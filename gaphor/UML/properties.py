@@ -533,7 +533,6 @@ class derived(umlproperty):
         Update the list of items. Returns a unioncache instance.
         """
         u = self.filter(obj)
-        print(self.upper)
         if self.upper != '*' and self.upper <= 1:
             assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
             # maybe code below is better instead the assertion above?
@@ -630,7 +629,7 @@ class derivedunion(derived):
         Returns a union of all values as a set.
         """
         if self.single:
-            return iter(self.subsets).next().__get__(obj)
+            return next(iter(self.subsets)).__get__(obj)
         else:
             u = set()
             for s in self.subsets:
