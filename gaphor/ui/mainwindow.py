@@ -336,7 +336,7 @@ class MainWindow(object):
         self.window.connect('delete-event', self._on_window_delete)
 
         # We want to store the window size, so it can be reloaded on startup
-        self.window.set_property('allow-shrink', True)
+        self.window.set_resizable(True)
         self.window.connect('size-allocate', self._on_window_size_allocate)
         self.window.connect('destroy', self._on_window_destroy)
         #self.window.connect_after('key-press-event', self._on_key_press_event)
