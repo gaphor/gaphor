@@ -510,7 +510,7 @@ class NamespaceView(Gtk.TreeView):
 
 
     def expand_root_nodes(self):
-        self.expand_row((0,), False)
+        self.expand_row(path=Gtk.TreePath.new_first(), open_all=False)
 
 
     def _set_pixbuf(self, column, cell, model, iter, data):
