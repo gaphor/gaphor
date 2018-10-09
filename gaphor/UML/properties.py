@@ -363,7 +363,7 @@ class association(umlproperty):
         #print '__delete__', self, obj, value
 
         if not value:
-            if self.upper > 1:
+            if self.upper != "*" and self.upper > 1:
                 raise Exception('Can not delete collections')
             old = value = self._get(obj)
             if value is None:
@@ -533,7 +533,8 @@ class derived(umlproperty):
         Update the list of items. Returns a unioncache instance.
         """
         u = self.filter(obj)
-        if self.upper <= 1:
+        print(self.upper)
+        if self.upper != '*' and self.upper <= 1:
             assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
             # maybe code below is better instead the assertion above?
             #if len(u) > 1:
