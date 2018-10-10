@@ -369,7 +369,6 @@ class MainWindow(object):
                 title += ' *'
             self.window.set_title(title)
 
-
     # Notebook methods:
 
     def add_tab(self, item):
@@ -377,11 +376,13 @@ class MainWindow(object):
         Create a new tab on the notebook with window as its contents.
         Returns: The page number of the tab.
         """
-        group = list(self.layout.get_widgets('diagrams'))[0]
-        group.insert_item(item)
-        item.show_all()
-        #item.diagram_tab = tab
-        #self.notebook_map[item] = tab
+        diagrams = self.layout.get_widgets('diagrams')
+        if len(diagrams):
+            group = diagrams[0]
+            group.insert_item(item)
+            item.show_all()
+        # item.diagram_tab = tab
+        # self.notebook_map[item] = tab
 
     def set_current_page(self, tab):
         """
