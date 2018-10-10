@@ -86,6 +86,11 @@ class NamespaceModel(Gtk.GenericTreeModel):
         # Init parent:
         GObject.GObject.__init__(self)
 
+        self.stamp = 0
+
+        #: Dictionary of (id(user_data): user_data), used when leak-references=False
+        self._held_refs = {}
+
         # We own the references to the iterators.
         self.set_property('leak-references', 0)
 
