@@ -137,8 +137,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
     __gtype_name__ = 'GTKInterpreterConsole'
 
     def __init__(self, locals=None):
-        GObject.GObject.__init__(self)
-        self.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        Gtk.ScrolledWindow.__init__(self)
+        self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 
         self.text = Gtk.TextView()
         self.text.set_wrap_mode(True)
@@ -152,30 +152,30 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.ps1 = ">>> "
         self.ps2 = "... "
 
-        self.text.add_events( Gdk.EventMask.KEY_PRESS_MASK )
-        self.text.connect( "key_press_event", self.key_pressed )
+        self.text.add_events(Gdk.EventMask.KEY_PRESS_MASK)
+        self.text.connect("key_press_event", self.key_pressed)
 
         self.current_history = -1
 
         self.mark = self.text.get_buffer().create_mark("End", self.text.get_buffer().get_end_iter(), False )
 
         #setup colors
-        self.style_banner = Gtk.TextTag("banner")
+        self.style_banner = Gtk.TextTag.new("banner")
         self.style_banner.set_property( "foreground", "saddle brown" )
 
-        self.style_ps1 = Gtk.TextTag("ps1")
+        self.style_ps1 = Gtk.TextTag.new("ps1")
         self.style_ps1.set_property( "foreground", "DarkOrchid4" )
         self.style_ps1.set_property( "editable", False )
         self.style_ps1.set_property("font", "courier" )
 
-        self.style_ps2 = Gtk.TextTag("ps2")
+        self.style_ps2 = Gtk.TextTag.new("ps2")
         self.style_ps2.set_property( "foreground", "DarkOliveGreen" )
         self.style_ps2.set_property( "editable", False  )
         self.style_ps2.set_property("font", "courier" )
 
-        self.style_out = Gtk.TextTag("stdout")
+        self.style_out = Gtk.TextTag.new("stdout")
         self.style_out.set_property( "foreground", "midnight blue" )
-        self.style_err = Gtk.TextTag("stderr")
+        self.style_err = Gtk.TextTag.new("stderr")
         self.style_err.set_property( "style", Pango.Style.ITALIC )
         self.style_err.set_property( "foreground", "red" )
 
