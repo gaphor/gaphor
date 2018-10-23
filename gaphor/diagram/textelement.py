@@ -32,11 +32,10 @@ def swap(list, el1, el2):
 
 
 def _text_layout(cr, text, font, width):
-    cr = PangoCairo.CairoContext(cr)
-    layout = cr.create_layout()
+    layout = PangoCairo.create_layout(cr)
     if font:
-        layout.set_font_description(Pango.FontDescription(font))
-    layout.set_text(text)
+        layout.set_font_description(Pango.FontDescription.from_string(font))
+    layout.set_text(text, length=-1)
     layout.set_width(int(width * Pango.SCALE))
     #layout.set_height(height)
     return layout
