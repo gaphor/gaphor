@@ -2,9 +2,8 @@
 
 import sys
 import xml.sax.handler
+from builtins import str
 from xml.sax.saxutils import escape, quoteattr
-
-from past.builtins import basestring
 
 # See whether the xmlcharrefreplace error handler is
 # supported
@@ -14,6 +13,7 @@ try:
     del xmlcharrefreplace_errors
 except ImportError:
     _error_handling = "strict"
+
 
 class XMLWriter(xml.sax.handler.ContentHandler):
 
@@ -38,7 +38,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         Only the tag should be marked this way. Other stuff, such as
         namespaces and attributes can be written directly to the file.
         """
-        if not isinstance(text, unicode):
+        if not isinstance(text, str):
             text = text.decode(self._encoding, _error_handling)
 
         if self._next_newline:
