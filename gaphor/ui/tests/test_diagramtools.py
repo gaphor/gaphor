@@ -22,7 +22,7 @@ class DiagramItemConnectorTestCase(TestCase):
 
     def test_item_reconnect(self):
         # Setting the stage:
-	ci1 = self.create(items.ClassItem, UML.Class)
+        ci1 = self.create(items.ClassItem, UML.Class)
         ci2 = self.create(items.ClassItem, UML.Class)
         a = self.create(items.AssociationItem)
 
