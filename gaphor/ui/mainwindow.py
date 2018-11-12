@@ -329,9 +329,9 @@ class MainWindow(object):
 
         model = NamespaceModel(self.element_factory)
         view = NamespaceView(model, self.element_factory)
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
         view.show()
         
@@ -339,16 +339,16 @@ class MainWindow(object):
         view.connect('row-activated', self._on_view_row_activated)
         view.connect_after('cursor-changed', self._on_view_cursor_changed)
 
-        vbox = gtk.VBox()
+        vbox = Gtk.VBox()
         vbox.pack_start(scrolled_window, expand=True, padding=3)
         scrolled_window.show()
 
-        paned = gtk.HPaned()
+        paned = Gtk.HPaned()
         paned.set_property('position', 160)
         paned.pack1(vbox)
         vbox.show()
         
-        notebook = gtk.Notebook()
+        notebook = Gtk.Notebook()
         notebook.set_scrollable(True)
         notebook.set_show_border(False)
 
@@ -364,7 +364,7 @@ class MainWindow(object):
         self._tree_view = view
        
         toolbox = Toolbox(TOOLBOX_ACTIONS)
-        vbox.pack_start(toolbox, expand=False)
+        vbox.pack_start(toolbox, False, True, 0)
         toolbox.show()
 
         self._toolbox = toolbox
@@ -421,22 +421,22 @@ class MainWindow(object):
         """
         self.notebook_map[contents] = tab
         #contents.connect('destroy', self._on_tab_destroy)
-        l = gtk.Label(label)
+        l = Gtk.Label(label=label)
 
-        style = gtk.RcStyle()
+        style = Gtk.RcStyle()
         style.xthickness = 0
         style.ythickness = 0
-        button = gtk.Button()
-        button.set_relief(gtk.RELIEF_NONE)
+        button = Gtk.Button()
+        button.set_relief(Gtk.ReliefStyle.NONE)
         button.set_focus_on_click(False)
         button.modify_style(style)
         button.connect("clicked", self._on_tab_close_button_pressed, tab)
 
-        close_image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
+        close_image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE, Gtk.IconSize.MENU)
         button.add(close_image)
 
-        box = gtk.HBox()
-        box.pack_start(l)
+        box = Gtk.HBox()
+        box.pack_start(l, True, True, 0)
         box.pack_start(button, False, False)
         box.show_all()
 
@@ -470,7 +470,7 @@ class MainWindow(object):
     def set_tab_label(self, tab, label):
         for p, t in self.notebook_map.iteritems():
             if tab is t:
-                l = gtk.Label(label)
+                l = Gtk.Label(label=label)
                 l.show()
                 self.notebook.set_tab_label(p, l)
 
@@ -563,7 +563,7 @@ class MainWindow(object):
         Show a popup menu if button3 was pressed on the TreeView.
         """
         # handle mouse button 3:
-        if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
+        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             menu = self.ui_manager.get_widget('/namespace-popup')
             menu.popup(None, None, None, event.button, event.time)
 
