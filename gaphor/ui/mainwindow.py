@@ -670,4 +670,370 @@ class MainWindow(object):
 Gtk.AccelMap.add_filter('gaphor')
 
 
+@implementer(IUIComponent, IActionProvider)
+class Namespace(object):
+
+    title = _('Namespace')
+    placement = ('left', 'diagrams')
+
+    component_registry = inject('component_registry')
+    element_factory = inject('element_factory')
+    ui_manager = inject('ui_manager')
+    action_manager = inject('action_manager')
+    main_window = inject('main_window')
+
+    menu_xml = STATIC_MENU_XML % ('window', 'open-namespace')
+
+    _menu_xml = """
+      <ui>
+        <menubar name="mainwindow">
+          <menu action="diagram">
+            <separator />
+            <menuitem action="tree-view-create-diagram" />
+            <menuitem action="tree-view-create-package" />
+            <separator />
+            <menuitem action="tree-view-delete-diagram" />
+            <menuitem action="tree-view-delete-package" />
+            <separator />
+          </menu>
+        </menubar>
+        <popup action="namespace-popup">
+          <menuitem action="tree-view-open" />
+          <menuitem action="tree-view-rename" />
+          <separator />
+          <menuitem action="tree-view-create-diagram" />
+          <menuitem action="tree-view-create-package" />
+          <separator />
+          <menuitem action="tree-view-delete-diagram" />
+          <menuitem action="tree-view-delete-package" />
+          <separator />
+          <menuitem action="tree-view-refresh" />
+        </popup>
+      </ui>
+    """
+    def __init__(self):
+        self._namespace = None
+        self._ui_id = None
+        self.action_group = build_action_group(self)
+
+
+    @open_action(name='open-namespace', label=_('_Namespace'))
+    def open_namespace(self):
+        if not self._namespace:
+            #self.main_window.create_item(self) #self.open(), self.title, self.placement)
+            return self
+        else:
+            self._namespace.set_property('has-focus', True)
+
+    def open(self):
+        widget = self.construct()
+        self.component_registry.register_handler(self.expand_root_nodes)
+        return widget
+
+
+    def close(self):
+        if self._namespace:
+            self._namespace.destroy()
+            self._namespace = None
+
+            # TODO: How to ensure stuff is removed properly from services?
+            #self.ui_manager.remove_ui(self._ui_id)
+        self.component_registry.unregister_handler(self.expand_root_nodes)
+
+
+    def construct(self):
+        self._ui_id = self.ui_manager.add_ui_from_string(self._menu_xml)
+
+        model = NamespaceModel(self.element_factory)
+        view = NamespaceView(model, self.element_factory)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
+        scrolled_window.add(view)
+        scrolled_window.show()
+        view.show()
+        
+        view.connect_after('event-after', self._on_view_event)
+        view.connect('row-activated', self._on_view_row_activated)
+        view.connect_after('cursor-changed', self._on_view_cursor_changed)
+        view.connect('destroy', self._on_view_destroyed)
+        self._namespace = view
+        self.expand_root_nodes()
+
+        return scrolled_window
+      
+
+    @component.adapter(ModelFactoryEvent)
+    def expand_root_nodes(self, event=None):
+        """
+        """
+        # Expand all root elements:
+        self._namespace.expand_root_nodes()
+        self._on_view_cursor_changed(self._namespace)
+
+
+    def _on_view_event(self, view, event):
+        """
+        Show a popup menu if button3 was pressed on the TreeView.
+        """
+        # handle mouse button 3:
+        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
+            menu = self.ui_manager.get_widget('/namespace-popup')
+            menu.popup(None, None, None, event.button, event.time)
+
+
+    def _on_view_row_activated(self, view, path, column):
+        """
+        Double click on an element in the tree view.
+        """
+        self.action_manager.execute('tree-view-open')
+
+
+    def _on_view_cursor_changed(self, view):
+        """
+        Another row is selected, execute a dummy action.
+        """
+        element = view.get_selected_element()
+        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
+        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, UML.Package)
+
+        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, UML.Diagram)
+        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, UML.Package) and not element.presentation
+
+        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
+
+
+    def _on_view_destroyed(self, widget):
+        self.close()
+
+
+    def select_element(self, element):
+        """
+        Select an element from the Namespace view.
+        The element is selected. After this an action may be executed,
+        such as OpenModelElement, which will try to open the element (if it's
+        a Diagram).
+        """
+        path = self._namespace.get_model().path_from_element(element)
+        # Expand the first row:
+        if len(path) > 1:
+            self._namespace.expand_row(path[:-1], False)
+        selection = self._namespace.get_selection()
+        selection.select_path(path)
+        self._on_view_cursor_changed(self._namespace)
+
+
+    @action(name='tree-view-open', label='_Open')
+    def tree_view_open_selected(self):
+        element = self._namespace.get_selected_element()
+        # TODO: Candidate for adapter?
+        if isinstance(element, UML.Diagram):
+            self.main_window.show_diagram(element)
+        else:
+            log.debug('No action defined for element %s' % type(element).__name__)
+
+
+    @action(name='tree-view-rename', label=_('Rename'), accel='F2')
+    def tree_view_rename_selected(self):
+        view = self._namespace
+        element = view.get_selected_element()
+        path = view.get_model().path_from_element(element)
+        column = view.get_column(0)
+        cell = column.get_cell_renderers()[1]
+        cell.set_property('editable', 1)
+        cell.set_property('text', element.name)
+        view.set_cursor(path, column, True)
+        cell.set_property('editable', 0)
+
+
+    @action(name='tree-view-create-diagram', label=_('_New diagram'), stock_id='gaphor-diagram')
+    @transactional
+    def tree_view_create_diagram(self):
+        element = self._namespace.get_selected_element()
+        diagram = self.element_factory.create(UML.Diagram)
+        diagram.package = element
+
+        if element:
+            diagram.name = '%s diagram' % element.name
+        else:
+            diagram.name = 'New diagram'
+
+        self.select_element(diagram)
+        self.main_window.show_diagram(diagram)
+        self.tree_view_rename_selected()
+
+
+    @action(name='tree-view-delete-diagram', label=_('_Delete diagram'), stock_id='gtk-delete')
+    @transactional
+    def tree_view_delete_diagram(self):
+        diagram = self._namespace.get_selected_element()
+        m = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION,
+                              Gtk.ButtonsType.YES_NO,
+                              'Do you really want to delete diagram %s?\n\n'
+                              'This will possibly delete diagram items\n'
+                              'that are not shown in other diagrams.'
+                              % (diagram.name or '<None>'))
+        if m.run() == Gtk.ResponseType.YES:
+            for i in reversed(diagram.canvas.get_all_items()):
+                s = i.subject
+                if s and len(s.presentation) == 1:
+                    s.unlink()
+                i.unlink
+            diagram.unlink()
+        m.destroy()
+
+
+    @action(name='tree-view-create-package', label=_('New _package'), stock_id='gaphor-package')
+    @transactional
+    def tree_view_create_package(self):
+        element = self._namespace.get_selected_element()
+        package = self.element_factory.create(UML.Package)
+        package.package = element
+
+        if element:
+            package.name = '%s package' % element.name
+        else:
+            package.name = 'New model'
+
+        self.select_element(package)
+        self.tree_view_rename_selected()
+
+
+    @action(name='tree-view-delete-package', label=_('Delete pac_kage'), stock_id='gtk-delete')
+    @transactional
+    def tree_view_delete_package(self):
+        package = self._namespace.get_selected_element()
+        assert isinstance(package, UML.Package)
+        package.unlink()
+
+
+    @action(name='tree-view-refresh', label=_('_Refresh'))
+    def tree_view_refresh(self):
+        self._namespace.get_model().refresh()
+
+
+@implementer(IUIComponent, IActionProvider)
+class Toolbox(object):
+
+    title = _('Toolbox')
+    placement = ('left', 'diagrams')
+
+    component_registry = inject('component_registry')
+    main_window = inject('main_window')
+    properties = inject('properties')
+
+    menu_xml = """
+      <ui>
+        <menubar name="mainwindow">
+          <menu action="diagram">
+            <separator/>
+            <menuitem action="reset-tool-after-create" />
+            <separator/>
+          </menu>
+          <menu action="window">
+            <menuitem action="open-toolbox" />
+          </menu>
+        </menubar>
+      </ui>
+    """
+    
+    def __init__(self):
+        self._toolbox = None
+        self.action_group = build_action_group(self)
+        self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
+
+
+    @open_action(name='open-toolbox', label=_('T_oolbox'))
+    def open_toolbox(self):
+        if not self._toolbox:
+            #self.main_window.create_item(self) #.open(), self.title, self.placement)
+            return self
+        else:
+            self._toolbox.set_property('has-focus', True)
+
+    def open(self):
+        widget = self.construct()
+        self.main_window.window.connect_after('key-press-event', self._on_key_press_event)
+
+        self.component_registry.register_handler(self._on_diagram_tab_change)
+        if self.main_window.get_current_diagram_tab():
+            self.update_toolbox(self.main_window.get_current_diagram_tab().toolbox.action_group)
+        return widget
+
+    def close(self):
+        if self._toolbox:
+            self.component_registry.unregister_handler(self._on_diagram_tab_change)
+            self._toolbox.destroy()
+            self._toolbox = None
+
+
+    def construct(self):
+        toolbox = _Toolbox(TOOLBOX_ACTIONS)
+        toolbox.show()
+
+        toolbox.connect('destroy', self._on_toolbox_destroyed)
+        self._toolbox = toolbox
+        return toolbox
+
+
+    def _on_key_press_event(self, view, event):
+        """
+        Grab top level window events and select the appropriate tool based on the event.
+        """
+        if event.get_state() & Gdk.ModifierType.SHIFT_MASK or \
+	        (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
+            keyval = Gdk.keyval_name(event.keyval)
+            self.set_active_tool(shortcut=keyval)
+
+
+    def _on_toolbox_destroyed(self, widget):
+        self._toolbox = None
+
+
+    @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
+    def reset_tool_after_create(self, active):
+        self.properties.set('reset-tool-after-create', active)
+
+
+    #def _insensivate_toolbox(self):
+    #    for button in self._toolbox.buttons:
+    #        button.set_property('sensitive', False)
+
+    @component.adapter(IDiagramTabChange)
+    def _on_diagram_tab_change(self, event):
+        self.update_toolbox(event.diagram_tab.toolbox.action_group)
+
+    def update_toolbox(self, action_group):
+        """
+        Update the buttons in the toolbox. Each button should be connected
+        by an action. Each button is assigned a special _action_name_
+        attribute that can be used to fetch the action from the ui manager.
+        """
+        if not self._toolbox:
+            return
+
+        for button in self._toolbox.buttons:
+            
+            action_name = button.action_name
+            action = action_group.get_action(action_name)
+            if action:
+                action.connect_proxy(button)
+
+
+    def set_active_tool(self, action_name=None, shortcut=None):
+        """
+        Set the tool based on the name of the action
+        """
+        # HACK:
+        toolbox = self._toolbox
+        if shortcut and toolbox:
+            action_name = toolbox.shortcuts.get(shortcut)
+            log.debug('Action for shortcut %s: %s' % (shortcut, action_name))
+            if not action_name:
+                return
+
+        self.main_window.get_current_diagram_tab().toolbox.action_group.get_action(action_name).activate()
+            
+
+# vim:sw=4:et:ai
 # vim:sw=4:et:ai
