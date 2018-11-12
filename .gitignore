@@ -6,3 +6,8 @@ po/gaphor.pot
 html
 *.swp
 *.egg
+*.pyc
+.eggs/
+gaphor.egg-info/
+tmp.gaphor
+
