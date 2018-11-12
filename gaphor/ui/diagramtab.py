@@ -7,7 +7,6 @@ from builtins import object
 from builtins import str
 from zope import component
 
-from etkdocking import DockItem
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
     FocusedItemPainter, ToolPainter, BoundingBoxPainter

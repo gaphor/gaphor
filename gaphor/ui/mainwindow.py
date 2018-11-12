@@ -45,7 +45,6 @@ from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange
 from gaphor.ui.interfaces import IDiagramTabChange
 from gaphor.ui.interfaces import IUIComponent
-from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import NamespaceModel, NamespaceView
 from gaphor.ui.toolbox import Toolbox as _Toolbox
 
@@ -147,7 +146,7 @@ class MainWindow(object):
         # Map tab contents to DiagramTab
         self.notebook_map = {}
         self._current_diagram_tab = None
-        self.layout = None
+        #self.layout = None
         # Tree view:
         self._tree_view = None 
 
