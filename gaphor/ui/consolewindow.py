@@ -33,7 +33,8 @@ class ConsoleWindow(object):
 
     title = 'Gaphor Console'
     size = (400, 400)
-    placement = 'floating'
+    menubar_path = ''
+    toolbar_path = ''
 
     def __init__(self):
         self.action_group = build_action_group(self)

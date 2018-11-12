@@ -73,10 +73,10 @@ class DiagramTab(object):
         Gtk.TargetEntry('gaphor/toolbox-action', 0, VIEW_TARGET_TOOLBOX_ACTION)]
 
 
-    def __init__(self, diagram):
-        self.diagram = diagram
+    def __init__(self, owning_window):
+        self.diagram = None
         self.view = None
-        #self.owning_window = owning_window
+        self.owning_window = owning_window
         self.action_group = build_action_group(self)
         self.toolbox = None
         self.component_registry.register_handler(self._on_element_change)
@@ -93,11 +93,19 @@ class DiagramTab(object):
     def get_canvas(self):
         return self.diagram.canvas
 
+    def set_diagram(self, diagram):
+        self.diagram = diagram
+
+        if diagram and self.view:
+            self.view.hadjustment.set_value(0.0)
+            self.view.vadjustment.set_value(0.0)
+
+
     def construct(self):
         """
         Create the widget.
         
-        Returns: the newly created widget, a DockItem.
+        Returns: the newly created widget.
         """
         assert self.diagram
 
@@ -114,26 +122,22 @@ class DiagramTab(object):
         view.connect('focus-changed', self._on_view_selection_changed)
         view.connect('selection-changed', self._on_view_selection_changed)
         view.connect_after('key-press-event', self._on_key_press_event)
-        view.connect('drag-drop', self._on_drag_drop)
         view.connect('drag-data-received', self._on_drag_data_received)
 
         self.view = view
+
+        self.widget = scrolled_window
         
         self.toolbox = DiagramToolbox(self.diagram, view)
         
-        item = DockItem(title=self.title, stock_id='gaphor-diagram')
-        item.add(scrolled_window)
-
-        self.widget = item
-
-        return item
+        return scrolled_window
 
 
     @component.adapter(IAttributeChangeEvent)
     def _on_element_change(self, event):
         if event.element is self.diagram and \
                 event.property is UML.Diagram.name:
-           self.widget.title = self.title
+           self.owning_window.set_tab_label(self, self.title) 
 
 
     @component.adapter(IElementDeleteEvent)
@@ -148,7 +152,8 @@ class DiagramTab(object):
         Tab is destroyed. Do the same thing that would
         be done if File->Close was pressed.
         """
-        self.widget.destroy()
+        self.owning_window.remove_tab(self)
+        self.set_diagram(None)
         self.component_registry.unregister_handler(self._on_element_delete)
         self.component_registry.unregister_handler(self._on_element_change)
         self.view = None
@@ -254,7 +259,7 @@ class DiagramTab(object):
                 Gtk.ButtonsType.YES_NO,
                 'This will remove the following selected items from the model:\n%s\nAre you sure?' % s
                 )
-        dialog.set_transient_for(self.get_toplevel())
+        dialog.set_transient_for(self.owning_window.window)
         value = dialog.run()
         dialog.destroy()
         if value == Gtk.ResponseType.YES:
@@ -279,6 +284,7 @@ class DiagramTab(object):
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.component_registry.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
+
 
 
     def _on_drag_drop(self, view, context, x, y, time):
@@ -331,7 +337,7 @@ class DiagramTab(object):
             else:
                 log.warning('No graphical representation for UML element %s' % type(element).__name__)
             context.finish(True, False, time)
-        #else:
-        #    context.finish(False, False, time)
+        else:
+            context.finish(False, False, time)
 
 # vim: sw=4:et:ai

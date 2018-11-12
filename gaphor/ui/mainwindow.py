@@ -12,14 +12,28 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 import pkg_resources
-from etkdocking import DockItem, DockGroup
-from etkdocking import DockLayout
-from etkdocking.docklayout import add_new_group_above, add_new_group_below, add_new_group_floating
-from etkdocking.docklayout import add_new_group_left, add_new_group_right
-from etkdocking import settings
 from zope.interface import implementer
 
 from gaphor import UML
+# =======
+# import gobject, gtk
+
+# from zope import interface, component
+# from gaphor.interfaces import IActionProvider
+# from interfaces import IUIComponent
+
+# from gaphor import UML
+# from gaphor.core import _, inject, action, toggle_action, build_action_group, transactional
+# from namespace import NamespaceModel, NamespaceView
+# from diagramtab import DiagramTab
+# from toolbox import Toolbox
+# from diagramtoolbox import TOOLBOX_ACTIONS
+# from toplevelwindow import ToplevelWindow
+
+
+# from interfaces import IDiagramSelectionChange
+# from gaphor.interfaces import IServiceEvent, IActionExecutedEvent
+# >>>>>>> parent of 22d7dc07... Merge branch 'docking'
 from gaphor.UML.event import ModelFactoryEvent
 from gaphor.core import _, inject, action, toggle_action, open_action, build_action_group, transactional
 from gaphor.interfaces import IService, IActionProvider
@@ -44,11 +58,6 @@ ICONS = (
     'gaphor-256x256.png',
 )
 
-settings['diagrams'].expand = True
-settings['diagrams'].auto_remove = False
-settings['diagrams'].inherit_settings = False
-settings['EtkDockGroup'].expand = False
-settings['EtkDockPaned'].expand = False
 
 STATIC_MENU_XML = """
   <ui>
@@ -136,9 +145,11 @@ class MainWindow(object):
         self.model_changed = False
 
         # Map tab contents to DiagramTab
-        #self.notebook_map = {}
+        self.notebook_map = {}
         self._current_diagram_tab = None
         self.layout = None
+        # Tree view:
+        self._tree_view = None 
 
 
     def init(self, app=None):
@@ -197,6 +208,11 @@ class MainWindow(object):
         self.action_group.get_action('diagram-drawing-style').set_active(self.properties('diagram.sloppiness', 0) != 0)
 
         self.action_manager.register_action_provider(self)
+
+
+    tree_model = property(lambda s: s.tree_view.get_model())
+
+    tree_view = property(lambda s: s._tree_view)
 
 
     def get_filename(self):
@@ -272,14 +288,12 @@ class MainWindow(object):
                 self.set_current_page(tab)
                 return tab
 
-        tab = DiagramTab(diagram)
-        dock_item = tab.construct()
-        dock_item.set_name('diagram-tab')
-        dock_item.diagram_tab = tab
-        assert dock_item.get_name() == 'diagram-tab'
+        tab = DiagramTab(self)
+        tab.set_diagram(diagram)
+        widget = tab.construct()
         tab.set_drawing_style(self.properties('diagram.sloppiness', 0))
-
-        self.add_tab(dock_item)
+        self.add_tab(tab, widget, tab.title)
+        self.set_current_page(tab)
 
         return tab
 
@@ -314,22 +328,49 @@ class MainWindow(object):
         if toolbar:
             vbox.pack_start(toolbar, False, True, 0)
 
-        def _factory(name):
-            comp = self.component_registry.get_utility(IUIComponent, name)
-            log.debug('open component %s' % str(comp))
-            return comp.open()
-
-        filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
-        self.layout = DockLayout()
-
-        with open(filename) as f:
-            deserialize(self.layout, vbox, f.read(), _factory)
+        model = NamespaceModel(self.element_factory)
+        view = NamespaceView(model, self.element_factory)
+        scrolled_window = gtk.ScrolledWindow()
+        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
+        scrolled_window.add(view)
+        view.show()
         
-        self.layout.connect('item-closed', self._on_item_closed)
-        self.layout.connect('item-selected', self._on_item_selected)
+        view.connect_after('event-after', self._on_view_event)
+        view.connect('row-activated', self._on_view_row_activated)
+        view.connect_after('cursor-changed', self._on_view_cursor_changed)
 
+        vbox = gtk.VBox()
+        vbox.pack_start(scrolled_window, expand=True, padding=3)
+        scrolled_window.show()
+
+        paned = gtk.HPaned()
+        paned.set_property('position', 160)
+        paned.pack1(vbox)
         vbox.show()
-        # TODO: add statusbar
+        
+        notebook = gtk.Notebook()
+        notebook.set_scrollable(True)
+        notebook.set_show_border(False)
+
+        notebook.connect_after('switch-page', self._on_notebook_switch_page)
+        notebook.connect_after('page-removed', self._on_notebook_page_removed)
+
+        
+        paned.pack2(notebook)
+        notebook.show()
+        paned.show()
+
+        self.notebook = notebook
+        self._tree_view = view
+       
+        toolbox = Toolbox(TOOLBOX_ACTIONS)
+        vbox.pack_start(toolbox, expand=False)
+        toolbox.show()
+
+        self._toolbox = toolbox
+
+        self.open_welcome_page()
 
         self.window.show()
 
@@ -346,6 +387,9 @@ class MainWindow(object):
         cr.register_handler(self._on_undo_manager_state_changed)
         cr.register_handler(self._new_model_content)
         # TODO: register on ElementCreate/Delete event
+
+        return paned
+
 
 
     def open_welcome_page(self):
@@ -371,39 +415,96 @@ class MainWindow(object):
 
     # Notebook methods:
 
-    def add_tab(self, item):
+    def add_tab(self, tab, contents, label):
         """
         Create a new tab on the notebook with window as its contents.
         Returns: The page number of the tab.
         """
-        diagrams = self.layout.get_widgets('diagrams')
-        if len(diagrams):
-            group = diagrams[0]
-            group.insert_item(item)
-            item.show_all()
-        # item.diagram_tab = tab
-        # self.notebook_map[item] = tab
+        self.notebook_map[contents] = tab
+        #contents.connect('destroy', self._on_tab_destroy)
+        l = gtk.Label(label)
+
+        style = gtk.RcStyle()
+        style.xthickness = 0
+        style.ythickness = 0
+        button = gtk.Button()
+        button.set_relief(gtk.RELIEF_NONE)
+        button.set_focus_on_click(False)
+        button.modify_style(style)
+        button.connect("clicked", self._on_tab_close_button_pressed, tab)
+
+        close_image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
+        button.add(close_image)
+
+        box = gtk.HBox()
+        box.pack_start(l)
+        box.pack_start(button, False, False)
+        box.show_all()
+
+        # Note: append_page() emits switch-page event
+        self.notebook.append_page(contents, box)
+        self.notebook.set_tab_reorderable(contents, True)
+        page_num = self.notebook.page_num(contents)
+        #self.notebook.set_current_page(page_num)
+        return page_num
+
+    def get_current_tab(self):
+        """
+        Return the window (DiagramTab) that is currently visible on the
+        notebook.
+        """
+        current = self.notebook.get_current_page()
+        content = self.notebook.get_nth_page(current)
+        return self.notebook_map.get(content)
 
     def set_current_page(self, tab):
         """
         Force a specific tab (DiagramTab) to the foreground.
         """
-        for i in self.layout.get_widgets('diagram-tab'):
-            if i.diagram_tab is tab:
-                g = i.get_parent()
-                g.set_current_item(g.item_num(i))
+        for p, t in self.notebook_map.iteritems():
+            if tab is t:
+                num = self.notebook.page_num(p)
+                self.notebook.set_current_page(num)
                 return
-        #for p, t in self.notebook_map.iteritems():
-        #    if tab is t:
-        #        num = self.notebook.page_num(p)
-        #        self.notebook.set_current_page(num)
-        #        return
-        pass
 
+
+    def set_tab_label(self, tab, label):
+        for p, t in self.notebook_map.iteritems():
+            if tab is t:
+                l = gtk.Label(label)
+                l.show()
+                self.notebook.set_tab_label(p, l)
 
     def get_tabs(self):
-        tabs = [i.diagram_tab for i in self.layout.get_widgets('diagram-tab')]
-        return tabs
+        #tabs = [i.diagram_tab for i in self.layout.get_widgets('diagram-tab')]
+        return self.notebook_map.values()
+
+    def remove_tab(self, tab):
+        """
+        Remove the tab from the notebook. Tab is such a thing as
+        a DiagramTab.
+        """
+        for p, t in self.notebook_map.iteritems():
+            if tab is t:
+                num = self.notebook.page_num(p)
+                self.notebook.remove_page(num)
+                del self.notebook_map[p]
+                return
+
+    def select_element(self, element):
+        """
+        Select an element from the Namespace view.
+        The element is selected. After this an action may be executed,
+        such as OpenModelElement, which will try to open the element (if it's
+        a Diagram).
+        """
+        path = self.tree_model.path_from_element(element)
+        # Expand the first row:
+        if len(path) > 1:
+            self._tree_view.expand_row(path[:-1], False)
+        selection = self._tree_view.get_selection()
+        selection.select_path(path)
+        self._on_view_cursor_changed(self._tree_view)
 
     # Signal callbacks:
 
@@ -447,52 +548,75 @@ class MainWindow(object):
         cr.unregister_handler(self._on_file_manager_state_changed)
         cr.unregister_handler(self._new_model_content)
 
+    def _on_tab_close_button_pressed(self, event, tab):
+        tab.close()
+
+    def _on_tab_destroy(self, widget):
+        tab = self.notebook_map[widget]
+        assert isinstance(tab, DiagramTab)
+        self.remove_tab(tab)
+
     def _on_window_delete(self, window = None, event = None):
         return not self.ask_to_close()
 
-    def _clear_ui_settings(self):
-        try:
-            ui_manager = self.ui_manager
-        except component.ComponentLookupError as e:
-            log.warning('No UI manager service found')
-        else:
-            if self._tab_ui_settings:
-                action_group, ui_id = self._tab_ui_settings
-                self.ui_manager.remove_action_group(action_group)
-                self.ui_manager.remove_ui(ui_id)
-                self._tab_ui_settings = None
+    def _on_view_event(self, view, event):
+        """
+        Show a popup menu if button3 was pressed on the TreeView.
+        """
+        # handle mouse button 3:
+        if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
+            menu = self.ui_manager.get_widget('/namespace-popup')
+            menu.popup(None, None, None, event.button, event.time)
 
-    def _on_item_closed(self, layout, group, item):
-        self._clear_ui_settings()
-        try:
-            ui_component = item.ui_component
-        except AttributeError:
-            log.warning('No ui component defined on item')
-        else:
-            ui_component.close()
-        item.destroy()
 
-    def _on_item_selected(self, layout, group, item):
+    def _on_view_row_activated(self, view, path, column):
+        """
+        Double click on an element in the tree view.
+        """
+        self.action_manager.execute('tree-view-open')
+
+    def _on_view_cursor_changed(self, view):
+        """
+        Another row is selected, execute a dummy action.
+        """
+        element = view.get_selected_element()
+        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
+        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, UML.Package)
+
+        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, UML.Diagram)
+        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, UML.Package) and not element.presentation
+
+        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
+
+    def _insensivate_toolbox(self):
+        for button in self._toolbox.buttons:
+            button.set_property('sensitive', False)
+
+    def _on_notebook_page_removed(self, notebook, tab, page_num):
+        if self._tab_ui_settings:
+            action_group, ui_id = self._tab_ui_settings
+            self.ui_manager.remove_action_group(action_group)
+            self.ui_manager.remove_ui(ui_id)
+            self._tab_ui_settings = None
+            if notebook.get_current_page() == -1:
+                self._insensivate_toolbox()
+            else:
+                self._on_notebook_switch_page(notebook, None, notebook.get_current_page())
+
+    def _on_notebook_switch_page(self, notebook, tab, page_num):
         """
         Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
         """
-        # TODO: Here the magic happens!
-        # TODO: Need to see what the active view is, or make toolbox actions global
-        self._clear_ui_settings()
+        if self._tab_ui_settings:
+            action_group, ui_id = self._tab_ui_settings
+            self.ui_manager.remove_action_group(action_group)
+            self.ui_manager.remove_ui(ui_id)
+            self._tab_ui_settings = None
 
-        # Is it a diagram view?
-        try:
-            tab = item.diagram_tab
-        except AttributeError:
-            # Not a diagram tab
-            return
-
-        self._current_diagram_tab = tab
-
-        #content = self.notebook.get_nth_page(page_num)
-        #tab = self.notebook_map.get(content)
-        #assert isinstance(tab, DiagramTab), str(tab)
+        content = self.notebook.get_nth_page(page_num)
+        tab = self.notebook_map.get(content)
+        assert isinstance(tab, DiagramTab), str(tab)
         
         self.ui_manager.insert_action_group(tab.action_group, -1)
         ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
@@ -537,372 +661,6 @@ class MainWindow(object):
         """
         Create an item for a ui component. This method can be called from UIComponents.
         """
-        item = DockItem(ui_component.title)
-        item.add(ui_component.open())
-        group = DockGroup()
-        group.insert_item(item)
-        placement = ui_component.placement
-        if placement:
-            if placement == 'floating':
-                add_new_group_floating(group, self.layout, ui_component.size)
-            else:
-                location = self.layout.get_widgets(placement[1])[0]
-                { 'left': add_new_group_left,
-                  'right': add_new_group_right,
-                  'above': add_new_group_above,
-                  'below': add_new_group_below }[placement[0]](location, group)
-        else:
-            add_new_group_floating(group)
-        item.show()
-        item.ui_component = ui_component
-        group.show()
-
-
-Gtk.AccelMap.add_filter('gaphor')
-
-
-@implementer(IUIComponent, IActionProvider)
-class Namespace(object):
-
-    title = _('Namespace')
-    placement = ('left', 'diagrams')
-
-    component_registry = inject('component_registry')
-    element_factory = inject('element_factory')
-    ui_manager = inject('ui_manager')
-    action_manager = inject('action_manager')
-    main_window = inject('main_window')
-
-    menu_xml = STATIC_MENU_XML % ('window', 'open-namespace')
-
-    _menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="diagram">
-            <separator />
-            <menuitem action="tree-view-create-diagram" />
-            <menuitem action="tree-view-create-package" />
-            <separator />
-            <menuitem action="tree-view-delete-diagram" />
-            <menuitem action="tree-view-delete-package" />
-            <separator />
-          </menu>
-        </menubar>
-        <popup action="namespace-popup">
-          <menuitem action="tree-view-open" />
-          <menuitem action="tree-view-rename" />
-          <separator />
-          <menuitem action="tree-view-create-diagram" />
-          <menuitem action="tree-view-create-package" />
-          <separator />
-          <menuitem action="tree-view-delete-diagram" />
-          <menuitem action="tree-view-delete-package" />
-          <separator />
-          <menuitem action="tree-view-refresh" />
-        </popup>
-      </ui>
-    """
-    def __init__(self):
-        self._namespace = None
-        self._ui_id = None
-        self.action_group = build_action_group(self)
-
-
-    @open_action(name='open-namespace', label=_('_Namespace'))
-    def open_namespace(self):
-        if not self._namespace:
-            #self.main_window.create_item(self) #self.open(), self.title, self.placement)
-            return self
-        else:
-            self._namespace.set_property('has-focus', True)
-
-    def open(self):
-        widget = self.construct()
-        self.component_registry.register_handler(self.expand_root_nodes)
-        return widget
-
-
-    def close(self):
-        if self._namespace:
-            self._namespace.destroy()
-            self._namespace = None
-
-            # TODO: How to ensure stuff is removed properly from services?
-            #self.ui_manager.remove_ui(self._ui_id)
-        self.component_registry.unregister_handler(self.expand_root_nodes)
-
-
-    def construct(self):
-        self._ui_id = self.ui_manager.add_ui_from_string(self._menu_xml)
-
-        model = NamespaceModel(self.element_factory)
-        view = NamespaceView(model, self.element_factory)
-        scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
-        scrolled_window.add(view)
-        scrolled_window.show()
-        view.show()
-        
-        view.connect_after('event-after', self._on_view_event)
-        view.connect('row-activated', self._on_view_row_activated)
-        view.connect_after('cursor-changed', self._on_view_cursor_changed)
-        view.connect('destroy', self._on_view_destroyed)
-        self._namespace = view
-        self.expand_root_nodes()
-
-        return scrolled_window
-      
-
-    @component.adapter(ModelFactoryEvent)
-    def expand_root_nodes(self, event=None):
-        """
-        """
-        # Expand all root elements:
-        self._namespace.expand_root_nodes()
-        self._on_view_cursor_changed(self._namespace)
-
-
-    def _on_view_event(self, view, event):
-        """
-        Show a popup menu if button3 was pressed on the TreeView.
-        """
-        # handle mouse button 3:
-        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
-            menu = self.ui_manager.get_widget('/namespace-popup')
-            menu.popup(None, None, None, event.button, event.time)
-
-
-    def _on_view_row_activated(self, view, path, column):
-        """
-        Double click on an element in the tree view.
-        """
-        self.action_manager.execute('tree-view-open')
-
-
-    def _on_view_cursor_changed(self, view):
-        """
-        Another row is selected, execute a dummy action.
-        """
-        element = view.get_selected_element()
-        self.action_group.get_action('tree-view-create-diagram').props.sensitive = isinstance(element, UML.Package)
-        self.action_group.get_action('tree-view-create-package').props.sensitive = isinstance(element, UML.Package)
-
-        self.action_group.get_action('tree-view-delete-diagram').props.visible = isinstance(element, UML.Diagram)
-        self.action_group.get_action('tree-view-delete-package').props.visible = isinstance(element, UML.Package) and not element.presentation
-
-        self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
-
-
-    def _on_view_destroyed(self, widget):
-        self.close()
-
-
-    def select_element(self, element):
-        """
-        Select an element from the Namespace view.
-        The element is selected. After this an action may be executed,
-        such as OpenModelElement, which will try to open the element (if it's
-        a Diagram).
-        """
-        path = self._namespace.get_model().path_from_element(element)
-        # Expand the first row:
-        if len(path) > 1:
-            self._namespace.expand_row(path[:-1], False)
-        selection = self._namespace.get_selection()
-        selection.select_path(path)
-        self._on_view_cursor_changed(self._namespace)
-
-
-    @action(name='tree-view-open', label='_Open')
-    def tree_view_open_selected(self):
-        element = self._namespace.get_selected_element()
-        # TODO: Candidate for adapter?
-        if isinstance(element, UML.Diagram):
-            self.main_window.show_diagram(element)
-        else:
-            log.debug('No action defined for element %s' % type(element).__name__)
-
-
-    @action(name='tree-view-rename', label=_('Rename'), accel='F2')
-    def tree_view_rename_selected(self):
-        view = self._namespace
-        element = view.get_selected_element()
-        path = view.get_model().path_from_element(element)
-        column = view.get_column(0)
-        cell = column.get_cell_renderers()[1]
-        cell.set_property('editable', 1)
-        cell.set_property('text', element.name)
-        view.set_cursor(path, column, True)
-        cell.set_property('editable', 0)
-
-
-    @action(name='tree-view-create-diagram', label=_('_New diagram'), stock_id='gaphor-diagram')
-    @transactional
-    def tree_view_create_diagram(self):
-        element = self._namespace.get_selected_element()
-        diagram = self.element_factory.create(UML.Diagram)
-        diagram.package = element
-
-        if element:
-            diagram.name = '%s diagram' % element.name
-        else:
-            diagram.name = 'New diagram'
-
-        self.select_element(diagram)
-        self.main_window.show_diagram(diagram)
-        self.tree_view_rename_selected()
-
-
-    @action(name='tree-view-delete-diagram', label=_('_Delete diagram'), stock_id='gtk-delete')
-    @transactional
-    def tree_view_delete_diagram(self):
-        diagram = self._namespace.get_selected_element()
-        m = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL, Gtk.MessageType.QUESTION,
-                              Gtk.ButtonsType.YES_NO,
-                              'Do you really want to delete diagram %s?\n\n'
-                              'This will possibly delete diagram items\n'
-                              'that are not shown in other diagrams.'
-                              % (diagram.name or '<None>'))
-        if m.run() == Gtk.ResponseType.YES:
-            for i in reversed(diagram.canvas.get_all_items()):
-                s = i.subject
-                if s and len(s.presentation) == 1:
-                    s.unlink()
-                i.unlink
-            diagram.unlink()
-        m.destroy()
-
-
-    @action(name='tree-view-create-package', label=_('New _package'), stock_id='gaphor-package')
-    @transactional
-    def tree_view_create_package(self):
-        element = self._namespace.get_selected_element()
-        package = self.element_factory.create(UML.Package)
-        package.package = element
-
-        if element:
-            package.name = '%s package' % element.name
-        else:
-            package.name = 'New model'
-
-        self.select_element(package)
-        self.tree_view_rename_selected()
-
-
-    @action(name='tree-view-delete-package', label=_('Delete pac_kage'), stock_id='gtk-delete')
-    @transactional
-    def tree_view_delete_package(self):
-        package = self._namespace.get_selected_element()
-        assert isinstance(package, UML.Package)
-        package.unlink()
-
-
-    @action(name='tree-view-refresh', label=_('_Refresh'))
-    def tree_view_refresh(self):
-        self._namespace.get_model().refresh()
-
-
-@implementer(IUIComponent, IActionProvider)
-class Toolbox(object):
-
-    title = _('Toolbox')
-    placement = ('left', 'diagrams')
-
-    component_registry = inject('component_registry')
-    main_window = inject('main_window')
-    properties = inject('properties')
-
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="diagram">
-            <separator/>
-            <menuitem action="reset-tool-after-create" />
-            <separator/>
-          </menu>
-          <menu action="window">
-            <menuitem action="open-toolbox" />
-          </menu>
-        </menubar>
-      </ui>
-    """
-    
-    def __init__(self):
-        self._toolbox = None
-        self.action_group = build_action_group(self)
-        self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
-
-
-    @open_action(name='open-toolbox', label=_('T_oolbox'))
-    def open_toolbox(self):
-        if not self._toolbox:
-            #self.main_window.create_item(self) #.open(), self.title, self.placement)
-            return self
-        else:
-            self._toolbox.set_property('has-focus', True)
-
-    def open(self):
-        widget = self.construct()
-        self.main_window.window.connect_after('key-press-event', self._on_key_press_event)
-
-        self.component_registry.register_handler(self._on_diagram_tab_change)
-        if self.main_window.get_current_diagram_tab():
-            self.update_toolbox(self.main_window.get_current_diagram_tab().toolbox.action_group)
-        return widget
-
-    def close(self):
-        if self._toolbox:
-            self.component_registry.unregister_handler(self._on_diagram_tab_change)
-            self._toolbox.destroy()
-            self._toolbox = None
-
-
-    def construct(self):
-        toolbox = _Toolbox(TOOLBOX_ACTIONS)
-        toolbox.show()
-
-        toolbox.connect('destroy', self._on_toolbox_destroyed)
-        self._toolbox = toolbox
-        return toolbox
-
-
-    def _on_key_press_event(self, view, event):
-        """
-        Grab top level window events and select the appropriate tool based on the event.
-        """
-        if event.get_state() & Gdk.ModifierType.SHIFT_MASK or \
-	        (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
-            keyval = Gdk.keyval_name(event.keyval)
-            self.set_active_tool(shortcut=keyval)
-
-
-    def _on_toolbox_destroyed(self, widget):
-        self._toolbox = None
-
-
-    @toggle_action(name='reset-tool-after-create', label=_('_Reset tool'), active=False)
-    def reset_tool_after_create(self, active):
-        self.properties.set('reset-tool-after-create', active)
-
-
-    #def _insensivate_toolbox(self):
-    #    for button in self._toolbox.buttons:
-    #        button.set_property('sensitive', False)
-
-    @component.adapter(IDiagramTabChange)
-    def _on_diagram_tab_change(self, event):
-        self.update_toolbox(event.diagram_tab.toolbox.action_group)
-
-    def update_toolbox(self, action_group):
-        """
-        Update the buttons in the toolbox. Each button should be connected
-        by an action. Each button is assigned a special _action_name_
-        attribute that can be used to fetch the action from the ui manager.
-        """
-        if not self._toolbox:
-            return
-
         for button in self._toolbox.buttons:
             
             action_name = button.action_name
@@ -910,20 +668,7 @@ class Toolbox(object):
             if action:
                 action.connect_proxy(button)
 
+Gtk.AccelMap.add_filter('gaphor')
 
-    def set_active_tool(self, action_name=None, shortcut=None):
-        """
-        Set the tool based on the name of the action
-        """
-        # HACK:
-        toolbox = self._toolbox
-        if shortcut and toolbox:
-            action_name = toolbox.shortcuts.get(shortcut)
-            log.debug('Action for shortcut %s: %s' % (shortcut, action_name))
-            if not action_name:
-                return
-
-        self.main_window.get_current_diagram_tab().toolbox.action_group.get_action(action_name).activate()
-            
 
 # vim:sw=4:et:ai

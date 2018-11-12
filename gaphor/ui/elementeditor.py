@@ -30,10 +30,15 @@ class ElementEditor(object):
       <ui>
         <menubar name="mainwindow">
           <menu action="edit">
-            <separator />
             <menuitem action="ElementEditor:open" />
+            <separator />
           </menu>
         </menubar>
+        <toolbar action="mainwindow-toolbar">
+          <placeholder name="right">
+            <toolitem action="ElementEditor:open" position="bot" />
+          </placeholder>
+        </toolbar>
       </ui>
     """
 
@@ -70,6 +75,5 @@ class ElementEditor(object):
         self.widget.unparent()
         #self.dock_item.destroy()
         #return True
-
 
 # vim:sw=4:et:ai
