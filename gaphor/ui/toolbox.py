@@ -48,7 +48,7 @@ class Toolbox(Gtk.VBox):
         GObject.GObject.__init__(self)
         self.buttons = []
         self.shortcuts = {}
-        self._construct()
+        self._construct(toolboxdef)
 
     def make_wrapbox_decorator(self, title, content):
         """
@@ -101,9 +101,9 @@ class Toolbox(Gtk.VBox):
         return button
 
 
-    def _construct(self):
+    def _construct(self, toolboxdef):
         shortcuts = self.shortcuts
-        for title, items in self.toolboxdef:
+        for title, items in toolboxdef:
             wrapbox = Wrapbox()
             for action_name, label, stock_id, shortcut in items:
                 button = self.toolbox_button(action_name, stock_id)

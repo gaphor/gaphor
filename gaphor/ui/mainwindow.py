@@ -363,11 +363,12 @@ class MainWindow(object):
         self.notebook = notebook
         self._tree_view = view
        
-        toolbox = Toolbox(TOOLBOX_ACTIONS)
-        vbox.pack_start(toolbox, False, True, 0)
-        toolbox.show()
+        toolbox = Toolbox()
+        toolbox_widget = toolbox.construct()
+        vbox.pack_start(toolbox_widget, False, True, 0)
 
         self._toolbox = toolbox
+        self._toolbox_widget = toolbox_widget
 
         self.open_welcome_page()
 
@@ -423,13 +424,13 @@ class MainWindow(object):
         #contents.connect('destroy', self._on_tab_destroy)
         l = Gtk.Label(label=label)
 
-        style = Gtk.RcStyle()
-        style.xthickness = 0
-        style.ythickness = 0
+        #style = Gtk.RcStyle()
+        #style.xthickness = 0
+        #style.ythickness = 0
         button = Gtk.Button()
         button.set_relief(Gtk.ReliefStyle.NONE)
         button.set_focus_on_click(False)
-        button.modify_style(style)
+        #button.modify_style(style)
         button.connect("clicked", self._on_tab_close_button_pressed, tab)
 
         close_image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE, Gtk.IconSize.MENU)
@@ -588,7 +589,7 @@ class MainWindow(object):
         self.action_group.get_action('tree-view-open').props.sensitive = isinstance(element, UML.Diagram)
 
     def _insensivate_toolbox(self):
-        for button in self._toolbox.buttons:
+        for button in self._toolbox_widget.buttons:
             button.set_property('sensitive', False)
 
     def _on_notebook_page_removed(self, notebook, tab, page_num):
@@ -660,7 +661,7 @@ class MainWindow(object):
         """
         Create an item for a ui component. This method can be called from UIComponents.
         """
-        for button in self._toolbox.buttons:
+        for button in self._toolbox_widget.buttons:
             
             action_name = button.action_name
             action = action_group.get_action(action_name)
@@ -1035,5 +1036,4 @@ class Toolbox(object):
         self.main_window.get_current_diagram_tab().toolbox.action_group.get_action(action_name).activate()
             
 
-# vim:sw=4:et:ai
 # vim:sw=4:et:ai

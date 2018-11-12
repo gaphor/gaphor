@@ -10,6 +10,8 @@ import pkg_resources
 from zope.interface import implementer
 
 from gaphor.ui.interfaces import IUIComponent
+from gaphor.core import inject
+
 
 ICONS = (
     'gaphor-24x24.png',
@@ -28,6 +30,10 @@ class ToplevelWindow(object):
 
     def __init__(self):
         self.window = None
+
+    def ui_component(self):
+        raise NotImplementedError
+
 
     def construct(self):
 
@@ -58,7 +64,7 @@ class ToplevelWindow(object):
             if toolbar:
                 vbox.pack_start(toolbar, False, True, 0)
 
-            vbox.pack_end(self.ui_component(, True, True, 0), expand=self.resizable)
+            vbox.pack_end(self.ui_component(), True, True, 0)
             vbox.show()
             # TODO: add statusbar
         else:
