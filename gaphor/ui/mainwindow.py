@@ -660,7 +660,7 @@ class MainWindow(object):
         for button in self._toolbox_widget.buttons:
 
             action_name = button.action_name
-            action = action_group.get_action(action_name)
+            action = self.action_group.get_action(action_name)
             if action:
                 action.connect_proxy(button)
 
@@ -1011,7 +1011,7 @@ class Toolbox(object):
         for button in self._toolbox.buttons:
 
             action_name = button.action_name
-            action = action_group.get_action(action_name)
+            action = self.action_group.get_action(action_name)
             if action:
                 action.connect_proxy(button)
 
