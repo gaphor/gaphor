@@ -86,7 +86,6 @@ It uses the GTK+ environment for user interaction.
         'pycairo >= 1.17.0',
         'PyGObject >= 3.30.0',
         'gaphas >= 0.7.2',
-        'etkdocking >= 0.2',
         'zope.component >= 3.4.0', # - won't compile on windows.
         'future >= 0.16.0',
     ],

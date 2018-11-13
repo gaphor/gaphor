@@ -7,7 +7,6 @@ from builtins import object
 from builtins import str
 from zope import component
 
-from etkdocking import DockItem
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
     FocusedItemPainter, ToolPainter, BoundingBoxPainter
@@ -97,7 +96,7 @@ class DiagramTab(object):
         """
         Create the widget.
         
-        Returns: the newly created widget, a DockItem.
+        Returns: the newly created widget.
         """
         assert self.diagram
 
@@ -121,9 +120,9 @@ class DiagramTab(object):
         
         self.toolbox = DiagramToolbox(self.diagram, view)
         
-        item = DockItem(title=self.title, stock_id='gaphor-diagram')
-        item.add(scrolled_window)
-
+        #item = DockItem(title=self.title, stock_id='gaphor-diagram')
+        #item.add(scrolled_window)
+        item = scrolled_window
         self.widget = item
 
         return item
@@ -133,7 +132,8 @@ class DiagramTab(object):
     def _on_element_change(self, event):
         if event.element is self.diagram and \
                 event.property is UML.Diagram.name:
-           self.widget.title = self.title
+           #self.widget.title = self.title
+           print("TODO: update diagram title")
 
 
     @component.adapter(IElementDeleteEvent)

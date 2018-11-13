@@ -12,11 +12,6 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 import pkg_resources
-from etkdocking import DockItem, DockGroup
-from etkdocking import DockLayout
-from etkdocking.docklayout import add_new_group_above, add_new_group_below, add_new_group_floating
-from etkdocking.docklayout import add_new_group_left, add_new_group_right
-from etkdocking import settings
 from zope.interface import implementer
 
 from gaphor import UML
@@ -31,7 +26,7 @@ from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange
 from gaphor.ui.interfaces import IDiagramTabChange
 from gaphor.ui.interfaces import IUIComponent
-from gaphor.ui.layout import deserialize
+#from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import NamespaceModel, NamespaceView
 from gaphor.ui.toolbox import Toolbox as _Toolbox
 
@@ -43,12 +38,6 @@ ICONS = (
     'gaphor-96x96.png',
     'gaphor-256x256.png',
 )
-
-settings['diagrams'].expand = True
-settings['diagrams'].auto_remove = False
-settings['diagrams'].inherit_settings = False
-settings['EtkDockGroup'].expand = False
-settings['EtkDockPaned'].expand = False
 
 STATIC_MENU_XML = """
   <ui>
@@ -320,13 +309,13 @@ class MainWindow(object):
             return comp.open()
 
         filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
-        self.layout = DockLayout()
+        self.layout = Gtk.Notebook()
 
-        with open(filename) as f:
-            deserialize(self.layout, vbox, f.read(), _factory)
+        #with open(filename) as f:
+        #    deserialize(self.layout, vbox, f.read(), _factory)
         
-        self.layout.connect('item-closed', self._on_item_closed)
-        self.layout.connect('item-selected', self._on_item_selected)
+        self.layout.connect('page-removed', self._on_item_closed)
+        self.layout.connect('change-current-page', self._on_item_selected)
 
         vbox.show()
         # TODO: add statusbar
@@ -462,7 +451,7 @@ class MainWindow(object):
                 self.ui_manager.remove_ui(ui_id)
                 self._tab_ui_settings = None
 
-    def _on_item_closed(self, layout, group, item):
+    def _on_item_closed(self, layout, page_num, item):
         self._clear_ui_settings()
         try:
             ui_component = item.ui_component
@@ -472,7 +461,7 @@ class MainWindow(object):
             ui_component.close()
         item.destroy()
 
-    def _on_item_selected(self, layout, group, item):
+    def _on_item_selected(self, layout, page_num, item):
         """
         Another page (tab) is put on the front of the diagram notebook.
         A dummy action is executed.
@@ -490,8 +479,8 @@ class MainWindow(object):
 
         self._current_diagram_tab = tab
 
-        #content = self.notebook.get_nth_page(page_num)
-        #tab = self.notebook_map.get(content)
+        content = self.notebook.get_nth_page(page_num)
+        tab = self.notebook_map.get(content)
         #assert isinstance(tab, DiagramTab), str(tab)
         
         self.ui_manager.insert_action_group(tab.action_group, -1)
@@ -533,29 +522,15 @@ class MainWindow(object):
         self.properties.set('diagram.sloppiness', sloppiness)
 
 
-    def create_item(self, ui_component): #, widget, title, placement=None):
+    def create_item(self, ui_component):
         """
         Create an item for a ui component. This method can be called from UIComponents.
         """
-        item = DockItem(ui_component.title)
-        item.add(ui_component.open())
-        group = DockGroup()
-        group.insert_item(item)
-        placement = ui_component.placement
-        if placement:
-            if placement == 'floating':
-                add_new_group_floating(group, self.layout, ui_component.size)
-            else:
-                location = self.layout.get_widgets(placement[1])[0]
-                { 'left': add_new_group_left,
-                  'right': add_new_group_right,
-                  'above': add_new_group_above,
-                  'below': add_new_group_below }[placement[0]](location, group)
-        else:
-            add_new_group_floating(group)
-        item.show()
-        item.ui_component = ui_component
-        group.show()
+        window = Gtk.Window(Gtk.WindowType.UTILITY)
+        window.set_title(ui_component.title)
+        window.add(ui_component.open())
+        window.show()
+        window.ui_component = ui_component
 
 
 Gtk.AccelMap.add_filter('gaphor')
@@ -637,7 +612,7 @@ class Namespace(object):
 
         model = NamespaceModel(self.element_factory)
         view = NamespaceView(model, self.element_factory)
-        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window = Gtk.Scrolledwindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
