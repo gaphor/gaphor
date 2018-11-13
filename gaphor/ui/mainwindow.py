@@ -148,7 +148,7 @@ class MainWindow(object):
         self._current_diagram_tab = None
         #self.layout = None
         # Tree view:
-        self._tree_view = None 
+        self._tree_view = None
 
 
     def init(self, app=None):
@@ -175,7 +175,7 @@ class MainWindow(object):
             component_registry.register_utility(uicomp, IUIComponent, ep.name)
             if IActionProvider.providedBy(uicomp):
                 self.action_manager.register_action_provider(uicomp)
-                
+
 
     def shutdown(self):
         if self.window:
@@ -313,7 +313,6 @@ class MainWindow(object):
 
         self.window.add_accel_group(self.ui_manager.get_accel_group())
 
-        
         # Create a full featured window.
         vbox = Gtk.VBox()
         self.window.add(vbox)
@@ -322,7 +321,7 @@ class MainWindow(object):
         menubar = self.ui_manager.get_widget(self.menubar_path)
         if menubar:
             vbox.pack_start(menubar, False, True, 0)
-        
+
         toolbar = self.ui_manager.get_widget(self.toolbar_path)
         if toolbar:
             vbox.pack_start(toolbar, False, True, 0)
@@ -334,7 +333,7 @@ class MainWindow(object):
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
         view.show()
-        
+
         view.connect_after('event-after', self._on_view_event)
         view.connect('row-activated', self._on_view_row_activated)
         view.connect_after('cursor-changed', self._on_view_cursor_changed)
@@ -347,7 +346,7 @@ class MainWindow(object):
         paned.set_property('position', 160)
         paned.pack1(vbox)
         vbox.show()
-        
+
         notebook = Gtk.Notebook()
         notebook.set_scrollable(True)
         notebook.set_show_border(False)
@@ -355,14 +354,13 @@ class MainWindow(object):
         notebook.connect_after('switch-page', self._on_notebook_switch_page)
         notebook.connect_after('page-removed', self._on_notebook_page_removed)
 
-        
         paned.pack2(notebook)
         notebook.show()
         paned.show()
 
         self.notebook = notebook
         self._tree_view = view
-       
+
         toolbox = Toolbox()
         toolbox_widget = toolbox.construct()
         vbox.pack_start(toolbox_widget, False, True, 0)
@@ -516,7 +514,6 @@ class MainWindow(object):
         # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
         for diagram in self.element_factory.select(lambda e: e.isKindOf(UML.Diagram) and not (e.namespace and e.namespace.namespace)):
             self.show_diagram(diagram)
-    
 
     @component.adapter(FileManagerStateChanged)
     def _on_file_manager_state_changed(self, event):
@@ -617,7 +614,7 @@ class MainWindow(object):
         content = self.notebook.get_nth_page(page_num)
         tab = self.notebook_map.get(content)
         assert isinstance(tab, DiagramTab), str(tab)
-        
+
         self.ui_manager.insert_action_group(tab.action_group, -1)
         ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
         self._tab_ui_settings = tab.action_group, ui_id
@@ -633,7 +630,6 @@ class MainWindow(object):
         """
         self.properties.set('ui.window-size', (allocation.width, allocation.height))
 
-
     # Actions:
 
     @action(name='file-quit', stock_id='gtk-quit')
@@ -641,7 +637,6 @@ class MainWindow(object):
         # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and Gtk.main_quit()
         self.shutdown()
-
 
     @toggle_action(name='diagram-drawing-style', label='Hand drawn style', active=False)
     def hand_drawn_style(self, active):
@@ -662,11 +657,12 @@ class MainWindow(object):
         Create an item for a ui component. This method can be called from UIComponents.
         """
         for button in self._toolbox_widget.buttons:
-            
+
             action_name = button.action_name
             action = action_group.get_action(action_name)
             if action:
                 action.connect_proxy(button)
+
 
 Gtk.AccelMap.add_filter('gaphor')
 
@@ -753,7 +749,7 @@ class Namespace(object):
         scrolled_window.add(view)
         scrolled_window.show()
         view.show()
-        
+
         view.connect_after('event-after', self._on_view_event)
         view.connect('row-activated', self._on_view_row_activated)
         view.connect_after('cursor-changed', self._on_view_cursor_changed)
@@ -762,7 +758,6 @@ class Namespace(object):
         self.expand_root_nodes()
 
         return scrolled_window
-      
 
     @component.adapter(ModelFactoryEvent)
     def expand_root_nodes(self, event=None):
@@ -937,7 +932,7 @@ class Toolbox(object):
         </menubar>
       </ui>
     """
-    
+
     def __init__(self):
         self._toolbox = None
         self.action_group = build_action_group(self)
@@ -982,10 +977,9 @@ class Toolbox(object):
         Grab top level window events and select the appropriate tool based on the event.
         """
         if event.get_state() & Gdk.ModifierType.SHIFT_MASK or \
-	        (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
+                (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
             keyval = Gdk.keyval_name(event.keyval)
             self.set_active_tool(shortcut=keyval)
-
 
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None
@@ -1014,7 +1008,7 @@ class Toolbox(object):
             return
 
         for button in self._toolbox.buttons:
-            
+
             action_name = button.action_name
             action = action_group.get_action(action_name)
             if action:
@@ -1034,6 +1028,6 @@ class Toolbox(object):
                 return
 
         self.main_window.get_current_diagram_tab().toolbox.action_group.get_action(action_name).activate()
-            
+
 
 # vim:sw=4:et:ai
