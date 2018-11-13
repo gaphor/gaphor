@@ -8,6 +8,7 @@ from builtins import object
 from builtins import str
 from zope import component
 
+from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf

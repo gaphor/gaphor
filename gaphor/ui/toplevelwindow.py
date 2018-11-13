@@ -5,6 +5,7 @@ Basic stuff for toplevel windows.
 import os.path
 from builtins import object
 
+from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 import pkg_resources
 from zope.interface import implementer
