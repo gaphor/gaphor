@@ -9,6 +9,7 @@ from builtins import str
 from zope import component
 
 from gi.repository import GObject
+from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 import pkg_resources
@@ -26,7 +27,7 @@ from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange
 from gaphor.ui.interfaces import IDiagramTabChange
 from gaphor.ui.interfaces import IUIComponent
-#from gaphor.ui.layout import deserialize
+from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import NamespaceModel, NamespaceView
 from gaphor.ui.toolbox import Toolbox as _Toolbox
 
@@ -272,6 +273,8 @@ class MainWindow(object):
 
         return tab
 
+    def get_widgets(self, name):
+        return []
 
     def open(self):
 
@@ -309,13 +312,13 @@ class MainWindow(object):
             return comp.open()
 
         filename = pkg_resources.resource_filename('gaphor.ui', 'layout.xml')
-        self.layout = Gtk.Notebook()
+        self.layout = [] #Gtk.Notebook()
 
-        #with open(filename) as f:
-        #    deserialize(self.layout, vbox, f.read(), _factory)
+        with open(filename) as f:
+            deserialize(self.layout, vbox, f.read(), _factory)
         
-        self.layout.connect('page-removed', self._on_item_closed)
-        self.layout.connect('change-current-page', self._on_item_selected)
+        #self.layout.connect('item-closed', self._on_item_closed)
+        #self.layout.connect('item-selected', self._on_item_selected)
 
         vbox.show()
         # TODO: add statusbar
@@ -365,7 +368,7 @@ class MainWindow(object):
         Create a new tab on the notebook with window as its contents.
         Returns: The page number of the tab.
         """
-        diagrams = self.layout.get_widgets('diagrams')
+        diagrams = self.get_widgets('diagrams')
         if len(diagrams):
             group = diagrams[0]
             group.insert_item(item)
@@ -377,7 +380,7 @@ class MainWindow(object):
         """
         Force a specific tab (DiagramTab) to the foreground.
         """
-        for i in self.layout.get_widgets('diagram-tab'):
+        for i in self.get_widgets('diagram-tab'):
             if i.diagram_tab is tab:
                 g = i.get_parent()
                 g.set_current_item(g.item_num(i))
@@ -391,7 +394,7 @@ class MainWindow(object):
 
 
     def get_tabs(self):
-        tabs = [i.diagram_tab for i in self.layout.get_widgets('diagram-tab')]
+        tabs = [i.diagram_tab for i in self.get_widgets('diagram-tab')]
         return tabs
 
     # Signal callbacks:
@@ -612,7 +615,7 @@ class Namespace(object):
 
         model = NamespaceModel(self.element_factory)
         view = NamespaceView(model, self.element_factory)
-        scrolled_window = Gtk.Scrolledwindow()
+        scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
@@ -900,5 +903,29 @@ class Toolbox(object):
 
         self.main_window.get_current_diagram_tab().toolbox.action_group.get_action(action_name).activate()
             
+
+@implementer(IUIComponent) #, IActionProvider)
+class Diagrams(object):
+
+    title = _('Diagrams')
+    placement = ('left', 'diagrams')
+
+    component_registry = inject('component_registry')
+    main_window = inject('main_window')
+    properties = inject('properties')
+
+    def __init__(self):
+        pass
+        #self.action_group = build_action_group(self)
+        #self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
+
+    def open(self):
+        self.label = Gtk.Label("There will be diagrams")
+        return self.label
+
+    def close(self):
+        self.label.destroy()
+        self.label = None
+
 
 # vim:sw=4:et:ai

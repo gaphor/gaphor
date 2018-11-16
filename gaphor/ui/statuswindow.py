@@ -7,6 +7,7 @@ from builtins import object
 from past.utils import old_div
 from gi.repository import GObject
 from gi.repository import Pango
+from gi.repository import Gdk
 from gi.repository import Gtk
 
 from gaphor.misc.gidlethread import QueueEmpty
@@ -47,11 +48,11 @@ class StatusWindow(object):
         
         self.window.set_title(self.title)
         self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
-        self.set_transient_for(self.parent)
+        self.window.set_transient_for(self.parent)
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
-        self.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
+        self.window.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
         self.window.add(frame)
         
         self.progress_bar.set_size_request(400, -1)
