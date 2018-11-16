@@ -921,6 +921,7 @@ class Diagrams(object):
 
     def open(self):
         self.label = Gtk.Label("There will be diagrams")
+        self.label.show()
         return self.label
 
     def close(self):
