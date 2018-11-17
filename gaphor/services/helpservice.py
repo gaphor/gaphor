@@ -4,8 +4,9 @@ import os
 from builtins import object
 from logging import getLogger
 
-from gi.repository import Gtk
 import pkg_resources
+from gi.repository import GdkPixbuf
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor.application import Application
