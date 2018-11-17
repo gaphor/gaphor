@@ -71,7 +71,7 @@ def format_attribute(el, visibility=False, is_derived=False, type=False,
     if not (visibility or is_derived or type or multiplicity or default):
        visibility = is_derived = type = multiplicity = default = True
 
-    s = io.BytesIO()
+    s = io.StringIO()
 
     if visibility:
         s.write(vis_map[el.visibility])
