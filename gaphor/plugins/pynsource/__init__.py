@@ -91,7 +91,7 @@ class PyNSource(object):
 
         hbox = Gtk.HBox()
 
-        frame = Gtk.Frame('Files to reverse-engineer')
+        frame = Gtk.Frame.new('Files to reverse-engineer')
         frame.set_border_width(8)
         frame.set_size_request(500, 300)
         frame.show()

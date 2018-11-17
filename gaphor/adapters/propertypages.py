@@ -962,7 +962,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
             return None
 
         # TODO: use Gtk.Frame here
-        frame = Gtk.Frame('%s (: %s)' % (title, end.subject.type.name))
+        frame = Gtk.Frame.new('%s (: %s)' % (title, end.subject.type.name))
         vbox = Gtk.VBox()
         vbox.set_border_width(6)
         vbox.set_spacing(6)
@@ -1450,14 +1450,14 @@ class MessagePropertyPage(NamedItemPropertyPage):
             self._messages = CommunicationMessageModel(item)
             tree_view = create_tree_view(self._messages, (_('Message'),))
             tree_view.set_headers_visible(False)
-            frame = Gtk.Frame(label=_('Additional Messages'))
+            frame = Gtk.Frame.new(label=_('Additional Messages'))
             frame.add(tree_view)
             page.pack_start(frame, True, True, 0)
 
             self._inverted_messages = CommunicationMessageModel(item, inverted=True)
             tree_view = create_tree_view(self._inverted_messages, (_('Message'),))
             tree_view.set_headers_visible(False)
-            frame = Gtk.Frame(label=_('Inverted Messages'))
+            frame = Gtk.Frame.new(label=_('Inverted Messages'))
             frame.add(tree_view)
             page.pack_end(frame, True, True, 0)
         else:
