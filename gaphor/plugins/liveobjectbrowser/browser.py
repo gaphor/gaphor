@@ -69,8 +69,8 @@ class Browser(object):
 		self.make( path = path )
 
 	def delete_event(self, widget, event, data=None):
-	self.window.destroy()
-		#Gtk.main_quit()
+		self.window.destroy()
+		# Gtk.main_quit()
 		return False
 
 	def __init__(self, name, value):

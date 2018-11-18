@@ -5,6 +5,7 @@ Basic stuff for toplevel windows.
 import os.path
 from builtins import object
 
+from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 import pkg_resources
 from zope.interface import implementer
@@ -55,13 +56,13 @@ class ToplevelWindow(object):
 
             menubar = self.ui_manager.get_widget(self.menubar_path)
             if menubar:
-                vbox.pack_start(menubar, False, True, 0)
+                vbox.pack_start(child=menubar, expand=False, fill=True, padding=0)
             
             toolbar = self.ui_manager.get_widget(self.toolbar_path)
             if toolbar:
-                vbox.pack_start(toolbar, False, True, 0)
+                vbox.pack_start(child=toolbar, expand=False, fill=True, padding=0)
 
-            vbox.pack_end(self.ui_component(, True, True, 0), expand=self.resizable)
+            vbox.pack_end(child=self.ui_component, expand=self.resizable, fill=True, padding=0)
             vbox.show()
             # TODO: add statusbar
         else:
