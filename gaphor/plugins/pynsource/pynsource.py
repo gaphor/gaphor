@@ -70,6 +70,7 @@ from __future__ import print_function
 from builtins import str
 from builtins import range
 from builtins import object
+from functools import cmp_to_key
 import os
 import pprint
 import token
@@ -717,7 +718,7 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
                         return 0
                     else:
                         return 1
-            classnames.sort(cmpfunc)
+            classnames.sort(key=cmp_to_key(cmpfunc))
         for self.aclass in classnames:
             self.classentry = self.classlist[self.aclass]
 
