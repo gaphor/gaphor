@@ -83,7 +83,10 @@ class collection(object):
     __repr__ = __str__
 
     def __bool__(self):
-        return self.items!=[]
+        return self.items != []
+
+    # Maintains Python2 Compatibility
+    __nonzero__ = __bool__
 
     def append(self, value):
         if isinstance(value, self.type):
