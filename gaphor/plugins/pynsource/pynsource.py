@@ -225,7 +225,7 @@ class HandleClasses(AndyBasicParseEngine):
         self.inbetweenClassAndFirstDef = 0
 
     def On_deindent(self):
-        if self.indentlevel <= self.currclassindentlevel:
+        if self.currclassindentlevel and self.indentlevel <= self.currclassindentlevel:
 ##            print 'popping class', self.currclass, 'from', self.currclasslist
             self.PopCurrClass()
 ##        print
