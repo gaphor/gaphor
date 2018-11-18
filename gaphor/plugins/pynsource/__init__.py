@@ -100,7 +100,7 @@ class PyNSource(object):
         treeview = Gtk.TreeView(filelist)
         treeview.set_property('headers-visible', False)
         selection = treeview.get_selection()
-        selection.set_mode('single')
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
         treeview.set_size_request(200, -1)
         treeview.connect_after('cursor_changed', self.on_view_cursor_changed)
 

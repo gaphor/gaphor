@@ -57,7 +57,7 @@ class CheckModelWindow(object):
         treeview = Gtk.TreeView(model)
         treeview.connect('row-activated', self.on_row_activated)
         selection = treeview.get_selection()
-        selection.set_mode('single')
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
         treeview.set_size_request(200, -1)
 
         scrolled_window = Gtk.ScrolledWindow()
