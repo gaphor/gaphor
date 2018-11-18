@@ -17,7 +17,7 @@ from builtins import object
 from builtins import next
 from builtins import range
 import sys
-from gi.repository import GObject
+from gi.repository import GLib, GObject
 import time
 import traceback
 
@@ -60,11 +60,11 @@ class GIdleThread(object):
         self._idle_id = 0
         self._exc_info = (None, None, None)
 
-    def start(self, priority=GObject.PRIORITY_LOW):
+    def start(self, priority=GLib.PRIORITY_LOW):
         """Start the generator. Default priority is low, so screen updates
         will be allowed to happen.
         """
-        idle_id = GObject.idle_add(self.__generator_executer,
+        idle_id = GLib.idle_add(self.__generator_executer,
                                    priority=priority)
         self._idle_id = idle_id
         return idle_id

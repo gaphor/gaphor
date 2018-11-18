@@ -100,12 +100,12 @@ class FileManager(object):
         self.action_group = build_action_group(self)
 
         for name, label in (('file-recent-files', '_Recent files'),):
-            action = Gtk.Action(name, label, None, None)
+            action = Gtk.Action.new(name, label, None, None)
             action.set_property('hide-if-empty', False)
             self.action_group.add_action(action)
 
         for i in range(0, (MAX_RECENT-1)):
-            action = Gtk.Action('file-recent-%d' % i, None, None, None)
+            action = Gtk.Action.new('file-recent-%d' % i, None, None, None)
             action.set_property('visible', False)
             self.action_group.add_action(action)
             action.connect('activate', self.load_recent, i)

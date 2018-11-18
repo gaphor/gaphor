@@ -180,7 +180,7 @@ class MainWindow(object):
                             ('tools', '_Tools'),
                             ('window', '_Window'),
                             ('help', '_Help')):
-            a = Gtk.Action(name, label, None, None)
+            a = Gtk.Action.new(name, label, None, None)
             a.set_property('hide-if-empty', False)
             self.action_group.add_action(a)
         self._tab_ui_settings = None
@@ -280,7 +280,7 @@ class MainWindow(object):
 
         load_accel_map()
 
-        self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
+        self.window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
         self.window.set_title(self.title)
         self.window.set_size_request(*self.size)
         self.window.set_resizable(self.resizable)
@@ -920,7 +920,7 @@ class Diagrams(object):
         #self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
 
     def open(self):
-        self.label = Gtk.Label("There will be diagrams")
+        self.label = Gtk.Label(label="There will be diagrams")
         self.label.show()
         return self.label
 
