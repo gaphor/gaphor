@@ -10,6 +10,7 @@ import operator
 from builtins import map
 from builtins import str
 
+# PyGTKCompat used for Gtk.GenericTreeModel Support
 from gi import pygtkcompat
 pygtkcompat.enable()
 pygtkcompat.enable_gtk('3.0')
@@ -84,7 +85,7 @@ class NamespaceModel(Gtk.GenericTreeModel):
 
     def __init__(self, factory):
         # Init parent:
-        GObject.GObject.__init__(self)
+        Gtk.GenericTreeModel.__init__(self)
 
         self.stamp = 0
 
@@ -435,16 +436,14 @@ class NamespaceModel(Gtk.GenericTreeModel):
         """
         return node.namespace
 
-
     # TreeDragDest
 
     def row_drop_possible(self, dest_path, selection_data):
         print('row_drop_possible', dest_path, selection_data)
         return True
 
-
     def drag_data_received(self, dest, selection_data):
-        print('drag_data_received', dest_path, selection_data)
+        print('drag_data_received', dest, selection_data)
 
 
 class NamespaceView(Gtk.TreeView):
@@ -475,7 +474,7 @@ class NamespaceView(Gtk.TreeView):
         self.set_rules_hint(True)
         selection = self.get_selection()
         selection.set_mode(Gtk.SelectionMode.BROWSE)
-        column = Gtk.TreeViewColumn ('')
+        column = Gtk.TreeViewColumn.new()
         # First cell in the column is for an image...
         cell = Gtk.CellRendererPixbuf ()
         column.pack_start (cell, 0)
@@ -505,7 +504,6 @@ class NamespaceView(Gtk.TreeView):
         self.connect('drag-drop', NamespaceView.on_drag_drop)
         self.connect('drag-data-received', NamespaceView.on_drag_data_received)
 
-
     def get_selected_element(self):
         selection = self.get_selection()
         model, iter = selection.get_selected()
@@ -513,10 +511,8 @@ class NamespaceView(Gtk.TreeView):
             return
         return model.get_value(iter, 0)
 
-
     def expand_root_nodes(self):
         self.expand_row(path=Gtk.TreePath.new_first(), open_all=False)
-
 
     def _set_pixbuf(self, column, cell, model, iter, data):
         value = model.get_value(iter, 0)
