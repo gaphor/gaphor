@@ -11,7 +11,7 @@ from builtins import map
 from builtins import str
 
 # PyGTKCompat used for Gtk.GenericTreeModel Support
-from gi import pygtkcompat
+import pygtkcompat
 pygtkcompat.enable()
 pygtkcompat.enable_gtk('3.0')
 
