@@ -1,8 +1,8 @@
-# Gaphor on MacOS
+# Gaphor on macOS
 
 Running Gaphor on MacOS is a bit more involved.
 
-First mage sure Homebrew is installed.
+First make sure [Homebrew](https://brew.sh) is installed.
 
 Then from the command line install the following:
 
@@ -27,6 +27,7 @@ Now make sure you run Gaphor by using Python 3.
 
 
 * Install Gaphas, the canvas widget:
+
 
     $ python3 setup.py develop
 
