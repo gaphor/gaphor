@@ -16,6 +16,7 @@ from __future__ import print_function
 from builtins import object
 from builtins import next
 from builtins import range
+import types
 import sys
 from gi.repository import GLib, GObject
 import time
@@ -54,7 +55,7 @@ class GIdleThread(object):
     """
 
     def __init__(self, generator, queue=None):
-        assert hasattr(generator, 'next'), 'The generator should be an iterator'
+        assert isinstance(generator, types.GeneratorType), 'The generator should be an iterator'
         self._generator = generator
         self._queue = queue
         self._idle_id = 0

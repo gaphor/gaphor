@@ -5,7 +5,7 @@ from __future__ import division
 
 from builtins import object
 from past.utils import old_div
-from gi.repository import GObject
+from gi.repository import GLib
 from gi.repository import Pango
 from gi.repository import Gdk
 from gi.repository import Gtk
@@ -44,7 +44,7 @@ class StatusWindow(object):
         label = Gtk.Label(label=self.message)
         
         self.progress_bar = Gtk.ProgressBar()
-        self.window = Gtk.Window(Gtk.WindowType.TOPLEVEL)
+        self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
         
         self.window.set_title(self.title)
         self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
@@ -74,10 +74,10 @@ class StatusWindow(object):
         self.window.show_all()
 
         if self.queue:
-            self.idle_id = GObject.idle_add(progress_idle_handler,\
+            self.idle_id = GLib.idle_add(progress_idle_handler,\
                                             self.progress_bar,\
                                             self.queue,\
-                                            priority=GObject.PRIORITY_LOW)
+                                            priority=GLib.PRIORITY_LOW)
             self.window.connect('destroy', remove_idle_handler, self.idle_id)
                                             
     def destroy(self):
@@ -105,4 +105,4 @@ def remove_idle_handler(window, idle_id):
     """This removes the supplied gobject idle id.  This handle is required
     by StatusWindow when it is destroyed."""
     
-    GObject.source_remove(idle_id)
+    GLib.source_remove(idle_id)
