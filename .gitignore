@@ -8,3 +8,10 @@ html
 *.pyo
 *.swp
 *.egg
+.eggs/
+gaphor.egg-info/
+tmp.gaphor
+
+# Virtual env stuff
+.gaphor/
+venv
