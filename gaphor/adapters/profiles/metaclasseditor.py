@@ -54,7 +54,7 @@ class MetaclassNameEditor(object):
         for c in self.CLASSES:
             model.append([c])
 
-        cb = Gtk.ComboBoxEntry(model, 0)
+        cb = Gtk.ComboBox.new_with_model_and_entry(model)
 
         completion = Gtk.EntryCompletion()
         completion.set_model(model)
@@ -65,7 +65,7 @@ class MetaclassNameEditor(object):
         entry = cb.get_child()
         entry.set_text(subject and subject.name or '')
         hbox.pack_start(cb, True, True, 0)
-        page.set_data('default', entry)
+        page.default = entry
 
         # monitor subject.name attribute
         changed_id = entry.connect('changed', self._on_name_change)

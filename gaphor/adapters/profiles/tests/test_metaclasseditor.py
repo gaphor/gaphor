@@ -14,7 +14,7 @@ class MetaclassEditorTest(TestCase):
         page = editor.construct()
         self.assertTrue(page)
         combo = page.get_children()[0].get_children()[1]
-        self.assertSame(Gtk.ComboBoxEntry, type(combo))
+        self.assertSame(Gtk.ComboBox, type(combo))
 
         self.assertEquals("Class", combo.get_child().get_text())
 
