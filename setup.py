@@ -92,7 +92,6 @@ It uses the GTK+ environment for user interaction.
 
     zip_safe = False,
 
-    #test_suite = 'nose.collector',
 
     entry_points = {
         'console_scripts': [
@@ -146,11 +145,13 @@ It uses the GTK+ environment for user interaction.
 
     setup_requires = [
         #'Sphinx >= 1.0.6',
-        'nose >= 0.10.4',
+        'pytest-runner',
         'setuptools-git >= 0.3.4'
     ],
 
-    test_suite = 'nose.collector',
+    tests_require = [
+        'pytest'
+    ],
 
     options = dict(
         build_pot = dict(
