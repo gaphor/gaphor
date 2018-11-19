@@ -1,6 +1,7 @@
 from __future__ import division
 
 from past.utils import old_div
+from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -69,7 +70,7 @@ class Wrapbox(Gtk.Table):
         #print 'size_allocate', rows, cols
         if not self.resize_idle_id and (rows != self.rows or cols != self.cols):
             #print 'size_allocate', 'setting idle handler'
-            self.resize_idle_id = GObject.idle_add(self._idle_handler)
+            self.resize_idle_id = GLib.idle_add(self._idle_handler)
         self.rows = rows
         self.cols = cols
 

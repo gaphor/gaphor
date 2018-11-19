@@ -51,7 +51,8 @@ _default_filter_list = (
 # TODO: update tree sorter:
 # Diagram before Class & Package.
 # Property before Operation
-_tree_sorter = operator.attrgetter('name')
+_name_getter = operator.attrgetter('name')
+_tree_sorter = lambda e: _name_getter(e) or ''
 
 log = logging.getLogger(__name__)
 

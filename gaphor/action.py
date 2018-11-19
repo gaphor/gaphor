@@ -145,7 +145,7 @@ def build_action_group(obj, name=None):
     Say 0 baz
     """
     from gi.repository import Gtk
-    group = Gtk.ActionGroup(name or obj)
+    group = Gtk.ActionGroup.new(name or str(obj))
     objtype = type(obj)
 
     for attrname in dir(obj):
@@ -174,7 +174,7 @@ def build_action_group(obj, name=None):
             assert len(act.names) == len(act.stock_ids)
             assert len(act.names) == len(act.accels)
             for i, n in enumerate(act.names):
-                gtkact = Gtk.RadioAction(n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i)
+                gtkact = Gtk.RadioAction.new(n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i)
 
                 if not actgroup:
                     actgroup = gtkact
@@ -186,13 +186,13 @@ def build_action_group(obj, name=None):
             actgroup.set_current_value(act.active)
 
         elif isinstance(act, toggle_action):
-            gtkact = Gtk.ToggleAction(act.name, act.label, act.tooltip, act.stock_id)
+            gtkact = Gtk.ToggleAction.new(act.name, act.label, act.tooltip, act.stock_id)
             gtkact.set_property('active', act.active)
             gtkact.connect('activate', _toggle_action_activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
 
         elif isinstance(act, action):
-            gtkact = Gtk.Action(act.name, act.label, act.tooltip, act.stock_id)
+            gtkact = Gtk.Action.new(act.name, act.label, act.tooltip, act.stock_id)
             try:
                 activate = act.opening and _action_opening or _action_activate
             except AttributeError:
