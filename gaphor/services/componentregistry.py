@@ -10,7 +10,7 @@ from builtins import map
 from builtins import object
 from zope import component
 
-from zope.component import registry
+from zope.interface import registry
 from zope.interface import implementer
 
 from gaphor.interfaces import IService, IEventFilter
@@ -148,7 +148,7 @@ class ZopeComponentRegistry(object):
         Unregister a previously registered handler.
         """
         self._components.unregisterHandler(factory, required)
- 
+
     def _filter(self, objects):
         filtered = list(objects)
         for o in objects:
