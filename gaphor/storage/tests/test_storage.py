@@ -83,7 +83,7 @@ class StorageTestCase(TestCase):
         assert '<Diagram ' in out.data
         assert '<Comment ' in out.data
         assert '<canvas>' in out.data
-        assert ' type="CommentItem" ' in out.data, out.data
+        assert ' type="CommentItem"' in out.data, out.data
 
 
     def test_load_uml(self):
@@ -289,6 +289,7 @@ class StorageTestCase(TestCase):
         orig = expr.sub('%VER%', orig)
         copy = expr.sub('%VER%', copy)
 
+        self.maxDiff = None
         self.assertEqual(copy, orig, 'Saved model does not match copy')
 
 

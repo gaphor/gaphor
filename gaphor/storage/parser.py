@@ -57,7 +57,10 @@ class base(object):
         self.references = { }
 
     def __getattr__(self, key):
-        return self[key]
+        try:
+            return self.__getitem__(key)
+        except KeyError as e:
+            raise AttributeError(e)
 
     def __getitem__(self, key):
         try:
@@ -289,7 +292,7 @@ def parse_generator(filename, loader):
 
 
 class ProgressGenerator(object):
-    """A generator that yields the progress of taking from a file input object 
+    """A generator that yields the progress of taking from a file input object
     and feeding it into an output object.  The supplied file object is neither
     opened not closed by this generator.  The file object is assumed to
     already be opened for reading and that it will be closed elsewhere."""

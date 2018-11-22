@@ -18,7 +18,7 @@
 <ref refid="DCE:658E43CC-3A1D-11DC-8B61-000D93868322"/>
 </package>
 <canvas>
-<item type="Line" id="DCE:6719E9C4-3A1D-11DC-8B61-000D93868322">
+<item id="DCE:6719E9C4-3A1D-11DC-8B61-000D93868322" type="Line">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 336.0, 113.0)</val>
 </matrix>
@@ -32,7 +32,7 @@
 <val>[(0.0, 0.0), (93.0, -2.0), (87.0, 83.0)]</val>
 </points>
 </item>
-<item type="Box" id="DCE:680E2142-3A1D-11DC-8B61-000D93868322">
+<item id="DCE:680E2142-3A1D-11DC-8B61-000D93868322" type="Box">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 215.0, 121.0)</val>
 </matrix>
@@ -43,7 +43,7 @@
 <val>74.0</val>
 </height>
 </item>
-<item type="Ellipse" id="DCE:68ECCFB2-3A1D-11DC-8B61-000D93868322">
+<item id="DCE:68ECCFB2-3A1D-11DC-8B61-000D93868322" type="Ellipse">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 332.0, 137.0)</val>
 </matrix>

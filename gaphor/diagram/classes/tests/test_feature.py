@@ -29,7 +29,7 @@ class FeatureTestCase(TestCase):
         self.assertTrue(isinstance(item, FeatureItem))
 
         size = item.get_size()
-        self.assertNotEquals((0, 0), size)
+        self.assertNotEqual((0, 0), size)
 
         attr.defaultValue = 'myDefault'
 
