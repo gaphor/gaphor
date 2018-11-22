@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.ui.namespace import NamespaceModel
 from gaphor.diagram import items
 
-from gaphor.tests import TestCase 
+from gaphor.tests import TestCase
 
 class NodesGroupTestCase(TestCase):
     """
@@ -49,10 +49,10 @@ class NodeComponentGroupTestCase(TestCase):
 
         self.group(n, c)
 
-        self.assertEquals(1, len(n.subject.ownedAttribute))
-        self.assertEquals(1, len(n.subject.ownedConnector))
-        self.assertEquals(1, len(c.subject.ownedAttribute))
-        self.assertEquals(2, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEqual(1, len(n.subject.ownedAttribute))
+        self.assertEqual(1, len(n.subject.ownedConnector))
+        self.assertEqual(1, len(c.subject.ownedAttribute))
+        self.assertEqual(2, len(self.kindof(UML.ConnectorEnd)))
 
         a1 = n.subject.ownedAttribute[0]
         a2 = c.subject.ownedAttribute[0]
@@ -74,11 +74,11 @@ class NodeComponentGroupTestCase(TestCase):
         query = self.group(n, c)
         query = self.ungroup(n, c)
 
-        self.assertEquals(0, len(n.subject.ownedAttribute))
-        self.assertEquals(0, len(c.subject.ownedAttribute))
-        self.assertEquals(0, len(self.kindof(UML.Property)))
-        self.assertEquals(0, len(self.kindof(UML.Connector)))
-        self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEqual(0, len(n.subject.ownedAttribute))
+        self.assertEqual(0, len(c.subject.ownedAttribute))
+        self.assertEqual(0, len(self.kindof(UML.Property)))
+        self.assertEqual(0, len(self.kindof(UML.Connector)))
+        self.assertEqual(0, len(self.kindof(UML.ConnectorEnd)))
 
 
 class NodeArtifactGroupTestCase(TestCase):
@@ -91,7 +91,7 @@ class NodeArtifactGroupTestCase(TestCase):
 
         self.group(n, a)
 
-        self.assertEquals(1, len(n.subject.deployment))
+        self.assertEqual(1, len(n.subject.deployment))
         self.assertTrue(n.subject.deployment[0].deployedArtifact[0] is a.subject)
 
 
@@ -104,8 +104,8 @@ class NodeArtifactGroupTestCase(TestCase):
         query = self.group(n, a)
         query = self.ungroup(n, a)
 
-        self.assertEquals(0, len(n.subject.deployment))
-        self.assertEquals(0, len(self.kindof(UML.Deployment)))
+        self.assertEqual(0, len(n.subject.deployment))
+        self.assertEqual(0, len(self.kindof(UML.Deployment)))
 
 
 
@@ -119,12 +119,12 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         uc2 = self.create(items.UseCaseItem, UML.UseCase)
 
         self.group(s, uc1)
-        self.assertEquals(1, len(uc1.subject.subject))
+        self.assertEqual(1, len(uc1.subject.subject))
         self.group(s, uc2)
-        self.assertEquals(1, len(uc2.subject.subject))
+        self.assertEqual(1, len(uc2.subject.subject))
 
         # Classifier.useCase is not navigable to UseCase
-        #self.assertEquals(2, len(s.subject.useCase))
+        #self.assertEqual(2, len(s.subject.useCase))
 
 
     def test_grouping_with_namespace(self):
@@ -140,7 +140,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         c.ownedAttribute = attribute
 
         self.group(s, uc)
-        self.assertEquals(1, len(uc.subject.subject))
+        self.assertEqual(1, len(uc.subject.subject))
         self.assertTrue(s.subject.namespace is not uc.subject)
 
 
@@ -155,14 +155,14 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.group(s, uc2)
 
         self.ungroup(s, uc1)
-        self.assertEquals(0, len(uc1.subject.subject))
+        self.assertEqual(0, len(uc1.subject.subject))
         # Classifier.useCase is not navigable to UseCase
-        #self.assertEquals(1, len(s.subject.useCase))
+        #self.assertEqual(1, len(s.subject.useCase))
 
         self.ungroup(s, uc2)
-        self.assertEquals(0, len(uc2.subject.subject))
+        self.assertEqual(0, len(uc2.subject.subject))
         # Classifier.useCase is not navigable to UseCase
-        #self.assertEquals(0, len(s.subject.useCase))
+        #self.assertEqual(0, len(s.subject.useCase))
 
 
 
@@ -205,9 +205,9 @@ class PartitionGroupTestCase(TestCase):
         self.group(p2, a1)
 
         self.assertTrue(self.can_group(p2, a1))
-        self.assertEquals(1, len(p2.subject.node))
+        self.assertEqual(1, len(p2.subject.node))
         self.group(p2, a2)
-        self.assertEquals(2, len(p2.subject.node))
+        self.assertEqual(2, len(p2.subject.node))
 
 
     def test_subpartition_grouping(self):
@@ -241,14 +241,14 @@ class PartitionGroupTestCase(TestCase):
         self.group(p2, a2)
 
         self.ungroup(p2, a1)
-        self.assertEquals(1, len(p2.subject.node))
+        self.assertEqual(1, len(p2.subject.node))
         self.ungroup(p2, a2)
-        self.assertEquals(0, len(p2.subject.node))
+        self.assertEqual(0, len(p2.subject.node))
 
         self.ungroup(p1, p2)
         self.assertTrue(p1.subject is None, p1.subject)
         self.assertTrue(p2.subject is None, p2.subject)
-        self.assertEquals(0, len(self.kindof(UML.ActivityPartition)))
+        self.assertEqual(0, len(self.kindof(UML.ActivityPartition)))
 
 
     def test_ungrouping_with_actions(self):
@@ -271,9 +271,9 @@ class PartitionGroupTestCase(TestCase):
 
         self.ungroup(p1, p2)
 
-        self.assertEquals(0, len(partition.node))
-        self.assertEquals(0, len(p2.canvas.get_children(p2)))
-        self.assertEquals(0, len(partition.node))
+        self.assertEqual(0, len(partition.node))
+        self.assertEqual(0, len(p2.canvas.get_children(p2)))
+        self.assertEqual(0, len(partition.node))
 
 
     def test_nested_subpartition_ungrouping(self):
@@ -296,7 +296,7 @@ class PartitionGroupTestCase(TestCase):
         self.assertTrue(p2.subject is None, p2.subject)
         self.assertTrue(p3.subject is not None, p3.subject)
         self.assertTrue(p4.subject is not None, p4.subject)
-        self.assertEquals(2, len(self.kindof(UML.ActivityPartition)))
+        self.assertEqual(2, len(self.kindof(UML.ActivityPartition)))
 
 
     def test_nested_subpartition_regrouping(self):
@@ -319,10 +319,10 @@ class PartitionGroupTestCase(TestCase):
         self.assertTrue(p2.subject is None, p2.subject)
         self.assertTrue(p3.subject is not None, p3.subject)
         self.assertTrue(p4.subject is not None, p4.subject)
-        self.assertEquals(2, len(self.kindof(UML.ActivityPartition)))
+        self.assertEqual(2, len(self.kindof(UML.ActivityPartition)))
 
         self.group(p1, p2)
-        self.assertEquals(3, len(self.kindof(UML.ActivityPartition)))
+        self.assertEqual(3, len(self.kindof(UML.ActivityPartition)))
         self.assertTrue(p2.subject is not None, p2.subject)
         self.assertTrue(p3.subject is not None, p3.subject)
         self.assertTrue(p4.subject is not None, p4.subject)

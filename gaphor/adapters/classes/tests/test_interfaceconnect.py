@@ -46,7 +46,7 @@ class DependencyTestCase(TestCase):
         self.connect(dep, dep.head, iface, iface.ports()[0])
         self.assertTrue(dep._solid)
         # at the end, interface folded notation shall be `required' one
-        self.assertEquals(iface.folded, iface.FOLDED_REQUIRED)
+        self.assertEqual(iface.folded, iface.FOLDED_REQUIRED)
 
 
     def test_folded_interface_disconnection(self):
@@ -63,7 +63,7 @@ class DependencyTestCase(TestCase):
         self.disconnect(dep, dep.head)
         self.assertTrue(not dep._solid)
         # after disconnection, interface folded notation shall be `provided' one
-        self.assertEquals(iface.folded, iface.FOLDED_PROVIDED)
+        self.assertEqual(iface.folded, iface.FOLDED_PROVIDED)
 
 
     def test_unfolded_interface_disconnection(self):
@@ -79,7 +79,7 @@ class DependencyTestCase(TestCase):
         self.assertTrue(not dep._solid)
         # after disconnection, interface folded property shall be
         # `FOLDED_NONE'
-        self.assertEquals(iface.folded, iface.FOLDED_NONE)
+        self.assertEqual(iface.folded, iface.FOLDED_NONE)
 
 
 LINES = (items.ImplementationItem,

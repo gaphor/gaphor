@@ -53,16 +53,16 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # If one side is connected a "lost" message is created
         self.assertTrue(msg.subject is not None)
-        self.assertEquals(msg.subject.messageKind, 'lost')
+        self.assertEqual(msg.subject.messageKind, 'lost')
 
         messages = self.kindof(UML.Message)
         occurences = self.kindof(UML.MessageOccurrenceSpecification)
 
-        self.assertEquals(1, len(messages))
-        self.assertEquals(1, len(occurences))
+        self.assertEqual(1, len(messages))
+        self.assertEqual(1, len(occurences))
         self.assertTrue(messages[0] is msg.subject)
         self.assertTrue(occurences[0] is msg.subject.sendEvent)
-        
+
 
     def test_found_message_connection(self):
         """Test found message connection
@@ -74,16 +74,16 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # If one side is connected a "found" message is created
         self.assertTrue(msg.subject is not None)
-        self.assertEquals(msg.subject.messageKind, 'found')
+        self.assertEqual(msg.subject.messageKind, 'found')
 
         messages = self.kindof(UML.Message)
         occurences = self.kindof(UML.MessageOccurrenceSpecification)
 
-        self.assertEquals(1, len(messages))
-        self.assertEquals(1, len(occurences))
+        self.assertEqual(1, len(messages))
+        self.assertEqual(1, len(occurences))
         self.assertTrue(messages[0] is msg.subject)
         self.assertTrue(occurences[0] is msg.subject.receiveEvent)
-        
+
 
     def test_complete_message_connection(self):
         """Test complete message connection
@@ -97,13 +97,13 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # two sides are connected - "complete" message is created
         self.assertTrue(msg.subject is not None)
-        self.assertEquals(msg.subject.messageKind, 'complete')
+        self.assertEqual(msg.subject.messageKind, 'complete')
 
         messages = self.kindof(UML.Message)
         occurences = self.kindof(UML.MessageOccurrenceSpecification)
 
-        self.assertEquals(1, len(messages))
-        self.assertEquals(2, len(occurences))
+        self.assertEqual(1, len(messages))
+        self.assertEqual(2, len(occurences))
         self.assertTrue(messages[0] is msg.subject)
         self.assertTrue(msg.subject.sendEvent in occurences, '%s' % occurences)
         self.assertTrue(msg.subject.receiveEvent in occurences, '%s' % occurences)
@@ -126,7 +126,7 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.connect(msg, msg.tail, ll2, ll2.lifetime.port)
 
         self.assertTrue(msg.subject is not None)
-        self.assertEquals(msg.subject.messageKind, 'complete')
+        self.assertEqual(msg.subject.messageKind, 'complete')
 
 
     def test_disconnection(self):
@@ -159,12 +159,12 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.connect(msg, msg.head, ll)
         self.assertFalse(ll.lifetime.visible)
         self.assertFalse(ll.lifetime.connectable)
-        self.assertEquals(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
+        self.assertEqual(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
 
         # ... and disconnection
         self.disconnect(msg, msg.head)
         self.assertTrue(ll.lifetime.connectable)
-        self.assertEquals(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
+        self.assertEqual(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
 
 
     def test_lifetime_connectivity_on_lifetime(self):
@@ -179,13 +179,13 @@ class BasicMessageConnectionsTestCase(TestCase):
         # visibility and connectivity should unchange
         self.connect(msg, msg.head, ll, ll.lifetime.port)
         self.assertTrue(ll.lifetime.connectable)
-        self.assertEquals(ll.lifetime.MIN_LENGTH_VISIBLE, ll.lifetime.min_length)
+        self.assertEqual(ll.lifetime.MIN_LENGTH_VISIBLE, ll.lifetime.min_length)
 
         # ... and disconnection
         self.disconnect(msg, msg.head)
         self.assertTrue(ll.lifetime.connectable)
         self.assertTrue(ll.lifetime.visible)
-        self.assertEquals(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
+        self.assertEqual(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
 
 
 
@@ -238,7 +238,7 @@ class DiagramModeMessageConnectionTestCase(TestCase):
 
         self.connect(msg, msg.head, ll1)
         self.connect(msg, msg.tail, ll2)
-        
+
         factory = self.element_factory
         subject = msg.subject
 
@@ -260,25 +260,25 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         occurences = set(self.kindof(UML.MessageOccurrenceSpecification))
 
         # verify integrity of messages
-        self.assertEquals(5, len(messages))
-        self.assertEquals(10, len(occurences))
+        self.assertEqual(5, len(messages))
+        self.assertEqual(10, len(occurences))
         for m in messages:
             self.assertTrue(m.sendEvent in occurences)
             self.assertTrue(m.receiveEvent in occurences)
 
         # lost/received messages
         self.disconnect(msg, msg.head)
-        self.assertEquals(5, len(messages))
+        self.assertEqual(5, len(messages))
 
         # verify integrity of messages
-        self.assertEquals(10, len(occurences))
+        self.assertEqual(10, len(occurences))
         for m in messages:
             self.assertTrue(m.sendEvent is None or m.sendEvent in occurences)
             self.assertTrue(m.receiveEvent is None or m.receiveEvent in occurences)
 
         # no message after full disconnection
         self.disconnect(msg, msg.tail)
-        self.assertEquals(0, len(self.kindof(UML.Message)))
+        self.assertEqual(0, len(self.kindof(UML.Message)))
 
 
 # vim:sw=4:et:ai

@@ -16,10 +16,10 @@ class MetaclassEditorTest(TestCase):
         combo = page.get_children()[0].get_children()[1]
         self.assertSame(Gtk.ComboBox, type(combo))
 
-        self.assertEquals("Class", combo.get_child().get_text())
+        self.assertEqual("Class", combo.get_child().get_text())
 
         ci.subject.name = 'Blah'
-        self.assertEquals('Blah', combo.get_child().get_text())
+        self.assertEqual('Blah', combo.get_child().get_text())
 
 
 # vim:sw=4:et:ai

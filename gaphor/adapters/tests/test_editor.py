@@ -36,12 +36,12 @@ class EditorTestCase(TestCase):
         pos = assoc.head_end._name_bounds[:2]
         self.assertTrue(adapter.is_editable(*pos))
         self.assertTrue(adapter._edit is assoc.head_end)
-        
+
         pos = assoc.tail_end._name_bounds[:2]
         self.assertTrue(adapter.is_editable(*pos))
         self.assertTrue(adapter._edit is assoc.tail_end)
 
-        
+
     def test_objectnode_editor(self):
         node = self.create(items.ObjectNodeItem, UML.ObjectNode)
         self.diagram.canvas.update_now()
@@ -84,7 +84,7 @@ class EditorTestCase(TestCase):
         self.assertEqual('Class1', edit.get_text())
 
         # The attribute:
-        y = klass._header_size[1] + klass.style.compartment_padding[0] + 3 
+        y = klass._header_size[1] + klass.style.compartment_padding[0] + 3
         self.assertEqual(True, edit.is_editable(4, y))
         self.assertEqual(attr, edit._edit.subject)
         self.assertEqual('+ blah', edit.get_text())
@@ -99,7 +99,7 @@ class EditorTestCase(TestCase):
     def test_class_attribute_editor(self):
         klass = self.create(items.ClassItem, UML.Class)
         klass.subject.name = 'Class1'
-        
+
         editor = AttributesPage(klass)
         page = editor.construct()
         tree_view = page.get_children()[1]
@@ -108,22 +108,22 @@ class EditorTestCase(TestCase):
         attr = self.element_factory.create(UML.Property)
         attr.name = "blah"
         klass.subject.ownedAttribute = attr
-        
+
         self.assertSame(attr, tree_view.get_model()[0][-1])
-        self.assertEquals("+ blah", tree_view.get_model()[0][0])
-        
+        self.assertEqual("+ blah", tree_view.get_model()[0][0])
+
         attr.name = "foo"
-        self.assertEquals("+ foo", tree_view.get_model()[0][0])
+        self.assertEqual("+ foo", tree_view.get_model()[0][0])
         attr.typeValue = 'int'
-        self.assertEquals("+ foo: int", tree_view.get_model()[0][0])
+        self.assertEqual("+ foo: int", tree_view.get_model()[0][0])
         attr.isDerived = True
-        self.assertEquals("+ /foo: int", tree_view.get_model()[0][0])
+        self.assertEqual("+ /foo: int", tree_view.get_model()[0][0])
         page.destroy()
 
     def test_class_operation_editor(self):
         klass = self.create(items.ClassItem, UML.Class)
         klass.subject.name = 'Class1'
-        
+
         editor = OperationsPage(klass)
         page = editor.construct()
         tree_view = page.get_children()[1]
@@ -134,11 +134,11 @@ class EditorTestCase(TestCase):
         klass.subject.ownedOperation = oper
 
         self.assertSame(oper, tree_view.get_model()[0][-1])
-        self.assertEquals("+ o()", tree_view.get_model()[0][0])
+        self.assertEqual("+ o()", tree_view.get_model()[0][0])
         p = self.element_factory.create(UML.Parameter)
         p.name = 'blah'
         oper.formalParameter = p
-        self.assertEquals("+ o(in blah)", tree_view.get_model()[0][0])
+        self.assertEqual("+ o(in blah)", tree_view.get_model()[0][0])
 
         page.destroy()
 

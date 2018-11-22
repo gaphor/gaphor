@@ -24,15 +24,15 @@ class TransitionConnectorTestCase(TestCase):
         # connect vertices with transition
         self.connect(t, t.head, v1)
         self.connect(t, t.tail, v2)
-        
+
         self.assertTrue(t.subject is not None)
 
-        self.assertEquals(1, len(self.kindof(UML.Transition)))
-        
-        self.assertEquals(t.subject, v1.subject.outgoing[0])
-        self.assertEquals(t.subject, v2.subject.incoming[0])
-        self.assertEquals(t.subject.source, v1.subject)
-        self.assertEquals(t.subject.target, v2.subject)
+        self.assertEqual(1, len(self.kindof(UML.Transition)))
+
+        self.assertEqual(t.subject, v1.subject.outgoing[0])
+        self.assertEqual(t.subject, v2.subject.incoming[0])
+        self.assertEqual(t.subject.source, v1.subject)
+        self.assertEqual(t.subject.target, v2.subject)
 
 
     def test_vertex_reconnect(self):
@@ -55,17 +55,17 @@ class TransitionConnectorTestCase(TestCase):
 
         # reconnect: v1 -> v3
         self.connect(t, t.tail, v3)
-        
-        self.assertSame(s, t.subject)
-        self.assertEquals(1, len(self.kindof(UML.Transition)))
-        
-        self.assertEquals(t.subject, v1.subject.outgoing[0])
-        self.assertEquals(t.subject, v3.subject.incoming[0])
-        self.assertEquals(t.subject.source, v1.subject)
-        self.assertEquals(t.subject.target, v3.subject)
 
-        self.assertEquals(0, len(v2.subject.incoming))
-        self.assertEquals(0, len(v2.subject.outgoing))
+        self.assertSame(s, t.subject)
+        self.assertEqual(1, len(self.kindof(UML.Transition)))
+
+        self.assertEqual(t.subject, v1.subject.outgoing[0])
+        self.assertEqual(t.subject, v3.subject.incoming[0])
+        self.assertEqual(t.subject.source, v1.subject)
+        self.assertEqual(t.subject.target, v3.subject)
+
+        self.assertEqual(0, len(v2.subject.incoming))
+        self.assertEqual(0, len(v2.subject.outgoing))
 
 
     def test_vertex_disconnect(self):
@@ -79,8 +79,8 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.tail, v2)
         assert t.subject is not None
 
-        self.assertEquals(1, len(self.kindof(UML.Transition)))
-        
+        self.assertEqual(1, len(self.kindof(UML.Transition)))
+
         # test preconditions
         assert t.subject == v1.subject.outgoing[0]
         assert t.subject == v2.subject.incoming[0]
@@ -109,8 +109,8 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.tail, v2)
         self.assertTrue(t.subject is not None)
 
-        self.assertEquals(1, len(self.kindof(UML.Transition)))
-        
+        self.assertEqual(1, len(self.kindof(UML.Transition)))
+
         # test preconditions
         assert t.subject == v1.subject.outgoing[0]
         assert t.subject == v2.subject.incoming[0]
@@ -172,12 +172,12 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.tail, v2)
         self.assertTrue(t.subject is not None)
 
-        self.assertEquals(1, len(self.kindof(UML.Transition)))
-        
-        self.assertEquals(t.subject, v1.subject.outgoing[0])
-        self.assertEquals(t.subject, v2.subject.incoming[0])
-        self.assertEquals(t.subject.source, v1.subject)
-        self.assertEquals(t.subject.target, v2.subject)
+        self.assertEqual(1, len(self.kindof(UML.Transition)))
+
+        self.assertEqual(t.subject, v1.subject.outgoing[0])
+        self.assertEqual(t.subject, v2.subject.incoming[0])
+        self.assertEqual(t.subject.source, v1.subject)
+        self.assertEqual(t.subject.target, v2.subject)
 
 
     def test_final_state_head_glue(self):

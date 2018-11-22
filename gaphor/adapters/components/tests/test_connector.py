@@ -112,7 +112,7 @@ class InterfaceConnectTestCase(TestCase):
         line2 = self.create(items.ConnectorItem)
 
         self.connect(line1, line1.head, iface)
-        self.assertEquals(iface.FOLDED_ASSEMBLY, iface.folded)
+        self.assertEqual(iface.FOLDED_ASSEMBLY, iface.folded)
 
         glued = self.allow(line2, line2.head, iface)
         self.assertTrue(glued)
@@ -134,7 +134,7 @@ class InterfaceConnectTestCase(TestCase):
 
         self.connect(line, line.head, iface, pport)
         # interface goes into assembly mode
-        self.assertEquals(iface.FOLDED_ASSEMBLY, iface.folded)
+        self.assertEqual(iface.FOLDED_ASSEMBLY, iface.folded)
         self.assertFalse(iface._name.is_visible())
 
         # no UML metamodel yet
@@ -166,7 +166,7 @@ class InterfaceConnectTestCase(TestCase):
         assert iface._angle == 0.0
 
         self.connect(line, line.head, iface, pport)
-        self.assertEquals(rport.angle, iface._angle)
+        self.assertEqual(rport.angle, iface._angle)
 
 
     def test_connection_of_two_connectors_one_side(self):
@@ -243,8 +243,8 @@ class InterfaceConnectTestCase(TestCase):
         assert pport.provided and not pport.required and pport.connectable
 
         self.disconnect(line, line.head)
-        self.assertEquals(iface.FOLDED_PROVIDED, iface.folded)
-        self.assertEquals(iface._angle, 0)
+        self.assertEqual(iface.FOLDED_PROVIDED, iface.folded)
+        self.assertEqual(iface._angle, 0)
         self.assertTrue(iface._name.is_visible())
 
         self.assertFalse(any(p.provided for p in iface.ports()))
@@ -339,10 +339,10 @@ class AssemblyConnectorTestCase(TestCase):
             '%s is not %s' % (conn1.subject, conn2.subject))
         assembly = conn1.subject
         self.assertTrue(isinstance(assembly, UML.Connector))
-        self.assertEquals('assembly', assembly.kind)
+        self.assertEqual('assembly', assembly.kind)
 
         # there should be two connector ends
-        self.assertEquals(2, len(assembly.end))
+        self.assertEqual(2, len(assembly.end))
         # interface is on both ends
         #end1 = conn1.end
         #end2 = conn2.end
@@ -352,14 +352,14 @@ class AssemblyConnectorTestCase(TestCase):
         #self.assertTrue(end2 in assembly.end,
         #    '%s not in %s' % (end2, assembly.end))
 
-        #self.assertEquals(end1.role, iface.subject)
-        #self.assertEquals(end2.role, iface.subject)
-        # ends of connector point to components 
+        #self.assertEqual(end1.role, iface.subject)
+        #self.assertEqual(end2.role, iface.subject)
+        # ends of connector point to components
         #p1 = end1.partWithPort
         #p2 = end2.partWithPort
-        #self.assertEquals(p1, c1.subject.ownedPort[0],
+        #self.assertEqual(p1, c1.subject.ownedPort[0],
         #    '%s != %s' % (p1, c1.subject.ownedPort))
-        #self.assertEquals(p2, c2.subject.ownedPort[0],
+        #self.assertEqual(p2, c2.subject.ownedPort[0],
         #    '%s != %s' % (p2, c2.subject.ownedPort))
 
 
@@ -526,17 +526,17 @@ class AssemblyConnectorTestCase(TestCase):
 
         assembly = conn1.subject
 
-        self.assertEquals(3, len(assembly.end))
+        self.assertEqual(3, len(assembly.end))
 
         #end3 = conn3.end
 
         #self.assertTrue(end3 in assembly.end,
         #    '%s not in %s' % (end3, assembly.end))
 
-        #self.assertEquals(end3.role, iface.subject)
-        # ends of connector point to components 
+        #self.assertEqual(end3.role, iface.subject)
+        # ends of connector point to components
         #p3 = end3.partWithPort
-        #self.assertEquals(p3, c3.subject.ownedPort[0],
+        #self.assertEqual(p3, c3.subject.ownedPort[0],
         #    '%s != %s' % (p3, c3.subject.ownedPort))
 
 
@@ -566,7 +566,7 @@ class AssemblyConnectorTestCase(TestCase):
         # make an assembly
         self.connect(conn1, conn1.tail, iface, pport)
         self.connect(conn2, conn2.tail, iface, rport)
-  
+
         # test precondition
         assert conn1.subject is conn2.subject
 
@@ -574,10 +574,10 @@ class AssemblyConnectorTestCase(TestCase):
 
         self.assertTrue(conn1.subject is None)
         self.assertTrue(conn2.subject is None)
-        
-        self.assertEquals(0, len(self.kindof(UML.Connector)))
-        self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))
-        self.assertEquals(0, len(self.kindof(UML.Port)))
+
+        self.assertEqual(0, len(self.kindof(UML.Connector)))
+        self.assertEqual(0, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEqual(0, len(self.kindof(UML.Port)))
 
 
     def test_disconnection_order(self):
@@ -610,7 +610,7 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn1, conn1.tail, iface, pport)
         self.connect(conn2, conn2.tail, iface, rport)
         self.connect(conn3, conn3.tail, iface, rport)
-  
+
         # test precondition
         assert conn1.subject is conn2.subject is conn3.subject
 
@@ -624,10 +624,10 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertTrue(conn1.subject is None)
         self.assertTrue(conn2.subject is None)
         self.assertTrue(conn3.subject is None)
-        
-        self.assertEquals(0, len(self.kindof(UML.Connector)))
-        self.assertEquals(0, len(self.kindof(UML.ConnectorEnd)))
-        self.assertEquals(0, len(self.kindof(UML.Port)))
+
+        self.assertEqual(0, len(self.kindof(UML.Connector)))
+        self.assertEqual(0, len(self.kindof(UML.ConnectorEnd)))
+        self.assertEqual(0, len(self.kindof(UML.Port)))
 
 
 
