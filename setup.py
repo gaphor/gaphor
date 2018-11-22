@@ -144,6 +144,7 @@ It uses the GTK+ environment for user interaction.
 
     setup_requires = [
         #'Sphinx >= 1.0.6',
+        'future',
         'pytest-runner',
         'setuptools-git >= 0.3.4'
     ],

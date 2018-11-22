@@ -18,14 +18,11 @@ from __future__ import print_function
 import os
 import sys
 
-from future import standard_library
-
 try:
     from hashlib import md5
 except ImportError:
     from md5 import md5
 
-standard_library.install_aliases()
 DEFAULT_VERSION = "0.6c11"
 DEFAULT_URL     = "http://pypi.python.org/packages/%s/s/setuptools/" % sys.version[:3]
 
