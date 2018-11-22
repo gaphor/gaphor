@@ -81,7 +81,7 @@ def format_attribute(el, visibility=False, is_derived=False, type=False,
         if el.isDerived: s.write('/')
 
     s.write(name)
-    
+
     if type and el.typeValue:
         s.write(': %s' % el.typeValue)
 
@@ -110,7 +110,7 @@ def format_association_end(el):
     Format association end.
     """
     name = ''
-    n = io.BytesIO()
+    n = io.StringIO()
     if el.name:
         n.write(vis_map[el.visibility])
         n.write(' ')
@@ -121,7 +121,7 @@ def format_association_end(el):
         n.seek(0)
         name = n.read()
 
-    m = io.BytesIO()
+    m = io.StringIO()
     if el.upperValue:
         if el.lowerValue:
             m.write('%s..%s' % (el.lowerValue, el.upperValue))
@@ -157,7 +157,7 @@ def format_operation(el, pattern=None, visibility=False, type=False, multiplicit
     if not (visibility or type or multiplicity or default or tags or direction):
        visibility = type = multiplicity = default = tags = direction = True
 
-    s = io.BytesIO()
+    s = io.StringIO()
     if visibility:
         s.write(vis_map[el.visibility])
         s.write(' ')
