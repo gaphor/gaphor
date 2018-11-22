@@ -58,7 +58,7 @@ class AttributeTestCase(unittest.TestCase):
         a = factory.create(UML.Property)
         UML.parse(a, 'myattr')
         self.assertFalse(a.isDerived)
-        self.assertEquals('myattr', a.name)
+        self.assertEqual('myattr', a.name)
         self.assertTrue(a.typeValue is None, a.typeValue)
         self.assertTrue(a.lowerValue is None, a.lowerValue)
         self.assertTrue(a.upperValue is None, a.upperValue)
@@ -71,13 +71,13 @@ class AttributeTestCase(unittest.TestCase):
         a = factory.create(UML.Property)
 
         UML.parse(a, '+ / name : str[0..*] = "aap" { static }')
-        self.assertEquals('public', a.visibility)
+        self.assertEqual('public', a.visibility)
         self.assertTrue(a.isDerived)
-        self.assertEquals('name', a.name)
-        self.assertEquals('str', a.typeValue)
-        self.assertEquals('0', a.lowerValue)
-        self.assertEquals('*', a.upperValue)
-        self.assertEquals('"aap"', a.defaultValue)
+        self.assertEqual('name', a.name)
+        self.assertEqual('str', a.typeValue)
+        self.assertEqual('0', a.lowerValue)
+        self.assertEqual('*', a.upperValue)
+        self.assertEqual('"aap"', a.defaultValue)
 
 
     def test_parse_property_invalid(self):
@@ -86,7 +86,7 @@ class AttributeTestCase(unittest.TestCase):
         a = factory.create(UML.Property)
 
         UML.parse(a, '+ name = str[*] = "aap" { static }')
-        self.assertEquals('+ name = str[*] = "aap" { static }', a.name)
+        self.assertEqual('+ name = str[*] = "aap" { static }', a.name)
         self.assertFalse(a.isDerived)
         self.assertTrue(not a.typeValue)
         self.assertTrue(not a.lowerValue)
@@ -113,7 +113,7 @@ class AssociationEndTestCase(unittest.TestCase):
         p.association = a
 
         UML.parse(p, 'end')
-        self.assertEquals('end', p.name)
+        self.assertEqual('end', p.name)
         self.assertTrue(not p.typeValue)
         self.assertTrue(not p.lowerValue)
         self.assertTrue(not p.upperValue)
@@ -129,8 +129,8 @@ class AssociationEndTestCase(unittest.TestCase):
         UML.parse(p, '0..2 { tag }')
         self.assertTrue(p.name is None)
         self.assertTrue(not p.typeValue)
-        self.assertEquals('0', p.lowerValue)
-        self.assertEquals('2', p.upperValue)
+        self.assertEqual('0', p.lowerValue)
+        self.assertEqual('2', p.upperValue)
         self.assertTrue(not p.defaultValue)
 
 
@@ -143,8 +143,8 @@ class AssociationEndTestCase(unittest.TestCase):
         UML.parse(p, '0..2 { tag1, \ntag2}')
         self.assertTrue(p.name is None)
         self.assertTrue(not p.typeValue)
-        self.assertEquals('0', p.lowerValue)
-        self.assertEquals('2', p.upperValue)
+        self.assertEqual('0', p.lowerValue)
+        self.assertEqual('2', p.upperValue)
         self.assertTrue(not p.defaultValue)
 
 
@@ -155,12 +155,12 @@ class AssociationEndTestCase(unittest.TestCase):
         p = factory.create(UML.Property)
         p.association = a
         UML.parse(p, '-/end[*] { mytag}')
-        self.assertEquals('private', p.visibility)
+        self.assertEqual('private', p.visibility)
         self.assertTrue(p.isDerived)
-        self.assertEquals('end', p.name)
+        self.assertEqual('end', p.name)
         self.assertTrue(not p.typeValue)
         self.assertTrue(not p.lowerValue)
-        self.assertEquals('*', p.upperValue)
+        self.assertEqual('*', p.upperValue)
         self.assertTrue(not p.defaultValue)
 
 
@@ -180,7 +180,7 @@ class OperationTestCase(unittest.TestCase):
         """
         o = factory.create(UML.Operation)
         UML.parse(o, 'myfunc()')
-        self.assertEquals('myfunc', o.name)
+        self.assertEqual('myfunc', o.name)
         self.assertTrue(not o.returnResult[0].typeValue)
         self.assertFalse(o.formalParameter)
 
@@ -190,9 +190,9 @@ class OperationTestCase(unittest.TestCase):
         """
         o = factory.create(UML.Operation)
         UML.parse(o, '+ myfunc(): int')
-        self.assertEquals('myfunc', o.name)
-        self.assertEquals('int', o.returnResult[0].typeValue)
-        self.assertEquals('public', o.visibility)
+        self.assertEqual('myfunc', o.name)
+        self.assertEqual('int', o.returnResult[0].typeValue)
+        self.assertEqual('public', o.visibility)
         self.assertTrue(not o.formalParameter)
 
 
@@ -201,16 +201,16 @@ class OperationTestCase(unittest.TestCase):
         """
         o = factory.create(UML.Operation)
         UML.parse(o, '# myfunc2 (a: str, b: int = 3 {  static}): float')
-        self.assertEquals('myfunc2', o.name)
-        self.assertEquals('float', o.returnResult[0].typeValue)
-        self.assertEquals('protected', o.visibility)
-        self.assertEquals(2, len(o.formalParameter))
-        self.assertEquals('a', o.formalParameter[0].name)
-        self.assertEquals('str', o.formalParameter[0].typeValue)
+        self.assertEqual('myfunc2', o.name)
+        self.assertEqual('float', o.returnResult[0].typeValue)
+        self.assertEqual('protected', o.visibility)
+        self.assertEqual(2, len(o.formalParameter))
+        self.assertEqual('a', o.formalParameter[0].name)
+        self.assertEqual('str', o.formalParameter[0].typeValue)
         self.assertTrue(o.formalParameter[0].defaultValue is None)
-        self.assertEquals('b', o.formalParameter[1].name)
-        self.assertEquals('int', o.formalParameter[1].typeValue)
-        self.assertEquals('3', o.formalParameter[1].defaultValue)
+        self.assertEqual('b', o.formalParameter[1].name)
+        self.assertEqual('int', o.formalParameter[1].typeValue)
+        self.assertEqual('3', o.formalParameter[1].defaultValue)
 
 
     def test_parse_operation_1_param(self):
@@ -218,12 +218,12 @@ class OperationTestCase(unittest.TestCase):
         """
         o = factory.create(UML.Operation)
         UML.parse(o, '- myfunc2 (a: node): double')
-        self.assertEquals('myfunc2', o.name)
-        self.assertEquals('double', o.returnResult[0].typeValue)
-        self.assertEquals('private', o.visibility)
-        self.assertEquals(1, len(o.formalParameter))
-        self.assertEquals('a', o.formalParameter[0].name)
-        self.assertEquals('node', o.formalParameter[0].typeValue)
+        self.assertEqual('myfunc2', o.name)
+        self.assertEqual('double', o.returnResult[0].typeValue)
+        self.assertEqual('private', o.visibility)
+        self.assertEqual(1, len(o.formalParameter))
+        self.assertEqual('a', o.formalParameter[0].name)
+        self.assertEqual('node', o.formalParameter[0].typeValue)
         self.assertTrue(o.formalParameter[0].defaultValue is None)
 
 
@@ -232,7 +232,7 @@ class OperationTestCase(unittest.TestCase):
         """
         o = factory.create(UML.Operation)
         UML.parse(o, '- myfunc2: myType2')
-        self.assertEquals('- myfunc2: myType2', o.name)
+        self.assertEqual('- myfunc2: myType2', o.name)
 
 
 # vim:sw=4:et:ai

@@ -56,7 +56,7 @@ parser.add_option('-r', '--regex', dest='regex', metavar='regex',
 
 if not args:
     parser.print_help()
-    sys.exit(1)
+    #sys.exit(1)
 
 
 factory = UML.ElementFactory()

@@ -16,19 +16,19 @@ class StereotypesTestCase(TestCaseBase):
         """
         stereotype = self.factory.create(UML.Stereotype)
         stereotype.name = 'Test'
-        self.assertEquals('test', UML.model.stereotype_name(stereotype))
+        self.assertEqual('test', UML.model.stereotype_name(stereotype))
 
         stereotype.name = 'TEST'
-        self.assertEquals('TEST', UML.model.stereotype_name(stereotype))
+        self.assertEqual('TEST', UML.model.stereotype_name(stereotype))
 
         stereotype.name = 'T'
-        self.assertEquals('t', UML.model.stereotype_name(stereotype))
+        self.assertEqual('t', UML.model.stereotype_name(stereotype))
 
         stereotype.name = ''
-        self.assertEquals('', UML.model.stereotype_name(stereotype))
+        self.assertEqual('', UML.model.stereotype_name(stereotype))
 
         stereotype.name = None
-        self.assertEquals('', UML.model.stereotype_name(stereotype))
+        self.assertEqual('', UML.model.stereotype_name(stereotype))
 
 
     def test_stereotypes_conversion(self):
@@ -46,14 +46,14 @@ class StereotypesTestCase(TestCaseBase):
         UML.model.apply_stereotype(self.factory, cls, s2)
         UML.model.apply_stereotype(self.factory, cls, s3)
 
-        self.assertEquals(fmt % 's1, s2, s3', UML.model.stereotypes_str(cls))
+        self.assertEqual(fmt % 's1, s2, s3', UML.model.stereotypes_str(cls))
 
 
     def test_no_stereotypes(self):
         """Test stereotypes conversion without applied stereotypes
         """
         cls = self.factory.create(UML.Class)
-        self.assertEquals('', UML.model.stereotypes_str(cls))
+        self.assertEqual('', UML.model.stereotypes_str(cls))
 
 
     def test_additional_stereotypes(self):
@@ -72,7 +72,7 @@ class StereotypesTestCase(TestCaseBase):
         UML.model.apply_stereotype(self.factory, cls, s3)
 
         result = UML.model.stereotypes_str(cls, ('test',))
-        self.assertEquals(fmt % 'test, s1, s2, s3', result)
+        self.assertEqual(fmt % 'test, s1, s2, s3', result)
 
 
     def test_just_additional_stereotypes(self):
@@ -81,7 +81,7 @@ class StereotypesTestCase(TestCaseBase):
         cls = self.factory.create(UML.Class)
 
         result = UML.model.stereotypes_str(cls, ('test',))
-        self.assertEquals(fmt % 'test', result)
+        self.assertEqual(fmt % 'test', result)
 
 
     def test_getting_stereotypes(self):
@@ -100,7 +100,7 @@ class StereotypesTestCase(TestCaseBase):
 
         c1 = self.factory.create(UML.Class)
         result = tuple(st.name for st in UML.model.get_stereotypes(self.factory, c1))
-        self.assertEquals(('st1', 'st2'), result)
+        self.assertEqual(('st1', 'st2'), result)
 
 
     def test_getting_stereotypes_unique(self):
@@ -124,7 +124,7 @@ class StereotypesTestCase(TestCaseBase):
 
         c1 = self.factory.create(UML.Component)
         result = tuple(st.name for st in UML.model.get_stereotypes(self.factory, c1))
-        self.assertEquals(('st1', 'st2'), result)
+        self.assertEqual(('st1', 'st2'), result)
 
 
     def test_finding_stereotype_instances(self):
@@ -142,7 +142,7 @@ class StereotypesTestCase(TestCaseBase):
         UML.model.apply_stereotype(self.factory, c2, s1)
 
         result = [e.classifier[0].name for e in UML.model.find_instances(self.factory, s1)]
-        self.assertEquals(2, len(result))
+        self.assertEqual(2, len(result))
         self.assertTrue('s1' in result, result)
         self.assertFalse('s2' in result, result)
 
@@ -280,7 +280,7 @@ class DependencyTypeTestCase(TestCaseBase):
         cls = self.factory.create(UML.Class)
         iface = self.factory.create(UML.Interface)
         dt = UML.model.dependency_type(cls, iface)
-        self.assertEquals(UML.Usage, dt)
+        self.assertEqual(UML.Usage, dt)
 
 
     def test_usage_by_component(self):
@@ -291,7 +291,7 @@ class DependencyTypeTestCase(TestCaseBase):
         dt = UML.model.dependency_type(c, iface)
         # it should be usage not realization (interface is classifier as
         # well)
-        self.assertEquals(UML.Usage, dt)
+        self.assertEqual(UML.Usage, dt)
 
 
     def test_realization(self):
@@ -300,7 +300,7 @@ class DependencyTypeTestCase(TestCaseBase):
         c = self.factory.create(UML.Component)
         cls = self.factory.create(UML.Class)
         dt = UML.model.dependency_type(c, cls)
-        self.assertEquals(UML.Realization, dt)
+        self.assertEqual(UML.Realization, dt)
 
 
 class MessageTestCase(TestCaseBase):
