@@ -164,13 +164,13 @@ class collection(object):
 
     def nonEmpty(self):
         return not self.isEmpty()
-    
+
     def sum(self):
         r=0
         for o in self.items:
             r=r+o
         return o
-    
+
     def forAll(self, f):
         if not self.items or not inspect.getargspec(f)[0]:
             return True
@@ -178,11 +178,11 @@ class collection(object):
         nargs=len(inspect.getargspec(f)[0])
         if inspect.getargspec(f)[3]:
             nargs=nargs-len(inspect.getargspec(f)[3])
-            
+
         assert(nargs>0)
         nitems=len(self.items)
         index=[0]*nargs
-        
+
         while True:
             args=[]
             for x in index:
@@ -197,7 +197,7 @@ class collection(object):
                 if c<0:
                     return True
                 else:
-                    index[c]=index[c]+1 
+                    index[c]=index[c]+1
                 if index[c]==nitems-1:
                     c=c-1
         return False
@@ -209,7 +209,7 @@ class collection(object):
         nargs=len(inspect.getargspec(f)[0])
         if inspect.getargspec(f)[3]:
             nargs=nargs-len(inspect.getargspec(f)[3])
-            
+
         assert(nargs>0)
         nitems=len(self.items)
         index=[0]*nargs
@@ -227,7 +227,7 @@ class collection(object):
                 if c<0:
                     return False
                 else:
-                    index[c]=index[c]+1 
+                    index[c]=index[c]+1
                 if index[c]==nitems-1:
                     c=c-1
         return False

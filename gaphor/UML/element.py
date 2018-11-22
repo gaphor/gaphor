@@ -47,7 +47,7 @@ class Element(object):
 
     def umlproperties(self):
         """
-        Iterate over all UML properties 
+        Iterate over all UML properties
         """
         umlprop = umlproperty
         class_ = type(self)
@@ -89,24 +89,24 @@ class Element(object):
 
 
     def unlink(self):
-        
+
         """Unlink the element. All the elements references are destroyed.
-        
+
         The unlink lock is acquired while unlinking this elements properties
         to avoid recursion problems."""
-        
+
         if self._unlink_lock.locked():
-            
+
             return
-        
+
         with self._unlink_lock:
-            
+
             for prop in self.umlproperties():
-                
+
                 prop.unlink(self)
-                
+
             if self._factory:
-            
+
                 self._factory._unlink_element(self)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))

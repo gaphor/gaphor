@@ -33,17 +33,17 @@ class EventWatcher(object):
         Watch a certain path of elements starting with the DiagramItem.
         The handler is optional and will default the default provided at
         construction time.
-        
+
         Watches should be set in the constructor, so they can be registered
         and unregistered in one shot.
 
         This interface is fluent(returns self).
         """
-        
+
         #self.logger.info('Watching element path')
         #self.logger.debug('Path is %s' % path)
         #self.logger.debug('Handler is %s' % handler)
-        
+
         if handler:
             self._watched_paths[path] = handler
         elif self.default_handler:
@@ -54,17 +54,17 @@ class EventWatcher(object):
 
 
     def register_handlers(self):
-        
+
         #self.logger.info('Registering handlers')
-        
+
         dispatcher = self.element_dispatcher
         element = self.element
-        
+
         for path, handler in self._watched_paths.items():
-            
+
             #self.logger.debug('Path is %s' % path)
             #self.logger.debug('Handler is %s' % handler)
-            
+
             dispatcher.register_handler(handler, element, path)
 
 
@@ -73,16 +73,16 @@ class EventWatcher(object):
         Unregister handlers. Extra arguments are ignored (makes connecting to
         destroy signals much easier though).
         """
-        
+
         #self.logger.info('Unregistering handlers')
-        
+
         dispatcher = self.element_dispatcher
-        
+
         for path, handler in self._watched_paths.items():
-            
+
             #self.logger.debug('Path is %s' % path)
             #self.logger.debug('Handler is %s' % handler)
-            
+
             dispatcher.unregister_handler(handler)
 
 
@@ -91,7 +91,7 @@ class ElementDispatcher(object):
     """
     The Element based Dispatcher allows handlers to receive only events
     related to certain elements. Those elements should be registered to. Also
-    a path should be provided, that is used to find those changes. 
+    a path should be provided, that is used to find those changes.
 
     The handlers are registered on their property attribute. This avoids
     subclass lookups and is pretty specific. As a result this dispatcher is
@@ -184,7 +184,7 @@ class ElementDispatcher(object):
         """
         property, remainder = props[0], props[1:]
         key = (element, property)
-        
+
         # Register key
         try:
             handlers = self._handlers[key]
@@ -202,7 +202,7 @@ class ElementDispatcher(object):
 
         # Also add them to the reverse table, easing disconnecting
         try:
-            reverse = self._reverse[handler]       
+            reverse = self._reverse[handler]
         except KeyError:
             reverse = []
             self._reverse[handler] = reverse
@@ -250,12 +250,12 @@ class ElementDispatcher(object):
 
 
     def register_handler(self, handler, element, path):
-        
+
         #self.logger.info('Registering handler')
         #self.logger.debug('Handler is %s' % handler)
         #self.logger.debug('Element is %s' % element)
         #self.logger.debug('Path is %s' % path)
-        
+
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
 
@@ -264,10 +264,10 @@ class ElementDispatcher(object):
         """
         Unregister a handler from the registy.
         """
-        
+
         #self.logger.info('Unregistering handler')
         #self.logger.debug('Handler is %s' % handler)
-        
+
         try:
             reverse = reversed(self._reverse[handler])
         except KeyError:
@@ -290,11 +290,11 @@ class ElementDispatcher(object):
 
     @component.adapter(IElementChangeEvent)
     def on_element_change_event(self, event):
-        
+
         #self.logger.info('Handling IElementChangeEvent')
         #self.logger.debug('Element is %s' % event.element)
         #self.logger.debug('Property is %s' % event.property)
-        
+
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
             #log.debug('')
@@ -309,7 +309,7 @@ class ElementDispatcher(object):
                 except Exception as e:
                     self.logger.error('Problem executing handler %s' % handler)
                     self.logger.error(e)
-        
+
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
             if IAssociationSetEvent.providedBy(event):
@@ -332,10 +332,10 @@ class ElementDispatcher(object):
 
     @component.adapter(IModelFactoryEvent)
     def on_model_loaded(self, event):
-        
+
         #self.logger.info('Handling IModelFactoryEvent')
         #self.logger.debug('Event is %s' % event)
-        
+
         for key, value in list(self._handlers.items()):
             for h, remainders in list(value.items()):
                 for remainder in remainders:

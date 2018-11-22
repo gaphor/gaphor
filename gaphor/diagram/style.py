@@ -31,8 +31,7 @@ class Style(object):
     attributes, i.e.::
 
     >>> from gaphor.diagram import DiagramItemMeta
-    >>> class InitialNodeItem(object):
-    ...     __metaclass__ = DiagramItemMeta
+    >>> class InitialNodeItem(object, metaclass=DiagramItemMeta):
     ...     __style__ = {
     ...         'name-align': ('center', 'top'),
     ...     }
@@ -151,7 +150,7 @@ def get_text_point(extents, width, height, align, padding, outside):
 def get_text_point_at_line(extents, p1, p2, align, padding):
     """
     Calculate position of the text relative to a line defined by points
-    (p1, p2). Text is aligned using align and padding information. 
+    (p1, p2). Text is aligned using align and padding information.
 
     Parameters:
      - extents: text extents like width, height, etc.
@@ -166,7 +165,7 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
 
     dx = float(p2[0]) - float(p1[0])
     dy = float(p2[1]) - float(p1[1])
-    
+
     name_w, name_h = extents
 
     if dy == 0:
@@ -207,7 +206,7 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
         if align_bottom:
             name_dy = -ofs - name_h
         else:
-            name_dy = ofs 
+            name_dy = ofs
     return p1[0] + name_dx, p1[1] + name_dy
 
 
@@ -215,7 +214,7 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
 def get_text_point_at_line2(extents, p1, p2, align, padding):
     """
     Calculate position of the text relative to a line defined by points
-    (p1, p2). Text is aligned using align and padding information. 
+    (p1, p2). Text is aligned using align and padding information.
 
     TODO: merge with get_text_point_at_line function
 
