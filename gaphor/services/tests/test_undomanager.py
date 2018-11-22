@@ -59,7 +59,7 @@ class TestUndoManager(TestCase):
 
         undo_manager.shutdown()
 
-        
+
     def test_actions(self):
         undone = [ 0 ]
         def undo_action(undone=undone):
@@ -88,7 +88,7 @@ class TestUndoManager(TestCase):
         undo_manager.undo_transaction()
         assert not undo_manager.can_undo(), undo_manager._undo_stack
         assert undone[0] == 1, undone
-        
+
         undone[0] = 0
 
         assert undo_manager.can_redo(), undo_manager._redo_stack
@@ -174,7 +174,7 @@ class TestUndoManager(TestCase):
         from gaphor.UML.element import Element
         undo_manager = UndoManager()
         undo_manager.init(Application)
- 
+
         class A(Element): pass
         class B(Element): pass
 
@@ -189,7 +189,7 @@ class TestUndoManager(TestCase):
 
         undo_manager.begin_transaction()
         b1.two = a1
-        
+
         undo_manager.commit_transaction()
         assert a1 in b1.two
         assert b1 is a1.one
@@ -247,7 +247,7 @@ class TestUndoManager(TestCase):
         assert not undo_manager.can_redo()
         assert ef.size() == 1
         assert ef.lselect()[0] is p
-        
+
         undo_manager.shutdown()
 
 
@@ -309,7 +309,7 @@ class TestUndoManager(TestCase):
 
             a.a1 = A()
             undo_manager.commit_transaction()
-            
+
             assert len(events) == 1, events
             assert events[0].property is A.a1
             assert undo_manager.can_undo()
@@ -351,32 +351,32 @@ class TestUndoManager(TestCase):
 
         undo_manager.undo_transaction()
         assert undo_manager.can_undo()
-        self.assertEquals(1, len(undo_manager._undo_stack))
-        self.assertEquals(1, len(undo_manager._redo_stack))
+        self.assertEqual(1, len(undo_manager._undo_stack))
+        self.assertEqual(1, len(undo_manager._redo_stack))
         assert undo_manager.can_redo()
         assert ef.size() == 1
 
         undo_manager.undo_transaction()
         assert not undo_manager.can_undo()
         assert undo_manager.can_redo()
-        self.assertEquals(0, len(undo_manager._undo_stack))
-        self.assertEquals(2, len(undo_manager._redo_stack))
+        self.assertEqual(0, len(undo_manager._undo_stack))
+        self.assertEqual(2, len(undo_manager._redo_stack))
         #assert ef.size() == 0
 
         undo_manager.redo_transaction()
-        self.assertEquals(1, len(undo_manager._undo_stack))
-        self.assertEquals(1, len(undo_manager._redo_stack))
+        self.assertEqual(1, len(undo_manager._undo_stack))
+        self.assertEqual(1, len(undo_manager._redo_stack))
         assert undo_manager.can_undo()
         assert undo_manager.can_redo()
         assert ef.size() == 1
-        
+
         undo_manager.redo_transaction()
         assert undo_manager.can_undo()
         assert not undo_manager.can_redo()
         assert ef.size() == 2
-        
+
         assert p in ef.lselect()
-        
+
         undo_manager.shutdown()
 
 

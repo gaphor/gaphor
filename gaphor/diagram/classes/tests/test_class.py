@@ -24,7 +24,7 @@ class ClassTestCase(TestCase):
         self.assertEqual(0, len(klass._compartments[0]))
         self.assertEqual(0, len(klass._compartments[1]))
         self.assertEqual((10, 10), klass._compartments[0].get_size())
-        
+
         diagram.canvas.update()
 
         self.assertEqual((10, 10), klass._compartments[0].get_size())
@@ -114,7 +114,7 @@ class ClassTestCase(TestCase):
         y = name_size[1] + padding[0] + 2
         assert klass.item_at(x, y) is not None, klass.item_at(x, y)
         assert klass.item_at(x, y).subject is attr, klass.item_at(x, y).subject
-        
+
         y = name_size[1] + klass.compartments[0].height + padding[0] + 2
         assert klass.item_at(x, y) is not None, klass.item_at(x, y)
         assert klass.item_at(x, y).subject is oper, klass.item_at(x, y).subject
@@ -135,7 +135,7 @@ class ClassTestCase(TestCase):
         oper.name = 'method'
         klass.subject.ownedOperation = oper
 
-        self.assertEquals(100, klass.width)
+        self.assertEqual(100, klass.width)
 
         attr.name = 'x' * 25
         log.debug('name: %s' % attr.name)

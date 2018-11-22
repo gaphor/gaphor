@@ -23,7 +23,7 @@ TODO:
      relationship between a control and those surrounding it.
    * Assign access keys to all editable controls. Ensure that using the access
      key focuses its associated control.
- 
+
 """
 from __future__ import print_function
 from __future__ import division
@@ -90,7 +90,7 @@ class EditableTreeModel(Gtk.ListStore):
                 self.row_changed(row.path, row.iter)
                 #print 'found!'
                 return
-            
+
 
     def _get_rows(self):
         """
@@ -346,7 +346,7 @@ def swap_on_keypress(tree, event):
         model, iter = tree.get_selection().get_selected()
         model.swap(iter, model.iter_prev(iter))
         return True
-        
+
 
 @transactional
 def on_text_cell_edited(renderer, path, value, model, col=0):
@@ -396,7 +396,7 @@ class UMLComboModel(Gtk.ListStore):
             self.append([label])
             self._indices[value] = i
 
-        
+
     def get_index(self, value):
         """
         Return index of a ``value``.
@@ -434,7 +434,7 @@ def create_hbox_label(adapter, page, label):
     """
     hbox = Gtk.HBox(spacing=12)
     label = Gtk.Label(label=label)
-    label.set_alignment(0.0, 0.5)
+    # label.set_alignment(0.0, 0.5)
     adapter.size_group.add_widget(label)
     hbox.pack_start(label, False, True, 0)
     page.pack_start(hbox, False, True, 0)
@@ -458,9 +458,8 @@ def create_tree_view(model, names, tip='', ro_cols=None):
     if ro_cols is None:
         ro_cols = set()
 
-    tree_view = Gtk.TreeView(model)
-    tree_view.set_rules_hint(True)
-    
+    tree_view = Gtk.TreeView(model=model)
+
     n = model.get_n_columns() - 1
     for name, i in zip(names, list(range(n))):
         col_type = model.get_column_type(i)
@@ -543,7 +542,7 @@ class CommentItemPropertyPage(object):
     @transactional
     def _on_body_change(self, buffer):
         self.subject.body = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
-        
+
 component.provideAdapter(CommentItemPropertyPage, name='Properties')
 
 
@@ -566,7 +565,7 @@ class NamedElementPropertyPage(object):
         self.subject = subject
         self.watcher = EventWatcher(subject)
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
-    
+
     def construct(self):
         page = Gtk.VBox()
 
@@ -575,7 +574,7 @@ class NamedElementPropertyPage(object):
             return page
 
         hbox = create_hbox_label(self, page, self.NAME_LABEL)
-        entry = Gtk.Entry()        
+        entry = Gtk.Entry()
         entry.set_text(subject and subject.name or '')
         hbox.pack_start(entry, True, True, 0)
         page.set_data('default', entry)
@@ -598,7 +597,7 @@ class NamedElementPropertyPage(object):
     @transactional
     def _on_name_change(self, entry):
         self.subject.name = entry.get_text()
-        
+
 component.provideAdapter(NamedElementPropertyPage, name='Properties')
 
 
@@ -621,7 +620,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
 
     def __init__(self, subject):
         super(ClassPropertyPage, self).__init__(subject)
-        
+
     def construct(self):
         page = super(ClassPropertyPage, self).construct()
 
@@ -636,7 +635,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
         hbox.pack_start(label, False, True, 0)
         button = Gtk.CheckButton(_("Abstract"))
         button.set_active(self.subject.isAbstract)
-        
+
         button.connect('toggled', self._on_abstract_change)
         hbox.pack_start(button, True, True, 0)
         page.pack_start(hbox, False, True, 0)
@@ -730,7 +729,7 @@ class AttributesPage(object):
         super(AttributesPage, self).__init__()
         self.item = item
         self.watcher = EventWatcher(item.subject)
-        
+
     def construct(self):
         page = Gtk.VBox()
 
@@ -742,7 +741,7 @@ class AttributesPage(object):
         label = Gtk.Label(label='')
         label.set_justify(Gtk.Justification.LEFT)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(_('Show attributes'))
+        button = Gtk.CheckButton(label=_('Show attributes'))
         button.set_active(self.item.show_attributes)
         button.connect('toggled', self._on_show_attributes_change)
         hbox.pack_start(button, True, True, 0)
@@ -752,7 +751,7 @@ class AttributesPage(object):
             return ClassAttributes(self.item, (str, bool, GObject.TYPE_PYOBJECT))
 
         self.model = create_model()
-        
+
         tip = """\
 Add and edit class attributes according to UML syntax. Attribute syntax examples
 - attr
@@ -780,12 +779,12 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
             .register_handlers()
         tree_view.connect('destroy', self.watcher.unregister_handlers)
         return page
-        
+
     @transactional
     def _on_show_attributes_change(self, button):
         self.item.show_attributes = button.get_active()
         self.item.request_update()
-        
+
 
 component.provideAdapter(AttributesPage, name='Attributes')
 
@@ -804,7 +803,7 @@ class OperationsPage(object):
         super(OperationsPage, self).__init__()
         self.item = item
         self.watcher = EventWatcher(item.subject)
-        
+
     def construct(self):
         page = Gtk.VBox()
 
@@ -816,7 +815,7 @@ class OperationsPage(object):
         label = Gtk.Label(label="")
         label.set_justify(Gtk.Justification.LEFT)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(_("Show operations"))
+        button = Gtk.CheckButton(label=_("Show operations"))
         button.set_active(self.item.show_operations)
         button.connect('toggled', self._on_show_operations_change)
         hbox.pack_start(button, True, True, 0)
@@ -855,7 +854,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         tree_view.connect('destroy', self.watcher.unregister_handlers)
 
         return page
-        
+
     @transactional
     def _on_show_operations_change(self, button):
         self.item.show_operations = button.get_active()
@@ -889,7 +888,7 @@ class DependencyPropertyPage(object):
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = EventWatcher(self.item)
 
-        
+
     def construct(self):
         page = Gtk.VBox()
 
@@ -974,7 +973,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
     def construct(self):
         page = super(AssociationPropertyPage, self).construct()
-        
+
         if not self.subject:
             return page
 
@@ -1121,7 +1120,7 @@ Enter attribute name and multiplicity, for example
         combo = Gtk.ComboBoxText()
         for t in ('Unknown navigation', 'Not navigable', 'Navigable'):
             combo.append_text(t)
-        
+
         nav = self.subject.navigability
         combo.set_active(self.NAVIGABILITY.index(nav))
 
@@ -1131,12 +1130,12 @@ Enter attribute name and multiplicity, for example
         combo = Gtk.ComboBoxText()
         for t in ('No aggregation', 'Shared', 'Composite'):
             combo.append_text(t)
-        
+
         combo.set_active(['none', 'shared', 'composite'].index(self.subject.aggregation))
 
         combo.connect('changed', self._on_aggregation_change)
         vbox.pack_start(combo, False, True, 0)
-     
+
         return vbox
 
     @transactional
@@ -1169,7 +1168,7 @@ class LineStylePage(object):
         super(LineStylePage, self).__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
-        
+
     def construct(self):
         page = Gtk.VBox()
 
@@ -1228,12 +1227,12 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         page = super(ObjectNodePropertyPage, self).construct()
 
         subject = self.subject
-        
+
         if not subject:
             return page
 
         hbox = create_hbox_label(self, page, _('Upper bound'))
-        entry = Gtk.Entry()        
+        entry = Gtk.Entry()
         entry.set_text(subject.upperBound or '')
         entry.connect('changed', self._on_upper_bound_change)
         hbox.pack_start(entry, True, True, 0)
@@ -1287,7 +1286,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         page = super(JoinNodePropertyPage, self).construct()
 
         subject = self.subject
-        
+
         if not subject:
             return page
 
@@ -1296,7 +1295,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
 
         if isinstance(subject, UML.JoinNode):
             hbox = create_hbox_label(self, page, _('Join specification'))
-            entry = Gtk.Entry()        
+            entry = Gtk.Entry()
             entry.set_text(subject.joinSpec or '')
             entry.connect('changed', self._on_join_spec_change)
             hbox.pack_start(entry, True, True, 0)
@@ -1335,12 +1334,12 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
         page = super(FlowPropertyPageAbstract, self).construct()
 
         subject = self.subject
-        
+
         if not subject:
             return page
 
         hbox = create_hbox_label(self, page, _('Guard'))
-        entry = Gtk.Entry()        
+        entry = Gtk.Entry()
         entry.set_text(subject.guard or '')
         changed_id = entry.connect('changed', self._on_guard_change)
         hbox.pack_start(entry, True, True, 0)
@@ -1385,7 +1384,7 @@ class ComponentPropertyPage(NamedItemPropertyPage):
         page = super(ComponentPropertyPage, self).construct()
 
         subject = self.subject
-        
+
         if not subject:
             return page
 
@@ -1516,7 +1515,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
         subject.messageSort = ms
         # TODO: is required here?
         item.request_update()
-         
+
 
 component.provideAdapter(MessagePropertyPage, name='Properties')
 

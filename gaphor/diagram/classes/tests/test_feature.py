@@ -23,7 +23,7 @@ class FeatureTestCase(TestCase):
 
         clazzitem = self.create(ClassItem, UML.Class)
         clazzitem.subject.ownedAttribute = attr
-        self.assertEquals(1, len(clazzitem._compartments[0]))
+        self.assertEqual(1, len(clazzitem._compartments[0]))
 
         item = clazzitem._compartments[0][0]
         self.assertTrue(isinstance(item, FeatureItem))

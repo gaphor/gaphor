@@ -27,7 +27,7 @@ class InterfaceTestCase(TestCase):
         iface = self.create(InterfaceItem, UML.Interface)
         iface.drawing_style = iface.DRAW_ICON
 
-        self.assertEquals(iface.DRAW_ICON, iface.drawing_style)
+        self.assertEqual(iface.DRAW_ICON, iface.drawing_style)
 
         # default folded mode is provided
         self.assertTrue(iface.FOLDED_PROVIDED, iface.folded)
@@ -50,7 +50,7 @@ class InterfaceTestCase(TestCase):
         iface.drawing_style = iface.DRAW_ICON
 
         iface.drawing_style = iface.DRAW_COMPARTMENT
-        self.assertEquals(iface.DRAW_COMPARTMENT, iface.drawing_style)
+        self.assertEqual(iface.DRAW_COMPARTMENT, iface.drawing_style)
 
         # check if style information changed
         self.assertFalse(iface._name.style.text_outside)
@@ -68,7 +68,7 @@ class InterfaceTestCase(TestCase):
 
         iface.folded = iface.FOLDED_ASSEMBLY
         self.assertFalse(iface._name.is_visible())
-        
+
 
     def test_folded_interface_persistence(self):
         """Test folded interface saving/loading
@@ -82,12 +82,12 @@ class InterfaceTestCase(TestCase):
         self.load(data)
 
         interfaces = self.diagram.canvas.select(lambda e: isinstance(e, InterfaceItem))
-        self.assertEquals(1, len(interfaces))
+        self.assertEqual(1, len(interfaces))
         # ... gives provided folded mode on load;
         # correct folded mode is determined by connections, which will be
         # recreated later, i.e. required folded mode will be set when
         # implementation connects to the interface
-        self.assertEquals(iface.FOLDED_PROVIDED, interfaces[0].folded)
+        self.assertEqual(iface.FOLDED_PROVIDED, interfaces[0].folded)
 
 
 

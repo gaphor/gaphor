@@ -15,11 +15,11 @@ class FlowTestCase(TestCase):
         flow = self.create(items.FlowItem, UML.ControlFlow)
         flow.subject.name = 'Blah'
 
-        self.assertEquals('Blah', flow._name.text)
+        self.assertEqual('Blah', flow._name.text)
 
         flow.subject = None
 
-        self.assertEquals('', flow._name.text)
+        self.assertEqual('', flow._name.text)
 
 
     def test_guard(self):
@@ -28,13 +28,13 @@ class FlowTestCase(TestCase):
         """
         flow = self.create(items.FlowItem, UML.ControlFlow)
 
-        self.assertEquals('', flow._guard.text)
+        self.assertEqual('', flow._guard.text)
 
         flow.subject.guard = 'GuardMe'
-        self.assertEquals('GuardMe', flow._guard.text)
+        self.assertEqual('GuardMe', flow._guard.text)
 
         flow.subject = None
-        self.assertEquals('', flow._guard.text)
+        self.assertEqual('', flow._guard.text)
 
 
     def test_persistence(self):

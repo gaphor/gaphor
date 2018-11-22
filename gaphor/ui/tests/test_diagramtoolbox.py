@@ -9,7 +9,7 @@ from gaphor import UML
 
 class WindowOwner(object):
     """
-    Placeholder object for a MainWindow. Should provide just enough 
+    Placeholder object for a MainWindow. Should provide just enough
     methods to make the tests work.
     """
 
@@ -33,25 +33,25 @@ class DiagramToolboxTestCase(TestCase):
         TestCase.tearDown(self)
 
     def test_toolbox_actions_shortcut_unique(self):
-        
+
         shortcuts = {}
-        
+
         for category, items in TOOLBOX_ACTIONS:
-        
+
             for action_name, label, stock_id, shortcut in items:
-        
+
                 try:
-                    
+
                     shortcuts[shortcut].append(action_name)
-                    
+
                 except KeyError:
-                    
+
                     shortcuts[shortcut] = [action_name]
 
         for key, val in list(shortcuts.items()):
-            
+
             if key is not None:
-                
+
                 self.assertEqual(len(val), 1, 'Duplicate toolbox shortcut')
 
 
@@ -98,7 +98,7 @@ class DiagramToolboxTestCase(TestCase):
         self._test_placement_action('toolbox-implementation')
 
     # Components:
-    
+
     def test_placement_component(self):
         self._test_placement_action('toolbox-component')
 
@@ -130,11 +130,11 @@ class DiagramToolboxTestCase(TestCase):
 
     def test_placement_object_node(self):
         self._test_placement_action('toolbox-object-node')
-        self.assertEquals(1, len(self.kindof(UML.ObjectNode)))
+        self.assertEqual(1, len(self.kindof(UML.ObjectNode)))
 
     def test_placement_partition(self):
         self._test_placement_action('toolbox-partition')
-        self.assertEquals(0, len(self.kindof(UML.ActivityPartition)))
+        self.assertEqual(0, len(self.kindof(UML.ActivityPartition)))
 
     def test_placement_flow(self):
         self._test_placement_action('toolbox-flow')

@@ -14,19 +14,19 @@ class UndoTest(TestCase):
         undo_manager = self.get_service('undo_manager')
 
         ci1 = self.create(items.ClassItem, UML.Class)
-        self.assertEquals(6, len(self.diagram.canvas.solver.constraints))
+        self.assertEqual(6, len(self.diagram.canvas.solver.constraints))
 
         ci2 = self.create(items.ClassItem, UML.Class)
-        self.assertEquals(12, len(self.diagram.canvas.solver.constraints))
-        
+        self.assertEqual(12, len(self.diagram.canvas.solver.constraints))
+
         a = self.create(items.AssociationItem)
 
         self.connect(a, a.head, ci1)
         self.connect(a, a.tail, ci2)
 
         # Diagram, Association, 2x Class, Property, LiteralSpecification
-        self.assertEquals(6, len(factory.lselect()))
-        self.assertEquals(14, len(self.diagram.canvas.solver.constraints))
+        self.assertEqual(6, len(factory.lselect()))
+        self.assertEqual(14, len(self.diagram.canvas.solver.constraints))
 
         @transactional
         def delete_class():
@@ -39,21 +39,21 @@ class UndoTest(TestCase):
 
         self.assertTrue(undo_manager.can_undo())
 
-        self.assertEquals(ci1, self.get_connected(a.head))
-        self.assertEquals(None, self.get_connected(a.tail))
+        self.assertEqual(ci1, self.get_connected(a.head))
+        self.assertEqual(None, self.get_connected(a.tail))
 
         for i in range(3):
             # Diagram, Class
-            #self.assertEquals(2, len(factory.lselect()), factory.lselect())
+            #self.assertEqual(2, len(factory.lselect()), factory.lselect())
 
-            self.assertEquals(7, len(self.diagram.canvas.solver.constraints))
+            self.assertEqual(7, len(self.diagram.canvas.solver.constraints))
 
             undo_manager.undo_transaction()
 
-            self.assertEquals(14, len(self.diagram.canvas.solver.constraints))
+            self.assertEqual(14, len(self.diagram.canvas.solver.constraints))
 
-            self.assertEquals(ci1, self.get_connected(a.head))
-            self.assertEquals(ci2, self.get_connected(a.tail))
+            self.assertEqual(ci1, self.get_connected(a.head))
+            self.assertEqual(ci2, self.get_connected(a.tail))
 
             undo_manager.redo_transaction()
 # vim:sw=4:et:ai

@@ -38,8 +38,8 @@ class ElementDispatcherTestCase(TestCase):
         # 3:
         p.name = 'func'
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
-        self.assertEquals(3, len(self.events))
-        self.assertEquals(3, len(dispatcher._handlers))
+        self.assertEqual(3, len(self.events))
+        self.assertEqual(3, len(dispatcher._handlers))
 
 
     def test_register_handler_twice(self):
@@ -57,16 +57,16 @@ class ElementDispatcherTestCase(TestCase):
 
         n_handlers = len(dispatcher._handlers)
 
-        self.assertEquals(0, len(self.events))
+        self.assertEqual(0, len(self.events))
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
-        self.assertEquals(n_handlers, len(dispatcher._handlers))
+        self.assertEqual(n_handlers, len(dispatcher._handlers))
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
-        self.assertEquals(n_handlers, len(dispatcher._handlers))
+        self.assertEqual(n_handlers, len(dispatcher._handlers))
         dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
-        self.assertEquals(n_handlers, len(dispatcher._handlers))
+        self.assertEqual(n_handlers, len(dispatcher._handlers))
 
         p.name = 'func'
-        self.assertEquals(1, len(self.events))
+        self.assertEqual(1, len(self.events))
 
 
     def test_unregister_handler(self):
@@ -108,7 +108,7 @@ class ElementDispatcherTestCase(TestCase):
         element.ownedOperation = UML.Operation()
         assert len(self.events) == 1, self.events
         assert len(dispatcher._handlers) == 4
-        
+
         p.name = 'othername'
         assert len(self.events) == 2, self.events
 
@@ -153,7 +153,7 @@ class ElementDispatcherTestCase(TestCase):
 
         element.guard = UML.Constraint()
         assert len(self.events) == 2, self.events
-        
+
 
     def test_notification_with_composition(self):
         """
@@ -201,7 +201,7 @@ class A(Element):
 A.one = association('one', A, lower=0, upper=1, composite=True)
 A.two = association('two', A, lower=0, upper=2, composite=True)
 
- 
+
 class ElementDispatcherAsServiceTestCase(TestCase):
 
     services = TestCase.services + ['element_dispatcher']
@@ -233,7 +233,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         element.ownedOperation = UML.Operation()
         assert len(self.events) == 1, self.events
         assert len(dispatcher._handlers) == 4
-        
+
         p.name = 'othername'
         assert len(self.events) == 2, self.events
 
@@ -244,7 +244,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
     def test_association_notification(self):
         """
         Test notifications with Class object.
-        
+
         Tricky case where no events are fired.
         """
         dispatcher = self.dispatcher
@@ -261,7 +261,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         p1.name = 'foo'
         assert len(self.events) == 1, (self.events, dispatcher._handlers)
         assert len(dispatcher._handlers) == 3
-        
+
         p1.name = 'othername'
         assert len(self.events) == 2, self.events
 
@@ -272,7 +272,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
     def test_association_notification_complex(self):
         """
         Test notifications with Class object.
-        
+
         Tricky case where no events are fired.
         """
         dispatcher = self.dispatcher
@@ -300,7 +300,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         p1.name = 'foo'
         assert len(self.events) == 1, (self.events, dispatcher._handlers)
         assert len(dispatcher._handlers) == 11
-        
+
         p1.name = 'othername'
         assert len(self.events) == 2, self.events
 
@@ -322,7 +322,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[1].one = a.one.two[0].one
         a.one.two[0].one.two = A()
 
-        self.assertEquals(6, len(self.events))
+        self.assertEqual(6, len(self.events))
 
         a.unlink()
         watcher.unregister_handlers()
@@ -347,12 +347,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[0].one.two = A()
         a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        self.assertEquals(7, len(self.events))
+        self.assertEqual(7, len(self.events))
 
         a.unlink()
         watcher.unregister_handlers()
         watcher.unregister_handlers()
-        self.assertEquals(0, len(self.dispatcher._handlers))
+        self.assertEqual(0, len(self.dispatcher._handlers))
 
 
     def test_braking_big_diamond(self):
@@ -373,14 +373,14 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[0].one.two = A()
         a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        self.assertEquals(7, len(self.events))
-        self.assertEquals(6, len(self.dispatcher._handlers))
+        self.assertEqual(7, len(self.events))
+        self.assertEqual(6, len(self.dispatcher._handlers))
 
         del a.one.two[0].one
         #a.unlink()
         watcher.unregister_handlers()
         watcher.unregister_handlers()
-        self.assertEquals(0, len(self.dispatcher._handlers))
+        self.assertEqual(0, len(self.dispatcher._handlers))
 
 
 
@@ -399,13 +399,13 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two = A()
         a.one.two[0].one = a
 
-        self.assertEquals(4, len(self.events))
+        self.assertEqual(4, len(self.events))
 
         #a.one.two[0].one.two = A()
         #a.one.two[0].one.two = A()
 
         a.unlink()
-        self.assertEquals(1, len(self.dispatcher._handlers))
+        self.assertEqual(1, len(self.dispatcher._handlers))
 
 
 

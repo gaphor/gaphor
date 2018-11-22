@@ -1,7 +1,7 @@
 """Unit tests for transactions in Gaphor."""
 
 from builtins import str
-from unittest import TestCase 
+from unittest import TestCase
 
 from zope.component.globalregistry import base
 
@@ -26,31 +26,31 @@ def handle_rollback(event):
     rollbacks.append(event)
 
 class TransactionTestCase(TestCase):
-    """Test case for transactions with the component registry 
+    """Test case for transactions with the component registry
     enabled."""
 
     def setUp(self):
         """Initialize Gaphor services and register transaction event
         handlers."""
-        
+
         Application.init(services=['component_registry'])
-        
+
         component_registry = Application.get_service('component_registry')
-        
+
         component_registry.register_handler(handle_begins, [TransactionBegin])
         component_registry.register_handler(handle_commits, [TransactionCommit])
         component_registry.register_handler(handle_rollback, [TransactionRollback])
-        
+
         del begins[:]
         del commits[:]
         del rollbacks[:]
-        
+
     def tearDown(self):
         """Finished with the test case.  Unregister event handlers that
         store transaction events."""
-        
+
         component_registry = Application.get_service('component_registry')
-        
+
         component_registry.unregister_handler(handle_begins, [TransactionBegin])
         component_registry.unregister_handler(handle_commits, [TransactionCommit])
         component_registry.unregister_handler(handle_rollback, [TransactionRollback])
@@ -58,19 +58,19 @@ class TransactionTestCase(TestCase):
 
     def test_transaction_commit(self):
         """Test committing a transaction."""
-        
+
         tx = Transaction()
-        
+
         self.assertTrue(tx._stack, 'Transaction has no stack')
-        self.assertEquals(1, len(begins), 'Incorrect number of TrasactionBegin events')
-        self.assertEquals(0, len(commits), 'Incorrect number of TransactionCommit events')
-        self.assertEquals(0, len(rollbacks), 'Incorrect number of TransactionRollback events')
+        self.assertEqual(1, len(begins), 'Incorrect number of TrasactionBegin events')
+        self.assertEqual(0, len(commits), 'Incorrect number of TransactionCommit events')
+        self.assertEqual(0, len(rollbacks), 'Incorrect number of TransactionRollback events')
 
         tx.commit()
-        
-        self.assertEquals(1, len(begins), 'Incorrect number of TrasactionBegin events')
-        self.assertEquals(1, len(commits), 'Incorrect number of TransactionCommit events')
-        self.assertEquals(0, len(rollbacks), 'Incorrect number of TransactionRollback events')
+
+        self.assertEqual(1, len(begins), 'Incorrect number of TrasactionBegin events')
+        self.assertEqual(1, len(commits), 'Incorrect number of TransactionCommit events')
+        self.assertEqual(0, len(rollbacks), 'Incorrect number of TransactionRollback events')
         self.assertFalse(tx._stack, 'Transaction stack is not empty')
 
         try:
@@ -83,19 +83,19 @@ class TransactionTestCase(TestCase):
 
     def test_transaction_rollback(self):
         """Test rolling back a transaction."""
-        
+
         tx = Transaction()
-        
+
         self.assertTrue(tx._stack, 'Transaction has no stack')
-        self.assertEquals(1, len(begins), 'Incorrect number of TrasactionBegin events')
-        self.assertEquals(0, len(commits), 'Incorrect number of TransactionCommit events')
-        self.assertEquals(0, len(rollbacks), 'Incorrect number of TransactionRollback events')
+        self.assertEqual(1, len(begins), 'Incorrect number of TrasactionBegin events')
+        self.assertEqual(0, len(commits), 'Incorrect number of TransactionCommit events')
+        self.assertEqual(0, len(rollbacks), 'Incorrect number of TransactionRollback events')
 
         tx.rollback()
-        
-        self.assertEquals(1, len(begins), 'Incorrect number of TrasactionBegin events')
-        self.assertEquals(0, len(commits), 'Incorrect number of TransactionCommit events')
-        self.assertEquals(1, len(rollbacks), 'Incorrect number of TransactionRollback events')
+
+        self.assertEqual(1, len(begins), 'Incorrect number of TrasactionBegin events')
+        self.assertEqual(0, len(commits), 'Incorrect number of TransactionCommit events')
+        self.assertEqual(1, len(rollbacks), 'Incorrect number of TransactionRollback events')
 
         self.assertFalse(tx._stack, 'Transaction stack is not empty')
 
@@ -103,21 +103,21 @@ class TransactionTestCase(TestCase):
     def test_transaction_commit_after_rollback(self):
         """Test committing one transaction after rolling back another
         transaction."""
-        
+
         tx1 = Transaction()
         tx2 = Transaction()
 
         tx2.rollback()
         tx1.commit()
-        
-        self.assertEquals(1, len(begins), 'Incorrect number of TrasactionBegin events')
-        self.assertEquals(0, len(commits), 'Incorrect number of TransactionCommit events')
-        self.assertEquals(1, len(rollbacks), 'Incorrect number of TransactionRollback events')
+
+        self.assertEqual(1, len(begins), 'Incorrect number of TrasactionBegin events')
+        self.assertEqual(0, len(commits), 'Incorrect number of TransactionCommit events')
+        self.assertEqual(1, len(rollbacks), 'Incorrect number of TransactionRollback events')
 
 
     def test_transaction_stack(self):
         """Test the transaction stack."""
-        
+
         tx1 = Transaction()
         tx2 = Transaction()
 
@@ -131,32 +131,32 @@ class TransactionTestCase(TestCase):
 
     def test_transaction_context(self):
         """Test the transaction context manager."""
-        
+
         with Transaction() as tx:
-            
+
             self.assertTrue(isinstance(tx, Transaction), 'Context is not a Transaction instance')
             self.assertTrue(Transaction._stack, 'Transaction instance has no stack inside a context')
-            
+
         self.assertFalse(Transaction._stack, 'Transaction stack should be empty')
 
 
     def test_transaction_context_error(self):
         """Test the transaction context manager with errors."""
-        
+
         try:
             with Transaction():
                 raise TypeError('transaction error')
         except TypeError as e:
-            self.assertEquals('transaction error', str(e), 'Transaction context manager did no raise correct exception')
+            self.assertEqual('transaction error', str(e), 'Transaction context manager did no raise correct exception')
         else:
             self.fail('Transaction context manager did not raise exception when it should have')
-            
+
 class TransactionWithoutComponentRegistryTestCase(TestCase):
     """Test case for transactions with no component registry."""
 
     def test_transaction(self):
         """Test basic transaction functionality."""
-        
+
         tx = Transaction()
         tx.rollback()
 

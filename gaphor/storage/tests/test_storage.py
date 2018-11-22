@@ -68,7 +68,7 @@ class StorageTestCase(TestCase):
         assert '<Diagram ' in out.data
         assert '<Comment ' in out.data
         assert '<Class ' in out.data
-        
+
 
     def test_save_item(self):
         """Save a diagranm item too.
@@ -95,7 +95,7 @@ class StorageTestCase(TestCase):
         #self.element_factory.create(UML.Diagram)
         self.element_factory.create(UML.Comment)
         self.element_factory.create(UML.Class)
- 
+
         data = self.save()
         self.load(data)
 
@@ -105,7 +105,7 @@ class StorageTestCase(TestCase):
         assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
         assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Comment))) == 1
         assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Class))) == 1
-        
+
 
     def test_load_uml_2(self):
         """
@@ -138,11 +138,11 @@ class StorageTestCase(TestCase):
         assert iface.name == 'Circus'
         assert len(iface.presentation) == 1
         assert tuple(iface.presentation[0].matrix) == (1, 0, 0, 1, 10, 10), tuple(iface.presentation[0].matrix)
-        
+
         # Check load/save of other canvas items.
         assert len(d.canvas.get_all_items()) == 3
         for item in d.canvas.get_all_items():
-            assert item.subject, 'No subject for %s' % item 
+            assert item.subject, 'No subject for %s' % item
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
         #print d1, d1.subject
@@ -162,12 +162,12 @@ class StorageTestCase(TestCase):
         """
         Test if the meta model can be loaded.
         """
-        
+
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'gaphor/UML/uml2.gaphor')
-        
+
         with io.open(path) as ifile:
-            
+
             storage.load(ifile, factory=self.element_factory)
 
     def test_load_uml_relationships(self):
@@ -248,11 +248,11 @@ class StorageTestCase(TestCase):
         fd.close()
 
         diagrams = list(self.kindof(UML.Diagram))
-        self.assertEquals(1, len(diagrams))
+        self.assertEqual(1, len(diagrams))
         d = diagrams[0]
         a = d.canvas.select(lambda e: isinstance(e, items.AssociationItem))[0]
         self.assertTrue(a.subject is not None)
-        self.assertEquals(old_a_subject_id, a.subject.id)
+        self.assertEqual(old_a_subject_id, a.subject.id)
         cinfo_head = a.canvas.get_connection(a.head)
         self.assertTrue(cinfo_head.connected is not None)
         cinfo_tail = a.canvas.get_connection(a.tail)
@@ -261,51 +261,51 @@ class StorageTestCase(TestCase):
         #assert a.head_end._name
 
     def test_load_save(self):
-        
+
         """Test loading and saving models"""
-        
+
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'test-diagrams/simple-items.gaphor')
-        
+
         with io.open(path, 'r') as ifile:
-            
+
             storage.load(ifile, factory=self.element_factory)
-            
+
         pf = PseudoFile()
-        
+
         storage.save(XMLWriter(pf), factory=self.element_factory)
 
         with io.open(path, 'r') as ifile:
-            
+
             orig = ifile.read()
-            
+
         copy = pf.data
 
         with io.open('tmp.gaphor', 'w') as ofile:
-            
+
             ofile.write(copy)
-            
+
         expr = re.compile('gaphor-version="[^"]*"')
         orig = expr.sub('%VER%', orig)
         copy = expr.sub('%VER%', copy)
 
-        self.assertEquals(copy, orig, 'Saved model does not match copy')
+        self.assertEqual(copy, orig, 'Saved model does not match copy')
 
 
 class FileUpgradeTestCase(TestCase):
     def test_association_upgrade(self):
         """Test association navigability upgrade in Gaphor 0.15.0
         """
-        
+
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'test-diagrams/associations-pre015.gaphor')
-        
+
         with io.open(path) as ifile:
-            
+
             storage.load(ifile, factory=self.element_factory)
 
         diagrams = list(self.kindof(UML.Diagram))
-        self.assertEquals(1, len(diagrams))
+        self.assertEqual(1, len(diagrams))
         diagram = diagrams[0]
         assocs = diagram.canvas.select(lambda e: isinstance(e, items.AssociationItem))
         assert len(assocs) == 8
@@ -353,43 +353,43 @@ class FileUpgradeTestCase(TestCase):
     def test_tagged_values_upgrade(self):
         """Test tagged values upgrade in Gaphor 0.15.0
         """
-        
+
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'test-diagrams/taggedvalues-pre015.gaphor')
-        
+
         with io.open(path) as ifile:
-            
+
             storage.load(ifile, factory=self.element_factory)
-                    
+
         diagrams = list(self.kindof(UML.Diagram))
-        self.assertEquals(1, len(diagrams))
+        self.assertEqual(1, len(diagrams))
         diagram = diagrams[0]
         classes = diagram.canvas.select(lambda e: isinstance(e, items.ClassItem))
         profiles = self.element_factory.lselect(lambda e: isinstance(e, UML.Profile))
         stereotypes = self.element_factory.lselect(lambda e: isinstance(e, UML.Stereotype))
 
-        self.assertEquals(2, len(classes))
+        self.assertEqual(2, len(classes))
         c1, c2 = classes
 
-        self.assertEquals(1, len(profiles))
+        self.assertEqual(1, len(profiles))
         profile = profiles[0]
-        self.assertEquals('version 0.15 conversion', profile.name)
+        self.assertEqual('version 0.15 conversion', profile.name)
 
         # TODO: This test is failing when run with all nosetests, do we need some type of teardown prior to the test?
 
-        self.assertEquals(1, len(stereotypes))
+        self.assertEqual(1, len(stereotypes))
         stereotype = stereotypes[0]
-        self.assertEquals('Tagged', stereotype.name)
-        self.assertEquals(profile, stereotype.namespace)
-        self.assertEquals('c1', c1.subject.name)
-        self.assertEquals('c2', c2.subject.name)
-        self.assertEquals(stereotype, c1.subject.appliedStereotype[0].classifier[0])
-        self.assertEquals(stereotype, c2.subject.appliedStereotype[0].classifier[0])
-        self.assertEquals('t1', c1.subject.appliedStereotype[0].slot[0].definingFeature.name)
-        self.assertEquals('t2', c1.subject.appliedStereotype[0].slot[1].definingFeature.name)
-        self.assertEquals('t5', c2.subject.appliedStereotype[0].slot[0].definingFeature.name)
-        self.assertEquals('t6', c2.subject.appliedStereotype[0].slot[1].definingFeature.name)
-        self.assertEquals('t7', c2.subject.appliedStereotype[0].slot[2].definingFeature.name)
+        self.assertEqual('Tagged', stereotype.name)
+        self.assertEqual(profile, stereotype.namespace)
+        self.assertEqual('c1', c1.subject.name)
+        self.assertEqual('c2', c2.subject.name)
+        self.assertEqual(stereotype, c1.subject.appliedStereotype[0].classifier[0])
+        self.assertEqual(stereotype, c2.subject.appliedStereotype[0].classifier[0])
+        self.assertEqual('t1', c1.subject.appliedStereotype[0].slot[0].definingFeature.name)
+        self.assertEqual('t2', c1.subject.appliedStereotype[0].slot[1].definingFeature.name)
+        self.assertEqual('t5', c2.subject.appliedStereotype[0].slot[0].definingFeature.name)
+        self.assertEqual('t6', c2.subject.appliedStereotype[0].slot[1].definingFeature.name)
+        self.assertEqual('t7', c2.subject.appliedStereotype[0].slot[2].definingFeature.name)
 
 
     def test_lifeline_messages_upgrade(self):
@@ -398,23 +398,23 @@ class FileUpgradeTestCase(TestCase):
 
         dist = pkg_resources.get_distribution('gaphor')
         path = os.path.join(dist.location, 'test-diagrams/lifelines-pre015.gaphor')
-        
+
         with io.open(path) as ifile:
-            
-            storage.load(ifile, factory=self.element_factory)        
+
+            storage.load(ifile, factory=self.element_factory)
 
         diagrams = list(self.kindof(UML.Diagram))
-        self.assertEquals(1, len(diagrams))
+        self.assertEqual(1, len(diagrams))
         diagram = diagrams[0]
 
         lifelines = diagram.canvas.select(lambda e: isinstance(e, items.LifelineItem))
         occurrences = self.kindof(UML.MessageOccurrenceSpecification)
         messages = self.kindof(UML.Message)
 
-        self.assertEquals(2, len(lifelines))
-        self.assertEquals(12, len(messages))
+        self.assertEqual(2, len(lifelines))
+        self.assertEqual(12, len(messages))
         # 2 * 12 but there are 4 lost/found messages
-        self.assertEquals(20, len(set(occurrences)))
+        self.assertEqual(20, len(set(occurrences)))
 
         l1, l2 = lifelines
         if l1.subject.name == 'a2':

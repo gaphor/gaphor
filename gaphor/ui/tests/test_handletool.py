@@ -116,18 +116,18 @@ class HandleToolTestCase(unittest.TestCase):
         handle.pos = 245, 248
         item = tool.glue(line, handle, (245, 248))
         self.assertTrue(item is not None)
-        self.assertEquals((238, 248), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
+        self.assertEqual((238, 248), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
 
         handle.pos = 245, 248
         tool.connect(line, handle, (245, 248))
         cinfo = diagram.canvas.get_connection(handle)
         self.assertTrue(cinfo.constraint is not None)
         self.assertTrue(cinfo.connected is actor, cinfo.connected)
-        self.assertEquals((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
+        self.assertEqual((238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
 
         Connector(line, handle).disconnect()
         #tool.disconnect(line, handle)
-        
+
         cinfo = diagram.canvas.get_connection(handle)
 
         self.assertTrue(cinfo is None)
@@ -184,17 +184,17 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertTrue(cinfo.item is line)
         self.assertTrue(cinfo.connected is actor)
 
-        self.assertEquals((200, 200), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
-        
+        self.assertEqual((200, 200), view.get_matrix_i2v(line).transform_point(handle.x, handle.y))
+
         # Try to connect far away from any item will only do a full disconnect
-        self.assertEquals(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
+        self.assertEqual(len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
         sink = tool.glue(line, handle, (500, 500))
         self.assertTrue(sink is None, sink)
         tool.connect(line, handle, (500, 500))
 
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
+        self.assertEqual((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         cinfo = view.canvas.get_connection(handle)
         self.assertTrue(cinfo is None)
 
@@ -206,8 +206,8 @@ class HandleToolTestCase(unittest.TestCase):
         diagram = element_factory.create(UML.Diagram)
 
         comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-        #self.assertEquals(30, comment.height)
-        #self.assertEquals(100, comment.width)
+        #self.assertEqual(30, comment.height)
+        #self.assertEqual(100, comment.width)
 
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
@@ -228,7 +228,7 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(Event(x=0, y=0, state=0))
 
         handle = line.handles()[0]
-        self.assertEquals((.0, .0), view.canvas.get_matrix_i2c(line).transform_point(*handle.pos))
+        self.assertEqual((.0, .0), view.canvas.get_matrix_i2c(line).transform_point(*handle.pos))
         cinfo = diagram.canvas.get_connection(handle)
         self.assertTrue(cinfo.connected is comment)
         #self.assertTrue(handle.connected_to is comment, 'c = ' + str(handle.connected_to))
@@ -241,7 +241,7 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
+        self.assertEqual((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         cinfo = diagram.canvas.get_connection(handle)
         self.assertTrue(cinfo.connected is actor)
         #self.assertTrue(handle.connection_data is not None)
@@ -254,7 +254,7 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
-        self.assertEquals((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
+        self.assertEqual((200, 200), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         cinfo = diagram.canvas.get_connection(handle)
         self.assertTrue(cinfo.connected is actor)
         #self.assertTrue(handle.connection_data is not None)
@@ -267,11 +267,11 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(Event(x=500, y=500, state=0))
 
         handle = line.handles()[-1]
-        self.assertEquals((500, 500), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
+        self.assertEqual((500, 500), view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y))
         cinfo = diagram.canvas.get_connection(handle)
         self.assertTrue(cinfo is None)
         #self.assertTrue(handle.connection_data is None)
-        self.assertEquals(len(comment.subject.annotatedElement), 0)
+        self.assertEqual(len(comment.subject.annotatedElement), 0)
 
 
 # vim:sw=4:et:ai

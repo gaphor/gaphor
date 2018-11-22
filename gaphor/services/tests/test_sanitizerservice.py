@@ -13,7 +13,7 @@ class SanitizerServiceTest(TestCase):
         Remove element if the last instance of an item is deleted.
         """
         ef = self.element_factory
-        
+
         klassitem = self.create(items.ClassItem, UML.Class)
         klass = klassitem.subject
 
@@ -35,7 +35,7 @@ class SanitizerServiceTest(TestCase):
         """
         factory = self.element_factory
         create = factory.create
-        
+
         # Set the stage
         #metaklass = create(UML.Class)
         #metaklass.name = 'Class'
@@ -55,13 +55,13 @@ class SanitizerServiceTest(TestCase):
 
         st_attr.unlink()
 
-        self.assertEquals([], list(stereotype.ownedMember))
-        self.assertEquals([], list(instspec.slot))
+        self.assertEqual([], list(stereotype.ownedMember))
+        self.assertEqual([], list(instspec.slot))
 
     def test_extension_disconnect(self):
         factory = self.element_factory
         create = factory.create
-        
+
         # Set the stage
         metaklass = create(UML.Class)
         metaklass.name = 'Class'
@@ -80,12 +80,12 @@ class SanitizerServiceTest(TestCase):
         # Causes set event
         del ext.ownedEnd.type
 
-        self.assertEquals([], list(klass.appliedStereotype))
+        self.assertEqual([], list(klass.appliedStereotype))
 
     def test_extension_deletion(self):
         factory = self.element_factory
         create = factory.create
-        
+
         # Set the stage
         metaklass = create(UML.Class)
         metaklass.name = 'Class'
@@ -103,12 +103,12 @@ class SanitizerServiceTest(TestCase):
 
         ext.unlink()
 
-        self.assertEquals([], list(klass.appliedStereotype))
+        self.assertEqual([], list(klass.appliedStereotype))
 
     def test_extension_deletion_with_2_metaclasses(self):
         factory = self.element_factory
         create = factory.create
-        
+
         # Set the stage
         metaklass = create(UML.Class)
         metaklass.name = 'Class'
@@ -132,14 +132,14 @@ class SanitizerServiceTest(TestCase):
 
         ext1.unlink()
 
-        self.assertEquals([], list(klass.appliedStereotype))
+        self.assertEqual([], list(klass.appliedStereotype))
         self.assertTrue(klass in self.element_factory)
-        self.assertEquals([instspec2], list(iface.appliedStereotype))
+        self.assertEqual([instspec2], list(iface.appliedStereotype))
 
     def test_stereotype_deletion(self):
         factory = self.element_factory
         create = factory.create
-        
+
         # Set the stage
         metaklass = create(UML.Class)
         metaklass.name = 'Class'
@@ -157,6 +157,6 @@ class SanitizerServiceTest(TestCase):
 
         stereotype.unlink()
 
-        self.assertEquals([], list(klass.appliedStereotype))
+        self.assertEqual([], list(klass.appliedStereotype))
 
 # vim:sw=4:et:ai

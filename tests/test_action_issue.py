@@ -24,24 +24,24 @@ class ActionIssueTestCase(TestCase):
 
         # Actions live in partitions:
         partitions = ef.lselect(lambda e: e.isKindOf(UML.ActivityPartition))
-        self.assertEquals(2, len(partitions))
+        self.assertEqual(2, len(partitions))
 
         # Okay, so far the data model is saved correctly. Now, how do the
         # handles behave?
         diagrams = ef.lselect(lambda e: e.isKindOf(UML.Diagram))
-        self.assertEquals(1, len(diagrams))
-        
+        self.assertEqual(1, len(diagrams))
+
         canvas = diagrams[0].canvas
         assert 9 == len(canvas.get_all_items())
         # Part, Part, Act, Act, Part, Act, Flow, Flow, Flow
 
         for e in actions + flows:
-            self.assertEquals(1, len(e.presentation), e)
+            self.assertEqual(1, len(e.presentation), e)
         for i in canvas.select(lambda e: isinstance(e, (FlowItem, ActionItem))):
             self.assertTrue(i.subject, i)
 
         # Loaded as:
-        # 
+        #
         # actions[0] --> flows[0, 1]
         # flows[0, 2] --> actions[2]
         # flows[1] --> actions[1] --> flows[2]

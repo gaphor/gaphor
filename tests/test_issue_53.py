@@ -29,12 +29,12 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
 
         # Find all profile instances
         profiles = element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
-        
+
         # Check there is 1 profile
-        self.assertEquals(1, len(profiles))
+        self.assertEqual(1, len(profiles))
 
         # Check the profile has 1 presentation
-        self.assertEquals(1, len(profiles[0].presentation))
+        self.assertEqual(1, len(profiles[0].presentation))
 
         # Unlink the presentation
         profiles[0].presentation[0].unlink()
@@ -42,18 +42,18 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
         self.assertFalse(element_factory.lselect(lambda e: e.isKindOf(UML.Profile)))
 
         classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-        self.assertEquals(1, len(classes))
+        self.assertEqual(1, len(classes))
 
         # Check if the link is really removed:
         self.assertFalse(classes[0].appliedStereotype)
         self.assertFalse(element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification)))
-        self.assertEquals(3, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))))
+        self.assertEqual(3, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))))
 
     def testPackageRemovalByRemovingTheDiagram(self):
         element_factory = Application.get_service('element_factory')
 
         diagram = element_factory.lselect(lambda e: e.isKindOf(UML.Diagram) and e.name == 'Stereotypes diagram')[0]
-        
+
         self.assertTrue(diagram)
 
         diagram.unlink()
@@ -61,11 +61,11 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
         self.assertFalse(element_factory.lselect(lambda e: e.isKindOf(UML.Profile)))
 
         classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-        self.assertEquals(1, len(classes))
+        self.assertEqual(1, len(classes))
 
         # Check if the link is really removed:
         self.assertFalse(classes[0].appliedStereotype)
         self.assertFalse(element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification)))
-        self.assertEquals(2, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))))
+        self.assertEqual(2, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))))
 
 # vim:sw=4:et:ai

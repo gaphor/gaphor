@@ -16,7 +16,7 @@ class InitialPseudostate(TestCase):
         """Test creation of initial pseudostate
         """
         item = self.create(InitialPseudostateItem, UML.Pseudostate)
-        self.assertEquals('initial', item.subject.kind)
+        self.assertEqual('initial', item.subject.kind)
 
 
     def test_history_pseudostate(self):
@@ -25,7 +25,7 @@ class InitialPseudostate(TestCase):
         item = self.create(HistoryPseudostateItem, UML.Pseudostate)
         # history setting is done in the DiagramToolbox factory:
         item.subject.kind = 'shallowHistory'
-        self.assertEquals('shallowHistory', item.subject.kind)
+        self.assertEqual('shallowHistory', item.subject.kind)
 
 
 # vim:sw=4:et:ai

@@ -39,9 +39,9 @@ class MetaclassNameEditor(object):
 
     def __init__(self, item):
         self.item = item
-        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+        self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = EventWatcher(item.subject)
-    
+
     def construct(self):
         page = Gtk.VBox()
 
@@ -84,7 +84,7 @@ class MetaclassNameEditor(object):
     @transactional
     def _on_name_change(self, entry):
         self.item.subject.name = entry.get_text()
-        
+
 component.provideAdapter(MetaclassNameEditor,
         adapts=[items.MetaclassItem], name='Properties')
 

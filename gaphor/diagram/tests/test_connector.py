@@ -30,10 +30,10 @@ class ConnectorItemTestCase(TestCase):
         #conn.end = end
         #self.assertTrue(conn._end is end)
 
-        self.assertEquals('', conn._interface.text)
+        self.assertEqual('', conn._interface.text)
 
         iface.name = 'RedSea'
-        self.assertEquals('RedSea', conn._interface.text)
+        self.assertEqual('RedSea', conn._interface.text)
 
 
     def test_setting_end(self):
@@ -47,11 +47,11 @@ class ConnectorItemTestCase(TestCase):
         conn.subject.end = end
         #conn.end = end
         #self.assertTrue(conn._end is end)
-        self.assertEquals('RedSea', conn._interface.text)
+        self.assertEqual('RedSea', conn._interface.text)
 
         del conn.subject.end[end]
         conn.end = None
-        self.assertEquals('', conn._interface.text)
+        self.assertEqual('', conn._interface.text)
 
 
     def test_persistence(self):

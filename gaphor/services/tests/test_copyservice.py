@@ -29,7 +29,7 @@ class CopyServiceTestCase(TestCase):
         service.paste(diagram)
 
         assert len(diagram.canvas.get_all_items()) == 2, diagram.canvas.get_all_items()
-    
+
     def test_copy_named_item(self):
         service = CopyService()
         service.init(Application)
@@ -41,12 +41,12 @@ class CopyServiceTestCase(TestCase):
         c.subject.name = 'Name'
 
         from gi.repository import GObject
-        self.assertEquals(0, GObject.main_depth())
+        self.assertEqual(0, GObject.main_depth())
 
         diagram.canvas.update_now()
         i = list(diagram.canvas.get_all_items())
-        self.assertEquals(1, len(i), i)
-        self.assertEquals('Name', i[0]._name.text)
+        self.assertEqual(1, len(i), i)
+        self.assertEqual('Name', i[0]._name.text)
 
         service.copy([c])
         assert diagram.canvas.get_all_items() == [ c ]
@@ -55,12 +55,12 @@ class CopyServiceTestCase(TestCase):
 
         i = diagram.canvas.get_all_items()
 
-        self.assertEquals(2, len(i), i)
+        self.assertEqual(2, len(i), i)
 
         diagram.canvas.update_now()
 
-        self.assertEquals('Name', i[0]._name.text)
-        self.assertEquals('Name', i[1]._name.text)
+        self.assertEqual('Name', i[0]._name.text)
+        self.assertEqual('Name', i[1]._name.text)
 
 
     def _skip_test_copy_paste_undo(self):
@@ -91,7 +91,7 @@ class CopyServiceTestCase(TestCase):
 
         all_items = list(self.diagram.canvas.get_all_items())
 
-        self.assertEquals(6, len(all_items))
+        self.assertEqual(6, len(all_items))
         self.assertFalse(orphan_references(self.element_factory))
 
         self.assertSame(all_items[0].subject, all_items[3].subject)
@@ -102,7 +102,7 @@ class CopyServiceTestCase(TestCase):
 
         undo_manager.undo_transaction()
 
-        self.assertEquals(3, len(self.diagram.canvas.get_all_items()))
+        self.assertEqual(3, len(self.diagram.canvas.get_all_items()))
         self.assertFalse(orphan_references(self.element_factory))
 
 

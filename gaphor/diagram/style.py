@@ -38,7 +38,7 @@ class Style(object):
 
     is translated to::
 
-    >>> print InitialNodeItem().style.name_align
+    >>> print(InitialNodeItem().style.name_align)
     ('center', 'top')
     """
 

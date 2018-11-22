@@ -128,13 +128,14 @@ class DisconnectHandle(object):
             log.debug('Disconnecting %s.%s' % (item, handle))
             if cinfo:
                 adapter = component.queryMultiAdapter((cinfo.connected, item), IConnect)
+                print("Adapter is {}".format(adapter))
                 adapter.disconnect(handle)
 
 
 
 class TextEditTool(Tool):
     """
-    Text edit tool. Allows for elements that can adapt to the 
+    Text edit tool. Allows for elements that can adapt to the
     IEditable interface to be edited.
     """
 
@@ -161,7 +162,7 @@ class TextEditTool(Tool):
         text_view.set_left_margin(2)
         text_view.set_right_margin(2)
         text_view.show()
-        
+
         frame = Gtk.Frame()
         frame.set_shadow_type(Gtk.ShadowType.IN)
         #frame.set_border_width(1)
@@ -266,7 +267,7 @@ class PlacementTool(_PlacementTool):
                     self.handle_tool.connect(self.new_item, opposite, vpos)
             return True
         return False
-            
+
     def on_button_release(self, event):
         try:
             if self.after_handler:
@@ -426,7 +427,7 @@ class DropZoneInMotion(GuidedItemInMotion):
             view.dropzone_item = None
             view.window.set_cursor(None)
 
-    
+
 class TransactionalToolChain(ToolChain):
     """
     In addition to a normal toolchain, this chain begins an undo-transaction
