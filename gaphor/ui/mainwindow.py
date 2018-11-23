@@ -864,9 +864,7 @@ class Toolbox(object):
             action_name = button.action_name
             action = action_group.get_action(action_name)
             if action:
-                pass
-                # FixMe: action.connect_proxy(button)
-                # AttributeError: 'RadioAction' object has no attribute 'connect_proxy'
+                button.set_related_action(action)
 
     def set_active_tool(self, action_name=None, shortcut=None):
         """

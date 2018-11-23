@@ -10,6 +10,7 @@ from builtins import object
 import cairo
 import gi
 from gaphas.geometry import distance_rectangle_point, Rectangle
+from gaphas.freehand import FreeHandCairoContext
 from gi.repository import Pango
 gi.require_version('PangoCairo', '1.0')
 from gi.repository import PangoCairo
@@ -457,6 +458,8 @@ class TextElement(object):
 
         cr = context.cairo
         cr.save()
+        if isinstance(cr, FreeHandCairoContext):
+            cr = cr.cr
         if isinstance(cr, cairo.Context) and self.text:
             cr.move_to(x, y)
             layout = PangoCairo.create_layout(cr)
