@@ -40,8 +40,8 @@ class CopyServiceTestCase(TestCase):
 
         c.subject.name = 'Name'
 
-        from gi.repository import GObject
-        self.assertEqual(0, GObject.main_depth())
+        from gi.repository import GLib
+        self.assertEqual(0, GLib.main_depth())
 
         diagram.canvas.update_now()
         i = list(diagram.canvas.get_all_items())
