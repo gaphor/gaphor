@@ -182,7 +182,7 @@ class recursemixin(object):
     ...         self.name = name
     ...         self.children = list(children)
     ...     def dump(self, level=0):
-    ...         print ' ' * level, self.name
+    ...         print(' ' * level, self.name)
     ...         for c in self.children: c.dump(level+1)
 
     Now if we make a (complex) structure out of it:
@@ -216,7 +216,7 @@ class recursemixin(object):
     ...         self.name = name
     ...         self.children = rlist(children)
     ...     def dump(self, level=0):
-    ...         print ' ' * level, self.name
+    ...         print(' ' * level, self.name)
     ...         for c in self.children: c.dump(level+1)
 
     >>> a = A('root', A('a', A('b'), A('c'), A('d')), A('e', A('one'), A('two')))

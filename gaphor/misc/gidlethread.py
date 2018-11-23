@@ -32,7 +32,7 @@ class GIdleThread(object):
     It can be started with start(). While the "thread" is running is_alive()
     can be called to see if it's alive. wait([timeout]) will wait till the
     generator is finished, or timeout seconds.
-    
+
     If an exception is raised from within the generator, it is stored in
     the exc_info property. Execution of the generator is finished. The
     exc_info property contains a tuple (exc_type, exc_value, exc_traceback),
@@ -47,11 +47,11 @@ class GIdleThread(object):
     ...         yield x
     >>> t = GIdleThread(counter(123))
     >>> id = t.start()
-    >>> main = GObject.main_context_default()
+    >>> main = GLib.main_context_default()
     >>> while t.is_alive():
     ...     main.iteration(False) # doctest: +ELLIPSIS
     True
-    ...
+
     """
 
     def __init__(self, generator, queue=None):
@@ -76,7 +76,7 @@ class GIdleThread(object):
         """
         clock = time.clock
         start_time = clock()
-        main = GObject.main_context_default()
+        main = GLib.main_context_default()
         while self.is_alive():
             main.iteration(False)
             if timeout and (clock() - start_time >= timeout):
@@ -196,8 +196,8 @@ if __name__ == '__main__':
     queue = Queue()
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
-    
-    main = GObject.main_context_default()
+
+    main = GLib.main_context_default()
     c.start()
     s.start()
     s.wait(2)
@@ -206,8 +206,8 @@ if __name__ == '__main__':
     queue = Queue(size=1)
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
-    
-    main = GObject.main_context_default()
-    c.start(priority=GObject.PRIORITY_DEFAULT)
+
+    main = GLib.main_context_default()
+    c.start(priority=GLib.PRIORITY_DEFAULT)
     s.start()
     s.wait(3)
