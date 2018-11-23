@@ -24,7 +24,7 @@ from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagramtab import DiagramTab
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
-from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange
+from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange, DiagramShow
 from gaphor.ui.interfaces import IDiagramTabChange
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.layout import deserialize
@@ -250,29 +250,6 @@ class MainWindow(object):
             return response == Gtk.ResponseType.REJECT
         return True
 
-
-    def show_diagram(self, diagram):
-        """
-        Show a Diagram element in a new tab.
-        If a tab is already open, show that one instead.
-        """
-        # Try to find an existing window/tab and let it get focus:
-        for tab in self.get_tabs():
-            if tab.get_diagram() is diagram:
-                self.set_current_page(tab)
-                return tab
-
-        tab = DiagramTab(diagram)
-        dock_item = tab.construct()
-        dock_item.set_name('diagram-tab')
-        dock_item.diagram_tab = tab
-        assert dock_item.get_name() == 'diagram-tab'
-        tab.set_drawing_style(self.properties('diagram.sloppiness', 0))
-
-        self.add_tab(dock_item)
-
-        return tab
-
     def get_widgets(self, name):
         return []
 
@@ -406,7 +383,8 @@ class MainWindow(object):
         """
         # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
         for diagram in self.element_factory.select(lambda e: e.isKindOf(UML.Diagram) and not (e.namespace and e.namespace.namespace)):
-            self.show_diagram(diagram)
+            # self.show_diagram(diagram)
+            self.component_registry.handle(DiagramShow(diagram))
 
 
     @component.adapter(FileManagerStateChanged)
@@ -697,7 +675,8 @@ class Namespace(object):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
-            self.main_window.show_diagram(element)
+            self.component_registry.handle(DiagramShow(element))
+
         else:
             log.debug('No action defined for element %s' % type(element).__name__)
 
@@ -728,7 +707,7 @@ class Namespace(object):
             diagram.name = 'New diagram'
 
         self.select_element(diagram)
-        self.main_window.show_diagram(diagram)
+        self.component_registry.handle(DiagramShow(diagram))
         self.tree_view_rename_selected()
 
 
@@ -863,7 +842,6 @@ class Toolbox(object):
     def reset_tool_after_create(self, active):
         self.properties.set('reset-tool-after-create', active)
 
-
     #def _insensivate_toolbox(self):
     #    for button in self._toolbox.buttons:
     #        button.set_property('sensitive', False)
@@ -887,7 +865,6 @@ class Toolbox(object):
             action = action_group.get_action(action_name)
             if action:
                 action.connect_proxy(button)
-
 
     def set_active_tool(self, action_name=None, shortcut=None):
         """
@@ -915,18 +892,53 @@ class Diagrams(object):
     properties = inject('properties')
 
     def __init__(self):
-        pass
+        self._notebook = None
         #self.action_group = build_action_group(self)
         #self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
 
     def open(self):
-        self.label = Gtk.Label(label="There will be diagrams")
-        self.label.show()
-        return self.label
+        self._notebook = Gtk.Notebook()
+        self._notebook.show()
+        self.component_registry.register_handler(self._on_show_diagram)
+        return self._notebook
 
     def close(self):
-        self.label.destroy()
-        self.label = None
+        self.component_registry.unregister_handler(self._on_show_diagram)
+        self._notebook.destroy()
+        self._notebook = None
+
+    # Hook into diagram open event
+    def _on_open_diagram(self, diagram):
+        if self._notebook:
+            tab = Gtk.Label(label=_('TAB'))
+            tab.show()
+            self._notebook.append_page(tab, Gtk.Label(label=_('About')))
+
+    @component.adapter(DiagramShow)
+    def _on_show_diagram(self, event):
+        """
+        Show a Diagram element in a new tab.
+        If a tab is already open, show that one instead.
+        """
+        diagram = event.diagram
+
+        # Try to find an existing window/tab and let it get focus:
+        # for tab in self.get_tabs():
+        #     if tab.get_diagram() is diagram:
+        #         self.set_current_page(tab)
+        #         return tab
+
+        tab = DiagramTab(diagram)
+        widget = tab.construct()
+        widget.set_name('diagram-tab')
+        widget.diagram_tab = tab
+        assert widget.get_name() == 'diagram-tab'
+        # tab.set_drawing_style(self.properties('diagram.sloppiness', 0))
+
+        # self.add_tab(dock_item)
+        page_num = self._notebook.append_page(widget, Gtk.Label(label=diagram.name))
+        self._notebook.set_current_page(page_num)
+        return tab
 
 
 # vim:sw=4:et:ai
