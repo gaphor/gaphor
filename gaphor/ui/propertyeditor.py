@@ -1,6 +1,8 @@
 """
 """
 
+import logging
+
 from builtins import object
 from gi.repository import Gtk
 from zope import component
@@ -10,6 +12,7 @@ from gaphor.UML.interfaces import IAssociationChangeEvent
 from gaphor.core import _, inject
 from gaphor.ui.interfaces import IPropertyPage, IDiagramSelectionChange
 
+log = logging.getLogger(__name__)
 
 class PropertyEditor(object):
     """
@@ -27,16 +30,16 @@ class PropertyEditor(object):
         #self._default_tab = _('Properties')
         #self._last_tab = self._default_tab
         self._expanded_pages = { _('Properties') : True }
-    
+
     def construct(self):
         self.vbox = Gtk.VBox()
         self._selection_change()
 
-        # Make sure we recieve 
+        # Make sure we recieve
         self.component_registry.register_handler(self._selection_change)
         self.component_registry.register_handler(self._element_changed)
         #self.component_registry.register_handler(self._new_item_on_diagram)
-        
+
         return self.vbox
 
     def get_adapters(self, item):
@@ -85,8 +88,8 @@ class PropertyEditor(object):
                 page.show_all()
             except Exception as e:
                 log.error('Could not construct property page for ' + name, exc_info=True)
-        
-            
+
+
     def clear_pages(self):
         """
         Remove all tabs from the notebook.
@@ -103,7 +106,7 @@ class PropertyEditor(object):
     def _selection_change(self, event=None):
         """
         Called when a diagram item receives focus.
-        
+
         This reloads all tabs based on the current selection.
         """
         item = event and event.focused_item
@@ -137,6 +140,6 @@ class PropertyEditor(object):
             default = page.get_data('default')
             if default:
                 default.grab_focus()
-        
+
 
 # vim:sw=4:et:ai
