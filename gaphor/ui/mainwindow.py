@@ -528,7 +528,6 @@ class Namespace(object):
     element_factory = inject('element_factory')
     ui_manager = inject('ui_manager')
     action_manager = inject('action_manager')
-    main_window = inject('main_window')
 
     menu_xml = STATIC_MENU_XML % ('window', 'open-namespace')
 
@@ -865,7 +864,9 @@ class Toolbox(object):
             action_name = button.action_name
             action = action_group.get_action(action_name)
             if action:
-                action.connect_proxy(button)
+                pass
+                # FixMe: action.connect_proxy(button)
+                # AttributeError: 'RadioAction' object has no attribute 'connect_proxy'
 
     def set_active_tool(self, action_name=None, shortcut=None):
         """
@@ -889,7 +890,6 @@ class Diagrams(object):
     placement = ('left', 'diagrams')
 
     component_registry = inject('component_registry')
-    main_window = inject('main_window')
     properties = inject('properties')
 
     def __init__(self):
@@ -907,13 +907,6 @@ class Diagrams(object):
         self.component_registry.unregister_handler(self._on_show_diagram)
         self._notebook.destroy()
         self._notebook = None
-
-    # Hook into diagram open event
-    def _on_open_diagram(self, diagram):
-        if self._notebook:
-            tab = Gtk.Label(label=_('TAB'))
-            tab.show()
-            self._notebook.append_page(tab, Gtk.Label(label=_('About')))
 
     @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):
@@ -934,11 +927,12 @@ class Diagrams(object):
         widget.set_name('diagram-tab')
         widget.diagram_tab = tab
         assert widget.get_name() == 'diagram-tab'
-        # tab.set_drawing_style(self.properties('diagram.sloppiness', 0))
+        tab.set_drawing_style(self.properties('diagram.sloppiness', 0))
 
-        # self.add_tab(dock_item)
         page_num = self._notebook.append_page(widget, Gtk.Label(label=diagram.name))
         self._notebook.set_current_page(page_num)
+        self.component_registry.handle(DiagramTabChange(widget))
+
         return tab
 
 
