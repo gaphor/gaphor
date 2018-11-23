@@ -507,7 +507,8 @@ class MainWindow(object):
         """
         Create an item for a ui component. This method can be called from UIComponents.
         """
-        window = Gtk.Window(Gtk.WindowType.UTILITY)
+        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+        window.set_transient_for(self.window)
         window.set_title(ui_component.title)
         window.add(ui_component.open())
         window.show()
