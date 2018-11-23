@@ -374,7 +374,7 @@ class TextElement(object):
     Representation of an editable text, which is part of a diagram item.
 
     Text element is aligned according to style information.
-        
+
     It also displays and allows to edit value of an attribute of UML
     class (DiagramItem.subject). Attribute name can be recursive, all
     below attribute names are valid:
@@ -456,20 +456,19 @@ class TextElement(object):
         width, height = bounds.width, bounds.height
 
         cr = context.cairo
+        cr.save()
         if isinstance(cr, cairo.Context) and self.text:
-            cr = PangoCairo.CairoContext(context.cairo)
             cr.move_to(x, y)
-            layout = cr.create_layout()
+            layout = PangoCairo.create_layout(cr)
             layout.set_font_description(Pango.FontDescription(self._style.font))
             layout.set_text(self.text)
-            cr.show_layout(layout)
+            PangoCairo.show_layout(cr, layout)
         if self.editable and (context.hovered or context.focused):
-            cr.save()
             cr.set_source_rgb(0.6, 0.6, 0.6)
             cr.set_line_width(0.5)
             cr.rectangle(x - 5, y - 1, width + 10, height + 2)
             cr.stroke()
-            cr.restore()
+        cr.restore()
 
 
 
