@@ -460,6 +460,7 @@ class NamespaceView(Gtk.TreeView):
     def __init__(self, model, factory):
         assert isinstance(model, NamespaceModel), 'model is not a NamespaceModel (%s)' % str(model)
         GObject.GObject.__init__(self)
+        self.set_model(model)
         self.factory = factory
         self.icon_cache = {}
 
