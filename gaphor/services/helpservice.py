@@ -49,6 +49,7 @@ class HelpService(object):
         version = Application.distribution.version
         about = Gtk.Dialog.new()
         about.set_title(_('About Gaphor'))
+        about.set_modal(True)
         about.set_transient_for(self.main_window.window)
         about.add_buttons(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         about.set_default_response(Gtk.ResponseType.OK)
