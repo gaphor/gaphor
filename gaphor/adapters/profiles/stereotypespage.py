@@ -141,7 +141,7 @@ def create_stereotype_tree_view(model):
     """
     tree_view = Gtk.TreeView(model)
     tree_view.set_rules_hint(True)
-    
+
     # Stereotype/Attributes
     col = Gtk.TreeViewColumn('%s / %s' % (_('Stereotype'), _('Attribute')))
     col.set_expand(True)
@@ -193,8 +193,8 @@ class StereotypePage(object):
 
     def __init__(self, item):
         self.item = item
-        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
-        
+        self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
+
     def construct(self):
         page = Gtk.VBox()
         subject = self.item.subject
@@ -244,13 +244,13 @@ class StereotypePage(object):
     #        UML.model.remove_stereotype(subject, stereotype)
     #    self.model.refresh()
 
-        
+
     @transactional
     def _on_show_stereotypes_attrs_change(self, button):
         self.item.show_stereotypes_attrs = button.get_active()
         self.item.request_update()
 
-        
+
 component.provideAdapter(StereotypePage,
         adapts=[UML.Element],
         name='Stereotypes')

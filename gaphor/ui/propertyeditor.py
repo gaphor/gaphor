@@ -137,7 +137,7 @@ class PropertyEditor(object):
         if self.notebook.get_n_pages() > 0:
             self.select_tab(self._default_tab)
             page = self.notebook.get_nth_page(self.notebook.get_current_page())
-            default = page.get_data('default')
+            default = page.default
             if default:
                 default.grab_focus()
 

@@ -171,7 +171,12 @@ class TextEditTool(Tool):
 
         window.add(frame)
         #window.set_border_width(1)
-        window.size_allocate((int(x), int(y), 50, 50))
+        r = Gdk.Rectangle()
+        r.x = int(x)
+        r.y = int(y)
+        r.width = 50
+        r.height = 50
+        window.size_allocate(r)
         #window.move(int(x), int(y))
         cursor_pos = view.get_toplevel().get_screen().get_display().get_pointer()
         window.move(cursor_pos[1], cursor_pos[2])

@@ -523,7 +523,7 @@ class CommentItemPropertyPage(object):
         text_view.show()
         text_view.set_size_request(-1, 100)
         page.pack_start(text_view, True, True, 0)
-        page.set_data('default', text_view)
+        page.default = text_view
 
         changed_id = buffer.connect('changed', self._on_body_change)
 
@@ -564,7 +564,7 @@ class NamedElementPropertyPage(object):
         assert subject is None or isinstance(subject, UML.NamedElement), '%s' % type(subject)
         self.subject = subject
         self.watcher = EventWatcher(subject)
-        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+        self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
         page = Gtk.VBox()
@@ -577,7 +577,7 @@ class NamedElementPropertyPage(object):
         entry = Gtk.Entry()
         entry.set_text(subject and subject.name or '')
         hbox.pack_start(entry, True, True, 0)
-        page.set_data('default', entry)
+        page.default = entry
 
         # monitor subject.name attribute
         changed_id = entry.connect('changed', self._on_name_change)
@@ -633,7 +633,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
         label.set_justify(Gtk.Justification.LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(_("Abstract"))
+        button = Gtk.CheckButton(label=_('Abstract'))
         button.set_active(self.subject.isAbstract)
 
         button.connect('toggled', self._on_abstract_change)
