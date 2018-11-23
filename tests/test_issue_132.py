@@ -38,6 +38,7 @@ class UndoRedoBugTestCase(TestCase):
         self.remove_attribute()
         assert len(self.class_.ownedAttribute) == 0
         assert self.attribute.namespace is None
+        assert self.undo_manager.can_undo()
 
         self.undo_manager.undo_transaction()
 

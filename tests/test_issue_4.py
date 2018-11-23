@@ -5,7 +5,7 @@ Test GitHub issue #4. Diagram could not be loaded due to JuggleError
 import os
 
 import pkg_resources
-from gi.repository import GObject
+from gi.repository import GLib
 from gi.repository import Gtk
 
 from gaphor.storage.storage import load
@@ -45,7 +45,7 @@ class CyclicDiagramTestCase(TestCase):
             finally:
                 Gtk.main_quit()
 
-        assert GObject.timeout_add(1, handler) > 0
+        assert GLib.timeout_add(1, handler) > 0
         Gtk.main()
 
 

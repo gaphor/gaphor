@@ -1,6 +1,6 @@
 # vim:sw=4:et:
 """This module contains some helpers that can be used to execute generator
-functions in the GObject main loop.
+functions in the GLib main loop.
 
 This module provided the following classes:
 GIdleThread - Thread like behavior for generators in a main loop
@@ -18,7 +18,7 @@ from builtins import next
 from builtins import range
 import types
 import sys
-from gi.repository import GLib, GObject
+from gi.repository import GLib
 import time
 import traceback
 
@@ -86,7 +86,7 @@ class GIdleThread(object):
         """Force the generator to stop running.
         """
         if self.is_alive():
-            GObject.source_remove(self._idle_id)
+            GLib.source_remove(self._idle_id)
             self._idle_id = 0
 
     def is_alive(self):

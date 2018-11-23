@@ -13,10 +13,10 @@
 #
 # Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
 # more details.
 #
-# You should have received a copy of the GNU Library General Public 
+# You should have received a copy of the GNU Library General Public
 # along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 This file provides the code generator which transforms gaphor/UML/uml2.gaphor
@@ -194,7 +194,7 @@ class Writer(object):
 
     def write_association(self, head, tail):
         """
-        Write an association for head. 
+        Write an association for head.
         The association should not be a redefine or derived association.
         """
         if head.written:
@@ -280,18 +280,18 @@ def parse_association_tags(appliedStereotypes):
 
     for stereotype in appliedStereotypes or []:
         for slot in stereotype.slot or []:
-         
 
-            #msg('scanning %s = %s' %  (slot.definingFeature.name, slot.value.value))
+
+            msg('scanning %s = %s' %  (slot.definingFeature.name, slot.value.value))
 
             if slot.definingFeature.name == 'subsets':
-                value = slot.value
+                value = slot.value.value
                 # remove all whitespaces and stuff
                 value = value.replace(' ', '').replace('\n', '').replace('\r', '')
                 subsets = value.split(',')
 
             if slot.definingFeature.name == 'redefines':
-                value = slot.value
+                value = slot.value.value
                 # remove all whitespaces and stuff
                 redefines = value.replace(' ', '').replace('\n', '').replace('\r', '')
 
@@ -471,7 +471,7 @@ def generate(filename, outfile=None, overridesfile=None):
             ignored_classes.add(c)
         else:
             writer.write_classdef(c)
- 
+
     # create attributes and enumerations
     derivedattributes = { }
     for c in [c for c in list(classes.values()) if c not in ignored_classes]:
