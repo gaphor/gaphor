@@ -47,7 +47,10 @@ class HelpService(object):
         logo_file =  os.path.join(pkg_resources.get_distribution('gaphor').location, 'gaphor', 'ui', 'pixmaps', 'logo.png')
         logo = GdkPixbuf.Pixbuf.new_from_file(logo_file)
         version = Application.distribution.version
-        about = Gtk.Dialog(_('About Gaphor'), self.main_window.window, Gtk.DialogFlags.MODAL, (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        about = Gtk.Dialog.new()
+        about.set_title(_('About Gaphor'))
+        about.set_transient_for(self.main_window.window)
+        about.add_buttons(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         about.set_default_response(Gtk.ResponseType.OK)
         vbox = about.vbox
 
@@ -77,7 +80,7 @@ class HelpService(object):
         notebook.append_page(tab_vbox, Gtk.Label(label=_('About')))
 
         tab_vbox = Gtk.VBox()
-        
+
         add_label('This software is published\n'
                   'under the terms of the\n'
                   '<span weight="bold">GNU General Public License v2</span>.\n'
@@ -85,7 +88,7 @@ class HelpService(object):
         notebook.append_page(tab_vbox, Gtk.Label(label=_('License')))
 
         tab_vbox = Gtk.VBox()
-        
+
         add_label('Gaphor is written by:\n'
                   'Arjan Molenaar\n'
                   'Artur Wroblewski\n'
