@@ -26,7 +26,7 @@ from gaphor.ui.event import DiagramSelectionChange
 
 
 class DiagramTab(object):
-    
+
     component_registry = inject('component_registry')
     element_factory = inject('element_factory')
     action_manager = inject('action_manager')
@@ -95,7 +95,7 @@ class DiagramTab(object):
     def construct(self):
         """
         Create the widget.
-        
+
         Returns: the newly created widget.
         """
         assert self.diagram
@@ -117,9 +117,9 @@ class DiagramTab(object):
         view.connect('drag-data-received', self._on_drag_data_received)
 
         self.view = view
-        
+
         self.toolbox = DiagramToolbox(self.diagram, view)
-        
+
         #item = DockItem(title=self.title, stock_id='gaphor-diagram')
         #item.add(scrolled_window)
         item = scrolled_window
@@ -180,7 +180,7 @@ class DiagramTab(object):
     def unselect_all(self):
         self.view.unselect_all()
 
-        
+
     @action(name='diagram-delete', stock_id='gtk-delete')
     @transactional
     def delete_selected_items(self):
@@ -194,35 +194,35 @@ class DiagramTab(object):
 
 
     def set_drawing_style(self, sloppiness=0.0):
-        """Set the drawing style for the diagram. 0.0 is straight, 
+        """Set the drawing style for the diagram. 0.0 is straight,
         2.0 is very sloppy.  If the sloppiness is set to be anything
         greater than 0.0, the FreeHandPainter instances will be used
         for both the item painter and the box painter.  Otherwise, by
-        default, the ItemPainter is used for the item and 
+        default, the ItemPainter is used for the item and
         BoundingBoxPainter for the box."""
 
         view = self.view
-        
+
         if sloppiness:
-            
+
             item_painter = FreeHandPainter(ItemPainter(),\
                                            sloppiness=sloppiness)
             box_painter = FreeHandPainter(BoundingBoxPainter(),\
                                           sloppiness=sloppiness)
-        
+
         else:
-        
+
             item_painter = ItemPainter()
             box_painter = BoundingBoxPainter()
-            
+
         view.painter = PainterChain().\
                        append(item_painter).\
                        append(HandlePainter()).\
                        append(FocusedItemPainter()).\
                        append(ToolPainter())
-                       
+
         view.bounding_box_painter = box_painter
-        
+
         view.queue_draw_refresh()
 
     def may_remove_from_model(self, view):
@@ -320,7 +320,7 @@ class DiagramTab(object):
                 tx = Transaction()
                 item = self.diagram.create(item_class)
                 assert item
-                
+
                 x, y = view.get_matrix_v2i(item).transform_point(x, y)
                 item.matrix.translate(x, y)
                 item.subject = element

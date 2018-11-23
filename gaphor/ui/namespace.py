@@ -67,7 +67,7 @@ def catchall(func):
                 args[0].refresh()
             except Exception as e:
                 log.error('Failed to refresh')
-            
+
     return catchall_wrapper
 
 
@@ -79,7 +79,7 @@ class NamespaceModel(Gtk.GenericTreeModel):
     NamedElement.namespace[1] -- Namespace.ownedMember[*]
 
     NOTE: when a model is loaded no IAssociation*Event's are emitted.
-    
+
     """
 
     component_registry = inject('component_registry')
@@ -394,7 +394,7 @@ class NamespaceModel(Gtk.GenericTreeModel):
         except (IndexError, ValueError) as e:
             return None
 
-        
+
     def on_iter_has_child(self, node):
         """
         Returns true if this node has children, or None.
@@ -473,7 +473,6 @@ class NamespaceView(Gtk.TreeView):
                 return not element.name.startswith(key)
         self.set_search_equal_func(search_func)
 
-        self.set_rules_hint(True)
         selection = self.get_selection()
         selection.set_mode(Gtk.SelectionMode.BROWSE)
         column = Gtk.TreeViewColumn.new()
@@ -481,7 +480,7 @@ class NamespaceView(Gtk.TreeView):
         cell = Gtk.CellRendererPixbuf ()
         column.pack_start (cell, 0)
         column.set_cell_data_func (cell, self._set_pixbuf, None)
-        
+
         # Second cell if for the name of the object...
         cell = Gtk.CellRendererText ()
         #cell.set_property ('editable', 1)
@@ -545,7 +544,7 @@ class NamespaceView(Gtk.TreeView):
 
         if isinstance(value, UML.Diagram):
             text = '<b>%s</b>' % text
-        elif (isinstance(value, UML.Classifier) 
+        elif (isinstance(value, UML.Classifier)
                 or isinstance(value, UML.Operation)) and value.isAbstract:
             text = '<i>%s</i>' % text
 
