@@ -282,12 +282,29 @@ class DiagramTab(object):
 
 
     def _on_drag_drop(self, view, context, x, y, time):
-        print('drag_drop on', context.targets)
-        if self.VIEW_DND_TARGETS[0][0] in context.targets:
+        """The signal handler for the drag-drop signal.
+
+        The drag-drop signal is emitted on the drop site when the user drops
+        the data onto the widget.
+
+        Args:
+            view: The view that received the drop.
+            context (Gdk.DragContext) - The drag context.
+            x (int): The x coordinate of the current cursor position.
+            y (int): The y coordinate of the current cursor position.
+            time (int): The timestamp of the motion event.
+
+        Returns:
+            bool: Whether the cursor position is in the drop zone.
+
+        """
+        targets = context.list_targets()
+        print('drag_drop on', targets)
+        if self.VIEW_DND_TARGETS[0][0] in targets:
             target = Gdk.atom_intern(self.VIEW_DND_TARGETS[0][0])
             view.drag_get_data(context, target, time)
             return True
-        elif self.VIEW_DND_TARGETS[1][0] in context.targets:
+        elif self.VIEW_DND_TARGETS[1][0] in targets:
             target = Gdk.atom_intern(self.VIEW_DND_TARGETS[1][0])
             view.drag_get_data(context, target, time)
             return True
