@@ -438,18 +438,15 @@ class TextElement(object):
         """
         self._text = value and self._pattern % value or ''
 
-
     text = property(lambda s: s._text, _set_text)
 
     style = property(lambda s: s._style)
-
 
     def is_visible(self):
         """
         Display text by default.
         """
         return True
-
 
     def draw(self, context):
         bounds = self.bounds
@@ -464,7 +461,7 @@ class TextElement(object):
             cr.move_to(x, y)
             layout = PangoCairo.create_layout(cr)
             layout.set_font_description(Pango.FontDescription(self._style.font))
-            layout.set_text(self.text)
+            layout.set_text(text=self.text, length=len(self.text))
             PangoCairo.show_layout(cr, layout)
         if self.editable and (context.hovered or context.focused):
             cr.set_source_rgb(0.6, 0.6, 0.6)
@@ -472,7 +469,6 @@ class TextElement(object):
             cr.rectangle(x - 5, y - 1, width + 10, height + 2)
             cr.stroke()
         cr.restore()
-
 
 
 # vim:sw=4:et:ai
