@@ -281,17 +281,16 @@ def parse_association_tags(appliedStereotypes):
     for stereotype in appliedStereotypes or []:
         for slot in stereotype.slot or []:
 
-
-            msg('scanning %s = %s' %  (slot.definingFeature.name, slot.value.value))
+            msg('scanning %s = %s' %  (slot.definingFeature.name, slot.value))
 
             if slot.definingFeature.name == 'subsets':
-                value = slot.value.value
+                value = slot.value
                 # remove all whitespaces and stuff
                 value = value.replace(' ', '').replace('\n', '').replace('\r', '')
                 subsets = value.split(',')
 
             if slot.definingFeature.name == 'redefines':
-                value = slot.value.value
+                value = slot.value
                 # remove all whitespaces and stuff
                 redefines = value.replace(' ', '').replace('\n', '').replace('\r', '')
 
