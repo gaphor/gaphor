@@ -100,7 +100,6 @@ class Toolbox(Gtk.VBox):
 
         return button
 
-
     def _construct(self, toolboxdef):
         shortcuts = self.shortcuts
         for title, items in toolboxdef:
@@ -120,9 +119,23 @@ class Toolbox(Gtk.VBox):
                 self.pack_start(wrapbox, False, True, 0)
                 wrapbox.show()
 
+    def _button_drag_data_get(self, button, context, data, info, time):
+        """The drag-data-get event signal handler.
 
-    def _button_drag_data_get(self, button, context, selection_data, info, time):
-        selection_data.set(selection_data.target, 8, button.action_name)
+        The drag-data-get signal is emitted on the drag source when the drop
+        site requests the data which is dragged.
+
+        Args:
+            button (Gtk.Button): The button that received the signal.
+            context (Gdk.DragContext): The drag context.
+            data (Gtk.SelectionData): The data to be filled with the dragged
+                data.
+            info (int): The info that has been registered with the target in
+                the Gtk.TargetList
+            time (int): The timestamp at which the data was received.
+
+        """
+        data.set(data.get_target(), 8, button.action_name.encode())
 
 
 # vim:sw=4:et:ai
