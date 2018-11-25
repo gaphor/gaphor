@@ -302,7 +302,7 @@ class DiagramTab(object):
 
         """
         targets = context.list_targets()
-        print('drag_drop on', targets)
+        # print('drag_drop on', targets)
         for target in targets:
             name = target.name()
             if name == "gaphor/element-id":  # self.VIEW_DND_TARGETS[0]
@@ -319,7 +319,7 @@ class DiagramTab(object):
         """
         Handle data dropped on the canvas.
         """
-        print('DND data received', view)
+        # print('DND data received', view)
         if data and data.get_format() == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
             tool = self.toolbox.get_tool(data.get_data().decode())
             tool.create_item((x, y))
