@@ -419,7 +419,7 @@ def create_uml_combo(data, callback):
     Combo box is returned.
     """
     model = UMLComboModel(data)
-    combo = Gtk.ComboBox(model)
+    combo = Gtk.ComboBox(model=model)
     cell = Gtk.CellRendererText()
     combo.pack_start(cell, True)
     combo.add_attribute(cell, 'text', 0)

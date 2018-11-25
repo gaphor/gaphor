@@ -33,9 +33,7 @@ class MetaclassNameEditor(object):
 
     NAME_LABEL = _('Name')
 
-    CLASSES = list(sorted(n for n in dir(UML)
-        if _issubclass(getattr(UML, n), UML.Element) and n != 'Stereotype'))
-
+    CLASSES = list(sorted(n for n in dir(UML) if _issubclass(getattr(UML, n), UML.Element) and n != 'Stereotype'))
 
     def __init__(self, item):
         self.item = item
@@ -54,7 +52,7 @@ class MetaclassNameEditor(object):
         for c in self.CLASSES:
             model.append([c])
 
-        cb = Gtk.ComboBox.new_with_model_and_entry(model)
+        cb = Gtk.ComboBox(model=model)
 
         completion = Gtk.EntryCompletion()
         completion.set_model(model)
@@ -84,6 +82,7 @@ class MetaclassNameEditor(object):
     @transactional
     def _on_name_change(self, entry):
         self.item.subject.name = entry.get_text()
+
 
 component.provideAdapter(MetaclassNameEditor,
         adapts=[items.MetaclassItem], name='Properties')
