@@ -300,14 +300,16 @@ class DiagramTab(object):
         """
         targets = context.list_targets()
         print('drag_drop on', targets)
-        if self.VIEW_DND_TARGETS[0][0] in targets:
-            target = Gdk.atom_intern(self.VIEW_DND_TARGETS[0][0])
-            view.drag_get_data(context, target, time)
-            return True
-        elif self.VIEW_DND_TARGETS[1][0] in targets:
-            target = Gdk.atom_intern(self.VIEW_DND_TARGETS[1][0])
-            view.drag_get_data(context, target, time)
-            return True
+        for target in targets:
+            name = target.name()
+            if name == "gaphor/element-id":  # self.VIEW_DND_TARGETS[0]
+                target = Gdk.atom_intern(name, False)
+                view.drag_get_data(context, target, time)
+                return True
+            elif name == "gaphor/toolbox-action":  # self.VIEW_DND_TARGETS[1]
+                target = Gdk.atom_intern(name, False)
+                view.drag_get_data(context, target, time)
+                return True
         return False
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
@@ -315,12 +317,12 @@ class DiagramTab(object):
         Handle data dropped on the canvas.
         """
         print('DND data received', view)
-        if data and data.format == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
+        if data and data.get_format() == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
             tool = self.toolbox.get_tool(data.data)
             tool.create_item((x, y))
             context.finish(True, False, time)
-        elif data and data.format == 8 and info == DiagramTab.VIEW_TARGET_ELEMENT_ID:
-            #print 'drag_data_received:', data.data, info
+        elif data and data.get_format() == 8 and info == DiagramTab.VIEW_TARGET_ELEMENT_ID:
+            # print('drag_data_received:', data.data, info)
             n, p = data.data.split('#')
             element = self.element_factory.lookup(n)
             assert element
