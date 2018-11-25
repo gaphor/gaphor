@@ -3,6 +3,7 @@
 from __future__ import division
 from __future__ import print_function
 
+import logging
 from builtins import object
 from builtins import str
 from zope import component
@@ -23,6 +24,8 @@ from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from gaphor.ui.event import DiagramSelectionChange
+
+log = logging.getLogger(__name__)
 
 
 class DiagramTab(object):
@@ -318,7 +321,7 @@ class DiagramTab(object):
         """
         print('DND data received', view)
         if data and data.get_format() == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
-            tool = self.toolbox.get_tool(data.data)
+            tool = self.toolbox.get_tool(data.get_data().decode())
             tool.create_item((x, y))
             context.finish(True, False, time)
         elif data and data.get_format() == 8 and info == DiagramTab.VIEW_TARGET_ELEMENT_ID:
