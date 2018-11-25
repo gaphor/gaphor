@@ -22,6 +22,7 @@ from gi.repository import GLib
 import time
 import traceback
 
+
 class GIdleThread(object):
     """This is a pseudo-"thread" for use with the GTK+ main loop.
 
@@ -55,7 +56,9 @@ class GIdleThread(object):
     """
 
     def __init__(self, generator, queue=None):
-        assert isinstance(generator, types.GeneratorType), 'The generator should be an iterator'
+        assert isinstance(
+            generator, types.GeneratorType
+        ), "The generator should be an iterator"
         self._generator = generator
         self._queue = queue
         self._idle_id = 0
@@ -65,8 +68,7 @@ class GIdleThread(object):
         """Start the generator. Default priority is low, so screen updates
         will be allowed to happen.
         """
-        idle_id = GLib.idle_add(self.__generator_executer,
-                                   priority=priority)
+        idle_id = GLib.idle_add(self.__generator_executer, priority=priority)
         self._idle_id = idle_id
         return idle_id
 
@@ -94,13 +96,16 @@ class GIdleThread(object):
         """
         return self._idle_id != 0
 
-    error = property(lambda self: self._exc_info[0],
-                     doc="Return a possible exception that had occured "\
-                         "during execution of the generator")
+    error = property(
+        lambda self: self._exc_info[0],
+        doc="Return a possible exception that had occured "
+        "during execution of the generator",
+    )
 
-    exc_info = property(lambda self: self._exc_info,
-                     doc="Return a exception information as provided by "\
-                         "sys.exc_info()")
+    exc_info = property(
+        lambda self: self._exc_info,
+        doc="Return a exception information as provided by " "sys.exc_info()",
+    )
 
     def reraise(self):
         """Rethrow the error that occurred during execution of the idle process.
@@ -127,7 +132,7 @@ class GIdleThread(object):
             return False
         except:
             self._exc_info = sys.exc_info()
-            #traceback.print_exc()
+            # traceback.print_exc()
             self._idle_id = 0
             return False
 
@@ -136,6 +141,7 @@ class QueueEmpty(Exception):
     """Exception raised whenever the queue is empty and someone tries to fetch
     a value.
     """
+
     pass
 
 
@@ -143,6 +149,7 @@ class QueueFull(Exception):
     """Exception raised when the queue is full and the oldest item may not be
     disposed.
     """
+
     pass
 
 
@@ -177,7 +184,8 @@ class Queue(object):
             raise QueueEmpty
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+
     def counter(max):
         for i in range(max):
             yield i
@@ -187,12 +195,12 @@ if __name__ == '__main__':
         while True:
             try:
                 cnt = queue.get()
-                print('cnt =', cnt)
+                print("cnt =", cnt)
             except QueueEmpty:
                 pass
             yield None
 
-    print('Test 1: (should print range 0..22)')
+    print("Test 1: (should print range 0..22)")
     queue = Queue()
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
@@ -202,7 +210,7 @@ if __name__ == '__main__':
     s.start()
     s.wait(2)
 
-    print('Test 2: (should only print 22)')
+    print("Test 2: (should only print 22)")
     queue = Queue(size=1)
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))

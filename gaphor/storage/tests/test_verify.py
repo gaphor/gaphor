@@ -1,11 +1,9 @@
-
 from gaphor.tests.testcase import TestCase
 from gaphor.storage.verify import orphan_references
 from gaphor import UML
 
 
 class VerifyTestCase(TestCase):
-
     def test_verifier(self):
         factory = self.element_factory
         c = factory.create(UML.Class)

@@ -12,7 +12,8 @@ import itertools
 from gaphor.UML.uml2 import *
 
 # '<<%s>>'
-STEREOTYPE_FMT = '\xc2\xab%s\xc2\xbb'
+STEREOTYPE_FMT = "\xc2\xab%s\xc2\xbb"
+
 
 def stereotypes_str(element, stereotypes=()):
     """
@@ -30,11 +31,11 @@ def stereotypes_str(element, stereotypes=()):
         applied = (stereotype_name(st) for st in get_applied_stereotypes(element))
     else:
         applied = ()
-    s = ', '.join(itertools.chain(stereotypes, applied))
+    s = ", ".join(itertools.chain(stereotypes, applied))
     if s:
         return STEREOTYPE_FMT % s
     else:
-        return ''
+        return ""
 
 
 def stereotype_name(stereotype):
@@ -48,7 +49,7 @@ def stereotype_name(stereotype):
     """
     name = stereotype.name
     if not name:
-        return ''
+        return ""
     elif len(name) > 1 and name[1].isupper():
         return name
     else:
@@ -77,8 +78,11 @@ def find_instances(factory, element):
     """
     Find instance specification which extend classifier `element`.
     """
-    return factory.select(lambda e: e.isKindOf(InstanceSpecification) \
-            and e.classifier and e.classifier[0] == element)
+    return factory.select(
+        lambda e: e.isKindOf(InstanceSpecification)
+        and e.classifier
+        and e.classifier[0] == element
+    )
 
 
 def remove_stereotype(element, stereotype):
@@ -113,7 +117,7 @@ def get_stereotypes(factory, element):
 
     # find stereotypes that extend element class
     classes = factory.select(lambda e: e.isKindOf(Class) and e.name in names)
-    
+
     stereotypes = set(ext.ownedEnd.type for cls in classes for ext in cls.extension)
     return sorted(stereotypes, key=lambda st: st.name)
 
@@ -137,14 +141,16 @@ def create_extension(factory, element, stereotype):
     ext.memberEnd = ext_end
     ext.ownedEnd = ext_end
     ext_end.type = stereotype
-    ext_end.aggregation = 'composite'
+    ext_end.aggregation = "composite"
     p.type = element
-    p.name = 'baseClass'
+    p.name = "baseClass"
     stereotype.ownedAttribute = p
 
     return ext
 
+
 extend_with_stereotype = create_extension
+
 
 def add_slot(factory, instance, definingFeature):
     """
@@ -162,11 +168,13 @@ def create_dependency(factory, supplier, client):
     dep.client = client
     return dep
 
+
 def create_realization(factory, realizingClassifier, abstraction):
     dep = factory.create(Realization)
     dep.realizingClassifier = realizingClassifier
     dep.abstraction = abstraction
     return dep
+
 
 def create_generalization(factory, general, specific):
     gen = factory.create(Generalization)
@@ -174,11 +182,13 @@ def create_generalization(factory, general, specific):
     gen.specific = specific
     return gen
 
+
 def create_implementation(factory, contract, implementatingClassifier):
     impl = factory.create(Implementation)
     impl.contract = contract
     impl.implementatingClassifier = implementatingClassifier
     return impl
+
 
 def create_association(factory, type_a, type_b):
     """
@@ -280,7 +290,7 @@ def dependency_type(client, supplier):
     If none of above is detected then standard dependency is determined.
     """
     dt = Dependency
-        
+
     # test interface first as it is a classifier
     if isinstance(supplier, Interface):
         dt = Usage
@@ -320,4 +330,4 @@ def create_message(factory, msg, inverted=False):
     return message
 
 
-#vim:sw=4:et:ai
+# vim:sw=4:et:ai

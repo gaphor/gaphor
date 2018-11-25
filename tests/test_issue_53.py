@@ -1,4 +1,3 @@
-
 import os
 import unittest
 
@@ -9,23 +8,22 @@ from gaphor.application import Application
 
 
 class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
-
     def setUp(self):
         Application.init()
-        element_factory = Application.get_service('element_factory')
+        element_factory = Application.get_service("element_factory")
         from gaphor.storage.storage import load
 
-        dist = pkg_resources.get_distribution('gaphor')
-        path = os.path.join(dist.location, 'tests/issue_53.gaphor')
+        dist = pkg_resources.get_distribution("gaphor")
+        path = os.path.join(dist.location, "tests/issue_53.gaphor")
         load(path, element_factory)
 
     def tearDown(self):
-        Application.get_service('element_factory').shutdown()
+        Application.get_service("element_factory").shutdown()
         Application.shutdown()
 
     def testPackageRemoval(self):
         # Load the application
-        element_factory = Application.get_service('element_factory')
+        element_factory = Application.get_service("element_factory")
 
         # Find all profile instances
         profiles = element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
@@ -46,13 +44,19 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
 
         # Check if the link is really removed:
         self.assertFalse(classes[0].appliedStereotype)
-        self.assertFalse(element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification)))
-        self.assertEqual(3, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))))
+        self.assertFalse(
+            element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification))
+        )
+        self.assertEqual(
+            3, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))
+        )
 
     def testPackageRemovalByRemovingTheDiagram(self):
-        element_factory = Application.get_service('element_factory')
+        element_factory = Application.get_service("element_factory")
 
-        diagram = element_factory.lselect(lambda e: e.isKindOf(UML.Diagram) and e.name == 'Stereotypes diagram')[0]
+        diagram = element_factory.lselect(
+            lambda e: e.isKindOf(UML.Diagram) and e.name == "Stereotypes diagram"
+        )[0]
 
         self.assertTrue(diagram)
 
@@ -65,7 +69,12 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
 
         # Check if the link is really removed:
         self.assertFalse(classes[0].appliedStereotype)
-        self.assertFalse(element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification)))
-        self.assertEqual(2, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))))
+        self.assertFalse(
+            element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification))
+        )
+        self.assertEqual(
+            2, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))
+        )
+
 
 # vim:sw=4:et:ai

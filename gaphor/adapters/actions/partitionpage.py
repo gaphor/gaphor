@@ -22,7 +22,7 @@ class PartitionPropertyPage(NamedItemPropertyPage):
 
     component.adapts(items.PartitionItem)
 
-    element_factory = inject('element_factory')
+    element_factory = inject("element_factory")
 
     def construct(self):
         item = self.item
@@ -32,17 +32,17 @@ class PartitionPropertyPage(NamedItemPropertyPage):
         if item.subject:
             if not item._toplevel:
                 hbox = Gtk.HBox(spacing=12)
-                button = Gtk.CheckButton(_('External'))
+                button = Gtk.CheckButton(_("External"))
                 button.set_active(item.subject.isExternal)
-                button.connect('toggled', self._on_external_change)
+                button.connect("toggled", self._on_external_change)
                 hbox.pack_start(button, True, True, 0)
                 page.pack_start(hbox, False, True, 0)
             else:
                 pass
-                #hbox = Gtk.HBox(spacing=12)
-                #button = Gtk.CheckButton(_('Dimension'))
-                #button.set_active(item.subject.isDimension)
-                #button.connect('toggled', self._on_dimension_change)
+                # hbox = Gtk.HBox(spacing=12)
+                # button = Gtk.CheckButton(_('Dimension'))
+                # button.set_active(item.subject.isDimension)
+                # button.connect('toggled', self._on_dimension_change)
 
         return page
 
@@ -54,7 +54,7 @@ class PartitionPropertyPage(NamedItemPropertyPage):
         item.request_update()
 
 
-component.provideAdapter(PartitionPropertyPage, name='Properties')
+component.provideAdapter(PartitionPropertyPage, name="Properties")
 
 
 # vim:sw=4:et:ai

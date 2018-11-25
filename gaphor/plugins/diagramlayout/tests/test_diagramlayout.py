@@ -1,4 +1,3 @@
-
 import unittest
 
 from gaphor import UML
@@ -10,12 +9,17 @@ from gaphor.tests.testcase import TestCase
 
 class DiagramLayoutTestCase(TestCase):
 
-    services = TestCase.services + ['main_window', 'ui_manager', 'properties', 'action_manager', 'diagram_layout']
-
+    services = TestCase.services + [
+        "main_window",
+        "ui_manager",
+        "properties",
+        "action_manager",
+        "diagram_layout",
+    ]
 
     def testDiagramLayout(self):
-        elemfact = Application.get_service('element_factory')
-        diagram_layout = Application.get_service('diagram_layout')
+        elemfact = Application.get_service("element_factory")
+        diagram_layout = Application.get_service("diagram_layout")
 
         diagram = elemfact.create(UML.Diagram)
         c1 = diagram.create(items.ClassItem, subject=elemfact.create(UML.Class))
@@ -25,7 +29,6 @@ class DiagramLayoutTestCase(TestCase):
         c2.request_update()
 
         diagram_layout.layout_diagram(diagram)
-
 
 
 # vim:sw=4:et:ai

@@ -3,7 +3,7 @@
 Base class for UML model elements.
 """
 
-__all__ = ['Element']
+__all__ = ["Element"]
 
 import threading
 import uuid
@@ -37,13 +37,11 @@ class Element(object):
         self._factory = factory
         self._unlink_lock = threading.Lock()
 
+    id = property(lambda self: self._id, doc="Id")
 
-    id = property(lambda self: self._id, doc='Id')
-
-
-    factory = property(lambda self: self._factory,
-                       doc="The factory that created this element")
-
+    factory = property(
+        lambda self: self._factory, doc="The factory that created this element"
+    )
 
     def umlproperties(self):
         """
@@ -52,11 +50,10 @@ class Element(object):
         umlprop = umlproperty
         class_ = type(self)
         for propname in dir(class_):
-            if not propname.startswith('_'):
+            if not propname.startswith("_"):
                 prop = getattr(class_, propname)
                 if isinstance(prop, umlprop):
                     yield prop
-
 
     def save(self, save_func):
         """
@@ -64,7 +61,6 @@ class Element(object):
         """
         for prop in self.umlproperties():
             prop.save(self, save_func)
-
 
     def load(self, name, value):
         """
@@ -74,11 +70,11 @@ class Element(object):
         try:
             prop = getattr(type(self), name)
         except AttributeError as e:
-            raise AttributeError("'%s' has no property '%s'" % \
-                                        (type(self).__name__, name))
+            raise AttributeError(
+                "'%s' has no property '%s'" % (type(self).__name__, name)
+            )
         else:
             prop.load(self, value)
-
 
     def postload(self):
         """
@@ -86,7 +82,6 @@ class Element(object):
         """
         for prop in self.umlproperties():
             prop.postload(self)
-
 
     def unlink(self):
 
@@ -117,22 +112,19 @@ class Element(object):
         """
         return isinstance(self, class_)
 
-
     def isTypeOf(self, other):
         """
         Returns true if the object is of the same type as other.
         """
         return isinstance(self, type(other))
 
-
     def __getstate__(self):
         d = dict(self.__dict__)
         try:
-            del d['_factory']
+            del d["_factory"]
         except KeyError:
             pass
         return d
-
 
     def __setstate__(self, state):
         self._factory = None

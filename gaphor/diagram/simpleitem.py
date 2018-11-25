@@ -15,10 +15,7 @@ from gaphor.diagram.style import Style
 
 class Line(_Line):
 
-    __style__ = {
-        'line-width': 2,
-        'line-color': (0, 0, 0, 1),
-    }
+    __style__ = {"line-width": 2, "line-color": (0, 0, 0, 1)}
 
     def __init__(self, id=None):
         super(Line, self).__init__()
@@ -28,21 +25,21 @@ class Line(_Line):
         self._handles[0].connectable = False
         self._handles[-1].connectable = False
 
-    id = property(lambda self: self._id, doc='Id')
+    id = property(lambda self: self._id, doc="Id")
 
-    def save (self, save_func):
-        save_func('matrix', tuple(self.matrix))
-        for prop in ('orthogonal', 'horizontal'):
+    def save(self, save_func):
+        save_func("matrix", tuple(self.matrix))
+        for prop in ("orthogonal", "horizontal"):
             save_func(prop, getattr(self, prop))
-        points = [ ]
+        points = []
         for h in self.handles():
             points.append(tuple(map(float, h.pos)))
-        save_func('points', points)
+        save_func("points", points)
 
-    def load (self, name, value):
-        if name == 'matrix':
+    def load(self, name, value):
+        if name == "matrix":
             self.matrix = eval(value)
-        elif name == 'points':
+        elif name == "points":
             points = eval(value)
             for x in range(len(points) - 2):
                 h = self._create_handle((0, 0))
@@ -50,13 +47,13 @@ class Line(_Line):
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
             self._update_ports()
-        elif name == 'horizontal':
+        elif name == "horizontal":
             self.horizontal = eval(value)
-        elif name == 'orthogonal':
+        elif name == "orthogonal":
             self._load_orthogonal = eval(value)
 
     def postload(self):
-        if hasattr(self, '_load_orthogonal'):
+        if hasattr(self, "_load_orthogonal"):
             self.orthogonal = self._load_orthogonal
             del self._load_orthogonal
 
@@ -77,9 +74,9 @@ class Box(Element):
     """
 
     __style__ = {
-        'border-width': 2,
-        'border-color': (0, 0, 0, 1),
-        'fill-color': (1, 1, 1, 0),
+        "border-width": 2,
+        "border-color": (0, 0, 0, 1),
+        "fill-color": (1, 1, 1, 0),
     }
 
     def __init__(self, id=None):
@@ -87,19 +84,19 @@ class Box(Element):
         self.style = Style(Box.__style__)
         self._id = id
 
-    id = property(lambda self: self._id, doc='Id')
+    id = property(lambda self: self._id, doc="Id")
 
     def save(self, save_func):
-        save_func('matrix', tuple(self.matrix))
-        save_func('width', self.width)
-        save_func('height', self.height)
+        save_func("matrix", tuple(self.matrix))
+        save_func("width", self.width)
+        save_func("height", self.height)
 
     def load(self, name, value):
-        if name == 'matrix':
+        if name == "matrix":
             self.matrix = eval(value)
-        elif name == 'width':
+        elif name == "width":
             self.width = eval(value)
-        elif name == 'height':
+        elif name == "height":
             self.height = eval(value)
 
     def postload(self):
@@ -122,9 +119,9 @@ class Ellipse(Element):
     """
 
     __style__ = {
-        'border-width': 2,
-        'border-color': (0, 0, 0, 1),
-        'fill-color': (1, 1, 1, 0),
+        "border-width": 2,
+        "border-color": (0, 0, 0, 1),
+        "fill-color": (1, 1, 1, 0),
     }
 
     def __init__(self, id=None):
@@ -132,19 +129,19 @@ class Ellipse(Element):
         self.style = Style(Ellipse.__style__)
         self._id = id
 
-    id = property(lambda self: self._id, doc='Id')
+    id = property(lambda self: self._id, doc="Id")
 
     def save(self, save_func):
-        save_func('matrix', tuple(self.matrix))
-        save_func('width', self.width)
-        save_func('height', self.height)
+        save_func("matrix", tuple(self.matrix))
+        save_func("width", self.width)
+        save_func("height", self.height)
 
     def load(self, name, value):
-        if name == 'matrix':
+        if name == "matrix":
             self.matrix = eval(value)
-        elif name == 'width':
+        elif name == "width":
             self.width = eval(value)
-        elif name == 'height':
+        elif name == "height":
             self.height = eval(value)
 
     def postload(self):
@@ -155,8 +152,8 @@ class Ellipse(Element):
         nw = self._handles[NW]
         style = self.style
 
-        rx = old_div(self.width, 2.)
-        ry = old_div(self.height, 2.)
+        rx = old_div(self.width, 2.0)
+        ry = old_div(self.height, 2.0)
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)

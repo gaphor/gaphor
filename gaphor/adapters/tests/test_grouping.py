@@ -8,6 +8,7 @@ from gaphor.diagram import items
 
 from gaphor.tests import TestCase
 
+
 class NodesGroupTestCase(TestCase):
     """
     Nodes grouping tests.
@@ -24,7 +25,6 @@ class NodesGroupTestCase(TestCase):
         self.assertTrue(n2.subject in n1.subject.nestedNode)
         self.assertFalse(n1.subject in n2.subject.nestedNode)
 
-
     def test_ungrouping(self):
         """Test decomposition of component from node
         """
@@ -38,9 +38,7 @@ class NodesGroupTestCase(TestCase):
         self.assertFalse(n1.subject in n2.subject.nestedNode)
 
 
-
 class NodeComponentGroupTestCase(TestCase):
-
     def test_grouping(self):
         """Test component within node composition
         """
@@ -64,7 +62,6 @@ class NodeComponentGroupTestCase(TestCase):
         self.assertTrue(connector.end[0].role is a1)
         self.assertTrue(connector.end[1].role is a2)
 
-
     def test_ungrouping(self):
         """Test decomposition of component from node
         """
@@ -82,7 +79,6 @@ class NodeComponentGroupTestCase(TestCase):
 
 
 class NodeArtifactGroupTestCase(TestCase):
-
     def test_grouping(self):
         """Test artifact within node deployment
         """
@@ -93,7 +89,6 @@ class NodeArtifactGroupTestCase(TestCase):
 
         self.assertEqual(1, len(n.subject.deployment))
         self.assertTrue(n.subject.deployment[0].deployedArtifact[0] is a.subject)
-
 
     def test_ungrouping(self):
         """Test removal of artifact from node
@@ -108,9 +103,7 @@ class NodeArtifactGroupTestCase(TestCase):
         self.assertEqual(0, len(self.kindof(UML.Deployment)))
 
 
-
 class SubsystemUseCaseGroupTestCase(TestCase):
-
     def test_grouping(self):
         """Test adding an use case to a subsystem
         """
@@ -124,8 +117,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.assertEqual(1, len(uc2.subject.subject))
 
         # Classifier.useCase is not navigable to UseCase
-        #self.assertEqual(2, len(s.subject.useCase))
-
+        # self.assertEqual(2, len(s.subject.useCase))
 
     def test_grouping_with_namespace(self):
         """Test adding an use case to a subsystem (with namespace)
@@ -143,7 +135,6 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.assertEqual(1, len(uc.subject.subject))
         self.assertTrue(s.subject.namespace is not uc.subject)
 
-
     def test_ungrouping(self):
         """Test removal of use case from subsystem
         """
@@ -157,13 +148,12 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.ungroup(s, uc1)
         self.assertEqual(0, len(uc1.subject.subject))
         # Classifier.useCase is not navigable to UseCase
-        #self.assertEqual(1, len(s.subject.useCase))
+        # self.assertEqual(1, len(s.subject.useCase))
 
         self.ungroup(s, uc2)
         self.assertEqual(0, len(uc2.subject.subject))
         # Classifier.useCase is not navigable to UseCase
-        #self.assertEqual(0, len(s.subject.useCase))
-
+        # self.assertEqual(0, len(s.subject.useCase))
 
 
 class PartitionGroupTestCase(TestCase):
@@ -179,7 +169,6 @@ class PartitionGroupTestCase(TestCase):
         self.group(p1, a1)
         self.assertFalse(self.can_group(p1, p2))
 
-
     def test_no_nodes_when_subpartition_in(self):
         """Test adding nodes when subpartition added
         """
@@ -190,7 +179,6 @@ class PartitionGroupTestCase(TestCase):
         self.group(p, p1)
         self.assertFalse(self.can_group(p, a1))
 
-
     def test_action_grouping(self):
         """Test adding action to partition
         """
@@ -199,7 +187,7 @@ class PartitionGroupTestCase(TestCase):
         a1 = self.create(items.ActionItem, UML.Action)
         a2 = self.create(items.ActionItem, UML.Action)
 
-        self.assertFalse(self.can_group(p1, a1)) # cannot add to dimension
+        self.assertFalse(self.can_group(p1, a1))  # cannot add to dimension
 
         self.group(p1, p2)
         self.group(p2, a1)
@@ -208,7 +196,6 @@ class PartitionGroupTestCase(TestCase):
         self.assertEqual(1, len(p2.subject.node))
         self.group(p2, a2)
         self.assertEqual(2, len(p2.subject.node))
-
 
     def test_subpartition_grouping(self):
         """Test adding subpartition to partition
@@ -224,7 +211,6 @@ class PartitionGroupTestCase(TestCase):
         self.group(p, p2)
         self.assertTrue(p.subject is None)
         self.assertTrue(p2.subject is not None)
-
 
     def test_ungrouping(self):
         """Test action and subpartition removal
@@ -250,7 +236,6 @@ class PartitionGroupTestCase(TestCase):
         self.assertTrue(p2.subject is None, p2.subject)
         self.assertEqual(0, len(self.kindof(UML.ActivityPartition)))
 
-
     def test_ungrouping_with_actions(self):
         """Test subpartition with actions removal
         """
@@ -275,7 +260,6 @@ class PartitionGroupTestCase(TestCase):
         self.assertEqual(0, len(p2.canvas.get_children(p2)))
         self.assertEqual(0, len(partition.node))
 
-
     def test_nested_subpartition_ungrouping(self):
         """Test removal of subpartition with swimlanes
         """
@@ -297,7 +281,6 @@ class PartitionGroupTestCase(TestCase):
         self.assertTrue(p3.subject is not None, p3.subject)
         self.assertTrue(p4.subject is not None, p4.subject)
         self.assertEqual(2, len(self.kindof(UML.ActivityPartition)))
-
 
     def test_nested_subpartition_regrouping(self):
         """Test regrouping of subpartition with swimlanes
@@ -328,5 +311,3 @@ class PartitionGroupTestCase(TestCase):
         self.assertTrue(p4.subject is not None, p4.subject)
         self.assertTrue(p3.subject in p2.subject.subpartition, p2.subject.subpartition)
         self.assertTrue(p4.subject in p2.subject.subpartition, p2.subject.subpartition)
-
-

@@ -7,7 +7,6 @@ from gaphor.services.elementdispatcher import ElementDispatcher
 
 
 class ElementDispatcherTestCase(TestCase):
-
     def setUp(self):
         super(ElementDispatcherTestCase, self).setUp()
         self.events = []
@@ -21,13 +20,17 @@ class ElementDispatcherTestCase(TestCase):
     def _handler(self, event):
         self.events.append(event)
 
-
     def test_register_handler(self):
         dispatcher = self.dispatcher
         element = UML.Class()
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
         assert len(dispatcher._handlers) == 1
-        assert list(dispatcher._handlers.keys())[0] == (element, UML.Class.ownedOperation)
+        assert list(dispatcher._handlers.keys())[0] == (
+            element,
+            UML.Class.ownedOperation,
+        )
 
         # Add some properties:
 
@@ -36,11 +39,12 @@ class ElementDispatcherTestCase(TestCase):
         # 2:
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
         # 3:
-        p.name = 'func'
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        p.name = "func"
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
         self.assertEqual(3, len(self.events))
         self.assertEqual(3, len(dispatcher._handlers))
-
 
     def test_register_handler_twice(self):
         """
@@ -53,21 +57,28 @@ class ElementDispatcherTestCase(TestCase):
 
         element.ownedOperation = UML.Operation()
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
 
         n_handlers = len(dispatcher._handlers)
 
         self.assertEqual(0, len(self.events))
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
         self.assertEqual(n_handlers, len(dispatcher._handlers))
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
         self.assertEqual(n_handlers, len(dispatcher._handlers))
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
         self.assertEqual(n_handlers, len(dispatcher._handlers))
 
-        p.name = 'func'
+        p.name = "func"
         self.assertEqual(1, len(self.events))
-
 
     def test_unregister_handler(self):
 
@@ -76,8 +87,10 @@ class ElementDispatcherTestCase(TestCase):
         element = UML.Class()
         o = element.ownedOperation = UML.Operation()
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
-        p.name = 'func'
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        p.name = "func"
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
         assert len(dispatcher._handlers) == 3
         assert dispatcher._handlers[element, UML.Class.ownedOperation]
         assert dispatcher._handlers[o, UML.Operation.parameter]
@@ -87,10 +100,9 @@ class ElementDispatcherTestCase(TestCase):
 
         assert len(dispatcher._handlers) == 0, dispatcher._handlers
         assert len(dispatcher._reverse) == 0, dispatcher._reverse
-        #assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
+        # assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
         # Should not fail here too:
         dispatcher.unregister_handler(self._handler)
-
 
     def test_notification(self):
         """
@@ -100,8 +112,10 @@ class ElementDispatcherTestCase(TestCase):
         element = UML.Class()
         o = element.ownedOperation = UML.Operation()
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
-        p.name = 'func'
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        p.name = "func"
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
@@ -109,12 +123,11 @@ class ElementDispatcherTestCase(TestCase):
         assert len(self.events) == 1, self.events
         assert len(dispatcher._handlers) == 4
 
-        p.name = 'othername'
+        p.name = "othername"
         assert len(self.events) == 2, self.events
 
         del element.ownedOperation[o]
         assert len(dispatcher._handlers) == 2
-
 
     def test_notification_2(self):
         """
@@ -123,19 +136,22 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = UML.Transition()
         g = element.guard = UML.Constraint()
-        dispatcher.register_handler(self._handler, element, 'guard.specification')
+        dispatcher.register_handler(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
-        assert (element.guard, UML.Constraint.specification) in list(dispatcher._handlers.keys()), list(dispatcher._handlers.keys())
+        assert (element.guard, UML.Constraint.specification) in list(
+            dispatcher._handlers.keys()
+        ), list(dispatcher._handlers.keys())
 
-        g.specification = 'x'
+        g.specification = "x"
         assert len(self.events) == 1, self.events
 
         element.guard = UML.Constraint()
         assert len(self.events) == 2, self.events
         assert len(dispatcher._handlers) == 2, len(dispatcher._handlers)
-        assert (element.guard, UML.Constraint.specification) in list(dispatcher._handlers.keys())
-
+        assert (element.guard, UML.Constraint.specification) in list(
+            dispatcher._handlers.keys()
+        )
 
     def test_notification_of_change(self):
         """
@@ -144,16 +160,15 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = UML.Transition()
         g = element.guard = UML.Constraint()
-        dispatcher.register_handler(self._handler, element, 'guard.specification')
+        dispatcher.register_handler(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
 
-        g.specification = 'x'
+        g.specification = "x"
         assert len(self.events) == 1, self.events
 
         element.guard = UML.Constraint()
         assert len(self.events) == 2, self.events
-
 
     def test_notification_with_composition(self):
         """
@@ -163,14 +178,15 @@ class ElementDispatcherTestCase(TestCase):
         element = UML.Class()
         o = element.ownedOperation = UML.Operation()
         p = element.ownedOperation[0].precondition = UML.Constraint()
-        p.name = 'func'
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.precondition.name')
+        p.name = "func"
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.precondition.name"
+        )
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
         del element.ownedOperation[o]
         assert len(dispatcher._handlers) == 1
-
 
     def test_notification_with_incompatible_elements(self):
         """
@@ -179,37 +195,41 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = UML.Transition()
         g = element.guard = UML.Constraint()
-        dispatcher.register_handler(self._handler, element, 'guard.specification')
+        dispatcher.register_handler(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
-        assert (element.guard, UML.Constraint.specification) in list(dispatcher._handlers.keys()), list(dispatcher._handlers.keys())
+        assert (element.guard, UML.Constraint.specification) in list(
+            dispatcher._handlers.keys()
+        ), list(dispatcher._handlers.keys())
 
-        g.specification = 'x'
+        g.specification = "x"
         assert len(self.events) == 1, self.events
 
-        g.specification = 'a'
+        g.specification = "a"
         assert len(self.events) == 2, self.events
-
 
 
 from gaphor.UML import Element
 from gaphor.UML.properties import association
 from gaphor.services.elementdispatcher import EventWatcher
 
+
 class A(Element):
     pass
-A.one = association('one', A, lower=0, upper=1, composite=True)
-A.two = association('two', A, lower=0, upper=2, composite=True)
+
+
+A.one = association("one", A, lower=0, upper=1, composite=True)
+A.two = association("two", A, lower=0, upper=2, composite=True)
 
 
 class ElementDispatcherAsServiceTestCase(TestCase):
 
-    services = TestCase.services + ['element_dispatcher']
+    services = TestCase.services + ["element_dispatcher"]
 
     def setUp(self):
         super(ElementDispatcherAsServiceTestCase, self).setUp()
         self.events = []
-        self.dispatcher = Application.get_service('element_dispatcher')
+        self.dispatcher = Application.get_service("element_dispatcher")
 
     def tearDown(self):
         super(ElementDispatcherAsServiceTestCase, self).tearDown()
@@ -225,8 +245,10 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         element = UML.Class()
         o = element.ownedOperation = UML.Operation()
         p = element.ownedOperation[0].formalParameter = UML.Parameter()
-        p.name = 'func'
-        dispatcher.register_handler(self._handler, element, 'ownedOperation.parameter.name')
+        p.name = "func"
+        dispatcher.register_handler(
+            self._handler, element, "ownedOperation.parameter.name"
+        )
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
@@ -234,12 +256,11 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(self.events) == 1, self.events
         assert len(dispatcher._handlers) == 4
 
-        p.name = 'othername'
+        p.name = "othername"
         assert len(self.events) == 2, self.events
 
         del element.ownedOperation[o]
         assert len(dispatcher._handlers) == 2
-
 
     def test_association_notification(self):
         """
@@ -254,20 +275,19 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         assert len(element.memberEnd) == 2
         print(element.memberEnd)
-        dispatcher.register_handler(self._handler, element, 'memberEnd.name')
+        dispatcher.register_handler(self._handler, element, "memberEnd.name")
         assert len(dispatcher._handlers) == 3, len(dispatcher._handlers)
         assert not self.events
 
-        p1.name = 'foo'
+        p1.name = "foo"
         assert len(self.events) == 1, (self.events, dispatcher._handlers)
         assert len(dispatcher._handlers) == 3
 
-        p1.name = 'othername'
+        p1.name = "othername"
         assert len(self.events) == 2, self.events
 
-        p1.name = 'othername'
+        p1.name = "othername"
         assert len(self.events) == 2, self.events
-
 
     def test_association_notification_complex(self):
         """
@@ -279,31 +299,30 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         element = UML.Association()
         p1 = element.memberEnd = UML.Property()
         p2 = element.memberEnd = UML.Property()
-        p1.lowerValue = '0'
-        p1.upperValue = '1'
-        p2.lowerValue = '1'
-        p2.upperValue = '*'
+        p1.lowerValue = "0"
+        p1.upperValue = "1"
+        p2.lowerValue = "1"
+        p2.upperValue = "*"
 
         assert len(element.memberEnd) == 2
         print(element.memberEnd)
 
-        base = 'memberEnd<Property>.'
-        dispatcher.register_handler(self._handler, element, base + 'name')
-        dispatcher.register_handler(self._handler, element, base + 'aggregation')
-        dispatcher.register_handler(self._handler, element, base + 'classifier')
-        dispatcher.register_handler(self._handler, element, base + 'lowerValue')
-        dispatcher.register_handler(self._handler, element, base + 'upperValue')
+        base = "memberEnd<Property>."
+        dispatcher.register_handler(self._handler, element, base + "name")
+        dispatcher.register_handler(self._handler, element, base + "aggregation")
+        dispatcher.register_handler(self._handler, element, base + "classifier")
+        dispatcher.register_handler(self._handler, element, base + "lowerValue")
+        dispatcher.register_handler(self._handler, element, base + "upperValue")
 
         assert len(dispatcher._handlers) == 11, len(dispatcher._handlers)
         assert not self.events
 
-        p1.name = 'foo'
+        p1.name = "foo"
         assert len(self.events) == 1, (self.events, dispatcher._handlers)
         assert len(dispatcher._handlers) == 11
 
-        p1.name = 'othername'
+        p1.name = "othername"
         assert len(self.events) == 2, self.events
-
 
     def test_diamond(self):
         """
@@ -311,8 +330,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         a = A()
         watcher = EventWatcher(a, self._handler)
-        watcher.watch('one.two.one.two')
-        #watcher.watch('one.one.one.one')
+        watcher.watch("one.two.one.two")
+        # watcher.watch('one.one.one.one')
         watcher.register_handlers()
 
         a.one = A()
@@ -328,15 +347,14 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         watcher.unregister_handlers()
         watcher.unregister_handlers()
 
-
     def test_big_diamond(self):
         """
         Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' -> d
         """
         a = A()
         watcher = EventWatcher(a, self._handler)
-        watcher.watch('one.two.one.two')
-        #watcher.watch('one.one.one.one')
+        watcher.watch("one.two.one.two")
+        # watcher.watch('one.one.one.one')
         watcher.register_handlers()
 
         a.one = A()
@@ -354,15 +372,14 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         watcher.unregister_handlers()
         self.assertEqual(0, len(self.dispatcher._handlers))
 
-
     def test_braking_big_diamond(self):
         """
         Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' -> d
         """
         a = A()
         watcher = EventWatcher(a, self._handler)
-        watcher.watch('one.two.one.two')
-        #watcher.watch('one.one.one.one')
+        watcher.watch("one.two.one.two")
+        # watcher.watch('one.one.one.one')
         watcher.register_handlers()
 
         a.one = A()
@@ -377,12 +394,10 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         self.assertEqual(6, len(self.dispatcher._handlers))
 
         del a.one.two[0].one
-        #a.unlink()
+        # a.unlink()
         watcher.unregister_handlers()
         watcher.unregister_handlers()
         self.assertEqual(0, len(self.dispatcher._handlers))
-
-
 
     def test_cyclic(self):
         """
@@ -390,8 +405,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         a = A()
         watcher = EventWatcher(a, self._handler)
-        watcher.watch('one.two.one.two')
-        #watcher.watch('one.one.one.one')
+        watcher.watch("one.two.one.two")
+        # watcher.watch('one.one.one.one')
         watcher.register_handlers()
 
         a.one = A()
@@ -401,12 +416,11 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         self.assertEqual(4, len(self.events))
 
-        #a.one.two[0].one.two = A()
-        #a.one.two[0].one.two = A()
+        # a.one.two[0].one.two = A()
+        # a.one.two[0].one.two = A()
 
         a.unlink()
         self.assertEqual(1, len(self.dispatcher._handlers))
-
 
 
 # vim: sw=4:et:ai

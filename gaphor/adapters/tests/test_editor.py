@@ -1,4 +1,3 @@
-
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
@@ -6,8 +5,8 @@ from gaphor.diagram.interfaces import IEditor
 from gaphor.adapters.propertypages import AttributesPage, OperationsPage
 from gi.repository import Gtk
 
-class EditorTestCase(TestCase):
 
+class EditorTestCase(TestCase):
     def setUp(self):
         super(EditorTestCase, self).setUp()
 
@@ -41,25 +40,23 @@ class EditorTestCase(TestCase):
         self.assertTrue(adapter.is_editable(*pos))
         self.assertTrue(adapter._edit is assoc.tail_end)
 
-
     def test_objectnode_editor(self):
         node = self.create(items.ObjectNodeItem, UML.ObjectNode)
         self.diagram.canvas.update_now()
 
         adapter = IEditor(node)
         self.assertTrue(adapter.is_editable(10, 10))
-        #assert not adapter.edit_tag
+        # assert not adapter.edit_tag
 
-        #assert adapter.is_editable(*node.tag_bounds[:2])
-        #assert adapter.edit_tag
-
+        # assert adapter.is_editable(*node.tag_bounds[:2])
+        # assert adapter.edit_tag
 
     def test_classifier_editor(self):
         """
         Test classifier editor
         """
         klass = self.create(items.ClassItem, UML.Class)
-        klass.subject.name = 'Class1'
+        klass.subject.name = "Class1"
 
         self.diagram.canvas.update()
 
@@ -68,37 +65,36 @@ class EditorTestCase(TestCase):
         klass.subject.ownedAttribute = attr
 
         oper = self.element_factory.create(UML.Operation)
-        oper.name = 'method'
+        oper.name = "method"
         klass.subject.ownedOperation = oper
 
         self.diagram.canvas.update()
 
         edit = IEditor(klass)
 
-        self.assertEqual('CompartmentItemEditor', edit.__class__.__name__)
+        self.assertEqual("CompartmentItemEditor", edit.__class__.__name__)
 
         self.assertEqual(True, edit.is_editable(10, 10))
 
         # Test the inner working of the editor
         self.assertEqual(klass, edit._edit)
-        self.assertEqual('Class1', edit.get_text())
+        self.assertEqual("Class1", edit.get_text())
 
         # The attribute:
         y = klass._header_size[1] + klass.style.compartment_padding[0] + 3
         self.assertEqual(True, edit.is_editable(4, y))
         self.assertEqual(attr, edit._edit.subject)
-        self.assertEqual('+ blah', edit.get_text())
+        self.assertEqual("+ blah", edit.get_text())
 
         y += klass.compartments[0].height
         # The operation
         self.assertEqual(True, edit.is_editable(3, y))
         self.assertEqual(oper, edit._edit.subject)
-        self.assertEqual('+ method()', edit.get_text())
-
+        self.assertEqual("+ method()", edit.get_text())
 
     def test_class_attribute_editor(self):
         klass = self.create(items.ClassItem, UML.Class)
-        klass.subject.name = 'Class1'
+        klass.subject.name = "Class1"
 
         editor = AttributesPage(klass)
         page = editor.construct()
@@ -114,7 +110,7 @@ class EditorTestCase(TestCase):
 
         attr.name = "foo"
         self.assertEqual("+ foo", tree_view.get_model()[0][0])
-        attr.typeValue = 'int'
+        attr.typeValue = "int"
         self.assertEqual("+ foo: int", tree_view.get_model()[0][0])
         attr.isDerived = True
         self.assertEqual("+ /foo: int", tree_view.get_model()[0][0])
@@ -122,7 +118,7 @@ class EditorTestCase(TestCase):
 
     def test_class_operation_editor(self):
         klass = self.create(items.ClassItem, UML.Class)
-        klass.subject.name = 'Class1'
+        klass.subject.name = "Class1"
 
         editor = OperationsPage(klass)
         page = editor.construct()
@@ -130,16 +126,17 @@ class EditorTestCase(TestCase):
         self.assertSame(Gtk.TreeView, type(tree_view))
 
         oper = self.element_factory.create(UML.Operation)
-        oper.name = 'o'
+        oper.name = "o"
         klass.subject.ownedOperation = oper
 
         self.assertSame(oper, tree_view.get_model()[0][-1])
         self.assertEqual("+ o()", tree_view.get_model()[0][0])
         p = self.element_factory.create(UML.Parameter)
-        p.name = 'blah'
+        p.name = "blah"
         oper.formalParameter = p
         self.assertEqual("+ o(in blah)", tree_view.get_model()[0][0])
 
         page.destroy()
+
 
 # vim:sw=4:et:ai

@@ -8,6 +8,7 @@ from gaphor import UML
 from gaphor.UML.collection import collection
 import gaphas
 
+
 def orphan_references(factory):
     """
     Verify the contents of the element factory. Only checks are done
@@ -37,13 +38,13 @@ def orphan_references(factory):
         """
         for v in value:
             if v.id:
-                    refs.add((v.id, v))
+                refs.add((v.id, v))
 
     def verify_element(name, value):
         """
         Store the element id.
         """
-        if isinstance (value, (UML.Element, gaphas.Item)):
+        if isinstance(value, (UML.Element, gaphas.Item)):
             verify_reference(name, value)
         elif isinstance(value, collection):
             verify_collection(name, value)
@@ -55,9 +56,10 @@ def orphan_references(factory):
         Verify attributes and references in a gaphor.diagram.* object.
         The extra attribute reference can be used to force UML 
         """
-        #log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
-        if isinstance(value, collection) or \
-                (isinstance(value, (list, tuple)) and reference == True):
+        # log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
+        if isinstance(value, collection) or (
+            isinstance(value, (list, tuple)) and reference == True
+        ):
             verify_collection(name, value)
         elif reference:
             verify_reference(name, value)

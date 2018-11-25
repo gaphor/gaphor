@@ -1,4 +1,3 @@
-
 from gaphor.tests import TestCase
 from gaphor.ui.namespace import NamespaceModel
 from gaphor import UML
@@ -8,11 +7,11 @@ from gaphor.core import transactional
 
 class UndoRedoBugTestCase(TestCase):
 
-    services = TestCase.services + ['undo_manager']
+    services = TestCase.services + ["undo_manager"]
 
     def setUp(self):
         super(UndoRedoBugTestCase, self).setUp()
-        self.undo_manager = self.get_service('undo_manager')
+        self.undo_manager = self.get_service("undo_manager")
         self.namespace = NamespaceModel(self.element_factory)
 
     @transactional
@@ -25,7 +24,6 @@ class UndoRedoBugTestCase(TestCase):
     @transactional
     def remove_attribute(self):
         self.attribute.unlink()
-
 
     def test_bug_with_attribute(self):
         """

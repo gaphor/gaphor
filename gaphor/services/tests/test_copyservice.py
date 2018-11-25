@@ -1,4 +1,3 @@
-
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.services.copyservice import CopyService
@@ -8,7 +7,13 @@ from gaphor.tests.testcase import TestCase
 
 class CopyServiceTestCase(TestCase):
 
-    services = TestCase.services + ['main_window', 'action_manager', 'properties', 'undo_manager', 'ui_manager']
+    services = TestCase.services + [
+        "main_window",
+        "action_manager",
+        "properties",
+        "undo_manager",
+        "ui_manager",
+    ]
 
     def test_init(self):
         service = CopyService()
@@ -24,7 +29,7 @@ class CopyServiceTestCase(TestCase):
         ci = diagram.create(items.CommentItem, subject=ef.create(UML.Comment))
 
         service.copy([ci])
-        assert diagram.canvas.get_all_items() == [ ci ]
+        assert diagram.canvas.get_all_items() == [ci]
 
         service.paste(diagram)
 
@@ -38,18 +43,19 @@ class CopyServiceTestCase(TestCase):
         diagram = ef.create(UML.Diagram)
         c = diagram.create(items.ClassItem, subject=ef.create(UML.Class))
 
-        c.subject.name = 'Name'
+        c.subject.name = "Name"
 
         from gi.repository import GLib
+
         self.assertEqual(0, GLib.main_depth())
 
         diagram.canvas.update_now()
         i = list(diagram.canvas.get_all_items())
         self.assertEqual(1, len(i), i)
-        self.assertEqual('Name', i[0]._name.text)
+        self.assertEqual("Name", i[0]._name.text)
 
         service.copy([c])
-        assert diagram.canvas.get_all_items() == [ c ]
+        assert diagram.canvas.get_all_items() == [c]
 
         service.paste(diagram)
 
@@ -59,9 +65,8 @@ class CopyServiceTestCase(TestCase):
 
         diagram.canvas.update_now()
 
-        self.assertEqual('Name', i[0]._name.text)
-        self.assertEqual('Name', i[1]._name.text)
-
+        self.assertEqual("Name", i[0]._name.text)
+        self.assertEqual("Name", i[1]._name.text)
 
     def _skip_test_copy_paste_undo(self):
         """
@@ -98,7 +103,7 @@ class CopyServiceTestCase(TestCase):
         self.assertSame(all_items[1].subject, all_items[4].subject)
         self.assertSame(all_items[2].subject, all_items[5].subject)
 
-        undo_manager = self.get_service('undo_manager')
+        undo_manager = self.get_service("undo_manager")
 
         undo_manager.undo_transaction()
 

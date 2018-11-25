@@ -10,13 +10,10 @@ from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 
-class ActionItem(NamedItem):
-    __uml__   = UML.Action
-    __style__ = {
-        'min-size':   (50, 30),
-        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
-    }
 
+class ActionItem(NamedItem):
+    __uml__ = UML.Action
+    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
     def draw(self, context):
         """
@@ -42,12 +39,8 @@ class ActionItem(NamedItem):
 
 
 class SendSignalActionItem(NamedItem):
-    __uml__   = UML.SendSignalAction
-    __style__ = {
-        'min-size':   (50, 30),
-        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
-    }
-
+    __uml__ = UML.SendSignalAction
+    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
     def draw(self, context):
         """
@@ -61,9 +54,9 @@ class SendSignalActionItem(NamedItem):
         w = self.width
         h = self.height
         c.move_to(0, 0)
-        c.line_to(w-d, 0)
-        c.line_to(w, old_div(h,2))
-        c.line_to(w-d, h)
+        c.line_to(w - d, 0)
+        c.line_to(w, old_div(h, 2))
+        c.line_to(w - d, h)
         c.line_to(0, h)
         c.close_path()
 
@@ -71,12 +64,8 @@ class SendSignalActionItem(NamedItem):
 
 
 class AcceptEventActionItem(NamedItem):
-    __uml__   = UML.SendSignalAction
-    __style__ = {
-        'min-size':   (50, 30),
-        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
-    }
-
+    __uml__ = UML.SendSignalAction
+    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
     def draw(self, context):
         """
@@ -93,7 +82,7 @@ class AcceptEventActionItem(NamedItem):
         c.line_to(w, 0)
         c.line_to(w, h)
         c.line_to(0, h)
-        c.line_to(d, old_div(h,2))
+        c.line_to(d, old_div(h, 2))
         c.close_path()
 
         c.stroke()

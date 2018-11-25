@@ -12,14 +12,15 @@ import gi
 from gaphas.geometry import distance_rectangle_point, Rectangle
 from gaphas.freehand import FreeHandCairoContext
 from gi.repository import Pango
-gi.require_version('PangoCairo', '1.0')
+
+gi.require_version("PangoCairo", "1.0")
 from gi.repository import PangoCairo
 from past.utils import old_div
 
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.style import Style
 
-DEFAULT_TEXT_FONT = 'sans 10'
+DEFAULT_TEXT_FONT = "sans 10"
 
 
 def swap(list, el1, el2):
@@ -38,7 +39,7 @@ def _text_layout(cr, text, font, width):
         layout.set_font_description(Pango.FontDescription.from_string(font))
     layout.set_text(text, length=-1)
     layout.set_width(int(width * Pango.SCALE))
-    #layout.set_height(height)
+    # layout.set_height(height)
     return layout
 
 
@@ -49,8 +50,19 @@ def text_extents(cr, text, font=None, width=-1, height=-1):
     return layout.get_pixel_size()
 
 
-def text_align(cr, x, y, text, font, width=-1, height=-1,
-               align_x=0, align_y=0, padding_x=0, padding_y=0):
+def text_align(
+    cr,
+    x,
+    y,
+    text,
+    font,
+    width=-1,
+    height=-1,
+    align_x=0,
+    align_y=0,
+    padding_x=0,
+    padding_y=0,
+):
     """
     Draw text relative to (x, y).
     x, y - coordinates
@@ -94,7 +106,9 @@ def text_center(cr, x, y, text, font):
 
 
 def text_multiline(cr, x, y, text, font, width=-1, height=-1):
-    text_align(cr, x, y, text, font=font, width=width, height=height, align_x=1, align_y=1)
+    text_align(
+        cr, x, y, text, font=font, width=width, height=height, align_x=1, align_y=1
+    )
 
 
 class EditableTextSupport(object):
@@ -106,9 +120,10 @@ class EditableTextSupport(object):
      - _texts:       list of diagram item text elements
      - _text_groups: grouping information of text elements (None - ungrouped)
     """
+
     def __init__(self):
         self._texts = []
-        self._text_groups = { None: [] }
+        self._text_groups = {None: []}
         self._text_groups_sizes = {}
 
     def postload(self):
@@ -120,9 +135,7 @@ class EditableTextSupport(object):
         """
         return self._texts
 
-
-    def add_text(self, attr, style=None, pattern=None, visible=None,
-            editable=False):
+    def add_text(self, attr, style=None, pattern=None, visible=None, editable=False):
         """
         Create and add a text element.
 
@@ -134,19 +147,19 @@ class EditableTextSupport(object):
 
         Returns created text element.
         """
-        txt = TextElement(attr, style=style, pattern=pattern,
-                visible=visible, editable=editable)
+        txt = TextElement(
+            attr, style=style, pattern=pattern, visible=visible, editable=editable
+        )
         self._texts.append(txt)
 
         # try to group text element
-        gname = style and style.get('text-align-group') or None
+        gname = style and style.get("text-align-group") or None
         if gname not in self._text_groups:
             self._text_groups[gname] = []
         group = self._text_groups[gname]
         group.append(txt)
 
         return txt
-
 
     def remove_text(self, txt):
         """
@@ -157,7 +170,7 @@ class EditableTextSupport(object):
         """
         # remove from align group
         style = txt.style
-        if style and hasattr(style, 'text_align_group'):
+        if style and hasattr(style, "text_align_group"):
             gname = style.text_align_group
         else:
             gname = None
@@ -168,7 +181,6 @@ class EditableTextSupport(object):
         # remove text element from diagram item
         self._texts.remove(txt)
 
-
     def swap_texts(self, txt1, txt2):
         """
         Swap two text elements.
@@ -176,7 +188,7 @@ class EditableTextSupport(object):
         swap(self._texts, txt1, txt2)
 
         style = txt1.style
-        if style and hasattr(style, 'text_align_group'):
+        if style and hasattr(style, "text_align_group"):
             gname = style.text_align_group
         else:
             gname = None
@@ -184,13 +196,11 @@ class EditableTextSupport(object):
         group = self._text_groups[gname]
         swap(group, txt1, txt2)
 
-
     def _get_visible_texts(self, texts):
         """
         Get list of visible texts.
         """
         return [txt for txt in texts if txt.is_visible()]
-
 
     def _get_text_groups(self):
         """
@@ -199,7 +209,6 @@ class EditableTextSupport(object):
         tg = self._text_groups
         groups = self._text_groups
         return ((name, tg[name]) for name in groups if name)
-
 
     def _set_text_sizes(self, context, texts):
         """
@@ -214,7 +223,6 @@ class EditableTextSupport(object):
             w, h = text_extents(cr, txt.text, font=txt.style.font)
             txt.bounds.width = max(15, w)
             txt.bounds.height = max(10, h)
-
 
     def _set_text_group_size(self, context, name, texts):
         """
@@ -238,7 +246,6 @@ class EditableTextSupport(object):
         height = sum(txt.bounds.height for txt in texts)
         self._text_groups_sizes[name] = width, height
 
-
     def pre_update(self, context):
         """
         Calculate sizes of text elements and text groups.
@@ -254,7 +261,6 @@ class EditableTextSupport(object):
         texts = self._text_groups[None]
         texts = self._get_visible_texts(texts)
         self._set_text_sizes(context, texts)
-
 
     def _text_group_align(self, context, name, texts):
         """
@@ -275,8 +281,9 @@ class EditableTextSupport(object):
         # align according to style of last text in the group
         style = texts[-1]._style
         extents = self._text_groups_sizes[name]
-        x, y = self.text_align(extents, style.text_align,
-                style.text_padding, style.text_outside)
+        x, y = self.text_align(
+            extents, style.text_align, style.text_padding, style.text_outside
+        )
 
         max_hint = 0
         if style.text_align_str:
@@ -298,7 +305,6 @@ class EditableTextSupport(object):
             txt.bounds.y = y + dy
             dy += height
 
-
     def _get_text_align_hint(self, cr, txt):
         """
         Calculate hint value for text element depending on
@@ -310,7 +316,6 @@ class EditableTextSupport(object):
         if len(chunks) > 1:
             hint, _ = text_extents(cr, chunks[0], font=txt.style.font)
         return hint
-
 
     def post_update(self, context):
         """
@@ -329,27 +334,31 @@ class EditableTextSupport(object):
         for txt in texts:
             style = txt.style
             extents = txt.bounds.width, txt.bounds.height
-            x, y = self.text_align(extents, style.text_align,
-                    style.text_padding, style.text_outside)
+            x, y = self.text_align(
+                extents, style.text_align, style.text_padding, style.text_outside
+            )
 
-            bounds = txt.bounds # fixme: gaphor rectangle problem
-            width, height = bounds.width, bounds.height # fixme: gaphor rectangle problem
+            bounds = txt.bounds  # fixme: gaphor rectangle problem
+            width, height = (
+                bounds.width,
+                bounds.height,
+            )  # fixme: gaphor rectangle problem
             txt.bounds.x = x
             txt.bounds.y = y
-
 
     def point(self, pos):
         """
         Return the distance to the nearest editable and visible text
         element.
         """
+
         def distances():
             yield 10000.0
             for txt in self._texts:
                 if txt.is_visible() and txt.editable:
                     yield distance_rectangle_point(txt.bounds, pos)
-        return min(distances())
 
+        return min(distances())
 
     def draw(self, context):
         """
@@ -360,14 +369,13 @@ class EditableTextSupport(object):
 
         # fixme: do it on per group basis
         if any(txt._style.text_rotated for txt in self._get_visible_texts(self._texts)):
-            cr.rotate(old_div(-math.pi,2))
+            cr.rotate(old_div(-math.pi, 2))
 
         if self.subject:
             for txt in self._get_visible_texts(self._texts):
                 txt.draw(context)
 
         cr.restore()
-
 
 
 class TextElement(object):
@@ -395,8 +403,7 @@ class TextElement(object):
 
     bounds = property(lambda self: self._bounds)
 
-    def __init__(self, attr, style=None, pattern=None, visible=None,
-            editable=False):
+    def __init__(self, attr, style=None, pattern=None, visible=None, editable=False):
         """
         Create new text element with bounds (0, 0, 10, 10) and empty text.
 
@@ -410,17 +417,17 @@ class TextElement(object):
 
         # create default style for a text element
         self._style = Style()
-        self._style.add('text-padding', (2, 2, 2, 2))
-        self._style.add('text-align', (ALIGN_CENTER, ALIGN_TOP))
-        self._style.add('text-outside', False)
-        self._style.add('text-rotated', False)
-        self._style.add('text-align-str', None)
-        self._style.add('font', DEFAULT_TEXT_FONT)
+        self._style.add("text-padding", (2, 2, 2, 2))
+        self._style.add("text-align", (ALIGN_CENTER, ALIGN_TOP))
+        self._style.add("text-outside", False)
+        self._style.add("text-rotated", False)
+        self._style.add("text-align-str", None)
+        self._style.add("font", DEFAULT_TEXT_FONT)
         if style:
             self._style.update(style)
 
         self.attr = attr
-        self._text = ''
+        self._text = ""
 
         if visible:
             self.is_visible = visible
@@ -428,7 +435,7 @@ class TextElement(object):
         if pattern:
             self._pattern = pattern
         else:
-            self._pattern = '%s'
+            self._pattern = "%s"
 
         self.editable = editable
 
@@ -436,7 +443,7 @@ class TextElement(object):
         """
         Render text value using pattern.
         """
-        self._text = value and self._pattern % value or ''
+        self._text = value and self._pattern % value or ""
 
     text = property(lambda s: s._text, _set_text)
 

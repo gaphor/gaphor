@@ -59,6 +59,7 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
 PI_2 = old_div(pi, 2)
 
+
 class MessageItem(NamedLine):
     """
     Message item is drawn on sequence and communication diagrams.
@@ -73,9 +74,7 @@ class MessageItem(NamedLine):
     - _arrow_angle: decorating arrow angle
     """
 
-    __style__ = {
-        'name-align-str': ':',
-    }
+    __style__ = {"name-align-str": ":"}
 
     # name padding on sequence diagram
     SD_PADDING = NamedLine.style.name_padding
@@ -91,7 +90,6 @@ class MessageItem(NamedLine):
         self._messages = odict()
         self._inverted_messages = odict()
 
-
     def pre_update(self, context):
         """
         Update communication diagram information.
@@ -104,7 +102,6 @@ class MessageItem(NamedLine):
 
         super(MessageItem, self).pre_update(context)
 
-
     def post_update(self, context):
         """
         Update communication diagram information.
@@ -116,24 +113,21 @@ class MessageItem(NamedLine):
             self._arrow_pos = pos
             self._arrow_angle = angle
 
-
     def save(self, save_func):
-        save_func('message', list(self._messages), reference=True)
-        save_func('inverted', list(self._inverted_messages), reference=True)
+        save_func("message", list(self._messages), reference=True)
+        save_func("inverted", list(self._inverted_messages), reference=True)
 
         super(MessageItem, self).save(save_func)
 
-
     def load(self, name, value):
-        if name == 'message':
-            #print 'message! value =', value
+        if name == "message":
+            # print 'message! value =', value
             self.add_message(value, False)
-        elif name == 'inverted':
-            #print 'inverted! value =', value
+        elif name == "inverted":
+            # print 'inverted! value =', value
             self.add_message(value, True)
         else:
             super(MessageItem, self).load(name, value)
-
 
     def postload(self):
         for message in self._messages:
@@ -144,7 +138,6 @@ class MessageItem(NamedLine):
 
         super(MessageItem, self).postload()
 
-
     def _draw_circle(self, cr):
         """
         Draw circle for lost/found messages.
@@ -154,7 +147,6 @@ class MessageItem(NamedLine):
         cr.set_line_width(0.01)
         cr.arc(0.0, 0.0, 4, 0.0, 2 * pi)
         cr.fill()
-
 
     def _draw_arrow(self, cr, half=False, filled=True):
         """
@@ -173,7 +165,6 @@ class MessageItem(NamedLine):
             cr.close_path()
             cr.fill_preserve()
 
-
     def draw_head(self, context):
         cr = context.cairo
         # no head drawing in case of communication diagram
@@ -184,12 +175,11 @@ class MessageItem(NamedLine):
         cr.move_to(0, 0)
 
         subject = self.subject
-        if subject and subject.messageKind == 'found':
+        if subject and subject.messageKind == "found":
             self._draw_circle(cr)
             cr.stroke()
 
         cr.move_to(0, 0)
-
 
     def draw_tail(self, context):
         cr = context.cairo
@@ -201,7 +191,7 @@ class MessageItem(NamedLine):
 
         subject = self.subject
 
-        if subject and subject.messageSort in ('createMessage', 'reply'):
+        if subject and subject.messageSort in ("createMessage", "reply"):
             cr.set_dash((7.0, 5.0), 0)
 
         cr.line_to(0, 0)
@@ -211,19 +201,18 @@ class MessageItem(NamedLine):
 
         if subject:
             w = cr.get_line_width()
-            if subject.messageKind == 'lost':
+            if subject.messageKind == "lost":
                 self._draw_circle(cr)
                 cr.stroke()
 
             cr.set_line_width(w)
-            half = subject.messageSort == 'asynchSignal'
-            filled = subject.messageSort in ('synchCall', 'deleteMessage')
+            half = subject.messageSort == "asynchSignal"
+            filled = subject.messageSort in ("synchCall", "deleteMessage")
             self._draw_arrow(cr, half, filled)
         else:
             self._draw_arrow(cr)
 
         cr.stroke()
-
 
     def _draw_decorating_arrow(self, cr, inverted=False):
         cr.save()
@@ -263,7 +252,6 @@ class MessageItem(NamedLine):
         finally:
             cr.restore()
 
-
     def draw(self, context):
         super(MessageItem, self).draw(context)
 
@@ -275,7 +263,6 @@ class MessageItem(NamedLine):
             if len(self._inverted_messages) > 0:
                 self._draw_decorating_arrow(cr, True)
 
-
     def is_communication(self):
         """
         Check if message is connecting to lifelines on communication
@@ -284,9 +271,12 @@ class MessageItem(NamedLine):
         canvas = self.canvas
         c1 = canvas.get_connection(self.head)
         c2 = canvas.get_connection(self.tail)
-        return c1 and not c1.connected.lifetime.visible \
-                or c2 and not c2.connected.lifetime.visible
-
+        return (
+            c1
+            and not c1.connected.lifetime.visible
+            or c2
+            and not c2.connected.lifetime.visible
+        )
 
     def add_message(self, message, inverted):
         """
@@ -295,23 +285,20 @@ class MessageItem(NamedLine):
         if inverted:
             messages = self._inverted_messages
             style = {
-                'text-align-group': 'inverted',
-                'text-align': (ALIGN_CENTER, ALIGN_BOTTOM),
+                "text-align-group": "inverted",
+                "text-align": (ALIGN_CENTER, ALIGN_BOTTOM),
             }
         else:
             messages = self._messages
-            group = 'stereotype'
-            style = {
-                'text-align-group': 'stereotype',
-            }
+            group = "stereotype"
+            style = {"text-align-group": "stereotype"}
 
-        style['text-align-str'] = ':'
-        style['text-padding'] = self.CD_PADDING
-        txt = self.add_text('name', style=style)
+        style["text-align-str"] = ":"
+        style["text-padding"] = self.CD_PADDING
+        txt = self.add_text("name", style=style)
         txt.text = message.name
         messages[message] = txt
         self.request_update()
-
 
     def remove_message(self, message, inverted):
         """
@@ -326,7 +313,6 @@ class MessageItem(NamedLine):
         del messages[message]
         self.request_update()
 
-
     def set_message_text(self, message, text, inverted):
         """
         Set text of message on communication diagram.
@@ -337,7 +323,6 @@ class MessageItem(NamedLine):
             messages = self._messages
         messages[message].text = text
         self.request_update()
-
 
     def swap_messages(self, m1, m2, inverted):
         """

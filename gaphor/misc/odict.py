@@ -1,8 +1,9 @@
 # from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/107747
 from builtins import map
 from builtins import zip
-class odict(dict):
 
+
+class odict(dict):
     def __init__(self, dict=()):
         self._keys = []
         super(odict, self).__init__(dict)
@@ -13,7 +14,8 @@ class odict(dict):
 
     def __setitem__(self, key, item):
         dict.__setitem__(self, key, item)
-        if key not in self._keys: self._keys.append(key)
+        if key not in self._keys:
+            self._keys.append(key)
 
     def clear(self):
         dict.clear(self)
@@ -34,7 +36,7 @@ class odict(dict):
         try:
             key = self._keys[-1]
         except IndexError:
-            raise KeyError('dictionary is empty')
+            raise KeyError("dictionary is empty")
 
         val = self[key]
         del self[key]
@@ -43,16 +45,17 @@ class odict(dict):
 
     def setdefault(self, key, failobj=None):
         dict.setdefault(self, key, failobj)
-        if key not in self._keys: self._keys.append(key)
+        if key not in self._keys:
+            self._keys.append(key)
 
     def update(self, dict):
         dict.update(self, dict)
         for key in list(dict.keys()):
-            if key not in self._keys: self._keys.append(key)
+            if key not in self._keys:
+                self._keys.append(key)
 
     def values(self):
         return list(map(self.get, self._keys))
-    
 
     def swap(self, k1, k2):
         """
@@ -61,7 +64,6 @@ class odict(dict):
         i1 = self._keys.index(k1)
         i2 = self._keys.index(k2)
         self._keys[i1], self._keys[i2] = self._keys[i2], self._keys[i1]
-
 
     def __iter__(self):
         for k in self._keys:

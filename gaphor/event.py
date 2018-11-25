@@ -35,6 +35,7 @@ class TransactionBegin(object):
     This event denotes the beginning of a transaction.
     Nested (sub-) transactions should not emit this signal.
     """
+
     pass
 
 
@@ -44,6 +45,7 @@ class TransactionCommit(object):
     This event is emitted when a transaction (toplevel) is successfully
     commited.
     """
+
     pass
 
 
@@ -54,6 +56,7 @@ class TransactionRollback(object):
     should be marked for rollback. This event is emitted to tell the operation
     has failed.
     """
+
     pass
 
 
@@ -69,4 +72,3 @@ class ActionExecuted(object):
 
 
 # vim:sw=4:et:ai
-

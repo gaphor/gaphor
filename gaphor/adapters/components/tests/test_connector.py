@@ -15,6 +15,7 @@ class ComponentConnectTestCase(TestCase):
     """
     Test connection of connector item to a component.
     """
+
     def test_glue(self):
         """Test glueing connector to component
         """
@@ -24,7 +25,6 @@ class ComponentConnectTestCase(TestCase):
         glued = self.allow(line, line.head, component)
         self.assertTrue(glued)
 
-
     def test_connection(self):
         """Test connecting connector to a component
         """
@@ -33,8 +33,7 @@ class ComponentConnectTestCase(TestCase):
 
         self.connect(line, line.head, component)
         self.assertTrue(line.subject is None)
-        #self.assertTrue(line.end is None)
-
+        # self.assertTrue(line.end is None)
 
     def test_glue_both(self):
         """Test glueing connector to component when one is connected
@@ -48,11 +47,11 @@ class ComponentConnectTestCase(TestCase):
         self.assertFalse(glued)
 
 
-
 class InterfaceConnectTestCase(TestCase):
     """
     Test connection with interface acting as assembly connector.
     """
+
     def test_non_folded_glue(self):
         """Test non-folded interface glueing
         """
@@ -61,7 +60,6 @@ class InterfaceConnectTestCase(TestCase):
 
         glued = self.allow(line, line.head, iface)
         self.assertFalse(glued)
-
 
     def test_folded_glue(self):
         """Test folded interface glueing
@@ -72,7 +70,6 @@ class InterfaceConnectTestCase(TestCase):
         iface.folded = iface.FOLDED_REQUIRED
         glued = self.allow(line, line.head, iface)
         self.assertTrue(glued)
-
 
     def test_glue_when_dependency_connected(self):
         """Test interface glueing, when dependency connected
@@ -87,7 +84,6 @@ class InterfaceConnectTestCase(TestCase):
         glued = self.allow(line, line.head, iface)
         self.assertFalse(glued)
 
-
     def test_glue_when_implementation_connected(self):
         """Test interface glueing, when implementation connected
         """
@@ -100,7 +96,6 @@ class InterfaceConnectTestCase(TestCase):
         iface.folded = iface.FOLDED_REQUIRED
         glued = self.allow(line, line.head, iface)
         self.assertFalse(glued)
-
 
     def test_glue_when_connector_connected(self):
         """Test interface glueing, when connector connected
@@ -116,7 +111,6 @@ class InterfaceConnectTestCase(TestCase):
 
         glued = self.allow(line2, line2.head, iface)
         self.assertTrue(glued)
-
 
     def test_simple_connection(self):
         """Test simple connection to an interface
@@ -139,7 +133,7 @@ class InterfaceConnectTestCase(TestCase):
 
         # no UML metamodel yet
         self.assertTrue(line.subject is None)
-        #self.assertTrue(line.end is None)
+        # self.assertTrue(line.end is None)
 
         # check port status
         self.assertTrue(pport.provided and not pport.required and pport.connectable)
@@ -148,7 +142,6 @@ class InterfaceConnectTestCase(TestCase):
         p2 = iface.ports()[3]
         self.assertTrue(not p1.required and not p1.provided and not p1.connectable)
         self.assertTrue(not p2.required and not p2.provided and not p2.connectable)
-
 
     def test_connection_angle_change(self):
         """Test angle after connection to an interface
@@ -168,7 +161,6 @@ class InterfaceConnectTestCase(TestCase):
         self.connect(line, line.head, iface, pport)
         self.assertEqual(rport.angle, iface._angle)
 
-
     def test_connection_of_two_connectors_one_side(self):
         """Test connection of two connectors to required port of an interface
         """
@@ -186,9 +178,9 @@ class InterfaceConnectTestCase(TestCase):
 
         # no UML metamodel yet
         self.assertTrue(c1.subject is None)
-        #self.assertTrue(c1.end is None)
+        # self.assertTrue(c1.end is None)
         self.assertTrue(c2.subject is None)
-        #self.assertTrue(c2.end is None)
+        # self.assertTrue(c2.end is None)
 
         # check port status
         self.assertTrue(pport.provided and not pport.required)
@@ -197,7 +189,6 @@ class InterfaceConnectTestCase(TestCase):
         p2 = iface.ports()[3]
         self.assertTrue(not p1.required and not p1.provided)
         self.assertTrue(not p2.required and not p2.provided)
-
 
     def test_connection_of_two_connectors_two_sides(self):
         """Test connection of two connectors to required and provided ports of an interface
@@ -215,9 +206,9 @@ class InterfaceConnectTestCase(TestCase):
 
         # no UML metamodel yet
         self.assertTrue(c1.subject is None)
-        #self.assertTrue(c1.end is None)
+        # self.assertTrue(c1.end is None)
         self.assertTrue(c2.subject is None)
-        #self.assertTrue(c2.end is None)
+        # self.assertTrue(c2.end is None)
 
         # check port status
         self.assertTrue(pport.provided and not pport.required)
@@ -226,7 +217,6 @@ class InterfaceConnectTestCase(TestCase):
         p2 = iface.ports()[3]
         self.assertTrue(not p1.required and not p1.provided)
         self.assertTrue(not p2.required and not p2.provided)
-
 
     def test_simple_disconnection(self):
         """Test disconnection of simple connection to an interface
@@ -252,12 +242,12 @@ class InterfaceConnectTestCase(TestCase):
         self.assertTrue(all(p.connectable for p in iface.ports()))
 
 
-
 class AssemblyConnectorTestCase(TestCase):
     """
     Test assembly connector. It is assumed that interface and component
     connection tests defined above are working correctly.
     """
+
     def create_interfaces(self, *args):
         """
         Generate interfaces with names specified by arguments.
@@ -271,7 +261,6 @@ class AssemblyConnectorTestCase(TestCase):
             interface.name = name
             yield interface
 
-
     def provide(self, component, interface):
         """
         Change component's data so it implements interfaces.
@@ -280,7 +269,6 @@ class AssemblyConnectorTestCase(TestCase):
         component.implementation = impl
         impl.contract = interface
 
-
     def require(self, component, interface):
         """
         Change component's data so it requires interface.
@@ -288,7 +276,6 @@ class AssemblyConnectorTestCase(TestCase):
         usage = self.element_factory.create(UML.Usage)
         component.clientDependency = usage
         usage.supplier = interface
-
 
     def test_getting_component(self):
         """Test getting component
@@ -305,7 +292,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         self.assertTrue(c1 is ConnectorConnectBase.get_component(conn1))
         self.assertTrue(c2 is ConnectorConnectBase.get_component(conn2))
-
 
     def test_connection(self):
         """Test basic assembly connection
@@ -335,33 +321,34 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn2, conn2.tail, iface, rport)
 
         # test UML data model
-        self.assertTrue(conn1.subject is conn2.subject,
-            '%s is not %s' % (conn1.subject, conn2.subject))
+        self.assertTrue(
+            conn1.subject is conn2.subject,
+            "%s is not %s" % (conn1.subject, conn2.subject),
+        )
         assembly = conn1.subject
         self.assertTrue(isinstance(assembly, UML.Connector))
-        self.assertEqual('assembly', assembly.kind)
+        self.assertEqual("assembly", assembly.kind)
 
         # there should be two connector ends
         self.assertEqual(2, len(assembly.end))
         # interface is on both ends
-        #end1 = conn1.end
-        #end2 = conn2.end
+        # end1 = conn1.end
+        # end2 = conn2.end
 
-        #self.assertTrue(end1 in assembly.end,
+        # self.assertTrue(end1 in assembly.end,
         #    '%s not in %s' % (end1, assembly.end))
-        #self.assertTrue(end2 in assembly.end,
+        # self.assertTrue(end2 in assembly.end,
         #    '%s not in %s' % (end2, assembly.end))
 
-        #self.assertEqual(end1.role, iface.subject)
-        #self.assertEqual(end2.role, iface.subject)
+        # self.assertEqual(end1.role, iface.subject)
+        # self.assertEqual(end2.role, iface.subject)
         # ends of connector point to components
-        #p1 = end1.partWithPort
-        #p2 = end2.partWithPort
-        #self.assertEqual(p1, c1.subject.ownedPort[0],
+        # p1 = end1.partWithPort
+        # p2 = end2.partWithPort
+        # self.assertEqual(p1, c1.subject.ownedPort[0],
         #    '%s != %s' % (p1, c1.subject.ownedPort))
-        #self.assertEqual(p2, c2.subject.ownedPort[0],
+        # self.assertEqual(p2, c2.subject.ownedPort[0],
         #    '%s != %s' % (p2, c2.subject.ownedPort))
-
 
     def test_required_port_glue(self):
         """Test if required port glueing works
@@ -387,7 +374,6 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn1, conn1.tail, iface, pport)
         glued = self.allow(conn2, conn2.tail, iface, rport)
         self.assertTrue(glued)
-
 
     def test_wrong_port_glue(self):
         """Test if incorrect port glueing is forbidden
@@ -425,7 +411,6 @@ class AssemblyConnectorTestCase(TestCase):
         glued = self.allow(conn3, conn3.head, c3)
         self.assertFalse(glued)
 
-
     def test_port_status(self):
         """Test if port type is set properly
         """
@@ -450,7 +435,6 @@ class AssemblyConnectorTestCase(TestCase):
         # check port type
         self.assertTrue(pport.provided)
         self.assertTrue(rport.required)
-
 
     def test_connection_order(self):
         """Test connection order of assembly connection
@@ -480,9 +464,8 @@ class AssemblyConnectorTestCase(TestCase):
         # no UML data model yet (no connection on required port)
         self.assertTrue(conn1.subject is None)
         self.assertTrue(conn2.subject is None)
-        #self.assertTrue(conn1.end is None)
-        #self.assertTrue(conn2.end is None)
-
+        # self.assertTrue(conn1.end is None)
+        # self.assertTrue(conn2.end is None)
 
     def test_addtional_connections(self):
         """Test additional connections to assembly connection
@@ -522,23 +505,22 @@ class AssemblyConnectorTestCase(TestCase):
 
         # test UML data model
         self.assertTrue(conn3.subject is conn1.subject)
-        #self.assertTrue(conn3.end is not None)
+        # self.assertTrue(conn3.end is not None)
 
         assembly = conn1.subject
 
         self.assertEqual(3, len(assembly.end))
 
-        #end3 = conn3.end
+        # end3 = conn3.end
 
-        #self.assertTrue(end3 in assembly.end,
+        # self.assertTrue(end3 in assembly.end,
         #    '%s not in %s' % (end3, assembly.end))
 
-        #self.assertEqual(end3.role, iface.subject)
+        # self.assertEqual(end3.role, iface.subject)
         # ends of connector point to components
-        #p3 = end3.partWithPort
-        #self.assertEqual(p3, c3.subject.ownedPort[0],
+        # p3 = end3.partWithPort
+        # self.assertEqual(p3, c3.subject.ownedPort[0],
         #    '%s != %s' % (p3, c3.subject.ownedPort))
-
 
     def test_disconnection(self):
         """Test assembly connector disconnection
@@ -579,7 +561,6 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertEqual(0, len(self.kindof(UML.ConnectorEnd)))
         self.assertEqual(0, len(self.kindof(UML.Port)))
 
-
     def test_disconnection_order(self):
         """Test assembly connector disconnection order
         """
@@ -616,10 +597,10 @@ class AssemblyConnectorTestCase(TestCase):
 
         # disconnect from provided port
         # assembly should be destroyed
-        log.debug('Perform disconnect from here')
+        log.debug("Perform disconnect from here")
         self.disconnect(conn1, conn1.head)
 
-        log.debug('Disconnect done')
+        log.debug("Disconnect done")
 
         self.assertTrue(conn1.subject is None)
         self.assertTrue(conn2.subject is None)
@@ -628,7 +609,6 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertEqual(0, len(self.kindof(UML.Connector)))
         self.assertEqual(0, len(self.kindof(UML.ConnectorEnd)))
         self.assertEqual(0, len(self.kindof(UML.Port)))
-
 
 
 # vim:sw=4:et:ai

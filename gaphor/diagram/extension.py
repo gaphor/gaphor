@@ -9,6 +9,7 @@ ExtensionItem -- Graphical representation of an association.
 from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
 
+
 class ExtensionItem(NamedLine):
     """
     ExtensionItem represents associations. 
@@ -20,8 +21,7 @@ class ExtensionItem(NamedLine):
 
     def __init__(self, id=None):
         NamedLine.__init__(self, id)
-        self.watch('subject<Extension>.ownedEnd')
-
+        self.watch("subject<Extension>.ownedEnd")
 
     def draw_head(self, context):
         cr = context.cairo

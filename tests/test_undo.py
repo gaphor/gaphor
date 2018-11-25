@@ -1,17 +1,17 @@
-
 from builtins import range
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.core import transactional
 
+
 class UndoTest(TestCase):
 
-    services = TestCase.services + [ 'undo_manager' ]
+    services = TestCase.services + ["undo_manager"]
 
     def test_class_association_undo_redo(self):
         factory = self.element_factory
-        undo_manager = self.get_service('undo_manager')
+        undo_manager = self.get_service("undo_manager")
 
         self.assertEqual(0, len(self.diagram.canvas.solver.constraints))
 
@@ -46,7 +46,7 @@ class UndoTest(TestCase):
 
         for i in range(3):
             # Diagram, Class
-            #self.assertEqual(2, len(factory.lselect()), factory.lselect())
+            # self.assertEqual(2, len(factory.lselect()), factory.lselect())
 
             self.assertEqual(3, len(self.diagram.canvas.solver.constraints))
 
@@ -58,4 +58,6 @@ class UndoTest(TestCase):
             self.assertEqual(ci2, self.get_connected(a.tail))
 
             undo_manager.redo_transaction()
+
+
 # vim:sw=4:et:ai

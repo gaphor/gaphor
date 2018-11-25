@@ -107,7 +107,8 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
 from operator import attrgetter
 
-logger = getLogger('Connector')
+logger = getLogger("Connector")
+
 
 class ConnectorItem(NamedLine):
     """
@@ -125,24 +126,20 @@ class ConnectorItem(NamedLine):
      _interface
         Interface name, when connector is assembly connector.
     """
-    __uml__        = UML.Connector
-    __style__   = {
-        'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
-        'name-outside': True,
-    }
+
+    __uml__ = UML.Connector
+    __style__ = {"name-align": (ALIGN_CENTER, ALIGN_BOTTOM), "name-outside": True}
 
     def __init__(self, id):
         super(ConnectorItem, self).__init__(id)
-        self._interface = self.add_text('end.role.name', style={
-            'text-align-group': 'stereotype',
-        })
-        self.watch('subject<Connector>.end.role.name', self.on_interface_name)
-
+        self._interface = self.add_text(
+            "end.role.name", style={"text-align-group": "stereotype"}
+        )
+        self.watch("subject<Connector>.end.role.name", self.on_interface_name)
 
     def postload(self):
         super(ConnectorItem, self).postload()
         self.on_interface_name(None)
-
 
     def on_interface_name(self, event):
         """
@@ -150,39 +147,34 @@ class ConnectorItem(NamedLine):
         by `ConnectorItem.subject.end.role`).
         """
         try:
-            self._interface.text = self.subject.end['it.role', 0].role.name
+            self._interface.text = self.subject.end["it.role", 0].role.name
         except (IndexError, AttributeError) as e:
             logger.error(e)
-            self._interface.text = ''
+            self._interface.text = ""
         else:
             self.request_update(matrix=False)
-
 
     def draw_tail(self, context):
         cr = context.cairo
         cr.line_to(0, 0)
-        if self.subject and self.subject.kind == 'delegation':
+        if self.subject and self.subject.kind == "delegation":
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
 
-
     def save(self, save_func):
         super(ConnectorItem, self).save(save_func)
-        #save_func('end', self.end)
-
+        # save_func('end', self.end)
 
     def load(self, name, value):
-        if name == 'end':
-            pass #self.end = value
+        if name == "end":
+            pass  # self.end = value
         else:
             super(ConnectorItem, self).load(name, value)
 
-
-    #def on_named_element_name(self, event):
+    # def on_named_element_name(self, event):
     #    if isinstance(self.subject, UML.Connector):
     #        super(ConnectorItem, self).on_named_element_name(event)
-
 
 
 # vim:sw=4:et:ai

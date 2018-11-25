@@ -1,4 +1,3 @@
-
 import gaphor.adapters.connectors
 import gaphor.adapters.editors
 

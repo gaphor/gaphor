@@ -9,6 +9,7 @@ from gaphor.interfaces import IServiceEvent
 class IElementEvent(interface.Interface):
     """Generic event fired when element state changes.
     """
+
     element = interface.Attribute("The changed element")
 
 
@@ -26,6 +27,7 @@ class IElementChangeEvent(IElementEvent):
     """
     Generic event fired when element state changes.
     """
+
     property = interface.Attribute("The property that changed")
     old_value = interface.Attribute("The property value before the change")
     new_value = interface.Attribute("The property value after the change")
@@ -43,10 +45,12 @@ class IAssociationChangeEvent(IElementChangeEvent):
     This event may be fired for both ends of the association.
     """
 
+
 class IAssociationSetEvent(IAssociationChangeEvent):
     """
     An association with [0..1] multiplicity has been changed.
     """
+
 
 class IAssociationAddEvent(IAssociationChangeEvent):
     """
@@ -54,16 +58,19 @@ class IAssociationAddEvent(IAssociationChangeEvent):
     added. ``new_value`` contains the property being added.
     """
 
+
 class IAssociationDeleteEvent(IAssociationChangeEvent):
     """
     An association with [0..*] multiplicity has been changed: an entry has
     been removed. ``old_value`` contains the property that has been removed.
     """
 
+
 class IElementFactoryEvent(IServiceEvent):
     """
     Events related to individual model elements.
     """
+
 
 class IModelFactoryEvent(IElementFactoryEvent):
     """

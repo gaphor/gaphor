@@ -1,9 +1,8 @@
-
 from unittest import TestCase
 from gaphor.services.properties import Properties, FileBackend
 import tempfile
 
-#class MockApplication(object):
+# class MockApplication(object):
 #
 #    def __init__(self):
 #        self.events = []
@@ -12,19 +11,20 @@ import tempfile
 #        self.events.append(event)
 #
 
-class TestProperties(TestCase):
 
+class TestProperties(TestCase):
     def setUp(self):
         self.tmpdir = tempfile.mkdtemp()
         backend = FileBackend(self.tmpdir)
         self.properties = Properties(backend)
-#        self.app = MockApplication()
+        #        self.app = MockApplication()
         self.properties.init(self.app)
 
     def shutDown(self):
         self.properties.shutdown()
         os.remove(os.path.join(self.tmpdir, FileBackend.RESOURCE_FILE))
         os.rmdir(self.tmpdir)
+
 
 #    def test_properties(self):
 #        prop = self.properties

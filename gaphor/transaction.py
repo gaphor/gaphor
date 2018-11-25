@@ -20,22 +20,26 @@ def transactional(func):
     Transaction instance is created before the decorated function is called.
     If calling the function leads to an exception being raised, the transaction
     is rolled-back.  Otherwise, it is committed."""
-    
+
     def _transactional(*args, **kwargs):
         r = None
         tx = Transaction()
         try:
             r = func(*args, **kwargs)
         except Exception as e:
-            log.error('Transaction terminated due to an exception, performing a rollback', exc_info=True)
+            log.error(
+                "Transaction terminated due to an exception, performing a rollback",
+                exc_info=True,
+            )
             try:
                 tx.rollback()
             except Exception as e:
-                log.error('Rollback failed', exc_info=True)
+                log.error("Rollback failed", exc_info=True)
             raise
         else:
             tx.commit()
         return r
+
     return _transactional
 
 
@@ -43,6 +47,7 @@ class TransactionError(Exception):
     """
     Errors related to the transaction module.
     """
+
     pass
 
 
@@ -71,9 +76,9 @@ class Transaction(object):
     ...     pass
     """
 
-    component_registry = application.inject('component_registry')
+    component_registry = application.inject("component_registry")
 
-    _stack= []
+    _stack = []
 
     def __init__(self):
         """Initialize the transaction.  If this is the first transaction in
@@ -112,20 +117,22 @@ class Transaction(object):
         """Close the transaction.  If the stack is empty, a TransactionError
         is raised.  If the last transaction on the stack isn't this transaction,
         a Transaction error is raised."""
-        
+
         try:
             last = self._stack.pop()
         except IndexError:
-            raise TransactionError('No Transaction on stack.')
+            raise TransactionError("No Transaction on stack.")
         if last is not self:
             self._stack.append(last)
-            raise TransactionError('Transaction on stack is not the transaction being closed.')
+            raise TransactionError(
+                "Transaction on stack is not the transaction being closed."
+            )
 
     def _handle(self, event):
         try:
             component_registry = self.component_registry
         except (application.NotInitializedError, component.ComponentLookupError):
-            log.warning('Could not lookup component_registry. Not emitting events.')
+            log.warning("Could not lookup component_registry. Not emitting events.")
         else:
             component_registry.handle(event)
 
@@ -136,10 +143,11 @@ class Transaction(object):
     def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
         """Provide with-statement transaction support.  If an error occurred,
         the transaction is rolled back.  Otherwise, it is committed."""
-        
+
         if exc_type:
             self.rollback()
         else:
             self.commit()
+
 
 # vim: sw=4:et:ai

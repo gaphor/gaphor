@@ -10,12 +10,12 @@ import pkg_resources
 from gaphor import UML
 from gaphor.storage.parser import ParserException
 
-XMLNS='http://gaphor.sourceforge.net/gaphor/stock-icons'
+XMLNS = "http://gaphor.sourceforge.net/gaphor/stock-icons"
 
 _icon_factory = Gtk.IconFactory()
 _icon_factory.add_default()
 
-_uml_to_stock_id_map = { }
+_uml_to_stock_id_map = {}
 
 log = logging.getLogger(__name__)
 
@@ -27,8 +27,9 @@ def get_stock_id(element, option=None):
         if t in _uml_to_stock_id_map:
             return _uml_to_stock_id_map[t]
         else:
-            log.warning('Stock id for %s (%s) not found' % (element, option))
-            return None #STOCK_POINTER
+            log.warning("Stock id for %s (%s) not found" % (element, option))
+            return None  # STOCK_POINTER
+
 
 def add_stock_icon(id, icon_dir, icon_files, uml_class=None, option=None):
     global _uml_to_stock_id_map
@@ -36,11 +37,11 @@ def add_stock_icon(id, icon_dir, icon_files, uml_class=None, option=None):
     set = Gtk.IconSet()
     for icon in icon_files:
         source = Gtk.IconSource()
-        if icon.find('16') != -1:
+        if icon.find("16") != -1:
             source.set_size(Gtk.IconSize.MENU)
-        elif icon.find('24') != -1:
+        elif icon.find("24") != -1:
             source.set_size(Gtk.IconSize.SMALL_TOOLBAR)
-        elif icon.find('48') != -1:
+        elif icon.find("48") != -1:
             source.set_size(Gtk.IconSize.LARGE_TOOLBAR)
         source.set_filename(os.path.join(icon_dir, icon))
         set.add_source(source)
@@ -63,9 +64,9 @@ class StockIconLoader(handler.ContentHandler):
     def startDocument(self):
         """Start of document: all our attributes are initialized.
         """
-        self.id = ''
+        self.id = ""
         self.files = []
-        self.data = ''
+        self.data = ""
         self.element = None
         self.option = None
 
@@ -73,38 +74,40 @@ class StockIconLoader(handler.ContentHandler):
         pass
 
     def startElement(self, name, attrs):
-        self.data = ''
+        self.data = ""
 
         # A new icon is found
-        if name == 'icon':
-            self.id = attrs['id']
+        if name == "icon":
+            self.id = attrs["id"]
             self.files = []
             self.element = None
 
-        elif name not in ('element', 'option', 'file', 'stock-icons'):
-            raise ParserException('Invalid XML: tag <%s> not known' % name)
+        elif name not in ("element", "option", "file", "stock-icons"):
+            raise ParserException("Invalid XML: tag <%s> not known" % name)
 
     def endElement(self, name):
-        if name == 'icon':
+        if name == "icon":
             assert self.id
             assert self.files
-            add_stock_icon(self.id, self.icon_dir, self.files, self.element, self.option)
+            add_stock_icon(
+                self.id, self.icon_dir, self.files, self.element, self.option
+            )
             self.option = None
-        elif name == 'element':
+        elif name == "element":
             try:
                 self.element = getattr(UML, self.data)
             except:
-                raise ParserException('No element found with name %s' % self.data)
-        elif name == 'option':
+                raise ParserException("No element found with name %s" % self.data)
+        elif name == "option":
             self.option = self.data
-        elif name == 'file':
+        elif name == "file":
             self.files.append(self.data)
-        elif name == 'stock-icons':
+        elif name == "stock-icons":
             pass
 
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
-            a = { }
+            a = {}
             for key, val in list(attrs.items()):
                 a[key[1]] = val
             self.startElement(name[1], a)
@@ -123,17 +126,21 @@ def load_stock_icons():
     (usually /usr/local/share/gaphor).
     """
     from xml.sax import make_parser
+
     parser = make_parser()
-    icon_dir = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'pixmaps'))
-    log.info('Icon dir: %s' % icon_dir)
+    icon_dir = os.path.abspath(pkg_resources.resource_filename("gaphor.ui", "pixmaps"))
+    log.info("Icon dir: %s" % icon_dir)
     loader = StockIconLoader(icon_dir)
 
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    filename = os.path.abspath(pkg_resources.resource_filename('gaphor.ui', 'icons.xml'))
+    filename = os.path.abspath(
+        pkg_resources.resource_filename("gaphor.ui", "icons.xml")
+    )
     parser.parse(filename)
 
-#load_stock_icons()
+
+# load_stock_icons()
 
 # vim:sw=4:et

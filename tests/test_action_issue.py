@@ -6,15 +6,15 @@ from gaphor.tests import TestCase
 from gaphor.storage import storage
 from gaphor.diagram.items import FlowItem, ActionItem
 
-class ActionIssueTestCase(TestCase):
 
+class ActionIssueTestCase(TestCase):
     def test_it(self):
         """
         Test an issue when loading a freshly created action diagram.
         """
         ef = self.element_factory
-        dist = pkg_resources.get_distribution('gaphor')
-        path = os.path.join(dist.location, 'test-diagrams/action-issue.gaphor')
+        dist = pkg_resources.get_distribution("gaphor")
+        path = os.path.join(dist.location, "test-diagrams/action-issue.gaphor")
         storage.load(path, ef)
 
         actions = ef.lselect(lambda e: e.isKindOf(UML.Action))

@@ -21,6 +21,7 @@
 Recursive attribute access functions.
 """
 
+
 def rgetattr(obj, attr):
     """
     Get named attribute from an object, i.e. getattr(obj, 'a.a') is
@@ -40,7 +41,7 @@ def rgetattr(obj, attr):
     ...
     AttributeError: 'A' object has no attribute 'c'
     """
-    attrs = attr.split('.')
+    attrs = attr.split(".")
     obj = getattr(obj, attrs[0])
     for name in attrs[1:]:
         obj = getattr(obj, name)
@@ -67,7 +68,7 @@ def rsetattr(obj, attr, val):
     >>> print(a.a.c)
     3
     """
-    attrs = attr.split('.')
+    attrs = attr.split(".")
     if len(attrs) > 1:
         obj = getattr(obj, attrs[0])
         for name in attrs[1:-1]:

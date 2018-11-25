@@ -15,6 +15,7 @@ import os
 import re
 import sys
 
+
 def pkg2dir(package):
     """
     Return directory path from UML package class.
@@ -23,7 +24,7 @@ def pkg2dir(package):
     while package:
         name.insert(0, package.name)
         package = package.package
-    return '/'.join(name)
+    return "/".join(name)
 
 
 def message(msg):
@@ -35,28 +36,46 @@ def message(msg):
         print(msg, file=sys.stderr)
 
 
-usage = 'usage: %prog [options] file1 file2...'
+usage = "usage: %prog [options] file1 file2..."
 
 parser = optparse.OptionParser(usage=usage)
 
-parser.add_option('-v', '--verbose', dest='verbose', action='store_true',
-    help='verbose output')
-parser.add_option('-u', '--use-underscores', dest='underscores', action='store_true',
-    help='use underscores instead of spaces for output filenames')
-parser.add_option('-d', '--dir', dest='dir', metavar='directory',
-    help='output to directory')
-parser.add_option('-f', '--format', dest='format', metavar='format',
-    help='output file format, default pdf', default='pdf',
-    choices=['pdf', 'svg', 'png'])
-parser.add_option('-r', '--regex', dest='regex', metavar='regex',
-    help='process diagrams which name matches given regular expresion;' \
-    ' name includes package name; regular expressions are case insensitive')
+parser.add_option(
+    "-v", "--verbose", dest="verbose", action="store_true", help="verbose output"
+)
+parser.add_option(
+    "-u",
+    "--use-underscores",
+    dest="underscores",
+    action="store_true",
+    help="use underscores instead of spaces for output filenames",
+)
+parser.add_option(
+    "-d", "--dir", dest="dir", metavar="directory", help="output to directory"
+)
+parser.add_option(
+    "-f",
+    "--format",
+    dest="format",
+    metavar="format",
+    help="output file format, default pdf",
+    default="pdf",
+    choices=["pdf", "svg", "png"],
+)
+parser.add_option(
+    "-r",
+    "--regex",
+    dest="regex",
+    metavar="regex",
+    help="process diagrams which name matches given regular expresion;"
+    " name includes package name; regular expressions are case insensitive",
+)
 
 (options, args) = parser.parse_args()
 
 if not args:
     parser.print_help()
-    #sys.exit(1)
+    # sys.exit(1)
 
 
 factory = UML.ElementFactory()
@@ -68,9 +87,9 @@ if options.regex:
 
 # we should have some gaphor files to be processed at this point
 for model in args:
-    message('loading model %s' % model)
+    message("loading model %s" % model)
     storage.load(model, factory)
-    message('\nready for rendering\n')
+    message("\nready for rendering\n")
 
     for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
         odir = pkg2dir(diagram.package)
@@ -78,26 +97,26 @@ for model in args:
         # just diagram name
         dname = diagram.name
         # full diagram name including package path
-        pname = '%s/%s' % (odir, dname)
+        pname = "%s/%s" % (odir, dname)
 
         if options.underscores:
-            odir = odir.replace(' ', '_')
-            dname = dname.replace(' ', '_')
+            odir = odir.replace(" ", "_")
+            dname = dname.replace(" ", "_")
 
         if name_re and not name_re.search(pname):
-            message('skipping %s' % pname)
+            message("skipping %s" % pname)
             continue
 
         if options.dir:
-            odir = '%s/%s' % (options.dir, odir)
+            odir = "%s/%s" % (options.dir, odir)
 
-        outfilename = '%s/%s.%s' % (odir, dname, options.format)
+        outfilename = "%s/%s.%s" % (odir, dname, options.format)
 
         if not os.path.exists(odir):
-            message('creating dir %s' % odir)
+            message("creating dir %s" % odir)
             os.makedirs(odir)
 
-        message('rendering: %s -> %s...' % (pname, outfilename))
+        message("rendering: %s -> %s..." % (pname, outfilename))
 
         view = View(diagram.canvas)
         view.painter = ItemPainter()
@@ -109,26 +128,28 @@ for model in args:
         tmpsurface.flush()
 
         w, h = view.bounding_box.width, view.bounding_box.height
-        if options.format == 'pdf':
+        if options.format == "pdf":
             surface = cairo.PDFSurface(outfilename, w, h)
-        elif options.format == 'svg':
+        elif options.format == "svg":
             surface = cairo.SVGSurface(outfilename, w, h)
-        elif options.format == 'png':
-            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w+1), int(h+1))
+        elif options.format == "png":
+            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w + 1), int(h + 1))
         else:
-            assert False, 'unknown format %s' % options.format
+            assert False, "unknown format %s" % options.format
         cr = cairo.Context(surface)
         view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
         view.paint(cr)
         cr.show_page()
 
-        if options.format == 'png':
+        if options.format == "png":
             surface.write_to_png(outfilename)
 
         surface.flush()
         surface.finish()
 
+
 def main():
     pass
+
 
 # vim:sw=4:et:ai

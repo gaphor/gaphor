@@ -10,9 +10,9 @@ class ExtendItem(IncludeItem):
     """
     Use case extension relationship.
     """
-    __uml__ = UML.Extend
-    __stereotype__ = 'extend'
 
+    __uml__ = UML.Extend
+    __stereotype__ = "extend"
 
 
 # vim:sw=4:et

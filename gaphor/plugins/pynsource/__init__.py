@@ -23,7 +23,7 @@ NAME_COLUMN = 0
 @implementer(IService, IActionProvider)
 class PyNSource(object):
 
-    main_window = inject('main_window')
+    main_window = inject("main_window")
 
     menu_xml = """
       <ui>
@@ -46,8 +46,11 @@ class PyNSource(object):
     def shutdown(self):
         pass
 
-    @action(name='file-import-pynsource', label='Python source code',
-            tooltip='Import Python source code')
+    @action(
+        name="file-import-pynsource",
+        label="Python source code",
+        tooltip="Import Python source code",
+    )
     def execute(self):
         dialog = self.create_dialog()
         response = dialog.run()
@@ -78,31 +81,37 @@ class PyNSource(object):
         main_window.show_diagram(engineer.diagram)
 
     def create_dialog(self):
-        dialog = Gtk.Dialog("Import Python files",
-                            self.main_window.window,
-                            Gtk.DialogFlags.MODAL,
-                            (Gtk.STOCK_OK, Gtk.ResponseType.OK,
-                             Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL))
+        dialog = Gtk.Dialog(
+            "Import Python files",
+            self.main_window.window,
+            Gtk.DialogFlags.MODAL,
+            (
+                Gtk.STOCK_OK,
+                Gtk.ResponseType.OK,
+                Gtk.STOCK_CANCEL,
+                Gtk.ResponseType.CANCEL,
+            ),
+        )
         dialog.set_default_response(Gtk.ResponseType.OK)
 
         filelist = Gtk.ListStore(GObject.TYPE_STRING)
-        filelist.connect('row-inserted', self.on_view_rows_changed)
-        filelist.connect('row-deleted', self.on_view_rows_changed)
+        filelist.connect("row-inserted", self.on_view_rows_changed)
+        filelist.connect("row-deleted", self.on_view_rows_changed)
 
         hbox = Gtk.HBox()
 
-        frame = Gtk.Frame.new('Files to reverse-engineer')
+        frame = Gtk.Frame.new("Files to reverse-engineer")
         frame.set_border_width(8)
         frame.set_size_request(500, 300)
         frame.show()
         hbox.pack_start(frame, True, True, 0)
 
         treeview = Gtk.TreeView(filelist)
-        treeview.set_property('headers-visible', False)
+        treeview.set_property("headers-visible", False)
         selection = treeview.get_selection()
         selection.set_mode(Gtk.SelectionMode.SINGLE)
         treeview.set_size_request(200, -1)
-        treeview.connect_after('cursor_changed', self.on_view_cursor_changed)
+        treeview.connect_after("cursor_changed", self.on_view_cursor_changed)
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
@@ -119,27 +128,27 @@ class PyNSource(object):
         bbox = Gtk.VButtonBox()
         bbox.set_layout(Gtk.ButtonBoxStyle.SPREAD)
         bbox.set_border_width(10)
-        button = Gtk.Button(stock='gtk-add')
-        button.connect('clicked', self.on_add_dir_clicked)
+        button = Gtk.Button(stock="gtk-add")
+        button.connect("clicked", self.on_add_dir_clicked)
         bbox.add(button)
         self.add_button = button
 
-        #button = Gtk.Button('Add dir...')
-        #button.connect('clicked', self.on_add_dir_clicked)
-        #bbox.add(button)
-        #self.add_dir_button = button
+        # button = Gtk.Button('Add dir...')
+        # button.connect('clicked', self.on_add_dir_clicked)
+        # bbox.add(button)
+        # self.add_dir_button = button
 
-        button = Gtk.Button(stock='gtk-remove')
-        button.connect('clicked', self.on_remove_clicked)
-        button.set_property('sensitive', False)
+        button = Gtk.Button(stock="gtk-remove")
+        button.connect("clicked", self.on_remove_clicked)
+        button.set_property("sensitive", False)
         bbox.add(button)
         self.remove_button = button
 
-        #button = Gtk.Button(stock='gtk-execute')
-        #button.connect('clicked', self.on_execute_clicked)
-        #button.set_property('sensitive', False)
-        #bbox.add(button)
-        #self.execute_button = button
+        # button = Gtk.Button(stock='gtk-execute')
+        # button.connect('clicked', self.on_execute_clicked)
+        # button.set_property('sensitive', False)
+        # bbox.add(button)
+        # self.execute_button = button
 
         hbox.pack_start(bbox, False, True, 0)
         hbox.show_all()
@@ -158,7 +167,7 @@ class PyNSource(object):
         self.treeview = None
         self.filelist = None
 
-    def Walk(self, root, recurse=0, pattern='*', return_folders=0):
+    def Walk(self, root, recurse=0, pattern="*", return_folders=0):
         import fnmatch
         import os
         import string
@@ -173,8 +182,8 @@ class PyNSource(object):
             return result
 
         # expand pattern
-        pattern = pattern or '*'
-        pat_list = string.splitfields(pattern, ';')
+        pattern = pattern or "*"
+        pat_list = string.splitfields(pattern, ";")
 
         # check each file
         for name in names:
@@ -184,7 +193,8 @@ class PyNSource(object):
             for pat in pat_list:
                 if fnmatch.fnmatch(name, pat):
                     if os.path.isfile(fullname) or (
-                            return_folders and os.path.isdir(fullname)):
+                        return_folders and os.path.isdir(fullname)
+                    ):
                         result.append(fullname)
                     continue
 
@@ -192,7 +202,8 @@ class PyNSource(object):
             if recurse:
                 if os.path.isdir(fullname) and not os.path.islink(fullname):
                     result = result + self.Walk(
-                                    fullname, recurse, pattern, return_folders)
+                        fullname, recurse, pattern, return_folders
+                    )
 
         return result
 
@@ -200,41 +211,45 @@ class PyNSource(object):
         selection = view.get_selection()
         filelist, iter = selection.get_selected()
         if not iter:
-            self.remove_button.set_property('sensitive', False)
+            self.remove_button.set_property("sensitive", False)
             return
-        #element = filelist.get_value(iter, NAME_COLUMN)
-        self.remove_button.set_property('sensitive', True)
-        #self.update_detail(element)
+        # element = filelist.get_value(iter, NAME_COLUMN)
+        self.remove_button.set_property("sensitive", True)
+        # self.update_detail(element)
 
     def on_view_rows_changed(self, view, *args):
         iter = None
         try:
-            iter = view.get_iter('0')
+            iter = view.get_iter("0")
         except ValueError:
             pass
-        #self.execute_button.set_property('sensitive', bool(iter))
+        # self.execute_button.set_property('sensitive', bool(iter))
 
     def on_add_dir_clicked(self, button):
         import os
-        
-        filesel = Gtk.FileChooserDialog(title='Add Source Code',
-                                        action=Gtk.FileChooserAction.OPEN,
-                                        buttons=(Gtk.STOCK_CANCEL,
-                                                 Gtk.ResponseType.CANCEL,
-                                                 Gtk.STOCK_OPEN,
-                                                 Gtk.ResponseType.OK))
+
+        filesel = Gtk.FileChooserDialog(
+            title="Add Source Code",
+            action=Gtk.FileChooserAction.OPEN,
+            buttons=(
+                Gtk.STOCK_CANCEL,
+                Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OPEN,
+                Gtk.ResponseType.OK,
+            ),
+        )
 
         filesel.set_select_multiple(True)
-        filesel.set_filename('~/')
+        filesel.set_filename("~/")
 
         response = filesel.run()
-        selection = filesel.get_filenames()        
+        selection = filesel.get_filenames()
         filesel.destroy()
 
         if response == Gtk.ResponseType.OK:
             for filename in selection:
                 if os.path.isdir(filename):
-                    list = self.Walk(filename, 1, '*.py', 1)
+                    list = self.Walk(filename, 1, "*.py", 1)
                     for file in list:
                         iter = self.filelist.append()
                         self.filelist.set_value(iter, NAME_COLUMN, file)
@@ -250,7 +265,7 @@ class PyNSource(object):
             return
         element = filelist.remove(iter)
 
-        self.remove_button.set_property('sensitive', False)
+        self.remove_button.set_property("sensitive", False)
 
 
 # vim:sw=4:et:ai

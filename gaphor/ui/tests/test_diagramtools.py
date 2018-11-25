@@ -1,4 +1,3 @@
-
 from gi.repository import Gtk
 import logging
 from gaphor.tests import TestCase
@@ -10,12 +9,18 @@ Event = Context
 
 logging.basicConfig(level=logging.DEBUG)
 
+
 class DiagramItemConnectorTestCase(TestCase):
-    services = TestCase.services + [ 'main_window', 'ui_manager', 'action_manager', 'properties' ]
+    services = TestCase.services + [
+        "main_window",
+        "ui_manager",
+        "action_manager",
+        "properties",
+    ]
 
     def setUp(self):
         super(DiagramItemConnectorTestCase, self).setUp()
-        mw = self.get_service('main_window')
+        mw = self.get_service("main_window")
         mw.open()
         mw.show_diagram(self.diagram)
         self.main_window = mw
@@ -37,7 +42,7 @@ class DiagramItemConnectorTestCase(TestCase):
 
         # The act: perform button press event and button release
         view = self.main_window.get_current_diagram_view()
-        
+
         self.assertSame(self.diagram.canvas, view.canvas)
 
         p = view.get_matrix_i2v(a).transform_point(*a.head.pos)
@@ -53,5 +58,6 @@ class DiagramItemConnectorTestCase(TestCase):
         view.do_event(event)
 
         self.assertSame(the_association, a.subject)
+
 
 # vim:sw=4:et:ai

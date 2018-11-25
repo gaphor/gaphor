@@ -11,12 +11,12 @@ from gaphor.diagram.style import get_text_point
 
 class ElementItem(gaphas.Element, DiagramItem):
     __style__ = {
-        'min-size': (0, 0),
-        'stereotype-padding': (5, 10, 5, 10),
-        'background': 'solid',
-        'background-color': (1, 1, 1, 0.8),
-        'highlight-color': (0, 0, 1, 0.4),
-        'background-gradient': ((0.8, 0.8, 0.8, 0.5), (1.0, 1.0, 1.0, 0.5))
+        "min-size": (0, 0),
+        "stereotype-padding": (5, 10, 5, 10),
+        "background": "solid",
+        "background-color": (1, 1, 1, 0.8),
+        "highlight-color": (0, 0, 1, 0.4),
+        "background-gradient": ((0.8, 0.8, 0.8, 0.5), (1.0, 1.0, 1.0, 0.5)),
     }
 
     def __init__(self, id=None):
@@ -28,13 +28,13 @@ class ElementItem(gaphas.Element, DiagramItem):
         self.auto_resize = 0
 
     def save(self, save_func):
-        save_func('matrix', tuple(self.matrix))
-        for prop in ('width', 'height'):
+        save_func("matrix", tuple(self.matrix))
+        for prop in ("width", "height"):
             self.save_property(save_func, prop)
         DiagramItem.save(self, save_func)
 
     def load(self, name, value):
-        if name == 'matrix':
+        if name == "matrix":
             self.matrix = eval(value)
         else:
             DiagramItem.load(self, name, value)
@@ -66,11 +66,11 @@ class ElementItem(gaphas.Element, DiagramItem):
         cr = context.cairo
         cr.save()
         try:
-            if self.style.background == 'solid':
+            if self.style.background == "solid":
                 cr.set_source_rgba(*self.style.background_color)
                 cr.fill_preserve()
 
-            elif self.style.background == 'gradient':
+            elif self.style.background == "gradient":
                 # TODO: check if style is gradient
                 g = cairo.LinearGradient(0, 0, self.width, self.height)
                 for i, c in enumerate(self.style.background_gradient):
@@ -98,9 +98,9 @@ class ElementItem(gaphas.Element, DiagramItem):
         DiagramItem.draw(self, context)
 
     def text_align(self, extents, align, padding, outside):
-        x, y = get_text_point(extents, self.width, self.height,
-                              align, padding, outside)
+        x, y = get_text_point(extents, self.width, self.height, align, padding, outside)
 
         return x, y
+
 
 # vim:sw=4:et:ai

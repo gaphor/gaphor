@@ -7,6 +7,7 @@ from zope import interface, component
 from gaphor import UML
 from gaphor.diagram import items
 
+
 class MessageLifelineConnect(AbstractConnect):
     """
     Connect lifeline with a message.
@@ -23,10 +24,11 @@ class MessageLifelineConnect(AbstractConnect):
         """
         Always create a new Message with two EventOccurence instances.
         """
+
         def get_subject():
             if not line.subject:
                 message = self.element_factory.create(UML.Message)
-                message.name = 'call()'
+                message.name = "call()"
                 line.subject = message
             return line.subject
 
@@ -43,7 +45,6 @@ class MessageLifelineConnect(AbstractConnect):
                 event = self.element_factory.create(UML.MessageOccurrenceSpecification)
                 event.receiveMessage = message
                 event.covered = received.subject
-
 
     def disconnect_lifelines(self, line):
         """
@@ -80,7 +81,6 @@ class MessageLifelineConnect(AbstractConnect):
                 line.remove_message(message, True)
                 message.unlink()
 
-
     def allow(self, handle, port):
         """
         Glue to lifeline's head or lifetime. If lifeline's lifetime is
@@ -98,7 +98,6 @@ class MessageLifelineConnect(AbstractConnect):
             return not (lifetime.visible ^ opposite_is_visible)
 
         return not (lifetime.visible ^ (port is element.lifetime.port))
-        
 
     def connect(self, handle, port):
         super(MessageLifelineConnect, self).connect(handle, port)
@@ -116,7 +115,6 @@ class MessageLifelineConnect(AbstractConnect):
             lifetime.visible = False
             lifetime.connectable = False
 
-
     def disconnect(self, handle):
         super(MessageLifelineConnect, self).disconnect(handle)
 
@@ -129,7 +127,7 @@ class MessageLifelineConnect(AbstractConnect):
         # if a message is delete message, then disconnection causes
         # lifeline to be no longer destroyed (note that there can be
         # only one delete message connected to lifeline)
-        if received and line.subject.messageSort == 'deleteMessage':
+        if received and line.subject.messageSort == "deleteMessage":
             received.is_destroyed = False
             received.request_update()
 
@@ -140,8 +138,6 @@ class MessageLifelineConnect(AbstractConnect):
             # zero, so allow connections to lifeline's lifetime
             lifetime.connectable = True
             lifetime.min_length = lifetime.MIN_LENGTH
-            
 
 
 component.provideAdapter(MessageLifelineConnect)
-

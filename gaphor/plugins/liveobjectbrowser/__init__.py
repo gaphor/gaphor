@@ -16,7 +16,7 @@ from gaphor.plugins.liveobjectbrowser.browser import Browser
 @implementer(IService, IActionProvider)
 class LiveObjectBrowser(object):
 
-    element_factory = inject('element_factory')
+    element_factory = inject("element_factory")
 
     menu_xml = """
       <ui>
@@ -36,7 +36,7 @@ class LiveObjectBrowser(object):
     def shutdown(self):
         pass
 
-    @action(name='tools-life-object-browser', label='Life object browser')
+    @action(name="tools-life-object-browser", label="Life object browser")
     def execute(self):
         browser = Browser("resource", self.element_factory.lselect())
 

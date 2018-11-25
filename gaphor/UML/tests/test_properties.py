@@ -7,17 +7,20 @@ from gaphor.UML.properties import *
 from gaphor.UML.element import Element
 from gaphor.UML.interfaces import IAssociationChangeEvent
 
-class PropertiesTestCase(unittest.TestCase):
 
+class PropertiesTestCase(unittest.TestCase):
     def test_association_1_x(self):
         #
         # 1:-
         #
-        class A(Element): pass
-        class B(Element): pass
+        class A(Element):
+            pass
 
-        A.one = association('one', B, 0, 1, opposite='two')
-        B.two = association('two', A, 0, 1)
+        class B(Element):
+            pass
+
+        A.one = association("one", B, 0, 1, opposite="two")
+        B.two = association("two", A, 0, 1)
         a = A()
         b = B()
         a.one = b
@@ -36,17 +39,21 @@ class PropertiesTestCase(unittest.TestCase):
         assert a.one is None
         assert b.two is None
 
-
     def test_association_n_x(self):
         #
         # n:-
         #
-        class A(Element): pass
-        class B(Element): pass
-        class C(Element): pass
+        class A(Element):
+            pass
 
-        A.one = association('one', B, 0, '*', opposite='two')
-        B.two = association('two', A, 0, 1)
+        class B(Element):
+            pass
+
+        class C(Element):
+            pass
+
+        A.one = association("one", B, 0, "*", opposite="two")
+        B.two = association("two", A, 0, 1)
 
         a = A()
         b = B()
@@ -54,17 +61,21 @@ class PropertiesTestCase(unittest.TestCase):
         assert b in a.one
         assert b.two is a
 
-
     def test_association_1_1(self):
         #
         # 1:1
         #
-        class A(Element): pass
-        class B(Element): pass
-        class C(Element): pass
+        class A(Element):
+            pass
 
-        A.one = association('one', B, 0, 1, opposite='two')
-        B.two = association('two', A, 0, 1, opposite='one')
+        class B(Element):
+            pass
+
+        class C(Element):
+            pass
+
+        A.one = association("one", B, 0, 1, opposite="two")
+        B.two = association("two", A, 0, 1, opposite="one")
 
         a = A()
         b = B()
@@ -73,40 +84,44 @@ class PropertiesTestCase(unittest.TestCase):
 
         assert a.one is b
         assert b.two is a
-        #assert len(a._observers.get('__unlink__')) == 0
-        #assert len(b._observers.get('__unlink__')) == 0
+        # assert len(a._observers.get('__unlink__')) == 0
+        # assert len(b._observers.get('__unlink__')) == 0
 
         a.one = B()
         assert a.one is not b
         assert b.two is None
-        #assert len(a._observers.get('__unlink__')) == 0
-        #assert len(b._observers.get('__unlink__')) == 0
+        # assert len(a._observers.get('__unlink__')) == 0
+        # assert len(b._observers.get('__unlink__')) == 0
 
         c = C()
         try:
             a.one = c
         except Exception as e:
-            pass #ok print 'exception caught:', e
+            pass  # ok print 'exception caught:', e
         else:
             assert a.one is not c
 
         del a.one
         assert a.one is None
         assert b.two is None
-        #assert len(a._observers.get('__unlink__')) == 0
-        #assert len(b._observers.get('__unlink__')) == 0
-
+        # assert len(a._observers.get('__unlink__')) == 0
+        # assert len(b._observers.get('__unlink__')) == 0
 
     def test_association_1_n(self):
         #
         # 1:n
         #
-        class A(Element): pass
-        class B(Element): pass
-        class C(Element): pass
+        class A(Element):
+            pass
 
-        A.one = association('one', B, lower=0, upper=1, opposite='two')
-        B.two = association('two', A, lower=0, upper='*', opposite='one')
+        class B(Element):
+            pass
+
+        class C(Element):
+            pass
+
+        A.one = association("one", B, lower=0, upper=1, opposite="two")
+        B.two = association("two", A, lower=0, upper="*", opposite="one")
 
         a1 = A()
         a2 = A()
@@ -114,16 +129,16 @@ class PropertiesTestCase(unittest.TestCase):
         b2 = B()
 
         b1.two = a1
-        assert len(b1.two) == 1, 'len(b1.two) == %d' % len(b1.two)
+        assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
         assert a1 in b1.two
-        assert a1.one is b1, '%s/%s' % (a1.one, b1)
+        assert a1.one is b1, "%s/%s" % (a1.one, b1)
         b1.two = a1
         b1.two = a1
-        assert len(b1.two) == 1, 'len(b1.two) == %d' % len(b1.two)
+        assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
         assert a1 in b1.two
-        assert a1.one is b1, '%s/%s' % (a1.one, b1)
-        #assert len(a1._observers.get('__unlink__')) == 0
-        #assert len(b1._observers.get('__unlink__')) == 0
+        assert a1.one is b1, "%s/%s" % (a1.one, b1)
+        # assert len(a1._observers.get('__unlink__')) == 0
+        # assert len(b1._observers.get('__unlink__')) == 0
 
         b1.two = a2
         assert a1 in b1.two
@@ -134,7 +149,7 @@ class PropertiesTestCase(unittest.TestCase):
         try:
             del b1.two
         except Exception:
-            pass #ok
+            pass  # ok
         else:
             assert b1.two != []
 
@@ -150,8 +165,8 @@ class PropertiesTestCase(unittest.TestCase):
         assert a2 in b1.two
         assert a1.one is None
         assert a2.one is b1
-        #assert len(a1._observers.get('__unlink__')) == 0
-        #assert len(b1._observers.get('__unlink__')) == 0
+        # assert len(a1._observers.get('__unlink__')) == 0
+        # assert len(b1._observers.get('__unlink__')) == 0
 
         a2.one = b2
 
@@ -164,21 +179,25 @@ class PropertiesTestCase(unittest.TestCase):
         try:
             del b1.two[a1]
         except ValueError:
-            pass #ok
+            pass  # ok
         else:
-            assert 0, 'should not be removed'
-
+            assert 0, "should not be removed"
 
     def test_association_n_n(self):
         #
         # n:n
         #
-        class A(Element): pass
-        class B(Element): pass
-        class C(Element): pass
+        class A(Element):
+            pass
 
-        A.one = association('one', B, 0, '*', opposite='two')
-        B.two = association('two', A, 0, '*', opposite='one')
+        class B(Element):
+            pass
+
+        class C(Element):
+            pass
+
+        A.one = association("one", B, 0, "*", opposite="two")
+        B.two = association("two", A, 0, "*", opposite="one")
 
         a1 = A()
         a2 = A()
@@ -197,8 +216,8 @@ class PropertiesTestCase(unittest.TestCase):
         assert a1 in b1.two
         assert a1 in b2.two
         assert not a2.one
-        #assert len(a1._observers.get('__unlink__')) == 0
-        #assert len(b1._observers.get('__unlink__')) == 0
+        # assert len(a1._observers.get('__unlink__')) == 0
+        # assert len(b1._observers.get('__unlink__')) == 0
 
         a2.one = b1
         assert len(a1.one) == 2
@@ -223,15 +242,20 @@ class PropertiesTestCase(unittest.TestCase):
         assert a1 in b2.two
         assert b1 in a2.one
         assert a2 in b1.two
-        #assert len(a1._observers.get('__unlink__')) == 0
-        #assert len(b1._observers.get('__unlink__')) == 0
+        # assert len(a1._observers.get('__unlink__')) == 0
+        # assert len(b1._observers.get('__unlink__')) == 0
 
     def test_association_swap(self):
-        class A(Element): pass
-        class B(Element): pass
-        class C(Element): pass
+        class A(Element):
+            pass
 
-        A.one = association('one', B, 0, '*')
+        class B(Element):
+            pass
+
+        class C(Element):
+            pass
+
+        A.one = association("one", B, 0, "*")
 
         a = A()
         b1 = B()
@@ -244,18 +268,19 @@ class PropertiesTestCase(unittest.TestCase):
         assert a.one[1] is b2
 
         events = []
+
         @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
-#        Application.register_handler(handler)
-#        try:
+        #        Application.register_handler(handler)
+        #        try:
         a.one.swap(b1, b2)
-#            assert len(events) == 1
-#            assert events[0].property is A.one
-#            assert events[0].element is a
-#        finally:
-#            Application.unregister_handler(handler)
+        #            assert len(events) == 1
+        #            assert events[0].property is A.one
+        #            assert events[0].element is a
+        #        finally:
+        #            Application.unregister_handler(handler)
 
         assert a.one.size() == 2
         assert a.one[0] is b2
@@ -265,11 +290,16 @@ class PropertiesTestCase(unittest.TestCase):
         #
         # unlink
         #
-        class A(Element): pass
-        class B(Element): pass
-        class C(Element): pass
+        class A(Element):
+            pass
 
-        A.one = association('one', B, 0, '*')
+        class B(Element):
+            pass
+
+        class C(Element):
+            pass
+
+        A.one = association("one", B, 0, "*")
 
         a1 = A()
         a2 = A()
@@ -282,30 +312,34 @@ class PropertiesTestCase(unittest.TestCase):
         assert b2 in a1.one
 
         a2.one = b1
-        #assert len(a1._observers.get('__unlink__')) == 0
-        #assert len(b1._observers.get('__unlink__')) == 0
+        # assert len(a1._observers.get('__unlink__')) == 0
+        # assert len(b1._observers.get('__unlink__')) == 0
 
         # remove b1 from all elements connected to b1
         # also the signal should be removed
         b1.unlink()
 
-        #assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
-        #assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
+        # assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
+        # assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
 
         assert b1 not in a1.one
         assert b2 in a1.one
-
 
     def test_association_unlink_2(self):
         #
         # unlink
         #
-        class A(Element): pass
-        class B(Element): pass
-        class C(Element): pass
+        class A(Element):
+            pass
 
-        A.one = association('one', B, 0, '*', opposite='two')
-        B.two = association('two', A, 0, '*')
+        class B(Element):
+            pass
+
+        class C(Element):
+            pass
+
+        A.one = association("one", B, 0, "*", opposite="two")
+        B.two = association("two", A, 0, "*")
 
         a1 = A()
         a2 = A()
@@ -320,15 +354,15 @@ class PropertiesTestCase(unittest.TestCase):
         assert a1 in b2.two
 
         a2.one = b1
-        #assert len(a1._observers.get('__unlink__')) == 0
-        #assert len(b1._observers.get('__unlink__')) == 0
+        # assert len(a1._observers.get('__unlink__')) == 0
+        # assert len(b1._observers.get('__unlink__')) == 0
 
         # remove b1 from all elements connected to b1
         # also the signal should be removed
         b1.unlink()
 
-        #assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
-        #assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
+        # assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
+        # assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
 
         assert b1 not in a1.one
         assert b2 in a1.one
@@ -337,145 +371,156 @@ class PropertiesTestCase(unittest.TestCase):
 
     def test_attributes(self):
         import types
-        class A(Element): pass
 
-        A.a = attribute('a', bytes, 'default')
+        class A(Element):
+            pass
+
+        A.a = attribute("a", bytes, "default")
 
         a = A()
-        assert a.a == 'default', a.a
-        a.a = 'bar'
-        assert a.a == 'bar', a.a
+        assert a.a == "default", a.a
+        a.a = "bar"
+        assert a.a == "bar", a.a
         del a.a
-        assert a.a == 'default'
+        assert a.a == "default"
         try:
             a.a = 1
         except AttributeError:
-            pass #ok
+            pass  # ok
         else:
-            assert 0, 'should not set integer'
+            assert 0, "should not set integer"
 
     def test_enumerations(self):
         import types
-        class A(Element): pass
 
-        A.a = enumeration('a', ('one', 'two', 'three'), 'one')
+        class A(Element):
+            pass
+
+        A.a = enumeration("a", ("one", "two", "three"), "one")
         a = A()
-        assert a.a == 'one'
-        a.a = 'two'
-        assert a.a == 'two'
-        a.a = 'three'
-        assert a.a == 'three'
+        assert a.a == "one"
+        a.a = "two"
+        assert a.a == "two"
+        a.a = "three"
+        assert a.a == "three"
         try:
-            a.a = 'four'
+            a.a = "four"
         except AttributeError:
-            assert a.a == 'three'
+            assert a.a == "three"
         else:
-            assert 0, 'a.a could not be four'
+            assert 0, "a.a could not be four"
         del a.a
-        assert a.a == 'one'
+        assert a.a == "one"
 
     def skiptest_notify(self):
         import types
+
         class A(Element):
-            notified=None
+            notified = None
+
             def notify(self, name, pspec):
                 self.notified = name
 
-        A.assoc = association('assoc', A)
-        A.attr = attribute('attr', bytes, 'default')
-        A.enum = enumeration('enum', ('one', 'two'), 'one')
+        A.assoc = association("assoc", A)
+        A.attr = attribute("attr", bytes, "default")
+        A.enum = enumeration("enum", ("one", "two"), "one")
 
         a = A()
         assert a.notified == None
         a.assoc = A()
-        assert a.notified == 'assoc', a.notified
-        a.attr = 'newval'
-        assert a.notified == 'attr', a.notified
-        a.enum = 'two'
-        assert a.notified == 'enum', a.notified
+        assert a.notified == "assoc", a.notified
+        a.attr = "newval"
+        assert a.notified == "attr", a.notified
+        a.enum = "two"
+        assert a.notified == "enum", a.notified
         a.notified = None
-        a.enum = 'two' # should not notify since value hasn't changed.
+        a.enum = "two"  # should not notify since value hasn't changed.
         assert a.notified == None
 
     def test_derivedunion(self):
-        class A(Element): pass
+        class A(Element):
+            pass
 
-        A.a = association('a', A)
-        A.b = association('b', A, 0, 1)
-        A.u = derivedunion('u', object, 0, '*', A.a, A.b)
+        A.a = association("a", A)
+        A.b = association("b", A, 0, 1)
+        A.u = derivedunion("u", object, 0, "*", A.a, A.b)
 
         a = A()
-        assert len(a.a) == 0, 'a.a = %s' % a.a
-        assert len(a.u) == 0, 'a.u = %s' % a.u
+        assert len(a.a) == 0, "a.a = %s" % a.a
+        assert len(a.u) == 0, "a.u = %s" % a.u
         a.a = b = A()
         a.a = c = A()
-        assert len(a.a) == 2, 'a.a = %s' % a.a
+        assert len(a.a) == 2, "a.a = %s" % a.a
         assert b in a.a
         assert c in a.a
-        assert len(a.u) == 2, 'a.u = %s' % a.u
+        assert len(a.u) == 2, "a.u = %s" % a.u
         assert b in a.u
         assert c in a.u
 
         a.b = d = A()
-        assert len(a.a) == 2, 'a.a = %s' % a.a
+        assert len(a.a) == 2, "a.a = %s" % a.a
         assert b in a.a
         assert c in a.a
         assert d == a.b
-        assert len(a.u) == 3, 'a.u = %s' % a.u
+        assert len(a.u) == 3, "a.u = %s" % a.u
         assert b in a.u
         assert c in a.u
         assert d in a.u
 
     def skiptest_deriveduntion_notify(self):
-        class A(Element): pass
+        class A(Element):
+            pass
+
         class E(Element):
-            notified=False
+            notified = False
+
             def notify(self, name, pspec):
-                if name == 'u':
+                if name == "u":
                     self.notified = True
 
-        E.a = association('a', A)
-        E.u = derivedunion('u', A, 0, '*', E.a)
+        E.a = association("a", A)
+        E.u = derivedunion("u", A, 0, "*", E.a)
 
         e = E()
         assert e.notified == False
         e.a = A()
         assert e.notified == True
 
-
     def test_derivedunion_listmixins(self):
-        class A(Element): pass
+        class A(Element):
+            pass
 
-        A.a = association('a', A)
-        A.b = association('b', A)
-        A.u = derivedunion('u', A, 0, '*', A.a, A.b)
-        A.name = attribute('name', str, 'default')
+        A.a = association("a", A)
+        A.b = association("b", A)
+        A.u = derivedunion("u", A, 0, "*", A.a, A.b)
+        A.name = attribute("name", str, "default")
 
         a = A()
         a.a = A()
         a.a = A()
         a.b = A()
-        a.a[0].name = 'foo'
-        a.a[1].name = 'bar'
-        a.b[0].name = 'baz'
+        a.a[0].name = "foo"
+        a.a[1].name = "bar"
+        a.b[0].name = "baz"
 
-        assert list(a.a[:].name) == ['foo', 'bar']
-        assert sorted(list(a.u[:].name)) == ['bar', 'baz', 'foo']
+        assert list(a.a[:].name) == ["foo", "bar"]
+        assert sorted(list(a.u[:].name)) == ["bar", "baz", "foo"]
 
     def test_composite(self):
         class A(Element):
             is_unlinked = False
+
             def unlink(self):
                 self.is_unlinked = True
                 Element.unlink(self)
 
-        A.comp = association('comp', A, composite=True, opposite='other')
-        A.other = association('other', A, composite=False, opposite='comp')
+        A.comp = association("comp", A, composite=True, opposite="other")
+        A.other = association("other", A, composite=False, opposite="comp")
 
         a = A()
-        a.name = 'a'
+        a.name = "a"
         b = A()
-        b.name = 'b'
+        b.name = "b"
         a.comp = b
         assert b in a.comp
         assert a in b.other
@@ -485,19 +530,20 @@ class PropertiesTestCase(unittest.TestCase):
         assert b.is_unlinked
 
     def skiptest_derivedunion(self):
-        
         class A(Element):
             is_unlinked = False
+
             def unlink(self):
                 self.is_unlinked = True
                 Element.unlink(self)
 
-        A.a = association('a', A, upper=1)
-        A.b = association('b', A)
+        A.a = association("a", A, upper=1)
+        A.b = association("b", A)
 
-        A.derived_a = derivedunion('derived_a', A, 0, 1, A.a)
-        A.derived_b = derivedunion('derived_b', A, 0, '*', A.b)
+        A.derived_a = derivedunion("derived_a", A, 0, 1, A.a)
+        A.derived_b = derivedunion("derived_b", A, 0, "*", A.b)
         events = []
+
         @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
@@ -514,24 +560,30 @@ class PropertiesTestCase(unittest.TestCase):
 
     def skiptest_derivedunion_events(self):
         from zope import component
-        from gaphor.UML.event import DerivedSetEvent, DerivedAddEvent, DerivedDeleteEvent
-        
+        from gaphor.UML.event import (
+            DerivedSetEvent,
+            DerivedAddEvent,
+            DerivedDeleteEvent,
+        )
+
         class A(Element):
             is_unlinked = False
+
             def unlink(self):
                 self.is_unlinked = True
                 Element.unlink(self)
 
-        A.a1 = association('a1', A, upper=1)
-        A.a2 = association('a2', A, upper=1)
-        A.b1 = association('b1', A, upper='*')
-        A.b2 = association('b2', A, upper='*')
-        A.b3 = association('b3', A, upper=1)
+        A.a1 = association("a1", A, upper=1)
+        A.a2 = association("a2", A, upper=1)
+        A.b1 = association("b1", A, upper="*")
+        A.b2 = association("b2", A, upper="*")
+        A.b3 = association("b3", A, upper=1)
 
-        A.derived_a = derivedunion('derived_a', object, 0, 1, A.a1, A.a2)
-        A.derived_b = derivedunion('derived_b', object, 0, '*', A.b1, A.b2, A.b3)
-        
+        A.derived_a = derivedunion("derived_a", object, 0, 1, A.a1, A.a2)
+        A.derived_b = derivedunion("derived_b", object, 0, "*", A.b1, A.b2, A.b3)
+
         events = []
+
         @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
@@ -558,8 +610,16 @@ class PropertiesTestCase(unittest.TestCase):
             del a.a1
             assert len(events) == 2, len(events)
             assert events[0].property is A.derived_a
-            assert events[0].new_value is a.a2, '%s %s %s' % (a.a1, a.a2, events[3].new_value)
-            assert events[0].old_value is old_a1, '%s %s %s' % (a.a1, a.a2, events[3].old_value)
+            assert events[0].new_value is a.a2, "%s %s %s" % (
+                a.a1,
+                a.a2,
+                events[3].new_value,
+            )
+            assert events[0].old_value is old_a1, "%s %s %s" % (
+                a.a1,
+                a.a2,
+                events[3].old_value,
+            )
             assert events[1].property is A.a1
 
             del events[:]
@@ -567,8 +627,16 @@ class PropertiesTestCase(unittest.TestCase):
             del a.a2
             assert len(events) == 2, len(events)
             assert events[0].property is A.derived_a
-            assert events[0].new_value is None, '%s %s %s' % (a.a1, a.a2, events[5].new_value)
-            assert events[0].old_value is old_a2, '%s %s %s' % (a.a1, a.a2, events[5].old_value)
+            assert events[0].new_value is None, "%s %s %s" % (
+                a.a1,
+                a.a2,
+                events[5].new_value,
+            )
+            assert events[0].old_value is old_a2, "%s %s %s" % (
+                a.a1,
+                a.a2,
+                events[5].old_value,
+            )
             assert events[1].property is A.a2
 
             del events[:]
@@ -619,21 +687,23 @@ class PropertiesTestCase(unittest.TestCase):
             assert events[14].property is A.b3
         finally:
             Application.unregister_handler(handler)
-        
+
     def skiptest_redefine(self):
         from zope import component
         from gaphor.application import Application
-        
+
         class A(Element):
             is_unlinked = False
+
             def unlink(self):
                 self.is_unlinked = True
                 Element.unlink(self)
 
-        A.a = association('a', A, upper=1)
+        A.a = association("a", A, upper=1)
 
-        A.a = redefine(A, 'a', A, A.a)
+        A.a = redefine(A, "a", A, A.a)
         events = []
+
         @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
@@ -650,21 +720,23 @@ class PropertiesTestCase(unittest.TestCase):
 
     def skiptest_redefine_subclass(self):
         from zope import component
-        
+
         class A(Element):
             is_unlinked = False
+
             def unlink(self):
                 self.is_unlinked = True
                 Element.unlink(self)
 
-        A.a = association('a', A, upper=1)
+        A.a = association("a", A, upper=1)
 
         class B(A):
             pass
 
-        B.b = redefine(B, 'b', A, A.a)
-        
+        B.b = redefine(B, "b", A, A.a)
+
         events = []
+
         @component.adapter(IAssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
@@ -676,7 +748,7 @@ class PropertiesTestCase(unittest.TestCase):
             # Only a.a changes, no B class involved
             assert len(events) == 1
             assert events[0].property is A.a, events[0].property
-            #assert events[1].property is A.a.original, events[1].property
+            # assert events[1].property is A.a.original, events[1].property
             del events[:]
 
             a = B()
@@ -689,7 +761,7 @@ class PropertiesTestCase(unittest.TestCase):
             Application.unregister_handler(handler)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
 
 # vim:sw=4:et:ai

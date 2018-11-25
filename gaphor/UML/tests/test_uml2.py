@@ -4,8 +4,8 @@ import unittest
 
 import gaphor.UML as UML
 
-class ClassesTestCase(unittest.TestCase):
 
+class ClassesTestCase(unittest.TestCase):
     def setUp(self):
 
         self.factory = UML.ElementFactory()
@@ -24,9 +24,12 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Association elements are not part of the meta-model')
+            self.fail("Association elements are not part of the meta-model")
 
-        self.assertFalse(element.isDerived, 'The isDerived property should default to False - %s' % element.isDerived)
+        self.assertFalse(
+            element.isDerived,
+            "The isDerived property should default to False - %s" % element.isDerived,
+        )
 
         property1 = self.factory.create(UML.Property)
         property2 = self.factory.create(UML.Property)
@@ -38,19 +41,35 @@ class ClassesTestCase(unittest.TestCase):
 
         element.navigableOwnedEnd = property1
 
-        self.assertTrue(property1 in element.member, 'Namespace.member does not contain memberEnd - %s' % element.member)
-        self.assertTrue(property2 in element.member, 'Namespace.member does not contain memberEnd - %s' % element.member)
+        self.assertTrue(
+            property1 in element.member,
+            "Namespace.member does not contain memberEnd - %s" % element.member,
+        )
+        self.assertTrue(
+            property2 in element.member,
+            "Namespace.member does not contain memberEnd - %s" % element.member,
+        )
 
-        self.assertTrue(property1 in element.feature, 'Classifier.feature does not contain ownedEnd - %s' % element.feature)
-        self.assertTrue(property1 in element.ownedMember, 'Namespace.ownedMember does not contain ownedEnd - %s' % element.ownedEnd)
+        self.assertTrue(
+            property1 in element.feature,
+            "Classifier.feature does not contain ownedEnd - %s" % element.feature,
+        )
+        self.assertTrue(
+            property1 in element.ownedMember,
+            "Namespace.ownedMember does not contain ownedEnd - %s" % element.ownedEnd,
+        )
 
-        self.assertTrue(property1 in element.ownedEnd, 'Association.ownedEnd does not contain navigableOwnedEnd - %s' % element.ownedEnd)
+        self.assertTrue(
+            property1 in element.ownedEnd,
+            "Association.ownedEnd does not contain navigableOwnedEnd - %s"
+            % element.ownedEnd,
+        )
 
-#    def test_association_class(self):
-#        try:
-#            element = self.factory.create(UML.AssociationClass)
-#        except AttributeError:
-#            self.fail('AssociationClass elements are not part of the meta-model')
+    #    def test_association_class(self):
+    #        try:
+    #            element = self.factory.create(UML.AssociationClass)
+    #        except AttributeError:
+    #            self.fail('AssociationClass elements are not part of the meta-model')
 
     def test_class(self):
 
@@ -62,7 +81,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Class elements are not part of the meta-model')
+            self.fail("Class elements are not part of the meta-model")
 
         property1 = self.factory.create(UML.Property)
         operation1 = self.factory.create(UML.Operation)
@@ -70,11 +89,26 @@ class ClassesTestCase(unittest.TestCase):
         element.ownedAttribute = property1
         element.ownedOperation = operation1
 
-        self.assertTrue(property1 in element.attribute, 'Classifier.attribute does not contain ownedAttribute - %s' % element.attribute)
-        self.assertTrue(property1 in element.ownedMember, 'Namespace.ownedMember does not contain ownedAttribute - %s' % element.ownedMember)
+        self.assertTrue(
+            property1 in element.attribute,
+            "Classifier.attribute does not contain ownedAttribute - %s"
+            % element.attribute,
+        )
+        self.assertTrue(
+            property1 in element.ownedMember,
+            "Namespace.ownedMember does not contain ownedAttribute - %s"
+            % element.ownedMember,
+        )
 
-        self.assertTrue(operation1 in element.feature, 'Classifier.feature does not contain ownedOperation - %s' % element.feature)
-        self.assertTrue(operation1 in element.ownedMember, 'Namespace.ownedMember does not contain ownedOperation' % element.ownedMember)
+        self.assertTrue(
+            operation1 in element.feature,
+            "Classifier.feature does not contain ownedOperation - %s" % element.feature,
+        )
+        self.assertTrue(
+            operation1 in element.ownedMember,
+            "Namespace.ownedMember does not contain ownedOperation"
+            % element.ownedMember,
+        )
 
     def test_comment(self):
 
@@ -86,17 +120,22 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Comment elements are not part of the meta-model')
+            self.fail("Comment elements are not part of the meta-model")
 
-        element.body = 'Comment body'
+        element.body = "Comment body"
 
-        self.assertTrue(element.body == 'Comment body', 'Incorrect comment body - %s' % element.body)
+        self.assertTrue(
+            element.body == "Comment body", "Incorrect comment body - %s" % element.body
+        )
 
         annotatedElement = self.factory.create(UML.Class)
 
         element.annotatedElement = annotatedElement
 
-        self.assertTrue(annotatedElement in element.annotatedElement, 'Incorrect annotated element - %s' % element.annotatedElement)
+        self.assertTrue(
+            annotatedElement in element.annotatedElement,
+            "Incorrect annotated element - %s" % element.annotatedElement,
+        )
 
     def test_constraint(self):
 
@@ -108,15 +147,22 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Constraint elements are not part of the meta-model')
+            self.fail("Constraint elements are not part of the meta-model")
 
         constrainedElement = self.factory.create(UML.Class)
 
         element.constrainedElement = constrainedElement
-        element.specification = 'Constraint specification'
+        element.specification = "Constraint specification"
 
-        self.assertTrue(constrainedElement in element.constrainedElement, 'Constraint.constrainedElement does not contain the correct element - %s' % element.constrainedElement)
-        self.assertTrue(element.specification == 'Constraint specification', 'Constraint.specification is incorrect - %s' % element.specification)
+        self.assertTrue(
+            constrainedElement in element.constrainedElement,
+            "Constraint.constrainedElement does not contain the correct element - %s"
+            % element.constrainedElement,
+        )
+        self.assertTrue(
+            element.specification == "Constraint specification",
+            "Constraint.specification is incorrect - %s" % element.specification,
+        )
 
     def test_dependency(self):
 
@@ -128,7 +174,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Dependency elements are not part of the meta-model')
+            self.fail("Dependency elements are not part of the meta-model")
 
         client = self.factory.create(UML.Package)
         supplier = self.factory.create(UML.Package)
@@ -136,8 +182,14 @@ class ClassesTestCase(unittest.TestCase):
         element.client = client
         element.supplier = supplier
 
-        self.assertTrue(client in element.client, 'Dependency.client does not contain client - %s' % element.client)
-        self.assertTrue(supplier in element.supplier, 'Dependency.supplier does not contain supplier - %s' % element.supplier)
+        self.assertTrue(
+            client in element.client,
+            "Dependency.client does not contain client - %s" % element.client,
+        )
+        self.assertTrue(
+            supplier in element.supplier,
+            "Dependency.supplier does not contain supplier - %s" % element.supplier,
+        )
 
     def test_element_import(self):
 
@@ -147,7 +199,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('ElementImport elements are not part of the meta-model')
+            self.fail("ElementImport elements are not part of the meta-model")
 
     def test_enumeration(self):
 
@@ -157,7 +209,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Enumeration elements are not part of the meta-model')
+            self.fail("Enumeration elements are not part of the meta-model")
 
     def test_generalization(self):
 
@@ -167,7 +219,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Generalization elements are not part of the meta-model')
+            self.fail("Generalization elements are not part of the meta-model")
 
     def test_interface(self):
 
@@ -177,7 +229,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Interface elements are not part of the meta-model')
+            self.fail("Interface elements are not part of the meta-model")
 
     def test_namespace(self):
 
@@ -187,7 +239,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Namespace elements are not part of the meta-model')
+            self.fail("Namespace elements are not part of the meta-model")
 
     def test_operation(self):
 
@@ -197,7 +249,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Operation elements are not part of the meta-model')
+            self.fail("Operation elements are not part of the meta-model")
 
     def test_package(self):
 
@@ -207,7 +259,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Package elements are not part of the meta-model')
+            self.fail("Package elements are not part of the meta-model")
 
     def test_parameter(self):
 
@@ -217,7 +269,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Parameter elements are not part of the meta-model')
+            self.fail("Parameter elements are not part of the meta-model")
 
     def test_property(self):
 
@@ -227,7 +279,7 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Property elements are not part of the meta-model')
+            self.fail("Property elements are not part of the meta-model")
 
     def test_realization(self):
 
@@ -237,18 +289,16 @@ class ClassesTestCase(unittest.TestCase):
 
         except AttributeError:
 
-            self.fail('Realization elements are not part of the meta-model')
+            self.fail("Realization elements are not part of the meta-model")
 
 
 class Uml2TestCase(unittest.TestCase):
-
     def test_ids(self):
         factory = UML.ElementFactory()
         c = factory.create(UML.Class)
         assert c.id
         p = factory.create_as(UML.Class, id=False)
         assert p.id is False, p.id
-
 
     def test1(self):
         factory = UML.ElementFactory()
@@ -269,36 +319,34 @@ class Uml2TestCase(unittest.TestCase):
 
         self.assertEqual([p], factory.lselect())
 
-
-#    def test_lower_upper(self):
-#        """
-#        Test MultiplicityElement.{lower|upper}
-#        """
-#        assert UML.MultiplicityElement.lowerValue in UML.MultiplicityElement.lower.subsets
-#
-#        e = UML.MultiplicityElement()
-#        e.lowerValue = '2'
-#        assert e.lower == '2', e.lower
-#
-#        assert UML.MultiplicityElement.upperValue in UML.MultiplicityElement.upper.subsets
-#
-#        e.upperValue = 'up'
-#        assert UML.MultiplicityElement.upper.version == 4, UML.MultiplicityElement.upper.version
-#        assert e.upper == 'up'
-#        e.upperValue = 'down'
-#        assert UML.MultiplicityElement.upper.version == 5, UML.MultiplicityElement.upper.version
-#        assert e.upper == 'down', e.upper
-#
-#        # TODO: test signal handling
+    #    def test_lower_upper(self):
+    #        """
+    #        Test MultiplicityElement.{lower|upper}
+    #        """
+    #        assert UML.MultiplicityElement.lowerValue in UML.MultiplicityElement.lower.subsets
+    #
+    #        e = UML.MultiplicityElement()
+    #        e.lowerValue = '2'
+    #        assert e.lower == '2', e.lower
+    #
+    #        assert UML.MultiplicityElement.upperValue in UML.MultiplicityElement.upper.subsets
+    #
+    #        e.upperValue = 'up'
+    #        assert UML.MultiplicityElement.upper.version == 4, UML.MultiplicityElement.upper.version
+    #        assert e.upper == 'up'
+    #        e.upperValue = 'down'
+    #        assert UML.MultiplicityElement.upper.version == 5, UML.MultiplicityElement.upper.version
+    #        assert e.upper == 'down', e.upper
+    #
+    #        # TODO: test signal handling
 
     def test_property_is_composite(self):
         p = UML.Property()
         assert p.isComposite == False, p.isComposite
-        p.aggregation = 'shared'
+        p.aggregation = "shared"
         assert p.isComposite == False, p.isComposite
-        p.aggregation = 'composite'
+        p.aggregation = "composite"
         assert p.isComposite == True, p.isComposite
-
 
     def test_association_endType(self):
         factory = UML.ElementFactory()
@@ -320,8 +368,6 @@ class Uml2TestCase(unittest.TestCase):
 
         assert c1 in a.endType
         assert c3 in a.endType
-
-
 
     def test_property_navigability(self):
         factory = UML.ElementFactory()
@@ -345,23 +391,22 @@ class Uml2TestCase(unittest.TestCase):
     def test_namedelement_qualifiedname(self):
         factory = UML.ElementFactory()
         p = factory.create(UML.Package)
-        p.name = 'Package'
+        p.name = "Package"
         c = factory.create(UML.Class)
-        c.name = 'Class'
+        c.name = "Class"
 
-        self.assertEqual(('Class',), c.qualifiedName)
+        self.assertEqual(("Class",), c.qualifiedName)
 
         p.ownedClassifier = c
 
-        self.assertEqual(('Package', 'Class'), c.qualifiedName)
-
+        self.assertEqual(("Package", "Class"), c.qualifiedName)
 
     def test_extension_metaclass(self):
         factory = UML.ElementFactory()
         c = factory.create(UML.Class)
-        c.name = 'Class'
+        c.name = "Class"
         s = factory.create(UML.Stereotype)
-        s.name = 'Stereotype'
+        s.name = "Stereotype"
 
         e = UML.model.create_extension(factory, c, s)
 
@@ -370,9 +415,9 @@ class Uml2TestCase(unittest.TestCase):
     def test_metaclass_extension(self):
         factory = UML.ElementFactory()
         c = factory.create(UML.Class)
-        c.name = 'Class'
+        c.name = "Class"
         s = factory.create(UML.Stereotype)
-        s.name = 'Stereotype'
+        s.name = "Stereotype"
 
         self.assertEqual([], c.extension)
         self.assertEqual([], s.extension)
@@ -389,10 +434,10 @@ class Uml2TestCase(unittest.TestCase):
         self.assertEqual(0, len(factory.lselect()))
 
         c = factory.create(UML.Class)
-        c.name = 'Class'
+        c.name = "Class"
         o = factory.create(UML.Operation)
         c.ownedOperation = o
-        UML.parse(o, 'a(x: int, y: int)')
+        UML.parse(o, "a(x: int, y: int)")
 
         c.unlink()
 

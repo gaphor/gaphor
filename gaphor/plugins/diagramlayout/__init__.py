@@ -25,7 +25,7 @@ from gaphor.plugins.diagramlayout import toposort
 @implementer(IService, IActionProvider)
 class DiagramLayout(object):
 
-    main_window = inject('main_window')
+    main_window = inject("main_window")
 
     menu_xml = """
       <ui>
@@ -48,8 +48,9 @@ class DiagramLayout(object):
     def update(self):
         self.sensitive = bool(self.get_window().get_current_diagram())
 
-    @action(name='diagram-layout', label='Layout diagram',
-            tooltip='simple diagram layout')
+    @action(
+        name="diagram-layout", label="Layout diagram", tooltip="simple diagram layout"
+    )
     def execute(self):
         d = self.main_window.get_current_diagram()
         self.layout_diagram(d)
@@ -60,6 +61,7 @@ class DiagramLayout(object):
 
 
 MARGIN = 100
+
 
 def layout_diagram(diag):
     """
@@ -82,12 +84,12 @@ def layout_diagram(diag):
     # First extract data from the diagram (which ones are the nodes, and
     # the relationships).
     for item in diag.canvas.get_root_items():
-        if isinstance(item, (items.GeneralizationItem,
-                             items.ImplementationItem)):
+        if isinstance(item, (items.GeneralizationItem, items.ImplementationItem)):
             # Primary relationships, should be drawn top-down
             try:
-                relations.append((item.handles[0].connected_to,
-                                  item.handles[-1].connected_to))
+                relations.append(
+                    (item.handles[0].connected_to, item.handles[-1].connected_to)
+                )
                 primary_nodes.extend(relations[-1])
             except Exception as e:
                 log.error(e)
@@ -95,9 +97,10 @@ def layout_diagram(diag):
             # Secondary (associations, dependencies) may be drawn top-down
             # or left-right
             try:
-                other_relations.append((item.handles[0].connected_to,
-                                        item.handles[-1].connected_to))
-                #other_relations.append((item.handles[-1].connected_to,
+                other_relations.append(
+                    (item.handles[0].connected_to, item.handles[-1].connected_to)
+                )
+                # other_relations.append((item.handles[-1].connected_to,
                 #                        item.handles[0].connected_to))
             except Exception as e:
                 log.error(e)
@@ -113,7 +116,7 @@ def layout_diagram(diag):
     other_sorted = toposort.toposort(nodes, other_relations, 0)
 
     if not sorted:
-        return;
+        return
 
     # Move nodes from the first (generalization) row to the other rows
     # if they are not superclasses for some other class
@@ -125,7 +128,7 @@ def layout_diagram(diag):
             # Figure out what row(s) they're on
             row = find_row(item, related, sorted[1:])
             if row:
-                #print 'moving', item.subject.name, 'to row', sorted.index(row)
+                # print 'moving', item.subject.name, 'to row', sorted.index(row)
                 sorted[0].remove(item)
                 row.append(item)
 
@@ -173,8 +176,10 @@ def simple_layout_lines(diag):
             # Secondary (associations, dependencies) may be drawn top-down
             # or left-right
             try:
-                lines[item] = (item.handles[0].connected_to,
-                               item.handles[-1].connected_to)
+                lines[item] = (
+                    item.handles[0].connected_to,
+                    item.handles[-1].connected_to,
+                )
             except Exception as e:
                 log.error(e)
 
@@ -182,7 +187,7 @@ def simple_layout_lines(diag):
     # end handle
     for line in list(lines.keys()):
         while len(line.handles) > 2:
-            line.set_property('del_segment', 0)
+            line.set_property("del_segment", 0)
 
     # Strategy 1:
     # Now we have nice short lines. Let's move them to a point between
@@ -193,7 +198,10 @@ def simple_layout_lines(diag):
             continue
         center0 = find_center(nodes[0])
         center1 = find_center(nodes[1])
-        center = old_div((center0[0] + center1[0]), 2.0), old_div((center0[1] + center1[1]), 2.0)
+        center = (
+            old_div((center0[0] + center1[0]), 2.0),
+            old_div((center0[1] + center1[1]), 2.0),
+        )
         line.handles[0].set_pos_w(*center)
         line.handles[-1].set_pos_w(*center)
         nodes[0].connect_handle(line.handles[0])
@@ -230,11 +238,12 @@ def find_row(item, related_items, sorted):
     max_refs = 0
     max_row = None
     for row in sorted:
-        cnt = len([ i for i in row if i in related_items ])
+        cnt = len([i for i in row if i in related_items])
         if cnt > max_refs:
             max_row = row
             max_refs = cnt
     return max_row
+
 
 def find_center(item):
     """
@@ -243,5 +252,6 @@ def find_center(item):
     x = old_div(item.width, 2.0)
     y = old_div(item.height, 2.0)
     return item.canvas.get_matrix_i2c(item).transform_point(x, y)
+
 
 # vim:sw=4:et

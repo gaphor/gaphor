@@ -13,11 +13,13 @@ from gaphor.diagram import items
 from zope import interface, component
 from gaphor.adapters.propertypages import NamedItemPropertyPage, create_hbox_label
 
+
 class TransitionPropertyPage(NamedItemPropertyPage):
     """
     Transition property page allows to edit guard specification.
     """
-    element_factory = inject('element_factory')
+
+    element_factory = inject("element_factory")
 
     component.adapts(items.TransitionItem)
 
@@ -29,22 +31,24 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, _('Guard'))
+        hbox = create_hbox_label(self, page, _("Guard"))
         entry = Gtk.Entry()
         v = subject.guard.specification
-        entry.set_text(v if v else '')
-        entry.connect('changed', self._on_guard_change)
-        changed_id = entry.connect('changed', self._on_guard_change)
+        entry.set_text(v if v else "")
+        entry.connect("changed", self._on_guard_change)
+        changed_id = entry.connect("changed", self._on_guard_change)
         hbox.pack_start(entry, True, True, 0)
 
         def handler(event):
             entry.handler_block(changed_id)
             v = event.new_value
-            entry.set_text(v if v else '')
+            entry.set_text(v if v else "")
             entry.handler_unblock(changed_id)
 
-        self.watcher.watch('guard<Constraint>.specification', handler).register_handlers()
-        entry.connect('destroy', self.watcher.unregister_handlers)
+        self.watcher.watch(
+            "guard<Constraint>.specification", handler
+        ).register_handlers()
+        entry.connect("destroy", self.watcher.unregister_handlers)
 
         return page
 
@@ -57,14 +61,15 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         self.subject.guard.specification = value
 
 
-component.provideAdapter(TransitionPropertyPage, name='Properties')
+component.provideAdapter(TransitionPropertyPage, name="Properties")
 
 
 class StatePropertyPage(NamedItemPropertyPage):
     """
     State property page.
     """
-    element_factory = inject('element_factory')
+
+    element_factory = inject("element_factory")
 
     component.adapts(items.StateItem)
 
@@ -72,29 +77,29 @@ class StatePropertyPage(NamedItemPropertyPage):
         page = super(StatePropertyPage, self).construct()
 
         subject = self.subject
- 
+
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, _('Entry'))
+        hbox = create_hbox_label(self, page, _("Entry"))
         entry = Gtk.Entry()
         if self.item._entry.subject:
             entry.set_text(self.item._entry.subject.name)
-        entry.connect('changed', self._on_text_change, self.item.set_entry)
+        entry.connect("changed", self._on_text_change, self.item.set_entry)
         hbox.pack_start(entry, True, True, 0)
 
-        hbox = create_hbox_label(self, page, _('Exit'))
+        hbox = create_hbox_label(self, page, _("Exit"))
         entry = Gtk.Entry()
         if self.item._exit.subject:
             entry.set_text(self.item._exit.subject.name)
-        entry.connect('changed', self._on_text_change, self.item.set_exit)
+        entry.connect("changed", self._on_text_change, self.item.set_exit)
         hbox.pack_start(entry, True, True, 0)
 
-        hbox = create_hbox_label(self, page, _('Do Activity'))
+        hbox = create_hbox_label(self, page, _("Do Activity"))
         entry = Gtk.Entry()
         if self.item._do_activity.subject:
             entry.set_text(self.item._do_activity.subject.name)
-        entry.connect('changed', self._on_text_change, self.item.set_do_activity)
+        entry.connect("changed", self._on_text_change, self.item.set_do_activity)
         hbox.pack_start(entry, True, True, 0)
 
         page.show_all()
@@ -110,6 +115,4 @@ class StatePropertyPage(NamedItemPropertyPage):
         method(value)
 
 
-
-component.provideAdapter(StatePropertyPage, name='Properties')
-
+component.provideAdapter(StatePropertyPage, name="Properties")

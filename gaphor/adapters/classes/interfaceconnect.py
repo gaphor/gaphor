@@ -12,13 +12,18 @@ from zope import interface
 from gaphor import UML
 
 from gaphor.diagram import items
-from gaphor.adapters.classes.classconnect import DependencyConnect, ImplementationConnect
+from gaphor.adapters.classes.classconnect import (
+    DependencyConnect,
+    ImplementationConnect,
+)
+
 
 class ImplementationInterfaceConnect(ImplementationConnect):
     """
     Connect interface item and a behaviored classifier using an
     implementation.
     """
+
     component.adapts(items.InterfaceItem, items.ImplementationItem)
 
     def connect(self, handle, port):
@@ -29,7 +34,6 @@ class ImplementationInterfaceConnect(ImplementationConnect):
         super(ImplementationInterfaceConnect, self).connect(handle, port)
         if handle is self.line.head:
             self.line._solid = self.element.folded != self.element.FOLDED_NONE
-
 
     def disconnect(self, handle):
         """
@@ -44,11 +48,11 @@ class ImplementationInterfaceConnect(ImplementationConnect):
 component.provideAdapter(ImplementationInterfaceConnect)
 
 
-
 class DependencyInterfaceConnect(DependencyConnect):
     """
     Connect interface item with dependency item.
     """
+
     component.adapts(items.InterfaceItem, items.DependencyItem)
 
     def connect(self, handle, port):
@@ -68,7 +72,6 @@ class DependencyInterfaceConnect(DependencyConnect):
             # required interface will be rotated properly when folded by
             # user
             self.element._angle = port.angle
-
 
     def disconnect(self, handle):
         """

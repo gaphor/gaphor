@@ -79,7 +79,7 @@ class Diagram(Namespace, PackageableElement):
         """Apply the supplied save function to this diagram and the canvas."""
 
         super(Diagram, self).save(save_func)
-        save_func('canvas', self.canvas)
+        save_func("canvas", self.canvas)
 
     def postload(self):
         """Handle post-load functionality for the diagram canvas."""

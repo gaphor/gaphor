@@ -76,7 +76,11 @@ import pprint
 import token
 import tokenize
 
-from gaphor.plugins.pynsource.keywords import pythonbuiltinfunctions, javakeywords, delphikeywords
+from gaphor.plugins.pynsource.keywords import (
+    pythonbuiltinfunctions,
+    javakeywords,
+    delphikeywords,
+)
 
 DEBUG_DUMPTOKENS = False
 
@@ -89,13 +93,13 @@ class AndyBasicParseEngine(object):
         self.indentlevel = 0
 
     def _ReadAllTokensFromFile(self, file):
-        fp = open(file, 'r')
+        fp = open(file, "r")
         try:
-            self.tokens = [ x[0:2] for x in tokenize.generate_tokens(fp.readline) ]
+            self.tokens = [x[0:2] for x in tokenize.generate_tokens(fp.readline)]
         finally:
             fp.close()
         if DEBUG_DUMPTOKENS:
-            pprint.pprint( self.tokens )
+            pprint.pprint(self.tokens)
 
     def Parse(self, file):
         self._ReadAllTokensFromFile(file)
@@ -118,18 +122,21 @@ class AndyBasicParseEngine(object):
             if tokentype == 0:  # End Marker.
                 break
 
-            assert token, ("Not expecting blank token, once have detected in & out dents. tokentype=%d, token=%s" %(tokentype, token))
+            assert token, (
+                "Not expecting blank token, once have detected in & out dents. tokentype=%d, token=%s"
+                % (tokentype, token)
+            )
 
             self.tokentype, self.token = tokentype, token
-            if i+1 < maxtokens:
-                self.nexttokentype, self.nexttoken = self.tokens[i+1]
+            if i + 1 < maxtokens:
+                self.nexttokentype, self.nexttoken = self.tokens[i + 1]
             else:
                 self.nexttokentype, self.nexttoken = (0, None)
 
             if self._Isblank():
                 continue
             else:
-                #print 'MEAT', self.token
+                # print 'MEAT', self.token
                 self._Gotmeat()
 
     def On_deindent(self):
@@ -154,9 +161,9 @@ class AndyBasicParseEngine(object):
         return 0
 
     def _Isnewline(self):
-        if (self.token == '\n' or self.tokentype == token.N_TOKENS):
+        if self.token == "\n" or self.tokentype == token.N_TOKENS:
             if self.tokentype == token.N_TOKENS:
-                assert '#' in self.token
+                assert "#" in self.token
             self.meat = 0
             self.isfreshline = 1
             self.On_newline()
@@ -170,6 +177,7 @@ class AndyBasicParseEngine(object):
             return 1
         else:
             return 0
+
 
 class ClassEntry(object):
     def __init__(self):
@@ -202,16 +210,18 @@ class ClassEntry(object):
         else:
             # See if there is more info to add re this attr.
             if len(attrobj.attrtype) < len(attrtype):
-                attrobj.attrtype = attrtype   # Update it.
+                attrobj.attrtype = attrtype  # Update it.
 
         # OLD CODE
-        #if not self.FindAttribute(attrname):
+        # if not self.FindAttribute(attrname):
         #    self.attrs.append(Attribute(attrname, attrtype))
 
+
 class Attribute(object):
-    def __init__(self, attrname, attrtype='normal'):
+    def __init__(self, attrname, attrtype="normal"):
         self.attrname = attrname
         self.attrtype = attrtype
+
 
 class HandleClasses(AndyBasicParseEngine):
     def __init__(self):
@@ -226,26 +236,29 @@ class HandleClasses(AndyBasicParseEngine):
 
     def On_deindent(self):
         if self.currclassindentlevel and self.indentlevel <= self.currclassindentlevel:
-##            print 'popping class', self.currclass, 'from', self.currclasslist
+            ##            print 'popping class', self.currclass, 'from', self.currclasslist
             self.PopCurrClass()
-##        print
-##        print 'deindent!!', self.indentlevel, 'class indentlevel =', self.currclassindentlevel
+
+    ##        print
+    ##        print 'deindent!!', self.indentlevel, 'class indentlevel =', self.currclassindentlevel
 
     def _DeriveNestedClassName(self, currclass):
         if not self.currclasslist:
             return currclass
         else:
             classname, indentlevel = self.currclasslist[-1]
-            return classname + '_' + currclass   # Cannot use :: since java doesn't like this name, nor does the file system.
+            return (
+                classname + "_" + currclass
+            )  # Cannot use :: since java doesn't like this name, nor does the file system.
 
     def PushCurrClass(self, currclass):
-        #print 'pushing currclass', currclass, 'self.currclasslist', self.currclasslist
+        # print 'pushing currclass', currclass, 'self.currclasslist', self.currclasslist
         currclass = self._DeriveNestedClassName(currclass)
-        self.currclasslist.append( (currclass, self.indentlevel) )
-        #print 'result of pushing = ', self.currclasslist
+        self.currclasslist.append((currclass, self.indentlevel))
+        # print 'result of pushing = ', self.currclasslist
 
     def PopCurrClass(self):
-        #__import__("traceback").print_stack(limit=6)
+        # __import__("traceback").print_stack(limit=6)
         self.currclasslist.pop()
 
     def GetCurrClassIndentLevel(self):
@@ -259,6 +272,7 @@ class HandleClasses(AndyBasicParseEngine):
             return None
         currclassandindentlevel = self.currclasslist[-1]
         return currclassandindentlevel[0]
+
     currclass = property(GetCurrClass)
 
     currclassindentlevel = property(GetCurrClassIndentLevel)
@@ -268,19 +282,20 @@ class HandleClasses(AndyBasicParseEngine):
         self.nexttokenisclass = 0
         if self.currclass not in self.classlist:
             self.classlist[self.currclass] = ClassEntry()
-        #print 'class', self.currclass
+        # print 'class', self.currclass
         self.inbetweenClassAndFirstDef = 1
 
     def On_newline(self):
         pass
 
     def On_meat(self):
-        if self.token == 'class':
-##            print 'meat found class', self.token
+        if self.token == "class":
+            ##            print 'meat found class', self.token
             self.nexttokenisclass = 1
         elif self.nexttokenisclass:
-##            print 'meat found class name ', self.token
+            ##            print 'meat found class name ', self.token
             self._JustThenGotclass()
+
 
 class HandleInheritedClasses(HandleClasses):
     def __init__(self):
@@ -289,7 +304,7 @@ class HandleInheritedClasses(HandleClasses):
 
     def _JustThenGotclass(self):
         HandleClasses._JustThenGotclass(self)
-        self.currsuperclass = ''
+        self.currsuperclass = ""
         self.nexttokenisBracketOpenOrColon = 1
 
     def _ClearwaitingInheriteClasses(self):
@@ -302,30 +317,35 @@ class HandleInheritedClasses(HandleClasses):
 
     def On_meat(self):
         HandleClasses.On_meat(self)
-        if self.nexttokenisBracketOpenOrColon and self.token == '(':
-            assert self.tokentype == token.OP  # unecessary, just practicing refering to tokens via names not numbers
+        if self.nexttokenisBracketOpenOrColon and self.token == "(":
+            assert (
+                self.tokentype == token.OP
+            )  # unecessary, just practicing refering to tokens via names not numbers
             self.nexttokenisBracketOpen = 0
             self.nexttokenisSuperclass = 1
 
-        elif self.nexttokenisBracketOpenOrColon and self.token == ':':
+        elif self.nexttokenisBracketOpenOrColon and self.token == ":":
             self._ClearwaitingInheriteClasses()
 
-        elif self.nexttokenisSuperclass and self.token == ')':
+        elif self.nexttokenisSuperclass and self.token == ")":
             self._ClearwaitingInheriteClasses()
 
         elif self.nexttokenisSuperclass:
             self.currsuperclass += self.token
-            if self.token == '.' or self.nexttoken == '.':
-                #print 'processing multi part superclass detected!', self.token, self.nexttoken
+            if self.token == "." or self.nexttoken == ".":
+                # print 'processing multi part superclass detected!', self.token, self.nexttoken
                 self.nexttokenisSuperclass = 1
             else:
                 self.nexttokenisSuperclass = 0
                 self.nexttokenisComma = 1
-                self.classlist[self.currclass].classesinheritsfrom.append(self.currsuperclass)
+                self.classlist[self.currclass].classesinheritsfrom.append(
+                    self.currsuperclass
+                )
 
-        elif self.nexttokenisComma and self.token == ',':
+        elif self.nexttokenisComma and self.token == ",":
             self.nexttokenisSuperclass = 1
             self.nexttokenisComma = 0
+
 
 class HandleDefs(HandleInheritedClasses):
     def __init__(self):
@@ -336,8 +356,8 @@ class HandleDefs(HandleInheritedClasses):
     def _Gotdef(self):
         self.currdef = self.token
         self.nexttokenisdef = 0
-        #print 'ADDING    def', self.currdef, 'to', self.currclass
-##        if self.currclass and self.indentlevel == 1:
+        # print 'ADDING    def', self.currdef, 'to', self.currclass
+        ##        if self.currclass and self.indentlevel == 1:
         if self.currclass:
             self.classlist[self.currclass].defs.append(self.currdef)
         elif self.optionModuleAsClass and self.indentlevel == 0:
@@ -351,13 +371,16 @@ class HandleDefs(HandleInheritedClasses):
     def On_meat(self):
         HandleInheritedClasses.On_meat(self)
 
-##        if self.token == 'def' and self.indentlevel == 1:
-        if self.token == 'def':
-##            print 'DEF FOUND AT LEVEL', self.indentlevel
+        ##        if self.token == 'def' and self.indentlevel == 1:
+        if self.token == "def":
+            ##            print 'DEF FOUND AT LEVEL', self.indentlevel
             self.nexttokenisdef = 1
         elif self.nexttokenisdef:
             self._Gotdef()
+
+
 ##        self.meat = 1
+
 
 class HandleClassAttributes(HandleDefs):
     def __init__(self):
@@ -386,10 +409,10 @@ class HandleClassAttributes(HandleDefs):
     def On_meat(self):
         HandleDefs.On_meat(self)
 
-        if self.isfreshline and self.token == 'self' and self.nexttoken == '.':
+        if self.isfreshline and self.token == "self" and self.nexttoken == ".":
             self.waitingfordot = 1
 
-        elif self.waitingfordot and self.token == '.':
+        elif self.waitingfordot and self.token == ".":
             self.waitingfordot = 0
             self.waitingforvarname = 1
 
@@ -410,19 +433,19 @@ class HandleClassAttributes(HandleDefs):
 
             G. We could find   self.numberOfFlags = read16(fp)    - skip cos read16 is a module function.
             """
-            if self.nexttoken == '=':
+            if self.nexttoken == "=":
                 self.waitingforequalsymbol = 1  # Case A
-            elif self.nexttoken == '.':
-                self.waitingforsubsequentdot = 1 # Cases B,C, D,E,F  pending
+            elif self.nexttoken == ".":
+                self.waitingforsubsequentdot = 1  # Cases B,C, D,E,F  pending
 
-        elif self.waitingforsubsequentdot and self.token == '.':
+        elif self.waitingforsubsequentdot and self.token == ".":
             self.waitingfordot = 0
             self.waitingforsubsequentdot = 0
             self.waitingforequalsymbol = 0
-            if self.nexttoken.lower() in ('append', 'add', 'insert'):  # Case B
+            if self.nexttoken.lower() in ("append", "add", "insert"):  # Case B
                 # keep the class attribute name we have, wait till bracket
                 self.waitforappendopenbracket = 1
-            elif self.currvarname in ('__class__',):  # Case C
+            elif self.currvarname in ("__class__",):  # Case C
                 self.currvarname = None
                 self.waitingforvarname = 1
                 self.nextvarnameisstatic = 1
@@ -430,13 +453,13 @@ class HandleClassAttributes(HandleDefs):
                 # Skip cases D, E, F
                 self._Clearwaiting()
 
-        elif self.waitforappendopenbracket and self.token == '(':
+        elif self.waitforappendopenbracket and self.token == "(":
             self.waitforappendopenbracket = 0
             self.nextvarnameismany = 1
             self._AddAttribute()
             self._Clearwaiting()
 
-        elif self.waitingforequalsymbol and self.token == '=':
+        elif self.waitingforequalsymbol and self.token == "=":
             self.waitingforequalsymbol = 0
             self._AddAttribute()
             self._Clearwaiting()
@@ -444,16 +467,17 @@ class HandleClassAttributes(HandleDefs):
     def _AddAttribute(self):
         classentry = self.classlist[self.currclass]
         if self.nextvarnameisstatic:
-            attrtype = ['static']
+            attrtype = ["static"]
         else:
-            attrtype = ['normal']
+            attrtype = ["normal"]
 
         if self.nextvarnameismany:
-            attrtype.append('many')
+            attrtype.append("many")
 
         classentry.AddAttribute(self.currvarname, attrtype)
-        #print '       ATTR  ', self.currvarname
+        # print '       ATTR  ', self.currvarname
         self.JustGotASelfAttr(self.currvarname)
+
 
 class HandleComposites(HandleClassAttributes):
     def __init__(self):
@@ -463,7 +487,7 @@ class HandleComposites(HandleClassAttributes):
         self.dummy2 = [()]
 
     def JustGotASelfAttr(self, selfattrname):
-        assert selfattrname != 'self'
+        assert selfattrname != "self"
         self.lastselfattrname = selfattrname
         self.waitingforclassname = 1
         self.waitingforOpenBracket = 0
@@ -490,23 +514,26 @@ class HandleComposites(HandleClassAttributes):
         if self.dontdoanythingnow:
             pass
 
-        elif self.waitingforclassname and self.token not in ( '(', '[' ) and \
-          self.token not in pythonbuiltinfunctions and\
-          self.tokentype not in (token.NUMBER, token.STRING) and\
-          self.token not in self.modulemethods:
+        elif (
+            self.waitingforclassname
+            and self.token not in ("(", "[")
+            and self.token not in pythonbuiltinfunctions
+            and self.tokentype not in (token.NUMBER, token.STRING)
+            and self.token not in self.modulemethods
+        ):
             self.possibleclassname = self.token
             self.waitingforclassname = 0
             self.waitingforOpenBracket = 1
 
-        elif self.waitingforOpenBracket and self.token == '(':
+        elif self.waitingforOpenBracket and self.token == "(":
             self.waitingforclassname = 0
             self.waitingforOpenBracket = 0
 
             dependency = (self.lastselfattrname, self.possibleclassname)
             self.classlist[self.currclass].classdependencytuples.append(dependency)
-            #print '*** dependency - created instance of', self.possibleclassname, 'assigned to', self.lastselfattrname
+            # print '*** dependency - created instance of', self.possibleclassname, 'assigned to', self.lastselfattrname
 
-        elif self.waitingforOpenBracket and self.token == ')':
+        elif self.waitingforOpenBracket and self.token == ")":
             """
             New - we haven't got a class being created but instead have a variable.
             Note that the above code detects
@@ -518,8 +545,8 @@ class HandleComposites(HandleClassAttributes):
             variablename = self.possibleclassname
 
             # try to find a class with the same name.
-            correspondingClassName = variablename[0].upper() + variablename[1:] # HACK
-            #print 'correspondingClassName', correspondingClassName
+            correspondingClassName = variablename[0].upper() + variablename[1:]  # HACK
+            # print 'correspondingClassName', correspondingClassName
 
             dependency = (self.lastselfattrname, correspondingClassName)
             self.classlist[self.currclass].classdependencytuples.append(dependency)
@@ -535,18 +562,25 @@ class HandleClassStaticAttrs(HandleComposites):
 
     def __Clearwaiting(self):
         self.__waitingforequalsymbol = 0
-        self.__staticattrname = ''
+        self.__staticattrname = ""
 
     def On_meat(self):
         HandleComposites.On_meat(self)
 
-        if self.isfreshline and self.currclass and self.inbetweenClassAndFirstDef and self.tokentype == 1 and self.indentlevel != 0 and self.nexttoken == '=':
+        if (
+            self.isfreshline
+            and self.currclass
+            and self.inbetweenClassAndFirstDef
+            and self.tokentype == 1
+            and self.indentlevel != 0
+            and self.nexttoken == "="
+        ):
             self.__waitingforequalsymbol = 1
             self.__staticattrname = self.token
 
-        elif self.__waitingforequalsymbol and self.token == '=':
+        elif self.__waitingforequalsymbol and self.token == "=":
             self.__waitingforequalsymbol = 0
-            #print 'have static level attr', self.__staticattrname
+            # print 'have static level attr', self.__staticattrname
             self.__AddAttrModuleLevel()
             self.__Clearwaiting()
 
@@ -556,25 +590,24 @@ class HandleClassStaticAttrs(HandleComposites):
         # also should be able to resuse most of _AddAttr()
         #
         classentry = self.classlist[self.currclass]
-        attrtype = ['static']
+        attrtype = ["static"]
 
         classentry.AddAttribute(self.__staticattrname, attrtype)
-        #print '       STATIC ATTR  ', self.__staticattrname
-
+        # print '       STATIC ATTR  ', self.__staticattrname
 
 
 class HandleModuleLevelDefsAndAttrs(HandleClassStaticAttrs):
     def __init__(self):
         HandleClassStaticAttrs.__init__(self)
-        self.moduleasclass = ''
+        self.moduleasclass = ""
         self.__Clearwaiting()
 
     def __Clearwaiting(self):
         self.waitingforequalsymbolformoduleattr = 0
-        self.modulelevelattrname = ''
+        self.modulelevelattrname = ""
 
     def Parse(self, file):
-        self.moduleasclass = 'Module_'+os.path.splitext(os.path.basename(file))[0]
+        self.moduleasclass = "Module_" + os.path.splitext(os.path.basename(file))[0]
         if self.optionModuleAsClass:
             self.classlist[self.moduleasclass] = ClassEntry()
             self.classlist[self.moduleasclass].ismodulenotrealclass = 1
@@ -584,13 +617,18 @@ class HandleModuleLevelDefsAndAttrs(HandleClassStaticAttrs):
     def On_meat(self):
         HandleClassStaticAttrs.On_meat(self)
 
-        if self.isfreshline and self.tokentype == 1 and self.indentlevel == 0 and self.nexttoken == '=':
+        if (
+            self.isfreshline
+            and self.tokentype == 1
+            and self.indentlevel == 0
+            and self.nexttoken == "="
+        ):
             self.waitingforequalsymbolformoduleattr = 1
             self.modulelevelattrname = self.token
 
-        elif self.waitingforequalsymbolformoduleattr and self.token == '=':
+        elif self.waitingforequalsymbolformoduleattr and self.token == "=":
             self.waitingforequalsymbolformoduleattr = 0
-            #print 'have module level attr', self.modulelevelattrname
+            # print 'have module level attr', self.modulelevelattrname
             self._AddAttrModuleLevel()
             self.__Clearwaiting()
 
@@ -607,21 +645,19 @@ class HandleModuleLevelDefsAndAttrs(HandleClassStaticAttrs):
         # also should be able to resuse most of _AddAttr()
         #
         classentry = self.classlist[self.moduleasclass]
-        attrtype = ['normal']
+        attrtype = ["normal"]
 
-##        if self.nextvarnameisstatic:
-##            attrtype = ['static']
-##        else:
-##            attrtype = ['normal']
-##
-##        if self.nextvarnameismany:
-##            attrtype.append('many')
+        ##        if self.nextvarnameisstatic:
+        ##            attrtype = ['static']
+        ##        else:
+        ##            attrtype = ['normal']
+        ##
+        ##        if self.nextvarnameismany:
+        ##            attrtype.append('many')
 
         classentry.AddAttribute(self.modulelevelattrname, attrtype)
-        #print '       ATTR  ', self.currvarname
-        #self.JustGotASelfAttr(self.currvarname)
-
-
+        # print '       ATTR  ', self.currvarname
+        # self.JustGotASelfAttr(self.currvarname)
 
 
 class PySourceAsText(HandleModuleLevelDefsAndAttrs):
@@ -629,7 +665,7 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
         HandleModuleLevelDefsAndAttrs.__init__(self)
         self.listcompositesatend = 0
         self.embedcompositeswithattributelist = 1
-        self.result = ''
+        self.result = ""
         self.aclass = None
         self.classentry = None
         self.staticmessage = ""
@@ -649,57 +685,65 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
     def _DumpAttribute(self, attrobj):
         compositescreated = self._GetCompositeCreatedClassesFor(attrobj.attrname)
         if compositescreated and self.embedcompositeswithattributelist:
-            self.result +=  "%s %s <@>----> %s" % (attrobj.attrname, self.staticmessage, str(compositescreated))
+            self.result += "%s %s <@>----> %s" % (
+                attrobj.attrname,
+                self.staticmessage,
+                str(compositescreated),
+            )
         else:
-            self.result +=  "%s %s" % (attrobj.attrname, self.staticmessage)
+            self.result += "%s %s" % (attrobj.attrname, self.staticmessage)
         self.result += self.manymessage
-        self.result += '\n'
+        self.result += "\n"
 
     def _DumpCompositeExtraFooter(self):
         if self.classentry.classdependencytuples and self.listcompositesatend:
             for dependencytuple in self.classentry.classdependencytuples:
-                self.result +=  "%s <*>---> %s\n" % dependencytuple
-            self.result +=  '-'*20   +'\n'
+                self.result += "%s <*>---> %s\n" % dependencytuple
+            self.result += "-" * 20 + "\n"
 
     def _DumpClassNameAndGeneralisations(self):
         self._Line()
         if self.classentry.ismodulenotrealclass:
-            self.result +=  '%s  (file)\n' % (self.aclass,)
+            self.result += "%s  (file)\n" % (self.aclass,)
         else:
-            self.result +=  '%s  --------|> %s\n' % (self.aclass, self.classentry.classesinheritsfrom)
+            self.result += "%s  --------|> %s\n" % (
+                self.aclass,
+                self.classentry.classesinheritsfrom,
+            )
         self._Line()
 
     def _DumpAttributes(self):
         for attrobj in self.classentry.attrs:
             self.staticmessage = ""
             self.manymessage = ""
-            if 'static' in attrobj.attrtype:
+            if "static" in attrobj.attrtype:
                 self.staticmessage = " static"
-            if 'many' in attrobj.attrtype:
+            if "many" in attrobj.attrtype:
                 self.manymessage = " 1..*"
             self._DumpAttribute(attrobj)
 
     def _DumpMethods(self):
         for adef in self.classentry.defs:
-            self.result +=  adef +'\n'
+            self.result += adef + "\n"
 
     def _Line(self):
-        self.result +=  '-'*20   +'\n'
+        self.result += "-" * 20 + "\n"
 
     def _DumpClassHeader(self):
-        self.result += '\n'
+        self.result += "\n"
 
     def _DumpClassFooter(self):
-        self.result += '\n'
-        self.result += '\n'
+        self.result += "\n"
+        self.result += "\n"
 
     def _DumpModuleMethods(self):
         if self.modulemethods:
-            self.result += '  ModuleMethods = %s\n' % repr(self.modulemethods)
-##        self.result += '\n'
+            self.result += "  ModuleMethods = %s\n" % repr(self.modulemethods)
+
+    ##        self.result += '\n'
 
     def __str__(self):
-        self.result = ''
+        self.result = ""
         self._DumpClassHeader()
         self._DumpModuleMethods()
 
@@ -708,8 +752,9 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
         if optionAlphabetic:
             classnames.sort()
         else:
+
             def cmpfunc(a, b):
-                if a.find('Module_') != -1:
+                if a.find("Module_") != -1:
                     return -1
                 else:
                     if a < b:
@@ -718,12 +763,12 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
                         return 0
                     else:
                         return 1
+
             classnames.sort(key=cmp_to_key(cmpfunc))
         for self.aclass in classnames:
             self.classentry = self.classlist[self.aclass]
 
-
-##        for self.aclass, self.classentry in self.classlist.items():
+            ##        for self.aclass, self.classentry in self.classlist.items():
             self._DumpClassNameAndGeneralisations()
             self._DumpAttributes()
             self._Line()
@@ -741,34 +786,33 @@ class PySourceAsJava(PySourceAsText):
         self.fp = None
 
     def _DumpClassFooter(self):
-        self.result +=  "}\n"
+        self.result += "}\n"
 
         if self.fp:
             self.fp.write(self.result)
             self.fp.close()
             self.fp = None
-            self.result = ''
+            self.result = ""
 
     def _DumpModuleMethods(self):
-        self.result += '/*\n'
+        self.result += "/*\n"
         PySourceAsText._DumpModuleMethods(self)
-        self.result += '*/\n'
+        self.result += "*/\n"
 
     def _OpenNextFile(self):
         filepath = "%s\\%s.java" % (self.outdir, self.aclass)
-        self.fp = open(filepath, 'w')
-
+        self.fp = open(filepath, "w")
 
     def _NiceNameToPreventCompilerErrors(self, attrname):
         """
         Prevent compiler errors on the java side by checking and modifying attribute name
         """
         # only emit the rhs of a multi part name e.g. undo.UndoItem will appear only as UndoItem
-        if attrname.find('.') != -1:
-            attrname = attrname.split('.')[-1] # take the last
+        if attrname.find(".") != -1:
+            attrname = attrname.split(".")[-1]  # take the last
         # Prevent compiler errors on the java side by avoiding the generating of java keywords as attribute names
         if attrname in javakeywords:
-            attrname = '_' + attrname
+            attrname = "_" + attrname
         return attrname
 
     def _DumpAttribute(self, attrobj):
@@ -782,11 +826,19 @@ class PySourceAsJava(PySourceAsText):
         attrname = self._NiceNameToPreventCompilerErrors(attrobj.attrname)
 
         if compositecreated and self.embedcompositeswithattributelist:
-            self.result +=  "    public %s %s %s = new %s();\n" % (self.staticmessage, compositecreated, attrname, compositecreated)
+            self.result += "    public %s %s %s = new %s();\n" % (
+                self.staticmessage,
+                compositecreated,
+                attrname,
+                compositecreated,
+            )
         else:
-##            self.result +=  "    public %s void %s;\n" % (self.staticmessage, attrobj.attrname)
-##            self.result +=  "    public %s int %s;\n" % (self.staticmessage, attrname)
-            self.result +=  "    public %s variant %s;\n" % (self.staticmessage, attrname)
+            ##            self.result +=  "    public %s void %s;\n" % (self.staticmessage, attrobj.attrname)
+            ##            self.result +=  "    public %s int %s;\n" % (self.staticmessage, attrname)
+            self.result += "    public %s variant %s;\n" % (
+                self.staticmessage,
+                attrname,
+            )
 
         """
         import java.util.Vector;
@@ -801,40 +853,44 @@ class PySourceAsJava(PySourceAsText):
 
     def _DumpClassNameAndGeneralisations(self):
         if self.verbose:
-            print('  Generating Java class', self.aclass)
+            print("  Generating Java class", self.aclass)
         self._OpenNextFile()
 
         self.result += "// Generated by PyNSource http://www.atug.com/andypatterns/pynsource.htm \n\n"
 
-##        self.result +=  "import javax.swing.Icon;     // Not needed, just testing pyNSource's ability to generate import statements.\n\n"    # NEW package support!
+        ##        self.result +=  "import javax.swing.Icon;     // Not needed, just testing pyNSource's ability to generate import statements.\n\n"    # NEW package support!
 
-        self.result +=  'public class %s ' % self.aclass
+        self.result += "public class %s " % self.aclass
         if self.classentry.classesinheritsfrom:
-            self.result +=  'extends %s ' % self._NiceNameToPreventCompilerErrors(self.classentry.classesinheritsfrom[0])
-        self.result +=  '{\n'
+            self.result += "extends %s " % self._NiceNameToPreventCompilerErrors(
+                self.classentry.classesinheritsfrom[0]
+            )
+        self.result += "{\n"
 
     def _DumpMethods(self):
         for adef in self.classentry.defs:
-            self.result +=  "    public void %s() {\n    }\n" % adef
+            self.result += "    public void %s() {\n    }\n" % adef
 
     def _Line(self):
         pass
+
 
 def unique(s):
     """ Return a list of the elements in list s in arbitrary order, but without duplicates """
     n = len(s)
     if n == 0:
-         return []
+        return []
     u = {}
     try:
-         for x in s:
+        for x in s:
             u[x] = 1
     except TypeError:
-         del u   # move onto the next record
+        del u  # move onto the next record
     else:
-          return list(u.keys())
+        return list(u.keys())
 
     raise KeyError("uniqueness algorithm failed .. type more of it in please")
+
 
 class PySourceAsDelphi(PySourceAsText):
     """
@@ -882,47 +938,49 @@ class PySourceAsDelphi(PySourceAsText):
       end.
 
     """
+
     def __init__(self, outdir=None):
         PySourceAsText.__init__(self)
         self.outdir = outdir
         self.fp = None
 
     def _DumpClassFooter(self):
-        self.result +=  "\n\n"
+        self.result += "\n\n"
 
-        self.result +=  "implementation\n\n"
+        self.result += "implementation\n\n"
 
         self.DumpImplementationMethods()
 
-        self.result +=  "\nend.\n\n"
+        self.result += "\nend.\n\n"
 
         if self.fp:
             self.fp.write(self.result)
             self.fp.close()
             self.fp = None
-            self.result = ''
+            self.result = ""
 
     def _DumpModuleMethods(self):
-        self.result += '(*\n'
+        self.result += "(*\n"
         PySourceAsText._DumpModuleMethods(self)
-        self.result += '*)\n\n'
+        self.result += "*)\n\n"
 
     def _OpenNextFile(self):
         filepath = "%s\\unit_%s.pas" % (self.outdir, self.aclass)
-        self.fp = open(filepath, 'w')
-
+        self.fp = open(filepath, "w")
 
     def _NiceNameToPreventCompilerErrors(self, attrname):
         """
         Prevent compiler errors on the java side by checking and modifying attribute name
         """
         # only emit the rhs of a multi part name e.g. undo.UndoItem will appear only as UndoItem
-        if attrname.find('.') != -1:
-            attrname = attrname.split('.')[-1] # take the last
+        if attrname.find(".") != -1:
+            attrname = attrname.split(".")[-1]  # take the last
 
         # Prevent compiler errors on the Delphi side by avoiding the generating of delphi keywords as attribute names
-        if attrname.lower() in delphikeywords:   # delphi is case insensitive, so convert everything to lowercase for comparisons
-            attrname = '_' + attrname
+        if (
+            attrname.lower() in delphikeywords
+        ):  # delphi is case insensitive, so convert everything to lowercase for comparisons
+            attrname = "_" + attrname
 
         return attrname
 
@@ -941,28 +999,29 @@ class PySourceAsDelphi(PySourceAsText):
         # Extra processing on the attribute name, to avoid delphi compiler errors
         attrname = self._NiceNameToPreventCompilerErrors(attrobj.attrname)
 
-        self.result +=  "    "
+        self.result += "    "
         if self.staticmessage:
-            self.result +=  "class var"
+            self.result += "class var"
 
         if compositecreated:
             vartype = compositecreated
         else:
-            vartype = 'Variant'
-        self.result +=  "%s : %s;\n"%(attrname, vartype)
+            vartype = "Variant"
+        self.result += "%s : %s;\n" % (attrname, vartype)
 
         # generate more complex stuff in the implementation section...
-##        if compositecreated and self.embedcompositeswithattributelist:
-##            self.result +=  "    public %s %s %s = new %s();\n" % (self.staticmessage, compositecreated, attrname, compositecreated)
-##        else:
-##            self.result +=  "%s : Variant;\n"%attrname
+
+    ##        if compositecreated and self.embedcompositeswithattributelist:
+    ##            self.result +=  "    public %s %s %s = new %s();\n" % (self.staticmessage, compositecreated, attrname, compositecreated)
+    ##        else:
+    ##            self.result +=  "%s : Variant;\n"%attrname
 
     def _DumpCompositeExtraFooter(self):
         pass
 
     def _DumpClassNameAndGeneralisations(self):
         if self.verbose:
-            print('  Generating Delphi class', self.aclass)
+            print("  Generating Delphi class", self.aclass)
         self._OpenNextFile()
 
         self.result += "// Generated by PyNSource http://www.atug.com/andypatterns/pynsource.htm \n\n"
@@ -976,60 +1035,76 @@ class PySourceAsDelphi(PySourceAsText):
             self.result += ", ".join(uses)
             self.result += ";\n\n"
 
-        self.result +=  'type\n\n'
-        self.result +=  '%s = class' % self.aclass
+        self.result += "type\n\n"
+        self.result += "%s = class" % self.aclass
         if self.classentry.classesinheritsfrom:
-            self.result +=  '(%s)' % self._NiceNameToPreventCompilerErrors(self.classentry.classesinheritsfrom[0])
-        self.result +=  '\n'
-        self.result +=  'public\n'
+            self.result += "(%s)" % self._NiceNameToPreventCompilerErrors(
+                self.classentry.classesinheritsfrom[0]
+            )
+        self.result += "\n"
+        self.result += "public\n"
 
     def _DumpMethods(self):
-        if self.classentry.attrs:   # if there were any atributes...
-            self.result +=  "\n"  # a little bit of a separator between attributes and methods.
+        if self.classentry.attrs:  # if there were any atributes...
+            self.result += (
+                "\n"
+            )  # a little bit of a separator between attributes and methods.
 
         for adef in self.classentry.defs:
-            if adef == '__init__':
-                self.result +=  "    constructor Create;\n"
+            if adef == "__init__":
+                self.result += "    constructor Create;\n"
             else:
-##                self.result +=  "    function %s(): void; virtual;\n" % adef
-                self.result +=  "    procedure %s(); virtual;\n" % adef
+                ##                self.result +=  "    function %s(): void; virtual;\n" % adef
+                self.result += "    procedure %s(); virtual;\n" % adef
 
-        self.result +=  "end;\n"   # end of class
+        self.result += "end;\n"  # end of class
 
     def DumpImplementationMethods(self):
         for adef in self.classentry.defs:
-            if adef == '__init__':
-                self.result +=  "constructor %s.Create;\n" % self.aclass  # replace __init__ with the word 'Create'
+            if adef == "__init__":
+                self.result += (
+                    "constructor %s.Create;\n" % self.aclass
+                )  # replace __init__ with the word 'Create'
             else:
-##                self.result +=  "function %s.%s(): void;\n" % (self.aclass, adef)
-                self.result +=  "procedure %s.%s();\n" % (self.aclass, adef)
-            self.result +=  "begin\n"
-            if adef == '__init__':
+                ##                self.result +=  "function %s.%s(): void;\n" % (self.aclass, adef)
+                self.result += "procedure %s.%s();\n" % (self.aclass, adef)
+            self.result += "begin\n"
+            if adef == "__init__":
                 self.CreateCompositeAttributeClassCreationAndAssignmentInImplementation()
-            self.result +=  "end;\n\n"
-
+            self.result += "end;\n\n"
 
     def CreateCompositeAttributeClassCreationAndAssignmentInImplementation(self):
         # Only do those attributes that are composite and need to create an instance of something
         for attrobj in self.classentry.attrs:
             compositescreated = self._GetCompositeCreatedClassesFor(attrobj.attrname)
-            if compositescreated and self.embedcompositeswithattributelist: # latter variable always seems to be true! Never reset!?
+            if (
+                compositescreated and self.embedcompositeswithattributelist
+            ):  # latter variable always seems to be true! Never reset!?
                 compositecreated = compositescreated[0]
-                self.result +=  "    %s := %s.Create();\n" % (attrobj.attrname, compositecreated)
+                self.result += "    %s := %s.Create();\n" % (
+                    attrobj.attrname,
+                    compositecreated,
+                )
 
     def GetUses(self):
         result = []
         for attrobj in self.classentry.attrs:
             compositescreated = self._GetCompositeCreatedClassesFor(attrobj.attrname)
-            if compositescreated and self.embedcompositeswithattributelist: # latter variable always seems to be true! Never reset!?
+            if (
+                compositescreated and self.embedcompositeswithattributelist
+            ):  # latter variable always seems to be true! Never reset!?
                 compositecreated = compositescreated[0]
                 result.append(compositecreated)
 
         # Also use any inherited calss modules.
         if self.classentry.classesinheritsfrom:
-            result.append(self._NiceNameToPreventCompilerErrors(self.classentry.classesinheritsfrom[0]))
+            result.append(
+                self._NiceNameToPreventCompilerErrors(
+                    self.classentry.classesinheritsfrom[0]
+                )
+            )
 
-        return [ 'unit_'+u for u in result ]
+        return ["unit_" + u for u in result]
 
     def _Line(self):
         pass
@@ -1042,14 +1117,20 @@ class PythonToJava(object):
         self.verbose = verbose
 
     def _GenerateAuxilliaryClasses(self):
-        classestocreate = ('variant', 'unittest', 'list', 'object', 'dict')  # should add more classes and add them to a jar file to avoid namespace pollution.
+        classestocreate = (
+            "variant",
+            "unittest",
+            "list",
+            "object",
+            "dict",
+        )  # should add more classes and add them to a jar file to avoid namespace pollution.
         for aclass in classestocreate:
-            fp = open(os.path.join(self.outpath, aclass+'.java'), 'w')
+            fp = open(os.path.join(self.outpath, aclass + ".java"), "w")
             fp.write(self.GenerateSourceFileForAuxClass(aclass))
             fp.close()
 
     def GenerateSourceFileForAuxClass(self, aclass):
-       return '\npublic class %s {\n}\n'%aclass
+        return "\npublic class %s {\n}\n" % aclass
 
     def ExportTo(self, outpath):
         self.outpath = outpath
@@ -1057,27 +1138,27 @@ class PythonToJava(object):
         self._GenerateAuxilliaryClasses()
 
         for directory in self.directories:
-            if '*' in directory or '.' in directory:
+            if "*" in directory or "." in directory:
                 filepath = directory
             else:
                 filepath = os.path.join(directory, "*.py")
             if self.verbose:
-                print('Processing directory', filepath)
+                print("Processing directory", filepath)
             globbed = glob.glob(filepath)
-            #print 'Java globbed is', globbed
+            # print 'Java globbed is', globbed
             for f in globbed:
                 self._Process(f)
 
     def _Process(self, filepath):
         if self.verbose:
-            padding = ' '
+            padding = " "
         else:
-            padding = ''
+            padding = ""
         thefile = os.path.basename(filepath)
-        if thefile[0] == '_':
-            print('  ', 'Skipped', thefile, 'cos begins with underscore.')
+        if thefile[0] == "_":
+            print("  ", "Skipped", thefile, "cos begins with underscore.")
             return
-        print('%sProcessing %s...'%(padding, thefile))
+        print("%sProcessing %s..." % (padding, thefile))
         p = self._CreateParser()
         p.Parse(filepath)
         str(p)  # triggers the output.
@@ -1087,6 +1168,7 @@ class PythonToJava(object):
         p.optionModuleAsClass = self.optionModuleAsClass
         p.verbose = self.verbose
         return p
+
 
 class PythonToDelphi(PythonToJava):
     def _GenerateAuxilliaryJavaClasses(self):
@@ -1100,14 +1182,14 @@ class PythonToDelphi(PythonToJava):
 
     def _GenerateAuxilliaryClasses(self):
         # Delphi version omits the class 'object' and 'variant' since these already are pre-defined in Delphi.
-        classestocreate = ('unittest', 'list', 'dict')  # should add more classes
+        classestocreate = ("unittest", "list", "dict")  # should add more classes
         for aclass in classestocreate:
-            fp = open(os.path.join(self.outpath, 'unit_'+aclass+'.pas'), 'w')
+            fp = open(os.path.join(self.outpath, "unit_" + aclass + ".pas"), "w")
             fp.write(self.GenerateSourceFileForAuxClass(aclass))
             fp.close()
 
     def GenerateSourceFileForAuxClass(self, aclass):
-       template = """
+        template = """
 unit unit_%s;
 
 interface
@@ -1122,30 +1204,32 @@ implementation
 
 end.
        """
-       return template%(aclass, aclass)
+        return template % (aclass, aclass)
 
 
 def run():
-    #FILE = 'testmodule01.py'
-    #FILE = 'C:\\Documents and Settings\\Administrator\\Desktop\\try\\PyutXmlV6.py'
-    #FILE = 'testmodule02.py'
-    #FILE = 'andyparse9.py'
+    # FILE = 'testmodule01.py'
+    # FILE = 'C:\\Documents and Settings\\Administrator\\Desktop\\try\\PyutXmlV6.py'
+    # FILE = 'testmodule02.py'
+    # FILE = 'andyparse9.py'
     FILE = "c:\\cc\devel\storyline\\battle.py"
-    #FILE = "c:\\cc\devel\storyline\\battleresult.py"
-    #FILE = "c:\\cc\devel\storyline\\battlestabs.py"
+    # FILE = "c:\\cc\devel\storyline\\battleresult.py"
+    # FILE = "c:\\cc\devel\storyline\\battlestabs.py"
 
     p = PySourceAsText()
-    #p = JavaDumper("c:\\try")
+    # p = JavaDumper("c:\\try")
 
     p.Parse(FILE)
 
-    print('*'*20, 'parsing', FILE, '*'*20)
+    print("*" * 20, "parsing", FILE, "*" * 20)
     print(p)
-    print('Done.')
+    print("Done.")
 
-if __name__ == '__main__':
-    #run()
+
+if __name__ == "__main__":
+    # run()
     import sys, glob, getopt
+
     SIMPLE = 0
     globbed = []
 
@@ -1153,7 +1237,7 @@ if __name__ == '__main__':
     optionModuleAsClass = 0
     optionExportToJava = 0
     optionExportToDelphi = 0
-    optionExportTo_outdir = ''
+    optionExportTo_outdir = ""
 
     if SIMPLE:
         params = sys.argv[1]
@@ -1163,22 +1247,28 @@ if __name__ == '__main__':
         print(listofoptionvaluepairs, params)
 
         def EnsurePathExists(outdir, outlanguagemsg):
-            assert outdir, 'Need to specify output folder for %s output - got %s.'%(outlanguagemsg, outdir)
+            assert outdir, "Need to specify output folder for %s output - got %s." % (
+                outlanguagemsg,
+                outdir,
+            )
             if not os.path.exists(outdir):
-                raise RuntimeError('Output directory %s for %s file output does not exist.'%(outdir, outlanguagemsg))
+                raise RuntimeError(
+                    "Output directory %s for %s file output does not exist."
+                    % (outdir, outlanguagemsg)
+                )
 
         for optionvaluepair in listofoptionvaluepairs:
-            if '-m' == optionvaluepair[0]:
+            if "-m" == optionvaluepair[0]:
                 optionModuleAsClass = 1
-            if '-v' == optionvaluepair[0]:
+            if "-v" == optionvaluepair[0]:
                 optionVerbose = 1
-            if optionvaluepair[0] in ('-j', '-d'):
-                if optionvaluepair[0] == '-j':
+            if optionvaluepair[0] in ("-j", "-d"):
+                if optionvaluepair[0] == "-j":
                     optionExportToJava = 1
-                    language = 'Java'
+                    language = "Java"
                 else:
                     optionExportToDelphi = 1
-                    language = 'Delphi'
+                    language = "Delphi"
                 optionExportTo_outdir = optionvaluepair[1]
                 EnsurePathExists(optionExportTo_outdir, language)
 
@@ -1189,9 +1279,17 @@ if __name__ == '__main__':
     if globbed:
         if optionExportToJava or optionExportToDelphi:
             if optionExportToJava:
-                u = PythonToJava(globbed, treatmoduleasclass=optionModuleAsClass, verbose=optionVerbose)
+                u = PythonToJava(
+                    globbed,
+                    treatmoduleasclass=optionModuleAsClass,
+                    verbose=optionVerbose,
+                )
             else:
-                u = PythonToDelphi(globbed, treatmoduleasclass=optionModuleAsClass, verbose=optionVerbose)
+                u = PythonToDelphi(
+                    globbed,
+                    treatmoduleasclass=optionModuleAsClass,
+                    verbose=optionVerbose,
+                )
             u.ExportTo(optionExportTo_outdir)
         else:
             p = PySourceAsText()
@@ -1201,7 +1299,8 @@ if __name__ == '__main__':
                 p.Parse(f)
             print(p)
     else:
-        print("""Usage: pynsource -v -m -j outdir sourcedirorpythonfiles...
+        print(
+            """Usage: pynsource -v -m -j outdir sourcedirorpythonfiles...
 
 -j generate java files, specify output folder for java files
 -v verbose
@@ -1219,5 +1318,5 @@ e.g. pynsource -j c:/try c:/try/s*.py Tests/u*.py
 e.g. pynsource -v -m -j c:/try c:/try/s*.py Tests/u*.py c:\cc\Devel\Client\w*.py
 DELPHI EXAMPLE
 e.g. pynsource -d c:/delphiouputdir c:/pythoninputdir/*.py
-""")
-
+"""
+        )

@@ -5,13 +5,14 @@ Use case inclusion relationship.
 from gaphor import UML
 from gaphor.diagram.diagramline import DiagramLine
 
+
 class IncludeItem(DiagramLine):
     """
     Use case inclusion relationship.
     """
 
     __uml__ = UML.Include
-    __stereotype__ = 'include'
+    __stereotype__ = "include"
 
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
