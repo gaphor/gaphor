@@ -1,20 +1,22 @@
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 Gaphor
-===============================================
+======
 The UML modeling tool.
+
+|Code style: black|
+
 
 Prerequisites
 ~~~~~~~~~~~~~
 
 Current minimum requirements
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Currently PyGTK is required for Windows, macOS, and Linux.
 
 
 Future minimum requirements
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Gaphor will soon require **Python 3**. Legacy Python 2 will no longer be supported.
 
@@ -58,3 +60,5 @@ want to contribute code, please `fork the code`_ and `submit a pull request`_.
 .. _log them on Github: https://github.com/gaphor/gaphor/issues
 .. _fork the code: https://github.com/gaphor/gaphor
 .. _submit a pull request: https://github.com/gaphor/gaphor/pulls
+.. |Code style: black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/ambv/black
