@@ -11,6 +11,7 @@ import logging
 import cairo
 from gi.repository import Pango
 from gi.repository import PangoCairo
+from gaphas.freehand import FreeHandCairoContext
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
@@ -42,7 +43,7 @@ class FeatureItem(object):
 
     def save(self, save_func):
         DiagramItem.save(self, save_func)
-        
+
 
     def postload(self):
         if self.subject:
@@ -87,18 +88,19 @@ class FeatureItem(object):
 
     def draw(self, context):
         cr = context.cairo
+        if isinstance(cr, FreeHandCairoContext):
+            cr = cr.cr
         if isinstance(cr, cairo.Context):
-            cr = PangoCairo.CairoContext(cr)
-            layout = cr.create_layout()
+            layout = PangoCairo.create_layout(cr)
             layout.set_font_description(Pango.FontDescription(self.font))
             layout.set_text(self.render() or '')
-        
+
             if hasattr(self.subject, 'isStatic') and self.subject.isStatic:
                 attrlist = Pango.AttrList()
                 attrlist.insert(Pango.AttrUnderline(Pango.Underline.SINGLE,
                                 2, -1))
                 layout.set_attributes(attrlist)
-            cr.show_layout(layout)
+            PangoCairo.show_layout(cr, layout)
 
 
 class Compartment(list):
@@ -154,7 +156,7 @@ class Compartment(list):
         cr = context.cairo
         for item in self:
             item.pre_update(context)
-        
+
         if self:
             # self (=list) contains items
             sizes = [ (0, 0) ] # to not throw exceptions by max and sum
@@ -199,7 +201,7 @@ class Compartment(list):
     def item_at(self, x, y):
         if 0 > x > self.width:
             return None
-        
+
         padding = self.owner.style.compartment_padding
         vspacing = self.owner.style.compartment_vspacing
         height = padding[0]
@@ -337,7 +339,7 @@ class CompartmentItem(NamedItem):
     def update_stereotypes_attrs(self):
         """
         Display or hide stereotypes attributes.
-        
+
         New compartment is created for every stereotype having attributes
         redefined.
         """
@@ -372,7 +374,7 @@ class CompartmentItem(NamedItem):
             self.request_update()
 #            if self.canvas:
 #                request_resolve = self.canvas.solver.request_resolve
-#                for h in self._handles: 
+#                for h in self._handles:
 #                    request_resolve(h.x)
 #                    request_resolve(h.y)
 
@@ -580,7 +582,7 @@ class CompartmentItem(NamedItem):
 
         padding = self.style.compartment_padding
         vspacing = self.style.compartment_vspacing
-        
+
         # place offset at top of first comparement
         y -= header_height
         y += old_div(vspacing, 2.0)
