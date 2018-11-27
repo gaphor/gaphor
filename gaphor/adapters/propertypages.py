@@ -153,16 +153,6 @@ class EditableTreeModel(Gtk.ListStore):
         self.append([None] * self.get_n_columns())
 
 
-    def iter_prev(self, iter):
-        """
-        Get previous GTK tree iterator to ``iter``.
-        """
-        i = self.get_path(iter)[0]
-        if i == 0:
-            return None
-        return self.get_iter((i - 1,))
-
-
     @transactional
     def set_value(self, iter, col, value):
         row = self[iter][:]
@@ -345,7 +335,7 @@ def swap_on_keypress(tree, event):
         return True
     elif k == 'minus':
         model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_prev(iter))
+        model.swap(iter, model.iter_previous(iter))
         return True
 
 
