@@ -9,8 +9,14 @@ from builtins import str
 from zope import component
 
 from gaphas.freehand import FreeHandPainter
-from gaphas.painter import PainterChain, ItemPainter, HandlePainter, \
-    FocusedItemPainter, ToolPainter, BoundingBoxPainter
+from gaphas.painter import (
+    PainterChain,
+    ItemPainter,
+    HandlePainter,
+    FocusedItemPainter,
+    ToolPainter,
+    BoundingBoxPainter,
+)
 from gaphas.view import GtkView
 from gi.repository import Gdk
 from gi.repository import Gtk
@@ -30,9 +36,9 @@ log = logging.getLogger(__name__)
 
 class DiagramTab(object):
 
-    component_registry = inject('component_registry')
-    element_factory = inject('element_factory')
-    action_manager = inject('action_manager')
+    component_registry = inject("component_registry")
+    element_factory = inject("element_factory")
+    action_manager = inject("action_manager")
 
     menu_xml = """
       <ui>
@@ -71,20 +77,20 @@ class DiagramTab(object):
     VIEW_TARGET_ELEMENT_ID = 1
     VIEW_TARGET_TOOLBOX_ACTION = 2
     VIEW_DND_TARGETS = [
-        Gtk.TargetEntry.new('gaphor/element-id', 0, VIEW_TARGET_ELEMENT_ID),
-        Gtk.TargetEntry.new('gaphor/toolbox-action', 0, VIEW_TARGET_TOOLBOX_ACTION)]
-
+        Gtk.TargetEntry.new("gaphor/element-id", 0, VIEW_TARGET_ELEMENT_ID),
+        Gtk.TargetEntry.new("gaphor/toolbox-action", 0, VIEW_TARGET_TOOLBOX_ACTION),
+    ]
 
     def __init__(self, diagram):
         self.diagram = diagram
         self.view = None
-        #self.owning_window = owning_window
+        # self.owning_window = owning_window
         self.action_group = build_action_group(self)
         self.toolbox = None
         self.component_registry.register_handler(self._on_element_change)
         self.component_registry.register_handler(self._on_element_delete)
 
-    title = property(lambda s: s.diagram and s.diagram.name or _('<None>'))
+    title = property(lambda s: s.diagram and s.diagram.name or _("<None>"))
 
     def get_diagram(self):
         return self.diagram
@@ -104,8 +110,11 @@ class DiagramTab(object):
         assert self.diagram
 
         view = GtkView(canvas=self.diagram.canvas)
-        view.drag_dest_set(Gtk.DestDefaults.MOTION, DiagramTab.VIEW_DND_TARGETS,
-                           Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK)
+        view.drag_dest_set(
+            Gtk.DestDefaults.MOTION,
+            DiagramTab.VIEW_DND_TARGETS,
+            Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+        )
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
@@ -113,39 +122,35 @@ class DiagramTab(object):
         scrolled_window.add(view)
         scrolled_window.show_all()
 
-        view.connect('focus-changed', self._on_view_selection_changed)
-        view.connect('selection-changed', self._on_view_selection_changed)
-        view.connect_after('key-press-event', self._on_key_press_event)
-        view.connect('drag-drop', self._on_drag_drop)
-        view.connect('drag-data-received', self._on_drag_data_received)
+        view.connect("focus-changed", self._on_view_selection_changed)
+        view.connect("selection-changed", self._on_view_selection_changed)
+        view.connect_after("key-press-event", self._on_key_press_event)
+        view.connect("drag-drop", self._on_drag_drop)
+        view.connect("drag-data-received", self._on_drag_data_received)
 
         self.view = view
 
         self.toolbox = DiagramToolbox(self.diagram, view)
 
-        #item = DockItem(title=self.title, stock_id='gaphor-diagram')
-        #item.add(scrolled_window)
+        # item = DockItem(title=self.title, stock_id='gaphor-diagram')
+        # item.add(scrolled_window)
         item = scrolled_window
         self.widget = item
 
         return item
 
-
     @component.adapter(IAttributeChangeEvent)
     def _on_element_change(self, event):
-        if event.element is self.diagram and \
-                event.property is UML.Diagram.name:
-           #self.widget.title = self.title
-           print("TODO: update diagram title")
-
+        if event.element is self.diagram and event.property is UML.Diagram.name:
+            # self.widget.title = self.title
+            print("TODO: update diagram title")
 
     @component.adapter(IElementDeleteEvent)
     def _on_element_delete(self, event):
         if event.element is self.diagram:
             self.close()
 
-
-    @action(name='diagram-close', stock_id='gtk-close')
+    @action(name="diagram-close", stock_id="gtk-close")
     def close(self):
         """
         Tab is destroyed. Do the same thing that would
@@ -156,35 +161,30 @@ class DiagramTab(object):
         self.component_registry.unregister_handler(self._on_element_change)
         self.view = None
 
-
-    @action(name='diagram-zoom-in', stock_id='gtk-zoom-in')
+    @action(name="diagram-zoom-in", stock_id="gtk-zoom-in")
     def zoom_in(self):
         self.view.zoom(1.2)
 
-
-    @action(name='diagram-zoom-out', stock_id='gtk-zoom-out')
+    @action(name="diagram-zoom-out", stock_id="gtk-zoom-out")
     def zoom_out(self):
         self.view.zoom(old_div(1, 1.2))
 
-
-    @action(name='diagram-zoom-100', stock_id='gtk-zoom-100')
+    @action(name="diagram-zoom-100", stock_id="gtk-zoom-100")
     def zoom_100(self):
         zx = self.view.matrix[0]
         self.view.zoom(old_div(1, zx))
 
-
-    @action(name='diagram-select-all', label='_Select all', accel='<Control>a')
+    @action(name="diagram-select-all", label="_Select all", accel="<Control>a")
     def select_all(self):
         self.view.select_all()
 
-
-    @action(name='diagram-unselect-all', label='Des_elect all',
-            accel='<Control><Shift>a')
+    @action(
+        name="diagram-unselect-all", label="Des_elect all", accel="<Control><Shift>a"
+    )
     def unselect_all(self):
         self.view.unselect_all()
 
-
-    @action(name='diagram-delete', stock_id='gtk-delete')
+    @action(name="diagram-delete", stock_id="gtk-delete")
     @transactional
     def delete_selected_items(self):
         items = self.view.selected_items
@@ -194,7 +194,6 @@ class DiagramTab(object):
             else:
                 if i.canvas:
                     i.canvas.remove(i)
-
 
     def set_drawing_style(self, sloppiness=0.0):
         """Set the drawing style for the diagram. 0.0 is straight,
@@ -208,21 +207,21 @@ class DiagramTab(object):
 
         if sloppiness:
 
-            item_painter = FreeHandPainter(ItemPainter(),\
-                                           sloppiness=sloppiness)
-            box_painter = FreeHandPainter(BoundingBoxPainter(),\
-                                          sloppiness=sloppiness)
+            item_painter = FreeHandPainter(ItemPainter(), sloppiness=sloppiness)
+            box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness=sloppiness)
 
         else:
 
             item_painter = ItemPainter()
             box_painter = BoundingBoxPainter()
 
-        view.painter = PainterChain().\
-                       append(item_painter).\
-                       append(HandlePainter()).\
-                       append(FocusedItemPainter()).\
-                       append(ToolPainter())
+        view.painter = (
+            PainterChain()
+            .append(item_painter)
+            .append(HandlePainter())
+            .append(FocusedItemPainter())
+            .append(ToolPainter())
+        )
 
         view.bounding_box_painter = box_painter
 
@@ -235,35 +234,36 @@ class DiagramTab(object):
         confirmation before deletion.
         """
         items = self.view.selected_items
-        last_in_model = [i for i in items if i.subject and len(i.subject.presentation) == 1]
-        log.debug('Last in model: %s' % str(last_in_model))
+        last_in_model = [
+            i for i in items if i.subject and len(i.subject.presentation) == 1
+        ]
+        log.debug("Last in model: %s" % str(last_in_model))
         if last_in_model:
             return self.confirm_deletion_of_items(last_in_model)
         return True
-
 
     def confirm_deletion_of_items(self, last_in_model):
         """
         Request user confirmation on deleting the item from the model.
         """
-        s = ''
+        s = ""
         for item in last_in_model:
-            s += '%s\n' % str(item)
+            s += "%s\n" % str(item)
 
         dialog = Gtk.MessageDialog(
-                None,
-                Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                Gtk.MessageType.WARNING,
-                Gtk.ButtonsType.YES_NO,
-                'This will remove the following selected items from the model:\n%s\nAre you sure?' % s
-                )
+            None,
+            Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+            Gtk.MessageType.WARNING,
+            Gtk.ButtonsType.YES_NO,
+            "This will remove the following selected items from the model:\n%s\nAre you sure?"
+            % s,
+        )
         dialog.set_transient_for(self.get_toplevel())
         value = dialog.run()
         dialog.destroy()
         if value == Gtk.ResponseType.YES:
             return True
         return False
-
 
     def _on_key_press_event(self, view, event):
         """
@@ -272,17 +272,19 @@ class DiagramTab(object):
         edit stuff.
         """
         if view.is_focus():
-            if event.keyval == Gdk.KEY_Delete and \
-                    (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
+            if event.keyval == Gdk.KEY_Delete and (
+                event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
+            ):
                 self.delete_selected_items()
-            elif event.keyval == Gdk.KEY_BackSpace and \
-                    (event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK):
+            elif event.keyval == Gdk.KEY_BackSpace and (
+                event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
+            ):
                 self.delete_selected_items()
-
 
     def _on_view_selection_changed(self, view, selection_or_focus):
-        self.component_registry.handle(DiagramSelectionChange(view, view.focused_item, view.selected_items))
-
+        self.component_registry.handle(
+            DiagramSelectionChange(view, view.focused_item, view.selected_items)
+        )
 
     def _on_drag_drop(self, view, context, x, y, time):
         """The signal handler for the drag-drop signal.
@@ -320,13 +322,21 @@ class DiagramTab(object):
         Handle data dropped on the canvas.
         """
         # print('DND data received', view)
-        if data and data.get_format() == 8 and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION:
+        if (
+            data
+            and data.get_format() == 8
+            and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION
+        ):
             tool = self.toolbox.get_tool(data.get_data().decode())
             tool.create_item((x, y))
             context.finish(True, False, time)
-        elif data and data.get_format() == 8 and info == DiagramTab.VIEW_TARGET_ELEMENT_ID:
+        elif (
+            data
+            and data.get_format() == 8
+            and info == DiagramTab.VIEW_TARGET_ELEMENT_ID
+        ):
             # print('drag_data_received:', data.data, info)
-            n, p = data.data.split('#')
+            n, p = data.data.split("#")
             element = self.element_factory.lookup(n)
             assert element
 
@@ -337,7 +347,7 @@ class DiagramTab(object):
                 q = q, p
             item_class = get_diagram_item(q)
             if isinstance(element, UML.Diagram):
-                self.action_manager.execute('OpenModelElement')
+                self.action_manager.execute("OpenModelElement")
             elif item_class:
                 tx = Transaction()
                 item = self.diagram.create(item_class)
@@ -351,9 +361,13 @@ class DiagramTab(object):
                 view.focused_item = item
 
             else:
-                log.warning('No graphical representation for UML element %s' % type(element).__name__)
+                log.warning(
+                    "No graphical representation for UML element %s"
+                    % type(element).__name__
+                )
             context.finish(True, False, time)
-        #else:
+        # else:
         #    context.finish(False, False, time)
+
 
 # vim: sw=4:et:ai

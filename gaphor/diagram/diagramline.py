@@ -20,7 +20,8 @@ class DiagramLine(gaphas.Line, DiagramItem):
     """
     Base class for diagram lines.
     """
-    def __init__(self, id = None):
+
+    def __init__(self, id=None):
         gaphas.Line.__init__(self)
         DiagramItem.__init__(self, id)
         self.fuzziness = 2
@@ -28,16 +29,13 @@ class DiagramLine(gaphas.Line, DiagramItem):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
-
     def setup_canvas(self):
         gaphas.Line.setup_canvas(self)
         self.register_handlers()
 
-
     def teardown_canvas(self):
         gaphas.Line.teardown_canvas(self)
         self.unregister_handlers()
-
 
     def pre_update(self, context):
         # first, update stereotype to know its text
@@ -46,46 +44,41 @@ class DiagramLine(gaphas.Line, DiagramItem):
         gaphas.Line.pre_update(self, context)
         DiagramItem.pre_update(self, context)
 
-
     def post_update(self, context):
         gaphas.Line.post_update(self, context)
         DiagramItem.post_update(self, context)
 
-
     def draw(self, context):
         gaphas.Line.draw(self, context)
         DiagramItem.draw(self, context)
-
 
     def point(self, pos):
         d1 = gaphas.Line.point(self, pos)
         d2 = DiagramItem.point(self, pos)
         return min(d1, d2)
 
-
     def save(self, save_func):
         DiagramItem.save(self, save_func)
-        save_func('matrix', tuple(self.matrix))
-        for prop in ('orthogonal', 'horizontal'):
+        save_func("matrix", tuple(self.matrix))
+        for prop in ("orthogonal", "horizontal"):
             save_func(prop, getattr(self, prop))
         points = []
         for h in self.handles():
             points.append(tuple(map(float, h.pos)))
-        save_func('points', points)
+        save_func("points", points)
 
         canvas = self.canvas
         c = canvas.get_connection(self.head)
         if c:
-            save_func('head-connection', c.connected, reference=True)
+            save_func("head-connection", c.connected, reference=True)
         c = canvas.get_connection(self.tail)
         if c:
-            save_func('tail-connection', c.connected, reference=True)
-
+            save_func("tail-connection", c.connected, reference=True)
 
     def load(self, name, value):
-        if name == 'matrix':
+        if name == "matrix":
             self.matrix = eval(value)
-        elif name == 'points':
+        elif name == "points":
             points = eval(value)
             for x in range(len(points) - 2):
                 h = self._create_handle((0, 0))
@@ -98,15 +91,14 @@ class DiagramLine(gaphas.Line, DiagramItem):
             # handles information is loaded.
             self._update_ports()
 
-        elif name == 'orthogonal':
+        elif name == "orthogonal":
             self._load_orthogonal = eval(value)
-        elif name in ('head_connection', 'head-connection'):
+        elif name in ("head_connection", "head-connection"):
             self._load_head_connection = value
-        elif name in ('tail_connection', 'tail-connection'):
+        elif name in ("tail_connection", "tail-connection"):
             self._load_tail_connection = value
         else:
             DiagramItem.load(self, name, value)
-
 
     def _get_sink(self, handle, item):
         """
@@ -123,13 +115,12 @@ class DiagramLine(gaphas.Line, DiagramItem):
         port = None
         dist = 10e6
         for p in item.ports():
-            pos, d = p.glue(hpos)   
+            pos, d = p.glue(hpos)
             if not port or d < dist:
                 port = p
                 dist = d
-                
-        return ConnectionSink(item, port)
 
+        return ConnectionSink(item, port)
 
     def _postload_connect(self, handle, item):
         """
@@ -143,9 +134,8 @@ class DiagramLine(gaphas.Line, DiagramItem):
 
         connector.connect(sink)
 
-
     def postload(self):
-        if hasattr(self, '_load_orthogonal'):
+        if hasattr(self, "_load_orthogonal"):
             # Ensure there are enough handles
             if self._load_orthogonal and len(self._handles) < 3:
                 p0 = self._handles[-1].pos
@@ -159,16 +149,15 @@ class DiagramLine(gaphas.Line, DiagramItem):
         self.canvas.update_matrix(self)
         self.canvas.solver.solve()
 
-        if hasattr(self, '_load_head_connection'):
+        if hasattr(self, "_load_head_connection"):
             self._postload_connect(self.head, self._load_head_connection)
             del self._load_head_connection
 
-        if hasattr(self, '_load_tail_connection'):
+        if hasattr(self, "_load_tail_connection"):
             self._postload_connect(self.tail, self._load_tail_connection)
             del self._load_tail_connection
 
         DiagramItem.postload(self)
-
 
     def _get_middle_segment(self):
         """
@@ -178,7 +167,6 @@ class DiagramLine(gaphas.Line, DiagramItem):
         m = old_div(len(handles), 2)
         assert m - 1 >= 0 and m < len(handles)
         return handles[m - 1], handles[m]
-
 
     def _get_center_pos(self, inverted=False):
         """
@@ -191,7 +179,6 @@ class DiagramLine(gaphas.Line, DiagramItem):
         if inverted:
             angle += pi
         return pos, angle
-
 
     def text_align(self, extents, align, padding, outside):
         handles = self._handles
@@ -216,35 +203,36 @@ class DiagramLine(gaphas.Line, DiagramItem):
         return x, y
 
 
-
-
 class NamedLine(DiagramLine):
 
     __style__ = {
-            'name-align': (ALIGN_CENTER, ALIGN_TOP),
-            'name-padding': (5, 5, 5, 5),
-            'name-outside': True,
-            'name-align-str': None,
+        "name-align": (ALIGN_CENTER, ALIGN_TOP),
+        "name-padding": (5, 5, 5, 5),
+        "name-outside": True,
+        "name-align-str": None,
     }
 
     def __init__(self, id=None):
         DiagramLine.__init__(self, id)
-        self._name = self.add_text('name', style={
-                    'text-align': self.style.name_align,
-                    'text-padding': self.style.name_padding,
-                    'text-outside': self.style.name_outside,
-                    'text-align-str': self.style.name_align_str,
-                    'text-align-group': 'stereotype',
-                }, editable=True)
-        self.watch('subject<NamedElement>.name', self.on_named_element_name)
-
+        self._name = self.add_text(
+            "name",
+            style={
+                "text-align": self.style.name_align,
+                "text-padding": self.style.name_padding,
+                "text-outside": self.style.name_outside,
+                "text-align-str": self.style.name_align_str,
+                "text-align-group": "stereotype",
+            },
+            editable=True,
+        )
+        self.watch("subject<NamedElement>.name", self.on_named_element_name)
 
     def postload(self):
         super(NamedLine, self).postload()
         self.on_named_element_name(None)
 
     def on_named_element_name(self, event):
-        self._name.text = self.subject and self.subject.name or ''
+        self._name.text = self.subject and self.subject.name or ""
         self.request_update()
 
 

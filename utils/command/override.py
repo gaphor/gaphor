@@ -12,10 +12,10 @@
 #
 # Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
 # more details.
 #
-# You should have received a copy of the GNU Library General Public 
+# You should have received a copy of the GNU Library General Public
 # along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 This file contains code for loading up an override file.  The override file
@@ -30,13 +30,12 @@ from __future__ import print_function
 from builtins import object
 import sys, string
 
-class Overrides(object):
 
+class Overrides(object):
     def __init__(self, filename=None):
         self.overrides = {}
         if filename:
             self.read_overrides(filename)
-
 
     def read_overrides(self, filename):
         """Read a file and return a dictionary of overriden properties
@@ -47,7 +46,7 @@ class Overrides(object):
         <implementation>
         %%
         """
-        fp = open(filename, 'r')
+        fp = open(filename, "r")
         # read all the components of the file ...
         # bufs contains a list of (lines, startline) pairs.
         bufs = []
@@ -56,7 +55,7 @@ class Overrides(object):
         line = fp.readline()
         linenum = 1
         while line:
-            if line == '%%\n' or line == '%%':
+            if line == "%%\n" or line == "%%":
                 if lines:
                     bufs.append((list(lines), startline))
                 startline = linenum + 1
@@ -78,16 +77,20 @@ class Overrides(object):
             words = line.split()
 
             # TODO: Create a mech to define dependencies
-            if words[0] == 'override':
+            if words[0] == "override":
                 func = words[1]
                 deps = ()
-                if len(words) > 3 and words[2] == 'derives':
+                if len(words) > 3 and words[2] == "derives":
                     deps = tuple(words[3:])
-                self.overrides[func] = (deps, ''.join(rest), '%d: %s' % (startline, line))
-            elif words[0] == 'comment':
-                pass # ignore comments
+                self.overrides[func] = (
+                    deps,
+                    "".join(rest),
+                    "%d: %s" % (startline, line),
+                )
+            elif words[0] == "comment":
+                pass  # ignore comments
             else:
-                print("Unknown word: '%s', line %d" (words[0], startline))
+                print("Unknown word: '%s', line %d"(words[0], startline))
                 raise SystemExit
 
     def has_override(self, key):
@@ -102,9 +105,10 @@ class Overrides(object):
         if not data:
             return False
 
-        fp.write('# ')
+        fp.write("# ")
         fp.write(line)
         fp.write(data)
         return True
+
 
 # vim:sw=4:et:ai

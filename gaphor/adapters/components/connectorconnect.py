@@ -27,9 +27,8 @@ class ConnectorConnectBase(AbstractConnect):
         provided = set(c1.subject.provided)
         required = set(c2.subject.required)
         interfaces = list(provided.intersection(required))
-        interfaces.sort(key=operator.attrgetter('name'))
+        interfaces.sort(key=operator.attrgetter("name"))
         return interfaces
-
 
     def get_connecting(self, iface, both=False):
         """
@@ -44,10 +43,10 @@ class ConnectorConnectBase(AbstractConnect):
         canvas = iface.canvas
         connected = canvas.get_connections(connected=iface)
         if both:
-            connected = [c for c in connected
-                    if canvas.get_connection(c.item.opposite(c.handle))]
+            connected = [
+                c for c in connected if canvas.get_connection(c.item.opposite(c.handle))
+            ]
         return connected
-
 
     @staticmethod
     def get_component(connector):
@@ -63,7 +62,6 @@ class ConnectorConnectBase(AbstractConnect):
         elif c2 and isinstance(c2.connected, items.ComponentItem):
             component = c2.connected
         return component
-
 
     def create_uml(self, connector, component, assembly, iface):
         """
@@ -82,13 +80,12 @@ class ConnectorConnectBase(AbstractConnect):
         """
         connector.subject = assembly
 
-        end =  self.element_factory.create(UML.ConnectorEnd)
+        end = self.element_factory.create(UML.ConnectorEnd)
         end.role = iface
         end.partWithPort = self.element_factory.create(UML.Port)
         assembly.end = end
 
         component.subject.ownedPort = end.partWithPort
-
 
     def drop_uml(self, connector, component):
         """
@@ -105,7 +102,6 @@ class ConnectorConnectBase(AbstractConnect):
         p.unlink()
         connector.subject = None
 
-
     def allow(self, handle, port):
         glue_ok = super(ConnectorConnectBase, self).allow(handle, port)
 
@@ -118,24 +114,33 @@ class ConnectorConnectBase(AbstractConnect):
 
         # connect only components and interfaces but not two interfaces nor
         # two components
-        glue_ok = not (isinstance(component, items.ComponentItem) \
-                and isinstance(iface, items.ComponentItem) \
-                or isinstance(component, items.InterfaceItem) \
-                and isinstance(iface, items.InterfaceItem))
+        glue_ok = not (
+            isinstance(component, items.ComponentItem)
+            and isinstance(iface, items.ComponentItem)
+            or isinstance(component, items.InterfaceItem)
+            and isinstance(iface, items.InterfaceItem)
+        )
 
         # if port type is known, then allow connection to proper port only
-        if glue_ok and component is not None and iface is not None \
-                and (port.required or port.provided):
+        if (
+            glue_ok
+            and component is not None
+            and iface is not None
+            and (port.required or port.provided)
+        ):
 
             assert isinstance(component, items.ComponentItem)
             assert isinstance(iface, items.InterfaceItem)
 
-            glue_ok = port.provided and iface.subject in component.subject.provided \
-                or port.required and iface.subject in component.subject.required
+            glue_ok = (
+                port.provided
+                and iface.subject in component.subject.provided
+                or port.required
+                and iface.subject in component.subject.required
+            )
             return glue_ok
 
         return glue_ok
-
 
     def connect(self, handle, port):
         super(ConnectorConnectBase, self).connect(handle, port)
@@ -164,18 +169,22 @@ class ConnectorConnectBase(AbstractConnect):
                 for c in connections:
                     if c.item.subject:
                         assembly = c.item.subject
-                        assert assembly.kind == 'assembly'
+                        assert assembly.kind == "assembly"
                         break
 
                 if assembly is None:
-                    assembly =  self.element_factory.create(UML.Connector)
-                    assembly.kind = 'assembly'
+                    assembly = self.element_factory.create(UML.Connector)
+                    assembly.kind = "assembly"
                     for c in connections:
                         connector = c.item
-                        self.create_uml(connector, self.get_component(connector), assembly, iface.subject)
+                        self.create_uml(
+                            connector,
+                            self.get_component(connector),
+                            assembly,
+                            iface.subject,
+                        )
                 else:
                     self.create_uml(line, component, assembly, iface.subject)
-
 
     def disconnect(self, handle):
         super(ConnectorConnectBase, self).disconnect(handle)
@@ -205,16 +214,15 @@ class ConnectorConnectBase(AbstractConnect):
             self.drop_uml(line, c)
 
 
-
 class ComponentConnectorConnect(ConnectorConnectBase):
     """
     Connection of connector item to a component.
     """
+
     component.adapts(items.ComponentItem, items.ConnectorItem)
 
 
 component.provideAdapter(ComponentConnectorConnect)
-
 
 
 class InterfaceConnectorConnect(ConnectorConnectBase):
@@ -224,6 +232,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
     See also `AbstractConnect` class for exception of interface item
     connections.
     """
+
     component.adapts(items.InterfaceItem, items.ConnectorItem)
 
     def allow(self, handle, port):
@@ -238,18 +247,21 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
             # find connected items, which are not connectors
             canvas = self.element.canvas
             connections = self.get_connecting(self.element)
-            lines = [c.item for c in connections if not isinstance(c.item, items.ConnectorItem)]
+            lines = [
+                c.item
+                for c in connections
+                if not isinstance(c.item, items.ConnectorItem)
+            ]
             glue_ok = len(lines) == 0
 
         return glue_ok
-
 
     def connect(self, handle, port):
         super(InterfaceConnectorConnect, self).connect(handle, port)
 
         iface = self.element
         iface.folded = iface.FOLDED_ASSEMBLY
-         
+
         # determine required and provided ports
         pport = port
         ports = iface.ports()
@@ -267,7 +279,6 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
 
             ports[(index + 1) % 4].connectable = False
             ports[(index + 3) % 4].connectable = False
-
 
     def disconnect(self, handle):
         super(InterfaceConnectorConnect, self).disconnect(handle)

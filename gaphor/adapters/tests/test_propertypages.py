@@ -4,8 +4,8 @@ from gaphor.diagram import items
 from gaphor.tests import TestCase
 from gaphor.adapters.propertypages import ClassAttributes
 
-class ClassAttributesTestCase(TestCase):
 
+class ClassAttributesTestCase(TestCase):
     def test_attribute_editing(self):
         class_item = self.create(items.ClassItem, UML.Class)
         model = ClassAttributes(class_item, (str, bool, object))

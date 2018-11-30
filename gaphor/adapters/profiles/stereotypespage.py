@@ -22,7 +22,7 @@ class StereotypeAttributes(Gtk.TreeStore):
     GTK tree model to edit instance specifications of stereotypes.
     """
 
-    element_factory = inject('element_factory')
+    element_factory = inject("element_factory")
 
     def __init__(self, subject):
         GObject.GObject.__init__(self, str, str, bool, object, object, object)
@@ -48,21 +48,21 @@ class StereotypeAttributes(Gtk.TreeStore):
             else:
                 obj = None
 
-            parent = self.append(None, (st.name, '', bool(obj), st, None, None))
+            parent = self.append(None, (st.name, "", bool(obj), st, None, None))
 
             if obj:
                 for attr in st.ownedAttribute:
                     if not attr.association:
                         slot = slots.get(attr)
-                        value = slot.value if slot else ''
+                        value = slot.value if slot else ""
                         data = (attr.name, value, True, attr, obj, slot)
-                        #print 'data', data
+                        # print 'data', data
                         self.append(parent, data)
             else:
                 for attr in st.ownedAttribute:
                     if not attr.association:
-                        data = (attr.name, '', False, attr, None, None)
-                        #print 'no data', data
+                        data = (attr.name, "", False, attr, None, None)
+                        # print 'no data', data
                         self.append(parent, data)
 
     @transactional
@@ -72,7 +72,7 @@ class StereotypeAttributes(Gtk.TreeStore):
         elif col == 1:
             self.set_slot_value(iter, value)
         else:
-            print('col', col)
+            print("col", col)
 
     def select_stereotype(self, iter):
         """
@@ -83,7 +83,7 @@ class StereotypeAttributes(Gtk.TreeStore):
         name, old_value, is_applied, stereotype, _, _ = row
         value = not is_applied
 
-        log.debug('selecting %s' % list(row))
+        log.debug("selecting %s" % list(row))
 
         subject = self.subject
         if value:
@@ -106,12 +106,12 @@ class StereotypeAttributes(Gtk.TreeStore):
         row = self[path]
         name, old_value, is_applied, attr, obj, slot = row
         if isinstance(attr, UML.Stereotype):
-            return # don't edit stereotype rows
+            return  # don't edit stereotype rows
 
-        log.debug('editing %s' % list(row))
+        log.debug("editing %s" % list(row))
 
         if slot is None and not value:
-            return # nothing to do and don't create slot without value
+            return  # nothing to do and don't create slot without value
 
         if slot is None:
             slot = UML.model.add_slot(self.element_factory, obj, attr)
@@ -124,11 +124,11 @@ class StereotypeAttributes(Gtk.TreeStore):
             # no value, then remove slot
             del obj.slot[slot]
             slot = None
-            value = ''
+            value = ""
 
         row[1] = value
         row[5] = slot
-        log.debug('slots %s' % obj.slot)
+        log.debug("slots %s" % obj.slot)
 
 
 def create_stereotype_tree_view(model):
@@ -143,43 +143,47 @@ def create_stereotype_tree_view(model):
     tree_view.set_rules_hint(True)
 
     # Stereotype/Attributes
-    col = Gtk.TreeViewColumn('%s / %s' % (_('Stereotype'), _('Attribute')))
+    col = Gtk.TreeViewColumn("%s / %s" % (_("Stereotype"), _("Attribute")))
     col.set_expand(True)
     renderer = Gtk.CellRendererToggle()
-    renderer.set_property('active', True)
-    renderer.set_property('activatable', True)
-    renderer.connect('toggled', on_bool_cell_edited, model, 2)
+    renderer.set_property("active", True)
+    renderer.set_property("activatable", True)
+    renderer.connect("toggled", on_bool_cell_edited, model, 2)
     col.pack_start(renderer, False, True, 0)
-    col.add_attribute(renderer, 'active', 2)
+    col.add_attribute(renderer, "active", 2)
+
     def show_checkbox(column, cell, model, iter):
-        #value = model.get_value(iter, 4)
-        #cell.set_property('active', value is not None)
+        # value = model.get_value(iter, 4)
+        # cell.set_property('active', value is not None)
         value = model.get_value(iter, 3)
-        cell.set_property('visible', isinstance(value, UML.Stereotype))
+        cell.set_property("visible", isinstance(value, UML.Stereotype))
+
     col.set_cell_data_func(renderer, show_checkbox)
 
     renderer = Gtk.CellRendererText()
-    renderer.set_property('editable', False)
-    renderer.set_property('is-expanded', True)
+    renderer.set_property("editable", False)
+    renderer.set_property("is-expanded", True)
     col.pack_start(renderer, False, True, 0)
-    col.add_attribute(renderer, 'text', 0)
+    col.add_attribute(renderer, "text", 0)
     tree_view.append_column(col)
 
     # TODO: use col.set_cell_data_func(renderer, func, None) to toggle visibility
     # Value
     renderer = Gtk.CellRendererText()
-    renderer.set_property('is-expanded', True)
-    renderer.connect('edited', on_text_cell_edited, model, 1)
-    col = Gtk.TreeViewColumn(_('Value'), renderer, text=1)
+    renderer.set_property("is-expanded", True)
+    renderer.connect("edited", on_text_cell_edited, model, 1)
+    col = Gtk.TreeViewColumn(_("Value"), renderer, text=1)
     col.set_expand(True)
+
     def set_editable(column, cell, model, iter):
         value = model.get_value(iter, 4)
-        cell.set_property('editable', bool(value))
+        cell.set_property("editable", bool(value))
+
     col.set_cell_data_func(renderer, set_editable)
     tree_view.append_column(col)
 
-    #tree_view.connect('key_press_event', remove_on_keypress)
-    #tree_view.connect('key_press_event', swap_on_keypress)
+    # tree_view.connect('key_press_event', remove_on_keypress)
+    # tree_view.connect('key_press_event', swap_on_keypress)
 
     return tree_view
 
@@ -189,7 +193,7 @@ class StereotypePage(object):
 
     order = 40
 
-    element_factory = inject('element_factory')
+    element_factory = inject("element_factory")
 
     def __init__(self, item):
         self.item = item
@@ -205,8 +209,8 @@ class StereotypePage(object):
         if not stereotypes:
             return None
 
-        #applied = set(UML.model.get_applied_stereotypes(subject))
-        #for i, stereotype in enumerate(stereotypes):
+        # applied = set(UML.model.get_applied_stereotypes(subject))
+        # for i, stereotype in enumerate(stereotypes):
         #    if (i % 3) == 0:
         #        hbox = Gtk.HBox(spacing=20)
         #        page.pack_start(hbox, False, True, 0)
@@ -218,11 +222,11 @@ class StereotypePage(object):
         # show stereotypes attributes toggle
         if isinstance(self.item, StereotypeSupport):
             hbox = Gtk.HBox()
-            label = Gtk.Label(label='')
+            label = Gtk.Label(label="")
             hbox.pack_start(label, False, True, 0)
-            button = Gtk.CheckButton(_('Show stereotypes attributes'))
+            button = Gtk.CheckButton(_("Show stereotypes attributes"))
             button.set_active(self.item.show_stereotypes_attrs)
-            button.connect('toggled', self._on_show_stereotypes_attrs_change)
+            button.connect("toggled", self._on_show_stereotypes_attrs_change)
             hbox.pack_start(button, True, True, 0)
             page.pack_start(hbox, False, True, 0)
 
@@ -234,9 +238,8 @@ class StereotypePage(object):
         page.show_all()
         return page
 
-
-    #@transactional
-    #def _on_stereotype_selected(self, button, stereotype):
+    # @transactional
+    # def _on_stereotype_selected(self, button, stereotype):
     #    subject = self.item.subject
     #    if button.get_active():
     #        UML.model.apply_stereotype(self.element_factory, subject, stereotype)
@@ -244,16 +247,13 @@ class StereotypePage(object):
     #        UML.model.remove_stereotype(subject, stereotype)
     #    self.model.refresh()
 
-
     @transactional
     def _on_show_stereotypes_attrs_change(self, button):
         self.item.show_stereotypes_attrs = button.get_active()
         self.item.request_update()
 
 
-component.provideAdapter(StereotypePage,
-        adapts=[UML.Element],
-        name='Stereotypes')
+component.provideAdapter(StereotypePage, adapts=[UML.Element], name="Stereotypes")
 
 
 # vim:sw=4:et:ai

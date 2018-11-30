@@ -16,26 +16,29 @@ from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 from future.utils import with_metaclass
 
-logger = getLogger('Diagram')
+logger = getLogger("Diagram")
+
 
 class StereotypeSupport(object):
     """
     Support for stereotypes for every diagram item.
     """
+
     STEREOTYPE_ALIGN = {
-        'text-align': (ALIGN_CENTER, ALIGN_TOP),
-        'text-padding': (5, 10, 2, 10),
-        'text-outside': False,
-        'text-align-group': 'stereotype',
-        'line-width': 2,
+        "text-align": (ALIGN_CENTER, ALIGN_TOP),
+        "text-padding": (5, 10, 2, 10),
+        "text-outside": False,
+        "text-align-group": "stereotype",
+        "line-width": 2,
     }
 
     def __init__(self):
-        self._stereotype = self.add_text('stereotype',
-                style=self.STEREOTYPE_ALIGN,
-                visible=lambda: self._stereotype.text)
+        self._stereotype = self.add_text(
+            "stereotype",
+            style=self.STEREOTYPE_ALIGN,
+            visible=lambda: self._stereotype.text,
+        )
         self._show_stereotypes_attrs = False
-
 
     @observed
     def _set_show_stereotypes_attrs(self, value):
@@ -43,14 +46,15 @@ class StereotypeSupport(object):
         self.update_stereotypes_attrs()
 
     show_stereotypes_attrs = reversible_property(
-            fget=lambda s: s._show_stereotypes_attrs,
-            fset=_set_show_stereotypes_attrs,
-            doc="""
+        fget=lambda s: s._show_stereotypes_attrs,
+        fset=_set_show_stereotypes_attrs,
+        doc="""
             Diagram item should show stereotypes attributes when property
             is set to True.
 
             When changed, method `update_stereotypes_attrs` is called.
-            """)
+            """,
+    )
 
     def update_stereotypes_attrs(self):
         """
@@ -63,7 +67,6 @@ class StereotypeSupport(object):
         stereotypes attributes in compartments.
         """
         pass
-
 
     def set_stereotype(self, text=None):
         """
@@ -88,7 +91,7 @@ class StereotypeSupport(object):
         # by default no stereotype, however check for __stereotype__
         # attribute to assign some static stereotype see interfaces,
         # use case relationships, package or class for examples
-        stereotype = getattr(self, '__stereotype__', ())
+        stereotype = getattr(self, "__stereotype__", ())
         if stereotype:
             stereotype = self.parse_stereotype(stereotype)
 
@@ -96,9 +99,8 @@ class StereotypeSupport(object):
         stereotype = UML.model.stereotypes_str(self.subject, stereotype)
         self.set_stereotype(stereotype)
 
-
     def parse_stereotype(self, data):
-        if isinstance(data, str): # return data as stereotype if it is a string
+        if isinstance(data, str):  # return data as stereotype if it is a string
             return (data,)
 
         subject = self.subject
@@ -113,11 +115,11 @@ class StereotypeSupport(object):
                 cls = None
                 predicate = condition
             else:
-                assert False, 'wrong conditional %s' % condition
+                assert False, "wrong conditional %s" % condition
 
             ok = True
             if cls:
-                ok = isinstance(subject, cls) #isinstance(subject, cls)
+                ok = isinstance(subject, cls)  # isinstance(subject, cls)
             if predicate:
                 ok = predicate(self)
 
@@ -126,8 +128,12 @@ class StereotypeSupport(object):
         return ()
 
 
-
-class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentation, StereotypeSupport, EditableTextSupport), {}))):
+class DiagramItem(
+    with_metaclass(
+        DiagramItemMeta,
+        type("NewBase", (UML.Presentation, StereotypeSupport, EditableTextSupport), {}),
+    )
+):
     """
     Basic functionality for all model elements (lines and elements!).
 
@@ -148,7 +154,7 @@ class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentat
     @cvar style: styles information (derived from DiagramItemMeta)
     """
 
-    dispatcher = inject('element_dispatcher')
+    dispatcher = inject("element_dispatcher")
 
     def __init__(self, id=None):
         UML.Presentation.__init__(self)
@@ -162,13 +168,15 @@ class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentat
 
         def update(event):
             self.request_update()
+
         self.watcher = EventWatcher(self, default_handler=update)
 
-        self.watch('subject') \
-            .watch('subject.appliedStereotype.classifier.name', self.on_element_applied_stereotype)
+        self.watch("subject").watch(
+            "subject.appliedStereotype.classifier.name",
+            self.on_element_applied_stereotype,
+        )
 
-    id = property(lambda self: self._id, doc='Id')
-
+    id = property(lambda self: self._id, doc="Id")
 
     def set_prop_persistent(self, name):
         """
@@ -179,38 +187,37 @@ class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentat
     # TODO: Use adapters for load/save functionality
     def save(self, save_func):
         if self.subject:
-            save_func('subject', self.subject)
+            save_func("subject", self.subject)
 
-        save_func('show_stereotypes_attrs', self.show_stereotypes_attrs)
+        save_func("show_stereotypes_attrs", self.show_stereotypes_attrs)
 
         # save persistent properties
         for p in self._persistent_props:
-            save_func(p, getattr(self, p.replace('-', '_')))
+            save_func(p, getattr(self, p.replace("-", "_")))
 
     def load(self, name, value):
-        if name == 'subject':
+        if name == "subject":
             type(self).subject.load(self, value)
-        elif name == 'show_stereotypes_attrs':
+        elif name == "show_stereotypes_attrs":
             self._show_stereotypes_attrs = eval(value)
         else:
             try:
-                setattr(self, name.replace('-', '_'), eval(value))
+                setattr(self, name.replace("-", "_"), eval(value))
             except:
-                logger.warning('%s has no property named %s (value %s)'%\
-                (self, name, value))
+                logger.warning(
+                    "%s has no property named %s (value %s)" % (self, name, value)
+                )
 
     def postload(self):
         if self.subject:
             self.update_stereotype()
             self.update_stereotypes_attrs()
 
-
     def save_property(self, save_func, name):
         """
         Save a property, this is a shorthand method.
         """
-        save_func(name, getattr(self, name.replace('-', '_')))
-
+        save_func(name, getattr(self, name.replace("-", "_")))
 
     def save_properties(self, save_func, *names):
         """
@@ -219,7 +226,6 @@ class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentat
         for name in names:
             self.save_property(save_func, name)
 
-
     def unlink(self):
         """
         Remove the item from the canvas and set subject to None.
@@ -227,7 +233,6 @@ class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentat
         if self.canvas:
             self.canvas.remove(self)
         super(DiagramItem, self).unlink()
-
 
     def request_update(self):
         """
@@ -244,16 +249,13 @@ class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentat
     def draw(self, context):
         EditableTextSupport.draw(self, context)
 
-
     def item_at(self, x, y):
         return self
-
 
     def on_element_applied_stereotype(self, event):
         if self.subject:
             self.update_stereotype()
             self.request_update()
-
 
     def watch(self, path, handler=None):
         """
@@ -269,12 +271,11 @@ class DiagramItem(with_metaclass(DiagramItemMeta, type('NewBase', (UML.Presentat
         self.watcher.watch(path, handler)
         return self
 
-
     def register_handlers(self):
         self.watcher.register_handlers()
 
-
     def unregister_handlers(self):
         self.watcher.unregister_handlers()
+
 
 # vim:sw=4:et:ai

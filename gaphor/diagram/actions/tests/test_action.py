@@ -12,4 +12,3 @@ class ActionTestCase(TestCase):
         """Test creation of actions.
         """
         self.create(ActionItem, UML.Action)
-

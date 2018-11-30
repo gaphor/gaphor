@@ -6,6 +6,7 @@ from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
 
+
 class ExtendItemTestCase(TestCase):
     def test_use_case_glue(self):
         """Test "extend" glueing to use cases
@@ -15,7 +16,6 @@ class ExtendItemTestCase(TestCase):
 
         glued = self.allow(extend, extend.head, uc1)
         self.assertTrue(glued)
-
 
     def test_use_case_connect(self):
         """Test connecting "extend" to use cases
@@ -29,7 +29,6 @@ class ExtendItemTestCase(TestCase):
 
         self.connect(extend, extend.tail, uc2)
         self.assertTrue(self.get_connected(extend.tail), uc2)
-
 
     def test_use_case_connect(self):
         """Test reconnecting use cases with "extend"
@@ -51,7 +50,6 @@ class ExtendItemTestCase(TestCase):
         self.assertSame(extend.subject.extendedCase, uc1.subject)
         self.assertSame(extend.subject.extension, uc3.subject)
 
-
     def test_use_case_disconnect(self):
         """Test disconnecting "extend" from use cases
         """
@@ -68,7 +66,6 @@ class ExtendItemTestCase(TestCase):
 
         self.disconnect(extend, extend.tail)
         self.assertTrue(self.get_connected(extend.tail) is None)
-
 
 
 # vim:sw=4:et:ai

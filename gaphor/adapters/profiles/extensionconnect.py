@@ -9,6 +9,7 @@ class ExtensionConnect(RelationshipConnect):
     """
     Connect class and stereotype items using an extension item.
     """
+
     component.adapts(items.ClassifierItem, items.ExtensionItem)
 
     def allow(self, handle, port):
@@ -25,7 +26,6 @@ class ExtensionConnect(RelationshipConnect):
 
         return allow and super(ExtensionConnect, self).allow(handle, port)
 
-
     def connect_subject(self, handle):
         element = self.element
         line = self.line
@@ -40,10 +40,11 @@ class ExtensionConnect(RelationshipConnect):
             if line.subject:
                 end1 = line.subject.memberEnd[0]
                 end2 = line.subject.memberEnd[1]
-                if (end1.type is head_type and end2.type is tail_type) \
-                   or (end2.type is head_type and end1.type is tail_type):
+                if (end1.type is head_type and end2.type is tail_type) or (
+                    end2.type is head_type and end1.type is tail_type
+                ):
                     return
-             
+
             # TODO: make element at head end update!
             c1.request_update()
 
@@ -53,8 +54,9 @@ class ExtensionConnect(RelationshipConnect):
                 if isinstance(assoc, UML.Extension):
                     end1 = assoc.memberEnd[0]
                     end2 = assoc.memberEnd[1]
-                    if (end1.type is head_type and end2.type is tail_type) \
-                       or (end2.type is head_type and end1.type is tail_type):
+                    if (end1.type is head_type and end2.type is tail_type) or (
+                        end2.type is head_type and end1.type is tail_type
+                    ):
                         # check if this entry is not yet in the diagram
                         # Return if the association is not (yet) on the canvas
                         for item in assoc.presentation:
@@ -65,9 +67,9 @@ class ExtensionConnect(RelationshipConnect):
                             return
             else:
                 # Create a new Extension relationship
-                relation = UML.model.extend_with_stereotype(self.element_factory,
-                        head_type,
-                        tail_type)
+                relation = UML.model.extend_with_stereotype(
+                    self.element_factory, head_type, tail_type
+                )
                 line.subject = relation
 
     def disconnect_subject(self, handle):

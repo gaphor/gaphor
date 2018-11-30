@@ -12,39 +12,34 @@ class TransitionItem(NamedLine):
     """
     Representation of state transition.
     """
+
     __uml__ = UML.Transition
 
-    __style__ = {
-            'name-align': (ALIGN_RIGHT, ALIGN_TOP),
-            'name-padding': (5, 15, 5, 5),
-    }
+    __style__ = {"name-align": (ALIGN_RIGHT, ALIGN_TOP), "name-padding": (5, 15, 5, 5)}
 
-    element_factory = inject('element_factory')
+    element_factory = inject("element_factory")
 
-    def __init__(self, id = None):
+    def __init__(self, id=None):
         NamedLine.__init__(self, id)
-        self._guard = self.add_text('guard.specification', editable=True)
-        self.watch('subject<Transition>.guard<Constraint>.specification', self.on_guard)
-
+        self._guard = self.add_text("guard.specification", editable=True)
+        self.watch("subject<Transition>.guard<Constraint>.specification", self.on_guard)
 
     def postload(self):
         """
         Load guard specification information.
         """
         try:
-            self._guard.text = self.subject.guard.specification or ''
+            self._guard.text = self.subject.guard.specification or ""
         except AttributeError:
-            self._guard.text = ''
+            self._guard.text = ""
         super(TransitionItem, self).postload()
-
 
     def on_guard(self, event):
         try:
-            self._guard.text = self.subject.guard.specification or ''
+            self._guard.text = self.subject.guard.specification or ""
         except AttributeError:
-            self._guard.text = ''
+            self._guard.text = ""
         self.request_update()
-
 
     def draw_tail(self, context):
         cr = context.cairo

@@ -13,23 +13,21 @@ from logging import getLogger
 from gaphor.interfaces import IService
 from gaphor.core import inject
 
+
 class ServiceRegistry(object):
 
-    component_registry = inject('component_registry')
-    logger = getLogger('ServiceRegistry')
+    component_registry = inject("component_registry")
+    logger = getLogger("ServiceRegistry")
 
     def __init__(self):
         self._uninitialized_services = {}
 
-
     def init(self, app=None):
-        self.logger.info('Starting')
-        
+        self.logger.info("Starting")
 
     def shutdown(self):
-        
-        self.logger.info('Shutting down')
 
+        self.logger.info("Shutting down")
 
     def load_services(self, services=None):
         """
@@ -38,21 +36,21 @@ class ServiceRegistry(object):
         Services are registered as utilities in zope.component.
         Service should provide an interface gaphor.interfaces.IService.
         """
-        
-        self.logger.info('Loading services')
-        
-        for ep in pkg_resources.iter_entry_points('gaphor.services'):
+
+        self.logger.info("Loading services")
+
+        for ep in pkg_resources.iter_entry_points("gaphor.services"):
             cls = ep.load()
             if not IService.implementedBy(cls):
-                raise NameError('Entry point %s doesn''t provide IService' % ep.name)
+                raise NameError("Entry point %s doesn" "t provide IService" % ep.name)
             if services is None or ep.name in services:
                 srv = cls()
                 self._uninitialized_services[ep.name] = srv
 
     def init_all_services(self):
-        
-        self.logger.info('Initializing services')
-        
+
+        self.logger.info("Initializing services")
+
         while self._uninitialized_services:
             self.init_service(next(iter(self._uninitialized_services.keys())))
 
@@ -62,10 +60,10 @@ class ServiceRegistry(object):
 
         Raises ComponentLookupError if the service has nor been found
         """
-        
-        self.logger.info('Initializing service')
-        self.logger.debug('Service name is %s' % name)
-        
+
+        self.logger.info("Initializing service")
+        self.logger.debug("Service name is %s" % name)
+
         try:
             srv = self._uninitialized_services.pop(name)
         except KeyError:

@@ -23,55 +23,55 @@ class PropertyDispatcher(object):
     originate on a whole lot of classes.
     """
 
-    logger = getLogger('PropertyDispatcher')
+    logger = getLogger("PropertyDispatcher")
 
-    component_registry = inject('component_registry')
+    component_registry = inject("component_registry")
 
     def __init__(self):
         # Handlers is a dict of sets
         self._handlers = {}
 
     def init(self, app):
-        
-        self.logger.info('Starting')
-        
+
+        self.logger.info("Starting")
+
         self.component_registry.register_handler(self.on_element_change_event)
 
     def shutdown(self):
-        
-        self.logger.info('Shutting down')
-        
+
+        self.logger.info("Shutting down")
+
         self.component_registry.unregister_handler(self.on_element_change_event)
 
     def register_handler(self, property, handler, exact=False):
-        
-        self.logger.info('Registring handler')
-        self.logger.debug('Property is %s' % property)
-        self.logger.debug('Handler is %s' % handler)
-        
+
+        self.logger.info("Registring handler")
+        self.logger.debug("Property is %s" % property)
+        self.logger.debug("Handler is %s" % handler)
+
         try:
             self._handlers[property].add(handler)
         except KeyError:
             self._handlers[property] = set([handler])
 
     def unregister_handler(self, property, handler):
-        
-        self.logger.info('Unregistering handler')
-        self.logger.debug('Property is %s' % property)
-        self.logger.debug('Handler is %s' % handler)
-        
+
+        self.logger.info("Unregistering handler")
+        self.logger.debug("Property is %s" % property)
+        self.logger.debug("Handler is %s" % handler)
+
         s = self._handlers.get(property)
         if s:
             s.discard(handler)
 
     @component.adapter(IElementChangeEvent)
     def on_element_change_event(self, event):
-        
-        self.logger.info('Handling IElementChangeEvent')
-        
+
+        self.logger.info("Handling IElementChangeEvent")
+
         property = event.property
-        
-        self.logger.debug('Property is %s' % property)
+
+        self.logger.debug("Property is %s" % property)
 
         s = self._handlers.get(property)
         if not s:
@@ -80,7 +80,7 @@ class PropertyDispatcher(object):
             try:
                 handler(event)
             except Exception as e:
-                log.error('problem executing handler %s' % handler, exc_info=True)
+                log.error("problem executing handler %s" % handler, exc_info=True)
 
 
 # vim:sw=4:et:ai

@@ -112,7 +112,6 @@ class InterfacePort(LinePort):
         self.required = False
         self.provided = False
 
-
     def glue(self, pos):
         """
         Behaves like simple line port, but for folded interface suggests
@@ -130,7 +129,6 @@ class InterfacePort(LinePort):
             return pl, d
 
 
-
 class InterfaceItem(ClassItem):
     """
     Interface item supporting class box, folded notations and assembly
@@ -139,37 +137,30 @@ class InterfaceItem(ClassItem):
     When in folded mode, provided (ball) notation is used by default.
     """
 
-    __uml__        = UML.Interface
-    __stereotype__ = {'interface': lambda self: self.drawing_style != self.DRAW_ICON}
+    __uml__ = UML.Interface
+    __stereotype__ = {"interface": lambda self: self.drawing_style != self.DRAW_ICON}
     __style__ = {
-        'icon-size': (20, 20),
-        'icon-size-provided': (20, 20),
-        'icon-size-required': (28, 28),
-        'name-outside': False,
+        "icon-size": (20, 20),
+        "icon-size-provided": (20, 20),
+        "icon-size-required": (28, 28),
+        "name-outside": False,
     }
 
-    UNFOLDED_STYLE = {
-        'text-align': (ALIGN_CENTER, ALIGN_TOP),
-        'text-outside': False,
-    }
+    UNFOLDED_STYLE = {"text-align": (ALIGN_CENTER, ALIGN_TOP), "text-outside": False}
 
-    FOLDED_STYLE = {
-        'text-align': (ALIGN_CENTER, ALIGN_BOTTOM),
-        'text-outside': True,
-    }
+    FOLDED_STYLE = {"text-align": (ALIGN_CENTER, ALIGN_BOTTOM), "text-outside": True}
 
     RADIUS_PROVIDED = 10
     RADIUS_REQUIRED = 14
 
     # Non-folded mode.
-    FOLDED_NONE     = 0
+    FOLDED_NONE = 0
     # Folded mode, provided (ball) notation.
     FOLDED_PROVIDED = 1
     # Folded mode, required (socket) notation.
     FOLDED_REQUIRED = 2
     # Folded mode, notation of assembly connector icon mode (ball&socket).
     FOLDED_ASSEMBLY = 3
-
 
     def __init__(self, id=None):
         ClassItem.__init__(self, id)
@@ -189,13 +180,16 @@ class InterfaceItem(ClassItem):
             InterfacePort(h_nw.pos, h_ne.pos, self, 0),
             InterfacePort(h_ne.pos, h_se.pos, self, old_div(pi, 2)),
             InterfacePort(h_se.pos, h_sw.pos, self, pi),
-            InterfacePort(h_sw.pos, h_nw.pos, self, pi * 1.5)
+            InterfacePort(h_sw.pos, h_nw.pos, self, pi * 1.5),
         ]
 
-        self.watch('subject<Interface>.ownedAttribute', self.on_class_owned_attribute) \
-            .watch('subject<Interface>.ownedOperation', self.on_class_owned_operation) \
-            .watch('subject<Interface>.supplierDependency')
-
+        self.watch(
+            "subject<Interface>.ownedAttribute", self.on_class_owned_attribute
+        ).watch(
+            "subject<Interface>.ownedOperation", self.on_class_owned_operation
+        ).watch(
+            "subject<Interface>.supplierDependency"
+        )
 
     @observed
     def set_drawing_style(self, style):
@@ -205,11 +199,13 @@ class InterfaceItem(ClassItem):
         """
         super(InterfaceItem, self).set_drawing_style(style)
         if self._drawing_style == self.DRAW_ICON:
-            self.folded = self.FOLDED_PROVIDED # set default folded mode
+            self.folded = self.FOLDED_PROVIDED  # set default folded mode
         else:
-            self.folded = self.FOLDED_NONE # unset default folded mode
+            self.folded = self.FOLDED_NONE  # unset default folded mode
 
-    drawing_style = reversible_property(lambda self: self._drawing_style, set_drawing_style)
+    drawing_style = reversible_property(
+        lambda self: self._drawing_style, set_drawing_style
+    )
 
     def _is_folded(self):
         """
@@ -233,10 +229,10 @@ class InterfaceItem(ClassItem):
         else:
             if self._folded == self.FOLDED_PROVIDED:
                 icon_size = self.style.icon_size_provided
-            else: # required interface or assembly icon mode
+            else:  # required interface or assembly icon mode
                 icon_size = self.style.icon_size_required
 
-            self.style.icon_size =  icon_size
+            self.style.icon_size = icon_size
             self.min_width, self.min_height = icon_size
             self.width, self.height = icon_size
 
@@ -261,23 +257,32 @@ class InterfaceItem(ClassItem):
 
         self.request_update()
 
-    folded = property(_is_folded, _set_folded,
-        doc="Check or set folded notation, see FOLDED_* constants.")
-
+    folded = property(
+        _is_folded,
+        _set_folded,
+        doc="Check or set folded notation, see FOLDED_* constants.",
+    )
 
     def draw_icon(self, context):
         cr = context.cairo
         h_nw = self._handles[NW]
-        cx, cy = h_nw.pos.x + old_div(self.width, 2), h_nw.pos.y + old_div(self.height, 2)
-        required = self._folded == self.FOLDED_REQUIRED or self._folded == self.FOLDED_ASSEMBLY
-        provided = self._folded == self.FOLDED_PROVIDED or self._folded == self.FOLDED_ASSEMBLY
+        cx, cy = (
+            h_nw.pos.x + old_div(self.width, 2),
+            h_nw.pos.y + old_div(self.height, 2),
+        )
+        required = (
+            self._folded == self.FOLDED_REQUIRED or self._folded == self.FOLDED_ASSEMBLY
+        )
+        provided = (
+            self._folded == self.FOLDED_PROVIDED or self._folded == self.FOLDED_ASSEMBLY
+        )
         if required:
             cr.save()
             cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self._angle, pi + self._angle)
             cr.restore()
         if provided:
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
-            cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi*2)
+            cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
         cr.stroke()
         super(InterfaceItem, self).draw(context)
 

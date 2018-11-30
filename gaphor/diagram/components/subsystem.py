@@ -14,14 +14,13 @@ from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
 from gaphor.diagram import uml
 
-@uml(UML.Component, stereotype='subsystem')
+
+@uml(UML.Component, stereotype="subsystem")
 class SubsystemItem(ComponentItem):
-    __style__   = {
-        'name-align': (ALIGN_LEFT, ALIGN_TOP),
-    }
+    __style__ = {"name-align": (ALIGN_LEFT, ALIGN_TOP)}
+
     def __init__(self, id=None):
         super(SubsystemItem, self).__init__(id)
-
 
     def draw(self, context):
         super(SubsystemItem, self).draw(context)

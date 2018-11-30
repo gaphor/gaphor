@@ -8,6 +8,7 @@ from gaphor import UML
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
+
 class TransitionConnectorTestCase(TestCase):
 
     services = TestCase.services
@@ -34,7 +35,6 @@ class TransitionConnectorTestCase(TestCase):
         self.assertEqual(t.subject.source, v1.subject)
         self.assertEqual(t.subject.target, v2.subject)
 
-
     def test_vertex_reconnect(self):
         """Test transition to state vertex reconnection
         """
@@ -50,8 +50,8 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.tail, v2)
 
         s = t.subject
-        s.name = 'tname'
-        s.guard.specification = 'tguard'
+        s.name = "tname"
+        s.guard.specification = "tguard"
 
         # reconnect: v1 -> v3
         self.connect(t, t.tail, v3)
@@ -66,7 +66,6 @@ class TransitionConnectorTestCase(TestCase):
 
         self.assertEqual(0, len(v2.subject.incoming))
         self.assertEqual(0, len(v2.subject.outgoing))
-
 
     def test_vertex_disconnect(self):
         """Test transition and state vertices disconnection
@@ -90,7 +89,6 @@ class TransitionConnectorTestCase(TestCase):
 
         self.disconnect(t, t.head)
         self.assertTrue(t.subject is None)
-
 
     def test_initial_pseudostate_connect(self):
         """Test transition and initial pseudostate connection
@@ -124,7 +122,6 @@ class TransitionConnectorTestCase(TestCase):
         self.assertFalse(glued)
         self.assertTrue(self.get_connected(t2.head) is None)
 
-
     def test_initial_pseudostate_disconnect(self):
         """Test transition and initial pseudostate disconnection
         """
@@ -142,7 +139,6 @@ class TransitionConnectorTestCase(TestCase):
         self.disconnect(t, t.head)
         self.assertFalse(self.get_connected(t.head))
 
-
     def test_initial_pseudostate_tail_glue(self):
         """Test transition tail and initial pseudostate glueing
         """
@@ -153,7 +149,6 @@ class TransitionConnectorTestCase(TestCase):
         # no tail connection should be possible
         glued = self.allow(t, t.tail, v1)
         self.assertFalse(glued)
-
 
     def test_final_state_connect(self):
         """Test transition to final state connection
@@ -178,7 +173,6 @@ class TransitionConnectorTestCase(TestCase):
         self.assertEqual(t.subject, v2.subject.incoming[0])
         self.assertEqual(t.subject.source, v1.subject)
         self.assertEqual(t.subject.target, v2.subject)
-
 
     def test_final_state_head_glue(self):
         """Test transition head to final state connection

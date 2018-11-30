@@ -1,8 +1,8 @@
-
 import re
 
-pattern = r'([A-Z])'
-sub = r'_\1'
+pattern = r"([A-Z])"
+sub = r"_\1"
+
 
 def camelCase_to_underscore(str):
     """
@@ -16,6 +16,7 @@ def camelCase_to_underscore(str):
     return re.sub(pattern, sub, str).lower()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import doctest
+
     doctest.testmod()

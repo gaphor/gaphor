@@ -33,9 +33,9 @@ class CopyService(object):
       on the canvas and make the uml element visible again.
     """
 
-    component_registry = inject('component_registry')
-    element_factory = inject('element_factory')
-    main_window = inject('main_window')
+    component_registry = inject("component_registry")
+    element_factory = inject("element_factory")
+    main_window = inject("main_window")
 
     menu_xml = """
       <ui>
@@ -55,9 +55,9 @@ class CopyService(object):
         self.action_group = build_action_group(self)
 
     def init(self, app):
-        self.action_group.get_action('edit-copy').props.sensitive = False
-        self.action_group.get_action('edit-paste').props.sensitive = False
-        
+        self.action_group.get_action("edit-copy").props.sensitive = False
+        self.action_group.get_action("edit-paste").props.sensitive = False
+
         self.component_registry.register_handler(self._update)
 
     def shutdown(self):
@@ -67,13 +67,14 @@ class CopyService(object):
     @component.adapter(IDiagramSelectionChange)
     def _update(self, event):
         diagram_view = event.diagram_view
-        self.action_group.get_action('edit-copy').props.sensitive = bool(diagram_view.selected_items)
+        self.action_group.get_action("edit-copy").props.sensitive = bool(
+            diagram_view.selected_items
+        )
 
     def copy(self, items):
         if items:
             self.copy_buffer = set(items)
-            self.action_group.get_action('edit-paste').props.sensitive = True
-
+            self.action_group.get_action("edit-paste").props.sensitive = True
 
     def copy_func(self, name, value, reference=False):
         """
@@ -81,6 +82,7 @@ class CopyService(object):
         otherwise from the element factory.
         If it does not exist there, do not copy it!
         """
+
         def load_element():
             item = self._new_items.get(value.id)
             if item:
@@ -111,7 +113,7 @@ class CopyService(object):
         if not canvas:
             return
 
-        copy_items = [ c for c in self.copy_buffer if c.canvas ]
+        copy_items = [c for c in self.copy_buffer if c.canvas]
 
         # Mapping original id -> new item
         self._new_items = {}
@@ -141,8 +143,7 @@ class CopyService(object):
         for item in list(self._new_items.values()):
             item.postload()
 
-
-    @action(name='edit-copy', stock_id='gtk-copy')
+    @action(name="edit-copy", stock_id="gtk-copy")
     def copy_action(self):
         view = self.main_window.get_current_diagram_view()
         if view.is_focus():
@@ -152,7 +153,7 @@ class CopyService(object):
                 copy_items.append(i)
             self.copy(copy_items)
 
-    @action(name='edit-paste', stock_id='gtk-paste')
+    @action(name="edit-paste", stock_id="gtk-paste")
     def paste_action(self):
         view = self.main_window.get_current_diagram_view()
         diagram = self.main_window.get_current_diagram()

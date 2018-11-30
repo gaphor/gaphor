@@ -9,20 +9,17 @@ from gaphor.diagram.nameditem import NamedItem
 class PackageItem(NamedItem):
 
     __uml__ = UML.Package, UML.Profile
-    __stereotype__ = {
-        'profile': UML.Profile,
-    }
+    __stereotype__ = {"profile": UML.Profile}
     __style__ = {
-        'min-size': (NamedItem.style.min_size[0], 70),
-        'name-font': 'sans bold 10',
-        'name-padding': (25, 10, 5, 10),
-        'tab-x': 50,
-        'tab-y': 20,
+        "min-size": (NamedItem.style.min_size[0], 70),
+        "name-font": "sans bold 10",
+        "name-padding": (25, 10, 5, 10),
+        "tab-x": 50,
+        "tab-y": 20,
     }
 
     def __init__(self, id=None):
         super(PackageItem, self).__init__(id)
-
 
     def draw(self, context):
         super(PackageItem, self).draw(context)

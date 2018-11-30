@@ -1,4 +1,3 @@
-
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
@@ -6,7 +5,7 @@ from gaphor.diagram import items
 
 class SanitizerServiceTest(TestCase):
 
-    services = TestCase.services + [ 'sanitizer' ]
+    services = TestCase.services + ["sanitizer"]
 
     def test_presentation_delete(self):
         """
@@ -27,7 +26,6 @@ class SanitizerServiceTest(TestCase):
         assert not klassitem.canvas
         assert klass not in self.element_factory.lselect()
 
-
     def test_stereotype_attribute_delete(self):
         """
         This test was applicable to the Sanitizer service, but is now resolved
@@ -37,13 +35,13 @@ class SanitizerServiceTest(TestCase):
         create = factory.create
 
         # Set the stage
-        #metaklass = create(UML.Class)
-        #metaklass.name = 'Class'
+        # metaklass = create(UML.Class)
+        # metaklass.name = 'Class'
         klass = create(UML.Class)
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
         stereotype.ownedAttribute = st_attr
-        #ext = UML.model.create_extension(factory, metaklass, stereotype)
+        # ext = UML.model.create_extension(factory, metaklass, stereotype)
 
         # Apply stereotype to class and create slot
         instspec = UML.model.apply_stereotype(factory, klass, stereotype)
@@ -64,7 +62,7 @@ class SanitizerServiceTest(TestCase):
 
         # Set the stage
         metaklass = create(UML.Class)
-        metaklass.name = 'Class'
+        metaklass.name = "Class"
         klass = create(UML.Class)
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
@@ -88,7 +86,7 @@ class SanitizerServiceTest(TestCase):
 
         # Set the stage
         metaklass = create(UML.Class)
-        metaklass.name = 'Class'
+        metaklass.name = "Class"
         klass = create(UML.Class)
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
@@ -111,9 +109,9 @@ class SanitizerServiceTest(TestCase):
 
         # Set the stage
         metaklass = create(UML.Class)
-        metaklass.name = 'Class'
+        metaklass.name = "Class"
         metaiface = create(UML.Class)
-        metaiface.name = 'Interface'
+        metaiface.name = "Interface"
         klass = create(UML.Class)
         iface = create(UML.Interface)
         stereotype = create(UML.Stereotype)
@@ -142,7 +140,7 @@ class SanitizerServiceTest(TestCase):
 
         # Set the stage
         metaklass = create(UML.Class)
-        metaklass.name = 'Class'
+        metaklass.name = "Class"
         klass = create(UML.Class)
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
@@ -158,5 +156,6 @@ class SanitizerServiceTest(TestCase):
         stereotype.unlink()
 
         self.assertEqual([], list(klass.appliedStereotype))
+
 
 # vim:sw=4:et:ai

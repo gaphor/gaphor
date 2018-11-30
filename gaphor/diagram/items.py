@@ -39,7 +39,11 @@ from gaphor.diagram.activitynodes import FlowFinalNodeItem
 from gaphor.diagram.activitynodes import DecisionNodeItem
 from gaphor.diagram.activitynodes import ForkNodeItem
 from gaphor.diagram.objectnode import ObjectNodeItem
-from gaphor.diagram.actions.action import ActionItem, SendSignalActionItem, AcceptEventActionItem
+from gaphor.diagram.actions.action import (
+    ActionItem,
+    SendSignalActionItem,
+    AcceptEventActionItem,
+)
 from gaphor.diagram.actions.flow import FlowItem
 from gaphor.diagram.actions.partition import PartitionItem
 
@@ -53,7 +57,10 @@ from gaphor.diagram.states import VertexItem
 from gaphor.diagram.states.state import StateItem
 from gaphor.diagram.states.transition import TransitionItem
 from gaphor.diagram.states.finalstate import FinalStateItem
-from gaphor.diagram.states.pseudostates import InitialPseudostateItem, HistoryPseudostateItem
+from gaphor.diagram.states.pseudostates import (
+    InitialPseudostateItem,
+    HistoryPseudostateItem,
+)
 
 # Use Cases:
 from gaphor.diagram.actor import ActorItem
@@ -64,4 +71,3 @@ from gaphor.diagram.extend import ExtendItem
 # Stereotypes:
 from gaphor.diagram.extension import ExtensionItem
 from gaphor.diagram.profiles.metaclass import MetaclassItem
-

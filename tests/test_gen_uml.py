@@ -12,7 +12,7 @@ from utils.command.gen_uml import generate
 
 class PseudoFile(object):
     def __init__(self):
-        self.data = ''
+        self.data = ""
 
     def write(self, data):
         self.data += data
@@ -22,11 +22,10 @@ class PseudoFile(object):
 
 
 class GenUmlTestCase(unittest.TestCase):
-
     def test_loading(self):
 
-        dist = pkg_resources.get_distribution('gaphor')
-        model_file = os.path.join(dist.location, 'tests/test-model.gaphor')
+        dist = pkg_resources.get_distribution("gaphor")
+        model_file = os.path.join(dist.location, "tests/test-model.gaphor")
         outfile = PseudoFile()
 
         generate(model_file, outfile)

@@ -25,7 +25,7 @@ def editable(el):
     It returns element itself by default.
     """
     return el
-    
+
 
 @editable.when_type(UML.Slot)
 def editable_slot(el):
@@ -40,6 +40,7 @@ class CommentItemEditor(object):
     """
     Text edit support for Comment item.
     """
+
     component.adapts(items.CommentItem)
 
     def __init__(self, item):
@@ -69,6 +70,7 @@ class NamedItemEditor(object):
     """
     Text edit support for Named items.
     """
+
     component.adapts(items.NamedItem)
 
     def __init__(self, item):
@@ -79,7 +81,7 @@ class NamedItemEditor(object):
 
     def get_text(self):
         s = self._item.subject
-        return s.name if s else ''
+        return s.name if s else ""
 
     def get_bounds(self):
         return None
@@ -101,6 +103,7 @@ class DiagramItemTextEditor(object):
     """
     Text edit support for diagram items containing text elements.
     """
+
     component.adapts(items.DiagramItem)
 
     def __init__(self, item):
@@ -125,7 +128,7 @@ class DiagramItemTextEditor(object):
         return None
 
     def update_text(self, text):
-        log.debug('Updating text to %s' % text)
+        log.debug("Updating text to %s" % text)
         if self._text_element:
             self._text_element.text = text
             rsetattr(self._item.subject, self._text_element.attr, text)
@@ -142,6 +145,7 @@ class CompartmentItemEditor(object):
     """
     Text editor support for compartment items.
     """
+
     component.adapts(items.CompartmentItem)
 
     def __init__(self, item):
@@ -198,9 +202,15 @@ class AssociationItemEditor(object):
     def get_text(self):
         if self._edit is self._item:
             return self._edit.subject.name
-        return UML.format(self._edit.subject, visibility=True,
-                                is_derived=True, type=True,
-                                multiplicity=True, default=True)
+        return UML.format(
+            self._edit.subject,
+            visibility=True,
+            is_derived=True,
+            type=True,
+            multiplicity=True,
+            default=True,
+        )
+
     def get_bounds(self):
         return None
 
@@ -218,9 +228,10 @@ component.provideAdapter(AssociationItemEditor)
 class ForkNodeItemEditor(object):
     """Text edit support for fork node join specification.
     """
+
     component.adapts(items.ForkNodeItem)
 
-    element_factory = inject('element_factory')
+    element_factory = inject("element_factory")
 
     def __init__(self, item):
         self._item = item
@@ -235,7 +246,7 @@ class ForkNodeItemEditor(object):
         if self._item.subject.joinSpec:
             return self._item.subject.joinSpec
         else:
-            return ''
+            return ""
 
     def get_bounds(self):
         return None
@@ -250,6 +261,7 @@ class ForkNodeItemEditor(object):
 
     def key_pressed(self, pos, key):
         pass
+
 
 component.provideAdapter(ForkNodeItemEditor)
 

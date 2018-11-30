@@ -6,7 +6,7 @@ This module allows Gaphor to be launched from the command line.
 The main() function sets up the command-line options and arguments and
 passes them to the main Application instance."""
 
-__all__ = [ 'main' ]
+__all__ = ["main"]
 
 from optparse import OptionParser
 import logging
@@ -14,9 +14,9 @@ import gi
 
 from gaphor.application import Application
 
-gi.require_version('Gtk', '3.0')
+gi.require_version("Gtk", "3.0")
 
-LOG_FORMAT = '%(name)s %(levelname)s %(message)s'
+LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 
 def launch(model=None):
@@ -28,15 +28,15 @@ def launch(model=None):
 
     # Make sure gui is loaded ASAP.
     # This prevents menu items from appearing at unwanted places.
-    Application.essential_services.append('main_window')
+    Application.essential_services.append("main_window")
 
     Application.init()
 
-    main_window = Application.get_service('main_window')
+    main_window = Application.get_service("main_window")
 
     main_window.open()
 
-    file_manager = Application.get_service('file_manager')
+    file_manager = Application.get_service("file_manager")
 
     if model:
         file_manager.load(model)
@@ -44,7 +44,8 @@ def launch(model=None):
         file_manager.action_new()
 
     Application.run()
-    
+
+
 def main():
     """Start Gaphor from the command line.  This function creates an option
     parser for retrieving arguments and options from the command line.  This
@@ -56,26 +57,33 @@ def main():
 
     parser = OptionParser()
 
-    parser.add_option('-p',\
-                      '--profiler',\
-                      action='store_true',\
-                      help='Run in profiler')
-    parser.add_option('-q', "--quiet",
-                      dest='quiet', help='Quiet output',
-                      default=False, action='store_true')
-    parser.add_option('-v', '--verbose',
-                      dest='verbose', help='Verbose output',
-                      default=False, action="store_true")
-    
+    parser.add_option("-p", "--profiler", action="store_true", help="Run in profiler")
+    parser.add_option(
+        "-q",
+        "--quiet",
+        dest="quiet",
+        help="Quiet output",
+        default=False,
+        action="store_true",
+    )
+    parser.add_option(
+        "-v",
+        "--verbose",
+        dest="verbose",
+        help="Verbose output",
+        default=False,
+        action="store_true",
+    )
+
     options, args = parser.parse_args()
-    
+
     if options.verbose:
         logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
     elif options.quiet:
         logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
     else:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-    
+
     try:
         model = args[0]
     except IndexError:
@@ -86,13 +94,13 @@ def main():
         import cProfile
         import pstats
 
-        cProfile.run('import gaphor; gaphor.launch()',\
-                     'gaphor.prof')
-        
-        profile_stats = pstats.Stats('gaphor.prof')
-        profile_stats.strip_dirs().sort_stats('time').print_stats(50)
+        cProfile.run("import gaphor; gaphor.launch()", "gaphor.prof")
+
+        profile_stats = pstats.Stats("gaphor.prof")
+        profile_stats.strip_dirs().sort_stats("time").print_stats(50)
 
     else:
         launch(model)
+
 
 # vim:sw=4:et:ai

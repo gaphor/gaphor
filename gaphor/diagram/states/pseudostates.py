@@ -15,20 +15,21 @@ class InitialPseudostateItem(VertexItem):
     """
     Initial pseudostate diagram item.
     """
-    __uml__   = UML.Pseudostate
+
+    __uml__ = UML.Pseudostate
     __style__ = {
-        'min-size':   (20, 20),
-        'name-align': (ALIGN_LEFT, ALIGN_TOP),
-        'name-padding': (2, 2, 2, 2),
-        'name-outside': True,
+        "min-size": (20, 20),
+        "name-align": (ALIGN_LEFT, ALIGN_TOP),
+        "name-padding": (2, 2, 2, 2),
+        "name-outside": True,
     }
 
     RADIUS = 10
+
     def __init__(self, id=None):
         super(InitialPseudostateItem, self).__init__(id)
         for h in self.handles():
             h.movable = False
-
 
     def draw(self, context):
         """
@@ -47,20 +48,21 @@ class HistoryPseudostateItem(VertexItem):
     """
     History pseudostate diagram item.
     """
-    __uml__   = UML.Pseudostate
+
+    __uml__ = UML.Pseudostate
     __style__ = {
-        'min-size':   (30, 30),
-        'name-align': (ALIGN_LEFT, ALIGN_TOP),
-        'name-padding': (2, 2, 2, 2),
-        'name-outside': True,
+        "min-size": (30, 30),
+        "name-align": (ALIGN_LEFT, ALIGN_TOP),
+        "name-padding": (2, 2, 2, 2),
+        "name-outside": True,
     }
 
     RADIUS = 15
+
     def __init__(self, id=None):
         super(HistoryPseudostateItem, self).__init__(id)
         for h in self.handles():
             h.movable = False
-
 
     def draw(self, context):
         """
@@ -71,8 +73,9 @@ class HistoryPseudostateItem(VertexItem):
         r = self.RADIUS
         d = r * 2
         path_ellipse(cr, r, r, d, d)
-        #cr.set_line_width(1)
+        # cr.set_line_width(1)
         cr.stroke()
         text_center(cr, r, r, "H", self.style.name_font)
+
 
 # vim:sw=4:et

@@ -17,15 +17,15 @@ def get_icon_option(element):
 @get_icon_option.when_type(UML.Class)
 def get_option_class(element):
     if element.extension:
-        return 'metaclass'
+        return "metaclass"
 
 
 @get_icon_option.when_type(UML.Component)
 def get_option_component(element):
     for p in element.presentation:
         try:
-            if p.__stereotype__ == 'subsystem':
-                return 'subsystem'
+            if p.__stereotype__ == "subsystem":
+                return "subsystem"
         except AttributeError:
             pass
 
@@ -33,6 +33,7 @@ def get_option_component(element):
 @get_icon_option.when_type(UML.Property)
 def get_option_property(element):
     if element.association:
-        return 'association-end'
+        return "association-end"
+
 
 # vim:sw=4:et:ai

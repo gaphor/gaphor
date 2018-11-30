@@ -10,17 +10,13 @@ TODO: partition can be resized only horizontally or vertically, therefore
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 
+
 class PartitionItem(NamedItem):
     __uml__ = UML.ActivityPartition
 
-    __stereotype__ = {
-        'external': lambda self: self.subject and self.subject.isExternal,
-    }
+    __stereotype__ = {"external": lambda self: self.subject and self.subject.isExternal}
 
-    __style__   = {
-        'min-size': (100, 300),
-        'line-width': 2.4,
-    }
+    __style__ = {"min-size": (100, 300), "line-width": 2.4}
 
     DELTA = 30
 
@@ -29,25 +25,25 @@ class PartitionItem(NamedItem):
         self._toplevel = False
         self._bottom = False
         self._subpart = False
-        self._hdmax = 0 # maximum subpartition header height
-
+        self._hdmax = 0  # maximum subpartition header height
 
     def pre_update(self, context):
         super(PartitionItem, self).pre_update(context)
 
         # get subpartitions
-        children = list(k for k in self.canvas.get_children(self)
-                if isinstance(k, PartitionItem))
+        children = list(
+            k for k in self.canvas.get_children(self) if isinstance(k, PartitionItem)
+        )
 
         self._toplevel = self.canvas.get_parent(self) is None
         self._subpart = len(children) > 0
         self._bottom = not self._toplevel and not self._subpart
-        
+
         if self._toplevel:
             self._header_size = self._header_size[0], self.DELTA
 
         handles = self.handles()
-        
+
         # toplevel partition controls the height
         # partitions at the very bottom control the width
         # middle partitions control nothing
@@ -75,12 +71,11 @@ class PartitionItem(NamedItem):
                 x, y = sl.matrix[4], sl.matrix[5]
 
                 x = dp - x
-                y =  - y + self._header_size[1] + self._hdmax - sl._header_size[1]
+                y = -y + self._header_size[1] + self._hdmax - sl._header_size[1]
                 sl.matrix.translate(x, y)
 
                 sl.height = sl.min_height = max(0, self.height - self._header_size[1])
                 dp += sl.width
-
 
     def draw(self, context):
         """
@@ -93,7 +88,6 @@ class PartitionItem(NamedItem):
         if self.subject and not self.subject.isDimension and self._toplevel:
             cr.move_to(0, 0)
             cr.line_to(self.width, 0)
-
 
         h = self._header_size[1]
 
@@ -119,7 +113,6 @@ class PartitionItem(NamedItem):
                 dp += sl.width
                 cr.move_to(dp, h)
                 cr.line_to(dp, self.height)
-
 
         cr.stroke()
 

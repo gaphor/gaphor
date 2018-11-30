@@ -8,14 +8,12 @@ from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
 
+
 class InteractionItem(NamedItem):
 
     __uml__ = UML.Interaction
 
-    __style__ = {
-        'min-size': (150, 100),
-        'name-align': (ALIGN_TOP, ALIGN_LEFT),
-    }
+    __style__ = {"min-size": (150, 100), "name-align": (ALIGN_TOP, ALIGN_LEFT)}
 
     def draw(self, context):
         cr = context.cairo

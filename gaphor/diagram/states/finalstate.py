@@ -10,16 +10,17 @@ from gaphor.diagram.states import VertexItem
 
 
 class FinalStateItem(VertexItem):
-    __uml__   = UML.FinalState
+    __uml__ = UML.FinalState
     __style__ = {
-        'min-size':   (30, 30),
-        'name-align': (ALIGN_RIGHT, ALIGN_BOTTOM),
-        'name-padding': (2, 2, 2, 2),
-        'name-outside': True,
+        "min-size": (30, 30),
+        "name-align": (ALIGN_RIGHT, ALIGN_BOTTOM),
+        "name-padding": (2, 2, 2, 2),
+        "name-outside": True,
     }
 
     RADIUS_1 = 10
     RADIUS_2 = 15
+
     def __init__(self, id=None):
         super(FinalStateItem, self).__init__(id)
         for h in self.handles():
@@ -43,5 +44,6 @@ class FinalStateItem(VertexItem):
         cr.stroke()
 
         super(FinalStateItem, self).draw(context)
+
 
 # vim:sw=4:et

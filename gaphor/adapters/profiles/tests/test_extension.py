@@ -6,10 +6,12 @@ from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
 
+
 class ExtensionConnectorTestCase(TestCase):
     """
     Extension item connection adapter tests.
     """
+
     def test_class_glue(self):
         """Test extension item glueing to a class
         """
@@ -19,7 +21,6 @@ class ExtensionConnectorTestCase(TestCase):
         # cannot connect extension item tail to a class
         glued = self.allow(ext, ext.tail, cls)
         self.assertFalse(glued)
-
 
     def test_stereotype_glue(self):
         """Test extension item glueing to a stereotype
@@ -35,7 +36,6 @@ class ExtensionConnectorTestCase(TestCase):
         glued = self.allow(ext, ext.head, st)
         self.assertTrue(glued)
 
-
     def test_glue(self):
         """Test extension item glue
         """
@@ -50,7 +50,6 @@ class ExtensionConnectorTestCase(TestCase):
 
         glued = self.allow(ext, ext.head, cls)
         self.assertTrue(glued)
-
 
     def test_connection(self):
         """Test extension item connection

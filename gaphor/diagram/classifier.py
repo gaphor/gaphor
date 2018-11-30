@@ -14,21 +14,21 @@ class ClassifierItem(CompartmentItem):
     """
 
     __style__ = {
-        'name-font': 'sans bold 10',
-        'abstract-name-font': 'sans bold italic 10',
+        "name-font": "sans bold 10",
+        "abstract-name-font": "sans bold italic 10",
     }
- 
+
     def __init__(self, id=None):
         super(ClassifierItem, self).__init__(id)
-        self.watch('subject<Classifier>.isAbstract', self.on_classifier_is_abstract)
-
+        self.watch("subject<Classifier>.isAbstract", self.on_classifier_is_abstract)
 
     def on_classifier_is_abstract(self, event):
-        self._name.font = self.style.abstract_name_font \
-                if self.subject and self.subject.isAbstract \
-                else self.style.name_font
+        self._name.font = (
+            self.style.abstract_name_font
+            if self.subject and self.subject.isAbstract
+            else self.style.name_font
+        )
         self.request_update()
-
 
     def postload(self):
         super(ClassifierItem, self).postload()

@@ -12,10 +12,10 @@
 #
 # Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License 
+# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
 # more details.
 #
-# You should have received a copy of the GNU Library General Public 
+# You should have received a copy of the GNU Library General Public
 # along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
 """
 Support for actions in generic files.
@@ -53,7 +53,9 @@ class action(object):
     'my action'
     """
 
-    def __init__(self, name, label=None, tooltip=None, stock_id=None, accel=None, **kwargs):
+    def __init__(
+        self, name, label=None, tooltip=None, stock_id=None, accel=None, **kwargs
+    ):
         self.name = name
         self.label = label
         self.tooltip = tooltip
@@ -64,15 +66,20 @@ class action(object):
     def __call__(self, func):
         func.__action__ = self
         return func
-        
+
 
 class toggle_action(action):
     """
     A toggle button can be switched on and off.
     An extra 'active' attribute is provided than gives the initial status.
     """
-    def __init__(self, name, label=None, tooltip=None, stock_id=None, accel=None, active=False):
-        super(toggle_action, self).__init__(name, label, tooltip, stock_id, accel=accel, active=active)
+
+    def __init__(
+        self, name, label=None, tooltip=None, stock_id=None, accel=None, active=False
+    ):
+        super(toggle_action, self).__init__(
+            name, label, tooltip, stock_id, accel=accel, active=active
+        )
 
 
 class radio_action(action):
@@ -82,8 +89,19 @@ class radio_action(action):
     The callback function should have an extra value property, which is
     given the index number of the activated radio button action.
     """
-    def __init__(self, names, labels=None, tooltips=None, stock_ids=None, accels=None, active=0):
-        super(radio_action, self).__init__(names[0], names=names, labels=labels, tooltips=tooltips, stock_ids=stock_ids, accels=accels, active=active)
+
+    def __init__(
+        self, names, labels=None, tooltips=None, stock_ids=None, accels=None, active=0
+    ):
+        super(radio_action, self).__init__(
+            names[0],
+            names=names,
+            labels=labels,
+            tooltips=tooltips,
+            stock_ids=stock_ids,
+            accels=accels,
+            active=active,
+        )
 
 
 def open_action(name, label=None, tooltip=None, stock_id=None, accel=None, **kwargs):
@@ -114,7 +132,7 @@ def open_action(name, label=None, tooltip=None, stock_id=None, accel=None, **kwa
 
 
 def is_action(func):
-    return bool(getattr(func, '__action__', False))
+    return bool(getattr(func, "__action__", False))
 
 
 def build_action_group(obj, name=None):
@@ -145,6 +163,7 @@ def build_action_group(obj, name=None):
     Say 0 baz
     """
     from gi.repository import Gtk
+
     group = Gtk.ActionGroup.new(name or str(obj))
     objtype = type(obj)
 
@@ -158,7 +177,7 @@ def build_action_group(obj, name=None):
             method = getattr(objtype, attrname)
         except:
             continue
-        act = getattr(method, '__action__', None)
+        act = getattr(method, "__action__", None)
         if isinstance(act, radio_action):
             actgroup = None
             if not act.labels:
@@ -174,7 +193,9 @@ def build_action_group(obj, name=None):
             assert len(act.names) == len(act.stock_ids)
             assert len(act.names) == len(act.accels)
             for i, n in enumerate(act.names):
-                gtkact = Gtk.RadioAction.new(n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i)
+                gtkact = Gtk.RadioAction.new(
+                    n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i
+                )
 
                 if not actgroup:
                     actgroup = gtkact
@@ -182,13 +203,15 @@ def build_action_group(obj, name=None):
                     gtkact.props.group = actgroup
                 group.add_action_with_accel(gtkact, act.accels[i])
 
-            actgroup.connect('changed', _radio_action_changed, obj, attrname)
+            actgroup.connect("changed", _radio_action_changed, obj, attrname)
             actgroup.set_current_value(act.active)
 
         elif isinstance(act, toggle_action):
-            gtkact = Gtk.ToggleAction.new(act.name, act.label, act.tooltip, act.stock_id)
-            gtkact.set_property('active', act.active)
-            gtkact.connect('activate', _toggle_action_activate, obj, attrname)
+            gtkact = Gtk.ToggleAction.new(
+                act.name, act.label, act.tooltip, act.stock_id
+            )
+            gtkact.set_property("active", act.active)
+            gtkact.connect("activate", _toggle_action_activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
 
         elif isinstance(act, action):
@@ -197,12 +220,12 @@ def build_action_group(obj, name=None):
                 activate = act.opening and _action_opening or _action_activate
             except AttributeError:
                 activate = _action_activate
-                
-            gtkact.connect('activate', activate, obj, attrname)
+
+            gtkact.connect("activate", activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
 
         elif act is not None:
-            raise TypeError('Invalid action type: %s' % action)
+            raise TypeError("Invalid action type: %s" % action)
     return group
 
 
@@ -219,7 +242,7 @@ def _action_opening(action, obj, name):
     method = getattr(obj, name)
     ui_comp = method()
     if ui_comp:
-        Application.get_service('main_window').create_item(ui_comp)
+        Application.get_service("main_window").create_item(ui_comp)
 
 
 def _toggle_action_activate(action, obj, name):
@@ -232,8 +255,9 @@ def _radio_action_changed(action, current_action, obj, name):
     method(current_action.props.value)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import doctest
+
     doctest.testmod()
 
 # vim:sw=4:et:ai

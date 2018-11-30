@@ -1,4 +1,3 @@
-
 import unittest
 from gaphor.UML import *
 from gaphor.UML.interfaces import *
@@ -7,7 +6,6 @@ import weakref, sys
 
 
 class ElementFactoryTestCase(unittest.TestCase):
-
     def setUp(self):
         self.factory = ElementFactory()
 
@@ -24,16 +22,15 @@ class ElementFactoryTestCase(unittest.TestCase):
         ef = self.factory
 
         p = ef.create(Parameter)
-        #wp = weakref.ref(p)
+        # wp = weakref.ref(p)
         assert len(list(ef.values())) == 1
         ef.flush()
         del p
 
         gc.collect()
 
-        #assert wp() is None
+        # assert wp() is None
         assert len(list(ef.values())) == 0, list(ef.values())
-
 
     def testWithoutApplication(self):
         ef = ElementFactory()
@@ -50,7 +47,6 @@ class ElementFactoryTestCase(unittest.TestCase):
         p.unlink()
         assert ef.size() == 0, ef.size()
 
-
     def testUnlink(self):
         ef = self.factory
         p = ef.create(Parameter)
@@ -62,7 +58,7 @@ class ElementFactoryTestCase(unittest.TestCase):
         assert len(list(ef.values())) == 0, list(ef.values())
 
         p = ef.create(Parameter)
-        p.defaultValue = 'l'
+        p.defaultValue = "l"
 
         assert len(list(ef.values())) == 1
 
@@ -70,8 +66,6 @@ class ElementFactoryTestCase(unittest.TestCase):
         del p
 
         assert len(list(ef.values())) == 0, list(ef.values())
-
-
 
 
 from zope import component
@@ -83,6 +77,7 @@ handled = False
 events = []
 last_event = None
 
+
 @component.adapter(IServiceEvent)
 def handler(event):
     global handled, events, last_event
@@ -90,14 +85,14 @@ def handler(event):
     events.append(event)
     last_event = event
 
+
 component.provideHandler(handler)
 
 
 class ElementFactoryServiceTestCase(unittest.TestCase):
-
     def setUp(self):
-        Application.init(['element_factory'])
-        self.factory = Application.get_service('element_factory')
+        Application.init(["element_factory"])
+        self.factory = Application.get_service("element_factory")
 
     def tearDown(self):
         del self.factory
@@ -107,37 +102,37 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
     def clearEvents(self):
         global handled, events, last_event
         handled = False
-        events = [ ]
+        events = []
         last_event = None
 
     def testCreateEvent(self):
         ef = self.factory
         global handled
         p = ef.create(Parameter)
-        self.assertTrue(IElementCreateEvent.providedBy(last_event) )
+        self.assertTrue(IElementCreateEvent.providedBy(last_event))
         self.assertTrue(handled)
 
     def testRemoveEvent(self):
         ef = self.factory
         global handled
         p = ef.create(Parameter)
-        self.assertTrue(IElementCreateEvent.providedBy(last_event) )
+        self.assertTrue(IElementCreateEvent.providedBy(last_event))
         self.assertTrue(handled)
         self.clearEvents()
         p.unlink()
-        self.assertTrue(IElementDeleteEvent.providedBy(last_event) )
+        self.assertTrue(IElementDeleteEvent.providedBy(last_event))
 
     def testModelEvent(self):
         ef = self.factory
         global handled
         ef.notify_model()
-        self.assertTrue(IModelFactoryEvent.providedBy(last_event) )
+        self.assertTrue(IModelFactoryEvent.providedBy(last_event))
 
     def testFlushEvent(self):
         ef = self.factory
         global handled
         ef.flush()
-        self.assertTrue(IFlushFactoryEvent.providedBy(last_event) )
+        self.assertTrue(IFlushFactoryEvent.providedBy(last_event))
 
 
 # vim:sw=4:et:ai

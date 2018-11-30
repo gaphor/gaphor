@@ -6,6 +6,7 @@ from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
 
+
 class BasicMessageConnectionsTestCase(TestCase):
     def test_head_glue(self):
         """Test message head glue
@@ -18,7 +19,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         glued = self.allow(msg, msg.head, ll, port)
         self.assertTrue(glued)
 
-
     def test_invisible_lifetime_glue(self):
         """Test message to invisible lifetime glue
         """
@@ -29,7 +29,6 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         assert not ll.lifetime.visible
         self.assertFalse(glued)
-
 
     def test_visible_lifetime_glue(self):
         """Test message to visible lifetime glue
@@ -42,7 +41,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         glued = self.allow(msg, msg.head, ll, ll.lifetime.port)
         self.assertTrue(glued)
 
-
     def test_lost_message_connection(self):
         """Test lost message connection
         """
@@ -53,7 +51,7 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # If one side is connected a "lost" message is created
         self.assertTrue(msg.subject is not None)
-        self.assertEqual(msg.subject.messageKind, 'lost')
+        self.assertEqual(msg.subject.messageKind, "lost")
 
         messages = self.kindof(UML.Message)
         occurences = self.kindof(UML.MessageOccurrenceSpecification)
@@ -62,7 +60,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEqual(1, len(occurences))
         self.assertTrue(messages[0] is msg.subject)
         self.assertTrue(occurences[0] is msg.subject.sendEvent)
-
 
     def test_found_message_connection(self):
         """Test found message connection
@@ -74,7 +71,7 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # If one side is connected a "found" message is created
         self.assertTrue(msg.subject is not None)
-        self.assertEqual(msg.subject.messageKind, 'found')
+        self.assertEqual(msg.subject.messageKind, "found")
 
         messages = self.kindof(UML.Message)
         occurences = self.kindof(UML.MessageOccurrenceSpecification)
@@ -83,7 +80,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEqual(1, len(occurences))
         self.assertTrue(messages[0] is msg.subject)
         self.assertTrue(occurences[0] is msg.subject.receiveEvent)
-
 
     def test_complete_message_connection(self):
         """Test complete message connection
@@ -97,7 +93,7 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # two sides are connected - "complete" message is created
         self.assertTrue(msg.subject is not None)
-        self.assertEqual(msg.subject.messageKind, 'complete')
+        self.assertEqual(msg.subject.messageKind, "complete")
 
         messages = self.kindof(UML.Message)
         occurences = self.kindof(UML.MessageOccurrenceSpecification)
@@ -105,9 +101,8 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEqual(1, len(messages))
         self.assertEqual(2, len(occurences))
         self.assertTrue(messages[0] is msg.subject)
-        self.assertTrue(msg.subject.sendEvent in occurences, '%s' % occurences)
-        self.assertTrue(msg.subject.receiveEvent in occurences, '%s' % occurences)
-
+        self.assertTrue(msg.subject.sendEvent in occurences, "%s" % occurences)
+        self.assertTrue(msg.subject.receiveEvent in occurences, "%s" % occurences)
 
     def test_lifetime_connection(self):
         """Test messages' lifetimes connection
@@ -126,8 +121,7 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.connect(msg, msg.tail, ll2, ll2.lifetime.port)
 
         self.assertTrue(msg.subject is not None)
-        self.assertEqual(msg.subject.messageKind, 'complete')
-
+        self.assertEqual(msg.subject.messageKind, "complete")
 
     def test_disconnection(self):
         """Test message disconnection
@@ -141,12 +135,11 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # one side disconnection
         self.disconnect(msg, msg.head)
-        self.assertTrue(msg.subject is not None, '%s' % msg.subject)
+        self.assertTrue(msg.subject is not None, "%s" % msg.subject)
 
         # 2nd side disconnection
         self.disconnect(msg, msg.tail)
-        self.assertTrue(msg.subject is None, '%s' % msg.subject)
-
+        self.assertTrue(msg.subject is None, "%s" % msg.subject)
 
     def test_lifetime_connectivity_on_head(self):
         """Test lifeline's lifetime connectivity change on head connection
@@ -165,7 +158,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.disconnect(msg, msg.head)
         self.assertTrue(ll.lifetime.connectable)
         self.assertEqual(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
-
 
     def test_lifetime_connectivity_on_lifetime(self):
         """Test lifeline's lifetime connectivity change on lifetime connection
@@ -188,7 +180,6 @@ class BasicMessageConnectionsTestCase(TestCase):
         self.assertEqual(ll.lifetime.MIN_LENGTH, ll.lifetime.min_length)
 
 
-
 class DiagramModeMessageConnectionTestCase(TestCase):
     def test_message_glue_cd(self):
         """Test glueing message on communication diagram
@@ -208,7 +199,6 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         # mode
         self.assertFalse(glued)
 
-
     def test_message_glue_sd(self):
         """Test glueing message on sequence diagram
         """
@@ -227,7 +217,6 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         # no connection possible as 2nd lifeline is in communication
         # diagram mode
         self.assertFalse(glued)
-
 
     def test_messages_disconnect_cd(self):
         """Test disconnecting messages on communication diagram

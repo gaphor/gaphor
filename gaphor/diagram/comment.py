@@ -12,9 +12,7 @@ from gaphor.diagram.textelement import text_multiline, text_extents
 class CommentItem(ElementItem):
     __uml__ = UML.Comment
 
-    __style__ = {
-        'font': 'sans 10'
-    }
+    __style__ = {"font": "sans 10"}
 
     EAR = 15
     OFFSET = 5
@@ -24,7 +22,7 @@ class CommentItem(ElementItem):
         self.min_width = CommentItem.EAR + 2 * CommentItem.OFFSET
         self.height = 50
         self.width = 100
-        self.watch('subject<Comment>.body')
+        self.watch("subject<Comment>.body")
 
     def edit(self):
         # self.start_editing(self._body)
@@ -36,7 +34,9 @@ class CommentItem(ElementItem):
         cr = context.cairo
         e = self.EAR
         o = self.OFFSET
-        w, h = text_extents(cr, self.subject.body, self.style.font, width=self.width - e)
+        w, h = text_extents(
+            cr, self.subject.body, self.style.font, width=self.width - e
+        )
         self.min_width = w + e + o * 2
         self.min_height = h + o * 2
         ElementItem.pre_update(self, context)
@@ -65,6 +65,15 @@ class CommentItem(ElementItem):
         if self.subject.body:
             off = self.OFFSET
             # Do not print empty string, since cairo-win32 can't handle it.
-            text_multiline(c, off, off, self.subject.body, self.style.font, self.width - ear, self.height)
+            text_multiline(
+                c,
+                off,
+                off,
+                self.subject.body,
+                self.style.font,
+                self.width - ear,
+                self.height,
+            )
+
 
 # vim:sw=4:et:ai

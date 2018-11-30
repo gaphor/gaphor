@@ -16,16 +16,13 @@ class UseCaseItem(ClassifierItem):
     """
     Presentation of gaphor.UML.UseCase.
     """
+
     __uml__ = UML.UseCase
-    __style__ = {
-        'min-size':   (50, 30),
-        'name-align': (ALIGN_CENTER, ALIGN_MIDDLE),
-    }
+    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
     def __init__(self, id=None):
         super(UseCaseItem, self).__init__(id)
         self.drawing_style = -1
-
 
     def pre_update(self, context):
         cr = context.cairo
@@ -35,12 +32,11 @@ class UseCaseItem(ClassifierItem):
             self.min_width, self.min_height = width + 10, height + 20
         super(UseCaseItem, self).pre_update(context)
 
-
     def draw(self, context):
         cr = context.cairo
 
-        rx = old_div(self.width, 2.) 
-        ry = old_div(self.height, 2.)
+        rx = old_div(self.width, 2.0)
+        ry = old_div(self.height, 2.0)
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)

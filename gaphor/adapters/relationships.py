@@ -21,7 +21,7 @@ from zope import component
 ###            if (end1.type is head_type and end2.type is tail_type) \
 ###               or (end2.type is head_type and end1.type is tail_type):
 ###                return
-###                
+###
 ###        # Find all associations and determine if the properties on the
 ###        # association ends have a type that points to the class.
 ###        Association = UML.Association

@@ -24,7 +24,7 @@ methods:
     save(save_func):  send the value of the property to save_func(name, value)
 """
 
-__all__ = [ 'attribute', 'enumeration', 'association', 'derivedunion', 'redefine' ]
+__all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
 
 import logging
 
@@ -99,6 +99,7 @@ class umlproperty(object):
         else:
             component.handle(event)
 
+
 class attribute(umlproperty):
     """
     Attribute.
@@ -109,32 +110,46 @@ class attribute(umlproperty):
     # TODO: check if lower and upper are actually needed for attributes
     def __init__(self, name, type, default=None, lower=0, upper=1):
         self.name = intern(name)
-        self._name = intern('_' + name)
+        self._name = intern("_" + name)
         self.type = type
         self.default = default
         self.lower = lower
         self.upper = upper
-        
+
     def load(self, obj, value):
-        
+
         """Load the attribute value."""
-        
+
         try:
-            
+
             setattr(obj, self._name, self.type(value))
-            
+
         except ValueError:
-            
-            error_msg = 'Failed to load attribute %s of type %s with value %s'\
-                        % (self._name, self.type, value)
-                        
+
+            error_msg = "Failed to load attribute %s of type %s with value %s" % (
+                self._name,
+                self.type,
+                value,
+            )
+
             raise TypeError(error_msg)
-        
+
     def __str__(self):
         if self.lower == self.upper:
-            return '<attribute %s: %s[%s] = %s>' % (self.name, self.type, self.lower, self.default)
+            return "<attribute %s: %s[%s] = %s>" % (
+                self.name,
+                self.type,
+                self.lower,
+                self.default,
+            )
         else:
-            return '<attribute %s: %s[%s..%s] = %s>' % (self.name, self.type, self.lower, self.upper, self.default)
+            return "<attribute %s: %s[%s..%s] = %s>" % (
+                self.name,
+                self.type,
+                self.lower,
+                self.upper,
+                self.default,
+            )
 
     def _get(self, obj):
         try:
@@ -145,12 +160,16 @@ class attribute(umlproperty):
     def _set(self, obj, value):
         if value is not None:
             if not isinstance(value, self.type) and not isinstance(value, str):
-                raise AttributeError('Value should be of type %s' % hasattr(self.type, '__name__') and self.type.__name__ or self.type)
+                raise AttributeError(
+                    "Value should be of type %s" % hasattr(self.type, "__name__")
+                    and self.type.__name__
+                    or self.type
+                )
 
         if value == self._get(obj):
             return
 
-        #undoattributeaction(self, obj, self._get(obj))
+        # undoattributeaction(self, obj, self._get(obj))
 
         old = self._get(obj)
         if value == self.default and hasattr(obj, self._name):
@@ -162,7 +181,7 @@ class attribute(umlproperty):
     def _del(self, obj, value=None):
         old = self._get(obj)
         try:
-            #undoattributeaction(self, obj, self._get(obj))
+            # undoattributeaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
@@ -185,14 +204,14 @@ class enumeration(umlproperty):
 
     def __init__(self, name, values, default):
         self.name = intern(name)
-        self._name = intern('_' + name)
+        self._name = intern("_" + name)
         self.values = values
         self.default = default
         self.lower = 0
         self.upper = 1
 
     def __str__(self):
-        return '<enumeration %s: %s = %s>' % (self.name, self.values, self.default)
+        return "<enumeration %s: %s = %s>" % (self.name, self.values, self.default)
 
     def _get(self, obj):
         try:
@@ -202,12 +221,12 @@ class enumeration(umlproperty):
 
     def load(self, obj, value):
         if not value in self.values:
-            raise AttributeError('Value should be one of %s' % str(self.values))
+            raise AttributeError("Value should be one of %s" % str(self.values))
         setattr(obj, self._name, value)
 
     def _set(self, obj, value):
         if not value in self.values:
-            raise AttributeError('Value should be one of %s' % str(self.values))
+            raise AttributeError("Value should be one of %s" % str(self.values))
         old = self._get(obj)
         if value == old:
             return
@@ -241,10 +260,10 @@ class association(umlproperty):
     If the association is a composite relationship, the association will
     unlink all elements attached to if it is unlinked.
     """
- 
-    def __init__(self, name, type, lower=0, upper='*', composite=False, opposite=None):
+
+    def __init__(self, name, type, lower=0, upper="*", composite=False, opposite=None):
         self.name = intern(name)
-        self._name = intern('_' + name)
+        self._name = intern("_" + name)
         self.type = type
         self.lower = lower
         self.upper = upper
@@ -254,7 +273,10 @@ class association(umlproperty):
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
-            raise AttributeError('Value for %s should be of type %s (%s)' % (self.name, self.type.__name__, type(value).__name__))
+            raise AttributeError(
+                "Value for %s should be of type %s (%s)"
+                % (self.name, self.type.__name__, type(value).__name__)
+            )
         self._set(obj, value, do_notify=False)
 
     def postload(self, obj):
@@ -266,22 +288,30 @@ class association(umlproperty):
         if not values:
             return
         if self.upper == 1:
-            values = [ values ]
+            values = [values]
         for value in values:
             if not isinstance(value, self.type):
-                raise AttributeError('Error in postload validation for %s: Value %s should be of type %s' % (self.name, value, self.type.__name__))
+                raise AttributeError(
+                    "Error in postload validation for %s: Value %s should be of type %s"
+                    % (self.name, value, self.type.__name__)
+                )
 
     def __str__(self):
         if self.lower == self.upper:
-            s = '<association %s: %s[%s]' % (self.name, self.type.__name__, self.lower)
+            s = "<association %s: %s[%s]" % (self.name, self.type.__name__, self.lower)
         else:
-            s = '<association %s: %s[%s..%s]' % (self.name, self.type.__name__, self.lower, self.upper)
+            s = "<association %s: %s[%s..%s]" % (
+                self.name,
+                self.type.__name__,
+                self.lower,
+                self.upper,
+            )
         if self.opposite:
-            s += ' %s-> %s' % (self.composite and '<>' or '', self.opposite)
-        return s + '>'
+            s += " %s-> %s" % (self.composite and "<>" or "", self.opposite)
+        return s + ">"
 
     def _get(self, obj):
-        #print '_get', self, obj
+        # print '_get', self, obj
         # TODO: Handle lower and add items if lower > 0
         try:
             return getattr(obj, self._name)
@@ -290,7 +320,7 @@ class association(umlproperty):
                 return None
             else:
                 # Create the empty collection here since it might be used to
-                # add 
+                # add
                 c = collection(self, obj, self.type)
                 setattr(obj, self._name, c)
                 return c
@@ -302,10 +332,9 @@ class association(umlproperty):
 
         This method is called from the opposite association property.
         """
-        #print '__set__', self, obj, value, self._get(obj)
-        if not (isinstance(value, self.type) or \
-                (value is None and self.upper == 1)):
-            raise AttributeError('Value should be of type %s' % self.type.__name__)
+        # print '__set__', self, obj, value, self._get(obj)
+        if not (isinstance(value, self.type) or (value is None and self.upper == 1)):
+            raise AttributeError("Value should be of type %s" % self.type.__name__)
         # Remove old value only for uni-directional associations
         if self.upper == 1:
             old = self._get(obj)
@@ -349,7 +378,7 @@ class association(umlproperty):
         elif not self.opposite:
             if not self.stub:
                 self.stub = associationstub(self)
-                setattr(self.type, 'UML_associationstub_%x' % id(self), self.stub)
+                setattr(self.type, "UML_associationstub_%x" % id(self), self.stub)
             self.stub._set(value, obj)
 
         if do_notify:
@@ -360,11 +389,11 @@ class association(umlproperty):
         Delete is used for element deletion and for removal of
         elements from a list.
         """
-        #print '__delete__', self, obj, value
+        # print '__delete__', self, obj, value
 
         if not value:
             if self.upper != "*" and self.upper > 1:
-                raise Exception('Can not delete collections')
+                raise Exception("Can not delete collections")
             old = value = self._get(obj)
             if value is None:
                 return
@@ -431,18 +460,18 @@ class associationstub(umlproperty):
 
     def __init__(self, association):
         self.association = association
-        self._name = intern('_stub_%x' % id(self))
+        self._name = intern("_stub_%x" % id(self))
 
     def __get__(self, obj, class_=None):
         if obj:
-            raise AssociationStubError('getting values not allowed')
+            raise AssociationStubError("getting values not allowed")
         return self
 
     def __set__(self, obj, value):
-        raise AssociationStubError('setting values not allowed')
+        raise AssociationStubError("setting values not allowed")
 
     def __delete__(self, obj, value=None):
-        raise AssociationStubError('deleting values not allowed')
+        raise AssociationStubError("deleting values not allowed")
 
     def save(self, obj, save_func):
         pass
@@ -464,7 +493,7 @@ class associationstub(umlproperty):
             getattr(obj, self._name).add(value)
         except AttributeError:
             setattr(obj, self._name, set([value]))
-            
+
     def _del(self, obj, value, from_opposite=False):
         try:
             c = getattr(obj, self._name)
@@ -497,7 +526,7 @@ class derived(umlproperty):
 
     def __init__(self, name, type, lower, upper, *subsets):
         self.name = intern(name)
-        self._name = intern('_' + name)
+        self._name = intern("_" + name)
         self.version = 1
         self.type = type
         self.lower = lower
@@ -507,10 +536,11 @@ class derived(umlproperty):
 
         component.provideHandler(self._association_changed)
 
-
     def load(self, obj, value):
-        raise ValueError('Derivedunion: Properties should not be loaded in a derived union %s: %s' % (self.name, value))
-
+        raise ValueError(
+            "Derivedunion: Properties should not be loaded in a derived union %s: %s"
+            % (self.name, value)
+        )
 
     def postload(self, obj):
         self.version += 1
@@ -518,25 +548,27 @@ class derived(umlproperty):
     def save(self, obj, save_func):
         pass
 
-
     def __str__(self):
-        return '<derived %s: %s>' % (self.name, str(list(map(str, self.subsets)))[1:-1])
+        return "<derived %s: %s>" % (self.name, str(list(map(str, self.subsets)))[1:-1])
 
     def filter(self, obj):
         """
         Filter should return something iterable.
         """
-        raise NotImplementedError('Implement this in the property.')
+        raise NotImplementedError("Implement this in the property.")
 
     def _update(self, obj):
         """
         Update the list of items. Returns a unioncache instance.
         """
         u = self.filter(obj)
-        if self.upper != '*' and self.upper <= 1:
-            assert len(u) <= 1, 'Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u))
+        if self.upper != "*" and self.upper <= 1:
+            assert len(u) <= 1, (
+                "Derived union %s of item %s should have length 1 %s"
+                % (self.name, obj.id, tuple(u))
+            )
             # maybe code below is better instead the assertion above?
-            #if len(u) > 1:
+            # if len(u) > 1:
             #    log.warning('Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u)))
             if u:
                 u = next(iter(u))
@@ -546,8 +578,7 @@ class derived(umlproperty):
         uc = unioncache(u, self.version)
         setattr(obj, self._name, uc)
         return uc
-        
-        
+
     def _get(self, obj):
         try:
             uc = getattr(obj, self._name)
@@ -555,16 +586,14 @@ class derived(umlproperty):
                 uc = self._update(obj)
         except AttributeError:
             uc = self._update(obj)
-        
+
         return uc.data
 
-
     def _set(self, obj, value):
-        raise AttributeError('Can not set values on a union')
-
+        raise AttributeError("Can not set values on a union")
 
     def _del(self, obj, value=None):
-        raise AttributeError('Can not delete values on a union')
+        raise AttributeError("Can not delete values on a union")
 
     @component.adapter(IElementChangeEvent)
     def _association_changed(self, event):
@@ -583,10 +612,10 @@ class derived(umlproperty):
         if event.property in self.subsets:
             # Make sure unions are created again
             self.version += 1
-            
+
             if not IAssociationChangeEvent.providedBy(event):
                 return
-                
+
             # mimic the events for Set/Add/Delete
             if self.upper == 1:
                 # This is a [0..1] event
@@ -594,10 +623,10 @@ class derived(umlproperty):
                 assert IAssociationSetEvent.providedBy(event)
                 old_value, new_value = event.old_value, event.new_value
                 self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
-            else:        
+            else:
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
-                    # Do a filter? Change to 
+                    # Do a filter? Change to
                     self.handle(DerivedDeleteEvent(event.element, self, old_value))
                     self.handle(DerivedAddEvent(event.element, self, new_value))
 
@@ -612,7 +641,12 @@ class derived(umlproperty):
                 elif IAssociationChangeEvent.providedBy(event):
                     self.handle(DerivedChangeEvent(event.element, self))
                 else:
-                    log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
+                    log.error(
+                        "Don"
+                        "t know how to handle event "
+                        + str(event)
+                        + " for derived union"
+                    )
 
 
 class derivedunion(derived):
@@ -646,7 +680,7 @@ class derivedunion(derived):
 
     # Filter is our default filter
     filter = _union
-    
+
     @component.adapter(IElementChangeEvent)
     def _association_changed(self, event):
         """
@@ -664,10 +698,10 @@ class derivedunion(derived):
         if event.property in self.subsets:
             # Make sure unions are created again
             self.version += 1
-            
+
             if not IAssociationChangeEvent.providedBy(event):
                 return
-                
+
             values = self._union(event.element, exclude=event.property)
 
             if self.upper == 1:
@@ -676,7 +710,9 @@ class derivedunion(derived):
                 # This is a [0..1] event
                 if self.single:
                     # Only one subset element, so pass the values on
-                    self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
+                    self.handle(
+                        DerivedSetEvent(event.element, self, old_value, new_value)
+                    )
                 else:
                     new_values = set(values)
                     if new_value:
@@ -686,8 +722,10 @@ class derivedunion(derived):
                         return
                     if values:
                         new_value = next(iter(values))
-                    self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
-            else:        
+                    self.handle(
+                        DerivedSetEvent(event.element, self, old_value, new_value)
+                    )
+            else:
                 if IAssociationSetEvent.providedBy(event):
                     old_value, new_value = event.old_value, event.new_value
                     if old_value and old_value not in values:
@@ -708,7 +746,12 @@ class derivedunion(derived):
                 elif IAssociationChangeEvent.providedBy(event):
                     self.handle(DerivedChangeEvent(event.element, self))
                 else:
-                    log.error('Don''t know how to handle event ' + str(event) + ' for derived union')
+                    log.error(
+                        "Don"
+                        "t know how to handle event "
+                        + str(event)
+                        + " for derived union"
+                    )
 
 
 class redefine(umlproperty):
@@ -724,7 +767,7 @@ class redefine(umlproperty):
     def __init__(self, decl_class, name, type, original):
         self.decl_class = decl_class
         self.name = intern(name)
-        self._name = intern('_' + name)
+        self._name = intern("_" + name)
         self.type = type
         self.original = original
 
@@ -738,25 +781,24 @@ class redefine(umlproperty):
         if self.original.name == self.name:
             self.original.load(obj, value)
 
-
     def postload(self, obj):
         if self.original.name == self.name:
             self.original.postload(obj)
-
 
     def save(self, obj, save_func):
         if self.original.name == self.name:
             self.original.save(obj, save_func)
 
-
     def unlink(self, obj):
         if self.original.name == self.name:
             self.original.unlink(obj)
 
-
     def __str__(self):
-        return '<redefine %s: %s = %s>' % (self.name, self.type.__name__, str(self.original))
-
+        return "<redefine %s: %s = %s>" % (
+            self.name,
+            self.type.__name__,
+            str(self.original),
+        )
 
     def __get__(self, obj, class_=None):
         # No longer needed
@@ -764,43 +806,48 @@ class redefine(umlproperty):
             return self
         return self.original.__get__(obj, class_)
 
-
     def __set__(self, obj, value):
         # No longer needed
         if not isinstance(value, self.type):
-            raise AttributeError('Value should be of type %s' % self.type.__name__)
+            raise AttributeError("Value should be of type %s" % self.type.__name__)
         self.original.__set__(obj, value)
-
 
     def __delete__(self, obj, value=None):
         # No longer needed
         self.original.__delete__(obj, value)
 
-
     def _get(self, obj):
         return self.original._get(obj)
-
 
     def _set(self, obj, value, from_opposite=False):
         return self.original._set(obj, value, from_opposite)
 
-
     def _del(self, obj, value, from_opposite=False):
         return self.original._del(obj, value, from_opposite)
 
-
     @component.adapter(IAssociationChangeEvent)
     def _association_changed(self, event):
-        if event.property is self.original and isinstance(event.element, self.decl_class):
+        if event.property is self.original and isinstance(
+            event.element, self.decl_class
+        ):
             # mimic the events for Set/Add/Delete
             if IAssociationSetEvent.providedBy(event):
-                self.handle(RedefineSetEvent(event.element, self, event.old_value, event.new_value))
+                self.handle(
+                    RedefineSetEvent(
+                        event.element, self, event.old_value, event.new_value
+                    )
+                )
             elif IAssociationAddEvent.providedBy(event):
                 self.handle(RedefineAddEvent(event.element, self, event.new_value))
             elif IAssociationDeleteEvent.providedBy(event):
                 self.handle(RedefineDeleteEvent(event.element, self, event.old_value))
             else:
-                log.error('Don''t know how to handle event ' + str(event) + ' for redefined association')
+                log.error(
+                    "Don"
+                    "t know how to handle event "
+                    + str(event)
+                    + " for redefined association"
+                )
 
 
 try:

@@ -7,20 +7,24 @@ from zope import component
 from gaphor.diagram.interfaces import IConnect
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.items import AssociationItem, ClassItem, InterfaceItem, \
-    UseCaseItem, ActorItem
+from gaphor.diagram.items import (
+    AssociationItem,
+    ClassItem,
+    InterfaceItem,
+    UseCaseItem,
+    ActorItem,
+)
 
 
 class AssociationItemTestCase(TestCase):
 
-    services = TestCase.services + ['element_dispatcher']
+    services = TestCase.services + ["element_dispatcher"]
 
     def setUp(self):
         super(AssociationItemTestCase, self).setUp()
         self.assoc = self.create(AssociationItem)
         self.class1 = self.create(ClassItem, UML.Class)
         self.class2 = self.create(ClassItem, UML.Class)
-
 
     def test_create(self):
         """Test association creation and its basic properties
@@ -37,7 +41,6 @@ class AssociationItemTestCase(TestCase):
         self.assoc.show_direction = True
         self.assertTrue(self.assoc.show_direction)
 
-
     def test_invert_direction(self):
         """Test association direction inverting
         """
@@ -52,10 +55,10 @@ class AssociationItemTestCase(TestCase):
         self.assertTrue(head_subject is self.assoc.subject.memberEnd[1])
         self.assertTrue(tail_subject is self.assoc.subject.memberEnd[0])
 
-
     def test_association_end_updates(self):
         """Test association end navigability connected to a class"""
         from gaphas.canvas import Canvas
+
         canvas = Canvas()
         c1 = self.create(ClassItem, UML.Class)
         c2 = self.create(ClassItem, UML.Class)
@@ -75,14 +78,14 @@ class AssociationItemTestCase(TestCase):
         assert a.subject.memberEnd[1] is a.tail_end.subject
         assert a.subject.memberEnd[0].name is None
 
-        dispatcher = self.get_service('element_dispatcher')
+        dispatcher = self.get_service("element_dispatcher")
         print((a.subject.memberEnd[0], UML.Property.name) in dispatcher._handlers)
-        print('*' * 60)
-        a.subject.memberEnd[0].name = 'blah'
-        print('*' * 60)
+        print("*" * 60)
+        a.subject.memberEnd[0].name = "blah"
+        print("*" * 60)
         self.diagram.canvas.update()
 
-        assert a.head_end._name == '+ blah', a.head_end.get_name()
+        assert a.head_end._name == "+ blah", a.head_end.get_name()
 
     def test_association_orthogonal(self):
         c1 = self.create(ClassItem, UML.Class)
@@ -101,8 +104,9 @@ class AssociationItemTestCase(TestCase):
         try:
             a.orthogonal = True
         except ValueError:
-            pass # Expected, hanve only 2 handles, need 3 or more
+            pass  # Expected, hanve only 2 handles, need 3 or more
         else:
-            assert False, 'Can not set line to orthogonal with less than 3 handles'
+            assert False, "Can not set line to orthogonal with less than 3 handles"
+
 
 # vim:sw=4:et:ai

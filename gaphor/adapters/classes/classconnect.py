@@ -16,6 +16,7 @@ class DependencyConnect(RelationshipConnect):
     """
     Connect two NamedItem elements using a Dependency
     """
+
     component.adapts(items.NamedItem, items.DependencyItem)
 
     def allow(self, handle, port):
@@ -23,12 +24,10 @@ class DependencyConnect(RelationshipConnect):
         element = self.element
 
         # Element should be a NamedElement
-        if not element.subject or \
-                not isinstance(element.subject, UML.NamedElement):
-                    return False
+        if not element.subject or not isinstance(element.subject, UML.NamedElement):
+            return False
 
         return super(DependencyConnect, self).allow(handle, port)
-
 
     def reconnect(self, handle, port):
         line = self.line
@@ -39,8 +38,9 @@ class DependencyConnect(RelationshipConnect):
         elif handle is line.tail:
             for c in dep.client:
                 del dep.client[c]
-        self.reconnect_relationship(handle, line.dependency_type.supplier, line.dependency_type.client)
-
+        self.reconnect_relationship(
+            handle, line.dependency_type.supplier, line.dependency_type.client
+        )
 
     def connect_subject(self, handle):
         """
@@ -60,10 +60,13 @@ class DependencyConnect(RelationshipConnect):
                 supplier = self.get_connected(opposite).subject
             line.dependency_type = UML.model.dependency_type(client, supplier)
 
-        relation = self.relationship_or_new(line.dependency_type,
-                            line.dependency_type.supplier,
-                            line.dependency_type.client)
+        relation = self.relationship_or_new(
+            line.dependency_type,
+            line.dependency_type.supplier,
+            line.dependency_type.client,
+        )
         line.subject = relation
+
 
 component.provideAdapter(DependencyConnect)
 
@@ -72,30 +75,32 @@ class GeneralizationConnect(RelationshipConnect):
     """
     Connect Classifiers with a Generalization relationship.
     """
+
     # FixMe: Both ends of the generalization should be of the same  type?
     component.adapts(items.ClassifierItem, items.GeneralizationItem)
 
-
     def reconnect(self, handle, port):
-        self.reconnect_relationship(handle, UML.Generalization.general, UML.Generalization.specific)
-
+        self.reconnect_relationship(
+            handle, UML.Generalization.general, UML.Generalization.specific
+        )
 
     def connect_subject(self, handle):
-        log.debug('connect_subject: %s' % (handle,))
-        relation = self.relationship_or_new(UML.Generalization,
-                    UML.Generalization.general,
-                    UML.Generalization.specific)
-        log.debug('found: %s' % (relation,))
+        log.debug("connect_subject: %s" % (handle,))
+        relation = self.relationship_or_new(
+            UML.Generalization, UML.Generalization.general, UML.Generalization.specific
+        )
+        log.debug("found: %s" % (relation,))
         self.line.subject = relation
 
-component.provideAdapter(GeneralizationConnect)
 
+component.provideAdapter(GeneralizationConnect)
 
 
 class AssociationConnect(UnaryRelationshipConnect):
     """
     Connect association to classifier.
     """
+
     component.adapts(items.ClassifierItem, items.AssociationItem)
 
     def allow(self, handle, port):
@@ -121,12 +126,15 @@ class AssociationConnect(UnaryRelationshipConnect):
             if line.subject:
                 end1 = line.subject.memberEnd[0]
                 end2 = line.subject.memberEnd[1]
-                if (end1.type is head_type and end2.type is tail_type) \
-                   or (end2.type is head_type and end1.type is tail_type):
+                if (end1.type is head_type and end2.type is tail_type) or (
+                    end2.type is head_type and end1.type is tail_type
+                ):
                     return
-                    
+
             # Create new association
-            relation = UML.model.create_association(self.element_factory, head_type, tail_type)
+            relation = UML.model.create_association(
+                self.element_factory, head_type, tail_type
+            )
             relation.package = element.canvas.diagram.namespace
 
             line.head_end.subject = relation.memberEnd[0]
@@ -145,15 +153,14 @@ class AssociationConnect(UnaryRelationshipConnect):
             end = line.head_end
             oend = line.tail_end
         else:
-            raise ValueError('Incorrect handle passed to adapter')
+            raise ValueError("Incorrect handle passed to adapter")
 
         nav = oend.subject.navigability
 
-        UML.model.set_navigability(line.subject, end.subject, None) # clear old data
+        UML.model.set_navigability(line.subject, end.subject, None)  # clear old data
 
         oend.subject.type = c.subject
         UML.model.set_navigability(line.subject, oend.subject, nav)
-
 
     def disconnect_subject(self, handle):
         """
@@ -178,30 +185,28 @@ class AssociationConnect(UnaryRelationshipConnect):
 component.provideAdapter(AssociationConnect)
 
 
-
 class ImplementationConnect(RelationshipConnect):
     """
     Connect Interface and a BehavioredClassifier using an Implementation.
     """
-    component.adapts(items.NamedItem, items.ImplementationItem)
 
+    component.adapts(items.NamedItem, items.ImplementationItem)
 
     def allow(self, handle, port):
         line = self.line
         element = self.element
 
         # Element at the head should be an Interface
-        if handle is line.head and \
-           not isinstance(element.subject, UML.Interface):
+        if handle is line.head and not isinstance(element.subject, UML.Interface):
             return None
 
         # Element at the tail should be a BehavioredClassifier
-        if handle is line.tail and \
-           not isinstance(element.subject, UML.BehavioredClassifier):
+        if handle is line.tail and not isinstance(
+            element.subject, UML.BehavioredClassifier
+        ):
             return None
 
         return super(ImplementationConnect, self).allow(handle, port)
-
 
     def reconnect(self, handle, port):
         line = self.line
@@ -212,16 +217,21 @@ class ImplementationConnect(RelationshipConnect):
         elif handle is line.tail:
             for c in impl.implementatingClassifier:
                 del impl.implementatingClassifier[c]
-        self.reconnect_relationship(handle, UML.Implementation.contract, UML.Implementation.implementatingClassifier)
-
+        self.reconnect_relationship(
+            handle,
+            UML.Implementation.contract,
+            UML.Implementation.implementatingClassifier,
+        )
 
     def connect_subject(self, handle):
         """
         Perform implementation relationship connection.
         """
-        relation = self.relationship_or_new(UML.Implementation,
-                    UML.Implementation.contract,
-                    UML.Implementation.implementatingClassifier)
+        relation = self.relationship_or_new(
+            UML.Implementation,
+            UML.Implementation.contract,
+            UML.Implementation.implementatingClassifier,
+        )
         self.line.subject = relation
 
 

@@ -1,4 +1,3 @@
-
 from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.diagram.classes.klass import ClassItem
@@ -7,7 +6,6 @@ from gaphor.UML.diagram import DiagramCanvas
 
 
 class FeatureTestCase(TestCase):
-
     def setUp(self):
         super(FeatureTestCase, self).setUp()
 
@@ -19,7 +17,7 @@ class FeatureTestCase(TestCase):
         Test how attribute is updated
         """
         attr = self.element_factory.create(UML.Property)
-        UML.parse(attr, '-name:myType')
+        UML.parse(attr, "-name:myType")
 
         clazzitem = self.create(ClassItem, UML.Class)
         clazzitem.subject.ownedAttribute = attr
@@ -31,11 +29,10 @@ class FeatureTestCase(TestCase):
         size = item.get_size()
         self.assertNotEqual((0, 0), size)
 
-        attr.defaultValue = 'myDefault'
+        attr.defaultValue = "myDefault"
 
         self.diagram.canvas.update()
         self.assertTrue(size < item.get_size())
-
 
 
 # vim:sw=4:et:ai

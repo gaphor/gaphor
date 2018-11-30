@@ -36,12 +36,14 @@ from gaphor.core import _
 
 widget_factory = {}
 
+
 def deserialize(layout, container, layoutstr, itemfactory):
-    '''
+    """
     Return a new layout with it's attached frames. Frames that should be floating
     already have their Gtk.Window attached (check frame.get_parent()). Transient settings
     and such should be done by the invoking application.
-    '''
+    """
+
     def counter():
         i = 0
         while True:
@@ -49,23 +51,23 @@ def deserialize(layout, container, layoutstr, itemfactory):
             i += 1
 
     def _des(element, index, parent_widget=None):
-        if element.tag == 'component':
-            name = element.attrib['name']
+        if element.tag == "component":
+            name = element.attrib["name"]
             widget = itemfactory(name)
             widget.set_name(name)
             add(widget, index, parent_widget)
         else:
             factory = widget_factory[element.tag]
             widget = factory(parent=parent_widget, index=index, **element.attrib)
-            assert widget, 'No widget (%s)' % widget
+            assert widget, "No widget (%s)" % widget
             if len(element):
                 list(map(_des, element, counter(), [widget] * len(element)))
         return widget
 
     tree = fromstring(layoutstr)
-    list(map(layout.append, list(map(_des, tree, counter(), [ container ] * len(tree)))))
+    list(map(layout.append, list(map(_des, tree, counter(), [container] * len(tree)))))
 
-    #return layout
+    # return layout
 
 
 def add(widget, index, parent_widget):
@@ -79,9 +81,10 @@ def add(widget, index, parent_widget):
 
 
 def factory(typename):
-    '''
+    """
     Simple decorator for populating the widget_factory dictionary.
-    '''
+    """
+
     def _factory(func):
         widget_factory[typename] = func
         return func
@@ -89,12 +92,13 @@ def factory(typename):
     return _factory
 
 
-@factory('paned')
+@factory("paned")
 def paned(parent, index, orientation, weight=None):
-    paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL \
-                if orientation == "horizontal" \
-                else Gtk.Orientation.VERTICAL)
+    paned = Gtk.Paned.new(
+        Gtk.Orientation.HORIZONTAL
+        if orientation == "horizontal"
+        else Gtk.Orientation.VERTICAL
+    )
     add(paned, index, parent)
     paned.show()
     return paned
-

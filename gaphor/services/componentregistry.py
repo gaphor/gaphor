@@ -32,50 +32,47 @@ class ZopeComponentRegistry(object):
 
     def init(self, app):
         self._components = registry.Components(
-                               name='component_registry',
-                               bases=(component.getGlobalSiteManager(),))
+            name="component_registry", bases=(component.getGlobalSiteManager(),)
+        )
 
         # Make sure component.handle() and query methods works.
         # TODO: eventually all queries should be done through the Application
         # instance.
         # Used in collection.py, transaction.py, diagramtoolbox.py:
         component.handle = self.handle
-        #component.getMultiAdapter = self._components.getMultiAdapter
+        # component.getMultiAdapter = self._components.getMultiAdapter
         # Used all over the place:
         component.queryMultiAdapter = self._components.queryMultiAdapter
-        #component.getAdapter = self._components.getAdapter
-        #component.queryAdapter = self._components.queryAdapter
+        # component.getAdapter = self._components.getAdapter
+        # component.queryAdapter = self._components.queryAdapter
         # Used in propertyeditor.py:
         component.getAdapters = self._components.getAdapters
-        #component.getUtility = self._components.getUtility
+        # component.getUtility = self._components.getUtility
         # Used in test cases (test_application.py)
         component.queryUtility = self._components.queryUtility
-        #component.getUtilitiesFor = self._components.getUtilitiesFor
-
+        # component.getUtilitiesFor = self._components.getUtilitiesFor
 
     def shutdown(self):
         pass
 
-
     def get_service(self, name):
         return self.get_utility(IService, name)
 
-
     # Wrap zope.component's Components methods
 
-    def register_utility(self, component=None, provided=None, name=''):
+    def register_utility(self, component=None, provided=None, name=""):
         """
         Register a component (e.g. Service)
         """
         self._components.registerUtility(component, provided, name)
 
-    def unregister_utility(self, component=None, provided=None, name=''):
+    def unregister_utility(self, component=None, provided=None, name=""):
         """
         Unregister a component (e.g. Service)
         """
         self._components.unregisterUtility(component, provided, name)
 
-    def get_utility(self, provided, name=''):
+    def get_utility(self, provided, name=""):
         """
         Get a component from the registry.
         zope.component.ComponentLookupError is thrown if no such component
@@ -90,22 +87,19 @@ class ZopeComponentRegistry(object):
         for name, utility in self._components.getUtilitiesFor(provided):
             yield name, utility
 
-    def register_adapter(self, factory, adapts=None, provides=None, name=''):
+    def register_adapter(self, factory, adapts=None, provides=None, name=""):
         """
         Register an adapter (factory) that adapts objects to a specific
         interface. A name can be used to distinguish between different adapters
         that adapt to the same interfaces.
         """
-        self._components.registerAdapter(factory, adapts, provides,
-                              name, event=False)
+        self._components.registerAdapter(factory, adapts, provides, name, event=False)
 
-    def unregister_adapter(self, factory=None,
-                           required=None, provided=None, name=u''):
+    def unregister_adapter(self, factory=None, required=None, provided=None, name=u""):
         """
         Unregister a previously registered adapter.
         """
-        self._components.unregisterAdapter(factory,
-                              required, provided, name)
+        self._components.unregisterAdapter(factory, required, provided, name)
 
     def get_adapter(self, objects, interface):
         """
@@ -122,16 +116,19 @@ class ZopeComponentRegistry(object):
         """
         Register a subscription adapter. See registerAdapter().
         """
-        self._components.registerSubscriptionAdapter(factory, adapts,
-                              provides, event=False)
+        self._components.registerSubscriptionAdapter(
+            factory, adapts, provides, event=False
+        )
 
-    def unregister_subscription_adapter(self, factory=None,
-                          required=None, provided=None, name=u''):
+    def unregister_subscription_adapter(
+        self, factory=None, required=None, provided=None, name=u""
+    ):
         """
         Unregister a previously registered subscription adapter.
         """
-        self._components.unregisterSubscriptionAdapter(factory,
-                              required, provided, name)
+        self._components.unregisterSubscriptionAdapter(
+            factory, required, provided, name
+        )
 
     def subscribers(self, objects, interface):
         return self._components.subscribers(objects, interface)

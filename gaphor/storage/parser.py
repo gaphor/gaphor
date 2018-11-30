@@ -32,7 +32,7 @@ takes a long time. The yielded values are the percentage of the file read.
 
 from __future__ import division
 
-__all__ = ['parse', 'ParserException']
+__all__ = ["parse", "ParserException"]
 
 import io
 import os
@@ -53,8 +53,8 @@ class base(object):
     """
 
     def __init__(self):
-        self.values = { }
-        self.references = { }
+        self.values = {}
+        self.references = {}
 
     def __getattr__(self, key):
         try:
@@ -74,22 +74,22 @@ class base(object):
         except:
             return None
 
-class element(base):
 
+class element(base):
     def __init__(self, id, type):
         base.__init__(self)
         self.id = id
         self.type = type
         self.canvas = None
 
-class canvas(base):
 
+class canvas(base):
     def __init__(self):
         base.__init__(self)
         self.canvasitems = []
 
-class canvasitem(base):
 
+class canvasitem(base):
     def __init__(self, id, type):
         base.__init__(self)
         self.id = id
@@ -97,24 +97,26 @@ class canvasitem(base):
         self.canvasitems = []
 
 
-XMLNS='http://gaphor.sourceforge.net/model'
+XMLNS = "http://gaphor.sourceforge.net/model"
+
 
 class ParserException(Exception):
     pass
 
 
 # Loader state:
-[ROOT,         # Expect 'gaphor' element
- GAPHOR,       # Expect UML classes (tag name is the UML class name)
- ELEMENT,      # Expect properties of UML object
- DIAGRAM,      # Expect properties of Diagram object + canvas
- CANVAS,       # Expect canvas properties + <item> tags
- ITEM,         # Expect item attributes and nested items
- ATTR,         # Reading contents of an attribute (such as a <val> or <ref>)
- VAL,          # Redaing contents of a <val> tag
- REFLIST,      # In a <reflist>
- REF           # Reading contents of a <ref> tag
- ] = range(10)
+[
+    ROOT,  # Expect 'gaphor' element
+    GAPHOR,  # Expect UML classes (tag name is the UML class name)
+    ELEMENT,  # Expect properties of UML object
+    DIAGRAM,  # Expect properties of Diagram object + canvas
+    CANVAS,  # Expect canvas properties + <item> tags
+    ITEM,  # Expect item attributes and nested items
+    ATTR,  # Reading contents of an attribute (such as a <val> or <ref>)
+    VAL,  # Redaing contents of a <val> tag
+    REFLIST,  # In a <reflist>
+    REF,  # Reading contents of a <ref> tag
+] = range(10)
 
 
 class GaphorLoader(handler.ContentHandler):
@@ -160,38 +162,40 @@ class GaphorLoader(handler.ContentHandler):
         """
         self.version = None
         self.gaphor_version = None
-        self.elements = odict() # map id: element/canvasitem
+        self.elements = odict()  # map id: element/canvasitem
         self.__stack = []
-        self.text = ''
+        self.text = ""
 
     def endDocument(self):
         if len(self.__stack) != 0:
-            raise ParserException('Invalid XML document.')
+            raise ParserException("Invalid XML document.")
 
     def startElement(self, name, attrs):
-        self.text = ''
+        self.text = ""
 
         state = self.state()
 
         # Read a element class. The name of the tag is the class name:
         if state == GAPHOR:
-            id = attrs['id']
+            id = attrs["id"]
             e = element(id, name)
-            assert id not in list(self.elements.keys()), '%s already defined' % (id)#, self.elements[id])
+            assert id not in list(self.elements.keys()), "%s already defined" % (
+                id
+            )  # , self.elements[id])
             self.elements[id] = e
-            self.push(e, name == 'Diagram' and DIAGRAM or ELEMENT)
+            self.push(e, name == "Diagram" and DIAGRAM or ELEMENT)
 
         # Special treatment for the <canvas> tag in a Diagram:
-        elif state == DIAGRAM and name == 'canvas':
+        elif state == DIAGRAM and name == "canvas":
             c = canvas()
             self.peek().canvas = c
             self.push(c, CANVAS)
 
         # Items in a canvas are referenced by the <item> tag:
-        elif state in (CANVAS, ITEM) and name == 'item':
-            id = attrs['id']
-            c = canvasitem(id, attrs['type'])
-            assert id not in list(self.elements.keys()), '%s already defined' % id
+        elif state in (CANVAS, ITEM) and name == "item":
+            id = attrs["id"]
+            c = canvasitem(id, attrs["type"])
+            assert id not in list(self.elements.keys()), "%s already defined" % id
             self.elements[id] = c
             self.peek().canvasitems.append(c)
             self.push(c, ITEM)
@@ -203,22 +207,22 @@ class GaphorLoader(handler.ContentHandler):
             self.push(name, ATTR)
 
         # Reference list:
-        elif state == ATTR and name == 'reflist':
+        elif state == ATTR and name == "reflist":
             self.push(self.peek(), REFLIST)
 
         # Reference with multiplicity 1:
-        elif state  == ATTR and name == 'ref':
+        elif state == ATTR and name == "ref":
             n = self.peek(1)
             # Fetch the element instance from the stack
-            r = self.peek(2).references[n] = attrs['refid']
+            r = self.peek(2).references[n] = attrs["refid"]
             self.push(None, REF)
 
         # Reference with multiplicity *:
-        elif state == REFLIST and name == 'ref':
+        elif state == REFLIST and name == "ref":
             n = self.peek(1)
             # Fetch the element instance from the stack
             r = self.peek(3).references
-            refid = attrs['refid']
+            refid = attrs["refid"]
             try:
                 r[n].append(refid)
             except KeyError:
@@ -226,20 +230,22 @@ class GaphorLoader(handler.ContentHandler):
             self.push(None, REF)
 
         # We need to get the text within the <val> tag:
-        elif state == ATTR and name == 'val':
+        elif state == ATTR and name == "val":
             self.push(None, VAL)
 
         # The <gaphor> tag is the toplevel tag:
-        elif state == ROOT and name == 'gaphor':
-            assert attrs['version'] in ('3.0',)
-            self.version = attrs['version']
-            self.gaphor_version = attrs.get('gaphor-version')
+        elif state == ROOT and name == "gaphor":
+            assert attrs["version"] in ("3.0",)
+            self.version = attrs["version"]
+            self.gaphor_version = attrs.get("gaphor-version")
             if not self.gaphor_version:
-                self.gaphor_version = attrs.get('gaphor_version')
+                self.gaphor_version = attrs.get("gaphor_version")
             self.push(None, GAPHOR)
 
         else:
-            raise ParserException('Invalid XML: tag <%s> not known (state = %s)' % (name, state))
+            raise ParserException(
+                "Invalid XML: tag <%s> not known (state = %s)" % (name, state)
+            )
 
     def endElement(self, name):
         # Put the text on the value
@@ -252,7 +258,7 @@ class GaphorLoader(handler.ContentHandler):
 
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
-            a = { }
+            a = {}
             for key, val in list(attrs.items()):
                 a[key[1]] = val
             self.startElement(name[1], a)
@@ -280,8 +286,9 @@ def parse_generator(filename, loader):
     """The generator based version of parse().
     parses the file filename and load it with ContentHandler loader.
     """
-    assert isinstance(loader, GaphorLoader), 'loader should be a GaphorLoader'
+    assert isinstance(loader, GaphorLoader), "loader should be a GaphorLoader"
     from xml.sax import make_parser
+
     parser = make_parser()
 
     parser.setFeature(handler.feature_namespaces, 1)
@@ -342,7 +349,7 @@ def parse_file(filename, parser):
         file_obj = filename
     else:
         is_fd = False
-        file_obj = io.open(filename, 'r')
+        file_obj = io.open(filename, "r")
 
     for progress in ProgressGenerator(file_obj, parser):
         yield progress
@@ -351,5 +358,6 @@ def parse_file(filename, parser):
 
     if not is_fd:
         file_obj.close()
+
 
 # vim:sw=4:et:ai

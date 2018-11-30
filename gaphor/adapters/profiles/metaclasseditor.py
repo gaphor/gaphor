@@ -31,9 +31,15 @@ class MetaclassNameEditor(object):
 
     order = 10
 
-    NAME_LABEL = _('Name')
+    NAME_LABEL = _("Name")
 
-    CLASSES = list(sorted(n for n in dir(UML) if _issubclass(getattr(UML, n), UML.Element) and n != 'Stereotype'))
+    CLASSES = list(
+        sorted(
+            n
+            for n in dir(UML)
+            if _issubclass(getattr(UML, n), UML.Element) and n != "Stereotype"
+        )
+    )
 
     def __init__(self, item):
         self.item = item
@@ -61,21 +67,21 @@ class MetaclassNameEditor(object):
         cb.get_child().set_completion(completion)
 
         entry = cb.get_child()
-        entry.set_text(subject and subject.name or '')
+        entry.set_text(subject and subject.name or "")
         hbox.pack_start(cb, True, True, 0)
         page.default = entry
 
         # monitor subject.name attribute
-        changed_id = entry.connect('changed', self._on_name_change)
+        changed_id = entry.connect("changed", self._on_name_change)
 
         def handler(event):
             if event.element is subject and event.new_value is not None:
                 entry.handler_block(changed_id)
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
-        self.watcher.watch('name', handler) \
-            .register_handlers()
-        entry.connect('destroy', self.watcher.unregister_handlers)
+
+        self.watcher.watch("name", handler).register_handlers()
+        entry.connect("destroy", self.watcher.unregister_handlers)
         page.show_all()
         return page
 
@@ -84,7 +90,8 @@ class MetaclassNameEditor(object):
         self.item.subject.name = entry.get_text()
 
 
-component.provideAdapter(MetaclassNameEditor,
-        adapts=[items.MetaclassItem], name='Properties')
+component.provideAdapter(
+    MetaclassNameEditor, adapts=[items.MetaclassItem], name="Properties"
+)
 
 # vim:sw=4:et:ai

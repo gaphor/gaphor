@@ -49,6 +49,7 @@ class IEditor(interface.Interface):
         character in single line editing.
         """
 
+
 class IConnect(interface.Interface):
     """
     This interface is used by the HandleTool to allow connecting

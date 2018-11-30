@@ -5,14 +5,14 @@ Implementation of interface.
 from gaphor import UML
 from gaphor.diagram.diagramline import DiagramLine
 
+
 class ImplementationItem(DiagramLine):
 
-    __uml__          = UML.Implementation
+    __uml__ = UML.Implementation
 
-    def __init__(self, id = None):
+    def __init__(self, id=None):
         DiagramLine.__init__(self, id)
-        self._solid = False 
-
+        self._solid = False
 
     def draw_head(self, context):
         cr = context.cairo
@@ -25,12 +25,10 @@ class ImplementationItem(DiagramLine):
             cr.stroke()
             cr.move_to(15, 0)
 
-
     def draw(self, context):
         if not self._solid:
             context.cairo.set_dash((7.0, 5.0), 0)
         super(ImplementationItem, self).draw(context)
-
 
 
 # vim:sw=4

@@ -7,10 +7,12 @@ from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
 
+
 class FlowItemBasicNodesConnectionTestCase(TestCase):
     """
     Tests for flow item connecting to basic activity nodes.
     """
+
     def test_initial_node_glue(self):
         """Test flow item glueing to initial node item
         """
@@ -24,7 +26,6 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
         allowed = self.allow(flow, flow.head, node)
         self.assertTrue(allowed)
 
-
     def test_flow_final_node_glue(self):
         """Test flow item glueing to flow final node item
         """
@@ -37,7 +38,6 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
 
         allowed = self.allow(flow, flow.tail, node)
         self.assertTrue(allowed)
-
 
     def test_activity_final_node_glue(self):
         """Test flow item glueing to activity final node item
@@ -57,6 +57,7 @@ class FlowItemObjectNodeTestCase(TestCase):
     """
     Flow item connecting to object node item tests.
     """
+
     def test_glue(self):
         """Test glueing to object node
         """
@@ -64,7 +65,6 @@ class FlowItemObjectNodeTestCase(TestCase):
         onode = self.create(items.ObjectNodeItem, UML.ObjectNode)
         glued = self.allow(flow, flow.head, onode)
         self.assertTrue(glued)
-
 
     def test_connection(self):
         """Test connection to object node
@@ -87,7 +87,6 @@ class FlowItemObjectNodeTestCase(TestCase):
         self.assertTrue(flow.subject)
         self.assertTrue(isinstance(flow.subject, UML.ObjectFlow))
 
-
     def test_reconnection(self):
         """Test object flow reconnection
         """
@@ -101,8 +100,8 @@ class FlowItemObjectNodeTestCase(TestCase):
         self.connect(flow, flow.tail, o1)
 
         f = flow.subject
-        f.name = 'tname'
-        f.guard = 'tguard'
+        f.name = "tname"
+        f.guard = "tguard"
 
         # reconnect: a1 -> o2
         self.connect(flow, flow.tail, o2)
@@ -118,9 +117,8 @@ class FlowItemObjectNodeTestCase(TestCase):
 
         self.assertEqual(1, len(self.kindof(UML.ObjectFlow)))
         # one guard
-        self.assertEqual('tname', flow.subject.name)
-        self.assertEqual('tguard', flow.subject.guard)
-
+        self.assertEqual("tname", flow.subject.name)
+        self.assertEqual("tguard", flow.subject.guard)
 
     def test_control_flow_reconnection(self):
         """Test control flow becoming object flow due to reconnection
@@ -135,8 +133,8 @@ class FlowItemObjectNodeTestCase(TestCase):
         self.connect(flow, flow.tail, a2)
 
         f = flow.subject
-        f.name = 'tname'
-        f.guard = 'tguard'
+        f.name = "tname"
+        f.guard = "tguard"
 
         # reconnect with object flow: a1 -> o1
         self.connect(flow, flow.tail, o1)
@@ -153,15 +151,15 @@ class FlowItemObjectNodeTestCase(TestCase):
         self.assertEqual(0, len(self.kindof(UML.ControlFlow)))
         self.assertEqual(1, len(self.kindof(UML.ObjectFlow)))
         # one guard, not changed
-        self.assertEqual('tname', flow.subject.name)
-        self.assertEqual('tguard', flow.subject.guard)
-
+        self.assertEqual("tname", flow.subject.name)
+        self.assertEqual("tguard", flow.subject.guard)
 
 
 class FlowItemActionTestCase(TestCase):
     """
     Flow item connecting to action item tests.
     """
+
     def test_glue(self):
         """Test flow item glueing to action items
         """
@@ -176,7 +174,6 @@ class FlowItemActionTestCase(TestCase):
 
         glued = self.allow(flow, flow.tail, a2)
         self.assertTrue(glued)
-
 
     def test_connect(self):
         """Test flow item connecting to action items
@@ -200,7 +197,6 @@ class FlowItemActionTestCase(TestCase):
         self.assertTrue(flow.subject in a2.subject.incoming)
         self.assertTrue(flow.subject.target is a2.subject)
 
-
     def test_disconnect(self):
         """Test flow item disconnection from action items
         """
@@ -218,7 +214,6 @@ class FlowItemActionTestCase(TestCase):
         self.assertEqual(0, len(a1.subject.outgoing))
         self.assertEqual(0, len(a2.subject.outgoing))
 
-
     def test_reconnect(self):
         """Test flow item reconnection
         """
@@ -231,8 +226,8 @@ class FlowItemActionTestCase(TestCase):
         self.connect(flow, flow.head, a1)
         self.connect(flow, flow.tail, a2)
         f = flow.subject
-        f.name = 'tname'
-        f.guard = 'tguard'
+        f.name = "tname"
+        f.guard = "tguard"
 
         # reconnect: a1 -> a3
         self.connect(flow, flow.tail, a3)
@@ -248,9 +243,8 @@ class FlowItemActionTestCase(TestCase):
 
         self.assertEqual(1, len(self.kindof(UML.ControlFlow)))
         # one guard
-        self.assertEqual('tname', flow.subject.name)
-        self.assertEqual('tguard', flow.subject.guard)
-
+        self.assertEqual("tname", flow.subject.name)
+        self.assertEqual("tguard", flow.subject.guard)
 
     def test_object_flow_reconnection(self):
         """Test object flow becoming control flow due to reconnection
@@ -265,8 +259,8 @@ class FlowItemActionTestCase(TestCase):
         self.connect(flow, flow.tail, o1)
 
         f = flow.subject
-        f.name = 'tname'
-        f.guard = 'tguard'
+        f.name = "tname"
+        f.guard = "tguard"
 
         # reconnect with object flow: a1 -> a2
         self.connect(flow, flow.tail, a2)
@@ -283,8 +277,8 @@ class FlowItemActionTestCase(TestCase):
         self.assertEqual(1, len(self.kindof(UML.ControlFlow)))
         self.assertEqual(0, len(self.kindof(UML.ObjectFlow)))
         # one guard, not changed
-        self.assertEqual('tname', flow.subject.name)
-        self.assertEqual('tguard', flow.subject.guard)
+        self.assertEqual("tname", flow.subject.name)
+        self.assertEqual("tguard", flow.subject.guard)
 
 
 class FlowItemDesisionAndForkNodes(object):
@@ -321,7 +315,6 @@ class FlowItemDesisionAndForkNodes(object):
         glued = self.allow(flow, flow.tail, node)
         self.assertTrue(glued)
 
-
     def test_node_class_change(self):
         """ Test node incoming edges
 
@@ -356,7 +349,6 @@ class FlowItemDesisionAndForkNodes(object):
 
         # node class changes
         self.assertTrue(isinstance(jn.subject, self.join_node_cls))
-
 
     def test_outgoing_edges(self):
         """Test outgoing edges
@@ -396,9 +388,7 @@ class FlowItemDesisionAndForkNodes(object):
         self.connect(flow3, flow3.head, jn)
         self.assertEqual(2, len(jn.subject.outgoing))
 
-        self.assertTrue(isinstance(jn.subject, self.fork_node_cls),
-                '%s' % jn.subject)
-
+        self.assertTrue(isinstance(jn.subject, self.fork_node_cls), "%s" % jn.subject)
 
     def test_combined_nodes_connection(self):
         """Test combined nodes connection
@@ -440,7 +430,6 @@ class FlowItemDesisionAndForkNodes(object):
         self.assertTrue(1, len(jn.subject.outgoing))
         self.assertTrue(1, len(jn.combined.incoming))
         self.assertTrue(jn.subject.outgoing[0] is jn.combined.incoming[0])
-
 
     def test_combined_node_disconnection(self):
         """Test combined nodes disconnection
@@ -490,9 +479,8 @@ class FlowItemDesisionAndForkNodes(object):
 
         flows = self.kindof(UML.ControlFlow)
         nodes = self.kindof(self.fork_node_cls)
-        self.assertTrue(cnode not in nodes, '%s in %s' % (cnode, nodes))
-        self.assertTrue(cflow not in flows, '%s in %s' % (cflow, flows))
-
+        self.assertTrue(cnode not in nodes, "%s in %s" % (cnode, nodes))
+        self.assertTrue(cflow not in flows, "%s in %s" % (cflow, flows))
 
 
 class FlowItemForkNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
@@ -501,12 +489,10 @@ class FlowItemForkNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
     join_node_cls = UML.JoinNode
 
 
-
 class FlowItemDecisionNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
     item_cls = items.DecisionNodeItem
     fork_node_cls = UML.DecisionNode
     join_node_cls = UML.MergeNode
-
 
 
 # vim:sw=4:et:ai

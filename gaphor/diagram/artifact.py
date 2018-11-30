@@ -5,14 +5,13 @@ Artifact item.
 from gaphor import UML
 from gaphor.diagram.classifier import ClassifierItem
 
+
 class ArtifactItem(ClassifierItem):
 
-    __uml__  = UML.Artifact
+    __uml__ = UML.Artifact
     __icon__ = True
 
-    __style__ = {
-            'name-padding': (10, 25, 10, 10),
-    }
+    __style__ = {"name-padding": (10, 25, 10, 10)}
 
     ICON_HEIGHT = 20
 
@@ -23,7 +22,7 @@ class ArtifactItem(ClassifierItem):
         # Set drawing style to compartment w/ small icon
         self.drawing_style = self.DRAW_COMPARTMENT_ICON
         self._line = []
-        
+
     def pre_update_compartment_icon(self, context):
         super(ArtifactItem, self).pre_update_compartment_icon(context)
         w = self.ICON_WIDTH
@@ -31,14 +30,14 @@ class ArtifactItem(ClassifierItem):
         ix, iy = self.get_icon_pos()
         ear = 5
         self._line = (
-                (ix + w - ear, iy + ear),
-                (ix + w, iy + ear),
-                (ix + w - ear, iy),
-                (ix, iy),
-                (ix, iy + h),
-                (ix + w, iy + h),
-                (ix + w, iy + ear))
-
+            (ix + w - ear, iy + ear),
+            (ix + w, iy + ear),
+            (ix + w - ear, iy),
+            (ix, iy),
+            (ix, iy + h),
+            (ix + w, iy + h),
+            (ix + w, iy + ear),
+        )
 
     def draw_compartment_icon(self, context):
         cr = context.cairo
@@ -56,7 +55,6 @@ class ArtifactItem(ClassifierItem):
         for x, y in self._line:
             cr.line_to(x, y)
         cr.stroke()
-
 
 
 # vim:sw=4:et

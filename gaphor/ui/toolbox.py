@@ -29,16 +29,22 @@ class Toolbox(Gtk.VBox):
     TARGET_STRING = 0
     TARGET_TOOLBOX_ACTION = 1
     DND_TARGETS = [
-        Gtk.TargetEntry.new('STRING', Gtk.TargetFlags.SAME_APP, TARGET_STRING),
-        Gtk.TargetEntry.new('text/plain', Gtk.TargetFlags.SAME_APP, TARGET_STRING),
-        Gtk.TargetEntry.new('gaphor/toolbox-action', Gtk.TargetFlags.SAME_APP, TARGET_TOOLBOX_ACTION)]
+        Gtk.TargetEntry.new("STRING", Gtk.TargetFlags.SAME_APP, TARGET_STRING),
+        Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, TARGET_STRING),
+        Gtk.TargetEntry.new(
+            "gaphor/toolbox-action", Gtk.TargetFlags.SAME_APP, TARGET_TOOLBOX_ACTION
+        ),
+    ]
 
     __gsignals__ = {
-        'toggled': (GObject.SignalFlags.RUN_FIRST,
-                    None, (GObject.TYPE_STRING, GObject.TYPE_INT))
+        "toggled": (
+            GObject.SignalFlags.RUN_FIRST,
+            None,
+            (GObject.TYPE_STRING, GObject.TYPE_INT),
+        )
     }
 
-    properties = inject('properties')
+    properties = inject("properties")
 
     def __init__(self, toolboxdef):
         """
@@ -59,12 +65,12 @@ class Toolbox(Gtk.VBox):
 
         expander.set_label(title)
 
-        prop = 'ui.toolbox.%s' % title.replace(' ', '-').lower()
-        
+        prop = "ui.toolbox.%s" % title.replace(" ", "-").lower()
+
         expanded = self.properties.get(prop, False)
         expander.set_expanded(expanded)
 
-        expander.connect('activate', self.on_expander_toggled, prop)
+        expander.connect("activate", self.on_expander_toggled, prop)
 
         expander.add(content)
 
@@ -72,15 +78,14 @@ class Toolbox(Gtk.VBox):
 
         return expander
 
-
     def on_expander_toggled(self, widget, prop):
         # Save the property (inverse value as handler is called before the
         # action takes place):
         self.properties.set(prop, not widget.get_expanded())
-        
 
-    def toolbox_button(self, action_name, stock_id,
-                       icon_size=Gtk.IconSize.LARGE_TOOLBAR):
+    def toolbox_button(
+        self, action_name, stock_id, icon_size=Gtk.IconSize.LARGE_TOOLBAR
+    ):
         button = Gtk.ToggleButton()
         button.set_relief(Gtk.ReliefStyle.NONE)
         if stock_id:
@@ -91,12 +96,15 @@ class Toolbox(Gtk.VBox):
         else:
             button.props.label = action_name
         button.action_name = action_name
-        
+
         # Enable DND (behaviour like tree view)
-        button.drag_source_set(Gdk.ModifierType.BUTTON1_MASK, self.DND_TARGETS,
-                Gdk.DragAction.COPY | Gdk.DragAction.LINK)
+        button.drag_source_set(
+            Gdk.ModifierType.BUTTON1_MASK,
+            self.DND_TARGETS,
+            Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+        )
         button.drag_source_set_icon_stock(stock_id)
-        button.connect('drag-data-get', self._button_drag_data_get)
+        button.connect("drag-data-get", self._button_drag_data_get)
 
         return button
 
@@ -107,7 +115,7 @@ class Toolbox(Gtk.VBox):
             for action_name, label, stock_id, shortcut in items:
                 button = self.toolbox_button(action_name, stock_id)
                 if label:
-                    button.set_tooltip_text('%s (%s)' % (label, shortcut))
+                    button.set_tooltip_text("%s (%s)" % (label, shortcut))
                 self.buttons.append(button)
                 wrapbox.add(button)
                 button.show()

@@ -2,19 +2,21 @@ from builtins import object
 
 from zope.interface import implementer
 
-from gaphor.ui.interfaces import IDiagramSelectionChange, IDiagramTabChange, IDiagramShow
+from gaphor.ui.interfaces import (
+    IDiagramSelectionChange,
+    IDiagramTabChange,
+    IDiagramShow,
+)
 
 
 @implementer(IDiagramShow)
 class DiagramShow(object):
-
     def __init__(self, diagram):
         self.diagram = diagram
 
 
 @implementer(IDiagramTabChange)
 class DiagramTabChange(object):
-
     def __init__(self, item):
         self.item = item
         self.diagram_tab = item.diagram_tab
@@ -22,7 +24,6 @@ class DiagramTabChange(object):
 
 @implementer(IDiagramSelectionChange)
 class DiagramSelectionChange(object):
-
     def __init__(self, diagram_view, focused_item, selected_items):
         self.diagram_view = diagram_view
         self.focused_item = focused_item

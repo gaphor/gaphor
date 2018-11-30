@@ -10,6 +10,7 @@ from gaphor import UML
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 from gaphor.diagram.classifier import ClassifierItem
 
+
 class ActorItem(ClassifierItem):
     """
     Actor item is a classifier in icon mode.
@@ -20,21 +21,20 @@ class ActorItem(ClassifierItem):
     __uml__ = UML.Actor
 
     HEAD = 11
-    ARM  = 19
+    ARM = 19
     NECK = 10
     BODY = 20
     __style__ = {
-        'min-size': (ARM * 2, HEAD + NECK + BODY + ARM),
-        'name-align': (ALIGN_CENTER, ALIGN_BOTTOM),
-        'name-padding': (5, 0, 5, 0),
-        'name-outside': True,
+        "min-size": (ARM * 2, HEAD + NECK + BODY + ARM),
+        "name-align": (ALIGN_CENTER, ALIGN_BOTTOM),
+        "name-padding": (5, 0, 5, 0),
+        "name-outside": True,
     }
 
-    def __init__(self, id = None):
+    def __init__(self, id=None):
         ClassifierItem.__init__(self, id)
 
         self.drawing_style = self.DRAW_ICON
-
 
     def draw_icon(self, context):
         """
@@ -46,7 +46,7 @@ class ActorItem(ClassifierItem):
 
         head, neck, arm, body = self.HEAD, self.NECK, self.ARM, self.BODY
 
-        fx = old_div(self.width, (arm * 2));
+        fx = old_div(self.width, (arm * 2))
         fy = old_div(self.height, (head + neck + body + arm))
 
         x = arm * fx
