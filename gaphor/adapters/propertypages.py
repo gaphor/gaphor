@@ -33,6 +33,7 @@ from builtins import zip
 from builtins import range
 from past.utils import old_div
 from gi.repository import GObject
+from gi.repository import Gdk
 from gi.repository import Gtk
 import math
 from gaphor.core import _, inject, transactional
@@ -88,7 +89,7 @@ class EditableTreeModel(Gtk.ListStore):
         for row in self:
             # print 'refresh for', obj
             if row[-1] is obj:
-                seIlf._set_object_value(row, len(row) - 1, obj)
+                self._set_object_value(row, len(row) - 1, obj)
                 self.row_changed(row.path, row.iter)
                 # print 'found!'
                 return
@@ -146,25 +147,15 @@ class EditableTreeModel(Gtk.ListStore):
         """
         self.append([None] * self.get_n_columns())
 
-    def iter_prev(self, iter):
-        """
-        Get previous GTK tree iterator to ``iter``.
-        """
-        i = self.get_path(iter)[0]
-        if i == 0:
-            return None
-        return self.get_iter((i - 1,))
-
     @transactional
     def set_value(self, iter, col, value):
-        path = self.get_path(iter)
-        row = self[path]
+        row = self[iter][:]
 
         if col == 0 and not value and row[-1]:
             # kill row and delete object if text of first column is empty
             self.remove(iter)
 
-        elif value and col == 0 and not row[-1]:
+        elif col == 0 and value and not row[-1]:
             # create new object
             obj = self._create_object()
             row[-1] = obj
@@ -173,7 +164,8 @@ class EditableTreeModel(Gtk.ListStore):
 
         elif row[-1]:
             self._set_object_value(row, col, value)
-        # self._item.request_update(matrix=False)
+
+        self.set(iter, list(range(len(row))), row)
 
     def remove(self, iter):
         """
@@ -328,7 +320,7 @@ def swap_on_keypress(tree, event):
         return True
     elif k == "minus":
         model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_prev(iter))
+        model.swap(iter, model.iter_previous(iter))
         return True
 
 
@@ -741,7 +733,7 @@ class AttributesPage(object):
         page.pack_start(hbox, False, True, 0)
 
         def create_model():
-            return ClassAttributes(self.item, (str, bool, GObject.TYPE_PYOBJECT))
+            return ClassAttributes(self.item, (str, bool, object))
 
         self.model = create_model()
 
@@ -819,7 +811,7 @@ class OperationsPage(object):
         page.pack_start(hbox, False, True, 0)
 
         def create_model():
-            return ClassOperations(self.item, (str, bool, bool, GObject.TYPE_PYOBJECT))
+            return ClassOperations(self.item, (str, bool, bool, object))
 
         self.model = create_model()
         tip = """\

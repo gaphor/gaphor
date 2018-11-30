@@ -6,6 +6,10 @@ diagram).
 
 from builtins import str
 import inspect
+import gi
+
+gi.require_version("PangoCairo", "1.0")
+
 from gi.repository import GObject
 import uuid
 
@@ -76,7 +80,7 @@ class DiagramItemMeta(type):
         Map UML class to diagram item.
 
         @param cls:  new instance of item class
-        @param data: metaclass data with UML class information 
+        @param data: metaclass data with UML class information
 
         """
         if "__uml__" in data:

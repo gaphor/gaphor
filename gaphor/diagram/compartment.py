@@ -11,6 +11,7 @@ import logging
 import cairo
 from gi.repository import Pango
 from gi.repository import PangoCairo
+from gaphas.freehand import FreeHandCairoContext
 from gaphas.state import observed, reversible_property
 
 from gaphor import UML
@@ -80,9 +81,10 @@ class FeatureItem(object):
 
     def draw(self, context):
         cr = context.cairo
+        if isinstance(cr, FreeHandCairoContext):
+            cr = cr.cr
         if isinstance(cr, cairo.Context):
-            cr = PangoCairo.CairoContext(cr)
-            layout = cr.create_layout()
+            layout = PangoCairo.create_layout(cr)
             layout.set_font_description(Pango.FontDescription(self.font))
             layout.set_text(self.render() or "")
 
@@ -90,7 +92,7 @@ class FeatureItem(object):
                 attrlist = Pango.AttrList()
                 attrlist.insert(Pango.AttrUnderline(Pango.Underline.SINGLE, 2, -1))
                 layout.set_attributes(attrlist)
-            cr.show_layout(layout)
+            PangoCairo.show_layout(cr, layout)
 
 
 class Compartment(list):
@@ -333,7 +335,7 @@ class CompartmentItem(NamedItem):
     def update_stereotypes_attrs(self):
         """
         Display or hide stereotypes attributes.
-        
+
         New compartment is created for every stereotype having attributes
         redefined.
         """
