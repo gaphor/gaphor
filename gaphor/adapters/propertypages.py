@@ -167,6 +167,8 @@ class EditableTreeModel(Gtk.ListStore):
 
         self.set(iter, list(range(len(row))), row)
 
+        self.set(iter, list(range(len(row))), row)
+
     def remove(self, iter):
         """
         Remove object from GTK model and destroy it.
