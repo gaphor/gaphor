@@ -5,24 +5,13 @@ Run 'python setup.py develop' to set up a development environment, including
 dependencies.
 """
 
-VERSION = "0.17.1"
+VERSION = "1.0.0"
 
-import os
 import sys
 
 sys.path.insert(0, ".")
 
-from ez_setup import use_setuptools
-
-use_setuptools()
-
 from setuptools import setup, find_packages
-from distutils.cmd import Command
-
-# try:
-# from sphinx.setup_command import BuildDoc
-# except ImportError, e:
-#    print 'No Sphynx found'
 
 from utils.command.build_mo import build_mo
 from utils.command.build_pot import build_pot
