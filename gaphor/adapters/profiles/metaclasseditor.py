@@ -58,7 +58,7 @@ class MetaclassNameEditor(object):
         for c in self.CLASSES:
             model.append([c])
 
-        cb = Gtk.ComboBox(model=model)
+        cb = Gtk.ComboBox.new_with_model_and_entry(model)
 
         completion = Gtk.EntryCompletion()
         completion.set_model(model)
