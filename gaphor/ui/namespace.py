@@ -138,11 +138,11 @@ class NamespaceModel(Gtk.GenericTreeModel):
             ns = e.namespace
             n = self._nodes.get(ns)
             if n:
-                return self.path_from_element(ns) + (n.index(e),)
+                return self.path_from_element(ns) + [n.index(e)]
             else:
-                return ()
+                return []
         else:
-            return ()
+            return []
 
     def element_from_path(self, path):
         """
@@ -290,9 +290,9 @@ class NamespaceModel(Gtk.GenericTreeModel):
             # Remove entry from old place
             if old_value in self._nodes:
                 try:
-                    path = self.path_from_element(old_value) + (
-                        self._nodes[old_value].index(element),
-                    )
+                    path = self.path_from_element(old_value) + [
+                        self._nodes[old_value].index(element)
+                    ]
                 except ValueError:
                     log.error(
                         "Unable to create path for element %s and old_value %s"
