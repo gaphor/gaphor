@@ -8,8 +8,9 @@ import math
 from builtins import object
 
 import cairo
-from gaphas.geometry import distance_rectangle_point, Rectangle
+import gi
 from gaphas.freehand import FreeHandCairoContext
+from gaphas.geometry import distance_rectangle_point, Rectangle
 from gi.repository import Pango
 
 gi.require_version("PangoCairo", "1.0")
