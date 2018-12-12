@@ -138,11 +138,11 @@ class NamespaceModel(Gtk.GenericTreeModel):
             ns = e.namespace
             n = self._nodes.get(ns)
             if n:
-                return self.path_from_element(ns) + [n.index(e)]
+                return self.path_from_element(ns) + (n.index(e),)
             else:
-                return []
+                return ()
         else:
-            return []
+            return ()
 
     def element_from_path(self, path):
         """
