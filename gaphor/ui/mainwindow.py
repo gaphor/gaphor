@@ -941,6 +941,38 @@ class Diagrams(object):
         self._notebook.destroy()
         self._notebook = None
 
+    def on_close_tab(self, button, widget):
+        page_num = self._notebook.page_num(widget)
+        self._notebook.remove_page(page_num)
+
+    def create_tab(self, title, widget):
+        """Creates a new Notebook tab with a label and close button.
+
+        Args:
+            title (str): The title of the tab, the diagram name.
+            widget (Gtk.Widget): The child widget of the tab.
+
+        """
+        tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        label = Gtk.Label(title)
+        tab_box.pack_start(label)
+
+        close_image = Gtk.Image.new_from_icon_name(
+            icon_name="window-close", size=Gtk.IconSize.MENU
+        )
+        button = Gtk.Button()
+        button.set_relief(Gtk.ReliefStyle.NONE)
+        button.set_focus_on_click(False)
+        button.add(close_image)
+        tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
+        tab_box.show_all()
+
+        page_num = self._notebook.append_page(child=widget, tab_label=tab_box)
+        self._notebook.set_current_page(page_num)
+
+        button.connect("clicked", self.on_close_tab, widget)
+        self.component_registry.handle(DiagramTabChange(widget))
+
     @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):
         """
@@ -962,9 +994,7 @@ class Diagrams(object):
         assert widget.get_name() == "diagram-tab"
         tab.set_drawing_style(self.properties("diagram.sloppiness", 0))
 
-        page_num = self._notebook.append_page(widget, Gtk.Label(label=diagram.name))
-        self._notebook.set_current_page(page_num)
-        self.component_registry.handle(DiagramTabChange(widget))
+        self.create_tab(diagram.name, widget)
 
         return tab
 
