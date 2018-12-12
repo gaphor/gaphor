@@ -1,5 +1,6 @@
 import gaphor.adapters.connectors
 import gaphor.adapters.editors
+import gaphor.adapters.grouping
 
 import gaphor.adapters.actions.flowconnect
 import gaphor.adapters.actions.partitionpage
