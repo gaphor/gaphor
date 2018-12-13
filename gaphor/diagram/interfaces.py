@@ -3,7 +3,7 @@ This module describes the interfaces specific to the gaphor.diagram module.
 These interfaces are:
 
  - IConnect
-   Use to define adapters for connecting 
+   Use to define adapters for connecting
  - IEditor
    Text editor interface
 
@@ -92,7 +92,8 @@ class IConnect(interface.Interface):
         otherwise.
         """
 
-
+# TODO: I think this should have been called Namespacing or something similar,
+# since that's the modeling concept.
 class IGroup(interface.Interface):
     """
     Provide interface for adding one UML object to another, i.e.
