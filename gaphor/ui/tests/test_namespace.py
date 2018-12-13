@@ -133,7 +133,7 @@ class NewNamespaceTestCase(TestCase):
         m = factory.create(UML.Package)
         m.name = "m"
         assert m in ns._nodes
-        assert ns.path_from_element(m) == (1,)
+        assert ns.path_from_element(m) == [1]
         assert ns.element_from_path((1,)) is m
 
         a = factory.create(UML.Package)
@@ -141,8 +141,8 @@ class NewNamespaceTestCase(TestCase):
         assert a in ns._nodes
         assert a in ns._nodes[None]
         assert m in ns._nodes
-        assert ns.path_from_element(a) == (1,), ns.path_from_element(a)
-        assert ns.path_from_element(m) == (2,), ns.path_from_element(m)
+        assert ns.path_from_element(a) == [1], ns.path_from_element(a)
+        assert ns.path_from_element(m) == [2], ns.path_from_element(m)
 
         a.package = m
         assert a in ns._nodes
@@ -152,14 +152,14 @@ class NewNamespaceTestCase(TestCase):
         assert a.package is m
         assert a in m.ownedMember
         assert a.namespace is m
-        assert ns.path_from_element(a) == (1, 0), ns.path_from_element(a)
+        assert ns.path_from_element(a) == [1, 0], ns.path_from_element(a)
 
         c = factory.create(UML.Class)
         c.name = "c"
         assert c in ns._nodes
-        assert ns.path_from_element(c) == (1,), ns.path_from_element(c)
-        assert ns.path_from_element(m) == (2,), ns.path_from_element(m)
-        assert ns.path_from_element(a) == (2, 0), ns.path_from_element(a)
+        assert ns.path_from_element(c) == [1], ns.path_from_element(c)
+        assert ns.path_from_element(m) == [2], ns.path_from_element(m)
+        assert ns.path_from_element(a) == [2, 0], ns.path_from_element(a)
 
         c.package = m
         assert c in ns._nodes
