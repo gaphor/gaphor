@@ -839,6 +839,7 @@ class Diagrams(object):
 
         page_num = self._notebook.append_page(child=widget, tab_label=tab_box)
         self._notebook.set_current_page(page_num)
+        self._notebook.set_tab_reorderable(widget, True)
 
         button.connect("clicked", self.on_close_tab, widget)
         self.component_registry.handle(DiagramTabChange(widget))
