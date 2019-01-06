@@ -2,7 +2,7 @@ from builtins import object
 from gi.repository import Gtk
 from gaphor.tests.testcase import TestCase
 from gaphor.application import Application
-from gaphor.ui.diagramtab import DiagramTab
+from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.diagramtoolbox import DiagramToolbox, TOOLBOX_ACTIONS
 from gaphor import UML
 
@@ -24,7 +24,7 @@ class DiagramToolboxTestCase(TestCase):
     def setUp(self):
         TestCase.setUp(self)
         diagram = self.diagram
-        tab = DiagramTab(WindowOwner())
+        tab = DiagramPage(WindowOwner())
         tab.diagram = diagram
         tab.construct()
         self.tab = tab

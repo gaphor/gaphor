@@ -172,7 +172,7 @@ def itemiter(toolbox_actions):
 
 class DiagramToolbox(object):
     """
-    Composite class for DiagramTab (diagramtab.py).
+    Composite class for DiagramPage (diagrampage.py).
     """
 
     element_factory = inject("element_factory")

@@ -34,7 +34,7 @@ from gaphor.ui.event import DiagramSelectionChange
 log = logging.getLogger(__name__)
 
 
-class DiagramTab(object):
+class DiagramPage(object):
 
     component_registry = inject("component_registry")
     element_factory = inject("element_factory")
@@ -112,7 +112,7 @@ class DiagramTab(object):
         view = GtkView(canvas=self.diagram.canvas)
         view.drag_dest_set(
             Gtk.DestDefaults.MOTION,
-            DiagramTab.VIEW_DND_TARGETS,
+            DiagramPage.VIEW_DND_TARGETS,
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
         )
 
@@ -325,7 +325,7 @@ class DiagramTab(object):
         if (
             data
             and data.get_format() == 8
-            and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION
+            and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
             tool = self.toolbox.get_tool(data.get_data().decode())
             tool.create_item((x, y))
@@ -333,7 +333,7 @@ class DiagramTab(object):
         elif (
             data
             and data.get_format() == 8
-            and info == DiagramTab.VIEW_TARGET_ELEMENT_ID
+            and info == DiagramPage.VIEW_TARGET_ELEMENT_ID
         ):
             # print('drag_data_received:', data.data, info)
             n, p = data.data.split("#")

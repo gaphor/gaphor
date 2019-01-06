@@ -2,11 +2,11 @@ import unittest
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.ui.diagramtab import DiagramTab
+from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.mainwindow import MainWindow
 
 
-class DiagramTabTestCase(unittest.TestCase):
+class DiagramPageTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[

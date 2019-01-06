@@ -30,7 +30,7 @@ from gaphor.interfaces import IService, IActionProvider
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
-from gaphor.ui.diagramtab import DiagramTab
+from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange, DiagramShow
 from gaphor.ui.interfaces import IDiagramTabChange
@@ -132,10 +132,6 @@ class MainWindow(object):
     def __init__(self):
         self.window = None
         self.model_changed = False
-
-        # Map tab contents to DiagramTab
-        # self.notebook_map = {}
-        self._current_diagram_tab = None
         self.layout = None
 
     def init(self, app=None):
@@ -174,7 +170,6 @@ class MainWindow(object):
         cr.unregister_handler(self._on_file_manager_state_changed)
         cr.unregister_handler(self._on_undo_manager_state_changed)
         cr.unregister_handler(self._new_model_content)
-        # self.ui_manager.remove_action_group(self.action_group)
 
     def init_action_group(self):
         self.action_group = build_action_group(self)
@@ -203,30 +198,6 @@ class MainWindow(object):
         Return the file name of the currently opened model.
         """
         return self.file_manager.filename
-
-    def get_current_diagram_tab(self):
-        """
-        Get the currently opened and viewed DiagramTab, shown on the right
-        side of the main window.
-        See also: get_current_diagram(), get_current_diagram_view().
-        """
-        return self._current_diagram_tab
-
-    def get_current_diagram(self):
-        """
-        Return the Diagram associated with the viewed DiagramTab.
-        See also: get_current_diagram_tab(), get_current_diagram_view().
-        """
-        tab = self._current_diagram_tab
-        return tab and tab.get_diagram()
-
-    def get_current_diagram_view(self):
-        """
-        Return the DiagramView associated with the viewed DiagramTab.
-        See also: get_current_diagram_tab(), get_current_diagram().
-        """
-        tab = self._current_diagram_tab
-        return tab and tab.get_view()
 
     def ask_to_close(self):
         """
@@ -310,9 +281,6 @@ class MainWindow(object):
         with open(filename) as f:
             deserialize(self.layout, vbox, f.read(), _factory)
 
-        # self.layout.connect('item-closed', self._on_item_closed)
-        # self.layout.connect('item-selected', self._on_item_selected)
-
         vbox.show()
         # TODO: add statusbar
 
@@ -324,7 +292,6 @@ class MainWindow(object):
         self.window.set_resizable(True)
         self.window.connect("size-allocate", self._on_window_size_allocate)
         self.window.connect("destroy", self._on_window_destroy)
-        # self.window.connect_after('key-press-event', self._on_key_press_event)
 
         cr = self.component_registry
         cr.register_handler(self._on_file_manager_state_changed)
@@ -353,41 +320,6 @@ class MainWindow(object):
                 title += " *"
             self.window.set_title(title)
 
-    # Notebook methods:
-
-    def add_tab(self, item):
-        """
-        Create a new tab on the notebook with window as its contents.
-        Returns: The page number of the tab.
-        """
-        diagrams = self.get_widgets("diagrams")
-        if len(diagrams):
-            group = diagrams[0]
-            group.insert_item(item)
-            item.show_all()
-        # item.diagram_tab = tab
-        # self.notebook_map[item] = tab
-
-    def set_current_page(self, tab):
-        """
-        Force a specific tab (DiagramTab) to the foreground.
-        """
-        for i in self.get_widgets("diagram-tab"):
-            if i.diagram_tab is tab:
-                g = i.get_parent()
-                g.set_current_item(g.item_num(i))
-                return
-        # for p, t in self.notebook_map.iteritems():
-        #    if tab is t:
-        #        num = self.notebook.page_num(p)
-        #        self.notebook.set_current_page(num)
-        #        return
-        pass
-
-    def get_tabs(self):
-        tabs = [i.diagram_tab for i in self.get_widgets("diagram-tab")]
-        return tabs
-
     # Signal callbacks:
 
     @component.adapter(ModelFactoryEvent)
@@ -400,7 +332,6 @@ class MainWindow(object):
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
-            # self.show_diagram(diagram)
             self.component_registry.handle(DiagramShow(diagram))
 
     @component.adapter(FileManagerStateChanged)
@@ -445,51 +376,6 @@ class MainWindow(object):
                 self.ui_manager.remove_action_group(action_group)
                 self.ui_manager.remove_ui(ui_id)
                 self._tab_ui_settings = None
-
-    def _on_item_closed(self, layout, page_num, item):
-        self._clear_ui_settings()
-        try:
-            ui_component = item.ui_component
-        except AttributeError:
-            log.warning("No ui component defined on item")
-        else:
-            ui_component.close()
-        item.destroy()
-
-    def _on_item_selected(self, layout, page_num, item):
-        """
-        Another page (tab) is put on the front of the diagram notebook.
-        A dummy action is executed.
-        """
-        # TODO: Here the magic happens!
-        # TODO: Need to see what the active view is, or make toolbox actions global
-        self._clear_ui_settings()
-
-        # Is it a diagram view?
-        try:
-            tab = item.diagram_tab
-        except AttributeError:
-            # Not a diagram tab
-            return
-
-        self._current_diagram_tab = tab
-
-        content = self.notebook.get_nth_page(page_num)
-        tab = self.notebook_map.get(content)
-        # assert isinstance(tab, DiagramTab), str(tab)
-
-        self.ui_manager.insert_action_group(tab.action_group, -1)
-        ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
-        self._tab_ui_settings = tab.action_group, ui_id
-        log.debug("Menus updated with %s, %d" % self._tab_ui_settings)
-
-        # Make sure everyone knows the selection has changed.
-        self.component_registry.handle(
-            DiagramTabChange(item),
-            DiagramSelectionChange(
-                tab.view, tab.view.focused_item, tab.view.selected_items
-            ),
-        )
 
     def _on_window_size_allocate(self, window, allocation):
         """
@@ -582,7 +468,6 @@ class Namespace(object):
     @open_action(name="open-namespace", label=_("_Namespace"))
     def open_namespace(self):
         if not self._namespace:
-            # self.main_window.create_item(self) #self.open(), self.title, self.placement)
             return self
         else:
             self._namespace.set_property("has-focus", True)
@@ -777,7 +662,7 @@ class Namespace(object):
 
     @action(
         name="tree-view-delete-package",
-        label=_("Delete pac_kage"),
+        label=_("Delete package"),
         stock_id="gtk-delete",
     )
     @transactional
@@ -823,30 +708,23 @@ class Toolbox(object):
             self.properties.get("reset-tool-after-create", True)
         )
 
-    @open_action(name="open-toolbox", label=_("T_oolbox"))
+    @open_action(name="open-toolbox", label=_("Toolbox"))
     def open_toolbox(self):
         if not self._toolbox:
-            # self.main_window.create_item(self) #.open(), self.title, self.placement)
             return self
         else:
             self._toolbox.set_property("has-focus", True)
 
     def open(self):
+        print("open toolbox")
         widget = self.construct()
         self.main_window.window.connect_after(
             "key-press-event", self._on_key_press_event
         )
-
-        self.component_registry.register_handler(self._on_diagram_tab_change)
-        if self.main_window.get_current_diagram_tab():
-            self.update_toolbox(
-                self.main_window.get_current_diagram_tab().toolbox.action_group
-            )
         return widget
 
     def close(self):
         if self._toolbox:
-            self.component_registry.unregister_handler(self._on_diagram_tab_change)
             self._toolbox.destroy()
             self._toolbox = None
 
@@ -874,10 +752,6 @@ class Toolbox(object):
     @toggle_action(name="reset-tool-after-create", label=_("_Reset tool"), active=False)
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)
-
-    # def _insensivate_toolbox(self):
-    #    for button in self._toolbox.buttons:
-    #        button.set_property('sensitive', False)
 
     @component.adapter(IDiagramTabChange)
     def _on_diagram_tab_change(self, event):
@@ -911,12 +785,8 @@ class Toolbox(object):
             if not action_name:
                 return
 
-        self.main_window.get_current_diagram_tab().toolbox.action_group.get_action(
-            action_name
-        ).activate()
 
-
-@implementer(IUIComponent)  # , IActionProvider)
+@implementer(IUIComponent)
 class Diagrams(object):
 
     title = _("Diagrams")
@@ -927,10 +797,10 @@ class Diagrams(object):
 
     def __init__(self):
         self._notebook = None
-        # self.action_group = build_action_group(self)
-        # self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
+        self._current_diagram_tab = None
 
     def open(self):
+        print("open diagram")
         self._notebook = Gtk.Notebook()
         self._notebook.show()
         self.component_registry.register_handler(self._on_show_diagram)
@@ -975,28 +845,38 @@ class Diagrams(object):
 
     @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):
-        """
-        Show a Diagram element in a new tab.
-        If a tab is already open, show that one instead.
+        """Show a Diagram element in the Notebook.
+
+        If a diagram is already open on a Notebook page, show that one,
+        otherwise create a new Notebook page.
+
+        Args:
+            event: The service event that is calling the method.
+
         """
         diagram = event.diagram
 
         # Try to find an existing window/tab and let it get focus:
-        # for tab in self.get_tabs():
-        #     if tab.get_diagram() is diagram:
-        #         self.set_current_page(tab)
-        #         return tab
+        num_pages = self._notebook.get_n_pages()
+        found_page = False
+        for page in range(0, num_pages):
+            child_widget = self._notebook.get_nth_page(page)
+            if child_widget.diagram_tab.get_diagram() is diagram:
+                self._notebook.set_current_page(page)
+                found_page = True
+                break
 
-        tab = DiagramTab(diagram)
-        widget = tab.construct()
-        widget.set_name("diagram-tab")
-        widget.diagram_tab = tab
-        assert widget.get_name() == "diagram-tab"
-        tab.set_drawing_style(self.properties("diagram.sloppiness", 0))
+        if not found_page:
+            print("Show diagram")
 
-        self.create_tab(diagram.name, widget)
+            page = DiagramPage(diagram)
+            widget = page.construct()
+            widget.set_name("diagram-tab")
+            widget.diagram_tab = page
+            assert widget.get_name() == "diagram-tab"
+            page.set_drawing_style(self.properties("diagram.sloppiness", 0))
 
-        return tab
+            self.create_tab(diagram.name, widget)
 
 
 # vim:sw=4:et:ai
