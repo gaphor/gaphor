@@ -17,3 +17,9 @@ tmp.gaphor
 venv
 .vscode/
 .python-version
+
+# Coverage
+.coverage
+
+# Tox
+.tox

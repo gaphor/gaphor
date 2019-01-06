@@ -92,6 +92,7 @@ class IConnect(interface.Interface):
         otherwise.
         """
 
+
 # TODO: I think this should have been called Namespacing or something similar,
 # since that's the modeling concept.
 class IGroup(interface.Interface):
