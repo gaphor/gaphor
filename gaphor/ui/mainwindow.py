@@ -716,7 +716,6 @@ class Toolbox(object):
             self._toolbox.set_property("has-focus", True)
 
     def open(self):
-        print("open toolbox")
         widget = self.construct()
         self.main_window.window.connect_after(
             "key-press-event", self._on_key_press_event
@@ -797,23 +796,43 @@ class Diagrams(object):
 
     def __init__(self):
         self._notebook = None
-        self._current_diagram_tab = None
 
     def open(self):
-        print("open diagram")
+        """Open the diagrams component.
+
+        Returns:
+            The Gtk.Notebook.
+
+        """
         self._notebook = Gtk.Notebook()
         self._notebook.show()
         self.component_registry.register_handler(self._on_show_diagram)
         return self._notebook
 
     def close(self):
+        """Close the diagrams component.
+
+        """
         self.component_registry.unregister_handler(self._on_show_diagram)
         self._notebook.destroy()
         self._notebook = None
 
-    def on_close_tab(self, button, widget):
+    def cb_close_tab(self, button, widget):
+        """Callback to close the tab and remove the notebook page.
+
+        Args:
+            button (Gtk.Button): The button the callback is from.
+            widget (Gtk.Widget): The child widget of the tab.
+
+        """
         page_num = self._notebook.page_num(widget)
+        # TODO why does Gtk.Notebook give a GTK-CRITICAL if you remove a page
+        #   with set_show_tabs(True)?
+        self._notebook.set_show_tabs(False)
         self._notebook.remove_page(page_num)
+        if self._notebook.get_n_pages() > 0:
+            self._notebook.set_show_tabs(True)
+        widget.destroy()
 
     def create_tab(self, title, widget):
         """Creates a new Notebook tab with a label and close button.
@@ -841,8 +860,9 @@ class Diagrams(object):
         self._notebook.set_current_page(page_num)
         self._notebook.set_tab_reorderable(widget, True)
 
-        button.connect("clicked", self.on_close_tab, widget)
+        button.connect("clicked", self.cb_close_tab, widget)
         self.component_registry.handle(DiagramTabChange(widget))
+        self._notebook.set_show_tabs(True)
 
     @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):
@@ -868,8 +888,6 @@ class Diagrams(object):
                 break
 
         if not found_page:
-            print("Show diagram")
-
             page = DiagramPage(diagram)
             widget = page.construct()
             widget.set_name("diagram-tab")
