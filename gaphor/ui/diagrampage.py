@@ -84,7 +84,7 @@ class DiagramPage(object):
     def __init__(self, diagram):
         self.diagram = diagram
         self.view = None
-        # self.owning_window = owning_window
+        self.widget = None
         self.action_group = build_action_group(self)
         self.toolbox = None
         self.component_registry.register_handler(self._on_element_change)
@@ -121,6 +121,7 @@ class DiagramPage(object):
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
         scrolled_window.show_all()
+        self.widget = scrolled_window
 
         view.connect("focus-changed", self._on_view_selection_changed)
         view.connect("selection-changed", self._on_view_selection_changed)
@@ -132,12 +133,7 @@ class DiagramPage(object):
 
         self.toolbox = DiagramToolbox(self.diagram, view)
 
-        # item = DockItem(title=self.title, stock_id='gaphor-diagram')
-        # item.add(scrolled_window)
-        item = scrolled_window
-        self.widget = item
-
-        return item
+        return self.widget
 
     @component.adapter(IAttributeChangeEvent)
     def _on_element_change(self, event):

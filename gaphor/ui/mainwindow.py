@@ -32,8 +32,8 @@ from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
-from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange, DiagramShow
-from gaphor.ui.interfaces import IDiagramTabChange
+from gaphor.ui.event import DiagramPageChange, DiagramShow
+from gaphor.ui.interfaces import IDiagramPageChange
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import NamespaceModel, NamespaceView
@@ -752,9 +752,9 @@ class Toolbox(object):
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)
 
-    @component.adapter(IDiagramTabChange)
-    def _on_diagram_tab_change(self, event):
-        self.update_toolbox(event.diagram_tab.toolbox.action_group)
+    @component.adapter(IDiagramPageChange)
+    def _on_diagram_page_change(self, event):
+        self.update_toolbox(event.diagram_page.toolbox.action_group)
 
     def update_toolbox(self, action_group):
         """
@@ -832,6 +832,7 @@ class Diagrams(object):
         self._notebook.remove_page(page_num)
         if self._notebook.get_n_pages() > 0:
             self._notebook.set_show_tabs(True)
+        widget.diagram_page.close()
         widget.destroy()
 
     def create_tab(self, title, widget):
@@ -861,7 +862,7 @@ class Diagrams(object):
         self._notebook.set_tab_reorderable(widget, True)
 
         button.connect("clicked", self.cb_close_tab, widget)
-        self.component_registry.handle(DiagramTabChange(widget))
+        self.component_registry.handle(DiagramPageChange(widget))
         self._notebook.set_show_tabs(True)
 
     @component.adapter(DiagramShow)
@@ -877,25 +878,24 @@ class Diagrams(object):
         """
         diagram = event.diagram
 
-        # Try to find an existing window/tab and let it get focus:
+        # Try to find an existing diagram page and give it focus
         num_pages = self._notebook.get_n_pages()
-        found_page = False
         for page in range(0, num_pages):
             child_widget = self._notebook.get_nth_page(page)
-            if child_widget.diagram_tab.get_diagram() is diagram:
+            if child_widget.diagram_page.get_diagram() is diagram:
                 self._notebook.set_current_page(page)
-                found_page = True
-                break
+                return child_widget.diagram_page
 
-        if not found_page:
-            page = DiagramPage(diagram)
-            widget = page.construct()
-            widget.set_name("diagram-tab")
-            widget.diagram_tab = page
-            assert widget.get_name() == "diagram-tab"
-            page.set_drawing_style(self.properties("diagram.sloppiness", 0))
+        # No existing diagram page found, creating one
+        page = DiagramPage(diagram)
+        widget = page.construct()
+        widget.set_name("diagram-tab")
+        widget.diagram_page = page
+        assert widget.get_name() == "diagram-tab"
+        page.set_drawing_style(self.properties("diagram.sloppiness", 0))
 
-            self.create_tab(diagram.name, widget)
+        self.create_tab(diagram.name, widget)
+        return page
 
 
 # vim:sw=4:et:ai

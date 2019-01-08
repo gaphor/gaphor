@@ -117,8 +117,8 @@ class CheckModelWindow(object):
             except AttributeError:
                 presentation = element.namespace.presentation[0]
                 diagram = presentation.canvas.diagram
-            diagram_tab = main_window.show_diagram(diagram)
-            diagram_tab.view.focused_item = presentation
+            diagram_page = main_window.show_diagram(diagram)
+            diagram_page.view.focused_item = presentation
 
     def on_destroy(self, window):
         self.window = None
