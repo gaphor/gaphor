@@ -3,19 +3,26 @@ A GUI for the checkmodel plugin.
 """
 from __future__ import print_function
 
+import logging
 from builtins import object
 
+import gi
+
+gi.require_version("Gtk", "3.0")
 from gi.repository import GObject
 from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
+from gaphor.ui.diagrampage import DiagramPage
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.plugins.checkmetamodel import checkmodel
 
 PYELEMENT_COLUMN = 0
 ELEMENT_COLUMN = 1
 REASON_COLUMN = 2
+
+log = logging.getLogger(__name__)
 
 
 @implementer(IService, IActionProvider)
@@ -110,14 +117,13 @@ class CheckModelWindow(object):
         element = self.model.get_value(iter, PYELEMENT_COLUMN)
         print("Looking for element", element)
         if element.presentation:
-            main_window = self.main_window
             presentation = element.presentation[0]
             try:
                 diagram = presentation.canvas.diagram
             except AttributeError:
                 presentation = element.namespace.presentation[0]
                 diagram = presentation.canvas.diagram
-            diagram_page = main_window.show_diagram(diagram)
+            diagram_page = DiagramPage(diagram)
             diagram_page.view.focused_item = presentation
 
     def on_destroy(self, window):
