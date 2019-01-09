@@ -1,9 +1,11 @@
 import unittest
 
+from gaphas.examples import Box
+
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.ui.diagrampage import DiagramPage
-from gaphor.ui.mainwindow import MainWindow
+from gaphor.diagram.comment import CommentItem
+from gaphor.ui.mainwindow import DiagramPage
 
 
 class DiagramPageTestCase(unittest.TestCase):
@@ -20,37 +22,30 @@ class DiagramPageTestCase(unittest.TestCase):
         )
         main_window = Application.get_service("main_window")
         main_window.open()
-        element_factory = Application.get_service("element_factory")
-        self.element_factory = element_factory
-        self.diagram = element_factory.create(UML.Diagram)
-        self.tab = main_window.show_diagram(self.diagram)
-        self.assertEqual(self.tab.diagram, self.diagram)
-        self.assertEqual(self.tab.view.canvas, self.diagram.canvas)
-        self.assertEqual(len(element_factory.lselect()), 1)
+        self.element_factory = Application.get_service("element_factory")
+        self.diagram = self.element_factory.create(UML.Diagram)
+        self.page = DiagramPage(self.diagram)
+        self.page.construct()
+        self.assertEqual(self.page.diagram, self.diagram)
+        self.assertEqual(self.page.view.canvas, self.diagram.canvas)
+        self.assertEqual(len(self.element_factory.lselect()), 1)
 
     def tearDown(self):
-        self.tab.close()
-        del self.tab
+        self.page.close()
+        del self.page
         self.diagram.unlink()
         del self.diagram
         Application.shutdown()
-        # assert len(self.element_factory.lselect()) == 0
+        assert len(self.element_factory.lselect()) == 0
 
     def test_creation(self):
         pass
 
     def test_placement(self):
-        tab = self.tab
-        diagram = self.diagram
-        from gaphas import Element
-        from gaphas.examples import Box
-
         box = Box()
-        diagram.canvas.add(box)
-        diagram.canvas.update_now()
-        tab.view.request_update([box])
-
-        from gaphor.diagram.comment import CommentItem
+        self.diagram.canvas.add(box)
+        self.diagram.canvas.update_now()
+        self.page.view.request_update([box])
 
         comment = self.diagram.create(
             CommentItem, subject=self.element_factory.create(UML.Comment)
