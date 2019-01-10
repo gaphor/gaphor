@@ -110,11 +110,6 @@ class MainWindow(object):
             <placeholder name="secondary" />
             <placeholder name="ternary" />
           </menu>
-          <menu action="window">
-            <placeholder name="primary" />
-            <placeholder name="secondary" />
-            <placeholder name="ternary" />
-          </menu>
           <menu action="help">
             <placeholder name="primary" />
             <placeholder name="secondary" />
@@ -430,8 +425,6 @@ class Namespace(object):
     ui_manager = inject("ui_manager")
     action_manager = inject("action_manager")
 
-    menu_xml = STATIC_MENU_XML % ("window", "open-namespace")
-
     _menu_xml = """
       <ui>
         <menubar name="mainwindow">
@@ -464,13 +457,6 @@ class Namespace(object):
         self._namespace = None
         self._ui_id = None
         self.action_group = build_action_group(self)
-
-    @open_action(name="open-namespace", label=_("_Namespace"))
-    def open_namespace(self):
-        if not self._namespace:
-            return self
-        else:
-            self._namespace.set_property("has-focus", True)
 
     def open(self):
         widget = self.construct()
@@ -694,9 +680,6 @@ class Toolbox(object):
             <menuitem action="reset-tool-after-create" />
             <separator/>
           </menu>
-          <menu action="window">
-            <menuitem action="open-toolbox" />
-          </menu>
         </menubar>
       </ui>
     """
@@ -707,13 +690,6 @@ class Toolbox(object):
         self.action_group.get_action("reset-tool-after-create").set_active(
             self.properties.get("reset-tool-after-create", True)
         )
-
-    @open_action(name="open-toolbox", label=_("Toolbox"))
-    def open_toolbox(self):
-        if not self._toolbox:
-            return self
-        else:
-            self._toolbox.set_property("has-focus", True)
 
     def open(self):
         widget = self.construct()
@@ -816,6 +792,16 @@ class Diagrams(object):
         self.component_registry.unregister_handler(self._on_show_diagram)
         self._notebook.destroy()
         self._notebook = None
+
+    def get_current_diagram(self):
+        """Returns the current page of the notebook.
+
+        Returns (DiagramPage): The current diagram page.
+
+        """
+        page_num = self._notebook.get_current_page()
+        child_widget = self._notebook.get_nth_page(page_num)
+        return child_widget.diagram_page
 
     def cb_close_tab(self, button, widget):
         """Callback to close the tab and remove the notebook page.

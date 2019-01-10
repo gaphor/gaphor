@@ -1,15 +1,17 @@
 """
-This module provides a means to automatocally layout diagrams.
+This module provides a means to automatically layout diagrams.
 
 The layout is done like this:
- - First all nodes (Classes, packages, comments) on a digram are determined
+ - First all nodes (Classes, packages, comments) on a diagram are determined
  - A vertical ordering is determined based on the inheritance
  - A horizontal ordering is determined based on associations and dependencies
  - The nodes are moved to their place
  - Lines are reconnected to the nodes, so everything looks pretty.
+
 """
 from __future__ import division
 
+import logging
 import random
 from builtins import object
 
@@ -20,6 +22,8 @@ from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.plugins.diagramlayout import toposort
+
+log = logging.getLogger(__name__)
 
 
 @implementer(IService, IActionProvider)
@@ -52,7 +56,7 @@ class DiagramLayout(object):
         name="diagram-layout", label="Layout diagram", tooltip="simple diagram layout"
     )
     def execute(self):
-        d = self.main_window.get_current_diagram()
+        d = self.diagram.get_current_diagram()
         self.layout_diagram(d)
 
     @transactional
