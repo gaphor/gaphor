@@ -175,7 +175,6 @@ class MainWindow(object):
             ("edit", "_Edit"),
             ("diagram", "_Diagram"),
             ("tools", "_Tools"),
-            ("window", "_Window"),
             ("help", "_Help"),
         ):
             a = Gtk.Action.new(name, label, None, None)
@@ -648,7 +647,7 @@ class Namespace(object):
 
     @action(
         name="tree-view-delete-package",
-        label=_("Delete package"),
+        label=_("Delete pac_kage"),
         stock_id="gtk-delete",
     )
     @transactional

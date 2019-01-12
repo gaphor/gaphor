@@ -53,7 +53,7 @@ class DiagramLayout(object):
         self.sensitive = bool(self.get_window().get_current_diagram())
 
     @action(
-        name="diagram-layout", label="Layout diagram", tooltip="simple diagram layout"
+        name="diagram-layout", label="La_yout diagram", tooltip="simple diagram layout"
     )
     def execute(self):
         d = self.diagram.get_current_diagram()
