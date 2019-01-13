@@ -149,6 +149,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def __init__(self, locals=None):
         Gtk.ScrolledWindow.__init__(self)
+        self.set_min_content_width(640)
+        self.set_min_content_height(480)
         self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 
         self.text = Gtk.TextView()
@@ -360,7 +362,6 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 def main():
     w = Gtk.Window()
     console = GTKInterpreterConsole()
-    console.set_size_request(640, 480)
     w.add(console)
 
     def destroy(arg=None):
