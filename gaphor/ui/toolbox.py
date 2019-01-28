@@ -16,7 +16,7 @@ class Toolbox(Gtk.VBox):
     with a name above it. When the user clicks on the name the box's content
     shows/hides.
 
-    The 'toggled' signal is emited everytime a box shows/hides.
+    The 'toggled' signal is emitted every time a box shows/hides.
 
     The toolbox is generated based on a definition with the form:
     ('name', ('boxAction1', 'boxAction2',...), 'name2', ('BoxActionN',...))

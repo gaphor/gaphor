@@ -237,8 +237,7 @@ class MainWindow(object):
 
         self.window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
         self.window.set_title(self.title)
-        self.window.set_size_request(*self.size)
-        self.window.set_resizable(self.resizable)
+        self.window.set_default_size(*self.size)
 
         # set default icons of gaphor windows
         icon_dir = os.path.abspath(
