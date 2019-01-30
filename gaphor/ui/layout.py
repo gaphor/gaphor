@@ -73,9 +73,9 @@ def deserialize(layout, container, layoutstr, itemfactory):
 def add(widget, index, parent_widget):
     if isinstance(parent_widget, Gtk.Paned):
         if index == 0:
-            parent_widget.add1(widget)
+            parent_widget.pack1(child=widget, resize=False, shrink=False)
         elif index == 1:
-            parent_widget.add2(widget)
+            parent_widget.pack2(child=widget, resize=True, shrink=False)
     else:
         parent_widget.add(widget)
 
