@@ -93,12 +93,14 @@ def factory(typename):
 
 
 @factory("paned")
-def paned(parent, index, orientation, weight=None):
+def paned(parent, index, orientation, position=None):
     paned = Gtk.Paned.new(
         Gtk.Orientation.HORIZONTAL
         if orientation == "horizontal"
         else Gtk.Orientation.VERTICAL
     )
     add(paned, index, parent)
+    if position:
+        paned.set_position(int(position))
     paned.show()
     return paned
