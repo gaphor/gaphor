@@ -99,8 +99,6 @@ class MainWindow(object):
             <placeholder name="ternary" />
           </menu>
           <menu action="diagram">
-            <menuitem action="diagram-drawing-style" />
-            <separator />
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
@@ -181,9 +179,6 @@ class MainWindow(object):
             a.set_property("hide-if-empty", False)
             self.action_group.add_action(a)
         self._tab_ui_settings = None
-        self.action_group.get_action("diagram-drawing-style").set_active(
-            self.properties("diagram.sloppiness", 0) != 0
-        )
 
         self.action_manager.register_action_provider(self)
 
@@ -383,19 +378,6 @@ class MainWindow(object):
         # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and Gtk.main_quit()
         self.shutdown()
-
-    @toggle_action(name="diagram-drawing-style", label="Hand drawn style", active=False)
-    def hand_drawn_style(self, active):
-        """
-        Toggle between straight diagrams and "hand drawn" diagram style.
-        """
-        if active:
-            sloppiness = 0.5
-        else:
-            sloppiness = 0.0
-        for tab in self.get_tabs():
-            tab.set_drawing_style(sloppiness)
-        self.properties.set("diagram.sloppiness", sloppiness)
 
     def create_item(self, ui_component):
         """
@@ -760,7 +742,7 @@ class Toolbox(object):
                 return
 
 
-@implementer(IUIComponent)
+@implementer(IUIComponent, IActionProvider)
 class Diagrams(object):
 
     title = _("Diagrams")
@@ -769,8 +751,24 @@ class Diagrams(object):
     component_registry = inject("component_registry")
     properties = inject("properties")
 
+    menu_xml = """
+      <ui>
+        <menubar name="mainwindow">
+          <menu action="diagram">
+            <separator/>
+            <menuitem action="diagram-drawing-style" />
+            <separator/>
+          </menu>
+        </menubar>
+      </ui>
+    """
+
     def __init__(self):
         self._notebook = None
+        self.action_group = build_action_group(self)
+        self.action_group.get_action("diagram-drawing-style").set_active(
+            self.properties("diagram.sloppiness", 0) != 0
+        )
 
     def open(self):
         """Open the diagrams component.
@@ -850,6 +848,23 @@ class Diagrams(object):
         self.component_registry.handle(DiagramPageChange(widget))
         self._notebook.set_show_tabs(True)
 
+    def get_widgets_on_pages(self):
+        """Gets the widget on each open page Notebook page.
+
+        The page is the page number in the Notebook (0 indexed) and the widget
+        is the child widget on each page.
+
+        Returns:
+            List of tuples (page, widget) of the currently open Notebook pages.
+
+        """
+        widgets_on_pages = []
+        num_pages = self._notebook.get_n_pages()
+        for page in range(0, num_pages):
+            widget = self._notebook.get_nth_page(page)
+            widgets_on_pages.append((page, widget))
+        return widgets_on_pages
+
     @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
@@ -864,12 +879,10 @@ class Diagrams(object):
         diagram = event.diagram
 
         # Try to find an existing diagram page and give it focus
-        num_pages = self._notebook.get_n_pages()
-        for page in range(0, num_pages):
-            child_widget = self._notebook.get_nth_page(page)
-            if child_widget.diagram_page.get_diagram() is diagram:
+        for page, widget in self.get_widgets_on_pages():
+            if widget.diagram_page.get_diagram() is diagram:
                 self._notebook.set_current_page(page)
-                return child_widget.diagram_page
+                return widget.diagram_page
 
         # No existing diagram page found, creating one
         page = DiagramPage(diagram)
@@ -881,6 +894,19 @@ class Diagrams(object):
 
         self.create_tab(diagram.name, widget)
         return page
+
+    @toggle_action(name="diagram-drawing-style", label="Hand drawn style", active=False)
+    def hand_drawn_style(self, active):
+        """
+        Toggle between straight diagrams and "hand drawn" diagram style.
+        """
+        if active:
+            sloppiness = 0.5
+        else:
+            sloppiness = 0.0
+        for page, widget in self.get_widgets_on_pages():
+            widget.diagram_page.set_drawing_style(sloppiness)
+        self.properties.set("diagram.sloppiness", sloppiness)
 
 
 # vim:sw=4:et:ai
