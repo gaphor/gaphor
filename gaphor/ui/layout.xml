@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <layout>
-    <paned orientation="horizontal">
-      <paned orientation="vertical" weight="20">
+    <paned orientation="horizontal" position="200">
+      <paned orientation="vertical" position="200">
         <component name="namespace"/>
         <component name="toolbox"/>
       </paned>
-      <component name="diagrams" weight="80"/>
+      <component name="diagrams"/>
     </paned>
 </layout>

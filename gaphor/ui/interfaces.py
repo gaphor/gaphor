@@ -13,14 +13,14 @@ class IDiagramShow(interface.Interface):
     diagram = interface.Attribute("The newly selected Diagram")
 
 
-class IDiagramTabChange(interface.Interface):
+class IDiagramPageChange(interface.Interface):
     """
     The selected diagram changes.
     """
 
     item = interface.Attribute("The newly selected Notebook pane")
 
-    diagram_tab = interface.Attribute("The newly selected diagram tab")
+    diagram_page = interface.Attribute("The newly selected diagram page")
 
 
 class IDiagramSelectionChange(interface.Interface):

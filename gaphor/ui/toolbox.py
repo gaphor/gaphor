@@ -7,23 +7,18 @@ from gi.repository import Gdk
 from gi.repository import Gtk
 
 from gaphor.core import inject
-from gaphor.ui.wrapbox import Wrapbox
 
 
-class Toolbox(Gtk.VBox):
+class Toolbox(Gtk.ToolPalette):
     """
-    A toolbox is a widget that contains a set of buttons (a Wrapbox widget)
-    with a name above it. When the user clicks on the name the box's content
-    shows/hides.
-
-    The 'toggled' signal is emited everytime a box shows/hides.
+    A toolbox is a ToolPalette widget that contains a ToolItems (buttons) that
+    are added to a ToolItemGroup. Each group has a label above the buttons.
+    When the user clicks on the name the group's content toggles to show or
+    hide the buttons.
 
     The toolbox is generated based on a definition with the form:
     ('name', ('boxAction1', 'boxAction2',...), 'name2', ('BoxActionN',...))
 
-    1 Create action pool for placement actions
-    2 Create Gtk.RadioButtons for each item.
-    3 connect to action
     """
 
     TARGET_STRING = 0
@@ -47,57 +42,23 @@ class Toolbox(Gtk.VBox):
     properties = inject("properties")
 
     def __init__(self, toolboxdef):
-        """
-        Create a new Toolbox instance. Wrapbox objects are generated
-        using the menu_factory and based on the toolboxdef definition.
+        """Create a new Toolbox instance.
+
+        ToolItemGroups and ToolItems are created using the menu_factory and
+        based on the toolboxdef definition.
+
         """
         GObject.GObject.__init__(self)
         self.buttons = []
         self.shortcuts = {}
         self._construct(toolboxdef)
 
-    def make_wrapbox_decorator(self, title, content):
-        """
-        Create a Gtk.VBox with in the top compartment a label that can be
-        clicked to show/hide the lower compartment.
-        """
-        expander = Gtk.Expander()
-
-        expander.set_label(title)
-
-        prop = "ui.toolbox.%s" % title.replace(" ", "-").lower()
-
-        expanded = self.properties.get(prop, False)
-        expander.set_expanded(expanded)
-
-        expander.connect("activate", self.on_expander_toggled, prop)
-
-        expander.add(content)
-
-        expander.show_all()
-
-        return expander
-
-    def on_expander_toggled(self, widget, prop):
-        # Save the property (inverse value as handler is called before the
-        # action takes place):
-        self.properties.set(prop, not widget.get_expanded())
-
-    def toolbox_button(
-        self, action_name, stock_id, icon_size=Gtk.IconSize.LARGE_TOOLBAR
-    ):
-        button = Gtk.ToggleButton()
-        button.set_relief(Gtk.ReliefStyle.NONE)
-        if stock_id:
-            icon = Gtk.Image()
-            icon.set_from_stock(stock_id, icon_size)
-            button.add(icon)
-            icon.show()
-        else:
-            button.props.label = action_name
+    def toolbox_button(self, action_name, stock_id):
+        button = Gtk.ToolButton.new_from_stock(stock_id)
         button.action_name = action_name
+        button.set_use_drag_window(True)
 
-        # Enable DND (behaviour like tree view)
+        # Enable Drag and Drop
         button.drag_source_set(
             Gdk.ModifierType.BUTTON1_MASK,
             self.DND_TARGETS,
@@ -111,21 +72,17 @@ class Toolbox(Gtk.VBox):
     def _construct(self, toolboxdef):
         shortcuts = self.shortcuts
         for title, items in toolboxdef:
-            wrapbox = Wrapbox()
+            tool_item_group = Gtk.ToolItemGroup.new(title)
             for action_name, label, stock_id, shortcut in items:
                 button = self.toolbox_button(action_name, stock_id)
                 if label:
                     button.set_tooltip_text("%s (%s)" % (label, shortcut))
                 self.buttons.append(button)
-                wrapbox.add(button)
+                tool_item_group.insert(button, -1)
                 button.show()
                 shortcuts[shortcut] = action_name
-            if title:
-                wrapbox_dec = self.make_wrapbox_decorator(title, wrapbox)
-                self.pack_start(wrapbox_dec, False, True, 0)
-            else:
-                self.pack_start(wrapbox, False, True, 0)
-                wrapbox.show()
+            self.add(tool_item_group)
+            tool_item_group.show()
 
     def _button_drag_data_get(self, button, context, data, info, time):
         """The drag-data-get event signal handler.
@@ -143,7 +100,7 @@ class Toolbox(Gtk.VBox):
             time (int): The timestamp at which the data was received.
 
         """
-        data.set(data.get_target(), 8, button.action_name.encode())
+        data.set(type=data.get_target(), format=8, data=button.action_name.encode())
 
 
 # vim:sw=4:et:ai

@@ -73,9 +73,9 @@ def deserialize(layout, container, layoutstr, itemfactory):
 def add(widget, index, parent_widget):
     if isinstance(parent_widget, Gtk.Paned):
         if index == 0:
-            parent_widget.add1(widget)
+            parent_widget.pack1(child=widget, resize=False, shrink=False)
         elif index == 1:
-            parent_widget.add2(widget)
+            parent_widget.pack2(child=widget, resize=True, shrink=False)
     else:
         parent_widget.add(widget)
 
@@ -93,12 +93,14 @@ def factory(typename):
 
 
 @factory("paned")
-def paned(parent, index, orientation, weight=None):
+def paned(parent, index, orientation, position=None):
     paned = Gtk.Paned.new(
         Gtk.Orientation.HORIZONTAL
         if orientation == "horizontal"
         else Gtk.Orientation.VERTICAL
     )
     add(paned, index, parent)
+    if position:
+        paned.set_position(int(position))
     paned.show()
     return paned

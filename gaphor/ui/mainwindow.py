@@ -30,10 +30,10 @@ from gaphor.interfaces import IService, IActionProvider
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
-from gaphor.ui.diagramtab import DiagramTab
+from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
-from gaphor.ui.event import DiagramTabChange, DiagramSelectionChange, DiagramShow
-from gaphor.ui.interfaces import IDiagramTabChange
+from gaphor.ui.event import DiagramPageChange, DiagramShow
+from gaphor.ui.interfaces import IDiagramPageChange
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import NamespaceModel, NamespaceView
@@ -99,18 +99,11 @@ class MainWindow(object):
             <placeholder name="ternary" />
           </menu>
           <menu action="diagram">
-            <menuitem action="diagram-drawing-style" />
-            <separator />
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
           </menu>
           <menu action="tools">
-            <placeholder name="primary" />
-            <placeholder name="secondary" />
-            <placeholder name="ternary" />
-          </menu>
-          <menu action="window">
             <placeholder name="primary" />
             <placeholder name="secondary" />
             <placeholder name="ternary" />
@@ -132,10 +125,6 @@ class MainWindow(object):
     def __init__(self):
         self.window = None
         self.model_changed = False
-
-        # Map tab contents to DiagramTab
-        # self.notebook_map = {}
-        self._current_diagram_tab = None
         self.layout = None
 
     def init(self, app=None):
@@ -174,7 +163,6 @@ class MainWindow(object):
         cr.unregister_handler(self._on_file_manager_state_changed)
         cr.unregister_handler(self._on_undo_manager_state_changed)
         cr.unregister_handler(self._new_model_content)
-        # self.ui_manager.remove_action_group(self.action_group)
 
     def init_action_group(self):
         self.action_group = build_action_group(self)
@@ -185,16 +173,12 @@ class MainWindow(object):
             ("edit", "_Edit"),
             ("diagram", "_Diagram"),
             ("tools", "_Tools"),
-            ("window", "_Window"),
             ("help", "_Help"),
         ):
             a = Gtk.Action.new(name, label, None, None)
             a.set_property("hide-if-empty", False)
             self.action_group.add_action(a)
         self._tab_ui_settings = None
-        self.action_group.get_action("diagram-drawing-style").set_active(
-            self.properties("diagram.sloppiness", 0) != 0
-        )
 
         self.action_manager.register_action_provider(self)
 
@@ -203,30 +187,6 @@ class MainWindow(object):
         Return the file name of the currently opened model.
         """
         return self.file_manager.filename
-
-    def get_current_diagram_tab(self):
-        """
-        Get the currently opened and viewed DiagramTab, shown on the right
-        side of the main window.
-        See also: get_current_diagram(), get_current_diagram_view().
-        """
-        return self._current_diagram_tab
-
-    def get_current_diagram(self):
-        """
-        Return the Diagram associated with the viewed DiagramTab.
-        See also: get_current_diagram_tab(), get_current_diagram_view().
-        """
-        tab = self._current_diagram_tab
-        return tab and tab.get_diagram()
-
-    def get_current_diagram_view(self):
-        """
-        Return the DiagramView associated with the viewed DiagramTab.
-        See also: get_current_diagram_tab(), get_current_diagram().
-        """
-        tab = self._current_diagram_tab
-        return tab and tab.get_view()
 
     def ask_to_close(self):
         """
@@ -272,8 +232,7 @@ class MainWindow(object):
 
         self.window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
         self.window.set_title(self.title)
-        self.window.set_size_request(*self.size)
-        self.window.set_resizable(self.resizable)
+        self.window.set_default_size(*self.size)
 
         # set default icons of gaphor windows
         icon_dir = os.path.abspath(
@@ -310,9 +269,6 @@ class MainWindow(object):
         with open(filename) as f:
             deserialize(self.layout, vbox, f.read(), _factory)
 
-        # self.layout.connect('item-closed', self._on_item_closed)
-        # self.layout.connect('item-selected', self._on_item_selected)
-
         vbox.show()
         # TODO: add statusbar
 
@@ -324,7 +280,6 @@ class MainWindow(object):
         self.window.set_resizable(True)
         self.window.connect("size-allocate", self._on_window_size_allocate)
         self.window.connect("destroy", self._on_window_destroy)
-        # self.window.connect_after('key-press-event', self._on_key_press_event)
 
         cr = self.component_registry
         cr.register_handler(self._on_file_manager_state_changed)
@@ -353,41 +308,6 @@ class MainWindow(object):
                 title += " *"
             self.window.set_title(title)
 
-    # Notebook methods:
-
-    def add_tab(self, item):
-        """
-        Create a new tab on the notebook with window as its contents.
-        Returns: The page number of the tab.
-        """
-        diagrams = self.get_widgets("diagrams")
-        if len(diagrams):
-            group = diagrams[0]
-            group.insert_item(item)
-            item.show_all()
-        # item.diagram_tab = tab
-        # self.notebook_map[item] = tab
-
-    def set_current_page(self, tab):
-        """
-        Force a specific tab (DiagramTab) to the foreground.
-        """
-        for i in self.get_widgets("diagram-tab"):
-            if i.diagram_tab is tab:
-                g = i.get_parent()
-                g.set_current_item(g.item_num(i))
-                return
-        # for p, t in self.notebook_map.iteritems():
-        #    if tab is t:
-        #        num = self.notebook.page_num(p)
-        #        self.notebook.set_current_page(num)
-        #        return
-        pass
-
-    def get_tabs(self):
-        tabs = [i.diagram_tab for i in self.get_widgets("diagram-tab")]
-        return tabs
-
     # Signal callbacks:
 
     @component.adapter(ModelFactoryEvent)
@@ -400,7 +320,6 @@ class MainWindow(object):
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
-            # self.show_diagram(diagram)
             self.component_registry.handle(DiagramShow(diagram))
 
     @component.adapter(FileManagerStateChanged)
@@ -446,51 +365,6 @@ class MainWindow(object):
                 self.ui_manager.remove_ui(ui_id)
                 self._tab_ui_settings = None
 
-    def _on_item_closed(self, layout, page_num, item):
-        self._clear_ui_settings()
-        try:
-            ui_component = item.ui_component
-        except AttributeError:
-            log.warning("No ui component defined on item")
-        else:
-            ui_component.close()
-        item.destroy()
-
-    def _on_item_selected(self, layout, page_num, item):
-        """
-        Another page (tab) is put on the front of the diagram notebook.
-        A dummy action is executed.
-        """
-        # TODO: Here the magic happens!
-        # TODO: Need to see what the active view is, or make toolbox actions global
-        self._clear_ui_settings()
-
-        # Is it a diagram view?
-        try:
-            tab = item.diagram_tab
-        except AttributeError:
-            # Not a diagram tab
-            return
-
-        self._current_diagram_tab = tab
-
-        content = self.notebook.get_nth_page(page_num)
-        tab = self.notebook_map.get(content)
-        # assert isinstance(tab, DiagramTab), str(tab)
-
-        self.ui_manager.insert_action_group(tab.action_group, -1)
-        ui_id = self.ui_manager.add_ui_from_string(tab.menu_xml)
-        self._tab_ui_settings = tab.action_group, ui_id
-        log.debug("Menus updated with %s, %d" % self._tab_ui_settings)
-
-        # Make sure everyone knows the selection has changed.
-        self.component_registry.handle(
-            DiagramTabChange(item),
-            DiagramSelectionChange(
-                tab.view, tab.view.focused_item, tab.view.selected_items
-            ),
-        )
-
     def _on_window_size_allocate(self, window, allocation):
         """
         Store the window size in a property.
@@ -504,19 +378,6 @@ class MainWindow(object):
         # TODO: check for changes (e.g. undo manager), fault-save
         self.ask_to_close() and Gtk.main_quit()
         self.shutdown()
-
-    @toggle_action(name="diagram-drawing-style", label="Hand drawn style", active=False)
-    def hand_drawn_style(self, active):
-        """
-        Toggle between straight diagrams and "hand drawn" diagram style.
-        """
-        if active:
-            sloppiness = 0.5
-        else:
-            sloppiness = 0.0
-        for tab in self.get_tabs():
-            tab.set_drawing_style(sloppiness)
-        self.properties.set("diagram.sloppiness", sloppiness)
 
     def create_item(self, ui_component):
         """
@@ -543,8 +404,6 @@ class Namespace(object):
     element_factory = inject("element_factory")
     ui_manager = inject("ui_manager")
     action_manager = inject("action_manager")
-
-    menu_xml = STATIC_MENU_XML % ("window", "open-namespace")
 
     _menu_xml = """
       <ui>
@@ -579,14 +438,6 @@ class Namespace(object):
         self._ui_id = None
         self.action_group = build_action_group(self)
 
-    @open_action(name="open-namespace", label=_("_Namespace"))
-    def open_namespace(self):
-        if not self._namespace:
-            # self.main_window.create_item(self) #self.open(), self.title, self.placement)
-            return self
-        else:
-            self._namespace.set_property("has-focus", True)
-
     def open(self):
         widget = self.construct()
         self.component_registry.register_handler(self.expand_root_nodes)
@@ -609,6 +460,7 @@ class Namespace(object):
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
+        scrolled_window.set_placement(Gtk.CornerType.TOP_RIGHT)
         scrolled_window.add(view)
         scrolled_window.show()
         view.show()
@@ -809,9 +661,6 @@ class Toolbox(object):
             <menuitem action="reset-tool-after-create" />
             <separator/>
           </menu>
-          <menu action="window">
-            <menuitem action="open-toolbox" />
-          </menu>
         </menubar>
       </ui>
     """
@@ -823,30 +672,15 @@ class Toolbox(object):
             self.properties.get("reset-tool-after-create", True)
         )
 
-    @open_action(name="open-toolbox", label=_("T_oolbox"))
-    def open_toolbox(self):
-        if not self._toolbox:
-            # self.main_window.create_item(self) #.open(), self.title, self.placement)
-            return self
-        else:
-            self._toolbox.set_property("has-focus", True)
-
     def open(self):
         widget = self.construct()
         self.main_window.window.connect_after(
             "key-press-event", self._on_key_press_event
         )
-
-        self.component_registry.register_handler(self._on_diagram_tab_change)
-        if self.main_window.get_current_diagram_tab():
-            self.update_toolbox(
-                self.main_window.get_current_diagram_tab().toolbox.action_group
-            )
         return widget
 
     def close(self):
         if self._toolbox:
-            self.component_registry.unregister_handler(self._on_diagram_tab_change)
             self._toolbox.destroy()
             self._toolbox = None
 
@@ -875,13 +709,9 @@ class Toolbox(object):
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)
 
-    # def _insensivate_toolbox(self):
-    #    for button in self._toolbox.buttons:
-    #        button.set_property('sensitive', False)
-
-    @component.adapter(IDiagramTabChange)
-    def _on_diagram_tab_change(self, event):
-        self.update_toolbox(event.diagram_tab.toolbox.action_group)
+    @component.adapter(IDiagramPageChange)
+    def _on_diagram_page_change(self, event):
+        self.update_toolbox(event.diagram_page.toolbox.action_group)
 
     def update_toolbox(self, action_group):
         """
@@ -911,12 +741,8 @@ class Toolbox(object):
             if not action_name:
                 return
 
-        self.main_window.get_current_diagram_tab().toolbox.action_group.get_action(
-            action_name
-        ).activate()
 
-
-@implementer(IUIComponent)  # , IActionProvider)
+@implementer(IUIComponent, IActionProvider)
 class Diagrams(object):
 
     title = _("Diagrams")
@@ -925,25 +751,72 @@ class Diagrams(object):
     component_registry = inject("component_registry")
     properties = inject("properties")
 
+    menu_xml = """
+      <ui>
+        <menubar name="mainwindow">
+          <menu action="diagram">
+            <separator/>
+            <menuitem action="diagram-drawing-style" />
+            <separator/>
+          </menu>
+        </menubar>
+      </ui>
+    """
+
     def __init__(self):
         self._notebook = None
-        # self.action_group = build_action_group(self)
-        # self.action_group.get_action('reset-tool-after-create').set_active(self.properties.get('reset-tool-after-create', True))
+        self.action_group = build_action_group(self)
+        self.action_group.get_action("diagram-drawing-style").set_active(
+            self.properties("diagram.sloppiness", 0) != 0
+        )
 
     def open(self):
+        """Open the diagrams component.
+
+        Returns:
+            The Gtk.Notebook.
+
+        """
         self._notebook = Gtk.Notebook()
         self._notebook.show()
         self.component_registry.register_handler(self._on_show_diagram)
         return self._notebook
 
     def close(self):
+        """Close the diagrams component.
+
+        """
         self.component_registry.unregister_handler(self._on_show_diagram)
         self._notebook.destroy()
         self._notebook = None
 
-    def on_close_tab(self, button, widget):
+    def get_current_diagram(self):
+        """Returns the current page of the notebook.
+
+        Returns (DiagramPage): The current diagram page.
+
+        """
+        page_num = self._notebook.get_current_page()
+        child_widget = self._notebook.get_nth_page(page_num)
+        return child_widget.diagram_page
+
+    def cb_close_tab(self, button, widget):
+        """Callback to close the tab and remove the notebook page.
+
+        Args:
+            button (Gtk.Button): The button the callback is from.
+            widget (Gtk.Widget): The child widget of the tab.
+
+        """
         page_num = self._notebook.page_num(widget)
+        # TODO why does Gtk.Notebook give a GTK-CRITICAL if you remove a page
+        #   with set_show_tabs(True)?
+        self._notebook.set_show_tabs(False)
         self._notebook.remove_page(page_num)
+        if self._notebook.get_n_pages() > 0:
+            self._notebook.set_show_tabs(True)
+        widget.diagram_page.close()
+        widget.destroy()
 
     def create_tab(self, title, widget):
         """Creates a new Notebook tab with a label and close button.
@@ -969,34 +842,71 @@ class Diagrams(object):
 
         page_num = self._notebook.append_page(child=widget, tab_label=tab_box)
         self._notebook.set_current_page(page_num)
+        self._notebook.set_tab_reorderable(widget, True)
 
-        button.connect("clicked", self.on_close_tab, widget)
-        self.component_registry.handle(DiagramTabChange(widget))
+        button.connect("clicked", self.cb_close_tab, widget)
+        self.component_registry.handle(DiagramPageChange(widget))
+        self._notebook.set_show_tabs(True)
+
+    def get_widgets_on_pages(self):
+        """Gets the widget on each open page Notebook page.
+
+        The page is the page number in the Notebook (0 indexed) and the widget
+        is the child widget on each page.
+
+        Returns:
+            List of tuples (page, widget) of the currently open Notebook pages.
+
+        """
+        widgets_on_pages = []
+        num_pages = self._notebook.get_n_pages()
+        for page in range(0, num_pages):
+            widget = self._notebook.get_nth_page(page)
+            widgets_on_pages.append((page, widget))
+        return widgets_on_pages
 
     @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):
-        """
-        Show a Diagram element in a new tab.
-        If a tab is already open, show that one instead.
+        """Show a Diagram element in the Notebook.
+
+        If a diagram is already open on a Notebook page, show that one,
+        otherwise create a new Notebook page.
+
+        Args:
+            event: The service event that is calling the method.
+
         """
         diagram = event.diagram
 
-        # Try to find an existing window/tab and let it get focus:
-        # for tab in self.get_tabs():
-        #     if tab.get_diagram() is diagram:
-        #         self.set_current_page(tab)
-        #         return tab
+        # Try to find an existing diagram page and give it focus
+        for page, widget in self.get_widgets_on_pages():
+            if widget.diagram_page.get_diagram() is diagram:
+                self._notebook.set_current_page(page)
+                return widget.diagram_page
 
-        tab = DiagramTab(diagram)
-        widget = tab.construct()
+        # No existing diagram page found, creating one
+        page = DiagramPage(diagram)
+        widget = page.construct()
         widget.set_name("diagram-tab")
-        widget.diagram_tab = tab
+        widget.diagram_page = page
         assert widget.get_name() == "diagram-tab"
-        tab.set_drawing_style(self.properties("diagram.sloppiness", 0))
+        page.set_drawing_style(self.properties("diagram.sloppiness", 0))
 
         self.create_tab(diagram.name, widget)
+        return page
 
-        return tab
+    @toggle_action(name="diagram-drawing-style", label="Hand drawn style", active=False)
+    def hand_drawn_style(self, active):
+        """
+        Toggle between straight diagrams and "hand drawn" diagram style.
+        """
+        if active:
+            sloppiness = 0.5
+        else:
+            sloppiness = 0.0
+        for page, widget in self.get_widgets_on_pages():
+            widget.diagram_page.set_drawing_style(sloppiness)
+        self.properties.set("diagram.sloppiness", sloppiness)
 
 
 # vim:sw=4:et:ai

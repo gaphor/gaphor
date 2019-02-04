@@ -56,7 +56,7 @@ class DiagramExportManager(object):
 
         self.logger.info("Updating")
 
-        tab = self.get_window().get_current_diagram_tab()
+        tab = self.get_window().get_current_diagram_page()
         self.sensitive = tab and True or False
 
     def save_dialog(self, diagram, title, ext):

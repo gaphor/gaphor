@@ -48,7 +48,7 @@ class ElementEditor(object):
 
     @open_action(
         name="ElementEditor:open",
-        label=_("Editor"),
+        label=_("_Editor"),
         stock_id="gtk-edit",
         accel="<Control>e",
     )

@@ -34,7 +34,7 @@ from gaphor.ui.event import DiagramSelectionChange
 log = logging.getLogger(__name__)
 
 
-class DiagramTab(object):
+class DiagramPage(object):
 
     component_registry = inject("component_registry")
     element_factory = inject("element_factory")
@@ -84,7 +84,7 @@ class DiagramTab(object):
     def __init__(self, diagram):
         self.diagram = diagram
         self.view = None
-        # self.owning_window = owning_window
+        self.widget = None
         self.action_group = build_action_group(self)
         self.toolbox = None
         self.component_registry.register_handler(self._on_element_change)
@@ -112,7 +112,7 @@ class DiagramTab(object):
         view = GtkView(canvas=self.diagram.canvas)
         view.drag_dest_set(
             Gtk.DestDefaults.MOTION,
-            DiagramTab.VIEW_DND_TARGETS,
+            DiagramPage.VIEW_DND_TARGETS,
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
         )
 
@@ -121,6 +121,7 @@ class DiagramTab(object):
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
         scrolled_window.show_all()
+        self.widget = scrolled_window
 
         view.connect("focus-changed", self._on_view_selection_changed)
         view.connect("selection-changed", self._on_view_selection_changed)
@@ -132,12 +133,7 @@ class DiagramTab(object):
 
         self.toolbox = DiagramToolbox(self.diagram, view)
 
-        # item = DockItem(title=self.title, stock_id='gaphor-diagram')
-        # item.add(scrolled_window)
-        item = scrolled_window
-        self.widget = item
-
-        return item
+        return self.widget
 
     @component.adapter(IAttributeChangeEvent)
     def _on_element_change(self, event):
@@ -325,7 +321,7 @@ class DiagramTab(object):
         if (
             data
             and data.get_format() == 8
-            and info == DiagramTab.VIEW_TARGET_TOOLBOX_ACTION
+            and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
             tool = self.toolbox.get_tool(data.get_data().decode())
             tool.create_item((x, y))
@@ -333,7 +329,7 @@ class DiagramTab(object):
         elif (
             data
             and data.get_format() == 8
-            and info == DiagramTab.VIEW_TARGET_ELEMENT_ID
+            and info == DiagramPage.VIEW_TARGET_ELEMENT_ID
         ):
             # print('drag_data_received:', data.data, info)
             n, p = data.data.split("#")

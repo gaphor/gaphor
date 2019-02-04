@@ -4,7 +4,7 @@ from zope.interface import implementer
 
 from gaphor.ui.interfaces import (
     IDiagramSelectionChange,
-    IDiagramTabChange,
+    IDiagramPageChange,
     IDiagramShow,
 )
 
@@ -15,11 +15,11 @@ class DiagramShow(object):
         self.diagram = diagram
 
 
-@implementer(IDiagramTabChange)
-class DiagramTabChange(object):
+@implementer(IDiagramPageChange)
+class DiagramPageChange(object):
     def __init__(self, item):
         self.item = item
-        self.diagram_tab = item.diagram_tab
+        self.diagram_page = item.diagram_page
 
 
 @implementer(IDiagramSelectionChange)
