@@ -111,7 +111,7 @@ class DiagramPage(object):
 
         view = GtkView(canvas=self.diagram.canvas)
         view.drag_dest_set(
-            Gtk.DestDefaults.MOTION,
+            Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
         )
@@ -303,11 +303,11 @@ class DiagramPage(object):
         # print('drag_drop on', targets)
         for target in targets:
             name = target.name()
-            if name == "gaphor/element-id":  # self.VIEW_DND_TARGETS[0]
+            if name == "gaphor/element-id":
                 target = Gdk.atom_intern(name, False)
                 view.drag_get_data(context, target, time)
                 return True
-            elif name == "gaphor/toolbox-action":  # self.VIEW_DND_TARGETS[1]
+            elif name == "gaphor/toolbox-action":
                 target = Gdk.atom_intern(name, False)
                 view.drag_get_data(context, target, time)
                 return True
@@ -331,8 +331,8 @@ class DiagramPage(object):
             and data.get_format() == 8
             and info == DiagramPage.VIEW_TARGET_ELEMENT_ID
         ):
-            # print('drag_data_received:', data.data, info)
-            n, p = data.data.split("#")
+            # print('drag_data_received:', data.get_data(), info)
+            n, p = data.get_data().decode().split("#")
             element = self.element_factory.lookup(n)
             assert element
 
@@ -362,8 +362,8 @@ class DiagramPage(object):
                     % type(element).__name__
                 )
             context.finish(True, False, time)
-        # else:
-        #    context.finish(False, False, time)
+        else:
+           context.finish(False, False, time)
 
 
 # vim: sw=4:et:ai
