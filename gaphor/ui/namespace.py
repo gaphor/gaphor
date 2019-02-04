@@ -504,7 +504,6 @@ class NamespaceView(Gtk.TreeView):
             Gtk.DestDefaults.ALL, [NamespaceView.DND_TARGETS[-1]], Gdk.DragAction.MOVE
         )
         self.connect("drag-motion", NamespaceView.on_drag_motion)
-        self.connect("drag-drop", NamespaceView.on_drag_drop)
         self.connect("drag-data-received", NamespaceView.on_drag_data_received)
 
     def get_selected_element(self):
@@ -584,10 +583,11 @@ class NamespaceView(Gtk.TreeView):
             p = p if p else ""
             # 'id#stereotype' is being send
             if info == NamespaceView.TARGET_ELEMENT_ID:
-                selection_data.set(selection_data.target, 8, "%s#%s" % (element.id, p))
+                # print("TARGET_ELEMENT_ID", selection_data.get_target(), 8, "%s#%s" % (element.id, p))
+                selection_data.set(selection_data.get_target(), 8, ("%s#%s" % (element.id, p)).encode())
             else:
                 selection_data.set(
-                    selection_data.target, 8, "%s#%s" % (element.name, p)
+                    selection_data.get_target(), 8, ("%s#%s" % (element.name, p)).encode()
                 )
         return True
 
@@ -607,31 +607,17 @@ class NamespaceView(Gtk.TreeView):
                 Gtk.TreePath.new_from_indices([len(self.get_model()) - 1]),
                 Gtk.TreeViewDropPosition.AFTER
             )
-
-        kind = Gdk.DragAction.COPY
-
-        context.drag_status(kind, time)
         return True
-
-    def on_drag_drop(self, context, x, y, time):
-        """
-        Determine if drop is allowed.
-        """
-        if "gaphor/element-id" in context.targets:
-            self.emit_stop_by_name("drag-drop")
-            self.drag_get_data(context, context.targets[-1], time)
-            return True
-        return False
 
     def on_drag_data_received(self, context, x, y, selection, info, time):
         """
         Drop the data send by on_drag_data_get().
         """
-        # print 'data-received', NamespaceView.TARGET_ELEMENT_ID, 'in', context.targets
-        self.emit_stop_by_name("drag-data-received")
-        if "gaphor/element-id" in context.targets:
-            # print 'drag_data_received'
-            n, p = selection.data.split("#")
+        # print('data-received', info, NamespaceView.TARGET_ELEMENT_ID, 'in', context.list_targets())
+        self.stop_emission_by_name("drag-data-received")
+        if info == NamespaceView.TARGET_ELEMENT_ID:
+            # print('drag_data_received', selection.get_data())
+            n, _p = selection.get_data().decode().split("#")
             drop_info = self.get_dest_row_at_pos(x, y)
         else:
             drop_info = None
@@ -673,14 +659,17 @@ class NamespaceView(Gtk.TreeView):
                 tx.commit()
 
             except AttributeError as e:
-                # log.info('Unable to drop data', e)
-                context.drop_finish(False, time)
+                log.info('Unable to drop data %s' % e)
+                context.finish(False, False, time)
             else:
-                context.drop_finish(True, time)
+                context.finish(True, True, time)
                 # Finally let's try to select the element again.
                 path = model.path_from_element(element)
                 if len(path) > 1:
-                    self.expand_row(path[:-1], False)
+                    self.expand_row(
+                        path=Gtk.TreePath.new_from_indices(path[:-1]),
+                        open_all=False
+                    )
                 selection = self.get_selection()
                 selection.select_path(path)
 
