@@ -599,12 +599,13 @@ class NamespaceView(Gtk.TreeView):
 
     # Drop
     def on_drag_motion(self, context, x, y, time):
-        try:
-            path, pos = self.get_dest_row_at_pos(x, y)
-            self.set_drag_dest_row(path, pos)
-        except TypeError:
+        path_pos_or_none = self.get_dest_row_at_pos(x, y)
+        if path_pos_or_none:
+            self.set_drag_dest_row(*path_pos_or_none)
+        else:
             self.set_drag_dest_row(
-                len(self.get_model()) - 1, Gtk.TreeViewDropPosition.AFTER
+                Gtk.TreePath.new_from_indices([len(self.get_model()) - 1]),
+                Gtk.TreeViewDropPosition.AFTER
             )
 
         kind = Gdk.DragAction.COPY
