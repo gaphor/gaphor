@@ -828,7 +828,7 @@ class Diagrams(object):
 
         """
         tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-        label = Gtk.Label(title)
+        label = Gtk.Label(label=title)
         tab_box.pack_start(label)
 
         close_image = Gtk.Image.new_from_icon_name(
