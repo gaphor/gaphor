@@ -945,12 +945,12 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(_("Show direction"))
+        button = Gtk.CheckButton(label=_("Show direction"))
         button.set_active(self.item.show_direction)
         button.connect("toggled", self._on_show_direction_change)
         hbox.pack_start(button, True, True, 0)
 
-        button = Gtk.Button(_("Invert Direction"))
+        button = Gtk.Button(label=_("Invert Direction"))
         button.connect("clicked", self._on_invert_direction_change)
         hbox.pack_start(button, True, True, 0)
 
