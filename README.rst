@@ -36,6 +36,16 @@ To install, run the following::
 
     $ pip install gaphor
 
+Note
+^^^^^
+The latest release of Gaphor (0.17.2) is currently incompatible with versions of gaphas newer than 0.7.2 as later versions of gaphas use PyGObject, but gaphor uses PyGTK.
+
+Therefore, when installing Gaphor via pip, gaphas must be pinned to version 0.7.2 with::
+
+    $ python2 -m pip install -I gaphas==0.7.2
+
+If a newer version is already installed in your environment, make sure to uninstall gaphas again before pinning the version.
+
 
 Documentation
 ~~~~~~~~~~~~~
