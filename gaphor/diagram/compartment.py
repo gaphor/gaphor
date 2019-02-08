@@ -297,7 +297,6 @@ class CompartmentItem(NamedItem):
             and event.element in self.subject.appliedStereotype
             and self._show_stereotypes_attrs
         ):
-
             comp = self._find_stereotype_compartment(event.element)
             if comp is None:
                 log.debug("No compartment found for %s" % event.element)
