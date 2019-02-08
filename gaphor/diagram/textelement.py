@@ -97,8 +97,8 @@ def text_align(
     else:
         y = y + padding_y
     cr.move_to(x, y)
-    cr.update_layout(layout)
-    cr.show_layout(layout)
+
+    PangoCairo.show_layout(cr, layout)
 
 
 def text_center(cr, x, y, text, font):
@@ -366,16 +366,16 @@ class EditableTextSupport(object):
         """
         cr = context.cairo
         cr.save()
+        try:
+            # fixme: do it on per group basis
+            if any(txt._style.text_rotated for txt in self._get_visible_texts(self._texts)):
+                cr.rotate(old_div(-math.pi, 2))
 
-        # fixme: do it on per group basis
-        if any(txt._style.text_rotated for txt in self._get_visible_texts(self._texts)):
-            cr.rotate(old_div(-math.pi, 2))
-
-        if self.subject:
-            for txt in self._get_visible_texts(self._texts):
-                txt.draw(context)
-
-        cr.restore()
+            if self.subject:
+                for txt in self._get_visible_texts(self._texts):
+                    txt.draw(context)
+        finally:
+            cr.restore()
 
 
 class TextElement(object):
@@ -462,17 +462,20 @@ class TextElement(object):
 
         cr = context.cairo
         cr.save()
-        if isinstance(cr, FreeHandCairoContext):
-            cr = cr.cr
-        if isinstance(cr, cairo.Context) and self.text:
-            cr.move_to(x, y)
-            layout = PangoCairo.create_layout(cr)
-            layout.set_font_description(Pango.FontDescription(self._style.font))
-            layout.set_text(text=self.text, length=len(self.text))
-            PangoCairo.show_layout(cr, layout)
-        if self.editable and (context.hovered or context.focused):
-            cr.set_source_rgb(0.6, 0.6, 0.6)
-            cr.set_line_width(0.5)
-            cr.rectangle(x - 5, y - 1, width + 10, height + 2)
-            cr.stroke()
-        cr.restore()
+        try:
+            if isinstance(cr, FreeHandCairoContext):
+                cr = cr.cr
+            if isinstance(cr, cairo.Context) and self.text:
+                cr.move_to(x, y)
+                layout = PangoCairo.create_layout(cr)
+                layout.set_font_description(Pango.FontDescription(self._style.font))
+                layout.set_text(text=self.text, length=len(self.text))
+                PangoCairo.show_layout(cr, layout)
+            if self.editable and (context.hovered or context.focused):
+                cr.set_source_rgb(0.6, 0.6, 0.6)
+                cr.set_line_width(0.5)
+                cr.rectangle(x - 5, y - 1, width + 10, height + 2)
+                cr.stroke()
+        finally:
+            cr.restore()
+
