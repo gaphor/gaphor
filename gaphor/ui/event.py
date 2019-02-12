@@ -2,15 +2,11 @@ from builtins import object
 
 from zope.interface import implementer
 
-from gaphor.ui.interfaces import (
-    IDiagramSelectionChange,
-    IDiagramPageChange,
-    IDiagramShow,
-)
+from gaphor.ui.interfaces import IDiagramSelectionChange, IDiagramPageChange, IDiagram
 
 
-@implementer(IDiagramShow)
-class DiagramShow(object):
+@implementer(IDiagram)
+class Diagram(object):
     def __init__(self, diagram):
         self.diagram = diagram
 

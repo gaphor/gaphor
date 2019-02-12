@@ -32,7 +32,7 @@ from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
-from gaphor.ui.event import DiagramPageChange, DiagramShow
+from gaphor.ui.event import DiagramPageChange, Diagram
 from gaphor.ui.interfaces import IDiagramPageChange
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.layout import deserialize
@@ -320,7 +320,7 @@ class MainWindow(object):
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
-            self.component_registry.handle(DiagramShow(diagram))
+            self.component_registry.handle(Diagram(diagram))
 
     @component.adapter(FileManagerStateChanged)
     def _on_file_manager_state_changed(self, event):
@@ -545,7 +545,7 @@ class Namespace(object):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
-            self.component_registry.handle(DiagramShow(element))
+            self.component_registry.handle(Diagram(element))
 
         else:
             log.debug("No action defined for element %s" % type(element).__name__)
@@ -579,7 +579,7 @@ class Namespace(object):
             diagram.name = "New diagram"
 
         self.select_element(diagram)
-        self.component_registry.handle(DiagramShow(diagram))
+        self.component_registry.handle(Diagram(diagram))
         self.tree_view_rename_selected()
 
     @action(
@@ -798,7 +798,7 @@ class Diagrams(object):
         """
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
-        return child_widget.diagram_page
+        return child_widget.diagram_page.get_diagram()
 
     def cb_close_tab(self, button, widget):
         """Callback to close the tab and remove the notebook page.
@@ -865,7 +865,7 @@ class Diagrams(object):
             widgets_on_pages.append((page, widget))
         return widgets_on_pages
 
-    @component.adapter(DiagramShow)
+    @component.adapter(Diagram)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
 

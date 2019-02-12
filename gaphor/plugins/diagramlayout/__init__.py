@@ -22,6 +22,7 @@ from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.plugins.diagramlayout import toposort
+from gaphor.ui.interfaces import IUIComponent
 
 log = logging.getLogger(__name__)
 
@@ -29,6 +30,7 @@ log = logging.getLogger(__name__)
 @implementer(IService, IActionProvider)
 class DiagramLayout(object):
 
+    component_registry = inject("component_registry")
     main_window = inject("main_window")
 
     menu_xml = """
@@ -50,13 +52,19 @@ class DiagramLayout(object):
         pass
 
     def update(self):
-        self.sensitive = bool(self.get_window().get_current_diagram())
+        self.sensitive = bool(
+            self.component_registry.get_utility(
+                IUIComponent, "diagrams"
+            ).get_current_diagram()
+        )
 
     @action(
         name="diagram-layout", label="La_yout diagram", tooltip="simple diagram layout"
     )
     def execute(self):
-        d = self.diagram.get_current_diagram()
+        d = self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_diagram()
         self.layout_diagram(d)
 
     @transactional
