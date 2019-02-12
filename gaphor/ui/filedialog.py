@@ -20,9 +20,9 @@ class FileDialog(object):
         """Initialize the file dialog.  The title parameter is the title
         displayed in the dialog.  The filename parameter will set the current
         file name in the dialog.  The action is either open or save and changes
-        the buttons isplayed.  If the parent window parameter is supplied,
+        the buttons displayed.  If the parent window parameter is supplied,
         the file dialog is set to be transient for that window.  The multiple
-        parameter should be set to true if sultiple files can be opened at once.
+        parameter should be set to true if multiple files can be opened at once.
         This means that a list of filenames instead of a single filename string
         will be returned by the selection property.  The filters is a list
         of dictionaries that have a name and pattern key.  This restricts what
@@ -63,14 +63,14 @@ class FileDialog(object):
         by the selection property."""
 
         response = self.dialog.run()
-        selection = None
 
         if response == Gtk.ResponseType.OK:
-
             if self.multiple:
                 selection = self.dialog.get_filenames()
             else:
                 selection = self.dialog.get_filename()
+        else:
+            selection = ""
 
         return selection
 
