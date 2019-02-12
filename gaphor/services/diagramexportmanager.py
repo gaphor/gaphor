@@ -13,6 +13,7 @@ from zope.interface import implementer
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.questiondialog import QuestionDialog
 
 
@@ -22,6 +23,7 @@ class DiagramExportManager(object):
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
 
+    component_registry = inject("component_registry")
     main_window = inject("main_window")
     properties = inject("properties")
     logger = getLogger("ExportManager")
@@ -51,11 +53,7 @@ class DiagramExportManager(object):
         pass
 
     def update(self):
-
-        self.logger.info("Updating")
-
-        tab = self.get_window().get_current_diagram_page()
-        self.sensitive = tab and True or False
+        pass
 
     def save_dialog(self, diagram, title, ext):
 
@@ -191,7 +189,9 @@ class DiagramExportManager(object):
     def save_svg_action(self):
         title = "Export diagram to SVG"
         ext = ".svg"
-        diagram = self.main_window.get_current_diagram()
+        diagram = self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_svg(filename, diagram.canvas)
@@ -204,7 +204,9 @@ class DiagramExportManager(object):
     def save_png_action(self):
         title = "Export diagram to PNG"
         ext = ".png"
-        diagram = self.main_window.get_current_diagram()
+        diagram = self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_png(filename, diagram.canvas)
@@ -217,7 +219,9 @@ class DiagramExportManager(object):
     def save_pdf_action(self):
         title = "Export diagram to PDF"
         ext = ".pdf"
-        diagram = self.main_window.get_current_diagram()
+        diagram = self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_pdf(filename, diagram.canvas)
