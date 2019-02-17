@@ -9,8 +9,8 @@ from gaphor.diagram import items
 
 class IncludeItemTestCase(TestCase):
     def test_use_case_glue(self):
-        """Test "include" glueing to use cases
-        """
+        """Test "include" gluing to use cases."""
+
         uc1 = self.create(items.UseCaseItem, UML.UseCase)
         include = self.create(items.IncludeItem)
 

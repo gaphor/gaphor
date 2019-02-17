@@ -140,8 +140,8 @@ class TransitionConnectorTestCase(TestCase):
         self.assertFalse(self.get_connected(t.head))
 
     def test_initial_pseudostate_tail_glue(self):
-        """Test transition tail and initial pseudostate glueing
-        """
+        """Test transition tail and initial pseudostate gluing."""
+
         v1 = self.create(items.InitialPseudostateItem, UML.Pseudostate)
         t = self.create(items.TransitionItem)
         assert t.subject is None

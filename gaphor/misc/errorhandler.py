@@ -1,10 +1,10 @@
-# vim:sw=4:et
 """A generic way to handle errors in GUI applications.
 
-This module also contains a ErrorHandlerAspect, which can be easely attached
+This module also contains a ErrorHandlerAspect, which can be easily attached
 to a class' method and will raise the error dialog when the method exits with
 an exception.
 """
+
 from gi.repository import Gtk
 import sys
 import pdb
@@ -19,7 +19,7 @@ def error_handler(message=None, exc_info=None):
         return
 
     if not message:
-        message = _("An error occured.")
+        message = _("An error occurred.")
 
     buttons = Gtk.ButtonsType.OK
     message = "%s\n\nTechnical details:\n\t%s\n\t%s" % (message, exc_type, exc_value)

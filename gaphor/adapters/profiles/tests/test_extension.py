@@ -13,8 +13,8 @@ class ExtensionConnectorTestCase(TestCase):
     """
 
     def test_class_glue(self):
-        """Test extension item glueing to a class
-        """
+        """Test extension item gluing to a class."""
+
         ext = self.create(items.ExtensionItem)
         cls = self.create(items.ClassItem, UML.Class)
 
@@ -23,8 +23,8 @@ class ExtensionConnectorTestCase(TestCase):
         self.assertFalse(glued)
 
     def test_stereotype_glue(self):
-        """Test extension item glueing to a stereotype
-        """
+        """Test extension item gluing to a stereotype."""
+
         ext = self.create(items.ExtensionItem)
         st = self.create(items.ClassItem, UML.Stereotype)
 

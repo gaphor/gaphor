@@ -202,12 +202,12 @@ class UndoManager(object):
         # Store stacks
         undo_stack = list(self._undo_stack)
 
-        errorous_tx = self._current_transaction
+        erroneous_tx = self._current_transaction
         self._current_transaction = None
         try:
             with Transaction():
                 try:
-                    errorous_tx.execute()
+                    erroneous_tx.execute()
                 except Exception as e:
                     self.logger.error("Could not roolback transaction")
                     self.logger.error(e)
@@ -377,7 +377,7 @@ class UndoManager(object):
         # print 'got new set event', association, element, value
         def _undo_association_set_event():
             # print 'undoing action', element, value
-            # Tell the assoctaion it should not need to let the opposite
+            # Tell the association it should not need to let the opposite
             # side connect (it has it's own signal)
             association._set(element, value, from_opposite=True)
 
@@ -391,7 +391,7 @@ class UndoManager(object):
 
         def _undo_association_add_event():
             # print 'undoing action', element, value
-            # Tell the assoctaion it should not need to let the opposite
+            # Tell the association it should not need to let the opposite
             # side connect (it has it's own signal)
             association._del(element, value, from_opposite=True)
 

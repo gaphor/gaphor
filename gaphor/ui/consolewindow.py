@@ -41,9 +41,8 @@ class ConsoleWindow(object):
         self.ui_manager = None  # injected
 
     def load_console_py(self):
-        """
-        Load default script for console. Saves some repetative typing.
-        """
+        """Load default script for console. Saves some repetitive typing."""
+
         console_py = os.path.join(get_user_data_dir(), "console.py")
         try:
             with open(console_py) as f:

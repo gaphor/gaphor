@@ -587,7 +587,7 @@ class HandleClassStaticAttrs(HandleComposites):
     def __AddAttrModuleLevel(self):
         # Should re-use the logic in HandleClassAttributes for both parsing
         # (getting more info on multiplicity but not static - cos static not relevant?) and
-        # also should be able to resuse most of _AddAttr()
+        # also should be able to reuse most of _AddAttr()
         #
         classentry = self.classlist[self.currclass]
         attrtype = ["static"]
@@ -642,7 +642,7 @@ class HandleModuleLevelDefsAndAttrs(HandleClassStaticAttrs):
 
         # Should re-use the logic in HandleClassAttributes for both parsing
         # (getting more info on multiplicity but not static - cos static not relevant?) and
-        # also should be able to resuse most of _AddAttr()
+        # also should be able to reuse most of _AddAttr()
         #
         classentry = self.classlist[self.moduleasclass]
         attrtype = ["normal"]

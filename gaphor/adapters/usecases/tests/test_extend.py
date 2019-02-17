@@ -9,8 +9,8 @@ from gaphor.diagram import items
 
 class ExtendItemTestCase(TestCase):
     def test_use_case_glue(self):
-        """Test "extend" glueing to use cases
-        """
+        """Test "extend" gluing to use cases."""
+
         uc1 = self.create(items.UseCaseItem, UML.UseCase)
         extend = self.create(items.ExtendItem)
 

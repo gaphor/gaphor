@@ -1,7 +1,5 @@
 comment
-  vim:sw=4:et:syntax=python
-
-  This is a file with custom definitions for Gaphors data model.
+  This is a file with custom definitions for Gaphor's data model.
 
   Parts are separated by '%%' (no training spaces) on a line.
   Comment parts start with 'comment' on the line below the percentage

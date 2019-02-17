@@ -38,7 +38,7 @@ Now you should be able to start Gaphor by executing ``C:\Program Files\PyGTK\Pyt
 
 
 If you're a developer and already have Python 2.4 installed you can, as an
-alternative, check out the ``gaphor-win32-libs`` module from Gaphors
+alternative, check out the ``gaphor-win32-libs`` module from Gaphor's
 subversion repository or download the zip file from http://svn.devjavu.com/gaphor/gaphor-win32-libs/zips/gaphor-win32-libs.zip.
 Follow the instructions in the ``README.txt`` file.
 

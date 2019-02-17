@@ -137,7 +137,7 @@ class DiagramItem(
     """
     Basic functionality for all model elements (lines and elements!).
 
-    This class contains common functionallity for model elements and
+    This class contains common functionality for model elements and
     relationships.
     It provides an interface similar to UML.Element for connecting and
     disconnecting signals.

@@ -190,7 +190,7 @@ class CommentLineElementConnect(AbstractConnect):
                     del hct.subject.annotatedElement[oct.subject]
             except ValueError:
                 logger.debug(
-                    "Invoked CommentLineElementConnect.disconnect() for nonexistant relationship"
+                    "Invoked CommentLineElementConnect.disconnect() for nonexistent relationship"
                 )
 
         super(CommentLineElementConnect, self).disconnect(handle)
@@ -378,7 +378,7 @@ class UnaryRelationshipConnect(AbstractConnect):
     def disconnect_connected_items(self):
         """
         Cause items connected to @line to be disconnected.
-        This is nessesary if the subject of the @line is to be removed.
+        This is necessary if the subject of the @line is to be removed.
 
         Returns a list of (item, handle) pairs that were connected (this
         list can be used to connect items again with connect_connected_items()).

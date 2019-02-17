@@ -28,7 +28,7 @@ class CopyService(object):
       generatlised to allow a subset to be saved/loaded (which is needed
       anyway for exporting/importing stereotype Profiles).
     - How many data should be saved? (e.g. we copy a diagram item, remove it
-      (the underlaying UML element is removed) and the paste the copied item.
+      (the underlying UML element is removed) and the paste the copied item.
       The diagram should act as if we have placed a copy of the removed item
       on the canvas and make the uml element visible again.
     """
@@ -78,7 +78,7 @@ class CopyService(object):
 
     def copy_func(self, name, value, reference=False):
         """
-        Copy an element, preferbly from the list of new items,
+        Copy an element, preferably from the list of new items,
         otherwise from the element factory.
         If it does not exist there, do not copy it!
         """
@@ -124,7 +124,7 @@ class CopyService(object):
 
         # Copy attributes and references. References should be
         #  1. in the ElementFactory (hence they are model elements)
-        #  2. refered to in new_items
+        #  2. referred to in new_items
         #  3. canvas property is overridden
         for ci in copy_items:
             self._item = self._new_items[ci.id]

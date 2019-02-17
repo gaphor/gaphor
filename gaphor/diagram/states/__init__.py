@@ -6,8 +6,8 @@ Pseudostates
 There are some similarities between activities and state machines, for example
     - initial node and initial psuedostate
     - final node and final state
-Of course, they differ in many aspects, but the similarites drive user
-interface of state machines. This is with respect of minimalization of the set
+Of course, they differ in many aspects, but the similarities drive user
+interface of state machines. This is with respect of minimization of the set
 of diagram items (i.e. there is only one diagram item for both join and fork
 nodes in activities implemented in Gaphor).
 

@@ -17,8 +17,8 @@ class ComponentConnectTestCase(TestCase):
     """
 
     def test_glue(self):
-        """Test glueing connector to component
-        """
+        """Test gluing connector to component."""
+
         component = self.create(items.ComponentItem, UML.Component)
         line = self.create(items.ConnectorItem)
 
@@ -36,8 +36,8 @@ class ComponentConnectTestCase(TestCase):
         # self.assertTrue(line.end is None)
 
     def test_glue_both(self):
-        """Test glueing connector to component when one is connected
-        """
+        """Test gluing connector to component when one is connected."""
+
         c1 = self.create(items.ComponentItem, UML.Component)
         c2 = self.create(items.ComponentItem, UML.Component)
         line = self.create(items.ConnectorItem)
@@ -53,8 +53,8 @@ class InterfaceConnectTestCase(TestCase):
     """
 
     def test_non_folded_glue(self):
-        """Test non-folded interface glueing
-        """
+        """Test non-folded interface gluing."""
+
         iface = self.create(items.InterfaceItem, UML.Component)
         line = self.create(items.ConnectorItem)
 
@@ -62,8 +62,8 @@ class InterfaceConnectTestCase(TestCase):
         self.assertFalse(glued)
 
     def test_folded_glue(self):
-        """Test folded interface glueing
-        """
+        """Test folded interface gluing."""
+
         iface = self.create(items.InterfaceItem, UML.Component)
         line = self.create(items.ConnectorItem)
 
@@ -72,8 +72,8 @@ class InterfaceConnectTestCase(TestCase):
         self.assertTrue(glued)
 
     def test_glue_when_dependency_connected(self):
-        """Test interface glueing, when dependency connected
-        """
+        """Test interface gluing, when dependency connected."""
+
         iface = self.create(items.InterfaceItem, UML.Component)
         dep = self.create(items.DependencyItem)
         line = self.create(items.ConnectorItem)
@@ -85,8 +85,8 @@ class InterfaceConnectTestCase(TestCase):
         self.assertFalse(glued)
 
     def test_glue_when_implementation_connected(self):
-        """Test interface glueing, when implementation connected
-        """
+        """Test interface gluing, when implementation connected."""
+
         iface = self.create(items.InterfaceItem, UML.Component)
         impl = self.create(items.ImplementationItem)
         line = self.create(items.ConnectorItem)
@@ -98,8 +98,8 @@ class InterfaceConnectTestCase(TestCase):
         self.assertFalse(glued)
 
     def test_glue_when_connector_connected(self):
-        """Test interface glueing, when connector connected
-        """
+        """Test interface gluing, when connector connected."""
+
         iface = self.create(items.InterfaceItem, UML.Component)
         iface.folded = iface.FOLDED_REQUIRED
 
@@ -351,8 +351,8 @@ class AssemblyConnectorTestCase(TestCase):
         #    '%s != %s' % (p2, c2.subject.ownedPort))
 
     def test_required_port_glue(self):
-        """Test if required port glueing works
-        """
+        """Test if required port gluing works."""
+
         conn1 = self.create(items.ConnectorItem)
         conn2 = self.create(items.ConnectorItem)
 
@@ -376,8 +376,8 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertTrue(glued)
 
     def test_wrong_port_glue(self):
-        """Test if incorrect port glueing is forbidden
-        """
+        """Test if incorrect port gluing is forbidden."""
+
         conn1 = self.create(items.ConnectorItem)
         conn2 = self.create(items.ConnectorItem)
         conn3 = self.create(items.ConnectorItem)

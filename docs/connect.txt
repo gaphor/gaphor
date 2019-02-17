@@ -6,7 +6,7 @@ relationship, the connection is also made at semantic level (the model).
 From a GUI point of view it all starts with a button release event.
 
 With "item" I refer to objects in a diagram (graphical), with "element" I
-refer to symantic (model) objects.
+refer to semantic (model) objects.
 
 Is relation with this element allowed?
   No:
