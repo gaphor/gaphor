@@ -179,8 +179,8 @@ class GeneralizationTestCase(TestCase):
     """
 
     def test_glue(self):
-        """Test generalization item glueing using two classes
-        """
+        """Test generalization item gluing using two classes."""
+
         gen = self.create(items.GeneralizationItem)
         c1 = self.create(items.ClassItem, UML.Class)
         c2 = self.create(items.ClassItem, UML.Class)
@@ -346,6 +346,3 @@ class AssociationConnectorTestCase(TestCase):
 
         # after disconnection: one diagram and two classes
         self.assertEqual(3, len(list(self.element_factory.select())))
-
-
-# vim:sw=4:et:ai

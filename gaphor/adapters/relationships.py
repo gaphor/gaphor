@@ -40,6 +40,3 @@ from zope import component
 ###                    else:
 ###                        return assoc
 ###        return None
-
-
-# vim:sw=4:et:ai

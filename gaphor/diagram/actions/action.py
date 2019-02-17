@@ -86,6 +86,3 @@ class AcceptEventActionItem(NamedItem):
         c.close_path()
 
         c.stroke()
-
-
-# vim:sw=4:et:ai

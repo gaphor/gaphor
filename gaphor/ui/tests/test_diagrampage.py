@@ -51,6 +51,3 @@ class DiagramPageTestCase(unittest.TestCase):
             CommentItem, subject=self.element_factory.create(UML.Comment)
         )
         self.assertEqual(len(self.element_factory.lselect()), 2)
-
-
-# vim:sw=4:et:ai

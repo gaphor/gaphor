@@ -43,7 +43,7 @@ class TransactionBegin(object):
 class TransactionCommit(object):
     """
     This event is emitted when a transaction (toplevel) is successfully
-    commited.
+    committed.
     """
 
     pass
@@ -63,12 +63,9 @@ class TransactionRollback(object):
 @implementer(IActionExecutedEvent)
 class ActionExecuted(object):
     """
-    Once an operation has succesfully been executed this event is raised.
+    Once an operation has successfully been executed this event is raised.
     """
 
     def __init__(self, name, action):
         self.name = name
         self.action = action
-
-
-# vim:sw=4:et:ai

@@ -70,7 +70,7 @@ For a complete set of changes and fixes see:
 - improved items's connection adapters 
 - fixed comment line, comment, message and lifeline items connection
   adapters to implement UML specification more closely
-- items glueing speedup
+- items gluing speedup
 - property page is updated when association or other diagram line connects
   to appropriate diagram items
 - removing and reordering of class' attributes and operations is possible

@@ -8,12 +8,9 @@ from gaphor.diagram import items
 from gaphor.adapters.connectors import RelationshipConnect
 
 
+@component.adapter(items.UseCaseItem, items.IncludeItem)
 class IncludeConnect(RelationshipConnect):
-    """
-    Connect use cases with an include item relationship.
-    """
-
-    component.adapts(items.UseCaseItem, items.IncludeItem)
+    """Connect use cases with an include item relationship."""
 
     def allow(self, handle, port):
         line = self.line
@@ -39,12 +36,9 @@ class IncludeConnect(RelationshipConnect):
 component.provideAdapter(IncludeConnect)
 
 
+@component.adapter(items.UseCaseItem, items.ExtendItem)
 class ExtendConnect(RelationshipConnect):
-    """
-    Connect use cases with an extend item relationship.
-    """
-
-    component.adapts(items.UseCaseItem, items.ExtendItem)
+    """Connect use cases with an extend item relationship."""
 
     def allow(self, handle, port):
         line = self.line
@@ -68,5 +62,3 @@ class ExtendConnect(RelationshipConnect):
 
 
 component.provideAdapter(ExtendConnect)
-
-# vim:sw=4:et:ai

@@ -1,6 +1,5 @@
-"""
-Activity partition property page.
-"""
+"""Activity partition property page."""
+
 from zope import component
 
 from gi.repository import Gtk
@@ -15,12 +14,9 @@ from gaphor.ui.interfaces import IPropertyPage
 
 
 @implementer(IPropertyPage)
+@component.adapter(items.PartitionItem)
 class PartitionPropertyPage(NamedItemPropertyPage):
-    """
-    Partition property page.
-    """
-
-    component.adapts(items.PartitionItem)
+    """Partition property page."""
 
     element_factory = inject("element_factory")
 
@@ -55,6 +51,3 @@ class PartitionPropertyPage(NamedItemPropertyPage):
 
 
 component.provideAdapter(PartitionPropertyPage, name="Properties")
-
-
-# vim:sw=4:et:ai

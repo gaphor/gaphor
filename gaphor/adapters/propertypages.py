@@ -23,34 +23,34 @@ TODO:
      relationship between a control and those surrounding it.
    * Assign access keys to all editable controls. Ensure that using the access
      key focuses its associated control.
-
 """
-from __future__ import print_function
-from __future__ import division
 
+from __future__ import division
+from __future__ import print_function
+
+import math
 from builtins import object
-from builtins import zip
 from builtins import range
-from past.utils import old_div
+from builtins import zip
+from zope import component
+
+import gaphas.item
+from gaphas.decorators import AsyncIO
 from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import Gtk
-import math
+from past.utils import old_div
+from zope.interface import implementer
+
+from gaphor import UML
 from gaphor.core import _, inject, transactional
+from gaphor.diagram import items
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
-from gaphor.diagram import items
-from zope.interface import implementer
-from zope import component
-from gaphor import UML
-from gaphor.UML.interfaces import IAttributeChangeEvent
-import gaphas.item
-from gaphas.decorators import AsyncIO
 
 
 class EditableTreeModel(Gtk.ListStore):
-    """
-    Editable GTK tree model based on ListStore model.
+    """Editable GTK tree model based on ListStore model.
 
     Every row is represented by a list of editable values. Last column
     contains an object, which is being edited (this column is not
@@ -69,13 +69,13 @@ class EditableTreeModel(Gtk.ListStore):
     element_factory = inject("element_factory")
 
     def __init__(self, item, cols=None):
-        """
-        Create new model.
+        """Create new model.
 
         Parameters:
         - _item: diagram item owning tree model
         - cols: model columns, defaults to [str, object]
         """
+
         if cols is None:
             cols = (str, object)
         super(EditableTreeModel, self).__init__(*cols)
@@ -95,10 +95,11 @@ class EditableTreeModel(Gtk.ListStore):
                 return
 
     def _get_rows(self):
+        """Return rows to be edited.
+
+        Last column has to contain object being edited.
         """
-        Return rows to be edited. Last column has to contain object being
-        edited.
-        """
+
         raise NotImplemented
 
     def _create_object(self):
@@ -183,9 +184,7 @@ class EditableTreeModel(Gtk.ListStore):
 
 
 class ClassAttributes(EditableTreeModel):
-    """
-    GTK tree model to edit class attributes.
-    """
+    """GTK tree model to edit class attributes."""
 
     def _get_rows(self):
         for attr in self._item.subject.ownedAttribute:
@@ -216,9 +215,7 @@ class ClassAttributes(EditableTreeModel):
 
 
 class ClassOperations(EditableTreeModel):
-    """
-    GTK tree model to edit class operations.
-    """
+    """GTK tree model to edit class operations."""
 
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
@@ -256,9 +253,7 @@ class ClassOperations(EditableTreeModel):
 
 
 class CommunicationMessageModel(EditableTreeModel):
-    """
-    GTK tree model for list of messages on communication diagram.
-    """
+    """GTK tree model for list of messages on communication diagram."""
 
     def __init__(self, item, cols=None, inverted=False):
         self.inverted = inverted
@@ -273,9 +268,8 @@ class CommunicationMessageModel(EditableTreeModel):
                 yield [message.name, message]
 
     def remove(self, iter):
-        """
-        Remove message from message item and destroy it.
-        """
+        """Remove message from message item and destroy it."""
+
         message = self._get_object(iter)
         item = self._item
         super(CommunicationMessageModel, self).remove(iter)
@@ -300,9 +294,8 @@ class CommunicationMessageModel(EditableTreeModel):
 
 @transactional
 def remove_on_keypress(tree, event):
-    """
-    Remove selected items from GTK model on ``backspace`` keypress.
-    """
+    """Remove selected items from GTK model on ``backspace`` keypress."""
+
     k = Gdk.keyval_name(event.keyval).lower()
     if k == "backspace" or k == "kp_delete":
         model, iter = tree.get_selection().get_selected()
@@ -312,9 +305,8 @@ def remove_on_keypress(tree, event):
 
 @transactional
 def swap_on_keypress(tree, event):
-    """
-    Swap selected and previous (or next) items.
-    """
+    """Swap selected and previous (or next) items."""
+
     k = Gdk.keyval_name(event.keyval).lower()
     if k == "equal" or k == "kp_add":
         model, iter = tree.get_selection().get_selected()
@@ -328,25 +320,22 @@ def swap_on_keypress(tree, event):
 
 @transactional
 def on_text_cell_edited(renderer, path, value, model, col=0):
-    """
-    Update editable tree model based on fresh user input.
-    """
+    """Update editable tree model based on fresh user input."""
+
     iter = model.get_iter(path)
     model.set_value(iter, col, value)
 
 
 @transactional
 def on_bool_cell_edited(renderer, path, model, col):
-    """
-    Update editable tree model based on fresh user input.
-    """
+    """Update editable tree model based on fresh user input."""
+
     iter = model.get_iter(path)
     model.set_value(iter, col, renderer.get_active())
 
 
 class UMLComboModel(Gtk.ListStore):
-    """
-    UML combo box model.
+    """UML combo box model.
 
     Model allows to easily create a combo box with values and their labels,
     for example
@@ -471,12 +460,9 @@ Use -/= to move items up or down.\
 
 
 @implementer(IPropertyPage)
+@component.adapter(UML.Comment)
 class CommentItemPropertyPage(object):
-    """
-    Property page for Comments
-    """
-
-    component.adapts(UML.Comment)
+    """Property page for Comments."""
 
     order = 0
 
@@ -529,14 +515,12 @@ component.provideAdapter(CommentItemPropertyPage, name="Properties")
 
 
 @implementer(IPropertyPage)
+@component.adapter(UML.NamedElement)
 class NamedElementPropertyPage(object):
-    """
-    An adapter which works for any named item view.
+    """An adapter which works for any named item view.
 
     It also sets up a table view which can be extended.
     """
-
-    component.adapts(UML.NamedElement)
 
     order = 10
 
@@ -595,12 +579,9 @@ class NamedItemPropertyPage(NamedElementPropertyPage):
         super(NamedItemPropertyPage, self).__init__(item.subject)
 
 
+@component.adapter(UML.Class)
 class ClassPropertyPage(NamedElementPropertyPage):
-    """
-    Adapter which shows a property page for a class view.
-    """
-
-    component.adapts(UML.Class)
+    """Adapter which shows a property page for a class view."""
 
     def __init__(self, subject):
         super(ClassPropertyPage, self).__init__(subject)
@@ -634,12 +615,9 @@ class ClassPropertyPage(NamedElementPropertyPage):
 component.provideAdapter(ClassPropertyPage, name="Properties")
 
 
+@component.adapter(items.InterfaceItem)
 class InterfacePropertyPage(NamedItemPropertyPage):
-    """
-    Adapter which shows a property page for an interface view.
-    """
-
-    component.adapts(items.InterfaceItem)
+    """Adapter which shows a property page for an interface view."""
 
     def construct(self):
         page = super(InterfacePropertyPage, self).construct()
@@ -703,12 +681,9 @@ component.provideAdapter(InterfacePropertyPage, name="Properties")
 
 
 @implementer(IPropertyPage)
+@component.adapter(items.ClassItem)
 class AttributesPage(object):
-    """
-    An editor for attributes associated with classes and interfaces.
-    """
-
-    component.adapts(items.ClassItem)
+    """An editor for attributes associated with classes and interfaces."""
 
     order = 20
 
@@ -781,12 +756,9 @@ component.provideAdapter(AttributesPage, name="Attributes")
 
 
 @implementer(IPropertyPage)
+@component.adapter(items.ClassItem)
 class OperationsPage(object):
-    """
-    An editor for operations associated with classes and interfaces.
-    """
-
-    component.adapts(items.ClassItem)
+    """An editor for operations associated with classes and interfaces."""
 
     order = 30
 
@@ -862,12 +834,9 @@ component.provideAdapter(OperationsPage, name="Operations")
 
 
 @implementer(IPropertyPage)
+@component.adapter(items.DependencyItem)
 class DependencyPropertyPage(object):
-    """
-    Dependency item editor.
-    """
-
-    component.adapts(items.DependencyItem)
+    """Dependency item editor."""
 
     order = 0
 
@@ -943,11 +912,10 @@ class DependencyPropertyPage(object):
 component.provideAdapter(DependencyPropertyPage, name="Properties")
 
 
+@component.adapter(items.AssociationItem)
 class AssociationPropertyPage(NamedItemPropertyPage):
     """
     """
-
-    component.adapts(items.AssociationItem)
 
     def construct_end(self, title, end):
 
@@ -1064,12 +1032,9 @@ component.provideAdapter(AssociationPropertyPage, name="Properties")
 
 
 @implementer(IPropertyPage)
+@component.adapter(UML.Property)
 class AssociationEndPropertyPage(object):
-    """
-    Property page for association end properties.
-    """
-
-    component.adapts(UML.Property)
+    """Property page for association end properties."""
 
     order = 0
 
@@ -1164,12 +1129,9 @@ component.provideAdapter(AssociationEndPropertyPage, name="Properties")
 
 
 @implementer(IPropertyPage)
+@component.adapter(gaphas.item.Line)
 class LineStylePage(object):
-    """
-    Basic line style properties: color, orthogonal, etc.
-    """
-
-    component.adapts(gaphas.item.Line)
+    """Basic line style properties: color, orthogonal, etc."""
 
     order = 400
 
@@ -1225,11 +1187,10 @@ class LineStylePage(object):
 component.provideAdapter(LineStylePage, name="Style")
 
 
+@component.adapter(items.ObjectNodeItem)
 class ObjectNodePropertyPage(NamedItemPropertyPage):
     """
     """
-
-    component.adapts(items.ObjectNodeItem)
 
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
@@ -1285,11 +1246,10 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 component.provideAdapter(ObjectNodePropertyPage, name="Properties")
 
 
+@component.adapter(items.ForkNodeItem)
 class JoinNodePropertyPage(NamedItemPropertyPage):
     """
     """
-
-    component.adapts(items.ForkNodeItem)
 
     def construct(self):
         page = super(JoinNodePropertyPage, self).construct()
@@ -1337,9 +1297,7 @@ component.provideAdapter(JoinNodePropertyPage, name="Properties")
 
 
 class FlowPropertyPageAbstract(NamedElementPropertyPage):
-    """
-    Flow item element editor.
-    """
+    """Flow item element editor."""
 
     def construct(self):
         page = super(FlowPropertyPageAbstract, self).construct()
@@ -1372,25 +1330,26 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
         self.subject.guard = value
 
 
-# fixme: unify ObjectFlowPropertyPage and ControlFlowPropertyPage
-# after introducing common class for element editors
+# TODO: unify ObjectFlowPropertyPage and ControlFlowPropertyPage
+#   after introducing common class for element editors
+@component.adapter(UML.ControlFlow)
 class ControlFlowPropertyPage(FlowPropertyPageAbstract):
-    component.adapts(UML.ControlFlow)
+    pass
 
 
+@component.adapter(UML.ObjectFlow)
 class ObjectFlowPropertyPage(FlowPropertyPageAbstract):
-    component.adapts(UML.ObjectFlow)
+    pass
 
 
 component.provideAdapter(ControlFlowPropertyPage, name="Properties")
 component.provideAdapter(ObjectFlowPropertyPage, name="Properties")
 
 
+@component.adapter(items.ComponentItem)
 class ComponentPropertyPage(NamedItemPropertyPage):
     """
     """
-
-    component.adapts(items.ComponentItem)
 
     def construct(self):
         page = super(ComponentPropertyPage, self).construct()
@@ -1426,15 +1385,13 @@ class ComponentPropertyPage(NamedItemPropertyPage):
 component.provideAdapter(ComponentPropertyPage, name="Properties")
 
 
+@component.adapter(items.MessageItem)
 class MessagePropertyPage(NamedItemPropertyPage):
-    """
-    Property page for editing message items.
+    """Property page for editing message items.
 
     When message is on communication diagram, then additional messages can
     be added. On sequence diagram sort of message can be changed.
     """
-
-    component.adapts(items.MessageItem)
 
     element_factory = inject("element_factory")
 
@@ -1503,9 +1460,8 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
     @transactional
     def _on_message_sort_change(self, combo):
-        """
-        Update message item's message sort information.
-        """
+        """Update message item's message sort information."""
+
         combo = self.combo
         ms = combo.get_model().get_value(combo.get_active())
 
@@ -1533,6 +1489,3 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
 
 component.provideAdapter(MessagePropertyPage, name="Properties")
-
-
-# vim:sw=4:et:ai

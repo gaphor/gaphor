@@ -43,6 +43,3 @@ class ObjectNodeTestCase(TestCase):
         TODO: Test connector item saving/loading
         """
         pass
-
-
-# vim:sw=4:et:ai

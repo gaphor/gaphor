@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 
 class FeatureItem(object):
     """
-    FeatureItems are model elements who recide inside a ClassifierItem, such
+    FeatureItems are model elements who reside inside a ClassifierItem, such
     as methods and attributes. Those items can have comments attached, but only
     on the left and right side.
     Note that features can also be used inside objects.

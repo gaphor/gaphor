@@ -266,6 +266,3 @@ class PyNSource(object):
         element = filelist.remove(iter)
 
         self.remove_button.set_property("sensitive", False)
-
-
-# vim:sw=4:et:ai

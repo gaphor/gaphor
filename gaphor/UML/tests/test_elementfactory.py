@@ -133,6 +133,3 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
         global handled
         ef.flush()
         self.assertTrue(IFlushFactoryEvent.providedBy(last_event))
-
-
-# vim:sw=4:et:ai

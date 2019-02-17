@@ -112,18 +112,13 @@ class AbstractConnect(object):
     #        raise NotImplementedError('Reconnection not implemented')
 
     def disconnect(self, handle):
-        """
-        Disconnect UML model level connections.
-        """
+        """Disconnect UML model level connections."""
         pass
 
 
+@component.adapter(items.ElementItem, items.CommentLineItem)
 class CommentLineElementConnect(AbstractConnect):
-    """
-    Connect a comment line to any element item.
-    """
-
-    component.adapts(items.ElementItem, items.CommentLineItem)
+    """Connect a comment line to any element item."""
 
     def allow(self, handle, port):
         """
@@ -195,7 +190,7 @@ class CommentLineElementConnect(AbstractConnect):
                     del hct.subject.annotatedElement[oct.subject]
             except ValueError:
                 logger.debug(
-                    "Invoked CommentLineElementConnect.disconnect() for nonexistant relationship"
+                    "Invoked CommentLineElementConnect.disconnect() for nonexistent relationship"
                 )
 
         super(CommentLineElementConnect, self).disconnect(handle)
@@ -204,12 +199,9 @@ class CommentLineElementConnect(AbstractConnect):
 component.provideAdapter(CommentLineElementConnect)
 
 
+@component.adapter(items.DiagramLine, items.CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
-    """
-    Connect a comment line to any diagram line.
-    """
-
-    component.adapts(items.DiagramLine, items.CommentLineItem)
+    """Connect a comment line to any diagram line."""
 
     def allow(self, handle, port):
         """
@@ -386,7 +378,7 @@ class UnaryRelationshipConnect(AbstractConnect):
     def disconnect_connected_items(self):
         """
         Cause items connected to @line to be disconnected.
-        This is nessesary if the subject of the @line is to be removed.
+        This is necessary if the subject of the @line is to be removed.
 
         Returns a list of (item, handle) pairs that were connected (this
         list can be used to connect items again with connect_connected_items()).
@@ -488,6 +480,3 @@ class RelationshipConnect(UnaryRelationshipConnect):
             return None
 
         return super(RelationshipConnect, self).allow(handle, port)
-
-
-# vim:sw=4:et:ai

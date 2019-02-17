@@ -63,6 +63,3 @@ class ActivityNodesTestCase(TestCase):
         ]
         self.assertTrue(item.combined is not None, item.combined)
         self.assertTrue(isinstance(item.combined, UML.JoinNode))
-
-
-# vim:sw=4:et:ai

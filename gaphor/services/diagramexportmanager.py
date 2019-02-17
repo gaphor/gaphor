@@ -1,6 +1,4 @@
-"""
-Service dedicated to exporting diagrams to a varyity of file formats.
-"""
+"""Service dedicated to exporting diagrams to a variety of file formats."""
 
 import os
 from builtins import object
@@ -117,7 +115,7 @@ class DiagramExportManager(object):
 
         self.update_painters(view)
 
-        # Update bounding boxes with a temporaly CairoContext
+        # Update bounding boxes with a temporary CairoContext
         # (used for stuff like calculating font metrics)
         tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
         tmpcr = cairo.Context(tmpsurface)

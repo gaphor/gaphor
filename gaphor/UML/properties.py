@@ -861,6 +861,3 @@ else:
     psyco.bind(association)
     psyco.bind(derivedunion)
     psyco.bind(redefine)
-
-
-# vim:sw=4:et:ai

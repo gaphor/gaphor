@@ -358,6 +358,3 @@ def parse_file(filename, parser):
 
     if not is_fd:
         file_obj.close()
-
-
-# vim:sw=4:et:ai

@@ -26,6 +26,3 @@ class DiagramExportManagerTestCase(unittest.TestCase):
     def test_init_from_application(self):
         Application.get_service("diagram_export_manager")
         Application.get_service("main_window")
-
-
-# vim:sw=4:et:ai

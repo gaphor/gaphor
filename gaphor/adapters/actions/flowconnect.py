@@ -209,12 +209,9 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             self.decombine_nodes()
 
 
+@component.adapter(items.ForkNodeItem, items.FlowItem)
 class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
-    """
-    Connect Flow to a ForkNode.
-    """
-
-    component.adapts(items.ForkNodeItem, items.FlowItem)
+    """Connect Flow to a ForkNode."""
 
     fork_node_cls = UML.ForkNode
     join_node_cls = UML.JoinNode
@@ -223,18 +220,12 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
 component.provideAdapter(FlowForkNodeConnect)
 
 
+@component.adapter(items.DecisionNodeItem, items.FlowItem)
 class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
-    """
-    Connect Flow to a DecisionNode
-    """
-
-    component.adapts(items.DecisionNodeItem, items.FlowItem)
+    """Connect Flow to a DecisionNode."""
 
     fork_node_cls = UML.DecisionNode
     join_node_cls = UML.MergeNode
 
 
 component.provideAdapter(FlowDecisionNodeConnect)
-
-
-# vim:sw=4:et:ai

@@ -28,6 +28,3 @@ class DiagramSelectionChange(object):
         self.diagram_view = diagram_view
         self.focused_item = focused_item
         self.selected_items = selected_items
-
-
-# vim:sw=4:et:ai

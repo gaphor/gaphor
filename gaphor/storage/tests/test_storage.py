@@ -489,6 +489,3 @@ class FileUpgradeTestCase(TestCase):
         m = find("rlost1()")
         self.assertTrue(m.sendEvent is None)
         self.assertTrue(m.receiveEvent.covered is l1.subject)
-
-
-# vim:sw=4:et:ai

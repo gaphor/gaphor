@@ -19,6 +19,3 @@ class VerifyTestCase(TestCase):
         assert m in c.ownedComment
 
         assert orphan_references(factory)
-
-
-# vim:sw=4:et:ai

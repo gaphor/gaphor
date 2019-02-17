@@ -5,12 +5,9 @@ from gaphor.adapters.connectors import RelationshipConnect
 from gaphor.diagram import items
 
 
+@component.adapter(items.ClassifierItem, items.ExtensionItem)
 class ExtensionConnect(RelationshipConnect):
-    """
-    Connect class and stereotype items using an extension item.
-    """
-
-    component.adapts(items.ClassifierItem, items.ExtensionItem)
+    """Connect class and stereotype items using an extension item."""
 
     def allow(self, handle, port):
         line = self.line

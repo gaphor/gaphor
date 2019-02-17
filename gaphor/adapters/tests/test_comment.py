@@ -28,8 +28,8 @@ class CommentLineTestCase(TestCase):
         self.assertFalse(comment.subject.annotatedElement)
 
     def test_commentline_same_comment_glue(self):
-        """Test comment line item glueing to already connected comment item
-        """
+        """Test comment line item gluing to already connected comment item."""
+
         comment = self.create(items.CommentItem, UML.Comment)
         line = self.create(items.CommentLineItem)
 
@@ -113,7 +113,7 @@ class CommentLineTestCase(TestCase):
 
         self.assertTrue(line.canvas)
 
-        # FixMe: This should invoke the disconnnect handler of the line's
+        # FixMe: This should invoke the disconnect handler of the line's
         #  handles.
 
         line.unlink()
@@ -144,7 +144,7 @@ class CommentLineTestCase(TestCase):
 
         clazz_subject = clazz.subject
 
-        # FixMe: This should invoke the disconnnect handler of the line's
+        # FixMe: This should invoke the disconnect handler of the line's
         #  handles.
 
         clazz.unlink()
@@ -177,7 +177,7 @@ class CommentLineTestCase(TestCase):
         self.assertTrue(gen.subject in comment.subject.annotatedElement)
         self.assertTrue(comment.subject in gen.subject.ownedComment)
 
-        # FixMe: This should invoke the disconnnect handler of the line's
+        # FixMe: This should invoke the disconnect handler of the line's
         #  handles.
 
         gen.unlink()

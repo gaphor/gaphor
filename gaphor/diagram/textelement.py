@@ -476,6 +476,3 @@ class TextElement(object):
             cr.rectangle(x - 5, y - 1, width + 10, height + 2)
             cr.stroke()
         cr.restore()
-
-
-# vim:sw=4:et:ai

@@ -150,6 +150,3 @@ for model in args:
 
 def main():
     pass
-
-
-# vim:sw=4:et:ai

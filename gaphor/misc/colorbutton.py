@@ -30,6 +30,3 @@ class ColorButton(Gtk.ColorButton):
         )
 
     color = property(lambda s: s.get_color_float())
-
-
-# vim:sw=4:et:ai

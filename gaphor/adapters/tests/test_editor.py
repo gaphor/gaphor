@@ -137,6 +137,3 @@ class EditorTestCase(TestCase):
         self.assertEqual("+ o(in blah)", tree_view.get_model()[0][0])
 
         page.destroy()
-
-
-# vim:sw=4:et:ai

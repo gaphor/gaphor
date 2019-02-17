@@ -9,8 +9,8 @@ from gaphor.tests import TestCase
 
 class ImplementationTestCase(TestCase):
     def test_non_interface_glue(self):
-        """Test non-interface glueing with implementation
-        """
+        """Test non-interface gluing with implementation."""
+
         impl = self.create(items.ImplementationItem)
         clazz = self.create(items.ClassItem, UML.Class)
 
@@ -19,7 +19,7 @@ class ImplementationTestCase(TestCase):
         self.assertFalse(glued)
 
     def test_interface_glue(self):
-        """Test interface glueing with implementation
+        """Test interface gluing with implementation
         """
         iface = self.create(items.InterfaceItem, UML.Interface)
         impl = self.create(items.ImplementationItem)
@@ -28,7 +28,7 @@ class ImplementationTestCase(TestCase):
         self.assertTrue(glued)
 
     def test_classifier_glue(self):
-        """Test classifier glueing with implementation
+        """Test classifier gluing with implementation
         """
         impl = self.create(items.ImplementationItem)
         clazz = self.create(items.ClassItem, UML.Class)
@@ -80,6 +80,3 @@ class ImplementationTestCase(TestCase):
             c1.subject not in impl.subject.implementatingClassifier,
             impl.subject.implementatingClassifier,
         )
-
-
-# vim:sw=4:et:ai

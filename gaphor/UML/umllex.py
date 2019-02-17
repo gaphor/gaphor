@@ -182,7 +182,7 @@ def parse_attribute(el, s):
 def parse_association_end(el, s):
     """
     Parse the text at one end of an association. The association end holds
-    two strings. It is automattically figured out which string is fed to the
+    two strings. It is automatically figured out which string is fed to the
     parser.
     """
     create = el._factory.create
@@ -346,6 +346,3 @@ def parse_namedelement(el, text):
     Parse named element by simply assigning text to its name.
     """
     el.name = text
-
-
-# vim:sw=4:et:ai

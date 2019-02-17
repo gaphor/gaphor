@@ -102,8 +102,8 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
         self.iface.folded = self.iface.FOLDED_PROVIDED
 
     def test_interface_with_implementation(self):
-        """Test glueing different lines to folded interface with implementation
-        """
+        """Test gluing different lines to folded interface with implementation."""
+
         impl = self.create(items.ImplementationItem)
         self.connect(impl, impl.head, self.iface, self.iface.ports()[0])
 
@@ -111,11 +111,10 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
             line = self.create(cls)
             glued = self.allow(line, line.head, self.iface)
             # no additional lines (specified above) can be glued
-            self.assertFalse(glued, "Glueing of %s should not be allowed" % cls)
+            self.assertFalse(glued, "gluing of %s should not be allowed" % cls)
 
     def test_interface_with_dependency(self):
-        """Test glueing different lines to folded interface with dependency
-        """
+        """Test gluing different lines to folded interface with dependency."""
         dep = self.create(items.DependencyItem)
         self.connect(dep, dep.head, self.iface, self.iface.ports()[0])
 
@@ -123,7 +122,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
             line = self.create(cls)
             glued = self.allow(line, line.head, self.iface)
             # no additional lines (specified above) can be glued
-            self.assertFalse(glued, "Glueing of %s should not be allowed" % cls)
+            self.assertFalse(glued, "gluing of %s should not be allowed" % cls)
 
 
 class FoldedInterfaceSingleLineTestCase(TestCase):
@@ -133,8 +132,8 @@ class FoldedInterfaceSingleLineTestCase(TestCase):
     """
 
     def test_interface_with_forbidden_lines(self):
-        """Test glueing forbidden lines to folded interface
-        """
+        """Test gluing forbidden lines to folded interface."""
+
         iface = self.create(items.InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_PROVIDED
 
@@ -142,7 +141,4 @@ class FoldedInterfaceSingleLineTestCase(TestCase):
             line = self.create(cls)
             glued = self.allow(line, line.head, iface)
             # no additional lines (specified above) can be glued
-            self.assertFalse(glued, "Glueing of %s should not be allowed" % cls)
-
-
-# vim:sw=4:et:ai
+            self.assertFalse(glued, "gluing of %s should not be allowed" % cls)

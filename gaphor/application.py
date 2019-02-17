@@ -176,6 +176,3 @@ class inject(object):
         # if self._s is None:
         #    self._s = _Application.get_service(self._name)
         # return self._s
-
-
-# vim:sw=4:et:ai

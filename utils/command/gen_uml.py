@@ -625,5 +625,3 @@ if __name__ == "__main__":
 
     doctest.testmod()
     generate("uml2.gaphor")
-
-# vim:sw=4:et:ai

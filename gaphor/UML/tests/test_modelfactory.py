@@ -183,14 +183,14 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
 
         UML.model.set_navigability(assoc, end, True)
 
-        # class/interface navigablity, Association.navigableOwnedEnd not
+        # class/interface navigability, Association.navigableOwnedEnd not
         # involved
         self.assertTrue(end not in assoc.navigableOwnedEnd)
         self.assertTrue(end not in assoc.ownedEnd)
         self.assertTrue(end in c2.ownedAttribute)
         self.assertTrue(end.navigability is True)
 
-        # uknown navigability
+        # unknown navigability
         UML.model.set_navigability(assoc, end, None)
         self.assertTrue(end not in assoc.navigableOwnedEnd)
         self.assertTrue(end in assoc.ownedEnd)
@@ -233,13 +233,13 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
 
         UML.model.set_navigability(assoc, end, True)
 
-        # class/interface navigablity, Association.navigableOwnedEnd not
+        # class/interface navigability, Association.navigableOwnedEnd not
         # involved
         self.assertTrue(end in assoc.navigableOwnedEnd)
         self.assertTrue(end not in assoc.ownedEnd)
         self.assertTrue(end.navigability is True)
 
-        # uknown navigability
+        # unknown navigability
         UML.model.set_navigability(assoc, end, None)
         self.assertTrue(end not in assoc.navigableOwnedEnd)
         self.assertTrue(end in assoc.ownedEnd)

@@ -80,6 +80,3 @@ class ActionIssueTestCase(TestCase):
             self.assertTrue(p)
             self.assertTrue(canvas.get_parent(a.presentation[0]))
             self.assertSame(canvas.get_parent(a.presentation[0]), p.presentation[0])
-
-
-# vim:sw=4:et:ai

@@ -84,6 +84,3 @@ class InterfaceTestCase(TestCase):
         # recreated later, i.e. required folded mode will be set when
         # implementation connects to the interface
         self.assertEqual(iface.FOLDED_PROVIDED, interfaces[0].folded)
-
-
-# vim:sw=4:et:ai

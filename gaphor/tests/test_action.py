@@ -10,5 +10,3 @@ if __name__ == "__main__":
     import unittest
 
     unittest.main(defaultTest="test_suite")
-
-# vim:sw=4:et:ai

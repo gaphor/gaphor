@@ -36,12 +36,9 @@ def editable_slot(el):
 
 
 @implementer(IEditor)
+@component.adapter(items.CommentItem)
 class CommentItemEditor(object):
-    """
-    Text edit support for Comment item.
-    """
-
-    component.adapts(items.CommentItem)
+    """Text edit support for Comment item."""
 
     def __init__(self, item):
         self._item = item
@@ -66,12 +63,9 @@ component.provideAdapter(CommentItemEditor)
 
 
 @implementer(IEditor)
+@component.adapter(items.NamedItem)
 class NamedItemEditor(object):
-    """
-    Text edit support for Named items.
-    """
-
-    component.adapts(items.NamedItem)
+    """Text edit support for Named items."""
 
     def __init__(self, item):
         self._item = item
@@ -99,12 +93,9 @@ component.provideAdapter(NamedItemEditor)
 
 
 @implementer(IEditor)
+@component.adapter(items.DiagramItem)
 class DiagramItemTextEditor(object):
-    """
-    Text edit support for diagram items containing text elements.
-    """
-
-    component.adapts(items.DiagramItem)
+    """Text edit support for diagram items containing text elements."""
 
     def __init__(self, item):
         self._item = item
@@ -141,12 +132,9 @@ component.provideAdapter(DiagramItemTextEditor)
 
 
 @implementer(IEditor)
+@component.adapter(items.CompartmentItem)
 class CompartmentItemEditor(object):
-    """
-    Text editor support for compartment items.
-    """
-
-    component.adapts(items.CompartmentItem)
+    """Text editor support for compartment items."""
 
     def __init__(self, item):
         self._item = item
@@ -177,9 +165,8 @@ component.provideAdapter(CompartmentItemEditor)
 
 
 @implementer(IEditor)
+@component.adapter(items.AssociationItem)
 class AssociationItemEditor(object):
-    component.adapts(items.AssociationItem)
-
     def __init__(self, item):
         self._item = item
         self._edit = None
@@ -225,11 +212,9 @@ component.provideAdapter(AssociationItemEditor)
 
 
 @implementer(IEditor)
+@component.adapter(items.ForkNodeItem)
 class ForkNodeItemEditor(object):
-    """Text edit support for fork node join specification.
-    """
-
-    component.adapts(items.ForkNodeItem)
+    """Text edit support for fork node join specification."""
 
     element_factory = inject("element_factory")
 
@@ -264,5 +249,3 @@ class ForkNodeItemEditor(object):
 
 
 component.provideAdapter(ForkNodeItemEditor)
-
-# vim:sw=4:et:ai

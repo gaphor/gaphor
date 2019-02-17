@@ -14,6 +14,3 @@ from gaphor.action import (
     build_action_group,
 )
 from gaphor.i18n import _
-
-
-# vim:sw=4:et:ai

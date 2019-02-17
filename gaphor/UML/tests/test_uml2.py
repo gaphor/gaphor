@@ -442,6 +442,3 @@ class Uml2TestCase(unittest.TestCase):
         c.unlink()
 
         self.assertEqual(0, len(factory.lselect()), factory.lselect())
-
-
-# vim:sw=4:et:ai

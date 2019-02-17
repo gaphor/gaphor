@@ -69,6 +69,3 @@ class ConnectorItemTestCase(TestCase):
         ends = self.kindof(UML.ConnectorEnd)
         # self.assertTrue(connectors[0].end is not None)
         # self.assertTrue(connectors[0].end is ends[0])
-
-
-# vim:sw=4:et:ai

@@ -227,6 +227,3 @@ class OperationTestCase(unittest.TestCase):
         o = factory.create(UML.Operation)
         UML.parse(o, "- myfunc2: myType2")
         self.assertEqual("- myfunc2: myType2", o.name)
-
-
-# vim:sw=4:et:ai

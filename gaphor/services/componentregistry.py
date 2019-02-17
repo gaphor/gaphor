@@ -163,6 +163,3 @@ class ZopeComponentRegistry(object):
         objects = self._filter(events)
         if objects:
             list(map(self._components.handle, events))
-
-
-# vim:sw=4:et:ai

@@ -111,6 +111,3 @@ class UIManager(Gtk.UIManager):
 
     def shutdown(self):
         pass
-
-
-# vim:sw=4:et:ai

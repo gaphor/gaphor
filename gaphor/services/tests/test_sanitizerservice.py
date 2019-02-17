@@ -156,6 +156,3 @@ class SanitizerServiceTest(TestCase):
         stereotype.unlink()
 
         self.assertEqual([], list(klass.appliedStereotype))
-
-
-# vim:sw=4:et:ai

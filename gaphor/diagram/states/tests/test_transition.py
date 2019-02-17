@@ -31,6 +31,3 @@ class TransitionTestCase(TestCase):
 
         c.specification = "foo"
         assert item._guard.text == "foo", item._guard.text
-
-
-# vim:sw=4:et:ai

@@ -907,6 +907,3 @@ class Diagrams(object):
         for page, widget in self.get_widgets_on_pages():
             widget.diagram_page.set_drawing_style(sloppiness)
         self.properties.set("diagram.sloppiness", sloppiness)
-
-
-# vim:sw=4:et:ai

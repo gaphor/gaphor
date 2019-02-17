@@ -14,8 +14,8 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
     """
 
     def test_initial_node_glue(self):
-        """Test flow item glueing to initial node item
-        """
+        """Test flow item gluing to initial node item."""
+
         flow = self.create(items.FlowItem)
         node = self.create(items.InitialNodeItem, UML.InitialNode)
 
@@ -27,8 +27,8 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
         self.assertTrue(allowed)
 
     def test_flow_final_node_glue(self):
-        """Test flow item glueing to flow final node item
-        """
+        """Test flow item gluing to flow final node item."""
+
         flow = self.create(items.FlowItem)
         node = self.create(items.FlowFinalNodeItem, UML.FlowFinalNode)
 
@@ -40,7 +40,7 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
         self.assertTrue(allowed)
 
     def test_activity_final_node_glue(self):
-        """Test flow item glueing to activity final node item
+        """Test flow item gluing to activity final node item
         """
         flow = self.create(items.FlowItem)
         node = self.create(items.ActivityFinalNodeItem, UML.ActivityFinalNode)
@@ -59,8 +59,8 @@ class FlowItemObjectNodeTestCase(TestCase):
     """
 
     def test_glue(self):
-        """Test glueing to object node
-        """
+        """Test gluing to object node."""
+
         flow = self.create(items.FlowItem)
         onode = self.create(items.ObjectNodeItem, UML.ObjectNode)
         glued = self.allow(flow, flow.head, onode)
@@ -161,8 +161,8 @@ class FlowItemActionTestCase(TestCase):
     """
 
     def test_glue(self):
-        """Test flow item glueing to action items
-        """
+        """Test flow item gluing to action items."""
+
         flow = self.create(items.FlowItem)
         a1 = self.create(items.ActionItem, UML.Action)
         a2 = self.create(items.ActionItem, UML.Action)
@@ -493,6 +493,3 @@ class FlowItemDecisionNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
     item_cls = items.DecisionNodeItem
     fork_node_cls = UML.DecisionNode
     join_node_cls = UML.MergeNode
-
-
-# vim:sw=4:et:ai

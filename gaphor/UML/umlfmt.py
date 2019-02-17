@@ -229,6 +229,3 @@ def format_namedelement(el, pattern="%s"):
     Format named element.
     """
     return pattern % el.name
-
-
-# vim:sw=4:et:ai

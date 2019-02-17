@@ -103,4 +103,4 @@ class Toolbox(Gtk.ToolPalette):
         data.set(type=data.get_target(), format=8, data=button.action_name.encode())
 
 
-# vim:sw=4:et:ai
+Gtk.Box.new(orientation=Gtk.Orientation.VERTICAL, spacing=0)

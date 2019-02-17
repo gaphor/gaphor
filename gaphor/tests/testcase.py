@@ -209,5 +209,3 @@ class TestCase(TestCaseExtras, unittest.TestCase):
 
 
 main = unittest.main
-
-# vim:sw=4:et:ai
