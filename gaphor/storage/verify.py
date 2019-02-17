@@ -80,6 +80,3 @@ def orphan_references(factory):
         e.save(verify_element)
 
     return [r[1] for r in refs if not r[0] in elements]
-
-
-# vim:sw=4:et:ai

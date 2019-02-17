@@ -32,6 +32,3 @@ class ExtensionItem(NamedLine):
         cr.set_source_rgb(0, 0, 0)
         cr.fill()
         cr.move_to(15, 0)
-
-
-# vim:sw=4:et:ai

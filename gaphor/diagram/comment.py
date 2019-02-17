@@ -74,6 +74,3 @@ class CommentItem(ElementItem):
                 self.width - ear,
                 self.height,
             )
-
-
-# vim:sw=4:et:ai

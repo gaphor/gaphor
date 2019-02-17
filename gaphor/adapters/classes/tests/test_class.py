@@ -346,6 +346,3 @@ class AssociationConnectorTestCase(TestCase):
 
         # after disconnection: one diagram and two classes
         self.assertEqual(3, len(list(self.element_factory.select())))
-
-
-# vim:sw=4:et:ai

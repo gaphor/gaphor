@@ -166,6 +166,3 @@ class CopyService(object):
 
         for item in list(self._new_items.values()):
             view.select_item(item)
-
-
-# vim:sw=4:et:ai

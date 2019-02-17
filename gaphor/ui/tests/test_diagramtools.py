@@ -58,6 +58,3 @@ class DiagramItemConnectorTestCase(TestCase):
         view.do_event(event)
 
         self.assertSame(the_association, a.subject)
-
-
-# vim:sw=4:et:ai

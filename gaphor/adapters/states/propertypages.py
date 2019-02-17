@@ -1,5 +1,4 @@
-"""
-State items property pages.
+"""State items property pages.
 
 To register property pages implemented in this module, it is imported in
 gaphor.adapter package.
@@ -14,14 +13,11 @@ from zope import interface, component
 from gaphor.adapters.propertypages import NamedItemPropertyPage, create_hbox_label
 
 
+@component.adapter(items.TransitionItem)
 class TransitionPropertyPage(NamedItemPropertyPage):
-    """
-    Transition property page allows to edit guard specification.
-    """
+    """Transition property page allows to edit guard specification."""
 
     element_factory = inject("element_factory")
-
-    component.adapts(items.TransitionItem)
 
     def construct(self):
         page = super(TransitionPropertyPage, self).construct()
@@ -64,14 +60,11 @@ class TransitionPropertyPage(NamedItemPropertyPage):
 component.provideAdapter(TransitionPropertyPage, name="Properties")
 
 
+@component.adapter(items.StateItem)
 class StatePropertyPage(NamedItemPropertyPage):
-    """
-    State property page.
-    """
+    """State property page."""
 
     element_factory = inject("element_factory")
-
-    component.adapts(items.StateItem)
 
     def construct(self):
         page = super(StatePropertyPage, self).construct()

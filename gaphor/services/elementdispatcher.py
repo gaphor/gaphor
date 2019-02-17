@@ -343,5 +343,3 @@ class ElementDispatcher(object):
 
 #        for h in self._reverse.iterkeys():
 #            h(None)
-
-# vim:sw=4:et:ai

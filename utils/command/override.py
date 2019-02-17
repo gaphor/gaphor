@@ -109,6 +109,3 @@ class Overrides(object):
         fp.write(line)
         fp.write(data)
         return True
-
-
-# vim:sw=4:et:ai

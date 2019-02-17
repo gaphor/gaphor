@@ -172,6 +172,3 @@ class Alignment(object):
             y = target_y - item.height - item.matrix[5]
             item.matrix.translate(0, y)
             item.request_update()
-
-
-# vim:sw=4:et:ai

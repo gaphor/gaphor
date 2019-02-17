@@ -74,6 +74,3 @@ def rsetattr(obj, attr, val):
         for name in attrs[1:-1]:
             obj = getattr(obj, name)
     setattr(obj, attrs[-1], val)
-
-
-# vim:sw=4:et:ai

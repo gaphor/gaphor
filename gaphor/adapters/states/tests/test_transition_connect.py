@@ -182,6 +182,3 @@ class TransitionConnectorTestCase(TestCase):
 
         glued = self.allow(t, t.head, v)
         self.assertFalse(glued)
-
-
-# vim:sw=4:et:ai

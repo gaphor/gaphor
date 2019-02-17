@@ -14,6 +14,3 @@ class CollectionlistTestCase(unittest.TestCase):
         c.append("b")
         c.append("c")
         assert str(c) == "['a', 'b', 'c']"
-
-
-# vim:sw=4:et:ai

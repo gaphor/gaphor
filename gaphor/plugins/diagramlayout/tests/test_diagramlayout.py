@@ -29,6 +29,3 @@ class DiagramLayoutTestCase(TestCase):
         c2.request_update()
 
         diagram_layout.layout_diagram(diagram)
-
-
-# vim:sw=4:et:ai

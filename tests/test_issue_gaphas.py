@@ -33,6 +33,3 @@ class GaphasTest(TestCase):
         c1.unlink()
 
         self.diagram.canvas.update_now()
-
-
-# vim:sw=4:et:ai

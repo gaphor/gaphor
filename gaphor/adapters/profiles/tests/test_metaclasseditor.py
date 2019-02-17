@@ -19,6 +19,3 @@ class MetaclassEditorTest(TestCase):
 
         ci.subject.name = "Blah"
         self.assertEqual("Blah", combo.get_child().get_text())
-
-
-# vim:sw=4:et:ai

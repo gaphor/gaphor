@@ -80,6 +80,3 @@ class ImplementationTestCase(TestCase):
             c1.subject not in impl.subject.implementatingClassifier,
             impl.subject.implementatingClassifier,
         )
-
-
-# vim:sw=4:et:ai

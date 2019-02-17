@@ -128,6 +128,3 @@ class SanitizerService(object):
         if event.property is UML.InstanceSpecification.classifier:
             if isinstance(event.old_value, UML.Stereotype):
                 event.element.unlink()
-
-
-# vim:sw=4:et:ai

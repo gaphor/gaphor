@@ -14,5 +14,3 @@ class ConnectorTestCase(TestCase):
 
 
 # fixme: relationship test moved from multi dependency test
-
-# vim:sw=4:et:ai

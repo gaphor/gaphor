@@ -128,6 +128,3 @@ class HelpService(object):
         vbox.show_all()
         about.run()
         about.destroy()
-
-
-# vim:sw=4:et:ai

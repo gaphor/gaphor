@@ -143,6 +143,3 @@ class FoldedInterfaceSingleLineTestCase(TestCase):
             glued = self.allow(line, line.head, iface)
             # no additional lines (specified above) can be glued
             self.assertFalse(glued, "Glueing of %s should not be allowed" % cls)
-
-
-# vim:sw=4:et:ai

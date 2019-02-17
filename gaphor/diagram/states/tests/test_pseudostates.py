@@ -28,6 +28,3 @@ class InitialPseudostate(TestCase):
         # history setting is done in the DiagramToolbox factory:
         item.subject.kind = "shallowHistory"
         self.assertEqual("shallowHistory", item.subject.kind)
-
-
-# vim:sw=4:et:ai

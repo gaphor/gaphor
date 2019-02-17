@@ -143,6 +143,3 @@ class XMLWriter(xml.sax.handler.ContentHandler):
     def endCDATA(self):
         self._write(u"]]>")
         self._in_cdata = False
-
-
-# vim:sw=4:et:ai

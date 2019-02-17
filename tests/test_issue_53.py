@@ -75,6 +75,3 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
         self.assertEqual(
             2, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))
         )
-
-
-# vim:sw=4:et:ai

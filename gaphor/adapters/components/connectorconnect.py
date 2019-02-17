@@ -214,32 +214,30 @@ class ConnectorConnectBase(AbstractConnect):
             self.drop_uml(line, c)
 
 
+@component.adapter(items.ComponentItem, items.ConnectorItem)
 class ComponentConnectorConnect(ConnectorConnectBase):
-    """
-    Connection of connector item to a component.
-    """
+    """Connection of connector item to a component."""
 
-    component.adapts(items.ComponentItem, items.ConnectorItem)
+    pass
 
 
 component.provideAdapter(ComponentConnectorConnect)
 
 
+@component.adapter(items.InterfaceItem, items.ConnectorItem)
 class InterfaceConnectorConnect(ConnectorConnectBase):
-    """
-    Connect connector to an interface to maintain assembly connection.
+    """Connect connector to an interface to maintain assembly connection.
 
     See also `AbstractConnect` class for exception of interface item
     connections.
     """
 
-    component.adapts(items.InterfaceItem, items.ConnectorItem)
-
     def allow(self, handle, port):
+        """Allow gluing to folded interface.
+
+        Only allow gluing when connectors are connected.
         """
-        Allow glueing to folded interface only and when only connectors are
-        connected.
-        """
+
         glue_ok = super(InterfaceConnectorConnect, self).allow(handle, port)
         iface = self.element
         glue_ok = glue_ok and iface.folded != iface.FOLDED_NONE

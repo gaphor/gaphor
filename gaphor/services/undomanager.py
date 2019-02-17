@@ -410,6 +410,3 @@ class UndoManager(object):
             association._set(element, value, from_opposite=True)
 
         self.add_undo_action(_undo_association_delete_event)
-
-
-# vim:sw=4:et:ai

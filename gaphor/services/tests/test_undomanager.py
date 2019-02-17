@@ -396,6 +396,3 @@ class TestUndoManager(TestCase):
         assert p in ef.lselect()
 
         undo_manager.shutdown()
-
-
-# vim:sw=4:et:ai

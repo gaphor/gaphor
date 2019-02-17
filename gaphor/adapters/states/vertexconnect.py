@@ -32,12 +32,9 @@ class VertexConnect(RelationshipConnect):
             relation.guard = self.element_factory.create(UML.Constraint)
 
 
+@component.adapter(items.VertexItem, items.TransitionItem)
 class TransitionConnect(VertexConnect):
-    """
-    Connect two state vertices using transition item.
-    """
-
-    component.adapts(items.VertexItem, items.TransitionItem)
+    """Connect two state vertices using transition item."""
 
     def allow(self, handle, port):
         """
@@ -62,15 +59,13 @@ class TransitionConnect(VertexConnect):
 component.provideAdapter(TransitionConnect)
 
 
+@component.adapter(items.InitialPseudostateItem, items.TransitionItem)
 class InitialPseudostateTransitionConnect(VertexConnect):
-    """
-    Connect initial pseudostate using transition item.
+    """Connect initial pseudostate using transition item.
 
     It modifies InitialPseudostateItem._connected attribute to disallow
     connection of more than one transition.
     """
-
-    component.adapts(items.InitialPseudostateItem, items.TransitionItem)
 
     def allow(self, handle, port):
         """
@@ -97,15 +92,13 @@ class InitialPseudostateTransitionConnect(VertexConnect):
 component.provideAdapter(InitialPseudostateTransitionConnect)
 
 
+@component.adapter(items.HistoryPseudostateItem, items.TransitionItem)
 class HistoryPseudostateTransitionConnect(VertexConnect):
-    """
-    Connect history pseudostate using transition item.
+    """Connect history pseudostate using transition item.
 
     It modifies InitialPseudostateItem._connected attribute to disallow
     connection of more than one transition.
     """
-
-    component.adapts(items.HistoryPseudostateItem, items.TransitionItem)
 
     def allow(self, handle, port):
         """
@@ -114,5 +107,3 @@ class HistoryPseudostateTransitionConnect(VertexConnect):
 
 
 component.provideAdapter(HistoryPseudostateTransitionConnect)
-
-# vim:sw=4:et:ai

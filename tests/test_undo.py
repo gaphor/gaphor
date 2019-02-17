@@ -58,6 +58,3 @@ class UndoTest(TestCase):
             self.assertEqual(ci2, self.get_connected(a.tail))
 
             undo_manager.redo_transaction()
-
-
-# vim:sw=4:et:ai

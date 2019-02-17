@@ -109,6 +109,3 @@ class CopyServiceTestCase(TestCase):
 
         self.assertEqual(3, len(self.diagram.canvas.get_all_items()))
         self.assertFalse(orphan_references(self.element_factory))
-
-
-# vim:sw=4:et:ai

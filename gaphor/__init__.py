@@ -101,6 +101,3 @@ def main():
 
     else:
         launch(model)
-
-
-# vim:sw=4:et:ai

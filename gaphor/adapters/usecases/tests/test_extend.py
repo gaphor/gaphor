@@ -66,6 +66,3 @@ class ExtendItemTestCase(TestCase):
 
         self.disconnect(extend, extend.tail)
         self.assertTrue(self.get_connected(extend.tail) is None)
-
-
-# vim:sw=4:et:ai

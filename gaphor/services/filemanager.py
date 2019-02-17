@@ -486,6 +486,3 @@ class FileManager(object):
             return True
 
         return False
-
-
-# vim:sw=4:et:ai

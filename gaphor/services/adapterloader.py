@@ -16,6 +16,3 @@ class AdapterLoader(object):
 
     def shutdown(self):
         pass
-
-
-# vim:sw=4:et:ai

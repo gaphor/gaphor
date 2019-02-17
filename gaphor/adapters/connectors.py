@@ -112,18 +112,13 @@ class AbstractConnect(object):
     #        raise NotImplementedError('Reconnection not implemented')
 
     def disconnect(self, handle):
-        """
-        Disconnect UML model level connections.
-        """
+        """Disconnect UML model level connections."""
         pass
 
 
+@component.adapter(items.ElementItem, items.CommentLineItem)
 class CommentLineElementConnect(AbstractConnect):
-    """
-    Connect a comment line to any element item.
-    """
-
-    component.adapts(items.ElementItem, items.CommentLineItem)
+    """Connect a comment line to any element item."""
 
     def allow(self, handle, port):
         """
@@ -204,12 +199,9 @@ class CommentLineElementConnect(AbstractConnect):
 component.provideAdapter(CommentLineElementConnect)
 
 
+@component.adapter(items.DiagramLine, items.CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
-    """
-    Connect a comment line to any diagram line.
-    """
-
-    component.adapts(items.DiagramLine, items.CommentLineItem)
+    """Connect a comment line to any diagram line."""
 
     def allow(self, handle, port):
         """
@@ -488,6 +480,3 @@ class RelationshipConnect(UnaryRelationshipConnect):
             return None
 
         return super(RelationshipConnect, self).allow(handle, port)
-
-
-# vim:sw=4:et:ai

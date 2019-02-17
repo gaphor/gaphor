@@ -285,6 +285,3 @@ class InterfaceItem(ClassItem):
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
         cr.stroke()
         super(InterfaceItem, self).draw(context)
-
-
-# vim:sw=4:et:ai

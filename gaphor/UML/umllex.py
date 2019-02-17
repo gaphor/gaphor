@@ -346,6 +346,3 @@ def parse_namedelement(el, text):
     Parse named element by simply assigning text to its name.
     """
     el.name = text
-
-
-# vim:sw=4:et:ai

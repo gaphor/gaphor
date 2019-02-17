@@ -29,6 +29,3 @@ class SimpleItemTestCase(TestCase):
         """
         """
         self.diagram.create(Ellipse)
-
-
-# vim:sw=4:et:ai

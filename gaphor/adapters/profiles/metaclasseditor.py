@@ -93,5 +93,3 @@ class MetaclassNameEditor(object):
 component.provideAdapter(
     MetaclassNameEditor, adapts=[items.MetaclassItem], name="Properties"
 )
-
-# vim:sw=4:et:ai

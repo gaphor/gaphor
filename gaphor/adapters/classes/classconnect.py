@@ -1,6 +1,5 @@
-"""
-Classes related (dependency, implementation) adapter connections.
-"""
+"""Classes related (dependency, implementation) adapter connections."""
+
 import logging
 
 from zope import component
@@ -12,12 +11,9 @@ from gaphor.diagram import items
 log = logging.getLogger(__name__)
 
 
+@component.adapter(items.NamedItem, items.DependencyItem)
 class DependencyConnect(RelationshipConnect):
-    """
-    Connect two NamedItem elements using a Dependency
-    """
-
-    component.adapts(items.NamedItem, items.DependencyItem)
+    """Connect two NamedItem elements using a Dependency."""
 
     def allow(self, handle, port):
         line = self.line
@@ -44,8 +40,9 @@ class DependencyConnect(RelationshipConnect):
 
     def connect_subject(self, handle):
         """
-        TODO: cleck for existing relationships (use self.relation())
+        TODO: check for existing relationships (use self.relation())
         """
+
         line = self.line
 
         if line.auto_dependency:
@@ -71,13 +68,9 @@ class DependencyConnect(RelationshipConnect):
 component.provideAdapter(DependencyConnect)
 
 
+@component.adapter(items.ClassifierItem, items.GeneralizationItem)
 class GeneralizationConnect(RelationshipConnect):
-    """
-    Connect Classifiers with a Generalization relationship.
-    """
-
-    # FixMe: Both ends of the generalization should be of the same  type?
-    component.adapts(items.ClassifierItem, items.GeneralizationItem)
+    """Connect Classifiers with a Generalization relationship."""
 
     def reconnect(self, handle, port):
         self.reconnect_relationship(
@@ -96,12 +89,9 @@ class GeneralizationConnect(RelationshipConnect):
 component.provideAdapter(GeneralizationConnect)
 
 
+@component.adapter(items.ClassifierItem, items.AssociationItem)
 class AssociationConnect(UnaryRelationshipConnect):
-    """
-    Connect association to classifier.
-    """
-
-    component.adapts(items.ClassifierItem, items.AssociationItem)
+    """Connect association to classifier."""
 
     def allow(self, handle, port):
         element = self.element
@@ -185,12 +175,9 @@ class AssociationConnect(UnaryRelationshipConnect):
 component.provideAdapter(AssociationConnect)
 
 
+@component.adapter(items.NamedItem, items.ImplementationItem)
 class ImplementationConnect(RelationshipConnect):
-    """
-    Connect Interface and a BehavioredClassifier using an Implementation.
-    """
-
-    component.adapts(items.NamedItem, items.ImplementationItem)
+    """Connect Interface and a BehavioredClassifier using an Implementation."""
 
     def allow(self, handle, port):
         line = self.line
@@ -236,5 +223,3 @@ class ImplementationConnect(RelationshipConnect):
 
 
 component.provideAdapter(ImplementationConnect)
-
-# vim:sw=4:et:ai

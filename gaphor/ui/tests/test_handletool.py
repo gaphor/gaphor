@@ -322,6 +322,3 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertTrue(cinfo is None)
         # self.assertTrue(handle.connection_data is None)
         self.assertEqual(len(comment.subject.annotatedElement), 0)
-
-
-# vim:sw=4:et:ai

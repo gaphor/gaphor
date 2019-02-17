@@ -185,9 +185,7 @@ class ElementFactory(object):
 
 @implementer(IService)
 class ElementFactoryService(ElementFactory):
-    """
-    Service version of the ElementFctory.
-    """
+    """Service version of the ElementFactory."""
 
     component_registry = inject("component_registry")
 
@@ -250,23 +248,17 @@ class ElementFactoryService(ElementFactory):
 
 
 @implementer(IEventFilter)
+@component.adapter(IElementChangeEvent)
 class ElementChangedEventBlocker(object):
-    """
-    Blocks all events of type IElementChangeEvent.
+    """Blocks all events of type IElementChangeEvent.
 
     This filter is placed when the the element factory flushes it's content.
     """
-
-    component.adapts(IElementChangeEvent)
 
     def __init__(self, event):
         self._event = event
 
     def filter(self):
-        """
-        Returns something that evaluates to `True` so events are blocked.
-        """
+        """Returns something that evaluates to `True` so events are blocked."""
+
         return "Blocked by ElementFactory.flush()"
-
-
-# vim:sw=4:et

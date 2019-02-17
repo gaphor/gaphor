@@ -141,6 +141,3 @@ class ClassTestCase(TestCase):
 
         width = klass.width
         self.assertGreater(width, 170.0)
-
-
-# vim:sw=4:et:ai

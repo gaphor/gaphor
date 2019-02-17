@@ -577,5 +577,3 @@ class ACItem(object):
 #    cos_angle = cos(angle)
 #    return (cos_angle * a - sin_angle * b + x,
 #            sin_angle * a + cos_angle * b + y)
-
-# vim:sw=4:et:ai

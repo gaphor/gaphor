@@ -138,5 +138,3 @@ It uses the GTK+ environment for user interaction.
         build_mo=dict(all_linguas=",".join(LINGUAS)),
     ),
 )
-
-# vim:sw=4:et:ai

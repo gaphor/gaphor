@@ -386,5 +386,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# vim:sw=4:et:ai

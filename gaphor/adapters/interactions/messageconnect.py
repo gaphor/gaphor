@@ -1,6 +1,4 @@
-"""
-Message item connection adapters.
-"""
+"""Message item connection adapters."""
 
 from gaphor.adapters.connectors import AbstractConnect
 from zope import interface, component
@@ -8,9 +6,9 @@ from gaphor import UML
 from gaphor.diagram import items
 
 
+@component.adapter(items.LifelineItem, items.MessageItem)
 class MessageLifelineConnect(AbstractConnect):
-    """
-    Connect lifeline with a message.
+    """Connect lifeline with a message.
 
     A message can connect to both the lifeline's head (the rectangle)
     or the lifetime line. In case it's added to the head, the message
@@ -18,11 +16,9 @@ class MessageLifelineConnect(AbstractConnect):
     added to a lifetime line, it's considered a sequence diagram.
     """
 
-    component.adapts(items.LifelineItem, items.MessageItem)
-
     def connect_lifelines(self, line, send, received):
         """
-        Always create a new Message with two EventOccurence instances.
+        Always create a new Message with two EventOccurrence instances.
         """
 
         def get_subject():

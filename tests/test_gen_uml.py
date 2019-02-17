@@ -55,6 +55,3 @@ SubClass.name4 = redefine(SubClass, 'name4', D, name2)
 
 # # 'SubClass.value' is a simple attribute
 # SubClass.value = attribute('value', str, lower=f9124094-3f14-11de-9595-00224128e79d)
-
-
-# vim:sw=4:et:ai

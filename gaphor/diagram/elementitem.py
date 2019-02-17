@@ -101,6 +101,3 @@ class ElementItem(gaphas.Element, DiagramItem):
         x, y = get_text_point(extents, self.width, self.height, align, padding, outside)
 
         return x, y
-
-
-# vim:sw=4:et:ai

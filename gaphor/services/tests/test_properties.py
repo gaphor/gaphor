@@ -51,6 +51,3 @@ class TestProperties(TestCase):
 #
 #        assert 3 == prop('test2', 3)
 #        assert 3 == prop('test2', 4)
-
-
-# vim:sw=4:et:ai

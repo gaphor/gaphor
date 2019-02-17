@@ -74,6 +74,3 @@ class ToplevelWindow(object):
             # Create a simple window.
             self.window.add(self.ui_component())
         self.window.show()
-
-
-# vim:sw=4:et:ai

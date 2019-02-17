@@ -33,6 +33,3 @@ class FeatureTestCase(TestCase):
 
         self.diagram.canvas.update()
         self.assertTrue(size < item.get_size())
-
-
-# vim:sw=4:et:ai

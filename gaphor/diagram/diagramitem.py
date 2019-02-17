@@ -276,6 +276,3 @@ class DiagramItem(
 
     def unregister_handlers(self):
         self.watcher.unregister_handlers()
-
-
-# vim:sw=4:et:ai

@@ -18,13 +18,11 @@ from gaphor.adapters.classes.classconnect import (
 )
 
 
+@component.adapter(items.InterfaceItem, items.ImplementationItem)
 class ImplementationInterfaceConnect(ImplementationConnect):
-    """
-    Connect interface item and a behaviored classifier using an
+    """Connect interface item and a behaviored classifier using an
     implementation.
     """
-
-    component.adapts(items.InterfaceItem, items.ImplementationItem)
 
     def connect(self, handle, port):
         """
@@ -48,12 +46,9 @@ class ImplementationInterfaceConnect(ImplementationConnect):
 component.provideAdapter(ImplementationInterfaceConnect)
 
 
+@component.adapter(items.InterfaceItem, items.DependencyItem)
 class DependencyInterfaceConnect(DependencyConnect):
-    """
-    Connect interface item with dependency item.
-    """
-
-    component.adapts(items.InterfaceItem, items.DependencyItem)
+    """Connect interface item with dependency item."""
 
     def connect(self, handle, port):
         """
@@ -90,5 +85,3 @@ class DependencyInterfaceConnect(DependencyConnect):
 
 
 component.provideAdapter(DependencyInterfaceConnect)
-
-# vim:sw=4:et:ai

@@ -609,6 +609,3 @@ class AssemblyConnectorTestCase(TestCase):
         self.assertEqual(0, len(self.kindof(UML.Connector)))
         self.assertEqual(0, len(self.kindof(UML.ConnectorEnd)))
         self.assertEqual(0, len(self.kindof(UML.Port)))
-
-
-# vim:sw=4:et:ai

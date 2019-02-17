@@ -493,6 +493,3 @@ class FlowItemDecisionNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
     item_cls = items.DecisionNodeItem
     fork_node_cls = UML.DecisionNode
     join_node_cls = UML.MergeNode
-
-
-# vim:sw=4:et:ai

@@ -78,6 +78,3 @@ class IPropertyPage(interface.Interface):
         """
         Destroy the page and clean up signal handlers and stuff.
         """
-
-
-# vim:sw=4:et:ai

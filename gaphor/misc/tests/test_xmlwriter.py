@@ -83,6 +83,3 @@ class XMLWriterTestCase(unittest.TestCase):
             % sys.getdefaultencoding()
         )
         assert w.s == xml, w.s
-
-
-# vim:sw=4:et:ai

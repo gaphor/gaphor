@@ -41,6 +41,3 @@ def error_handler(message=None, exc_info=None):
     dialog.destroy()
     if answer == Gtk.ResponseType.YES:
         pdb.post_mortem(exc_traceback)
-
-
-# vim:sw=4:et:ai

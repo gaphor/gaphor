@@ -268,6 +268,3 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         # no message after full disconnection
         self.disconnect(msg, msg.tail)
         self.assertEqual(0, len(self.kindof(UML.Message)))
-
-
-# vim:sw=4:et:ai
