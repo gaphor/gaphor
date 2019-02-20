@@ -3,18 +3,21 @@ Test handle tool functionality.
 """
 
 import unittest
-from gi.repository import Gtk
+from zope import component
+
+from gaphas.aspect import Connector, ConnectionSink
+from gi.repository import Gdk, Gtk
 
 from gaphor import UML
+from gaphor.application import Application
+from gaphor.core import inject
+from gaphor.diagram.actor import ActorItem
 from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
-from gaphor.diagram.actor import ActorItem
+from gaphor.diagram.interfaces import IConnect
 from gaphor.ui.diagramtools import ConnectHandleTool, DiagramItemConnector
-from gaphas.canvas import Context
-from gaphas.aspect import Connector, ConnectionSink
-from gaphor.application import Application
-
-Event = Context
+from gaphor.ui.event import Diagram
+from gaphor.ui.interfaces import IUIComponent
 
 
 class DiagramItemConnectorTestCase(unittest.TestCase):
@@ -40,16 +43,12 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
             CommentItem, subject=self.element_factory.create(UML.Comment)
         )
         self.commentline = self.diagram.create(CommentLineItem)
-        self.view = self.main_window.show_diagram(self.diagram).view
 
     def test_aspect_type(self):
         aspect = Connector(self.commentline, self.commentline.handles()[0])
         assert isinstance(aspect, DiagramItemConnector)
 
     def test_query(self):
-        from zope import component
-        from gaphor.diagram.interfaces import IConnect
-
         assert component.queryMultiAdapter((self.comment, self.commentline), IConnect)
 
     def test_allow(self):
@@ -61,7 +60,6 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
         assert aspect.allow(sink)
 
     def test_connect(self):
-
         sink = ConnectionSink(self.comment, self.comment.ports()[0])
         aspect = Connector(self.commentline, self.commentline.handles()[0])
         aspect.connect(sink)
@@ -74,6 +72,8 @@ class HandleToolTestCase(unittest.TestCase):
     """
     Handle connection tool integration tests.
     """
+
+    component_registry = inject("component_registry")
 
     def setUp(self):
         Application.init(
@@ -98,8 +98,9 @@ class HandleToolTestCase(unittest.TestCase):
         """
         Get a view for diagram.
         """
-        self.main_window.show_diagram(diagram)
-        view = self.main_window.get_current_diagram_view()
+        view = self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_view()
 
         # realize view, forces bounding box recalculation
         while Gtk.events_pending():
@@ -114,7 +115,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
-
+        self.component_registry.handle(Diagram(diagram))
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )
@@ -127,7 +128,9 @@ class HandleToolTestCase(unittest.TestCase):
 
         line = diagram.create(CommentLineItem)
 
-        view = self.get_diagram_view(diagram)
+        view = self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_view()
         assert view, "View should be available here"
 
         tool = ConnectHandleTool(view)
@@ -167,7 +170,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
-        # self.main_window.show_diagram(diagram)
+        self.component_registry.handle(Diagram(diagram))
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )
@@ -176,7 +179,9 @@ class HandleToolTestCase(unittest.TestCase):
         diagram.canvas.update_matrix(actor)
         line = diagram.create(CommentLineItem)
 
-        view = self.get_diagram_view(diagram)
+        view = self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_view()
 
         assert view, "View should be available here"
 
@@ -263,8 +268,8 @@ class HandleToolTestCase(unittest.TestCase):
 
         tool = ConnectHandleTool(view)
 
-        tool.on_button_press(Event(x=0, y=0, state=0))
-        tool.on_button_release(Event(x=0, y=0, state=0))
+        tool.on_button_press(Gdk.Event(x=0, y=0, state=0))
+        tool.on_button_release(Gdk.Event(x=0, y=0, state=0))
 
         handle = line.handles()[0]
         self.assertEqual(
@@ -277,9 +282,9 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Grab the second handle and drag it to the actor
 
-        tool.on_button_press(Event(x=10, y=10, state=0))
-        tool.on_motion_notify(Event(x=200, y=200, state=0xFFFF))
-        tool.on_button_release(Event(x=200, y=200, state=0))
+        tool.on_button_press(Gdk.Event(x=10, y=10, state=0))
+        tool.on_motion_notify(Gdk.Event(x=200, y=200, state=0xFFFF))
+        tool.on_button_release(Gdk.Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
         self.assertEqual(
@@ -293,9 +298,9 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Press, release, nothing should change
 
-        tool.on_button_press(Event(x=200, y=200, state=0))
-        tool.on_motion_notify(Event(x=200, y=200, state=0xFFFF))
-        tool.on_button_release(Event(x=200, y=200, state=0))
+        tool.on_button_press(Gdk.Event(x=200, y=200, state=0))
+        tool.on_motion_notify(Gdk.Event(x=200, y=200, state=0xFFFF))
+        tool.on_button_release(Gdk.Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
         self.assertEqual(
@@ -309,9 +314,9 @@ class HandleToolTestCase(unittest.TestCase):
 
         # Move second handle away from the actor. Should remove connection
 
-        tool.on_button_press(Event(x=200, y=200, state=0))
-        tool.on_motion_notify(Event(x=500, y=500, state=0xFFFF))
-        tool.on_button_release(Event(x=500, y=500, state=0))
+        tool.on_button_press(Gdk.Event(x=200, y=200, state=0))
+        tool.on_motion_notify(Gdk.Event(x=500, y=500, state=0xFFFF))
+        tool.on_button_release(Gdk.Event(x=500, y=500, state=0))
 
         handle = line.handles()[-1]
         self.assertEqual(
