@@ -55,6 +55,11 @@ class DiagramExportManager(object):
     def update(self):
         pass
 
+    def get_current_diagram(self):
+        return self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_diagram()
+
     def save_dialog(self, diagram, title, ext):
 
         filename = (diagram.name or "export") + ext
@@ -189,9 +194,7 @@ class DiagramExportManager(object):
     def save_svg_action(self):
         title = "Export diagram to SVG"
         ext = ".svg"
-        diagram = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_diagram()
+        diagram = self.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_svg(filename, diagram.canvas)
@@ -204,9 +207,7 @@ class DiagramExportManager(object):
     def save_png_action(self):
         title = "Export diagram to PNG"
         ext = ".png"
-        diagram = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_diagram()
+        diagram = self.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_png(filename, diagram.canvas)
@@ -219,9 +220,7 @@ class DiagramExportManager(object):
     def save_pdf_action(self):
         title = "Export diagram to PDF"
         ext = ".pdf"
-        diagram = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_diagram()
+        diagram = self.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_pdf(filename, diagram.canvas)

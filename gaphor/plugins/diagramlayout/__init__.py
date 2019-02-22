@@ -51,20 +51,19 @@ class DiagramLayout(object):
     def shutdown(self):
         pass
 
+    def get_current_diagram(self):
+        return self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_diagram()
+
     def update(self):
-        self.sensitive = bool(
-            self.component_registry.get_utility(
-                IUIComponent, "diagrams"
-            ).get_current_diagram()
-        )
+        self.sensitive = bool(self.get_current_diagram())
 
     @action(
         name="diagram-layout", label="La_yout diagram", tooltip="simple diagram layout"
     )
     def execute(self):
-        d = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_diagram()
+        d = self.get_current_diagram()
         self.layout_diagram(d)
 
     @transactional

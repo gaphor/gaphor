@@ -24,16 +24,16 @@ class MainWindowTestCase(unittest.TestCase):
     def tearDown(self):
         Application.shutdown()
 
+    def get_current_diagram(self):
+        return self.component_registry.get_utility(
+            IUIComponent, "diagrams"
+        ).get_current_diagram()
+
     def test_creation(self):
         # MainWindow should be created as resource
         main_w = Application.get_service("main_window")
         main_w.open()
-        self.assertEqual(
-            self.component_registry.get_utility(
-                IUIComponent, "diagrams"
-            ).get_current_diagram(),
-            None,
-        )
+        self.assertEqual(self.get_current_diagram(), None)
 
     def test_show_diagram(self):
         main_w = Application.get_service("main_window")
@@ -41,12 +41,7 @@ class MainWindowTestCase(unittest.TestCase):
         diagram = element_factory.create(UML.Diagram)
         main_w.open()
         self.component_registry.handle(Diagram(diagram))
-        self.assertEqual(
-            self.component_registry.get_utility(
-                IUIComponent, "diagrams"
-            ).get_current_diagram(),
-            diagram,
-        )
+        self.assertEqual(self.get_current_diagram(), diagram)
 
 
 # vim:sw=4:et:ai

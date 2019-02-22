@@ -128,9 +128,7 @@ class HandleToolTestCase(unittest.TestCase):
 
         line = diagram.create(CommentLineItem)
 
-        view = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_view()
+        view = self.get_diagram_view()
         assert view, "View should be available here"
 
         tool = ConnectHandleTool(view)
@@ -179,10 +177,7 @@ class HandleToolTestCase(unittest.TestCase):
         diagram.canvas.update_matrix(actor)
         line = diagram.create(CommentLineItem)
 
-        view = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_view()
-
+        view = self.get_diagram_view()
         assert view, "View should be available here"
 
         tool = ConnectHandleTool(view)
