@@ -5,7 +5,7 @@ Interfaces related to the user interface.
 from zope import interface
 
 
-class IDiagramShow(interface.Interface):
+class IDiagram(interface.Interface):
     """
     Show a new diagram tab
     """

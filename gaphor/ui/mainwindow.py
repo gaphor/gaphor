@@ -32,7 +32,7 @@ from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
-from gaphor.ui.event import DiagramPageChange, DiagramShow
+from gaphor.ui.event import DiagramPageChange, Diagram
 from gaphor.ui.interfaces import IDiagramPageChange
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.layout import deserialize
@@ -320,7 +320,7 @@ class MainWindow(object):
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
-            self.component_registry.handle(DiagramShow(diagram))
+            self.component_registry.handle(Diagram(diagram))
 
     @component.adapter(FileManagerStateChanged)
     def _on_file_manager_state_changed(self, event):
@@ -545,7 +545,7 @@ class Namespace(object):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
-            self.component_registry.handle(DiagramShow(element))
+            self.component_registry.handle(Diagram(element))
 
         else:
             log.debug("No action defined for element %s" % type(element).__name__)
@@ -580,7 +580,7 @@ class Namespace(object):
             diagram.name = "New diagram"
 
         self.select_element(diagram)
-        self.component_registry.handle(DiagramShow(diagram))
+        self.component_registry.handle(Diagram(diagram))
         self.tree_view_rename_selected()
 
     @action(
@@ -776,17 +776,16 @@ class Diagrams(object):
 
         Returns:
             The Gtk.Notebook.
-
         """
+
         self._notebook = Gtk.Notebook()
         self._notebook.show()
         self.component_registry.register_handler(self._on_show_diagram)
         return self._notebook
 
     def close(self):
-        """Close the diagrams component.
+        """Close the diagrams component."""
 
-        """
         self.component_registry.unregister_handler(self._on_show_diagram)
         self._notebook.destroy()
         self._notebook = None
@@ -795,11 +794,24 @@ class Diagrams(object):
         """Returns the current page of the notebook.
 
         Returns (DiagramPage): The current diagram page.
-
         """
+
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
-        return child_widget.diagram_page
+        if child_widget is not None:
+            return child_widget.diagram_page.get_diagram()
+        else:
+            return None
+
+    def get_current_view(self):
+        """Returns the current view of the diagram page.
+
+        Returns (GtkView): The current view.
+        """
+
+        page_num = self._notebook.get_current_page()
+        child_widget = self._notebook.get_nth_page(page_num)
+        return child_widget.diagram_page.get_view()
 
     def cb_close_tab(self, button, widget):
         """Callback to close the tab and remove the notebook page.
@@ -807,8 +819,8 @@ class Diagrams(object):
         Args:
             button (Gtk.Button): The button the callback is from.
             widget (Gtk.Widget): The child widget of the tab.
-
         """
+
         page_num = self._notebook.page_num(widget)
         # TODO why does Gtk.Notebook give a GTK-CRITICAL if you remove a page
         #   with set_show_tabs(True)?
@@ -825,8 +837,8 @@ class Diagrams(object):
         Args:
             title (str): The title of the tab, the diagram name.
             widget (Gtk.Widget): The child widget of the tab.
-
         """
+
         tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
         label = Gtk.Label(title)
         tab_box.pack_start(label)
@@ -857,8 +869,8 @@ class Diagrams(object):
 
         Returns:
             List of tuples (page, widget) of the currently open Notebook pages.
-
         """
+
         widgets_on_pages = []
         num_pages = self._notebook.get_n_pages()
         for page in range(0, num_pages):
@@ -866,7 +878,7 @@ class Diagrams(object):
             widgets_on_pages.append((page, widget))
         return widgets_on_pages
 
-    @component.adapter(DiagramShow)
+    @component.adapter(Diagram)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
 
@@ -875,8 +887,8 @@ class Diagrams(object):
 
         Args:
             event: The service event that is calling the method.
-
         """
+
         diagram = event.diagram
 
         # Try to find an existing diagram page and give it focus
@@ -898,9 +910,8 @@ class Diagrams(object):
 
     @toggle_action(name="diagram-drawing-style", label="Hand drawn style", active=False)
     def hand_drawn_style(self, active):
-        """
-        Toggle between straight diagrams and "hand drawn" diagram style.
-        """
+        """Toggle between straight diagrams and "hand drawn" diagram style."""
+
         if active:
             sloppiness = 0.5
         else:
