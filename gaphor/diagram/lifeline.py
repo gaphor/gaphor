@@ -23,7 +23,6 @@ from __future__ import division
 
 from builtins import object
 from builtins import map
-from past.utils import old_div
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
@@ -55,7 +54,7 @@ class LifetimePort(LinePort):
         # keep message at the same distance from head or bottom of lifetime
         # line depending on situation
         height = self.end.y - self.start.y
-        if old_div(y, height) < 0.5:
+        if y / height < 0.5:
             delta = y - self.start.y
             align = 0
         else:

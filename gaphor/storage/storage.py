@@ -22,7 +22,6 @@ import gaphas
 from builtins import map
 from builtins import str
 from future import standard_library
-from past.utils import old_div
 
 from gaphor import UML
 from gaphor import diagram
@@ -177,7 +176,7 @@ def save_generator(writer, factory):
 
         n += 1
         if n % 25 == 0:
-            yield old_div((n * 100), size)
+            yield (n * 100) / size
 
     # writer.endElement('gaphor')
     writer.endElementNS((NAMESPACE_MODEL, "gaphor"), None)
@@ -205,7 +204,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     def update_status_queue(_n=[0]):
         n = _n[0] = _n[0] + 1
         if n % 30 == 0:
-            return old_div((n * 100), size)
+            return (n * 100) / size
 
     # log.info('0%')
 
@@ -361,7 +360,7 @@ def load_generator(filename, factory):
         for percentage in parser.parse_generator(filename, loader):
             pass
             if percentage:
-                yield old_div(percentage, 2)
+                yield percentage / 2
             else:
                 yield percentage
         elements = loader.elements
@@ -388,7 +387,7 @@ def load_generator(filename, factory):
                 elements, factory, gaphor_version
             ):
                 if percentage:
-                    yield old_div(percentage, 2) + 50
+                    yield percentage / 2 + 50
                 else:
                     yield percentage
         except Exception as e:

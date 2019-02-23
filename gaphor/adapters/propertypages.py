@@ -39,7 +39,6 @@ from gaphas.decorators import AsyncIO
 from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import Gtk
-from past.utils import old_div
 from zope.interface import implementer
 
 from gaphor import UML
@@ -1287,9 +1286,9 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
 
     def _on_horizontal_change(self, button):
         if button.get_active():
-            self.item.matrix.rotate(old_div(math.pi, 2))
+            self.item.matrix.rotate(math.pi / 2)
         else:
-            self.item.matrix.rotate(old_div(-math.pi, 2))
+            self.item.matrix.rotate(-math.pi / 2)
         self.item.request_update()
 
 

@@ -3,7 +3,6 @@ Use case diagram item.
 """
 from __future__ import division
 
-from past.utils import old_div
 from gaphas.util import path_ellipse
 
 from gaphor import UML
@@ -35,8 +34,8 @@ class UseCaseItem(ClassifierItem):
     def draw(self, context):
         cr = context.cairo
 
-        rx = old_div(self.width, 2.0)
-        ry = old_div(self.height, 2.0)
+        rx = self.width / 2.0
+        ry = self.height / 2.0
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)

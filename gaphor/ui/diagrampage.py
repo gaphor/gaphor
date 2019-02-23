@@ -20,7 +20,6 @@ from gaphas.painter import (
 from gaphas.view import GtkView
 from gi.repository import Gdk
 from gi.repository import Gtk
-from past.utils import old_div
 
 from gaphor import UML
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
@@ -163,12 +162,12 @@ class DiagramPage(object):
 
     @action(name="diagram-zoom-out", stock_id="gtk-zoom-out")
     def zoom_out(self):
-        self.view.zoom(old_div(1, 1.2))
+        self.view.zoom(1 / 1.2)
 
     @action(name="diagram-zoom-100", stock_id="gtk-zoom-100")
     def zoom_100(self):
         zx = self.view.matrix[0]
-        self.view.zoom(old_div(1, zx))
+        self.view.zoom(1 / zx)
 
     @action(name="diagram-select-all", label="_Select all", accel="<Control>a")
     def select_all(self):

@@ -3,7 +3,6 @@ a queue."""
 from __future__ import division
 
 from builtins import object
-from past.utils import old_div
 from gi.repository import GLib
 from gi.repository import Pango
 from gi.repository import Gdk
@@ -101,7 +100,7 @@ def progress_idle_handler(progress_bar, queue):
     except QueueEmpty:
         pass
     if percentage:
-        progress_bar.set_fraction(min(old_div(percentage, 100.0), 100.0))
+        progress_bar.set_fraction(min(percentage, 100.0) / 100.0)
     return True
 
 

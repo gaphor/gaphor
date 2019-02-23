@@ -5,7 +5,6 @@ from __future__ import division
 
 from builtins import map
 from builtins import range
-from past.utils import old_div
 from math import atan2, pi
 
 import gaphas
@@ -164,7 +163,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         Get middle line segment.
         """
         handles = self._handles
-        m = old_div(len(handles), 2)
+        m = len(handles) // 2
         assert m - 1 >= 0 and m < len(handles)
         return handles[m - 1], handles[m]
 
@@ -174,7 +173,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         the middle segment is also returned.
         """
         h0, h1 = self._get_middle_segment()
-        pos = old_div((h0.pos.x + h1.pos.x), 2), old_div((h0.pos.y + h1.pos.y), 2)
+        pos = (h0.pos.x + h1.pos.x) / 2, (h0.pos.y + h1.pos.y) / 2
         angle = atan2(h1.pos.y - h0.pos.y, h1.pos.x - h0.pos.x)
         if inverted:
             angle += pi

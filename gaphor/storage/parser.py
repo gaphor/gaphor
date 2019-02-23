@@ -41,7 +41,6 @@ from xml.sax import handler
 from builtins import object
 from builtins import range
 from future import standard_library
-from past.utils import old_div
 
 from gaphor.misc.odict import odict
 
@@ -333,7 +332,7 @@ class ProgressGenerator(object):
             self.output.feed(block)
             block = self.input.read(self.block_size)
             read_size += len(block)
-            yield old_div((read_size * 100), self.file_size)
+            yield (read_size * 100) / self.file_size
 
 
 def parse_file(filename, parser):

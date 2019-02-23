@@ -69,7 +69,6 @@ Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 from __future__ import division
 
-from past.utils import old_div
 from math import pi
 
 from gaphas.connector import LinePort
@@ -118,8 +117,8 @@ class InterfacePort(LinePort):
         connection to the middle point of a port.
         """
         if self.iface.folded:
-            px = old_div((self.start.x + self.end.x), 2)
-            py = old_div((self.start.y + self.end.y), 2)
+            px = (self.start.x + self.end.x) / 2
+            py = (self.start.y + self.end.y) / 2
             d = distance_point_point((px, py), pos)
             return (px, py), d
         else:
@@ -178,7 +177,7 @@ class InterfaceItem(ClassItem):
         # edge of element define default element ports
         self._ports = [
             InterfacePort(h_nw.pos, h_ne.pos, self, 0),
-            InterfacePort(h_ne.pos, h_se.pos, self, old_div(pi, 2)),
+            InterfacePort(h_ne.pos, h_se.pos, self, pi / 2),
             InterfacePort(h_se.pos, h_sw.pos, self, pi),
             InterfacePort(h_sw.pos, h_nw.pos, self, pi * 1.5),
         ]
@@ -266,10 +265,7 @@ class InterfaceItem(ClassItem):
     def draw_icon(self, context):
         cr = context.cairo
         h_nw = self._handles[NW]
-        cx, cy = (
-            h_nw.pos.x + old_div(self.width, 2),
-            h_nw.pos.y + old_div(self.height, 2),
-        )
+        cx, cy = (h_nw.pos.x + self.width / 2, h_nw.pos.y + self.height / 2)
         required = (
             self._folded == self.FOLDED_REQUIRED or self._folded == self.FOLDED_ASSEMBLY
         )
