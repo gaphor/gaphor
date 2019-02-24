@@ -1,10 +1,7 @@
 """
 Activity control nodes.
 """
-from __future__ import print_function
-from __future__ import division
 
-from builtins import map
 import math
 
 from gaphas.util import path_ellipse

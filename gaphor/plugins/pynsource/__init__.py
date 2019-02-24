@@ -7,8 +7,6 @@ This plugin uses PyNSource, written by Andy Bulka
 Depends on the Diagram Layout plugin.
 """
 
-from builtins import object
-
 from gi.repository import GObject
 from gi.repository import Gtk
 from zope.interface import implementer

@@ -1,12 +1,7 @@
 """Defines a status window class for displaying the progress of
 a queue."""
-from __future__ import division
 
-from builtins import object
-from gi.repository import GLib
-from gi.repository import Pango
-from gi.repository import Gdk
-from gi.repository import Gtk
+from gi.repository import GLib, Gdk, Gtk, Pango
 
 from gaphor.misc.gidlethread import QueueEmpty
 

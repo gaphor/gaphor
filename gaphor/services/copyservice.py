@@ -2,8 +2,6 @@
 Copy / Paste functionality
 """
 
-from builtins import object
-from builtins import str
 from zope import component
 
 import gaphas

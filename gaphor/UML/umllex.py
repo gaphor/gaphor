@@ -6,9 +6,6 @@ The regular expressions are constructed based on a series of
 "sub-patterns". This makes it easy to identify the autonomy of an
 attribute/operation.
 """
-from __future__ import absolute_import
-
-from builtins import map
 
 __all__ = ["parse_property", "parse_operation"]
 

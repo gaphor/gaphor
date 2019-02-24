@@ -1,12 +1,6 @@
 """
 Style classes and constants.
 """
-from __future__ import division
-
-from builtins import object
-from builtins import range
-from past.builtins import cmp
-from math import pi
 
 # padding
 PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = list(range(4))
@@ -259,7 +253,7 @@ def get_text_point_at_line2(extents, p1, p2, align, padding):
         # determine quadrant, we are interested in 1 or 3 and 2 or 4
         # see hint tuples below
         h2 = height / 2.0
-        q = cmp(d1, 0)
+        q = (d1 > 0) - (d1 < 0)
         if abs(dx) < EPSILON:
             hint = 0
         else:

@@ -1,9 +1,7 @@
 """
 This plugin extends Gaphor with XMI alignment actions.
 """
-from __future__ import division
 
-from builtins import object
 from zope import component
 
 from zope.interface import implementer

@@ -23,7 +23,6 @@ into gaphor/UML/uml2.py.
 
 Also a distutils tool, build_uml, is provided.
 """
-from __future__ import print_function
 
 import os.path
 from distutils.core import Command

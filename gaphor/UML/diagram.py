@@ -5,8 +5,6 @@ representation of a UML diagram. Diagrams can be visualized and edited.
 The DiagramCanvas class extends the gaphas.Canvas class.
 """
 
-from builtins import str
-from builtins import filter
 import uuid
 
 import gaphas

@@ -1,7 +1,6 @@
 """Service dedicated to exporting diagrams to a variety of file formats."""
 
 import os
-from builtins import object
 from logging import getLogger
 
 import cairo

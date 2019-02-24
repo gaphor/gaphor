@@ -1,13 +1,11 @@
 """
 Command for running gaphor and tests directly from setup.py.
 """
-from __future__ import print_function
 
 import os.path
 import sys
 from distutils.core import Command
 
-from past.builtins import execfile
 from pkg_resources import load_entry_point
 
 

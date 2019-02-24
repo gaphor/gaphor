@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
 import gaphor
 from gaphor.storage import storage
 import gaphor.UML as UML

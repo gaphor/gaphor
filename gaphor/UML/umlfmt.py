@@ -5,12 +5,9 @@ Formatting of UML elements like attributes, operations, stereotypes, etc.
 import io
 import re
 
-from future import standard_library
 from simplegeneric import generic
 
 from gaphor.UML import uml2 as UML
-
-standard_library.install_aliases()
 
 
 @generic

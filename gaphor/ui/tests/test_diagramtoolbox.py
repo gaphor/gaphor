@@ -1,10 +1,8 @@
-from builtins import object
-from gi.repository import Gtk
 from gaphor.tests.testcase import TestCase
-from gaphor.application import Application
-from gaphor.ui.diagrampage import DiagramPage
-from gaphor.ui.diagramtoolbox import DiagramToolbox, TOOLBOX_ACTIONS
 from gaphor import UML
+from gaphor.tests.testcase import TestCase
+from gaphor.ui.diagrampage import DiagramPage
+from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
 
 class WindowOwner(object):

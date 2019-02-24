@@ -67,7 +67,6 @@ follows
 
 Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
-from __future__ import division
 
 from math import pi
 

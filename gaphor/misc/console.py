@@ -8,14 +8,11 @@
 
 import code
 import sys
-from builtins import object
 
-from future import standard_library
 from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import Pango
 
-standard_library.install_aliases()
 
 banner = (
     """Gaphor Interactive Python Console

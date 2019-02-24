@@ -2,7 +2,6 @@
 Test case that checks the working of the utils/command/gen_uml.py module.
 """
 
-from builtins import object
 import os
 import pkg_resources
 import unittest

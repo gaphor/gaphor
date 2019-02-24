@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-from builtins import object
 from gaphor.tests.testcase import TestCase
 import gaphor.UML as UML
 from gaphor.ui.namespace import NamespaceModel

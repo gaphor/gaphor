@@ -1,7 +1,6 @@
 """
 """
 
-from builtins import object
 from zope.interface import implementer
 from zope import component
 

@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.application import Application

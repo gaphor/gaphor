@@ -14,11 +14,6 @@
 #
 
 # for selftesting
-from __future__ import print_function
-from builtins import chr
-from builtins import range
-from builtins import object
-
 try:
     import fintl
 

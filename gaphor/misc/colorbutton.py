@@ -4,7 +4,6 @@ A version of the standard Gtk.ColorButton tweaked towards Gaphor.
 Gaphor is using color values from 0 to 1 (cairo standard), so that required some tweaks
 on the color widget. The standard format is `(red, green, blue, alpha)`.
 """
-from __future__ import division
 
 from gi.repository import Gtk
 

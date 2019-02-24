@@ -1,7 +1,6 @@
 """Defines a QuestionDialog class used to get a yes or no answer from the user.
 """
 
-from builtins import object
 from gi.repository import Gtk
 
 

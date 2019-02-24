@@ -1,7 +1,6 @@
 """About and help services. (help browser anyone?)"""
 
 import os
-from builtins import object
 from logging import getLogger
 
 import pkg_resources

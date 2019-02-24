@@ -3,9 +3,7 @@ Control flow and object flow implementation.
 
 Contains also implementation to split flows using activity edge connectors.
 """
-from __future__ import division
 
-from builtins import object
 from math import atan, pi, sin, cos
 
 from gaphor import UML

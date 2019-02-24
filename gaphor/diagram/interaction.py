@@ -1,7 +1,6 @@
 """
 Interaction diagram item.
 """
-from __future__ import division
 
 from gaphor import UML
 from gaphor.diagram.nameditem import NamedItem

@@ -7,8 +7,6 @@
 #
 # Arjan Molenaar.
 
-from __future__ import print_function
-from builtins import str
 import sys
 
 sys.path.append("..")

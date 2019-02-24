@@ -3,7 +3,6 @@
 
 Generate .mo files from po files.
 """
-from __future__ import print_function
 
 import os.path
 from distutils.core import Command

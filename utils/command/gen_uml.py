@@ -35,10 +35,6 @@ Also a distutils tool, build_uml, is provided.
 # Recreate the model using some very dynamic class, so we can set all
 # attributes and traverse them to generate the data model.
 
-from builtins import filter
-from builtins import str
-from builtins import map
-from builtins import object
 import sys
 
 from gaphor.storage.parser import parse, base, element
@@ -149,15 +145,11 @@ class Writer(object):
 
         # print a.class_name, a.name, 'type is', type
         if type.lower() == "boolean":
-            # FixMe: Should this be a boolean or an integer?
-            # Integer is save and compattable with python2.2.
             type = "int"
         elif type.lower() in ("integer", "unlimitednatural"):
             type = "int"
         elif type.lower() == "string":
-            # Change to basestr for Python 2.3
             type = "str"
-            # type = '(str, unicode)'
 
         default = a.defaultValue
         # Make sure types are represented the Python way:

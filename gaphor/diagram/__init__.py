@@ -4,13 +4,6 @@ The diagram package contains items (to be drawn on the diagram), tools
 diagram).
 """
 
-from builtins import str
-import inspect
-import gi
-
-gi.require_version("PangoCairo", "1.0")
-
-from gi.repository import GObject
 import uuid
 
 from gaphor.diagram.style import Style

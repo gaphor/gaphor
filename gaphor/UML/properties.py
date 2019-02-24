@@ -28,10 +28,6 @@ __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"
 
 import logging
 
-from builtins import map
-from builtins import next
-from builtins import object
-from builtins import str
 from zope import component
 
 from gaphor.UML.collection import collection, collectionlist
@@ -44,11 +40,6 @@ from gaphor.UML.interfaces import IAssociationDeleteEvent
 from gaphor.UML.interfaces import IAssociationSetEvent, IAssociationAddEvent
 from gaphor.UML.interfaces import IElementChangeEvent, IAssociationChangeEvent
 
-# Maintains Python 2 compatibility
-try:
-    from sys import intern
-except ImportError:
-    pass
 
 log = logging.getLogger(__name__)
 
@@ -109,8 +100,8 @@ class attribute(umlproperty):
 
     # TODO: check if lower and upper are actually needed for attributes
     def __init__(self, name, type, default=None, lower=0, upper=1):
-        self.name = intern(name)
-        self._name = intern("_" + name)
+        self.name = name
+        self._name = "_" + name
         self.type = type
         self.default = default
         self.lower = lower
@@ -203,8 +194,8 @@ class enumeration(umlproperty):
     type = property(lambda s: str)
 
     def __init__(self, name, values, default):
-        self.name = intern(name)
-        self._name = intern("_" + name)
+        self.name = name
+        self._name = "_" + name
         self.values = values
         self.default = default
         self.lower = 0
@@ -262,13 +253,13 @@ class association(umlproperty):
     """
 
     def __init__(self, name, type, lower=0, upper="*", composite=False, opposite=None):
-        self.name = intern(name)
-        self._name = intern("_" + name)
+        self.name = name
+        self._name = "_" + name
         self.type = type
         self.lower = lower
         self.upper = upper
         self.composite = composite
-        self.opposite = opposite and intern(opposite)
+        self.opposite = opposite and opposite
         self.stub = None
 
     def load(self, obj, value):
@@ -460,7 +451,7 @@ class associationstub(umlproperty):
 
     def __init__(self, association):
         self.association = association
-        self._name = intern("_stub_%x" % id(self))
+        self._name = "_stub_%x" % id(self)
 
     def __get__(self, obj, class_=None):
         if obj:
@@ -525,8 +516,8 @@ class derived(umlproperty):
     """
 
     def __init__(self, name, type, lower, upper, *subsets):
-        self.name = intern(name)
-        self._name = intern("_" + name)
+        self.name = name
+        self._name = "_" + name
         self.version = 1
         self.type = type
         self.lower = lower
@@ -766,8 +757,8 @@ class redefine(umlproperty):
 
     def __init__(self, decl_class, name, type, original):
         self.decl_class = decl_class
-        self.name = intern(name)
-        self._name = intern("_" + name)
+        self.name = name
+        self._name = "_" + name
         self.type = type
         self.original = original
 

@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 
-from __future__ import division
-from __future__ import print_function
-
 import logging
-from builtins import object
-from builtins import str
 from zope import component
 
 from gaphas.freehand import FreeHandPainter

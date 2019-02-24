@@ -4,7 +4,6 @@ file system.  These are things like preferences."""
 import os
 import pprint
 import sys
-from builtins import object
 from logging import getLogger
 from zope import interface
 

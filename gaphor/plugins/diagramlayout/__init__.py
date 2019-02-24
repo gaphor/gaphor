@@ -9,11 +9,9 @@ The layout is done like this:
  - Lines are reconnected to the nodes, so everything looks pretty.
 
 """
-from __future__ import division
 
 import logging
 import random
-from builtins import object
 
 from zope.interface import implementer
 

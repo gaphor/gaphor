@@ -2,7 +2,6 @@
 
 import logging
 import os
-from builtins import object
 
 from zope.interface import implementer
 

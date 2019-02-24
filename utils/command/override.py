@@ -24,11 +24,6 @@ do its job correctly.
 
 This is a simple rip-off of the override script used in PyGTK.
 """
-from __future__ import print_function
-
-
-from builtins import object
-import sys, string
 
 
 class Overrides(object):

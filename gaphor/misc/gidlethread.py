@@ -11,16 +11,11 @@ QueueEmpty - raised when one tried to get a value of an empty queue
 QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
-from __future__ import print_function
 
-from builtins import object
-from builtins import next
-from builtins import range
 import types
 import sys
 from gi.repository import GLib
 import time
-import traceback
 
 
 class GIdleThread(object):
@@ -132,7 +127,6 @@ class GIdleThread(object):
             return False
         except:
             self._exc_info = sys.exc_info()
-            # traceback.print_exc()
             self._idle_id = 0
             return False
 

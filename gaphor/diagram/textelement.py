@@ -2,10 +2,8 @@
 Support for editable text, a part of a diagram item, i.e. name of named
 item, guard of flow item, etc.
 """
-from __future__ import division
 
 import math
-from builtins import object
 
 import cairo
 import gi

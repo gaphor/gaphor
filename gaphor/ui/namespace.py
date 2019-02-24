@@ -3,12 +3,9 @@ This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
-from __future__ import print_function
 
 import logging
 import operator
-from builtins import map
-from builtins import str
 
 # PyGTKCompat used for Gtk.GenericTreeModel Support
 import pygtkcompat

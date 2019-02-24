@@ -10,10 +10,6 @@ See the documentation on the mixins.
 
 """
 
-from builtins import object
-from builtins import filter
-from past.builtins import basestring
-
 __all__ = ["querymixin", "recursemixin", "getslicefix"]
 
 import sys
@@ -123,7 +119,7 @@ def issafeiterable(obj):
     False
     """
     try:
-        return iter(obj) and not isinstance(obj, basestring)
+        return iter(obj) and not isinstance(obj, str)
     except TypeError:
         pass
     return False

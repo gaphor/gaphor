@@ -1,10 +1,7 @@
 """
 Trivial drawing aids (box, line, ellipse).
 """
-from __future__ import division
 
-from builtins import map
-from builtins import range
 from gaphas.item import Element, NW
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse

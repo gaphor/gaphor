@@ -19,10 +19,7 @@ cannot be supported. Still, destruction event notation is shown at the
 bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
-from __future__ import division
 
-from builtins import object
-from builtins import map
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG

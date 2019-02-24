@@ -1,8 +1,5 @@
-# vim:sw=4:et
-
 import sys
 import xml.sax.handler
-from builtins import str
 from xml.sax.saxutils import escape, quoteattr
 
 # See whether the xmlcharrefreplace error handler is

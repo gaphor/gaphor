@@ -45,7 +45,6 @@ operation information in message's name.
 
 See also ``lifeline`` module documentation.
 """
-from __future__ import division
 
 from math import pi
 

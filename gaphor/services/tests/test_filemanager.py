@@ -1,7 +1,6 @@
-from builtins import range
 import unittest
+
 from gaphor.application import Application
-from gaphor.services.filemanager import FileManager
 
 
 class FileManagerTestCase(unittest.TestCase):

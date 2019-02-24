@@ -25,13 +25,7 @@ TODO:
      key focuses its associated control.
 """
 
-from __future__ import division
-from __future__ import print_function
-
 import math
-from builtins import object
-from builtins import range
-from builtins import zip
 from zope import component
 
 import gaphas.item

@@ -1,10 +1,7 @@
 """
 Diagram item with compartments.
 """
-from __future__ import division
 
-from builtins import object
-from builtins import zip
 import logging
 
 import cairo

@@ -1,7 +1,6 @@
 """
 Use case diagram item.
 """
-from __future__ import division
 
 from gaphas.util import path_ellipse
 

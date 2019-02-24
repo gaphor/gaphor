@@ -23,9 +23,6 @@ Support for actions in generic files.
 See also gaphor/service/actionmanager.py for the management module.
 """
 
-from __future__ import absolute_import, print_function
-
-from builtins import object
 from gaphor.application import Application
 
 

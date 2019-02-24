@@ -36,7 +36,6 @@ classifiers=[
 python = "~2.7 || ^3.5"
 pycairo = "^1.18"
 PyGObject = "^3.30"
-future = "^0.17.1"
 gaphas = "^1.0.0"
 "zope.component" = "^4.5"
 
@@ -57,7 +56,7 @@ build-backend = "poetry.masonry.api"
 legacy_tox_ini = """
 [tox]
 skipsdist = True
-envlist = py27, py356, py36, py37
+envlist = py356, py36, py37
 
 [testenv]
 whitelist_externals =

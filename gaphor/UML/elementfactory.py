@@ -3,30 +3,23 @@
 Factory for and registration of model elements.
 """
 
-from builtins import object
-from builtins import str
-from zope.interface import implementer
-from zope import component
 import uuid
-from gaphor.core import inject
-from gaphor.misc import odict
-from gaphor.interfaces import IService, IEventFilter
-from gaphor.UML.interfaces import (
-    IElementCreateEvent,
-    IElementDeleteEvent,
-    IFlushFactoryEvent,
-    IModelFactoryEvent,
-    IElementChangeEvent,
-    IElementEvent,
-)
+from zope import component
+
+from zope.interface import implementer
+
+from gaphor.UML.diagram import Diagram
+from gaphor.UML.element import Element
 from gaphor.UML.event import (
     ElementCreateEvent,
     ElementDeleteEvent,
     FlushFactoryEvent,
     ModelFactoryEvent,
 )
-from gaphor.UML.element import Element
-from gaphor.UML.diagram import Diagram
+from gaphor.UML.interfaces import IElementChangeEvent
+from gaphor.core import inject
+from gaphor.interfaces import IService, IEventFilter
+from gaphor.misc import odict
 
 
 class ElementFactory(object):

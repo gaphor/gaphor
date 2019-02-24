@@ -1,7 +1,6 @@
 """
 Unnit tests for AssociationItem.
 """
-from __future__ import print_function
 
 from zope import component
 from gaphor.diagram.interfaces import IConnect

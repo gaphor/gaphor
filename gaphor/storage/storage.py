@@ -8,9 +8,6 @@ save(filename)
     store the current model in a file
 """
 
-from __future__ import division
-from __future__ import print_function
-
 __all__ = ["load", "save"]
 
 import gc
@@ -19,9 +16,6 @@ import os.path
 import io
 
 import gaphas
-from builtins import map
-from builtins import str
-from future import standard_library
 
 from gaphor import UML
 from gaphor import diagram
@@ -38,8 +32,6 @@ from gaphor.storage import parser
 # this be done using services? i.e. request storage service, which should
 # depend on connectors service?
 from gaphor.adapters import connectors
-
-standard_library.install_aliases()
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"

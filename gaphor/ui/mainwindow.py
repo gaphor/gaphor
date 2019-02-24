@@ -4,15 +4,13 @@ The main application window.
 
 import logging
 import os.path
-from builtins import object
-from builtins import str
 from zope import component
 
+import pkg_resources
 from gi.repository import GLib
 from gi.repository import Gdk
-from gi.repository import Gtk
 from gi.repository import GdkPixbuf
-import pkg_resources
+from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor import UML
@@ -22,7 +20,6 @@ from gaphor.core import (
     inject,
     action,
     toggle_action,
-    open_action,
     build_action_group,
     transactional,
 )
