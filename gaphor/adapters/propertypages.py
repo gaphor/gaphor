@@ -938,12 +938,12 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(_("Show direction"))
+        button = Gtk.CheckButton(label=_("Show direction"))
         button.set_active(self.item.show_direction)
         button.connect("toggled", self._on_show_direction_change)
         hbox.pack_start(button, True, True, 0)
 
-        button = Gtk.Button(_("Invert Direction"))
+        button = Gtk.Button(label=_("Invert Direction"))
         button.connect("clicked", self._on_invert_direction_change)
         hbox.pack_start(button, True, True, 0)
 
@@ -1131,7 +1131,7 @@ class LineStylePage(object):
     def __init__(self, item):
         super(LineStylePage, self).__init__()
         self.item = item
-        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+        self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
         page = Gtk.VBox()
@@ -1142,7 +1142,7 @@ class LineStylePage(object):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(_("Orthogonal"))
+        button = Gtk.CheckButton(label=_("Orthogonal"))
         button.set_active(self.item.orthogonal)
         button.connect("toggled", self._on_orthogonal_change)
         hbox.pack_start(button, True, True, 0)
@@ -1159,7 +1159,7 @@ class LineStylePage(object):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(_("Horizontal"))
+        button = Gtk.CheckButton(label=_("Horizontal"))
         button.set_active(self.item.horizontal)
         button.connect("toggled", self._on_horizontal_change)
         hbox.pack_start(button, True, True, 0)

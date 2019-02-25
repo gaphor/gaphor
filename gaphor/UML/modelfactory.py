@@ -12,7 +12,7 @@ import itertools
 from gaphor.UML.uml2 import *
 
 # '<<%s>>'
-STEREOTYPE_FMT = "\xc2\xab%s\xc2\xbb"
+STEREOTYPE_FMT = "<<%s>>"
 
 
 def stereotypes_str(element, stereotypes=()):

@@ -83,10 +83,10 @@ class FeatureItem(object):
             layout = PangoCairo.create_layout(cr)
             layout.set_font_description(Pango.FontDescription(self.font))
             layout.set_text(self.render() or "")
-
             if hasattr(self.subject, "isStatic") and self.subject.isStatic:
-                attrlist = Pango.AttrList()
-                attrlist.insert(Pango.AttrUnderline(Pango.Underline.SINGLE, 2, -1))
+                attrlist = Pango.AttrList.new()
+                # TODO: How to underline text?
+                # attrlist.insert(Pango.Attribute(Pango.Underline.SINGLE, 2, -1))
                 layout.set_attributes(attrlist)
             PangoCairo.show_layout(cr, layout)
 
@@ -293,7 +293,6 @@ class CompartmentItem(NamedItem):
             and event.element in self.subject.appliedStereotype
             and self._show_stereotypes_attrs
         ):
-
             comp = self._find_stereotype_compartment(event.element)
             if comp is None:
                 log.debug("No compartment found for %s" % event.element)
