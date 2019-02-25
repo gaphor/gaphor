@@ -2,7 +2,6 @@
 Unittest the storage and parser modules
 """
 
-from builtins import object
 import io
 import os
 import os.path
@@ -10,19 +9,12 @@ import re
 from io import StringIO
 
 import pkg_resources
-from builtins import map
-from builtins import next
-from future import standard_library
 
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage
 from gaphor.tests.testcase import TestCase
-
-standard_library.install_aliases()
-
-# __module__ = 'test_storage'
 
 
 class PseudoFile(object):

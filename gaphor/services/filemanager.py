@@ -3,8 +3,6 @@ The file service is responsible for loading and saving the user data.
 """
 
 import logging
-from builtins import object
-from builtins import range
 from zope import component
 
 from gi.repository import Gtk

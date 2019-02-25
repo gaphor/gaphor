@@ -1,11 +1,7 @@
 """
 Activity control nodes.
 """
-from __future__ import print_function
-from __future__ import division
 
-from builtins import map
-from past.utils import old_div
 import math
 
 from gaphas.util import path_ellipse
@@ -113,7 +109,7 @@ class FlowFinalNodeItem(ActivityNodeItem):
         path_ellipse(cr, r, r, d, d)
         cr.stroke()
 
-        dr = (1 - math.sin(old_div(math.pi, 4))) * r
+        dr = (1 - math.sin(math.pi / 4)) * r
         cr.move_to(dr, dr)
         cr.line_to(d - dr, d - dr)
         cr.move_to(dr, d - dr)

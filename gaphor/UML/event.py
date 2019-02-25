@@ -1,7 +1,5 @@
 """The core UML metamodel events."""
 
-from builtins import object
-
 from zope.interface import implementer
 
 from gaphor.UML.interfaces import (

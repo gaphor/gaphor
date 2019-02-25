@@ -1,4 +1,3 @@
-from builtins import object
 import sys
 import unittest
 from gaphor.misc.xmlwriter import XMLWriter

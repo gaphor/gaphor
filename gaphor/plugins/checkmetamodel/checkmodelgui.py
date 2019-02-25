@@ -1,10 +1,8 @@
 """
 A GUI for the checkmodel plugin.
 """
-from __future__ import print_function
 
 import logging
-from builtins import object
 
 import gi
 

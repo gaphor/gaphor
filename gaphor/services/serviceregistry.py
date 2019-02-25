@@ -5,13 +5,11 @@ retrieved.
 Our good old NameServicer.
 """
 
-from builtins import object
-from builtins import next
-from zope import interface, component
-
 from logging import getLogger
-from gaphor.interfaces import IService
+from zope import component
+
 from gaphor.core import inject
+from gaphor.interfaces import IService
 
 
 class ServiceRegistry(object):

@@ -1,5 +1,3 @@
-from builtins import object
-
 from zope.interface import implementer
 
 from gaphor.interfaces import IService

@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-from builtins import map
 from gaphor import UML
 from os import path
 

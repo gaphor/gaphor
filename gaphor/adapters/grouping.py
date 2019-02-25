@@ -14,7 +14,6 @@ instance of an item to be grouped is created. This happens when item
 is about to be created. Therefore `AbstractGroup.can_contain` has
 to be aware that `AbstractGroup.item` can be null.
 """
-from builtins import object
 import logging
 
 from zope.interface import implementer

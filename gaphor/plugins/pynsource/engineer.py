@@ -1,15 +1,14 @@
 """The code reverse engineer.
 """
-from __future__ import print_function
 
-from builtins import object
 from zope import component
-from gaphor import UML
-from gaphor.diagram import items
-from gaphor.core import inject
-from gaphor.diagram.interfaces import IConnect
+
 from gaphas.aspect import ConnectionSink, Connector
 
+from gaphor import UML
+from gaphor.core import inject
+from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 from gaphor.plugins.pynsource.pynsource import PySourceAsText
 
 BASE_CLASSES = ("object", "type", "dict", "list", "tuple", "int", "float")

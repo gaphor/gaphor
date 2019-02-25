@@ -2,7 +2,6 @@
 Flow item connection adapters tests.
 """
 
-from builtins import object
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items

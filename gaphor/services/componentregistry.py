@@ -6,8 +6,6 @@ Maybe we should split the ComponentRegistry in a Dispatcher (register_handler,
 unregister_handler, handle), a AdapterRegistry and a Subscription registry.
 """
 
-from builtins import map
-from builtins import object
 from zope import component
 
 from zope.interface import registry

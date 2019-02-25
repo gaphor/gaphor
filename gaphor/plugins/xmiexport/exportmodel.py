@@ -1,5 +1,3 @@
-from builtins import object
-from builtins import str
 from logging import getLogger
 
 from gaphor.misc.xmlwriter import XMLWriter

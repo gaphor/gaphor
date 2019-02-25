@@ -2,7 +2,6 @@
 This plugin extends Gaphor with XMI export functionality.
 """
 
-from builtins import object
 from logging import getLogger
 
 from zope.interface import implementer

@@ -5,12 +5,10 @@ Everything is about services so the TestCase can define it's required
 services and start off.
 """
 
-from builtins import object
 import logging
 import unittest
 from io import StringIO
 
-from future import standard_library
 from gaphas.aspect import ConnectionSink, Connector
 from zope import component
 
@@ -21,8 +19,6 @@ from gaphor.diagram.interfaces import IGroup
 
 # For DiagramItemConnector aspect:
 import gaphor.ui.diagramtools
-
-standard_library.install_aliases()
 
 log = logging.getLogger("Gaphor")
 log.setLevel(logging.WARNING)

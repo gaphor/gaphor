@@ -22,9 +22,7 @@
 Build a PO template (for i18n) and update the .po files to reflect
 the last changes.
 """
-from __future__ import print_function
 
-from builtins import object
 import os.path
 import sys
 from distutils.core import Command

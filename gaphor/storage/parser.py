@@ -30,22 +30,13 @@ The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
 """
 
-from __future__ import division
-
 __all__ = ["parse", "ParserException"]
 
 import io
 import os
 from xml.sax import handler
 
-from builtins import object
-from builtins import range
-from future import standard_library
-from past.utils import old_div
-
 from gaphor.misc.odict import odict
-
-standard_library.install_aliases()
 
 
 class base(object):
@@ -333,7 +324,7 @@ class ProgressGenerator(object):
             self.output.feed(block)
             block = self.input.read(self.block_size)
             read_size += len(block)
-            yield old_div((read_size * 100), self.file_size)
+            yield (read_size * 100) / self.file_size
 
 
 def parse_file(filename, parser):

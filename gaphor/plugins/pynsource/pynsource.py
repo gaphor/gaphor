@@ -65,11 +65,7 @@ then the command is
     pynsource -j src pythoninput01\*.py
 
 """
-from __future__ import print_function
 
-from builtins import str
-from builtins import range
-from builtins import object
 from functools import cmp_to_key
 import os
 import pprint

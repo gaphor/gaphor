@@ -4,9 +4,7 @@ Connector adapters.
 To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
-from __future__ import print_function
 
-from builtins import object
 from logging import getLogger
 from zope import component
 

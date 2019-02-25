@@ -3,12 +3,9 @@ This is the TreeView that is most common (for example: it is used
 in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
-from __future__ import print_function
 
 import logging
 import operator
-from builtins import map
-from builtins import str
 
 # PyGTKCompat used for Gtk.GenericTreeModel Support
 import pygtkcompat
@@ -584,10 +581,14 @@ class NamespaceView(Gtk.TreeView):
             # 'id#stereotype' is being send
             if info == NamespaceView.TARGET_ELEMENT_ID:
                 # print("TARGET_ELEMENT_ID", selection_data.get_target(), 8, "%s#%s" % (element.id, p))
-                selection_data.set(selection_data.get_target(), 8, ("%s#%s" % (element.id, p)).encode())
+                selection_data.set(
+                    selection_data.get_target(), 8, ("%s#%s" % (element.id, p)).encode()
+                )
             else:
                 selection_data.set(
-                    selection_data.get_target(), 8, ("%s#%s" % (element.name, p)).encode()
+                    selection_data.get_target(),
+                    8,
+                    ("%s#%s" % (element.name, p)).encode(),
                 )
         return True
 
@@ -605,7 +606,7 @@ class NamespaceView(Gtk.TreeView):
         else:
             self.set_drag_dest_row(
                 Gtk.TreePath.new_from_indices([len(self.get_model()) - 1]),
-                Gtk.TreeViewDropPosition.AFTER
+                Gtk.TreeViewDropPosition.AFTER,
             )
         return True
 
@@ -659,7 +660,7 @@ class NamespaceView(Gtk.TreeView):
                 tx.commit()
 
             except AttributeError as e:
-                log.info('Unable to drop data %s' % e)
+                log.info("Unable to drop data %s" % e)
                 context.finish(False, False, time)
             else:
                 context.finish(True, True, time)
@@ -667,8 +668,7 @@ class NamespaceView(Gtk.TreeView):
                 path = model.path_from_element(element)
                 if len(path) > 1:
                     self.expand_row(
-                        path=Gtk.TreePath.new_from_indices(path[:-1]),
-                        open_all=False
+                        path=Gtk.TreePath.new_from_indices(path[:-1]), open_all=False
                     )
                 selection = self.get_selection()
                 selection.select_path(path)

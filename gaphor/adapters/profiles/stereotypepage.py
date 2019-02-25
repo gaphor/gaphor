@@ -1,9 +1,7 @@
 """
 Stereotype property page.
 """
-from __future__ import print_function
 
-from builtins import object
 from zope import component
 
 from gi.repository import GObject, Gtk

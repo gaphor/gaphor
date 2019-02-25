@@ -8,15 +8,12 @@ stages:
 
 jobs:
   include:
-    - python: 2.7
-    - python: 3.5
-    - python: 3.6
-    - python: 3.7
+    - python: 3.7.2
       env: PYTEST_ADDOPTS="--doctest-modules"
       sudo: true
 
     - stage: lint
-      python: 3.7
+      python: 3.7.2
       before_install: skip
       install:
         - pip install pre-commit

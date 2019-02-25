@@ -125,14 +125,9 @@ del property_opposite
 
 %%
 override Property.isComposite derives Property.aggregation
-#Property.isComposite = property(lambda self: self.aggregation == intern('composite'))
+#Property.isComposite = property(lambda self: self.aggregation == 'composite')
 Property.isComposite = derivedunion('isComposite', bool, 0, 1, Property.aggregation)
-# Maintains Python 2 and 3 compatibility
-try:
-    from sys import intern
-except ImportError:
-    pass
-Property.isComposite.filter = lambda obj: [obj.aggregation == intern('composite')]
+Property.isComposite.filter = lambda obj: [obj.aggregation == 'composite']
 %%
 override Constraint.context
 Constraint.context = derivedunion('context', Namespace, 0, 1)

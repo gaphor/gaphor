@@ -8,9 +8,6 @@ __all__ = ["Element"]
 import threading
 import uuid
 
-from builtins import object
-from builtins import str
-
 from gaphor.UML.properties import umlproperty
 
 

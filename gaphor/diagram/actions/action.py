@@ -1,9 +1,7 @@
 """
 Action diagram item.
 """
-from __future__ import division
 
-from past.utils import old_div
 from math import pi
 
 from gaphor import UML
@@ -55,7 +53,7 @@ class SendSignalActionItem(NamedItem):
         h = self.height
         c.move_to(0, 0)
         c.line_to(w - d, 0)
-        c.line_to(w, old_div(h, 2))
+        c.line_to(w, h / 2)
         c.line_to(w - d, h)
         c.line_to(0, h)
         c.close_path()
@@ -82,7 +80,7 @@ class AcceptEventActionItem(NamedItem):
         c.line_to(w, 0)
         c.line_to(w, h)
         c.line_to(0, h)
-        c.line_to(d, old_div(h, 2))
+        c.line_to(d, h / 2)
         c.close_path()
 
         c.stroke()

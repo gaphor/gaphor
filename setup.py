@@ -75,7 +75,6 @@ It uses the GTK+ environment for user interaction.
         "PyGObject >= 3.30.0",
         "gaphas >= 0.7.2",
         "zope.component >= 3.4.0",  # - won't compile on windows.
-        "future >= 0.16.0",
     ],
     zip_safe=False,
     entry_points={

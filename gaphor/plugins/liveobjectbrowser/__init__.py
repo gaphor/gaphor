@@ -4,8 +4,6 @@ Plugin based on the Live Object browser
 It shows the state of the data model at the time the browser is activated.
 """
 
-from builtins import object
-
 from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group

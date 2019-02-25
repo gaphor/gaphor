@@ -1,11 +1,7 @@
 """
 Trivial drawing aids (box, line, ellipse).
 """
-from __future__ import division
 
-from builtins import map
-from builtins import range
-from past.utils import old_div
 from gaphas.item import Element, NW
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
@@ -152,8 +148,8 @@ class Ellipse(Element):
         nw = self._handles[NW]
         style = self.style
 
-        rx = old_div(self.width, 2.0)
-        ry = old_div(self.height, 2.0)
+        rx = self.width / 2.0
+        ry = self.height / 2.0
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)

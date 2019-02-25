@@ -3,7 +3,6 @@ DiagramItem provides basic functionality for presentations.
 Such as a modifier 'subject' property and a unique id.
 """
 
-from builtins import object
 from zope import component
 from gaphas.state import observed, reversible_property
 
@@ -14,7 +13,6 @@ from gaphor.core import inject
 from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
-from future.utils import with_metaclass
 
 logger = getLogger("Diagram")
 
@@ -129,10 +127,8 @@ class StereotypeSupport(object):
 
 
 class DiagramItem(
-    with_metaclass(
-        DiagramItemMeta,
-        type("NewBase", (UML.Presentation, StereotypeSupport, EditableTextSupport), {}),
-    )
+    type("NewBase", (UML.Presentation, StereotypeSupport, EditableTextSupport), {}),
+    metaclass=DiagramItemMeta,
 ):
     """
     Basic functionality for all model elements (lines and elements!).

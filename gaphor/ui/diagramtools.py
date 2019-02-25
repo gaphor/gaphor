@@ -8,7 +8,6 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 """
 
 import logging
-from builtins import object
 from zope import component
 
 from gaphas.aspect import Connector, InMotion

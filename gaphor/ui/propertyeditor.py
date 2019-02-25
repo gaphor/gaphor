@@ -3,7 +3,6 @@
 
 import logging
 
-from builtins import object
 from gi.repository import Gtk
 from zope import component
 

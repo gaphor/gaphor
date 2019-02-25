@@ -4,9 +4,7 @@ A version of the standard Gtk.ColorButton tweaked towards Gaphor.
 Gaphor is using color values from 0 to 1 (cairo standard), so that required some tweaks
 on the color widget. The standard format is `(red, green, blue, alpha)`.
 """
-from __future__ import division
 
-from past.utils import old_div
 from gi.repository import Gtk
 
 
@@ -22,11 +20,6 @@ class ColorButton(Gtk.ColorButton):
 
     def get_color_float(self):
         c = self.get_color()
-        return (
-            c.red_float,
-            c.green_float,
-            c.blue_float,
-            old_div(self.get_alpha(), 65535.0),
-        )
+        return (c.red_float, c.green_float, c.blue_float, self.get_alpha() / 65535.0)
 
     color = property(lambda s: s.get_color_float())

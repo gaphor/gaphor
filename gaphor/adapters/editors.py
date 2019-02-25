@@ -2,19 +2,16 @@
 Adapters
 """
 
-from builtins import object
-from zope.interface import implementer
 from zope import component
 
-from gaphas.item import NW, SE
-from gaphas import geometry
-from gaphas import constraint
+from simplegeneric import generic
+from zope.interface import implementer
+
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.diagram.interfaces import IEditor
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IEditor
 from gaphor.misc.rattr import rgetattr, rsetattr
-from simplegeneric import generic
 
 
 @generic

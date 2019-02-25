@@ -1,7 +1,6 @@
 """This module has a generic FileDialog class that is used to open
 or save files."""
 
-from builtins import object
 from gi.repository import Gtk
 
 

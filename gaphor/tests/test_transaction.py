@@ -1,6 +1,5 @@
 """Unit tests for transactions in Gaphor."""
 
-from builtins import str
 from unittest import TestCase
 
 from zope.component.globalregistry import base

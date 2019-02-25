@@ -1,9 +1,7 @@
 """
 Actor item classes.
 """
-from __future__ import division
 
-from past.utils import old_div
 from math import pi
 
 from gaphor import UML
@@ -46,17 +44,17 @@ class ActorItem(ClassifierItem):
 
         head, neck, arm, body = self.HEAD, self.NECK, self.ARM, self.BODY
 
-        fx = old_div(self.width, (arm * 2))
-        fy = old_div(self.height, (head + neck + body + arm))
+        fx = self.width / (arm * 2)
+        fy = self.height / (head + neck + body + arm)
 
         x = arm * fx
-        y = (old_div(head, 2)) * fy
+        y = (head / 2) * fy
         cy = head * fy
 
         cr.move_to(x + head * fy / 2.0, y)
         cr.arc(x, y, head * fy / 2.0, 0, 2 * pi)
 
-        cr.move_to(x, y + old_div(cy, 2))
+        cr.move_to(x, y + cy / 2)
         cr.line_to(arm * fx, (head + neck + body) * fy)
 
         cr.move_to(0, (head + neck) * fy)

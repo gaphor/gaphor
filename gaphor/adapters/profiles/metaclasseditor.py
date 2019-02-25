@@ -2,7 +2,6 @@
 Metaclass item editors.
 """
 
-from builtins import object
 from zope import component
 
 from gi.repository import Gtk

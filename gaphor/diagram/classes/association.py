@@ -6,28 +6,18 @@ Plan:
  - for assocation name and direction tag, use the same trick as is used
    for line ends.
 """
-from __future__ import division
 
 # TODO: for Association.postload(): in some cases where the association ends
-# are connected to the same Class, the head_end property is connected to the
-# tail end and visa versa.
+#   are connected to the same Class, the head_end property is connected to the
+#   tail end and visa versa.
 
-from builtins import map
-from past.utils import old_div
-from gaphor.diagram.textelement import text_extents, text_multiline
-from gaphas.state import reversible_property
-from gaphas import Item
 from gaphas.geometry import Rectangle, distance_point_point_fast
-from gaphas.geometry import distance_rectangle_point, distance_line_point
+from gaphas.geometry import distance_rectangle_point
+from gaphas.state import reversible_property
 
 from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
-
-# Maintains Python 2 compatibility
-try:
-    from sys import intern
-except ImportError:
-    pass
+from gaphor.diagram.textelement import text_extents, text_multiline
 
 
 class AssociationItem(NamedLine):
@@ -184,9 +174,9 @@ class AssociationItem(NamedLine):
 
         # Update line ends using the aggregation and isNavigable values:
         if head_subject and tail_subject:
-            if tail_subject.aggregation == intern("composite"):
+            if tail_subject.aggregation == "composite":
                 self.draw_head = self.draw_head_composite
-            elif tail_subject.aggregation == intern("shared"):
+            elif tail_subject.aggregation == "shared":
                 self.draw_head = self.draw_head_shared
             elif self._head_end.subject.navigability is True:
                 self.draw_head = self.draw_head_navigable
@@ -195,9 +185,9 @@ class AssociationItem(NamedLine):
             else:
                 self.draw_head = self.draw_head_undefined
 
-            if head_subject.aggregation == intern("composite"):
+            if head_subject.aggregation == "composite":
                 self.draw_tail = self.draw_tail_composite
-            elif head_subject.aggregation == intern("shared"):
+            elif head_subject.aggregation == "shared":
                 self.draw_tail = self.draw_tail_shared
             elif self._tail_end.subject.navigability is True:
                 self.draw_tail = self.draw_tail_navigable
@@ -468,7 +458,7 @@ class AssociationEnd(UML.Presentation):
         if dy == 0:
             rc = 1000.0  # quite a lot...
         else:
-            rc = old_div(dx, dy)
+            rc = dx / dy
         abs_rc = abs(rc)
         h = dx > 0  # right side of the box
         v = dy > 0  # bottom side
