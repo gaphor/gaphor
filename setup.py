@@ -74,7 +74,7 @@ It uses the GTK+ environment for user interaction.
         "pycairo >= 1.17.0",
         "PyGObject >= 3.30.0",
         "gaphas >= 0.7.2",
-        "zope.component >= 3.4.0",  # - won't compile on windows.
+        "zope.component >= 3.4.0",
     ],
     zip_safe=False,
     entry_points={
@@ -118,17 +118,12 @@ It uses the GTK+ environment for user interaction.
     cmdclass={
         "build_py": build_py_with_sub_commands,
         "build_uml": build_uml,
-        # 'build_doc': BuildDoc,
         "build_mo": build_mo,
         "build_pot": build_pot,
         "install_lib": install_lib,
         "run": run,
     },
     setup_requires=[
-        # 'Sphinx >= 1.0.6',
-        "future",
-        "pytest-runner",
-        "setuptools-git >= 0.3.4",
         "pre-commit >= 0.12.0",
     ],
     tests_require=["pytest"],
