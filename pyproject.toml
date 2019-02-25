@@ -33,7 +33,7 @@ classifiers=[
 ]
 
 [tool.poetry.dependencies]
-python = "~2.7 || ^3.5"
+python = "^3.5"
 pycairo = "^1.18"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
