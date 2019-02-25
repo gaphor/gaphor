@@ -111,7 +111,7 @@ class DiagramPage(object):
 
         view = GtkView(canvas=self.diagram.canvas)
         view.drag_dest_set(
-            Gtk.DestDefaults.MOTION,
+            Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
         )
@@ -126,7 +126,7 @@ class DiagramPage(object):
         view.connect("focus-changed", self._on_view_selection_changed)
         view.connect("selection-changed", self._on_view_selection_changed)
         view.connect_after("key-press-event", self._on_key_press_event)
-        view.connect("drag-drop", self._on_drag_drop)
+        #view.connect("drag-drop", self._on_drag_drop)
         view.connect("drag-data-received", self._on_drag_data_received)
 
         self.view = view
@@ -282,42 +282,42 @@ class DiagramPage(object):
             DiagramSelectionChange(view, view.focused_item, view.selected_items)
         )
 
-    def _on_drag_drop(self, view, context, x, y, time):
-        """The signal handler for the drag-drop signal.
-
-        The drag-drop signal is emitted on the drop site when the user drops
-        the data onto the widget.
-
-        Args:
-            view: The view that received the drop.
-            context (Gdk.DragContext) - The drag context.
-            x (int): The x coordinate of the current cursor position.
-            y (int): The y coordinate of the current cursor position.
-            time (int): The timestamp of the motion event.
-
-        Returns:
-            bool: Whether the cursor position is in the drop zone.
-
-        """
-        targets = context.list_targets()
-        # print('drag_drop on', targets)
-        for target in targets:
-            name = target.name()
-            if name == "gaphor/element-id":  # self.VIEW_DND_TARGETS[0]
-                target = Gdk.atom_intern(name, False)
-                view.drag_get_data(context, target, time)
-                return True
-            elif name == "gaphor/toolbox-action":  # self.VIEW_DND_TARGETS[1]
-                target = Gdk.atom_intern(name, False)
-                view.drag_get_data(context, target, time)
-                return True
-        return False
+#    def _on_drag_drop(self, view, context, x, y, time):
+#        """The signal handler for the drag-drop signal.
+#
+#        The drag-drop signal is emitted on the drop site when the user drops
+#        the data onto the widget.
+#
+#        Args:
+#            view: The view that received the drop.
+#            context (Gdk.DragContext) - The drag context.
+#            x (int): The x coordinate of the current cursor position.
+#            y (int): The y coordinate of the current cursor position.
+#            time (int): The timestamp of the motion event.
+#
+#        Returns:
+#            bool: Whether the cursor position is in the drop zone.
+#
+#        """
+#        targets = context.list_targets()
+#        # print('drag_drop on', targets)
+#        for target in targets:
+#            name = target.name()
+#            if name == "gaphor/element-id":
+#                target = Gdk.atom_intern(name, False)
+#                view.drag_get_data(context, target, time)
+#                return True
+#            elif name == "gaphor/toolbox-action":
+#                target = Gdk.atom_intern(name, False)
+#                view.drag_get_data(context, target, time)
+#                return True
+#        return False
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
         """
         Handle data dropped on the canvas.
         """
-        # print('DND data received', view)
+        print('DND data received', view)
         if (
             data
             and data.get_format() == 8
@@ -331,8 +331,8 @@ class DiagramPage(object):
             and data.get_format() == 8
             and info == DiagramPage.VIEW_TARGET_ELEMENT_ID
         ):
-            # print('drag_data_received:', data.data, info)
-            n, p = data.data.split("#")
+            print('drag_data_received:', data.get_data(), info)
+            n, p = data.get_data().decode().split("#")
             element = self.element_factory.lookup(n)
             assert element
 
@@ -362,8 +362,8 @@ class DiagramPage(object):
                     % type(element).__name__
                 )
             context.finish(True, False, time)
-        # else:
-        #    context.finish(False, False, time)
+        else:
+           context.finish(False, False, time)
 
 
 # vim: sw=4:et:ai
