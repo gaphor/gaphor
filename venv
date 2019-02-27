@@ -1,0 +1,62 @@
+#!/bin/bash
+#
+# An easy way to set up a virtualenv.
+#
+# Source this file to work inside this venv:
+#
+#     source ./venv [-f]
+#
+# Call `./venv -f` to force a new development installation.
+#
+#set -xeuo pipefail
+
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
+
+die() {
+	echo "Error: $*";
+	exit 1;
+}
+
+python3 --version || die "Python 3.x not found"
+
+PYTHON_VER="$(python3 --version | sed 's/^Python \([0-9]\.[0-9]\).[0-9]$/\1/')"
+
+test -d .venv || {
+	echo "Setting up a virtual env for Gaphor..."
+	python3 -m venv --prompt Gaphor .venv
+}
+
+source .venv/bin/activate
+
+# Force a new installation if "-f" is provided as argument
+test "${1:-}" = "-f" && rm .venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link
+
+test -f .venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link || {
+	echo "Installing Gaphor in the virtualenv..."
+        pip install --upgrade pip
+	pip install --upgrade pycairo
+	python setup.py develop
+}
+
+test_module() {
+	python3 -c "$1" 2>&- || {
+		echo "$2"
+		echo
+		echo "The Command used to test this:"
+		echo
+		echo "    >>> $1"
+		echo
+	}
+}
+
+test_module \
+	"import gi" \
+	"PyGobject3 (gobject-introspection) can not be loaded"
+
+test_module \
+	"from gi.repository import Gtk" \
+	"Gtk3 is not installed in a way it can be loaded in Python"
+
+test_module \
+	"import gaphor.UML" \
+	"Gaphor was not installed properly, that should not have happened. Please open an issue on GitHub"

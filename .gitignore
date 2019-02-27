@@ -14,7 +14,7 @@ tmp.gaphor
 
 # Virtual env stuff
 .gaphor/
-venv
+.venv/
 .vscode/
 .python-version
 
