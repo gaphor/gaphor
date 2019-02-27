@@ -73,7 +73,7 @@ It uses the GTK+ environment for user interaction.
     install_requires=[
         "pycairo >= 1.17.0",
         "PyGObject >= 3.30.0",
-        "gaphas >= 0.7.2",
+        "gaphas >= 1.0.0",
         "zope.component >= 3.4.0",
     ],
     zip_safe=False,
