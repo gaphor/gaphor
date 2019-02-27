@@ -71,7 +71,7 @@ It uses the GTK+ environment for user interaction.
     packages=find_packages(exclude=["ez_setup", "utils*"]),
     include_package_data=True,
     install_requires=[
-        "pycairo >= 1.17.0",
+        "pycairo >= 1.18.0",
         "PyGObject >= 3.30.0",
         "gaphas >= 1.0.0",
         "zope.component >= 3.4.0",
