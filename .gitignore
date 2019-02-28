@@ -1,7 +1,5 @@
 build
 dist
-gaphor/UML/uml2.py
-gaphor/data
 po/gaphor.pot
 html
 *.pyc
@@ -14,13 +12,9 @@ tmp.gaphor
 pip-wheel-metadata
 
 # Virtual env stuff
-.gaphor/
 .venv/
 .vscode/
 .python-version
 
 # Coverage
 .coverage
-
-# Tox
-.tox
