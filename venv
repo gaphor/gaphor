@@ -8,55 +8,82 @@
 #
 # Call `./venv -f` to force a new development installation.
 #
-#set -xeuo pipefail
 
-export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
 
-die() {
-	echo "Error: $*";
-	exit 1;
-}
+(
+	# Do the whole installation process in a sub-shell, so we can safely fail when
+	# this file is sourced in the parent shell.
+	set -euo pipefail
 
-python3 --version || die "Python 3.x not found"
-
-PYTHON_VER="$(python3 --version | sed 's/^Python \([0-9]\.[0-9]\).[0-9]$/\1/')"
-
-test -d .venv || {
-	echo "Setting up a virtual env for Gaphor..."
-	python3 -m venv --prompt Gaphor .venv
-}
-
-source .venv/bin/activate
-
-# Force a new installation if "-f" is provided as argument
-test "${1:-}" = "-f" && rm .venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link
-
-test -f .venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link || {
-	echo "Installing Gaphor in the virtualenv..."
-        pip install --upgrade pip
-	pip install --upgrade pycairo
-	python setup.py develop
-}
-
-test_module() {
-	python3 -c "$1" 2>&- || {
-		echo "$2"
-		echo
-		echo "The Command used to test this:"
-		echo
-		echo "    >>> $1"
-		echo
+	check() {
+		echo Checking: $@
+		$@ >/dev/null 2>&1
 	}
-}
 
-test_module \
-	"import gi" \
-	"PyGobject3 (gobject-introspection) can not be loaded"
+	NO_FORCE_INSTALL=true
 
-test_module \
-	"from gi.repository import Gtk" \
-	"Gtk3 is not installed in a way it can be loaded in Python"
+	while getopts 'fh' OPTION
+	do
+			case "$OPTION" in
+			f)
+					NO_FORCE_INSTALL=false
+					;;
+			esac
+	done
 
-test_module \
-	"import gaphor.UML" \
-	"Gaphor was not installed properly, that should not have happened. Please open an issue on GitHub"
+	# If on Macos with brew, make sure we can find the brewed libffi (which is not "linked"):
+	check brew --version && {
+		libffi_path="$(brew ls libffi | grep pkgconfig | xargs dirname)"
+		echo "Adding libffi pkg-config path ${libffi_path} to \$PKG_CONFIG_PATH"
+		export PKG_CONFIG_PATH="${libffi_path}:${PKG_CONFIG_PATH:-}"
+	}
+
+	check python3 --version || {
+		echo "==> Python 3.x not found"
+		exit 1
+	}
+
+	check pkg-config --print-errors --exists 'gobject-introspection-1.0 >= 1.46.0' || {
+		echo "==> GObject-Introspection not found, Please check above errors and correct them"
+		exit 1
+	}
+
+	PYTHON_VER="$(python3 --version | sed 's/^Python \([0-9]\.[0-9]\).[0-9]$/\1/')"
+
+	test -d .venv || {
+		echo "Setting up a virtual env for Gaphor..."
+		python3 -m venv --prompt Gaphor .venv
+	}
+
+	source .venv/bin/activate
+
+	{ ${NO_FORCE_INSTALL} && test -f .venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link; } || {
+		echo "Installing Gaphor in the virtualenv..."
+		pip --disable-pip-version-check install --upgrade poetry && poetry install
+	}
+
+	test_module() {
+		python3 -c "$1" 2>&- || {
+			echo "$2"
+			echo
+			echo "The Command used to test this:"
+			echo
+			echo "    >>> $1"
+			echo
+			exit 1
+		}
+	}
+
+	test_module \
+		"import gi" \
+		"PyGobject3 (gobject-introspection) can not be loaded"
+
+	test_module \
+		"from gi.repository import Gtk" \
+		"Gtk3 is not installed in a way it can be loaded in Python"
+
+	test_module \
+		"import gaphor.UML" \
+		"Gaphor was not installed properly, that should not have happened. Please open an issue on GitHub"
+
+) && source .venv/bin/activate

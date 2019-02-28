@@ -11,6 +11,7 @@ html
 .eggs/
 gaphor.egg-info/
 tmp.gaphor
+pip-wheel-metadata
 
 # Virtual env stuff
 .gaphor/
