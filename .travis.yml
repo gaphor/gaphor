@@ -30,7 +30,7 @@ install:
   - pip --disable-pip-version-check install poetry
   - poetry install
 script:
-  - xvfb-run pytest -q
+  - xvfb-run pytest
 after_success:
   - coveralls
 
