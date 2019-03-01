@@ -4,7 +4,7 @@ Gaphor
 
 The UML modeling tool.
 
-|Code style: black|
+|code style: black| |build: passed|
 
 .. NOTE::
    The latest release of Gaphor (0.17.2) uses Python 2.x and PyGTK. The master version is using Python 3.x and PyGobject (GObject-introspection).
@@ -70,6 +70,8 @@ want to contribute code, please `fork the code`_ and `submit a pull request`_.
 .. _log them on Github: https://github.com/gaphor/gaphor/issues
 .. _fork the code: https://github.com/gaphor/gaphor
 .. _submit a pull request: https://github.com/gaphor/gaphor/pulls
-.. |Code style: black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/ambv/black
 .. _Homebrew: https://brew.sh
+.. |code style: black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/ambv/black
+.. |build: passed| image:: https://travis-ci.com/gaphor/gaphor.svg?branch=master
+    :target: https://travis-ci.com/gaphor/gaphor
