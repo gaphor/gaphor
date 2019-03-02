@@ -6,7 +6,6 @@ from gi.repository import Gtk
 
 
 class MetaclassEditorTest(TestCase):
-
     def test_stereotype_page_with_no_stereotype(self):
         ci = self.create(items.ClassItem, UML.Class)
         ci.subject.name = "Class"
@@ -20,9 +19,7 @@ class MetaclassEditorTest(TestCase):
         metaclass.name = "Class"
         stereotype = self.element_factory.create(UML.Stereotype)
         stereotype.name = "NewStereotype"
-        UML.model.create_extension(
-                    self.element_factory, metaclass, stereotype
-                )
+        UML.model.create_extension(self.element_factory, metaclass, stereotype)
         attr = self.element_factory.create(UML.Property)
         attr.name = "Property"
         # stereotype.ownedAttribute = attr

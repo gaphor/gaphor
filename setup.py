@@ -17,7 +17,6 @@ from utils.command.build_mo import build_mo
 from utils.command.build_pot import build_pot
 from utils.command.build_uml import build_uml
 from utils.command.install_lib import install_lib
-from utils.command.run import run
 
 LINGUAS = ["ca", "es", "fr", "nl", "sv"]
 
@@ -71,7 +70,7 @@ It uses the GTK+ environment for user interaction.
     packages=find_packages(exclude=["ez_setup", "utils*"]),
     include_package_data=True,
     install_requires=[
-        "pycairo >= 1.17.0",
+        "pycairo >= 1.18.0",
         "PyGObject >= 3.30.0",
         "gaphas >= 1.0.0",
         "zope.component >= 3.4.0",
@@ -121,11 +120,8 @@ It uses the GTK+ environment for user interaction.
         "build_mo": build_mo,
         "build_pot": build_pot,
         "install_lib": install_lib,
-        "run": run,
     },
-    setup_requires=[
-        "pre-commit >= 0.12.0",
-    ],
+    setup_requires=["pre-commit >= 0.12.0"],
     tests_require=["pytest"],
     options=dict(
         build_pot=dict(all_linguas=",".join(LINGUAS)),
