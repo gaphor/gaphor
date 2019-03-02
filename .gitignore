@@ -11,6 +11,7 @@ html
 .eggs/
 gaphor.egg-info/
 tmp.gaphor
+.gpg
 
 # Virtual env stuff
 .gaphor/
@@ -23,3 +24,8 @@ venv
 
 # Tox
 .tox
+
+# Flatpak
+flatpak/build
+flatpak/gaphor-repo
+flatpak/.flatpak-builder

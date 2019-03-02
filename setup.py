@@ -66,10 +66,11 @@ It uses the GTK+ environment for user interaction.
         "Topic :: Software Development :: Documentation",
     ],
     keywords="model modeling modelling uml diagram python tool",
-    packages=find_packages(exclude=["ez_setup", "utils*"]),
+    packages=find_packages(exclude=["utils"]),
+    package_data={"": ["LICENSE.txt", "*.xml", "*.png"]},
     include_package_data=True,
     install_requires=[
-        "pycairo >= 1.17.0",
+        "pycairo >= 1.16.3",
         "PyGObject >= 3.30.0",
         "gaphas >= 1.0.0",
         "zope.component >= 3.4.0",

@@ -1,12 +1,10 @@
 [Desktop Entry]
 Name=Gaphor
-Comment=UML modelling environment
+Comment=The simple modeling tool
 Comment[nl]=UML modelleer omgeving environment
 Comment[pl]=Środowisko modelowania UML
 Exec=gaphor
-Icon=gaphor-48x48.png
+Icon=org.gaphor.Gaphor
 Terminal=false
-MultipleArgs=false
 Type=Application
 Categories=GTK;GNOME;Development;ProjectManagement;
-# vi: encoding=utf-8
