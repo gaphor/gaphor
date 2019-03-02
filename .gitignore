@@ -1,7 +1,5 @@
 build
 dist
-gaphor/UML/uml2.py
-gaphor/data
 po/gaphor.pot
 html
 *.pyc
@@ -12,10 +10,10 @@ html
 gaphor.egg-info/
 tmp.gaphor
 .gpg
+pip-wheel-metadata
 
 # Virtual env stuff
-.gaphor/
-venv
+.venv/
 .vscode/
 .python-version
 
