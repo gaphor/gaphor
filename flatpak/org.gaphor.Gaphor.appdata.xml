@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>org.gaphor.Gaphor.desktop</id>
+  <id>org.gaphor.Gaphor</id>
+  <launchable type="desktop-id">org.gaphor.Gaphor.desktop</launchable>
   <name>Gaphor</name>
   <summary>Simple modeling tool</summary>
   <metadata_license>CC-BY-3.0</metadata_license>
