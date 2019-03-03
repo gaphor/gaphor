@@ -9,7 +9,6 @@ finish-args:
 - "--socket=fallback-x11"
 - "--share=ipc"
 - "--socket=wayland"
-- "--persist=.gaphor"
 - "--filesystem=xdg-run/dconf"
 - "--filesystem=~/.config/dconfig:ro"
 - "--talk-name=ca.desrt.dconf"
