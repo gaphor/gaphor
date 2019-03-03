@@ -8,7 +8,6 @@ import unittest
 
 from utils.command.gen_uml import generate
 
-
 class PseudoFile(object):
     def __init__(self):
         self.data = ""
@@ -23,8 +22,7 @@ class PseudoFile(object):
 class GenUmlTestCase(unittest.TestCase):
     def test_loading(self):
 
-        dist = pkg_resources.get_distribution("gaphor")
-        model_file = os.path.join(dist.location, "tests/test-model.gaphor")
+        model_file = "tests/test-model.gaphor"
         outfile = PseudoFile()
 
         generate(model_file, outfile)
@@ -53,6 +51,3 @@ SubClass.value = attribute('value', str)
 SubClass.abstract = derivedunion('abstract', C, 0, '*', SubClass.concrete)
 SubClass.name4 = redefine(SubClass, 'name4', D, name2)
 """
-
-# # 'SubClass.value' is a simple attribute
-# SubClass.value = attribute('value', str, lower=f9124094-3f14-11de-9595-00224128e79d)
