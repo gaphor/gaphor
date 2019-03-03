@@ -6,6 +6,7 @@
   <metadata_license>CC-BY-3.0</metadata_license>
   <project_license>LGPL-2.0+</project_license>
   <url type="homepage">https://github.com/gaphor/gaphor</url>
+  <url type="help">https://gaphor.readthedocs.io</url>
   <description>
     <p>Gaphor is a simple modeling tool written in Python. It is Free and Open Source software
         for creating software and system architecture and designs. It is aimed at beginning models.
