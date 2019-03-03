@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "1.0.0"
+version = "1.0.0rc1"
 description = "Gaphor is a UML modeling tool"
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
