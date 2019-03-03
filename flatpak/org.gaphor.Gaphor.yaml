@@ -40,13 +40,9 @@ modules:
     tag: 1.0.0rc1
     url: https://github.com/gaphor/gaphor
     commit: 48c2bcff5ae32a6b6c4cae19d8d43634573741de
-  - type: file
-    path: org.gaphor.Gaphor.appdata.xml
-  - type: file
-    path: org.gaphor.Gaphor.desktop
   post-install:
-  - install -Dm644 org.gaphor.Gaphor.appdata.xml /app/share/appdata/org.gaphor.Gaphor.appdata.xml
-  - install -Dm644 org.gaphor.Gaphor.desktop /app/share/applications/org.gaphor.Gaphor.desktop
+  - install -Dm644 flatpak/org.gaphor.Gaphor.appdata.xml /app/share/appdata/org.gaphor.Gaphor.appdata.xml
+  - install -Dm644 flatpak/org.gaphor.Gaphor.desktop /app/share/applications/org.gaphor.Gaphor.desktop
   - install -Dm644 gaphor/ui/pixmaps/gaphor-24x24.png /app/share/icons/hicolor/24x24/apps/gaphor.png
   - install -Dm644 gaphor/ui/pixmaps/gaphor-48x48.png /app/share/icons/hicolor/48x48/apps/gaphor.png
   - install -Dm644 gaphor/ui/pixmaps/gaphor-96x96.png /app/share/icons/hicolor/96x96/apps/gaphor.png
