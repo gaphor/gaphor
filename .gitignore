@@ -9,6 +9,7 @@ html
 .eggs/
 gaphor.egg-info/
 tmp.gaphor
+.gpg
 pip-wheel-metadata
 
 # Virtual env stuff
@@ -18,3 +19,11 @@ pip-wheel-metadata
 
 # Coverage
 .coverage
+
+# Tox
+.tox
+
+# Flatpak
+flatpak/build
+flatpak/gaphor-repo
+flatpak/.flatpak-builder

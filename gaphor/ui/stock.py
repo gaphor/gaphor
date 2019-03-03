@@ -2,7 +2,7 @@
 """
 import logging
 import os.path
-from xml.sax import handler
+from xml.sax import handler, make_parser
 
 from gi.repository import Gtk
 import pkg_resources
@@ -125,7 +125,6 @@ def load_stock_icons():
     """Load stock icon definitions from the DataDir location
     (usually /usr/local/share/gaphor).
     """
-    from xml.sax import make_parser
 
     parser = make_parser()
     icon_dir = os.path.abspath(pkg_resources.resource_filename("gaphor.ui", "pixmaps"))

@@ -5,29 +5,28 @@ Run 'python setup.py develop' to set up a development environment, including
 dependencies.
 """
 
-VERSION = "1.0.0"
-
 import sys
 
-sys.path.insert(0, ".")
-
 from setuptools import setup, find_packages
+from setuptools.command.build_py import build_py
 
 from utils.command.build_mo import build_mo
 from utils.command.build_pot import build_pot
 from utils.command.build_uml import build_uml
 from utils.command.install_lib import install_lib
 
+VERSION = "1.0.0rc1"
 LINGUAS = ["ca", "es", "fr", "nl", "sv"]
 
-
-# Wrap setuptools' build_py command, so we're sure build_uml is performed
-# before the build_py code.
-
-from setuptools.command.build_py import build_py
+sys.path.insert(0, ".")
 
 
-class build_py_with_sub_commands(build_py):
+class BuildPyWithSubCommands(build_py):
+    """Wraps setuptools build_py.
+
+    Ensure that build_uml is performed before build_py is run
+    """
+
     def run(self):
         for cmd_name in self.get_sub_commands():
             self.run_command(cmd_name)
@@ -35,19 +34,18 @@ class build_py_with_sub_commands(build_py):
         build_py.run(self)
 
 
-build_py_with_sub_commands.sub_commands.append(("build_uml", None))
-
+BuildPyWithSubCommands.sub_commands.append(("build_uml", None))
 
 setup(
     name="gaphor",
     version=VERSION,
-    url="http://gaphor.sourceforge.net",
+    url="https://github.org/gaphor/gaphor",
     author="Arjan J. Molenaar",
-    author_email="arjanmol@users.sourceforge.net",
-    license="GNU General Public License",
+    author_email="gaphor@gmail.com",
+    license="GNU Lesser General Public License",
     description="Gaphor is a UML modeling tool",
     long_description="""
-Gaphor is a UML modeling tool written in Python.
+Gaphor is a simple modeling tool written in Python.
 
 It uses the GTK+ environment for user interaction.
 """,
@@ -67,10 +65,11 @@ It uses the GTK+ environment for user interaction.
         "Topic :: Software Development :: Documentation",
     ],
     keywords="model modeling modelling uml diagram python tool",
-    packages=find_packages(exclude=["ez_setup", "utils*"]),
+    packages=find_packages(exclude=["utils"]),
+    package_data={"": ["LICENSE.txt", "*.xml", "*.png"]},
     include_package_data=True,
     install_requires=[
-        "pycairo >= 1.18.0",
+        "pycairo >= 1.16.3",
         "PyGObject >= 3.30.0",
         "gaphas >= 1.0.0",
         "zope.component >= 3.4.0",
@@ -115,7 +114,7 @@ It uses the GTK+ environment for user interaction.
         ],
     },
     cmdclass={
-        "build_py": build_py_with_sub_commands,
+        "build_py": BuildPyWithSubCommands,
         "build_uml": build_uml,
         "build_mo": build_mo,
         "build_pot": build_pot,
