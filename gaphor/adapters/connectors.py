@@ -243,9 +243,9 @@ class CommentLineLineConnect(AbstractConnect):
         opposite = self.line.opposite(handle)
         c2 = self.get_connected(opposite)
         if c1 and c2:
-            if isinstance(c1.subject, UML.Comment):
+            if isinstance(c1.subject, UML.Comment) and c2.subject in c1.subject.annotatedElement:
                 del c1.subject.annotatedElement[c2.subject]
-            elif c2.subject and c1.subject:
+            elif c2.subject and c1.subject in c2.subject.annotatedElement:
                 del c2.subject.annotatedElement[c1.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 
