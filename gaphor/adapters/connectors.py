@@ -197,7 +197,7 @@ class CommentLineElementConnect(AbstractConnect):
 component.provideAdapter(CommentLineElementConnect)
 
 
-@component.adapter(items.DiagramLine, items.CommentLineItem)
+# @component.adapter(items.DiagramLine, items.CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
     """Connect a comment line to any diagram line."""
 
@@ -254,12 +254,24 @@ class CommentLineLineConnect(AbstractConnect):
         if c1 and c2:
             if isinstance(c1.subject, UML.Comment):
                 del c1.subject.annotatedElement[c2.subject]
-            elif c2.subject:
+            elif c2.subject and c1.subject:
                 del c2.subject.annotatedElement[c1.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 
 
-component.provideAdapter(CommentLineLineConnect)
+component.provideAdapter(CommentLineLineConnect, adapts=(items.DiagramLine, items.CommentLineItem))
+
+
+class InverseCommentLineLineConnect(CommentLineLineConnect):
+    """
+    In case a line is disconnected that contains a comment-line,
+    the comment line unlinking should happen in a correct way.
+    """
+
+    def __init__(self, line, element):
+        super().__init__(element, line)
+
+component.provideAdapter(InverseCommentLineLineConnect, adapts=(items.CommentLineItem, items.DiagramLine))
 
 
 class UnaryRelationshipConnect(AbstractConnect):
@@ -369,8 +381,10 @@ class UnaryRelationshipConnect(AbstractConnect):
         # First make sure coordinates match
         solver.solve()
         for cinfo in connections or canvas.get_connections(connected=line):
+            if line is cinfo.connected:
+                continue
             adapter = component.queryMultiAdapter((line, cinfo.connected), IConnect)
-            assert adapter
+            assert adapter, "No element to connect {} and {}".format(line, cinfo.connected)
             adapter.connect(cinfo.handle, cinfo.port)
 
     def disconnect_connected_items(self):
