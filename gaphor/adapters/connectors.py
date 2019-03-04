@@ -243,14 +243,19 @@ class CommentLineLineConnect(AbstractConnect):
         opposite = self.line.opposite(handle)
         c2 = self.get_connected(opposite)
         if c1 and c2:
-            if isinstance(c1.subject, UML.Comment) and c2.subject in c1.subject.annotatedElement:
+            if (
+                isinstance(c1.subject, UML.Comment)
+                and c2.subject in c1.subject.annotatedElement
+            ):
                 del c1.subject.annotatedElement[c2.subject]
             elif c2.subject and c1.subject in c2.subject.annotatedElement:
                 del c2.subject.annotatedElement[c1.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 
 
-component.provideAdapter(CommentLineLineConnect, adapts=(items.DiagramLine, items.CommentLineItem))
+component.provideAdapter(
+    CommentLineLineConnect, adapts=(items.DiagramLine, items.CommentLineItem)
+)
 
 
 class InverseCommentLineLineConnect(CommentLineLineConnect):
@@ -262,7 +267,10 @@ class InverseCommentLineLineConnect(CommentLineLineConnect):
     def __init__(self, line, element):
         super().__init__(element, line)
 
-component.provideAdapter(InverseCommentLineLineConnect, adapts=(items.CommentLineItem, items.DiagramLine))
+
+component.provideAdapter(
+    InverseCommentLineLineConnect, adapts=(items.CommentLineItem, items.DiagramLine)
+)
 
 
 class UnaryRelationshipConnect(AbstractConnect):
@@ -375,7 +383,9 @@ class UnaryRelationshipConnect(AbstractConnect):
             if line is cinfo.connected:
                 continue
             adapter = component.queryMultiAdapter((line, cinfo.connected), IConnect)
-            assert adapter, "No element to connect {} and {}".format(line, cinfo.connected)
+            assert adapter, "No element to connect {} and {}".format(
+                line, cinfo.connected
+            )
             adapter.connect(cinfo.handle, cinfo.port)
 
     def disconnect_connected_items(self):

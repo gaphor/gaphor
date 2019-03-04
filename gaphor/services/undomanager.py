@@ -65,7 +65,9 @@ class ActionStack(object):
             try:
                 action()
             except Exception as e:
-                self.logger.error("Error while undoing action %s" % action, exc_info=True)
+                self.logger.error(
+                    "Error while undoing action %s" % action, exc_info=True
+                )
 
 
 @implementer(IServiceEvent)
