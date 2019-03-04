@@ -454,13 +454,8 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         if hct and oct:
             # Both sides of line are connected => disconnect
-            old = line.subject
-
             connections = self.disconnect_connected_items()
-
             self.disconnect_subject(handle)
-            if old:
-                self.connect_connected_items(connections)
 
         super(UnaryRelationshipConnect, self).disconnect(handle)
 
