@@ -131,7 +131,6 @@ class DisconnectHandle(object):
             log.debug("Disconnecting %s.%s" % (item, handle))
             if cinfo:
                 adapter = component.queryMultiAdapter((cinfo.connected, item), IConnect)
-                print("Adapter is {}".format(adapter))
                 adapter.disconnect(handle)
 
 

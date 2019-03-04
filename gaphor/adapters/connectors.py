@@ -33,7 +33,6 @@ class AbstractConnect(object):
     The following methods are required to make this work:
 
     - `allow()`: is the connection allowed at all (during mouse movement for example).
-      
     - `connect()`: Establish a connection between element and line. Also takes care of
       disconnects, if required (e.g. 1:1 relationships)
     - `disconnect()`: Break connection, called when dropping a handle on a
@@ -98,16 +97,10 @@ class AbstractConnect(object):
         Connect to an element. Note that at this point the line may
         be connected to some other, or the same element.
         Also the connection at UML level still exists.
-        
+
         Returns `True` if a connection is established.
         """
         return True
-
-    #    def reconnect(self, handle, port):
-    #        """
-    #        UML model reconnection method.
-    #        """
-    #        raise NotImplementedError('Reconnection not implemented')
 
     def disconnect(self, handle):
         """Disconnect UML model level connections."""
@@ -226,8 +219,6 @@ class CommentLineLineConnect(AbstractConnect):
             and connected_to.subject is element.subject
         ):
             return None
-
-        print("Connecting", element, "with", element.subject)
 
         # One end should be connected to a CommentItem:
         cls = items.CommentItem
