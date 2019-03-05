@@ -82,7 +82,7 @@ class FeatureItem(object):
         if isinstance(cr, cairo.Context):
             layout = PangoCairo.create_layout(cr)
             layout.set_font_description(Pango.FontDescription(self.font))
-            layout.set_text(self.render() or "")
+            layout.set_text(self.render() or "", length=-1)
             if hasattr(self.subject, "isStatic") and self.subject.isStatic:
                 attrlist = Pango.AttrList.new()
                 # TODO: How to underline text?
