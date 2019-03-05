@@ -190,7 +190,6 @@ class CommentLineElementConnect(AbstractConnect):
 component.provideAdapter(CommentLineElementConnect)
 
 
-# @component.adapter(items.DiagramLine, items.CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
     """Connect a comment line to any diagram line."""
 
