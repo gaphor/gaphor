@@ -311,7 +311,6 @@ class DiagramPage(object):
         """
         Handle data dropped on the canvas.
         """
-        print("DND data received", view)
         if (
             data
             and data.get_format() == 8
