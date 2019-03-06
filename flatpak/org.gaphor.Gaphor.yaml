@@ -15,17 +15,7 @@ finish-args:
   - --env=DCONF_USER_CONFIG_DIR=.config/dconf
 cleanup:
   - /include
-  - /lib/pkgconfig
-  - /share/pkgconfig
-  - /share/aclocal
-  - /man
-  - /share/man
-  - /share/gtk-doc
-  - "*.la"
-  - "*.a"
-  - /lib/girepository-1.0
-  - /share/doc
-  - /share/gir-1.0
+  - /lib/debug
 modules:
   - generated-poetry-sources.json
   - name: gaphor
