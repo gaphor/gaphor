@@ -120,7 +120,6 @@ It uses the GTK+ environment for user interaction.
         "build_pot": build_pot,
         "install_lib": install_lib,
     },
-    setup_requires=["pre-commit >= 0.12.0"],
     tests_require=["pytest"],
     options=dict(
         build_pot=dict(all_linguas=",".join(LINGUAS)),
