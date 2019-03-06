@@ -20,9 +20,6 @@ modules:
   - generated-poetry-sources.json
   - name: gaphor
     buildsystem: simple
-    build-options:
-      build-args:
-        - --filesystem=host
     build-commands:
       - pip3 install --prefix=/app --disable-pip-version-check --no-build-isolation --no-deps .
     sources:
