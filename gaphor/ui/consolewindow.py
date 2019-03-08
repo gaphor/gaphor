@@ -3,12 +3,12 @@
 import logging
 import os
 
+from gi.repository import GLib
 from zope.interface import implementer
 
 from gaphor.action import action, open_action, build_action_group
 from gaphor.core import inject
 from gaphor.interfaces import IActionProvider
-from gaphor.misc import get_user_data_dir
 from gaphor.misc.console import GTKInterpreterConsole
 from gaphor.ui.interfaces import IUIComponent
 
@@ -42,7 +42,7 @@ class ConsoleWindow(object):
     def load_console_py(self):
         """Load default script for console. Saves some repetitive typing."""
 
-        console_py = os.path.join(get_user_data_dir(), "console.py")
+        console_py = os.path.join(GLib.get_user_data_dir(), "console.py")
         try:
             with open(console_py) as f:
                 for line in f:
