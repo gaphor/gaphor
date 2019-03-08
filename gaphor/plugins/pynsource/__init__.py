@@ -226,15 +226,9 @@ class PyNSource(object):
     def on_add_dir_clicked(self, button):
         import os
 
-        filesel = Gtk.FileChooserDialog(
+        filesel = Gtk.FileChooserNative(
             title="Add Source Code",
             action=Gtk.FileChooserAction.OPEN,
-            buttons=(
-                Gtk.STOCK_CANCEL,
-                Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OPEN,
-                Gtk.ResponseType.OK,
-            ),
         )
 
         filesel.set_select_multiple(True)
@@ -244,7 +238,7 @@ class PyNSource(object):
         selection = filesel.get_filenames()
         filesel.destroy()
 
-        if response == Gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.ACCEPT:
             for filename in selection:
                 if os.path.isdir(filename):
                     list = self.Walk(filename, 1, "*.py", 1)
