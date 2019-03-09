@@ -151,6 +151,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Menda",
+      "name": "Rafael Muñoz Cárdenas",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/23944?v=4",
+      "profile": "http://www.rmunoz.net",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
