@@ -8,11 +8,11 @@ from logging import getLogger
 from zope import interface
 
 from gaphas.decorators import AsyncIO
+from gi.repository import GLib
 from zope.interface import implementer
 
 from gaphor.core import inject
 from gaphor.interfaces import IService
-from gaphor.misc import get_user_data_dir
 
 
 class IPropertyChangeEvent(interface.Interface):
@@ -130,7 +130,7 @@ class FileBackend(object):
 
     RESOURCE_FILE = "resources"
 
-    def __init__(self, datadir=get_user_data_dir()):
+    def __init__(self, datadir=GLib.get_user_data_dir()):
         """Constructor.  Initialize the directory used for storing 
         properties."""
 

@@ -5,51 +5,31 @@ sdk: org.gnome.Sdk
 rename-icon: gaphor
 command: gaphor
 finish-args:
-- "--socket=x11"
-- "--socket=fallback-x11"
-- "--share=ipc"
-- "--socket=wayland"
-- "--persist=.gaphor"
-- "--filesystem=xdg-run/dconf"
-- "--filesystem=~/.config/dconfig:ro"
-- "--talk-name=ca.desrt.dconf"
-- "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+  - --socket=x11
+  - --socket=fallback-x11
+  - --share=ipc
+  - --socket=wayland
+  - --filesystem=xdg-run/dconf
+  - --filesystem=~/.config/dconfig:ro
+  - --talk-name=ca.desrt.dconf
+  - --env=DCONF_USER_CONFIG_DIR=.config/dconf
 cleanup:
-- "/include"
-- "/lib/pkgconfig"
-- "/share/pkgconfig"
-- "/share/aclocal"
-- "/man"
-- "/share/man"
-- "/share/gtk-doc"
-- "*.la"
-- "*.a"
-- "/lib/girepository-1.0"
-- "/share/doc"
-- "/share/gir-1.0"
+  - /include
+  - /lib/debug
 modules:
-- name: gaphor
-  buildsystem: simple
-  build-options:
-    build-args:
-    - "--share=network"
-    - "--filesystem=host"
-  build-commands:
-  - pip3 install --prefix=/app --disable-pip-version-check .
-  sources:
-  - type: git
-    tag: 1.0.0rc1
-    url: https://github.com/gaphor/gaphor
-    commit: 48c2bcff5ae32a6b6c4cae19d8d43634573741de
-  - type: file
-    path: org.gaphor.Gaphor.appdata.xml
-  - type: file
-    path: org.gaphor.Gaphor.desktop
-  post-install:
-  - install -Dm644 org.gaphor.Gaphor.appdata.xml /app/share/appdata/org.gaphor.Gaphor.appdata.xml
-  - install -Dm644 org.gaphor.Gaphor.desktop /app/share/applications/org.gaphor.Gaphor.desktop
-  - install -Dm644 gaphor/ui/pixmaps/gaphor-24x24.png /app/share/icons/hicolor/24x24/apps/gaphor.png
-  - install -Dm644 gaphor/ui/pixmaps/gaphor-48x48.png /app/share/icons/hicolor/48x48/apps/gaphor.png
-  - install -Dm644 gaphor/ui/pixmaps/gaphor-96x96.png /app/share/icons/hicolor/96x96/apps/gaphor.png
-  - install -Dm644 gaphor/ui/pixmaps/gaphor-256x256.png /app/share/icons/hicolor/256x256/apps/gaphor.png
-  - install -Dm644 iconsrc/gaphor.svg /app/share/icons/hicolor/scalable/apps/gaphor.svg
+  - generated-poetry-sources.json
+  - name: gaphor
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=/app --disable-pip-version-check --no-build-isolation --no-deps .
+    sources:
+      - type: dir
+        path: ../
+    post-install:
+      - install -Dm644 flatpak/org.gaphor.Gaphor.appdata.xml /app/share/appdata/org.gaphor.Gaphor.appdata.xml
+      - install -Dm644 flatpak/org.gaphor.Gaphor.desktop /app/share/applications/org.gaphor.Gaphor.desktop
+      - install -Dm644 gaphor/ui/pixmaps/gaphor-24x24.png /app/share/icons/hicolor/24x24/apps/gaphor.png
+      - install -Dm644 gaphor/ui/pixmaps/gaphor-48x48.png /app/share/icons/hicolor/48x48/apps/gaphor.png
+      - install -Dm644 gaphor/ui/pixmaps/gaphor-96x96.png /app/share/icons/hicolor/96x96/apps/gaphor.png
+      - install -Dm644 gaphor/ui/pixmaps/gaphor-256x256.png /app/share/icons/hicolor/256x256/apps/gaphor.png
+      - install -Dm644 iconsrc/gaphor.svg /app/share/icons/hicolor/scalable/apps/gaphor.svg

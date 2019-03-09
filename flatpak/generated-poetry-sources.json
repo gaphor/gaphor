@@ -1,0 +1,224 @@
+{
+    "name": "poetry-deps",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} appdirs aspy.yaml atomicwrites attrs black cfgv click colorama coverage decorator future gaphas identify importlib-metadata importlib-resources more-itertools nodeenv packaging pathlib2 pluggy pre-commit py pycairo pygobject pyparsing pytest pytest-cov pytest-runner pytest-sugar pyyaml simplegeneric six termcolor toml virtualenv zipp zope.component zope.deferredimport zope.deprecation zope.event zope.hookable zope.interface zope.proxy"
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/56/eb/810e700ed1349edde4cbdc1b2a21e28cdf115f9faf263f6bbf8447c1abf3/appdirs-1.4.3-py2.py3-none-any.whl",
+            "sha256": "d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/c3/9d/16224e88f34048d1e7a251de7b77fa98f70f21a70c134fb6c21d6848380f/aspy.yaml-1.1.2-py2.py3-none-any.whl",
+            "sha256": "19dd2ee74f96b72a3096d78be1a872914c70982299cda137725478954870a896"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/ec/0f/cd484ac8820fed363b374af30049adc8fd13065720fd4f4c6be8a2309da7/atomicwrites-1.3.0.tar.gz",
+            "sha256": "75a9445bac02d8d058d5e1fe689654ba5a6556a1dfd8ce6ec55a0ed79866cfa6"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/3a/e1/5f9023cc983f1a628a8c2fd051ad19e76ff7b142a0faf329336f9a62a514/attrs-18.2.0-py2.py3-none-any.whl",
+            "sha256": "ca4be454458f9dec299268d472aaa5a11f67a4ff70093396e1ceae9c76cf4bbb"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/2a/34/9938749f260a861cdd8427d63899e08f9a2a041159a26c2615b02828c973/black-18.9b0-py36-none-any.whl",
+            "sha256": "817243426042db1d36617910df579a54f1afd659adb96fc5032fcf4b36209739"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/6c/16/d9aaff0d7b4db23d798bb94140f475be521595532e316255fa12d6be2e17/cfgv-1.4.0-py2.py3-none-any.whl",
+            "sha256": "41d22dd864c474f919ecb88900000d2410d640315f75bdb79b3abf9347089641"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/fa/37/45185cb5abbc30d7257104c434fe0b07e5a195a6847506c074527aa599ec/Click-7.0-py2.py3-none-any.whl",
+            "sha256": "2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/76/53/e785891dce0e2f2b9f4b4ff5bc6062a53332ed28833c7afede841f46a5db/colorama-0.4.1.tar.gz",
+            "sha256": "05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/fb/af/ce7b0fe063ee0142786ee53ad6197979491ce0785567b6d8be751d2069e8/coverage-4.5.2.tar.gz",
+            "sha256": "ab235d9fe64833f12d1334d29b558aacedfbca2356dfb9691f2d0d38a8a7bfb4"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/c4/26/b48aaa231644bc875bb348e162d156edb18b994da900a10f4493ea995a2f/decorator-4.3.2.tar.gz",
+            "sha256": "33cd704aea07b4c28b3eb2c97d288a06918275dac0ecebdaf1bc8a48d98adb9e"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/90/52/e20466b85000a181e1e144fd8305caf2cf475e2f9674e797b222f8105f5f/future-0.17.1.tar.gz",
+            "sha256": "67045236dcfd6816dc439556d009594abf643e5eb48992e36beac09c2ca659b8"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/68/1d/4c8501535889538fe2144b5b8836fa2b3296e06d4a3d9f7e4e7e8cc1e90f/gaphas-1.0.0-py2.py3-none-any.whl",
+            "sha256": "5437fb44d74670e227f766735fb6ce0c69c18793ceaa7b2fd499bc5d067b0d0c"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/59/5c/29f4129c889a034ddc254ab2066dfa53fec6b91165bc90df8269dda2601d/identify-1.3.0-py2.py3-none-any.whl",
+            "sha256": "162e553f1c75df561301c1fd5ee2d88f579bd5dff739c53369807d84b730b489"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/c4/e4/b5dbc3364c296e0510e739c4e09daba535e9676ffde6c1312c2210c76bf0/importlib_metadata-0.8-py2.py3-none-any.whl",
+            "sha256": "a17ce1a8c7bff1e8674cb12c992375d8d0800c9190177ecf0ad93e0097224095"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/2f/f7/b4aa02cdd3ee7ebba375969d77c00826aa15c5db84247d23c89522dccbfa/importlib_resources-1.0.2-py2.py3-none-any.whl",
+            "sha256": "6e2783b2538bd5a14678284a3962b0660c715e5a0f10243fd5e00a4b5974f50b"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/ae/d4/d6bad4844831943dd667510947712750004525c5807711982f4ec390da2b/more_itertools-6.0.0-py3-none-any.whl",
+            "sha256": "0125e8f60e9e031347105eb1682cef932f5e97d7b9a1a28d9bf00c22a5daef40"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/00/6e/ed417bd1ed417ab3feada52d0c89ab0ed87d150f91590badf84273e047c9/nodeenv-1.3.3.tar.gz",
+            "sha256": "ad8259494cf1c9034539f6cced78a1da4840a4b157e23640bc4a0c0546b0cb7a"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/91/32/58bc30e646e55eab8b21abf89e353f59c0cc02c417e42929f4a9546e1b1d/packaging-19.0-py2.py3-none-any.whl",
+            "sha256": "9e1cbf8c12b1f1ce0bb5344b8d7ecf66a6f8a6e91bcb0c84593ed6d3ab5c4ab3"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/2a/46/c696dcf1c7aad917b39b875acdc5451975e3a9b4890dca8329983201c97a/pathlib2-2.3.3-py2.py3-none-any.whl",
+            "sha256": "5887121d7f7df3603bca2f710e7219f3eca0eb69e0b7cc6e0a022e155ac931a7"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/84/e8/4ddac125b5a0e84ea6ffc93cfccf1e7ee1924e88f53c64e98227f0af2a5f/pluggy-0.9.0-py2.py3-none-any.whl",
+            "sha256": "84d306a647cc805219916e62aab89caa97a33a1dd8c342e87a37f91073cd4746"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/8f/77/017fd5ae77f999f63d0e524ad16dc732160de37d22786965b5f8b12d800e/pre_commit-1.14.4-py2.py3-none-any.whl",
+            "sha256": "fc512f129b9526e35e80d656a16a31c198f584c4fce3a5c739045b5140584917"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/76/bc/394ad449851729244a97857ee14d7cba61ddb268dce3db538ba2f2ba1f0f/py-1.8.0-py2.py3-none-any.whl",
+            "sha256": "64f65755aee5b381cea27766a3a147c3f15b9b6b9ac88676de66ba2ae36793fa"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/a6/54/23d6cf3e8d8f1eb30e0e58f171b6f62b2ea75c024935492373639a1a08e4/pycairo-1.18.0.tar.gz",
+            "sha256": "abd42a4c9c2069febb4c38fe74bfc4b4a9d3a89fea3bc2e4ba7baff7a20f783f"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/8c/1f/76533985b054473ef6ab1ba4d9c00d62da502f8b43d3171ae588ec81ae93/PyGObject-3.30.4.tar.gz",
+            "sha256": "2d4423cbf169d50a3165f2dde21478a00215c7fb3f68d9d236af588c670980bb"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/de/0a/001be530836743d8be6c2d85069f46fecf84ac6c18c7f5fb8125ee11d854/pyparsing-2.3.1-py2.py3-none-any.whl",
+            "sha256": "f6c5ef0d7480ad048c054c37632c67fca55299990fff127850181659eea33fc3"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/51/b2/2fa8e8b179c792c457c2f7800f1313bfbd34f515e3a833e6083121844c14/pytest-4.3.0-py2.py3-none-any.whl",
+            "sha256": "9687049d53695ad45cf5fdc7bbd51f0c49f1ea3ecfc4b7f3fde7501b541f17f4"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/7d/b5/92f32674ab954f80499ac73347bfeb815545ea295439c12b0ef3ac8f0975/pytest_cov-2.6.1-py2.py3-none-any.whl",
+            "sha256": "230ef817450ab0699c6cc3c9c8f7a829c34674456f2ed8df1fe1d39780f7c87f"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/04/88/176f3b60929a391a02ff8514e0cb5bf81956da4b98c832ee2d8038bc8358/pytest_runner-4.4-py2.py3-none-any.whl",
+            "sha256": "e946c7dbdc8c0c2ffa44e7b45450f68e7f08cb133983134fa63a1d1486c2b36b"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/55/59/f02f78d1c80f7e03e23177f60624c8106d4f23d124c921df103f65692464/pytest-sugar-0.9.2.tar.gz",
+            "sha256": "fcd87a74b2bce5386d244b49ad60549bfbc4602527797fac167da147983f58ab"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/9e/a3/1d13970c3f36777c583f136c136f804d70f500168edc1edea6daa7200769/PyYAML-3.13.tar.gz",
+            "sha256": "3ef3092145e9b70e3ddd2c7ad59bdd0252a94dfe3949721633e41344de00a6bf"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/3d/57/4d9c9e3ae9a255cd4e1106bb57e24056d3d0709fc01b2e3e345898e49d5b/simplegeneric-0.8.1.zip",
+            "sha256": "dc972e06094b9af5b855b3df4a646395e43d1c9d0d39ed345b7393560d0b9173"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/73/fb/00a976f728d0d1fecfe898238ce23f502a721c0ac0ecfedb80e0d88c64e9/six-1.12.0-py2.py3-none-any.whl",
+            "sha256": "3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/8a/48/a76be51647d0eb9f10e2a4511bf3ffb8cc1e6b14e9e4fab46173aa79f981/termcolor-1.1.0.tar.gz",
+            "sha256": "1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/a2/12/ced7105d2de62fa7c8fb5fce92cc4ce66b57c95fb875e9318dba7f8c5db0/toml-0.10.0-py2.py3-none-any.whl",
+            "sha256": "235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/88/b6/9f2e13a71e5a7cd458dcf4f24540a4bd39206cc6290e8393a48d8b95c11e/virtualenv-16.4.1-py2.py3-none-any.whl",
+            "sha256": "dffd40d19ab0168c02cf936de59590a3c0f2c8c4a36f363fcf3dae18728dc94e"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/00/42/10a1f8d29eaf9c7f2b555a5d1d602b9261f2a0cbec08f8f23d9056f5915d/zipp-0.3.3-py2.py3-none-any.whl",
+            "sha256": "682b3e1c62b7026afe24eadf6be579fb45fec54c07ea218bded8092af07a68c4"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/97/e2/c785df1171f277ea93cc16bdcc112cb3ddfde1aeefbc401d46c49727f472/zope.component-4.5-py2.py3-none-any.whl",
+            "sha256": "984a06ba3def0b02b1117fa4c45b56e772e8c29c0340820fbf367e440a93a3a4"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/62/d2/e03e4b0c9103817e19d1ea577c1f7fb9b67e4c0397ca5127d377e1eafe0c/zope.deferredimport-4.3-py2.py3-none-any.whl",
+            "sha256": "4aae9cbacb2146cca58e62be0a914f0cec034d3b2d41135ea212ca8a96f4b5ec"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/f9/26/b935bbf9d27e898b87d80e7873a0200cebf239253d0afe7a59f82fe90fff/zope.deprecation-4.4.0-py2.py3-none-any.whl",
+            "sha256": "f1480b74995958b24ce37b0ef04d3663d2683e5d6debc96726eff18acf4ea113"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/c5/96/361edb421a077a4c208b4a5c212737d78ae03ce67fbbcd01621c49f332d1/zope.event-4.4-py2.py3-none-any.whl",
+            "sha256": "d8e97d165fd5a0997b45f5303ae11ea3338becfe68c401dd88ffd2113fe5cae7"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/41/b5/378175b959565de41f45c775cdfbf8897aaeaf29a258b94e40bd2661ce46/zope.hookable-4.2.0.tar.gz",
+            "sha256": "c1df3929a3666fc5a0c80d60a0c1e6f6ef97c7f6ed2f1b7cf49f3e6f3d4dde15"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/4e/d0/c9d16bd5b38de44a20c6dc5d5ed80a49626fafcb3db9f9efdc2a19026db6/zope.interface-4.6.0.tar.gz",
+            "sha256": "1b3d0dcabc7c90b470e59e38a9acaa361be43b3a6ea644c0063951964717f0e5"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/7c/f5/e9ed65cdf8c93d24d7512ef89e21b241bc9ae75d90bc8608cc142f4c26f9/zope.proxy-4.3.1.tar.gz",
+            "sha256": "563c2454b2d0f23bca54d2e0e4d781149b7b06cb5df67e253ca3620f37202dd2"
+        }
+    ]
+}
