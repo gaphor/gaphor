@@ -1,0 +1,25 @@
+{
+  "projectName": "gaphor",
+  "projectOwner": "danyeaw",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "amolenaar",
+      "name": "Arjan Molenaar",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/96249?v=4",
+      "profile": "https://github.com/amolenaar",
+      "contributions": [
+        "code",
+        "doc",
+        "plugin",
+        "test"
+      ]
+    }
+  ]
+}
