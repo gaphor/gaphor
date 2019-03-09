@@ -16,9 +16,21 @@
       "profile": "https://github.com/amolenaar",
       "contributions": [
         "code",
+        "bug",
         "doc",
         "plugin",
         "test"
+      ]
+    },
+    {
+      "login": "wrobell",
+      "name": "wrobell",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/105664?v=4",
+      "profile": "https://github.com/wrobell",
+      "contributions": [
+        "code",
+        "test",
+        "design"
       ]
     }
   ]
