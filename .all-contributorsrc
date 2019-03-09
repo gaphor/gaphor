@@ -187,6 +187,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "nedko",
+      "name": "Nedko Arnaudov",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/96399?v=4",
+      "profile": "http://nedko.arnaudov.name",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
