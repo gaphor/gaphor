@@ -67,7 +67,8 @@
       "profile": "http://www.boduch.ca",
       "contributions": [
         "code",
-        "test"
+        "test",
+        "bug"
       ]
     },
     {
@@ -131,6 +132,15 @@
       "profile": "https://github.com/tonytheleg",
       "contributions": [
         "maintenance"
+      ]
+    },
+    {
+      "login": "jischebeck",
+      "name": "Jan",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3011242?v=4",
+      "profile": "https://github.com/jischebeck",
+      "contributions": [
+        "bug"
       ]
     }
   ]
