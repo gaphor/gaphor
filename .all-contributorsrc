@@ -59,6 +59,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "adamboduch",
+      "name": "Adam Boduch",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/114619?v=4",
+      "profile": "http://www.boduch.ca",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }
