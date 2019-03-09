@@ -114,6 +114,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jmallach",
+      "name": "Jordi Mallach",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/929712?v=4",
+      "profile": "https://oskuro.net/",
+      "contributions": [
+        "translation"
+      ]
     }
   ]
 }
