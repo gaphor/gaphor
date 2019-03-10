@@ -58,7 +58,7 @@ function build_compileall {
 
 function install_pre_deps {
     pacman -S --needed --noconfirm p7zip git dos2unix \
-        mingw-w64-"${ARCH}"-nsis wget mingw-w64-"${ARCH}"-toolchain
+        mingw-w64-"${ARCH}"-nsis mingw-w64-"${ARCH}"-wget mingw-w64-"${ARCH}"-toolchain
 }
 
 function create_root {
@@ -297,8 +297,8 @@ function build_portable_installer {
 
     rm -Rf 7zout 7z1900-x64.exe
     7z a payload.7z "$PORTABLE"
-    wget -P "$DIR" -c http://www.7-zip.org/a/7z1604.exe
-    7z x -o7zout 7z1604.exe
+    wget.exe -P "$DIR" -c https://www.7-zip.org/a/7z1900-x64.exe
+    7z x -o7zout 7z1900-x64.exe
     cat 7zout/7z.sfx payload.7z > "$PORTABLE".exe
-    rm -Rf 7zout 7z1604.exe payload.7z "$PORTABLE"
+    rm -Rf 7zout 7z1900-x64.exe payload.7z "$PORTABLE"
 }
