@@ -146,7 +146,7 @@ setup(
         # Web deployments
         "django": {"app_requires": []},
         # Translations
-        "build_pot": {"all_linguas": [",".join(LINGUAS)]},
-        "build_mo": {"all_linguas": [",".join(LINGUAS)]},
+        "build_pot": {"all_linguas": ",".join(LINGUAS)},
+        "build_mo": {"all_linguas": ",".join(LINGUAS)},
     },
 )
