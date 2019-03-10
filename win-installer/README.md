@@ -25,12 +25,16 @@ Files\Gaphor\bin\python.exe setup.py run.
 - To run Gaphor execute `python3 setup.py run`
 
 ## Creating an Installer
-Simply run `./build.sh [git-tag]` and both the installer and the portable
+Simply run `./build.sh` and both the installer and the portable
 installer should appear in this directory.
 
-You can pass a git tag ./build.sh release-1.0.0 to build a specific tag or pass
-nothing to build master. Note that it will clone from this repository and not
-from github so any commits present locally will be cloned as well.
+You can also run the build using a specific git version:
+1. Pass a git tag with: `./build.sh release-1.0.0`
+1. Pass a git commit hash with: `./build.sh a5d3e53406fadd1fe089aa995b650949256d4981`
+1. Pass nothing to build master
+
+Note: `build.sh` clones from the local repository and not from GitHub so any
+commits present locally will be cloned as well.
 
 ## Updating an Existing Installer
 We directly follow msys2 upstream so building the installer two weeks later
@@ -38,4 +42,4 @@ might result in newer versions of dependencies being used. To reduce the risk of
 stable release breakage you can use an existing installer and just install a
 newer Gaphor version into it and then repack it:
 
-`./rebuild.sh gaphor-1.0.0-installer.exe [git-tag]`
+`./rebuild.sh gaphor-1.0.0-installer.exe [git tag / commit]`

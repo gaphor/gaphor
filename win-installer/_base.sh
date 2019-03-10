@@ -25,8 +25,8 @@ else
     MINGW="mingw32"
 fi
 
-VERSION="1.0.0rc1"
-VERSION_DESC="Release Candidate 1"
+VERSION="0.0.0"
+VERSION_DESC="UNKNOWN"
 
 function set_build_root {
     BUILD_ROOT="$1"
@@ -90,19 +90,31 @@ function install_deps {
         mingw-w64-"${ARCH}"-python3-setuptools \
         mingw-w64-"${ARCH}"-python3-zope.interface
 
-    # First time installing pip fails
-    build_pacman --noconfirm -S \
-        mingw-w64-"${ARCH}"-python3-pip \
+    # First time installing pip has post-install errors, reinstall to fix
+    # sed: can't read mingw64/bin/pip3-script.py: No such file or directory
+    # sed: can't read mingw64/bin/pip3.7-script.py: No such file or directory
+    # error: command (/usr/bin/bash /usr/bin/bash -c . /tmp/alpm_omSbWr/.INSTALL; post_install 19.0.1-1 ) failed to execute correctly
+    build_pacman --noconfirm -S mingw-w64-"${ARCH}"-python3-pip
 
     PIP_REQUIREMENTS="\
         pycairo==1.18.0
         PyGObject==3.30.4
         gaphas==1.0.0
         zope.component==4.5
+        tomlkit==0.5.3
         "
 
     build_pip install $(echo "$PIP_REQUIREMENTS" | tr ["\\n"] [" "])
 
+}
+
+function get_version {
+	python3 - <<END
+from tomlkit import parse
+with open('../pyproject.toml', 'r') as f:
+	parsed_toml = parse(f.read())
+	print(parsed_toml["tool"]["poetry"]["version"])
+END
 }
 
 function install_gaphor {
@@ -121,6 +133,8 @@ function install_gaphor {
     python3 "${MISC}"/create-launcher.py \
         "${VERSION}" "${MINGW_ROOT}"/bin
 
+    VERSION=$(get_version)
+    VERSION_DESC="$VERSION"
     if [ "$1" = "master" ]
     then
         local GIT_REV=$(git rev-list --count HEAD)
