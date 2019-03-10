@@ -133,7 +133,7 @@ function install_gaphor {
 
 function cleanup_before {
     # these all have svg variants
-    find "${MINGW_ROOT}"/share/icons -name "*.symbolic.png" -delete
+    find "${MINGW_ROOT}"/share/icons -name "*.symbolic.png" -exec rm -f {} \;
 
     # remove some larger ones
     rm -Rf "${MINGW_ROOT}/share/icons/Adwaita/512x512"
@@ -146,15 +146,17 @@ function cleanup_before {
     # python related, before installing gaphor
     rm -Rf "${MINGW_ROOT}"/lib/python3.*/test
     rm -f "${MINGW_ROOT}"/lib/python3.*/lib-dynload/_tkinter*
-    find "${MINGW_ROOT}"/lib/python3.* -type d -name "test*" -delete
-    find "${MINGW_ROOT}"/lib/python3.* -type d -name "*_test*" -delete
+    find "${MINGW_ROOT}"/lib/python3.* -type d -name "test*" \
+        -prune -exec rm -rf {} \;
+    find "${MINGW_ROOT}"/lib/python3.* -type d -name "*_test*" \
+        -prune -exec rm -rf {} \;
 
-    find "${MINGW_ROOT}"/bin -name "*.pyo" -delete
-    find "${MINGW_ROOT}"/bin -name "*.pyc" -delete
+    find "${MINGW_ROOT}"/bin -name "*.pyo" -exec rm -f {} \;
+    find "${MINGW_ROOT}"/bin -name "*.pyc" -exec rm -f {} \;
 
     build_compileall_pyconly -d "" -f -q "$(cygpath -w "${MINGW_ROOT}")"
     find "${MINGW_ROOT}" -name "*.py" -exec rm -f {} \;
-    find "${MINGW_ROOT}" -type d -name "__pycache__" -delete
+    find "${MINGW_ROOT}" -type d -name "__pycache__" -prune -exec rm -rf {} \;
 }
 
 function cleanup_after {
@@ -293,7 +295,7 @@ function build_portable_installer {
     mkdir "$PORTABLE"/config
     cp -RT "${MINGW_ROOT}" "$PORTABLE"/data
 
-    rm -Rf 7zout 7z1604.exe
+    rm -Rf 7zout 7z1900-x64.exe
     7z a payload.7z "$PORTABLE"
     wget -P "$DIR" -c http://www.7-zip.org/a/7z1604.exe
     7z x -o7zout 7z1604.exe
