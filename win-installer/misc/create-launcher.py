@@ -212,7 +212,7 @@ def main():
         "Gaphor",
         version,
         company_name,
-        "gaphor.main:main",
+        "gaphor:main",
         True,
     )
 
@@ -223,7 +223,7 @@ def main():
         "Gaphor",
         version,
         company_name,
-        "gaphor.main:main",
+        "gaphor:main",
         False,
     )
 
