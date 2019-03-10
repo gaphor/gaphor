@@ -5,6 +5,7 @@ Run './venv' to set up a development environment, including dependencies.
 
 import io
 import sys
+import re
 
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
@@ -42,7 +43,7 @@ with io.open("./gaphor/__init__.py", encoding="utf8") as version_file:
     else:
         raise RuntimeError("Unable to find version string.")
 
-build_py_with_sub_commands.sub_commands.append(("build_uml", None))
+BuildPyWithSubCommands.sub_commands.append(("build_uml", None))
 
 with io.open("README.rst", encoding="utf8") as readme:
     long_description = readme.read()
