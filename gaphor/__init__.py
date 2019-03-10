@@ -1,11 +1,21 @@
 #!/usr/bin/env python
 
-"""This is Gaphor, a Python+GTK based UML modelling tool.
+"""Gaphor is the simple modeling tool written in Python.
 
 This module allows Gaphor to be launched from the command line.
 The main() function sets up the command-line options and arguments and
-passes them to the main Application instance."""
+passes them to the main Application instance.
 
+"""
+# Examples of valid version strings
+# __version__ = '1.2.3.dev1'  # Development release 1
+# __version__ = '1.2.3a1'     # Alpha Release 1
+# __version__ = '1.2.3b1'     # Beta Release 1
+# __version__ = '1.2.3rc1'    # RC Release 1
+# __version__ = '1.2.3'       # Final Release
+# __version__ = '1.2.3.post1' # Post Release 1
+
+__version__ = "1.0.0rc1"
 __all__ = ["main"]
 
 from optparse import OptionParser
@@ -21,7 +31,7 @@ LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 def launch(model=None):
     """Start the main application by initiating and running Application.
-    
+
     The file_manager service is used here to load a Gaphor model if one was
     specified on the command line.  Otherwise, a new model is created and
     the Gaphor GUI is started."""
@@ -50,7 +60,7 @@ def main():
     """Start Gaphor from the command line.  This function creates an option
     parser for retrieving arguments and options from the command line.  This
     includes a Gaphor model to load.
-    
+
     The application is then initialized, passing along the option parser.  This
     provides plugins and services with access to the command line options
     and may add their own."""
