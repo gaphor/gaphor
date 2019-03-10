@@ -4,6 +4,7 @@ Run './venv' to set up a development environment, including dependencies.
 """
 
 import io
+import os
 import sys
 import re
 
@@ -33,7 +34,8 @@ class BuildPyWithSubCommands(build_py):
         build_py.run(self)
 
 
-with io.open("./gaphor/__init__.py", encoding="utf8") as version_file:
+init_file = os.path.join(os.path.dirname(__file__), "gaphor", "__init__.py")
+with io.open(init_file, encoding="utf8") as version_file:
     version_match = re.search(
         r"^__version__ = ['\"]([^'\"]*)['\"]", version_file.read(), re.M
     )
