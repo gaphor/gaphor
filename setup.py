@@ -1,10 +1,9 @@
-"""
-Setup script for Gaphor.
+"""Setup script for Gaphor.
 
-Run 'python setup.py develop' to set up a development environment, including
-dependencies.
+Run './venv' to set up a development environment, including dependencies.
 """
 
+import io
 import sys
 
 from setuptools import setup, find_packages
@@ -14,8 +13,8 @@ from utils.command.build_mo import build_mo
 from utils.command.build_pot import build_pot
 from utils.command.build_uml import build_uml
 from utils.command.install_lib import install_lib
+from utils.command.run import run
 
-VERSION = "1.0.0rc1"
 LINGUAS = ["ca", "es", "fr", "nl", "sv"]
 
 sys.path.insert(0, ".")
@@ -34,28 +33,36 @@ class BuildPyWithSubCommands(build_py):
         build_py.run(self)
 
 
-BuildPyWithSubCommands.sub_commands.append(("build_uml", None))
+with io.open("./gaphor/__init__.py", encoding="utf8") as version_file:
+    version_match = re.search(
+        r"^__version__ = ['\"]([^'\"]*)['\"]", version_file.read(), re.M
+    )
+    if version_match:
+        version = version_match.group(1)
+    else:
+        raise RuntimeError("Unable to find version string.")
+
+build_py_with_sub_commands.sub_commands.append(("build_uml", None))
+
+with io.open("README.rst", encoding="utf8") as readme:
+    long_description = readme.read()
 
 setup(
     name="gaphor",
-    version=VERSION,
-    url="https://github.org/gaphor/gaphor",
+    version=version,
+    url="https://gaphor.readthedocs.io/",
     author="Arjan J. Molenaar",
     author_email="gaphor@gmail.com",
     license="GNU Lesser General Public License",
-    description="Gaphor is a UML modeling tool",
-    long_description="""
-Gaphor is a simple modeling tool written in Python.
-
-It uses the GTK+ environment for user interaction.
-""",
+    description="Gaphor is the simple modeling tool",
+    long_description=long_description,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: X11 Applications :: GTK",
         "Intended Audience :: Developers",
         "Intended Audience :: End Users/Desktop",
         "Intended Audience :: Information Technology",
-        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "License :: OSI Approved :: GNU Lesser General Public License (LGPL)",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
@@ -65,13 +72,24 @@ It uses the GTK+ environment for user interaction.
         "Topic :: Software Development :: Documentation",
     ],
     keywords="model modeling modelling uml diagram python tool",
-    packages=find_packages(exclude=["utils"]),
-    package_data={"": ["LICENSE.txt", "*.xml", "*.png"]},
+    packages=find_packages(
+        exclude=[
+            "utils*",
+            "docs",
+            "tests",
+            "windows",
+            "macOS",
+            "linux",
+            "iOS",
+            "android",
+            "django",
+        ]
+    ),
     include_package_data=True,
     install_requires=[
-        "pycairo >= 1.16.3",
+        "pycairo >= 1.17.0",
         "PyGObject >= 3.30.0",
-        "gaphas >= 1.0.0",
+        "gaphas >= 0.7.2",
         "zope.component >= 3.4.0",
     ],
     zip_safe=False,
@@ -82,7 +100,6 @@ It uses the GTK+ environment for user interaction.
         ],
         "gaphor.services": [
             "component_registry = gaphor.services.componentregistry:ZopeComponentRegistry",
-            # 'event_dispatcher = gaphor.services.eventdispatcher:EventDispatcher',
             "adapter_loader = gaphor.services.adapterloader:AdapterLoader",
             "properties = gaphor.services.properties:Properties",
             "undo_manager = gaphor.services.undomanager:UndoManager",
@@ -95,17 +112,13 @@ It uses the GTK+ environment for user interaction.
             "copy = gaphor.services.copyservice:CopyService",
             "sanitizer = gaphor.services.sanitizerservice:SanitizerService",
             "element_dispatcher = gaphor.services.elementdispatcher:ElementDispatcher",
-            # 'property_dispatcher = gaphor.services.propertydispatcher:PropertyDispatcher',
             "xmi_export = gaphor.plugins.xmiexport:XMIExport",
             "diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout",
             "pynsource = gaphor.plugins.pynsource:PyNSource",
-            # 'check_metamodel = gaphor.plugins.checkmetamodel:CheckModelWindow',
-            # 'live_object_browser = gaphor.plugins.liveobjectbrowser:LiveObjectBrowser',
             "alignment = gaphor.plugins.alignment:Alignment",
             "help = gaphor.services.helpservice:HelpService",
         ],
         "gaphor.uicomponents": [
-            # 'mainwindow = gaphor.ui.mainwindow:MainWindow',
             "namespace = gaphor.ui.mainwindow:Namespace",
             "toolbox = gaphor.ui.mainwindow:Toolbox",
             "diagrams = gaphor.ui.mainwindow:Diagrams",
@@ -119,10 +132,22 @@ It uses the GTK+ environment for user interaction.
         "build_mo": build_mo,
         "build_pot": build_pot,
         "install_lib": install_lib,
+        "run": run,
     },
     tests_require=["pytest"],
-    options=dict(
-        build_pot=dict(all_linguas=",".join(LINGUAS)),
-        build_mo=dict(all_linguas=",".join(LINGUAS)),
-    ),
+    options={
+        "app": {"formal_name": "Gaphor", "bundle": "org.gaphor"},
+        # Desktop/laptop deployments
+        "macos": {"app_requires": [], "icon": "gaphor/ui/pixmaps/gaphor-256x256.png"},
+        "linux": {"app_requires": [], "icon": "gaphor/ui/pixmaps/gaphor-48x48.png"},
+        "windows": {"app_requires": [], "icon": "win-installer/misc/gaphor"},
+        # Mobile deployments
+        "ios": {"app_requires": []},
+        "android": {"app_requires": []},
+        # Web deployments
+        "django": {"app_requires": []},
+        # Translations
+        "build_pot": {"all_linguas": [",".join(LINGUAS)]},
+        "build_mo": {"all_linguas": [",".join(LINGUAS)]},
+    },
 )
