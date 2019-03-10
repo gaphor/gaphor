@@ -12,7 +12,10 @@ source "$DIR"/_base.sh
 function main {
     local GIT_TAG=${1:-"master"}
 
-#    [[ -d "${BUILD_ROOT}" ]] && (echo "${BUILD_ROOT} already exists"; exit 1)
+    if [[ -d "${BUILD_ROOT}" ]]; then
+        echo "Removing ${BUILD_ROOT}"
+        rm -rf "${BUILD_ROOT}"
+    fi
 
     # started from the wrong env -> switch
     if [ $(echo "$MSYSTEM" | tr '[A-Z]' '[a-z]') != "$MINGW" ]; then
