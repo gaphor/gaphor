@@ -12,11 +12,10 @@ subprocess.run(
     "git"
     "mingw-w64-x68_64-python3"
     "mingw-w64-x68_64-python3-cairo"
-    "mingw-w64-x68_64-gobject-introspection"
-    "mingw-w64-x68_64-libffi"
+    "mingw-w64-x68_64-gobject-gobject"
     "mingw-w64-x68_64-python3-pip"
     "mingw-w64-x68_64-setuptools"
 )
 
 # Install Gaphor dependencies
-subprocess.run("pip3 install --user -U" "gaphas" "zope.component")
+subprocess.run("pip3 install --user -U" "gaphas" "zope.component" "pycairo" "PyGObject")
