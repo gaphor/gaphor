@@ -161,7 +161,6 @@ class StorageTestCase(TestCase):
         path = os.path.join(dist.location, "gaphor/UML/uml2.gaphor")
 
         with io.open(path) as ifile:
-
             storage.load(ifile, factory=self.element_factory)
 
     def test_load_uml_relationships(self):
