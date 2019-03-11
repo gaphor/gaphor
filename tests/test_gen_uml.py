@@ -8,6 +8,7 @@ import unittest
 
 from utils.command.gen_uml import generate
 
+
 class PseudoFile(object):
     def __init__(self):
         self.data = ""
