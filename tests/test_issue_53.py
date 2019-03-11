@@ -14,7 +14,7 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
         from gaphor.storage.storage import load
 
         dist = pkg_resources.get_distribution("gaphor")
-        path = os.path.join(dist.location, "tests/issue_53.gaphor")
+        path = os.path.join(dist.location, "test-diagrams/issue_53.gaphor")
         load(path, element_factory)
 
     def tearDown(self):
