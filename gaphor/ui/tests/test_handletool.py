@@ -161,51 +161,42 @@ class HandleToolTestCase(unittest.TestCase):
             CommentItem, subject=element_factory.create(UML.Comment)
         )
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
-        actor.matrix.translate(200, 200)
-        diagram.canvas.update_matrix(actor)
         line = diagram.create(CommentLineItem)
 
-        view = self.get_diagram_view()
+        view = self.get_diagram_view(diagram)
         assert view, "View should be available here"
 
         tool = ConnectHandleTool(view)
 
-        # select handle:
+        # Connect one end to the Comment:
         handle = line.handles()[0]
         tool.grab_handle(line, handle)
 
-        # Connect one end to the Comment
-        # handle.pos = view.get_matrix_v2i(line).transform_point(45, 48)
-        sink = tool.glue(line, handle, (0, 0))
+        comment_bb = view.get_item_bounding_box(comment)
+        handle.pos = (comment_bb.x1, comment_bb.y1)
+        sink = tool.glue(line, handle, handle.pos)
         assert sink is not None
         assert sink.item is comment
 
-        tool.connect(line, handle, (0, 0))
+        tool.connect(line, handle, handle.pos)
         cinfo = diagram.canvas.get_connection(handle)
         self.assertTrue(cinfo is not None, None)
         self.assertTrue(cinfo.item is line)
         self.assertTrue(cinfo.connected is comment)
 
-        pos = view.get_matrix_i2v(line).transform_point(handle.x, handle.y)
-        self.assertAlmostEquals(0, pos[0], 0.00001)
-        self.assertAlmostEquals(0, pos[1], 0.00001)
-
-        # Connect the other end to the actor:
+        # Connect the other end to the Actor:
         handle = line.handles()[-1]
         tool.grab_handle(line, handle)
+        actor_bb = view.get_item_bounding_box(actor)
 
-        handle.pos = 140, 150
-        sink = tool.glue(line, handle, (200, 200))
+        handle.pos = actor_bb.x1, actor_bb.y1
+        sink = tool.glue(line, handle, handle.pos)
         self.assertTrue(sink.item is actor)
-        tool.connect(line, handle, (200, 200))
+        tool.connect(line, handle, handle.pos)
 
         cinfo = view.canvas.get_connection(handle)
         self.assertTrue(cinfo.item is line)
         self.assertTrue(cinfo.connected is actor)
-
-        self.assertEqual(
-            (200, 200), view.get_matrix_i2v(line).transform_point(handle.x, handle.y)
-        )
 
         # Try to connect far away from any item will only do a full disconnect
         self.assertEqual(
@@ -217,10 +208,6 @@ class HandleToolTestCase(unittest.TestCase):
         self.assertTrue(sink is None, sink)
         tool.connect(line, handle, (500, 500))
 
-        self.assertEqual(
-            (200, 200),
-            view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y),
-        )
         cinfo = view.canvas.get_connection(handle)
         self.assertTrue(cinfo is None)
 
