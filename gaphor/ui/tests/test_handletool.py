@@ -119,8 +119,6 @@ class HandleToolTestCase(unittest.TestCase):
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )
-        # assert comment.height == 50
-        # assert comment.width == 100
 
         actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
         actor.matrix.translate(200, 200)
@@ -128,36 +126,26 @@ class HandleToolTestCase(unittest.TestCase):
 
         line = diagram.create(CommentLineItem)
 
-        view = self.get_diagram_view()
+        view = self.get_diagram_view(diagram)
         assert view, "View should be available here"
-
-        tool = ConnectHandleTool(view)
+        comment_bb = view.get_item_bounding_box(comment)
+        print("comment bb", comment_bb)
 
         # select handle:
         handle = line.handles()[-1]
-        tool._grabbed_item = line
-        tool._grabbed_handle = handle
+        tool = ConnectHandleTool(view=view)
 
-        # Should glue to (238, 248)
-        handle.pos = 245, 248
-        item = tool.glue(line, handle, (245, 248))
+        tool.grab_handle(line, handle)
+        handle.pos = (comment_bb.x, comment_bb.y)
+        item = tool.glue(line, handle, handle.pos)
         self.assertTrue(item is not None)
-        self.assertEqual(
-            (238, 248),
-            view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y),
-        )
 
-        handle.pos = 245, 248
-        tool.connect(line, handle, (245, 248))
+        tool.connect(line, handle, handle.pos)
         cinfo = diagram.canvas.get_connection(handle)
         self.assertTrue(cinfo.constraint is not None)
         self.assertTrue(cinfo.connected is actor, cinfo.connected)
-        self.assertEqual(
-            (238, 248), view.get_matrix_i2v(line).transform_point(handle.x, handle.y)
-        )
 
         Connector(line, handle).disconnect()
-        # tool.disconnect(line, handle)
 
         cinfo = diagram.canvas.get_connection(handle)
 
