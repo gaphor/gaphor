@@ -140,7 +140,6 @@ class StorageTestCase(TestCase):
             assert item.subject, "No subject for %s" % item
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
-        # print d1, d1.subject
 
     def test_load_with_whitespace_name(self):
         difficult_name = "    with space before and after  "
@@ -202,7 +201,6 @@ class StorageTestCase(TestCase):
         assert list(map(float, aa.handles()[1].pos)) == [40, 40], aa.handles()[1].pos
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
-        # print d1, d1.subject
 
     def test_connection(self):
         """

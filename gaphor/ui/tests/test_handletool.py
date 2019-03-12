@@ -129,7 +129,6 @@ class HandleToolTestCase(unittest.TestCase):
         view = self.get_diagram_view(diagram)
         assert view, "View should be available here"
         comment_bb = view.get_item_bounding_box(comment)
-        print("comment bb", comment_bb)
 
         # select handle:
         handle = line.handles()[-1]
