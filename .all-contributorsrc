@@ -33,6 +33,7 @@
       "contributions": [
         "code",
         "test",
+        "bug",
         "design"
       ]
     },
@@ -193,6 +194,15 @@
       "name": "Nedko Arnaudov",
       "avatar_url": "https://avatars2.githubusercontent.com/u/96399?v=4",
       "profile": "http://nedko.arnaudov.name",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Alexander-Wilms",
+      "name": "Alexander Wilms",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3226457?v=4",
+      "profile": "https://github.com/Alexander-Wilms",
       "contributions": [
         "bug"
       ]
