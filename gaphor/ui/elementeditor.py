@@ -49,7 +49,7 @@ class ElementEditor(object):
         name="ElementEditor:open",
         label=_("_Editor"),
         stock_id="gtk-edit",
-        accel="<Control>e",
+        accel="<Primary>e",
     )
     def open_elementeditor(self):
         """Display the element editor when the toolbar button is toggled.  If

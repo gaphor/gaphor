@@ -164,12 +164,12 @@ class DiagramPage(object):
         zx = self.view.matrix[0]
         self.view.zoom(1 / zx)
 
-    @action(name="diagram-select-all", label="_Select all", accel="<Control>a")
+    @action(name="diagram-select-all", label="_Select all", accel="<Primary>a")
     def select_all(self):
         self.view.select_all()
 
     @action(
-        name="diagram-unselect-all", label="Des_elect all", accel="<Control><Shift>a"
+        name="diagram-unselect-all", label="Des_elect all", accel="<Primary><Shift>a"
     )
     def unselect_all(self):
         self.view.unselect_all()
