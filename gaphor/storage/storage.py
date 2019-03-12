@@ -346,7 +346,11 @@ def load_generator(filename, factory):
         raise
 
     if version_lower_than(gaphor_version, (0, 17, 0)):
-        raise ValueError("Gaphor model version should be at least 0.17.0 (found {})".format(gaphor_version))
+        raise ValueError(
+            "Gaphor model version should be at least 0.17.0 (found {})".format(
+                gaphor_version
+            )
+        )
 
     try:
         component_registry = Application.get_service("component_registry")

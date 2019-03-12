@@ -97,7 +97,7 @@ class PropertiesTestCase(unittest.TestCase):
         try:
             a.one = c
         except Exception as e:
-            pass  # ok print 'exception caught:', e
+            pass  # ok
         else:
             assert a.one is not c
 

@@ -432,11 +432,10 @@ class NamespaceModel(Gtk.GenericTreeModel):
     # TreeDragDest
 
     def row_drop_possible(self, dest_path, selection_data):
-        print("row_drop_possible", dest_path, selection_data)
         return True
 
     def drag_data_received(self, dest, selection_data):
-        print("drag_data_received", dest, selection_data)
+        pass
 
 
 class NamespaceView(Gtk.TreeView):
@@ -580,7 +579,6 @@ class NamespaceView(Gtk.TreeView):
             p = p if p else ""
             # 'id#stereotype' is being send
             if info == NamespaceView.TARGET_ELEMENT_ID:
-                # print("TARGET_ELEMENT_ID", selection_data.get_target(), 8, "%s#%s" % (element.id, p))
                 selection_data.set(
                     selection_data.get_target(), 8, ("%s#%s" % (element.id, p)).encode()
                 )
@@ -614,10 +612,8 @@ class NamespaceView(Gtk.TreeView):
         """
         Drop the data send by on_drag_data_get().
         """
-        # print('data-received', info, NamespaceView.TARGET_ELEMENT_ID, 'in', context.list_targets())
         self.stop_emission_by_name("drag-data-received")
         if info == NamespaceView.TARGET_ELEMENT_ID:
-            # print('drag_data_received', selection.get_data())
             n, _p = selection.get_data().decode().split("#")
             drop_info = self.get_dest_row_at_pos(x, y)
         else:

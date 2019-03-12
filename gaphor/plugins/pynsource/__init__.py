@@ -227,8 +227,7 @@ class PyNSource(object):
         import os
 
         filesel = Gtk.FileChooserNative(
-            title="Add Source Code",
-            action=Gtk.FileChooserAction.OPEN,
+            title="Add Source Code", action=Gtk.FileChooserAction.OPEN
         )
 
         filesel.set_select_multiple(True)
