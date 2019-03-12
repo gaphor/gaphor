@@ -500,7 +500,7 @@ class CommentItemPropertyPage(object):
     @transactional
     def _on_body_change(self, buffer):
         self.subject.body = buffer.get_text(
-            buffer.get_start_iter(), buffer.get_end_iter()
+            buffer.get_start_iter(), buffer.get_end_iter(), False
         )
 
 
