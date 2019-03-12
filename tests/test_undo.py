@@ -38,6 +38,7 @@ class UndoTest(TestCase):
 
         delete_class()
 
+        # FYI: crashes here, why?
         self.assertTrue(undo_manager.can_undo())
 
         self.assertEqual(ci1, self.get_connected(a.head))
