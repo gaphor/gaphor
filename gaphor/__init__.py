@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""This is Gaphor, a Python+GTK based UML modelling tool.
+"""This is Gaphor, a Python+GTK based UML modeling tool.
 
 This module allows Gaphor to be launched from the command line.
 The main() function sets up the command-line options and arguments and
