@@ -76,7 +76,7 @@ class Alignment(object):
         name="align-left",
         label="Left",
         tooltip="Vertically align diagram elements on the left",
-        accel="<control><shift>l",
+        accel="<Primary><Shift>l",
     )
     @transactional
     def align_left(self):
@@ -92,7 +92,7 @@ class Alignment(object):
         name="align-center",
         label="Center",
         tooltip="Vertically align diagram elements on their centers",
-        accel="<control><shift>c",
+        accel="<Primary><Shift>c",
     )
     @transactional
     def align_center(self):
@@ -110,7 +110,7 @@ class Alignment(object):
         name="align-right",
         label="Right",
         tooltip="Vertically align diagram elements on the right",
-        accel="<control><shift>r",
+        accel="<Primary><Shift>r",
     )
     @transactional
     def align_right(self):
@@ -126,7 +126,7 @@ class Alignment(object):
         name="align-top",
         label="Top",
         tooltip="Horizontally align diagram elements on their tops",
-        accel="<control><shift>t",
+        accel="<Primary><Shift>t",
     )
     @transactional
     def align_top(self):
@@ -142,7 +142,7 @@ class Alignment(object):
         name="align-middle",
         label="Middle",
         tooltip="Horizontally align diagram elements on their middles",
-        accel="<control><shift>m",
+        accel="<Primary><Shift>m",
     )
     @transactional
     def align_middle(self):
@@ -158,7 +158,7 @@ class Alignment(object):
         name="align-bottom",
         label="Bottom",
         tooltip="Horizontally align diagram elements on their bottoms",
-        accel="<control><shift>b",
+        accel="<Primary><Shift>b",
     )
     @transactional
     def align_bottom(self):
