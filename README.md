@@ -64,7 +64,6 @@ that is ready, you can install Gaphor, using pip:
 
 ```bash
 $ pip install --pre gaphor
-$ source ./venv
 $ gaphor
 ```
 
@@ -78,7 +77,6 @@ To setup a development environment with Linux:
 ```bash
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
     gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
-$ pip install poetry
 $ source ./venv
 ```
 
