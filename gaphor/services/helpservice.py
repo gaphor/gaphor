@@ -98,8 +98,8 @@ class HelpService(object):
         add_label(
             "This software is published\n"
             "under the terms of the\n"
-            '<span weight="bold">GNU Library General Public License v2</span>.\n'
-            "See the LICENSE.txt file for details.",
+            '<span weight="bold">Apache Software License v2</span>.\n'
+            "See the LICENSE.md file for details.",
             0,
             8,
         )
