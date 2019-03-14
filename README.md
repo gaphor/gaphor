@@ -89,6 +89,7 @@ To setup a development environment in Windows:
 # pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-python3-setuptools mingw-w64-x86_64-python3-zope.interface
 ```
 Install git if it isn't already installed in msys2 with `pacman -S git`
+
 git clone the repository to C:\msys64\home\<user>
 ```bash
 # cd gaphor
