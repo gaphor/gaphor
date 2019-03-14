@@ -86,18 +86,16 @@ Section "Install"
     IntFmt $0 "0x%08X" $0
     WriteRegDWORD HKLM "${UNINST_KEY}" "EstimatedSize" "$0"
 
-    ; Register a default entry for file extensions
-    ; WriteRegStr HKLM "Software\Classes\${ID}.assoc.ANY\shell\play\command" "" "$\"$INST_BIN$\" --run --play-file $\"%1$\""
-    ; WriteRegStr HKLM "Software\Classes\${ID}.assoc.ANY\DefaultIcon" "" "$\"$INST_BIN$\""
-    ; WriteRegStr HKLM "Software\Classes\${ID}.assoc.ANY\shell\play" "FriendlyAppName" "${NAME}"
+    ; Register a default entry for file extension
+    WriteRegStr HKLM "Software\Classes\${NAME}.ModelFile\open\command" "" "$\"$INST_BIN$\""
+    WriteRegStr HKLM "Software\Classes\${NAME}.ModelFile\DefaultIcon" "" "$\"$INST_BIN$\""
+
+    ; Register supported file extension
+    WriteRegStr HKLM "Software\Classes\.${ID}" ".gaphor" "${NAME}.ModelFile"
 
     ; Add application entry
     WriteRegStr HKLM "Software\${NAME}\${ID}\Capabilities" "ApplicationDescription" "${DESC}"
     WriteRegStr HKLM "Software\${NAME}\${ID}\Capabilities" "ApplicationName" "${NAME}"
-
-    ; Register supported file extensions
-    !define ASSOC_KEY "Software\${NAME}\${ID}\Capabilities\FileAssociations"
-    WriteRegStr HKLM "${ASSOC_KEY}" ".gaphor" "${ID}.assoc.ANY"
 
     ; Register application entry
     WriteRegStr HKLM "Software\RegisteredApplications" "${NAME}" "Software\${NAME}\${ID}\Capabilities"
@@ -170,7 +168,8 @@ Section "Uninstall"
     RMDir "$SMPROGRAMS\${NAME}"
 
     ; Remove application registration and file assocs
-    DeleteRegKey HKLM "Software\Classes\${ID}.assoc.ANY"
+    DeleteRegKey HKLM "Software\Classes\${NAME}.ModelFile"
+    DeleteRegKey HKLM "Software\.${ID}"
     DeleteRegKey HKLM "Software\${NAME}"
     DeleteRegValue HKLM "Software\RegisteredApplications" "${NAME}"
 
