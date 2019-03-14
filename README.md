@@ -53,30 +53,62 @@ graphics library.
 
 ## :floppy_disk: Install
 
-To install Gaphor in Linux use Flatpak:
+To install Gaphor on Windows you the [latest installer](https://github.com/gaphor/gaphor/releases).
+There are two versions:
+1. Full Windows installation
+2. Portable installation
 
+To install Gaphor in Linux use Flatpak:
 1. [Install Flatpak](https://flatpak.org/setup)
 1. `flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
 1. `flatpak install --user org.gaphor.Gaphor`
 
-We are currently working on installation packages for Windows and macOS. Until
-that is ready, you can install Gaphor, using pip:
+We are currently working on installation packages for macOS. Until that is
+ready, you can install Gaphor, using pip:
 
 ```bash
 $ pip install --pre gaphor
 $ gaphor
 ```
-
 Use of a
 [virtual environment](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments)
 is highly recommended.
 
 ### Development
 
+#### Windows
+
+NOTE: Use of virtual environments with msys2 is currently [broken](https://github.com/msys2/MINGW-packages/issues/5001).
+To setup a development environment in Windows:
+1) Go to http://www.msys2.org/ and download the x86_64 installer
+1) Follow the instructions on the page for setting up the basic environment
+1) Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
+```bash
+# pacman -Suy
+# pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-python3-cairo
+# pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-python3-setuptools mingw-w64-x86_64-python3-zope.interface
+```
+Install git if it isn't already installed in msys2 with `pacman -S git`
+git clone the repository to C:\msys64\home\<user>
+```bash
+# cd gaphor
+# pip install -e .
+``` 
+
+#### Linux
 To setup a development environment with Linux:
 ```bash
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
     gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
+$ source ./venv
+```
+
+#### macOS
+To setup a development environment with macOS:
+1. Install [homebrew](https://brew.sh)
+1. Open a terminal and execute:
+```bash
+$ brew install gobject-introspection gtk+3
 $ source ./venv
 ```
 
@@ -92,23 +124,17 @@ Class item instance on the diagram and add a new Class to the model (it shows
 up in the Navigation). The selected tool will reset itself to
 the Pointer tool if the option ''Diagram -> Reset tool'' is selected.
 
-.. image:: oneclass.png
-
-It's simple to add elements to a diagram. 
-
 Some elements are not directly visible. The section in the toolbox is collapsed
 and needs to be clicked first to reveal its contents.
 
 Gaphor only has one diagram type, and it does not enforce which elements should
 be placed on a diagram.
 
-### Create New Diagram
+### Create a New Diagram
 
-.. image:: navpopup.png
-
-To create a new diagram, use the Navigation. Select an element that can contain
-a diagram (a Package or Profile) and right-click. Select `New diagram`
-and a new diagram is created.
+1. Use the Navigation to select an element that can contain a diagram (a
+Package or Profile)
+1. Select Diagram, and New diagram. A new diagram is created.
 
 ### Copy and Paste
 
@@ -126,9 +152,6 @@ Class show up in the Navigation but can not be added to a diagram.
 
 Elements can also be dragged within the Navigation in order to rearrange them
 in to different packages.
-
-
-## :mag: API
 
 
 ## :heart: Contributing
