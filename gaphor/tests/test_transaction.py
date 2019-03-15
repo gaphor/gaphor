@@ -141,11 +141,10 @@ class TransactionTestCase(TestCase):
         tx2 = Transaction()
 
         try:
-            tx1.commit()
-        except TransactionError as e:
-            pass
-        else:
-            self.fail("Commit should not have succeeded")
+            self.assertRaises(TransactionError, tx1.commit)
+        finally:
+            tx2.rollback()
+            tx1.rollback()
 
     def test_transaction_context(self):
         """Test the transaction context manager."""

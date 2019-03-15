@@ -23,27 +23,16 @@ class FileDialog(object):
         the file dialog is set to be transient for that window.  The multiple
         parameter should be set to true if multiple files can be opened at once.
         This means that a list of filenames instead of a single filename string
-        will be returned by the selection property.  The filters is a list
-        of dictionaries that have a name and pattern key.  This restricts what
-        is visible in the dialog."""
+        will be returned by the selection property."""
 
         self.multiple = multiple
 
         if action == "open":
             action = Gtk.FileChooserAction.OPEN
-            response_button = Gtk.STOCK_OPEN
         else:
             action = Gtk.FileChooserAction.SAVE
-            response_button = Gtk.STOCK_SAVE
 
-        buttons = (
-            Gtk.STOCK_CANCEL,
-            Gtk.ResponseType.CANCEL,
-            response_button,
-            Gtk.ResponseType.OK,
-        )
-
-        self.dialog = Gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
+        self.dialog = Gtk.FileChooserNative(title=title, action=action)
 
         if parent:
             self.dialog.set_transient_for(parent)
@@ -51,19 +40,13 @@ class FileDialog(object):
         if filename:
             self.dialog.set_current_name(filename)
 
-        for filter in filters:
-            _filter = Gtk.FileFilter()
-            _filter.set_name(filter["name"])
-            _filter.add_pattern(filter["pattern"])
-            self.dialog.add_filter(_filter)
-
     def get_selection(self):
         """Return the selected file or files from the dialog.  This is used
         by the selection property."""
 
         response = self.dialog.run()
 
-        if response == Gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.ACCEPT:
             if self.multiple:
                 selection = self.dialog.get_filenames()
             else:

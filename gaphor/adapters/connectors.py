@@ -33,7 +33,6 @@ class AbstractConnect(object):
     The following methods are required to make this work:
 
     - `allow()`: is the connection allowed at all (during mouse movement for example).
-      
     - `connect()`: Establish a connection between element and line. Also takes care of
       disconnects, if required (e.g. 1:1 relationships)
     - `disconnect()`: Break connection, called when dropping a handle on a
@@ -98,16 +97,10 @@ class AbstractConnect(object):
         Connect to an element. Note that at this point the line may
         be connected to some other, or the same element.
         Also the connection at UML level still exists.
-        
+
         Returns `True` if a connection is established.
         """
         return True
-
-    #    def reconnect(self, handle, port):
-    #        """
-    #        UML model reconnection method.
-    #        """
-    #        raise NotImplementedError('Reconnection not implemented')
 
     def disconnect(self, handle):
         """Disconnect UML model level connections."""
@@ -197,7 +190,6 @@ class CommentLineElementConnect(AbstractConnect):
 component.provideAdapter(CommentLineElementConnect)
 
 
-@component.adapter(items.DiagramLine, items.CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
     """Connect a comment line to any diagram line."""
 
@@ -227,8 +219,6 @@ class CommentLineLineConnect(AbstractConnect):
         ):
             return None
 
-        print("Connecting", element, "with", element.subject)
-
         # One end should be connected to a CommentItem:
         cls = items.CommentItem
         glue_ok = isinstance(connected_to, cls) ^ isinstance(self.element, cls)
@@ -252,14 +242,34 @@ class CommentLineLineConnect(AbstractConnect):
         opposite = self.line.opposite(handle)
         c2 = self.get_connected(opposite)
         if c1 and c2:
-            if isinstance(c1.subject, UML.Comment):
+            if (
+                isinstance(c1.subject, UML.Comment)
+                and c2.subject in c1.subject.annotatedElement
+            ):
                 del c1.subject.annotatedElement[c2.subject]
-            elif c2.subject:
+            elif c2.subject and c1.subject in c2.subject.annotatedElement:
                 del c2.subject.annotatedElement[c1.subject]
         super(CommentLineLineConnect, self).disconnect(handle)
 
 
-component.provideAdapter(CommentLineLineConnect)
+component.provideAdapter(
+    CommentLineLineConnect, adapts=(items.DiagramLine, items.CommentLineItem)
+)
+
+
+class InverseCommentLineLineConnect(CommentLineLineConnect):
+    """
+    In case a line is disconnected that contains a comment-line,
+    the comment line unlinking should happen in a correct way.
+    """
+
+    def __init__(self, line, element):
+        super().__init__(element, line)
+
+
+component.provideAdapter(
+    InverseCommentLineLineConnect, adapts=(items.CommentLineItem, items.DiagramLine)
+)
 
 
 class UnaryRelationshipConnect(AbstractConnect):
@@ -369,8 +379,12 @@ class UnaryRelationshipConnect(AbstractConnect):
         # First make sure coordinates match
         solver.solve()
         for cinfo in connections or canvas.get_connections(connected=line):
+            if line is cinfo.connected:
+                continue
             adapter = component.queryMultiAdapter((line, cinfo.connected), IConnect)
-            assert adapter
+            assert adapter, "No element to connect {} and {}".format(
+                line, cinfo.connected
+            )
             adapter.connect(cinfo.handle, cinfo.port)
 
     def disconnect_connected_items(self):
@@ -440,13 +454,8 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         if hct and oct:
             # Both sides of line are connected => disconnect
-            old = line.subject
-
             connections = self.disconnect_connected_items()
-
             self.disconnect_subject(handle)
-            if old:
-                self.connect_connected_items(connections)
 
         super(UnaryRelationshipConnect, self).disconnect(handle)
 

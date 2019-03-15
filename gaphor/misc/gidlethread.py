@@ -44,8 +44,9 @@ class GIdleThread(object):
     >>> t = GIdleThread(counter(123))
     >>> id = t.start()
     >>> main = GLib.main_context_default()
-    >>> while t.is_alive():
-    ...     main.iteration(False) # doctest: +ELLIPSIS
+    >>> t.is_alive()
+    True
+    >>> main.iteration(False) # doctest: +ELLIPSIS
     True
 
     """

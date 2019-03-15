@@ -174,16 +174,13 @@ class CommentLineTestCase(TestCase):
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, gen)
 
-        self.assertTrue(gen.subject in comment.subject.annotatedElement)
-        self.assertTrue(comment.subject in gen.subject.ownedComment)
-
-        # FixMe: This should invoke the disconnect handler of the line's
-        #  handles.
+        assert gen.subject in comment.subject.annotatedElement
+        assert comment.subject in gen.subject.ownedComment
 
         gen.unlink()
 
-        self.assertFalse(comment.subject.annotatedElement)
-        self.assertTrue(gen.subject is None)
+        assert not comment.subject.annotatedElement
+        assert gen.subject is None
 
     def test_commentline_linked_to_same_element_twice(self):
         """

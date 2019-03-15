@@ -47,6 +47,8 @@ class ActionStack(object):
     typically undo actions performed by the user.
     """
 
+    logger = getLogger("UndoManager.ActionStack")
+
     def __init__(self):
         self._actions = []
 
@@ -63,7 +65,9 @@ class ActionStack(object):
             try:
                 action()
             except Exception as e:
-                log.error("Error while undoing action %s" % action, exc_info=True)
+                self.logger.error(
+                    "Error while undoing action %s" % action, exc_info=True
+                )
 
 
 @implementer(IServiceEvent)
@@ -81,7 +85,7 @@ class UndoManager(object):
     """
     Simple transaction manager for Gaphor.
     This transaction manager supports nested transactions.
-    
+
     The Undo manager sports an undo and a redo stack. Each stack contains
     a set of actions that can be executed, just by calling them (e.i action())
     If something is returned by an action, that is considered the callable
@@ -224,7 +228,7 @@ class UndoManager(object):
         self.component_registry.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
-    @action(name="edit-undo", stock_id="gtk-undo", accel="<Control>z")
+    @action(name="edit-undo", stock_id="gtk-undo", accel="<Primary>z")
     def undo_transaction(self):
         if not self._undo_stack:
             return
@@ -255,7 +259,7 @@ class UndoManager(object):
         self.component_registry.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
-    @action(name="edit-redo", stock_id="gtk-redo", accel="<Control>y")
+    @action(name="edit-redo", stock_id="gtk-redo", accel="<Primary>y")
     def redo_transaction(self):
         if not self._redo_stack:
             return

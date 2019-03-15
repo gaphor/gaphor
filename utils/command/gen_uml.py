@@ -143,7 +143,6 @@ class Writer(object):
                 % (a.class_name, a.name)
             )
 
-        # print a.class_name, a.name, 'type is', type
         if type.lower() == "boolean":
             type = "int"
         elif type.lower() in ("integer", "unlimitednatural"):
@@ -333,7 +332,6 @@ def parse_association_tags(appliedStereotypes):
                 # remove all whitespaces and stuff
                 redefines = value.replace(" ", "").replace("\n", "").replace("\r", "")
 
-    # print 'found', subsets, redefines
     return subsets, redefines
 
 
@@ -363,7 +361,6 @@ def parse_association_end(head, tail):
             % (head.id, head.class_name, head.name)
         )
 
-    # print head.id, head.lowerValue
     upper = head.upperValue or "*"
     lower = head.lowerValue or upper
     if lower == "*":
@@ -492,7 +489,6 @@ def generate(filename, outfile=None, overridesfile=None):
             instSpec = all_elements[c.appliedStereotype[0]]
             sType = all_elements[instSpec.classifier[0]]
             c.stereotypeName = sType.name
-            # print "  class '%s' has been stereotyped as '%s'" % (c.name, c.stereotypeName)
             writer.write(
                 "# class '%s' has been stereotyped as '%s'\n"
                 % (c.name, c.stereotypeName)
@@ -501,7 +497,6 @@ def generate(filename, outfile=None, overridesfile=None):
             def tag_children(me):
                 for child in me.specialization:
                     child.stereotypeName = sType.name
-                    # print "  class '%s' has been stereotyped as '%s' too" % (child.name, child.stereotypeName)
                     writer.write(
                         "# class '%s' has been stereotyped as '%s' too\n"
                         % (child.name, child.stereotypeName)

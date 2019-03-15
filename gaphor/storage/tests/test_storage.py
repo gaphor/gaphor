@@ -140,7 +140,6 @@ class StorageTestCase(TestCase):
             assert item.subject, "No subject for %s" % item
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
-        # print d1, d1.subject
 
     def test_load_with_whitespace_name(self):
         difficult_name = "    with space before and after  "
@@ -161,7 +160,6 @@ class StorageTestCase(TestCase):
         path = os.path.join(dist.location, "gaphor/UML/uml2.gaphor")
 
         with io.open(path) as ifile:
-
             storage.load(ifile, factory=self.element_factory)
 
     def test_load_uml_relationships(self):
@@ -203,7 +201,6 @@ class StorageTestCase(TestCase):
         assert list(map(float, aa.handles()[1].pos)) == [40, 40], aa.handles()[1].pos
         d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
         assert d1
-        # print d1, d1.subject
 
     def test_connection(self):
         """
@@ -265,7 +262,6 @@ class StorageTestCase(TestCase):
         path = os.path.join(dist.location, "test-diagrams/simple-items.gaphor")
 
         with io.open(path, "r") as ifile:
-
             storage.load(ifile, factory=self.element_factory)
 
         pf = PseudoFile()
@@ -289,195 +285,15 @@ class StorageTestCase(TestCase):
         self.maxDiff = None
         self.assertEqual(copy, orig, "Saved model does not match copy")
 
+    def test_loading_an_old_version(self):
 
-class FileUpgradeTestCase(TestCase):
-    def test_association_upgrade(self):
-        """Test association navigability upgrade in Gaphor 0.15.0
-        """
+        """Test loading and saving models"""
 
         dist = pkg_resources.get_distribution("gaphor")
-        path = os.path.join(dist.location, "test-diagrams/associations-pre015.gaphor")
+        path = os.path.join(dist.location, "test-diagrams/old-gaphor-version.gaphor")
 
-        with io.open(path) as ifile:
+        def load_old_model():
+            with io.open(path, "r") as ifile:
+                storage.load(ifile, factory=self.element_factory)
 
-            storage.load(ifile, factory=self.element_factory)
-
-        diagrams = list(self.kindof(UML.Diagram))
-        self.assertEqual(1, len(diagrams))
-        diagram = diagrams[0]
-        assocs = diagram.canvas.select(lambda e: isinstance(e, items.AssociationItem))
-        assert len(assocs) == 8
-        a1, a2 = [a for a in assocs if a.subject.name == "nav"]
-
-        self.assertTrue(a1.head_end.subject.navigability)
-        self.assertTrue(a1.tail_end.subject.navigability)
-        self.assertTrue(a2.head_end.subject.navigability)
-        self.assertTrue(a2.tail_end.subject.navigability)
-
-        self.assertTrue(len(a1.head_end.subject.type.ownedAttribute) == 1)
-        self.assertTrue(
-            len(a1.tail_end.subject.type.ownedAttribute) == 2
-        )  # association end and an attribute
-
-        # use cases and actors - no owned attributes as navigability is realized
-        # by association's navigable owned ends
-        self.assertTrue(len(a2.head_end.subject.type.ownedAttribute) == 0)
-        self.assertTrue(len(a2.tail_end.subject.type.ownedAttribute) == 0)
-
-        a1, a2 = [a for a in assocs if a.subject.name == "nonnav"]
-        self.assertTrue(a1.head_end.subject.navigability is False)
-        self.assertTrue(a1.tail_end.subject.navigability is False)
-        self.assertTrue(a2.head_end.subject.navigability is False)
-        self.assertTrue(a2.tail_end.subject.navigability is False)
-
-        a1, a2 = [a for a in assocs if a.subject.name == "unk"]
-        self.assertTrue(a1.head_end.subject.navigability is None)
-        self.assertTrue(a1.tail_end.subject.navigability is None)
-        self.assertTrue(a2.head_end.subject.navigability is None)
-        self.assertTrue(a2.tail_end.subject.navigability is None)
-
-        a, = [a for a in assocs if a.subject.name == "sided"]
-        assert a.head_end.subject.name == "cs"
-        assert a.tail_end.subject.name == "int"
-        self.assertTrue(a.head_end.subject.navigability is False)
-        self.assertTrue(a.tail_end.subject.navigability is True)
-
-        a, = [a for a in assocs if a.subject.name == "sided2"]
-        assert a.head_end.subject.name == "cs"
-        assert a.tail_end.subject.name == "int"
-        self.assertTrue(a.head_end.subject.navigability is None)
-        self.assertTrue(a.tail_end.subject.navigability is True)
-
-    def test_tagged_values_upgrade(self):
-        """Test tagged values upgrade in Gaphor 0.15.0
-        """
-
-        dist = pkg_resources.get_distribution("gaphor")
-        path = os.path.join(dist.location, "test-diagrams/taggedvalues-pre015.gaphor")
-
-        with io.open(path) as ifile:
-
-            storage.load(ifile, factory=self.element_factory)
-
-        diagrams = list(self.kindof(UML.Diagram))
-        self.assertEqual(1, len(diagrams))
-        diagram = diagrams[0]
-        classes = diagram.canvas.select(lambda e: isinstance(e, items.ClassItem))
-        profiles = self.element_factory.lselect(lambda e: isinstance(e, UML.Profile))
-        stereotypes = self.element_factory.lselect(
-            lambda e: isinstance(e, UML.Stereotype)
-        )
-
-        self.assertEqual(2, len(classes))
-        c1, c2 = classes
-
-        self.assertEqual(1, len(profiles))
-        profile = profiles[0]
-        self.assertEqual("version 0.15 conversion", profile.name)
-
-        # TODO: This test is failing when run with all nosetests, do we need some type of teardown prior to the test?
-
-        self.assertEqual(1, len(stereotypes))
-        stereotype = stereotypes[0]
-        self.assertEqual("Tagged", stereotype.name)
-        self.assertEqual(profile, stereotype.namespace)
-        self.assertEqual("c1", c1.subject.name)
-        self.assertEqual("c2", c2.subject.name)
-        self.assertEqual(stereotype, c1.subject.appliedStereotype[0].classifier[0])
-        self.assertEqual(stereotype, c2.subject.appliedStereotype[0].classifier[0])
-        self.assertEqual(
-            "t1", c1.subject.appliedStereotype[0].slot[0].definingFeature.name
-        )
-        self.assertEqual(
-            "t2", c1.subject.appliedStereotype[0].slot[1].definingFeature.name
-        )
-        self.assertEqual(
-            "t5", c2.subject.appliedStereotype[0].slot[0].definingFeature.name
-        )
-        self.assertEqual(
-            "t6", c2.subject.appliedStereotype[0].slot[1].definingFeature.name
-        )
-        self.assertEqual(
-            "t7", c2.subject.appliedStereotype[0].slot[2].definingFeature.name
-        )
-
-    def test_lifeline_messages_upgrade(self):
-        """Test message occurrence specification upgrade in Gaphor 0.15.0
-        """
-
-        dist = pkg_resources.get_distribution("gaphor")
-        path = os.path.join(dist.location, "test-diagrams/lifelines-pre015.gaphor")
-
-        with io.open(path) as ifile:
-
-            storage.load(ifile, factory=self.element_factory)
-
-        diagrams = list(self.kindof(UML.Diagram))
-        self.assertEqual(1, len(diagrams))
-        diagram = diagrams[0]
-
-        lifelines = diagram.canvas.select(lambda e: isinstance(e, items.LifelineItem))
-        occurrences = self.kindof(UML.MessageOccurrenceSpecification)
-        messages = self.kindof(UML.Message)
-
-        self.assertEqual(2, len(lifelines))
-        self.assertEqual(12, len(messages))
-        # 2 * 12 but there are 4 lost/found messages
-        self.assertEqual(20, len(set(occurrences)))
-
-        l1, l2 = lifelines
-        if l1.subject.name == "a2":
-            l1, l2 = l2, l1
-
-        def find(name):
-            return next((m for m in messages if m.name == name))
-
-        m1 = find("call()")
-        m2 = find("callx()")
-        m3 = find("cally()")
-        # inverted messages
-        m4 = find("calla()")
-        m5 = find("callb()")
-
-        self.assertTrue(m1.sendEvent.covered is l1.subject)
-        self.assertTrue(m2.sendEvent.covered is l1.subject)
-        self.assertTrue(m3.sendEvent.covered is l1.subject)
-
-        self.assertTrue(m1.receiveEvent.covered is l2.subject)
-        self.assertTrue(m2.receiveEvent.covered is l2.subject)
-        self.assertTrue(m3.receiveEvent.covered is l2.subject)
-
-        # test inverted messages
-        self.assertTrue(m4.sendEvent.covered is l2.subject)
-        self.assertTrue(m5.sendEvent.covered is l2.subject)
-
-        self.assertTrue(m4.receiveEvent.covered is l1.subject)
-        self.assertTrue(m5.receiveEvent.covered is l1.subject)
-
-        m = find("simple()")
-        self.assertTrue(m.sendEvent.covered is l1.subject)
-        self.assertTrue(m.receiveEvent.covered is l2.subject)
-
-        m = find("found1()")
-        self.assertTrue(m.sendEvent is None)
-        self.assertTrue(m.receiveEvent.covered is l1.subject)
-
-        m = find("found2()")
-        self.assertTrue(m.sendEvent is None)
-        self.assertTrue(m.receiveEvent.covered is l1.subject)
-
-        m = find("rfound1()")
-        self.assertTrue(m.sendEvent.covered is l1.subject)
-        self.assertTrue(m.receiveEvent is None)
-
-        m = find("lost1()")
-        self.assertTrue(m.sendEvent.covered is l1.subject)
-        self.assertTrue(m.receiveEvent is None)
-
-        m = find("lost2()")
-        self.assertTrue(m.sendEvent.covered is l1.subject)
-        self.assertTrue(m.receiveEvent is None)
-
-        m = find("rlost1()")
-        self.assertTrue(m.sendEvent is None)
-        self.assertTrue(m.receiveEvent.covered is l1.subject)
+        self.assertRaises(ValueError, load_old_model)
