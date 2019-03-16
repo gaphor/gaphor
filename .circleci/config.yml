@@ -36,7 +36,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            xvfb-run pytest
+            xvfb-run poetry run pytest
 
       - store_artifacts:
           path: test-reports
