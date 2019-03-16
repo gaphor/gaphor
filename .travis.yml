@@ -1,5 +1,4 @@
 language: python
-dist: xenial
 cache: pip
 python: 3.7.2
 
@@ -10,14 +9,41 @@ stages:
 jobs:
   include:
     - os: linux
-      dist: trusty
+      dist: xenial
       env: PYTEST_ADDOPTS="--doctest-modules"
       sudo: true
+      before_install:
+        - sudo apt-get update -q
+        - sudo apt-get install --no-install-recommends -y xvfb python3-dev python3-gi python3-gi-cairo
+        gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
+      before_deploy:
+        - poetry config http-basic.pypi $PYPI_USER $PYPI_PASSWORD
+        - poetry build
+      deploy:
+        provider: script
+        script: poetry publish
+        on:
+          tags: true
 
     - os: osx
       env: PYTEST_ADDOPTS="--doctest-modules"
+      before_install:
+        - brew update
+        - brew install gobject-introspection gtk+3
+      before_deploy:
+        - python setup.py macos -b
+      deploy:
+        - provider: releases
+          api_key:
+            secure: YOUR_API_KEY_ENCRYPTED
+          file: "macOS/Gaphor.dmg"
+          skip_cleanup: true
+          on:
+            tags: true
 
     - stage: lint
+      os: linux
+      dist: xenial
       python: 3.7.2
       before_install: skip
       install:
@@ -26,16 +52,9 @@ jobs:
       script:
         - pre-commit run --all-files
       after_success: skip
+      before_deploy: skip
+      deploy: skip
 
-before_install:
-  if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
-    - brew update
-    - brew install gobject-introspection gtk+3
-  else
-    - sudo apt-get update -q
-    - sudo apt-get install --no-install-recommends -y xvfb python3-dev python3-gi python3-gi-cairo
-    gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
-  fi
 install:
   - pip --disable-pip-version-check install poetry
   - poetry install
@@ -43,6 +62,7 @@ script:
   - xvfb-run pytest
 after_success:
   - coveralls
+
 
 notifications:
   email: false
