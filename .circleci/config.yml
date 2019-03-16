@@ -27,18 +27,15 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
             pip --disable-pip-version-check install poetry
             poetry install
       - save_cache:
           paths:
-            - ./venv
+            - ~/.cache/pypoetry
           key: v1-dependencies-{{ checksum "poetry.lock" }}
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
             xvfb-run pytest
 
       - store_artifacts:
