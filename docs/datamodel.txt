@@ -44,17 +44,17 @@ name ``name``. If no value is assigned before the value is requested, it
 returns and empty string ''::
 
   m = Class()
-  print m.name               # Returns ''
+  print(m.name)              # Returns ''
   m.name = 'MyName'
-  print m.name	             # Returns 'MyName'
+  print(m.name)	             # Returns 'MyName'
    
   m = Element()
   c = Comment()
-  print m.comment              # Returns an empty list '[]'
-  print c.annotatedElement     # Returns an empty list '[]'
+  print(m.comment)             # Returns an empty list '[]'
+  print(c.annotatedElement)    # Returns an empty list '[]'
   m.comment = c                # Add 'c' to 'm.comment' and add 'm' to 'c.annotatedElement'
-  print m.comment              # Returns a list '[c]'
-  print c.annotatedElement     # Returns a list '[m]'
+  print(m.comment)             # Returns a list '[c]'
+  print(c.annotatedElement)    # Returns a list '[m]'
 
 All this wisdom is defined in the data-models base class: ``Element``. 
 The datamodel itself code is generated. 

@@ -80,11 +80,9 @@ class EditableTreeModel(Gtk.ListStore):
 
     def refresh(self, obj):
         for row in self:
-            # print 'refresh for', obj
             if row[-1] is obj:
                 self._set_object_value(row, len(row) - 1, obj)
                 self.row_changed(row.path, row.iter)
-                # print 'found!'
                 return
 
     def _get_rows(self):
@@ -500,7 +498,7 @@ class CommentItemPropertyPage(object):
     @transactional
     def _on_body_change(self, buffer):
         self.subject.body = buffer.get_text(
-            buffer.get_start_iter(), buffer.get_end_iter()
+            buffer.get_start_iter(), buffer.get_end_iter(), False
         )
 
 
@@ -1275,7 +1273,6 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_join_spec_change(self, entry):
         value = entry.get_text().strip()
-        print("new joinspec", value)
         self.subject.joinSpec = value
 
     def _on_horizontal_change(self, button):

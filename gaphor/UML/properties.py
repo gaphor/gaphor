@@ -302,7 +302,6 @@ class association(umlproperty):
         return s + ">"
 
     def _get(self, obj):
-        # print '_get', self, obj
         # TODO: Handle lower and add items if lower > 0
         try:
             return getattr(obj, self._name)
@@ -323,7 +322,6 @@ class association(umlproperty):
 
         This method is called from the opposite association property.
         """
-        # print '__set__', self, obj, value, self._get(obj)
         if not (isinstance(value, self.type) or (value is None and self.upper == 1)):
             raise AttributeError("Value should be of type %s" % self.type.__name__)
         # Remove old value only for uni-directional associations
@@ -379,9 +377,8 @@ class association(umlproperty):
         """
         Delete is used for element deletion and for removal of
         elements from a list.
-        """
-        # print '__delete__', self, obj, value
 
+        """
         if not value:
             if self.upper != "*" and self.upper > 1:
                 raise Exception("Can not delete collections")

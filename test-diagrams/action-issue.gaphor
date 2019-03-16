@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.15.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.0.0">
 <Package id="902f3c16-0445-11df-a840-00123f877750">
 <name>
-<val><![CDATA[New model]]></val>
+<val>New model</val>
 </name>
 <ownedDiagram>
 <reflist>
@@ -12,13 +12,13 @@
 </Package>
 <Diagram id="902f8a0e-0445-11df-a840-00123f877750">
 <name>
-<val><![CDATA[main]]></val>
+<val>main</val>
 </name>
 <package>
 <ref refid="902f3c16-0445-11df-a840-00123f877750"/>
 </package>
 <canvas>
-<item type="PartitionItem" id="91e88300-0445-11df-a840-00123f877750">
+<item id="91e88300-0445-11df-a840-00123f877750" type="PartitionItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 180.0, 386.0)</val>
 </matrix>
@@ -31,7 +31,7 @@
 <show_stereotypes_attrs>
 <val>0</val>
 </show_stereotypes_attrs>
-<item type="PartitionItem" id="937b5864-0445-11df-a840-00123f877750">
+<item id="937b5864-0445-11df-a840-00123f877750" type="PartitionItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 0.0, 30.0)</val>
 </matrix>
@@ -39,7 +39,7 @@
 <val>170.0</val>
 </width>
 <height>
-<val>300.0</val>
+<val>270.0</val>
 </height>
 <subject>
 <ref refid="937c5b9c-0445-11df-a840-00123f877750"/>
@@ -47,12 +47,12 @@
 <show_stereotypes_attrs>
 <val>0</val>
 </show_stereotypes_attrs>
-<item type="ActionItem" id="975fa78c-0445-11df-a840-00123f877750">
+<item id="975fa78c-0445-11df-a840-00123f877750" type="ActionItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 50.0, 53.0)</val>
 </matrix>
 <width>
-<val>75.0</val>
+<val>84.0</val>
 </width>
 <height>
 <val>30.0</val>
@@ -64,12 +64,12 @@
 <val>0</val>
 </show_stereotypes_attrs>
 </item>
-<item type="ActionItem" id="a0d69618-0445-11df-a840-00123f877750">
+<item id="a0d69618-0445-11df-a840-00123f877750" type="ActionItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 82.0, 206.0)</val>
 </matrix>
 <width>
-<val>75.0</val>
+<val>84.0</val>
 </width>
 <height>
 <val>30.0</val>
@@ -82,7 +82,7 @@
 </show_stereotypes_attrs>
 </item>
 </item>
-<item type="PartitionItem" id="95a453c0-0445-11df-a840-00123f877750">
+<item id="95a453c0-0445-11df-a840-00123f877750" type="PartitionItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 170.0, 30.0)</val>
 </matrix>
@@ -98,12 +98,12 @@
 <show_stereotypes_attrs>
 <val>0</val>
 </show_stereotypes_attrs>
-<item type="ActionItem" id="9f12f312-0445-11df-a840-00123f877750">
+<item id="9f12f312-0445-11df-a840-00123f877750" type="ActionItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 141.0, 156.0)</val>
 </matrix>
 <width>
-<val>75.0</val>
+<val>84.0</val>
 </width>
 <height>
 <val>30.0</val>
@@ -117,7 +117,7 @@
 </item>
 </item>
 </item>
-<item type="FlowItem" id="a2dafe9a-0445-11df-a840-00123f877750">
+<item id="a2dafe9a-0445-11df-a840-00123f877750" type="FlowItem">
 <subject>
 <ref refid="a35cf0c6-0445-11df-a840-00123f877750"/>
 </subject>
@@ -125,7 +125,7 @@
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 269.0, 499.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 273.68, 499.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -134,7 +134,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (20.0, 123.0)]</val>
+<val>[(0.0, 0.0), (18.560000000000002, 123.0)]</val>
 </points>
 <head-connection>
 <ref refid="975fa78c-0445-11df-a840-00123f877750"/>
@@ -143,7 +143,7 @@
 <ref refid="a0d69618-0445-11df-a840-00123f877750"/>
 </tail-connection>
 </item>
-<item type="FlowItem" id="a4bc0452-0445-11df-a840-00123f877750">
+<item id="a4bc0452-0445-11df-a840-00123f877750" type="FlowItem">
 <subject>
 <ref refid="a564d398-0445-11df-a840-00123f877750"/>
 </subject>
@@ -151,7 +151,7 @@
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 305.0, 482.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 314.0, 482.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -160,7 +160,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (186.0, 93.0)]</val>
+<val>[(0.0, 0.0), (177.0, 93.0)]</val>
 </points>
 <head-connection>
 <ref refid="975fa78c-0445-11df-a840-00123f877750"/>
@@ -169,7 +169,7 @@
 <ref refid="9f12f312-0445-11df-a840-00123f877750"/>
 </tail-connection>
 </item>
-<item type="FlowItem" id="a6f9d91a-0445-11df-a840-00123f877750">
+<item id="a6f9d91a-0445-11df-a840-00123f877750" type="FlowItem">
 <subject>
 <ref refid="a78ec1f6-0445-11df-a840-00123f877750"/>
 </subject>
@@ -186,7 +186,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-154.0, 44.0)]</val>
+<val>[(0.0, 0.0), (-145.0, 44.0)]</val>
 </points>
 <head-connection>
 <ref refid="9f12f312-0445-11df-a840-00123f877750"/>
@@ -199,7 +199,7 @@
 </Diagram>
 <ActivityPartition id="937c5b9c-0445-11df-a840-00123f877750">
 <name>
-<val><![CDATA[Swimlane]]></val>
+<val>Swimlane</val>
 </name>
 <node>
 <reflist>
@@ -215,7 +215,7 @@
 </ActivityPartition>
 <ActivityPartition id="95a559dc-0445-11df-a840-00123f877750">
 <name>
-<val><![CDATA[Swimlane]]></val>
+<val>Swimlane</val>
 </name>
 <node>
 <reflist>
@@ -235,7 +235,7 @@
 </reflist>
 </inPartition>
 <name>
-<val><![CDATA[NewAction]]></val>
+<val>NewAction</val>
 </name>
 <outgoing>
 <reflist>
@@ -261,7 +261,7 @@
 </reflist>
 </incoming>
 <name>
-<val><![CDATA[NewAction]]></val>
+<val>NewAction</val>
 </name>
 <outgoing>
 <reflist>
@@ -287,7 +287,7 @@
 </reflist>
 </incoming>
 <name>
-<val><![CDATA[NewAction]]></val>
+<val>NewAction</val>
 </name>
 <presentation>
 <reflist>
@@ -296,9 +296,6 @@
 </presentation>
 </Action>
 <ControlFlow id="a35cf0c6-0445-11df-a840-00123f877750">
-<guard>
-<ref refid="a35d42d8-0445-11df-a840-00123f877750"/>
-</guard>
 <presentation>
 <reflist>
 <ref refid="a2dafe9a-0445-11df-a840-00123f877750"/>
@@ -311,11 +308,7 @@
 <ref refid="a0d680e2-0445-11df-a840-00123f877750"/>
 </target>
 </ControlFlow>
-<LiteralSpecification id="a35d42d8-0445-11df-a840-00123f877750"/>
 <ControlFlow id="a564d398-0445-11df-a840-00123f877750">
-<guard>
-<ref refid="a5652370-0445-11df-a840-00123f877750"/>
-</guard>
 <presentation>
 <reflist>
 <ref refid="a4bc0452-0445-11df-a840-00123f877750"/>
@@ -328,11 +321,7 @@
 <ref refid="9f12dac6-0445-11df-a840-00123f877750"/>
 </target>
 </ControlFlow>
-<LiteralSpecification id="a5652370-0445-11df-a840-00123f877750"/>
 <ControlFlow id="a78ec1f6-0445-11df-a840-00123f877750">
-<guard>
-<ref refid="a78f16ba-0445-11df-a840-00123f877750"/>
-</guard>
 <presentation>
 <reflist>
 <ref refid="a6f9d91a-0445-11df-a840-00123f877750"/>
@@ -345,5 +334,4 @@
 <ref refid="a0d680e2-0445-11df-a840-00123f877750"/>
 </target>
 </ControlFlow>
-<LiteralSpecification id="a78f16ba-0445-11df-a840-00123f877750"/>
 </gaphor>

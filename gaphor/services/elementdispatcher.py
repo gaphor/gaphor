@@ -139,23 +139,6 @@ class ElementDispatcher(object):
         """
         Given a start element and a path, return a tuple of UML properties
         (association, attribute, etc.) representing the path.
-
-        >>> from gaphor import UML
-        >>> dispatcher = ElementDispatcher()
-        >>> sorted(map(str, dispatcher._path_to_properties(UML.Class(),
-        ...         'ownedOperation.parameter.name'))) # doctest: +NORMALIZE_WHITESPACE
-        ['<association ownedOperation: Operation[0..*] <>-> class_>',
-        "<attribute name: <type 'str'>[0..1] = None>",
-        "<derived parameter:
-            '<association formalParameter: Parameter[0..*] <>-> ownerFormalParam>',
-            '<association returnResult: Parameter[0..*] <>-> ownerReturnParam>'>"]
-
-        Should also work for elements that use subtypes of a certain class:
-
-        >>> sorted(map(str, dispatcher._path_to_properties(UML.Transition(),
-        ...         'guard.specification'))) # doctest: +NORMALIZE_WHITESPACE
-        ['<association guard: Constraint[0..1]>',
-         "<attribute specification: <type 'str'>[0..1] = None>"]
         """
         c = type(element)
         tpath = []

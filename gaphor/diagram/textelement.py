@@ -468,7 +468,7 @@ class TextElement(object):
                 cr.move_to(x, y)
                 layout = PangoCairo.create_layout(cr)
                 layout.set_font_description(Pango.FontDescription(self._style.font))
-                layout.set_text(text=self.text, length=len(self.text))
+                layout.set_text(text=self.text, length=-1)
                 PangoCairo.show_layout(cr, layout)
             if self.editable and (context.hovered or context.focused):
                 cr.set_source_rgb(0.6, 0.6, 0.6)

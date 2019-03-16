@@ -1,7 +1,7 @@
 """
 Adapters
 """
-
+import logging
 from zope import component
 
 from simplegeneric import generic
@@ -12,6 +12,8 @@ from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IEditor
 from gaphor.misc.rattr import rgetattr, rsetattr
+
+log = logging.getLogger(__name__)
 
 
 @generic
