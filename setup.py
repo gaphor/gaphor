@@ -140,7 +140,7 @@ setup(
     options={
         "app": {"formal_name": "Gaphor", "bundle": "org.gaphor"},
         # Desktop/laptop deployments
-        "macos": {"app_requires": [], "icon": "gaphor/ui/pixmaps/gaphor-256x256.png"},
+        "macos": {"app_requires": [], "icon": "package/icons/gaphor"},
         "linux": {"app_requires": []},
         "windows": {"app_requires": []},
         # Mobile deployments
