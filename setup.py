@@ -141,8 +141,8 @@ setup(
         "app": {"formal_name": "Gaphor", "bundle": "org.gaphor"},
         # Desktop/laptop deployments
         "macos": {"app_requires": [], "icon": "gaphor/ui/pixmaps/gaphor-256x256.png"},
-        "linux": {"app_requires": [], "icon": "gaphor/ui/pixmaps/gaphor-48x48.png"},
-        "windows": {"app_requires": [], "icon": "win-installer/misc/gaphor"},
+        "linux": {"app_requires": []},
+        "windows": {"app_requires": []},
         # Mobile deployments
         "ios": {"app_requires": []},
         "android": {"app_requires": []},
