@@ -21,12 +21,12 @@ jobs:
 
     - os: osx
       language: generic
-      env: PYTEST_ADDOPTS="--doctest-modules"
+      env:
+        - PYTEST_ADDOPTS="--doctest-modules"
+        - DISPLAY=:99.0
       before_install:
         - brew upgrade python
         - brew install gobject-introspection gtk+3
-      before_script:
-        - "export DISPLAY=:99.0"
       script:
         - Xvfb :99.0 & poetry run pytest
 
