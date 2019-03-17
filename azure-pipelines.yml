@@ -18,23 +18,21 @@ jobs:
           %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syyuu
           %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
         displayName: Update MSYS2
-        env:
-          PATH: %CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
 
       - script: |
+          set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
           %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-install.sh"
         displayName: Install Depdendencies
         env:
-          PATH: %CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
           MSYS2_ARCH: $(MSYS2_ARCH)
           MSYSTEM: $(MSYSTEM)
           CHERE_INVOKING: yes
 
       - script: |
+          set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
           %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-test.sh"
         displayName: Run Tests
         env:
-          PATH: C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
           MSYS2_ARCH: $(MSYS2_ARCH)
           MSYSTEM: $(MSYSTEM)
           CHERE_INVOKING: yes
