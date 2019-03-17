@@ -20,6 +20,7 @@ jobs:
         gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
 
     - os: osx
+      language: generic
       env: PYTEST_ADDOPTS="--doctest-modules"
       before_install:
         - brew install python3 gobject-introspection gtk+3
