@@ -18,4 +18,4 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-python3-zope.interface \
     mingw-w64-$MSYS2_ARCH-python3-coverage
 
-pip3 install pycairo PyGObject gaphas zope.component tomlkit
+pip3 install pycairo==1.18.0 PyGObject==3.30.4 gaphas==1.0.0 zope.component==4.5 tomlkit==0.5.3
