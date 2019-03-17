@@ -34,7 +34,8 @@ jobs:
         - brew install gobject-introspection gtk+3
         - mkdir -p /Users/travis/.local/share
       script:
-        - Xvfb :99.0 & python3 -m poetry run pytest
+        - source .venv/bin/activate
+        - Xvfb :99.0 & pytest
 
     - stage: lint
       os: linux
