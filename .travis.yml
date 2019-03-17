@@ -21,6 +21,11 @@ jobs:
 
     - os: osx
       language: generic
+      before_cache:
+        - brew cleanup
+      cache:
+        directories:
+          - $HOME/Library/Caches/Homebrew
       env:
         - PYTEST_ADDOPTS="--doctest-modules"
         - DISPLAY=:99.0
@@ -29,7 +34,7 @@ jobs:
         - brew install gobject-introspection gtk+3
         - mkdir -p /Users/travis/.local/share
       script:
-        - Xvfb :99.0 & poetry run pytest
+        - Xvfb :99.0 & python3 -m poetry run pytest
 
     - stage: lint
       os: linux
