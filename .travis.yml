@@ -29,6 +29,7 @@ jobs:
       env:
         - PYTEST_ADDOPTS="--doctest-modules"
         - DISPLAY=:99.0
+        - PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       before_install:
         - brew upgrade python
         - brew install gobject-introspection gtk+3
@@ -37,7 +38,7 @@ jobs:
         - source .venv/bin/activate
         - Xvfb :99.0 & pytest
         - python setup.py macos -b
-        - ls -l MacOS/
+        - ls -l macOS/
 
     - stage: lint
       os: linux
