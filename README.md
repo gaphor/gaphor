@@ -190,8 +190,8 @@ See [the contributing file](CONTRIBUTING.md)!
 ## :copyright: License
 Copyright (C) Arjan Molenaar and Dan Yeaw
 
-Licensed under the [Library General Public License 2.0](LICENSE.txt).
+Licensed under the [Apache License v2](LICENSE.txt).
 
-Summary: You can copy, distribute, or modify Gaphor, as long as you include the
-required notices and license them under the LGPL.
-
+Summary: You can do what you like with Gaphor, as long as you include the
+required notices. This permissive license contains a patent license from the
+contributors of the code.
