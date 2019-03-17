@@ -20,7 +20,7 @@ jobs:
         displayName: Update MSYS2
 
       - script: |
-          set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+          set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\bin;%CD:~0,2%\msys64\mingw64\bin;%CD:~0,2%\msys64\usr\lib;%CD:~0,2%\msys64\mingw64\lib;%CD:~0,2%\msys64\usr\include;%CD:~0,2%\msys64\mingw64\include;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
           %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-install.sh"
         displayName: Install Depdendencies
         env:
