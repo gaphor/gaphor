@@ -1,6 +1,5 @@
 language: python
 cache: pip
-python: 3.7.2
 services:
   - xvfb
 
@@ -12,6 +11,7 @@ jobs:
   include:
     - os: linux
       dist: xenial
+      python: 3.7.2
       env: PYTEST_ADDOPTS="--doctest-modules"
       sudo: true
       before_install: <
@@ -22,7 +22,7 @@ jobs:
     - os: osx
       env: PYTEST_ADDOPTS="--doctest-modules"
       before_install:
-        - brew install gobject-introspection gtk+3
+        - brew install python3 gobject-introspection gtk+3
 
     - stage: lint
       os: linux
