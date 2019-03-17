@@ -1,0 +1,55 @@
+jobs:
+  - job: MAIN
+    timeoutInMinutes: 60
+    pool:
+      vmImage: vs2017-win2016
+    strategy:
+      matrix:
+        x86_64:
+          MSYSTEM: MINGW64
+          MSYS2_ARCH: x86_64
+    steps:
+      - script: |
+          choco install msys2 --params="/InstallDir:%CD:~0,2%\msys64 /NoUpdate /NoPath"
+        displayName: Install MSYS2
+      - script: |
+          set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+          %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syyuu
+          %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
+        displayName: Update MSYS2
+      - script: |
+          set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+          export MSYS2_FC_CACHE_SKIP=1
+          pacman --noconfirm -Suy
+          pacman --noconfirm -S --needed \
+              git \
+              mingw-w64-x86_64-gtk3 \
+              mingw-w64-x86_64-python3 \
+              mingw-w64-x86_64-python3-gobject \
+              mingw-w64-x86_64-python3-cairo \
+              mingw-w64-x86_64-python3-pip \
+              mingw-w64-x86_64-python3-pytest \
+              mingw-w64-x86_64-python3-coverage
+              mingw-w64-x86_64--python3-setuptools \
+              mingw-w64-x86_64-python3-zope.interface
+
+          pip3 install pycairo PyGObject gaphas zope.component tomlkit
+          CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-install.sh"
+        displayName: Install Depdendencies
+        env:
+          MSYS2_ARCH: $(MSYS2_ARCH)
+          MSYSTEM: $(MSYSTEM)
+          CHERE_INVOKING: yes
+      - script: |
+          set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+          %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-test.sh"
+        displayName: Run Tests
+        env:
+          MSYS2_ARCH: x86_64
+          MSYSTEM: MINGW64
+          CHERE_INVOKING: yes
+      - task: PublishTestResults@2
+        condition: not(canceled())
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+testRunTitle: 'Publish test results'
