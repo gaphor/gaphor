@@ -13,9 +13,9 @@ jobs:
       env: PYTEST_ADDOPTS="--doctest-modules"
       sudo: true
       before_install: >
-        - sudo apt-get update -q && sudo apt-get install --no-install-recommends -y
-          python3-dev python3-gi python3-gi-cairo
-          gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
+        sudo apt-get update -q && sudo apt-get install --no-install-recommends -y
+        python3-dev python3-gi python3-gi-cairo
+        gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
       script:
         - xvfb-run poetry run pytest
 
@@ -27,6 +27,7 @@ jobs:
       before_install:
         - brew upgrade python
         - brew install gobject-introspection gtk+3
+        - mkdir -p /Users/travis/.local/share
       script:
         - Xvfb :99.0 & poetry run pytest
 
