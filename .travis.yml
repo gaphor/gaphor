@@ -1,7 +1,5 @@
 language: python
 cache: pip
-services:
-  - xvfb
 
 stages:
   - lint
@@ -40,8 +38,12 @@ jobs:
 install:
   - pip --disable-pip-version-check install poetry
   - poetry install
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to startall
 script:
-  - xvfb-run pytest
+  - poetry run pytest
 after_success:
   - coveralls
 
