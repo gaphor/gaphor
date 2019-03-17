@@ -11,7 +11,7 @@ aspects of the application need a little more explanation.
 
    introduction
    working
-   modelling
+   modeling
    plugins
    stereotypes
 

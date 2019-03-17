@@ -46,10 +46,10 @@ A reverse engineering tool for Python source code
  - UML diagram models that you can layout, arrange and print out.
  - UML text diagrams, which you can paste into your source code for documentation purposes.
  - Java or Delphi code (which can be subsequently imported into more sophisticated UML 
-   modelling tools, like Enterprise Architect or ESS-Model (free).)
+   modeling tools, like Enterprise Architect or ESS-Model (free).)
 
 Features
- - Resilient: doesn't import the python files, thus will never get "stuck" when syntax is wrong. 
+ - Resilient: doesn't import the python files, thus will never get "stuck" when syntax is wrong.ï¿½
  - Fast
  - Recognises inheritance and composition  relationships
  - Detects the cardinality of associations e.g. one to one or 1..*  etc
@@ -71,7 +71,7 @@ The PyNSource command line tool is pynsource.py
 Command line Usage
 ------------------
 
- pynsource -v -m [-j outdir] sourceDirOrListOfPythonFiles...   
+ï¿½pynsource -v -m [-j outdir] sourceDirOrListOfPythonFiles...ï¿½ï¿½ï¿½
 
    no options - generate Ascii UML
 -j generate java files, specify output folder for java files

@@ -62,7 +62,7 @@ class ConsoleWindow(object):
         self.load_console_py()
         return self.console
 
-    @action(name="ConsoleWindow:close", stock_id="gtk-close", accel="<Control><Shift>w")
+    @action(name="ConsoleWindow:close", stock_id="gtk-close", accel="<Primary><Shift>w")
     def close(self, dock_item=None):
         self.console.destroy()
         self.console = None

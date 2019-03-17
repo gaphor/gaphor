@@ -7,7 +7,7 @@ http://www.atug.com/andypatterns/pynsource.htm
 
 A python source code scanner that generates
  - UML pictures (as text)
- - Java code (which can be imported into UML modelling tools.)
+ - Java code (which can be imported into UML modeling tools.)
  - UML diagrams in wxpython (see associated module pyNsourceGui.py)
 
 
