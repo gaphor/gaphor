@@ -21,7 +21,8 @@ jobs:
       language: generic
       env: PYTEST_ADDOPTS="--doctest-modules"
       before_install:
-        - brew install python3 gobject-introspection gtk+3
+        - brew upgrade python
+        - brew install gobject-introspection gtk+3
       before_script:
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
