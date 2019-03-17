@@ -27,10 +27,8 @@ jobs:
         - brew install gobject-introspection gtk+3
       before_script:
         - "export DISPLAY=:99.0"
-        - Xvfb start
-        - sleep 3 # give xvfb some time to startall
       script:
-        - poetry run pytest
+        - Xvfb :99.0 & poetry run pytest
 
     - stage: lint
       os: linux
