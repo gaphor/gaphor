@@ -36,6 +36,8 @@ jobs:
       script:
         - source .venv/bin/activate
         - Xvfb :99.0 & pytest
+        - python setup.py macos -b
+        - ls -l MacOS/
 
     - stage: lint
       os: linux
