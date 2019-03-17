@@ -44,9 +44,7 @@ jobs:
       after_success: skip
 
 install:
-  - pip3 --disable-pip-version-check install poetry
   - ./venv
-  - poetry install
 after_success:
   - coveralls
 
