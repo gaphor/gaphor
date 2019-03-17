@@ -17,16 +17,16 @@ jobs:
       - script: >
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
 
-          export MSYS2_FC_CACHE_SKIP=1
+          %CD:~0,2%\msys64\usr\bin\bash export MSYS2_FC_CACHE_SKIP=1
 
-          pacman --noconfirm -Suy
+          %CD:~0,2%\msys64\usr\bin\bash pacman --noconfirm -Suy
 
-          pacman --noconfirm -S --needed git mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3
+          %CD:~0,2%\msys64\usr\bin\bash pacman --noconfirm -S --needed git mingw-w64-x86_64-gtk3
           mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-python3-cairo mingw-w64-x86_64-python3-pip
-          mingw-w64-x86_64-python3-pytest mingw-w64-x86_64-python3-coverage
+          mingw-w64-x86_64-python3-pytest mingw-w64-x86_64-python3-coverage mingw-w64-x86_64-python3
           mingw-w64-x86_64-python3-setuptools mingw-w64-x86_64-python3-zope.interface
 
-          pip3 install pycairo PyGObject gaphas zope.component tomlkit
+          %CD:~0,2%\msys64\usr\bin\bash pip3 install pycairo PyGObject gaphas zope.component tomlkit
         displayName: Install Depdendencies
         env:
           CHERE_INVOKING: yes
@@ -34,7 +34,7 @@ jobs:
       - script: |
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
           export PYTEST_ADDOPTS="-v --junitxml=junit/test-results.xml"
-          pytest
+          %CD:~0,2%\msys64\usr\bin\bash pytest
         displayName: Run Tests
         env:
           CHERE_INVOKING: yes
