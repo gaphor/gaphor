@@ -26,7 +26,7 @@ jobs:
           mingw-w64-x86_64-python3-pytest mingw-w64-x86_64-python3-coverage mingw-w64-x86_64-python3
           mingw-w64-x86_64-python3-setuptools mingw-w64-x86_64-python3-zope.interface"
 
-          %CD:~0,2%\msys64\usr\bin\bash -lc "python3.exe -m pip install pycairo PyGObject gaphas zope.component tomlkit"
+          %CD:~0,2%\msys64\usr\bin\bash -lc "%CD:~0,2%\msys64\usr\bin\python3.exe -m pip install pycairo PyGObject gaphas zope.component tomlkit"
         displayName: Install Depdendencies
         env:
           CHERE_INVOKING: yes
