@@ -12,9 +12,9 @@ jobs:
     python: 3.7.2
     env: PYTEST_ADDOPTS="--doctest-modules"
     sudo: true
-    before_install: sudo apt-get update -q && sudo apt-get install --no-install-recommends
+    before_install: 'sudo apt-get update -q && sudo apt-get install --no-install-recommends
       -y python3-dev python3-gi python3-gi-cairo gir1.2-gtk-3.0 libgirepository1.0-dev
-      libcairo2-dev
+      libcairo2-dev'
     script:
     - xvfb-run poetry run pytest
     before_deploy:
@@ -33,7 +33,7 @@ jobs:
     - brew cleanup
     cache:
       directories:
-      - "$HOME/Library/Caches/Homebrew"
+      - $HOME/Library/Caches/Homebrew
     env:
     - PYTEST_ADDOPTS="--doctest-modules"
     - DISPLAY=:99.0
@@ -45,8 +45,16 @@ jobs:
     script:
     - source .venv/bin/activate
     - Xvfb :99.0 & pytest
+    before_deploy:
+    - source .venv/bin/activate
     - python setup.py macos -b
-    - ls -l macOS/
+    deploy:
+      provider: releases
+      api_key:
+        secure: Kh3FkAxlQYDuL9WsEUDlDeiYcZ9Ax9QvLfmnVqeDx6bb2DSZP+UBbtXvNKFQ4UgCLezyUlmWLcr64R5Y/4xuaN+p8G9CKT5OA1Z+WY1KAgI1FlwQWCxnG9RJMuxZ0QzPW3LjSeHREM8N7pwgxnEvN3HZKNUB1tm+o8llXMSjGdg=
+      file: macOS/Gaphor.dmg
+      on:
+        tags: true
 
   - stage: lint
     os: linux
@@ -61,9 +69,11 @@ jobs:
     after_success: skip
 
 install:
-- "./venv"
+- ./venv
+
 after_success:
 - coveralls
+
 notifications:
   email: false
   webhooks:
@@ -72,6 +82,7 @@ notifications:
     on_success: change
     on_failure: always
     on_start: never
+
 env:
   global:
   - secure: SpGuC4czJM/68wv0x860/MbwvOF/7CVjEUoZuWV2xkcJtcw5xapI3EgWsJYu33zAIZrgHBUOpwwbQWf4ud5zqznziTZj53DM/oSxnUBLTgsgYwuNQDYWP0htFNnRWQfcQfRkUDeJzhRBc3fNcSxT+Hvh6f+qAaPq3qKApAPgi3A=
