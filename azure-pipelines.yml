@@ -6,36 +6,46 @@ jobs:
     strategy:
       matrix:
         x86_64:
+          MSYS2_ROOT: %CD:~0,2\msys64
           MSYSTEM: MINGW64
           MSYS2_ARCH: x86_64
     steps:
       - script: |
-          choco install msys2 --params="/InstallDir:%CD:~0,2%\msys64 /NoUpdate /NoPath"
+          choco install msys2 --params="/InstallDir:%MSYS2_ROOT% /NoUpdate /NoPath"
         displayName: Install MSYS2
+        env:
+          MSYS2_ROOT: $(MSYS2_ROOT)
 
       - script: |
-          set MSYS2_ROOT=%CD:~0,2%\msys64
-          git clone https://github.com/userzimmermann/MSYS2-cmd.git %CD:~0,2%\msys64\cmd
-          %CD:~0,2%\msys64\cmd\msystem MINGW64
-        displayName: Install and Activate MSYS2-cmd
+          git clone https://github.com/userzimmermann/MSYS2-cmd.git %MSYS2_ROOT%\cmd
+        displayName: Install MSYS2-cmd
+        env:
+          MSYS2_ROOT: $(MSYS2_ROOT)
 
       - script: |
+          %MSYS2_ROOT%\cmd\msystem MINGW64
           pacman --noconfirm -Syyuu
           pacman --noconfirm -Syuu
         displayName: Update MSYS2
+        env:
+          MSYS2_ROOT: $(MSYS2_ROOT)
 
       - script: |
+          %MSYS2_ROOT%\cmd\msystem MINGW64
           bash -lc ".azure/msys2-install.sh"
         displayName: Install Dependencies
         env:
+          MSYS2_ROOT: $(MSYS2_ROOT)
           MSYS2_ARCH: $(MSYS2_ARCH)
           MSYSTEM: $(MSYSTEM)
           CHERE_INVOKING: yes
 
       - script: |
+          %MSYS2_ROOT%\cmd\msystem MINGW64
           bash -lc ".azure/msys2-test.sh"
         displayName: Run Tests
         env:
+          MSYS2_ROOT: $(MSYS2_ROOT)
           MSYS2_ARCH: $(MSYS2_ARCH)
           MSYSTEM: $(MSYSTEM)
           CHERE_INVOKING: yes
