@@ -14,6 +14,7 @@ jobs:
         displayName: Install MSYS2
 
       - script: |
+          set MSYS2_ROOT=%CD:~0,2%\msys64
           git clone https://github.com/userzimmermann/MSYS2-cmd.git %CD:~0,2%\msys64\cmd
           %CD:~0,2%\msys64\cmd\msystem MINGW64
         displayName: Install and Activate MSYS2-cmd
