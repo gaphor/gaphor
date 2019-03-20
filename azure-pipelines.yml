@@ -14,14 +14,17 @@ jobs:
         displayName: Install MSYS2
 
       - script: |
-          set PATH=%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-          %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syyuu
-          %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
+          git clone https://github.com/userzimmermann/MSYS2-cmd.git %CD:~0,2%\msys64\cmd
+          %CD:~0,2%\msys64\cmd\msystem MINGW64
+        displayName: Install and Activate MSYS2-cmd
+
+      - script: |
+          pacman --noconfirm -Syyuu
+          pacman --noconfirm -Syuu
         displayName: Update MSYS2
 
       - script: |
-          set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-          %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-install.sh"
+          bash -lc ".azure/msys2-install.sh"
         displayName: Install Dependencies
         env:
           MSYS2_ARCH: $(MSYS2_ARCH)
@@ -29,8 +32,7 @@ jobs:
           CHERE_INVOKING: yes
 
       - script: |
-          set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-          %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-test.sh"
+          bash -lc ".azure/msys2-test.sh"
         displayName: Run Tests
         env:
           MSYS2_ARCH: $(MSYS2_ARCH)
