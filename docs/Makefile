@@ -1,5 +1,6 @@
 # Makefile for Sphinx documentation
 #
+Python ?= python3
 
 # You can set these variables from the command line.
 SPHINXOPTS    =

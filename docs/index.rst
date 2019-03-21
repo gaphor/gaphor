@@ -24,7 +24,7 @@ Running Gaphor on different platforms:
    :maxdepth: 1
 
    linux
-   win32
+   windows
    custominstall
 
 
