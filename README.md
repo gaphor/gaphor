@@ -2,7 +2,7 @@
 
 [![Build state](https://travis-ci.com/gaphor/gaphor.svg?branch=master)](https://travis-ci.com/gaphor/gaphor)
 ![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)
-[![Coverage](https://coveralls.io/repos/github/gaphor/gaphor/badge.svg?branch=master)](https://coveralls.io/github/gaphor/gaphor?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/gaphor/gaphor/badge.svg?branch=master)](https://coveralls.io/github/gaphor/gaphor?branch=master)
 [![PyPI](https://img.shields.io/pypi/v/gaphor.svg)](https://pypi.org/project/gaphor)
 [![Downloads](https://pepy.tech/badge/gaphor)](https://pepy.tech/project/gaphor)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)

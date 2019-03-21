@@ -27,3 +27,6 @@ pip-wheel-metadata
 flatpak/build
 flatpak/gaphor-repo
 flatpak/.flatpak-builder
+
+# Windows Install
+win-installer/_build_root
