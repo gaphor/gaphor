@@ -54,7 +54,7 @@ jobs:
           testRunTitle: 'Publish test results'
 
       - task: ShellScript@2
-        condition: and(succceeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         inputs:
           scriptPath: win-installer/build.sh
           args: $tagName
