@@ -69,6 +69,6 @@ jobs:
         displayName: 'Create GitHub Release'
         inputs:
           gitHubConnection: GaphorConnection
-          respositoryName: gaphor/gaphor
+          respositoryName: gaphor
           assets: $(Build.ArtifactStagingDirectory)/*.exe
 
