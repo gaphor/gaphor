@@ -46,9 +46,29 @@ jobs:
           MSYS2_ARCH: $(MSYS2_ARCH)
           MSYSTEM: $(MSYSTEM)
           CHERE_INVOKING: yes
+
       - task: PublishTestResults@2
         condition: not(canceled())
         inputs:
           testResultsFiles: '**/test-*.xml'
           testRunTitle: 'Publish test results'
+
+      - task: ShellScript@2
+        condition: and(succceeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+          scriptPath: win-installer/build.sh
+          args: $tagName
+
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: win-installer
+          contents: '*.exe'
+          targetFolder: $(Build.ArtifactStagingDirectory)
+
+      - task: GitHubRelease@0
+        displayName: 'Create GitHub Release'
+        inputs:
+          gitHubConnection: GaphorConnection
+          respositoryName: gaphor/gaphor
+          assets: $(Build.ArtifactStagingDirectory)/*.exe
 
