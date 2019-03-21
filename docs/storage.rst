@@ -30,14 +30,14 @@ All elements inside a canvas have a tag ``Item``.
          <ref refid="1"/>
        </namespace>
        <canvas extents="(9.0, 9.0, 189.0, 247.0)" grid_bg="0xFFFFFFFF"
-   	    grid_color="0x80ff" grid_int_x="10.0" grid_int_y="10.0"
-   	    grid_ofs_x="0.0" grid_ofs_y="0.0" snap_to_grid="0"
-   	    static_extents="0" affine="(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)"
-   	    id="DCE:xxxx">
+        grid_color="0x80ff" grid_int_x="10.0" grid_int_y="10.0"
+        grid_ofs_x="0.0" grid_ofs_y="0.0" snap_to_grid="0"
+        static_extents="0" affine="(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)"
+        id="DCE:xxxx">
          <item affine="(1.0, 0.0, 0.0, 1.0, 150.0, 50.0)" cid="0x8293e74"
-   		height="78.0" subject="3" type="ActorItem" width="38.0"/>
+            height="78.0" subject="3" type="ActorItem" width="38.0"/>
          <item affine="(1.0, 0.0, 0.0, 1.0, 10.0, 10.0)" cid="0x82e7d74"
-   		height="26.0" subject="5" type="CommentItem" width="100.0"/>
+            height="26.0" subject="5" type="CommentItem" width="100.0"/>
        </canvas>
      </Diagram>
      <Actor id="3">
@@ -46,7 +46,7 @@ All elements inside a canvas have a tag ``Item``.
        </name>
        <namespace>
          <ref refid="1"/>
-       </namespace
+       </namespace>
      </Actor>
      <UseCase id="4">
        <namespace>

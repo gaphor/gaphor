@@ -105,7 +105,7 @@ class Element(object):
 
     def isKindOf(self, class_):
         """
-        Returns true if the object is an instance of class_.
+        Returns true if the object is an instance of `class_`.
         """
         return isinstance(self, class_)
 

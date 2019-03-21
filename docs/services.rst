@@ -53,5 +53,5 @@ information along with its service definition.
 
 .. seealso:: 
 
-    Writing plugins :ref:`<manual/plugins>`
+    :doc:`Writing plugins <manual/plugins>`
 
