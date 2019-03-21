@@ -15,6 +15,8 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+from pathlib import Path
+
 from tomlkit import parse
 
 # -- Project information -----------------------------------------------------
@@ -25,10 +27,9 @@ author = "Arjan J. Molenaar"
 
 # The short X.Y version
 version = ""
-with open("../pyproject.toml", "r") as f:
-    parsed_toml = parse(f.read())
-    # The full version, including alpha/beta/rc tags.
-    release = parsed_toml["tool"]["poetry"]["version"]
+project_dir = Path(__file__).resolve().parent.parent
+f = project_dir.joinpath("pyproject.toml")
+release = parse(f.read_text())["tool"]["poetry"]["version"]
 
 # -- General configuration ---------------------------------------------------
 
