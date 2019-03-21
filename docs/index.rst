@@ -20,8 +20,9 @@ Running Gaphor on different platforms:
 .. toctree::
    :maxdepth: 1
 
-   linux
    windows
+   linux
+   macos
    custominstall
 
 
