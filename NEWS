@@ -1,3 +1,14 @@
+1.0.0
+-----
+- Port to Python 3
+- Port from GTK+ 2 and PyGTK to GTK+ 3 with PyGObject
+- Drop use of etk.docking
+- Overhaul the README
+- Add contributing guide and code of conduct
+- Adopt Black as code formatter
+- Add CI/CD for Windows, macOS, Linux with Travis, Azure-Pipelines, and
+ReadTheDocs
+
 0.17.2
 ------
 - Improved Python3 compatibility
