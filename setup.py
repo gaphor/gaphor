@@ -46,7 +46,7 @@ with io.open(version_file, encoding="utf8") as version_file:
 
 BuildPyWithSubCommands.sub_commands.append(("build_uml", None))
 
-readme = os.path.join(os.path.dirname(__file__), "README.rst")
+readme = os.path.join(os.path.dirname(__file__), "README.md")
 with io.open(readme, encoding="utf8") as readme:
     long_description = readme.read()
 
