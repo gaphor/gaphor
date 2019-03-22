@@ -18,12 +18,10 @@ jobs:
     script:
     - xvfb-run poetry run pytest
     before_deploy:
-    - poetry config http-basic.pypi $PYPI_USER $PYPI_PASSWORD
-    - poetry config repositories.test-pypi https://test.pypi.org/legacy/
     - poetry build
     deploy:
       provider: script
-      script: poetry publish -r test-pypi
+      script: poetry publish -u $PYPI_USER -p $PYPI_PASSWORD
       on:
         tags: true
 

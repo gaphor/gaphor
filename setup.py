@@ -16,7 +16,7 @@ from utils.command.build_pot import build_pot
 from utils.command.build_uml import build_uml
 from utils.command.install_lib import install_lib
 
-VERSION = "1.0.0rc2"
+VERSION = "1.0.0rc3"
 LINGUAS = ["ca", "es", "fr", "nl", "sv"]
 
 sys.path.insert(0, ".")

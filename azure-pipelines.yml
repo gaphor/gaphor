@@ -54,14 +54,14 @@ jobs:
           testRunTitle: 'Publish test results'
 
       - task: ShellScript@2
-        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
         inputs:
           scriptPath: win-installer/build.sh
           args: $tagName
 
       - task: CopyFiles@2
         displayName: 'Copy Windows Binaries'
-        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
         inputs:
           sourceFolder: win-installer
           contents: '*.exe'
@@ -69,7 +69,7 @@ jobs:
 
       - task: GitHubRelease@0
         displayName: 'Create GitHub Release'
-        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
         inputs:
           gitHubConnection: GaphorConnection
           respositoryName: gaphor/gaphor
