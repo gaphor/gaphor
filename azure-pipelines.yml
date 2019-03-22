@@ -1,0 +1,77 @@
+jobs:
+  - job: MAIN
+    timeoutInMinutes: 60
+    pool:
+      vmImage: vs2017-win2016
+    strategy:
+      matrix:
+        x86_64:
+          MSYSTEM: MINGW64
+          MSYS2_ARCH: x86_64
+    steps:
+      - script: |
+          set MSYS2_ROOT=%CD:~0,2%\msys64
+          choco install msys2 --params="/InstallDir:%MSYS2_ROOT% /NoUpdate /NoPath"
+        displayName: Install MSYS2
+
+      - script: |
+          set MSYS2_ROOT=%CD:~0,2%\msys64
+          git clone https://github.com/userzimmermann/MSYS2-cmd.git %MSYS2_ROOT%\cmd
+          %MSYS2_ROOT%\cmd\msystem MINGW64
+        displayName: Install and Activate MSYS2-cmd
+
+      - script: |
+          set MSYS2_ROOT=%CD:~0,2%\msys64
+          %MSYS2_ROOT%\cmd\msystem MINGW64
+          pacman --noconfirm -Syyuu
+          pacman --noconfirm -Syuu
+        displayName: Update MSYS2
+
+      - script: |
+          set MSYS2_ROOT=%CD:~0,2%\msys64
+          %MSYS2_ROOT%\cmd\msystem MINGW64
+          bash -lc ".azure/msys2-install.sh"
+        displayName: Install Dependencies
+        env:
+          MSYS2_ARCH: $(MSYS2_ARCH)
+          MSYSTEM: $(MSYSTEM)
+          CHERE_INVOKING: yes
+
+      - script: |
+          set MSYS2_ROOT=%CD:~0,2%\msys64
+          %MSYS2_ROOT%\cmd\msystem MINGW64
+          bash -lc ".azure/msys2-test.sh"
+        displayName: Run Tests
+        env:
+          MSYS2_ARCH: $(MSYS2_ARCH)
+          MSYSTEM: $(MSYSTEM)
+          CHERE_INVOKING: yes
+
+      - task: PublishTestResults@2
+        condition: not(canceled())
+        inputs:
+          testResultsFiles: 'junit/test-results.xml'
+          testRunTitle: 'Publish test results'
+
+      - task: ShellScript@2
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+          scriptPath: win-installer/build.sh
+          args: $tagName
+
+      - task: CopyFiles@2
+        displayName: 'Copy Windows Binaries'
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+          sourceFolder: win-installer
+          contents: '*.exe'
+          targetFolder: $(Build.ArtifactStagingDirectory)
+
+      - task: GitHubRelease@0
+        displayName: 'Create GitHub Release'
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+          gitHubConnection: GaphorConnection
+          respositoryName: gaphor/gaphor
+          assets: $(Build.ArtifactStagingDirectory)/*.exe
+

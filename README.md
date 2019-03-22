@@ -1,6 +1,7 @@
 # Gaphor <img src="iconsrc/gaphor.svg" width="48">
 
 [![Build state](https://travis-ci.com/gaphor/gaphor.svg?branch=master)](https://travis-ci.com/gaphor/gaphor)
+[![Build Status](https://dev.azure.com/gaphor-dev/gaphor/_apis/build/status/gaphor.gaphor?branchName=master)](https://dev.azure.com/gaphor-dev/gaphor/_build/latest?definitionId=2&branchName=master)
 ![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)
 [![Coverage Status](https://coveralls.io/repos/github/gaphor/gaphor/badge.svg?branch=master)](https://coveralls.io/github/gaphor/gaphor?branch=master)
 [![PyPI](https://img.shields.io/pypi/v/gaphor.svg)](https://pypi.org/project/gaphor)
