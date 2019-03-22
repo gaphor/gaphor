@@ -1,7 +1,4 @@
-# vim: sw=4
-"""
-Factory for and registration of model elements.
-"""
+"""Factory for and registration of model elements."""
 
 import uuid
 from zope import component
@@ -27,13 +24,12 @@ class ElementFactory(object):
     The ElementFactory is used to create elements and do lookups to
     elements.
 
-    Notifications are send with as arguments (name, element, *user_data).
+    Notifications are sent as arguments (name, element, `*user_data`).
     The following names are used:
     create - a new model element is created (element is newly created element)
     remove - a model element is removed (element is to be removed element)
-    model - a new model has been loaded (element is None)
-    flush - model is flushed: all element are removed from the factory
-            (element is None)
+    model - a new model has been loaded (element is None) flush - model is
+    flushed: all element are removed from the factory (element is None)
     """
 
     def __init__(self):

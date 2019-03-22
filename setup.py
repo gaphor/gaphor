@@ -94,6 +94,7 @@ setup(
         "PyGObject >= 3.30.0",
         "gaphas >= 0.7.2",
         "zope.component >= 3.4.0",
+        "zope.interface >= 4.6.0",
     ],
     zip_safe=False,
     entry_points={

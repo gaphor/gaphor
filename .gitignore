@@ -20,8 +20,8 @@ pip-wheel-metadata
 # Coverage
 .coverage
 
-# Tox
-.tox
+# Editors
+.idea
 
 # Flatpak
 flatpak/build
@@ -35,3 +35,6 @@ windows/
 android/
 linux/
 django/
+
+# Windows Install
+win-installer/_build_root
