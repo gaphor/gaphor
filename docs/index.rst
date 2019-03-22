@@ -1,17 +1,14 @@
-######################
-Documentation contents
-######################
+Welcome to Gaphor's documentation!
+==================================
 
-  *The source is the documentation.*
-
-Well, not for us.
-
-Currently, there's not a lot of documentation though. For those of you interested in Gaphor there's:
+Some highlights of the documentation:
 
 * A :doc:`manual <manual/index>`. It outlines some of the ideas in and behind Gaphor.
 * The :ref:`tech-section` contains some interesting articles about the technology that drives Gaphor and Gaphas, Gaphor's canvas widget.
 
-If you're into writing plug-ins for Gaphor you should have a look at our fabulous `Hello world <http://github.com/amolenaar/gaphor.plugins.helloworld>`_ plug-in.
+If you're into writing plug-ins for Gaphor you should have a look at our
+fabulous `Hello world <http://github.com/amolenaar/gaphor.plugins.helloworld>`_
+plug-in.
 
 .. toctree::
    :maxdepth: 2
@@ -23,8 +20,9 @@ Running Gaphor on different platforms:
 .. toctree::
    :maxdepth: 1
 
+   windows
    linux
-   win32
+   macos
    custominstall
 
 
@@ -62,5 +60,3 @@ External links
 * The `official UML metamodel specification <http://www.omg.org/technology/documents/modeling_spec_catalog.htm#UML>`_. This ''is'' our data model.
 
 
-..
-   # vim:syntax=rst
