@@ -20,13 +20,21 @@ pip-wheel-metadata
 # Coverage
 .coverage
 
-# Tox
-.tox
+# Editors
+.idea
 
 # Flatpak
 flatpak/build
 flatpak/gaphor-repo
 flatpak/.flatpak-builder
+
+# Briefcase build directories
+iOS/
+macOS/
+windows/
+android/
+linux/
+django/
 
 # Windows Install
 win-installer/_build_root
