@@ -1,0 +1,5 @@
+docutils==0.14
+Pygments==2.3.1
+sphinx-rtd-theme==0.4.3
+sphinxcontrib-websupport==1.1.0
+tomlkit==0.5.3
