@@ -50,7 +50,7 @@ jobs:
       - task: PublishTestResults@2
         condition: not(canceled())
         inputs:
-          testResultsFiles: '**/test-*.xml'
+          testResultsFiles: 'junit/test-results.xml'
           testRunTitle: 'Publish test results'
 
       - task: ShellScript@2
