@@ -1,42 +1,39 @@
 language: python
 cache: pip
-
 stages:
 - lint
 - test
-
 jobs:
   include:
   - os: linux
     dist: xenial
     python: 3.7.2
-    env: PYTEST_ADDOPTS="--cov=gaphor"
+    env:
+    - PYTEST_ADDOPTS="--cov=gaphor"
+    - secure: tyPr8Uxb0Bml1KQ1dX3s5BOtJQPsPzFaItbTTliOwDUxVhXZvfmC/XbPRGBWo2cgiGkaM3XKuk2qtDqAsKrftuyOWcWqJrtKoNBOcjPDKFUo7q2tWCL0A+nxD3z3Novsmi5q27/2PtDJCd1nN1NGY5pg2auE9aDxX85z4YRnz1jhc5mXPMZ0BmMCg/8TjxnrZCgahKEIReZBSf9vHPTCEnGNH/+QODK0nTXdMrna2rBEWb6ik0Bs/iLVZ4LvSR19VI73ixO0m9OmI7V0edKMbN7il/FASUv8YZsmNR+ogETRvN2GJBL9urCx3gZTSy+Ok4L7FXuT7TsrNU90N9ONvNjYTzOBlZ3l/9NMpfNW8RiwvC9Me4Kyy1KaOSl/HdyzfmBSOlOKeXJhA4zlmsXCXmDCSSRUPoD8W8oKdRR/pKDiZD87AXLX1ZJXoWY9yz7qjixXQVvGdioFTi9zbsgLtM98VrldstTVj8NnXkixKfx3klYGyPpoSmoBixJgPv2AJeHJTsLvpOMR577t2rxW+vY7x9rBn4PUrUtA6z9+/cGsCNLWP7B2OzpXsCDTLJDdGH01ZJ0hYdhkTJi7B0y8Rt+XS+DfqML0fKMWwTVsHbsUEYOH+So8kVV/m/QSQNI6IdJvWmFjVhlxVMtVAm4HvHgCpERzSVtwoJb+CToLTfg=
+    - secure: NCrLCP0K5aMcsdBettDFnQ4TEGzGuYhPa6pJybUiIV7+RLvs8kwwDI2FwnB6oK9e/YWg9qxAh00xMwOmhOlu3QzEayL91TF30+W0HkBnvNRg4/9X9/9f4msTd0Wg8fFeKYffbkPmCc4iGX6JmK4vK+TZT6YpUNTK6wgRvSBx7crKHhlVE3POI5tq0J4xg2F2oymoVDSMz8Sc04pqM12mQTZp9R4aQ09L+HQ6v3eS5bCdmiHy5lTPvb6PKYD9jJafEtV9BSHWFjrqZieSJ9aUgJTr4UrI7utus6BNzfG7ULYytq6mMOyKF3xc/Rtw0eM5bVe2e1Qq/8DVmfCWE9TvgkNdXCR2FNU/Pmpv8x9hYZCPLGGYebTK/OVQ2Eet5YihB1fMUFgndSW83X7/6V/WWFfuw4UVkzHzXHT4ofeDYP+JFDDUWrhCUil13iLIRt/c9dEyiE/T2rzyIA4SaT5NBoeXaH8OeI2vLarPYyIbTImrIdPpO7Rqr9i2+IVuO7oPG59mlr2UV+thkc2BXHkHKuZJvlDJI45PE3E+u0njttiin2jb9VqOmTa0wi4F5CyCzZfoI4Ake6pzYB3i/2SYvYZfu+f/2F5obNWjUWZUWELG4YTHlLK3MOe1KnhIMx4doTxC0h72vLcPOIR72+44zGefNNpJy91EhcWbYTOWQGU=
     sudo: true
-    before_install: 'sudo apt-get update -q && sudo apt-get install --no-install-recommends
+    before_install: sudo apt-get update -q && sudo apt-get install --no-install-recommends
       -y python3-dev python3-gi python3-gi-cairo gir1.2-gtk-3.0 libgirepository1.0-dev
-      libcairo2-dev'
+      libcairo2-dev
     script:
     - xvfb-run poetry run pytest
     before_deploy:
-    - poetry config http-basic.pypi $PYPI_USER $PYPI_PASSWORD
     - poetry build
     deploy:
       skip_cleanup: true
       provider: script
-      script: |
-      poetry publish
-      draft: true
-      tag_name: $TRAVIS_TAG
+      script: poetry publish -u $PYPIUSER -p $PYPIPASS
+      tag_name: "$TRAVIS_TAG"
       on:
         tags: true
-
   - os: osx
     language: generic
     before_cache:
     - brew cleanup
     cache:
       directories:
-      - $HOME/Library/Caches/Homebrew
+      - "$HOME/Library/Caches/Homebrew"
     env:
     - PYTEST_ADDOPTS="--doctest-modules"
     - DISPLAY=:99.0
@@ -55,13 +52,13 @@ jobs:
       skip_cleanup: true
       provider: releases
       draft: true
-      tag_name: $TRAVIS_TAG
+      tag_name: "$TRAVIS_TAG"
       api_key:
-        secure: Kh3FkAxlQYDuL9WsEUDlDeiYcZ9Ax9QvLfmnVqeDx6bb2DSZP+UBbtXvNKFQ4UgCLezyUlmWLcr64R5Y/4xuaN+p8G9CKT5OA1Z+WY1KAgI1FlwQWCxnG9RJMuxZ0QzPW3LjSeHREM8N7pwgxnEvN3HZKNUB1tm+o8llXMSjGdg=
+        secure: VU0fcP6CNEOYtEU3pweLJnfVhKmVB01B6hirO0+6i39c3o/ELxBnqUF+B/drMfOl11nsUqXU2oDOcApuqXHqZIBa2S2tCk0Y1gbPSBJmqc5jeCuLOmUgMgQcCsH+cUi6rLxEqdt2v4i8Wk9IBOu1hNo3qBBoPQTN8KLJJtU1Z/NdVGdHPmE3q1q59RpFOgWZrS3TuSq6y0UNlW+wAP86pGuN3wh1CiLPVaQiCry7fFUAIAMb9Ow5eDYaKdLfLaU5/zT8H+AsaMD30EesfuZu3bXXv8XF8aG3EXOQxaaAmwV1q08mq+mk1Q3QQ8k08+wXaj5NAKalyNMi7HwCu5WA9/ZH7IayqnB9oGBAXJoNPHUAiKDlPC0866CcFoB3Uv83vD9VYPwzjWAadXMH9zN7q+Idtfr+I0J3vrAT60Qu8y2DgvPxJ636geNolFmMGjBZORB92rETOTZGvlhuj9o4J4ITCGbQ0UXGKrCSGLGbfpQ9AD+lndTAZtIIial8/IebOlFWklZdU2/INYMfAbTtnYpJSQzDZg4wLSHsst0AbKsPSM6qD9dkdhMAAokT0yH9JDO3SHT/ceVxNZOub3zO+D194Zkmpitxa8ZEKGF6ED9hRdU4mQj044hRmo6yrrwfp0nSzuI5jaiDGpZJ0hmpXbVZYqDSx3hRxi4Iql5yCpY=
       file: macOS/Gaphor.dmg
       on:
+        repo: gaphor/gaphor
         tags: true
-
   - stage: lint
     os: linux
     dist: xenial
@@ -73,13 +70,10 @@ jobs:
     script:
     - pre-commit run --all-files
     after_success: skip
-
 install:
-- ./venv
-
+- "./venv"
 after_success:
 - coveralls
-
 notifications:
   email: false
   webhooks:
@@ -88,8 +82,3 @@ notifications:
     on_success: change
     on_failure: always
     on_start: never
-
-env:
-  global:
-  - secure: SpGuC4czJM/68wv0x860/MbwvOF/7CVjEUoZuWV2xkcJtcw5xapI3EgWsJYu33zAIZrgHBUOpwwbQWf4ud5zqznziTZj53DM/oSxnUBLTgsgYwuNQDYWP0htFNnRWQfcQfRkUDeJzhRBc3fNcSxT+Hvh6f+qAaPq3qKApAPgi3A=
-  - secure: KkwTMvRZdY3ge4VV+rF3zJDeMsAZHprL/NpsK5ogUIRrPHW6QikpMEtO5P5xQO4RwollkZiPY9hy7ne/VYsoXlHX8jvHOe3OjlQdTkmjJaVVKQY65YjWV4KWiu55YRiAHy10LsnN5FUKVu6vYwHGT6EK3BSb9L+iHqtYWLEHjfo=

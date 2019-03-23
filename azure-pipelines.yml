@@ -4,6 +4,9 @@ trigger:
       - '*'
       - refs/tags/*
 
+variables:
+  System.Debug: true
+
 jobs:
   - job: MAIN
     timeoutInMinutes: 60
@@ -73,7 +76,7 @@ jobs:
         displayName: Copy Windows Binaries
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         inputs:
-          sourceFolder: win-installer
+          sourceFolder: .
           contents: '*.exe'
           targetFolder: $(Build.ArtifactStagingDirectory)
 
@@ -82,7 +85,7 @@ jobs:
         displayName: Create GitHub Release
         inputs:
           gitHubConnection: GaphorConnection
-          respositoryName: gaphor/gaphor
+          repositoryName: gaphor/gaphor
           action: create
           tagSource: auto
           target: $(Build.SourceVersion)

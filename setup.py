@@ -16,7 +16,7 @@ from utils.command.build_pot import build_pot
 from utils.command.build_uml import build_uml
 from utils.command.install_lib import install_lib
 
-VERSION = "1.0.0rc5"
+VERSION = "1.0.0rc6"
 LINGUAS = ["ca", "es", "fr", "nl", "sv"]
 
 sys.path.insert(0, ".")
@@ -66,7 +66,7 @@ setup(
         "Intended Audience :: Developers",
         "Intended Audience :: End Users/Desktop",
         "Intended Audience :: Information Technology",
-        "License :: OSI Approved :: GNU Lesser General Public License (LGPL)",
+        "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
