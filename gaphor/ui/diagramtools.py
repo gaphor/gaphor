@@ -3,7 +3,7 @@ Tools for handling items on the canvas.
 
 Although Gaphas has quite a few useful tools, some tools need to be extended:
  - PlacementTool: should perform undo
- - HandleTool: shoudl support adapter based connection protocol
+ - HandleTool: should support adapter based connection protocol
  - TextEditTool: should support adapter based edit protocol
 """
 
