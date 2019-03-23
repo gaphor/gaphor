@@ -20,8 +20,11 @@ jobs:
     before_deploy:
     - poetry build
     deploy:
+      skip_cleanup: true
       provider: script
       script: poetry publish -u $PYPI_USER -p $PYPI_PASSWORD
+      draft: true
+      tag_name: $TRAVIS_TAG
       on:
         tags: true
 
@@ -47,7 +50,10 @@ jobs:
     - source .venv/bin/activate
     - python setup.py macos -b
     deploy:
+      skip_cleanup: true
       provider: releases
+      draft: true
+      tag_name: $TRAVIS_TAG
       api_key:
         secure: Kh3FkAxlQYDuL9WsEUDlDeiYcZ9Ax9QvLfmnVqeDx6bb2DSZP+UBbtXvNKFQ4UgCLezyUlmWLcr64R5Y/4xuaN+p8G9CKT5OA1Z+WY1KAgI1FlwQWCxnG9RJMuxZ0QzPW3LjSeHREM8N7pwgxnEvN3HZKNUB1tm+o8llXMSjGdg=
       file: macOS/Gaphor.dmg

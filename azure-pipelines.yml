@@ -1,3 +1,9 @@
+trigger:
+  branches:
+    include:
+      - '*'
+      - refs/tags/*
+
 jobs:
   - job: MAIN
     timeoutInMinutes: 60
@@ -54,24 +60,28 @@ jobs:
           testRunTitle: 'Publish test results'
 
       - task: ShellScript@2
-        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
         inputs:
           scriptPath: win-installer/build.sh
           args: $tagName
+          condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
 
       - task: CopyFiles@2
         displayName: 'Copy Windows Binaries'
-        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
         inputs:
           sourceFolder: win-installer
           contents: '*.exe'
           targetFolder: $(Build.ArtifactStagingDirectory)
+          condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
 
       - task: GitHubRelease@0
         displayName: 'Create GitHub Release'
-        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
         inputs:
           gitHubConnection: GaphorConnection
           respositoryName: gaphor/gaphor
+          action: create
+          tagSource: auto
+          target: $(Build.SourceVersion)
           assets: $(Build.ArtifactStagingDirectory)/*.exe
+          isDraft: true
+          condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
 
