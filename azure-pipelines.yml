@@ -56,25 +56,30 @@ jobs:
       - task: PublishTestResults@2
         condition: not(canceled())
         inputs:
-          testResultsFiles: 'junit/test-results.xml'
-          testRunTitle: 'Publish test results'
+          testResultsFiles: junit/test-results.xml
+          testRunTitle: Publish Test Results
 
-      - task: ShellScript@2
-        inputs:
-          scriptPath: win-installer/build.sh
-          args: $tagName
-          condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
+      - script: |
+          set MSYS2_ROOT=%CD:~0,2%\msys64
+          %MSYS2_ROOT%\cmd\msystem MINGW64
+          bash -lc "win-installer/build.sh"
+        displayName: Create Windows Binaries
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
+        env:
+          MSYSTEM: $(MSYSTEM)
+          CHERE_INVOKING: yes
 
       - task: CopyFiles@2
-        displayName: 'Copy Windows Binaries'
+        displayName: Copy Windows Binaries
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
         inputs:
           sourceFolder: win-installer
           contents: '*.exe'
           targetFolder: $(Build.ArtifactStagingDirectory)
-          condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
 
       - task: GitHubRelease@0
-        displayName: 'Create GitHub Release'
+        condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
+        displayName: Create GitHub Release
         inputs:
           gitHubConnection: GaphorConnection
           respositoryName: gaphor/gaphor
@@ -83,5 +88,3 @@ jobs:
           target: $(Build.SourceVersion)
           assets: $(Build.ArtifactStagingDirectory)/*.exe
           isDraft: true
-          condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/*'))
-
