@@ -145,12 +145,11 @@ class TextEditTool(Tool):
         Create a popup window with some editable text.
         """
         view = self.view
-        window = Gtk.Window()
+        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
         window.set_property("decorated", False)
         window.set_property("skip-taskbar-hint", True)
-        window.set_resize_mode(Gtk.RESIZE_IMMEDIATE)
-        # window.set_modal(True)
-        window.set_parent_window(view.window)
+        window.set_modal(True)
+        window.set_transient_for(view.get_toplevel())
         buffer = Gtk.TextBuffer()
         if text:
             buffer.set_text(text)
@@ -159,42 +158,50 @@ class TextEditTool(Tool):
             buffer.move_mark_by_name("insert", enditer)
         text_view = Gtk.TextView()
         text_view.set_buffer(buffer)
-        # text_view.set_border_width(2)
         text_view.set_left_margin(2)
         text_view.set_right_margin(2)
-        text_view.show()
 
         frame = Gtk.Frame()
         frame.set_shadow_type(Gtk.ShadowType.IN)
-        # frame.set_border_width(1)
         frame.add(text_view)
-        frame.show()
 
         window.add(frame)
-        # window.set_border_width(1)
         r = Gdk.Rectangle()
-        r.x = int(x)
-        r.y = int(y)
-        r.width = 50
+        r.x = 0
+        r.y = 0
+        r.width = 70
         r.height = 50
         window.size_allocate(r)
-        # window.move(int(x), int(y))
-        cursor_pos = view.get_toplevel().get_screen().get_display().get_pointer()
-        window.move(cursor_pos[1], cursor_pos[2])
-        window.connect("focus-out-event", self._on_focus_out_event, buffer, editor)
-        text_view.connect("key-press-event", self._on_key_press_event, buffer, editor)
-        # text_view.set_size_request(50, 50)
-        window.show()
-        # text_view.grab_focus()
-        # window.set_uposition(event.x, event.y)
-        # window.focus
+        window.move(int(x), int(y))
+
+        def on_button_press(widget, event):
+            if event.window == view.get_window():
+                self.submit_text(widget, buffer, editor)
+
+        def on_key_press_event(widget, event):
+            if event.keyval == Gdk.KEY_Return and not event.get_state() & (
+                Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
+            ):
+                self.submit_text(widget, buffer, editor)
+            elif event.keyval == Gdk.KEY_Escape:
+                widget.get_toplevel().destroy()
+
+        def on_focus_out_event(widget, event):
+            print("Focus out event emitted")
+            self.submit_text(widget, buffer, editor)
+
+        window.add_events(Gdk.EventMask.FOCUS_CHANGE_MASK);
+        window.connect("focus-out-event", on_focus_out_event)
+        window.connect("button-press-event", on_button_press)
+        text_view.connect("key-press-event", on_key_press_event)
+        window.show_all()
 
     @transactional
     def submit_text(self, widget, buffer, editor):
         """
         Submit the final text to the edited item.
         """
-        text = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+        text = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), include_hidden_chars=True)
         editor.update_text(text)
         widget.get_toplevel().destroy()
 
@@ -211,21 +218,9 @@ class TextEditTool(Tool):
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
             if editor.is_editable(x, y):
                 text = editor.get_text()
-                # get item at cursor
-                self.create_edit_window(event.x, event.y, text, editor)
+                root_coords = event.get_root_coords()
+                self.create_edit_window(root_coords.x_root, root_coords.y_root, text, editor)
                 return True
-
-    def _on_key_press_event(self, widget, event, buffer, editor):
-        if event.keyval == Gdk.KEY_Return and not event.get_state() & (
-            Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
-        ):
-            self.submit_text(widget, buffer, editor)
-        elif event.keyval == Gdk.KEY_Escape:
-            widget.get_toplevel().destroy()
-
-    def _on_focus_out_event(self, widget, event, buffer, editor):
-        self.submit_text(widget, buffer, editor)
-
 
 class PlacementTool(_PlacementTool):
     """
