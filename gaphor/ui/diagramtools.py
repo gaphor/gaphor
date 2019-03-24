@@ -174,9 +174,27 @@ class TextEditTool(Tool):
         r.height = 50
         window.size_allocate(r)
         window.move(int(x), int(y))
-        # TODO: This event is not picked up - maybe check for click events, if not clicked inside editor, exir
-        window.connect("focus-out-event", self._on_focus_out_event, buffer, editor)
-        text_view.connect("key-press-event", self._on_key_press_event, buffer, editor)
+
+        def on_button_press(widget, event):
+            if event.window == view.get_window():
+                self.submit_text(widget, buffer, editor)
+
+        def on_key_press_event(widget, event):
+            if event.keyval == Gdk.KEY_Return and not event.get_state() & (
+                Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
+            ):
+                self.submit_text(widget, buffer, editor)
+            elif event.keyval == Gdk.KEY_Escape:
+                widget.get_toplevel().destroy()
+
+        def on_focus_out_event(widget, event):
+            print("Focus out event emitted")
+            self.submit_text(widget, buffer, editor)
+
+        window.add_events(Gdk.EventMask.FOCUS_CHANGE_MASK);
+        window.connect("focus-out-event", on_focus_out_event)
+        window.connect("button-press-event", on_button_press)
+        text_view.connect("key-press-event", on_key_press_event)
         window.show_all()
 
     @transactional
@@ -204,19 +222,6 @@ class TextEditTool(Tool):
                 root_coords = event.get_root_coords()
                 self.create_edit_window(root_coords.x_root, root_coords.y_root, text, editor)
                 return True
-
-    def _on_key_press_event(self, widget, event, buffer, editor):
-        if event.keyval == Gdk.KEY_Return and not event.get_state() & (
-            Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
-        ):
-            self.submit_text(widget, buffer, editor)
-        elif event.keyval == Gdk.KEY_Escape:
-            widget.get_toplevel().destroy()
-
-    def _on_focus_out_event(self, widget, event, buffer, editor):
-        print("Focus out event emitted")
-        self.submit_text(widget, buffer, editor)
-
 
 class PlacementTool(_PlacementTool):
     """
