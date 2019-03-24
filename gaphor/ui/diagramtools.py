@@ -148,7 +148,6 @@ class TextEditTool(Tool):
         window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
         window.set_property("decorated", False)
         window.set_property("skip-taskbar-hint", True)
-        window.set_resize_mode(Gtk.RESIZE_IMMEDIATE)
         window.set_modal(True)
         window.set_transient_for(view.get_toplevel())
         buffer = Gtk.TextBuffer()
