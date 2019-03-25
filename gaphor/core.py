@@ -10,7 +10,6 @@ from gaphor.action import (
     action,
     toggle_action,
     radio_action,
-    open_action,
     build_action_group,
 )
 from gaphor.i18n import _
