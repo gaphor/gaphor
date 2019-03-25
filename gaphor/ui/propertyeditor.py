@@ -27,8 +27,6 @@ class PropertyEditor(object):
     def __init__(self):
         super(PropertyEditor, self).__init__()
         self._current_item = None
-        # self._default_tab = _('Properties')
-        # self._last_tab = self._default_tab
         self._expanded_pages = {_("Properties"): True}
 
     def construct(self):
@@ -42,7 +40,7 @@ class PropertyEditor(object):
 
         return self.vbox
 
-    def get_adapters(self, item):
+    def _get_adapters(self, item):
         """
         Return an ordered list of (order, name, adapter).
         """
@@ -65,7 +63,7 @@ class PropertyEditor(object):
         """
         Load all tabs that can operate on the given item.
         """
-        adapters = self.get_adapters(item)
+        adapters = self._get_adapters(item)
 
         first = True
         for _, name, adapter in adapters:

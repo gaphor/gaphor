@@ -37,13 +37,13 @@ class ElementEditor(object):
     """
 
     def __init__(self):
-        """Constructor.  Build the action group for the element editor window.
+        """Constructor. Build the action group for the element editor window.
         This will place a button for opening the window in the toolbar.
         The widget attribute is a PropertyEditor."""
 
         self.action_group = build_action_group(self)
         self.property_editor = PropertyEditor()
-        self.widget = self.property_editor.construct()
+        self.widget = None
 
     @open_action(
         name="ElementEditor:open",
@@ -55,13 +55,15 @@ class ElementEditor(object):
         """Display the element editor when the toolbar button is toggled.  If
         active, the element editor is displayed.  Otherwise, it is hidden."""
 
-        if not self.widget.get_parent():
+        if not self.widget:
             return self
 
     def open(self):
         """Display and return the PropertyEditor widget."""
 
-        self.widget.show()
+        if not self.widget:
+            self.widget = self.property_editor.construct()
+            self.widget.show()
         return self.widget
 
     def close(self):
@@ -71,7 +73,8 @@ class ElementEditor(object):
 
         log.debug("ElementEditor.close")
         # self.action_group.get_action('ElementEditor:open').set_active(False)
-        self.widget.unparent()
+        self.widget.destroy()
+        self.widget = None
         # self.dock_item.destroy()
         # return True
 
