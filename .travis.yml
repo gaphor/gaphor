@@ -23,8 +23,7 @@ jobs:
     deploy:
       skip_cleanup: true
       provider: script
-      script: |
-      poetry publish
+      script: poetry publish
       draft: true
       tag_name: $TRAVIS_TAG
       on:
