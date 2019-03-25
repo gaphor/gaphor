@@ -26,20 +26,20 @@ jobs:
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
           git clone https://github.com/userzimmermann/MSYS2-cmd.git %MSYS2_ROOT%\cmd
-          %MSYS2_ROOT%\cmd\msystem MINGW64
+          %MSYS2_ROOT%\cmd\msystem MSYS
         displayName: Install and Activate MSYS2-cmd
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MINGW64
+          %MSYS2_ROOT%\cmd\msystem MSYS
           pacman --noconfirm -Syyuu
           pacman --noconfirm -Syuu
         displayName: Update MSYS2
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MINGW64
-          bash -lc ".azure/msys2-install.sh"
+          %MSYS2_ROOT%\cmd\msystem MSYS
+          bash -c ".azure/msys2-install.sh"
         displayName: Install Dependencies
         env:
           MSYS2_ARCH: $(MSYS2_ARCH)
@@ -48,8 +48,8 @@ jobs:
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MINGW64
-          bash -lc ".azure/msys2-test.sh"
+          %MSYS2_ROOT%\cmd\msystem MSYS
+          bash -c ".azure/msys2-test.sh"
         displayName: Run Tests
         env:
           MSYS2_ARCH: $(MSYS2_ARCH)
@@ -64,8 +64,8 @@ jobs:
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MINGW64
-          bash -lc "win-installer/build.sh"
+          %MSYS2_ROOT%\cmd\msystem MSYS
+          bash -c "win-installer/build.sh"
         displayName: Create Windows Binaries
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         env:

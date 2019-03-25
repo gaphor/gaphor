@@ -95,6 +95,8 @@ function install_deps {
     # sed: can't read mingw64/bin/pip3.7-script.py: No such file or directory
     # error: command (/usr/bin/bash /usr/bin/bash -c . /tmp/alpm_omSbWr/.INSTALL; post_install 19.0.1-1 ) failed to execute correctly
     build_pacman --noconfirm -S mingw-w64-"${ARCH}"-python3-pip
+    build_pacman --noconfirm -S mingw-w64-"${ARCH}"-python3-pip
+    build_pacman --noconfirm -S mingw-w64-"${ARCH}"-python3-pip
 
     PIP_REQUIREMENTS="\
         pycairo==1.18.0

@@ -17,12 +17,6 @@ function main {
         rm -rf "${BUILD_ROOT}"
     fi
 
-    # started from the wrong env -> switch
-    if [ $(echo "$MSYSTEM" | tr '[A-Z]' '[a-z]') != "$MINGW" ]; then
-        "/${MINGW}.exe" "$0"
-        exit $?
-    fi
-
     echo "install pre-dependencies"
     install_pre_deps
     echo "create root"
