@@ -53,14 +53,24 @@ class DiagramItemConnectorTestCase(TestCase):
         p = view.get_matrix_i2v(a).transform_point(*a.head.pos)
 
         event = Gdk.Event()
-        event.x, event.y, event.type, event.state = p[0], p[1], Gdk.EventType.BUTTON_PRESS, 0
+        event.x, event.y, event.type, event.state = (
+            p[0],
+            p[1],
+            Gdk.EventType.BUTTON_PRESS,
+            0,
+        )
 
         view.do_event(event)
 
         self.assertSame(the_association, a.subject)
 
         event = Gdk.Event()
-        event.x, event.y, event.type, event.state = p[0], p[1], Gdk.EventType.BUTTON_RELEASE, 0
+        event.x, event.y, event.type, event.state = (
+            p[0],
+            p[1],
+            Gdk.EventType.BUTTON_RELEASE,
+            0,
+        )
 
         view.do_event(event)
 

@@ -190,7 +190,7 @@ class TextEditTool(Tool):
             print("Focus out event emitted")
             self.submit_text(widget, buffer, editor)
 
-        window.add_events(Gdk.EventMask.FOCUS_CHANGE_MASK);
+        window.add_events(Gdk.EventMask.FOCUS_CHANGE_MASK)
         window.connect("focus-out-event", on_focus_out_event)
         window.connect("button-press-event", on_button_press)
         text_view.connect("key-press-event", on_key_press_event)
@@ -201,7 +201,9 @@ class TextEditTool(Tool):
         """
         Submit the final text to the edited item.
         """
-        text = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), include_hidden_chars=True)
+        text = buffer.get_text(
+            buffer.get_start_iter(), buffer.get_end_iter(), include_hidden_chars=True
+        )
         editor.update_text(text)
         widget.get_toplevel().destroy()
 
@@ -219,8 +221,11 @@ class TextEditTool(Tool):
             if editor.is_editable(x, y):
                 text = editor.get_text()
                 root_coords = event.get_root_coords()
-                self.create_edit_window(root_coords.x_root, root_coords.y_root, text, editor)
+                self.create_edit_window(
+                    root_coords.x_root, root_coords.y_root, text, editor
+                )
                 return True
+
 
 class PlacementTool(_PlacementTool):
     """
