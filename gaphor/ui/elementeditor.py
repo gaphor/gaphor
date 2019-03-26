@@ -148,7 +148,7 @@ class ElementEditor(object):
                     expander.set_label("<b>%s</b>" % name)
                     expander.add(page)
                     expander.show_all()
-                    expander.set_expanded(self._expanded_pages.get(name, False))
+                    expander.set_expanded(self._expanded_pages.get(name, True))
                     expander.connect_after("activate", self.on_expand, name)
                     self.vbox.pack_start(expander, False, True, 0)
                 page.show_all()
