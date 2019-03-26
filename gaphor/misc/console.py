@@ -144,7 +144,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     __gtype_name__ = "GTKInterpreterConsole"
 
-    def __init__(self, locals=None):
+    def __init__(self, locals=None, banner=banner):
         Gtk.ScrolledWindow.__init__(self)
         self.set_min_content_width(640)
         self.set_min_content_height(480)

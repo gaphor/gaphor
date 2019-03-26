@@ -91,7 +91,6 @@ class ElementEditor(object):
         self.component_registry.register_handler(self._element_changed)
 
         window.connect("destroy", self.close)
-        return vbox
 
     def close(self, _widget=None):
         """Hide the element editor window and deactivate the toolbar button.
