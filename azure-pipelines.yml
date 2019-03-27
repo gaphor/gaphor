@@ -8,15 +8,14 @@ variables:
   System.Debug: true
 
 jobs:
-  - job: MAIN
+  - job: Windows
     timeoutInMinutes: 60
     pool:
       vmImage: vs2017-win2016
-    strategy:
-      matrix:
-        x86_64:
-          MSYSTEM: MINGW64
-          MSYS2_ARCH: x86_64
+    variables:
+      MSYSTEM: MINGW64
+      MSYS2_ARCH: x86_64
+
     steps:
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
@@ -91,3 +90,24 @@ jobs:
           target: $(Build.SourceVersion)
           assets: $(Build.ArtifactStagingDirectory)/*.exe
           isDraft: true
+
+  - job: macOS
+    pool:
+      vmImage: 'macOS-10.13'
+    timeoutInMinutes: 60
+    steps:
+    - script: |
+        brew install gobject-introspection gtk+3
+        ./venv
+        source .venv/bin/activate
+        pip install pytest-xvfb
+      displayName: 'Install dependencies'
+      env:
+        PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+
+    - script: |
+        source .venv/bin/activate
+        pytest
+      displayName: 'PyTest'
+      env:
+        PYTEST_ADDOPTS: "--doctest-modules"
