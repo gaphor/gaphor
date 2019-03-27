@@ -82,4 +82,5 @@ class ConsoleWindow(object):
 
         window.connect("destroy", self.close)
 
+
 # vim:sw=4:et:ai
