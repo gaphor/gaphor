@@ -8,7 +8,23 @@ variables:
   System.Debug: true
 
 jobs:
+  - job: Lint
+    pool:
+      vmImage: ubuntu-16.04
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.7'
+          architecture: 'x64'
+
+      - script: |
+            pip install pre-commit
+            pre-commit install-hooks
+            pre-commit run --all-files
+
   - job: Windows
+    dependsOn: Lint
+    condition: succeeded()
     timeoutInMinutes: 60
     pool:
       vmImage: vs2017-win2016
@@ -92,9 +108,13 @@ jobs:
           isDraft: true
 
   - job: macOS
+    dependsOn: Lint
+    condition: succeeded()
     pool:
       vmImage: 'macOS-10.13'
     timeoutInMinutes: 60
+    variables:
+        PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
     - script: |
         brew install gobject-introspection gtk+3
@@ -102,15 +122,11 @@ jobs:
         source .venv/bin/activate
         pip install pytest-xvfb
       displayName: 'Install dependencies'
-      env:
-        PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
 
     - script: |
         source .venv/bin/activate
-        pytest
+        pytest --junitxml=junit/test-results.xml --cov=gaphor --cov-report=xml --cov-report=html
       displayName: 'PyTest'
-      env:
-        PYTEST_ADDOPTS: "--doctest-modules"
 
     - script: |
         source .venv/bin/activate
@@ -137,3 +153,42 @@ jobs:
         target: $(Build.SourceVersion)
         assets: $(Build.ArtifactStagingDirectory)/*.dmg
         isDraft: true
+
+  - job: Linux
+    dependsOn: Lint
+    condition: succeeded()
+    pool:
+      vmImage: 'ubuntu-16.04'
+    timeoutInMinutes: 60
+
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.7'
+        architecture: 'x64'
+    
+    - script: >
+        sudo apt-get update -q && sudo apt-get install --no-install-recommends -y
+        python3-dev python3-gi python3-gi-cairo gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
+      displayName: Install Ubuntu Dependencies
+
+    - script: |
+        ./venv
+        source .venv/bin/activate
+        pip install pytest-xvfb
+      displayName: Install Python Dependencies
+
+    - script: |
+        source .venv/bin/activate
+        pytest --junitxml=junit/test-results.xml --cov=gaphor --cov-report=xml --cov-report=html
+      displayName: 'PyTest'
+
+    - task: PublishTestResults@2
+      condition: not(canceled())
+      inputs:
+        testResultsFiles: junit/test-results.xml
+        testRunTitle: Publish Test Results
+    
+    - script: |
+        poetry build
+      displayName: Build Wheel
