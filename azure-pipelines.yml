@@ -111,3 +111,29 @@ jobs:
       displayName: 'PyTest'
       env:
         PYTEST_ADDOPTS: "--doctest-modules"
+
+    - script: |
+        source .venv/bin/activate
+        python setup.py macos -b
+      displayName: Create macOS Package
+      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+
+    - task: CopyFiles@2
+      displayName: Copy macOS Package
+      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+      inputs:
+        sourceFolder: macOS
+        contents: '*.dmg'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: GitHubRelease@0
+      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+      displayName: Create GitHub Release
+      inputs:
+        gitHubConnection: GaphorConnection
+        repositoryName: gaphor/gaphor
+        action: create
+        tagSource: auto
+        target: $(Build.SourceVersion)
+        assets: $(Build.ArtifactStagingDirectory)/*.dmg
+        isDraft: true
