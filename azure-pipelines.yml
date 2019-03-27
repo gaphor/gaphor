@@ -125,8 +125,10 @@ jobs:
 
     - script: |
         source .venv/bin/activate
-        pytest --junitxml=junit/test-results.xml --cov=gaphor --cov-report=xml --cov-report=html
+        pytest
       displayName: 'PyTest'
+      env:
+        PYTEST_ADDOPTS: "--doctest-modules"
 
     - script: |
         source .venv/bin/activate
@@ -180,8 +182,11 @@ jobs:
 
     - script: |
         source .venv/bin/activate
-        pytest --junitxml=junit/test-results.xml --cov=gaphor --cov-report=xml --cov-report=html
+        pytest
       displayName: 'PyTest'
+      env:
+        PYTEST_ADDOPTS: "--doctest-modules"
+
 
     - task: PublishTestResults@2
       condition: not(canceled())

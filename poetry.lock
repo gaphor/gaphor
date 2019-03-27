@@ -85,10 +85,10 @@ description = "The AWS SDK for Python"
 name = "boto3"
 optional = false
 python-versions = "*"
-version = "1.9.120"
+version = "1.9.123"
 
 [package.dependencies]
-botocore = ">=1.12.120,<1.13.0"
+botocore = ">=1.12.123,<1.13.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.2.0,<0.3.0"
 
@@ -98,7 +98,7 @@ description = "Low-level, data-driven core of boto 3."
 name = "botocore"
 optional = false
 python-versions = "*"
-version = "1.12.120"
+version = "1.12.123"
 
 [package.dependencies]
 docutils = ">=0.10"
@@ -269,7 +269,7 @@ description = "File identification library for Python"
 name = "identify"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.4.0"
+version = "1.4.1"
 
 [[package]]
 category = "dev"
@@ -732,8 +732,8 @@ attrs = ["69c0dbf2ed392de1cb5ec704444b08a5ef81680a61cb899dc08127123af36a79", "f0
 binaryornot = ["359501dfc9d40632edc9fac890e19542db1a287bbcfa58175b66658392018061", "b8b71173c917bddcd2c16070412e369c3ed7f0528926f70cac18a6c97fd563e4"]
 biplist = ["4c0549764c5fe50b28042ec21aa2e14fe1a2224e239a1dae77d9e7f3932aa4c6"]
 black = ["817243426042db1d36617910df579a54f1afd659adb96fc5032fcf4b36209739", "e030a9a28f542debc08acceb273f228ac422798e5215ba2a791a6ddeaaca22a5"]
-boto3 = ["39e9b6516a72864f5a6b69f38edac087cc4ba623095f4528b916620e63de32b3", "a3eb22bb975a200a69084ec2bb69819e483ad531bf05e7b73861fc1b333aad42"]
-botocore = ["2bf8768887bfb008406eec725eecf6f174307dac00f5fad244cdd5d39c6c2147", "c0f9c57e7a8c65f17a62a0926c3e73686f6ae1c08abf3b5a63cc3a5bcc4c437b"]
+boto3 = ["2e527686a72ff5fed8275e897df63fadbdca6d4d47f651d898dee89ba9b9eb4d", "fa93b78f2530c748ad60e46250d2e7162deabc75db4e4e7c18500b2daa95855f"]
+botocore = ["7982ab3b3da1f7f2f23f0a12fbd34fe8efc514b53bbe61b536a61884a51db25c", "da94f6087a075ecd01446a9ed4cd4c1d0c356c2c28e69095b23ed4c8814833f4"]
 briefcase = ["175c11f1cfd15d7753af3488330addd9ee8f518dc4dfbfb9407eec7be921dcc5", "b0c2423dedfa00b47dec91d4f9d4e5725098a8e6104dfd5b8586ddca256b7ebb"]
 certifi = ["59b7658e26ca9c7339e00f8f4636cdfe59d34fa37b9b04f6f9e9926b3cece1a5", "b26104d6835d1f5e49452a26eb2ff87fe7090b89dfcaee5ea2212697e1e1d7ae"]
 cfgv = ["39f8475d8eca48639f900daffa3f8bd2f60a31d989df41a9f81c5ad1779a66eb", "a6a4366d32799a6bfb6f577ebe113b27ba8d1bae43cb57133b1472c1c3dae227"]
@@ -748,7 +748,7 @@ docutils = ["02aec4bd92ab067f6ff27a38a38a41173bf01bed8f89157768c1573f53e474a6", 
 ds-store = ["f569659cfd66b21273c5a2405d5e1e0f54fddebf627130329f01404f271a074c"]
 future = ["67045236dcfd6816dc439556d009594abf643e5eb48992e36beac09c2ca659b8"]
 gaphas = ["5437fb44d74670e227f766735fb6ce0c69c18793ceaa7b2fd499bc5d067b0d0c", "87ab6ea895000deab229d3f8ff4b885ad0d079481947ac5406f7b0a24bcc38f6"]
-identify = ["407cbb36e8b72b45cfa96a97ae13ccabca4c36557e03616958bd895dfcd3f77d", "721abbbb1269fa1172799119981c22c5ace022544ce82eedc29b1b0d753baaa5"]
+identify = ["244e7864ef59f0c7c50c6db73f58564151d91345cd9b76ed793458953578cadd", "8ff062f90ad4b09cfe79b5dfb7a12e40f19d2e68a5c9598a49be45f16aba7171"]
 idna = ["c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407", "ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"]
 importlib-metadata = ["a17ce1a8c7bff1e8674cb12c992375d8d0800c9190177ecf0ad93e0097224095", "b50191ead8c70adfa12495fba19ce6d75f2e0275c14c5a7beb653d6799b512bd"]
 importlib-resources = ["6e2783b2538bd5a14678284a3962b0660c715e5a0f10243fd5e00a4b5974f50b", "d3279fd0f6f847cced9f7acc19bd3e5df54d34f93a2e7bb5f238f81545787078"]
