@@ -11,9 +11,10 @@ import sys
 import pydoc
 from rlcompleter import Completer
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import gi
-    gi.require_version('Gtk', '3.0')
+
+    gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gtk
 from gi.repository import Gdk
@@ -28,8 +29,8 @@ Type "help" for more information.
     % sys.version
 )
 
-class Help(object):
 
+class Help(object):
     def __call__(self, obj=None):
         if obj:
             pydoc.help(obj)
@@ -90,7 +91,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.interpreter = code.InteractiveInterpreter(locals)
 
-        self.interpreter.locals['help'] = Help()
+        self.interpreter.locals["help"] = Help()
         self.completer = Completer(self.interpreter.locals)
         self.buffer = []
         self.history = []
@@ -262,7 +263,6 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
                 p = self.completer.complete(token, len(completions))
         else:
             completions = list(self.interpreter.locals.keys())
-
 
         if len(completions) > 1:
             max_len = max(map(len, completions)) + 2
