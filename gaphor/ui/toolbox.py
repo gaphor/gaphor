@@ -81,7 +81,6 @@ class Toolbox(object):
             button.action_name = action_name
             if label:
                 button.set_tooltip_text("%s (%s)" % (label, shortcut))
-            # button.set_use_drag_window(True)
 
             # Enable Drag and Drop
             inner_button = button.get_children()[0]
