@@ -223,6 +223,9 @@ class MainWindow(object):
     def get_widgets(self, name):
         return []
 
+    def get_ui_component(self, name):
+        return self.component_registry.get_utility(IUIComponent, name)
+
     def open(self):
 
         load_accel_map()
@@ -256,7 +259,7 @@ class MainWindow(object):
             vbox.pack_start(toolbar, False, True, 0)
 
         def _factory(name):
-            comp = self.component_registry.get_utility(IUIComponent, name)
+            comp = self.get_ui_component(name)
             log.debug("open component %s" % str(comp))
             return comp.open()
 
@@ -376,6 +379,7 @@ class MainWindow(object):
         self.ask_to_close() and Gtk.main_quit()
         self.shutdown()
 
+    # TODO: Does not belong here
     def create_item(self, ui_component):
         """
         Create an item for a ui component. This method can be called from UIComponents.
@@ -805,7 +809,8 @@ class Diagrams(object):
 
         Returns (GtkView): The current view.
         """
-
+        if not self._notebook:
+            return
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
         return child_widget.diagram_page.get_view()

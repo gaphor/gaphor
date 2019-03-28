@@ -3,9 +3,10 @@
 import logging
 import os
 
+from gi.repository import Gtk
 from zope.interface import implementer
 
-from gaphor.action import action, open_action, build_action_group
+from gaphor.action import action, build_action_group
 from gaphor.core import inject
 from gaphor.misc import get_config_dir
 from gaphor.interfaces import IActionProvider
@@ -19,6 +20,7 @@ log = logging.getLogger(__name__)
 class ConsoleWindow(object):
 
     component_registry = inject("component_registry")
+    main_window = inject("main_window")
 
     menu_xml = """
         <ui>
@@ -36,8 +38,7 @@ class ConsoleWindow(object):
 
     def __init__(self):
         self.action_group = build_action_group(self)
-        self.console = None
-        self.ui_manager = None  # injected
+        self.window = None
 
     def load_console_py(self):
         """Load default script for console. Saves some repetitive typing."""
@@ -50,30 +51,37 @@ class ConsoleWindow(object):
         except IOError:
             log.info("No initiation script %s" % console_py)
 
-    @open_action(name="ConsoleWindow:open", label="_Console")
+    @action(name="ConsoleWindow:open", label="_Console")
     def open_console(self):
-        if not self.console:
-            return self
+        if not self.window:
+            self.open()
         else:
-            self.console.set_property("has-focus", True)
+            self.window.set_property("has-focus", True)
 
     def open(self):
         self.construct()
         self.load_console_py()
-        return self.console
 
     @action(name="ConsoleWindow:close", stock_id="gtk-close", accel="<Primary><Shift>w")
-    def close(self, dock_item=None):
-        self.console.destroy()
-        self.console = None
+    def close(self, widget=None):
+        self.window.destroy()
+        self.window = None
 
     def construct(self):
+        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+        window.set_transient_for(self.main_window.window)
+        window.set_title(self.title)
+
         console = GTKInterpreterConsole(
             locals={"service": self.component_registry.get_service}
         )
         console.show()
-        self.console = console
-        return console
+        window.add(console)
+        window.show()
+
+        self.window = window
+
+        window.connect("destroy", self.close)
 
 
 # vim:sw=4:et:ai
