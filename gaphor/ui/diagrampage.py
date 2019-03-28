@@ -2,6 +2,7 @@
 
 import logging
 from zope import component
+from zope.interface import implementer
 
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (
@@ -17,6 +18,7 @@ from gi.repository import Gdk
 from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.interfaces import IActionProvider
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.core import _, inject, transactional, action, build_action_group
 from gaphor.diagram import get_diagram_item
@@ -28,6 +30,7 @@ from gaphor.ui.event import DiagramSelectionChange
 log = logging.getLogger(__name__)
 
 
+@implementer(IActionProvider)
 class DiagramPage(object):
 
     component_registry = inject("component_registry")
