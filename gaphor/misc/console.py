@@ -22,19 +22,26 @@ banner = (
     % sys.version
 )
 
+def console_help(obj=None):
+    if obj:
+        print("Help for", obj)
+    else:
+        print("General help")
 
-class OutputStream(object):
+
+class TextViewWriter(object):
     """
     A Multiplexing output stream.
     It can replace another stream, and tee output to the original stream and too
     a GTK textview.
     """
 
-    def __init__(self, view, old_out, style):
+    def __init__(self, name, view, style):
+        self.name = name
+        self.out = getattr(sys, name)
         self.view = view
         self.buffer = view.get_buffer()
         self.mark = self.buffer.create_mark("End", self.buffer.get_end_iter(), False)
-        self.out = old_out
         self.style = style
         self.tee = 1
 
@@ -48,6 +55,13 @@ class OutputStream(object):
             self.view.scroll_to_mark(self.mark, 0, True, 1, 1)
 
         self.buffer.insert_with_tags(end, text, self.style)
+
+    def __enter__(self):
+        setattr(sys, self.name, self)
+        return self
+
+    def __exit__(self, exception_type, exception_value, traceback):
+        setattr(sys, self.name, self.out)
 
 
 class GTKInterpreterConsole(Gtk.ScrolledWindow):
@@ -70,6 +84,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.interpreter = code.InteractiveInterpreter(locals)
 
+        self.interpreter.locals['help'] = console_help
         self.completer = Completer(self.interpreter.locals)
         self.buffer = []
         self.history = []
@@ -110,11 +125,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.text.get_buffer().get_tag_table().add(self.style_out)
         self.text.get_buffer().get_tag_table().add(self.style_err)
 
-        self.stdout = None  # OutputStream(self.text,sys.stdout,self.style_out)
-        self.stderr = None  # OutputStream(self.text,sys.stderr,self.style_err)
-
-        # sys.stderr = self.stderr
-        # sys.stdout = self.stdout
+        self.stdout = TextViewWriter("stdout", self.text, self.style_out)
+        self.stderr = TextViewWriter("stderr", self.text, self.style_err)
 
         self.current_prompt = None
 
@@ -154,7 +166,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         source = "\n".join(self.buffer)
 
-        more = self.interpreter.runsource(source, "<<console>>")
+        with self.stdout, self.stderr:
+            more = self.interpreter.runsource(source, "<<console>>")
 
         if not more:
             self.reset_buffer()
@@ -260,19 +273,6 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
             self.replace_line(line)
 
         return True
-
-    def do_realize(self):
-        Gtk.ScrolledWindow.do_realize(self)
-        self.stdout = OutputStream(self.text, sys.stdout, self.style_out)
-        self.stderr = OutputStream(self.text, sys.stderr, self.style_err)
-
-        sys.stdout = self.stdout
-        sys.stderr = self.stderr
-
-    def do_unrealize(self):
-        sys.stdout = self.stdout.out
-        sys.stderr = self.stderr.out
-        Gtk.ScrolledWindow.do_unrealize(self)
 
 
 def main():
