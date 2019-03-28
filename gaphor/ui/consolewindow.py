@@ -40,14 +40,14 @@ class ConsoleWindow(object):
         self.action_group = build_action_group(self)
         self.window = None
 
-    def load_console_py(self):
+    def load_console_py(self, console):
         """Load default script for console. Saves some repetitive typing."""
 
         console_py = os.path.join(get_config_dir(), "console.py")
         try:
             with open(console_py) as f:
                 for line in f:
-                    self.console.push(line)
+                    console.push(line)
         except IOError:
             log.info("No initiation script %s" % console_py)
 
@@ -59,8 +59,8 @@ class ConsoleWindow(object):
             self.window.set_property("has-focus", True)
 
     def open(self):
-        self.construct()
-        self.load_console_py()
+        console = self.construct()
+        self.load_console_py(console)
 
     @action(name="ConsoleWindow:close", stock_id="gtk-close", accel="<Primary><Shift>w")
     def close(self, widget=None):
@@ -82,6 +82,8 @@ class ConsoleWindow(object):
         self.window = window
 
         window.connect("destroy", self.close)
+
+        return console
 
 
 # vim:sw=4:et:ai
