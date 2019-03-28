@@ -19,6 +19,7 @@ if __name__ == "__main__":
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Pango
+from gi.repository import GLib
 
 
 banner = (
@@ -139,11 +140,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.current_prompt = None
 
-        self.write_line(self.banner, self.style_banner)
-        self.prompt_ps1()
-
         self.add(self.text)
         self.text.show()
+
+        self.write_line(self.banner, self.style_banner)
+
+        GLib.idle_add(self.prompt_ps1)
 
     def reset_history(self):
         self.history = []
