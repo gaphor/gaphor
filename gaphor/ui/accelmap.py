@@ -4,7 +4,8 @@ main screen and diagram windows.
 """
 
 import os
-from gi.repository import GLib, Gtk
+from gi.repository import Gtk
+from gaphor.misc import get_config_dir
 
 
 def _get_accel_map_filename():
@@ -12,11 +13,8 @@ def _get_accel_map_filename():
     The Gaphor accelMap file ($HOME/.gaphor/accelmap).
     """
 
-    user_data_dir = GLib.get_user_data_dir()
-
-    if not os.path.exists(user_data_dir):
-        os.mkdir(user_data_dir)
-    return os.path.join(user_data_dir, "accelmap")
+    config_dir = get_config_dir()
+    return os.path.join(config_dir, "accelmap")
 
 
 def load_accel_map():
