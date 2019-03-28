@@ -43,16 +43,6 @@ ICONS = (
     "gaphor-256x256.png",
 )
 
-STATIC_MENU_XML = """
-  <ui>
-    <menubar name="mainwindow">
-      <menu action="%s">
-        <menuitem action="%s" />
-      </menu>
-    </menubar>
-  </ui>
-"""
-
 
 @implementer(IService, IActionProvider)
 class MainWindow(object):
@@ -217,9 +207,6 @@ class MainWindow(object):
                 return self.file_manager.action_save()
             return response == Gtk.ResponseType.REJECT
         return True
-
-    def get_widgets(self, name):
-        return []
 
     def get_ui_component(self, name):
         return self.component_registry.get_utility(IUIComponent, name)
