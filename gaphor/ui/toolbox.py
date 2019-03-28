@@ -76,20 +76,24 @@ class Toolbox(object):
 
     def construct(self):
         def toolbox_button(action_name, stock_id, label, shortcut):
-            button = Gtk.ToggleToolButton.new_from_stock(stock_id)
+            button = Gtk.ToggleToolButton.new()
+            button.set_icon_name(stock_id)
             button.action_name = action_name
             if label:
                 button.set_tooltip_text("%s (%s)" % (label, shortcut))
             # button.set_use_drag_window(True)
 
             # Enable Drag and Drop
-            # button.drag_source_set(
-            #     Gdk.ModifierType.BUTTON1_MASK,
-            #     self.DND_TARGETS,
-            #     Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-            # )
-            # button.drag_source_set_icon_stock(stock_id)
-            # button.connect("drag-data-get", self._button_drag_data_get)
+            inner_button = button.get_children()[0]
+            inner_button.drag_source_set(
+                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                self.DND_TARGETS,
+                Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+            )
+            inner_button.drag_source_set_icon_stock(stock_id)
+            inner_button.connect(
+                "drag-data-get", self._button_drag_data_get, action_name
+            )
 
             return button
 
@@ -144,7 +148,6 @@ class Toolbox(object):
             return
 
         for button in self.buttons:
-
             action_name = button.action_name
             action = action_group.get_action(action_name)
             if action:
@@ -161,3 +164,21 @@ class Toolbox(object):
             log.debug("Action for shortcut %s: %s" % (shortcut, action_name))
             if not action_name:
                 return
+
+    def _button_drag_data_get(self, button, context, data, info, time, action_name):
+        """The drag-data-get event signal handler.
+
+        The drag-data-get signal is emitted on the drag source when the drop
+        site requests the data which is dragged.
+
+        Args:
+            button (Gtk.Button): The button that received the signal.
+            context (Gdk.DragContext): The drag context.
+            data (Gtk.SelectionData): The data to be filled with the dragged
+                data.
+            info (int): The info that has been registered with the target in
+                the Gtk.TargetList
+            time (int): The timestamp at which the data was received.
+
+        """
+        data.set(type=data.get_target(), format=8, data=action_name.encode())
