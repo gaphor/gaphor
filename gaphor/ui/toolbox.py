@@ -57,8 +57,6 @@ class _Toolbox(Gtk.ToolPalette):
 
         """
         GObject.GObject.__init__(self)
-        self.buttons = []
-        self.shortcuts = {}
         self._construct(toolboxdef)
 
     def toolbox_button(self, action_name, stock_id):
@@ -143,24 +141,58 @@ class Toolbox(object):
         self.action_group.get_action("reset-tool-after-create").set_active(
             self.properties.get("reset-tool-after-create", True)
         )
+        self.buttons = []
+        self.shortcuts = {}
 
     def open(self):
         widget = self.construct()
         self.main_window.window.connect_after(
             "key-press-event", self._on_key_press_event
         )
+        self.component_registry.register_handler(self._on_diagram_page_change)
         return widget
 
     def close(self):
         if self._toolbox:
             self._toolbox.destroy()
             self._toolbox = None
+        self.component_registry.unregister_handler(self._on_diagram_page_change)
 
     def construct(self):
-        toolbox = _Toolbox(self._toolbox_actions)
+        def toolbox_button(action_name, stock_id, label, shortcut):
+            button = Gtk.ToggleToolButton.new_from_stock(stock_id)
+            button.action_name = action_name
+            if label:
+                button.set_tooltip_text("%s (%s)" % (label, shortcut))
+            # button.set_use_drag_window(True)
+
+            # Enable Drag and Drop
+            # button.drag_source_set(
+            #     Gdk.ModifierType.BUTTON1_MASK,
+            #     self.DND_TARGETS,
+            #     Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+            # )
+            # button.drag_source_set_icon_stock(stock_id)
+            # button.connect("drag-data-get", self._button_drag_data_get)
+
+            return button
+
+        toolbox = Gtk.ToolPalette.new()
+        toolbox.connect("destroy", self._on_toolbox_destroyed)
+
+        for title, items in self._toolbox_actions:
+            tool_item_group = Gtk.ToolItemGroup.new(title)
+            for action_name, label, stock_id, shortcut in items:
+                button = toolbox_button(action_name, stock_id, label, shortcut)
+                tool_item_group.insert(button, -1)
+                button.show()
+                self.buttons.append(button)
+                self.shortcuts[shortcut] = action_name
+            toolbox.add(tool_item_group)
+            tool_item_group.show()
+
         toolbox.show()
 
-        toolbox.connect("destroy", self._on_toolbox_destroyed)
         self._toolbox = toolbox
         return toolbox
 
@@ -183,6 +215,7 @@ class Toolbox(object):
 
     @component.adapter(IDiagramPageChange)
     def _on_diagram_page_change(self, event):
+        print("Diagram page changed", event.diagram_page)
         self.update_toolbox(event.diagram_page.toolbox.action_group)
 
     def update_toolbox(self, action_group):
@@ -194,7 +227,7 @@ class Toolbox(object):
         if not self._toolbox:
             return
 
-        for button in self._toolbox.buttons:
+        for button in self.buttons:
 
             action_name = button.action_name
             action = action_group.get_action(action_name)
@@ -208,7 +241,7 @@ class Toolbox(object):
         # HACK:
         toolbox = self._toolbox
         if shortcut and toolbox:
-            action_name = toolbox.shortcuts.get(shortcut)
+            action_name = self.shortcuts.get(shortcut)
             log.debug("Action for shortcut %s: %s" % (shortcut, action_name))
             if not action_name:
                 return

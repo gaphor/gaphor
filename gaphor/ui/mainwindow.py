@@ -417,6 +417,7 @@ class Diagrams(object):
 
         self._notebook = Gtk.Notebook()
         self._notebook.show()
+        self._notebook.connect("switch-page", self._on_switch_page)
         self.component_registry.register_handler(self._on_show_diagram)
         return self._notebook
 
@@ -515,6 +516,9 @@ class Diagrams(object):
             widget = self._notebook.get_nth_page(page)
             widgets_on_pages.append((page, widget))
         return widgets_on_pages
+
+    def _on_switch_page(self, notebook, page, page_num):
+        self.component_registry.handle(DiagramPageChange(page))
 
     @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):
