@@ -28,7 +28,7 @@ from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.ui.event import DiagramPageChange, Diagram
+from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import Namespace
@@ -305,7 +305,7 @@ class MainWindow(object):
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
-            self.component_registry.handle(Diagram(diagram))
+            self.component_registry.handle(DiagramShow(diagram))
 
     @component.adapter(FileManagerStateChanged)
     def _on_file_manager_state_changed(self, event):
@@ -516,7 +516,7 @@ class Diagrams(object):
             widgets_on_pages.append((page, widget))
         return widgets_on_pages
 
-    @component.adapter(Diagram)
+    @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
 

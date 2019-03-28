@@ -16,7 +16,7 @@ from gaphor.diagram.comment import CommentItem
 from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.interfaces import IConnect
 from gaphor.ui.diagramtools import ConnectHandleTool, DiagramItemConnector
-from gaphor.ui.event import Diagram
+from gaphor.ui.event import DiagramShow
 from gaphor.ui.interfaces import IUIComponent
 
 
@@ -115,7 +115,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
-        self.component_registry.handle(Diagram(diagram))
+        self.component_registry.handle(DiagramShow(diagram))
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )
@@ -155,7 +155,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
-        self.component_registry.handle(Diagram(diagram))
+        self.component_registry.handle(DiagramShow(diagram))
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )

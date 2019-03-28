@@ -30,6 +30,7 @@ from gaphor.UML.event import (
 from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.core import _, action, build_action_group, inject, transactional
 from gaphor.transaction import Transaction
+from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui import stock
 from gaphor.ui.iconoption import get_icon_option
 from gaphor.ui.interfaces import IUIComponent
@@ -824,7 +825,7 @@ class Namespace(object):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
-            self.component_registry.handle(Diagram(element))
+            self.component_registry.handle(DiagramShow(element))
 
         else:
             log.debug("No action defined for element %s" % type(element).__name__)
@@ -859,7 +860,7 @@ class Namespace(object):
             diagram.name = "New diagram"
 
         self.select_element(diagram)
-        self.component_registry.handle(Diagram(diagram))
+        self.component_registry.handle(DiagramShow(diagram))
         self.tree_view_rename_selected()
 
     @action(
