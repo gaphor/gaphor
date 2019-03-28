@@ -124,6 +124,7 @@ jobs:
       displayName: 'Install dependencies'
 
     - script: |
+        mkdir 
         source .venv/bin/activate
         pytest
       displayName: 'PyTest'
@@ -176,13 +177,12 @@ jobs:
 
     - script: |
         ./venv
-        source .venv/bin/activate
-        pip install pytest-xvfb
       displayName: Install Python Dependencies
 
     - script: |
+        mkdir -p /home/vsts/.local/share # This can be removed once we merge back to master (config dir)
         source .venv/bin/activate
-        pytest
+        xvfb-run pytest
       displayName: 'PyTest'
       env:
         PYTEST_ADDOPTS: "--doctest-modules"
@@ -195,5 +195,6 @@ jobs:
         testRunTitle: Publish Test Results
     
     - script: |
+        source .venv/bin/activate
         poetry build
       displayName: Build Wheel
