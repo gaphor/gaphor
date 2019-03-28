@@ -123,13 +123,12 @@ jobs:
           pip install pytest-xvfb
         displayName: 'Install dependencies'
 
-      - script: |
-          mkdir
-          source .venv/bin/activate
-          pytest
-        displayName: 'PyTest'
-        env:
-          PYTEST_ADDOPTS: "--doctest-modules"
+    - script: |
+        source .venv/bin/activate
+        pytest
+      displayName: 'PyTest'
+      env:
+        PYTEST_ADDOPTS: "--doctest-modules"
 
       - script: |
           source .venv/bin/activate
@@ -188,14 +187,13 @@ jobs:
           PYTEST_ADDOPTS: "--doctest-modules"
 
 
-      - task: PublishTestResults@2
-        condition: not(canceled())
-        inputs:
-          testResultsFiles: junit/test-results.xml
-          testRunTitle: Publish Test Results
-
-      - script: |
-          source .venv/bin/activate
-          poetry build
-        displayName: Build Wheel
-
+    - task: PublishTestResults@2
+      condition: not(canceled())
+      inputs:
+        testResultsFiles: junit/test-results.xml
+        testRunTitle: Publish Test Results
+    
+    - script: |
+        source .venv/bin/activate
+        poetry build
+      displayName: Build Wheel
