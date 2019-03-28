@@ -54,6 +54,9 @@ class ZopeComponentRegistry(object):
         pass
 
     def get_service(self, name):
+        """Obtain a service used by Gaphor by name.
+        E.g. service("element_factory")
+        """
         return self.get_utility(IService, name)
 
     # Wrap zope.component's Components methods
