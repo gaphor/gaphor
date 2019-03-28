@@ -8,6 +8,7 @@
 
 import code
 import sys
+import pydoc
 from rlcompleter import Completer
 
 from gi.repository import Gdk
@@ -18,15 +19,24 @@ from gi.repository import Pango
 banner = (
     """Gaphor Interactive Python Console
 %s
+Type "help" for more information.
 """
     % sys.version
 )
 
-def console_help(obj=None):
-    if obj:
-        print("Help for", obj)
-    else:
-        print("General help")
+class Help(object):
+
+    def __call__(self, obj=None):
+        if obj:
+            pydoc.help(obj)
+        else:
+            str(self)
+
+    def __str__(self):
+        return "Usage: help(object)"
+
+    def __repr__(self):
+        return str(self)
 
 
 class TextViewWriter(object):
@@ -40,21 +50,12 @@ class TextViewWriter(object):
         self.name = name
         self.out = getattr(sys, name)
         self.view = view
-        self.buffer = view.get_buffer()
-        self.mark = self.buffer.create_mark("End", self.buffer.get_end_iter(), False)
         self.style = style
-        self.tee = 1
 
     def write(self, text):
-        if self.tee:
-            self.out.write(text)
-
-        end = self.buffer.get_end_iter()
-
-        if not self.view == None:
-            self.view.scroll_to_mark(self.mark, 0, True, 1, 1)
-
-        self.buffer.insert_with_tags(end, text, self.style)
+        buffer = self.view.get_buffer()
+        end = buffer.get_end_iter()
+        buffer.insert_with_tags(end, text, self.style)
 
     def __enter__(self):
         setattr(sys, self.name, self)
@@ -84,7 +85,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.interpreter = code.InteractiveInterpreter(locals)
 
-        self.interpreter.locals['help'] = console_help
+        self.interpreter.locals['help'] = Help()
         self.completer = Completer(self.interpreter.locals)
         self.buffer = []
         self.history = []
@@ -115,9 +116,11 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.style_out = Gtk.TextTag.new("stdout")
         self.style_out.set_property("foreground", "midnight blue")
+        self.style_out.set_property("editable", False)
         self.style_err = Gtk.TextTag.new("stderr")
         self.style_err.set_property("style", Pango.Style.ITALIC)
         self.style_err.set_property("foreground", "red")
+        self.style_err.set_property("editable", False)
 
         self.text.get_buffer().get_tag_table().add(self.style_banner)
         self.text.get_buffer().get_tag_table().add(self.style_ps1)
