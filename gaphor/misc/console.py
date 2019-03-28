@@ -8,6 +8,7 @@
 
 import code
 import sys
+from rlcompleter import Completer
 
 from gi.repository import Gdk
 from gi.repository import Gtk
@@ -20,93 +21,6 @@ banner = (
 """
     % sys.version
 )
-
-
-class Completer(object):
-    """
-    Taken from rlcompleter, with readline references stripped, and a
-    local dictionary to use.
-    """
-
-    def __init__(self, locals):
-        self.locals = locals
-
-    def complete(self, text, state):
-        """
-        Return the next possible completion for 'text'.
-        This is called successively with state == 0, 1, 2, ... until it
-        returns None.  The completion should begin with 'text'.
-        """
-        if state == 0:
-            if "." in text:
-                self.matches = self.attr_matches(text)
-            else:
-                self.matches = self.global_matches(text)
-        try:
-            return self.matches[state]
-        except IndexError:
-            return None
-
-    def global_matches(self, text):
-        """
-        Compute matches when text is a simple name.
-
-        Return a list of all keywords, built-in functions and names
-        currently defines in __main__ that match.
-        """
-        import keyword
-
-        matches = []
-        n = len(text)
-        for list in [
-            keyword.kwlist,
-            list(__builtin__.__dict__.keys()),
-            list(__main__.__dict__.keys()),
-            list(self.locals.keys()),
-        ]:
-            for word in list:
-                if word[:n] == text and word != "__builtins__":
-                    matches.append(word)
-        return matches
-
-    def attr_matches(self, text):
-        """
-        Compute matches when text contains a dot.
-
-        Assuming the text is of the form NAME.NAME....[NAME], and is
-        evaluatable in the globals of __main__, it will be evaluated
-        and its attributes (as revealed by dir()) are used as possible
-        completions.  (For class instances, class members are are also
-        considered.)
-
-        WARNING: this can still invoke arbitrary C code, if an object
-        with a __getattr__ hook is evaluated.
-        """
-        import re
-
-        m = re.match(r"(\w+(\.\w+)*)\.(\w*)", text)
-        if not m:
-            return
-        expr, attr = m.group(1, 3)
-        object = eval(expr, __main__.__dict__, self.locals)
-        words = dir(object)
-        if hasattr(object, "__class__"):
-            words.append("__class__")
-            words = words + get_class_members(object.__class__)
-        matches = []
-        n = len(attr)
-        for word in words:
-            if word[:n] == attr and word != "__builtins__":
-                matches.append("%s.%s" % (expr, word))
-        return matches
-
-
-def get_class_members(klass):
-    ret = dir(klass)
-    if hasattr(klass, "__bases__"):
-        for base in klass.__bases__:
-            ret = ret + get_class_members(base)
-    return ret
 
 
 class OutputStream(object):
@@ -152,6 +66,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.text = Gtk.TextView()
         self.text.set_wrap_mode(True)
+        self.text.set_monospace(True)
 
         self.interpreter = code.InteractiveInterpreter(locals)
 
@@ -178,12 +93,10 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.style_ps1 = Gtk.TextTag.new("ps1")
         self.style_ps1.set_property("foreground", "DarkOrchid4")
         self.style_ps1.set_property("editable", False)
-        self.style_ps1.set_property("font", "courier")
 
         self.style_ps2 = Gtk.TextTag.new("ps2")
         self.style_ps2.set_property("foreground", "DarkOliveGreen")
         self.style_ps2.set_property("editable", False)
-        self.style_ps2.set_property("font", "courier")
 
         self.style_out = Gtk.TextTag.new("stdout")
         self.style_out.set_property("foreground", "midnight blue")
@@ -227,10 +140,10 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def write_line(self, text, style=None):
         start, end = self.text.get_buffer().get_bounds()
-        if style == None:
-            self.text.get_buffer().insert(end, text)
-        else:
+        if style:
             self.text.get_buffer().insert_with_tags(end, text, style)
+        else:
+            self.text.get_buffer().insert(end, text)
 
         self.text.scroll_to_mark(self.mark, 0, True, 1, 1)
 
@@ -267,10 +180,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
             start = self.text.get_buffer().get_iter_at_line_offset(l, 4)
             self.text.get_buffer().place_cursor(start)
             return True
-        elif (
-            event.keyval == Gdk.keyval_from_name("space")
-            and event.get_state() & Gdk.ModifierType.CONTROL_MASK
-        ):
+        elif event.keyval == Gdk.keyval_from_name("Tab"):
             return self.complete_line()
         return False
 
@@ -321,21 +231,30 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
     def complete_line(self):
         line = self.current_line()
         tokens = line.split()
-        token = tokens[-1]
 
-        completions = []
-        p = self.completer.complete(token, len(completions))
-        while p != None:
-            completions.append(p)
+        if tokens:
+            token = tokens[-1]
+            completions = []
             p = self.completer.complete(token, len(completions))
+            while p != None:
+                completions.append(p)
+                p = self.completer.complete(token, len(completions))
+        else:
+            completions = list(self.interpreter.locals.keys())
 
-        if len(completions) != 1:
-            self.write_line("\n")
-            self.write_line("\n".join(completions), self.style_ps1)
+
+        if len(completions) > 1:
+            max_len = max(map(len, completions)) + 2
+            per_line = 80 // max_len
+            for i, c in enumerate(completions):
+                if i % per_line == 0:
+                    self.write_line("\n")
+                self.write_line(c, self.style_ps1)
+                self.write_line(" " * (max_len - len(c)), self.style_ps1)
             self.write_line("\n")
             self.current_prompt()
             self.write_line(line)
-        else:
+        elif len(completions) == 1:
             i = line.rfind(token)
             line = line[0:i] + completions[0]
             self.replace_line(line)
