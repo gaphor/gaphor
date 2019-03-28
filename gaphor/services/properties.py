@@ -8,7 +8,7 @@ from logging import getLogger
 from zope import interface
 
 from gaphas.decorators import AsyncIO
-from gi.repository import GLib
+from gaphor.misc import get_config_dir
 from zope.interface import implementer
 
 from gaphor.core import inject
@@ -58,13 +58,13 @@ class Properties(object):
         self._backend = backend or FileBackend()
 
     def init(self, app):
-        """Initialize the properties service.  This will load any stored 
+        """Initialize the properties service.  This will load any stored
         properties from the file system."""
 
         self._backend.load(self._resources)
 
     def shutdown(self):
-        """Shutdown the properties service.  This will ensure that all 
+        """Shutdown the properties service.  This will ensure that all
         properties are saved."""
 
         self._backend.save(self._resources)
@@ -130,15 +130,15 @@ class FileBackend(object):
 
     RESOURCE_FILE = "resources"
 
-    def __init__(self, datadir=GLib.get_user_data_dir()):
-        """Constructor.  Initialize the directory used for storing 
+    def __init__(self, datadir=get_config_dir()):
+        """Constructor.  Initialize the directory used for storing
         properties."""
 
         self.datadir = datadir
 
     def get_filename(self, create=False):
         """Return the current file used to store Gaphor properties.  If the
-        created parameter is set to True, the file is created if it doesn't 
+        created parameter is set to True, the file is created if it doesn't
         exist.  This defaults to False."""
 
         datadir = self.datadir
