@@ -11,6 +11,10 @@ import sys
 import pydoc
 from rlcompleter import Completer
 
+if __name__ == '__main__':
+    import gi
+    gi.require_version('Gdk', '3.0')
+
 from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import Pango
@@ -82,6 +86,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.text = Gtk.TextView()
         self.text.set_wrap_mode(True)
         self.text.set_monospace(True)
+        self.text.set_border_width(4)
 
         self.interpreter = code.InteractiveInterpreter(locals)
 
