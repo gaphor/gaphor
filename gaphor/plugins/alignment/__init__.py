@@ -46,7 +46,6 @@ class Alignment(object):
 
     @component.adapter(IDiagramSelectionChange)
     def update(self, event=None):
-        print("Alignment change", event)
         self._last_update = event
         sensitive = event and len(event.selected_items) > 1
         self.action_group.get_action("align-left").set_sensitive(sensitive)
