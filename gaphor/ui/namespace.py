@@ -685,7 +685,7 @@ class Namespace(object):
     ui_manager = inject("ui_manager")
     action_manager = inject("action_manager")
 
-    _menu_xml = """
+    menu_xml = """
       <ui>
         <menubar name="mainwindow">
           <menu action="diagram">
@@ -715,7 +715,6 @@ class Namespace(object):
 
     def __init__(self):
         self._namespace = None
-        self._ui_id = None
         self.action_group = build_action_group(self)
 
     def open(self):
@@ -728,13 +727,9 @@ class Namespace(object):
             self._namespace.destroy()
             self._namespace = None
 
-            # TODO: How to ensure stuff is removed properly from services?
-            # self.ui_manager.remove_ui(self._ui_id)
         self.component_registry.unregister_handler(self.expand_root_nodes)
 
     def construct(self):
-        self._ui_id = self.ui_manager.add_ui_from_string(self._menu_xml)
-
         model = NamespaceModel(self.element_factory)
         view = NamespaceView(model, self.element_factory)
         scrolled_window = Gtk.ScrolledWindow()
