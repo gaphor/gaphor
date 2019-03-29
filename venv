@@ -10,6 +10,14 @@
 #
 
 
+# If on Macos with brew, make sure we can find the brewed libffi (which is not "linked"):
+echo "Are we on Macos with Homebrew installed?"
+brew --version >/dev/null 2>&1 && {
+	libffi_path="$(brew ls libffi | grep pkgconfig | xargs dirname)"
+	echo "Adding libffi pkg-config path ${libffi_path} to \$PKG_CONFIG_PATH"
+	export PKG_CONFIG_PATH="${libffi_path}:${PKG_CONFIG_PATH:-}"
+}
+
 (
 	# Do the whole installation process in a sub-shell, so we can safely fail when
 	# this file is sourced in the parent shell.
@@ -30,13 +38,6 @@
 					;;
 			esac
 	done
-
-	# If on Macos with brew, make sure we can find the brewed libffi (which is not "linked"):
-	check brew --version && {
-		libffi_path="$(brew ls libffi | grep pkgconfig | xargs dirname)"
-		echo "Adding libffi pkg-config path ${libffi_path} to \$PKG_CONFIG_PATH"
-		export PKG_CONFIG_PATH="${libffi_path}:${PKG_CONFIG_PATH:-}"
-	}
 
 	check python3 --version || {
 		echo "==> Python 3.x not found"
