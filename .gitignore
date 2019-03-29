@@ -38,3 +38,6 @@ django/
 
 # Windows Install
 win-installer/_build_root
+
+# MacOS
+package/gaphor.iconset/
