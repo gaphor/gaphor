@@ -134,7 +134,6 @@ class Toolbox(object):
 
     @component.adapter(IDiagramPageChange)
     def _on_diagram_page_change(self, event):
-        print("Diagram page changed", event.diagram_page)
         self.update_toolbox(event.diagram_page.toolbox.action_group)
 
     def update_toolbox(self, action_group):
