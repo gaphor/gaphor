@@ -199,9 +199,9 @@ class DiagramToolbox(object):
         tool_name = list(itemiter(TOOLBOX_ACTIONS))[id][0]
         self.view.tool = self.get_tool(tool_name)
 
-    def _item_factory(self, item_class, subject_class=None, extra_func=None):
+    def _item_factory(self, item_class, subject_class=None, config_func=None):
         """
-        ``extra_func`` may be a function accepting the newly created item.
+        ``config_func`` may be a function accepting the newly created item.
         """
 
         def factory_method(parent=None):
@@ -210,8 +210,8 @@ class DiagramToolbox(object):
             else:
                 subject = None
             item = self.diagram.create(item_class, subject=subject, parent=parent)
-            if extra_func:
-                extra_func(item)
+            if config_func:
+                config_func(item)
             return item
 
         factory_method.item_class = item_class

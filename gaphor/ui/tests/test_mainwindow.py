@@ -3,7 +3,7 @@ import unittest
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.core import inject
-from gaphor.ui.event import Diagram
+from gaphor.ui.event import DiagramShow
 from gaphor.ui.interfaces import IUIComponent
 
 
@@ -40,7 +40,7 @@ class MainWindowTestCase(unittest.TestCase):
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
         main_w.open()
-        self.component_registry.handle(Diagram(diagram))
+        self.component_registry.handle(DiagramShow(diagram))
         self.assertEqual(self.get_current_diagram(), diagram)
 
 

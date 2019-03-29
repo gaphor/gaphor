@@ -11,8 +11,7 @@ class WindowOwner(object):
     methods to make the tests work.
     """
 
-    def remove_tab(self, other):
-        pass
+    pass
 
 
 class DiagramToolboxTestCase(TestCase):

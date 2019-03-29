@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.tests import TestCase
-from gaphor.ui.event import Diagram
+from gaphor.ui.event import DiagramShow
 from gaphor.ui.interfaces import IUIComponent
 
 logging.basicConfig(level=logging.DEBUG)
@@ -26,7 +26,7 @@ class DiagramItemConnectorTestCase(TestCase):
         mw = self.get_service("main_window")
         mw.open()
         self.main_window = mw
-        self.component_registry.handle(Diagram(self.diagram))
+        self.component_registry.handle(DiagramShow(self.diagram))
 
     def test_item_reconnect(self):
         # Setting the stage:
