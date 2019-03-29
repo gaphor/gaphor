@@ -60,7 +60,8 @@ brew --version >/dev/null 2>&1 && {
 
 	{ ${NO_FORCE_INSTALL} && test -f .venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link; } || {
 		echo "Installing Gaphor in the virtualenv..."
-		pip --disable-pip-version-check install --upgrade poetry && poetry install
+		pip install -U pip
+		pip install --upgrade poetry && poetry install
 	}
 
 	test_module() {
