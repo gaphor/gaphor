@@ -452,10 +452,8 @@ class Diagrams(object):
         page_num = self._notebook.page_num(widget)
         # TODO why does Gtk.Notebook give a GTK-CRITICAL if you remove a page
         #   with set_show_tabs(True)?
-        self._notebook.set_show_tabs(False)
+        self._clear_ui_settings()
         self._notebook.remove_page(page_num)
-        if self._notebook.get_n_pages() > 0:
-            self._notebook.set_show_tabs(True)
         widget.diagram_page.close()
         widget.destroy()
 
