@@ -50,6 +50,7 @@ jobs:
     before_deploy:
     - source .venv/bin/activate
     - python setup.py macos -b
+    - ls macOS
     deploy:
       skip_cleanup: true
       provider: releases
@@ -76,8 +77,8 @@ jobs:
 install:
 - ./venv
 
-after_success:
-- coveralls
+# after_success:
+# - coveralls
 
 notifications:
   email: false
