@@ -348,7 +348,6 @@ class MainWindow(object):
     def quit(self):
         # TODO: check for changes (e.g. undo manager), fault-save
         close = self.ask_to_close()
-        print("close", close)
         if close:
             Gtk.main_quit()
             self.shutdown()
