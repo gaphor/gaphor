@@ -163,7 +163,6 @@ class MainWindow(object):
             a = Gtk.Action.new(name, label, None, None)
             a.set_property("hide-if-empty", False)
             self.action_group.add_action(a)
-        self._tab_ui_settings = None
 
         self.action_manager.register_action_provider(self)
 
@@ -338,18 +337,6 @@ class MainWindow(object):
     def _on_window_delete(self, window=None, event=None):
         return not self.ask_to_close()
 
-    def _clear_ui_settings(self):
-        try:
-            ui_manager = self.ui_manager
-        except component.ComponentLookupError as e:
-            log.warning("No UI manager service found")
-        else:
-            if self._tab_ui_settings:
-                action_group, ui_id = self._tab_ui_settings
-                self.ui_manager.remove_action_group(action_group)
-                self.ui_manager.remove_ui(ui_id)
-                self._tab_ui_settings = None
-
     def _on_window_size_allocate(self, window, allocation):
         """
         Store the window size in a property.
@@ -388,6 +375,7 @@ class Diagrams(object):
 
     component_registry = inject("component_registry")
     properties = inject("properties")
+    ui_manager = inject("ui_manager")
 
     menu_xml = """
       <ui>
@@ -407,6 +395,7 @@ class Diagrams(object):
         self.action_group.get_action("diagram-drawing-style").set_active(
             self.properties("diagram.sloppiness", 0) != 0
         )
+        self._page_ui_settings = None
 
     def open(self):
         """Open the diagrams component.
@@ -463,10 +452,8 @@ class Diagrams(object):
         page_num = self._notebook.page_num(widget)
         # TODO why does Gtk.Notebook give a GTK-CRITICAL if you remove a page
         #   with set_show_tabs(True)?
-        self._notebook.set_show_tabs(False)
+        self._clear_ui_settings()
         self._notebook.remove_page(page_num)
-        if self._notebook.get_n_pages() > 0:
-            self._notebook.set_show_tabs(True)
         widget.diagram_page.close()
         widget.destroy()
 
@@ -511,6 +498,9 @@ class Diagrams(object):
         """
 
         widgets_on_pages = []
+        if not self._notebook:
+            return widgets_on_pages
+
         num_pages = self._notebook.get_n_pages()
         for page in range(0, num_pages):
             widget = self._notebook.get_nth_page(page)
@@ -518,7 +508,26 @@ class Diagrams(object):
         return widgets_on_pages
 
     def _on_switch_page(self, notebook, page, page_num):
+        self._clear_ui_settings()
+        self._add_ui_settings(page_num)
         self.component_registry.handle(DiagramPageChange(page))
+
+    def _add_ui_settings(self, page_num):
+        ui_manager = self.ui_manager
+        child_widget = self._notebook.get_nth_page(page_num)
+        action_group = child_widget.diagram_page.action_group
+        menu_xml = child_widget.diagram_page.menu_xml
+        ui_manager.insert_action_group(action_group)
+        ui_id = ui_manager.add_ui_from_string(menu_xml)
+        self._page_ui_settings = (action_group, ui_id)
+
+    def _clear_ui_settings(self):
+        ui_manager = self.ui_manager
+        if self._page_ui_settings:
+            action_group, ui_id = self._page_ui_settings
+            self.ui_manager.remove_action_group(action_group)
+            self.ui_manager.remove_ui(ui_id)
+            self._page_ui_settings = None
 
     @component.adapter(DiagramShow)
     def _on_show_diagram(self, event):

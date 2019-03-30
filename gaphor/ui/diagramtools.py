@@ -30,10 +30,10 @@ from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.interfaces import IEditor, IConnect, IGroup
 
 # cursor to indicate grouping
-IN_CURSOR = Gdk.CursorType.DIAMOND_CROSS
+IN_CURSOR = Gdk.Cursor.new(Gdk.CursorType.DIAMOND_CROSS)
 
 # cursor to indicate ungrouping
-OUT_CURSOR = Gdk.CursorType.SIZING
+OUT_CURSOR = Gdk.Cursor.new(Gdk.CursorType.SIZING)
 
 log = logging.getLogger(__name__)
 

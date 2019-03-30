@@ -39,6 +39,7 @@ class Alignment(object):
 
     def init(self, app):
         self.component_registry.register_handler(self.update)
+        self.update()
 
     def shutdown(self):
         self.component_registry.unregister_handler(self.update)
