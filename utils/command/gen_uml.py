@@ -1,39 +1,17 @@
-#!/usr/bin/env python
+"""The Gaphor code generator.
 
-# Copyright (C) 2003-2017 Arjan Molenaar <gaphor@gmail.com>
-#                         Artur Wroblewski <wrobell@pld-linux.org>
-#                         Dan Yeaw <dan@yeaw.me>
-#
-# This file is part of Gaphor.
-#
-# Gaphor is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Library General Public License as published by the Free
-# Software Foundation, either version 2 of the License, or (at your option)
-# any later version.
-#
-# Gaphor is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License
-# more details.
-#
-# You should have received a copy of the GNU Library General Public
-# along with Gaphor.  If not, see <http://www.gnu.org/licenses/>.
-"""
 This file provides the code generator which transforms gaphor/UML/uml2.gaphor
-into gaphor/UML/uml2.py.
+into gaphor/UML/uml2.py. Also a distutils tool, build_uml, is provided.
 
-Also a distutils tool, build_uml, is provided.
+Create a UML 2.0 datamodel from the Gaphor model file.
+
+To do this we do the following:
+1. read the model file with the gaphor parser
+2. Create a object hierarchy by ordering elements based on generalizations
+
+Recreate the model using some very dynamic class, so we can set all
+attributes and traverse them to generate the data model.
 """
-
-#
-# Create a UML 2.0 datamodel from the Gaphor 0.2.0 model file.
-#
-# To do this we do the following:
-# 1. read the model file with the gaphor parser
-# 2. Create a object herarcy by ordering elements based on generalizations
-
-# Recreate the model using some very dynamic class, so we can set all
-# attributes and traverse them to generate the data model.
 
 import sys
 
