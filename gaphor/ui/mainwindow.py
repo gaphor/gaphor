@@ -204,8 +204,7 @@ class MainWindow(object):
             if response == Gtk.ResponseType.YES:
                 # On filedialog.cancel, the application should not close.
                 return self.file_manager.action_save()
-            return response == Gtk.ResponseType.REJECT
-        return True
+        return response == Gtk.ResponseType.REJECT
 
     def get_ui_component(self, name):
         return self.component_registry.get_utility(IUIComponent, name)
