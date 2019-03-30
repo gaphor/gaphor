@@ -100,14 +100,14 @@ Therefore, code of connector items is written with assumption, that
 interfaces are connectable elements.
 """
 
-from logging import getLogger
+import logging
 from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
 from operator import attrgetter
 
-logger = getLogger("Connector")
+logger = logging.getLogger(__name__)
 
 
 class ConnectorItem(NamedLine):

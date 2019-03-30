@@ -4,7 +4,6 @@ file system.  These are things like preferences."""
 import os
 import pprint
 import sys
-from logging import getLogger
 from zope import interface
 
 from gaphas.decorators import AsyncIO
@@ -46,8 +45,6 @@ class Properties(object):
     Properties are persisted to the local file system."""
 
     component_registry = inject("component_registry")
-
-    logger = getLogger("Properties")
 
     def __init__(self, backend=None):
         """Constructor.  Initialize the Gaphor application object, the

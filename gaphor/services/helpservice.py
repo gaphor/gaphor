@@ -1,7 +1,6 @@
 """About and help services. (help browser anyone?)"""
 
 import os
-from logging import getLogger
 
 import pkg_resources
 from gi.repository import GdkPixbuf
@@ -29,17 +28,15 @@ class HelpService(object):
     """
 
     main_window = inject("main_window")
-    logger = getLogger("HelpService")
 
     def __init__(self):
         pass
 
     def init(self, app):
-        self.logger.info("Starting")
         self.action_group = build_action_group(self)
 
     def shutdown(self):
-        self.logger.info("Shutting down")
+        pass
 
     @action(name="help-about", stock_id="gtk-about")
     def about(self):

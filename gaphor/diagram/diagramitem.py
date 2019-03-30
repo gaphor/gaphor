@@ -6,7 +6,7 @@ Such as a modifier 'subject' property and a unique id.
 from zope import component
 from gaphas.state import observed, reversible_property
 
-from logging import getLogger
+import logging
 from gaphor import UML
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.core import inject
@@ -14,7 +14,7 @@ from gaphor.diagram import DiagramItemMeta
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 
-logger = getLogger("Diagram")
+logger = logging.getLogger(__name__)
 
 
 class StereotypeSupport(object):
@@ -258,7 +258,7 @@ class DiagramItem(
         Watch a certain path of elements starting with the DiagramItem.
         The handler is optional and will default to a simple
         self.request_update().
-        
+
         Watches should be set in the constructor, so they can be registered
         and unregistered in one shot.
 

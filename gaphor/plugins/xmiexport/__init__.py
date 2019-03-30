@@ -2,7 +2,7 @@
 This plugin extends Gaphor with XMI export functionality.
 """
 
-from logging import getLogger
+import logging
 
 from zope.interface import implementer
 
@@ -11,13 +11,14 @@ from gaphor.interfaces import IService, IActionProvider
 from gaphor.plugins.xmiexport import exportmodel
 from gaphor.ui.filedialog import FileDialog
 
+logger = logging.getLogger(__name__)
+
 
 @implementer(IService, IActionProvider)
 class XMIExport(object):
 
     element_factory = inject("element_factory")
     main_window = inject("main_window")
-    logger = getLogger(__name__)
 
     menu_xml = """
       <ui>
@@ -58,14 +59,12 @@ class XMIExport(object):
         filename = file_dialog.selection
 
         if filename and len(filename) > 0:
-            self.logger.debug("Exporting XMI model to: %s" % filename)
+            logger.debug("Exporting XMI model to: %s" % filename)
             export = exportmodel.XMIExport(self.element_factory)
             try:
                 export.export(filename)
             except Exception as e:
-                self.logger.error(
-                    "Error while saving model to file %s: %s" % (filename, e)
-                )
+                logger.error("Error while saving model to file %s: %s" % (filename, e))
 
 
 # vim:sw=4:et

@@ -1,7 +1,7 @@
 """Service dedicated to exporting diagrams to a variety of file formats."""
 
 import os
-from logging import getLogger
+import logging
 
 import cairo
 from gaphas.freehand import FreeHandPainter
@@ -15,6 +15,8 @@ from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.questiondialog import QuestionDialog
 
+logger = logging.getLogger(__name__)
+
 
 @implementer(IService, IActionProvider)
 class DiagramExportManager(object):
@@ -25,7 +27,6 @@ class DiagramExportManager(object):
     component_registry = inject("component_registry")
     main_window = inject("main_window")
     properties = inject("properties")
-    logger = getLogger("ExportManager")
 
     menu_xml = """
       <ui>
@@ -93,12 +94,12 @@ class DiagramExportManager(object):
 
     def update_painters(self, view):
 
-        self.logger.info("Updating painters")
-        self.logger.debug("View is %s" % view)
+        logger.info("Updating painters")
+        logger.debug("View is %s" % view)
 
         sloppiness = self.properties("diagram.sloppiness", 0)
 
-        self.logger.debug("Sloppiness is %s" % sloppiness)
+        logger.debug("Sloppiness is %s" % sloppiness)
 
         if sloppiness:
             view.painter = FreeHandPainter(ItemPainter(), sloppiness)
@@ -110,8 +111,8 @@ class DiagramExportManager(object):
 
     def save_svg(self, filename, canvas):
 
-        self.logger.info("Exporting to SVG")
-        self.logger.debug("SVG path is %s" % filename)
+        logger.info("Exporting to SVG")
+        logger.debug("SVG path is %s" % filename)
 
         view = View(canvas)
 
@@ -136,8 +137,8 @@ class DiagramExportManager(object):
 
     def save_png(self, filename, canvas):
 
-        self.logger.info("Exporting to PNG")
-        self.logger.debug("PNG path is %s" % filename)
+        logger.info("Exporting to PNG")
+        logger.debug("PNG path is %s" % filename)
 
         view = View(canvas)
 
@@ -161,8 +162,8 @@ class DiagramExportManager(object):
 
     def save_pdf(self, filename, canvas):
 
-        self.logger.info("Exporting to PDF")
-        self.logger.debug("PDF path is %s" % filename)
+        logger.info("Exporting to PDF")
+        logger.debug("PDF path is %s" % filename)
 
         view = View(canvas)
 

@@ -252,7 +252,7 @@ class NamespaceModel(Gtk.GenericTreeModel):
     def _on_element_delete(self, event):
         element = event.element
 
-        # log.debug('Namespace received deleting element %s' % element)
+        log.debug("Namespace received deleting element %s" % element)
 
         if event.service is self.factory and type(element) in self.filter:
             path = self.path_from_element(element)

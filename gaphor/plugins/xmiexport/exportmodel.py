@@ -1,6 +1,8 @@
-from logging import getLogger
+import logging
 
 from gaphor.misc.xmlwriter import XMLWriter
+
+logger = logging.getLogger(__name__)
 
 
 class XMIExport(object):
@@ -11,14 +13,12 @@ class XMIExport(object):
     XMI_PREFIX = "XMI"
     UML_PREFIX = "UML"
 
-    logger = getLogger(__name__)
-
     def __init__(self, element_factory):
         self.element_factory = element_factory
         self.handled_ids = list()
 
     def handle(self, xmi, element):
-        self.logger.debug("Handling %s" % element.__class__.__name__)
+        logger.debug("Handling %s" % element.__class__.__name__)
         try:
             handler_name = "handle%s" % element.__class__.__name__
             handler = getattr(self, handler_name)
@@ -27,13 +27,11 @@ class XMIExport(object):
             if not idref:
                 self.handled_ids.append(element.id)
         except AttributeError as e:
-            self.logger.warning(
+            logger.warning(
                 "Missing handler for %s:%s" % (element.__class__.__name__, e)
             )
         except Exception as e:
-            self.logger.error(
-                "Failed to handle %s:%s" % (element.__class__.__name__, e)
-            )
+            logger.error("Failed to handle %s:%s" % (element.__class__.__name__, e))
 
     def handlePackage(self, xmi, element, idref=False):
 
@@ -263,7 +261,7 @@ class XMIExport(object):
 
         xmi.endElement("XMI")
 
-        self.logger.debug(self.handled_ids)
+        logger.debug(self.handled_ids)
 
     def select_package(self, element):
         return element.__class__.__name__ == "Package"

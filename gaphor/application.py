@@ -9,7 +9,7 @@ All important services are present in the application object:
  - action sets
 """
 
-from logging import getLogger
+import logging
 
 import pkg_resources
 from zope import component
@@ -17,7 +17,7 @@ from zope import component
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.interfaces import IService
 
-logger = getLogger("Application")
+logger = logging.getLogger(__name__)
 
 
 class NotInitializedError(Exception):

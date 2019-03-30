@@ -5,7 +5,7 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-from logging import getLogger
+import logging
 from zope import component
 
 from zope.interface import implementer
@@ -15,7 +15,7 @@ from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 
-logger = getLogger("Connector")
+logger = logging.getLogger(__name__)
 
 
 @implementer(IConnect)
