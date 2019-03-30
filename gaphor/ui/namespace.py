@@ -761,10 +761,10 @@ class Namespace(object):
         """
         Show a popup menu if button3 was pressed on the TreeView.
         """
-        # handle mouse button 3:
-        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
+        # handle mouse button 3:"
+        if event.type == Gdk.EventType.BUTTON_PRESS and event.button.button == 3:
             menu = self.ui_manager.get_widget("/namespace-popup")
-            menu.popup(None, None, None, event.button, event.time)
+            menu.popup_at_pointer(event)
 
     def _on_view_row_activated(self, view, path, column):
         """

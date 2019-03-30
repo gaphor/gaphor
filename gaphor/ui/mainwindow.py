@@ -348,8 +348,11 @@ class MainWindow(object):
     @action(name="file-quit", stock_id="gtk-quit")
     def quit(self):
         # TODO: check for changes (e.g. undo manager), fault-save
-        self.ask_to_close() and Gtk.main_quit()
-        self.shutdown()
+        close = self.ask_to_close()
+        print("close", close)
+        if close:
+            Gtk.main_quit()
+            self.shutdown()
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
