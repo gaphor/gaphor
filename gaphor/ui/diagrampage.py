@@ -84,7 +84,6 @@ class DiagramPage(object):
         self.widget = None
         self.action_group = build_action_group(self)
         self.toolbox = None
-        self.component_registry.register_handler(self._on_element_change)
         self.component_registry.register_handler(self._on_element_delete)
 
     title = property(lambda s: s.diagram and s.diagram.name or _("<None>"))
@@ -132,12 +131,6 @@ class DiagramPage(object):
 
         return self.widget
 
-    @component.adapter(IAttributeChangeEvent)
-    def _on_element_change(self, event):
-        if event.element is self.diagram and event.property is UML.Diagram.name:
-            # self.widget.title = self.title
-            print("TODO: update diagram title")
-
     @component.adapter(IElementDeleteEvent)
     def _on_element_delete(self, event):
         if event.element is self.diagram:
@@ -151,7 +144,6 @@ class DiagramPage(object):
         """
         self.widget.destroy()
         self.component_registry.unregister_handler(self._on_element_delete)
-        self.component_registry.unregister_handler(self._on_element_change)
         self.view = None
 
     @action(name="diagram-zoom-in", stock_id="gtk-zoom-in")

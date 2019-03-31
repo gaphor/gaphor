@@ -24,6 +24,7 @@ from gaphor.core import (
     transactional,
 )
 from gaphor.interfaces import IService, IActionProvider
+from gaphor.UML.interfaces import IAttributeChangeEvent
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
@@ -410,11 +411,13 @@ class Diagrams(object):
         self._notebook.show()
         self._notebook.connect("switch-page", self._on_switch_page)
         self.component_registry.register_handler(self._on_show_diagram)
+        self.component_registry.register_handler(self._on_name_change)
         return self._notebook
 
     def close(self):
         """Close the diagrams component."""
 
+        self.component_registry.unregister_handler(self._on_name_change)
         self.component_registry.unregister_handler(self._on_show_diagram)
         self._notebook.destroy()
         self._notebook = None
@@ -467,6 +470,16 @@ class Diagrams(object):
             widget (Gtk.Widget): The child widget of the tab.
         """
 
+        page_num = self._notebook.append_page(
+            child=widget, tab_label=self.tab_label(title, widget)
+        )
+        self._notebook.set_current_page(page_num)
+        self._notebook.set_tab_reorderable(widget, True)
+
+        self.component_registry.handle(DiagramPageChange(widget))
+        self._notebook.set_show_tabs(True)
+
+    def tab_label(self, title, widget):
         tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
         label = Gtk.Label(label=title)
         tab_box.pack_start(label)
@@ -478,16 +491,10 @@ class Diagrams(object):
         button.set_relief(Gtk.ReliefStyle.NONE)
         button.set_focus_on_click(False)
         button.add(close_image)
+        button.connect("clicked", self.cb_close_tab, widget)
         tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
         tab_box.show_all()
-
-        page_num = self._notebook.append_page(child=widget, tab_label=tab_box)
-        self._notebook.set_current_page(page_num)
-        self._notebook.set_tab_reorderable(widget, True)
-
-        button.connect("clicked", self.cb_close_tab, widget)
-        self.component_registry.handle(DiagramPageChange(widget))
-        self._notebook.set_show_tabs(True)
+        return tab_box
 
     def get_widgets_on_pages(self):
         """Gets the widget on each open page Notebook page.
@@ -560,6 +567,17 @@ class Diagrams(object):
 
         self.create_tab(diagram.name, widget)
         return page
+
+    @component.adapter(IAttributeChangeEvent)
+    def _on_name_change(self, event):
+        if event.property is UML.Diagram.name:
+            for page in range(0, self._notebook.get_n_pages()):
+                widget = self._notebook.get_nth_page(page)
+                if event.element is widget.diagram_page.diagram:
+                    print("Name change", event.__dict__)
+                    self._notebook.set_tab_label(
+                        widget, self.tab_label(event.new_value, widget)
+                    )
 
     @toggle_action(name="diagram-drawing-style", label="Hand drawn style", active=False)
     def hand_drawn_style(self, active):
