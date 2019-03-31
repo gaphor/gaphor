@@ -118,20 +118,19 @@ jobs:
     steps:
     - script: |
         brew install gobject-introspection gtk+3
-        ./venv
-        source .venv/bin/activate
+        source venv
         pip install pytest-xvfb
       displayName: 'Install dependencies'
 
     - script: |
-        source .venv/bin/activate
+        source venv
         pytest
       displayName: 'PyTest'
       env:
         PYTEST_ADDOPTS: "--doctest-modules"
 
     - script: |
-        source .venv/bin/activate
+        source venv
         python setup.py macos -b
       displayName: Create macOS Package
       condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
@@ -175,12 +174,12 @@ jobs:
       displayName: Install Ubuntu Dependencies
 
     - script: |
-        ./venv
+        source venv
       displayName: Install Python Dependencies
 
     - script: |
         mkdir -p /home/vsts/.local/share # This can be removed once we merge back to master (config dir)
-        source .venv/bin/activate
+        source venv
         xvfb-run pytest
       displayName: 'PyTest'
       env:
@@ -194,6 +193,6 @@ jobs:
         testRunTitle: Publish Test Results
     
     - script: |
-        source .venv/bin/activate
+        source venv
         poetry build
       displayName: Build Wheel
