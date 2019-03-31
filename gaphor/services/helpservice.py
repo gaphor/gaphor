@@ -96,7 +96,7 @@ class HelpService(object):
             "This software is published\n"
             "under the terms of the\n"
             '<span weight="bold">Apache Software License v2</span>.\n'
-            "See the LICENSE.md file for details.",
+            "See the LICENSE.txt file for details.",
             0,
             8,
         )

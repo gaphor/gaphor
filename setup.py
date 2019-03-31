@@ -57,7 +57,6 @@ setup(
     url="https://gaphor.readthedocs.io/",
     author="Arjan J. Molenaar",
     author_email="gaphor@gmail.com",
-    license="GNU Lesser General Public License",
     description="Gaphor is the simple modeling tool",
     long_description=long_description,
     classifiers=[
