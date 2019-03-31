@@ -21,6 +21,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: End Users/Desktop",
     "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: Apache Software License",
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX",
@@ -28,7 +29,6 @@ classifiers = [
     "Programming Language :: Python",
     "Topic :: Multimedia :: Graphics :: Editors :: Vector-Based",
     "Topic :: Software Development :: Documentation",
-    "License :: OSI Approved :: Apache Software License",
 ]
 
 [tool.poetry.dependencies]
