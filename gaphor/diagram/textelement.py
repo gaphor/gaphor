@@ -11,6 +11,7 @@ from gaphas.freehand import FreeHandCairoContext
 from gaphas.geometry import distance_rectangle_point, Rectangle
 from gi.repository import Pango
 
+gi.require_version("PangoCairo", "1.0")
 from gi.repository import PangoCairo
 
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
