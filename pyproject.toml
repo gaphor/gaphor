@@ -6,7 +6,6 @@ authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
     "Dan Yeaw <dan@yeaw.me>"
 ]
-license = "Apache-2.0"
 
 readme = "README.md"
 
