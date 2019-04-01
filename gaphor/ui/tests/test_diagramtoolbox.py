@@ -165,6 +165,3 @@ class DiagramToolboxTestCase(TestCase):
 
     def test_extension(self):
         self._test_placement_action("toolbox-extension")
-
-
-# vim:sw=4:et:ai

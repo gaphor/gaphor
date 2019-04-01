@@ -42,6 +42,3 @@ class MainWindowTestCase(unittest.TestCase):
         main_w.open()
         self.component_registry.handle(DiagramShow(diagram))
         self.assertEqual(self.get_current_diagram(), diagram)
-
-
-# vim:sw=4:et:ai
