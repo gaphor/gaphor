@@ -560,9 +560,9 @@ class Diagrams(object):
         # No existing diagram page found, creating one
         page = DiagramPage(diagram)
         widget = page.construct()
+        widget.set_css_name("diagram-tab")
         widget.set_name("diagram-tab")
         widget.diagram_page = page
-        assert widget.get_name() == "diagram-tab"
         page.set_drawing_style(self.properties("diagram.sloppiness", 0))
 
         self.create_tab(diagram.name, widget)
