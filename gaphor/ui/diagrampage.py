@@ -106,6 +106,7 @@ class DiagramPage(object):
         assert self.diagram
 
         view = GtkView(canvas=self.diagram.canvas)
+        view.set_css_name("diagramview")
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,

@@ -3,7 +3,7 @@ This module contains user interface related code, such as the
 main screen and diagram windows.
 """
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 import pkg_resources
 import os.path
 
@@ -26,5 +26,9 @@ _repl.expr = "(.?[A-Z])"
 def icon_for_element(element):
     return re.sub(_repl.expr, _repl, type(element).__name__)
 
+# Set style for model canvas
+css_provider = Gtk.CssProvider.new()
+screen = Gdk.Display.get_default().get_default_screen()
 
-# vim:sw=4:et:
+Gtk.StyleContext.add_provider_for_screen(screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+css_provider.load_from_data("diagramview { background: yellow }".encode("utf-8"))
