@@ -36,7 +36,7 @@ function set_build_root {
 
 set_build_root "${DIR}/_build_root"
 
-function build_pacman {
+function build_pacman {/LICENSE
     pacman --cachedir "/var/cache/pacman/pkg" --root "${BUILD_ROOT}" "$@"
 }
 
@@ -81,6 +81,12 @@ function extract_installer {
 }
 
 function install_deps {
+    # Temporarily using our own remote repository while waiting for
+    # https://github.com/msys2/MINGW-packages/pull/5114 to be merged
+    mkdir -p "$BUILD_ROOT"/etc
+    cp "${DIR}"/pacman.conf "$BUILD_ROOT"/etc/
+    build_pacman --noconfirm -Syu
+
     build_pacman --noconfirm -S \
         mingw-w64-"${ARCH}"-gtk3 \
         mingw-w64-"${ARCH}"-python3 \
@@ -89,12 +95,6 @@ function install_deps {
         mingw-w64-"${ARCH}"-python3-pip \
         mingw-w64-"${ARCH}"-python3-setuptools \
         mingw-w64-"${ARCH}"-python3-zope.interface
-
-    # First time installing pip has post-install errors, reinstall to fix
-    # sed: can't read mingw64/bin/pip3-script.py: No such file or directory
-    # sed: can't read mingw64/bin/pip3.7-script.py: No such file or directory
-    # error: command (/usr/bin/bash /usr/bin/bash -c . /tmp/alpm_omSbWr/.INSTALL; post_install 19.0.1-1 ) failed to execute correctly
-    build_pacman --noconfirm -S mingw-w64-"${ARCH}"-python3-pip
 
     PIP_REQUIREMENTS="\
         pycairo==1.18.0
