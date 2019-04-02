@@ -106,7 +106,10 @@ class DiagramPage(object):
         assert self.diagram
 
         view = GtkView(canvas=self.diagram.canvas)
-        view.set_css_name("diagramview")
+        try:
+            view.set_css_name("diagramview")
+        except AttributeError:
+            pass  # Gtk.Widget.set_css_name() is added in 3.20
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,

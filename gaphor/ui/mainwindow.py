@@ -560,7 +560,10 @@ class Diagrams(object):
         # No existing diagram page found, creating one
         page = DiagramPage(diagram)
         widget = page.construct()
-        widget.set_css_name("diagram-tab")
+        try:
+            widget.set_css_name("diagram-tab")
+        except AttributeError:
+            pass  # Gtk.Widget.set_css_name() is added in 3.20
         widget.set_name("diagram-tab")
         widget.diagram_page = page
         page.set_drawing_style(self.properties("diagram.sloppiness", 0))
