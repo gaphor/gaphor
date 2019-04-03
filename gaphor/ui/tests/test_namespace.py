@@ -63,6 +63,3 @@ class NamespaceTestCase(TestCase):
         assert c not in ns._nodes[None]
         assert c not in ns._nodes[m]
         assert c not in ns._nodes[a]
-
-
-

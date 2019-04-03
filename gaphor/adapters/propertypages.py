@@ -44,6 +44,7 @@ from gaphor.ui.interfaces import IPropertyPage
 
 log = logging.getLogger(__name__)
 
+
 class EditableTreeModel(Gtk.ListStore):
     """Editable GTK tree model based on ListStore model.
 

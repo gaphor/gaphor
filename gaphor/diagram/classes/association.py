@@ -376,7 +376,7 @@ class AssociationEnd(UML.Presentation):
 
     An AsociationEnd has no ID, hence it will not be stored, but it will be
     recreated by the owning Association.
-    
+
     TODO:
     - add on_point() and let it return min(distance(_name), distance(_mult)) or
       the first 20-30 units of the line, for association end popup menu.
