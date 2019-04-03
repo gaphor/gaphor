@@ -174,8 +174,6 @@ class StereotypePage(object):
         name, old_value, is_applied, stereotype, _, _ = row
         value = not is_applied
 
-        print("selecting %s" % list(row))
-
         subject = self.item.subject
         if value:
             UML.model.apply_stereotype(self.element_factory, subject, stereotype)
@@ -199,8 +197,6 @@ class StereotypePage(object):
         if isinstance(attr, UML.Stereotype):
             return  # don't edit stereotype rows
 
-        print("editing %s" % list(row))
-
         if slot is None and not value:
             return  # nothing to do and don't create slot without value
 
@@ -219,7 +215,6 @@ class StereotypePage(object):
 
         row[1] = value
         row[5] = slot
-        print("slots %s" % obj.slot)
 
 
 component.provideAdapter(StereotypePage, adapts=[UML.Element], name="Stereotypes")
