@@ -6,8 +6,7 @@
 - Overhaul the README
 - Add contributing guide and code of conduct
 - Adopt Black as code formatter
-- Add CI/CD for Windows, macOS, Linux with Travis, Azure-Pipelines, and
-ReadTheDocs
+- Add CI/CD for Windows, macOS, Linux with Azure-Pipelines and ReadTheDocs
 
 0.17.2
 ------
