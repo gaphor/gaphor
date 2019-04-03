@@ -106,7 +106,9 @@ class StereotypePage(object):
         # stereotype attributes
         # self.model = StereotypeAttributes(self.item.subject)
         self.model = Gtk.TreeStore.new([str, str, bool, object, object, object])
-        tree_view = create_stereotype_tree_view(self.model, self._toggle_stereotype, self._set_value)
+        tree_view = create_stereotype_tree_view(
+            self.model, self._toggle_stereotype, self._set_value
+        )
         page.pack_start(tree_view, True, True, 0)
 
         page.show_all()
