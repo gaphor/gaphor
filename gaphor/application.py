@@ -125,9 +125,17 @@ class _Application(object):
             return self.init_service(name)
 
     def run(self):
-        from gi.repository import Gtk
+        from gi.repository import Gio, Gtk
+        app = Gtk.Application(application_id="org.gaphor.gaphor",
+                         flags=Gio.ApplicationFlags.FLAGS_NONE)
 
-        Gtk.main()
+        def app_activate(app):
+            main_window = self.get_service("main_window")
+            app.add_window(main_window.window)
+
+        app.connect("activate", app_activate)
+
+        app.run()
 
     def shutdown(self):
         for name, srv in self.component_registry.get_utilities(IService):
