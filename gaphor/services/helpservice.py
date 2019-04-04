@@ -7,7 +7,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 from zope.interface import implementer
 
-from gaphor.application import Application
+from gaphor import __version__
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
 
@@ -48,7 +48,7 @@ class HelpService(object):
             "logo.png",
         )
         logo = GdkPixbuf.Pixbuf.new_from_file(logo_file)
-        version = Application.distribution.version
+        version = __version__
         about = Gtk.Dialog.new()
         about.set_title(_("About Gaphor"))
         about.set_modal(True)
@@ -76,7 +76,7 @@ class HelpService(object):
             label.set_justify(Gtk.Justification.CENTER)
             tab_vbox.pack_start(label, True, True, 0)
 
-        add_label('<span weight="bold">version %s</span>' % version)
+        add_label('<span weight="bold">Version %s</span>' % version)
         add_label(
             '<span variant="smallcaps">Gaphor is the simple modeling tool written in Python</span>',
             8,
