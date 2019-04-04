@@ -26,6 +26,7 @@ TODO:
 """
 
 import math
+import logging
 from zope import component
 
 import gaphas.item
@@ -40,6 +41,8 @@ from gaphor.core import _, inject, transactional
 from gaphor.diagram import items
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.ui.interfaces import IPropertyPage
+
+log = logging.getLogger(__name__)
 
 
 class EditableTreeModel(Gtk.ListStore):

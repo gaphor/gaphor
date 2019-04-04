@@ -138,7 +138,7 @@ class NamespaceModel(Gtk.GenericTreeModel):
         if e:
             ns = e.namespace
             n = self._nodes.get(ns)
-            if n:
+            if n and e in n:
                 return self.path_from_element(ns) + (n.index(e),)
             else:
                 return ()
@@ -267,7 +267,7 @@ class NamespaceModel(Gtk.GenericTreeModel):
             self._remove_element(element)
 
             parent_node = self._nodes.get(element.namespace)
-            if parent_node:
+            if element in parent_node:
                 parent_node.remove(element)
 
     #            if path and parent_node and len(self._nodes[parent_node]) == 0:

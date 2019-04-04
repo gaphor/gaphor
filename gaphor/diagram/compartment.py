@@ -184,8 +184,7 @@ class Compartment(list):
         for item in self:
             cr.save()
             try:
-                cr.translate(0, offset)
-                # cr.move_to(0, offset)
+                cr.move_to(0, offset)
                 item.draw(context)
                 offset += vspacing + item.height
             finally:
@@ -309,6 +308,7 @@ class CompartmentItem(NamedItem):
         st = obj.classifier[0].name
         c = Compartment(st, self, obj)
         c.title = UML.model.STEREOTYPE_FMT % st
+        c.font = self.style.feature_font
         self._update_stereotype_compartment(c, obj)
         self._compartments.append(c)
         self.request_update()
@@ -324,6 +324,7 @@ class CompartmentItem(NamedItem):
         for slot in obj.slot:
             item = FeatureItem()
             item.subject = slot
+            item.font = self.style.feature_font
             comp.append(item)
         comp.visible = len(obj.slot) > 0
 
@@ -395,6 +396,7 @@ class CompartmentItem(NamedItem):
         diagram item. Their visibility can be toggled by Compartment.visible.
         """
         c = Compartment(name, self)
+        c.font = self.style.feature_font
         self._compartments.append(c)
         return c
 

@@ -8,14 +8,13 @@ from gi.repository import GObject, Gtk
 from zope.interface import implementer
 
 from gaphor import UML
-from gaphor.adapters.propertypages import on_text_cell_edited, on_bool_cell_edited
 from gaphor.core import _, inject, transactional
 from gaphor.diagram.diagramitem import StereotypeSupport
 from gaphor.diagram import items
 from gaphor.ui.interfaces import IPropertyPage
 
 
-def create_stereotype_tree_view(model):
+def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
     """
     Create a tree view for an editable tree model.
 
@@ -32,11 +31,11 @@ def create_stereotype_tree_view(model):
     renderer = Gtk.CellRendererToggle()
     renderer.set_property("active", True)
     renderer.set_property("activatable", True)
-    renderer.connect("toggled", on_bool_cell_edited, model, 2)
+    renderer.connect("toggled", toggle_stereotype, model, 2)
     col.pack_start(renderer, False)
     col.add_attribute(renderer, "active", 2)
 
-    def show_checkbox(column, cell, model, iter):
+    def show_checkbox(column, cell, model, iter, data):
         # value = model.get_value(iter, 4)
         # cell.set_property('active', value is not None)
         value = model.get_value(iter, 3)
@@ -55,11 +54,11 @@ def create_stereotype_tree_view(model):
     # Value
     renderer = Gtk.CellRendererText()
     renderer.set_property("is-expanded", True)
-    renderer.connect("edited", on_text_cell_edited, model, 1)
+    renderer.connect("edited", set_slot_value, model, 1)
     col = Gtk.TreeViewColumn(_("Value"), renderer, text=1)
     col.set_expand(True)
 
-    def set_editable(column, cell, model, iter):
+    def set_editable(column, cell, model, iter, data):
         value = model.get_value(iter, 4)
         cell.set_property("editable", bool(value))
 
@@ -107,10 +106,14 @@ class StereotypePage(object):
         # stereotype attributes
         # self.model = StereotypeAttributes(self.item.subject)
         self.model = Gtk.TreeStore.new([str, str, bool, object, object, object])
-        tree_view = create_stereotype_tree_view(self.model)
+        tree_view = create_stereotype_tree_view(
+            self.model, self._toggle_stereotype, self._set_value
+        )
         page.pack_start(tree_view, True, True, 0)
 
         page.show_all()
+
+        self.refresh()
         return page
 
     @transactional
@@ -155,13 +158,14 @@ class StereotypePage(object):
                         self.model.append(parent, data)
 
     @transactional
-    def set_value(self, iter, col, value):
-        if col == 2:
-            self.select_stereotype(iter)
-        elif col == 1:
-            self.set_slot_value(iter, value)
-        else:
-            print("col", col)
+    def _set_value(self, renderer, path, value, model, col=0):
+        iter = model.get_iter(path)
+        self.set_slot_value(iter, value)
+
+    @transactional
+    def _toggle_stereotype(self, renderer, path, model, col):
+        iter = model.get_iter(path)
+        self.select_stereotype(iter)
 
     def select_stereotype(self, iter):
         """
@@ -171,8 +175,6 @@ class StereotypePage(object):
         row = self.model[path]
         name, old_value, is_applied, stereotype, _, _ = row
         value = not is_applied
-
-        print("selecting %s" % list(row))
 
         subject = self.item.subject
         if value:
@@ -197,8 +199,6 @@ class StereotypePage(object):
         if isinstance(attr, UML.Stereotype):
             return  # don't edit stereotype rows
 
-        print("editing %s" % list(row))
-
         if slot is None and not value:
             return  # nothing to do and don't create slot without value
 
@@ -217,7 +217,6 @@ class StereotypePage(object):
 
         row[1] = value
         row[5] = slot
-        print("slots %s" % obj.slot)
 
 
 component.provideAdapter(StereotypePage, adapts=[UML.Element], name="Stereotypes")

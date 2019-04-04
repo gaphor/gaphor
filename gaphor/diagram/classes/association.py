@@ -22,7 +22,7 @@ from gaphor.diagram.textelement import text_extents, text_multiline
 
 class AssociationItem(NamedLine):
     """
-    AssociationItem represents associations. 
+    AssociationItem represents associations.
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
     """
@@ -61,6 +61,15 @@ class AssociationItem(NamedLine):
             base + "type<Class>.ownedAttribute", self.on_association_end_value
         ).watch(
             base + "type<Interface>.ownedAttribute", self.on_association_end_value
+        ).watch(
+            base + "appliedStereotype", self.on_association_end_value
+        ).watch(
+            base + "appliedStereotype.slot", self.on_association_end_value
+        ).watch(
+            base + "appliedStereotype.slot.definingFeature.name",
+            self.on_association_end_value,
+        ).watch(
+            base + "appliedStereotype.slot.value", self.on_association_end_value
         ).watch(
             "subject<Association>.ownedEnd"
         ).watch(
@@ -376,7 +385,7 @@ class AssociationEnd(UML.Presentation):
 
     An AsociationEnd has no ID, hence it will not be stored, but it will be
     recreated by the owning Association.
-    
+
     TODO:
     - add on_point() and let it return min(distance(_name), distance(_mult)) or
       the first 20-30 units of the line, for association end popup menu.

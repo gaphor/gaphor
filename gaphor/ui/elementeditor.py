@@ -80,7 +80,6 @@ class ElementEditor(object):
 
         diagrams = self.main_window.get_ui_component("diagrams")
         current_view = diagrams.get_current_view()
-        print("current view", current_view)
         if current_view:
             focused_item = current_view.focused_item
             if focused_item:

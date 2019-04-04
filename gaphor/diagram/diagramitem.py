@@ -127,8 +127,7 @@ class StereotypeSupport(object):
 
 
 class DiagramItem(
-    type("NewBase", (UML.Presentation, StereotypeSupport, EditableTextSupport), {}),
-    metaclass=DiagramItemMeta,
+    UML.Presentation, StereotypeSupport, EditableTextSupport, metaclass=DiagramItemMeta
 ):
     """
     Basic functionality for all model elements (lines and elements!).
