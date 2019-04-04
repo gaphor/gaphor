@@ -774,7 +774,7 @@ class Namespace(object):
 
     def _on_view_cursor_changed(self, view):
         """
-        Another row is selected, execute a dummy action.
+        Another row is selected, toggle action sensitivity.
         """
         element = view.get_selected_element()
         self.action_group.get_action(
