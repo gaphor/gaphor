@@ -53,21 +53,31 @@ graphics library.
 
 ## :floppy_disk: Install
 
-To install Gaphor on Windows you the [latest installer](https://github.com/gaphor/gaphor/releases).
+### Windows
+To install Gaphor on Windows you an use the [latest Gaphor.exe installer](https://github.com/gaphor/gaphor/releases).
 There are two versions:
 1. Full Windows installation
 2. Portable installation
 
+### Linux
 To install Gaphor in Linux use Flatpak:
 1. [Install Flatpak](https://flatpak.org/setup)
 1. `flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
 1. `flatpak install --user org.gaphor.Gaphor`
+Alternatively, you can download the [latest
+Gaphor.tar.gz](https://github.com/gaphor/gaphor/releases).
 
-We are currently working on installation packages for macOS. Until that is
-ready, you can install Gaphor, using pip:
+### macOS
+To install Gaphor on macOS you can use the [latest Gaphor.dmg
+installer](https://github.com/gaphor/gaphor/releases).
+Note: Sometimes launching the app the first time after installation fails due
+to macOS security settings, please attempt to launch it a 2nd time if this
+happens.
 
+### PyPI
+You can also install Gaphor using a wheel from PyPI.
 ```bash
-$ pip install --pre gaphor
+$ pip install gaphor
 $ gaphor
 ```
 Use of a
@@ -78,22 +88,23 @@ is highly recommended.
 
 #### Windows
 
-NOTE: Use of virtual environments with msys2 is currently [broken](https://github.com/msys2/MINGW-packages/issues/5001).
+NOTE: Use of virtual environments with msys2 is currently
+[broken](https://github.com/msys2/MINGW-packages/issues/5001).
 To setup a development environment in Windows:
 1) Go to http://www.msys2.org/ and download the x86_64 installer
 1) Follow the instructions on the page for setting up the basic environment
 1) Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
 ```bash
-# pacman -Suy
-# pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-python3-cairo
-# pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-python3-setuptools mingw-w64-x86_64-python3-zope.interface
+$ pacman -Suy
+$ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-python3-cairo
+$ pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-python3-setuptools mingw-w64-x86_64-python3-zope.interface
 ```
 Install git if it isn't already installed in msys2 with `pacman -S git`
 
 git clone the repository to C:\msys64\home\<user>
 ```bash
-# cd gaphor
-# pip install -e .
+$ cd gaphor
+$ pip3 install -e .
 ``` 
 
 #### Linux
