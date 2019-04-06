@@ -126,8 +126,10 @@ class _Application(object):
 
     def run(self):
         from gi.repository import Gio, Gtk
-        app = Gtk.Application(application_id="org.gaphor.gaphor",
-                         flags=Gio.ApplicationFlags.FLAGS_NONE)
+
+        app = Gtk.Application(
+            application_id="org.gaphor.gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
+        )
 
         def app_activate(app):
             main_window = self.get_service("main_window")
