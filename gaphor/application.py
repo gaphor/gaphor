@@ -124,18 +124,44 @@ class _Application(object):
         except component.ComponentLookupError:
             return self.init_service(name)
 
-    def run(self):
+    def run(self, model=None):
+        """Start the main application by initiating and running Application.
+
+        The file_manager service is used here to load a Gaphor model if one was
+        specified on the command line.  Otherwise, a new model is created and
+        the Gaphor GUI is started."""
+
         from gi.repository import Gio, Gtk
 
         app = Gtk.Application(
-            application_id="org.gaphor.gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
+            application_id="org.gaphor.gaphor", flags=Gio.ApplicationFlags.HANDLES_OPEN
         )
 
+        def app_startup(app):
+            self.essential_services.append("main_window")
+
+            self.init()
+
         def app_activate(app):
+            # Make sure gui is loaded ASAP.
+            # This prevents menu items from appearing at unwanted places.
             main_window = self.get_service("main_window")
+            main_window.open()
             app.add_window(main_window.window)
 
+            file_manager = self.get_service("file_manager")
+
+            if model:
+                file_manager.load(model)
+            else:
+                file_manager.action_new()
+
+        def app_open(app, *args):
+            print("Open file", args)
+
+        app.connect("startup", app_startup)
         app.connect("activate", app_activate)
+        app.connect("open", app_open)
 
         app.run()
 

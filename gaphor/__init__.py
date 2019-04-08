@@ -29,33 +29,6 @@ gi.require_version("Gtk", "3.0")
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 
-def launch(model=None):
-    """Start the main application by initiating and running Application.
-
-    The file_manager service is used here to load a Gaphor model if one was
-    specified on the command line.  Otherwise, a new model is created and
-    the Gaphor GUI is started."""
-
-    # Make sure gui is loaded ASAP.
-    # This prevents menu items from appearing at unwanted places.
-    Application.essential_services.append("main_window")
-
-    Application.init()
-
-    main_window = Application.get_service("main_window")
-
-    main_window.open()
-
-    file_manager = Application.get_service("file_manager")
-
-    if model:
-        file_manager.load(model)
-    else:
-        file_manager.action_new()
-
-    Application.run()
-
-
 def main():
     """Start Gaphor from the command line.  This function creates an option
     parser for retrieving arguments and options from the command line.  This
@@ -104,10 +77,12 @@ def main():
         import cProfile
         import pstats
 
-        cProfile.run("import gaphor; gaphor.launch()", "gaphor.prof")
+        cProfile.runctx(
+            "Application.run(model)", globals(), locals(), filename="gaphor.prof"
+        )
 
         profile_stats = pstats.Stats("gaphor.prof")
         profile_stats.strip_dirs().sort_stats("time").print_stats(50)
 
     else:
-        launch(model)
+        Application.run(model)
