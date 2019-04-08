@@ -63,7 +63,7 @@ There are two versions:
 To install Gaphor in Linux use Flatpak:
 1. [Install Flatpak](https://flatpak.org/setup)
 1. `flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
-1. `flatpak install --user org.gaphor.Gaphor`
+1. `flatpak install --user flathub org.gaphor.Gaphor`
 Alternatively, you can download the [latest
 Gaphor.tar.gz](https://github.com/gaphor/gaphor/releases).
 
