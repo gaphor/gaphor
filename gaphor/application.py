@@ -161,6 +161,15 @@ class _Application(object):
         def app_shutdown(app):
             self.shutdown()
 
+        def main_quit(action, param):
+            # Perform the "luxe" quit version, as defined in MainWindow
+            main_window = self.get_service("main_window")
+            return main_window.quit()
+
+        action = Gio.SimpleAction.new("quit", None)
+        action.connect("activate", main_quit)
+        app.add_action(action)
+
         app.connect("startup", app_startup)
         app.connect("activate", app_activate)
         app.connect("shutdown", app_shutdown)

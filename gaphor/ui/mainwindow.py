@@ -346,6 +346,7 @@ class MainWindow(object):
         close = self.ask_to_close()
         if close and self.app:
             self.app.quit()
+        return close
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
