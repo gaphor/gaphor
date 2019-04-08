@@ -24,7 +24,7 @@ modules:
       - pip3 install --prefix=/app --disable-pip-version-check --no-build-isolation --no-deps .
     sources:
       - type: git
-        tag: 1.0.0.post1
+        tag: 1.0.0.post2
         url: https://github.com/gaphor/gaphor
         commit: 2eba9134ff07d1233450adcf32f2582e98f2cab9
     post-install:
