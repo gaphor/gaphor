@@ -265,7 +265,7 @@ class MainWindow(object):
         vbox.show()
         # TODO: add statusbar
 
-        self.window.show()
+        self.window.present()
 
         self.window.connect("delete-event", self._on_window_delete)
 
