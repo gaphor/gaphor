@@ -6,6 +6,13 @@
   <summary>Simple modeling tool</summary>
   <metadata_license>CC-BY-3.0</metadata_license>
   <project_license>Apache-2.0</project_license>
+  <screenshots>
+    <screenshot type="default">
+      <caption>The Gaphor main window.</caption>
+      <image type="source" width="800" height="600">
+        http://screenshots.debian.net/screenshots/000/016/772/large.png</image>
+    </screenshot>
+  </screenshots>
   <url type="homepage">https://github.com/gaphor/gaphor</url>
   <url type="help">https://gaphor.readthedocs.io</url>
   <description>
