@@ -79,5 +79,5 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["setuptools", "poetry>=0.12"]
 build-backend = "poetry.masonry.api"
