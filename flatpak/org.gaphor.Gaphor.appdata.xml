@@ -21,8 +21,7 @@
     </p>
   </description>
   <releases>
-    <release version="1.0.0.post1" date="2019-04-04"/>
-    <release version="1.0.0rc1" date="2019-03-02"/>
+    <release version="1.0.0" date="2019-04-04"/>
     <release version="0.17.2" date="2013-07-05" />
   </releases>
   <content_rating type="oars-1.1">
