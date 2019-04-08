@@ -5,15 +5,16 @@
   <name>Gaphor</name>
   <summary>Simple modeling tool</summary>
   <metadata_license>CC-BY-3.0</metadata_license>
-  <project_license>LGPL-2.0+</project_license>
+  <project_license>Apache-2.0</project_license>
   <url type="homepage">https://github.com/gaphor/gaphor</url>
   <url type="help">https://gaphor.readthedocs.io</url>
   <description>
     <p>Gaphor is a simple modeling tool written in Python. It is Free and Open Source software
-        for creating software and system architecture and designs. It is aimed at beginning models.
+        for creating software and system architecture and designs. It is aimed at beginning modelers.
     </p>
   </description>
   <releases>
+    <release version="1.0.0.post1" date="2019-04-04"/>
     <release version="1.0.0rc1" date="2019-03-02"/>
     <release version="0.17.2" date="2013-07-05" />
   </releases>
