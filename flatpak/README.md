@@ -12,7 +12,7 @@
 
 1. Build Gaphor
 
-        $ flatpak-builder --gpg-sign=E4089A143589D73655DF66774E9C27AE08850F1E --gpg-homedir=../.gpg --force-clean --repo=gaphor-repo build org.gaphor.Gaphor.json
+        $ flatpak-builder --gpg-sign=E4089A143589D73655DF66774E9C27AE08850F1E --gpg-homedir=../.gpg --force-clean --repo=gaphor-repo build org.gaphor.Gaphor.yaml
         
 1. Create a Single-file Bundle
 
