@@ -256,10 +256,10 @@ class MainWindow(object):
             log.debug("open component %s" % str(comp))
             return comp.open()
 
-        filename = pkg_resources.resource_filename("gaphor.ui", "layout.xml")
+        layout_file = pkg_resources.resource_filename("gaphor.ui", "layout.xml")
         self.layout = []  # Gtk.Notebook()
 
-        with open(filename) as f:
+        with open(layout_file) as f:
             deserialize(self.layout, vbox, f.read(), _factory)
 
         vbox.show()
