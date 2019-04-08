@@ -39,11 +39,12 @@ class _Application(object):
     """
 
     # interface.implements(IApplication)
-    _ESSENTIAL_SERVICES = ["component_registry"]
+    _ESSENTIAL_SERVICES = ["component_registry", "element_dispatcher"]
 
     def __init__(self):
         self._uninitialized_services = {}
         self._event_filter = None
+        self._app = None
         self.component_registry = None
 
     def init(self, services=None):
@@ -134,19 +135,20 @@ class _Application(object):
         from gi.repository import Gio, Gtk
 
         app = Gtk.Application(
-            application_id="org.gaphor.gaphor", flags=Gio.ApplicationFlags.HANDLES_OPEN
+            application_id="org.gaphor.gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
         )
+        self._app = app
+
+        self.essential_services.append("main_window")
 
         def app_startup(app):
-            self.essential_services.append("main_window")
-
             self.init()
 
         def app_activate(app):
             # Make sure gui is loaded ASAP.
             # This prevents menu items from appearing at unwanted places.
             main_window = self.get_service("main_window")
-            main_window.open()
+            main_window.open(app)
             app.add_window(main_window.window)
 
             file_manager = self.get_service("file_manager")
@@ -156,14 +158,17 @@ class _Application(object):
             else:
                 file_manager.action_new()
 
-        def app_open(app, *args):
-            print("Open file", args)
+        def app_shutdown(app):
+            self.shutdown()
 
         app.connect("startup", app_startup)
         app.connect("activate", app_activate)
-        app.connect("open", app_open)
-
+        app.connect("shutdown", app_shutdown)
         app.run()
+
+    def quit(self):
+        if self._app:
+            self._app.quit()
 
     def shutdown(self):
         for name, srv in self.component_registry.get_utilities(IService):

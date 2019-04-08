@@ -109,11 +109,13 @@ class MainWindow(object):
     """
 
     def __init__(self):
+        self.app = None
         self.window = None
         self.model_changed = False
         self.layout = None
 
     def init(self, app=None):
+        self.app = app
         self.init_stock_icons()
         self.init_action_group()
         self.init_ui_components()
@@ -140,6 +142,7 @@ class MainWindow(object):
                 self.action_manager.register_action_provider(uicomp)
 
     def shutdown(self):
+        log.info("Shutting down")
         if self.window:
             self.window.destroy()
             self.window = None
@@ -211,11 +214,16 @@ class MainWindow(object):
     def get_ui_component(self, name):
         return self.component_registry.get_utility(IUIComponent, name)
 
-    def open(self):
-
+    def open(self, gtk_app=None):
+        """Open the main window.
+        """
         load_accel_map()
 
-        self.window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
+        self.window = (
+            Gtk.ApplicationWindow.new(gtk_app)
+            if gtk_app
+            else Gtk.Window.new(type=Gtk.WindowType.TOPLEVEL)
+        )
         self.window.set_title(self.title)
         self.window.set_default_size(*self.size)
 
@@ -264,13 +272,11 @@ class MainWindow(object):
         # We want to store the window size, so it can be reloaded on startup
         self.window.set_resizable(True)
         self.window.connect("size-allocate", self._on_window_size_allocate)
-        self.window.connect("destroy", self._on_window_destroy)
 
         cr = self.component_registry
         cr.register_handler(self._on_file_manager_state_changed)
         cr.register_handler(self._on_undo_manager_state_changed)
         cr.register_handler(self._new_model_content)
-        # TODO: register on ElementCreate/Delete event
 
     def open_welcome_page(self):
         """
@@ -323,18 +329,6 @@ class MainWindow(object):
             self.model_changed = True
             self.set_title()
 
-    def _on_window_destroy(self, window):
-        """
-        Window is destroyed... Quit the application.
-        """
-        self.window = None
-        if GLib.main_depth() > 0:
-            Gtk.main_quit()
-        cr = self.component_registry
-        cr.unregister_handler(self._on_undo_manager_state_changed)
-        cr.unregister_handler(self._on_file_manager_state_changed)
-        cr.unregister_handler(self._new_model_content)
-
     def _on_window_delete(self, window=None, event=None):
         return not self.ask_to_close()
 
@@ -350,9 +344,8 @@ class MainWindow(object):
     def quit(self):
         # TODO: check for changes (e.g. undo manager), fault-save
         close = self.ask_to_close()
-        if close:
-            Gtk.main_quit()
-            self.shutdown()
+        if close and self.app:
+            self.app.quit()
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
