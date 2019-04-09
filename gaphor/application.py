@@ -24,6 +24,9 @@ class NotInitializedError(Exception):
     pass
 
 
+_ESSENTIAL_SERVICES = ["component_registry", "element_dispatcher"]
+
+
 class _Application(object):
     """
     The Gaphor application is started from the Application instance. It behaves
@@ -38,13 +41,11 @@ class _Application(object):
     unregistered on shutdown for example.
     """
 
-    # interface.implements(IApplication)
-    _ESSENTIAL_SERVICES = ["component_registry", "element_dispatcher"]
-
     def __init__(self):
         self._uninitialized_services = {}
         self._event_filter = None
         self._app = None
+        self._essential_services = list(_ESSENTIAL_SERVICES)
         self.component_registry = None
 
     def init(self, services=None):
@@ -55,7 +56,7 @@ class _Application(object):
         self.init_all_services()
 
     essential_services = property(
-        lambda s: s._ESSENTIAL_SERVICES,
+        lambda s: s._essential_services,
         doc="""
         Provide an ordered list of services that need to be loaded first.
         """,
@@ -103,9 +104,9 @@ class _Application(object):
             logger.info("initializing service service.%s" % name)
             srv.init(self)
 
-            # Bootstrap symptoms
-            if name in self.essential_services:
-                setattr(self, name, srv)
+            # Bootstrap hassle:
+            if name == "component_registry":
+                self.component_registry = srv
 
             self.component_registry.register_utility(srv, IService, name)
             self.component_registry.handle(ServiceInitializedEvent(name, srv))
@@ -132,7 +133,8 @@ class _Application(object):
 
         for name in reversed(self.essential_services):
             self.shutdown_service(name)
-            setattr(self, name, None)
+
+        self.component_registry = None
 
     def shutdown_service(self, name):
         srv = self.component_registry.get_service(name)
