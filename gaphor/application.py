@@ -113,7 +113,7 @@ class _Application(object):
 
     distribution = property(
         lambda s: pkg_resources.get_distribution("gaphor"),
-        doc="Get the PkgResources distribution for Gaphor",
+        doc="The PkgResources distribution for Gaphor",
     )
 
     def get_service(self, name):
@@ -125,12 +125,26 @@ class _Application(object):
         except component.ComponentLookupError:
             return self.init_service(name)
 
+    def shutdown(self):
+        for name, srv in self.component_registry.get_utilities(IService):
+            if name not in self.essential_services:
+                self.shutdown_service(name)
+
+        for name in reversed(self.essential_services):
+            self.shutdown_service(name)
+            setattr(self, name, None)
+
+    def shutdown_service(self, name):
+        srv = self.component_registry.get_service(name)
+        self.component_registry.handle(ServiceShutdownEvent(name, srv))
+        self.component_registry.unregister_utility(srv, IService, name)
+        srv.shutdown()
+
     def run(self, model=None):
-        """Start the main application by initiating and running Application.
+        """Start the GUI application.
 
         The file_manager service is used here to load a Gaphor model if one was
-        specified on the command line.  Otherwise, a new model is created and
-        the Gaphor GUI is started."""
+        specified on the command line."""
 
         from gi.repository import Gio, Gtk
 
@@ -176,23 +190,9 @@ class _Application(object):
         app.run()
 
     def quit(self):
+        """Quit the GUI application."""
         if self._app:
             self._app.quit()
-
-    def shutdown(self):
-        for name, srv in self.component_registry.get_utilities(IService):
-            if name not in self.essential_services:
-                self.shutdown_service(name)
-
-        for name in reversed(self.essential_services):
-            self.shutdown_service(name)
-            setattr(self, name, None)
-
-    def shutdown_service(self, name):
-        srv = self.component_registry.get_service(name)
-        self.component_registry.handle(ServiceShutdownEvent(name, srv))
-        self.component_registry.unregister_utility(srv, IService, name)
-        srv.shutdown()
 
 
 # Make sure there is only one!
