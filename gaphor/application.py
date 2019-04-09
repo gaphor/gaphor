@@ -212,7 +212,6 @@ class inject(object):
 
     def __init__(self, name):
         self._name = name
-        # self._s = None
 
     def __get__(self, obj, class_=None):
         """
@@ -221,6 +220,3 @@ class inject(object):
         if not obj:
             return self
         return Application.get_service(self._name)
-        # if self._s is None:
-        #    self._s = _Application.get_service(self._name)
-        # return self._s
