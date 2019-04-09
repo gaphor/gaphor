@@ -12,7 +12,7 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
-from logging import getLogger
+import logging
 from zope import component
 
 from gaphas import state
@@ -37,6 +37,8 @@ from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollbac
 from gaphor.interfaces import IService, IServiceEvent, IActionProvider
 from gaphor.transaction import Transaction, transactional
 
+logger = logging.getLogger(__name__)
+
 
 class ActionStack(object):
     """
@@ -46,8 +48,6 @@ class ActionStack(object):
     transaction has the effect of performing the actions recorded, which will
     typically undo actions performed by the user.
     """
-
-    logger = getLogger("UndoManager.ActionStack")
 
     def __init__(self):
         self._actions = []
@@ -65,9 +65,7 @@ class ActionStack(object):
             try:
                 action()
             except Exception as e:
-                self.logger.error(
-                    "Error while undoing action %s" % action, exc_info=True
-                )
+                logger.error("Error while undoing action %s" % action, exc_info=True)
 
 
 @implementer(IServiceEvent)
@@ -115,8 +113,6 @@ class UndoManager(object):
 
     component_registry = inject("component_registry")
 
-    logger = getLogger("UndoManager")
-
     def __init__(self):
         self._undo_stack = []
         self._redo_stack = []
@@ -126,7 +122,7 @@ class UndoManager(object):
 
     def init(self, app):
 
-        self.logger.info("Starting")
+        logger.info("Starting")
 
         self.component_registry.register_handler(self.reset)
         self.component_registry.register_handler(self.begin_transaction)
@@ -138,7 +134,7 @@ class UndoManager(object):
 
     def shutdown(self):
 
-        self.logger.info("Shutting down")
+        logger.info("Shutting down")
 
         self.component_registry.unregister_handler(self.reset)
         self.component_registry.unregister_handler(self.begin_transaction)
@@ -212,8 +208,8 @@ class UndoManager(object):
                 try:
                     erroneous_tx.execute()
                 except Exception as e:
-                    self.logger.error("Could not roolback transaction")
-                    self.logger.error(e)
+                    logger.error("Could not roolback transaction")
+                    logger.error(e)
         finally:
             # Discard all data collected in the rollback "transaction"
             self._undo_stack = undo_stack
@@ -299,7 +295,7 @@ class UndoManager(object):
 
     def _register_undo_handlers(self):
 
-        self.logger.debug("Registering undo handlers")
+        logger.debug("Registering undo handlers")
 
         self.component_registry.register_handler(self.undo_create_event)
         self.component_registry.register_handler(self.undo_delete_event)
@@ -316,7 +312,7 @@ class UndoManager(object):
 
     def _unregister_undo_handlers(self):
 
-        self.logger.debug("Unregistering undo handlers")
+        logger.debug("Unregistering undo handlers")
 
         self.component_registry.unregister_handler(self.undo_create_event)
         self.component_registry.unregister_handler(self.undo_delete_event)

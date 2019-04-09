@@ -24,6 +24,9 @@ class NotInitializedError(Exception):
     pass
 
 
+_ESSENTIAL_SERVICES = ["component_registry", "element_dispatcher"]
+
+
 class _Application(object):
     """
     The Gaphor application is started from the Application instance. It behaves
@@ -38,12 +41,11 @@ class _Application(object):
     unregistered on shutdown for example.
     """
 
-    # interface.implements(IApplication)
-    _ESSENTIAL_SERVICES = ["component_registry"]
-
     def __init__(self):
         self._uninitialized_services = {}
         self._event_filter = None
+        self._app = None
+        self._essential_services = list(_ESSENTIAL_SERVICES)
         self.component_registry = None
 
     def init(self, services=None):
@@ -54,7 +56,7 @@ class _Application(object):
         self.init_all_services()
 
     essential_services = property(
-        lambda s: s._ESSENTIAL_SERVICES,
+        lambda s: s._essential_services,
         doc="""
         Provide an ordered list of services that need to be loaded first.
         """,
@@ -102,9 +104,9 @@ class _Application(object):
             logger.info("initializing service service.%s" % name)
             srv.init(self)
 
-            # Bootstrap symptoms
-            if name in self.essential_services:
-                setattr(self, name, srv)
+            # Bootstrap hassle:
+            if name == "component_registry":
+                self.component_registry = srv
 
             self.component_registry.register_utility(srv, IService, name)
             self.component_registry.handle(ServiceInitializedEvent(name, srv))
@@ -112,7 +114,7 @@ class _Application(object):
 
     distribution = property(
         lambda s: pkg_resources.get_distribution("gaphor"),
-        doc="Get the PkgResources distribution for Gaphor",
+        doc="The PkgResources distribution for Gaphor",
     )
 
     def get_service(self, name):
@@ -124,21 +126,6 @@ class _Application(object):
         except component.ComponentLookupError:
             return self.init_service(name)
 
-    def run(self):
-        from gi.repository import Gio, Gtk
-
-        app = Gtk.Application(
-            application_id="org.gaphor.gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
-        )
-
-        def app_activate(app):
-            main_window = self.get_service("main_window")
-            app.add_window(main_window.window)
-
-        app.connect("activate", app_activate)
-
-        app.run()
-
     def shutdown(self):
         for name, srv in self.component_registry.get_utilities(IService):
             if name not in self.essential_services:
@@ -146,13 +133,68 @@ class _Application(object):
 
         for name in reversed(self.essential_services):
             self.shutdown_service(name)
-            setattr(self, name, None)
+
+        self.component_registry = None
 
     def shutdown_service(self, name):
         srv = self.component_registry.get_service(name)
         self.component_registry.handle(ServiceShutdownEvent(name, srv))
         self.component_registry.unregister_utility(srv, IService, name)
         srv.shutdown()
+
+    def run(self, model=None):
+        """Start the GUI application.
+
+        The file_manager service is used here to load a Gaphor model if one was
+        specified on the command line."""
+
+        from gi.repository import Gio, Gtk
+
+        app = Gtk.Application(
+            application_id="org.gaphor.gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
+        )
+        self._app = app
+
+        self.essential_services.append("main_window")
+
+        def app_startup(app):
+            self.init()
+
+        def app_activate(app):
+            # Make sure gui is loaded ASAP.
+            # This prevents menu items from appearing at unwanted places.
+            main_window = self.get_service("main_window")
+            main_window.open(app)
+            app.add_window(main_window.window)
+
+            file_manager = self.get_service("file_manager")
+
+            if model:
+                file_manager.load(model)
+            else:
+                file_manager.action_new()
+
+        def app_shutdown(app):
+            self.shutdown()
+
+        def main_quit(action, param):
+            # Perform the "luxe" quit version, as defined in MainWindow
+            main_window = self.get_service("main_window")
+            return main_window.quit()
+
+        action = Gio.SimpleAction.new("quit", None)
+        action.connect("activate", main_quit)
+        app.add_action(action)
+
+        app.connect("startup", app_startup)
+        app.connect("activate", app_activate)
+        app.connect("shutdown", app_shutdown)
+        app.run()
+
+    def quit(self):
+        """Quit the GUI application."""
+        if self._app:
+            self._app.quit()
 
 
 # Make sure there is only one!
@@ -172,7 +214,6 @@ class inject(object):
 
     def __init__(self, name):
         self._name = name
-        # self._s = None
 
     def __get__(self, obj, class_=None):
         """
@@ -181,6 +222,3 @@ class inject(object):
         if not obj:
             return self
         return Application.get_service(self._name)
-        # if self._s is None:
-        #    self._s = _Application.get_service(self._name)
-        # return self._s

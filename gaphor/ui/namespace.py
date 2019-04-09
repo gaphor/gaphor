@@ -267,7 +267,7 @@ class NamespaceModel(Gtk.GenericTreeModel):
             self._remove_element(element)
 
             parent_node = self._nodes.get(element.namespace)
-            if element in parent_node:
+            if parent_node and element in parent_node:
                 parent_node.remove(element)
 
     #            if path and parent_node and len(self._nodes[parent_node]) == 0:
