@@ -95,6 +95,7 @@ setup(
         "gaphas >= 0.7.2",
         "zope.component >= 3.4.0",
         "zope.interface >= 4.6.0",
+        "setuptools",
     ],
     zip_safe=False,
     entry_points={

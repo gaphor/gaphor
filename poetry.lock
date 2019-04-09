@@ -45,6 +45,11 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "19.1.0"
 
+[package.extras]
+dev = ["coverage", "hypothesis", "pympler", "pytest", "six", "zope.interface", "sphinx", "pre-commit"]
+docs = ["sphinx", "zope.interface"]
+tests = ["coverage", "hypothesis", "pympler", "pytest", "six", "zope.interface"]
+
 [[package]]
 category = "dev"
 description = "Ultra-lightweight pure Python package to check if a file is binary or text."
@@ -78,6 +83,9 @@ appdirs = "*"
 attrs = ">=17.4.0"
 click = ">=6.5"
 toml = ">=0.9.4"
+
+[package.extras]
+d = ["aiohttp (>=3.3.2)"]
 
 [[package]]
 category = "dev"
@@ -271,6 +279,9 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.4.0"
 
+[package.extras]
+license = ["editdistance"]
+
 [[package]]
 category = "dev"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -309,6 +320,9 @@ version = "2.10"
 
 [package.dependencies]
 MarkupSafe = ">=0.23"
+
+[package.extras]
+i18n = ["Babel (>=0.8)"]
 
 [[package]]
 category = "dev"
@@ -394,6 +408,9 @@ name = "pluggy"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.9.0"
+
+[package.extras]
+dev = ["pre-commit", "tox"]
 
 [[package]]
 category = "dev"
@@ -486,6 +503,9 @@ version = ">=4.0.0"
 python = "<3.6"
 version = ">=2.2.0"
 
+[package.extras]
+testing = ["argcomplete", "hypothesis (>=3.56)", "nose", "requests", "mock"]
+
 [[package]]
 category = "dev"
 description = "Pytest plugin for measuring coverage."
@@ -505,6 +525,10 @@ name = "pytest-runner"
 optional = false
 python-versions = ">=2.7,!=3.0,!=3.1"
 version = "4.4"
+
+[package.extras]
+docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
+testing = ["pytest (>=2.8)", "pytest-sugar (>=0.9.1)", "collective.checkdocs", "pytest-flake8", "pytest-virtualenv"]
 
 [[package]]
 category = "dev"
@@ -551,6 +575,10 @@ certifi = ">=2017.4.17"
 chardet = ">=3.0.2,<3.1.0"
 idna = ">=2.5,<2.9"
 urllib3 = ">=1.21.1,<1.25"
+
+[package.extras]
+security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
 
 [[package]]
 category = "dev"
@@ -603,6 +631,10 @@ optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4"
 version = "1.23"
 
+[package.extras]
+secure = ["pyOpenSSL (>=0.14,<18.0.0)", "pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
+
 [[package]]
 category = "dev"
 description = "Virtual Python Environment builder"
@@ -610,6 +642,10 @@ name = "virtualenv"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "16.4.3"
+
+[package.extras]
+docs = ["sphinx (>=1.8.0,<2)", "towncrier (>=18.5.0)", "sphinx-rtd-theme (>=0.4.2,<1)"]
+testing = ["pytest (>=4.0.0,<5)", "coverage (>=4.5.0,<5)", "six (>=1.10.0,<2)", "pytest-localserver", "pypiserver", "pytest-timeout (>=1.3.0,<2)", "pytest-xdist", "mock", "xonsh"]
 
 [[package]]
 category = "dev"
@@ -635,6 +671,10 @@ optional = false
 python-versions = ">=2.7"
 version = "0.3.3"
 
+[package.extras]
+docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
+testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs", "pytest-flake8", "pathlib2"]
+
 [[package]]
 category = "main"
 description = "Zope Component Architecture"
@@ -651,6 +691,14 @@ setuptools = "*"
 "zope.hookable" = ">=4.2.0"
 "zope.interface" = ">=4.1.0"
 
+[package.extras]
+docs = ["sphinx", "zodb", "repoze.sphinx.autointerface"]
+mintests = ["zope.configuration", "zope.i18nmessageid", "zope.testing", "zope.testrunner"]
+persistentregistry = ["persistent"]
+security = ["zope.location", "zope.proxy", "zope.security"]
+test = ["persistent", "zope.configuration", "zope.i18nmessageid", "zope.location", "zope.proxy", "zope.security", "zope.testing", "zope.testrunner"]
+zcml = ["zope.configuration", "zope.i18nmessageid"]
+
 [[package]]
 category = "main"
 description = "zope.deferredimport allows you to perform imports names that will only be resolved when used in the code."
@@ -663,6 +711,10 @@ version = "4.3"
 setuptools = "*"
 "zope.proxy" = "*"
 
+[package.extras]
+docs = ["sphinx", "repoze.sphinx.autointerface"]
+test = ["zope.testrunner"]
+
 [[package]]
 category = "main"
 description = "Zope Deprecation Infrastructure"
@@ -673,6 +725,10 @@ version = "4.4.0"
 
 [package.dependencies]
 setuptools = "*"
+
+[package.extras]
+docs = ["sphinx"]
+test = ["zope.testrunner"]
 
 [[package]]
 category = "main"
@@ -685,6 +741,10 @@ version = "4.4"
 [package.dependencies]
 setuptools = "*"
 
+[package.extras]
+docs = ["sphinx"]
+test = ["zope.testrunner"]
+
 [[package]]
 category = "main"
 description = "Zope hookable"
@@ -696,6 +756,11 @@ version = "4.2.0"
 [package.dependencies]
 setuptools = "*"
 
+[package.extras]
+docs = ["sphinx"]
+test = ["zope.testing"]
+testing = ["zope.testing", "coverage"]
+
 [[package]]
 category = "main"
 description = "Interfaces for Python"
@@ -706,6 +771,11 @@ version = "4.6.0"
 
 [package.dependencies]
 setuptools = "*"
+
+[package.extras]
+docs = ["sphinx", "repoze.sphinx.autointerface"]
+test = ["zope.event"]
+testing = ["zope.event", "nose", "coverage"]
 
 [[package]]
 category = "main"
@@ -719,8 +789,12 @@ version = "4.3.1"
 setuptools = "*"
 "zope.interface" = "*"
 
+[package.extras]
+docs = ["sphinx", "repoze.sphinx.autointerface"]
+test = ["zope.security", "zope.testrunner"]
+
 [metadata]
-content-hash = "38242e06eb3fd2a8651aae0b7d586d41a3758a57301b49db11bb067a145e8d55"
+content-hash = "a53912b7d26ebc4fd3639a37aad1dbeaddf89ae708f83691d9de47e6666a583b"
 python-versions = "^3.5"
 
 [metadata.hashes]
