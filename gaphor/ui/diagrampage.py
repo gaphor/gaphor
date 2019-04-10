@@ -14,6 +14,7 @@ from gaphas.painter import (
     BoundingBoxPainter,
 )
 from gaphas.view import GtkView
+import gaphas.segment  # Just register the handlers in this module
 from gi.repository import Gdk
 from gi.repository import Gtk
 
