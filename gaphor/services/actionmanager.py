@@ -84,6 +84,19 @@ class ActionManager(object):
                     menu_xml
                 )
 
+    def unregister_action_provider(self, action_provider):
+        action_provider = IActionProvider(action_provider)
+
+        try:
+            # Check if the action provider is registered
+            action_provider.__ui_merge_id
+        except AttributeError:
+            pass
+        else:
+            self.ui_manager.remove_ui(action_provider.__ui_merge_id)
+            self.ui_manager.remove_action_group(action_provider.action_group)
+            del action_provider.__ui_merge_id
+
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
 
@@ -103,15 +116,3 @@ class ActionManager(object):
 
     def get_accel_group(self):
         return self.ui_manager.get_accel_group()
-
-    def insert_action_group(self, action_group):
-        return self.ui_manager.insert_action_group(action_group)
-
-    def add_ui_from_string(self, ui_str):
-        return self.ui_manager.add_ui_from_string(ui_str)
-
-    def remove_action_group(self, action_group):
-        return self.ui_manager.remove_action_group(action_group)
-
-    def remove_ui(self, ui_id):
-        return self.ui_manager.remove_ui(ui_id)

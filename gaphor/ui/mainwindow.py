@@ -517,18 +517,13 @@ class Diagrams(object):
     def _add_ui_settings(self, page_num):
         action_manager = self.action_manager
         child_widget = self._notebook.get_nth_page(page_num)
-        action_group = child_widget.diagram_page.action_group
-        menu_xml = child_widget.diagram_page.menu_xml
-        action_manager.insert_action_group(action_group)
-        ui_id = action_manager.add_ui_from_string(menu_xml)
-        self._page_ui_settings = (action_group, ui_id)
+        self.action_manager.register_action_provider(child_widget.diagram_page)
+        self._page_ui_settings = child_widget.diagram_page
 
     def _clear_ui_settings(self):
-        action_manager = self.action_manager
+        # TODO: notebook.get_current_page()?
         if self._page_ui_settings:
-            action_group, ui_id = self._page_ui_settings
-            self.action_manager.remove_action_group(action_group)
-            self.action_manager.remove_ui(ui_id)
+            self.action_manager.unregister_action_provider(self._page_ui_settings)
             self._page_ui_settings = None
 
     @component.adapter(DiagramShow)
