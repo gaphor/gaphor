@@ -12,7 +12,6 @@ class CopyServiceTestCase(TestCase):
         "action_manager",
         "properties",
         "undo_manager",
-        "ui_manager",
     ]
 
     def test_init(self):

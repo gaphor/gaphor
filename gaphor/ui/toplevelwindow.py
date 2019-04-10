@@ -9,6 +9,7 @@ from gi.repository import Gtk
 import pkg_resources
 from zope.interface import implementer
 
+from gaphor.core import inject
 from gaphor.ui.interfaces import IUIComponent
 
 ICONS = (
@@ -25,6 +26,8 @@ class ToplevelWindow(object):
     menubar_path = ""
     toolbar_path = ""
     resizable = True
+
+    action_manager = inject("action_manager")
 
     def __init__(self):
         self.window = None
@@ -48,7 +51,7 @@ class ToplevelWindow(object):
         )
         self.window.set_icon_list(*icons)
 
-        self.window.add_accel_group(self.ui_manager.get_accel_group())
+        self.window.add_accel_group(self.action_manager.get_accel_group())
 
         if self.menubar_path or self.toolbar_path:
             # Create a full featured window.
@@ -56,11 +59,11 @@ class ToplevelWindow(object):
             self.window.add(vbox)
             vbox.show()
 
-            menubar = self.ui_manager.get_widget(self.menubar_path)
+            menubar = self.action_manager.get_widget(self.menubar_path)
             if menubar:
                 vbox.pack_start(child=menubar, expand=False, fill=True, padding=0)
 
-            toolbar = self.ui_manager.get_widget(self.toolbar_path)
+            toolbar = self.action_manager.get_widget(self.toolbar_path)
             if toolbar:
                 vbox.pack_start(child=toolbar, expand=False, fill=True, padding=0)
 

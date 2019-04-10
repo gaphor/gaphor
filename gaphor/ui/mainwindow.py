@@ -57,7 +57,6 @@ class MainWindow(object):
     element_factory = inject("element_factory")
     action_manager = inject("action_manager")
     file_manager = inject("file_manager")
-    ui_manager = inject("ui_manager")
 
     title = "Gaphor"
     size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
@@ -236,18 +235,18 @@ class MainWindow(object):
         )
         self.window.set_icon_list(list(icons))
 
-        self.window.add_accel_group(self.ui_manager.get_accel_group())
+        self.window.add_accel_group(self.action_manager.get_accel_group())
 
         # Create a full featured window.
         vbox = Gtk.VBox()
         self.window.add(vbox)
         vbox.show()
 
-        menubar = self.ui_manager.get_widget(self.menubar_path)
+        menubar = self.action_manager.get_widget(self.menubar_path)
         if menubar:
             vbox.pack_start(menubar, False, True, 0)
 
-        toolbar = self.ui_manager.get_widget(self.toolbar_path)
+        toolbar = self.action_manager.get_widget(self.toolbar_path)
         if toolbar:
             vbox.pack_start(toolbar, False, True, 0)
 
@@ -372,7 +371,7 @@ class Diagrams(object):
 
     component_registry = inject("component_registry")
     properties = inject("properties")
-    ui_manager = inject("ui_manager")
+    action_manager = inject("action_manager")
 
     menu_xml = """
       <ui>
@@ -516,20 +515,20 @@ class Diagrams(object):
         self.component_registry.handle(DiagramPageChange(page))
 
     def _add_ui_settings(self, page_num):
-        ui_manager = self.ui_manager
+        action_manager = self.action_manager
         child_widget = self._notebook.get_nth_page(page_num)
         action_group = child_widget.diagram_page.action_group
         menu_xml = child_widget.diagram_page.menu_xml
-        ui_manager.insert_action_group(action_group)
-        ui_id = ui_manager.add_ui_from_string(menu_xml)
+        action_manager.insert_action_group(action_group)
+        ui_id = action_manager.add_ui_from_string(menu_xml)
         self._page_ui_settings = (action_group, ui_id)
 
     def _clear_ui_settings(self):
-        ui_manager = self.ui_manager
+        action_manager = self.action_manager
         if self._page_ui_settings:
             action_group, ui_id = self._page_ui_settings
-            self.ui_manager.remove_action_group(action_group)
-            self.ui_manager.remove_ui(ui_id)
+            self.action_manager.remove_action_group(action_group)
+            self.action_manager.remove_ui(ui_id)
             self._page_ui_settings = None
 
     @component.adapter(DiagramShow)

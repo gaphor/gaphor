@@ -682,7 +682,6 @@ class Namespace(object):
 
     component_registry = inject("component_registry")
     element_factory = inject("element_factory")
-    ui_manager = inject("ui_manager")
     action_manager = inject("action_manager")
 
     menu_xml = """
@@ -763,7 +762,7 @@ class Namespace(object):
         """
         # handle mouse button 3:"
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button.button == 3:
-            menu = self.ui_manager.get_widget("/namespace-popup")
+            menu = self.action_manager.get_widget("/namespace-popup")
             menu.popup_at_pointer(event)
 
     def _on_view_row_activated(self, view, path, column):

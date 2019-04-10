@@ -10,13 +10,7 @@ from gaphor.ui.interfaces import IUIComponent
 class MainWindowTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
-            services=[
-                "element_factory",
-                "properties",
-                "main_window",
-                "ui_manager",
-                "action_manager",
-            ]
+            services=["element_factory", "properties", "main_window", "action_manager"]
         )
 
     component_registry = inject("component_registry")

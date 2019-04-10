@@ -14,7 +14,6 @@ class DiagramPageTestCase(unittest.TestCase):
             services=[
                 "element_factory",
                 "main_window",
-                "ui_manager",
                 "action_manager",
                 "properties",
                 "element_dispatcher",

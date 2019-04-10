@@ -22,10 +22,8 @@ class ActionManager(object):
 
     component_registry = inject("component_registry")
 
-    ui_manager = inject("ui_manager")
-
     def __init__(self):
-        pass
+        self.ui_manager = Gtk.UIManager()
 
     def init(self, app):
         logger.info("Loading action provider services")
@@ -98,15 +96,22 @@ class ActionManager(object):
 
             self.register_action_provider(event.service)
 
+    # UIManager methods:
 
-@implementer(IService)
-class UIManager(Gtk.UIManager):
-    """
-    Service version of Gtk.UIManager.
-    """
+    def get_widget(self, path):
+        return self.ui_manager.get_widget(path)
 
-    def init(self, app=None):
-        pass
+    def get_accel_group(self):
+        return self.ui_manager.get_accel_group()
 
-    def shutdown(self):
-        pass
+    def insert_action_group(self, action_group):
+        return self.ui_manager.insert_action_group(action_group)
+
+    def add_ui_from_string(self, ui_str):
+        return self.ui_manager.add_ui_from_string(ui_str)
+
+    def remove_action_group(self, action_group):
+        return self.ui_manager.remove_action_group(action_group)
+
+    def remove_ui(self, ui_id):
+        return self.ui_manager.remove_ui(ui_id)

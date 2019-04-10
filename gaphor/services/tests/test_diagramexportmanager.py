@@ -12,7 +12,6 @@ class DiagramExportManagerTestCase(unittest.TestCase):
                 "element_factory",
                 "diagram_export_manager",
                 "action_manager",
-                "ui_manager",
             ]
         )
 
