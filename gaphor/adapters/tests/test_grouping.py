@@ -3,7 +3,6 @@ Tests for grouping functionality in Gaphor.
 """
 
 from gaphor import UML
-from gaphor.ui.namespace import NamespaceModel
 from gaphor.diagram import items
 
 from gaphor.tests import TestCase
@@ -122,7 +121,6 @@ class SubsystemUseCaseGroupTestCase(TestCase):
     def test_grouping_with_namespace(self):
         """Test adding an use case to a subsystem (with namespace)
         """
-        namespace = NamespaceModel(self.element_factory)
         s = self.create(items.SubsystemItem, UML.Component)
         uc = self.create(items.UseCaseItem, UML.UseCase)
 

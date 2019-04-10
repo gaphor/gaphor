@@ -1,65 +1,42 @@
-from gaphor.tests.testcase import TestCase
+import pytest
 import gaphor.UML as UML
-from gaphor.ui.namespace import NamespaceModel
+from gaphor.ui.namespace import Namespace
 from gaphor.application import Application
 
 
-class NamespaceTestCase(TestCase):
+@pytest.fixture
+def application(
+    services=["element_factory", "component_registry", "ui_manager", "action_manager"]
+):
+    Application.init(services=services)
+    yield Application
+    Application.shutdown()
 
-    services = ["element_factory"]
 
-    def tearDown(self):
-        pass
+@pytest.fixture
+def element_factory(application):
+    return application.get_service("element_factory")
 
-    def test(self):
-        factory = Application.get_service("element_factory")
 
-        ns = NamespaceModel(factory)
+@pytest.fixture
+def component_registry(application):
+    return application.get_service("component_registry")
 
-        m = factory.create(UML.Package)
-        m.name = "m"
-        assert m in ns._nodes
-        assert ns.path_from_element(m) == (1,)
-        assert ns.element_from_path((1,)) is m
 
-        a = factory.create(UML.Package)
-        a.name = "a"
-        assert a in ns._nodes
-        assert a in ns._nodes[None]
-        assert m in ns._nodes
-        assert ns.path_from_element(a) == (1,), ns.path_from_element(a)
-        assert ns.path_from_element(m) == (2,), ns.path_from_element(m)
+@pytest.fixture
+def namespace(application):
+    namespace = Namespace()
+    namespace.init()
+    yield namespace
+    namespace.close()
 
-        a.package = m
-        assert a in ns._nodes
-        assert a not in ns._nodes[None]
-        assert a in ns._nodes[m]
-        assert m in ns._nodes
-        assert a.package is m
-        assert a in m.ownedMember
-        assert a.namespace is m
-        assert ns.path_from_element(a) == (1, 0), ns.path_from_element(a)
 
-        c = factory.create(UML.Class)
-        c.name = "c"
-        assert c in ns._nodes
-        assert ns.path_from_element(c) == (1,), ns.path_from_element(c)
-        assert ns.path_from_element(m) == (2,), ns.path_from_element(m)
-        assert ns.path_from_element(a) == (2, 0), ns.path_from_element(a)
+def test_new_model_is_empty(namespace):
+    assert namespace.model
+    assert namespace.model.get_iter_first() is None
 
-        c.package = m
-        assert c in ns._nodes
-        assert c not in ns._nodes[None]
-        assert c in ns._nodes[m]
 
-        c.package = a
-        assert c in ns._nodes
-        assert c not in ns._nodes[None]
-        assert c not in ns._nodes[m]
-        assert c in ns._nodes[a]
+def test_root_element_in_model(namespace, element_factory):
+    element_factory.create(UML.Package)
 
-        c.unlink()
-        assert c not in ns._nodes
-        assert c not in ns._nodes[None]
-        assert c not in ns._nodes[m]
-        assert c not in ns._nodes[a]
+    assert namespace.model.iter_n_children(None) == 1
