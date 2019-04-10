@@ -17,6 +17,9 @@ pip-wheel-metadata
 .vscode/
 .python-version
 
+# PyTest
+.pytest_cache
+
 # Coverage
 .coverage
 
