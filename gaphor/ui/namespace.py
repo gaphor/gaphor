@@ -336,6 +336,7 @@ class Namespace(object):
         self._namespace = None
         self.action_group = build_action_group(self)
         self.model = Gtk.TreeStore.new([object])
+        self.filter = _default_filter_list
 
     def init(self):
         # Event handler registration is in a separate function,
@@ -344,6 +345,7 @@ class Namespace(object):
         cr = self.component_registry
         cr.register_handler(self._on_element_create)
         cr.register_handler(self.expand_root_nodes)
+        cr.register_handler(self._on_association_set)
 
     def open(self):
         self.init()
@@ -357,6 +359,7 @@ class Namespace(object):
         cr = self.component_registry
         cr.unregister_handler(self.expand_root_nodes)
         cr.unregister_handler(self._on_element_create)
+        cr.unregister_handler(self._on_association_set)
 
     def construct(self):
         view = NamespaceView(self.model, self.element_factory)
@@ -377,14 +380,50 @@ class Namespace(object):
 
         return scrolled_window
 
+    def iter_for_element(self, element, old_namespace=0):
+        # Using `0` as sentinel
+        if old_namespace != 0:
+            parent_iter = self.iter_for_element(old_namespace)
+        elif element and element.namespace:
+            parent_iter = self.iter_for_element(element.namespace)
+        else:
+            parent_iter = None
+
+        child_iter = self.model.iter_children(parent_iter)
+        while child_iter:
+            if self.model.get_value(child_iter, 0) is element:
+                return child_iter
+            child_iter = self.model.iter_next(child_iter)
+        return None
+
     @component.adapter(ElementCreateEvent)
     def _on_element_create(self, event):
-        print("on element create", event)
         if event.service is self.element_factory:
             self._add_elements(event.element)
 
     def _add_elements(self, element):
         self.model.append(None, [element])
+
+    @component.adapter(DerivedSetEvent)
+    def _on_association_set(self, event):
+
+        element = event.element
+        if (
+            (type(element) not in self.filter)
+            or (not event.property is UML.NamedElement.namespace)
+            or (element not in self.element_factory)
+        ):
+            return
+
+        old_value, new_value = event.old_value, event.new_value
+
+        old_iter = self.iter_for_element(element, old_namespace=old_value)
+        if old_iter:
+            self.model.remove(old_iter)
+
+        new_iter = self.iter_for_element(new_value)
+        if new_iter:
+            self.model.append(new_iter, [element])
 
     @component.adapter(ModelFactoryEvent)
     def expand_root_nodes(self, event=None):
