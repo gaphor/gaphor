@@ -348,6 +348,7 @@ class Namespace(object):
         cr.register_handler(self._on_element_delete)
         cr.register_handler(self.expand_root_nodes)
         cr.register_handler(self._on_association_set)
+        cr.register_handler(self._on_attribute_change)
 
     def open(self):
         self.init()
@@ -363,6 +364,7 @@ class Namespace(object):
         cr.unregister_handler(self._on_element_create)
         cr.unregister_handler(self._on_element_delete)
         cr.unregister_handler(self._on_association_set)
+        cr.unregister_handler(self._on_attribute_change)
 
     def construct(self):
         view = NamespaceView(self.model, self.element_factory)
@@ -431,6 +433,23 @@ class Namespace(object):
                 new_iter = self.iter_for_element(new_value)
                 if new_iter:
                     self.model.append(new_iter, [element])
+
+    @component.adapter(IAttributeChangeEvent)
+    def _on_attribute_change(self, event):
+        """
+        Element changed, update appropriate row.
+        """
+        element = event.element
+
+        if (
+            event.property is UML.Classifier.isAbstract
+            or event.property is UML.BehavioralFeature.isAbstract
+            or event.property is UML.NamedElement.name
+        ):
+            iter = self.iter_for_element(element)
+            if iter:
+                path = self.model.get_path(iter)
+                self.model.row_changed(path, iter)
 
     @component.adapter(ModelFactoryEvent)
     def expand_root_nodes(self, event=None):

@@ -118,6 +118,16 @@ def test_element_should_not_be_added_if_parent_is_not_valid(namespace, element_f
     assert namespace.model.iter_n_children(iter) == 0
 
 
-def test_create_elements_recursively(namespace, element_factory):
+def test_change_element_name(namespace, element_factory):
+    # A row-changed event should be emitted to notify the view of the name change.
     p1 = element_factory.create(UML.Package)
-    p2 = element_factory.create(UML.Package)
+    events = []
+
+    def handle_row_changed(*args):
+        events.append(args)
+
+    namespace.model.connect("row-changed", handle_row_changed)
+
+    p1.name = "pack"
+
+    assert len(events) == 1
