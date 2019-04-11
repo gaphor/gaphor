@@ -401,17 +401,17 @@ class Namespace(object):
 
     @component.adapter(ElementCreateEvent)
     def _on_element_create(self, event):
-        if event.service is self.element_factory:
-            self._add_elements(event.element)
+        element = event.element
+        if type(element) in self.filter:
+            iter = self.iter_for_element(element.namespace)
+            self.model.append(iter, [element])
 
     @component.adapter(ElementDeleteEvent)
     def _on_element_delete(self, event):
         iter = self.iter_for_element(event.element)
+        # iter should be here, unless we try to delete an element who's parent element is already deleted, so let's be lenient.
         if iter:
             self.model.remove(iter)
-
-    def _add_elements(self, element):
-        self.model.append(None, [element])
 
     @component.adapter(DerivedSetEvent)
     def _on_association_set(self, event):

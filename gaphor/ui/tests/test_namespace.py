@@ -42,6 +42,12 @@ def test_root_element(namespace, element_factory):
     assert namespace.model.iter_n_children(None) == 1
 
 
+def test_should_not_add_non_namespace_element(namespace, element_factory):
+    element_factory.create(UML.Activity)
+
+    assert namespace.model.iter_n_children(None) == 0
+
+
 def test_multiple_root_elements(namespace, element_factory):
     element_factory.create(UML.Package)
     element_factory.create(UML.Package)
@@ -110,3 +116,8 @@ def test_element_should_not_be_added_if_parent_is_not_valid(namespace, element_f
     iter = namespace.iter_for_element(p1)
     assert namespace.model.iter_n_children(None) == 0
     assert namespace.model.iter_n_children(iter) == 0
+
+
+def test_create_elements_recursively(namespace, element_factory):
+    p1 = element_factory.create(UML.Package)
+    p2 = element_factory.create(UML.Package)
