@@ -60,10 +60,13 @@ There are two versions:
 2. Portable installation
 
 ### Linux
+NOTE: FlatHub based builds of Gaphor are currently broken, but we are trying to resolve the [issue](https://github.com/gaphor/gaphor/issues/135). Please use the alternative method below to directly download and extract the tar.gz package.
+
 To install Gaphor in Linux use Flatpak:
 1. [Install Flatpak](https://flatpak.org/setup)
 1. `flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
 1. `flatpak install --user flathub org.gaphor.Gaphor`
+
 Alternatively, you can download the [latest
 Gaphor.tar.gz](https://github.com/gaphor/gaphor/releases).
 
