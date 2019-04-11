@@ -23,6 +23,7 @@ from gaphor import UML
 from gaphor.interfaces import IActionProvider
 from gaphor.UML.event import (
     ElementCreateEvent,
+    ElementDeleteEvent,
     ModelFactoryEvent,
     FlushFactoryEvent,
     DerivedSetEvent,
@@ -284,13 +285,13 @@ class NamespaceView(Gtk.TreeView):
             else:
                 context.finish(True, True, time)
                 # Finally let's try to select the element again.
-                path = model.path_from_element(element)
-                if len(path) > 1:
-                    self.expand_row(
-                        path=Gtk.TreePath.new_from_indices(path[:-1]), open_all=False
-                    )
-                selection = self.get_selection()
-                selection.select_path(path)
+                # iter = self.iter_for_element(element)
+                # if iter:
+                #     self.expand_row(
+                #         path=Gtk.TreePath.new_from_indices(path[:-1]), open_all=False
+                #     )
+                # selection = self.get_selection()
+                # selection.select_path(path)
 
 
 @implementer(IUIComponent, IActionProvider)
@@ -344,6 +345,7 @@ class Namespace(object):
         # unit tests to fail, on macOS at least.
         cr = self.component_registry
         cr.register_handler(self._on_element_create)
+        cr.register_handler(self._on_element_delete)
         cr.register_handler(self.expand_root_nodes)
         cr.register_handler(self._on_association_set)
 
@@ -359,6 +361,7 @@ class Namespace(object):
         cr = self.component_registry
         cr.unregister_handler(self.expand_root_nodes)
         cr.unregister_handler(self._on_element_create)
+        cr.unregister_handler(self._on_element_delete)
         cr.unregister_handler(self._on_association_set)
 
     def construct(self):
@@ -401,6 +404,12 @@ class Namespace(object):
         if event.service is self.element_factory:
             self._add_elements(event.element)
 
+    @component.adapter(ElementDeleteEvent)
+    def _on_element_delete(self, event):
+        iter = self.iter_for_element(event.element)
+        if iter:
+            self.model.remove(iter)
+
     def _add_elements(self, element):
         self.model.append(None, [element])
 
@@ -408,22 +417,20 @@ class Namespace(object):
     def _on_association_set(self, event):
 
         element = event.element
-        if (
-            (type(element) not in self.filter)
-            or (not event.property is UML.NamedElement.namespace)
-            or (element not in self.element_factory)
+        if (type(element) in self.filter) and (
+            event.property is UML.NamedElement.namespace
         ):
-            return
+            old_value, new_value = event.old_value, event.new_value
 
-        old_value, new_value = event.old_value, event.new_value
+            old_iter = self.iter_for_element(element, old_namespace=old_value)
+            if old_iter:
+                self.model.remove(old_iter)
 
-        old_iter = self.iter_for_element(element, old_namespace=old_value)
-        if old_iter:
-            self.model.remove(old_iter)
-
-        new_iter = self.iter_for_element(new_value)
-        if new_iter:
-            self.model.append(new_iter, [element])
+                # Place new one only in case the old element can be found,
+                # e.i. it's has been created:
+                new_iter = self.iter_for_element(new_value)
+                if new_iter:
+                    self.model.append(new_iter, [element])
 
     @component.adapter(ModelFactoryEvent)
     def expand_root_nodes(self, event=None):

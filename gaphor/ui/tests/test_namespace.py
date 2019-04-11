@@ -61,25 +61,8 @@ def dump_model(model):
 
 def test_nested_elements(namespace, element_factory):
     p1 = element_factory.create(UML.Package)
-    p1.name = "p1"
-    p2 = element_factory.create(UML.Package)
-    p2.name = "p2"
-    p2.package = p1
-
-    dump_model(namespace.model)
-
-    assert p2.namespace == p1
-    assert namespace.model.iter_n_children(None) == 1
-
-
-def test_find_element_in_model(namespace, element_factory):
-    p1 = element_factory.create(UML.Package)
     p2 = element_factory.create(UML.Package)
     p2.package = p1
-
-    namespace.model.clear()
-    p1_iter = namespace.model.append(None, [p1])
-    p2_iter = namespace.model.append(p1_iter, [p2])
 
     assert p2.namespace == p1
 
@@ -90,3 +73,40 @@ def test_find_element_in_model(namespace, element_factory):
     iter = namespace.iter_for_element(p2)
     assert "0:0" == str(namespace.model.get_path(iter))
     assert p2 is namespace.model.get_value(iter, 0)
+
+
+def test_delete_element(namespace, element_factory):
+    p1 = element_factory.create(UML.Package)
+
+    p1.unlink()
+
+    assert namespace.model.iter_n_children(None) == 0
+
+
+def test_only_created_element_should_be_updated(namespace, element_factory):
+    """Elements should only be visible in the model if they're added through a IElementCreateEvent event."""
+    p1 = element_factory.create(UML.Package)
+    p2 = UML.Package(factory=element_factory)
+
+    p2.package = p1
+
+    assert p2.namespace == p1
+
+    iter = namespace.iter_for_element(p1)
+    assert namespace.model.iter_n_children(None) == 1
+    assert namespace.model.iter_n_children(iter) == 0
+
+
+def test_element_should_not_be_added_if_parent_is_not_valid(namespace, element_factory):
+    p1 = element_factory.create(UML.Package)
+    p2 = element_factory.create(UML.Package)
+
+    p1.unlink()
+
+    p2.package = p1
+
+    assert p2.namespace == p1
+
+    iter = namespace.iter_for_element(p1)
+    assert namespace.model.iter_n_children(None) == 0
+    assert namespace.model.iter_n_children(iter) == 0
