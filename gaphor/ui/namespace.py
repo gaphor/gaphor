@@ -346,6 +346,7 @@ class Namespace(object):
         cr = self.component_registry
         cr.register_handler(self._on_element_create)
         cr.register_handler(self._on_element_delete)
+        cr.register_handler(self._on_flush_factory)
         cr.register_handler(self.expand_root_nodes)
         cr.register_handler(self._on_association_set)
         cr.register_handler(self._on_attribute_change)
@@ -363,6 +364,7 @@ class Namespace(object):
         cr.unregister_handler(self.expand_root_nodes)
         cr.unregister_handler(self._on_element_create)
         cr.unregister_handler(self._on_element_delete)
+        cr.unregister_handler(self._on_flush_factory)
         cr.unregister_handler(self._on_association_set)
         cr.unregister_handler(self._on_attribute_change)
 
@@ -400,6 +402,10 @@ class Namespace(object):
                 return child_iter
             child_iter = self.model.iter_next(child_iter)
         return None
+
+    @component.adapter(FlushFactoryEvent)
+    def _on_flush_factory(self, event):
+        self.model.clear()
 
     @component.adapter(ElementCreateEvent)
     def _on_element_create(self, event):

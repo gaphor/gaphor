@@ -131,3 +131,12 @@ def test_change_element_name(namespace, element_factory):
     p1.name = "pack"
 
     assert len(events) == 1
+
+
+def test_element_factory_flush(namespace, element_factory):
+    p1 = element_factory.create(UML.Package)
+    assert namespace.model.get_iter_first() is not None
+
+    element_factory.flush()
+
+    assert namespace.model.get_iter_first() is None
