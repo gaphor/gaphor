@@ -56,11 +56,6 @@ _default_filter_list = (
     UML.Operation,
 )
 
-# TODO: update tree sorter:
-# Diagram before Class & Package.
-# Property before Operation
-_name_getter = operator.attrgetter("name")
-_tree_sorter = lambda e: _name_getter(e) or ""
 
 log = logging.getLogger(__name__)
 
@@ -415,6 +410,12 @@ class Namespace(object):
             child_iter = self.model.iter_next(child_iter)
         return None
 
+    def _visible(self, element):
+        # Spacial case: Non-navigable properties
+        return type(element) in self.filter and not (
+            isinstance(element, UML.Property) and element.namespace is None
+        )
+
     @component.adapter(ModelFactoryEvent)
     def _on_model_factory(self, event=None):
         """
@@ -423,13 +424,14 @@ class Namespace(object):
         log.info("Rebuilding namespace model")
 
         def add(element, iter=None):
-            child_iter = self.model.append(iter, [element])
-            if type(element) in self.filter and isinstance(element, UML.Namespace):
-                for e in element.ownedMember:
-                    # check if owned member is indeed within parent's namespace
-                    # the check is important in case on Node classes
-                    if element is e.namespace:
-                        add(e, child_iter)
+            if self._visible(element):
+                child_iter = self.model.append(iter, [element])
+                if isinstance(element, UML.Namespace):
+                    for e in element.ownedMember:
+                        # check if owned member is indeed within parent's namespace
+                        # the check is important in case on Node classes
+                        if element is e.namespace:
+                            add(e, child_iter)
 
         self.model.clear()
 
@@ -452,7 +454,7 @@ class Namespace(object):
     @component.adapter(ElementCreateEvent)
     def _on_element_create(self, event):
         element = event.element
-        if type(element) in self.filter and not self.iter_for_element(element):
+        if self._visible(element) and not self.iter_for_element(element):
             iter = self.iter_for_element(element.namespace)
             self.model.append(iter, [element])
 
@@ -469,21 +471,18 @@ class Namespace(object):
     def _on_association_set(self, event):
 
         element = event.element
-        if (type(element) in self.filter) and (
-            event.property is UML.NamedElement.namespace
-        ):
+        if event.property is UML.NamedElement.namespace:
             old_value, new_value = event.old_value, event.new_value
 
             old_iter = self.iter_for_element(element, old_namespace=old_value)
             if old_iter:
                 self.model.remove(old_iter)
 
-            # Place new one only in case the old element can be found,
-            # e.i. it's has been created:
-            # Does not hold true for associations and assoc.ends/properties
-            new_iter = self.iter_for_element(new_value)
-            if new_iter:
-                self.model.append(new_iter, [element])
+            if self._visible(element):
+                new_iter = self.iter_for_element(new_value)
+                # Should be either set (sub node) or unset (root node)
+                if bool(new_iter) == bool(new_value):
+                    self.model.append(new_iter, [element])
 
     @component.adapter(IAttributeChangeEvent)
     def _on_attribute_change(self, event):
