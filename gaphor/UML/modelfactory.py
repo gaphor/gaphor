@@ -211,7 +211,7 @@ def set_navigability(assoc, end, nav):
     """
     Set navigability of an association end (property).
 
-    There are free possible values for ``nav`` parameter
+    There are three possible values for ``nav`` parameter
 
      True
         association end is navigable
@@ -220,7 +220,7 @@ def set_navigability(assoc, end, nav):
      None
         association end navigability is unkown
 
-    There are two ways of specifing than an end is navigable
+    There are two ways of specifing that an end is navigable
 
     - an end is in Association.navigableOwnedEnd collection
     - an end is class (interface) attribute (stored in Class.ownedAttribute
