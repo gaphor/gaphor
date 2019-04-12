@@ -440,7 +440,7 @@ class Namespace(object):
     @component.adapter(ElementCreateEvent)
     def _on_element_create(self, event):
         element = event.element
-        if type(element) in self.filter:
+        if type(element) in self.filter and not self.iter_for_element(element):
             iter = self.iter_for_element(element.namespace)
             self.model.append(iter, [element])
 
