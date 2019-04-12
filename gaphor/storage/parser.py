@@ -335,7 +335,6 @@ def parse_file(filename, parser):
 
     is_fd = True
 
-    print(filename)
     if isinstance(filename, io.IOBase):
         file_obj = filename
     else:

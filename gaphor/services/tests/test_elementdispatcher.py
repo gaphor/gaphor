@@ -272,7 +272,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         p2 = element.memberEnd = UML.Property()
 
         assert len(element.memberEnd) == 2
-        print(element.memberEnd)
         dispatcher.register_handler(self._handler, element, "memberEnd.name")
         assert len(dispatcher._handlers) == 3, len(dispatcher._handlers)
         assert not self.events
@@ -303,7 +302,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         p2.upperValue = "*"
 
         assert len(element.memberEnd) == 2
-        print(element.memberEnd)
 
         base = "memberEnd<Property>."
         dispatcher.register_handler(self._handler, element, base + "name")

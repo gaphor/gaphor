@@ -322,7 +322,6 @@ class ForkNodeItem(Item, DiagramItem):
         return d - 3
 
     def on_named_element_name(self, event):
-        print("on_named_element_name", self.subject)
         subject = self.subject
         if subject:
             self._name.text = subject.name
@@ -337,7 +336,7 @@ class ForkNodeItem(Item, DiagramItem):
 
 def is_join_node(subject):
     """
-    Check if ``subject`` is join node. 
+    Check if ``subject`` is join node.
     """
     return subject and isinstance(subject, UML.JoinNode)
 

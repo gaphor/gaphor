@@ -112,7 +112,6 @@ class CheckModelWindow(object):
     def on_row_activated(self, treeview, row, column):
         iter = self.model.get_iter(row)
         element = self.model.get_value(iter, PYELEMENT_COLUMN)
-        print("Looking for element", element)
         if element.presentation:
             presentation = element.presentation[0]
             try:
