@@ -230,8 +230,8 @@ class ElementFactoryService(ElementFactory):
         """
         NOTE: Invoked from Element.unlink() to perform an element unlink.
         """
-        self._handle(ElementDeleteEvent(self, element))
         super(ElementFactoryService, self)._unlink_element(element)
+        self._handle(ElementDeleteEvent(self, element))
 
     def _handle(self, event):
         """
