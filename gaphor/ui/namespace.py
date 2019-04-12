@@ -346,8 +346,8 @@ class Namespace(object):
         cr = self.component_registry
         cr.register_handler(self._on_element_create)
         cr.register_handler(self._on_element_delete)
+        cr.register_handler(self._on_model_factory)
         cr.register_handler(self._on_flush_factory)
-        cr.register_handler(self.expand_root_nodes)
         cr.register_handler(self._on_association_set)
         cr.register_handler(self._on_attribute_change)
 
@@ -361,9 +361,9 @@ class Namespace(object):
             self._namespace = None
 
         cr = self.component_registry
-        cr.unregister_handler(self.expand_root_nodes)
         cr.unregister_handler(self._on_element_create)
         cr.unregister_handler(self._on_element_delete)
+        cr.unregister_handler(self._on_model_factory)
         cr.unregister_handler(self._on_flush_factory)
         cr.unregister_handler(self._on_association_set)
         cr.unregister_handler(self._on_attribute_change)
@@ -383,7 +383,7 @@ class Namespace(object):
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
         self._namespace = view
-        self.expand_root_nodes()
+        self._on_model_factory()
 
         return scrolled_window
 
@@ -402,6 +402,34 @@ class Namespace(object):
                 return child_iter
             child_iter = self.model.iter_next(child_iter)
         return None
+
+    @component.adapter(ModelFactoryEvent)
+    def _on_model_factory(self, event=None):
+        """
+        """
+
+        def add(element, iter=None):
+            child_iter = self.model.append(iter, [element])
+            if type(element) in self.filter:
+                for e in element.ownedMember:
+                    # check if owned member is indeed within parent's namespace
+                    # the check is important in case on Node classes
+                    if element is e.namespace:
+                        add(e, child_iter)
+
+        self.model.clear()
+
+        toplevel = self.element_factory.select(
+            lambda e: type(e) in self.filter and not e.namespace
+        )
+
+        for element in toplevel:
+            add(element)
+
+        # Expand all root elements:
+        if self._namespace:  # None for testing
+            self._namespace.expand_root_nodes()
+            self._on_view_cursor_changed(self._namespace)
 
     @component.adapter(FlushFactoryEvent)
     def _on_flush_factory(self, event):
@@ -458,15 +486,6 @@ class Namespace(object):
             if iter:
                 path = self.model.get_path(iter)
                 self.model.row_changed(path, iter)
-
-    @component.adapter(ModelFactoryEvent)
-    def expand_root_nodes(self, event=None):
-        """
-        """
-        print("expand_root_nodes", event)
-        # Expand all root elements:
-        self._namespace.expand_root_nodes()
-        self._on_view_cursor_changed(self._namespace)
 
     def _on_view_event(self, view, event):
         """
@@ -627,7 +646,7 @@ class Namespace(object):
 
     @action(name="tree-view-refresh", label=_("_Refresh"))
     def tree_view_refresh(self):
-        self._namespace.get_model().refresh()
+        self._on_model_factory()
 
 
 # vim: sw=4:et:ai

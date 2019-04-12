@@ -133,6 +133,20 @@ def test_change_element_name(namespace, element_factory):
     assert len(events) == 1
 
 
+def test_element_model_factory(namespace, element_factory):
+
+    with element_factory.block_events():
+        p1 = element_factory.create(UML.Package)
+        p2 = UML.Package(factory=element_factory)
+
+        p2.package = p1
+    element_factory.notify_model()
+
+    iter = namespace.iter_for_element(p1)
+    assert namespace.model.iter_n_children(None) == 1
+    assert namespace.model.iter_n_children(iter) == 1
+
+
 def test_element_factory_flush(namespace, element_factory):
     p1 = element_factory.create(UML.Package)
     assert namespace.model.get_iter_first() is not None

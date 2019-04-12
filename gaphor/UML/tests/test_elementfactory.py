@@ -100,6 +100,7 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(["element_factory"])
         self.factory = Application.get_service("element_factory")
+        clearEvents()
 
     def tearDown(self):
         del self.factory
@@ -136,3 +137,10 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
 
         assert len(events) == 1, events
         assert IFlushFactoryEvent.providedBy(last_event)
+
+    def test_no_create_events_when_blocked(self):
+        ef = self.factory
+        with ef.block_events():
+            ef.create(Parameter)
+
+        assert events == [], events
