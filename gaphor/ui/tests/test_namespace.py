@@ -89,20 +89,6 @@ def test_delete_element(namespace, element_factory):
     assert namespace.model.iter_n_children(None) == 0
 
 
-def test_only_created_element_should_be_updated(namespace, element_factory):
-    """Elements should only be visible in the model if they're added through a IElementCreateEvent event."""
-    p1 = element_factory.create(UML.Package)
-    p2 = UML.Package(factory=element_factory)
-
-    p2.package = p1
-
-    assert p2.namespace == p1
-
-    iter = namespace.iter_for_element(p1)
-    assert namespace.model.iter_n_children(None) == 1
-    assert namespace.model.iter_n_children(iter) == 0
-
-
 def test_element_should_not_be_added_if_parent_is_not_valid(namespace, element_factory):
     p1 = element_factory.create(UML.Package)
     p2 = element_factory.create(UML.Package)

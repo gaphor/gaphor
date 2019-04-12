@@ -466,11 +466,12 @@ class Namespace(object):
             if old_iter:
                 self.model.remove(old_iter)
 
-                # Place new one only in case the old element can be found,
-                # e.i. it's has been created:
-                new_iter = self.iter_for_element(new_value)
-                if new_iter:
-                    self.model.append(new_iter, [element])
+            # Place new one only in case the old element can be found,
+            # e.i. it's has been created:
+            # Does not hold true for associations and assoc.ends/properties
+            new_iter = self.iter_for_element(new_value)
+            if new_iter:
+                self.model.append(new_iter, [element])
 
     @component.adapter(IAttributeChangeEvent)
     def _on_attribute_change(self, event):
@@ -649,6 +650,3 @@ class Namespace(object):
     @action(name="tree-view-refresh", label=_("_Refresh"))
     def tree_view_refresh(self):
         self._on_model_factory()
-
-
-# vim: sw=4:et:ai
