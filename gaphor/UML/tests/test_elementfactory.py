@@ -89,6 +89,13 @@ def handler(event):
 component.provideHandler(handler)
 
 
+def clearEvents():
+    global handled, events, last_event
+    handled = False
+    events = []
+    last_event = None
+
+
 class ElementFactoryServiceTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(["element_factory"])
@@ -96,40 +103,36 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
 
     def tearDown(self):
         del self.factory
-        self.clearEvents()
+        clearEvents()
         Application.shutdown()
-
-    def clearEvents(self):
-        global handled, events, last_event
-        handled = False
-        events = []
-        last_event = None
 
     def testCreateEvent(self):
         ef = self.factory
-        global handled
         p = ef.create(Parameter)
-        self.assertTrue(IElementCreateEvent.providedBy(last_event))
-        self.assertTrue(handled)
+
+        assert IElementCreateEvent.providedBy(last_event)
+        assert handled
 
     def testRemoveEvent(self):
         ef = self.factory
-        global handled
         p = ef.create(Parameter)
-        self.assertTrue(IElementCreateEvent.providedBy(last_event))
-        self.assertTrue(handled)
-        self.clearEvents()
+        clearEvents()
         p.unlink()
-        self.assertTrue(IElementDeleteEvent.providedBy(last_event))
+
+        assert IElementDeleteEvent.providedBy(last_event)
 
     def testModelEvent(self):
         ef = self.factory
-        global handled
         ef.notify_model()
-        self.assertTrue(IModelFactoryEvent.providedBy(last_event))
+
+        assert IModelFactoryEvent.providedBy(last_event)
 
     def testFlushEvent(self):
         ef = self.factory
-        global handled
+        ef.create(Parameter)
+        del events[:]
+
         ef.flush()
-        self.assertTrue(IFlushFactoryEvent.providedBy(last_event))
+
+        assert len(events) == 1, events
+        assert IFlushFactoryEvent.providedBy(last_event)
