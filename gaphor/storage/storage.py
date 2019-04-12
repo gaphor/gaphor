@@ -304,8 +304,6 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             yield st
         elem.element.postload()
 
-    factory.notify_model()
-
 
 def load(filename, factory, status_queue=None):
     """
@@ -351,9 +349,9 @@ def load_generator(filename, factory):
             )
         )
 
+    factory.flush()
+    gc.collect()
     try:
-        factory.flush()
-        gc.collect()
         log.info("Read %d elements from file" % len(elements))
         with factory.block_events():
             for percentage in load_elements_generator(
@@ -368,6 +366,8 @@ def load_generator(filename, factory):
     except Exception as e:
         log.warning("file %s could not be loaded" % filename)
         raise
+    finally:
+        factory.notify_model()
 
 
 def version_lower_than(gaphor_version, version):

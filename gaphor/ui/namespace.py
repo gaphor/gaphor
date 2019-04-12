@@ -406,11 +406,13 @@ class Namespace(object):
     @component.adapter(ModelFactoryEvent)
     def _on_model_factory(self, event=None):
         """
+        Load a new model completely.
         """
+        log.info("Rebuilding namespace model")
 
         def add(element, iter=None):
             child_iter = self.model.append(iter, [element])
-            if type(element) in self.filter:
+            if type(element) in self.filter and isinstance(element, UML.Namespace):
                 for e in element.ownedMember:
                     # check if owned member is indeed within parent's namespace
                     # the check is important in case on Node classes
