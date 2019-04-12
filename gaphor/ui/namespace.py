@@ -369,7 +369,21 @@ class Namespace(object):
         cr.unregister_handler(self._on_attribute_change)
 
     def construct(self):
-        view = NamespaceView(self.model, self.element_factory)
+        sorted_model = Gtk.TreeModelSort(self.model)
+
+        def sort_func(model, iter_a, iter_b, userdata):
+            a = (model.get_value(iter_a, 0).name or "").lower()
+            b = (model.get_value(iter_b, 0).name or "").lower()
+            if a == b:
+                return 0
+            if a > b:
+                return 1
+            return -1
+
+        sorted_model.set_sort_func(0, sort_func, None)
+        sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
+
+        view = NamespaceView(sorted_model, self.element_factory)
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
