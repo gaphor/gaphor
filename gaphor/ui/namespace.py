@@ -327,8 +327,6 @@ class Namespace(object):
           <separator />
           <menuitem action="tree-view-delete-diagram" />
           <menuitem action="tree-view-delete-package" />
-          <separator />
-          <menuitem action="tree-view-refresh" />
         </popup>
       </ui>
     """
@@ -660,7 +658,3 @@ class Namespace(object):
         package = self._namespace.get_selected_element()
         assert isinstance(package, UML.Package)
         package.unlink()
-
-    @action(name="tree-view-refresh", label=_("_Refresh"))
-    def tree_view_refresh(self):
-        self._on_model_factory()
