@@ -4,12 +4,7 @@ from gaphor.tests.testcase import TestCase
 
 class ElementEditorTestCase(TestCase):
 
-    services = TestCase.services + [
-        "main_window",
-        "ui_manager",
-        "action_manager",
-        "properties",
-    ]
+    services = TestCase.services + ["main_window", "action_manager", "properties"]
 
     def test1(self):
         from gi.repository import Gtk

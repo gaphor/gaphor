@@ -13,12 +13,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 class DiagramItemConnectorTestCase(TestCase):
-    services = TestCase.services + [
-        "main_window",
-        "ui_manager",
-        "action_manager",
-        "properties",
-    ]
+    services = TestCase.services + ["main_window", "action_manager", "properties"]
     component_registry = inject("component_registry")
 
     def setUp(self):

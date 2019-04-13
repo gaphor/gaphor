@@ -11,7 +11,6 @@ class DiagramLayoutTestCase(TestCase):
 
     services = TestCase.services + [
         "main_window",
-        "ui_manager",
         "properties",
         "action_manager",
         "diagram_layout",

@@ -12,7 +12,6 @@ class FileManagerTestCase(unittest.TestCase):
                 "properties",
                 "main_window",
                 "action_manager",
-                "ui_manager",
             ]
         )
         self.recent_files_backup = Application.get_service("properties").get(

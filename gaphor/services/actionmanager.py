@@ -22,10 +22,8 @@ class ActionManager(object):
 
     component_registry = inject("component_registry")
 
-    ui_manager = inject("ui_manager")
-
     def __init__(self):
-        pass
+        self.ui_manager = Gtk.UIManager()
 
     def init(self, app):
         logger.info("Loading action provider services")
@@ -86,6 +84,19 @@ class ActionManager(object):
                     menu_xml
                 )
 
+    def unregister_action_provider(self, action_provider):
+        action_provider = IActionProvider(action_provider)
+
+        try:
+            # Check if the action provider is registered
+            action_provider.__ui_merge_id
+        except AttributeError:
+            pass
+        else:
+            self.ui_manager.remove_ui(action_provider.__ui_merge_id)
+            self.ui_manager.remove_action_group(action_provider.action_group)
+            del action_provider.__ui_merge_id
+
     @component.adapter(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
 
@@ -98,15 +109,10 @@ class ActionManager(object):
 
             self.register_action_provider(event.service)
 
+    # UIManager methods:
 
-@implementer(IService)
-class UIManager(Gtk.UIManager):
-    """
-    Service version of Gtk.UIManager.
-    """
+    def get_widget(self, path):
+        return self.ui_manager.get_widget(path)
 
-    def init(self, app=None):
-        pass
-
-    def shutdown(self):
-        pass
+    def get_accel_group(self):
+        return self.ui_manager.get_accel_group()
