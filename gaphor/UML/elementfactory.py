@@ -169,8 +169,7 @@ class ElementFactory(object):
         """
         Handle events coming from elements.
         """
-        # Invoke default handler, so properties get updated.
-        component.handle(event)
+        pass
 
 
 @implementer(IService)

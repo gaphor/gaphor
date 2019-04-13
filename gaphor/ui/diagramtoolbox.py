@@ -174,6 +174,7 @@ class DiagramToolbox(object):
     """
 
     element_factory = inject("element_factory")
+    component_registry = inject("component_registry")
     properties = inject("properties")
 
     def __init__(self, diagram, view):
@@ -243,7 +244,7 @@ class DiagramToolbox(object):
     def _after_handler(self, new_item):
         if self.properties("reset-tool-after-create", False):
             self.action_group.get_action("toolbox-pointer").activate()
-        component.handle(DiagramItemCreateEvent(new_item))
+        self.component_registry.handle(DiagramItemCreateEvent(new_item))
 
     ##
     ## Toolbox actions
