@@ -1,5 +1,5 @@
 """
-Control flow and object flow implementation. 
+Control flow and object flow implementation.
 
 Contains also implementation to split flows using activity edge connectors.
 """
@@ -30,7 +30,7 @@ class FlowItem(NamedLine):
     __style__ = {"name-align": (ALIGN_RIGHT, ALIGN_TOP), "name-padding": (5, 15, 5, 5)}
 
     def __init__(self, id=None):
-        NamedLine.__init__(self, id)
+        super().__init__(id)
         self._guard = self.add_text("guard.value", editable=True)
         self.watch("subject<ControlFlow>.guard", self.on_control_flow_guard)
         self.watch("subject<ObjectFlow>.guard", self.on_control_flow_guard)
@@ -40,7 +40,7 @@ class FlowItem(NamedLine):
             self._guard.text = self.subject.guard.value
         except AttributeError as e:
             self._guard.text = ""
-        super(FlowItem, self).postload()
+        super().postload()
 
     def on_control_flow_guard(self, event):
         subject = self.subject

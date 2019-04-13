@@ -20,7 +20,7 @@ class AssociationItemTestCase(TestCase):
     services = TestCase.services + ["element_dispatcher"]
 
     def setUp(self):
-        super(AssociationItemTestCase, self).setUp()
+        super().setUp()
         self.assoc = self.create(AssociationItem)
         self.class1 = self.create(ClassItem, UML.Class)
         self.class2 = self.create(ClassItem, UML.Class)
