@@ -150,9 +150,10 @@ class DiagramItem(
     """
 
     dispatcher = inject("element_dispatcher")
+    element_factory = inject("element_factory")
 
     def __init__(self, id=None):
-        UML.Presentation.__init__(self)
+        UML.Presentation.__init__(self, factory=self.element_factory)
         EditableTextSupport.__init__(self)
         StereotypeSupport.__init__(self)
 

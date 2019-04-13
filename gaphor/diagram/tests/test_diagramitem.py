@@ -2,46 +2,57 @@
 Test basic diagram item functionality like styles, etc.
 """
 
-import unittest
+import pytest
+from gaphor import Application
 from gaphor.diagram.diagramitem import DiagramItem
 
 
-class ItemTestCase(unittest.TestCase):
-    def setUp(self):
-        class ItemA(DiagramItem):
-            __style__ = {"a-01": 1, "a-02": 2}
+@pytest.fixture
+def application(services=["element_factory"]):
+    Application.init(services=services)
+    yield Application
+    Application.shutdown()
 
-        self.ItemA = ItemA
 
-    def test_style_assign(self):
-        """
-        Test style assign
-        """
-        item_a = self.ItemA()
-        self.assertEqual(self.ItemA.style.a_01, 1)
-        self.assertEqual(self.ItemA.style.a_02, 2)
-        self.assertEqual(item_a.style.a_01, 1)
-        self.assertEqual(item_a.style.a_02, 2)
+@pytest.fixture
+def ItemA(application):
+    class ItemA(DiagramItem):
+        __style__ = {"a-01": 1, "a-02": 2}
 
-    def test_style_override(self):
-        """
-        Test style override
-        """
+    return ItemA
 
-        class ItemB(self.ItemA):
-            __style__ = {"b-01": 3, "b-02": 4, "a-01": 5}
 
-        item_b = ItemB()
-        self.assertEqual(ItemB.style.b_01, 3)
-        self.assertEqual(ItemB.style.b_02, 4)
-        self.assertEqual(ItemB.style.a_01, 5)
-        self.assertEqual(ItemB.style.a_02, 2)
-        self.assertEqual(item_b.style.b_01, 3)
-        self.assertEqual(item_b.style.b_02, 4)
-        self.assertEqual(item_b.style.a_01, 5)
-        self.assertEqual(item_b.style.a_02, 2)
+def test_style_assign(ItemA):
+    """
+    Test style assign
+    """
+    item_a = ItemA()
 
-        # check ItemA style, it should remain unaffected by ItemB style
-        # changes
-        self.assertEqual(self.ItemA.style.a_01, 1)
-        self.assertEqual(self.ItemA.style.a_02, 2)
+    assert ItemA.style.a_01 == 1
+    assert ItemA.style.a_02 == 2
+    assert item_a.style.a_01 == 1
+    assert item_a.style.a_02 == 2
+
+
+def test_style_override(ItemA):
+    """
+    Test style override
+    """
+
+    class ItemB(ItemA):
+        __style__ = {"b-01": 3, "b-02": 4, "a-01": 5}
+
+    item_b = ItemB()
+    assert ItemB.style.b_01 == 3
+    assert ItemB.style.b_02 == 4
+    assert ItemB.style.a_01 == 5
+    assert ItemB.style.a_02 == 2
+    assert item_b.style.b_01 == 3
+    assert item_b.style.b_02 == 4
+    assert item_b.style.a_01 == 5
+    assert item_b.style.a_02 == 2
+
+    # check ItemA style, it should remain unaffected by ItemB style
+    # changes
+    assert ItemA.style.a_01 == 1
+    assert ItemA.style.a_02 == 2
