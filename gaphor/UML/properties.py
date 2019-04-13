@@ -28,8 +28,6 @@ __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"
 
 import logging
 
-from zope import component
-
 from gaphor.UML.collection import collection, collectionlist
 from gaphor.UML.event import AssociationAddEvent, AssociationDeleteEvent
 from gaphor.UML.event import AttributeChangeEvent, AssociationSetEvent
@@ -88,14 +86,9 @@ class umlproperty(object):
         pass
 
     def handle(self, event):
+        event.element.handle(event)
         for d in self._dependent_properties:
             d.propagate(event)
-
-        factory = event.element.factory
-        if factory:
-            factory._handle(event)
-        else:
-            component.handle(event)
 
 
 class attribute(umlproperty):

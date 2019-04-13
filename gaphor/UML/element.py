@@ -8,6 +8,8 @@ __all__ = ["Element"]
 import threading
 import uuid
 
+from zope import component
+
 from gaphor.UML.properties import umlproperty
 
 
@@ -81,8 +83,8 @@ class Element(object):
             prop.postload(self)
 
     def unlink(self):
-
-        """Unlink the element. All the elements references are destroyed.
+        """
+        Unlink the element. All the elements references are destroyed.
 
         The unlink lock is acquired while unlinking this elements properties
         to avoid recursion problems."""
@@ -99,6 +101,16 @@ class Element(object):
 
             if self._factory:
                 self._factory._unlink_element(self)
+
+    def handle(self, event):
+        """
+        Propagate incoming events
+        """
+        factory = self._factory
+        if factory:
+            factory._handle(event)
+        else:
+            component.handle(event)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
