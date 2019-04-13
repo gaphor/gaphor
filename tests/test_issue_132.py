@@ -1,5 +1,5 @@
 from gaphor.tests import TestCase
-from gaphor.ui.namespace import NamespaceModel
+
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.core import transactional
@@ -12,7 +12,6 @@ class UndoRedoBugTestCase(TestCase):
     def setUp(self):
         super(UndoRedoBugTestCase, self).setUp()
         self.undo_manager = self.get_service("undo_manager")
-        self.namespace = NamespaceModel(self.element_factory)
 
     @transactional
     def create_with_attribute(self):

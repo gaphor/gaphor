@@ -24,7 +24,7 @@ from gaphor.core import (
     transactional,
 )
 from gaphor.interfaces import IService, IActionProvider
-from gaphor.UML.interfaces import IAttributeChangeEvent
+from gaphor.UML.interfaces import IAttributeChangeEvent, IFlushFactoryEvent
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
@@ -405,11 +405,13 @@ class Diagrams(object):
         self._notebook.connect("switch-page", self._on_switch_page)
         self.component_registry.register_handler(self._on_show_diagram)
         self.component_registry.register_handler(self._on_name_change)
+        self.component_registry.register_handler(self._on_flush_model)
         return self._notebook
 
     def close(self):
         """Close the diagrams component."""
 
+        self.component_registry.unregister_handler(self._on_flush_model)
         self.component_registry.unregister_handler(self._on_name_change)
         self.component_registry.unregister_handler(self._on_show_diagram)
         self._notebook.destroy()
@@ -558,6 +560,14 @@ class Diagrams(object):
 
         self.create_tab(diagram.name, widget)
         return page
+
+    @component.adapter(IFlushFactoryEvent)
+    def _on_flush_model(self, event):
+        """
+        Close all tabs.
+        """
+        while self._notebook.get_n_pages():
+            self._notebook.remove_page(0)
 
     @component.adapter(IAttributeChangeEvent)
     def _on_name_change(self, event):

@@ -144,7 +144,7 @@ class FileManager(object):
             return []
 
     def set_recent_files(self, recent_files):
-        """Updates the properties service with the supplied list of recent 
+        """Updates the properties service with the supplied list of recent
         files.  This method is used by the recent_files property."""
 
         log.info("Storing recent files")
@@ -160,7 +160,7 @@ class FileManager(object):
     def update_recent_files(self, new_filename=None):
         """Updates the list of recent files.  If the new_filename
         parameter is supplied, it is added to the list of recent files.
-        
+
         The default recent file placeholder actions are hidden.  The real
         actions are then built using the recent file list."""
 
@@ -387,11 +387,12 @@ class FileManager(object):
                 return
 
         element_factory.flush()
-        model = element_factory.create(UML.Package)
-        model.name = _("New model")
-        diagram = element_factory.create(UML.Diagram)
-        diagram.package = model
-        diagram.name = _("main")
+        with element_factory.block_events():
+            model = element_factory.create(UML.Package)
+            model.name = _("New model")
+            diagram = element_factory.create(UML.Diagram)
+            diagram.package = model
+            diagram.name = _("main")
         self.filename = None
         element_factory.notify_model()
 

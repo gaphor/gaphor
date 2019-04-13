@@ -11,7 +11,7 @@ from zope import component
 from zope.interface import registry
 from zope.interface import implementer
 
-from gaphor.interfaces import IService, IEventFilter
+from gaphor.interfaces import IService
 
 
 @implementer(IService)
@@ -147,20 +147,8 @@ class ZopeComponentRegistry(object):
         """
         self._components.unregisterHandler(factory, required)
 
-    def _filter(self, objects):
-        filtered = list(objects)
-        for o in objects:
-            for adapter in self._components.subscribers(objects, IEventFilter):
-                if adapter.filter():
-                    # event is blocked
-                    filtered.remove(o)
-                    break
-        return filtered
-
     def handle(self, *events):
         """
         Send event notifications to registered handlers.
         """
-        objects = self._filter(events)
-        if objects:
-            list(map(self._components.handle, events))
+        list(map(self._components.handle, events))

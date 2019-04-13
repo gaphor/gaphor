@@ -23,6 +23,7 @@ from gaphor import UML
 from gaphor.interfaces import IActionProvider
 from gaphor.UML.event import (
     ElementCreateEvent,
+    ElementDeleteEvent,
     ModelFactoryEvent,
     FlushFactoryEvent,
     DerivedSetEvent,
@@ -55,391 +56,8 @@ _default_filter_list = (
     UML.Operation,
 )
 
-# TODO: update tree sorter:
-# Diagram before Class & Package.
-# Property before Operation
-_name_getter = operator.attrgetter("name")
-_tree_sorter = lambda e: _name_getter(e) or ""
 
 log = logging.getLogger(__name__)
-
-
-def catchall(func):
-    def catchall_wrapper(*args, **kwargs):
-        try:
-            func(*args, **kwargs)
-        except Exception as e:
-            log.error(
-                "Exception in %s. Try to refresh the entire model" % (func,),
-                exc_info=True,
-            )
-            try:
-                args[0].refresh()
-            except Exception as e:
-                log.error("Failed to refresh")
-
-    return catchall_wrapper
-
-
-class NamespaceModel(Gtk.GenericTreeModel):
-    """
-    The NamespaceModel holds a view on the data model based on namespace
-    relationships (such as a Package containing a Class).
-
-    NamedElement.namespace[1] -- Namespace.ownedMember[*]
-
-    NOTE: when a model is loaded no IAssociation*Event's are emitted.
-
-    """
-
-    component_registry = inject("component_registry")
-
-    def __init__(self, factory):
-        # Init parent:
-        Gtk.GenericTreeModel.__init__(self)
-
-        self.stamp = 0
-
-        #: Dictionary of (id(user_data): user_data), used when leak-references=False
-        self._held_refs = {}
-
-        # We own the references to the iterators.
-        self.set_property("leak-references", 0)
-
-        self.factory = factory
-
-        self._nodes = {None: []}
-
-        self.filter = _default_filter_list
-
-        cr = self.component_registry
-        cr.register_handler(self.flush)
-        cr.register_handler(self.refresh)
-        cr.register_handler(self._on_element_change)
-        cr.register_handler(self._on_element_create)
-        cr.register_handler(self._on_element_delete)
-        cr.register_handler(self._on_association_set)
-
-        self._build_model()
-
-    def close(self):
-        """
-        Close the namespace model, unregister handlers.
-        """
-        cr = self.component_registry
-        cr.unregister_handler(self.flush)
-        cr.unregister_handler(self.refresh)
-        cr.unregister_handler(self._on_element_change)
-        cr.unregister_handler(self._on_element_create)
-        cr.unregister_handler(self._on_element_delete)
-        cr.unregister_handler(self._on_association_set)
-
-    def path_from_element(self, e):
-        if e:
-            ns = e.namespace
-            n = self._nodes.get(ns)
-            if n and e in n:
-                return self.path_from_element(ns) + (n.index(e),)
-            else:
-                return ()
-        else:
-            return ()
-
-    def element_from_path(self, path):
-        """
-        Get the node form a path. None is returned if no node is found.
-        """
-        try:
-            nodes = self._nodes
-            node = None
-            for index in path:
-                node = nodes[node][index]
-            return node
-        except IndexError:
-            return None
-
-    @component.adapter(IAttributeChangeEvent)
-    @catchall
-    def _on_element_change(self, event):
-        """
-        Element changed, update appropriate row.
-        """
-        element = event.element
-        if element not in self._nodes:
-            return
-
-        if (
-            event.property is UML.Classifier.isAbstract
-            or event.property is UML.BehavioralFeature.isAbstract
-        ):
-            path = self.path_from_element(element)
-            if path:
-                self.row_changed(path, self.get_iter(path))
-
-        if event.property is UML.NamedElement.name:
-            try:
-                path = self.path_from_element(element)
-            except KeyError:
-                # Element not visible in the tree view
-                return
-
-            if not path:
-                return
-            self.row_changed(path, self.get_iter(path))
-            parent_nodes = self._nodes[element.namespace]
-            parent_path = self.path_from_element(element.namespace)
-            if not parent_path:
-                return
-
-            original = list(parent_nodes)
-            parent_nodes.sort(key=_tree_sorter)
-            if parent_nodes != original:
-                # reorder the list:
-                self.rows_reordered(
-                    parent_path,
-                    self.get_iter(parent_path),
-                    list(map(list.index, [original] * len(parent_nodes), parent_nodes)),
-                )
-
-    def _add_elements(self, element):
-        """
-        Add a single element.
-        """
-        if type(element) not in self.filter:
-            return
-        if element.namespace not in self._nodes:
-            return
-
-        self._nodes.setdefault(element, [])
-        parent = self._nodes[element.namespace]
-        parent.append(element)
-        parent.sort(key=_tree_sorter)
-        path = self.path_from_element(element)
-        self.row_inserted(path, self.get_iter(path))
-
-        # Add children
-        if isinstance(element, UML.Namespace):
-            for e in element.ownedMember:
-                # check if owned member is indeed within parent's namespace
-                # the check is important in case on Node classes
-                if element is e.namespace:
-                    self._add_elements(e)
-
-    def _remove_element(self, element):
-        """
-        Remove elements from the nodes. No update signal is emitted.
-        """
-
-        def remove(n):
-            for c in self._nodes.get(n, []):
-                remove(c)
-            try:
-                del self._nodes[n]
-            except KeyError:
-                pass
-
-        remove(element)
-
-    @component.adapter(ElementCreateEvent)
-    @catchall
-    def _on_element_create(self, event):
-        element = event.element
-        if event.service is self.factory:
-            self._add_elements(element)
-
-    @component.adapter(IElementDeleteEvent)
-    @catchall
-    def _on_element_delete(self, event):
-        element = event.element
-
-        log.debug("Namespace received deleting element %s" % element)
-
-        if event.service is self.factory and type(element) in self.filter:
-            path = self.path_from_element(element)
-
-            # log.debug('Deleting element %s from path %s' % (element, path))
-
-            # Remove all sub-elements:
-            if path:
-                self.row_deleted(path)
-                if path[:-1]:
-                    self.row_has_child_toggled(path[:-1], self.get_iter(path[:-1]))
-            self._remove_element(element)
-
-            parent_node = self._nodes.get(element.namespace)
-            if parent_node and element in parent_node:
-                parent_node.remove(element)
-
-    #            if path and parent_node and len(self._nodes[parent_node]) == 0:
-    #                self.row_has_child_toggled(path[:-1], self.get_iter(path[:-1]))
-
-    @component.adapter(DerivedSetEvent)
-    @catchall
-    def _on_association_set(self, event):
-
-        element = event.element
-        if type(element) not in self.filter:
-            return
-
-        if event.property is UML.NamedElement.namespace:
-            # Check if the element is actually in the element factory:
-            if element not in self.factory:
-                return
-
-            old_value, new_value = event.old_value, event.new_value
-
-            # Remove entry from old place
-            if old_value in self._nodes:
-                try:
-                    path = self.path_from_element(old_value) + (
-                        self._nodes[old_value].index(element),
-                    )
-                except ValueError:
-                    log.error(
-                        "Unable to create path for element %s and old_value %s"
-                        % (element, self._nodes[old_value])
-                    )
-                else:
-                    self._nodes[old_value].remove(element)
-                    self.row_deleted(path)
-                    path = path[:-1]  # self.path_from_element(old_value)
-                    if path:
-                        self.row_has_child_toggled(path, self.get_iter(path))
-
-            # Add to new place. This may fail if the type of the new place is
-            # not in the tree model (because it's filtered)
-            log.debug("Trying to add %s to %s" % (element, new_value))
-            if new_value in self._nodes:
-                if element in self._nodes:
-                    parent = self._nodes[new_value]
-                    parent.append(element)
-                    parent.sort(key=_tree_sorter)
-                    path = self.path_from_element(element)
-                    self.row_inserted(path, self.get_iter(path))
-                else:
-                    self._add_elements(element)
-            elif element in self._nodes:
-                # Non-existent: remove entirely
-                self._remove_element(element)
-
-    @component.adapter(ModelFactoryEvent)
-    def refresh(self, event=None):
-        self.flush()
-        self._build_model()
-
-    @component.adapter(FlushFactoryEvent)
-    def flush(self, event=None):
-        for n in self._nodes[None]:
-            self.row_deleted((0,))
-        self._nodes = {None: []}
-
-    def _build_model(self):
-        toplevel = self.factory.select(
-            lambda e: isinstance(e, UML.Namespace) and not e.namespace
-        )
-
-        for element in toplevel:
-            self._add_elements(element)
-
-    # TreeModel methods:
-
-    def on_get_flags(self):
-        """
-        Returns the GtkTreeModelFlags for this particular type of model.
-        """
-        return 0
-
-    def on_get_n_columns(self):
-        """
-        Returns the number of columns in the model.
-        """
-        return 1
-
-    def on_get_column_type(self, index):
-        """
-        Returns the type of a column in the model.
-        """
-        return GObject.TYPE_PYOBJECT
-
-    def on_get_path(self, node):
-        """
-        Returns the path for a node as a tuple (0, 1, 1).
-        """
-        path = self.path_from_element(node)
-        return path
-
-    def on_get_iter(self, path):
-        """
-        Returns the node corresponding to the given path.
-        The path is a tuple of values, like (0 1 1). Returns None if no
-        iterator can be created.
-        """
-        return self.element_from_path(path)
-
-    def on_get_value(self, node, column):
-        """
-        Returns the model element that matches 'node'.
-        """
-        assert column == 0, "column can only be 0"
-        return node
-
-    def on_iter_next(self, node):
-        """
-        Returns the next node at this level of the tree. None if no
-        next element.
-        """
-        try:
-            parent = self._nodes[node.namespace]
-            index = parent.index(node)
-            return parent[index + 1]
-        except (IndexError, ValueError) as e:
-            return None
-
-    def on_iter_has_child(self, node):
-        """
-        Returns true if this node has children, or None.
-        """
-        n = self._nodes.get(node)
-        return n or len(n) > 0
-
-    def on_iter_children(self, node):
-        """
-        Returns the first child of this node, or None.
-        """
-        try:
-            return self._nodes[node][0]
-        except (IndexError, KeyError) as e:
-            pass
-
-    def on_iter_n_children(self, node):
-        """
-        Returns the number of children of this node.
-        """
-        return len(self._nodes[node])
-
-    def on_iter_nth_child(self, node, n):
-        """
-        Returns the nth child of this node.
-        """
-        try:
-            nodes = self._nodes[node]
-            return nodes[n]
-        except TypeError as e:
-            return None
-
-    def on_iter_parent(self, node):
-        """
-        Returns the parent of this node or None if no parent
-        """
-        return node.namespace
-
-    # TreeDragDest
-
-    def row_drop_possible(self, dest_path, selection_data):
-        return True
-
-    def drag_data_received(self, dest, selection_data):
-        pass
 
 
 class NamespaceView(Gtk.TreeView):
@@ -453,9 +71,6 @@ class NamespaceView(Gtk.TreeView):
     ]
 
     def __init__(self, model, factory):
-        assert isinstance(
-            model, NamespaceModel
-        ), "model is not a NamespaceModel (%s)" % str(model)
         GObject.GObject.__init__(self)
         self.set_model(model)
         self.factory = factory
@@ -665,13 +280,13 @@ class NamespaceView(Gtk.TreeView):
             else:
                 context.finish(True, True, time)
                 # Finally let's try to select the element again.
-                path = model.path_from_element(element)
-                if len(path) > 1:
-                    self.expand_row(
-                        path=Gtk.TreePath.new_from_indices(path[:-1]), open_all=False
-                    )
-                selection = self.get_selection()
-                selection.select_path(path)
+                # iter = self.iter_for_element(element)
+                # if iter:
+                #     self.expand_row(
+                #         path=Gtk.TreePath.new_from_indices(path[:-1]), open_all=False
+                #     )
+                # selection = self.get_selection()
+                # selection.select_path(path)
 
 
 @implementer(IUIComponent, IActionProvider)
@@ -706,8 +321,6 @@ class Namespace(object):
           <separator />
           <menuitem action="tree-view-delete-diagram" />
           <menuitem action="tree-view-delete-package" />
-          <separator />
-          <menuitem action="tree-view-refresh" />
         </popup>
       </ui>
     """
@@ -715,22 +328,54 @@ class Namespace(object):
     def __init__(self):
         self._namespace = None
         self.action_group = build_action_group(self)
+        self.model = Gtk.TreeStore.new([object])
+        self.filter = _default_filter_list
+
+    def init(self):
+        # Event handler registration is in a separate function,
+        # since putting it in with widget construction will cause
+        # unit tests to fail, on macOS at least.
+        cr = self.component_registry
+        cr.register_handler(self._on_element_create)
+        cr.register_handler(self._on_element_delete)
+        cr.register_handler(self._on_model_factory)
+        cr.register_handler(self._on_flush_factory)
+        cr.register_handler(self._on_association_set)
+        cr.register_handler(self._on_attribute_change)
 
     def open(self):
-        widget = self.construct()
-        self.component_registry.register_handler(self.expand_root_nodes)
-        return widget
+        self.init()
+        return self.construct()
 
     def close(self):
         if self._namespace:
             self._namespace.destroy()
             self._namespace = None
 
-        self.component_registry.unregister_handler(self.expand_root_nodes)
+        cr = self.component_registry
+        cr.unregister_handler(self._on_element_create)
+        cr.unregister_handler(self._on_element_delete)
+        cr.unregister_handler(self._on_model_factory)
+        cr.unregister_handler(self._on_flush_factory)
+        cr.unregister_handler(self._on_association_set)
+        cr.unregister_handler(self._on_attribute_change)
 
     def construct(self):
-        model = NamespaceModel(self.element_factory)
-        view = NamespaceView(model, self.element_factory)
+        sorted_model = Gtk.TreeModelSort(self.model)
+
+        def sort_func(model, iter_a, iter_b, userdata):
+            a = (model.get_value(iter_a, 0).name or "").lower()
+            b = (model.get_value(iter_b, 0).name or "").lower()
+            if a == b:
+                return 0
+            if a > b:
+                return 1
+            return -1
+
+        sorted_model.set_sort_func(0, sort_func, None)
+        sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
+
+        view = NamespaceView(sorted_model, self.element_factory)
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
@@ -744,17 +389,116 @@ class Namespace(object):
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
         self._namespace = view
-        self.expand_root_nodes()
+        self._on_model_factory()
 
         return scrolled_window
 
+    def iter_for_element(self, element, old_namespace=0):
+        # Using `0` as sentinel
+        if old_namespace != 0:
+            parent_iter = self.iter_for_element(old_namespace)
+        elif element and element.namespace:
+            parent_iter = self.iter_for_element(element.namespace)
+        else:
+            parent_iter = None
+
+        child_iter = self.model.iter_children(parent_iter)
+        while child_iter:
+            if self.model.get_value(child_iter, 0) is element:
+                return child_iter
+            child_iter = self.model.iter_next(child_iter)
+        return None
+
+    def _visible(self, element):
+        # Spacial case: Non-navigable properties
+        return type(element) in self.filter and not (
+            isinstance(element, UML.Property) and element.namespace is None
+        )
+
     @component.adapter(ModelFactoryEvent)
-    def expand_root_nodes(self, event=None):
+    def _on_model_factory(self, event=None):
         """
+        Load a new model completely.
         """
+        log.info("Rebuilding namespace model")
+
+        def add(element, iter=None):
+            if self._visible(element):
+                child_iter = self.model.append(iter, [element])
+                if isinstance(element, UML.Namespace):
+                    for e in element.ownedMember:
+                        # check if owned member is indeed within parent's namespace
+                        # the check is important in case on Node classes
+                        if element is e.namespace:
+                            add(e, child_iter)
+
+        self.model.clear()
+
+        toplevel = self.element_factory.select(
+            lambda e: type(e) in self.filter and not e.namespace
+        )
+
+        for element in toplevel:
+            add(element)
+
         # Expand all root elements:
-        self._namespace.expand_root_nodes()
-        self._on_view_cursor_changed(self._namespace)
+        if self._namespace:  # None for testing
+            self._namespace.expand_root_nodes()
+            self._on_view_cursor_changed(self._namespace)
+
+    @component.adapter(FlushFactoryEvent)
+    def _on_flush_factory(self, event):
+        self.model.clear()
+
+    @component.adapter(ElementCreateEvent)
+    def _on_element_create(self, event):
+        element = event.element
+        if self._visible(element) and not self.iter_for_element(element):
+            iter = self.iter_for_element(element.namespace)
+            self.model.append(iter, [element])
+
+    @component.adapter(ElementDeleteEvent)
+    def _on_element_delete(self, event):
+        element = event.element
+        if type(element) in self.filter:
+            iter = self.iter_for_element(element)
+            # iter should be here, unless we try to delete an element who's parent element is already deleted, so let's be lenient.
+            if iter:
+                self.model.remove(iter)
+
+    @component.adapter(DerivedSetEvent)
+    def _on_association_set(self, event):
+
+        element = event.element
+        if event.property is UML.NamedElement.namespace:
+            old_value, new_value = event.old_value, event.new_value
+
+            old_iter = self.iter_for_element(element, old_namespace=old_value)
+            if old_iter:
+                self.model.remove(old_iter)
+
+            if self._visible(element):
+                new_iter = self.iter_for_element(new_value)
+                # Should be either set (sub node) or unset (root node)
+                if bool(new_iter) == bool(new_value):
+                    self.model.append(new_iter, [element])
+
+    @component.adapter(IAttributeChangeEvent)
+    def _on_attribute_change(self, event):
+        """
+        Element changed, update appropriate row.
+        """
+        element = event.element
+
+        if (
+            event.property is UML.Classifier.isAbstract
+            or event.property is UML.BehavioralFeature.isAbstract
+            or event.property is UML.NamedElement.name
+        ):
+            iter = self.iter_for_element(element)
+            if iter:
+                path = self.model.get_path(iter)
+                self.model.row_changed(path, iter)
 
     def _on_view_event(self, view, event):
         """
@@ -912,10 +656,3 @@ class Namespace(object):
         package = self._namespace.get_selected_element()
         assert isinstance(package, UML.Package)
         package.unlink()
-
-    @action(name="tree-view-refresh", label=_("_Refresh"))
-    def tree_view_refresh(self):
-        self._namespace.get_model().refresh()
-
-
-# vim: sw=4:et:ai

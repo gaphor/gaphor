@@ -1,8 +1,9 @@
 """Factory for and registration of model elements."""
 
 import uuid
-from zope import component
+from contextlib import contextmanager
 
+from zope import component
 from zope.interface import implementer
 
 from gaphor.UML.diagram import Diagram
@@ -15,7 +16,7 @@ from gaphor.UML.event import (
 )
 from gaphor.UML.interfaces import IElementChangeEvent
 from gaphor.core import inject
-from gaphor.interfaces import IService, IEventFilter
+from gaphor.interfaces import IService
 from gaphor.misc import odict
 
 
@@ -133,8 +134,8 @@ class ElementFactory(object):
         return bool(self._elements)
 
     def flush(self):
-        """Flush all elements (remove them from the factory). 
-        
+        """Flush all elements (remove them from the factory).
+
         Diagram elements are flushed first.  This is so that canvas updates
         are blocked.  The remaining elements are then flushed.
         """
@@ -178,6 +179,10 @@ class ElementFactoryService(ElementFactory):
 
     component_registry = inject("component_registry")
 
+    def __init__(self):
+        super(ElementFactoryService, self).__init__()
+        self._block_events = False
+
     def init(self, app):
         pass
 
@@ -189,65 +194,48 @@ class ElementFactoryService(ElementFactory):
         Create a new model element of type ``type``.
         """
         obj = super(ElementFactoryService, self).create(type)
-        self.component_registry.handle(ElementCreateEvent(self, obj))
+        self._handle(ElementCreateEvent(self, obj))
         return obj
 
     def flush(self):
-        """Flush all elements (remove them from the factory).  First test
-        if the element factory has a Gaphor application instance.  If yes,
-        the application will handle a FlushFactoryEvent and will register
-        a ElementChangedEventBlocker adapter.
-        
-        Diagram elements are flushed first.  This is so that canvas updates
-        are blocked.  The remaining elements are then flushed.  Finally,
-        the ElementChangedEventBlocker adapter is unregistered if the factory
-        has an application instance."""
+        """Flush all elements (remove them from the factory).
+        This method will emit a single FlushFactoryEvent,
+        all individual events are suppressed."""
 
-        self.component_registry.handle(FlushFactoryEvent(self))
-        self.component_registry.register_subscription_adapter(
-            ElementChangedEventBlocker
-        )
+        self._handle(FlushFactoryEvent(self))
 
-        try:
+        with self.block_events():
             super(ElementFactoryService, self).flush()
-        finally:
-            self.component_registry.unregister_subscription_adapter(
-                ElementChangedEventBlocker
-            )
 
     def notify_model(self):
         """
         Send notification that a new model has been loaded by means of the
         ModelFactoryEvent event from gaphor.UML.event.
         """
-        self.component_registry.handle(ModelFactoryEvent(self))
+        self._handle(ModelFactoryEvent(self))
+
+    @contextmanager
+    def block_events(self):
+        """
+        Block events from being emitted.
+        """
+        old = self._block_events
+        self._block_events = True
+
+        yield self
+
+        self._block_events = old
 
     def _unlink_element(self, element):
         """
         NOTE: Invoked from Element.unlink() to perform an element unlink.
         """
-        self.component_registry.handle(ElementDeleteEvent(self, element))
         super(ElementFactoryService, self)._unlink_element(element)
+        self._handle(ElementDeleteEvent(self, element))
 
     def _handle(self, event):
         """
         Handle events coming from elements (used internally).
         """
-        self.component_registry.handle(event)
-
-
-@implementer(IEventFilter)
-@component.adapter(IElementChangeEvent)
-class ElementChangedEventBlocker(object):
-    """Blocks all events of type IElementChangeEvent.
-
-    This filter is placed when the the element factory flushes it's content.
-    """
-
-    def __init__(self, event):
-        self._event = event
-
-    def filter(self):
-        """Returns something that evaluates to `True` so events are blocked."""
-
-        return "Blocked by ElementFactory.flush()"
+        if not self._block_events:
+            self.component_registry.handle(event)

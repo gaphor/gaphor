@@ -20,7 +20,6 @@ import gaphas
 from gaphor import UML
 from gaphor import diagram
 from gaphor.UML.collection import collection
-from gaphor.UML.elementfactory import ElementChangedEventBlocker
 from gaphor.application import Application, NotInitializedError
 from gaphor.diagram import items
 from gaphor.i18n import _
@@ -305,8 +304,6 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             yield st
         elem.element.postload()
 
-    factory.notify_model()
-
 
 def load(filename, factory, status_queue=None):
     """
@@ -352,18 +349,11 @@ def load_generator(filename, factory):
             )
         )
 
+    factory.flush()
+    gc.collect()
     try:
-        component_registry = Application.get_service("component_registry")
-    except NotInitializedError:
-        component_registry = None
-
-    try:
-        factory.flush()
-        gc.collect()
         log.info("Read %d elements from file" % len(elements))
-        if component_registry:
-            component_registry.register_subscription_adapter(ElementChangedEventBlocker)
-        try:
+        with factory.block_events():
             for percentage in load_elements_generator(
                 elements, factory, gaphor_version
             ):
@@ -371,19 +361,13 @@ def load_generator(filename, factory):
                     yield percentage / 2 + 50
                 else:
                     yield percentage
-        except Exception as e:
-            raise
-        finally:
-            if component_registry:
-                component_registry.unregister_subscription_adapter(
-                    ElementChangedEventBlocker
-                )
-
-        gc.collect()
-        yield 100
+            gc.collect()
+            yield 100
     except Exception as e:
-        log.info("file %s could not be loaded" % filename)
+        log.warning("file %s could not be loaded" % filename)
         raise
+    finally:
+        factory.notify_model()
 
 
 def version_lower_than(gaphor_version, version):

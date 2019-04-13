@@ -98,7 +98,6 @@ class Element(object):
                 prop.unlink(self)
 
             if self._factory:
-
                 self._factory._unlink_element(self)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
