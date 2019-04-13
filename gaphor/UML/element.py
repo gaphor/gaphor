@@ -8,8 +8,6 @@ __all__ = ["Element"]
 import threading
 import uuid
 
-from zope import component
-
 from gaphor.UML.properties import umlproperty
 
 
@@ -109,8 +107,6 @@ class Element(object):
         factory = self._factory
         if factory:
             factory._handle(event)
-        else:
-            component.handle(event)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
