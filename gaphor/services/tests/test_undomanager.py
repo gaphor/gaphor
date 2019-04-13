@@ -110,7 +110,7 @@ class TestUndoManager(TestCase):
         class A(Element):
             attr = attribute("attr", bytes, default="default")
 
-        a = A()
+        a = A(factory=self.element_factory)
         assert a.attr == "default", a.attr
         undo_manager.begin_transaction()
         a.attr = "five"
@@ -142,8 +142,8 @@ class TestUndoManager(TestCase):
         A.one = association("one", B, 0, 1, opposite="two")
         B.two = association("two", A, 0, 1)
 
-        a = A()
-        b = B()
+        a = A(factory=self.element_factory)
+        b = B(factory=self.element_factory)
 
         assert a.one is None
         assert b.two is None
@@ -194,10 +194,10 @@ class TestUndoManager(TestCase):
         A.one = association("one", B, lower=0, upper=1, opposite="two")
         B.two = association("two", A, lower=0, upper="*", opposite="one")
 
-        a1 = A()
-        a2 = A()
-        b1 = B()
-        b2 = B()
+        a1 = A(factory=self.element_factory)
+        a2 = A(factory=self.element_factory)
+        b1 = B(factory=self.element_factory)
+        b2 = B(factory=self.element_factory)
 
         undo_manager.begin_transaction()
         b1.two = a1
@@ -318,13 +318,13 @@ class TestUndoManager(TestCase):
         compreg = Application.get_service("component_registry")
         compreg.register_handler(handler)
         try:
-            a = A()
+            a = A(factory=self.element_factory)
 
             undo_manager = UndoManager()
             undo_manager.init(Application)
             undo_manager.begin_transaction()
 
-            a.a1 = A()
+            a.a1 = A(factory=self.element_factory)
             undo_manager.commit_transaction()
 
             assert len(events) == 1, events

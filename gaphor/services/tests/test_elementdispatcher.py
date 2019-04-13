@@ -6,21 +6,21 @@ from gaphor.services.elementdispatcher import ElementDispatcher
 
 class ElementDispatcherTestCase(TestCase):
     def setUp(self):
-        super(ElementDispatcherTestCase, self).setUp()
+        super().setUp()
         self.events = []
         self.dispatcher = ElementDispatcher()
         self.dispatcher.init(Application)
 
     def tearDown(self):
         self.dispatcher.shutdown()
-        super(ElementDispatcherTestCase, self).tearDown()
+        super().tearDown()
 
     def _handler(self, event):
         self.events.append(event)
 
     def test_register_handler(self):
         dispatcher = self.dispatcher
-        element = UML.Class()
+        element = self.element_factory.create(UML.Class)
         dispatcher.register_handler(
             self._handler, element, "ownedOperation.parameter.name"
         )
@@ -33,9 +33,11 @@ class ElementDispatcherTestCase(TestCase):
         # Add some properties:
 
         # 1:
-        element.ownedOperation = UML.Operation()
+        element.ownedOperation = self.element_factory.create(UML.Operation)
         # 2:
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
+            UML.Parameter
+        )
         # 3:
         p.name = "func"
         dispatcher.register_handler(
@@ -49,12 +51,14 @@ class ElementDispatcherTestCase(TestCase):
         Multiple registrations have no effect.
         """
         dispatcher = self.dispatcher
-        element = UML.Class()
+        element = self.element_factory.create(UML.Class)
 
         # Add some properties:
 
-        element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        element.ownedOperation = self.element_factory.create(UML.Operation)
+        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
+            UML.Parameter
+        )
         dispatcher.register_handler(
             self._handler, element, "ownedOperation.parameter.name"
         )
@@ -82,9 +86,11 @@ class ElementDispatcherTestCase(TestCase):
 
         # First some setup:
         dispatcher = self.dispatcher
-        element = UML.Class()
-        o = element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        element = self.element_factory.create(UML.Class)
+        o = element.ownedOperation = self.element_factory.create(UML.Operation)
+        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
+            UML.Parameter
+        )
         p.name = "func"
         dispatcher.register_handler(
             self._handler, element, "ownedOperation.parameter.name"
@@ -107,9 +113,11 @@ class ElementDispatcherTestCase(TestCase):
         Test notifications with Class object.
         """
         dispatcher = self.dispatcher
-        element = UML.Class()
-        o = element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        element = self.element_factory.create(UML.Class)
+        o = element.ownedOperation = self.element_factory.create(UML.Operation)
+        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
+            UML.Parameter
+        )
         p.name = "func"
         dispatcher.register_handler(
             self._handler, element, "ownedOperation.parameter.name"
@@ -117,7 +125,7 @@ class ElementDispatcherTestCase(TestCase):
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
-        element.ownedOperation = UML.Operation()
+        element.ownedOperation = self.element_factory.create(UML.Operation)
         assert len(self.events) == 1, self.events
         assert len(dispatcher._handlers) == 4
 
@@ -132,8 +140,8 @@ class ElementDispatcherTestCase(TestCase):
         Test notifications with Transition object.
         """
         dispatcher = self.dispatcher
-        element = UML.Transition()
-        g = element.guard = UML.Constraint()
+        element = self.element_factory.create(UML.Transition)
+        g = element.guard = self.element_factory.create(UML.Constraint)
         dispatcher.register_handler(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
@@ -144,7 +152,7 @@ class ElementDispatcherTestCase(TestCase):
         g.specification = "x"
         assert len(self.events) == 1, self.events
 
-        element.guard = UML.Constraint()
+        element.guard = self.element_factory.create(UML.Constraint)
         assert len(self.events) == 2, self.events
         assert len(dispatcher._handlers) == 2, len(dispatcher._handlers)
         assert (element.guard, UML.Constraint.specification) in list(
@@ -156,8 +164,8 @@ class ElementDispatcherTestCase(TestCase):
         Test notifications with Transition object.
         """
         dispatcher = self.dispatcher
-        element = UML.Transition()
-        g = element.guard = UML.Constraint()
+        element = self.element_factory.create(UML.Transition)
+        g = element.guard = self.element_factory.create(UML.Constraint)
         dispatcher.register_handler(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
@@ -165,7 +173,7 @@ class ElementDispatcherTestCase(TestCase):
         g.specification = "x"
         assert len(self.events) == 1, self.events
 
-        element.guard = UML.Constraint()
+        element.guard = self.element_factory.create(UML.Constraint)
         assert len(self.events) == 2, self.events
 
     def test_notification_with_composition(self):
@@ -173,9 +181,11 @@ class ElementDispatcherTestCase(TestCase):
         Test unregister with composition. Use Class.ownedOperation.precondition.
         """
         dispatcher = self.dispatcher
-        element = UML.Class()
-        o = element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].precondition = UML.Constraint()
+        element = self.element_factory.create(UML.Class)
+        o = element.ownedOperation = self.element_factory.create(UML.Operation)
+        p = element.ownedOperation[0].precondition = self.element_factory.create(
+            UML.Constraint
+        )
         p.name = "func"
         dispatcher.register_handler(
             self._handler, element, "ownedOperation.precondition.name"
@@ -191,8 +201,8 @@ class ElementDispatcherTestCase(TestCase):
         Test unregister with composition. Use Class.ownedOperation.precondition.
         """
         dispatcher = self.dispatcher
-        element = UML.Transition()
-        g = element.guard = UML.Constraint()
+        element = self.element_factory.create(UML.Transition)
+        g = element.guard = self.element_factory.create(UML.Constraint)
         dispatcher.register_handler(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
@@ -212,14 +222,6 @@ from gaphor.UML.properties import association
 from gaphor.services.elementdispatcher import EventWatcher
 
 
-class A(Element):
-    pass
-
-
-A.one = association("one", A, lower=0, upper=1, composite=True)
-A.two = association("two", A, lower=0, upper=2, composite=True)
-
-
 class ElementDispatcherAsServiceTestCase(TestCase):
 
     services = TestCase.services + ["element_dispatcher"]
@@ -228,6 +230,15 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         super(ElementDispatcherAsServiceTestCase, self).setUp()
         self.events = []
         self.dispatcher = Application.get_service("element_dispatcher")
+        element_factory = self.element_factory
+
+        class A(Element):
+            def __init__(self):
+                super().__init__(factory=element_factory)
+
+        A.one = association("one", A, lower=0, upper=1, composite=True)
+        A.two = association("two", A, lower=0, upper=2, composite=True)
+        self.A = A
 
     def tearDown(self):
         super(ElementDispatcherAsServiceTestCase, self).tearDown()
@@ -240,9 +251,11 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         Test notifications with Class object.
         """
         dispatcher = self.dispatcher
-        element = UML.Class()
-        o = element.ownedOperation = UML.Operation()
-        p = element.ownedOperation[0].formalParameter = UML.Parameter()
+        element = self.element_factory.create(UML.Class)
+        o = element.ownedOperation = self.element_factory.create(UML.Operation)
+        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
+            UML.Parameter
+        )
         p.name = "func"
         dispatcher.register_handler(
             self._handler, element, "ownedOperation.parameter.name"
@@ -250,7 +263,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
-        element.ownedOperation = UML.Operation()
+        element.ownedOperation = self.element_factory.create(UML.Operation)
         assert len(self.events) == 1, self.events
         assert len(dispatcher._handlers) == 4
 
@@ -267,9 +280,9 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         Tricky case where no events are fired.
         """
         dispatcher = self.dispatcher
-        element = UML.Association()
-        p1 = element.memberEnd = UML.Property()
-        p2 = element.memberEnd = UML.Property()
+        element = self.element_factory.create(UML.Association)
+        p1 = element.memberEnd = self.element_factory.create(UML.Property)
+        p2 = element.memberEnd = self.element_factory.create(UML.Property)
 
         assert len(element.memberEnd) == 2
         dispatcher.register_handler(self._handler, element, "memberEnd.name")
@@ -293,9 +306,9 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         Tricky case where no events are fired.
         """
         dispatcher = self.dispatcher
-        element = UML.Association()
-        p1 = element.memberEnd = UML.Property()
-        p2 = element.memberEnd = UML.Property()
+        element = self.element_factory.create(UML.Association)
+        p1 = element.memberEnd = self.element_factory.create(UML.Property)
+        p2 = element.memberEnd = self.element_factory.create(UML.Property)
         p1.lowerValue = "0"
         p1.upperValue = "1"
         p2.lowerValue = "1"
@@ -324,6 +337,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         Test diamond shaped dependencies a -> b -> c, a -> b' -> c
         """
+        A = self.A
         a = A()
         watcher = EventWatcher(a, self._handler)
         watcher.watch("one.two.one.two")
@@ -347,6 +361,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' -> d
         """
+        A = self.A
         a = A()
         watcher = EventWatcher(a, self._handler)
         watcher.watch("one.two.one.two")
@@ -372,6 +387,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' -> d
         """
+        A = self.A
         a = A()
         watcher = EventWatcher(a, self._handler)
         watcher.watch("one.two.one.two")
@@ -399,6 +415,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         Test cyclic dependency a -> b -> c -> a.
         """
+        A = self.A
         a = A()
         watcher = EventWatcher(a, self._handler)
         watcher.watch("one.two.one.two")
