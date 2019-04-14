@@ -48,12 +48,13 @@ class Alignment(object):
     def update(self, event=None):
         self._last_update = event
         sensitive = event and len(event.selected_items) > 1
-        self.action_group.get_action("align-left").set_sensitive(sensitive)
-        self.action_group.get_action("align-center").set_sensitive(sensitive)
-        self.action_group.get_action("align-right").set_sensitive(sensitive)
-        self.action_group.get_action("align-top").set_sensitive(sensitive)
-        self.action_group.get_action("align-middle").set_sensitive(sensitive)
-        self.action_group.get_action("align-bottom").set_sensitive(sensitive)
+        if sensitive is not None:
+            self.action_group.get_action("align-left").set_sensitive(sensitive)
+            self.action_group.get_action("align-center").set_sensitive(sensitive)
+            self.action_group.get_action("align-right").set_sensitive(sensitive)
+            self.action_group.get_action("align-top").set_sensitive(sensitive)
+            self.action_group.get_action("align-middle").set_sensitive(sensitive)
+            self.action_group.get_action("align-bottom").set_sensitive(sensitive)
 
     def get_items(self):
         return (self._last_update and self._last_update.selected_items) or []
