@@ -33,11 +33,10 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.5"
-pycairo = "^1.18"
+pycairo = "^1.16"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
 "zope.component" = "^4.5"
-setuptools = "^41.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.0"
