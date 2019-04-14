@@ -36,10 +36,6 @@ class Element(object):
 
     id = property(lambda self: self._id, doc="Id")
 
-    factory = property(
-        lambda self: self._factory, doc="The factory that created this element"
-    )
-
     def umlproperties(self):
         """
         Iterate over all UML properties
