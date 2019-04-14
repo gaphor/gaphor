@@ -151,7 +151,7 @@ class _Application(object):
         from gi.repository import Gio, Gtk
 
         app = Gtk.Application(
-            application_id="org.gaphor.gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
+            application_id="org.gaphor.Gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
         )
         self._app = app
 
