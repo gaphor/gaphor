@@ -38,12 +38,9 @@ highly complex models.
 
 Gaphor is designed around the following principles:
 
-- Simplicity
- The application should be easy to use. Only some basic knowledge of UML is required.
-- Consistency
- UML is a graphical modeling language, so all modeling is done in a diagram.
-- Workability
- The application should not bother the user every time they do something non-UML-ish.
+- Simplicity: The application should be easy to use. Only some basic knowledge of UML is required.
+- Consistency: UML is a graphical modeling language, so all modeling is done in a diagram.
+- Workability: The application should not bother the user every time they do something non-UML-ish.
  
 Gaphor is built on [Gaphas](https://github.com/gaphor/gaphas), which provides
 the foundational diagramming library. It is a GUI application that is built on
