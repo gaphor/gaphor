@@ -41,7 +41,7 @@ Gaphor is designed around the following principles:
 - Simplicity: The application should be easy to use. Only some basic knowledge of UML is required.
 - Consistency: UML is a graphical modeling language, so all modeling is done in a diagram.
 - Workability: The application should not bother the user every time they do something non-UML-ish.
- 
+
 Gaphor is built on [Gaphas](https://github.com/gaphor/gaphas), which provides
 the foundational diagramming library. It is a GUI application that is built on
 GTK and cairo, [PyGObject](https://pygobject.readthedocs.io/) provides access
@@ -76,6 +76,15 @@ happens.
 
 ### PyPI
 You can also install Gaphor using a wheel from PyPI.
+
+On Ubuntu 18.04, make sure the following packages are installed:
+
+* libcairo2-dev
+* libgirepository1.0-dev
+* gobject-introspection (a dependency of libgirepository1.0-dev)
+
+GTK+ 3.x is installed by default.
+
 ```bash
 $ pip install gaphor
 $ gaphor
@@ -105,7 +114,7 @@ git clone the repository to C:\msys64\home\<user>
 ```bash
 $ cd gaphor
 $ pip3 install -e .
-``` 
+```
 
 #### Linux
 To setup a development environment with Linux:
@@ -183,7 +192,7 @@ This project follows the
 specification. Contributions of any kind are welcome!
 
 1.  Check for open issues or open a fresh issue to start a discussion
-    around a feature idea or a bug. There is a 
+    around a feature idea or a bug. There is a
     [first-timers-only](https://github.com/gaphor/gaphor/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3Afirst-timers-only)
     tag for issues that should be ideal for people who are not very
     familiar with the codebase yet.
