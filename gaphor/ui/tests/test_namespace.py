@@ -5,9 +5,7 @@ from gaphor.application import Application
 
 
 @pytest.fixture
-def application(
-    services=["element_factory", "component_registry", "ui_manager", "action_manager"]
-):
+def application(services=["element_factory", "action_manager"]):
     Application.init(services=services)
     yield Application
     Application.shutdown()

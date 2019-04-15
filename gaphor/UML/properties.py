@@ -28,8 +28,6 @@ __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"
 
 import logging
 
-from zope import component
-
 from gaphor.UML.collection import collection, collectionlist
 from gaphor.UML.event import AssociationAddEvent, AssociationDeleteEvent
 from gaphor.UML.event import AttributeChangeEvent, AssociationSetEvent
@@ -50,11 +48,15 @@ class umlproperty(object):
 
     The subclasses should define a ``name`` attribute that contains the name
     of the property. Derived properties (derivedunion and redefine) can be
-    connected, they will be notified when the value changes.
+    connected, they will be notified when the value changes through
+    `propagate(self, event)`.
 
     In some cases properties call out and delegate actions to the ElementFactory,
     for example in the case of event handling.
     """
+
+    def __init__(self):
+        self._dependent_properties = set()
 
     def __get__(self, obj, class_=None):
         if obj:
@@ -84,11 +86,9 @@ class umlproperty(object):
         pass
 
     def handle(self, event):
-        factory = event.element.factory
-        if factory:
-            factory._handle(event)
-        else:
-            component.handle(event)
+        event.element.handle(event)
+        for d in self._dependent_properties:
+            d.propagate(event)
 
 
 class attribute(umlproperty):
@@ -100,6 +100,7 @@ class attribute(umlproperty):
 
     # TODO: check if lower and upper are actually needed for attributes
     def __init__(self, name, type, default=None, lower=0, upper=1):
+        super().__init__()
         self.name = name
         self._name = "_" + name
         self.type = type
@@ -194,6 +195,7 @@ class enumeration(umlproperty):
     type = property(lambda s: str)
 
     def __init__(self, name, values, default):
+        super().__init__()
         self.name = name
         self._name = "_" + name
         self.values = values
@@ -243,7 +245,7 @@ class association(umlproperty):
     Association, both uni- and bi-directional.
 
     Element.assoc = association('assoc', Element, opposite='other')
-    
+
     A listerer is connected to the value added to the association. This
     will cause the association to be ended if the element on the other end
     of the association is unlinked.
@@ -253,6 +255,7 @@ class association(umlproperty):
     """
 
     def __init__(self, name, type, lower=0, upper="*", composite=False, opposite=None):
+        super().__init__()
         self.name = name
         self._name = "_" + name
         self.type = type
@@ -447,6 +450,7 @@ class associationstub(umlproperty):
     """
 
     def __init__(self, association):
+        super().__init__()
         self.association = association
         self._name = "_stub_%x" % id(self)
 
@@ -513,6 +517,7 @@ class derived(umlproperty):
     """
 
     def __init__(self, name, type, lower, upper, *subsets):
+        super().__init__()
         self.name = name
         self._name = "_" + name
         self.version = 1
@@ -522,7 +527,8 @@ class derived(umlproperty):
         self.subsets = set(subsets)
         self.single = len(subsets) == 1
 
-        component.provideHandler(self._association_changed)
+        for s in subsets:
+            s._dependent_properties.add(self)
 
     def load(self, obj, value):
         raise ValueError(
@@ -583,8 +589,7 @@ class derived(umlproperty):
     def _del(self, obj, value=None):
         raise AttributeError("Can not delete values on a union")
 
-    @component.adapter(IElementChangeEvent)
-    def _association_changed(self, event):
+    def propagate(self, event):
         """
         Re-emit state change for the derived properties as Derived*Event's.
 
@@ -595,7 +600,7 @@ class derived(umlproperty):
           send DerivedSetEvent if len(union) < 2
         if multiplicity is [*]:
           send DerivedAddEvent and DerivedDeleteEvent
-            if value not in derived union and 
+            if value not in derived union and
         """
         if event.property in self.subsets:
             # Make sure unions are created again
@@ -669,8 +674,7 @@ class derivedunion(derived):
     # Filter is our default filter
     filter = _union
 
-    @component.adapter(IElementChangeEvent)
-    def _association_changed(self, event):
+    def propagate(self, event):
         """
         Re-emit state change for the derived union (as Derived*Event's).
 
@@ -681,7 +685,7 @@ class derivedunion(derived):
           send DerivedSetEvent if len(union) < 2
         if multiplicity is [*]:
           send DerivedAddEvent and DerivedDeleteEvent
-            if value not in derived union and 
+            if value not in derived union and
         """
         if event.property in self.subsets:
             # Make sure unions are created again
@@ -753,13 +757,14 @@ class redefine(umlproperty):
     """
 
     def __init__(self, decl_class, name, type, original):
+        super().__init__()
         self.decl_class = decl_class
         self.name = name
         self._name = "_" + name
         self.type = type
         self.original = original
 
-        component.provideHandler(self._association_changed)
+        original._dependent_properties.add(self)
 
     upper = property(lambda s: s.original.upper)
     lower = property(lambda s: s.original.lower)
@@ -813,8 +818,7 @@ class redefine(umlproperty):
     def _del(self, obj, value, from_opposite=False):
         return self.original._del(obj, value, from_opposite)
 
-    @component.adapter(IAssociationChangeEvent)
-    def _association_changed(self, event):
+    def propagate(self, event):
         if event.property is self.original and isinstance(
             event.element, self.decl_class
         ):

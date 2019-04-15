@@ -36,10 +36,6 @@ class Element(object):
 
     id = property(lambda self: self._id, doc="Id")
 
-    factory = property(
-        lambda self: self._factory, doc="The factory that created this element"
-    )
-
     def umlproperties(self):
         """
         Iterate over all UML properties
@@ -81,8 +77,8 @@ class Element(object):
             prop.postload(self)
 
     def unlink(self):
-
-        """Unlink the element. All the elements references are destroyed.
+        """
+        Unlink the element. All the elements references are destroyed.
 
         The unlink lock is acquired while unlinking this elements properties
         to avoid recursion problems."""
@@ -99,6 +95,14 @@ class Element(object):
 
             if self._factory:
                 self._factory._unlink_element(self)
+
+    def handle(self, event):
+        """
+        Propagate incoming events
+        """
+        factory = self._factory
+        if factory:
+            factory._handle(event)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 

@@ -237,10 +237,7 @@ class collection(object):
             i2 = self.items.index(item2)
             self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
 
-            # send a notification that this list has changed
-            factory = self.object.factory
-            if factory:
-                factory._handle(AssociationChangeEvent(self.object, self.property))
+            self.object.handle(AssociationChangeEvent(self.object, self.property))
             return True
         except IndexError as ex:
             return False

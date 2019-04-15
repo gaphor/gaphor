@@ -36,9 +36,6 @@ class ZopeComponentRegistry(object):
         # Make sure component.handle() and query methods works.
         # TODO: eventually all queries should be done through the Application
         # instance.
-        # Used in collection.py, transaction.py, diagramtoolbox.py:
-        component.handle = self.handle
-        # component.getMultiAdapter = self._components.getMultiAdapter
         # Used all over the place:
         component.queryMultiAdapter = self._components.queryMultiAdapter
         # component.getAdapter = self._components.getAdapter

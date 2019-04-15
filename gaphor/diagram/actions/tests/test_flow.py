@@ -33,9 +33,3 @@ class FlowTestCase(TestCase):
 
         flow.subject = None
         self.assertEqual("", flow._guard.text)
-
-    def test_persistence(self):
-        """
-        TODO: Test connector item saving/loading
-        """
-        pass
