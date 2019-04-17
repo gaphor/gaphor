@@ -180,7 +180,7 @@ class ElementFactoryService(ElementFactory):
 
     def __init__(self):
         super(ElementFactoryService, self).__init__()
-        self._block_events = False
+        self._block_events = 0
 
     def init(self, app):
         pass
@@ -218,12 +218,14 @@ class ElementFactoryService(ElementFactory):
         """
         Block events from being emitted.
         """
-        old = self._block_events
-        self._block_events = True
+        print("Blocking events", self._block_events)
+        self._block_events += 1
 
-        yield self
-
-        self._block_events = old
+        try:
+            yield self
+        finally:
+            self._block_events -= 1
+            print("Unblocked events", self._block_events)
 
     def _unlink_element(self, element):
         """
