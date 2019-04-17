@@ -3,7 +3,7 @@
 import logging
 import os
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 from zope.interface import implementer
 
 from gaphor.action import action, build_action_group
@@ -80,6 +80,16 @@ class ConsoleWindow(object):
         window.show()
 
         self.window = window
+
+        def key_event(widget, event):
+            if (
+                event.keyval == Gdk.KEY_d
+                and event.get_state() & Gdk.ModifierType.CONTROL_MASK
+            ):
+                window.destroy()
+            return False
+
+        window.connect("key_press_event", key_event)
 
         window.connect("destroy", self.close)
 

@@ -188,24 +188,34 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
     def key_pressed(self, widget, event):
         if event.keyval == Gdk.keyval_from_name("Return"):
             return self.execute_line()
+        if event.keyval == Gdk.keyval_from_name("Tab"):
+            return self.complete_line()
 
         if event.keyval == Gdk.keyval_from_name("Up"):
             self.current_history = self.current_history - 1
             if self.current_history < -len(self.history):
                 self.current_history = -len(self.history)
             return self.show_history()
-        elif event.keyval == Gdk.keyval_from_name("Down"):
+        if event.keyval == Gdk.keyval_from_name("Down"):
             self.current_history = self.current_history + 1
             if self.current_history > 0:
                 self.current_history = 0
             return self.show_history()
-        elif event.keyval == Gdk.keyval_from_name("Home"):
+
+        ctrl = event.state & Gdk.ModifierType.CONTROL_MASK
+        if (event.keyval == Gdk.keyval_from_name("Home")) or (
+            ctrl and event.keyval == Gdk.KEY_a
+        ):
             l = self.text.get_buffer().get_line_count() - 1
             start = self.text.get_buffer().get_iter_at_line_offset(l, 4)
             self.text.get_buffer().place_cursor(start)
             return True
-        elif event.keyval == Gdk.keyval_from_name("Tab"):
-            return self.complete_line()
+
+        if ctrl and event.keyval == Gdk.KEY_e:
+            end = self.text.get_buffer().get_end_iter()
+            self.text.get_buffer().place_cursor(end)
+            return True
+
         return False
 
     def show_history(self):
@@ -295,7 +305,7 @@ def main():
 
     def key_event(widget, event):
         if (
-            Gdk.keyval_name(event.keyval) == "d"
+            event.keyval == Gdk.KEY_d
             and event.get_state() & Gdk.ModifierType.CONTROL_MASK
         ):
             destroy()
