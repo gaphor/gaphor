@@ -91,6 +91,7 @@ function install_deps {
         mingw-w64-"${ARCH}"-gtk3 \
         mingw-w64-"${ARCH}"-python3 \
         mingw-w64-"${ARCH}"-python3-gobject \
+	mingw-w64-"${ARCH}"-gobject-introspection \
         mingw-w64-"${ARCH}"-python3-cairo \
         mingw-w64-"${ARCH}"-python3-pip \
         mingw-w64-"${ARCH}"-python3-setuptools \
@@ -103,19 +104,18 @@ function install_deps {
         zope.component==4.5
         tomlkit==0.5.3
         "
-
     build_pip install $(echo "$PIP_REQUIREMENTS" | tr ["\\n"] [" "])
 
 }
 
-function get_version {
-	python3 - <<END
-from tomlkit import parse
-with open('../pyproject.toml', 'r') as f:
-	parsed_toml = parse(f.read())
-	print(parsed_toml["tool"]["poetry"]["version"])
-END
-}
+# function get_version {
+# 	python3 - <<END
+# from tomlkit import parse
+# with open('../pyproject.toml', 'r') as f:
+# 	parsed_toml = parse(f.read())
+# 	print(parsed_toml["tool"]["poetry"]["version"])
+# END
+# }
 
 function install_gaphor {
     [ -z "$1" ] && (echo "Missing arg"; exit 1)
@@ -133,7 +133,8 @@ function install_gaphor {
     python3 "${MISC}"/create-launcher.py \
         "${VERSION}" "${MINGW_ROOT}"/bin
 
-    VERSION=$(get_version)
+#    VERSION=$(get_version)
+    VERSION="1.0.1"
     VERSION_DESC="$VERSION"
     if [ "$1" = "master" ]
     then
