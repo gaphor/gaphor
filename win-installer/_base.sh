@@ -36,7 +36,7 @@ function set_build_root {
 
 set_build_root "${DIR}/_build_root"
 
-function build_pacman {/LICENSE
+function build_pacman {
     pacman --cachedir "/var/cache/pacman/pkg" --root "${BUILD_ROOT}" "$@"
 }
 
