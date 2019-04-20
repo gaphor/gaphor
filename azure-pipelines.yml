@@ -37,26 +37,23 @@ jobs:
           set MSYS2_ROOT=%CD:~0,2%\msys64
           choco install msys2 --params="/InstallDir:%MSYS2_ROOT% /NoUpdate /NoPath"
         displayName: Install MSYS2
-    
-      - powershell: Write-Host "##vso[task.prependpath]$env:%CD:~0,2%\msys64\usr\bin"
-        displayName: Add MSYS2 to PATH
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
           git clone https://github.com/userzimmermann/MSYS2-cmd.git %MSYS2_ROOT%\cmd
-          %MSYS2_ROOT%\cmd\msystem MINGW64
+          %MSYS2_ROOT%\cmd\msystem MSYS
         displayName: Install and Activate MSYS2-cmd
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MINGW64
+          %MSYS2_ROOT%\cmd\msystem MSYS
           pacman --noconfirm -Syyuu
           pacman --noconfirm -Syuu
         displayName: Update MSYS2
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MINGW64
+          %MSYS2_ROOT%\cmd\msystem MSYS
           bash -c ".azure/msys2-install.sh"
         displayName: Install Dependencies
         env:
@@ -66,7 +63,7 @@ jobs:
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MINGW64
+          %MSYS2_ROOT%\cmd\msystem MSYS
           bash -c ".azure/msys2-test.sh"
         displayName: Run Tests
         env:
@@ -82,9 +79,8 @@ jobs:
 
       - script: |
           set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MINGW64
-          cd win-installer
-          bash -c "build.sh"
+          %MSYS2_ROOT%\cmd\msystem MSYS
+          bash -c "win-installer/build.sh"
         displayName: Create Windows Binaries
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         env:
@@ -95,7 +91,7 @@ jobs:
         displayName: Copy Windows Binaries
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         inputs:
-          sourceFolder: win-installer
+          sourceFolder: .
           contents: '*.exe'
           targetFolder: $(Build.ArtifactStagingDirectory)
 
