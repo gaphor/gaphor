@@ -6,6 +6,11 @@
   <summary>Simple modeling tool</summary>
   <metadata_license>CC-BY-3.0</metadata_license>
   <project_license>Apache-2.0</project_license>
+  <developer_name>Arjan J. Molenaar</developer_name>
+  <categories>
+    <category>Development</category>
+    <category>Graphics</category>
+  </categories>
   <screenshots>
     <screenshot type="default">
       <caption>The Gaphor main window.</caption>
@@ -21,6 +26,7 @@
     </p>
   </description>
   <releases>
+    <release version="1.0.1" date="2019-04-19"/>
     <release version="1.0.0" date="2019-04-04"/>
     <release version="0.17.2" date="2013-07-05" />
   </releases>
