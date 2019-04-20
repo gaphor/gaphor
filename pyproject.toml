@@ -77,20 +77,6 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "consolewindow" = "gaphor.ui.consolewindow:ConsoleWindow"
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 
-[tool.black]
-exclude = '''
-(
-  /(
-      \.eggs
-    | \.git
-    | \.venv
-    | build
-    | dist
-  )/
-  | msvc9compiler.py
-)
-'''
-
 [build-system]
 requires = ["setuptools", "wheel", "poetry>=0.12"]
 build-backend = "poetry.masonry.api"

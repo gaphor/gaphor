@@ -99,7 +99,7 @@ function install_deps {
 
     # Temporary workaround until mingw64 python3 is patched
     # Line 296 changed to not raise a VC 6.0 version error
-    cp "${DIR}"/msvc9compiler.py "${MINGW_ROOT}"/lib/python3.7/distutils/
+    cp "${DIR}"/msvc9compiler "${MINGW_ROOT}"/lib/python3.7/distutils/msvc9compiler.py
 
     PIP_REQUIREMENTS="\
         pycairo==1.18.0
