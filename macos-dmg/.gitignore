@@ -1,6 +1,7 @@
 Gaphor.app/Contents/.Python
-Gaphor.app/Contents/Resources/bin/
-Gaphor.app/Contents/Resources/include/
-Gaphor.app/Contents/Resources/lib/
-Gaphor.app/Contents/Resources/etc/
-Gaphor.app/Contents/Resources/share/
+Gaphor.app/Contents/bin/
+Gaphor.app/Contents/include/
+Gaphor.app/Contents/lib/
+Gaphor.app/Contents/etc/
+Gaphor.app/Contents/share/
+Gaphor.app/Contents/pyvenv.cfg

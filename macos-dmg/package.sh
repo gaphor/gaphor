@@ -6,7 +6,7 @@
 
 # Also fix $INSTALLDIR/MacOS/gaphor in case this number changes
 APP=Gaphor.app
-INSTALLDIR=$APP/Contents/Resources
+INSTALLDIR=$APP/Contents
 LIBDIR=$INSTALLDIR/lib
 
 LOCALDIR=/usr/local
@@ -15,7 +15,9 @@ function log() {
   echo $* >&2
 }
 
-python -m venv --prompt Gaphor.app --copies ${INSTALLDIR}
+log "Building venv for app bundle..."
+
+python3 -m venv --prompt Gaphor.app --copies ${INSTALLDIR}
 
 source ${INSTALLDIR}/bin/activate
 
@@ -52,7 +54,7 @@ function fix_paths {
   for dep in `resolve_deps $lib`; do
     #log Fixing `basename $lib`
     log "|  $dep"
-    install_name_tool -change $dep @executable_path/../Resources/lib/`basename $dep` $lib
+    install_name_tool -change $dep @executable_path/../lib/`basename $dep` $lib
   done
 }
 
