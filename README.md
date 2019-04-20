@@ -57,8 +57,6 @@ There are two versions:
 2. Portable installation
 
 ### Linux
-NOTE: FlatHub based builds of Gaphor are currently broken, but we are trying to resolve the [issue](https://github.com/gaphor/gaphor/issues/135). Please use the alternative method below to directly download and extract the tar.gz package.
-
 To install Gaphor in Linux use Flatpak:
 1. [Install Flatpak](https://flatpak.org/setup)
 1. `flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
@@ -68,7 +66,13 @@ Alternatively, you can download the [latest
 Gaphor.tar.gz](https://github.com/gaphor/gaphor/releases).
 
 ### macOS
-To install Gaphor on macOS you can use the [latest Gaphor.dmg
+We are still working on packaging GTK with Gaphor and it is currently an
+installation pre-requisite.
+1. Install [homebrew](https://brew.sh)
+1. Open a terminal and execute:
+```bash
+$ brew install gobject-introspection gtk+3
+Then install Gaphor on macOS using the [latest Gaphor.dmg
 installer](https://github.com/gaphor/gaphor/releases).
 Note: Sometimes launching the app the first time after installation fails due
 to macOS security settings, please attempt to launch it a 2nd time if this
