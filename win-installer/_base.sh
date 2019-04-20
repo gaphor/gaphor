@@ -97,6 +97,10 @@ function install_deps {
         mingw-w64-"${ARCH}"-python3-setuptools \
         mingw-w64-"${ARCH}"-python3-zope.interface
 
+    # Temporary workaround until mingw64 python3 is patched
+    # Line 296 changed to not raise a VC 6.0 version error
+    cp "${DIR}"/msvc9compiler.py "${MINGW_ROOT}"/lib/python3.7/distutils/
+
     PIP_REQUIREMENTS="\
         pycairo==1.18.0
         PyGObject==3.30.4
@@ -104,7 +108,7 @@ function install_deps {
         zope.component==4.5
         tomlkit==0.5.3
         "
-    build_pip install $(echo "$PIP_REQUIREMENTS" | tr ["\\n"] [" "])
+    build_pip install -I $(echo "$PIP_REQUIREMENTS" | tr ["\\n"] [" "])
 
 }
 
@@ -125,6 +129,11 @@ function install_gaphor {
 
     cd "${REPO_CLONE}"
     git checkout "$1" 
+    
+    # Don't use PEP517 until Poetry unicode issues resolved
+    # https://github.com/sdispater/poetry/pull/1029
+    rm pyproject.toml
+
     build_python setup.py install
 
     cd "${DIR}"
@@ -133,8 +142,7 @@ function install_gaphor {
     python3 "${MISC}"/create-launcher.py \
         "${VERSION}" "${MINGW_ROOT}"/bin
 
-#    VERSION=$(get_version)
-    VERSION="1.0.1"
+    VERSION=$(get_version)
     VERSION_DESC="$VERSION"
     if [ "$1" = "master" ]
     then
