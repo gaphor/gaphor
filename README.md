@@ -63,7 +63,7 @@ To install Gaphor in Linux use Flatpak:
 1. `flatpak install --user flathub org.gaphor.Gaphor`
 
 Alternatively, you can download the [latest
-Gaphor.tar.gz](https://github.com/gaphor/gaphor/releases).
+gaphor-linux.tar.gz](https://github.com/gaphor/gaphor/releases).
 
 ### macOS
 We are still working on packaging GTK with Gaphor and it is currently an
@@ -72,7 +72,7 @@ installation pre-requisite.
 1. Open a terminal and execute:
 ```bash
 $ brew install gobject-introspection gtk+3
-Then install Gaphor on macOS using the [latest Gaphor.dmg
+Then install Gaphor on macOS using the [latest gaphor-macOS.dmg
 installer](https://github.com/gaphor/gaphor/releases).
 Note: Sometimes launching the app the first time after installation fails due
 to macOS security settings, please attempt to launch it a 2nd time if this
