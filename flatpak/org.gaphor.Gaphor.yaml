@@ -30,9 +30,9 @@ modules:
         pycairo'
     sources:
       - type: git
-#        tag: 1.0.1
+        tag: 1.0.1
         url: https://github.com/gaphor/gaphor
-        commit: ccee465ea4ac32623c51483a5a478d9a713d5827
+        commit: e3fb4af05bbbec84185861838d25b62135b202a4
       - type: file
         url: https://files.pythonhosted.org/packages/ba/19/1119tfe7b1e49b9c8a9f154c930060f37074ea2e8f9f6558efc2eeaa417a2/decorator-4.4.0.tar.gz
         sha256: 86156361c50488b84a3f148056ea716ca587df2f0de1d34750d35c21312725de
