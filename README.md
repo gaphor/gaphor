@@ -72,8 +72,12 @@ installation pre-requisite.
 1. Open a terminal and execute:
 ```bash
 $ brew install gobject-introspection gtk+3
+```
+
 Then install Gaphor on macOS using the [latest gaphor-macOS.dmg
 installer](https://github.com/gaphor/gaphor/releases).
+
+
 Note: Sometimes launching the app the first time after installation fails due
 to macOS security settings, please attempt to launch it a 2nd time if this
 happens.
