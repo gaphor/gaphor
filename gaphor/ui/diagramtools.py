@@ -33,7 +33,7 @@ from gaphor.diagram.interfaces import IEditor, IConnect, IGroup
 IN_CURSOR = Gdk.Cursor.new(Gdk.CursorType.DIAMOND_CROSS)
 
 # cursor to indicate ungrouping
-OUT_CURSOR = Gdk.Cursor.new(Gdk.CursorType.SIZING)
+OUT_CURSOR = Gdk.Cursor.new(Gdk.CursorType.CROSSHAIR)
 
 log = logging.getLogger(__name__)
 
