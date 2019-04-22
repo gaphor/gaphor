@@ -56,7 +56,7 @@ while read f
 do
   echo "$(rel_path $f) $f"
 done |\
-grep '^lib/\|share/gir-1.0\|share/locale' |\
+grep '^lib/\|share/gir-1.0/\|share/locale/\|Frameworks/' |\
 while read rf f
 do
   log "Adding ${INSTALLDIR}/${rf}"
@@ -112,42 +112,16 @@ function fix_paths {
 } |\
 while read lib
 do
-  # log Resolving $lib
-  # resolve_deps $lib
   fix_paths $lib
-# done | sort -u | while read lib; do
-#   log Copying $lib
-#   cp $lib $LIBDIR
-#   chmod u+w $LIBDIR/`basename $lib`
-#   fix_paths $LIBDIR/`basename $lib`
 done
 
-# function fix_config {
-#   local file=$1
-#   local replace=$2
-
-#   mv $file $file.orig
-#   sed "$replace" $file.orig > $file
-# }
-
-GDK_PIXBUF_MODULEDIR=${INSTALLDIR}/lib/gdk-pixbuf-2.0/2.10.0/loaders gdk-pixbuf-query-loaders --update-cache
-
+cp /usr/local/bin/gdk-pixbuf-query-loaders ${INSTALLDIR}/bin
+fix_paths ${INSTALLDIR}/bin/gdk-pixbuf-query-loaders
 log "Installing Gaphor in ${INSTALLDIR}..."
 
 pip install ../dist/gaphor-*.tar.gz
 
-# Fix config files
-
-#fix_config $INSTALLDIR/etc/pango/pango.modules 's#/usr/local/.*lib/#${CWD}/../lib/#'
-#fix_config $INSTALLDIR/etc/gtk-2.0/gtk.immodules 's#/usr/local/.*lib/#${CWD}/../lib/#'
-#fix_config $INSTALLDIR/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache 's#/usr/local/.*lib/#${CWD}/../lib/#'
-
-# Normalize paths (Homebrew refers everything from it's Cellar)
-# fix_config $INSTALLDIR/Resources/etc/pango/pango.modules 's#/usr/local/.*lib/#/usr/local/lib/#'
-# fix_config $INSTALLDIR/Resources/etc/gtk-3.0/gtk.immodules 's#/usr/local/.*lib/#/usr/local/lib/#'
-# fix_config $INSTALLDIR/Resources/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache 's#/usr/local/.*lib/#/usr/local/lib/#'
-
-# Package!
+# Package it up!
 
 VERSION=`find . -name 'gaphor*egg' | sed -e 's|.*/gaphor-||' -e 's|-py.*egg$||'`
 zip -r Gaphor-$VERSION-macos.zip $APP
