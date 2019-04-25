@@ -8,28 +8,22 @@
 # Inkscape Modifications: Michael Wybrow <mjwybrow@users.sourceforge.net>
 # K-3D Modifications: Timothy M. Shead <tshead@k-3d.com>
 
-#cd "${0%/*}"
-
+PYVER="3.7"
 MACOS="$(dirname $0)"
 CONTENTS="$(dirname $MACOS)"
-RESOURCES="$CONTENTS/Resources"
 BIN="$CONTENTS/bin"
 
-CFG="$HOME/.local/share/gaphor"
+CFG="$HOME/.config/gaphor"
 
-PYTHONPATH="$CONTENTS/lib/python3.7"
-#PYTHONPATH="$PYTHONPATH:$PYTHONPATH/site-packages:/System/Library/Frameworks/Python.framework/Versions/2.6/Extras/lib/python/PyObjC"
-GDK_PIXBUF_MODULE_FILE="$CFG/gdk-pixbuf-2.0-loaders.cache"
+PYTHONHOME="${CONTENTS}/Frameworks/Python.framework/Versions/${PYVER}"
+PYTHONPATH="${CONTENTS}/lib/python${PYVER}"
 
-export PYTHONPATH GDK_PIXBUF_MODULE_FILE
+mkdir -p "${CFG}"
+GDK_PIXBUF_MODULE_FILE="${CFG}/gdk-pixbuf-2.0-loaders.cache"
 
-# Because the bundle could be located anywhere at runtime, we have to
-# create temporary copies of the GTK+/Gdk-Pixbuf/Pango configuration files
-# that reflect our current location
-#mkdir -p "$CFG/etc/gtk-2.0"
-#cp -f "$RESOURCES/etc/gtk-2.0/im-multipress.conf" "$CFG/etc/gtk-2.0/im-multipress.conf"
+"${BIN}/gdk-pixbuf-query-loaders" ../lib/gdk-pixbuf-2.0/2.10.0/loaders/* > "${GDK_PIXBUF_MODULE_FILE}"
+export PYTHONHOME PYTHONPATH GDK_PIXBUF_MODULE_FILE
 
-mkdir -p "$CFG/lib/gdk-pixbuf-2.0/2.10.0"
-sed -e 's|/usr/local|'"$CONTENTS|g" "$CONTENTS/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache" > "$GDK_PIXBUF_MODULE_FILE"
+"$BIN/python${PYVER}"
 
-"$BIN/python" "$BIN/gaphor"
+# "$BIN/python${PYVER}" "$BIN/gaphor"
