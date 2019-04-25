@@ -16,7 +16,7 @@ BIN="$CONTENTS/bin"
 CFG="$HOME/.config/gaphor"
 
 PYTHONHOME="${CONTENTS}/Frameworks/Python.framework/Versions/${PYVER}"
-PYTHONPATH="${CONTENTS}/lib/python${PYVER}"
+PYTHONPATH="${CONTENTS}/lib/python${PYVER}/site-packages"
 
 mkdir -p "${CFG}"
 GDK_PIXBUF_MODULE_FILE="${CFG}/gdk-pixbuf-2.0-loaders.cache"
@@ -24,6 +24,4 @@ GDK_PIXBUF_MODULE_FILE="${CFG}/gdk-pixbuf-2.0-loaders.cache"
 "${BIN}/gdk-pixbuf-query-loaders" ../lib/gdk-pixbuf-2.0/2.10.0/loaders/* > "${GDK_PIXBUF_MODULE_FILE}"
 export PYTHONHOME PYTHONPATH GDK_PIXBUF_MODULE_FILE
 
-"$BIN/python${PYVER}"
-
-# "$BIN/python${PYVER}" "$BIN/gaphor"
+"${BIN}/python${PYVER}" "${BIN}/gaphor"

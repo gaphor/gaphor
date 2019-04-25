@@ -4,65 +4,30 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
-<!--
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>py</string>
-				<string>pyw</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>PythonSource.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Python Script</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>pyc</string>
-				<string>pyo</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>PythonCompiled.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Python Bytecode Document</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-		</dict>
-	</array>
-  -->
 	<key>CFBundleExecutable</key>
 	<string>gaphor</string>
-	<key>CFBundleGetInfoString</key>
-	<string>0.17.0.dev</string>
 	<key>CFBundleIconFile</key>
 	<string>gaphor.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.github.amolenaar.Gaphor</string>
+	<string>org.gaphor.Gaphor</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>Gaphor</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleVersion</key>
+	<string>VERSION</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.17.0.dev</string>
+	<string>VERSION</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>0.16.0</string>
 	<key>CFBundleDisplayName</key>
 	<!-- shown in menu bar during running -->
 	<string>Gaphor</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2011 Gaphor Developers, GNU General Public License.</string>
+	<string>Copyright 2001-2019 Gaphor Developers, Apache 2 License.</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.6</string>
-        <key>LSUIElement</key>
-        <string>1</string>
+	<string>10.13</string>
 </dict>
 </plist>
