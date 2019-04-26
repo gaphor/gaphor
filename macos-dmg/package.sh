@@ -26,6 +26,9 @@ export PKG_CONFIG_PATH="${libffi_path}:${PKG_CONFIG_PATH:-}"
 
 rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
 
+
+# Copy all files in the application bundle:
+
 mkdir -p "${INSTALLDIR}/MacOS"
 mkdir -p "${INSTALLDIR}/Resources"
 
@@ -39,7 +42,10 @@ function rel_path {
   echo $1 | sed 's#/usr/local/Cellar/[^/]*/[^/]*/##'
 }
 
-brew deps gtk+3 |\
+{
+  echo gtk+3
+  brew deps gtk+3
+} |\
 while read dep
 do
   log "Scanning Homebrew files for $dep"
@@ -50,8 +56,7 @@ while read f
 do
   echo "$(rel_path $f) $f"
 done |\
-grep '^bin/gdk-pixbuf-query-loaders\|^lib/\|^share/gir-1.0/\|^share/locale/\|^Frameworks/' |\
-grep -v '^lib/.*\.a' |\
+grep '^bin/gdk-pixbuf-query-loaders\|^bin/gtk-query-immodules-3.0\|^lib/\|^share/gir-1.0/\|^share/locale/\|^Frameworks/' |\
 while read rf f
 do
   # log "Adding ${INSTALLDIR}/${rf}"
@@ -59,14 +64,27 @@ do
   test -L "$f" || cp $f "${INSTALLDIR}/${rf}"
 done
 
+rm -f "${INSTALLDIR}"/lib/*.a
+
 # Somehow files are writen with mode 444
-find $INSTALLDIR -type f -exec chmod u+w {} \;
+find "${INSTALLDIR}" -type f -exec chmod u+w {} \;
 
 log "Installing Gaphor in ${INSTALLDIR}..."
 
 pip3 install --prefix "${INSTALLDIR}" --force-reinstall ../dist/gaphor-${VERSION}.tar.gz
 
 ( cd "${INSTALLDIR}/bin" && ln -s "../Frameworks/Python.framework/Versions/${PYVER}/bin/python${PYVER}" .; )
+
+
+# Fix dynamic link dependencies:
+
+function map {
+  local fun=$1
+  while read arg
+  do
+    $fun $arg
+  done
+}
 
 function resolve_deps {
   local lib=$1
@@ -79,37 +97,49 @@ function resolve_deps {
 }
 
 function fix_paths {
-  local lib=$1
-  log Fixing $lib
-  for dep in `resolve_deps $lib`
+  local lib="$1"
+  log Fixing lib $lib
+  for dep in $(resolve_deps $lib)
   do
-    log "|  $dep"
+    log " | $dep"
     # @executable_path is /path/to/Gaphor.app/MacOS
-    if [[ "$dep" =~ ^.*/Frameworks/.* ]]
-    then
-      log ">> Framework: @loader_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#')"
-      install_name_tool -change $dep @loader_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#') $lib
-    else
-      log ">> Lib: @loader_path/../lib/$(basename $dep)"
-      install_name_tool -change $dep @loader_path/../lib/$(basename $dep) $lib
-    fi
+    log " | > @executable_path/../lib/$(basename $dep)"
+    install_name_tool -change $dep @executable_path/../lib/$(basename $dep) $lib
   done
 }
 
+function fix_fw_paths {
+  local lib="$1"
+  log Fixing fw lib $lib
+  for dep in $(resolve_deps $lib)
+  do
+    log " | $dep"
+    log " | > @executable_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#')"
+    install_name_tool -change $dep @executable_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#') $lib
+  done
+}
+
+function fix_gir {
+  local gir="$1"
+  local outfile="$(basename $gir | sed 's/gir$/typelib/')"
+  sed -i "" 's#/usr/local/Cellar/[^/]*/[^/]*#@executable_path/..#' "${gir}"
+  g-ir-compiler --output="${INSTALLDIR}/lib/girepository-1.0/${outfile}" "${gir}"
+}
+
 {
-  find $INSTALLDIR -type f -name '*.so'
-  find $INSTALLDIR -type f -name '*.dylib'
-  file $INSTALLDIR/bin/* | grep Mach-O | cut -f1 -d:
-  file $INSTALLDIR/Frameworks/Python.framework/Versions/*/bin/* | grep Mach-O | cut -f1 -d:
-  echo $INSTALLDIR/Frameworks/Python.framework/Versions/*/Python
-} |\
-while read lib
-do
-  # echo $lib
-  fix_paths $lib
-done
+  find ${INSTALLDIR} -type f -name '*.so'
+  find ${INSTALLDIR} -type f -name '*.dylib'
+  file ${INSTALLDIR}/bin/* | grep Mach-O | cut -f1 -d:
+} | map fix_paths
 
-# Package it up!
+{
+  file ${INSTALLDIR}/Frameworks/Python.framework/Versions/*/bin/* | grep Mach-O | cut -f1 -d:
+  echo ${INSTALLDIR}/Frameworks/Python.framework/Versions/*/Python
+} | map fix_fw_paths
 
-zip -r Gaphor-$VERSION-macos.zip $APP
+find "${INSTALLDIR}" -type f -name '*.gir' | map fix_gir
+
+# Package it!
+
+zip -qr "Gaphor-${VERSION}-macos.zip" "${APP}"
 # hdiutil create -srcfolder $APP Gaphor-$VERSION.dmg
