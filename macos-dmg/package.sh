@@ -24,10 +24,6 @@ function log() {
   echo "$*" >&2
 }
 
-libffi_path="$(brew ls libffi | grep pkgconfig | xargs dirname)"
-echo "Adding libffi pkg-config path ${libffi_path} to \$PKG_CONFIG_PATH"
-export PKG_CONFIG_PATH="${libffi_path}:${PKG_CONFIG_PATH:-}"
-
 rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
 
 
@@ -151,9 +147,8 @@ function fix_gir {
 
 find "${INSTALLDIR}" -type f -name '*.gir' | map fix_gir
 
-log "Building zip and dmg package..."
+log "Building Gaphor-$VERSION.dmg..."
 
-zip -qr "Gaphor-${VERSION}-macos.zip" "${APP}"
 hdiutil create -srcfolder $APP Gaphor-$VERSION.dmg
 
 log "Done!"
