@@ -131,6 +131,7 @@ jobs:
 
     - script: |
         source venv
+        pip install setuptools
         python setup.py sdist
         cd macos-dmg
         ./package.sh
