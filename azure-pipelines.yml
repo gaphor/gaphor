@@ -131,20 +131,22 @@ jobs:
 
     - script: |
         source venv
-        python setup.py macos -b
+        python setup.py sdist
+        cd macos-dmg
+        ./package.sh
       displayName: Create macOS Package
-      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+      #condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
 
     - task: CopyFiles@2
       displayName: Copy macOS Package
-      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+      #condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
       inputs:
-        sourceFolder: macOS
+        sourceFolder: macos-dmg
         contents: '*.dmg'
         targetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: GitHubRelease@0
-      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+      #condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
       displayName: Create GitHub Release
       inputs:
         gitHubConnection: GaphorConnection
