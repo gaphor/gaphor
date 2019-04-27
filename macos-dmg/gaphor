@@ -21,9 +21,11 @@ export PYTHONPATH="${CONTENTS}/lib/python${PYVER}/site-packages"
 
 export DYLD_LIBRARY_PATH="${CONTENTS}/lib"
 export FONTCONFIG_SYSROOT="${CONTENTS}/Resources"
-export GTK_DATA_PREFIX="${CONTENTS}"
+export GTK_DATA_PREFIX="${CONTENTS}/share"
 export GTK_EXE_PREFIX="${CONTENTS}"
 export GTK_PATH="${CONTENTS}"
+export XDG_DATA_HOME="${CONTENTS}/share"
+#export GTK_THEME=Adwaita:dark
 export GI_TYPELIB_PATH="${CONTENTS}/lib/girepository-1.0"
 
 export GDK_PIXBUF_MODULEDIR="${CONTENTS}/lib/gdk-pixbuf-2.0/2.10.0/loaders"

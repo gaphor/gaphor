@@ -117,7 +117,7 @@ jobs:
         PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
     - script: |
-        brew install gobject-introspection gtk+3
+        brew install gobject-introspection gtk+3 adwaita-icon-theme
         source venv
         pip install pytest-xvfb
       displayName: 'Install dependencies'

@@ -48,6 +48,8 @@ function rel_path {
   brew deps gtk+3
   echo gobject-introspection
   brew deps gobject-introspection
+  echo adwaita-icon-theme
+  brew deps adwaita-icon-theme
 } | sort -u |\
 while read dep
 do
@@ -59,7 +61,7 @@ while read f
 do
   echo "$(rel_path $f) $f"
 done |\
-grep '^bin/gdk-pixbuf-query-loaders\|^bin/gtk-query-immodules-3.0\|^lib/\|^share/gir-1.0/\|^share/locale/\|^Frameworks/' |\
+grep '^bin/gdk-pixbuf-query-loaders\|^bin/gtk-query-immodules-3.0\|^lib/\|^share/gir-1.0/\|^share/locale/\|^share/icons/\|^share/themes/\|^Frameworks/' |\
 while read rf f
 do
   # log "Adding ${INSTALLDIR}/${rf}"
