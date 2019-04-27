@@ -11,8 +11,10 @@ set -euo pipefail
 # Also fix $INSTALLDIR/MacOS/gaphor in case this number changes
 APP=Gaphor.app
 VERSION="$(ls ../dist/gaphor-*.tar.gz | tail -1 | sed 's#^.*gaphor-\(.*\).tar.gz#\1#')"
-INSTALLDIR=$APP/Contents
-LIBDIR=$INSTALLDIR/lib
+
+MACOSDIR="${APP}/Contents/MacOS"
+RESOURCESDIR="${APP}/Contents/Resources"
+INSTALLDIR="${APP}/Contents"
 
 LOCALDIR=/usr/local
 
@@ -31,14 +33,14 @@ rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
 
 # Copy all files in the application bundle:
 
-mkdir -p "${INSTALLDIR}/MacOS"
-mkdir -p "${INSTALLDIR}/Resources"
+mkdir -p "${MACOSDIR}"
+mkdir -p "${RESOURCESDIR}"
 
 cp PkgInfo "${INSTALLDIR}"
-cp gaphor.icns "${INSTALLDIR}/Resources"
+cp gaphor.icns "${RESOURCESDIR}"
 cat Info.plist | sed 's#VERSION#'${VERSION}'#g' > "${INSTALLDIR}/Info.plist"
-cat gaphor | sed 's#3.7#'${PYVER}'#' > "${INSTALLDIR}/MacOS/gaphor"
-chmod +x "${INSTALLDIR}/MacOS/gaphor"
+cat gaphor | sed 's#3.7#'${PYVER}'#' > "${MACOSDIR}/gaphor"
+chmod +x "${MACOSDIR}/gaphor"
 
 function rel_path {
   echo $1 | sed 's#/usr/local/Cellar/[^/]*/[^/]*/##'
@@ -68,8 +70,8 @@ do
   test -L "$f" || cp $f "${INSTALLDIR}/${rf}"
 done
 
-mkdir -p "${INSTALLDIR}/Resources/etc"
-cp -r /usr/local/etc/fonts "${INSTALLDIR}/Resources/etc"
+mkdir -p "${RESOURCESDIR}/etc"
+cp -r "${LOCALDIR}/etc/fonts" "${RESOURCESDIR}/etc"
 
 # Somehow files are writen with mode 444
 find "${INSTALLDIR}" -type f -exec chmod u+w {} \;
@@ -77,7 +79,7 @@ find "${INSTALLDIR}" -type f -exec chmod u+w {} \;
 # (from py2app/build_app.py:1458)
 # When we're using a python framework bin/python refers to a stub executable
 # that we don't want use, we need the executable in Resources/Python.app.
-cp "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app/Contents/MacOS/Python" "${INSTALLDIR}/MacOS/python"
+cp "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app/Contents/MacOS/Python" "${MACOSDIR}/python"
 
 rm "${INSTALLDIR}"/lib/*.a
 rm -r "${INSTALLDIR}/lib/gobject-introspection"
