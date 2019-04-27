@@ -2,7 +2,9 @@
 #
 # Package script for Gaphor.
 #
-# Thanks: http://stackoverflow.com/questions/1596945/building-osx-app-bundle
+# Thanks:
+# - http://stackoverflow.com/questions/1596945/building-osx-app-bundle
+# - Py2app: https://bitbucket.org/ronaldoussoren/py2app
 
 set -euo pipefail
 
@@ -17,7 +19,7 @@ LOCALDIR=/usr/local
 PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
 
 function log() {
-  echo $* >&2
+  echo "$*" >&2
 }
 
 libffi_path="$(brew ls libffi | grep pkgconfig | xargs dirname)"
@@ -45,10 +47,12 @@ function rel_path {
 {
   echo gtk+3
   brew deps gtk+3
-} |\
+  echo gobject-introspection
+  brew deps gobject-introspection
+} | sort -u |\
 while read dep
 do
-  log "Scanning Homebrew files for $dep"
+  log "Processing files for Homebrew formula $dep"
   brew list -v $dep
 done |\
 grep -v '^find ' |\
@@ -64,16 +68,25 @@ do
   test -L "$f" || cp $f "${INSTALLDIR}/${rf}"
 done
 
-rm -f "${INSTALLDIR}"/lib/*.a
-
 # Somehow files are writen with mode 444
 find "${INSTALLDIR}" -type f -exec chmod u+w {} \;
+
+# (from py2app/build_app.py:1458)
+# When we're using a python framework bin/python refers to a stub executable
+# that we don't want use, we need the executable in Resources/Python.app.
+cp "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app/Contents/MacOS/Python" "${INSTALLDIR}/MacOS/python"
+
+rm "${INSTALLDIR}"/lib/*.a
+rm -r "${INSTALLDIR}/lib/gobject-introspection"
+
+rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app"
+rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/bin"
+rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/include"
+rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/share"
 
 log "Installing Gaphor in ${INSTALLDIR}..."
 
 pip3 install --prefix "${INSTALLDIR}" --force-reinstall ../dist/gaphor-${VERSION}.tar.gz
-
-( cd "${INSTALLDIR}/bin" && ln -s "../Frameworks/Python.framework/Versions/${PYVER}/bin/python${PYVER}" .; )
 
 
 # Fix dynamic link dependencies:
@@ -98,24 +111,18 @@ function resolve_deps {
 
 function fix_paths {
   local lib="$1"
-  log Fixing lib $lib
+  log Fixing $lib
   for dep in $(resolve_deps $lib)
   do
-    log " | $dep"
     # @executable_path is /path/to/Gaphor.app/MacOS
-    log " | > @executable_path/../lib/$(basename $dep)"
-    install_name_tool -change $dep @executable_path/../lib/$(basename $dep) $lib
-  done
-}
-
-function fix_fw_paths {
-  local lib="$1"
-  log Fixing fw lib $lib
-  for dep in $(resolve_deps $lib)
-  do
-    log " | $dep"
-    log " | > @executable_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#')"
-    install_name_tool -change $dep @executable_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#') $lib
+    if [[ "$dep" =~ ^.*/Frameworks/.* ]]
+    then
+      log "  $dep -> @executable_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#')"
+      install_name_tool -change $dep @executable_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#') $lib
+    else
+      log "  $dep -> @executable_path/../lib/$(basename $dep)"
+      install_name_tool -change $dep @executable_path/../lib/$(basename $dep) $lib
+    fi
   done
 }
 
@@ -127,19 +134,21 @@ function fix_gir {
 }
 
 {
+  # Libraries
   find ${INSTALLDIR} -type f -name '*.so'
   find ${INSTALLDIR} -type f -name '*.dylib'
+  echo ${INSTALLDIR}/Frameworks/Python.framework/Versions/*/Python
+  # Binaries
   file ${INSTALLDIR}/bin/* | grep Mach-O | cut -f1 -d:
+  echo ${INSTALLDIR}/MacOS/python
 } | map fix_paths
 
-{
-  file ${INSTALLDIR}/Frameworks/Python.framework/Versions/*/bin/* | grep Mach-O | cut -f1 -d:
-  echo ${INSTALLDIR}/Frameworks/Python.framework/Versions/*/Python
-} | map fix_fw_paths
 
 find "${INSTALLDIR}" -type f -name '*.gir' | map fix_gir
 
-# Package it!
+log "Building zip and dmg package..."
 
 zip -qr "Gaphor-${VERSION}-macos.zip" "${APP}"
-# hdiutil create -srcfolder $APP Gaphor-$VERSION.dmg
+hdiutil create -srcfolder $APP Gaphor-$VERSION.dmg
+
+log "Done!"

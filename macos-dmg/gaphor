@@ -33,5 +33,4 @@ export GTK_IM_MODULE_FILE="${CFG}/immodules.cache"
 "${BIN}/gdk-pixbuf-query-loaders" --update-cache
 "${BIN}/gtk-query-immodules-3.0" --update-cache
 
-#exec "${BIN}/python${PYVER}" "${BIN}/gaphor"
-exec "python${PYVER}" "${BIN}/gaphor"
+exec "${MACOS}/python" "${BIN}/gaphor"
