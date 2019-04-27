@@ -130,9 +130,7 @@ jobs:
         PYTEST_ADDOPTS: "--doctest-modules"
 
     - script: |
-        source venv
-        pip install setuptools
-        python setup.py sdist
+        python3 setup.py sdist
         cd macos-dmg
         ./package.sh
       displayName: Create macOS Package

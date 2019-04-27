@@ -90,7 +90,7 @@ rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/share"
 
 log "Installing Gaphor in ${INSTALLDIR}..."
 
-pip3 install --prefix "${INSTALLDIR}" --force-reinstall --no-warn-script-location ../dist/gaphor-${VERSION}.tar.gz
+pip3 install --prefix "${INSTALLDIR}" --no-warn-script-location ../dist/gaphor-${VERSION}.tar.gz
 
 
 # Fix dynamic link dependencies:
