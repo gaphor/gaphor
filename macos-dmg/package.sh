@@ -68,6 +68,9 @@ do
   test -L "$f" || cp $f "${INSTALLDIR}/${rf}"
 done
 
+mkdir -p "${INSTALLDIR}/Resources/etc"
+cp -r /usr/local/etc/fonts "${INSTALLDIR}/Resources/etc"
+
 # Somehow files are writen with mode 444
 find "${INSTALLDIR}" -type f -exec chmod u+w {} \;
 
