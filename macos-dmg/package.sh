@@ -12,9 +12,10 @@ set -euo pipefail
 APP=Gaphor.app
 VERSION="$(ls ../dist/gaphor-*.tar.gz | tail -1 | sed 's#^.*gaphor-\(.*\).tar.gz#\1#')"
 
-MACOSDIR="${APP}/Contents/MacOS"
-RESOURCESDIR="${APP}/Contents/Resources"
-INSTALLDIR="${APP}/Contents"
+APPHOME="${APP}/Contents"
+MACOSDIR="${APPHOME}/MacOS"
+RESOURCESDIR="${APPHOME}/Resources"
+INSTALLDIR="${APPHOME}"
 
 LOCALDIR=/usr/local
 
@@ -87,7 +88,7 @@ rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/share"
 
 log "Installing Gaphor in ${INSTALLDIR}..."
 
-pip3 install --prefix "${INSTALLDIR}" --force-reinstall ../dist/gaphor-${VERSION}.tar.gz
+pip3 install --prefix "${INSTALLDIR}" --force-reinstall --no-warn-script-location ../dist/gaphor-${VERSION}.tar.gz
 
 
 # Fix dynamic link dependencies:
@@ -129,6 +130,7 @@ function fix_paths {
 
 function fix_gir {
   local gir="$1"
+  log Fixing $gir
   local outfile="$(basename $gir | sed 's/gir$/typelib/')"
   sed -i "" 's#/usr/local/Cellar/[^/]*/[^/]*#@executable_path/..#' "${gir}"
   g-ir-compiler --output="${INSTALLDIR}/lib/girepository-1.0/${outfile}" "${gir}"
@@ -136,16 +138,16 @@ function fix_gir {
 
 {
   # Libraries
-  find ${INSTALLDIR} -type f -name '*.so'
-  find ${INSTALLDIR} -type f -name '*.dylib'
-  echo ${INSTALLDIR}/Frameworks/Python.framework/Versions/*/Python
+  find ${APPHOME} -type f -name '*.so'
+  find ${APPHOME} -type f -name '*.dylib'
+  echo ${APPHOME}/Frameworks/Python.framework/Versions/*/Python
   # Binaries
   file ${INSTALLDIR}/bin/* | grep Mach-O | cut -f1 -d:
-  echo ${INSTALLDIR}/MacOS/python
+  echo ${MACOSDIR}/python
 } | map fix_paths
 
-
 find "${INSTALLDIR}" -type f -name '*.gir' | map fix_gir
+
 
 log "Building Gaphor-$VERSION.dmg..."
 

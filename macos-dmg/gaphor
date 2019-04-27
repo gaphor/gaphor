@@ -20,7 +20,7 @@ export PYTHONHOME="${CONTENTS}/Frameworks/Python.framework/Versions/${PYVER}"
 export PYTHONPATH="${CONTENTS}/lib/python${PYVER}/site-packages"
 
 export DYLD_LIBRARY_PATH="${CONTENTS}/lib"
-export FONTCONFIG_PATH="${CONTENTS}/Resources/fonts"
+export FONTCONFIG_SYSROOT="${CONTENTS}/Resources"
 export GTK_DATA_PREFIX="${CONTENTS}"
 export GTK_EXE_PREFIX="${CONTENTS}"
 export GTK_PATH="${CONTENTS}"
