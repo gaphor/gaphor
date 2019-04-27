@@ -116,15 +116,21 @@ function fix_paths {
   log Fixing $lib
   for dep in $(resolve_deps $lib)
   do
-    # @executable_path is /path/to/Gaphor.app/MacOS
+    local relname
     if [[ "$dep" =~ ^.*/Frameworks/.* ]]
     then
-      log "  $dep -> @executable_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#')"
-      install_name_tool -change $dep @executable_path/../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#') $lib
+      relname="../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#')"
     else
-      log "  $dep -> @executable_path/../lib/$(basename $dep)"
-      install_name_tool -change $dep @executable_path/../lib/$(basename $dep) $lib
+      relname="../lib/$(basename $dep)"
     fi
+    test -f "${MACOSDIR}/$relname" || {
+      local fullname=$(eval echo ${MACOSDIR}/${relname//\.dylib/.*.dylib})
+      log "Library ${MACOSDIR}/$relname not found, using $(basename $fullname) instead"
+      relname="$(dirname $relname)/$(basename $fullname)"
+    }
+    # @executable_path is /path/to/Gaphor.app/MacOS
+    log "  $dep -> @executable_path/$relname"
+    install_name_tool -change $dep @executable_path/$relname $lib
   done
 }
 
