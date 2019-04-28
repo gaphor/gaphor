@@ -28,6 +28,11 @@ function log() {
 rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
 
 
+# Make a virtual env, so we are not bothered with site-packages installed on the host system
+
+python3 -m venv --copies --prompt Gaphor.app "${APPHOME}"
+source "${APPHOME}/bin/activate"
+
 # Copy all files in the application bundle:
 
 mkdir -p "${MACOSDIR}"
@@ -90,8 +95,7 @@ rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/share"
 
 log "Installing Gaphor in ${INSTALLDIR}..."
 
-#pip3 install --prefix "${INSTALLDIR}" --no-warn-script-location ../dist/gaphor-${VERSION}.tar.gz
-pip3 install --prefix "${INSTALLDIR}" --no-warn-script-location ..
+pip3 install --no-warn-script-location ..
 
 
 # Fix dynamic link dependencies:
