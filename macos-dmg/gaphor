@@ -13,7 +13,7 @@ MACOS="$(dirname $0)"
 CONTENTS="$(dirname $MACOS)"
 BIN="$CONTENTS/bin"
 
-CFG="${HOME}/.config/gaphor"
+CFG="${HOME}/.cache/gaphor"
 mkdir -p "${CFG}"
 
 export PYTHONHOME="${CONTENTS}/Frameworks/Python.framework/Versions/${PYVER}"
