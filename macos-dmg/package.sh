@@ -66,7 +66,7 @@ while read f
 do
   echo "$(rel_path $f) $f"
 done |\
-grep '^bin/gdk-pixbuf-query-loaders\|^bin/gtk-query-immodules-3.0\|^lib/\|^share/gir-1.0/\|^share/locale/\|^share/icons/\|^share/themes/\|^Frameworks/' |\
+grep '^bin/gdk-pixbuf-query-loaders\|^bin/gtk-query-immodules-3.0\|^lib/\|^share/gir-1.0/\|^share/locale/\|^share/icons/\|^share/themes/\|^share/fontconfig/\|^Frameworks/' |\
 while read rf f
 do
   # log "Adding ${INSTALLDIR}/${rf}"
