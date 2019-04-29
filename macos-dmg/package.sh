@@ -10,7 +10,6 @@ set -euo pipefail
 
 # Also fix $INSTALLDIR/MacOS/gaphor in case this number changes
 APP=Gaphor.app
-VERSION="$(ls ../dist/gaphor-*.tar.gz | tail -1 | sed 's#^.*gaphor-\(.*\).tar.gz#\1#')"
 
 APPHOME="${APP}/Contents"
 MACOSDIR="${APPHOME}/MacOS"
@@ -18,8 +17,6 @@ RESOURCESDIR="${APPHOME}/Resources"
 INSTALLDIR="${APPHOME}"
 
 LOCALDIR=/usr/local
-
-PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
 
 function log() {
   echo "$*" >&2
@@ -32,6 +29,10 @@ rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
 
 python3 -m venv --copies --prompt Gaphor.app "${APPHOME}"
 source "${APPHOME}/bin/activate"
+
+VERSION="$(python3 ../setup.py --version)"
+PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
+
 
 # Copy all files in the application bundle:
 
