@@ -9,7 +9,7 @@ from zope import component
 from zope.interface import implementer
 
 from gaphor import UML
-from gaphor.UML.interfaces import IAssociationDeleteEvent, IAssociationSetEvent
+from gaphor.UML.event import AssociationDeleteEvent, AssociationSetEvent
 from gaphor.core import inject
 from gaphor.interfaces import IService
 
@@ -42,14 +42,14 @@ class SanitizerService(object):
         self.component_registry.unregister_handler(self._unlink_on_extension_delete)
         self.component_registry.unregister_handler(self._disconnect_extension_end)
 
-    @component.adapter(IAssociationDeleteEvent)
+    @component.adapter(AssociationDeleteEvent)
     def _unlink_on_presentation_delete(self, event):
         """
         Unlink the model element if no more presentations link to the `item`'s
         subject or the deleted item was the only item currently linked.
         """
 
-        self.logger.debug("Handling IAssociationDeleteEvent")
+        self.logger.debug("Handling AssociationDeleteEvent")
         # self.logger.debug('Property is %s' % event.property.name)
         # self.logger.debug('Element is %s' % event.element)
         # self.logger.debug('Old value is %s' % event.old_value)
@@ -72,13 +72,13 @@ class SanitizerService(object):
                 if not meta or isinstance(e, meta):
                     i.unlink()
 
-    @component.adapter(IAssociationDeleteEvent)
+    @component.adapter(AssociationDeleteEvent)
     def _unlink_on_extension_delete(self, event):
         """
         Remove applied stereotypes when extension is deleted.
         """
 
-        self.logger.debug("Handling IAssociationDeleteEvent")
+        self.logger.debug("Handling AssociationDeleteEvent")
         # self.logger.debug('Property is %s' % event.property.name)
         # self.logger.debug('Element is %s' % event.element)
         # self.logger.debug('Old value is %s' % event.old_value)
@@ -96,10 +96,10 @@ class SanitizerService(object):
             meta = p.type and getattr(UML, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
-    @component.adapter(IAssociationSetEvent)
+    @component.adapter(AssociationSetEvent)
     def _disconnect_extension_end(self, event):
 
-        self.logger.debug("Handling IAssociationSetEvent")
+        self.logger.debug("Handling AssociationSetEvent")
         # self.logger.debug('Property is %s' % event.property.name)
         # self.logger.debug('Element is %s' % event.element)
         # self.logger.debug('Old value is %s' % event.old_value)
@@ -113,13 +113,13 @@ class SanitizerService(object):
             meta = getattr(UML, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
-    @component.adapter(IAssociationDeleteEvent)
+    @component.adapter(AssociationDeleteEvent)
     def _unlink_on_stereotype_delete(self, event):
         """
         Remove applied stereotypes when stereotype is deleted.
         """
 
-        self.logger.debug("Handling IAssociationDeleteEvent")
+        self.logger.debug("Handling AssociationDeleteEvent")
         # self.logger.debug('Property is %s' % event.property)
         # self.logger.debug('Element is %s' % event.element)
         # self.logger.debug('Old value is %s' % event.old_value)

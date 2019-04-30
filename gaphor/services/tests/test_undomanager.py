@@ -289,7 +289,7 @@ class TestUndoManager(TestCase):
     def test_uml_associations(self):
 
         from zope import component
-        from gaphor.UML.interfaces import IAssociationChangeEvent
+        from gaphor.UML.event import AssociationChangeEvent
         from gaphor.UML.properties import association, derivedunion
         from gaphor.UML import Element
 
@@ -311,7 +311,7 @@ class TestUndoManager(TestCase):
 
         events = []
 
-        @component.adapter(IAssociationChangeEvent)
+        @component.adapter(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 

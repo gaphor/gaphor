@@ -3,12 +3,6 @@
 from zope.interface import implementer
 
 from gaphor.event import ServiceEvent
-from gaphor.UML.interfaces import IAssociationAddEvent, IAssociationDeleteEvent
-from gaphor.UML.interfaces import (
-    IAttributeChangeEvent,
-    IAssociationChangeEvent,
-    IAssociationSetEvent,
-)
 
 
 class ElementEvent(object):
@@ -29,7 +23,6 @@ class ElementChangeEvent(ElementEvent):
         self.property = property
 
 
-@implementer(IAttributeChangeEvent)
 class AttributeChangeEvent(ElementChangeEvent):
     """A UML attribute has changed value."""
 
@@ -44,7 +37,6 @@ class AttributeChangeEvent(ElementChangeEvent):
         self.new_value = new_value
 
 
-@implementer(IAssociationChangeEvent)
 class AssociationChangeEvent(ElementChangeEvent):
     """An association UML element has changed."""
 
@@ -56,7 +48,6 @@ class AssociationChangeEvent(ElementChangeEvent):
         super().__init__(element, association)
 
 
-@implementer(IAssociationSetEvent)
 class AssociationSetEvent(AssociationChangeEvent):
     """An association element has been set."""
 
@@ -71,7 +62,6 @@ class AssociationSetEvent(AssociationChangeEvent):
         self.new_value = new_value
 
 
-@implementer(IAssociationAddEvent)
 class AssociationAddEvent(AssociationChangeEvent):
     """An association element has been added."""
 
@@ -84,7 +74,6 @@ class AssociationAddEvent(AssociationChangeEvent):
         self.new_value = new_value
 
 
-@implementer(IAssociationDeleteEvent)
 class AssociationDeleteEvent(AssociationChangeEvent):
     """An association element has been deleted."""
 
@@ -103,7 +92,6 @@ class DerivedChangeEvent(AssociationChangeEvent):
     pass
 
 
-@implementer(IAssociationSetEvent)
 class DerivedSetEvent(DerivedChangeEvent, AssociationSetEvent):
     """A generic derived set event."""
 
@@ -115,7 +103,6 @@ class DerivedSetEvent(DerivedChangeEvent, AssociationSetEvent):
         super().__init__(element, association, old_value, new_value)
 
 
-@implementer(IAssociationAddEvent)
 class DerivedAddEvent(DerivedChangeEvent, AssociationAddEvent):
     """A derived property has been added."""
 
@@ -127,7 +114,6 @@ class DerivedAddEvent(DerivedChangeEvent, AssociationAddEvent):
         super().__init__(element, association, new_value)
 
 
-@implementer(IAssociationDeleteEvent)
 class DerivedDeleteEvent(DerivedChangeEvent, AssociationDeleteEvent):
     """A derived property has been deleted."""
 
@@ -139,7 +125,6 @@ class DerivedDeleteEvent(DerivedChangeEvent, AssociationDeleteEvent):
         super().__init__(element, association, old_value)
 
 
-@implementer(IAssociationSetEvent)
 class RedefineSetEvent(AssociationSetEvent):
     """A redefined property has been set."""
 
@@ -151,7 +136,6 @@ class RedefineSetEvent(AssociationSetEvent):
         super().__init__(element, association, old_value, new_value)
 
 
-@implementer(IAssociationAddEvent)
 class RedefineAddEvent(AssociationAddEvent):
     """A redefined property has been added."""
 
@@ -163,7 +147,6 @@ class RedefineAddEvent(AssociationAddEvent):
         super().__init__(element, association, new_value)
 
 
-@implementer(IAssociationDeleteEvent)
 class RedefineDeleteEvent(AssociationDeleteEvent):
     """A redefined property has been deleted."""
 

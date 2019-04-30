@@ -24,13 +24,13 @@ from gaphor.UML.event import (
     AssociationSetEvent,
     AssociationAddEvent,
     AssociationDeleteEvent,
+    AttributeChangeEvent,
     ModelFactoryEvent,
 )
-from gaphor.UML.interfaces import IAttributeChangeEvent
 from gaphor.action import action, build_action_group
 from gaphor.core import inject
-from gaphor.event import ActionExecuted
 from gaphor.event import (
+    ActionExecuted,
     ServiceEvent,
     TransactionBegin,
     TransactionCommit,
@@ -359,7 +359,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_delete_event)
 
-    @component.adapter(IAttributeChangeEvent)
+    @component.adapter(AttributeChangeEvent)
     def undo_attribute_change_event(self, event):
         attribute = event.property
         element = event.element

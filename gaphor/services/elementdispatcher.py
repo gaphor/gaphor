@@ -7,13 +7,13 @@ from zope import component
 from logging import getLogger
 from gaphor.core import inject
 from gaphor.interfaces import IService
-from gaphor.UML.interfaces import IElementChangeEvent
-from gaphor.UML.event import ModelFactoryEvent
 from gaphor import UML
-from gaphor.UML.interfaces import (
-    IAssociationSetEvent,
-    IAssociationAddEvent,
-    IAssociationDeleteEvent,
+from gaphor.UML.event import (
+    ElementChangeEvent,
+    AssociationSetEvent,
+    AssociationAddEvent,
+    AssociationDeleteEvent,
+    ModelFactoryEvent,
 )
 
 
@@ -81,7 +81,7 @@ class ElementDispatcher(object):
 
     The handlers are registered on their property attribute. This avoids
     subclass lookups and is pretty specific. As a result this dispatcher is
-    tailored for dispatching events from the data model (IElementChangeEvent)
+    tailored for dispatching events from the data model (ElementChangeEvent)
 
     For example: if you're a TransitionItem (UML.Presentation instance) and
     you're interested in the value of the guard attribute of the model element
@@ -254,10 +254,10 @@ class ElementDispatcher(object):
                     del self._handlers[key]
         del self._reverse[handler]
 
-    @component.adapter(IElementChangeEvent)
+    @component.adapter(ElementChangeEvent)
     def on_element_change_event(self, event):
 
-        # self.logger.info('Handling IElementChangeEvent')
+        # self.logger.info('Handling ElementChangeEvent')
         # self.logger.debug('Element is %s' % event.element)
         # self.logger.debug('Property is %s' % event.property)
 
@@ -278,7 +278,7 @@ class ElementDispatcher(object):
 
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
-            if IAssociationSetEvent.providedBy(event):
+            if isinstance(event, AssociationSetEvent):
                 for handler, remainders in handlers.items():
                     if remainders and event.old_value:
                         for remainder in remainders:
@@ -288,11 +288,11 @@ class ElementDispatcher(object):
                     if remainders and event.new_value:
                         for remainder in remainders:
                             self._add_handlers(event.new_value, remainder, handler)
-            elif IAssociationAddEvent.providedBy(event):
+            elif isinstance(event, AssociationAddEvent):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)
-            elif IAssociationDeleteEvent.providedBy(event):
+            elif isinstance(event, AssociationDeleteEvent):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
