@@ -642,8 +642,7 @@ class derived(umlproperty):
                     self.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error(
-                        "Don"
-                        "t know how to handle event "
+                        "Don't know how to handle event "
                         + str(event)
                         + " for derived union"
                     )
@@ -746,8 +745,7 @@ class derivedunion(derived):
                     self.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error(
-                        "Don"
-                        "t know how to handle event "
+                        "Don't know how to handle event "
                         + str(event)
                         + " for derived union"
                     )
@@ -842,8 +840,7 @@ class redefine(umlproperty):
                 self.handle(RedefineDeleteEvent(event.element, self, event.old_value))
             else:
                 log.error(
-                    "Don"
-                    "t know how to handle event "
+                    "Don't know how to handle event "
                     + str(event)
                     + " for redefined association"
                 )
