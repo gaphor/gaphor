@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# Gaphor startup script
+# Author: Arjan Molenaar <gaphor@gmail.com>
+#
+# Script is loosely inspired on bundle startup script from K-3D and Inkscape.
+# Author: Aaron Voisine <aaron@voisine.org>
+# Inkscape Modifications: Michael Wybrow <mjwybrow@users.sourceforge.net>
+# K-3D Modifications: Timothy M. Shead <tshead@k-3d.com>
+
+PYVER="3.7"
+MACOS="$(dirname $0)"
+CONTENTS="$(dirname $MACOS)"
+BIN="$CONTENTS/bin"
+
+CFG="${HOME}/.cache/gaphor"
+mkdir -p "${CFG}"
+
+export PYTHONHOME="${CONTENTS}/Frameworks/Python.framework/Versions/${PYVER}"
+export PYTHONPATH="${CONTENTS}/lib/python${PYVER}/site-packages"
+
+export DYLD_LIBRARY_PATH="${CONTENTS}/lib"
+export FONTCONFIG_SYSROOT="${CONTENTS}/Resources"
+export GTK_DATA_PREFIX="${CONTENTS}/share"
+export GTK_EXE_PREFIX="${CONTENTS}"
+export GTK_PATH="${CONTENTS}"
+export XDG_DATA_HOME="${CONTENTS}/share"
+export FONTCONFIG_FILE="${CONTENTS}/Resources/etc/fonts/fonts.conf"
+#export GTK_THEME=Adwaita:dark
+export GI_TYPELIB_PATH="${CONTENTS}/lib/girepository-1.0"
+
+export GDK_PIXBUF_MODULEDIR="${CONTENTS}/lib/gdk-pixbuf-2.0/2.10.0/loaders"
+export GDK_PIXBUF_MODULE_FILE="${CFG}/gdk-pixbuf-2.0-loaders.cache"
+
+export GTK_IM_MODULE_FILE="${CFG}/immodules.cache"
+
+"${BIN}/gdk-pixbuf-query-loaders" --update-cache
+"${BIN}/gtk-query-immodules-3.0" --update-cache
+
+exec "${MACOS}/python" "${BIN}/gaphor"

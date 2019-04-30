@@ -117,7 +117,7 @@ jobs:
         PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
     - script: |
-        brew install gobject-introspection gtk+3
+        brew install gobject-introspection gtk+3 adwaita-icon-theme
         source venv
         pip install pytest-xvfb
       displayName: 'Install dependencies'
@@ -130,16 +130,14 @@ jobs:
         PYTEST_ADDOPTS: "--doctest-modules"
 
     - script: |
-        source venv
-        python setup.py macos -b
+        cd macos-dmg
+        ./package.sh
       displayName: Create macOS Package
-      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
 
     - task: CopyFiles@2
       displayName: Copy macOS Package
-      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
       inputs:
-        sourceFolder: macOS
+        sourceFolder: macos-dmg
         contents: '*.dmg'
         targetFolder: $(Build.ArtifactStagingDirectory)
 
