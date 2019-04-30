@@ -7,7 +7,16 @@ from gaphor.interfaces import *
 
 
 @implementer(IServiceEvent)
-class ServiceInitializedEvent(object):
+class ServiceEvent(object):
+    """
+    An event emitted by a service.
+    """
+
+    def __init__(self, service):
+        self.service = service
+
+
+class ServiceInitializedEvent(ServiceEvent):
     """
     This event is emitted every time a new service has been initialized.
     """
@@ -17,8 +26,7 @@ class ServiceInitializedEvent(object):
         self.service = service
 
 
-@implementer(IServiceEvent)
-class ServiceShutdownEvent(object):
+class ServiceShutdownEvent(ServiceEvent):
     """
     This event is emitted every time a service has been shut down.
     """
@@ -28,7 +36,6 @@ class ServiceShutdownEvent(object):
         self.service = service
 
 
-@implementer(ITransactionEvent)
 class TransactionBegin(object):
     """
     This event denotes the beginning of a transaction.
@@ -38,7 +45,6 @@ class TransactionBegin(object):
     pass
 
 
-@implementer(ITransactionEvent)
 class TransactionCommit(object):
     """
     This event is emitted when a transaction (toplevel) is successfully
@@ -48,7 +54,6 @@ class TransactionCommit(object):
     pass
 
 
-@implementer(ITransactionEvent)
 class TransactionRollback(object):
     """
     If a set of operations fail (e.i. due to an exception) the transaction

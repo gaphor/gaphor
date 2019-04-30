@@ -46,13 +46,6 @@ class ITransaction(interface.Interface):
         """
 
 
-class ITransactionEvent(interface.Interface):
-    """
-    Events related to transaction workflow (begin/commit/rollback) implements
-    this interface.
-    """
-
-
 class IActionProvider(interface.Interface):
     """
     An action provider is a special service that provides actions
