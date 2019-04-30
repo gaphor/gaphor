@@ -244,7 +244,9 @@ class DiagramToolbox(object):
     def _after_handler(self, new_item):
         if self.properties("reset-tool-after-create", False):
             self.action_group.get_action("toolbox-pointer").activate()
-        self.component_registry.handle(DiagramItemCreateEvent(new_item))
+        self.component_registry.handle(
+            DiagramItemCreateEvent(self.element_factory, new_item)
+        )
 
     ##
     ## Toolbox actions

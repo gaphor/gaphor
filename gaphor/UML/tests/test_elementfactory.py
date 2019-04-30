@@ -1,6 +1,7 @@
 import unittest
 from gaphor.UML import *
-from gaphor.UML.interfaces import *
+from gaphor.UML.interfaces import IServiceEvent
+from gaphor.UML.event import *
 import gc
 import weakref, sys
 
@@ -111,7 +112,7 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
         ef = self.factory
         p = ef.create(Parameter)
 
-        assert IElementCreateEvent.providedBy(last_event)
+        assert isinstance(last_event, ElementCreateEvent)
         assert handled
 
     def testRemoveEvent(self):
@@ -120,13 +121,13 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
         clearEvents()
         p.unlink()
 
-        assert IElementDeleteEvent.providedBy(last_event)
+        assert isinstance(last_event, ElementDeleteEvent)
 
     def testModelEvent(self):
         ef = self.factory
         ef.notify_model()
 
-        assert IModelFactoryEvent.providedBy(last_event)
+        assert isinstance(last_event, ModelFactoryEvent)
 
     def testFlushEvent(self):
         ef = self.factory
@@ -136,7 +137,7 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
         ef.flush()
 
         assert len(events) == 1, events
-        assert IFlushFactoryEvent.providedBy(last_event)
+        assert isinstance(last_event, FlushFactoryEvent)
 
     def test_no_create_events_when_blocked(self):
         ef = self.factory

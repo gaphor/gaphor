@@ -20,8 +20,16 @@ from gaphor.UML.interfaces import (
 )
 
 
+class ElementEvent(object):
+    """Generic event fired when element state changes.
+    """
+
+    def __init__(self, element):
+        self.element = element
+
+
 @implementer(IAttributeChangeEvent)
-class AttributeChangeEvent(object):
+class AttributeChangeEvent(ElementEvent):
     """A UML attribute has changed value."""
 
     def __init__(self, element, attribute, old_value, new_value):
@@ -30,14 +38,14 @@ class AttributeChangeEvent(object):
         element that changed.  The old_value is the old value of the attribute
         and the new_value is the new value of the attribute."""
 
-        self.element = element
+        super().__init__(element)
         self.property = attribute
         self.old_value = old_value
         self.new_value = new_value
 
 
 @implementer(IAssociationChangeEvent)
-class AssociationChangeEvent(object):
+class AssociationChangeEvent(ElementEvent):
     """An association UML element has changed."""
 
     def __init__(self, element, association):
@@ -45,7 +53,7 @@ class AssociationChangeEvent(object):
         is changing from.  The association parameter is the changed
         association element."""
 
-        self.element = element
+        super().__init__(element)
         self.property = association
 
 
@@ -97,7 +105,7 @@ class DerivedChangeEvent(AssociationChangeEvent):
 
 
 @implementer(IAssociationSetEvent)
-class DerivedSetEvent(DerivedChangeEvent):
+class DerivedSetEvent(DerivedChangeEvent, AssociationSetEvent):
     """A generic derived set event."""
 
     def __init__(self, element, association, old_value, new_value):
@@ -105,53 +113,47 @@ class DerivedSetEvent(DerivedChangeEvent):
         derived set belongs.  The association parameter is the association
         of the derived set."""
 
-        AssociationChangeEvent.__init__(self, element, association)
-        self.old_value = old_value
-        self.new_value = new_value
+        super().__init__(element, association, old_value, new_value)
 
 
 @implementer(IAssociationAddEvent)
-class DerivedAddEvent(DerivedChangeEvent):
+class DerivedAddEvent(DerivedChangeEvent, AssociationAddEvent):
     """A derived property has been added."""
 
     def __init__(self, element, association, new_value):
         """Constructor.  The element parameter is the element to which the
-        derived property belongs.  The association parameter is the 
+        derived property belongs.  The association parameter is the
         association of the derived property."""
 
-        AssociationChangeEvent.__init__(self, element, association)
-        self.new_value = new_value
+        super().__init__(element, association, new_value)
 
 
 @implementer(IAssociationDeleteEvent)
-class DerivedDeleteEvent(DerivedChangeEvent):
+class DerivedDeleteEvent(DerivedChangeEvent, AssociationDeleteEvent):
     """A derived property has been deleted."""
 
     def __init__(self, element, association, old_value):
         """Constructor.  The element parameter is the element to which the
-        derived property belongs.  The association parameter is the 
+        derived property belongs.  The association parameter is the
         association of the derived property."""
 
-        AssociationChangeEvent.__init__(self, element, association)
-        self.old_value = old_value
+        super().__init__(element, association, old_value)
 
 
 @implementer(IAssociationSetEvent)
-class RedefineSetEvent(AssociationChangeEvent):
+class RedefineSetEvent(AssociationSetEvent):
     """A redefined property has been set."""
 
     def __init__(self, element, association, old_value, new_value):
         """Constructor.  The element parameter is the element to which the
-        property belongs.  The association parameter is association of the 
+        property belongs.  The association parameter is association of the
         property."""
 
-        AssociationChangeEvent.__init__(self, element, association)
-        self.old_value = old_value
-        self.new_value = new_value
+        super().__init__(element, association, old_value, new_value)
 
 
 @implementer(IAssociationAddEvent)
-class RedefineAddEvent(AssociationChangeEvent):
+class RedefineAddEvent(AssociationAddEvent):
     """A redefined property has been added."""
 
     def __init__(self, element, association, new_value):
@@ -159,12 +161,11 @@ class RedefineAddEvent(AssociationChangeEvent):
         property belongs.  The association parameter is the association of
         the property."""
 
-        AssociationChangeEvent.__init__(self, element, association)
-        self.new_value = new_value
+        super().__init__(element, association, new_value)
 
 
 @implementer(IAssociationDeleteEvent)
-class RedefineDeleteEvent(AssociationChangeEvent):
+class RedefineDeleteEvent(AssociationDeleteEvent):
     """A redefined property has been deleted."""
 
     def __init__(self, element, association, old_value):
@@ -172,63 +173,64 @@ class RedefineDeleteEvent(AssociationChangeEvent):
         property belongs.  The association parameter is the association of
         the property."""
 
-        AssociationChangeEvent.__init__(self, element, association)
-        self.old_value = old_value
+        super().__init__(element, association, old_value)
 
 
-@implementer(IElementCreateEvent)
-class DiagramItemCreateEvent(object):
-    """A diagram item has been created."""
+class ElementFactoryEvent(object):
+    """Events originated from the Elementfactory service."""
 
-    def __init__(self, element):
-        """Constructor.  The element parameter is the element being created."""
-
-        self.element = element
+    def __init__(self, service):
+        self.service = service
 
 
 @implementer(IElementCreateEvent, IElementFactoryEvent)
-class ElementCreateEvent(object):
+class ElementCreateEvent(ElementFactoryEvent):
     """An element has been created."""
 
     def __init__(self, service, element):
         """Constructor.  The service parameter is the service responsible
         for creating the element.  The element parameter is the element being
         created."""
-
-        self.service = service
+        super().__init__(service)
         self.element = element
 
 
+@implementer(IElementCreateEvent)
+class DiagramItemCreateEvent(ElementCreateEvent):
+    """A diagram item has been created."""
+
+    def __init__(self, service, element):
+        """Constructor.  The element parameter is the element being created."""
+        super().__init__(service, element)
+
+
 @implementer(IElementDeleteEvent, IElementFactoryEvent)
-class ElementDeleteEvent(object):
+class ElementDeleteEvent(ElementFactoryEvent):
     """An element has been deleted."""
 
     def __init__(self, service, element):
         """Constructor.  The service parameter is the service responsible for
         deleting the element.  The element parameter is the element being
         deleted."""
-
-        self.service = service
+        super().__init__(service)
         self.element = element
 
 
 @implementer(IModelFactoryEvent)
-class ModelFactoryEvent(object):
+class ModelFactoryEvent(ElementFactoryEvent):
     """A generic element factory event."""
 
     def __init__(self, service):
         """Constructor.  The service parameter is the service the emitted the
         event."""
-
-        self.service = service
+        super().__init__(service)
 
 
 @implementer(IFlushFactoryEvent)
-class FlushFactoryEvent(object):
+class FlushFactoryEvent(ElementFactoryEvent):
     """The element factory has been flushed."""
 
     def __init__(self, service):
         """Constructor.  The service parameter is the service responsible for
         flushing the factory."""
-
-        self.service = service
+        super().__init__(service)
