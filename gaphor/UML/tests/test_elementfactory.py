@@ -1,6 +1,6 @@
 import unittest
+from gaphor.event import ServiceEvent
 from gaphor.UML import *
-from gaphor.UML.interfaces import IServiceEvent
 from gaphor.UML.event import *
 import gc
 import weakref, sys
@@ -79,7 +79,7 @@ events = []
 last_event = None
 
 
-@component.adapter(IServiceEvent)
+@component.adapter(ServiceEvent)
 def handler(event):
     global handled, events, last_event
     handled = True

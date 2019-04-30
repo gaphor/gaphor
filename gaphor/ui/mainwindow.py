@@ -24,7 +24,7 @@ from gaphor.core import (
     transactional,
 )
 from gaphor.interfaces import IService, IActionProvider
-from gaphor.UML.interfaces import IAttributeChangeEvent, IFlushFactoryEvent
+from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
@@ -561,7 +561,7 @@ class Diagrams(object):
         self.create_tab(diagram.name, widget)
         return page
 
-    @component.adapter(IFlushFactoryEvent)
+    @component.adapter(FlushFactoryEvent)
     def _on_flush_model(self, event):
         """
         Close all tabs.
@@ -569,7 +569,7 @@ class Diagrams(object):
         while self._notebook.get_n_pages():
             self._notebook.remove_page(0)
 
-    @component.adapter(IAttributeChangeEvent)
+    @component.adapter(AttributeChangeEvent)
     def _on_name_change(self, event):
         if event.property is UML.Diagram.name:
             for page in range(0, self._notebook.get_n_pages()):

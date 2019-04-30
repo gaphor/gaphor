@@ -64,25 +64,3 @@ class IAssociationDeleteEvent(IAssociationChangeEvent):
     An association with [0..*] multiplicity has been changed: an entry has
     been removed. ``old_value`` contains the property that has been removed.
     """
-
-
-class IElementFactoryEvent(IServiceEvent):
-    """
-    Events related to individual model elements.
-    """
-
-
-class IModelFactoryEvent(IElementFactoryEvent):
-    """
-    A new model is loaded into the ElementFactory.
-    """
-
-
-class IFlushFactoryEvent(IElementFactoryEvent):
-    """
-    All elements are removed from the ElementFactory.
-    This event is emitted before the factory is emptied.
-    """
-
-
-# vim: sw=4:et

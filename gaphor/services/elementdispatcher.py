@@ -7,7 +7,8 @@ from zope import component
 from logging import getLogger
 from gaphor.core import inject
 from gaphor.interfaces import IService
-from gaphor.UML.interfaces import IElementChangeEvent, IModelFactoryEvent
+from gaphor.UML.interfaces import IElementChangeEvent
+from gaphor.UML.event import ModelFactoryEvent
 from gaphor import UML
 from gaphor.UML.interfaces import (
     IAssociationSetEvent,
@@ -296,17 +297,9 @@ class ElementDispatcher(object):
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
-    @component.adapter(IModelFactoryEvent)
+    @component.adapter(ModelFactoryEvent)
     def on_model_loaded(self, event):
-
-        # self.logger.info('Handling IModelFactoryEvent')
-        # self.logger.debug('Event is %s' % event)
-
         for key, value in list(self._handlers.items()):
             for h, remainders in list(value.items()):
                 for remainder in remainders:
                     self._add_handlers(key[0], (key[1],) + remainder, h)
-
-
-#        for h in self._reverse.iterkeys():
-#            h(None)

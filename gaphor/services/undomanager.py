@@ -24,16 +24,18 @@ from gaphor.UML.event import (
     AssociationSetEvent,
     AssociationAddEvent,
     AssociationDeleteEvent,
+    ModelFactoryEvent,
 )
-from gaphor.UML.interfaces import (
-    IElementDeleteEvent,
-    IAttributeChangeEvent,
-    IModelFactoryEvent,
-)
+from gaphor.UML.interfaces import IElementDeleteEvent, IAttributeChangeEvent
 from gaphor.action import action, build_action_group
 from gaphor.core import inject
 from gaphor.event import ActionExecuted
-from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+from gaphor.event import (
+    ServiceEvent,
+    TransactionBegin,
+    TransactionCommit,
+    TransactionRollback,
+)
 from gaphor.interfaces import IService, IServiceEvent, IActionProvider
 from gaphor.transaction import Transaction, transactional
 
@@ -69,7 +71,7 @@ class ActionStack(object):
 
 
 @implementer(IServiceEvent)
-class UndoManagerStateChanged(object):
+class UndoManagerStateChanged(ServiceEvent):
     """
     Event class used to send state changes on the ndo Manager.
     """
@@ -150,7 +152,7 @@ class UndoManager(object):
     def clear_redo_stack(self):
         del self._redo_stack[:]
 
-    @component.adapter(IModelFactoryEvent)
+    @component.adapter(ModelFactoryEvent)
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()

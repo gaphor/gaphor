@@ -2,6 +2,7 @@
 
 from zope.interface import implementer
 
+from gaphor.event import ServiceEvent
 from gaphor.UML.interfaces import (
     IAssociationAddEvent,
     IAssociationDeleteEvent,
@@ -12,12 +13,7 @@ from gaphor.UML.interfaces import (
     IAssociationChangeEvent,
     IAssociationSetEvent,
 )
-from gaphor.UML.interfaces import (
-    IElementFactoryEvent,
-    IModelFactoryEvent,
-    IElementDeleteEvent,
-    IFlushFactoryEvent,
-)
+from gaphor.UML.interfaces import IElementDeleteEvent
 
 
 class ElementEvent(object):
@@ -28,8 +24,18 @@ class ElementEvent(object):
         self.element = element
 
 
+class ElementChangeEvent(ElementEvent):
+    """
+    Generic event fired when element state changes.
+    """
+
+    def __init__(self, element, property):
+        self.element = element
+        self.property = property
+
+
 @implementer(IAttributeChangeEvent)
-class AttributeChangeEvent(ElementEvent):
+class AttributeChangeEvent(ElementChangeEvent):
     """A UML attribute has changed value."""
 
     def __init__(self, element, attribute, old_value, new_value):
@@ -38,14 +44,13 @@ class AttributeChangeEvent(ElementEvent):
         element that changed.  The old_value is the old value of the attribute
         and the new_value is the new value of the attribute."""
 
-        super().__init__(element)
-        self.property = attribute
+        super().__init__(element, attribute)
         self.old_value = old_value
         self.new_value = new_value
 
 
 @implementer(IAssociationChangeEvent)
-class AssociationChangeEvent(ElementEvent):
+class AssociationChangeEvent(ElementChangeEvent):
     """An association UML element has changed."""
 
     def __init__(self, element, association):
@@ -53,8 +58,7 @@ class AssociationChangeEvent(ElementEvent):
         is changing from.  The association parameter is the changed
         association element."""
 
-        super().__init__(element)
-        self.property = association
+        super().__init__(element, association)
 
 
 @implementer(IAssociationSetEvent)
@@ -176,14 +180,14 @@ class RedefineDeleteEvent(AssociationDeleteEvent):
         super().__init__(element, association, old_value)
 
 
-class ElementFactoryEvent(object):
+class ElementFactoryEvent(ServiceEvent):
     """Events originated from the Elementfactory service."""
 
     def __init__(self, service):
         self.service = service
 
 
-@implementer(IElementCreateEvent, IElementFactoryEvent)
+@implementer(IElementCreateEvent)
 class ElementCreateEvent(ElementFactoryEvent):
     """An element has been created."""
 
@@ -204,7 +208,7 @@ class DiagramItemCreateEvent(ElementCreateEvent):
         super().__init__(service, element)
 
 
-@implementer(IElementDeleteEvent, IElementFactoryEvent)
+@implementer(IElementDeleteEvent)
 class ElementDeleteEvent(ElementFactoryEvent):
     """An element has been deleted."""
 
@@ -216,7 +220,6 @@ class ElementDeleteEvent(ElementFactoryEvent):
         self.element = element
 
 
-@implementer(IModelFactoryEvent)
 class ModelFactoryEvent(ElementFactoryEvent):
     """A generic element factory event."""
 
@@ -226,7 +229,6 @@ class ModelFactoryEvent(ElementFactoryEvent):
         super().__init__(service)
 
 
-@implementer(IFlushFactoryEvent)
 class FlushFactoryEvent(ElementFactoryEvent):
     """The element factory has been flushed."""
 

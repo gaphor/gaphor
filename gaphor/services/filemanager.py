@@ -11,6 +11,7 @@ from zope.interface import implementer
 from gaphor import UML
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider, IServiceEvent
+from gaphor.event import ServiceEvent
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue
 from gaphor.misc.xmlwriter import XMLWriter
@@ -26,7 +27,7 @@ log = logging.getLogger(__name__)
 
 
 @implementer(IServiceEvent)
-class FileManagerStateChanged(object):
+class FileManagerStateChanged(ServiceEvent):
     """
     Event class used to send state changes on the ndo Manager.
     """
