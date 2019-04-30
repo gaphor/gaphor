@@ -9,12 +9,12 @@ from zope.interface import implementer
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element
 from gaphor.UML.event import (
+    ElementChangeEvent,
     ElementCreateEvent,
     ElementDeleteEvent,
     FlushFactoryEvent,
     ModelFactoryEvent,
 )
-from gaphor.UML.interfaces import IElementChangeEvent
 from gaphor.core import inject
 from gaphor.interfaces import IService
 from gaphor.misc import odict

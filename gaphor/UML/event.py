@@ -1,7 +1,5 @@
 """The core UML metamodel events."""
 
-from zope.interface import implementer
-
 from gaphor.event import ServiceEvent
 
 

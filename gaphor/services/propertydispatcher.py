@@ -6,7 +6,7 @@ from zope import component
 
 from zope.interface import implementer
 
-from gaphor.UML.interfaces import IElementChangeEvent
+from gaphor.UML.event import ElementChangeEvent
 from gaphor.core import inject
 from gaphor.interfaces import IService
 
@@ -63,10 +63,10 @@ class PropertyDispatcher(object):
         if s:
             s.discard(handler)
 
-    @component.adapter(IElementChangeEvent)
+    @component.adapter(ElementChangeEvent)
     def on_element_change_event(self, event):
 
-        self.logger.info("Handling IElementChangeEvent")
+        self.logger.debug("Handling ElementChangeEvent")
 
         property = event.property
 
