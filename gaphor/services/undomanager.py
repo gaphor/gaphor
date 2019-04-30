@@ -26,7 +26,7 @@ from gaphor.UML.event import (
     AssociationDeleteEvent,
     ModelFactoryEvent,
 )
-from gaphor.UML.interfaces import IElementDeleteEvent, IAttributeChangeEvent
+from gaphor.UML.interfaces import IAttributeChangeEvent
 from gaphor.action import action, build_action_group
 from gaphor.core import inject
 from gaphor.event import ActionExecuted
@@ -344,7 +344,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_create_event)
 
-    @component.adapter(IElementDeleteEvent)
+    @component.adapter(ElementDeleteEvent)
     def undo_delete_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems

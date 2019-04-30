@@ -13,16 +13,6 @@ class IElementEvent(interface.Interface):
     element = interface.Attribute("The changed element")
 
 
-class IElementCreateEvent(IElementEvent):
-    """A new element has been created.
-    """
-
-
-class IElementDeleteEvent(IElementEvent):
-    """An element is deleted from the model.
-    """
-
-
 class IElementChangeEvent(IElementEvent):
     """
     Generic event fired when element state changes.

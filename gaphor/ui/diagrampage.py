@@ -20,7 +20,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.interfaces import IActionProvider
-from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
+from gaphor.UML.event import ElementDeleteEvent
 from gaphor.core import _, inject, transactional, action, build_action_group
 from gaphor.diagram import get_diagram_item
 from gaphor.diagram.items import DiagramItem
@@ -136,7 +136,7 @@ class DiagramPage(object):
 
         return self.widget
 
-    @component.adapter(IElementDeleteEvent)
+    @component.adapter(ElementDeleteEvent)
     def _on_element_delete(self, event):
         if event.element is self.diagram:
             self.close()

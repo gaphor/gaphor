@@ -3,17 +3,12 @@
 from zope.interface import implementer
 
 from gaphor.event import ServiceEvent
-from gaphor.UML.interfaces import (
-    IAssociationAddEvent,
-    IAssociationDeleteEvent,
-    IElementCreateEvent,
-)
+from gaphor.UML.interfaces import IAssociationAddEvent, IAssociationDeleteEvent
 from gaphor.UML.interfaces import (
     IAttributeChangeEvent,
     IAssociationChangeEvent,
     IAssociationSetEvent,
 )
-from gaphor.UML.interfaces import IElementDeleteEvent
 
 
 class ElementEvent(object):
@@ -187,7 +182,6 @@ class ElementFactoryEvent(ServiceEvent):
         self.service = service
 
 
-@implementer(IElementCreateEvent)
 class ElementCreateEvent(ElementFactoryEvent):
     """An element has been created."""
 
@@ -199,7 +193,6 @@ class ElementCreateEvent(ElementFactoryEvent):
         self.element = element
 
 
-@implementer(IElementCreateEvent)
 class DiagramItemCreateEvent(ElementCreateEvent):
     """A diagram item has been created."""
 
@@ -208,7 +201,6 @@ class DiagramItemCreateEvent(ElementCreateEvent):
         super().__init__(service, element)
 
 
-@implementer(IElementDeleteEvent)
 class ElementDeleteEvent(ElementFactoryEvent):
     """An element has been deleted."""
 

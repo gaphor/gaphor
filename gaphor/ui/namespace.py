@@ -26,9 +26,9 @@ from gaphor.UML.event import (
     ElementDeleteEvent,
     ModelFactoryEvent,
     FlushFactoryEvent,
+    AttributeChangeEvent,
     DerivedSetEvent,
 )
-from gaphor.UML.interfaces import IAttributeChangeEvent, IElementDeleteEvent
 from gaphor.core import _, action, build_action_group, inject, transactional
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramPageChange, DiagramShow
@@ -483,7 +483,7 @@ class Namespace(object):
                 if bool(new_iter) == bool(new_value):
                     self.model.append(new_iter, [element])
 
-    @component.adapter(IAttributeChangeEvent)
+    @component.adapter(AttributeChangeEvent)
     def _on_attribute_change(self, event):
         """
         Element changed, update appropriate row.
