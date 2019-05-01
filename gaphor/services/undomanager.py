@@ -36,7 +36,7 @@ from gaphor.event import (
     TransactionCommit,
     TransactionRollback,
 )
-from gaphor.interfaces import IService, IServiceEvent, IActionProvider
+from gaphor.interfaces import IService, IActionProvider
 from gaphor.transaction import Transaction, transactional
 
 logger = logging.getLogger(__name__)
@@ -70,7 +70,6 @@ class ActionStack(object):
                 logger.error("Error while undoing action %s" % action, exc_info=True)
 
 
-@implementer(IServiceEvent)
 class UndoManagerStateChanged(ServiceEvent):
     """
     Event class used to send state changes on the ndo Manager.

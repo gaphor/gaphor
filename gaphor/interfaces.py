@@ -22,14 +22,6 @@ class IService(interface.Interface):
         """
 
 
-class IServiceEvent(interface.Interface):
-    """
-    An event emitted by a service.
-    """
-
-    service = interface.Attribute("The service that emits the event")
-
-
 class ITransaction(interface.Interface):
     """
     The methods each transaction should adhere.

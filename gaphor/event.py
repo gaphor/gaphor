@@ -6,7 +6,6 @@ from zope.interface import implementer
 from gaphor.interfaces import *
 
 
-@implementer(IServiceEvent)
 class ServiceEvent(object):
     """
     An event emitted by a service.

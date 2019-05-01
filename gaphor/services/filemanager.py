@@ -10,7 +10,7 @@ from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import _, inject, action, build_action_group
-from gaphor.interfaces import IService, IActionProvider, IServiceEvent
+from gaphor.interfaces import IService, IActionProvider
 from gaphor.event import ServiceEvent
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue
@@ -26,10 +26,9 @@ MAX_RECENT = 10
 log = logging.getLogger(__name__)
 
 
-@implementer(IServiceEvent)
 class FileManagerStateChanged(ServiceEvent):
     """
-    Event class used to send state changes on the ndo Manager.
+    Event class used to send state changes on the Undo Manager.
     """
 
     def __init__(self, service):
