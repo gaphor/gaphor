@@ -4,19 +4,20 @@ Adapters
 import logging
 from zope import component
 
-from simplegeneric import generic
+from functools import singledispatch
 from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
+from gaphor.diagram.abc import IEditorBase
 from gaphor.diagram.interfaces import IEditor
 from gaphor.misc.rattr import rgetattr, rsetattr
 
 log = logging.getLogger(__name__)
 
 
-@generic
+@singledispatch
 def editable(el):
     """
     Return editable part of UML element.
@@ -26,7 +27,7 @@ def editable(el):
     return el
 
 
-@editable.when_type(UML.Slot)
+@editable.register(UML.Slot)
 def editable_slot(el):
     """
     Return editable part of a slot.
@@ -34,9 +35,8 @@ def editable_slot(el):
     return el.value
 
 
-@implementer(IEditor)
-@component.adapter(items.CommentItem)
-class CommentItemEditor(object):
+@IEditor.register(items.CommentItem)
+class CommentItemEditor(IEditorBase):
     """Text edit support for Comment item."""
 
     def __init__(self, item):
@@ -58,12 +58,8 @@ class CommentItemEditor(object):
         pass
 
 
-component.provideAdapter(CommentItemEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.NamedItem)
-class NamedItemEditor(object):
+@IEditor.register(items.NamedItem)
+class NamedItemEditor(IEditorBase):
     """Text edit support for Named items."""
 
     def __init__(self, item):
@@ -88,12 +84,8 @@ class NamedItemEditor(object):
         pass
 
 
-component.provideAdapter(NamedItemEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.DiagramItem)
-class DiagramItemTextEditor(object):
+@IEditor.register(items.DiagramItem)
+class DiagramItemTextEditor(IEditorBase):
     """Text edit support for diagram items containing text elements."""
 
     def __init__(self, item):
@@ -127,12 +119,8 @@ class DiagramItemTextEditor(object):
         pass
 
 
-component.provideAdapter(DiagramItemTextEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.CompartmentItem)
-class CompartmentItemEditor(object):
+@IEditor.register(items.CompartmentItem)
+class CompartmentItemEditor(IEditorBase):
     """Text editor support for compartment items."""
 
     def __init__(self, item):
@@ -160,12 +148,8 @@ class CompartmentItemEditor(object):
         pass
 
 
-component.provideAdapter(CompartmentItemEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.AssociationItem)
-class AssociationItemEditor(object):
+@IEditor.register(items.AssociationItem)
+class AssociationItemEditor(IEditorBase):
     def __init__(self, item):
         self._item = item
         self._edit = None
@@ -207,12 +191,8 @@ class AssociationItemEditor(object):
         pass
 
 
-component.provideAdapter(AssociationItemEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.ForkNodeItem)
-class ForkNodeItemEditor(object):
+@IEditor.register(items.ForkNodeItem)
+class ForkNodeItemEditor(IEditorBase):
     """Text edit support for fork node join specification."""
 
     element_factory = inject("element_factory")
@@ -245,6 +225,3 @@ class ForkNodeItemEditor(object):
 
     def key_pressed(self, pos, key):
         pass
-
-
-component.provideAdapter(ForkNodeItemEditor)
