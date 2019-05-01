@@ -11,7 +11,7 @@ from gaphor.UML import Element
 from gaphor.UML.collection import collection
 from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.interfaces import IService, IActionProvider
-from gaphor.ui.interfaces import IDiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChange
 
 
 @implementer(IService, IActionProvider)
@@ -62,7 +62,7 @@ class CopyService(object):
         self.copy_buffer = set()
         self.component_registry.unregister_handler(self._update)
 
-    @component.adapter(IDiagramSelectionChange)
+    @component.adapter(DiagramSelectionChange)
     def _update(self, event):
         diagram_view = event.diagram_view
         self.action_group.get_action("edit-copy").props.sensitive = bool(
