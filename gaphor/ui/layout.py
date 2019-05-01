@@ -2,7 +2,6 @@
 Layout code from a simple XML description.
 """
 
-from simplegeneric import generic
 from xml.etree.ElementTree import fromstring
 
 from gi.repository import Gtk
