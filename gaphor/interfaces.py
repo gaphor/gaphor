@@ -47,13 +47,3 @@ class IActionProvider(interface.Interface):
     menu_xml = interface.Attribute("The menu XML")
 
     action_group = interface.Attribute("The accompanying ActionGroup")
-
-
-class IActionExecutedEvent(interface.Interface):
-    """
-    An event emitted when an action has been performed.
-    """
-
-    name = interface.Attribute("Name of the action performed, if any")
-
-    action = interface.Attribute("The performed action")

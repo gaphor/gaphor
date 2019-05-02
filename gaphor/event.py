@@ -63,7 +63,6 @@ class TransactionRollback(object):
     pass
 
 
-@implementer(IActionExecutedEvent)
 class ActionExecuted(object):
     """
     Once an operation has successfully been executed this event is raised.
