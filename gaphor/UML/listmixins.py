@@ -12,8 +12,6 @@ See the documentation on the mixins.
 
 __all__ = ["querymixin", "recursemixin"]
 
-import sys
-
 
 class Matcher(object):
     """
@@ -79,7 +77,7 @@ class querymixin(object):
     >>> m[1].name
     'two'
     >>> m['it.name=="one"'] # doctest: +ELLIPSIS
-    [<gaphor.misc.listmixins.A object at 0x...>]
+    [<gaphor.UML.listmixins.A object at 0x...>]
     >>> m['it.name=="two"', 0].name
     'two'
     """
@@ -225,21 +223,21 @@ class recursemixin(object):
     Invoking ``a.children[:]`` should now return a recurseproxy object:
 
     >>> a.children[:]                                       # doctest: +ELLIPSIS
-    <gaphor.misc.listmixins.recurseproxy object at 0x...>
+    <gaphor.UML.listmixins.recurseproxy object at 0x...>
     >>> list(a.children[:].name)                            # doctest: +ELLIPSIS
     ['a', 'e']
 
     Now calling a child on the list will return a list of all children:
 
     >>> a.children[:].children                              # doctest: +ELLIPSIS
-    <gaphor.misc.listmixins.recurseproxy object at 0x...>
+    <gaphor.UML.listmixins.recurseproxy object at 0x...>
     >>> list(a.children[:].children)                        # doctest: +ELLIPSIS
-    [<gaphor.misc.listmixins.A object at 0x...>, <gaphor.misc.listmixins.A object at 0x...>, <gaphor.misc.listmixins.A object at 0x...>, <gaphor.misc.listmixins.A object at 0x...>, <gaphor.misc.listmixins.A object at 0x...>]
+    [<gaphor.UML.listmixins.A object at 0x...>, <gaphor.UML.listmixins.A object at 0x...>, <gaphor.UML.listmixins.A object at 0x...>, <gaphor.UML.listmixins.A object at 0x...>, <gaphor.UML.listmixins.A object at 0x...>]
 
     And of course we're interested in the names:
 
     >>> a.children[:].children.name                         # doctest: +ELLIPSIS
-    <gaphor.misc.listmixins.recurseproxy object at 0x...>
+    <gaphor.UML.listmixins.recurseproxy object at 0x...>
     >>> list(a.children[:].children.name)
     ['b', 'c', 'd', 'one', 'two']
     """
@@ -254,6 +252,3 @@ class recursemixin(object):
             return self.proxy_class()(self)
         else:
             return super(recursemixin, self).__getitem__(key)
-
-
-# vim: sw=4:et:ai
