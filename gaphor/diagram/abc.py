@@ -1,44 +1,27 @@
 import abc
 
 
-class EditorBase(metaclass=abc.ABCMeta):
+class ConnectBase(metaclass=abc.ABCMeta):
     """
-    Provide an interface for editing text with the TextEditTool.
+    This interface is used by the HandleTool to allow connecting
+    lines to element items. For each specific case (Element, Line) an
+    adapter could be written.
     """
 
     @abc.abstractmethod
-    def is_editable(self, x, y):
+    def connect(self, handle, port):
         """
-        Is this item editable in it's current state.
-        x, y represent the cursors (x, y) position.
-        (this method should be called before get_text() is called.
+        Connect a line's handle to element.
+
+        Note that at the moment of the connect, handle.connected_to may point
+        to some other item. The implementor should do the disconnect of
+        the other element themselves.
         """
 
     @abc.abstractmethod
-    def get_text(self):
+    def disconnect(self, handle):
         """
-        Get the text to be updated
-        """
-
-    @abc.abstractmethod
-    def get_bounds(self):
-        """
-        Get the bounding box of the (current) text. The edit tool is not
-        required to do anything with this information but it might help for
-        some nicer displaying of the text widget.
-
-        Returns: a gaphas.geometry.Rectangle
-        """
-
-    @abc.abstractmethod
-    def update_text(self, text):
-        """
-        Update with the new text.
-        """
-
-    @abc.abstractmethod
-    def key_pressed(self, pos, key):
-        """
-        Called every time a key is pressed. Allows for 'Enter' as escape
-        character in single line editing.
+        The true disconnect. Disconnect a handle.connected_to from an
+        element. This requires that the relationship is also removed at
+        model level.
         """

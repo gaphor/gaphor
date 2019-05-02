@@ -13,13 +13,14 @@ from zope.interface import implementer
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
+from gaphor.diagram.abc import ConnectBase
 from gaphor.diagram.interfaces import IConnect
 
 logger = logging.getLogger(__name__)
 
 
 @implementer(IConnect)
-class AbstractConnect(object):
+class AbstractConnect(ConnectBase):
     """
     Connection adapter for Gaphor diagram items.
 
