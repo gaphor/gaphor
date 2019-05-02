@@ -20,15 +20,15 @@ class Alignment(object):
         <menubar action="mainwindow">
           <menu action="diagram">
             <placeholder name="ternary">
-        <separator />
-        <menuitem action="align-left" />
-        <menuitem action="align-center" />
-        <menuitem action="align-right" />
-        <separator />
-        <menuitem action="align-top" />
-        <menuitem action="align-middle" />
-        <menuitem action="align-bottom" />
-           </placeholder>
+              <separator />
+              <menuitem action="align-left" />
+              <menuitem action="align-center" />
+              <menuitem action="align-right" />
+              <separator />
+              <menuitem action="align-top" />
+              <menuitem action="align-bottom" />
+              <menuitem action="align-middle" />
+            </placeholder>
           </menu>
         </menubar>
       </ui>"""

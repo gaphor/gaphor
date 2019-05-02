@@ -192,7 +192,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 
     def connect_subject(self, handle):
         """
-        In addition to a subject connect, the subject of the element may 
+        In addition to a subject connect, the subject of the element may
         be changed.
         For readability, parameters are named after the classes used by
         Join/Fork nodes.
