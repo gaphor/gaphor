@@ -84,15 +84,6 @@ class RegistryTests(unittest.TestCase):
         registry.register(object(), name="foo")
         self.assertRaises(ValueError, registry.register, object(), "foo")
 
-    def test_override(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-
-        registry = Registry(("name", SimpleAxis()))
-        registry.register(1, name="foo")
-        registry.override(2, name="foo")
-        self.assertEqual(registry.lookup("foo"), 2)
-
     def test_skip_nodes(self):
         from gaphor.misc.generic.registry import Registry
         from gaphor.misc.generic.registry import SimpleAxis

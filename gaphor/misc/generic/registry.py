@@ -19,28 +19,22 @@ class Registry(object):
         )
 
     def register(self, target, *arg_keys, **kw_keys):
-        self._register(target, self._align_with_axes(arg_keys, kw_keys), False)
+        self._register(target, self._align_with_axes(arg_keys, kw_keys))
 
-    def override(self, target, *arg_keys, **kw_keys):
-        self._register(target, self._align_with_axes(arg_keys, kw_keys), True)
-
-    def _register(self, target, keys, override):
+    def _register(self, target, keys):
         tree_node = self._tree
         for key in keys:
             tree_node = tree_node.setdefault(key, _TreeNode())
 
-        if not override and not tree_node.target is None:
-            raise ValueError(
-                "Registration conflicts with existing registration.  Use "
-                "override method to override."
-            )
+        if not tree_node.target is None:
+            raise ValueError("Registration conflicts with existing registration.")
 
         tree_node.target = target
 
     def get_registration(self, *arg_keys, **kw_keys):
         tree_node = self._tree
         for key in self._align_with_axes(arg_keys, kw_keys):
-            if not tree_node.has_key(key):
+            if not key in tree_node:
                 return None
             tree_node = tree_node[key]
 
@@ -112,9 +106,6 @@ class Registry(object):
 
 class _TreeNode(dict):
     target = None
-
-    def has_key(self, key):
-        return key in self
 
     def __str__(self):
         return "<TreeNode %s %s>" % (self.target, dict.__str__(self))

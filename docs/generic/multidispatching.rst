@@ -87,93 +87,12 @@ You can have any number of arguments to dispatch on but they should be all
 positional, keyword arguments are allowed for multifunctions only if they're not
 used for dispatch.
 
-Providing "catch-all" case
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-There should be an analog to ``else`` statement -- a case which is used when no
-matching case is found, we will call such case *a catch-all case*, here is how
-you can define it using ``otherwise`` decorator::
-
-  @sound.otherwise
-  def sound(o):
-    print "<unknown>"
-
-You can try calling ``sound`` with whatever argument type you wish, it will
-never fall with ``TypeError`` anymore.
-
-Multimethods
-------------
-
-Another functionality provided by ``generic.multidispatch`` module are
-*multimethods*. Multimethods are similar to multifunctions except they are...
-methods. Technically the main and the only difference between multifunctions and
-multimethods is the latter is also dispatch on ``self`` argument.
-
-Implementing multimethods is similar to implementing multifunctions, you just
-have to decorate your methods with ``multimethod`` decorator instead of
-``multifunction``.  But there's some issue with how Python's classes works which
-forces us to use also ``has_multimethods`` class decorator::
-
-  from generic.multidispatch import multimethod, has_multimethods
-
-  @has_multimethods
-  class Animal(object):
-
-    @multimethod(Vegetable)
-    def can_eat(self, food):
-      return True
-
-    @can_eat.when(Meat)
-    def can_eat(self, food):
-      return False
-
-This would work like this::
-
-  >>> animal = Animal()
-  >>> animal.can_eat(Vegetable())
-  True
-  >>> animal.can_eat(Meat())
-  False
-
-So far we haven't seen any differences between multifunctions and multimethods
-but as it have already been said there's one -- multimethods use ``self``
-argument for dispatch. We can see that if we would subclass our ``Animal`` class
-and override ``can_eat`` method definition::
-
-  @has_multimethods
-  class Predator(Animal):
-
-    @Animal.can_eat.when(Meat)
-    def can_eat(self, food):
-      return True
-
-This will override ``can_eat`` on ``Predator`` instances but *only* for the case
-for ``Meat`` argument, case for the ``Vegetable`` is not overridden, so class
-inherits it from ``Animal``::
-
-  >>> predator = Predator()
-  >>> predator.can_eat(Vegetable())
-  True
-  >>> predator.can_eat(Meat())
-  True
-
-The only thing to care is you should not forget to include ``@has_multimethods``
-decorator on classes which define or override multimethods.
-
-You can also provide a "catch-all" case for multimethod using ``otherwise``
-decorator just like in example for multifunctions.
 
 API reference
 -------------
 
 .. autofunction:: generic.multidispatch.multifunction
 
-.. autofunction:: generic.multidispatch.multimethod
-
-.. autofunction:: generic.multidispatch.has_multimethods
-
 .. autoclass:: generic.multidispatch.FunctionDispatcher
-   :members: when, override, otherwise
+   :members: register
 
-.. autoclass:: generic.multidispatch.MethodDispatcher
-   :members: when, override, otherwise
