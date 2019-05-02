@@ -153,3 +153,17 @@ class MultifunctionTests(unittest.TestCase):
         self.assertEqual(func("1", "2"), "12")
         self.assertRaises(TypeError, func, 1, 2)
         self.assertRaises(TypeError, func, "1", 2)
+
+    def test_default(self):
+        from gaphor.misc.generic.multidispatch import multidispatch
+
+        @multidispatch()
+        def func(x, y):
+            return x + y
+
+        @func.register(str, str)
+        def func(x, y):
+            return x + y
+
+        self.assertEqual(func(1, 1), 2)
+        self.assertEqual(func("1", "2"), "12")

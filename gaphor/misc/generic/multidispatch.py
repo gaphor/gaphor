@@ -26,7 +26,11 @@ def multidispatch(*argtypes):
     """
 
     def _replace_with_dispatcher(func):
+        nonlocal argtypes
         argspec = inspect.getfullargspec(func)
+        if not argtypes:
+            argtypes = [object] * _arity(argspec)
+
         dispatcher = functools.update_wrapper(
             FunctionDispatcher(argspec, len(argtypes)), func
         )
