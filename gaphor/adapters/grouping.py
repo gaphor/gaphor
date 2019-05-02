@@ -23,12 +23,11 @@ from zope import component
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IGroup
+from gaphor.diagram.interfaces import Group
 
 log = logging.getLogger(__name__)
 
 
-@implementer(IGroup)
 # TODO: I think this should have been called Namespacing or something similar,
 # since that's the modeling concept.
 class AbstractGroup(metaclass=abc.ABCMeta):
@@ -70,6 +69,17 @@ class AbstractGroup(metaclass=abc.ABCMeta):
         """
 
 
+# Until we can deal with types (esp. typing.Any) we use this as a workaround:
+@Group.register(None, object)
+class NoParentGroup(AbstractGroup):
+    def group(self):
+        pass
+
+    def ungroup(self):
+        pass
+
+
+@Group.register(items.InteractionItem, items.LifelineItem)
 class InteractionLifelineGroup(AbstractGroup):
     """
     Add lifeline to interaction.
@@ -83,11 +93,7 @@ class InteractionLifelineGroup(AbstractGroup):
         del self.parent.subject.lifeline[self.item.subject]
 
 
-component.provideAdapter(
-    factory=InteractionLifelineGroup, adapts=(items.InteractionItem, items.LifelineItem)
-)
-
-
+@Group.register(items.NodeItem, items.NodeItem)
 class NodeGroup(AbstractGroup):
     """
     Add node to another node.
@@ -100,9 +106,7 @@ class NodeGroup(AbstractGroup):
         del self.parent.subject.nestedNode[self.item.subject]
 
 
-component.provideAdapter(factory=NodeGroup, adapts=(items.NodeItem, items.NodeItem))
-
-
+@Group.register(items.NodeItem, items.ComponentItem)
 class NodeComponentGroup(AbstractGroup):
     """
     Add components to node using internal structures.
@@ -148,11 +152,7 @@ class NodeComponentGroup(AbstractGroup):
                 log.debug("Removed %s from node %s" % (component, node))
 
 
-component.provideAdapter(
-    factory=NodeComponentGroup, adapts=(items.NodeItem, items.ComponentItem)
-)
-
-
+@Group.register(items.NodeItem, items.ArtifactItem)
 class NodeArtifactGroup(AbstractGroup):
     """
     Deploy artifact on node.
@@ -176,11 +176,7 @@ class NodeArtifactGroup(AbstractGroup):
                 log.debug("Removed %s from node %s" % (artifact, node))
 
 
-component.provideAdapter(
-    factory=NodeArtifactGroup, adapts=(items.NodeItem, items.ArtifactItem)
-)
-
-
+@Group.register(items.SubsystemItem, items.UseCaseItem)
 class SubsystemUseCaseGroup(AbstractGroup):
     """
     Make subsystem a subject of an use case.
@@ -197,11 +193,7 @@ class SubsystemUseCaseGroup(AbstractGroup):
         usecase.subject.remove(component)
 
 
-component.provideAdapter(
-    factory=SubsystemUseCaseGroup, adapts=(items.SubsystemItem, items.UseCaseItem)
-)
-
-
+@Group.register(items.PartitionItem, items.PartitionItem)
 class ActivityPartitionsGroup(AbstractGroup):
     """
     Group activity partitions.
@@ -253,11 +245,6 @@ class ActivityPartitionsGroup(AbstractGroup):
         sp.unlink()
 
 
-component.provideAdapter(
-    factory=ActivityPartitionsGroup, adapts=(items.PartitionItem, items.PartitionItem)
-)
-
-
 class ActivityNodePartitionGroup(AbstractGroup):
     """
     Group activity nodes within activity partition.
@@ -277,17 +264,7 @@ class ActivityNodePartitionGroup(AbstractGroup):
         partition.node.remove(node)
 
 
-component.provideAdapter(
-    factory=ActivityNodePartitionGroup,
-    adapts=(items.PartitionItem, items.ActivityNodeItem),
-)
-component.provideAdapter(
-    factory=ActivityNodePartitionGroup, adapts=(items.PartitionItem, items.ActionItem)
-)
-component.provideAdapter(
-    factory=ActivityNodePartitionGroup,
-    adapts=(items.PartitionItem, items.ObjectNodeItem),
-)
-component.provideAdapter(
-    factory=ActivityNodePartitionGroup, adapts=(items.PartitionItem, items.ForkNodeItem)
-)
+Group.register(items.PartitionItem, items.ActivityNodeItem)(ActivityNodePartitionGroup)
+Group.register(items.PartitionItem, items.ActionItem)(ActivityNodePartitionGroup)
+Group.register(items.PartitionItem, items.ObjectNodeItem)(ActivityNodePartitionGroup)
+Group.register(items.PartitionItem, items.ForkNodeItem)(ActivityNodePartitionGroup)

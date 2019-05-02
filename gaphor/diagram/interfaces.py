@@ -12,11 +12,19 @@ These interfaces are:
 from zope import interface
 
 from functools import singledispatch
+from gaphor.misc.generic.multidispatch import multidispatch
+import typing
 
 
 @singledispatch
 def Editor(obj):
     pass
+
+
+@multidispatch(object, object)
+class Group(object):
+    def __init__(self, parent, item):
+        pass
 
 
 class IConnect(interface.Interface):
@@ -27,17 +35,3 @@ class IConnect(interface.Interface):
     """
 
     pass
-
-
-# TODO: I think this should have been called Namespacing or something similar,
-# since that's the modeling concept.
-class IGroup(interface.Interface):
-    """
-    Provide interface for adding one UML object to another, i.e.
-    interactions contain lifelines and components contain classes objects.
-    """
-
-    pass
-
-
-# vim: sw=4:et:ai

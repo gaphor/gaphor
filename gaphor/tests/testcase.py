@@ -15,7 +15,7 @@ from zope import component
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.interfaces import IConnect
-from gaphor.diagram.interfaces import IGroup
+from gaphor.diagram.interfaces import Group
 
 # For DiagramItemConnector aspect:
 import gaphor.ui.diagramtools
@@ -143,8 +143,7 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         """
         Check if an item can be grouped by parent.
         """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter = Group(parent, item)
         return adapter.can_contain()
 
     def group(self, parent, item):
@@ -152,16 +151,14 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         Group item within a parent.
         """
         self.diagram.canvas.reparent(item, parent)
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter = Group(parent, item)
         adapter.group()
 
     def ungroup(self, parent, item):
         """
         Remove item from a parent.
         """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter = Group(parent, item)
         adapter.ungroup()
         self.diagram.canvas.reparent(item, None)
 

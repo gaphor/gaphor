@@ -29,7 +29,11 @@ def multidispatch(*argtypes):
         nonlocal argtypes
         argspec = inspect.getfullargspec(func)
         if not argtypes:
-            argtypes = [object] * _arity(argspec)
+            arity = _arity(argspec)
+            if isinstance(func, type):
+                # It's a class we deal with:
+                arity -= 1
+            argtypes = [object] * arity
 
         dispatcher = functools.update_wrapper(
             FunctionDispatcher(argspec, len(argtypes)), func
@@ -69,14 +73,16 @@ class FunctionDispatcher(object):
     def check_rule(self, rule, *argtypes):
         # Check if we have the right number of parametrized types
         if len(argtypes) != self.params_arity:
-            raise TypeError("Wrong number of type parameters.")
+            raise TypeError(
+                f"Wrong number of type parameters: have {len(argtypes)}, expected {self.params_arity}."
+            )
 
         # Check if we have the same argspec (by number of args)
         rule_argspec = inspect.getfullargspec(rule)
         left_spec = tuple(x and len(x) or 0 for x in rule_argspec[:4])
         right_spec = tuple(x and len(x) or 0 for x in self.argspec[:4])
         if left_spec != right_spec:
-            raise TypeError("Rule does not conform " "to previous implementations.")
+            raise TypeError("Rule does not conform to previous implementations.")
 
     def register_rule(self, rule, *argtypes):
         """ Register new ``rule`` for ``argtypes``."""

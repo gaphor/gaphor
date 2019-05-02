@@ -2,6 +2,8 @@
 
 import unittest
 
+from gaphor.misc.generic.multidispatch import multidispatch
+
 __all__ = ("DispatcherTests",)
 
 
@@ -134,8 +136,6 @@ class DispatcherTests(unittest.TestCase):
 
 class MultifunctionTests(unittest.TestCase):
     def test_it(self):
-        from gaphor.misc.generic.multidispatch import multidispatch
-
         @multidispatch(int, str)
         def func(x, y):
             return str(x) + y
@@ -155,15 +155,27 @@ class MultifunctionTests(unittest.TestCase):
         self.assertRaises(TypeError, func, "1", 2)
 
     def test_default(self):
-        from gaphor.misc.generic.multidispatch import multidispatch
-
         @multidispatch()
         def func(x, y):
             return x + y
 
         @func.register(str, str)
         def func(x, y):
-            return x + y
+            return y + x
 
         self.assertEqual(func(1, 1), 2)
-        self.assertEqual(func("1", "2"), "12")
+        self.assertEqual(func("1", "2"), "21")
+
+    def test_on_classes(self):
+        @multidispatch()
+        class A:
+            def __init__(self, a, b):
+                self.v = a + b
+
+        @A.register(str, str)
+        class B:
+            def __init__(self, a, b):
+                self.v = b + a
+
+        assert A(1, 1).v == 2
+        assert A("1", "2").v == "21"
