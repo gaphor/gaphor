@@ -134,9 +134,9 @@ class DispatcherTests(unittest.TestCase):
 
 class MultifunctionTests(unittest.TestCase):
     def test_it(self):
-        from gaphor.misc.generic.multidispatch import multifunction
+        from gaphor.misc.generic.multidispatch import multidispatch
 
-        @multifunction(int, str)
+        @multidispatch(int, str)
         def func(x, y):
             return str(x) + y
 

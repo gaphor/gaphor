@@ -14,11 +14,11 @@ import inspect
 
 from .registry import Registry, TypeAxis
 
-__all__ = "multifunction"
+__all__ = "multidispatch"
 
 
-def multifunction(*argtypes):
-    """ Declare function as multifunction
+def multidispatch(*argtypes):
+    """ Declare function as multidispatch
 
     This decorator takes ``argtypes`` argument types and replace decorated
     function with :class:`.FunctionDispatcher` object, which is responsible for
@@ -40,7 +40,7 @@ class FunctionDispatcher(object):
     """ Multidispatcher for functions
 
     This object dispatch calls to function by its argument types. Usually it is
-    produced by :func:`.multifunction` decorator.
+    produced by :func:`.multidispatch` decorator.
 
     You should not manually create objects of this type.
     """
@@ -80,12 +80,12 @@ class FunctionDispatcher(object):
         self.registry.register(rule, *argtypes)
 
     def register(self, *argtypes):
-        """ Decorator for registering new case for multifunction
+        """ Decorator for registering new case for multidispatch
 
         New case will be registered for types identified by ``argtypes``. The
         length of ``argtypes`` should be equal to the length of ``argtypes``
-        argument were passed corresponding :func:`.multifunction` call, which
-        also indicated the number of arguments multifunction dispatches on.
+        argument were passed corresponding :func:`.multidispatch` call, which
+        also indicated the number of arguments multidispatch dispatches on.
         """
 
         def register_rule(func):
