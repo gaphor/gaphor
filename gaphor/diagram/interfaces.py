@@ -70,26 +70,7 @@ class IGroup(interface.Interface):
     interactions contain lifelines and components contain classes objects.
     """
 
-    def pre_can_contain(self):
-        """
-        Determine if parent can contain item, which is instance of given
-        class. Method called before item creation.
-        """
-
-    def can_contain(self):
-        """
-        Determine if parent can contain item.
-        """
-
-    def group(self):
-        """
-        Perform grouping of items.
-        """
-
-    def ungroup(self):
-        """
-        Perform ungrouping of items.
-        """
+    pass
 
 
 # vim: sw=4:et:ai

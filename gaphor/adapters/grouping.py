@@ -15,6 +15,7 @@ is about to be created. Therefore `AbstractGroup.can_contain` has
 to be aware that `AbstractGroup.item` can be null.
 """
 import logging
+import abc
 
 from zope.interface import implementer
 from zope import component
@@ -28,8 +29,13 @@ log = logging.getLogger(__name__)
 
 
 @implementer(IGroup)
-class AbstractGroup(object):
+# TODO: I think this should have been called Namespacing or something similar,
+# since that's the modeling concept.
+class AbstractGroup(metaclass=abc.ABCMeta):
     """
+    Base class for grouping UML objects, i.e.
+    interactions contain lifelines and components contain classes objects.
+
     Base class for grouping UML objects.
 
     :Attributes:
@@ -47,21 +53,21 @@ class AbstractGroup(object):
 
     def can_contain(self):
         """
-        Check if parent can contain an item. True by default.
+        Determine if parent can contain item.
         """
         return True
 
+    @abc.abstractmethod
     def group(self):
         """
-        Group an item within parent.
+        Perform grouping of items.
         """
-        raise NotImplemented("This is abstract method")
 
+    @abc.abstractmethod
     def ungroup(self):
         """
-        Remove item from parent.
+        Perform ungrouping of items.
         """
-        raise NotImplemented("This is abstract method")
 
 
 class InteractionLifelineGroup(AbstractGroup):
