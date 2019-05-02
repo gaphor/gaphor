@@ -10,7 +10,7 @@ See the documentation on the mixins.
 
 """
 
-__all__ = ["querymixin", "recursemixin", "getslicefix"]
+__all__ = ["querymixin", "recursemixin"]
 
 import sys
 
@@ -208,7 +208,7 @@ class recursemixin(object):
     our specific case. ``__getslice__`` should be overridden, so we can make it
     behave like a normal python object (legacy, yes...).
 
-    >>> class rlist(recursemixin, getslicefix, list):
+    >>> class rlist(recursemixin, list):
     ...     pass
     >>> class A(object):
     ...     def __init__(self, name, *children):
@@ -254,24 +254,6 @@ class recursemixin(object):
             return self.proxy_class()(self)
         else:
             return super(recursemixin, self).__getitem__(key)
-
-
-class getslicefix(object):
-    """
-    C-Python classes still use __getslice__. This behaviour is depricated
-    and getitem should be called instead.
-    """
-
-    def __getslice__(self, a, b, c=None):
-        """
-        ``__getslice__`` is deprecated. Calls are redirected to
-        ``__getitem__()``.
-        """
-        if a == 0:
-            a = None
-        if b == sys.maxsize:
-            b = None
-        return self.__getitem__(slice(a, b, c))
 
 
 # vim: sw=4:et:ai

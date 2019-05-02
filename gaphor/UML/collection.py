@@ -5,10 +5,10 @@
 import inspect
 
 from gaphor.UML.event import AssociationChangeEvent
-from gaphor.misc.listmixins import querymixin, recursemixin, getslicefix
+from gaphor.misc.listmixins import querymixin, recursemixin
 
 
-class collectionlist(recursemixin, querymixin, getslicefix, list):
+class collectionlist(recursemixin, querymixin, list):
     """
     >>> c = collectionlist()
     >>> c.append('a')
