@@ -39,7 +39,7 @@ class GIdleThread(object):
 
     Example (runs a counter through the GLib main loop routine):
     >>> def counter(max):
-    ...     for x in xrange(max):
+    ...     for x in range(max):
     ...         yield x
     >>> t = GIdleThread(counter(123))
     >>> id = t.start()
