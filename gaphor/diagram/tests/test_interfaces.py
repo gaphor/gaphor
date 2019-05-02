@@ -13,7 +13,7 @@ class InterfacesTestCase(TestCase):
     def test_comment(self):
         # self.assertTrue(diagram.interfaces.ICommentItem.implementedBy(diagram.comment.CommentItem))
         item = diagram.comment.CommentItem()
-        editor = diagram.interfaces.IEditor(item)
+        editor = diagram.interfaces.Editor(item)
         self.assertTrue(editor)
         self.assertTrue(editor._item is item)
 

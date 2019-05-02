@@ -42,6 +42,6 @@ See interfaces.py and adapter.py for implementations.
 Text editing
 ------------
 
-Like item connecting, text editing is also implemented through adapters. The IEditor interface is used for this.
+Like item connecting, text editing is also implemented through adapters. The Editor interface is used for this.
 
 

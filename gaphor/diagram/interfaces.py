@@ -4,7 +4,7 @@ These interfaces are:
 
  - IConnect
    Use to define adapters for connecting
- - IEditor
+ - Editor
    Text editor interface
 
 """
@@ -15,7 +15,7 @@ from functools import singledispatch
 
 
 @singledispatch
-def IEditor(obj):
+def Editor(obj):
     pass
 
 

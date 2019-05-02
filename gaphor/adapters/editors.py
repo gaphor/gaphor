@@ -10,8 +10,8 @@ from zope.interface import implementer
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
-from gaphor.diagram.abc import IEditorBase
-from gaphor.diagram.interfaces import IEditor
+from gaphor.diagram.abc import EditorBase
+from gaphor.diagram.interfaces import Editor
 from gaphor.misc.rattr import rgetattr, rsetattr
 
 log = logging.getLogger(__name__)
@@ -35,8 +35,8 @@ def editable_slot(el):
     return el.value
 
 
-@IEditor.register(items.CommentItem)
-class CommentItemEditor(IEditorBase):
+@Editor.register(items.CommentItem)
+class CommentItemEditor(EditorBase):
     """Text edit support for Comment item."""
 
     def __init__(self, item):
@@ -58,8 +58,8 @@ class CommentItemEditor(IEditorBase):
         pass
 
 
-@IEditor.register(items.NamedItem)
-class NamedItemEditor(IEditorBase):
+@Editor.register(items.NamedItem)
+class NamedItemEditor(EditorBase):
     """Text edit support for Named items."""
 
     def __init__(self, item):
@@ -84,8 +84,8 @@ class NamedItemEditor(IEditorBase):
         pass
 
 
-@IEditor.register(items.DiagramItem)
-class DiagramItemTextEditor(IEditorBase):
+@Editor.register(items.DiagramItem)
+class DiagramItemTextEditor(EditorBase):
     """Text edit support for diagram items containing text elements."""
 
     def __init__(self, item):
@@ -119,8 +119,8 @@ class DiagramItemTextEditor(IEditorBase):
         pass
 
 
-@IEditor.register(items.CompartmentItem)
-class CompartmentItemEditor(IEditorBase):
+@Editor.register(items.CompartmentItem)
+class CompartmentItemEditor(EditorBase):
     """Text editor support for compartment items."""
 
     def __init__(self, item):
@@ -148,8 +148,8 @@ class CompartmentItemEditor(IEditorBase):
         pass
 
 
-@IEditor.register(items.AssociationItem)
-class AssociationItemEditor(IEditorBase):
+@Editor.register(items.AssociationItem)
+class AssociationItemEditor(EditorBase):
     def __init__(self, item):
         self._item = item
         self._edit = None
@@ -191,8 +191,8 @@ class AssociationItemEditor(IEditorBase):
         pass
 
 
-@IEditor.register(items.ForkNodeItem)
-class ForkNodeItemEditor(IEditorBase):
+@Editor.register(items.ForkNodeItem)
+class ForkNodeItemEditor(EditorBase):
     """Text edit support for fork node join specification."""
 
     element_factory = inject("element_factory")

@@ -1,7 +1,7 @@
 import abc
 
 
-class IEditorBase(metaclass=abc.ABCMeta):
+class EditorBase(metaclass=abc.ABCMeta):
     """
     Provide an interface for editing text with the TextEditTool.
     """

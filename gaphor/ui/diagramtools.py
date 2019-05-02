@@ -27,7 +27,7 @@ from gi.repository import Gtk
 from gaphor.core import Transaction, transactional
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.interfaces import IEditor, IConnect, IGroup
+from gaphor.diagram.interfaces import Editor, IConnect, IGroup
 
 # cursor to indicate grouping
 IN_CURSOR = Gdk.Cursor.new(Gdk.CursorType.DIAMOND_CROSS)
@@ -212,9 +212,9 @@ class TextEditTool(Tool):
         item = view.hovered_item
         if item:
             try:
-                editor = IEditor(item)
+                editor = Editor(item)
             except TypeError:
-                # Could not adapt to IEditor
+                # Could not adapt to Editor
                 return False
             log.debug("Found editor %r" % editor)
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
