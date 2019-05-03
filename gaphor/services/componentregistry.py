@@ -12,6 +12,7 @@ from zope.interface import registry
 from zope.interface import implementer
 
 from gaphor.interfaces import IService
+from gaphor.application import ComponentLookupError
 
 
 @implementer(IService)
@@ -54,7 +55,10 @@ class ZopeComponentRegistry(object):
         """Obtain a service used by Gaphor by name.
         E.g. service("element_factory")
         """
-        return self.get_utility(IService, name)
+        try:
+            return self.get_utility(IService, name)
+        except component.ComponentLookupError as cle:
+            raise ComponentLookupError(*cle.args)
 
     # Wrap zope.component's Components methods
 

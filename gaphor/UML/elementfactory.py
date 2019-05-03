@@ -3,7 +3,6 @@
 import uuid
 from contextlib import contextmanager
 
-from zope import component
 from zope.interface import implementer
 
 from gaphor.UML.diagram import Diagram

@@ -3,7 +3,6 @@ Test handle tool functionality.
 """
 
 import unittest
-from zope import component
 
 from gaphas.aspect import Connector, ConnectionSink
 from gi.repository import Gdk, Gtk

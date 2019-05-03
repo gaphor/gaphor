@@ -559,7 +559,6 @@ class PropertiesTestCase(unittest.TestCase):
             Application.unregister_handler(handler)
 
     def skiptest_derivedunion_events(self):
-        from zope import component
         from gaphor.UML.event import (
             DerivedSetEvent,
             DerivedAddEvent,
@@ -689,7 +688,6 @@ class PropertiesTestCase(unittest.TestCase):
             Application.unregister_handler(handler)
 
     def skiptest_redefine(self):
-        from zope import component
         from gaphor.application import Application
 
         class A(Element):
@@ -719,8 +717,6 @@ class PropertiesTestCase(unittest.TestCase):
             Application.unregister_handler(handler)
 
     def skiptest_redefine_subclass(self):
-        from zope import component
-
         class A(Element):
             is_unlinked = False
 

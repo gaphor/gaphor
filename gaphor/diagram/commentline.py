@@ -3,8 +3,6 @@ CommentLine -- A line that connects a comment to another model element.
 
 """
 
-from zope import component
-
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.interfaces import IConnect
 

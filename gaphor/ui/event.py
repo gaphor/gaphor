@@ -1,4 +1,6 @@
-from zope.interface import implementer
+"""
+UI related events.
+"""
 
 
 class DiagramShow(object):

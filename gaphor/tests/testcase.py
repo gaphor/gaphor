@@ -10,7 +10,6 @@ import unittest
 from io import StringIO
 
 from gaphas.aspect import ConnectionSink, Connector
-from zope import component
 
 from gaphor import UML
 from gaphor.application import Application

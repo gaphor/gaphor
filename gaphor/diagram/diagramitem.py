@@ -3,7 +3,6 @@ DiagramItem provides basic functionality for presentations.
 Such as a modifier 'subject' property and a unique id.
 """
 
-from zope import component
 from gaphas.state import observed, reversible_property
 
 import logging

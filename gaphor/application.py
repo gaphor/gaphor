@@ -10,9 +10,7 @@ All important services are present in the application object:
 """
 
 import logging
-
 import pkg_resources
-from zope import component
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.interfaces import IService
@@ -21,6 +19,10 @@ logger = logging.getLogger(__name__)
 
 
 class NotInitializedError(Exception):
+    pass
+
+
+class ComponentLookupError(LookupError):
     pass
 
 
@@ -33,12 +35,7 @@ class _Application(object):
     like a singleton in many ways.
 
     The Application is responsible for loading services and plugins. Services
-    are registered as "utilities" in the application registry.
-
-    Methods are provided that wrap zope.component's handle, adapter and
-    subscription registrations. In addition to registration methods also
-    unregister methods are provided. This way services can be properly
-    unregistered on shutdown for example.
+    are registered in the "component_registry" service.
     """
 
     def __init__(self):
@@ -66,7 +63,6 @@ class _Application(object):
         """
         Load services from resources.
 
-        Services are registered as utilities in zope.component.
         Service should provide an interface gaphor.interfaces.IService.
         """
         # Ensure essential services are always loaded.
@@ -99,7 +95,7 @@ class _Application(object):
         try:
             srv = self._uninitialized_services.pop(name)
         except KeyError:
-            raise component.ComponentLookupError(IService, name)
+            raise ComponentLookupError(IService, name)
         else:
             logger.info("initializing service service.%s" % name)
             srv.init(self)
@@ -123,7 +119,7 @@ class _Application(object):
 
         try:
             return self.component_registry.get_service(name)
-        except component.ComponentLookupError:
+        except ComponentLookupError:
             return self.init_service(name)
 
     def shutdown(self):

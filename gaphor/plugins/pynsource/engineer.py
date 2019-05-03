@@ -1,8 +1,6 @@
 """The code reverse engineer.
 """
 
-from zope import component
-
 from gaphas.aspect import ConnectionSink, Connector
 
 from gaphor import UML
