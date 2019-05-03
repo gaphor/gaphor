@@ -41,5 +41,5 @@ class IConnect(object):
     def __init__(self, item, line_item):
         pass
 
-    def allow(self, item, line):
+    def allow(self, handle, port):
         return False

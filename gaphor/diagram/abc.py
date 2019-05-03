@@ -9,6 +9,14 @@ class ConnectBase(metaclass=abc.ABCMeta):
     """
 
     @abc.abstractmethod
+    def allow(self, handle, port):
+        """
+        Determine if a connection is allowed.
+
+        Do some extra checks to see if the items actually can be connected.
+        """
+
+    @abc.abstractmethod
     def connect(self, handle, port):
         """
         Connect a line's handle to element.
