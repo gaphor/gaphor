@@ -20,7 +20,7 @@ from zope import component
 from zope.interface import implementer
 
 from gaphor import UML
-from gaphor.interfaces import IActionProvider
+from gaphor.abc import ActionProvider
 from gaphor.UML.event import (
     ElementCreateEvent,
     ElementDeleteEvent,
@@ -289,8 +289,8 @@ class NamespaceView(Gtk.TreeView):
                 # selection.select_path(path)
 
 
-@implementer(IUIComponent, IActionProvider)
-class Namespace(object):
+@implementer(IUIComponent)
+class Namespace(ActionProvider):
 
     title = _("Namespace")
     placement = ("left", "diagrams")

@@ -9,7 +9,7 @@ from gi.repository import Gtk
 from gaphor.core import _, inject, transactional
 from gaphor import UML
 from gaphor.diagram import items
-from zope import interface, component
+from zope import component
 from gaphor.adapters.propertypages import NamedItemPropertyPage, create_hbox_label
 
 

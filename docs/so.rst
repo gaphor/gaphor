@@ -3,16 +3,16 @@ Service Oriented Architecture
 
 Gaphor has a service oriented architecture. What does this mean? Well, Gaphor
 is built as a set of small islands (services). Each island provides a specific
-piece of functionality. For example: a service is responsible for 
+piece of functionality. For example: a service is responsible for
 loading/saving models, another for the menu structure, yet another service
 handles the undo system.
 
 Service are defined as `Egg entry points <http://peak.telecommunity.com/
 DevCenter/setuptools#dynamic-discovery-of-services-and-plugins>`_.
-With entry points applications can register functionality for specific 
+With entry points applications can register functionality for specific
 purposes. Entry points are grouped in so called *entry point groups*.
 For example the `console_scripts` entry point group is used to start
-an application from the command line. 
+an application from the command line.
 
 Entry points, as well as all major components in Gaphor, are defined around
 `Zope interfaces <http://www.zope.org/Products/ZopeInterface>`_. An interface
@@ -36,7 +36,7 @@ Plug-ins should also be defined as services. E.g.::
     },
 
 There is a thin line between a service and a plug-in. A service typically
-performs some basic need for the applications (such as the element factory 
+performs some basic need for the applications (such as the element factory
 or the undo mechanism). A plug-in is more of an add-on. For example a plug-in
 can depend on external libraries or provide a cross-over function between
 two applications.
@@ -51,7 +51,7 @@ interface:
    :members:
 
 UI components is another piece of cake. The ``gaphor.uicomponents`` entry
-point group is used to define windows and user interface functionality. 
+point group is used to define windows and user interface functionality.
 A UI component should implement the `gaphor.ui.interfaces.IUIComponent`
 interface:
 
@@ -60,9 +60,9 @@ interface:
 
 Typically a service and UI component would like to present some actions to the
 user, by means of menu entries. Every service and UI component can advertise
-actions by implementing the ``gaphor.interfaces.IActionProvider`` interface:
+actions by implementing the ``gaphor.abc.ActionProvider`` interface:
 
-.. autoclass:: gaphor.interfaces.IActionProvider
+.. autoclass:: gaphor.abc.ActionProvider
    :members:
 
 
@@ -72,7 +72,7 @@ Example plugin
 A small example is provided by means of the `Hello world plugin`.
 Take a look at the files at `Github <https://github.com/amolenaar/gaphor.plugins.helloworld>`_.
 
-The `setup.py <https://github.com/amolenaar/gaphor.plugins.helloworld/blob/master/setup.py>`_ 
+The `setup.py <https://github.com/amolenaar/gaphor.plugins.helloworld/blob/master/setup.py>`_
 file contains an entry point::
 
     entry_points = {
@@ -81,7 +81,7 @@ file contains an entry point::
         ]
     }
 
-This refers to the class ``HelloWorldPlugin`` in package/module 
+This refers to the class ``HelloWorldPlugin`` in package/module
 `gaphor.plugins.helloworld <https://github.com/amolenaar/gaphor.plugins.helloworld/blob/master/gaphor/plugins/helloworld/__init__.py>`_.
 
 Also notice that, since the package is defined as ``gaphor.plugins``, which is
@@ -95,12 +95,13 @@ Here is a stripped version of the hello world class::
 
     from zope.interface import implementer
 
-    from gaphor.interfaces import IService, IActionProvider
+    from gaphor.abc import ActionProvider
+    from gaphor.interfaces import IService
     from gaphor.core import _, inject, action, build_action_group
 
 
-    @implementer(IService, IActionProvider)              # 1.
-    class HelloWorldPlugin(object):
+    @implementer(IService)              # 1.
+    class HelloWorldPlugin(ActionProvider):
 
         gui_manager = inject('gui_manager')              # 2.
 
@@ -128,18 +129,18 @@ Here is a stripped version of the hello world class::
                 tooltip=_('Every application ...'))
         def helloworld_action(self):
             main_window = self.gui_manager.main_window   # 8.
-            pass # gtk code left out 
+            pass # gtk code left out
 
-1. As stated before, a plugin should implement the ``IService`` interface. 
-   It also implements ``IActionProvider``, saying it has some actions to
+1. As stated before, a plugin should implement the ``IService`` interface.
+   It also implements ``ActionProvider``, saying it has some actions to
    be performed by the user.
 2. The plugin depends on the ``gui_manager`` service. The ``gui_manager`` can
    be referenced as a normal attribute. The first time it's accessed the
    dependency to the ``gui_manager`` is resolved.
-3. As part of the ``IActionProvider`` interface an attribute ``menu_xml``
+3. As part of the ``ActionProvider`` interface an attribute ``menu_xml``
    should be defined that contains some menu xml
    (see http://developer.gnome.org/doc/API/2.0/gtk/GtkUIManager.html#XML-UI).
-4. ``IActionProvider`` also requires an ``action_group`` attribute (containing
+4. ``ActionProvider`` also requires an ``action_group`` attribute (containing
    a ``gtk.ActionGroup``). This action group is created on instantiation.
    The actions itself are defined with an ``action`` decorator (see 7).
 5. Each ``IService`` has an ``init(app)`` method...

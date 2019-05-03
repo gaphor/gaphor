@@ -10,7 +10,8 @@ from gaphas.view import View
 from zope.interface import implementer
 
 from gaphor.core import _, inject, action, build_action_group
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import ActionProvider
+from gaphor.interfaces import IService
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.questiondialog import QuestionDialog
@@ -18,8 +19,8 @@ from gaphor.ui.questiondialog import QuestionDialog
 logger = logging.getLogger(__name__)
 
 
-@implementer(IService, IActionProvider)
-class DiagramExportManager(object):
+@implementer(IService)
+class DiagramExportManager(ActionProvider):
     """
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """

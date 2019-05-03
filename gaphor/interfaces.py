@@ -20,14 +20,3 @@ class IService(interface.Interface):
         """
         Shutdown the services, free resources.
         """
-
-
-class IActionProvider(interface.Interface):
-    """
-    An action provider is a special service that provides actions
-    (see gaphor/action.py) and the accompanying XML for the UI manager.
-    """
-
-    menu_xml = interface.Attribute("The menu XML")
-
-    action_group = interface.Attribute("The accompanying ActionGroup")

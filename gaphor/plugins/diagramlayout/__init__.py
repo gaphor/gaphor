@@ -17,15 +17,16 @@ from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import ActionProvider
+from gaphor.interfaces import IService
 from gaphor.plugins.diagramlayout import toposort
 from gaphor.ui.interfaces import IUIComponent
 
 log = logging.getLogger(__name__)
 
 
-@implementer(IService, IActionProvider)
-class DiagramLayout(object):
+@implementer(IService)
+class DiagramLayout(ActionProvider):
 
     component_registry = inject("component_registry")
     main_window = inject("main_window")

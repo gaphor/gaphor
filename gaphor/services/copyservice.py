@@ -10,12 +10,13 @@ from zope.interface import implementer
 from gaphor.UML import Element
 from gaphor.UML.collection import collection
 from gaphor.core import inject, action, build_action_group, transactional
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import ActionProvider
+from gaphor.interfaces import IService
 from gaphor.ui.event import DiagramSelectionChange
 
 
-@implementer(IService, IActionProvider)
-class CopyService(object):
+@implementer(IService)
+class CopyService(ActionProvider):
     """
     Copy/Cut/Paste functionality required a lot of thinking:
 

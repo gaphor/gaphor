@@ -23,7 +23,8 @@ from gaphor.core import (
     build_action_group,
     transactional,
 )
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import ActionProvider
+from gaphor.interfaces import IService
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
@@ -45,8 +46,8 @@ ICONS = (
 )
 
 
-@implementer(IService, IActionProvider)
-class MainWindow(object):
+@implementer(IService)
+class MainWindow(ActionProvider):
     """
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
@@ -137,7 +138,7 @@ class MainWindow(object):
             uicomp = cls()
             uicomp.ui_name = ep.name
             component_registry.register_utility(uicomp, IUIComponent, ep.name)
-            if IActionProvider.providedBy(uicomp):
+            if isinstance(uicomp, ActionProvider):
                 self.action_manager.register_action_provider(uicomp)
 
     def shutdown(self):
@@ -363,8 +364,8 @@ class MainWindow(object):
 Gtk.AccelMap.add_filter("gaphor")
 
 
-@implementer(IUIComponent, IActionProvider)
-class Diagrams(object):
+@implementer(IUIComponent)
+class Diagrams(ActionProvider):
 
     title = _("Diagrams")
     placement = ("left", "diagrams")

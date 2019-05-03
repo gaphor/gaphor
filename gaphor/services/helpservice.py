@@ -9,11 +9,12 @@ from zope.interface import implementer
 
 from gaphor import __version__
 from gaphor.core import _, inject, action, build_action_group
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import ActionProvider
+from gaphor.interfaces import IService
 
 
-@implementer(IService, IActionProvider)
-class HelpService(object):
+@implementer(IService)
+class HelpService(ActionProvider):
 
     menu_xml = """
       <ui>

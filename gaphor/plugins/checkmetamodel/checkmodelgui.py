@@ -12,7 +12,8 @@ from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import ActionProvider
+from gaphor.interfaces import IService
 from gaphor.plugins.checkmetamodel import checkmodel
 
 PYELEMENT_COLUMN = 0
@@ -22,8 +23,8 @@ REASON_COLUMN = 2
 log = logging.getLogger(__name__)
 
 
-@implementer(IService, IActionProvider)
-class CheckModelWindow(object):
+@implementer(IService)
+class CheckModelWindow(ActionProvider):
 
     element_factory = inject("element_factory")
     main_window = inject("main_window")
