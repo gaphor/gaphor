@@ -9,11 +9,8 @@ These interfaces are:
 
 """
 
-from zope import interface
-
 from functools import singledispatch
 from gaphor.misc.generic.multidispatch import multidispatch
-import typing
 
 
 @singledispatch
@@ -27,11 +24,22 @@ class Group(object):
         pass
 
 
-class IConnect(interface.Interface):
+@multidispatch(object, object)
+class Group(object):
+    def __init__(self, parent, item):
+        pass
+
+
+@multidispatch(object, object)
+class IConnect(object):
     """
-    This interface is used by the HandleTool to allow connecting
+    This function is used by the HandleTool to allow connecting
     lines to element items. For each specific case (Element, Line) an
     adapter could be written.
     """
 
-    pass
+    def __init__(self, item, line_item):
+        pass
+
+    def allow(self, item, line):
+        return False

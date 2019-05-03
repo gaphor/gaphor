@@ -49,7 +49,7 @@ class DiagramItemConnector(Connector.default):
     """
 
     def allow(self, sink):
-        adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
+        adapter = IConnect(sink.item, self.item)
         return adapter and adapter.allow(self.handle, sink.port)
 
     @transactional
@@ -71,7 +71,7 @@ class DiagramItemConnector(Connector.default):
             elif cinfo:
                 # first disconnect but disable disconnection handle as
                 # reconnection is going to happen
-                adapter = component.queryMultiAdapter((sink.item, item), IConnect)
+                adapter = IConnect(sink.item, item)
                 try:
                     connect = adapter.reconnect
                 except AttributeError:
@@ -87,7 +87,7 @@ class DiagramItemConnector(Connector.default):
                 connect(handle, sink.port)
             else:
                 # new connection
-                adapter = component.queryMultiAdapter((sink.item, item), IConnect)
+                adapter = IConnect(sink.item, item)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
         except Exception as e:
@@ -130,7 +130,7 @@ class DisconnectHandle(object):
         else:
             log.debug("Disconnecting %s.%s" % (item, handle))
             if cinfo:
-                adapter = component.queryMultiAdapter((cinfo.connected, item), IConnect)
+                adapter = IConnect(cinfo.connected, item)
                 adapter.disconnect(handle)
 
 

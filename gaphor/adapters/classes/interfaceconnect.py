@@ -6,19 +6,17 @@ to folded interface, see `gaphor.diagram.classes.interface` documentation
 for details.
 """
 
-from zope import component
-from zope import interface
-
 from gaphor import UML
 
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 from gaphor.adapters.classes.classconnect import (
     DependencyConnect,
     ImplementationConnect,
 )
 
 
-@component.adapter(items.InterfaceItem, items.ImplementationItem)
+@IConnect.register(items.InterfaceItem, items.ImplementationItem)
 class ImplementationInterfaceConnect(ImplementationConnect):
     """Connect interface item and a behaviored classifier using an
     implementation.
@@ -43,10 +41,7 @@ class ImplementationInterfaceConnect(ImplementationConnect):
             self.line._solid = False
 
 
-component.provideAdapter(ImplementationInterfaceConnect)
-
-
-@component.adapter(items.InterfaceItem, items.DependencyItem)
+@IConnect.register(items.InterfaceItem, items.DependencyItem)
 class DependencyInterfaceConnect(DependencyConnect):
     """Connect interface item with dependency item."""
 
@@ -82,6 +77,3 @@ class DependencyInterfaceConnect(DependencyConnect):
             # test_unfolded_interface_disconnection as well
             if iface.folded:
                 iface.folded = iface.FOLDED_PROVIDED
-
-
-component.provideAdapter(DependencyInterfaceConnect)

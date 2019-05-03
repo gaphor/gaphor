@@ -48,7 +48,7 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
         assert isinstance(aspect, DiagramItemConnector)
 
     def test_query(self):
-        assert component.queryMultiAdapter((self.comment, self.commentline), IConnect)
+        assert IConnect(self.comment, self.commentline)
 
     def test_allow(self):
         aspect = Connector(self.commentline, self.commentline.handles()[0])

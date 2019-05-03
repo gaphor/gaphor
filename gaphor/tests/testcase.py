@@ -89,8 +89,7 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
 
-        query = (item, line)
-        adapter = component.queryMultiAdapter(query, IConnect)
+        adapter = IConnect(item, line)
         return adapter.allow(handle, port)
 
     def connect(self, line, handle, item, port=None):

@@ -1,11 +1,10 @@
-from zope import component
-
 from gaphor import UML
 from gaphor.adapters.connectors import RelationshipConnect
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 
 
-@component.adapter(items.ClassifierItem, items.ExtensionItem)
+@IConnect.register(items.ClassifierItem, items.ExtensionItem)
 class ExtensionConnect(RelationshipConnect):
     """Connect class and stereotype items using an extension item."""
 
@@ -85,6 +84,3 @@ class ExtensionConnect(RelationshipConnect):
                 for e in old.memberEnd:
                     e.unlink()
                 old.unlink()
-
-
-component.provideAdapter(ExtensionConnect)

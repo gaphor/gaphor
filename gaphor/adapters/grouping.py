@@ -17,9 +17,6 @@ to be aware that `AbstractGroup.item` can be null.
 import logging
 import abc
 
-from zope.interface import implementer
-from zope import component
-
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items

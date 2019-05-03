@@ -27,14 +27,10 @@ class CommentLineItem(DiagramLine):
         c1 = canvas.get_connection(self.head)
         c2 = canvas.get_connection(self.tail)
         if c1 and c2:
-            query = (c1.connected, self)
-            adapter = component.queryMultiAdapter(query, IConnect)
+            adapter = IConnect(c1.connected, self)
             adapter.disconnect(self.head)
         super(CommentLineItem, self).unlink()
 
     def draw(self, context):
         context.cairo.set_dash((7.0, 5.0), 0)
         DiagramLine.draw(self, context)
-
-
-# vim: sw=4:et:ai
