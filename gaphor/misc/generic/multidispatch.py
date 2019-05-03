@@ -100,7 +100,7 @@ class FunctionDispatcher(object):
 
         def register_rule(func):
             self.register_rule(func, *argtypes)
-            return self
+            return func
 
         return register_rule
 

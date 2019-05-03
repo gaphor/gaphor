@@ -135,7 +135,7 @@ class DispatcherTests(unittest.TestCase):
 
 
 class MultifunctionTests(unittest.TestCase):
-    def test_it(self):
+    def test_default_dispatcher(self):
         @multidispatch(int, str)
         def func(x, y):
             return str(x) + y
@@ -145,8 +145,13 @@ class MultifunctionTests(unittest.TestCase):
         self.assertRaises(TypeError, func, "1", 2)
         self.assertRaises(TypeError, func, "1", "2")
 
-        @func.register(str, str)
+    def test_multiple_functions(self):
+        @multidispatch(int, str)
         def func(x, y):
+            return str(x) + y
+
+        @func.register(str, str)
+        def _(x, y):
             return x + y
 
         self.assertEqual(func(1, "2"), "12")
@@ -160,7 +165,7 @@ class MultifunctionTests(unittest.TestCase):
             return x + y
 
         @func.register(str, str)
-        def func(x, y):
+        def _(x, y):
             return y + x
 
         self.assertEqual(func(1, 1), 2)
