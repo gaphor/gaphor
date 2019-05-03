@@ -9,7 +9,6 @@ from zope import component
 
 from gaphor import application
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor.interfaces import ITransaction
 
 log = logging.getLogger(__name__)
 
@@ -50,7 +49,6 @@ class TransactionError(Exception):
     pass
 
 
-@implementer(ITransaction)
 class Transaction(object):
     """
     The transaction. On start and end of a transaction an event is emitted.

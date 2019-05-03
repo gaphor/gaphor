@@ -22,22 +22,6 @@ class IService(interface.Interface):
         """
 
 
-class ITransaction(interface.Interface):
-    """
-    The methods each transaction should adhere.
-    """
-
-    def commit(self):
-        """
-        Commit the transaction.
-        """
-
-    def rollback(self):
-        """
-        Roll back the transaction.
-        """
-
-
 class IActionProvider(interface.Interface):
     """
     An action provider is a special service that provides actions
