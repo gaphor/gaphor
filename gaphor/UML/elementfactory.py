@@ -218,14 +218,12 @@ class ElementFactoryService(ElementFactory):
         """
         Block events from being emitted.
         """
-        print("Blocking events", self._block_events)
         self._block_events += 1
 
         try:
             yield self
         finally:
             self._block_events -= 1
-            print("Unblocked events", self._block_events)
 
     def _unlink_element(self, element):
         """
