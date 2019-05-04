@@ -27,7 +27,9 @@ class Registry(object):
             tree_node = tree_node.setdefault(key, _TreeNode())
 
         if not tree_node.target is None:
-            raise ValueError("Registration conflicts with existing registration.")
+            raise ValueError(
+                f"Registration for {target} conflicts with existing registration {tree_node.target}."
+            )
 
         tree_node.target = target
 
