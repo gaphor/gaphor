@@ -14,14 +14,9 @@ from gaphor.abc import Service
 from gaphor.application import ComponentLookupError
 
 
-class ZopeComponentRegistry(Service):
+class ComponentRegistry(Service):
     """
-    The ZopeComponentRegistry provides a subset of the
-    ``zope.component.registry.Components`` interface. This part is mainly
-    enough to get the work done and keeps stuff simpler.
-
-    This service should not be called directly, but through more specific
-    service such as Dispatcher and AdapterRegistry.
+    The ComponentRegistry provides a home for application wide components.
     """
 
     def __init__(self):

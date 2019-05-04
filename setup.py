@@ -104,7 +104,7 @@ setup(
             "gaphorconvert = gaphor.tools.gaphorconvert:main",
         ],
         "gaphor.services": [
-            "component_registry = gaphor.services.componentregistry:ZopeComponentRegistry",
+            "component_registry = gaphor.services.componentregistry:ComponentRegistry",
             "properties = gaphor.services.properties:Properties",
             "undo_manager = gaphor.services.undomanager:UndoManager",
             "element_factory = gaphor.UML.elementfactory:ElementFactoryService",
