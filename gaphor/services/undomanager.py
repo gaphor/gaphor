@@ -37,7 +37,6 @@ from gaphor.event import (
     TransactionRollback,
 )
 from gaphor.abc import Service, ActionProvider
-from gaphor.interfaces import IService
 from gaphor.transaction import Transaction, transactional
 
 logger = logging.getLogger(__name__)
@@ -80,7 +79,6 @@ class UndoManagerStateChanged(ServiceEvent):
         self.service = service
 
 
-@implementer(IService)
 class UndoManager(Service, ActionProvider):
     """
     Simple transaction manager for Gaphor.

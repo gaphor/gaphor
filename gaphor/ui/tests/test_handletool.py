@@ -16,7 +16,7 @@ from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.interfaces import IConnect
 from gaphor.ui.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.ui.event import DiagramShow
-from gaphor.ui.interfaces import IUIComponent
+from gaphor.ui.abc import UIComponent
 
 
 class DiagramItemConnectorTestCase(unittest.TestCase):
@@ -33,7 +33,6 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
             ]
         )
         self.main_window = Application.get_service("main_window")
-        self.main_window.init()
         self.main_window.open()
         self.element_factory = Application.get_service("element_factory")
         self.diagram = self.element_factory.create(UML.Diagram)
@@ -95,9 +94,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         Get a view for diagram.
         """
-        view = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_view()
+        view = self.component_registry.get(UIComponent, "diagrams").get_current_view()
 
         # realize view, forces bounding box recalculation
         while Gtk.events_pending():

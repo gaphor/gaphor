@@ -13,19 +13,15 @@ The layout is done like this:
 import logging
 import random
 
-from zope.interface import implementer
-
 from gaphor.core import inject, action, build_action_group, transactional
 from gaphor.diagram import items
 from gaphor.abc import Service, ActionProvider
-from gaphor.interfaces import IService
 from gaphor.plugins.diagramlayout import toposort
-from gaphor.ui.interfaces import IUIComponent
+from gaphor.ui.abc import UIComponent
 
 log = logging.getLogger(__name__)
 
 
-@implementer(IService)
 class DiagramLayout(Service, ActionProvider):
 
     component_registry = inject("component_registry")
@@ -50,8 +46,8 @@ class DiagramLayout(Service, ActionProvider):
         pass
 
     def get_current_diagram(self):
-        return self.component_registry.get_utility(
-            IUIComponent, "diagrams"
+        return self.component_registry.get(
+            UIComponent, "diagrams"
         ).get_current_diagram()
 
     def update(self):

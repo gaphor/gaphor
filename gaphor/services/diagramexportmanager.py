@@ -11,15 +11,13 @@ from zope.interface import implementer
 
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.abc import Service, ActionProvider
-from gaphor.interfaces import IService
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.filedialog import FileDialog
-from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.questiondialog import QuestionDialog
 
 logger = logging.getLogger(__name__)
 
 
-@implementer(IService)
 class DiagramExportManager(Service, ActionProvider):
     """
     Service for exporting diagrams as images (SVG, PNG, PDF).
@@ -57,8 +55,8 @@ class DiagramExportManager(Service, ActionProvider):
         pass
 
     def get_current_diagram(self):
-        return self.component_registry.get_utility(
-            IUIComponent, "diagrams"
+        return self.component_registry.get(
+            UIComponent, "diagrams"
         ).get_current_diagram()
 
     def save_dialog(self, diagram, title, ext):

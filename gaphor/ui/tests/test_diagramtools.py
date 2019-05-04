@@ -6,8 +6,8 @@ from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.tests import TestCase
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramShow
-from gaphor.ui.interfaces import IUIComponent
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -39,9 +39,7 @@ class DiagramItemConnectorTestCase(TestCase):
         the_association = a.subject
 
         # The act: perform button press event and button release
-        view = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_view()
+        view = self.component_registry.get(UIComponent, "diagrams").get_current_view()
 
         self.assertSame(self.diagram.canvas, view.canvas)
 

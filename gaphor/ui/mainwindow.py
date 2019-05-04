@@ -24,7 +24,6 @@ from gaphor.core import (
     transactional,
 )
 from gaphor.abc import Service, ActionProvider
-from gaphor.interfaces import IService
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
@@ -32,7 +31,6 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import DiagramPageChange, DiagramShow
-from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import Namespace
 from gaphor.ui.toolbox import Toolbox
@@ -47,7 +45,6 @@ ICONS = (
 )
 
 
-@implementer(IService)
 class MainWindow(Service, ActionProvider):
     """
     The main window for the application.
@@ -132,13 +129,11 @@ class MainWindow(Service, ActionProvider):
         for ep in pkg_resources.iter_entry_points("gaphor.uicomponents"):
             log.debug("found entry point uicomponent.%s" % ep.name)
             cls = ep.load()
-            if not IUIComponent.implementedBy(cls):
-                raise NameError(
-                    "Entry point %s doesn" "t provide IUIComponent" % ep.name
-                )
+            if not issubclass(cls, UIComponent):
+                raise NameError("Entry point %s doesn't provide UIComponent" % ep.name)
             uicomp = cls()
             uicomp.ui_name = ep.name
-            component_registry.register_utility(uicomp, IUIComponent, ep.name)
+            component_registry.register(uicomp, ep.name)
             if isinstance(uicomp, ActionProvider):
                 self.action_manager.register_action_provider(uicomp)
 
@@ -213,7 +208,7 @@ class MainWindow(Service, ActionProvider):
         return True
 
     def get_ui_component(self, name):
-        return self.component_registry.get_utility(IUIComponent, name)
+        return self.component_registry.get(UIComponent, name)
 
     def open(self, gtk_app=None):
         """Open the main window.
@@ -365,7 +360,6 @@ class MainWindow(Service, ActionProvider):
 Gtk.AccelMap.add_filter("gaphor")
 
 
-@implementer(IUIComponent)
 class Diagrams(UIComponent, ActionProvider):
 
     title = _("Diagrams")

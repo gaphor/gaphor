@@ -4,7 +4,6 @@ import unittest
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.interfaces import IService
 
 
 class LoadServiceTestCase(unittest.TestCase):

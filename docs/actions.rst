@@ -59,7 +59,7 @@ They can register handlers in order to update their state.
 Maybe it's nice to configure those through the egg-info system. I suppose
 gaphor.service will serve well (as they need to be initialized anyway)
 
- * also inherit ActionProvider from IService?
+ * also inherit ActionProvider from Service?
 
 ::
 

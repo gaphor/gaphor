@@ -11,7 +11,6 @@ from zope.interface import implementer
 
 from gaphor.core import inject
 from gaphor.abc import Service
-from gaphor.interfaces import IService
 
 
 class PropertyChangeEvent:
@@ -28,7 +27,6 @@ class PropertyChangeEvent:
 _no_default = object()
 
 
-@implementer(IService)
 class Properties(Service):
     """The Properties class holds a collection of application wide properties.
 

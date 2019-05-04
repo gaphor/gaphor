@@ -35,7 +35,6 @@ from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui import stock
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconoption import get_icon_option
-from gaphor.ui.interfaces import IUIComponent
 
 # The following items will be shown in the treeview, although they
 # are UML.Namespace elements.
@@ -290,7 +289,6 @@ class NamespaceView(Gtk.TreeView):
                 # selection.select_path(path)
 
 
-@implementer(IUIComponent)
 class Namespace(UIComponent, ActionProvider):
 
     title = _("Namespace")

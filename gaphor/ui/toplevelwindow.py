@@ -11,7 +11,6 @@ from zope.interface import implementer
 
 from gaphor.core import inject
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.interfaces import IUIComponent
 
 ICONS = (
     "gaphor-24x24.png",
@@ -21,7 +20,6 @@ ICONS = (
 )
 
 
-@implementer(IUIComponent)
 class ToplevelWindow(UIComponent):
 
     menubar_path = ""

@@ -10,12 +10,10 @@ from zope.interface import implementer
 from gaphor.core import inject
 from gaphor.event import ServiceInitializedEvent, ActionExecuted
 from gaphor.abc import Service, ActionProvider
-from gaphor.interfaces import IService
 
 logger = logging.getLogger(__name__)
 
 
-@implementer(IService)
 class ActionManager(Service):
     """
     This service is responsible for maintaining actions.
@@ -29,9 +27,9 @@ class ActionManager(Service):
     def init(self, app):
         logger.info("Loading action provider services")
 
-        # for name, service in self.component_registry.get_utilities(ActionProvider):
-        #     logger.debug("Service is %s" % service)
-        #     self.register_action_provider(service)
+        for service, name in self.component_registry.all(ActionProvider):
+            logger.debug("Service is %s" % service)
+            self.register_action_provider(service)
 
         self.component_registry.register_handler(self._service_initialized_handler)
 

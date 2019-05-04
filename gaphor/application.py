@@ -13,7 +13,7 @@ import logging
 import pkg_resources
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
-from gaphor.interfaces import IService
+from gaphor.abc import Service
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +63,7 @@ class _Application:
         """
         Load services from resources.
 
-        Service should provide an interface gaphor.interfaces.IService.
+        Service should provide an interface gaphor.abc.Service.
         """
         # Ensure essential services are always loaded.
         if services:
@@ -73,8 +73,8 @@ class _Application:
 
         for ep in pkg_resources.iter_entry_points("gaphor.services"):
             cls = ep.load()
-            if not IService.implementedBy(cls):
-                raise NameError("Entry point %s doesn" "t provide IService" % ep.name)
+            if isinstance(cls, Service):
+                raise NameError("Entry point %s doesn" "t provide Service" % ep.name)
             if not services or ep.name in services:
                 logger.debug('found service entry point "%s"' % ep.name)
                 srv = cls()
@@ -95,7 +95,7 @@ class _Application:
         try:
             srv = self._uninitialized_services.pop(name)
         except KeyError:
-            raise ComponentLookupError(IService, name)
+            raise ComponentLookupError(Service, name)
         else:
             logger.info("initializing service service.%s" % name)
             srv.init(self)
@@ -104,7 +104,7 @@ class _Application:
             if name == "component_registry":
                 self.component_registry = srv
 
-            self.component_registry.register_utility(srv, IService, name)
+            self.component_registry.register(srv, name)
             self.component_registry.handle(ServiceInitializedEvent(name, srv))
             return srv
 
@@ -123,7 +123,7 @@ class _Application:
             return self.init_service(name)
 
     def shutdown(self):
-        for name, srv in self.component_registry.get_utilities(IService):
+        for srv, name in self.component_registry.all(Service):
             if name not in self.essential_services:
                 self.shutdown_service(name)
 
@@ -135,7 +135,7 @@ class _Application:
     def shutdown_service(self, name):
         srv = self.component_registry.get_service(name)
         self.component_registry.handle(ServiceShutdownEvent(name, srv))
-        self.component_registry.unregister_utility(srv, IService, name)
+        self.component_registry.unregister(srv)
         srv.shutdown()
 
     def run(self, model=None):

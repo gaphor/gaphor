@@ -12,12 +12,10 @@ from gaphor.misc import get_config_dir
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.misc.console import GTKInterpreterConsole
-from gaphor.ui.interfaces import IUIComponent
 
 log = logging.getLogger(__name__)
 
 
-@implementer(IUIComponent)
 class ConsoleWindow(UIComponent, ActionProvider):
 
     component_registry = inject("component_registry")

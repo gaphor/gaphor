@@ -7,7 +7,6 @@ from zope import component
 from logging import getLogger
 from gaphor.core import inject
 from gaphor.abc import Service
-from gaphor.interfaces import IService
 from gaphor import UML
 from gaphor.UML.event import (
     ElementChangeEvent,
@@ -73,7 +72,6 @@ class EventWatcher:
             dispatcher.unregister_handler(handler)
 
 
-@implementer(IService)
 class ElementDispatcher(Service):
     """
     The Element based Dispatcher allows handlers to receive only events

@@ -12,10 +12,8 @@ from gaphor import UML
 from gaphor.UML.event import AssociationDeleteEvent, AssociationSetEvent
 from gaphor.core import inject
 from gaphor.abc import Service
-from gaphor.interfaces import IService
 
 
-@implementer(IService)
 class SanitizerService(Service):
     """
     Does some background cleanup jobs, such as removing elements from the

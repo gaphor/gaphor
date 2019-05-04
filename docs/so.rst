@@ -44,18 +44,18 @@ two applications.
 Interfaces
 ----------
 
-Each service (and plug-in) should implement the `gaphor.interfaces.IService`
+Each service (and plug-in) should implement the `gaphor.abc.Service`
 interface:
 
-.. autoclass:: gaphor.interfaces.IService
+.. autoclass:: gaphor.abc.Service
    :members:
 
 UI components is another piece of cake. The ``gaphor.uicomponents`` entry
 point group is used to define windows and user interface functionality.
-A UI component should implement the `gaphor.ui.interfaces.IUIComponent`
+A UI component should implement the `gaphor.ui.abc.UIComponent`
 interface:
 
-.. autoclass:: gaphor.ui.interfaces.IUIComponent
+.. autoclass:: gaphor.ui.abc.UIComponent
    :members:
 
 Typically a service and UI component would like to present some actions to the
@@ -128,7 +128,7 @@ Here is a stripped version of the hello world class::
             main_window = self.gui_manager.main_window   # 8.
             pass # gtk code left out
 
-1. As stated before, a plugin should implement the ``IService`` interface.
+1. As stated before, a plugin should implement the ``Service`` interface.
    It also implements ``ActionProvider``, saying it has some actions to
    be performed by the user.
 2. The plugin depends on the ``gui_manager`` service. The ``gui_manager`` can
@@ -140,7 +140,7 @@ Here is a stripped version of the hello world class::
 4. ``ActionProvider`` also requires an ``action_group`` attribute (containing
    a ``gtk.ActionGroup``). This action group is created on instantiation.
    The actions itself are defined with an ``action`` decorator (see 7).
-5. Each ``IService`` has an ``init(app)`` method...
+5. Each ``Service`` has an ``init(app)`` method...
 6. ... and a ``shutdown()`` method. Those can be used to create and detach
    event handlers for example.
 7. The action that can be invoked. The action is defined and will be picked

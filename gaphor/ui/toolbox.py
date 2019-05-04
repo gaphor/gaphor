@@ -13,14 +13,12 @@ from gi.repository import Gtk
 from gaphor.core import _, inject, toggle_action, build_action_group
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.event import DiagramPageChange
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
 log = logging.getLogger(__name__)
 
 
-@implementer(IUIComponent)
 class Toolbox(UIComponent, ActionProvider):
 
     TARGET_STRING = 0

@@ -2,8 +2,6 @@
 Application wide events are managed here.
 """
 
-from gaphor.interfaces import *
-
 
 class ServiceEvent:
     """

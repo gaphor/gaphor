@@ -11,7 +11,6 @@ from zope.interface import implementer
 from gaphor import UML
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.abc import Service, ActionProvider
-from gaphor.interfaces import IService
 from gaphor.event import ServiceEvent
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue
@@ -36,7 +35,6 @@ class FileManagerStateChanged(ServiceEvent):
         self.service = service
 
 
-@implementer(IService)
 class FileManager(Service, ActionProvider):
     """
     The file service, responsible for loading and saving Gaphor models.
