@@ -7,6 +7,14 @@ from gaphor.misc.generic.registry import Registry, SimpleAxis, TypeAxis
 __all__ = ("RegistryTests",)
 
 
+class DummyA(object):
+    pass
+
+
+class DummyB(DummyA):
+    pass
+
+
 class RegistryTests(unittest.TestCase):
     def test_one_axis_no_specificity(self):
         registry = Registry(("foo", SimpleAxis()))
@@ -19,16 +27,52 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(registry.lookup("foo"), b)
         self.assertEqual(registry.lookup("bar"), None)
 
+    def test_subtyping_on_axes(self):
+        registry = Registry(("type", TypeAxis()))
+
+        target1 = "one"
+        registry.register(target1, object)
+
+        target2 = "two"
+        registry.register(target2, DummyA)
+
+        target3 = "three"
+        registry.register(target3, DummyB)
+
+        self.assertEqual(registry.lookup(object()), target1)
+        self.assertEqual(registry.lookup(DummyA()), target2)
+        self.assertEqual(registry.lookup(DummyB()), target3)
+
+    def test_query_subtyping_on_axes(self):
+        registry = Registry(("type", TypeAxis()))
+
+        target1 = "one"
+        registry.register(target1, object)
+
+        target2 = "two"
+        registry.register(target2, DummyA)
+
+        target3 = "three"
+        registry.register(target3, DummyB)
+
+        target4 = "four"
+        registry.register(target4, int)
+
+        self.assertEqual(list(registry.query(object())), [target1])
+        self.assertEqual(list(registry.query(DummyA())), [target2, target1])
+        self.assertEqual(list(registry.query(DummyB())), [target3, target2, target1])
+        self.assertEqual(list(registry.query(3)), [target4, target1])
+
     def test_two_axes(self):
         registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
 
-        target1 = Target("one")
+        target1 = "one"
         registry.register(target1, object)
 
-        target2 = Target("two")
+        target2 = "two"
         registry.register(target2, DummyA)
 
-        target3 = Target("three")
+        target3 = "three"
         registry.register(target3, DummyA, "foo")
 
         context1 = object()
@@ -85,20 +129,3 @@ class RegistryTests(unittest.TestCase):
         self.assertRaises(ValueError, registry.register, 1, foo=1)
         self.assertRaises(ValueError, registry.lookup, foo=1)
         self.assertRaises(ValueError, registry.register, 1, "foo", name="foo")
-
-
-class DummyA(object):
-    pass
-
-
-class DummyB(DummyA):
-    pass
-
-
-class Target(object):
-    def __init__(self, name):
-        self.name = name
-
-    # Only called if being printed due to a failing test
-    def __repr__(self):  # pragma NO COVERAGE
-        return "Target('%s')" % self.name

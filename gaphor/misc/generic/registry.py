@@ -41,34 +41,34 @@ class Registry(object):
         return tree_node.target
 
     def lookup(self, *arg_objs, **kw_objs):
+        return next(self.query(*arg_objs, **kw_objs), None)
+
+    def query(self, *arg_objs, **kw_objs):
         objs = self._align_with_axes(arg_objs, kw_objs)
         axes = self._axes
-        return self._lookup(self._tree, objs, axes)
+        return self._query(self._tree, objs, axes)
 
-    def _lookup(self, tree_node, objs, axes):
+    def _query(self, tree_node, objs, axes):
         """ Recursively traverse registration tree, from left to right, most
         specific to least specific, returning the first target found on a
         matching node.  """
         if not objs:
-            return tree_node.target
+            yield tree_node.target
+        else:
+            obj = objs[0]
 
-        obj = objs[0]
-
-        # Skip non-participating nodes
-        if obj is None:
-            next_node = tree_node.get(None, None)
-            if next_node is not None:
-                return self._lookup(next_node, objs[1:], axes[1:])
-            return None
-
-        # Get matches on this axis and iterate from most to least specific
-        axis = axes[0]
-        for match_key in axis.matches(obj, tree_node.keys()):
-            target = self._lookup(tree_node[match_key], objs[1:], axes[1:])
-            if target is not None:
-                return target
-
-        return None
+            # Skip non-participating nodes
+            if obj is None:
+                next_node = tree_node.get(None, None)
+                if next_node is not None:
+                    for target in self._query(next_node, objs[1:], axes[1:]):
+                        yield target
+            else:
+                # Get matches on this axis and iterate from most to least specific
+                axis = axes[0]
+                for match_key in axis.matches(obj, tree_node.keys()):
+                    for target in self._query(tree_node[match_key], objs[1:], axes[1:]):
+                        yield target
 
     def _align_with_axes(self, args, kw):
         """ Create a list matching up all args and kwargs with their
