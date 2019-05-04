@@ -1,18 +1,16 @@
 """Activity partition property page."""
 
-from zope import component
-
 from gi.repository import Gtk
-from zope.interface import implementer
 
 from gaphor import UML
 
 from gaphor.adapters.propertypages import NamedItemPropertyPage
 from gaphor.core import _, inject, transactional
 from gaphor.diagram import items
+from gaphor.ui.interfaces import PropertyPages
 
 
-@component.adapter(items.PartitionItem)
+@PropertyPages.register(items.PartitionItem)
 class PartitionPropertyPage(NamedItemPropertyPage):
     """Partition property page."""
 
@@ -46,6 +44,3 @@ class PartitionPropertyPage(NamedItemPropertyPage):
         if item.subject:
             item.subject.isExternal = button.get_active()
         item.request_update()
-
-
-component.provideAdapter(PartitionPropertyPage, name="Properties")

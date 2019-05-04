@@ -2,17 +2,14 @@
 Stereotype property page.
 """
 
-from zope import component
-
 from gi.repository import GObject, Gtk
-from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import _, inject, transactional
 from gaphor.diagram.diagramitem import StereotypeSupport
 from gaphor.diagram import items
 from gaphor.ui.abc import PropertyPageBase
-from gaphor.ui.interfaces import IPropertyPage
+from gaphor.ui.interfaces import PropertyPages
 
 
 def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
@@ -72,10 +69,11 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
     return tree_view
 
 
-@implementer(IPropertyPage)
+@PropertyPages.register(UML.Element)
 class StereotypePage(PropertyPageBase):
 
     order = 40
+    name = "Stereotypes"
 
     element_factory = inject("element_factory")
 
@@ -218,9 +216,6 @@ class StereotypePage(PropertyPageBase):
 
         row[1] = value
         row[5] = slot
-
-
-component.provideAdapter(StereotypePage, adapts=[UML.Element], name="Stereotypes")
 
 
 # vim:sw=4:et:ai

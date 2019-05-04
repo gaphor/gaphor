@@ -11,7 +11,7 @@ from gaphor.UML.event import AssociationChangeEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.interfaces import IUIComponent, IPropertyPage
+from gaphor.ui.interfaces import IUIComponent, PropertyPages
 from gaphor.ui.event import DiagramSelectionChange
 
 log = logging.getLogger(__name__)
@@ -113,12 +113,12 @@ class ElementEditor(UIComponent, ActionProvider):
         adaptermap = {}
         try:
             if item.subject:
-                for name, adapter in getAdapters([item.subject], IPropertyPage):
-                    adaptermap[name] = (adapter.order, name, adapter)
+                for adapter in PropertyPages(item.subject):
+                    adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
         except AttributeError:
             pass
-        for name, adapter in getAdapters([item], IPropertyPage):
-            adaptermap[name] = (adapter.order, name, adapter)
+        for adapter in PropertyPages(item):
+            adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
 
         adapters = sorted(adaptermap.values())
         return adapters

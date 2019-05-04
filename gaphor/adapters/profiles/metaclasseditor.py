@@ -2,17 +2,14 @@
 Metaclass item editors.
 """
 
-from zope import component
-
 from gi.repository import Gtk
-from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
 from gaphor.core import _, transactional
 from gaphor.diagram import items
-from gaphor.ui.interfaces import IPropertyPage
 from gaphor.ui.abc import PropertyPageBase
+from gaphor.ui.interfaces import PropertyPages
 
 
 def _issubclass(c, b):
@@ -22,7 +19,7 @@ def _issubclass(c, b):
         return False
 
 
-@implementer(IPropertyPage)
+@PropertyPages.register(items.MetaclassItem)
 class MetaclassNameEditor(PropertyPageBase):
     """
     Metaclass name editor. Provides editable combo box entry with
@@ -88,8 +85,3 @@ class MetaclassNameEditor(PropertyPageBase):
     @transactional
     def _on_name_change(self, entry):
         self.item.subject.name = entry.get_text()
-
-
-component.provideAdapter(
-    MetaclassNameEditor, adapts=[items.MetaclassItem], name="Properties"
-)

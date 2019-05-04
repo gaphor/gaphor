@@ -33,7 +33,8 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
     A property page which can display itself in a notebook
     """
 
-    order = "Order number, used for ordered display"
+    order = 0  # Order number, used for ordered display
+    name = "Properties"
 
     @abc.abstractmethod
     def construct(self):

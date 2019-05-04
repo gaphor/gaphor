@@ -5,6 +5,26 @@ Interfaces related to the user interface.
 from zope import interface
 
 
+class _PropertyPages:
+    def __init__(self):
+        self.pages = []
+
+    def register(self, subject_type):
+        def reg(func):
+            self.pages.append((subject_type, func))
+            return func
+
+        return reg
+
+    def __call__(self, subject):
+        for subject_type, func in self.pages:
+            if isinstance(subject, subject_type):
+                yield func(subject)
+
+
+PropertyPages = _PropertyPages()
+
+
 class IUIComponent(interface.Interface):
     """
     A user interface component.
@@ -27,24 +47,4 @@ class IUIComponent(interface.Interface):
         """
         Close the UI component. The component can decide to hide or destroy the UI
         components.
-        """
-
-
-class IPropertyPage(interface.Interface):
-    """
-    A property page which can display itself in a notebook
-    """
-
-    order = interface.Attribute("Order number, used for ordered display")
-
-    def construct(self):
-        """
-        Create the page (Gtk.Widget) that belongs to the Property page.
-
-        Returns the page's toplevel widget (Gtk.Widget).
-        """
-
-    def destroy(self):
-        """
-        Destroy the page and clean up signal handlers and stuff.
         """
