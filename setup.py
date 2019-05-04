@@ -105,7 +105,6 @@ setup(
         ],
         "gaphor.services": [
             "component_registry = gaphor.services.componentregistry:ZopeComponentRegistry",
-            "adapter_loader = gaphor.services.adapterloader:AdapterLoader",
             "properties = gaphor.services.properties:Properties",
             "undo_manager = gaphor.services.undomanager:UndoManager",
             "element_factory = gaphor.UML.elementfactory:ElementFactoryService",

@@ -23,7 +23,6 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
-                "adapter_loader",
                 "element_factory",
                 "main_window",
                 "properties_manager",
@@ -75,7 +74,6 @@ class HandleToolTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
-                "adapter_loader",
                 "element_factory",
                 "main_window",
                 "properties_manager",
