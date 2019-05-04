@@ -11,6 +11,7 @@ from gaphor import UML
 from gaphor.core import _, inject, transactional
 from gaphor.diagram.diagramitem import StereotypeSupport
 from gaphor.diagram import items
+from gaphor.ui.abc import PropertyPageBase
 from gaphor.ui.interfaces import IPropertyPage
 
 
@@ -72,7 +73,7 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
 
 
 @implementer(IPropertyPage)
-class StereotypePage(object):
+class StereotypePage(PropertyPageBase):
 
     order = 40
 

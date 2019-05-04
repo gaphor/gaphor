@@ -28,7 +28,7 @@ class UIComponent(metaclass=abc.ABCMeta):
         """
 
 
-class PropertyPage(metaclass=abc.ABCMeta):
+class PropertyPageBase(metaclass=abc.ABCMeta):
     """
     A property page which can display itself in a notebook
     """
@@ -41,10 +41,4 @@ class PropertyPage(metaclass=abc.ABCMeta):
         Create the page (Gtk.Widget) that belongs to the Property page.
 
         Returns the page's toplevel widget (Gtk.Widget).
-        """
-
-    @abc.abstractmethod
-    def destroy(self):
-        """
-        Destroy the page and clean up signal handlers and stuff.
         """

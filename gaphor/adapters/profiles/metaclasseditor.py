@@ -12,6 +12,7 @@ from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
 from gaphor.core import _, transactional
 from gaphor.diagram import items
 from gaphor.ui.interfaces import IPropertyPage
+from gaphor.ui.abc import PropertyPageBase
 
 
 def _issubclass(c, b):
@@ -22,7 +23,7 @@ def _issubclass(c, b):
 
 
 @implementer(IPropertyPage)
-class MetaclassNameEditor(object):
+class MetaclassNameEditor(PropertyPageBase):
     """
     Metaclass name editor. Provides editable combo box entry with
     predefined list of names of UML classes.

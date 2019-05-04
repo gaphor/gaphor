@@ -40,6 +40,7 @@ from gaphor import UML
 from gaphor.core import _, inject, transactional
 from gaphor.diagram import items
 from gaphor.services.elementdispatcher import EventWatcher
+from gaphor.ui.abc import PropertyPageBase
 from gaphor.ui.interfaces import IPropertyPage
 
 log = logging.getLogger(__name__)
@@ -455,7 +456,7 @@ Use -/= to move items up or down.\
 
 @implementer(IPropertyPage)
 @component.adapter(UML.Comment)
-class CommentItemPropertyPage(object):
+class CommentItemPropertyPage(PropertyPageBase):
     """Property page for Comments."""
 
     order = 0
@@ -510,7 +511,7 @@ component.provideAdapter(CommentItemPropertyPage, name="Properties")
 
 @implementer(IPropertyPage)
 @component.adapter(UML.NamedElement)
-class NamedElementPropertyPage(object):
+class NamedElementPropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
 
     It also sets up a table view which can be extended.
@@ -676,7 +677,7 @@ component.provideAdapter(InterfacePropertyPage, name="Properties")
 
 @implementer(IPropertyPage)
 @component.adapter(items.ClassItem)
-class AttributesPage(object):
+class AttributesPage(PropertyPageBase):
     """An editor for attributes associated with classes and interfaces."""
 
     order = 20
@@ -751,7 +752,7 @@ component.provideAdapter(AttributesPage, name="Attributes")
 
 @implementer(IPropertyPage)
 @component.adapter(items.ClassItem)
-class OperationsPage(object):
+class OperationsPage(PropertyPageBase):
     """An editor for operations associated with classes and interfaces."""
 
     order = 30
@@ -829,7 +830,7 @@ component.provideAdapter(OperationsPage, name="Operations")
 
 @implementer(IPropertyPage)
 @component.adapter(items.DependencyItem)
-class DependencyPropertyPage(object):
+class DependencyPropertyPage(PropertyPageBase):
     """Dependency item editor."""
 
     order = 0
@@ -1027,7 +1028,7 @@ component.provideAdapter(AssociationPropertyPage, name="Properties")
 
 @implementer(IPropertyPage)
 @component.adapter(UML.Property)
-class AssociationEndPropertyPage(object):
+class AssociationEndPropertyPage(PropertyPageBase):
     """Property page for association end properties."""
 
     order = 0
@@ -1124,7 +1125,7 @@ component.provideAdapter(AssociationEndPropertyPage, name="Properties")
 
 @implementer(IPropertyPage)
 @component.adapter(gaphas.item.Line)
-class LineStylePage(object):
+class LineStylePage(PropertyPageBase):
     """Basic line style properties: color, orthogonal, etc."""
 
     order = 400
