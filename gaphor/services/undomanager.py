@@ -24,17 +24,19 @@ from gaphor.UML.event import (
     AssociationSetEvent,
     AssociationAddEvent,
     AssociationDeleteEvent,
-)
-from gaphor.UML.interfaces import (
-    IElementDeleteEvent,
-    IAttributeChangeEvent,
-    IModelFactoryEvent,
+    AttributeChangeEvent,
+    ModelFactoryEvent,
 )
 from gaphor.action import action, build_action_group
 from gaphor.core import inject
-from gaphor.event import ActionExecuted
-from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor.interfaces import IService, IServiceEvent, IActionProvider
+from gaphor.event import (
+    ActionExecuted,
+    ServiceEvent,
+    TransactionBegin,
+    TransactionCommit,
+    TransactionRollback,
+)
+from gaphor.interfaces import IService, IActionProvider
 from gaphor.transaction import Transaction, transactional
 
 logger = logging.getLogger(__name__)
@@ -68,8 +70,7 @@ class ActionStack(object):
                 logger.error("Error while undoing action %s" % action, exc_info=True)
 
 
-@implementer(IServiceEvent)
-class UndoManagerStateChanged(object):
+class UndoManagerStateChanged(ServiceEvent):
     """
     Event class used to send state changes on the ndo Manager.
     """
@@ -150,7 +151,7 @@ class UndoManager(object):
     def clear_redo_stack(self):
         del self._redo_stack[:]
 
-    @component.adapter(IModelFactoryEvent)
+    @component.adapter(ModelFactoryEvent)
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()
@@ -342,7 +343,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_create_event)
 
-    @component.adapter(IElementDeleteEvent)
+    @component.adapter(ElementDeleteEvent)
     def undo_delete_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems
@@ -357,7 +358,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_delete_event)
 
-    @component.adapter(IAttributeChangeEvent)
+    @component.adapter(AttributeChangeEvent)
     def undo_attribute_change_event(self, event):
         attribute = event.property
         element = event.element

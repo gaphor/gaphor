@@ -5,7 +5,6 @@ Base class for UML model elements.
 
 __all__ = ["Element"]
 
-import threading
 import uuid
 
 from gaphor.UML.properties import umlproperty
@@ -32,7 +31,7 @@ class Element(object):
         self._id = id or (id is not False and str(uuid.uuid1()) or False)
         # The factory this element belongs to.
         self._factory = factory
-        self._unlink_lock = threading.Lock()
+        self._unlink_lock = 0
 
     id = property(lambda self: self._id, doc="Id")
 
@@ -83,11 +82,11 @@ class Element(object):
         The unlink lock is acquired while unlinking this elements properties
         to avoid recursion problems."""
 
-        if self._unlink_lock.locked():
-
+        if self._unlink_lock:
             return
 
-        with self._unlink_lock:
+        try:
+            self._unlink_lock += 1
 
             for prop in self.umlproperties():
 
@@ -95,6 +94,8 @@ class Element(object):
 
             if self._factory:
                 self._factory._unlink_element(self)
+        finally:
+            self._unlink_lock -= 1
 
     def handle(self, event):
         """

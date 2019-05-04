@@ -7,10 +7,11 @@ from zope.component import adapter, getAdapters
 from zope.interface import implementer
 
 from gaphor.UML import Presentation
-from gaphor.UML.interfaces import IAssociationChangeEvent
+from gaphor.UML.event import AssociationChangeEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.interfaces import IActionProvider
-from gaphor.ui.interfaces import IUIComponent, IPropertyPage, IDiagramSelectionChange
+from gaphor.ui.interfaces import IUIComponent, IPropertyPage
+from gaphor.ui.event import DiagramSelectionChange
 
 log = logging.getLogger(__name__)
 
@@ -163,7 +164,7 @@ class ElementEditor(object):
     def on_expand(self, widget, name):
         self._expanded_pages[name] = widget.get_expanded()
 
-    @adapter(IDiagramSelectionChange)
+    @adapter(DiagramSelectionChange)
     def _selection_change(self, event=None, focused_item=None):
         """
         Called when a diagram item receives focus.
@@ -185,7 +186,7 @@ class ElementEditor(object):
             return
         self.create_pages(item)
 
-    @adapter(IAssociationChangeEvent)
+    @adapter(AssociationChangeEvent)
     def _element_changed(self, event):
         element = event.element
         if event.property is Presentation.subject:

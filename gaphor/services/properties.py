@@ -4,7 +4,6 @@ file system.  These are things like preferences."""
 import os
 import pprint
 import sys
-from zope import interface
 
 from gaphas.decorators import AsyncIO
 from gaphor.misc import get_config_dir
@@ -14,16 +13,6 @@ from gaphor.core import inject
 from gaphor.interfaces import IService
 
 
-class IPropertyChangeEvent(interface.Interface):
-
-    """A property changed event has a name, an old value, and a new value."""
-
-    name = interface.Attribute("The property name")
-    old_value = interface.Attribute("The property value before the change")
-    new_value = interface.Attribute("The property value after the change")
-
-
-@implementer(IPropertyChangeEvent)
 class PropertyChangeEvent(object):
 
     """This event is triggered any time a property is changed.  This event

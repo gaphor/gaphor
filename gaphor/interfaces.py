@@ -22,14 +22,6 @@ class IService(interface.Interface):
         """
 
 
-class IServiceEvent(interface.Interface):
-    """
-    An event emitted by a service.
-    """
-
-    service = interface.Attribute("The service that emits the event")
-
-
 class ITransaction(interface.Interface):
     """
     The methods each transaction should adhere.
@@ -46,13 +38,6 @@ class ITransaction(interface.Interface):
         """
 
 
-class ITransactionEvent(interface.Interface):
-    """
-    Events related to transaction workflow (begin/commit/rollback) implements
-    this interface.
-    """
-
-
 class IActionProvider(interface.Interface):
     """
     An action provider is a special service that provides actions
@@ -62,13 +47,3 @@ class IActionProvider(interface.Interface):
     menu_xml = interface.Attribute("The menu XML")
 
     action_group = interface.Attribute("The accompanying ActionGroup")
-
-
-class IActionExecutedEvent(interface.Interface):
-    """
-    An event emitted when an action has been performed.
-    """
-
-    name = interface.Attribute("Name of the action performed, if any")
-
-    action = interface.Attribute("The performed action")

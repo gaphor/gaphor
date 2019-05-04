@@ -8,7 +8,7 @@ from zope.interface import implementer
 
 from gaphor.core import inject, transactional, action, build_action_group
 from gaphor.interfaces import IService, IActionProvider
-from gaphor.ui.interfaces import IDiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChange
 
 
 @implementer(IService, IActionProvider)
@@ -44,7 +44,7 @@ class Alignment(object):
     def shutdown(self):
         self.component_registry.unregister_handler(self.update)
 
-    @component.adapter(IDiagramSelectionChange)
+    @component.adapter(DiagramSelectionChange)
     def update(self, event=None):
         self._last_update = event
         sensitive = event and len(event.selected_items) > 1

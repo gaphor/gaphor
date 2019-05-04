@@ -5,36 +5,6 @@ Interfaces related to the user interface.
 from zope import interface
 
 
-class IDiagramShow(interface.Interface):
-    """
-    Show a new diagram tab
-    """
-
-    diagram = interface.Attribute("The newly selected Diagram")
-
-
-class IDiagramPageChange(interface.Interface):
-    """
-    The selected diagram changes.
-    """
-
-    item = interface.Attribute("The newly selected Notebook pane")
-
-    diagram_page = interface.Attribute("The newly selected diagram page")
-
-
-class IDiagramSelectionChange(interface.Interface):
-    """
-    The selection of a diagram changed.
-    """
-
-    diagram_view = interface.Attribute("The diagram View that emits the event")
-
-    focused_item = interface.Attribute("The diagram item that received focus")
-
-    selected_items = interface.Attribute("All selected items in the diagram")
-
-
 class IUIComponent(interface.Interface):
     """
     A user interface component.

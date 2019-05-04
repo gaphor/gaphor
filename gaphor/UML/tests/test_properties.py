@@ -5,7 +5,7 @@ from zope import component
 from gaphor.application import Application
 from gaphor.UML.properties import *
 from gaphor.UML.element import Element
-from gaphor.UML.interfaces import IAssociationChangeEvent
+from gaphor.UML.event import AssociationChangeEvent
 
 
 class PropertiesTestCase(unittest.TestCase):
@@ -269,7 +269,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         events = []
 
-        @component.adapter(IAssociationChangeEvent)
+        @component.adapter(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -544,7 +544,7 @@ class PropertiesTestCase(unittest.TestCase):
         A.derived_b = derivedunion("derived_b", A, 0, "*", A.b)
         events = []
 
-        @component.adapter(IAssociationChangeEvent)
+        @component.adapter(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -584,7 +584,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         events = []
 
-        @component.adapter(IAssociationChangeEvent)
+        @component.adapter(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -704,7 +704,7 @@ class PropertiesTestCase(unittest.TestCase):
         A.a = redefine(A, "a", A, A.a)
         events = []
 
-        @component.adapter(IAssociationChangeEvent)
+        @component.adapter(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -737,7 +737,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         events = []
 
-        @component.adapter(IAssociationChangeEvent)
+        @component.adapter(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 

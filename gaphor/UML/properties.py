@@ -29,14 +29,21 @@ __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"
 import logging
 
 from gaphor.UML.collection import collection, collectionlist
-from gaphor.UML.event import AssociationAddEvent, AssociationDeleteEvent
-from gaphor.UML.event import AttributeChangeEvent, AssociationSetEvent
-from gaphor.UML.event import DerivedAddEvent, DerivedDeleteEvent
-from gaphor.UML.event import DerivedChangeEvent, DerivedSetEvent
-from gaphor.UML.event import RedefineSetEvent, RedefineAddEvent, RedefineDeleteEvent
-from gaphor.UML.interfaces import IAssociationDeleteEvent
-from gaphor.UML.interfaces import IAssociationSetEvent, IAssociationAddEvent
-from gaphor.UML.interfaces import IElementChangeEvent, IAssociationChangeEvent
+from gaphor.UML.event import (
+    AssociationAddEvent,
+    AssociationChangeEvent,
+    AssociationDeleteEvent,
+    AttributeChangeEvent,
+    AssociationSetEvent,
+    DerivedAddEvent,
+    DerivedDeleteEvent,
+    DerivedChangeEvent,
+    DerivedSetEvent,
+    ElementChangeEvent,
+    RedefineSetEvent,
+    RedefineAddEvent,
+    RedefineDeleteEvent,
+)
 
 
 log = logging.getLogger(__name__)
@@ -606,37 +613,36 @@ class derived(umlproperty):
             # Make sure unions are created again
             self.version += 1
 
-            if not IAssociationChangeEvent.providedBy(event):
+            if not isinstance(event, AssociationChangeEvent):
                 return
 
             # mimic the events for Set/Add/Delete
             if self.upper == 1:
                 # This is a [0..1] event
                 # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
-                assert IAssociationSetEvent.providedBy(event)
+                assert isinstance(event, AssociationSetEvent)
                 old_value, new_value = event.old_value, event.new_value
                 self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
             else:
-                if IAssociationSetEvent.providedBy(event):
+                if isinstance(event, AssociationSetEvent):
                     old_value, new_value = event.old_value, event.new_value
                     # Do a filter? Change to
                     self.handle(DerivedDeleteEvent(event.element, self, old_value))
                     self.handle(DerivedAddEvent(event.element, self, new_value))
 
-                elif IAssociationAddEvent.providedBy(event):
+                elif isinstance(event, AssociationAddEvent):
                     new_value = event.new_value
                     self.handle(DerivedAddEvent(event.element, self, new_value))
 
-                elif IAssociationDeleteEvent.providedBy(event):
+                elif isinstance(event, AssociationDeleteEvent):
                     old_value = event.old_value
                     self.handle(DerivedDeleteEvent(event.element, self, old_value))
 
-                elif IAssociationChangeEvent.providedBy(event):
+                elif isinstance(event, AssociationChangeEvent):
                     self.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error(
-                        "Don"
-                        "t know how to handle event "
+                        "Don't know how to handle event "
                         + str(event)
                         + " for derived union"
                     )
@@ -691,13 +697,13 @@ class derivedunion(derived):
             # Make sure unions are created again
             self.version += 1
 
-            if not IAssociationChangeEvent.providedBy(event):
+            if not isinstance(event, AssociationChangeEvent):
                 return
 
             values = self._union(event.element, exclude=event.property)
 
             if self.upper == 1:
-                assert IAssociationSetEvent.providedBy(event)
+                assert isinstance(event, AssociationSetEvent)
                 old_value, new_value = event.old_value, event.new_value
                 # This is a [0..1] event
                 if self.single:
@@ -718,29 +724,28 @@ class derivedunion(derived):
                         DerivedSetEvent(event.element, self, old_value, new_value)
                     )
             else:
-                if IAssociationSetEvent.providedBy(event):
+                if isinstance(event, AssociationSetEvent):
                     old_value, new_value = event.old_value, event.new_value
                     if old_value and old_value not in values:
                         self.handle(DerivedDeleteEvent(event.element, self, old_value))
                     if new_value and new_value not in values:
                         self.handle(DerivedAddEvent(event.element, self, new_value))
 
-                elif IAssociationAddEvent.providedBy(event):
+                elif isinstance(event, AssociationAddEvent):
                     new_value = event.new_value
                     if new_value not in values:
                         self.handle(DerivedAddEvent(event.element, self, new_value))
 
-                elif IAssociationDeleteEvent.providedBy(event):
+                elif isinstance(event, AssociationDeleteEvent):
                     old_value = event.old_value
                     if old_value not in values:
                         self.handle(DerivedDeleteEvent(event.element, self, old_value))
 
-                elif IAssociationChangeEvent.providedBy(event):
+                elif isinstance(event, AssociationChangeEvent):
                     self.handle(DerivedChangeEvent(event.element, self))
                 else:
                     log.error(
-                        "Don"
-                        "t know how to handle event "
+                        "Don't know how to handle event "
                         + str(event)
                         + " for derived union"
                     )
@@ -823,33 +828,19 @@ class redefine(umlproperty):
             event.element, self.decl_class
         ):
             # mimic the events for Set/Add/Delete
-            if IAssociationSetEvent.providedBy(event):
+            if isinstance(event, AssociationSetEvent):
                 self.handle(
                     RedefineSetEvent(
                         event.element, self, event.old_value, event.new_value
                     )
                 )
-            elif IAssociationAddEvent.providedBy(event):
+            elif isinstance(event, AssociationAddEvent):
                 self.handle(RedefineAddEvent(event.element, self, event.new_value))
-            elif IAssociationDeleteEvent.providedBy(event):
+            elif isinstance(event, AssociationDeleteEvent):
                 self.handle(RedefineDeleteEvent(event.element, self, event.old_value))
             else:
                 log.error(
-                    "Don"
-                    "t know how to handle event "
+                    "Don't know how to handle event "
                     + str(event)
                     + " for redefined association"
                 )
-
-
-try:
-    import psyco
-except ImportError:
-    pass
-else:
-    psyco.bind(umlproperty)
-    psyco.bind(attribute)
-    psyco.bind(enumeration)
-    psyco.bind(association)
-    psyco.bind(derivedunion)
-    psyco.bind(redefine)
