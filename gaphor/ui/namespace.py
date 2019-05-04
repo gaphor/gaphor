@@ -33,6 +33,7 @@ from gaphor.core import _, action, build_action_group, inject, transactional
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui import stock
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconoption import get_icon_option
 from gaphor.ui.interfaces import IUIComponent
 
@@ -290,7 +291,7 @@ class NamespaceView(Gtk.TreeView):
 
 
 @implementer(IUIComponent)
-class Namespace(ActionProvider):
+class Namespace(UIComponent, ActionProvider):
 
     title = _("Namespace")
     placement = ("left", "diagrams")

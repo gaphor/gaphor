@@ -10,6 +10,7 @@ from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationChangeEvent
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.abc import ActionProvider
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.interfaces import IUIComponent, IPropertyPage
 from gaphor.ui.event import DiagramSelectionChange
 
@@ -17,7 +18,7 @@ log = logging.getLogger(__name__)
 
 
 @implementer(IUIComponent)
-class ElementEditor(ActionProvider):
+class ElementEditor(UIComponent, ActionProvider):
     """The ElementEditor class is a utility window used to edit UML elements.
     It will display the properties of the currently selected element in the
     diagram."""

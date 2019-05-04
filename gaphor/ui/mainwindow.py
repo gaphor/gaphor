@@ -28,6 +28,7 @@ from gaphor.interfaces import IService
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import DiagramPageChange, DiagramShow
@@ -365,7 +366,7 @@ Gtk.AccelMap.add_filter("gaphor")
 
 
 @implementer(IUIComponent)
-class Diagrams(ActionProvider):
+class Diagrams(UIComponent, ActionProvider):
 
     title = _("Diagrams")
     placement = ("left", "diagrams")
