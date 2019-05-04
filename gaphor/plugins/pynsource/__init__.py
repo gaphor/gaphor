@@ -12,7 +12,7 @@ from gi.repository import Gtk
 from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
-from gaphor.abc import ActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.interfaces import IService
 from gaphor.plugins.pynsource.engineer import Engineer
 
@@ -20,7 +20,7 @@ NAME_COLUMN = 0
 
 
 @implementer(IService)
-class PyNSource(ActionProvider):
+class PyNSource(Service, ActionProvider):
 
     main_window = inject("main_window")
 

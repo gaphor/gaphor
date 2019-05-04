@@ -9,14 +9,14 @@ from zope.interface import implementer
 
 from gaphor.core import inject
 from gaphor.event import ServiceInitializedEvent, ActionExecuted
-from gaphor.abc import ActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.interfaces import IService
 
 logger = logging.getLogger(__name__)
 
 
 @implementer(IService)
-class ActionManager(object):
+class ActionManager(Service):
     """
     This service is responsible for maintaining actions.
     """

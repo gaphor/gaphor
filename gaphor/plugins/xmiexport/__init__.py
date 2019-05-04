@@ -7,7 +7,7 @@ import logging
 from zope.interface import implementer
 
 from gaphor.core import _, inject, action, build_action_group
-from gaphor.abc import ActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.interfaces import IService
 from gaphor.plugins.xmiexport import exportmodel
 from gaphor.ui.filedialog import FileDialog
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 @implementer(IService)
-class XMIExport(ActionProvider):
+class XMIExport(Service, ActionProvider):
 
     element_factory = inject("element_factory")
     main_window = inject("main_window")

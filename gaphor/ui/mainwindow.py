@@ -23,7 +23,7 @@ from gaphor.core import (
     build_action_group,
     transactional,
 )
-from gaphor.abc import ActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.interfaces import IService
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.filemanager import FileManagerStateChanged
@@ -47,7 +47,7 @@ ICONS = (
 
 
 @implementer(IService)
-class MainWindow(ActionProvider):
+class MainWindow(Service, ActionProvider):
     """
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.

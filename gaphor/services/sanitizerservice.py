@@ -11,11 +11,12 @@ from zope.interface import implementer
 from gaphor import UML
 from gaphor.UML.event import AssociationDeleteEvent, AssociationSetEvent
 from gaphor.core import inject
+from gaphor.abc import Service
 from gaphor.interfaces import IService
 
 
 @implementer(IService)
-class SanitizerService(object):
+class SanitizerService(Service):
     """
     Does some background cleanup jobs, such as removing elements from the
     model that have no presentations (and should have some).

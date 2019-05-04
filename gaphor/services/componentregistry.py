@@ -11,12 +11,13 @@ from zope import component
 from zope.interface import registry
 from zope.interface import implementer
 
+from gaphor.abc import Service
 from gaphor.interfaces import IService
 from gaphor.application import ComponentLookupError
 
 
 @implementer(IService)
-class ZopeComponentRegistry(object):
+class ZopeComponentRegistry(Service):
     """
     The ZopeComponentRegistry provides a subset of the
     ``zope.component.registry.Components`` interface. This part is mainly

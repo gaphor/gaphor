@@ -15,6 +15,7 @@ from gaphor.UML.event import (
     ModelFactoryEvent,
 )
 from gaphor.core import inject
+from gaphor.abc import Service
 from gaphor.interfaces import IService
 from gaphor.misc import odict
 
@@ -172,7 +173,7 @@ class ElementFactory(object):
 
 
 @implementer(IService)
-class ElementFactoryService(ElementFactory):
+class ElementFactoryService(Service, ElementFactory):
     """Service version of the ElementFactory."""
 
     component_registry = inject("component_registry")

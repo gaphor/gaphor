@@ -7,13 +7,13 @@ from zope import component
 from zope.interface import implementer
 
 from gaphor.core import inject, transactional, action, build_action_group
-from gaphor.abc import ActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.interfaces import IService
 from gaphor.ui.event import DiagramSelectionChange
 
 
 @implementer(IService)
-class Alignment(ActionProvider):
+class Alignment(Service, ActionProvider):
     component_registry = inject("component_registry")
 
     menu_xml = """

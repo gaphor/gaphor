@@ -12,7 +12,7 @@ from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.abc import ActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.interfaces import IService
 from gaphor.plugins.checkmetamodel import checkmodel
 
@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 
 
 @implementer(IService)
-class CheckModelWindow(ActionProvider):
+class CheckModelWindow(Service, ActionProvider):
 
     element_factory = inject("element_factory")
     main_window = inject("main_window")

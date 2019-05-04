@@ -10,6 +10,7 @@ from gaphor.misc import get_config_dir
 from zope.interface import implementer
 
 from gaphor.core import inject
+from gaphor.abc import Service
 from gaphor.interfaces import IService
 
 
@@ -28,7 +29,7 @@ _no_default = object()
 
 
 @implementer(IService)
-class Properties(object):
+class Properties(Service):
     """The Properties class holds a collection of application wide properties.
 
     Properties are persisted to the local file system."""

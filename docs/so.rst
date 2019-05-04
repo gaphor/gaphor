@@ -95,13 +95,10 @@ Here is a stripped version of the hello world class::
 
     from zope.interface import implementer
 
-    from gaphor.abc import ActionProvider
-    from gaphor.interfaces import IService
+    from gaphor.abc import Service, ActionProvider
     from gaphor.core import _, inject, action, build_action_group
 
-
-    @implementer(IService)              # 1.
-    class HelloWorldPlugin(ActionProvider):
+    class HelloWorldPlugin(Service, ActionProvider):     # 1.
 
         gui_manager = inject('gui_manager')              # 2.
 

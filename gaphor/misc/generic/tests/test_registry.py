@@ -2,14 +2,13 @@
 
 import unittest
 
+from gaphor.misc.generic.registry import Registry, SimpleAxis, TypeAxis
+
 __all__ = ("RegistryTests",)
 
 
 class RegistryTests(unittest.TestCase):
     def test_one_axis_no_specificity(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-
         registry = Registry(("foo", SimpleAxis()))
         a = object()
         b = object()
@@ -21,10 +20,6 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(registry.lookup("bar"), None)
 
     def test_two_axes(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-        from gaphor.misc.generic.registry import TypeAxis
-
         registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
 
         target1 = Target("one")
@@ -50,10 +45,6 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(registry.lookup(context2, "foo"), target3)
 
     def test_get_registration(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-        from gaphor.misc.generic.registry import TypeAxis
-
         registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
         registry.register("one", object)
         registry.register("two", DummyA, "foo")
@@ -63,31 +54,19 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(registry.get_registration(DummyA), None)
 
     def test_register_too_many_keys(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-
         registry = Registry(("name", SimpleAxis()))
         self.assertRaises(ValueError, registry.register, object(), "one", "two")
 
     def test_lookup_too_many_keys(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-
         registry = Registry(("name", SimpleAxis()))
         self.assertRaises(ValueError, registry.lookup, "one", "two")
 
     def test_conflict_error(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-
         registry = Registry(("name", SimpleAxis()))
         registry.register(object(), name="foo")
         self.assertRaises(ValueError, registry.register, object(), "foo")
 
     def test_skip_nodes(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-
         registry = Registry(
             ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
         )
@@ -95,9 +74,6 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(registry.lookup(1, three=3), "foo")
 
     def test_miss(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-
         registry = Registry(
             ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
         )
@@ -105,9 +81,6 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(registry.lookup(one=1, three=3), None)
 
     def test_bad_lookup(self):
-        from gaphor.misc.generic.registry import Registry
-        from gaphor.misc.generic.registry import SimpleAxis
-
         registry = Registry(("name", SimpleAxis()), ("grade", SimpleAxis()))
         self.assertRaises(ValueError, registry.register, 1, foo=1)
         self.assertRaises(ValueError, registry.lookup, foo=1)

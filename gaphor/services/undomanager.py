@@ -36,7 +36,7 @@ from gaphor.event import (
     TransactionCommit,
     TransactionRollback,
 )
-from gaphor.abc import ActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.interfaces import IService
 from gaphor.transaction import Transaction, transactional
 
@@ -81,7 +81,7 @@ class UndoManagerStateChanged(ServiceEvent):
 
 
 @implementer(IService)
-class UndoManager(ActionProvider):
+class UndoManager(Service, ActionProvider):
     """
     Simple transaction manager for Gaphor.
     This transaction manager supports nested transactions.
