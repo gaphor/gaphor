@@ -8,7 +8,6 @@ import gi
 
 from gi.repository import GObject
 from gi.repository import Gtk
-from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
 from gaphor.ui.diagrampage import DiagramPage

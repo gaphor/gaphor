@@ -5,7 +5,6 @@ Copy / Paste functionality
 from zope import component
 
 import gaphas
-from zope.interface import implementer
 
 from gaphor.UML import Element
 from gaphor.UML.collection import collection

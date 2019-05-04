@@ -4,8 +4,6 @@ This plugin extends Gaphor with XMI export functionality.
 
 import logging
 
-from zope.interface import implementer
-
 from gaphor.core import _, inject, action, build_action_group
 from gaphor.abc import Service, ActionProvider
 from gaphor.plugins.xmiexport import exportmodel

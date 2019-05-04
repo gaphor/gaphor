@@ -4,7 +4,7 @@ import logging
 
 from gi.repository import Gtk
 from zope.component import adapter
-from zope.interface import implementer
+
 
 from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationChangeEvent

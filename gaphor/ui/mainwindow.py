@@ -5,7 +5,7 @@ The main application window.
 import logging
 import os.path
 from zope import component
-from zope.interface import implementer
+
 
 import pkg_resources
 from gi.repository import GLib

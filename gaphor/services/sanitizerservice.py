@@ -6,7 +6,6 @@ the model clean and in sync with diagrams.
 from logging import getLogger
 from zope import component
 
-from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.UML.event import AssociationDeleteEvent, AssociationSetEvent

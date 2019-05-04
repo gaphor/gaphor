@@ -1,5 +1,3 @@
-from zope.interface import implementer
-
 from gaphor.abc import Service
 
 

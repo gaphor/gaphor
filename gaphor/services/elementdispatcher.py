@@ -1,7 +1,7 @@
 """
 """
 
-from zope.interface import implementer
+
 from zope import component
 
 from logging import getLogger

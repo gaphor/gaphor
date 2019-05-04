@@ -9,7 +9,6 @@ unregister_handler, handle), a AdapterRegistry and a Subscription registry.
 from zope import component
 
 from zope.interface import registry
-from zope.interface import implementer
 
 from gaphor.abc import Service
 from gaphor.application import ComponentLookupError

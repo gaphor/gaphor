@@ -4,7 +4,7 @@ Transaction support for Gaphor
 
 import logging
 
-from zope.interface import implementer
+
 from zope import component
 
 from gaphor import application

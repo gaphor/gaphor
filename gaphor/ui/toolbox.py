@@ -4,7 +4,7 @@ Toolbox.
 
 import logging
 from zope import component
-from zope.interface import implementer
+
 
 from gi.repository import GObject
 from gi.repository import Gdk

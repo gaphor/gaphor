@@ -2,7 +2,7 @@
 
 import logging
 from zope import component
-from zope.interface import implementer
+
 
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (

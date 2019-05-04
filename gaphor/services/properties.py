@@ -7,7 +7,7 @@ import sys
 
 from gaphas.decorators import AsyncIO
 from gaphor.misc import get_config_dir
-from zope.interface import implementer
+
 
 from gaphor.core import inject
 from gaphor.abc import Service

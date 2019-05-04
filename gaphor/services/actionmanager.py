@@ -5,7 +5,6 @@ import logging
 from zope import component
 
 from gi.repository import Gtk
-from zope.interface import implementer
 
 from gaphor.core import inject
 from gaphor.event import ServiceInitializedEvent, ActionExecuted

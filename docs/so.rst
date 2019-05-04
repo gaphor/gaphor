@@ -93,7 +93,7 @@ its namespace declaration:::
 
 Here is a stripped version of the hello world class::
 
-    from zope.interface import implementer
+
 
     from gaphor.abc import Service, ActionProvider
     from gaphor.core import _, inject, action, build_action_group

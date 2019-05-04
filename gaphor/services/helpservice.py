@@ -5,7 +5,7 @@ import os
 import pkg_resources
 from gi.repository import GdkPixbuf
 from gi.repository import Gtk
-from zope.interface import implementer
+
 
 from gaphor import __version__
 from gaphor.core import _, inject, action, build_action_group

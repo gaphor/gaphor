@@ -1,5 +1,4 @@
 import abc
-from zope.interface import implementer
 
 
 class Service(metaclass=abc.ABCMeta):

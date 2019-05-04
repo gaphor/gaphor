@@ -17,7 +17,7 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
 from zope import component
-from zope.interface import implementer
+
 
 from gaphor import UML
 from gaphor.abc import ActionProvider

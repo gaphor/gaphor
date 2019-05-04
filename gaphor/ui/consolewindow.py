@@ -4,7 +4,7 @@ import logging
 import os
 
 from gi.repository import Gtk, Gdk
-from zope.interface import implementer
+
 
 from gaphor.action import action, build_action_group
 from gaphor.core import inject

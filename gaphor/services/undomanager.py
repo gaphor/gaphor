@@ -16,7 +16,7 @@ import logging
 from zope import component
 
 from gaphas import state
-from zope.interface import implementer
+
 
 from gaphor.UML.event import (
     ElementCreateEvent,

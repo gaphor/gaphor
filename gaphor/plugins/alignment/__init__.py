@@ -4,8 +4,6 @@ This plugin extends Gaphor with XMI alignment actions.
 
 from zope import component
 
-from zope.interface import implementer
-
 from gaphor.core import inject, transactional, action, build_action_group
 from gaphor.abc import Service, ActionProvider
 from gaphor.ui.event import DiagramSelectionChange

@@ -6,7 +6,7 @@ import logging
 from zope import component
 
 from gi.repository import Gtk
-from zope.interface import implementer
+
 
 from gaphor import UML
 from gaphor.core import _, inject, action, build_action_group
