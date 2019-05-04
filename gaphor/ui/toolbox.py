@@ -3,14 +3,12 @@ Toolbox.
 """
 
 import logging
-from zope import component
-
 
 from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import Gtk
 
-from gaphor.core import _, inject, toggle_action, build_action_group
+from gaphor.core import _, inject, event_handler, toggle_action, build_action_group
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramPageChange
@@ -132,7 +130,7 @@ class Toolbox(UIComponent, ActionProvider):
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)
 
-    @component.adapter(DiagramPageChange)
+    @event_handler(DiagramPageChange)
     def _on_diagram_page_change(self, event):
         self.update_toolbox(event.diagram_page.toolbox.action_group)
 

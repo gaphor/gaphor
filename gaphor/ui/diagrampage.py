@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
 import logging
-from zope import component
-
 
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (
@@ -21,7 +19,14 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.abc import ActionProvider
 from gaphor.UML.event import ElementDeleteEvent
-from gaphor.core import _, inject, transactional, action, build_action_group
+from gaphor.core import (
+    _,
+    inject,
+    event_handler,
+    transactional,
+    action,
+    build_action_group,
+)
 from gaphor.diagram import get_diagram_item
 from gaphor.diagram.items import DiagramItem
 from gaphor.transaction import Transaction
@@ -135,7 +140,7 @@ class DiagramPage(ActionProvider):
 
         return self.widget
 
-    @component.adapter(ElementDeleteEvent)
+    @event_handler(ElementDeleteEvent)
     def _on_element_delete(self, event):
         if event.element is self.diagram:
             self.close()

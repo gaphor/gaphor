@@ -3,10 +3,8 @@ The file service is responsible for loading and saving the user data.
 """
 
 import logging
-from zope import component
 
 from gi.repository import Gtk
-
 
 from gaphor import UML
 from gaphor.core import _, inject, action, build_action_group

@@ -2,10 +2,8 @@
 """
 
 
-from zope import component
-
 from logging import getLogger
-from gaphor.core import inject
+from gaphor.core import inject, event_handler
 from gaphor.abc import Service
 from gaphor import UML
 from gaphor.UML.event import (
@@ -253,7 +251,7 @@ class ElementDispatcher(Service):
                     del self._handlers[key]
         del self._reverse[handler]
 
-    @component.adapter(ElementChangeEvent)
+    @event_handler(ElementChangeEvent)
     def on_element_change_event(self, event):
 
         # self.logger.info('Handling ElementChangeEvent')
@@ -296,7 +294,7 @@ class ElementDispatcher(Service):
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
-    @component.adapter(ModelFactoryEvent)
+    @event_handler(ModelFactoryEvent)
     def on_model_loaded(self, event):
         for key, value in list(self._handlers.items()):
             for h, remainders in list(value.items()):

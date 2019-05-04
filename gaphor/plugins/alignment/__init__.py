@@ -2,9 +2,7 @@
 This plugin extends Gaphor with XMI alignment actions.
 """
 
-from zope import component
-
-from gaphor.core import inject, transactional, action, build_action_group
+from gaphor.core import inject, event_handler, transactional, action, build_action_group
 from gaphor.abc import Service, ActionProvider
 from gaphor.ui.event import DiagramSelectionChange
 
@@ -41,7 +39,7 @@ class Alignment(Service, ActionProvider):
     def shutdown(self):
         self.component_registry.unregister_handler(self.update)
 
-    @component.adapter(DiagramSelectionChange)
+    @event_handler(DiagramSelectionChange)
     def update(self, event=None):
         self._last_update = event
         sensitive = event and len(event.selected_items) > 1

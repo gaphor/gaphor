@@ -12,19 +12,19 @@ Do some basic initialization, so event emission will work:
 
 The Transaction class is used mainly to signal the begin and end of a transaction. This is done by the TransactionBegin, TransactionCommit and TransactionRollback events:
 
-    >>> from zope import component
-    >>> @component.adapter(transaction.TransactionBegin)
+    >>> from gaphor.core import event_handler
+    >>> @event_handler(transaction.TransactionBegin)
     ... def transaction_begin_handler(event):
     ...     print 'tx begin'
     >>> component.provideHandler(transaction_begin_handler)
 
 Same goes for commit and rollback events:
 
-    >>> @component.adapter(transaction.TransactionCommit)
+    >>> @event_handler(transaction.TransactionCommit)
     ... def transaction_commit_handler(event):
     ...     print 'tx commit'
     >>> component.provideHandler(transaction_commit_handler)
-    >>> @component.adapter(transaction.TransactionRollback)
+    >>> @event_handler(transaction.TransactionRollback)
     ... def transaction_rollback_handler(event):
     ...     print 'tx rollback'
     >>> component.provideHandler(transaction_rollback_handler)

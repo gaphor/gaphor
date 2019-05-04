@@ -4,8 +4,6 @@ The main application window.
 
 import logging
 import os.path
-from zope import component
-
 
 import pkg_resources
 from gi.repository import GLib
@@ -18,6 +16,7 @@ from gaphor.UML.event import ModelFactoryEvent
 from gaphor.core import (
     _,
     inject,
+    event_handler,
     action,
     toggle_action,
     build_action_group,
@@ -297,7 +296,7 @@ class MainWindow(Service, ActionProvider):
 
     # Signal callbacks:
 
-    @component.adapter(ModelFactoryEvent)
+    @event_handler(ModelFactoryEvent)
     def _new_model_content(self, event):
         """
         Open the toplevel element and load toplevel diagrams.
@@ -309,14 +308,14 @@ class MainWindow(Service, ActionProvider):
         ):
             self.component_registry.handle(DiagramShow(diagram))
 
-    @component.adapter(FileManagerStateChanged)
+    @event_handler(FileManagerStateChanged)
     def _on_file_manager_state_changed(self, event):
         # We're only interested in file operations
         if event.service is self.file_manager:
             self.model_changed = False
             self.set_title()
 
-    @component.adapter(UndoManagerStateChanged)
+    @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
         """
         """
@@ -524,7 +523,7 @@ class Diagrams(UIComponent, ActionProvider):
             self.action_manager.unregister_action_provider(self._page_ui_settings)
             self._page_ui_settings = None
 
-    @component.adapter(DiagramShow)
+    @event_handler(DiagramShow)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
 
@@ -557,7 +556,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.create_tab(diagram.name, widget)
         return page
 
-    @component.adapter(FlushFactoryEvent)
+    @event_handler(FlushFactoryEvent)
     def _on_flush_model(self, event):
         """
         Close all tabs.
@@ -565,7 +564,7 @@ class Diagrams(UIComponent, ActionProvider):
         while self._notebook.get_n_pages():
             self._notebook.remove_page(0)
 
-    @component.adapter(AttributeChangeEvent)
+    @event_handler(AttributeChangeEvent)
     def _on_name_change(self, event):
         if event.property is UML.Diagram.name:
             for page in range(0, self._notebook.get_n_pages()):

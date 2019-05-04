@@ -2,6 +2,7 @@
 Test the UndoManager.
 """
 
+from gaphor.core import event_handler
 from gaphor.tests.testcase import TestCase
 from gaphor.services.undomanager import UndoManager
 from gaphor.transaction import Transaction
@@ -288,7 +289,6 @@ class TestUndoManager(TestCase):
 
     def test_uml_associations(self):
 
-        from zope import component
         from gaphor.UML.event import AssociationChangeEvent
         from gaphor.UML.properties import association, derivedunion
         from gaphor.UML import Element
@@ -311,7 +311,7 @@ class TestUndoManager(TestCase):
 
         events = []
 
-        @component.adapter(AssociationChangeEvent)
+        @event_handler(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 

@@ -1,4 +1,5 @@
 import unittest
+from zope import component
 from gaphor.event import ServiceEvent
 from gaphor.UML import *
 from gaphor.UML.event import *
@@ -69,8 +70,8 @@ class ElementFactoryTestCase(unittest.TestCase):
         assert len(list(ef.values())) == 0, list(ef.values())
 
 
-from zope import component
 from gaphor.application import Application
+from gaphor.core import event_handler
 
 # Event handlers are registered as persisting top level handlers, since no
 # unsubscribe functionality is provided.
@@ -79,7 +80,7 @@ events = []
 last_event = None
 
 
-@component.adapter(ServiceEvent)
+@event_handler(ServiceEvent)
 def handler(event):
     global handled, events, last_event
     handled = True

@@ -2,11 +2,10 @@
 """
 
 import logging
-from zope import component
 
 from gi.repository import Gtk
 
-from gaphor.core import inject
+from gaphor.core import inject, event_handler
 from gaphor.event import ServiceInitializedEvent, ActionExecuted
 from gaphor.abc import Service, ActionProvider
 
@@ -91,7 +90,7 @@ class ActionManager(Service):
             self.ui_manager.remove_action_group(action_provider.action_group)
             del action_provider.__ui_merge_id
 
-    @component.adapter(ServiceInitializedEvent)
+    @event_handler(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
 
         logger.debug("Handling ServiceInitializedEvent")

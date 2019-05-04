@@ -5,8 +5,6 @@ Transaction support for Gaphor
 import logging
 
 
-from zope import component
-
 from gaphor import application
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 
@@ -128,7 +126,7 @@ class Transaction:
     def _handle(self, event):
         try:
             component_registry = self.component_registry
-        except (application.NotInitializedError, component.ComponentLookupError):
+        except (application.NotInitializedError, application.ComponentLookupError):
             log.warning("Could not lookup component_registry. Not emitting events.")
         else:
             component_registry.handle(event)

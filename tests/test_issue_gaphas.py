@@ -1,7 +1,6 @@
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
-from zope import component
 from gaphas.aspect import ConnectionSink
 import gaphor.adapters.classes.classconnect
 

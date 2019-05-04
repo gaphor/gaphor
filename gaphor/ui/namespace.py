@@ -16,8 +16,6 @@ pygtkcompat.enable_gtk("3.0")
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
-from zope import component
-
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
@@ -29,7 +27,14 @@ from gaphor.UML.event import (
     AttributeChangeEvent,
     DerivedSetEvent,
 )
-from gaphor.core import _, action, build_action_group, inject, transactional
+from gaphor.core import (
+    _,
+    event_handler,
+    action,
+    build_action_group,
+    inject,
+    transactional,
+)
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui import stock
@@ -414,7 +419,7 @@ class Namespace(UIComponent, ActionProvider):
             isinstance(element, UML.Property) and element.namespace is None
         )
 
-    @component.adapter(ModelFactoryEvent)
+    @event_handler(ModelFactoryEvent)
     def _on_model_factory(self, event=None):
         """
         Load a new model completely.
@@ -445,18 +450,18 @@ class Namespace(UIComponent, ActionProvider):
             self._namespace.expand_root_nodes()
             self._on_view_cursor_changed(self._namespace)
 
-    @component.adapter(FlushFactoryEvent)
+    @event_handler(FlushFactoryEvent)
     def _on_flush_factory(self, event):
         self.model.clear()
 
-    @component.adapter(ElementCreateEvent)
+    @event_handler(ElementCreateEvent)
     def _on_element_create(self, event):
         element = event.element
         if self._visible(element) and not self.iter_for_element(element):
             iter = self.iter_for_element(element.namespace)
             self.model.append(iter, [element])
 
-    @component.adapter(ElementDeleteEvent)
+    @event_handler(ElementDeleteEvent)
     def _on_element_delete(self, event):
         element = event.element
         if type(element) in self.filter:
@@ -465,7 +470,7 @@ class Namespace(UIComponent, ActionProvider):
             if iter:
                 self.model.remove(iter)
 
-    @component.adapter(DerivedSetEvent)
+    @event_handler(DerivedSetEvent)
     def _on_association_set(self, event):
 
         element = event.element
@@ -482,7 +487,7 @@ class Namespace(UIComponent, ActionProvider):
                 if bool(new_iter) == bool(new_value):
                     self.model.append(new_iter, [element])
 
-    @component.adapter(AttributeChangeEvent)
+    @event_handler(AttributeChangeEvent)
     def _on_attribute_change(self, event):
         """
         Element changed, update appropriate row.

@@ -4,12 +4,11 @@ the model clean and in sync with diagrams.
 """
 
 from logging import getLogger
-from zope import component
 
 
 from gaphor import UML
 from gaphor.UML.event import AssociationDeleteEvent, AssociationSetEvent
-from gaphor.core import inject
+from gaphor.core import inject, event_handler
 from gaphor.abc import Service
 
 
@@ -40,7 +39,7 @@ class SanitizerService(Service):
         self.component_registry.unregister_handler(self._unlink_on_extension_delete)
         self.component_registry.unregister_handler(self._disconnect_extension_end)
 
-    @component.adapter(AssociationDeleteEvent)
+    @event_handler(AssociationDeleteEvent)
     def _unlink_on_presentation_delete(self, event):
         """
         Unlink the model element if no more presentations link to the `item`'s
@@ -70,7 +69,7 @@ class SanitizerService(Service):
                 if not meta or isinstance(e, meta):
                     i.unlink()
 
-    @component.adapter(AssociationDeleteEvent)
+    @event_handler(AssociationDeleteEvent)
     def _unlink_on_extension_delete(self, event):
         """
         Remove applied stereotypes when extension is deleted.
@@ -94,7 +93,7 @@ class SanitizerService(Service):
             meta = p.type and getattr(UML, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
-    @component.adapter(AssociationSetEvent)
+    @event_handler(AssociationSetEvent)
     def _disconnect_extension_end(self, event):
 
         self.logger.debug("Handling AssociationSetEvent")
@@ -111,7 +110,7 @@ class SanitizerService(Service):
             meta = getattr(UML, p.type.name)
             self.perform_unlink_for_instances(st, meta)
 
-    @component.adapter(AssociationDeleteEvent)
+    @event_handler(AssociationDeleteEvent)
     def _unlink_on_stereotype_delete(self, event):
         """
         Remove applied stereotypes when stereotype is deleted.
