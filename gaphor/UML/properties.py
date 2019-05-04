@@ -49,7 +49,7 @@ from gaphor.UML.event import (
 log = logging.getLogger(__name__)
 
 
-class umlproperty(object):
+class umlproperty:
     """
     Superclass for attribute, enumeration and association.
 
@@ -502,7 +502,7 @@ class associationstub(umlproperty):
             c.discard(value)
 
 
-class unioncache(object):
+class unioncache:
     """
     Small cache helper object for derivedunions.
     """

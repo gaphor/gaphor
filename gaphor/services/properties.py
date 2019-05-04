@@ -14,7 +14,7 @@ from gaphor.abc import Service
 from gaphor.interfaces import IService
 
 
-class PropertyChangeEvent(object):
+class PropertyChangeEvent:
 
     """This event is triggered any time a property is changed.  This event
     holds the property name, the current value, and the new value."""
@@ -111,7 +111,7 @@ class Properties(Service):
             self._backend.update(resources, key, value)
 
 
-class FileBackend(object):
+class FileBackend:
     """Resource backend that stores data to a resource file
     ($HOME/.gaphor/resource)."""
 

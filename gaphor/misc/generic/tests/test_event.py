@@ -131,7 +131,7 @@ class ManagerTests(unittest.TestCase):
         self.assertTrue("handler2" in eb.effects)
 
 
-class Event(object):
+class Event:
     def __init__(self):
         self.effects = []
 

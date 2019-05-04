@@ -29,7 +29,7 @@ class ComponentLookupError(LookupError):
 _ESSENTIAL_SERVICES = ["component_registry", "element_dispatcher"]
 
 
-class _Application(object):
+class _Application:
     """
     The Gaphor application is started from the Application instance. It behaves
     like a singleton in many ways.
@@ -197,14 +197,14 @@ class _Application(object):
 Application = _Application()
 
 
-class inject(object):
+class inject:
     """
     Simple descriptor for dependency injection.
     This is technically a wrapper around Application.get_service().
 
     Usage::
 
-    >>> class A(object):
+    >>> class A:
     ...     element_factory = inject('element_factory')
     """
 

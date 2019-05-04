@@ -7,7 +7,7 @@ This is a simple rip-off of the override script used in PyGTK.
 """
 
 
-class Overrides(object):
+class Overrides:
     def __init__(self, filename=None):
         self.overrides = {}
         if filename:

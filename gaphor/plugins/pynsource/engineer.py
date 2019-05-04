@@ -12,7 +12,7 @@ from gaphor.plugins.pynsource.pynsource import PySourceAsText
 BASE_CLASSES = ("object", "type", "dict", "list", "tuple", "int", "float")
 
 
-class Engineer(object):
+class Engineer:
     """
     The Engineer class will create a Gaphor model based on a list of Python
     files.

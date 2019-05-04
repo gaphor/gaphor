@@ -23,7 +23,7 @@ log = logging.getLogger("Gaphor")
 log.setLevel(logging.WARNING)
 
 
-class TestCaseExtras(object):
+class TestCaseExtras:
     """
     Mixin for some extra tests.
     """

@@ -18,7 +18,7 @@ from gi.repository import GLib
 import time
 
 
-class GIdleThread(object):
+class GIdleThread:
     """This is a pseudo-"thread" for use with the GTK+ main loop.
 
     This class does act a bit like a thread, all code is executed in
@@ -148,7 +148,7 @@ class QueueFull(Exception):
     pass
 
 
-class Queue(object):
+class Queue:
     """A FIFO queue. If the queue has a max size, the oldest item on the
     queue is dropped if that size id exceeded.
     """

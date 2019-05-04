@@ -49,7 +49,7 @@ class TransactionError(Exception):
     pass
 
 
-class Transaction(object):
+class Transaction:
     """
     The transaction. On start and end of a transaction an event is emitted.
 

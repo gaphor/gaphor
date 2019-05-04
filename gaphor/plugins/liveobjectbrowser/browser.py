@@ -15,7 +15,7 @@ Given an object, this tool throws up a gtk tree widget that maps all the referen
 from gi.repository import Gtk
 
 
-class Browser(object):
+class Browser:
     def make_row(self, piter, name, value):
         info = repr(value)
         if not hasattr(value, "__dict__"):
@@ -111,7 +111,7 @@ def dump(name, value):
 
 
 def test():
-    class Nil(object):
+    class Nil:
         pass
 
     a = Nil()

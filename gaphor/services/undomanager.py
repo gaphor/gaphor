@@ -43,7 +43,7 @@ from gaphor.transaction import Transaction, transactional
 logger = logging.getLogger(__name__)
 
 
-class ActionStack(object):
+class ActionStack:
     """
     A transaction. Every action that is added between a begin_transaction()
     and a commit_transaction() call is recorded in a transaction, so it can

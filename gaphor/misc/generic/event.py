@@ -50,7 +50,7 @@ class HandlerSet(namedtuple("HandlerSet", ["parents", "handlers"])):
                     yield handler
 
 
-class Manager(object):
+class Manager:
     """ Event manager
 
     Provides API for subscribing for and firing events. There's also global

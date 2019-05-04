@@ -13,14 +13,14 @@ See the documentation on the mixins.
 __all__ = ["querymixin", "recursemixin"]
 
 
-class Matcher(object):
+class Matcher:
     """
     Returns True if the expression returns True.
     The context for the expression is the element.
 
     Given a class:
 
-    >>> class A(object):
+    >>> class A:
     ...     def __init__(self, name): self.name = name
 
     We can create a path for each object:
@@ -57,13 +57,13 @@ class Matcher(object):
             return False
 
 
-class querymixin(object):
+class querymixin:
     """
     Implementation of the matcher as a mixin for lists.
 
     Given a class:
 
-    >>> class A(object):
+    >>> class A:
     ...     def __init__(self, name): self.name = name
 
     We can do nice things with this list:
@@ -123,7 +123,7 @@ def issafeiterable(obj):
     return False
 
 
-class recurseproxy(object):
+class recurseproxy:
     """
     Proxy object (helper) for the recusemixin.
 
@@ -167,14 +167,14 @@ class recurseproxy(object):
         return type(self)(type(self.__sequence)(mygetattr()))
 
 
-class recursemixin(object):
+class recursemixin:
     """
     Mixin class for lists, sets, etc. If data is requested using ``[:]``,
     a ``recurseproxy`` instance is created.
 
     The basic idea is to have a class that can contain children:
 
-    >>> class A(object):
+    >>> class A:
     ...     def __init__(self, name, *children):
     ...         self.name = name
     ...         self.children = list(children)
@@ -208,7 +208,7 @@ class recursemixin(object):
 
     >>> class rlist(recursemixin, list):
     ...     pass
-    >>> class A(object):
+    >>> class A:
     ...     def __init__(self, name, *children):
     ...         self.name = name
     ...         self.children = rlist(children)

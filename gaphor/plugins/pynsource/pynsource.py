@@ -81,7 +81,7 @@ from gaphor.plugins.pynsource.keywords import (
 DEBUG_DUMPTOKENS = False
 
 
-class AndyBasicParseEngine(object):
+class AndyBasicParseEngine:
     def __init__(self):
         self.meat = 0
         self.tokens = None
@@ -175,7 +175,7 @@ class AndyBasicParseEngine(object):
             return 0
 
 
-class ClassEntry(object):
+class ClassEntry:
     def __init__(self):
         self.defs = []
         self.attrs = []
@@ -213,7 +213,7 @@ class ClassEntry(object):
         #    self.attrs.append(Attribute(attrname, attrtype))
 
 
-class Attribute(object):
+class Attribute:
     def __init__(self, attrname, attrtype="normal"):
         self.attrname = attrname
         self.attrtype = attrtype
@@ -1106,7 +1106,7 @@ class PySourceAsDelphi(PySourceAsText):
         pass
 
 
-class PythonToJava(object):
+class PythonToJava:
     def __init__(self, directories, treatmoduleasclass=0, verbose=0):
         self.directories = directories
         self.optionModuleAsClass = treatmoduleasclass

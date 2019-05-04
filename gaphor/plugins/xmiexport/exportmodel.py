@@ -5,7 +5,7 @@ from gaphor.misc.xmlwriter import XMLWriter
 logger = logging.getLogger(__name__)
 
 
-class XMIExport(object):
+class XMIExport:
 
     XMI_VERSION = "2.1"
     XMI_NAMESPACE = "http://schema.omg.org/spec/XMI/2.1"

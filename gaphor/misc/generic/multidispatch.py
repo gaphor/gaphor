@@ -44,7 +44,7 @@ def multidispatch(*argtypes):
     return _replace_with_dispatcher
 
 
-class FunctionDispatcher(object):
+class FunctionDispatcher:
     """ Multidispatcher for functions
 
     This object dispatch calls to function by its argument types. Usually it is

@@ -97,7 +97,7 @@ class DiagramItemConnector(Connector.default):
         super(DiagramItemConnector, self).disconnect()
 
 
-class DisconnectHandle(object):
+class DisconnectHandle:
     """
     Callback for items disconnection using the adapters.
 

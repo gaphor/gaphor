@@ -5,7 +5,7 @@ Application wide events are managed here.
 from gaphor.interfaces import *
 
 
-class ServiceEvent(object):
+class ServiceEvent:
     """
     An event emitted by a service.
     """
@@ -34,7 +34,7 @@ class ServiceShutdownEvent(ServiceEvent):
         self.service = service
 
 
-class TransactionBegin(object):
+class TransactionBegin:
     """
     This event denotes the beginning of a transaction.
     Nested (sub-) transactions should not emit this signal.
@@ -43,7 +43,7 @@ class TransactionBegin(object):
     pass
 
 
-class TransactionCommit(object):
+class TransactionCommit:
     """
     This event is emitted when a transaction (toplevel) is successfully
     committed.
@@ -52,7 +52,7 @@ class TransactionCommit(object):
     pass
 
 
-class TransactionRollback(object):
+class TransactionRollback:
     """
     If a set of operations fail (e.i. due to an exception) the transaction
     should be marked for rollback. This event is emitted to tell the operation
@@ -62,7 +62,7 @@ class TransactionRollback(object):
     pass
 
 
-class ActionExecuted(object):
+class ActionExecuted:
     """
     Once an operation has successfully been executed this event is raised.
     """

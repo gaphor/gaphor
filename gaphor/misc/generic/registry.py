@@ -8,7 +8,7 @@ This implementation was borrowed from happy[1] project by Chris Rossi.
 __all__ = ("Registry", "SimpleAxis", "TypeAxis")
 
 
-class Registry(object):
+class Registry:
     """ Registry implementation."""
 
     def __init__(self, *axes):
@@ -113,7 +113,7 @@ class _TreeNode(dict):
         return "<TreeNode %s %s>" % (self.target, dict.__str__(self))
 
 
-class SimpleAxis(object):
+class SimpleAxis:
     """ A simple axis where the key into the axis is the same as the object to
     be matched (aka the identity axis). This axis behaves just like a
     dictionary.  You might use this axis if you are interested in registering

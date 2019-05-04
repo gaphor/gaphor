@@ -4,7 +4,7 @@
 from gi.repository import Gtk
 
 
-class QuestionDialog(object):
+class QuestionDialog:
     """A dialog that displays a GTK MessageDialog to get a yes or no answer
     from the user."""
 

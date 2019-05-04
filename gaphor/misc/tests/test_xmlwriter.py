@@ -3,7 +3,7 @@ import unittest
 from gaphor.misc.xmlwriter import XMLWriter
 
 
-class Writer(object):
+class Writer:
     def __init__(self):
         self.s = ""
 

@@ -7,7 +7,7 @@ from gaphor.misc.generic.registry import Registry, SimpleAxis, TypeAxis
 __all__ = ("RegistryTests",)
 
 
-class DummyA(object):
+class DummyA:
     pass
 
 

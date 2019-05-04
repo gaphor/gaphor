@@ -16,7 +16,7 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 logger = logging.getLogger(__name__)
 
 
-class StereotypeSupport(object):
+class StereotypeSupport:
     """
     Support for stereotypes for every diagram item.
     """

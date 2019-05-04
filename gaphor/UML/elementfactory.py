@@ -20,7 +20,7 @@ from gaphor.interfaces import IService
 from gaphor.misc import odict
 
 
-class ElementFactory(object):
+class ElementFactory:
     """
     The ElementFactory is used to create elements and do lookups to
     elements.

@@ -39,7 +39,7 @@ from xml.sax import handler
 from gaphor.misc.odict import odict
 
 
-class base(object):
+class base:
     """Simple base class for element, canvas and canvasitem.
     """
 
@@ -289,7 +289,7 @@ def parse_generator(filename, loader):
         yield percentage
 
 
-class ProgressGenerator(object):
+class ProgressGenerator:
     """A generator that yields the progress of taking from a file input object
     and feeding it into an output object.  The supplied file object is neither
     opened not closed by this generator.  The file object is assumed to

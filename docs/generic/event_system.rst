@@ -16,7 +16,7 @@ First you need to describe event types you want to use in your application,
 ``generic.event`` dispatches events to corresponding handlers by inspecting
 events' types, so it's natural to model those as classes::
 
-  class CommentAdded(object):
+  class CommentAdded:
     def __init__(self, post_id, comment):
       self.post_id = post_id
       self.comment = comment

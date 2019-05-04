@@ -19,19 +19,19 @@ def Editor(obj):
 
 
 @multidispatch(object, object)
-class Group(object):
+class Group:
     def __init__(self, parent, item):
         pass
 
 
 @multidispatch(object, object)
-class Group(object):
+class Group:
     def __init__(self, parent, item):
         pass
 
 
 @multidispatch(object, object)
-class IConnect(object):
+class IConnect:
     """
     This function is used by the HandleTool to allow connecting
     lines to element items. For each specific case (Element, Line) an

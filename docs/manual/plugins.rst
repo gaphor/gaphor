@@ -12,7 +12,7 @@ and managing data objects. Items can be queried using this element factory.
 It's registered in the application as `element_factory`. When writing a service
 or plugin the element factory can be injected into the service like this::
 
-  class MyThing(object):
+  class MyThing:
 
       element_factory = inject('element_factory')
 

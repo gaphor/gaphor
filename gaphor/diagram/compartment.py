@@ -18,7 +18,7 @@ from gaphor.diagram.textelement import text_extents, text_align
 log = logging.getLogger(__name__)
 
 
-class FeatureItem(object):
+class FeatureItem:
     """
     FeatureItems are model elements who reside inside a ClassifierItem, such
     as methods and attributes. Those items can have comments attached, but only

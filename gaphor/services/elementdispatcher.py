@@ -18,7 +18,7 @@ from gaphor.UML.event import (
 )
 
 
-class EventWatcher(object):
+class EventWatcher:
     """
     A helper for easy registering and unregistering event handlers.
     """

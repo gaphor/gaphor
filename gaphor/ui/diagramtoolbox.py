@@ -167,7 +167,7 @@ def itemiter(toolbox_actions):
             yield e
 
 
-class DiagramToolbox(object):
+class DiagramToolbox:
     """
     Composite class for DiagramPage (diagrampage.py).
     """

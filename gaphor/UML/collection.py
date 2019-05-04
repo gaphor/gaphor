@@ -46,7 +46,7 @@ class collectionlist(recursemixin, querymixin, list):
     """
 
 
-class collection(object):
+class collection:
     """
     Collection (set-like) for model elements' 1:n and n:m relationships.
     """

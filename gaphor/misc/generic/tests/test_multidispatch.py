@@ -62,7 +62,7 @@ class DispatcherTests(unittest.TestCase):
         self.assertEqual(dispatcher((1,)), (1,))
 
     def test_subtype_evaluation(self):
-        class Super(object):
+        class Super:
             pass
 
         class Sub(Super):

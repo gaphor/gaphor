@@ -15,7 +15,7 @@ import gaphor.storage.parser
 import gaphor.UML
 
 
-class Compare(object):
+class Compare:
     """This class makes it possible to compare two files.
     By default reports are printed to stdout in a diff-like syntax.
     """

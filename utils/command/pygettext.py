@@ -5,7 +5,7 @@
 # Minimally patched to make it even more xgettext compatible
 # by Peter Funk <pf@artcom-gmbh.de>
 #
-# 2002-11-22 Jürgen Hermann <jh@web.de>
+# 2002-11-22 Jï¿½rgen Hermann <jh@web.de>
 # Added checks that _() only contains string literals, and
 # command line args are resolved to module lists, i.e. you
 # can now pass a filename, a module or package name, or a
@@ -27,17 +27,17 @@ __doc__ = _(
 Many systems (Solaris, Linux, Gnu) provide extensive tools that ease the
 internationalization of C programs. Most of these tools are independent of
 the programming language and can be used from within Python programs.
-Martin von Loewis' work[1] helps considerably in this regard. 
+Martin von Loewis' work[1] helps considerably in this regard.
 
 There's one problem though; xgettext is the program that scans source code
 looking for message strings, but it groks only C (or C++). Python
 introduces a few wrinkles, such as dual quoting characters, triple quoted
-strings, and raw strings. xgettext understands none of this. 
+strings, and raw strings. xgettext understands none of this.
 
 Enter pygettext, which uses Python's standard tokenize module to scan
 Python source code, generating .pot files identical to what GNU xgettext[2]
 generates for C and C++ code. From there, the standard GNU tools can be
-used. 
+used.
 
 A word about marking Python strings as candidates for translation. GNU
 xgettext recognizes the following keywords: gettext, dgettext, dcgettext,
@@ -45,7 +45,7 @@ and gettext_noop. But those can be a lot of text to include all over your
 code. C and C++ have a trick: they use the C preprocessor. Most
 internationalized C source includes a #define for gettext() to _() so that
 what has to be written in the source is much less. Thus these are both
-translatable strings: 
+translatable strings:
 
     gettext("Translatable String")
     _("Translatable String")
@@ -61,7 +61,7 @@ NOTE: pygettext attempts to be option and feature compatible with GNU
 xgettext where ever possible. However some options are still missing or are
 not fully implemented. Also, xgettext's use of command line switches with
 option arguments is broken, and in these cases, pygettext just defines
-additional switches. 
+additional switches.
 
 Usage: pygettext [options] inputfile ...
 
@@ -213,7 +213,7 @@ def make_escapes(pass_iso8859):
     global escapes
     if pass_iso8859:
         # Allow iso-8859 characters to pass through so that e.g. 'msgid
-        # "Höhe"' would result not result in 'msgid "H\366he"'.  Otherwise we
+        # "Hï¿½he"' would result not result in 'msgid "H\366he"'.  Otherwise we
         # escape any character outside the 32..126 range.
         mod = 128
     else:
@@ -367,7 +367,7 @@ def getFilesForName(name):
     return []
 
 
-class TokenEater(object):
+class TokenEater:
     def __init__(self, options):
         self.__options = options
         self.__messages = {}
@@ -542,7 +542,7 @@ def main():
         usage(1, msg)
 
     # for holding option values
-    class Options(object):
+    class Options:
         # constants
         GNU = 1
         SOLARIS = 2
