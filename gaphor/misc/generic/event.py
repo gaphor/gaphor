@@ -122,13 +122,3 @@ class Manager(object):
             return func
 
         return registrator
-
-
-# Global event manager
-_global_manager = Manager()
-
-# Global event management API
-subscribe = _global_manager.subscribe
-unsubscribe = _global_manager.unsubscribe
-fire = _global_manager.fire
-subscriber = _global_manager.subscriber
