@@ -9,6 +9,7 @@ Transaction support is located in module gaphor.transaction:
 Do some basic initialization, so event emission will work:
 
     >>> Application.init(services=['component_registry'])
+    >>> component_registry = Application.get_service('component_registry')
 
 The Transaction class is used mainly to signal the begin and end of a transaction. This is done by the TransactionBegin, TransactionCommit and TransactionRollback events:
 
@@ -16,18 +17,18 @@ The Transaction class is used mainly to signal the begin and end of a transactio
     >>> @event_handler(transaction.TransactionBegin)
     ... def transaction_begin_handler(event):
     ...     print 'tx begin'
-    >>> component.provideHandler(transaction_begin_handler)
+    >>> component_registry.register_handler(transaction_begin_handler)
 
 Same goes for commit and rollback events:
 
     >>> @event_handler(transaction.TransactionCommit)
     ... def transaction_commit_handler(event):
     ...     print 'tx commit'
-    >>> component.provideHandler(transaction_commit_handler)
+    >>> component_registry.register_handler(transaction_commit_handler)
     >>> @event_handler(transaction.TransactionRollback)
     ... def transaction_rollback_handler(event):
     ...     print 'tx rollback'
-    >>> component.provideHandler(transaction_rollback_handler)
+    >>> component_registry.register_handler(transaction_rollback_handler)
 
 
 A Transaction is started by initiating a Transaction instance:

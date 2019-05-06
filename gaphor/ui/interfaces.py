@@ -2,8 +2,6 @@
 Interfaces related to the user interface.
 """
 
-from zope import interface
-
 
 class _PropertyPages:
     def __init__(self):

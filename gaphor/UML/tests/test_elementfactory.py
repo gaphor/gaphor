@@ -1,5 +1,4 @@
 import unittest
-from zope import component
 from gaphor.event import ServiceEvent
 from gaphor.UML import *
 from gaphor.UML.event import *
@@ -88,9 +87,6 @@ def handler(event):
     last_event = event
 
 
-component.provideHandler(handler)
-
-
 def clearEvents():
     global handled, events, last_event
     handled = False
@@ -102,6 +98,8 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(["element_factory"])
         self.factory = Application.get_service("element_factory")
+        component_registry = Application.get_service("component_registry")
+        component_registry.register_handler(handler)
         clearEvents()
 
     def tearDown(self):
