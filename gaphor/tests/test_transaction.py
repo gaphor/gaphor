@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from gaphor.application import Application
+from gaphor.core import Application, event_handler
 from gaphor.transaction import Transaction, transactional, TransactionError
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 
@@ -11,16 +11,19 @@ commits = []
 rollbacks = []
 
 
+@event_handler(TransactionBegin)
 def handle_begins(event):
     """Store TransactionBegin events in begins."""
     begins.append(event)
 
 
+@event_handler(TransactionCommit)
 def handle_commits(event):
     """Store TransactionCommit events in commits."""
     commits.append(event)
 
 
+@event_handler(TransactionRollback)
 def handle_rollback(event):
     """Store TransactionRollback events in rollbacks."""
     rollbacks.append(event)
@@ -38,9 +41,9 @@ class TransactionTestCase(TestCase):
 
         component_registry = Application.get_service("component_registry")
 
-        component_registry.register_handler(handle_begins, [TransactionBegin])
-        component_registry.register_handler(handle_commits, [TransactionCommit])
-        component_registry.register_handler(handle_rollback, [TransactionRollback])
+        component_registry.register_handler(handle_begins)
+        component_registry.register_handler(handle_commits)
+        component_registry.register_handler(handle_rollback)
 
         del begins[:]
         del commits[:]
@@ -52,9 +55,9 @@ class TransactionTestCase(TestCase):
 
         component_registry = Application.get_service("component_registry")
 
-        component_registry.unregister_handler(handle_begins, [TransactionBegin])
-        component_registry.unregister_handler(handle_commits, [TransactionCommit])
-        component_registry.unregister_handler(handle_rollback, [TransactionRollback])
+        component_registry.unregister_handler(handle_begins)
+        component_registry.unregister_handler(handle_commits)
+        component_registry.unregister_handler(handle_rollback)
 
     def test_transaction_commit(self):
         """Test committing a transaction."""
