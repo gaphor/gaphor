@@ -2,6 +2,8 @@
 
 import unittest
 
+from gaphor.misc.generic.event import Manager
+
 __all__ = ("ManagerTests",)
 
 
@@ -10,7 +12,6 @@ class ManagerTests(unittest.TestCase):
         return lambda e: e.effects.append(effect)
 
     def createManager(self):
-        from gaphor.misc.generic.event import Manager
 
         return Manager()
 
@@ -68,6 +69,22 @@ class ManagerTests(unittest.TestCase):
         self.assertTrue("handler1" in ed.effects)
         self.assertTrue("handler2" in ed.effects)
         self.assertTrue("handler3" in ed.effects)
+
+    def test_subscribe_no_events(self):
+        events = self.createManager()
+
+        ea = EventA()
+        events.fire(ea)
+        self.assertEqual(len(ea.effects), 0)
+
+    def test_subscribe_base_event(self):
+        events = self.createManager()
+        events.subscribe(self.makeHandler("handler1"), EventA)
+
+        ea = EventB()
+        events.fire(ea)
+        self.assertEqual(len(ea.effects), 1)
+        self.assertTrue("handler1" in ea.effects)
 
     def test_subscribe_event_malformed_multiple_inheritance(self):
         events = self.createManager()

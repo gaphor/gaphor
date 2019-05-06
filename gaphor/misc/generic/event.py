@@ -16,41 +16,11 @@ from collections import namedtuple
 
 from .registry import Registry, TypeAxis
 
-__all__ = ("Manager", "subscribe", "unsubscribe", "fire", "subscriber")
+
+__all__ = "Manager"
 
 
-class HandlerSet(namedtuple("HandlerSet", ["parents", "handlers"])):
-    """ Set of handlers for specific type of event.
-
-    This object stores ``handlers`` for specific event type and
-    ``parents`` reference to handler sets of event's supertypes.
-    """
-
-    @property
-    def all_handlers(self):
-        """ Iterate over own and supertypes' handlers.
-
-        This iterator yields just unique values, so it won't yield the
-        same handler twice, even if it was registered both for some
-        event type and its supertype.
-        """
-        seen = set()
-        seen_add = seen.add
-
-        # yield own handlers first
-        for handler in self.handlers:
-            seen_add(handler)
-            yield handler
-
-        # yield supertypes' handlers then
-        for parent in self.parents:
-            for handler in parent.all_handlers:
-                if not handler in seen:
-                    seen_add(handler)
-                    yield handler
-
-
-class Manager:
+class Manager(object):
     """ Event manager
 
     Provides API for subscribing for and firing events. There's also global
@@ -68,35 +38,28 @@ class Manager:
         handler_set = self.registry.get_registration(event_type)
         if not handler_set:
             handler_set = self._register_handler_set(event_type)
-        handler_set.handlers.add(handler)
+        handler_set.add(handler)
 
     def unsubscribe(self, handler, event_type):
         """ Unsubscribe ``handler`` from ``event_type``"""
         handler_set = self.registry.get_registration(event_type)
-        if handler_set and handler in handler_set.handlers:
-            handler_set.handlers.remove(handler)
+        if handler_set and handler in handler_set:
+            handler_set.remove(handler)
 
     def fire(self, event):
         """ Fire ``event``
 
         All subscribers will be executed with no determined order.
         """
-        handler_set = self.registry.lookup(event)
-        for handler in handler_set.all_handlers:
-            handler(event)
+        handler_sets = self.registry.query(event)
+        for handler_set in handler_sets:
+            for handler in handler_set:
+                handler(event)
 
     def _register_handler_set(self, event_type):
-        """ Register new handler set for ``event_type``."""
-        # Collect handler sets for supertypes
-        parent_handler_sets = []
-        parents = event_type.__bases__
-        for parent in parents:
-            parent_handlers = self.registry.get_registration(parent)
-            if parent_handlers is None:
-                parent_handlers = self._register_handler_set(parent)
-            parent_handler_sets.append(parent_handlers)
-
-        handler_set = HandlerSet(parents=parent_handler_sets, handlers=set())
+        """ Register new handler set for ``event_type``.
+        """
+        handler_set = set()
         self.registry.register(handler_set, event_type)
         return handler_set
 
