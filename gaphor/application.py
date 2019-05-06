@@ -219,17 +219,3 @@ class inject:
         if not obj:
             return self
         return Application.get_service(self._name)
-
-
-def event_handler(event_type):
-    """
-    Mark a function/method as an event handler for a particular type of event.
-    """
-    from zope import component
-
-    def wrapper(func):
-        func.__event_handler__ = event_type
-        component.adapter(event_type)(func)
-        return func
-
-    return wrapper
