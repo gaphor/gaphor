@@ -1,3 +1,7 @@
+1.0.2
+-----
+- Remove dependency on zope.component and zope.interface libraries
+
 1.0.1
 -----
 - Restore the alignment plugin

@@ -114,7 +114,7 @@ To setup a development environment in Windows:
 ```bash
 $ pacman -Suy
 $ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-python3-cairo
-$ pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-python3-setuptools mingw-w64-x86_64-python3-zope.interface
+$ pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-python3-setuptools
 ```
 Install git if it isn't already installed in msys2 with `pacman -S git`
 
