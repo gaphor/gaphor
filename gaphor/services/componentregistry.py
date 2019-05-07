@@ -86,4 +86,4 @@ class ComponentRegistry(Service):
         Send event notifications to registered handlers.
         """
         for e in events:
-            self._events.fire(e)
+            self._events.handle(e)
