@@ -1,22 +1,20 @@
 """
-Adapters
+Editors.
 """
 import logging
-from zope import component
-
-from simplegeneric import generic
-from zope.interface import implementer
+import abc
+from functools import singledispatch
 
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IEditor
+from gaphor.diagram.interfaces import Editor
 from gaphor.misc.rattr import rgetattr, rsetattr
 
 log = logging.getLogger(__name__)
 
 
-@generic
+@singledispatch
 def editable(el):
     """
     Return editable part of UML element.
@@ -26,7 +24,7 @@ def editable(el):
     return el
 
 
-@editable.when_type(UML.Slot)
+@editable.register(UML.Slot)
 def editable_slot(el):
     """
     Return editable part of a slot.
@@ -34,9 +32,51 @@ def editable_slot(el):
     return el.value
 
 
-@implementer(IEditor)
-@component.adapter(items.CommentItem)
-class CommentItemEditor(object):
+class AbstractEditor(metaclass=abc.ABCMeta):
+    """
+    Provide an interface for editing text with the TextEditTool.
+    """
+
+    @abc.abstractmethod
+    def is_editable(self, x, y):
+        """
+        Is this item editable in it's current state.
+        x, y represent the cursors (x, y) position.
+        (this method should be called before get_text() is called.
+        """
+
+    @abc.abstractmethod
+    def get_text(self):
+        """
+        Get the text to be updated
+        """
+
+    @abc.abstractmethod
+    def get_bounds(self):
+        """
+        Get the bounding box of the (current) text. The edit tool is not
+        required to do anything with this information but it might help for
+        some nicer displaying of the text widget.
+
+        Returns: a gaphas.geometry.Rectangle
+        """
+
+    @abc.abstractmethod
+    def update_text(self, text):
+        """
+        Update with the new text.
+        """
+
+    @abc.abstractmethod
+    def key_pressed(self, pos, key):
+        """
+        Called every time a key is pressed. Allows for 'Enter' as escape
+        character in single line editing.
+        """
+
+
+@Editor.register(items.CommentItem)
+class CommentItemEditor(AbstractEditor):
     """Text edit support for Comment item."""
 
     def __init__(self, item):
@@ -58,12 +98,8 @@ class CommentItemEditor(object):
         pass
 
 
-component.provideAdapter(CommentItemEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.NamedItem)
-class NamedItemEditor(object):
+@Editor.register(items.NamedItem)
+class NamedItemEditor(AbstractEditor):
     """Text edit support for Named items."""
 
     def __init__(self, item):
@@ -88,12 +124,8 @@ class NamedItemEditor(object):
         pass
 
 
-component.provideAdapter(NamedItemEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.DiagramItem)
-class DiagramItemTextEditor(object):
+@Editor.register(items.DiagramItem)
+class DiagramItemTextEditor(AbstractEditor):
     """Text edit support for diagram items containing text elements."""
 
     def __init__(self, item):
@@ -127,12 +159,8 @@ class DiagramItemTextEditor(object):
         pass
 
 
-component.provideAdapter(DiagramItemTextEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.CompartmentItem)
-class CompartmentItemEditor(object):
+@Editor.register(items.CompartmentItem)
+class CompartmentItemEditor(AbstractEditor):
     """Text editor support for compartment items."""
 
     def __init__(self, item):
@@ -160,12 +188,8 @@ class CompartmentItemEditor(object):
         pass
 
 
-component.provideAdapter(CompartmentItemEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.AssociationItem)
-class AssociationItemEditor(object):
+@Editor.register(items.AssociationItem)
+class AssociationItemEditor(AbstractEditor):
     def __init__(self, item):
         self._item = item
         self._edit = None
@@ -207,12 +231,8 @@ class AssociationItemEditor(object):
         pass
 
 
-component.provideAdapter(AssociationItemEditor)
-
-
-@implementer(IEditor)
-@component.adapter(items.ForkNodeItem)
-class ForkNodeItemEditor(object):
+@Editor.register(items.ForkNodeItem)
+class ForkNodeItemEditor(AbstractEditor):
     """Text edit support for fork node join specification."""
 
     element_factory = inject("element_factory")
@@ -245,6 +265,3 @@ class ForkNodeItemEditor(object):
 
     def key_pressed(self, pos, key):
         pass
-
-
-component.provideAdapter(ForkNodeItemEditor)

@@ -4,7 +4,7 @@ or save files."""
 from gi.repository import Gtk
 
 
-class FileDialog(object):
+class FileDialog:
     """This is a file dialog that is used to open or save a file."""
 
     def __init__(

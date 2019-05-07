@@ -19,7 +19,7 @@ PADDING_HINT = (1, 1, -1)  # padding hint tuple
 EPSILON = 1e-6
 
 
-class Style(object):
+class Style:
     """
     Item style information. Style information is provided through object's
     attributes, i.e.::

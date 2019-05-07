@@ -31,7 +31,7 @@ Type "help" for more information.
 )
 
 
-class Help(object):
+class Help:
     def __call__(self, obj=None):
         if obj:
             pydoc.help(obj)
@@ -45,7 +45,7 @@ class Help(object):
         return str(self)
 
 
-class TextViewWriter(object):
+class TextViewWriter:
     """
     A Multiplexing output stream.
     It can replace another stream, and tee output to the original stream and too

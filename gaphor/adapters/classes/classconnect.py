@@ -2,16 +2,15 @@
 
 import logging
 
-from zope import component
-
 from gaphor import UML
 from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 
 log = logging.getLogger(__name__)
 
 
-@component.adapter(items.NamedItem, items.DependencyItem)
+@IConnect.register(items.NamedItem, items.DependencyItem)
 class DependencyConnect(RelationshipConnect):
     """Connect two NamedItem elements using a Dependency."""
 
@@ -23,7 +22,7 @@ class DependencyConnect(RelationshipConnect):
         if not element.subject or not isinstance(element.subject, UML.NamedElement):
             return False
 
-        return super(DependencyConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def reconnect(self, handle, port):
         line = self.line
@@ -65,10 +64,7 @@ class DependencyConnect(RelationshipConnect):
         line.subject = relation
 
 
-component.provideAdapter(DependencyConnect)
-
-
-@component.adapter(items.ClassifierItem, items.GeneralizationItem)
+@IConnect.register(items.ClassifierItem, items.GeneralizationItem)
 class GeneralizationConnect(RelationshipConnect):
     """Connect Classifiers with a Generalization relationship."""
 
@@ -86,10 +82,7 @@ class GeneralizationConnect(RelationshipConnect):
         self.line.subject = relation
 
 
-component.provideAdapter(GeneralizationConnect)
-
-
-@component.adapter(items.ClassifierItem, items.AssociationItem)
+@IConnect.register(items.ClassifierItem, items.AssociationItem)
 class AssociationConnect(UnaryRelationshipConnect):
     """Connect association to classifier."""
 
@@ -100,7 +93,7 @@ class AssociationConnect(UnaryRelationshipConnect):
         if not isinstance(element.subject, UML.Classifier):
             return None
 
-        return super(AssociationConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def connect_subject(self, handle):
         element = self.element
@@ -172,10 +165,7 @@ class AssociationConnect(UnaryRelationshipConnect):
                 old.unlink()
 
 
-component.provideAdapter(AssociationConnect)
-
-
-@component.adapter(items.NamedItem, items.ImplementationItem)
+@IConnect.register(items.NamedItem, items.ImplementationItem)
 class ImplementationConnect(RelationshipConnect):
     """Connect Interface and a BehavioredClassifier using an Implementation."""
 
@@ -220,6 +210,3 @@ class ImplementationConnect(RelationshipConnect):
             UML.Implementation.implementatingClassifier,
         )
         self.line.subject = relation
-
-
-component.provideAdapter(ImplementationConnect)

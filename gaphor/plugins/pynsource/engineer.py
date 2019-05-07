@@ -1,8 +1,6 @@
 """The code reverse engineer.
 """
 
-from zope import component
-
 from gaphas.aspect import ConnectionSink, Connector
 
 from gaphor import UML
@@ -14,7 +12,7 @@ from gaphor.plugins.pynsource.pynsource import PySourceAsText
 BASE_CLASSES = ("object", "type", "dict", "list", "tuple", "int", "float")
 
 
-class Engineer(object):
+class Engineer:
     """
     The Engineer class will create a Gaphor model based on a list of Python
     files.
@@ -116,12 +114,12 @@ class Engineer(object):
                 self.connect(geni, geni.tail, clazz.gaphor_class_item)
                 self.connect(geni, geni.head, superclass_item)
 
-                # adapter = component.queryMultiAdapter((superclass_item, geni), IConnect)
+                # adapter = IConnect(superclass_item, geni)
                 # assert adapter
                 # handle = geni.handles()[0]
                 # adapter.connect(handle)
                 # clazz.gaphor_class_item.connect_handle(geni.handles[-1])
-                # adapter = component.queryMultiAdapter((clazz.gaphor_class_item, geni), IConnect)
+                # adapter = IConnect(clazz.gaphor_class_item, geni)
                 # assert adapter
                 # handle = geni.handles()[-1]
                 # adapter.connect(handle)
@@ -223,16 +221,12 @@ class Engineer(object):
             # Create the diagram item:
             association = self.diagram.create(items.AssociationItem)
 
-            adapter = component.queryMultiAdapter(
-                (head_type_item, association), IConnect
-            )
+            adapter = IConnect(head_type_item, association)
             assert adapter
             handle = association.handles()[0]
             adapter.connect(handle)
 
-            adapter = component.queryMultiAdapter(
-                (tail_type_item, association), IConnect
-            )
+            adapter = IConnect(tail_type_item, association)
             assert adapter
             handle = association.handles()[-1]
             adapter.connect(handle)

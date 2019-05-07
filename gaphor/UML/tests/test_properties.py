@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from zope import component
 from gaphor.application import Application
+from gaphor.core import event_handler
 from gaphor.UML.properties import *
 from gaphor.UML.element import Element
 from gaphor.UML.event import AssociationChangeEvent
@@ -269,7 +269,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         events = []
 
-        @component.adapter(AssociationChangeEvent)
+        @event_handler(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -544,7 +544,7 @@ class PropertiesTestCase(unittest.TestCase):
         A.derived_b = derivedunion("derived_b", A, 0, "*", A.b)
         events = []
 
-        @component.adapter(AssociationChangeEvent)
+        @event_handler(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -559,7 +559,6 @@ class PropertiesTestCase(unittest.TestCase):
             Application.unregister_handler(handler)
 
     def skiptest_derivedunion_events(self):
-        from zope import component
         from gaphor.UML.event import (
             DerivedSetEvent,
             DerivedAddEvent,
@@ -584,7 +583,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         events = []
 
-        @component.adapter(AssociationChangeEvent)
+        @event_handler(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -689,7 +688,6 @@ class PropertiesTestCase(unittest.TestCase):
             Application.unregister_handler(handler)
 
     def skiptest_redefine(self):
-        from zope import component
         from gaphor.application import Application
 
         class A(Element):
@@ -704,7 +702,7 @@ class PropertiesTestCase(unittest.TestCase):
         A.a = redefine(A, "a", A, A.a)
         events = []
 
-        @component.adapter(AssociationChangeEvent)
+        @event_handler(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 
@@ -719,8 +717,6 @@ class PropertiesTestCase(unittest.TestCase):
             Application.unregister_handler(handler)
 
     def skiptest_redefine_subclass(self):
-        from zope import component
-
         class A(Element):
             is_unlinked = False
 
@@ -737,7 +733,7 @@ class PropertiesTestCase(unittest.TestCase):
 
         events = []
 
-        @component.adapter(AssociationChangeEvent)
+        @event_handler(AssociationChangeEvent)
         def handler(event, events=events):
             events.append(event)
 

@@ -15,14 +15,14 @@ GUI FRONT END
 -------------
 
 Simply run
-     C:\Python22\Lib\site-packages\pynsource\pyNsourceGui.py
+     C:/Python22/Lib/site-packages/pynsource/pyNsourceGui.py
 
 you need wxpython installed.  See http://www.wxpython.org
 
 SOURCE GENERATOR
 ----------------
 
-Example Usage: C:\Python22\Lib\site-packages\pynsource\pynsource -v -m -j outdir sourcedirorpythonfiles...
+Example Usage: C:/Python22/Lib/site-packages/pynsource/pynsource -v -m -j outdir sourcedirorpythonfiles...
 
 -j generate java files, specify output folder for java files
 -v verbose
@@ -37,7 +37,7 @@ e.g. pynsource -j c:/try c:/try
 e.g. pynsource -v -m -j c:/try c:/try
 e.g. pynsource -v -m -j c:/try c:/try/s*.py
 e.g. pynsource -j c:/try c:/try/s*.py Tests/u*.py
-e.g. pynsource -v -m -j c:/try c:/try/s*.py Tests/u*.py c:\cc\Devel\Client\w*.py
+e.g. pynsource -v -m -j c:/try c:/try/s*.py Tests/u*.py c:/cc/Devel/Client/w*.py
 DELPHI EXAMPLE
 e.g. pynsource -d c:/delphiouputdir c:/pythoninputdir/*.py
 
@@ -62,7 +62,7 @@ Run pynsource so that it dumps the output into the src folder
 e.g. assuming the batch file is in the PythonToJavaTest01 folder and the python source is in
     .../Tests/PythonToJavaTest01/pythoninput01
 then the command is
-    pynsource -j src pythoninput01\*.py
+    pynsource -j src pythoninput01/*.py
 
 """
 
@@ -81,7 +81,7 @@ from gaphor.plugins.pynsource.keywords import (
 DEBUG_DUMPTOKENS = False
 
 
-class AndyBasicParseEngine(object):
+class AndyBasicParseEngine:
     def __init__(self):
         self.meat = 0
         self.tokens = None
@@ -175,7 +175,7 @@ class AndyBasicParseEngine(object):
             return 0
 
 
-class ClassEntry(object):
+class ClassEntry:
     def __init__(self):
         self.defs = []
         self.attrs = []
@@ -213,7 +213,7 @@ class ClassEntry(object):
         #    self.attrs.append(Attribute(attrname, attrtype))
 
 
-class Attribute(object):
+class Attribute:
     def __init__(self, attrname, attrtype="normal"):
         self.attrname = attrname
         self.attrtype = attrtype
@@ -796,7 +796,7 @@ class PySourceAsJava(PySourceAsText):
         self.result += "*/\n"
 
     def _OpenNextFile(self):
-        filepath = "%s\\%s.java" % (self.outdir, self.aclass)
+        filepath = "%s/%s.java" % (self.outdir, self.aclass)
         self.fp = open(filepath, "w")
 
     def _NiceNameToPreventCompilerErrors(self, attrname):
@@ -961,7 +961,7 @@ class PySourceAsDelphi(PySourceAsText):
         self.result += "*)\n\n"
 
     def _OpenNextFile(self):
-        filepath = "%s\\unit_%s.pas" % (self.outdir, self.aclass)
+        filepath = "%s/unit_%s.pas" % (self.outdir, self.aclass)
         self.fp = open(filepath, "w")
 
     def _NiceNameToPreventCompilerErrors(self, attrname):
@@ -1106,7 +1106,7 @@ class PySourceAsDelphi(PySourceAsText):
         pass
 
 
-class PythonToJava(object):
+class PythonToJava:
     def __init__(self, directories, treatmoduleasclass=0, verbose=0):
         self.directories = directories
         self.optionModuleAsClass = treatmoduleasclass
@@ -1203,25 +1203,6 @@ end.
         return template % (aclass, aclass)
 
 
-def run():
-    # FILE = 'testmodule01.py'
-    # FILE = 'C:\\Documents and Settings\\Administrator\\Desktop\\try\\PyutXmlV6.py'
-    # FILE = 'testmodule02.py'
-    # FILE = 'andyparse9.py'
-    FILE = "c:\\cc\devel\storyline\\battle.py"
-    # FILE = "c:\\cc\devel\storyline\\battleresult.py"
-    # FILE = "c:\\cc\devel\storyline\\battlestabs.py"
-
-    p = PySourceAsText()
-    # p = JavaDumper("c:\\try")
-
-    p.Parse(FILE)
-
-    print("*" * 20, "parsing", FILE, "*" * 20)
-    print(p)
-    print("Done.")
-
-
 if __name__ == "__main__":
     # run()
     import sys, glob, getopt
@@ -1311,7 +1292,7 @@ e.g. pynsource -j c:/try c:/try
 e.g. pynsource -v -m -j c:/try c:/try
 e.g. pynsource -v -m -j c:/try c:/try/s*.py
 e.g. pynsource -j c:/try c:/try/s*.py Tests/u*.py
-e.g. pynsource -v -m -j c:/try c:/try/s*.py Tests/u*.py c:\cc\Devel\Client\w*.py
+e.g. pynsource -v -m -j c:/try c:/try/s*.py Tests/u*.py c:/cc/Devel/Client/w*.py
 DELPHI EXAMPLE
 e.g. pynsource -d c:/delphiouputdir c:/pythoninputdir/*.py
 """

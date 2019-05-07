@@ -13,10 +13,8 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
 import logging
-from zope import component
-
 from gaphas import state
-from zope.interface import implementer
+
 
 from gaphor.UML.event import (
     ElementCreateEvent,
@@ -28,7 +26,7 @@ from gaphor.UML.event import (
     ModelFactoryEvent,
 )
 from gaphor.action import action, build_action_group
-from gaphor.core import inject
+from gaphor.core import inject, event_handler
 from gaphor.event import (
     ActionExecuted,
     ServiceEvent,
@@ -36,13 +34,13 @@ from gaphor.event import (
     TransactionCommit,
     TransactionRollback,
 )
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.transaction import Transaction, transactional
 
 logger = logging.getLogger(__name__)
 
 
-class ActionStack(object):
+class ActionStack:
     """
     A transaction. Every action that is added between a begin_transaction()
     and a commit_transaction() call is recorded in a transaction, so it can
@@ -79,8 +77,7 @@ class UndoManagerStateChanged(ServiceEvent):
         self.service = service
 
 
-@implementer(IService, IActionProvider)
-class UndoManager(object):
+class UndoManager(Service, ActionProvider):
     """
     Simple transaction manager for Gaphor.
     This transaction manager supports nested transactions.
@@ -151,13 +148,13 @@ class UndoManager(object):
     def clear_redo_stack(self):
         del self._redo_stack[:]
 
-    @component.adapter(ModelFactoryEvent)
+    @event_handler(ModelFactoryEvent)
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()
         self._action_executed()
 
-    @component.adapter(TransactionBegin)
+    @event_handler(TransactionBegin)
     def begin_transaction(self, event=None):
         """
         Add an action to the current transaction
@@ -176,7 +173,7 @@ class UndoManager(object):
             # TODO: should this be placed here?
             self._action_executed()
 
-    @component.adapter(TransactionCommit)
+    @event_handler(TransactionCommit)
     def commit_transaction(self, event=None):
         assert self._current_transaction
 
@@ -192,7 +189,7 @@ class UndoManager(object):
         self.component_registry.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
-    @component.adapter(TransactionRollback)
+    @event_handler(TransactionRollback)
     def rollback_transaction(self, event=None):
         """
         Roll back the transaction we're in.
@@ -282,7 +279,7 @@ class UndoManager(object):
     def can_redo(self):
         return bool(self._redo_stack)
 
-    @component.adapter(ActionExecuted)
+    @event_handler(ActionExecuted)
     def _action_executed(self, event=None):
         self.action_group.get_action("edit-undo").set_sensitive(self.can_undo())
         self.action_group.get_action("edit-redo").set_sensitive(self.can_redo())
@@ -326,7 +323,7 @@ class UndoManager(object):
 
         state.subscribers.discard(self._gaphas_undo_handler)
 
-    @component.adapter(ElementCreateEvent)
+    @event_handler(ElementCreateEvent)
     def undo_create_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems
@@ -343,7 +340,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_create_event)
 
-    @component.adapter(ElementDeleteEvent)
+    @event_handler(ElementDeleteEvent)
     def undo_delete_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems
@@ -358,7 +355,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_delete_event)
 
-    @component.adapter(AttributeChangeEvent)
+    @event_handler(AttributeChangeEvent)
     def undo_attribute_change_event(self, event):
         attribute = event.property
         element = event.element
@@ -369,7 +366,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_attribute_change_event)
 
-    @component.adapter(AssociationSetEvent)
+    @event_handler(AssociationSetEvent)
     def undo_association_set_event(self, event):
         association = event.property
         element = event.element
@@ -383,7 +380,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_association_set_event)
 
-    @component.adapter(AssociationAddEvent)
+    @event_handler(AssociationAddEvent)
     def undo_association_add_event(self, event):
         association = event.property
         element = event.element
@@ -397,7 +394,7 @@ class UndoManager(object):
 
         self.add_undo_action(_undo_association_add_event)
 
-    @component.adapter(AssociationDeleteEvent)
+    @event_handler(AssociationDeleteEvent)
     def undo_association_delete_event(self, event):
         association = event.property
         element = event.element

@@ -5,12 +5,12 @@ Formatting of UML elements like attributes, operations, stereotypes, etc.
 import io
 import re
 
-from simplegeneric import generic
+from functools import singledispatch
 
 from gaphor.UML import uml2 as UML
 
 
-@generic
+@singledispatch
 def format(el, pattern=None):
     """
     Format an UML element.
@@ -20,7 +20,7 @@ def format(el, pattern=None):
     )
 
 
-@format.when_type(UML.Property)
+@format.register(UML.Property)
 def format_property(el, pattern=None, *args, **kwargs):
     """
     Format property or an association end.
@@ -141,7 +141,7 @@ def format_association_end(el):
     return name, mult
 
 
-@format.when_type(UML.Operation)
+@format.register(UML.Operation)
 def format_operation(
     el,
     pattern=None,
@@ -215,12 +215,12 @@ def format_operation(
     return s.read()
 
 
-@format.when_type(UML.Slot)
+@format.register(UML.Slot)
 def format_slot(el, pattern=None):
     return '%s = "%s"' % (el.definingFeature.name, el.value)
 
 
-@format.when_type(UML.NamedElement)
+@format.register(UML.NamedElement)
 def format_namedelement(el, pattern="%s"):
     """
     Format named element.

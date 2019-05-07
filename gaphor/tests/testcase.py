@@ -10,12 +10,11 @@ import unittest
 from io import StringIO
 
 from gaphas.aspect import ConnectionSink, Connector
-from zope import component
 
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.interfaces import IConnect
-from gaphor.diagram.interfaces import IGroup
+from gaphor.diagram.interfaces import Group
 
 # For DiagramItemConnector aspect:
 import gaphor.ui.diagramtools
@@ -24,7 +23,7 @@ log = logging.getLogger("Gaphor")
 log.setLevel(logging.WARNING)
 
 
-class TestCaseExtras(object):
+class TestCaseExtras:
     """
     Mixin for some extra tests.
     """
@@ -50,7 +49,7 @@ class TestCaseExtras(object):
 
 class TestCase(TestCaseExtras, unittest.TestCase):
 
-    services = ["element_factory", "adapter_loader", "element_dispatcher", "sanitizer"]
+    services = ["element_factory", "element_dispatcher", "sanitizer"]
 
     def setUp(self):
         Application.init(services=self.services)
@@ -89,8 +88,7 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
 
-        query = (item, line)
-        adapter = component.queryMultiAdapter(query, IConnect)
+        adapter = IConnect(item, line)
         return adapter.allow(handle, port)
 
     def connect(self, line, handle, item, port=None):
@@ -143,8 +141,7 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         """
         Check if an item can be grouped by parent.
         """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter = Group(parent, item)
         return adapter.can_contain()
 
     def group(self, parent, item):
@@ -152,16 +149,14 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         Group item within a parent.
         """
         self.diagram.canvas.reparent(item, parent)
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter = Group(parent, item)
         adapter.group()
 
     def ungroup(self, parent, item):
         """
         Remove item from a parent.
         """
-        query = (parent, item)
-        adapter = component.queryMultiAdapter(query, IGroup)
+        adapter = Group(parent, item)
         adapter.ungroup()
         self.diagram.canvas.reparent(item, None)
 

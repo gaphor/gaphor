@@ -2,11 +2,8 @@
 
 import unittest
 
-from zope import component
-
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.interfaces import IService
 
 
 class LoadServiceTestCase(unittest.TestCase):
@@ -26,16 +23,6 @@ class LoadServiceTestCase(unittest.TestCase):
         self.assertTrue(
             Application.get_service("file_manager") is not None,
             "Failed to load the file manager service",
-        )
-
-        self.assertTrue(
-            component.queryUtility(IService, "undo_manager") is not None,
-            "Failed to query the undo manager utility",
-        )
-
-        self.assertTrue(
-            component.queryUtility(IService, "file_manager") is not None,
-            "Failed to query the file manager utility",
         )
 
         Application.shutdown()

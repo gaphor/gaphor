@@ -3,10 +3,8 @@ Test transition item and state vertices connections.
 """
 
 from gaphor.tests import TestCase
-from zope import component
 from gaphor import UML
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IConnect
 
 
 class TransitionConnectorTestCase(TestCase):

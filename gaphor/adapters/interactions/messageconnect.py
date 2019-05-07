@@ -1,12 +1,12 @@
 """Message item connection adapters."""
 
 from gaphor.adapters.connectors import AbstractConnect
-from zope import interface, component
 from gaphor import UML
 from gaphor.diagram import items
+from gaphor.diagram.interfaces import IConnect
 
 
-@component.adapter(items.LifelineItem, items.MessageItem)
+@IConnect.register(items.LifelineItem, items.MessageItem)
 class MessageLifelineConnect(AbstractConnect):
     """Connect lifeline with a message.
 
@@ -134,6 +134,3 @@ class MessageLifelineConnect(AbstractConnect):
             # zero, so allow connections to lifeline's lifetime
             lifetime.connectable = True
             lifetime.min_length = lifetime.MIN_LENGTH
-
-
-component.provideAdapter(MessageLifelineConnect)

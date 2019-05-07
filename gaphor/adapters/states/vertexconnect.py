@@ -6,11 +6,10 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-from zope import interface, component
-
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.adapters.connectors import RelationshipConnect
+from gaphor.diagram.interfaces import IConnect
 
 
 class VertexConnect(RelationshipConnect):
@@ -32,7 +31,7 @@ class VertexConnect(RelationshipConnect):
             relation.guard = self.element_factory.create(UML.Constraint)
 
 
-@component.adapter(items.VertexItem, items.TransitionItem)
+@IConnect.register(items.VertexItem, items.TransitionItem)
 class TransitionConnect(VertexConnect):
     """Connect two state vertices using transition item."""
 
@@ -56,10 +55,7 @@ class TransitionConnect(VertexConnect):
             return None
 
 
-component.provideAdapter(TransitionConnect)
-
-
-@component.adapter(items.InitialPseudostateItem, items.TransitionItem)
+@IConnect.register(items.InitialPseudostateItem, items.TransitionItem)
 class InitialPseudostateTransitionConnect(VertexConnect):
     """Connect initial pseudostate using transition item.
 
@@ -89,10 +85,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
             return None
 
 
-component.provideAdapter(InitialPseudostateTransitionConnect)
-
-
-@component.adapter(items.HistoryPseudostateItem, items.TransitionItem)
+@IConnect.register(items.HistoryPseudostateItem, items.TransitionItem)
 class HistoryPseudostateTransitionConnect(VertexConnect):
     """Connect history pseudostate using transition item.
 
@@ -104,6 +97,3 @@ class HistoryPseudostateTransitionConnect(VertexConnect):
         """
         """
         return super(HistoryPseudostateTransitionConnect, self).allow(handle, port)
-
-
-component.provideAdapter(HistoryPseudostateTransitionConnect)

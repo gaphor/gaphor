@@ -6,12 +6,12 @@ See also gaphor/service/actionmanager.py for the management module.
 from gaphor.application import Application
 
 
-class action(object):
+class action:
     """
     Decorator. Turns a regular function (/method) into a full blown
     Action class.
 
-    >>> class A(object):
+    >>> class A:
     ...     @action(name="my_action", label="my action")
     ...     def myaction(self):
     ...         print('action called')
@@ -90,7 +90,7 @@ def build_action_group(obj, name=None):
     Build actions and a Gtk.ActionGroup for each Action instance found in obj()
     (that's why Action is a class ;) ). This function requires GTK+.
 
-    >>> class A(object):
+    >>> class A:
     ...     @action(name='bar')
     ...     def bar(self): print('Say bar')
     ...     @toggle_action(name='foo')

@@ -93,8 +93,6 @@ setup(
         "pycairo >= 1.17.0",
         "PyGObject >= 3.30.0",
         "gaphas >= 0.7.2",
-        "zope.component >= 3.4.0",
-        "zope.interface >= 4.6.0",
         "setuptools",
     ],
     zip_safe=False,
@@ -104,8 +102,7 @@ setup(
             "gaphorconvert = gaphor.tools.gaphorconvert:main",
         ],
         "gaphor.services": [
-            "component_registry = gaphor.services.componentregistry:ZopeComponentRegistry",
-            "adapter_loader = gaphor.services.adapterloader:AdapterLoader",
+            "component_registry = gaphor.services.componentregistry:ComponentRegistry",
             "properties = gaphor.services.properties:Properties",
             "undo_manager = gaphor.services.undomanager:UndoManager",
             "element_factory = gaphor.UML.elementfactory:ElementFactoryService",

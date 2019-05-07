@@ -9,11 +9,11 @@ from gi.repository import Gtk
 from gaphor.core import _, inject, transactional
 from gaphor import UML
 from gaphor.diagram import items
-from zope import interface, component
 from gaphor.adapters.propertypages import NamedItemPropertyPage, create_hbox_label
+from gaphor.ui.interfaces import PropertyPages
 
 
-@component.adapter(items.TransitionItem)
+@PropertyPages.register(items.TransitionItem)
 class TransitionPropertyPage(NamedItemPropertyPage):
     """Transition property page allows to edit guard specification."""
 
@@ -57,10 +57,7 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         self.subject.guard.specification = value
 
 
-component.provideAdapter(TransitionPropertyPage, name="Properties")
-
-
-@component.adapter(items.StateItem)
+@PropertyPages.register(items.StateItem)
 class StatePropertyPage(NamedItemPropertyPage):
     """State property page."""
 
@@ -106,6 +103,3 @@ class StatePropertyPage(NamedItemPropertyPage):
     def _on_text_change(self, entry, method):
         value = entry.get_text().strip()
         method(value)
-
-
-component.provideAdapter(StatePropertyPage, name="Properties")

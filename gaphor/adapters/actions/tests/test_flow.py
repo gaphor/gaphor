@@ -280,7 +280,7 @@ class FlowItemActionTestCase(TestCase):
         self.assertEqual("tguard", flow.subject.guard)
 
 
-class FlowItemDesisionAndForkNodes(object):
+class FlowItemDesisionAndForkNodes:
     """
     Base class for flow connecting to decision and fork nodes.
 

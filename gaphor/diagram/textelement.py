@@ -108,7 +108,7 @@ def text_multiline(cr, x, y, text, font, width=-1, height=-1):
     )
 
 
-class EditableTextSupport(object):
+class EditableTextSupport:
     """
     Editable text support to allow display and edit text parts of a diagram
     item.
@@ -377,7 +377,7 @@ class EditableTextSupport(object):
             cr.restore()
 
 
-class TextElement(object):
+class TextElement:
     """
     Representation of an editable text, which is part of a diagram item.
 

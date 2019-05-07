@@ -4,12 +4,9 @@ Transaction support for Gaphor
 
 import logging
 
-from zope.interface import implementer
-from zope import component
 
 from gaphor import application
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor.interfaces import ITransaction
 
 log = logging.getLogger(__name__)
 
@@ -50,8 +47,7 @@ class TransactionError(Exception):
     pass
 
 
-@implementer(ITransaction)
-class Transaction(object):
+class Transaction:
     """
     The transaction. On start and end of a transaction an event is emitted.
 
@@ -130,7 +126,7 @@ class Transaction(object):
     def _handle(self, event):
         try:
             component_registry = self.component_registry
-        except (application.NotInitializedError, component.ComponentLookupError):
+        except (application.NotInitializedError, application.ComponentLookupError):
             log.warning("Could not lookup component_registry. Not emitting events.")
         else:
             component_registry.handle(event)

@@ -7,10 +7,10 @@ import os.path
 from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 import pkg_resources
-from zope.interface import implementer
+
 
 from gaphor.core import inject
-from gaphor.ui.interfaces import IUIComponent
+from gaphor.ui.abc import UIComponent
 
 ICONS = (
     "gaphor-24x24.png",
@@ -20,8 +20,7 @@ ICONS = (
 )
 
 
-@implementer(IUIComponent)
-class ToplevelWindow(object):
+class ToplevelWindow(UIComponent):
 
     menubar_path = ""
     toolbar_path = ""

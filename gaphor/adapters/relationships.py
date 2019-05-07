@@ -7,9 +7,6 @@ existing relationships on the diagram when a model element is added (e.g.
 by drag and drop).
 """
 
-from zope import component
-
-
 ###class AssociationRelationship(Relationship):
 ###    """Relationship for associations.
 ###    """

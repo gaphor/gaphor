@@ -57,19 +57,19 @@ For methods, it should be possible to create a decorator (@reversible) that
 schedules a method with the same signature as the calling operation, but with
 the inverse effect (e.g. the gaphas.tree module)::
 
-  class Tree(object):
+  class Tree:
 
     @reversable(lambda s, n, p: s.remove(n))
     def add(self, node, parent=None):
-        ... add 
+        ... add
 
     @reversable(add, self='self', node='node', parent='self.get_parent(node)')
     def remove(self, node):
         ... remove
 
 Okay, so the second case is tougher...
- 
- 
+
+
 So what we did:
 Add a StateManager to gaphas. All changes are sent to the statemanager.
 Gaphor should implement its own state manager.
@@ -82,18 +82,18 @@ Gaphor should implement its own state manager.
 Transactions
 ------------
 
-Gaphor's Undo manager works transactionally. Typically, methods can be 
+Gaphor's Undo manager works transactionally. Typically, methods can be
 decorated with @transactional and undo data is stored in the current
 transaction. A new tx is created when none exists.
 
 Although undo functionality is at the core of Gaphor (diagram items and
-model elements have been adapted to provide proper undo information), the 
+model elements have been adapted to provide proper undo information), the
 UndoManager itself is just a service.
 
 Transaction support though is a real core functionality. By letting elements
 and items emit event notifications on important changed other (yet to be
 defined) services can take benefit of those events. The UML module already
-works this way. Gaphas (the Gaphor canvas) also emits state changes. 
+works this way. Gaphas (the Gaphor canvas) also emits state changes.
 
 When state changes happen in model elements and diagram items an event is
 emitted. Those events are handled by special handlers that produce
@@ -113,7 +113,7 @@ Now, that should be done when a model element or diagram item sends a state
 change:
 
 1. The event is handled by the "reverse-handler"
-2. Reverse handler generates a IUndoEvent signal 
+2. Reverse handler generates a IUndoEvent signal
 3. The signal is received and stored as part of the undo-transaction.
 
 (Maybe step 2 and 3 can be merged, since only one function is not of any
@@ -127,7 +127,7 @@ When the topmost Transaction is committed:
 2. This triggers the UndoManager to close and store the transaction.
 
 When a transaction is rolled back:
- 
+
 1. The main transaction is marked for rollback
 2. When the toplevel tx is rolled back or committed a
    TransactionRollback event is emitted

@@ -4,11 +4,11 @@
 
 import inspect
 
-from gaphor.UML.event import AssociationChangeEvent
-from gaphor.misc.listmixins import querymixin, recursemixin, getslicefix
+from .event import AssociationChangeEvent
+from .listmixins import querymixin, recursemixin
 
 
-class collectionlist(recursemixin, querymixin, getslicefix, list):
+class collectionlist(recursemixin, querymixin, list):
     """
     >>> c = collectionlist()
     >>> c.append('a')
@@ -36,7 +36,7 @@ class collectionlist(recursemixin, querymixin, getslicefix, list):
     >>> list(c.ownedOperation[0].formalParameter[:].name)
     ['foo', 'bar']
     >>> c.ownedOperation[:].formalParameter.name   # doctest: +ELLIPSIS
-    <gaphor.misc.listmixins.recurseproxy object at 0x...>
+    <gaphor.UML.listmixins.recurseproxy object at 0x...>
     >>> list(c.ownedOperation[:].formalParameter.name)
     ['foo', 'bar']
     >>> c.ownedOperation[0].formalParameter['it.name=="foo"', 0].name
@@ -46,7 +46,7 @@ class collectionlist(recursemixin, querymixin, getslicefix, list):
     """
 
 
-class collection(object):
+class collection:
     """
     Collection (set-like) for model elements' 1:n and n:m relationships.
     """
@@ -243,6 +243,3 @@ class collection(object):
             return False
         except ValueError as ex:
             return False
-
-
-# vi:sw=4:et:ai

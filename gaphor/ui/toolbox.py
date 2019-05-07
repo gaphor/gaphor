@@ -3,24 +3,21 @@ Toolbox.
 """
 
 import logging
-from zope import component
-from zope.interface import implementer
 
 from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import Gtk
 
-from gaphor.core import _, inject, toggle_action, build_action_group
-from gaphor.interfaces import IActionProvider
-from gaphor.ui.interfaces import IUIComponent
+from gaphor.core import _, inject, event_handler, toggle_action, build_action_group
+from gaphor.abc import ActionProvider
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramPageChange
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
 log = logging.getLogger(__name__)
 
 
-@implementer(IUIComponent, IActionProvider)
-class Toolbox(object):
+class Toolbox(UIComponent, ActionProvider):
 
     TARGET_STRING = 0
     TARGET_TOOLBOX_ACTION = 1
@@ -133,7 +130,7 @@ class Toolbox(object):
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)
 
-    @component.adapter(DiagramPageChange)
+    @event_handler(DiagramPageChange)
     def _on_diagram_page_change(self, event):
         self.update_toolbox(event.diagram_page.toolbox.action_group)
 

@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.application import Application
 from gaphor.core import inject
 from gaphor.ui.event import DiagramShow
-from gaphor.ui.interfaces import IUIComponent
+from gaphor.ui.abc import UIComponent
 
 
 class MainWindowTestCase(unittest.TestCase):
@@ -19,8 +19,8 @@ class MainWindowTestCase(unittest.TestCase):
         Application.shutdown()
 
     def get_current_diagram(self):
-        return self.component_registry.get_utility(
-            IUIComponent, "diagrams"
+        return self.component_registry.get(
+            UIComponent, "diagrams"
         ).get_current_diagram()
 
     def test_creation(self):

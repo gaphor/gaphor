@@ -60,7 +60,7 @@ class LifetimePort(LinePort):
         return LineAlignConstraint(line, point, align, delta)
 
 
-class LifetimeItem(object):
+class LifetimeItem:
     """
     Lifeline's lifetime object.
 
@@ -204,7 +204,7 @@ class LifelineItem(NamedItem):
     def draw(self, context):
         """
         Draw lifeline.
-        
+
         Lifeline's head is always drawn.
 
         Lifeline's lifetime is drawn when lifetime is visible.

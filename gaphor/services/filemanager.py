@@ -3,14 +3,12 @@ The file service is responsible for loading and saving the user data.
 """
 
 import logging
-from zope import component
 
 from gi.repository import Gtk
-from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import _, inject, action, build_action_group
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.event import ServiceEvent
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue
@@ -35,8 +33,7 @@ class FileManagerStateChanged(ServiceEvent):
         self.service = service
 
 
-@implementer(IService, IActionProvider)
-class FileManager(object):
+class FileManager(Service, ActionProvider):
     """
     The file service, responsible for loading and saving Gaphor models.
     """

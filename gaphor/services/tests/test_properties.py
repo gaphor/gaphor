@@ -2,7 +2,7 @@ from unittest import TestCase
 from gaphor.services.properties import Properties, FileBackend
 import tempfile
 
-# class MockApplication(object):
+# class MockApplication:
 #
 #    def __init__(self):
 #        self.events = []

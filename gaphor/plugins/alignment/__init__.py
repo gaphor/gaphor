@@ -2,17 +2,12 @@
 This plugin extends Gaphor with XMI alignment actions.
 """
 
-from zope import component
-
-from zope.interface import implementer
-
-from gaphor.core import inject, transactional, action, build_action_group
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.core import inject, event_handler, transactional, action, build_action_group
+from gaphor.abc import Service, ActionProvider
 from gaphor.ui.event import DiagramSelectionChange
 
 
-@implementer(IService, IActionProvider)
-class Alignment(object):
+class Alignment(Service, ActionProvider):
     component_registry = inject("component_registry")
 
     menu_xml = """
@@ -20,15 +15,15 @@ class Alignment(object):
         <menubar action="mainwindow">
           <menu action="diagram">
             <placeholder name="ternary">
-        <separator />
-        <menuitem action="align-left" />
-        <menuitem action="align-center" />
-        <menuitem action="align-right" />
-        <separator />
-        <menuitem action="align-top" />
-        <menuitem action="align-middle" />
-        <menuitem action="align-bottom" />
-           </placeholder>
+              <separator />
+              <menuitem action="align-left" />
+              <menuitem action="align-center" />
+              <menuitem action="align-right" />
+              <separator />
+              <menuitem action="align-top" />
+              <menuitem action="align-bottom" />
+              <menuitem action="align-middle" />
+            </placeholder>
           </menu>
         </menubar>
       </ui>"""
@@ -44,7 +39,7 @@ class Alignment(object):
     def shutdown(self):
         self.component_registry.unregister_handler(self.update)
 
-    @component.adapter(DiagramSelectionChange)
+    @event_handler(DiagramSelectionChange)
     def update(self, event=None):
         self._last_update = event
         sensitive = event and len(event.selected_items) > 1

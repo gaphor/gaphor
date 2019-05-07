@@ -19,7 +19,7 @@ Where it should lead:
       or no item.
     - diagram actions (zoom, grid) work on active diagram (tab)
     - menus and actions for diagram items through adapters
- 
+
  * Actions should behave more like adapters. E.g. when a popup menu is created
    for an Association item, the menu actions should present themselves in the
    context of that menu item (with toggles set right).
@@ -40,15 +40,15 @@ Solution for simple actions
 
 For an action to actually be useful a piece of menu xml is needed.
 
-Hence an interface IActionProvider has to be defined::
+Hence an interface ActionProvider has to be defined::
 
-    class IActionProvider(interface.Interface):
-	menu_xml = interface.Attribute("The menu XML")
-	action_group = interface.Attribute("The accompanying ActionGroup")
+    class ActionProvider(abc.ABC):
+	menu_xml = ("The menu XML")
+	action_group = ("The accompanying ActionGroup")
 
 Support for actions can be arranged by decorating actions with an :ref:`@action <action_doc>`
 decorator and let the class create an ActionGroup using some
-actionGroup factory function (no inheritance needed here). 
+actionGroup factory function (no inheritance needed here).
 
 Note that ActionGroup is a GTK class and should technically only be used in the
 gaphor.ui package.
@@ -59,7 +59,7 @@ They can register handlers in order to update their state.
 Maybe it's nice to configure those through the egg-info system. I suppose
 gaphor.service will serve well (as they need to be initialized anyway)
 
- * also inherit IActionProvider from IService?
+ * also inherit ActionProvider from Service?
 
 ::
 
@@ -95,6 +95,6 @@ Scheme:
 2. Find the actual item (this may be a composite item of the element drawn).
    Use an IItemPicker adapter for that (if no such interface is available,
    use the item itself).
-3. Find a IActionProvider adapters for the selected (focused) item.
+3. Find a ActionProvider adapters for the selected (focused) item.
 4. Update the popup menu context (actions) for the selected item.
 

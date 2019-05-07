@@ -9,17 +9,15 @@ Depends on the Diagram Layout plugin.
 
 from gi.repository import GObject
 from gi.repository import Gtk
-from zope.interface import implementer
 
 from gaphor.core import inject, action, build_action_group
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.plugins.pynsource.engineer import Engineer
 
 NAME_COLUMN = 0
 
 
-@implementer(IService, IActionProvider)
-class PyNSource(object):
+class PyNSource(Service, ActionProvider):
 
     main_window = inject("main_window")
 

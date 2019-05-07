@@ -2,20 +2,17 @@
 """
 
 import logging
-from zope import component
 
 from gi.repository import Gtk
-from zope.interface import implementer
 
-from gaphor.core import inject
+from gaphor.core import inject, event_handler
 from gaphor.event import ServiceInitializedEvent, ActionExecuted
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import Service, ActionProvider
 
 logger = logging.getLogger(__name__)
 
 
-@implementer(IService)
-class ActionManager(object):
+class ActionManager(Service):
     """
     This service is responsible for maintaining actions.
     """
@@ -28,7 +25,7 @@ class ActionManager(object):
     def init(self, app):
         logger.info("Loading action provider services")
 
-        for name, service in self.component_registry.get_utilities(IActionProvider):
+        for service, name in self.component_registry.all(ActionProvider):
             logger.debug("Service is %s" % service)
             self.register_action_provider(service)
 
@@ -66,8 +63,6 @@ class ActionManager(object):
 
         logger.debug("Registering action provider %s" % action_provider)
 
-        action_provider = IActionProvider(action_provider)
-
         try:
             # Check if the action provider is not already registered
             action_provider.__ui_merge_id
@@ -85,8 +80,6 @@ class ActionManager(object):
                 )
 
     def unregister_action_provider(self, action_provider):
-        action_provider = IActionProvider(action_provider)
-
         try:
             # Check if the action provider is registered
             action_provider.__ui_merge_id
@@ -97,13 +90,13 @@ class ActionManager(object):
             self.ui_manager.remove_action_group(action_provider.action_group)
             del action_provider.__ui_merge_id
 
-    @component.adapter(ServiceInitializedEvent)
+    @event_handler(ServiceInitializedEvent)
     def _service_initialized_handler(self, event):
 
         logger.debug("Handling ServiceInitializedEvent")
         logger.debug("Service is %s" % event.service)
 
-        if IActionProvider.providedBy(event.service):
+        if isinstance(event.service, ActionProvider):
 
             logger.debug("Loading registered service %s" % event.service)
 

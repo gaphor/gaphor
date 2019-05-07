@@ -17,7 +17,7 @@ from gaphor.storage import storage
 from gaphor.tests.testcase import TestCase
 
 
-class PseudoFile(object):
+class PseudoFile:
     def __init__(self):
         self.data = ""
 

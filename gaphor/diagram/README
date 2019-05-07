@@ -17,12 +17,12 @@ gaphor.UML.Property and gaphor.UML.Operation are implicitly referenced.
 Signal handling
 ---------------
 
-As of this version, signal notification is done through zope.component. As a
-result all modification events originated from gaphor.UML classes are received
-by all items. (In the old days every item should register for specific events
-on specific model elements, which resulted in quite a complex administration of
-event handlers, since all those handlers should be unregistered when an item
-was removed).
+As of this version, signal notification is done through the component_registry
+service. As a result all modification events originated from gaphor.UML classes
+are received by all items. (In the old days every item should register for
+specific events on specific model elements, which resulted in quite a complex
+administration of event handlers, since all those handlers should be
+unregistered when an item was removed).
 
 Connecting items
 ----------------
@@ -42,6 +42,6 @@ See interfaces.py and adapter.py for implementations.
 Text editing
 ------------
 
-Like item connecting, text editing is also implemented through adapters. The IEditor interface is used for this.
+Like item connecting, text editing is also implemented through adapters. The Editor interface is used for this.
 
 

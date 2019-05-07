@@ -10,7 +10,7 @@ import uuid
 from gaphor.UML.properties import umlproperty
 
 
-class Element(object):
+class Element:
     """
     Base class for UML data classes.
     """

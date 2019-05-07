@@ -27,20 +27,19 @@ TODO:
 
 import math
 import logging
-from zope import component
 
 import gaphas.item
 from gaphas.decorators import AsyncIO
 from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import Gtk
-from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import _, inject, transactional
 from gaphor.diagram import items
 from gaphor.services.elementdispatcher import EventWatcher
-from gaphor.ui.interfaces import IPropertyPage
+from gaphor.ui.abc import PropertyPageBase
+from gaphor.ui.interfaces import PropertyPages
 
 log = logging.getLogger(__name__)
 
@@ -453,9 +452,8 @@ Use -/= to move items up or down.\
     return tree_view
 
 
-@implementer(IPropertyPage)
-@component.adapter(UML.Comment)
-class CommentItemPropertyPage(object):
+@PropertyPages.register(UML.Comment)
+class CommentItemPropertyPage(PropertyPageBase):
     """Property page for Comments."""
 
     order = 0
@@ -505,12 +503,8 @@ class CommentItemPropertyPage(object):
         )
 
 
-component.provideAdapter(CommentItemPropertyPage, name="Properties")
-
-
-@implementer(IPropertyPage)
-@component.adapter(UML.NamedElement)
-class NamedElementPropertyPage(object):
+@PropertyPages.register(UML.NamedElement)
+class NamedElementPropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
 
     It also sets up a table view which can be extended.
@@ -560,9 +554,6 @@ class NamedElementPropertyPage(object):
         self.subject.name = entry.get_text()
 
 
-component.provideAdapter(NamedElementPropertyPage, name="Properties")
-
-
 class NamedItemPropertyPage(NamedElementPropertyPage):
     """
     Base class for named item based adapters.
@@ -570,18 +561,18 @@ class NamedItemPropertyPage(NamedElementPropertyPage):
 
     def __init__(self, item):
         self.item = item
-        super(NamedItemPropertyPage, self).__init__(item.subject)
+        super().__init__(item.subject)
 
 
-@component.adapter(UML.Class)
+@PropertyPages.register(UML.Class)
 class ClassPropertyPage(NamedElementPropertyPage):
     """Adapter which shows a property page for a class view."""
 
     def __init__(self, subject):
-        super(ClassPropertyPage, self).__init__(subject)
+        super().__init__(subject)
 
     def construct(self):
-        page = super(ClassPropertyPage, self).construct()
+        page = super().construct()
 
         if not self.subject:
             return page
@@ -606,15 +597,12 @@ class ClassPropertyPage(NamedElementPropertyPage):
         self.subject.isAbstract = button.get_active()
 
 
-component.provideAdapter(ClassPropertyPage, name="Properties")
-
-
-@component.adapter(items.InterfaceItem)
+@PropertyPages.register(items.InterfaceItem)
 class InterfacePropertyPage(NamedItemPropertyPage):
     """Adapter which shows a property page for an interface view."""
 
     def construct(self):
-        page = super(InterfacePropertyPage, self).construct()
+        page = super().construct()
         item = self.item
 
         # Fold toggle
@@ -671,15 +659,12 @@ class InterfacePropertyPage(NamedItemPropertyPage):
             line.request_update()
 
 
-component.provideAdapter(InterfacePropertyPage, name="Properties")
-
-
-@implementer(IPropertyPage)
-@component.adapter(items.ClassItem)
-class AttributesPage(object):
+@PropertyPages.register(items.ClassItem)
+class AttributesPage(PropertyPageBase):
     """An editor for attributes associated with classes and interfaces."""
 
     order = 20
+    name = "Attributes"
 
     def __init__(self, item):
         super(AttributesPage, self).__init__()
@@ -746,15 +731,12 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
         self.item.request_update()
 
 
-component.provideAdapter(AttributesPage, name="Attributes")
-
-
-@implementer(IPropertyPage)
-@component.adapter(items.ClassItem)
-class OperationsPage(object):
+@PropertyPages.register(items.ClassItem)
+class OperationsPage(PropertyPageBase):
     """An editor for operations associated with classes and interfaces."""
 
     order = 30
+    name = "Operations"
 
     def __init__(self, item):
         super(OperationsPage, self).__init__()
@@ -824,12 +806,8 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         self.item.request_update()
 
 
-component.provideAdapter(OperationsPage, name="Operations")
-
-
-@implementer(IPropertyPage)
-@component.adapter(items.DependencyItem)
-class DependencyPropertyPage(object):
+@PropertyPages.register(items.DependencyItem)
+class DependencyPropertyPage(PropertyPageBase):
     """Dependency item editor."""
 
     order = 0
@@ -903,10 +881,7 @@ class DependencyPropertyPage(object):
         self.update()
 
 
-component.provideAdapter(DependencyPropertyPage, name="Properties")
-
-
-@component.adapter(items.AssociationItem)
+@PropertyPages.register(items.AssociationItem)
 class AssociationPropertyPage(NamedItemPropertyPage):
     """
     """
@@ -980,14 +955,12 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         adaptermap = {}
         try:
             if item.subject:
-                for name, adapter in component.getAdapters(
-                    [item.subject], IPropertyPage
-                ):
-                    adaptermap[name] = (adapter.order, name, adapter)
+                for adapter in PropertyPages(item.subject):
+                    adaptermap[name] = (adapter.order, adapter.name, adapter)
         except AttributeError:
             pass
-        for name, adapter in component.getAdapters([item], IPropertyPage):
-            adaptermap[name] = (adapter.order, name, adapter)
+        for adapter in PropertyPages(item):
+            adaptermap[name] = (adapter.order, adapter.name, adapter)
 
         adapters = sorted(adaptermap.values())
         return adapters
@@ -1022,12 +995,8 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                 )
 
 
-component.provideAdapter(AssociationPropertyPage, name="Properties")
-
-
-@implementer(IPropertyPage)
-@component.adapter(UML.Property)
-class AssociationEndPropertyPage(object):
+@PropertyPages.register(UML.Property)
+class AssociationEndPropertyPage(PropertyPageBase):
     """Property page for association end properties."""
 
     order = 0
@@ -1119,15 +1088,12 @@ Enter attribute name and multiplicity, for example
         self.subject.aggregation = ("none", "shared", "composite")[combo.get_active()]
 
 
-component.provideAdapter(AssociationEndPropertyPage, name="Properties")
-
-
-@implementer(IPropertyPage)
-@component.adapter(gaphas.item.Line)
-class LineStylePage(object):
+@PropertyPages.register(gaphas.item.Line)
+class LineStylePage(PropertyPageBase):
     """Basic line style properties: color, orthogonal, etc."""
 
     order = 400
+    name = "Style"
 
     def __init__(self, item):
         super(LineStylePage, self).__init__()
@@ -1178,10 +1144,7 @@ class LineStylePage(object):
         self.item.horizontal = button.get_active()
 
 
-component.provideAdapter(LineStylePage, name="Style")
-
-
-@component.adapter(items.ObjectNodeItem)
+@PropertyPages.register(items.ObjectNodeItem)
 class ObjectNodePropertyPage(NamedItemPropertyPage):
     """
     """
@@ -1237,10 +1200,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         self.item.set_ordering(self.subject.ordering)
 
 
-component.provideAdapter(ObjectNodePropertyPage, name="Properties")
-
-
-@component.adapter(items.ForkNodeItem)
+@PropertyPages.register(items.ForkNodeItem)
 class JoinNodePropertyPage(NamedItemPropertyPage):
     """
     """
@@ -1286,9 +1246,6 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         self.item.request_update()
 
 
-component.provideAdapter(JoinNodePropertyPage, name="Properties")
-
-
 class FlowPropertyPageAbstract(NamedElementPropertyPage):
     """Flow item element editor."""
 
@@ -1325,21 +1282,17 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
 
 # TODO: unify ObjectFlowPropertyPage and ControlFlowPropertyPage
 #   after introducing common class for element editors
-@component.adapter(UML.ControlFlow)
+@PropertyPages.register(UML.ControlFlow)
 class ControlFlowPropertyPage(FlowPropertyPageAbstract):
     pass
 
 
-@component.adapter(UML.ObjectFlow)
+@PropertyPages.register(UML.ObjectFlow)
 class ObjectFlowPropertyPage(FlowPropertyPageAbstract):
     pass
 
 
-component.provideAdapter(ControlFlowPropertyPage, name="Properties")
-component.provideAdapter(ObjectFlowPropertyPage, name="Properties")
-
-
-@component.adapter(items.ComponentItem)
+@PropertyPages.register(items.ComponentItem)
 class ComponentPropertyPage(NamedItemPropertyPage):
     """
     """
@@ -1375,10 +1328,7 @@ class ComponentPropertyPage(NamedItemPropertyPage):
             subject.isIndirectlyInstantiated = button.get_active()
 
 
-component.provideAdapter(ComponentPropertyPage, name="Properties")
-
-
-@component.adapter(items.MessageItem)
+@PropertyPages.register(items.MessageItem)
 class MessagePropertyPage(NamedItemPropertyPage):
     """Property page for editing message items.
 
@@ -1479,6 +1429,3 @@ class MessagePropertyPage(NamedItemPropertyPage):
         subject.messageSort = ms
         # TODO: is required here?
         item.request_update()
-
-
-component.provideAdapter(MessagePropertyPage, name="Properties")

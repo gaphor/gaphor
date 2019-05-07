@@ -10,12 +10,11 @@ All important services are present in the application object:
 """
 
 import logging
-
+import functools
 import pkg_resources
-from zope import component
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
-from gaphor.interfaces import IService
+from gaphor.abc import Service
 
 logger = logging.getLogger(__name__)
 
@@ -24,21 +23,20 @@ class NotInitializedError(Exception):
     pass
 
 
+class ComponentLookupError(LookupError):
+    pass
+
+
 _ESSENTIAL_SERVICES = ["component_registry", "element_dispatcher"]
 
 
-class _Application(object):
+class _Application:
     """
     The Gaphor application is started from the Application instance. It behaves
     like a singleton in many ways.
 
     The Application is responsible for loading services and plugins. Services
-    are registered as "utilities" in the application registry.
-
-    Methods are provided that wrap zope.component's handle, adapter and
-    subscription registrations. In addition to registration methods also
-    unregister methods are provided. This way services can be properly
-    unregistered on shutdown for example.
+    are registered in the "component_registry" service.
     """
 
     def __init__(self):
@@ -66,8 +64,7 @@ class _Application(object):
         """
         Load services from resources.
 
-        Services are registered as utilities in zope.component.
-        Service should provide an interface gaphor.interfaces.IService.
+        Service should provide an interface gaphor.abc.Service.
         """
         # Ensure essential services are always loaded.
         if services:
@@ -77,8 +74,8 @@ class _Application(object):
 
         for ep in pkg_resources.iter_entry_points("gaphor.services"):
             cls = ep.load()
-            if not IService.implementedBy(cls):
-                raise NameError("Entry point %s doesn" "t provide IService" % ep.name)
+            if isinstance(cls, Service):
+                raise NameError("Entry point %s doesn" "t provide Service" % ep.name)
             if not services or ep.name in services:
                 logger.debug('found service entry point "%s"' % ep.name)
                 srv = cls()
@@ -99,7 +96,7 @@ class _Application(object):
         try:
             srv = self._uninitialized_services.pop(name)
         except KeyError:
-            raise component.ComponentLookupError(IService, name)
+            raise ComponentLookupError(Service, name)
         else:
             logger.info("initializing service service.%s" % name)
             srv.init(self)
@@ -108,7 +105,7 @@ class _Application(object):
             if name == "component_registry":
                 self.component_registry = srv
 
-            self.component_registry.register_utility(srv, IService, name)
+            self.component_registry.register(srv, name)
             self.component_registry.handle(ServiceInitializedEvent(name, srv))
             return srv
 
@@ -123,11 +120,11 @@ class _Application(object):
 
         try:
             return self.component_registry.get_service(name)
-        except component.ComponentLookupError:
+        except ComponentLookupError:
             return self.init_service(name)
 
     def shutdown(self):
-        for name, srv in self.component_registry.get_utilities(IService):
+        for srv, name in self.component_registry.all(Service):
             if name not in self.essential_services:
                 self.shutdown_service(name)
 
@@ -139,7 +136,7 @@ class _Application(object):
     def shutdown_service(self, name):
         srv = self.component_registry.get_service(name)
         self.component_registry.handle(ServiceShutdownEvent(name, srv))
-        self.component_registry.unregister_utility(srv, IService, name)
+        self.component_registry.unregister(srv)
         srv.shutdown()
 
     def run(self, model=None):
@@ -201,14 +198,14 @@ class _Application(object):
 Application = _Application()
 
 
-class inject(object):
+class inject:
     """
     Simple descriptor for dependency injection.
     This is technically a wrapper around Application.get_service().
 
     Usage::
 
-    >>> class A(object):
+    >>> class A:
     ...     element_factory = inject('element_factory')
     """
 

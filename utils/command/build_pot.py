@@ -12,7 +12,7 @@ from utils.command import pygettext
 
 
 # from pygettext.main():
-class Options(object):
+class Options:
     # constants
     GNU = 1
     SOLARIS = 2

@@ -8,7 +8,6 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 """
 
 import logging
-from zope import component
 
 from gaphas.aspect import Connector, InMotion
 from gaphas.guide import GuidedItemInMotion
@@ -27,7 +26,7 @@ from gi.repository import Gtk
 from gaphor.core import Transaction, transactional
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.interfaces import IEditor, IConnect, IGroup
+from gaphor.diagram.interfaces import Editor, IConnect, Group
 
 # cursor to indicate grouping
 IN_CURSOR = Gdk.Cursor.new(Gdk.CursorType.DIAMOND_CROSS)
@@ -49,7 +48,7 @@ class DiagramItemConnector(Connector.default):
     """
 
     def allow(self, sink):
-        adapter = component.queryMultiAdapter((sink.item, self.item), IConnect)
+        adapter = IConnect(sink.item, self.item)
         return adapter and adapter.allow(self.handle, sink.port)
 
     @transactional
@@ -71,7 +70,7 @@ class DiagramItemConnector(Connector.default):
             elif cinfo:
                 # first disconnect but disable disconnection handle as
                 # reconnection is going to happen
-                adapter = component.queryMultiAdapter((sink.item, item), IConnect)
+                adapter = IConnect(sink.item, item)
                 try:
                     connect = adapter.reconnect
                 except AttributeError:
@@ -87,7 +86,7 @@ class DiagramItemConnector(Connector.default):
                 connect(handle, sink.port)
             else:
                 # new connection
-                adapter = component.queryMultiAdapter((sink.item, item), IConnect)
+                adapter = IConnect(sink.item, item)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
         except Exception as e:
@@ -98,7 +97,7 @@ class DiagramItemConnector(Connector.default):
         super(DiagramItemConnector, self).disconnect()
 
 
-class DisconnectHandle(object):
+class DisconnectHandle:
     """
     Callback for items disconnection using the adapters.
 
@@ -130,7 +129,7 @@ class DisconnectHandle(object):
         else:
             log.debug("Disconnecting %s.%s" % (item, handle))
             if cinfo:
-                adapter = component.queryMultiAdapter((cinfo.connected, item), IConnect)
+                adapter = IConnect(cinfo.connected, item)
                 adapter.disconnect(handle)
 
 
@@ -212,9 +211,9 @@ class TextEditTool(Tool):
         item = view.hovered_item
         if item:
             try:
-                editor = IEditor(item)
+                editor = Editor(item)
             except TypeError:
-                # Could not adapt to IEditor
+                # Could not adapt to Editor
                 return False
             log.debug("Found editor %r" % editor)
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
@@ -318,9 +317,7 @@ class GroupPlacementTool(PlacementTool):
 
         if parent:
             # create dummy adapter
-            adapter = component.queryMultiAdapter(
-                (parent, self._factory.item_class()), IGroup
-            )
+            adapter = Group(parent, self._factory.item_class())
             if adapter and adapter.can_contain():
                 view.dropzone_item = parent
                 view.window.set_cursor(IN_CURSOR)
@@ -343,15 +340,13 @@ class GroupPlacementTool(PlacementTool):
         parent = self._parent
         view = self.view
         try:
-            adapter = component.queryMultiAdapter(
-                (parent, self._factory.item_class()), IGroup
-            )
+            adapter = Group(parent, self._factory.item_class())
             if parent and adapter and adapter.can_contain():
                 kw["parent"] = parent
 
             item = super(GroupPlacementTool, self)._create_item(pos, **kw)
 
-            adapter = component.queryMultiAdapter((parent, item), IGroup)
+            adapter = Group(parent, item)
             if parent and item and adapter:
                 adapter.group()
 
@@ -384,7 +379,7 @@ class DropZoneInMotion(GuidedItemInMotion):
             return
 
         if current_parent and not over_item:  # are we going to remove from parent?
-            adapter = component.queryMultiAdapter((current_parent, item), IGroup)
+            adapter = Group(current_parent, item)
             if adapter:
                 view.window.set_cursor(OUT_CURSOR)
                 view.dropzone_item = current_parent
@@ -392,7 +387,7 @@ class DropZoneInMotion(GuidedItemInMotion):
 
         if over_item:
             # are we going to add to parent?
-            adapter = component.queryMultiAdapter((over_item, item), IGroup)
+            adapter = Group(over_item, item)
             if adapter and adapter.can_contain():
                 view.dropzone_item = over_item
                 view.window.set_cursor(IN_CURSOR)
@@ -416,7 +411,7 @@ class DropZoneInMotion(GuidedItemInMotion):
                 return
 
             if old_parent:
-                adapter = component.queryMultiAdapter((old_parent, item), IGroup)
+                adapter = Group(old_parent, item)
                 if adapter:
                     adapter.ungroup()
 
@@ -426,7 +421,7 @@ class DropZoneInMotion(GuidedItemInMotion):
                 old_parent.request_update()
 
             if new_parent:
-                adapter = component.queryMultiAdapter((new_parent, item), IGroup)
+                adapter = Group(new_parent, item)
                 if adapter and adapter.can_contain():
                     adapter.group()
 

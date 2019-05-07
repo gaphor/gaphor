@@ -10,11 +10,11 @@ attribute/operation.
 __all__ = ["parse_property", "parse_operation"]
 
 import re
-from simplegeneric import generic
+from functools import singledispatch
 from gaphor.UML.uml2 import Property, NamedElement, Operation, Parameter
 
 
-@generic
+@singledispatch
 def parse(el, text):
     """
     Parser for an UML element.
@@ -236,7 +236,7 @@ def parse_association_end(el, s):
             #        el.taggedValue = tv
 
 
-@parse.when_type(Property)
+@parse.register(Property)
 def parse_property(el, s):
     if el.association:
         parse_association_end(el, s)
@@ -244,7 +244,7 @@ def parse_property(el, s):
         parse_attribute(el, s)
 
 
-@parse.when_type(Operation)
+@parse.register(Operation)
 def parse_operation(el, s):
     """
     Parse string s in the operation. Tagged values, parameters and
@@ -337,7 +337,7 @@ def render_lifeline(el):
     return el.name
 
 
-@parse.when_type(NamedElement)
+@parse.register(NamedElement)
 def parse_namedelement(el, text):
     """
     Parse named element by simply assigning text to its name.

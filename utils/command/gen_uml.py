@@ -65,7 +65,7 @@ def msg(s):
     sys.stderr.flush()
 
 
-class Writer(object):
+class Writer:
     def __init__(self, filename, overrides=None):
         self.overrides = overrides
         if filename:
@@ -93,10 +93,11 @@ class Writer(object):
                 if s:
                     s += ", "
                 s = s + g["name"]
-            if not s:
-                s = "object"
             if not self.overrides.write_override(self, clazz["name"]):
-                self.write("class %s(%s): pass\n" % (clazz["name"], s))
+                self.write("class %s" % (clazz["name"],))
+                if s:
+                    self.write("(%s)" % (s,))
+                self.write(": pass\n")
         clazz.written = True
 
     def write_property(self, full_name, value):

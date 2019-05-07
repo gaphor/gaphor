@@ -3,7 +3,7 @@
 from gaphor.event import ServiceEvent
 
 
-class ElementEvent(object):
+class ElementEvent:
     """Generic event fired when element state changes.
     """
 

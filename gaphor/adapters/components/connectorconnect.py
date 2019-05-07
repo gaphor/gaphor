@@ -5,11 +5,10 @@ Implemented using interface item in assembly connector mode, see
 `gaphor.diagram.connector` module for details.
 """
 
-from zope import component
-
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.adapters.connectors import AbstractConnect
+from gaphor.diagram.interfaces import IConnect
 
 
 class ConnectorConnectBase(AbstractConnect):
@@ -214,17 +213,14 @@ class ConnectorConnectBase(AbstractConnect):
             self.drop_uml(line, c)
 
 
-@component.adapter(items.ComponentItem, items.ConnectorItem)
+@IConnect.register(items.ComponentItem, items.ConnectorItem)
 class ComponentConnectorConnect(ConnectorConnectBase):
     """Connection of connector item to a component."""
 
     pass
 
 
-component.provideAdapter(ComponentConnectorConnect)
-
-
-@component.adapter(items.InterfaceItem, items.ConnectorItem)
+@IConnect.register(items.InterfaceItem, items.ConnectorItem)
 class InterfaceConnectorConnect(ConnectorConnectBase):
     """Connect connector to an interface to maintain assembly connection.
 
@@ -290,6 +286,3 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
                 p.connectable = True
                 p.provided = False
                 p.required = False
-
-
-component.provideAdapter(InterfaceConnectorConnect)

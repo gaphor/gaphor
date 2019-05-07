@@ -6,20 +6,17 @@ gaphor.adapter package.
 """
 
 import logging
-from zope import component
-
-from zope.interface import implementer
 
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
+from gaphor.diagram.abc import ConnectBase
 from gaphor.diagram.interfaces import IConnect
 
 logger = logging.getLogger(__name__)
 
 
-@implementer(IConnect)
-class AbstractConnect(object):
+class AbstractConnect(ConnectBase):
     """
     Connection adapter for Gaphor diagram items.
 
@@ -107,7 +104,7 @@ class AbstractConnect(object):
         pass
 
 
-@component.adapter(items.ElementItem, items.CommentLineItem)
+@IConnect.register(items.ElementItem, items.CommentLineItem)
 class CommentLineElementConnect(AbstractConnect):
     """Connect a comment line to any element item."""
 
@@ -187,9 +184,7 @@ class CommentLineElementConnect(AbstractConnect):
         super(CommentLineElementConnect, self).disconnect(handle)
 
 
-component.provideAdapter(CommentLineElementConnect)
-
-
+@IConnect.register(items.DiagramLine, items.CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
     """Connect a comment line to any diagram line."""
 
@@ -252,11 +247,7 @@ class CommentLineLineConnect(AbstractConnect):
         super(CommentLineLineConnect, self).disconnect(handle)
 
 
-component.provideAdapter(
-    CommentLineLineConnect, adapts=(items.DiagramLine, items.CommentLineItem)
-)
-
-
+@IConnect.register(items.CommentLineItem, items.DiagramLine)
 class InverseCommentLineLineConnect(CommentLineLineConnect):
     """
     In case a line is disconnected that contains a comment-line,
@@ -265,11 +256,6 @@ class InverseCommentLineLineConnect(CommentLineLineConnect):
 
     def __init__(self, line, element):
         super().__init__(element, line)
-
-
-component.provideAdapter(
-    InverseCommentLineLineConnect, adapts=(items.CommentLineItem, items.DiagramLine)
-)
 
 
 class UnaryRelationshipConnect(AbstractConnect):
@@ -381,7 +367,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         for cinfo in connections or canvas.get_connections(connected=line):
             if line is cinfo.connected:
                 continue
-            adapter = component.queryMultiAdapter((line, cinfo.connected), IConnect)
+            adapter = IConnect(line, cinfo.connected)
             assert adapter, "No element to connect {} and {}".format(
                 line, cinfo.connected
             )
@@ -403,10 +389,9 @@ class UnaryRelationshipConnect(AbstractConnect):
         solver.solve()
         connections = list(canvas.get_connections(connected=line))
         for cinfo in connections:
-            adapter = component.queryMultiAdapter(
-                (cinfo.item, cinfo.connected), IConnect
-            )
+            adapter = IConnect(cinfo.item, cinfo.connected)
             assert adapter
+            print(adapter)
             adapter.disconnect(cinfo.handle)
         return connections
 

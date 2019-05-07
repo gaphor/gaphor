@@ -2,20 +2,16 @@
 Copy / Paste functionality
 """
 
-from zope import component
-
 import gaphas
-from zope.interface import implementer
 
 from gaphor.UML import Element
 from gaphor.UML.collection import collection
-from gaphor.core import inject, action, build_action_group, transactional
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.core import inject, event_handler, action, build_action_group, transactional
+from gaphor.abc import Service, ActionProvider
 from gaphor.ui.event import DiagramSelectionChange
 
 
-@implementer(IService, IActionProvider)
-class CopyService(object):
+class CopyService(Service, ActionProvider):
     """
     Copy/Cut/Paste functionality required a lot of thinking:
 
@@ -62,7 +58,7 @@ class CopyService(object):
         self.copy_buffer = set()
         self.component_registry.unregister_handler(self._update)
 
-    @component.adapter(DiagramSelectionChange)
+    @event_handler(DiagramSelectionChange)
     def _update(self, event):
         diagram_view = event.diagram_view
         self.action_group.get_action("edit-copy").props.sensitive = bool(

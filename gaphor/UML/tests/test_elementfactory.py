@@ -69,8 +69,8 @@ class ElementFactoryTestCase(unittest.TestCase):
         assert len(list(ef.values())) == 0, list(ef.values())
 
 
-from zope import component
 from gaphor.application import Application
+from gaphor.core import event_handler
 
 # Event handlers are registered as persisting top level handlers, since no
 # unsubscribe functionality is provided.
@@ -79,15 +79,12 @@ events = []
 last_event = None
 
 
-@component.adapter(ServiceEvent)
+@event_handler(ServiceEvent)
 def handler(event):
     global handled, events, last_event
     handled = True
     events.append(event)
     last_event = event
-
-
-component.provideHandler(handler)
 
 
 def clearEvents():
@@ -101,6 +98,8 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(["element_factory"])
         self.factory = Application.get_service("element_factory")
+        component_registry = Application.get_service("component_registry")
+        component_registry.register_handler(handler)
         clearEvents()
 
     def tearDown(self):

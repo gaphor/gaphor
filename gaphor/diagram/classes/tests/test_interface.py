@@ -2,7 +2,6 @@
 Test classes.
 """
 
-from zope import component
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.classes.interface import InterfaceItem

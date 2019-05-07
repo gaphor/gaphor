@@ -1,12 +1,10 @@
 """
 """
 
-from zope.interface import implementer
-from zope import component
 
 from logging import getLogger
-from gaphor.core import inject
-from gaphor.interfaces import IService
+from gaphor.core import inject, event_handler
+from gaphor.abc import Service
 from gaphor import UML
 from gaphor.UML.event import (
     ElementChangeEvent,
@@ -17,7 +15,7 @@ from gaphor.UML.event import (
 )
 
 
-class EventWatcher(object):
+class EventWatcher:
     """
     A helper for easy registering and unregistering event handlers.
     """
@@ -72,8 +70,7 @@ class EventWatcher(object):
             dispatcher.unregister_handler(handler)
 
 
-@implementer(IService)
-class ElementDispatcher(object):
+class ElementDispatcher(Service):
     """
     The Element based Dispatcher allows handlers to receive only events
     related to certain elements. Those elements should be registered to. Also
@@ -254,7 +251,7 @@ class ElementDispatcher(object):
                     del self._handlers[key]
         del self._reverse[handler]
 
-    @component.adapter(ElementChangeEvent)
+    @event_handler(ElementChangeEvent)
     def on_element_change_event(self, event):
 
         # self.logger.info('Handling ElementChangeEvent')
@@ -297,7 +294,7 @@ class ElementDispatcher(object):
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
-    @component.adapter(ModelFactoryEvent)
+    @event_handler(ModelFactoryEvent)
     def on_model_loaded(self, event):
         for key, value in list(self._handlers.items()):
             for h, remainders in list(value.items()):

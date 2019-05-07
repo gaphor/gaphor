@@ -4,8 +4,6 @@ The main application window.
 
 import logging
 import os.path
-from zope import component
-from zope.interface import implementer
 
 import pkg_resources
 from gi.repository import GLib
@@ -18,19 +16,20 @@ from gaphor.UML.event import ModelFactoryEvent
 from gaphor.core import (
     _,
     inject,
+    event_handler,
     action,
     toggle_action,
     build_action_group,
     transactional,
 )
-from gaphor.interfaces import IService, IActionProvider
+from gaphor.abc import Service, ActionProvider
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import DiagramPageChange, DiagramShow
-from gaphor.ui.interfaces import IUIComponent
 from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import Namespace
 from gaphor.ui.toolbox import Toolbox
@@ -45,8 +44,7 @@ ICONS = (
 )
 
 
-@implementer(IService, IActionProvider)
-class MainWindow(object):
+class MainWindow(Service, ActionProvider):
     """
     The main window for the application.
     It contains a Namespace-based tree view and a menu and a statusbar.
@@ -130,14 +128,12 @@ class MainWindow(object):
         for ep in pkg_resources.iter_entry_points("gaphor.uicomponents"):
             log.debug("found entry point uicomponent.%s" % ep.name)
             cls = ep.load()
-            if not IUIComponent.implementedBy(cls):
-                raise NameError(
-                    "Entry point %s doesn" "t provide IUIComponent" % ep.name
-                )
+            if not issubclass(cls, UIComponent):
+                raise NameError("Entry point %s doesn't provide UIComponent" % ep.name)
             uicomp = cls()
             uicomp.ui_name = ep.name
-            component_registry.register_utility(uicomp, IUIComponent, ep.name)
-            if IActionProvider.providedBy(uicomp):
+            component_registry.register(uicomp, ep.name)
+            if isinstance(uicomp, ActionProvider):
                 self.action_manager.register_action_provider(uicomp)
 
     def shutdown(self):
@@ -211,7 +207,7 @@ class MainWindow(object):
         return True
 
     def get_ui_component(self, name):
-        return self.component_registry.get_utility(IUIComponent, name)
+        return self.component_registry.get(UIComponent, name)
 
     def open(self, gtk_app=None):
         """Open the main window.
@@ -300,7 +296,7 @@ class MainWindow(object):
 
     # Signal callbacks:
 
-    @component.adapter(ModelFactoryEvent)
+    @event_handler(ModelFactoryEvent)
     def _new_model_content(self, event):
         """
         Open the toplevel element and load toplevel diagrams.
@@ -312,14 +308,14 @@ class MainWindow(object):
         ):
             self.component_registry.handle(DiagramShow(diagram))
 
-    @component.adapter(FileManagerStateChanged)
+    @event_handler(FileManagerStateChanged)
     def _on_file_manager_state_changed(self, event):
         # We're only interested in file operations
         if event.service is self.file_manager:
             self.model_changed = False
             self.set_title()
 
-    @component.adapter(UndoManagerStateChanged)
+    @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
         """
         """
@@ -363,8 +359,7 @@ class MainWindow(object):
 Gtk.AccelMap.add_filter("gaphor")
 
 
-@implementer(IUIComponent, IActionProvider)
-class Diagrams(object):
+class Diagrams(UIComponent, ActionProvider):
 
     title = _("Diagrams")
     placement = ("left", "diagrams")
@@ -528,7 +523,7 @@ class Diagrams(object):
             self.action_manager.unregister_action_provider(self._page_ui_settings)
             self._page_ui_settings = None
 
-    @component.adapter(DiagramShow)
+    @event_handler(DiagramShow)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
 
@@ -561,7 +556,7 @@ class Diagrams(object):
         self.create_tab(diagram.name, widget)
         return page
 
-    @component.adapter(FlushFactoryEvent)
+    @event_handler(FlushFactoryEvent)
     def _on_flush_model(self, event):
         """
         Close all tabs.
@@ -569,7 +564,7 @@ class Diagrams(object):
         while self._notebook.get_n_pages():
             self._notebook.remove_page(0)
 
-    @component.adapter(AttributeChangeEvent)
+    @event_handler(AttributeChangeEvent)
     def _on_name_change(self, event):
         if event.property is UML.Diagram.name:
             for page in range(0, self._notebook.get_n_pages()):

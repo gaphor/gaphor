@@ -9,7 +9,7 @@ def rgetattr(obj, attr):
      - obj:  object
      - attr: attribute name(s)
 
-    >>> class A(object): pass
+    >>> class A: pass
     >>> a = A()
     >>> a.a = A()
     >>> a.a.a = 1
@@ -36,7 +36,7 @@ def rsetattr(obj, attr, val):
      - attr: attribute name(s)
      - val:  attribute value
 
-    >>> class A(object): pass
+    >>> class A: pass
     >>> a = A()
     >>> a.a = A()
     >>> a.a.a = 1

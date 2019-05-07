@@ -3,21 +3,19 @@
 import logging
 
 from gi.repository import Gtk
-from zope.component import adapter, getAdapters
-from zope.interface import implementer
 
 from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationChangeEvent
-from gaphor.core import _, inject, action, build_action_group
-from gaphor.interfaces import IActionProvider
-from gaphor.ui.interfaces import IUIComponent, IPropertyPage
+from gaphor.core import _, inject, event_handler, action, build_action_group
+from gaphor.abc import ActionProvider
+from gaphor.ui.abc import UIComponent
+from gaphor.ui.interfaces import PropertyPages
 from gaphor.ui.event import DiagramSelectionChange
 
 log = logging.getLogger(__name__)
 
 
-@implementer(IUIComponent, IActionProvider)
-class ElementEditor(object):
+class ElementEditor(UIComponent, ActionProvider):
     """The ElementEditor class is a utility window used to edit UML elements.
     It will display the properties of the currently selected element in the
     diagram."""
@@ -112,12 +110,12 @@ class ElementEditor(object):
         adaptermap = {}
         try:
             if item.subject:
-                for name, adapter in getAdapters([item.subject], IPropertyPage):
-                    adaptermap[name] = (adapter.order, name, adapter)
+                for adapter in PropertyPages(item.subject):
+                    adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
         except AttributeError:
             pass
-        for name, adapter in getAdapters([item], IPropertyPage):
-            adaptermap[name] = (adapter.order, name, adapter)
+        for adapter in PropertyPages(item):
+            adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
 
         adapters = sorted(adaptermap.values())
         return adapters
@@ -164,7 +162,7 @@ class ElementEditor(object):
     def on_expand(self, widget, name):
         self._expanded_pages[name] = widget.get_expanded()
 
-    @adapter(DiagramSelectionChange)
+    @event_handler(DiagramSelectionChange)
     def _selection_change(self, event=None, focused_item=None):
         """
         Called when a diagram item receives focus.
@@ -186,7 +184,7 @@ class ElementEditor(object):
             return
         self.create_pages(item)
 
-    @adapter(AssociationChangeEvent)
+    @event_handler(AssociationChangeEvent)
     def _element_changed(self, event):
         element = event.element
         if event.property is Presentation.subject:

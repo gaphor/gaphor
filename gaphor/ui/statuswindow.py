@@ -6,9 +6,9 @@ from gi.repository import GLib, Gdk, Gtk, Pango
 from gaphor.misc.gidlethread import QueueEmpty
 
 
-class StatusWindow(object):
-    """Create a borderless window on the parent, usually the main window, 
-    with a label and a progress bar.  The progress bar is updated as the 
+class StatusWindow:
+    """Create a borderless window on the parent, usually the main window,
+    with a label and a progress bar.  The progress bar is updated as the
     queue is updated."""
 
     def __init__(self, title, message, parent=None, queue=None, display=True):

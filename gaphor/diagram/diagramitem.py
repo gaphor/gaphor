@@ -3,7 +3,6 @@ DiagramItem provides basic functionality for presentations.
 Such as a modifier 'subject' property and a unique id.
 """
 
-from zope import component
 from gaphas.state import observed, reversible_property
 
 import logging
@@ -17,7 +16,7 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 logger = logging.getLogger(__name__)
 
 
-class StereotypeSupport(object):
+class StereotypeSupport:
     """
     Support for stereotypes for every diagram item.
     """

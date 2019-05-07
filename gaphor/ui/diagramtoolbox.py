@@ -7,7 +7,6 @@ the actions bound to the toolbuttons should change as well.
 """
 
 from gaphas.item import SE
-from zope import component
 
 from gaphor import UML
 from gaphor.UML.event import DiagramItemCreateEvent
@@ -168,7 +167,7 @@ def itemiter(toolbox_actions):
             yield e
 
 
-class DiagramToolbox(object):
+class DiagramToolbox:
     """
     Composite class for DiagramPage (diagrampage.py).
     """

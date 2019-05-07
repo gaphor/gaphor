@@ -1,7 +1,7 @@
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IEditor
+from gaphor.diagram.interfaces import Editor
 from gaphor.adapters.propertypages import AttributesPage, OperationsPage
 from gi.repository import Gtk
 
@@ -12,7 +12,7 @@ class EditorTestCase(TestCase):
 
     def test_association_editor(self):
         assoc = self.create(items.AssociationItem)
-        adapter = IEditor(assoc)
+        adapter = Editor(assoc)
         assert not adapter.is_editable(10, 10)
         assert adapter._edit is None
 
@@ -44,7 +44,7 @@ class EditorTestCase(TestCase):
         node = self.create(items.ObjectNodeItem, UML.ObjectNode)
         self.diagram.canvas.update_now()
 
-        adapter = IEditor(node)
+        adapter = Editor(node)
         self.assertTrue(adapter.is_editable(10, 10))
         # assert not adapter.edit_tag
 
@@ -70,7 +70,7 @@ class EditorTestCase(TestCase):
 
         self.diagram.canvas.update()
 
-        edit = IEditor(klass)
+        edit = Editor(klass)
 
         self.assertEqual("CompartmentItemEditor", edit.__class__.__name__)
 

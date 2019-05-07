@@ -3,7 +3,6 @@ Test handle tool functionality.
 """
 
 import unittest
-from zope import component
 
 from gaphas.aspect import Connector, ConnectionSink
 from gi.repository import Gdk, Gtk
@@ -17,14 +16,13 @@ from gaphor.diagram.commentline import CommentLineItem
 from gaphor.diagram.interfaces import IConnect
 from gaphor.ui.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.ui.event import DiagramShow
-from gaphor.ui.interfaces import IUIComponent
+from gaphor.ui.abc import UIComponent
 
 
 class DiagramItemConnectorTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
-                "adapter_loader",
                 "element_factory",
                 "main_window",
                 "properties_manager",
@@ -34,7 +32,6 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
             ]
         )
         self.main_window = Application.get_service("main_window")
-        self.main_window.init()
         self.main_window.open()
         self.element_factory = Application.get_service("element_factory")
         self.diagram = self.element_factory.create(UML.Diagram)
@@ -48,7 +45,7 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
         assert isinstance(aspect, DiagramItemConnector)
 
     def test_query(self):
-        assert component.queryMultiAdapter((self.comment, self.commentline), IConnect)
+        assert IConnect(self.comment, self.commentline)
 
     def test_allow(self):
         aspect = Connector(self.commentline, self.commentline.handles()[0])
@@ -77,7 +74,6 @@ class HandleToolTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
-                "adapter_loader",
                 "element_factory",
                 "main_window",
                 "properties_manager",
@@ -96,9 +92,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         Get a view for diagram.
         """
-        view = self.component_registry.get_utility(
-            IUIComponent, "diagrams"
-        ).get_current_view()
+        view = self.component_registry.get(UIComponent, "diagrams").get_current_view()
 
         # realize view, forces bounding box recalculation
         while Gtk.events_pending():

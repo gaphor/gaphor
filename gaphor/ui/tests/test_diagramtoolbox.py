@@ -5,7 +5,7 @@ from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
 
-class WindowOwner(object):
+class WindowOwner:
     """
     Placeholder object for a MainWindow. Should provide just enough
     methods to make the tests work.

@@ -3,8 +3,6 @@
 import uuid
 from contextlib import contextmanager
 
-from zope import component
-from zope.interface import implementer
 
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element
@@ -16,11 +14,11 @@ from gaphor.UML.event import (
     ModelFactoryEvent,
 )
 from gaphor.core import inject
-from gaphor.interfaces import IService
+from gaphor.abc import Service
 from gaphor.misc import odict
 
 
-class ElementFactory(object):
+class ElementFactory:
     """
     The ElementFactory is used to create elements and do lookups to
     elements.
@@ -172,8 +170,7 @@ class ElementFactory(object):
         pass
 
 
-@implementer(IService)
-class ElementFactoryService(ElementFactory):
+class ElementFactoryService(Service, ElementFactory):
     """Service version of the ElementFactory."""
 
     component_registry = inject("component_registry")
@@ -218,14 +215,12 @@ class ElementFactoryService(ElementFactory):
         """
         Block events from being emitted.
         """
-        print("Blocking events", self._block_events)
         self._block_events += 1
 
         try:
             yield self
         finally:
             self._block_events -= 1
-            print("Unblocked events", self._block_events)
 
     def _unlink_element(self, element):
         """

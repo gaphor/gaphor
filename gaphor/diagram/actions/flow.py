@@ -60,7 +60,7 @@ class FlowItem(NamedLine):
 
 
 # class ACItem(TextElement):
-class ACItem(object):
+class ACItem:
     """
     Activity edge connector. It is a circle with name inside.
     """
