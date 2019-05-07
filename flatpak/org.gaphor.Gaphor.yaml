@@ -25,9 +25,7 @@ modules:
         enum34 glob2 html5lib idna jsonschema lockfile msgpack pastel pathlib2
         pkginfo pylev pyparsing pyrsistent requests requests-toolbelt scandir
         shellingham six tomlkit typing urllib3 virtualenv webencodings decorator
-        future gaphas pygobject simplegeneric zope.component zope.deferredimport
-        zope.deprecation zope.event zope.hookable zope.interface zope.proxy
-        pycairo'
+        future gaphas pygobject simplegeneric pycairo'
     sources:
       - type: git
         tag: 1.0.1
@@ -51,27 +49,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/3d/57/4d9c9e3ae9a255cd4e1106bb57e24056d3d0709fc01b2e3e345898e49d5b/simplegeneric-0.8.1.zip
         sha256: dc972e06094b9af5b855b3df4a646395e43d1c9d0d39ed345b7393560d0b9173
-      - type: file
-        url: https://files.pythonhosted.org/packages/97/e2/c785df1171f277ea93cc16bdcc112cb3ddfde1aeefbc401d46c49727f472/zope.component-4.5-py2.py3-none-any.whl
-        sha256: 984a06ba3def0b02b1117fa4c45b56e772e8c29c0340820fbf367e440a93a3a4
-      - type: file
-        url: https://files.pythonhosted.org/packages/62/d2/e03e4b0c9103817e19d1ea577c1f7fb9b67e4c0397ca5127d377e1eafe0c/zope.deferredimport-4.3-py2.py3-none-any.whl
-        sha256: 4aae9cbacb2146cca58e62be0a914f0cec034d3b2d41135ea212ca8a96f4b5ec
-      - type: file
-        url: https://files.pythonhosted.org/packages/f9/26/b935bbf9d27e898b87d80e7873a0200cebf239253d0afe7a59f82fe90fff/zope.deprecation-4.4.0-py2.py3-none-any.whl
-        sha256: f1480b74995958b24ce37b0ef04d3663d2683e5d6debc96726eff18acf4ea113
-      - type: file
-        url: https://files.pythonhosted.org/packages/c5/96/361edb421a077a4c208b4a5c212737d78ae03ce67fbbcd01621c49f332d1/zope.event-4.4-py2.py3-none-any.whl
-        sha256: d8e97d165fd5a0997b45f5303ae11ea3338becfe68c401dd88ffd2113fe5cae7
-      - type: file
-        url: https://files.pythonhosted.org/packages/41/b5/378175b959565de41f45c775cdfbf8897aaeaf29a258b94e40bd2661ce46/zope.hookable-4.2.0.tar.gz
-        sha256: c1df3929a3666fc5a0c80d60a0c1e6f6ef97c7f6ed2f1b7cf49f3e6f3d4dde15
-      - type: file
-        url: https://files.pythonhosted.org/packages/4e/d0/c9d16bd5b38de44a20c6dc5d5ed80a49626fafcb3db9f9efdc2a19026db6/zope.interface-4.6.0.tar.gz
-        sha256: 1b3d0dcabc7c90b470e59e38a9acaa361be43b3a6ea644c0063951964717f0e5
-      - type: file
-        url: https://files.pythonhosted.org/packages/7c/f5/e9ed65cdf8c93d24d7512ef89e21b241bc9ae75d90bc8608cc142f4c26f9/zope.proxy-4.3.1.tar.gz
-        sha256: 563c2454b2d0f23bca54d2e0e4d781149b7b06cb5df67e253ca3620f37202dd2
       - type: file
         url: https://files.pythonhosted.org/packages/c8/b0/cc6b7ba28d5fb790cf0d5946df849233e32b8872b6baca10c9e002ff5b41/setuptools-41.0.0-py2.py3-none-any.whl
         sha256: e67486071cd5cdeba783bd0b64f5f30784ff855b35071c8670551fd7fc52d4a1
