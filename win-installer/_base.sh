@@ -94,8 +94,7 @@ function install_deps {
 	mingw-w64-"${ARCH}"-gobject-introspection \
         mingw-w64-"${ARCH}"-python3-cairo \
         mingw-w64-"${ARCH}"-python3-pip \
-        mingw-w64-"${ARCH}"-python3-setuptools \
-        mingw-w64-"${ARCH}"-python3-zope.interface
+        mingw-w64-"${ARCH}"-python3-setuptools
 
     # Temporary workaround until mingw64 python3 is patched
     # Line 296 changed to not raise a VC 6.0 version error
@@ -105,7 +104,6 @@ function install_deps {
         pycairo==1.18.0
         PyGObject==3.30.4
         gaphas==1.0.0
-        zope.component==4.5
         tomlkit==0.5.3
         "
     build_pip install -I $(echo "$PIP_REQUIREMENTS" | tr ["\\n"] [" "])

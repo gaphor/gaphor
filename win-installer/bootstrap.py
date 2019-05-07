@@ -18,4 +18,4 @@ subprocess.run(
 )
 
 # Install Gaphor dependencies
-subprocess.run("pip3 install --user -U" "gaphas" "zope.component" "pycairo" "PyGObject")
+subprocess.run("pip3 install --user -U" "gaphas" "pycairo" "PyGObject")
