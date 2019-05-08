@@ -55,7 +55,7 @@ class EventWatcher:
 
         for path, handler in self._watched_paths.items():
 
-            dispatcher.register_handler(handler, element, path)
+            dispatcher.subscribe(handler, element, path)
 
     def unregister_handlers(self, *args):
         """
@@ -67,7 +67,7 @@ class EventWatcher:
 
         for path, handler in self._watched_paths.items():
 
-            dispatcher.unregister_handler(handler)
+            dispatcher.unsubscribe(handler)
 
 
 class ElementDispatcher(Service):
@@ -85,7 +85,7 @@ class ElementDispatcher(Service):
     that's represented by this item (gaphor.UML.Transition), you can register
     a handler like this::
 
-      dispatcher.register_handler(element,
+      dispatcher.subscribe(element,
               'guard.specification<LiteralSpecification>.value', self._handler)
 
     Note the '<' and '>'. This is because guard references ValueSpecification,
@@ -214,7 +214,7 @@ class ElementDispatcher(Service):
         if not handlers:
             del self._handlers[key]
 
-    def register_handler(self, handler, element, path):
+    def subscribe(self, handler, element, path):
 
         # self.logger.info('Registering handler')
         # self.logger.debug('Handler is %s' % handler)
@@ -224,7 +224,7 @@ class ElementDispatcher(Service):
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
 
-    def unregister_handler(self, handler):
+    def unsubscribe(self, handler):
         """
         Unregister a handler from the registy.
         """
