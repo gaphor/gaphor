@@ -29,7 +29,7 @@
 	<string>Copyright 2001-2019 Gaphor Developers, Apache 2 License.</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.13</string>
-	<key>LSUIElement</key>
-	<string>1</string>
+        <key>NSHighResolutionCapable</key>
+        <true/>
 </dict>
 </plist>
