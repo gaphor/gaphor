@@ -22,7 +22,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
     element_factory = inject("element_factory")
     main_window = inject("main_window")
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     title = _("Element Editor")
     size = (275, -1)
@@ -85,8 +85,8 @@ class ElementEditor(UIComponent, ActionProvider):
                 self._selection_change(focused_item=focused_item)
 
         # Make sure we recieve
-        self.component_registry.register_handler(self._selection_change)
-        self.component_registry.register_handler(self._element_changed)
+        self.event_manager.subscribe(self._selection_change)
+        self.event_manager.subscribe(self._element_changed)
 
         window.connect("destroy", self.close)
 
@@ -96,8 +96,8 @@ class ElementEditor(UIComponent, ActionProvider):
         idempotent if set."""
 
         log.debug("ElementEditor.close")
-        self.component_registry.unregister_handler(self._selection_change)
-        self.component_registry.unregister_handler(self._element_changed)
+        self.event_manager.unsubscribe(self._selection_change)
+        self.event_manager.unsubscribe(self._element_changed)
         self.window = None
         self.vbox = None
         self._current_item = None

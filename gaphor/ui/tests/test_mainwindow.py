@@ -14,6 +14,7 @@ class MainWindowTestCase(unittest.TestCase):
         )
 
     component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def tearDown(self):
         Application.shutdown()
@@ -34,5 +35,5 @@ class MainWindowTestCase(unittest.TestCase):
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
         main_w.open()
-        self.component_registry.handle(DiagramShow(diagram))
+        self.event_manager.handle(DiagramShow(diagram))
         self.assertEqual(self.get_current_diagram(), diagram)

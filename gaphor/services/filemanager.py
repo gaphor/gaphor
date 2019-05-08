@@ -38,7 +38,7 @@ class FileManager(Service, ActionProvider):
     The file service, responsible for loading and saving Gaphor models.
     """
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
     element_factory = inject("element_factory")
     main_window = inject("main_window")
     properties = inject("properties")
@@ -194,7 +194,7 @@ class FileManager(Service, ActionProvider):
         filename = self.recent_files[index]
 
         self.load(filename)
-        self.component_registry.handle(FileManagerStateChanged(self))
+        self.event_manager.handle(FileManagerStateChanged(self))
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
@@ -396,7 +396,7 @@ class FileManager(Service, ActionProvider):
         # main_window.select_element(diagram)
         # main_window.show_diagram(diagram)
 
-        self.component_registry.handle(FileManagerStateChanged(self))
+        self.event_manager.handle(FileManagerStateChanged(self))
 
     @action(name="file-new-template", label=_("New from template"))
     def action_new_from_template(self):
@@ -418,7 +418,7 @@ class FileManager(Service, ActionProvider):
         if filename:
             self.load(filename)
             self.filename = None
-            self.component_registry.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FileManagerStateChanged(self))
 
     @action(name="file-open", stock_id="gtk-open")
     def action_open(self):
@@ -439,7 +439,7 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.load(filename)
-            self.component_registry.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FileManagerStateChanged(self))
 
     @action(name="file-save", stock_id="gtk-save")
     def action_save(self):
@@ -454,7 +454,7 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.component_registry.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FileManagerStateChanged(self))
             return True
         else:
             return self.action_save_as()
@@ -478,7 +478,7 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.component_registry.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FileManagerStateChanged(self))
             return True
 
         return False

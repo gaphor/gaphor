@@ -98,8 +98,8 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(["element_factory"])
         self.factory = Application.get_service("element_factory")
-        component_registry = Application.get_service("component_registry")
-        component_registry.register_handler(handler)
+        event_manager = Application.get_service("event_manager")
+        event_manager.subscribe(handler)
         clearEvents()
 
     def tearDown(self):

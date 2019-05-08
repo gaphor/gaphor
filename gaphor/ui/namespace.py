@@ -299,7 +299,7 @@ class Namespace(UIComponent, ActionProvider):
     title = _("Namespace")
     placement = ("left", "diagrams")
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
     element_factory = inject("element_factory")
     action_manager = inject("action_manager")
 
@@ -339,13 +339,13 @@ class Namespace(UIComponent, ActionProvider):
         # Event handler registration is in a separate function,
         # since putting it in with widget construction will cause
         # unit tests to fail, on macOS at least.
-        cr = self.component_registry
-        cr.register_handler(self._on_element_create)
-        cr.register_handler(self._on_element_delete)
-        cr.register_handler(self._on_model_factory)
-        cr.register_handler(self._on_flush_factory)
-        cr.register_handler(self._on_association_set)
-        cr.register_handler(self._on_attribute_change)
+        em = self.event_manager
+        em.subscribe(self._on_element_create)
+        em.subscribe(self._on_element_delete)
+        em.subscribe(self._on_model_factory)
+        em.subscribe(self._on_flush_factory)
+        em.subscribe(self._on_association_set)
+        em.subscribe(self._on_attribute_change)
 
     def open(self):
         self.init()
@@ -356,13 +356,13 @@ class Namespace(UIComponent, ActionProvider):
             self._namespace.destroy()
             self._namespace = None
 
-        cr = self.component_registry
-        cr.unregister_handler(self._on_element_create)
-        cr.unregister_handler(self._on_element_delete)
-        cr.unregister_handler(self._on_model_factory)
-        cr.unregister_handler(self._on_flush_factory)
-        cr.unregister_handler(self._on_association_set)
-        cr.unregister_handler(self._on_attribute_change)
+        em = self.event_manager
+        em.unsubscribe(self._on_element_create)
+        em.unsubscribe(self._on_element_delete)
+        em.unsubscribe(self._on_model_factory)
+        em.unsubscribe(self._on_flush_factory)
+        em.unsubscribe(self._on_association_set)
+        em.unsubscribe(self._on_attribute_change)
 
     def construct(self):
         sorted_model = Gtk.TreeModelSort(self.model)
@@ -567,7 +567,7 @@ class Namespace(UIComponent, ActionProvider):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
-            self.component_registry.handle(DiagramShow(element))
+            self.event_manager.handle(DiagramShow(element))
 
         else:
             log.debug("No action defined for element %s" % type(element).__name__)
@@ -602,7 +602,7 @@ class Namespace(UIComponent, ActionProvider):
             diagram.name = "New diagram"
 
         self.select_element(diagram)
-        self.component_registry.handle(DiagramShow(diagram))
+        self.event_manager.handle(DiagramShow(diagram))
         self.tree_view_rename_selected()
 
     @action(

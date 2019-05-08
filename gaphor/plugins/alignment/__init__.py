@@ -8,7 +8,7 @@ from gaphor.ui.event import DiagramSelectionChange
 
 
 class Alignment(Service, ActionProvider):
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     menu_xml = """
       <ui>
@@ -33,11 +33,11 @@ class Alignment(Service, ActionProvider):
         self._last_update = None
 
     def init(self, app):
-        self.component_registry.register_handler(self.update)
+        self.event_manager.subscribe(self.update)
         self.update()
 
     def shutdown(self):
-        self.component_registry.unregister_handler(self.update)
+        self.event_manager.unsubscribe(self.update)
 
     @event_handler(DiagramSelectionChange)
     def update(self, event=None):

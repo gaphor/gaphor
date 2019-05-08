@@ -51,6 +51,7 @@ class MainWindow(Service, ActionProvider):
     """
 
     component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
     properties = inject("properties")
     element_factory = inject("element_factory")
     action_manager = inject("action_manager")
@@ -143,10 +144,10 @@ class MainWindow(Service, ActionProvider):
             self.window = None
         save_accel_map()
 
-        cr = self.component_registry
-        cr.unregister_handler(self._on_file_manager_state_changed)
-        cr.unregister_handler(self._on_undo_manager_state_changed)
-        cr.unregister_handler(self._new_model_content)
+        em = self.event_manager
+        em.unsubscribe(self._on_file_manager_state_changed)
+        em.unsubscribe(self._on_undo_manager_state_changed)
+        em.unsubscribe(self._new_model_content)
 
     def init_action_group(self):
         self.action_group = build_action_group(self)
@@ -268,10 +269,10 @@ class MainWindow(Service, ActionProvider):
         self.window.set_resizable(True)
         self.window.connect("size-allocate", self._on_window_size_allocate)
 
-        cr = self.component_registry
-        cr.register_handler(self._on_file_manager_state_changed)
-        cr.register_handler(self._on_undo_manager_state_changed)
-        cr.register_handler(self._new_model_content)
+        em = self.event_manager
+        em.subscribe(self._on_file_manager_state_changed)
+        em.subscribe(self._on_undo_manager_state_changed)
+        em.subscribe(self._new_model_content)
 
     def open_welcome_page(self):
         """
@@ -306,7 +307,7 @@ class MainWindow(Service, ActionProvider):
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
-            self.component_registry.handle(DiagramShow(diagram))
+            self.event_manager.handle(DiagramShow(diagram))
 
     @event_handler(FileManagerStateChanged)
     def _on_file_manager_state_changed(self, event):
@@ -364,7 +365,7 @@ class Diagrams(UIComponent, ActionProvider):
     title = _("Diagrams")
     placement = ("left", "diagrams")
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
     properties = inject("properties")
     action_manager = inject("action_manager")
 
@@ -398,17 +399,17 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook = Gtk.Notebook()
         self._notebook.show()
         self._notebook.connect("switch-page", self._on_switch_page)
-        self.component_registry.register_handler(self._on_show_diagram)
-        self.component_registry.register_handler(self._on_name_change)
-        self.component_registry.register_handler(self._on_flush_model)
+        self.event_manager.subscribe(self._on_show_diagram)
+        self.event_manager.subscribe(self._on_name_change)
+        self.event_manager.subscribe(self._on_flush_model)
         return self._notebook
 
     def close(self):
         """Close the diagrams component."""
 
-        self.component_registry.unregister_handler(self._on_flush_model)
-        self.component_registry.unregister_handler(self._on_name_change)
-        self.component_registry.unregister_handler(self._on_show_diagram)
+        self.event_manager.unsubscribe(self._on_flush_model)
+        self.event_manager.unsubscribe(self._on_name_change)
+        self.event_manager.unsubscribe(self._on_show_diagram)
         self._notebook.destroy()
         self._notebook = None
 
@@ -466,7 +467,7 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook.set_current_page(page_num)
         self._notebook.set_tab_reorderable(widget, True)
 
-        self.component_registry.handle(DiagramPageChange(widget))
+        self.event_manager.handle(DiagramPageChange(widget))
         self._notebook.set_show_tabs(True)
 
     def tab_label(self, title, widget):
@@ -509,7 +510,7 @@ class Diagrams(UIComponent, ActionProvider):
     def _on_switch_page(self, notebook, page, page_num):
         self._clear_ui_settings()
         self._add_ui_settings(page_num)
-        self.component_registry.handle(DiagramPageChange(page))
+        self.event_manager.handle(DiagramPageChange(page))
 
     def _add_ui_settings(self, page_num):
         action_manager = self.action_manager

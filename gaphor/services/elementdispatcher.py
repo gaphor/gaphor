@@ -99,7 +99,7 @@ class ElementDispatcher(Service):
 
     logger = getLogger("ElementDispatcher")
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def __init__(self):
         # Table used to fire events:
@@ -111,12 +111,12 @@ class ElementDispatcher(Service):
         self._reverse = dict()
 
     def init(self, app):
-        self.component_registry.register_handler(self.on_model_loaded)
-        self.component_registry.register_handler(self.on_element_change_event)
+        self.event_manager.subscribe(self.on_model_loaded)
+        self.event_manager.subscribe(self.on_element_change_event)
 
     def shutdown(self):
-        self.component_registry.unregister_handler(self.on_element_change_event)
-        self.component_registry.unregister_handler(self.on_model_loaded)
+        self.event_manager.unsubscribe(self.on_element_change_event)
+        self.event_manager.unsubscribe(self.on_model_loaded)
 
     def _path_to_properties(self, element, path):
         """

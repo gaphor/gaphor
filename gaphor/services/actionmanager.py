@@ -18,6 +18,7 @@ class ActionManager(Service):
     """
 
     component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def __init__(self):
         self.ui_manager = Gtk.UIManager()
@@ -29,13 +30,13 @@ class ActionManager(Service):
             logger.debug("Service is %s" % service)
             self.register_action_provider(service)
 
-        self.component_registry.register_handler(self._service_initialized_handler)
+        self.event_manager.subscribe(self._service_initialized_handler)
 
     def shutdown(self):
 
         logger.info("Shutting down")
 
-        self.component_registry.unregister_handler(self._service_initialized_handler)
+        self.event_manager.unsubscribe(self._service_initialized_handler)
 
     def execute(self, action_id, active=None):
 
@@ -44,7 +45,7 @@ class ActionManager(Service):
         a = self.get_action(action_id)
         if a:
             a.activate()
-            self.component_registry.handle(ActionExecuted(action_id, a))
+            self.event_manager.handle(ActionExecuted(action_id, a))
         else:
             logger.warning("Unknown action %s" % action_id)
 

@@ -315,8 +315,8 @@ class TestUndoManager(TestCase):
         def handler(event, events=events):
             events.append(event)
 
-        compreg = Application.get_service("component_registry")
-        compreg.register_handler(handler)
+        em = Application.get_service("event_manager")
+        em.subscribe(handler)
         try:
             a = A(factory=self.element_factory)
 
@@ -338,7 +338,7 @@ class TestUndoManager(TestCase):
             assert events[1].property is A.a1
 
         finally:
-            compreg.unregister_handler(handler)
+            em.unsubscribe(handler)
             undo_manager.shutdown()
 
     def test_redo_stack(self):

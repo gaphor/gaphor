@@ -71,7 +71,7 @@ class Transaction:
     ...     pass
     """
 
-    component_registry = application.inject("component_registry")
+    event_manager = application.inject("event_manager")
 
     _stack = []
 
@@ -125,11 +125,11 @@ class Transaction:
 
     def _handle(self, event):
         try:
-            component_registry = self.component_registry
+            event_manager = self.event_manager
         except (application.NotInitializedError, application.ComponentLookupError):
             log.warning("Could not lookup component_registry. Not emitting events.")
         else:
-            component_registry.handle(event)
+            event_manager.handle(event)
 
     def __enter__(self):
         """Provide with-statement transaction support."""

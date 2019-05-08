@@ -39,11 +39,11 @@ class TransactionTestCase(TestCase):
 
         Application.init(services=["component_registry"])
 
-        component_registry = Application.get_service("component_registry")
+        event_manager = Application.get_service("event_manager")
 
-        component_registry.register_handler(handle_begins)
-        component_registry.register_handler(handle_commits)
-        component_registry.register_handler(handle_rollback)
+        event_manager.subscribe(handle_begins)
+        event_manager.subscribe(handle_commits)
+        event_manager.subscribe(handle_rollback)
 
         del begins[:]
         del commits[:]
@@ -53,11 +53,11 @@ class TransactionTestCase(TestCase):
         """Finished with the test case.  Unregister event handlers that
         store transaction events."""
 
-        component_registry = Application.get_service("component_registry")
+        event_manager = Application.get_service("event_manager")
 
-        component_registry.unregister_handler(handle_begins)
-        component_registry.unregister_handler(handle_commits)
-        component_registry.unregister_handler(handle_rollback)
+        event_manager.unsubscribe(handle_begins)
+        event_manager.unsubscribe(handle_commits)
+        event_manager.unsubscribe(handle_rollback)
 
     def test_transaction_commit(self):
         """Test committing a transaction."""

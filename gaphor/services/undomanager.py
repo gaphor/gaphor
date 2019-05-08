@@ -109,7 +109,7 @@ class UndoManager(Service, ActionProvider):
       </ui>
     """
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def __init__(self):
         self._undo_stack = []
@@ -122,11 +122,11 @@ class UndoManager(Service, ActionProvider):
 
         logger.info("Starting")
 
-        self.component_registry.register_handler(self.reset)
-        self.component_registry.register_handler(self.begin_transaction)
-        self.component_registry.register_handler(self.commit_transaction)
-        self.component_registry.register_handler(self.rollback_transaction)
-        self.component_registry.register_handler(self._action_executed)
+        self.event_manager.subscribe(self.reset)
+        self.event_manager.subscribe(self.begin_transaction)
+        self.event_manager.subscribe(self.commit_transaction)
+        self.event_manager.subscribe(self.rollback_transaction)
+        self.event_manager.subscribe(self._action_executed)
         self._register_undo_handlers()
         self._action_executed()
 
@@ -134,11 +134,11 @@ class UndoManager(Service, ActionProvider):
 
         logger.info("Shutting down")
 
-        self.component_registry.unregister_handler(self.reset)
-        self.component_registry.unregister_handler(self.begin_transaction)
-        self.component_registry.unregister_handler(self.commit_transaction)
-        self.component_registry.unregister_handler(self.rollback_transaction)
-        self.component_registry.unregister_handler(self._action_executed)
+        self.event_manager.unsubscribe(self.reset)
+        self.event_manager.unsubscribe(self.begin_transaction)
+        self.event_manager.unsubscribe(self.commit_transaction)
+        self.event_manager.unsubscribe(self.rollback_transaction)
+        self.event_manager.unsubscribe(self._action_executed)
         self._unregister_undo_handlers()
 
     def clear_undo_stack(self):
@@ -168,7 +168,7 @@ class UndoManager(Service, ActionProvider):
         """
         if self._current_transaction:
             self._current_transaction.add(action)
-            self.component_registry.handle(UndoManagerStateChanged(self))
+            self.event_manager.handle(UndoManagerStateChanged(self))
 
             # TODO: should this be placed here?
             self._action_executed()
@@ -186,7 +186,7 @@ class UndoManager(Service, ActionProvider):
 
         self._current_transaction = None
 
-        self.component_registry.handle(UndoManagerStateChanged(self))
+        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @event_handler(TransactionRollback)
@@ -212,14 +212,14 @@ class UndoManager(Service, ActionProvider):
             # Discard all data collected in the rollback "transaction"
             self._undo_stack = undo_stack
 
-        self.component_registry.handle(UndoManagerStateChanged(self))
+        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def discard_transaction(self):
 
         self._current_transaction = None
 
-        self.component_registry.handle(UndoManagerStateChanged(self))
+        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @action(name="edit-undo", stock_id="gtk-undo", accel="<Primary>z")
@@ -250,7 +250,7 @@ class UndoManager(Service, ActionProvider):
         while len(self._redo_stack) > self._stack_depth:
             del self._redo_stack[0]
 
-        self.component_registry.handle(UndoManagerStateChanged(self))
+        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @action(name="edit-redo", stock_id="gtk-redo", accel="<Primary>y")
@@ -267,7 +267,7 @@ class UndoManager(Service, ActionProvider):
         finally:
             self._redo_stack = redo_stack
 
-        self.component_registry.handle(UndoManagerStateChanged(self))
+        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def in_transaction(self):
@@ -295,12 +295,12 @@ class UndoManager(Service, ActionProvider):
 
         logger.debug("Registering undo handlers")
 
-        self.component_registry.register_handler(self.undo_create_event)
-        self.component_registry.register_handler(self.undo_delete_event)
-        self.component_registry.register_handler(self.undo_attribute_change_event)
-        self.component_registry.register_handler(self.undo_association_set_event)
-        self.component_registry.register_handler(self.undo_association_add_event)
-        self.component_registry.register_handler(self.undo_association_delete_event)
+        self.event_manager.subscribe(self.undo_create_event)
+        self.event_manager.subscribe(self.undo_delete_event)
+        self.event_manager.subscribe(self.undo_attribute_change_event)
+        self.event_manager.subscribe(self.undo_association_set_event)
+        self.event_manager.subscribe(self.undo_association_add_event)
+        self.event_manager.subscribe(self.undo_association_delete_event)
 
         #
         # Direct revert-statements from gaphas to the undomanager
@@ -312,12 +312,12 @@ class UndoManager(Service, ActionProvider):
 
         logger.debug("Unregistering undo handlers")
 
-        self.component_registry.unregister_handler(self.undo_create_event)
-        self.component_registry.unregister_handler(self.undo_delete_event)
-        self.component_registry.unregister_handler(self.undo_attribute_change_event)
-        self.component_registry.unregister_handler(self.undo_association_set_event)
-        self.component_registry.unregister_handler(self.undo_association_add_event)
-        self.component_registry.unregister_handler(self.undo_association_delete_event)
+        self.event_manager.unsubscribe(self.undo_create_event)
+        self.event_manager.unsubscribe(self.undo_delete_event)
+        self.event_manager.unsubscribe(self.undo_attribute_change_event)
+        self.event_manager.unsubscribe(self.undo_association_set_event)
+        self.event_manager.unsubscribe(self.undo_association_add_event)
+        self.event_manager.unsubscribe(self.undo_association_delete_event)
 
         state.observers.discard(state.revert_handler)
 
@@ -336,7 +336,7 @@ class UndoManager(Service, ActionProvider):
                 del factory._elements[element.id]
             except KeyError:
                 pass  # Key was probably already removed in an unlink call
-            self.component_registry.handle(ElementDeleteEvent(factory, element))
+            self.event_manager.handle(ElementDeleteEvent(factory, element))
 
         self.add_undo_action(_undo_create_event)
 
@@ -351,7 +351,7 @@ class UndoManager(Service, ActionProvider):
 
         def _undo_delete_event():
             factory._elements[element.id] = element
-            self.component_registry.handle(ElementCreateEvent(factory, element))
+            self.event_manager.handle(ElementCreateEvent(factory, element))
 
         self.add_undo_action(_undo_delete_event)
 

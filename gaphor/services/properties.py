@@ -32,7 +32,7 @@ class Properties(Service):
 
     Properties are persisted to the local file system."""
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def __init__(self, backend=None):
         """Constructor.  Initialize the Gaphor application object, the
@@ -105,7 +105,7 @@ class Properties(Service):
 
         if value != old_value:
             resources[key] = value
-            self.component_registry.handle(PropertyChangeEvent(key, old_value, value))
+            self.event_manager.handle(PropertyChangeEvent(key, old_value, value))
             self._backend.update(resources, key, value)
 
 
