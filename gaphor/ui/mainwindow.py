@@ -114,9 +114,20 @@ class MainWindow(Service, ActionProvider):
 
     def init(self, app=None):
         self.app = app
+        self.init_styling()
         self.init_stock_icons()
         self.init_action_group()
         self.init_ui_components()
+
+    def init_styling(self):
+        css_file = pkg_resources.resource_filename("gaphor.ui", "layout.css")
+        style_provider = Gtk.CssProvider()
+        style_provider.load_from_path(css_file)
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(),
+            style_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
 
     def init_stock_icons(self):
         # Load stock items
