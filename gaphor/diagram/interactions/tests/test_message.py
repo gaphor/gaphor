@@ -3,7 +3,7 @@ Test messages.
 """
 
 from gaphor import UML
-from gaphor.diagram.message import MessageItem
+from gaphor.diagram.interactions.message import MessageItem
 from gaphor.tests.testcase import TestCase
 
 

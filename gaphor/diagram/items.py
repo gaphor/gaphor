@@ -4,70 +4,63 @@ is a shorthand for importing each module individually.
 """
 
 # Base classes:
-from gaphor.diagram.diagramitem import DiagramItem
-from gaphor.diagram.diagramline import DiagramLine, NamedLine
-from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.compartment import CompartmentItem, FeatureItem
-from gaphor.diagram.classifier import ClassifierItem
+from .diagramitem import DiagramItem
+from .diagramline import DiagramLine, NamedLine
+from .elementitem import ElementItem
+from .nameditem import NamedItem
+from .compartment import CompartmentItem, FeatureItem
+from .classifier import ClassifierItem
 
 # General:
-from gaphor.diagram.comment import CommentItem
-from gaphor.diagram.commentline import CommentLineItem
-from gaphor.diagram.simpleitem import Line, Box, Ellipse
+from .general.comment import CommentItem
+from .general.commentline import CommentLineItem
+from .general.simpleitem import Line, Box, Ellipse
 
 # Classes:
-from gaphor.diagram.classes.klass import ClassItem, OperationItem
-from gaphor.diagram.classes.interface import InterfaceItem
-from gaphor.diagram.classes.package import PackageItem
-from gaphor.diagram.classes.association import AssociationItem
-from gaphor.diagram.classes.dependency import DependencyItem
-from gaphor.diagram.classes.generalization import GeneralizationItem
-from gaphor.diagram.classes.implementation import ImplementationItem
+from .classes.klass import ClassItem, OperationItem
+from .classes.interface import InterfaceItem
+from .classes.package import PackageItem
+from .classes.association import AssociationItem
+from .classes.dependency import DependencyItem
+from .classes.generalization import GeneralizationItem
+from .classes.implementation import ImplementationItem
 
 # Components:
-from gaphor.diagram.artifact import ArtifactItem
-from gaphor.diagram.connector import ConnectorItem
-from gaphor.diagram.component import ComponentItem
-from gaphor.diagram.node import NodeItem
-from gaphor.diagram.components.subsystem import SubsystemItem
+from .components.artifact import ArtifactItem
+from .components.connector import ConnectorItem
+from .components.component import ComponentItem
+from .components.node import NodeItem
+from .components.subsystem import SubsystemItem
 
 # Actions:
-from gaphor.diagram.activitynodes import ActivityNodeItem
-from gaphor.diagram.activitynodes import InitialNodeItem, ActivityFinalNodeItem
-from gaphor.diagram.activitynodes import FlowFinalNodeItem
-from gaphor.diagram.activitynodes import DecisionNodeItem
-from gaphor.diagram.activitynodes import ForkNodeItem
-from gaphor.diagram.objectnode import ObjectNodeItem
-from gaphor.diagram.actions.action import (
-    ActionItem,
-    SendSignalActionItem,
-    AcceptEventActionItem,
-)
-from gaphor.diagram.actions.flow import FlowItem
-from gaphor.diagram.actions.partition import PartitionItem
+from .actions.activitynodes import ActivityNodeItem
+from .actions.activitynodes import InitialNodeItem, ActivityFinalNodeItem
+from .actions.activitynodes import FlowFinalNodeItem
+from .actions.activitynodes import DecisionNodeItem
+from .actions.activitynodes import ForkNodeItem
+from .actions.objectnode import ObjectNodeItem
+from .actions.action import ActionItem, SendSignalActionItem, AcceptEventActionItem
+from .actions.flow import FlowItem
+from .actions.partition import PartitionItem
 
 # Interactions
-from gaphor.diagram.interaction import InteractionItem
-from gaphor.diagram.lifeline import LifelineItem
-from gaphor.diagram.message import MessageItem
+from .interactions.interaction import InteractionItem
+from .interactions.lifeline import LifelineItem
+from .interactions.message import MessageItem
 
 # States
-from gaphor.diagram.states import VertexItem
-from gaphor.diagram.states.state import StateItem
-from gaphor.diagram.states.transition import TransitionItem
-from gaphor.diagram.states.finalstate import FinalStateItem
-from gaphor.diagram.states.pseudostates import (
-    InitialPseudostateItem,
-    HistoryPseudostateItem,
-)
+from .states import VertexItem
+from .states.state import StateItem
+from .states.transition import TransitionItem
+from .states.finalstate import FinalStateItem
+from .states.pseudostates import InitialPseudostateItem, HistoryPseudostateItem
 
 # Use Cases:
-from gaphor.diagram.actor import ActorItem
-from gaphor.diagram.usecase import UseCaseItem
-from gaphor.diagram.include import IncludeItem
-from gaphor.diagram.extend import ExtendItem
+from .usecases.actor import ActorItem
+from .usecases.usecase import UseCaseItem
+from .usecases.include import IncludeItem
+from .usecases.extend import ExtendItem
 
 # Stereotypes:
-from gaphor.diagram.extension import ExtensionItem
-from gaphor.diagram.profiles.metaclass import MetaclassItem
+from .profiles.extension import ExtensionItem
+from .profiles.metaclass import MetaclassItem

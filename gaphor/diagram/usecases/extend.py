@@ -3,7 +3,7 @@ Use case extension relationship.
 """
 
 from gaphor import UML
-from gaphor.diagram.include import IncludeItem
+from .include import IncludeItem
 
 
 class ExtendItem(IncludeItem):

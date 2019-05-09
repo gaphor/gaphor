@@ -6,7 +6,7 @@ import unittest
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.simpleitem import Line, Box, Ellipse
+from gaphor.diagram.general.simpleitem import Line, Box, Ellipse
 from gaphas import View
 
 

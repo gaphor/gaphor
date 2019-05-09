@@ -3,7 +3,7 @@ Test connector item.
 """
 
 from gaphor import UML
-from gaphor.diagram.connector import ConnectorItem
+from gaphor.diagram.components.connector import ConnectorItem
 from gaphor.tests.testcase import TestCase
 
 

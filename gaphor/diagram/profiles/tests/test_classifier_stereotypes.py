@@ -3,7 +3,7 @@ Test classifier stereotypes attributes using component items.
 """
 
 from gaphor import UML
-from gaphor.diagram.component import ComponentItem
+from gaphor.diagram.components.component import ComponentItem
 from gaphor.tests import TestCase
 
 
