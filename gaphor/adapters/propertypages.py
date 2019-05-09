@@ -956,11 +956,11 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         try:
             if item.subject:
                 for adapter in PropertyPages(item.subject):
-                    adaptermap[name] = (adapter.order, adapter.name, adapter)
+                    adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
         except AttributeError:
             pass
         for adapter in PropertyPages(item):
-            adaptermap[name] = (adapter.order, adapter.name, adapter)
+            adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
 
         adapters = sorted(adaptermap.values())
         return adapters
