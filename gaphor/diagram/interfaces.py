@@ -25,12 +25,6 @@ class Group:
 
 
 @multidispatch(object, object)
-class Group:
-    def __init__(self, parent, item):
-        pass
-
-
-@multidispatch(object, object)
 class IConnect:
     """
     This function is used by the HandleTool to allow connecting
