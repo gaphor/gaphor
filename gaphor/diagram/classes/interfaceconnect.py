@@ -10,10 +10,7 @@ from gaphor import UML
 
 from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
-from gaphor.adapters.classes.classconnect import (
-    DependencyConnect,
-    ImplementationConnect,
-)
+from .classconnect import DependencyConnect, ImplementationConnect
 
 
 @IConnect.register(items.InterfaceItem, items.ImplementationItem)

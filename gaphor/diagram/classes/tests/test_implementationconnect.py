@@ -3,16 +3,18 @@ Test implementation (interface realization) item connectors.
 """
 
 from gaphor import UML
-from gaphor.diagram import items
 from gaphor.tests import TestCase
+from ..klass import ClassItem
+from ..implementation import ImplementationItem
+from ..interface import InterfaceItem
 
 
 class ImplementationTestCase(TestCase):
     def test_non_interface_glue(self):
         """Test non-interface gluing with implementation."""
 
-        impl = self.create(items.ImplementationItem)
-        clazz = self.create(items.ClassItem, UML.Class)
+        impl = self.create(ImplementationItem)
+        clazz = self.create(ClassItem, UML.Class)
 
         glued = self.allow(impl, impl.head, clazz)
         # connecting head to non-interface item is disallowed
@@ -21,8 +23,8 @@ class ImplementationTestCase(TestCase):
     def test_interface_glue(self):
         """Test interface gluing with implementation
         """
-        iface = self.create(items.InterfaceItem, UML.Interface)
-        impl = self.create(items.ImplementationItem)
+        iface = self.create(InterfaceItem, UML.Interface)
+        impl = self.create(ImplementationItem)
 
         glued = self.allow(impl, impl.head, iface)
         self.assertTrue(glued)
@@ -30,8 +32,8 @@ class ImplementationTestCase(TestCase):
     def test_classifier_glue(self):
         """Test classifier gluing with implementation
         """
-        impl = self.create(items.ImplementationItem)
-        clazz = self.create(items.ClassItem, UML.Class)
+        impl = self.create(ImplementationItem)
+        clazz = self.create(ClassItem, UML.Class)
 
         glued = self.allow(impl, impl.tail, clazz)
         self.assertTrue(glued)
@@ -39,9 +41,9 @@ class ImplementationTestCase(TestCase):
     def test_connection(self):
         """Test connection of class and interface with implementation
         """
-        iface = self.create(items.InterfaceItem, UML.Interface)
-        impl = self.create(items.ImplementationItem)
-        clazz = self.create(items.ClassItem, UML.Class)
+        iface = self.create(InterfaceItem, UML.Interface)
+        impl = self.create(ImplementationItem)
+        clazz = self.create(ClassItem, UML.Class)
 
         self.connect(impl, impl.head, iface)
         self.connect(impl, impl.tail, clazz)
@@ -57,10 +59,10 @@ class ImplementationTestCase(TestCase):
     def test_reconnection(self):
         """Test reconnection of class and interface with implementation
         """
-        iface = self.create(items.InterfaceItem, UML.Interface)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
-        impl = self.create(items.ImplementationItem)
+        iface = self.create(InterfaceItem, UML.Interface)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
+        impl = self.create(ImplementationItem)
 
         # connect: iface -> c1
         self.connect(impl, impl.head, iface)

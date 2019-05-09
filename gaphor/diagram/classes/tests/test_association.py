@@ -4,13 +4,11 @@ Unnit tests for AssociationItem.
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.items import (
-    AssociationItem,
-    ClassItem,
-    InterfaceItem,
-    UseCaseItem,
-    ActorItem,
-)
+from gaphor.diagram.usecases.usecase import UseCaseItem
+from gaphor.diagram.usecases.actor import ActorItem
+from ..klass import ClassItem
+from ..interface import InterfaceItem
+from ..association import AssociationItem
 
 
 class AssociationItemTestCase(TestCase):

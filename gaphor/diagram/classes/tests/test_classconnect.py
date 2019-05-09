@@ -4,7 +4,12 @@ Classes related adapter connection tests.
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
+from gaphor.diagram.usecases.actor import ActorItem
+from ..dependency import DependencyItem
+from ..klass import ClassItem
+from ..interface import InterfaceItem
+from ..association import AssociationItem
+from ..generalization import GeneralizationItem
 
 
 class DependencyTestCase(TestCase):
@@ -15,9 +20,9 @@ class DependencyTestCase(TestCase):
     def test_dependency_glue(self):
         """Test dependency glue to two actor items
         """
-        actor1 = self.create(items.ActorItem, UML.Actor)
-        actor2 = self.create(items.ActorItem, UML.Actor)
-        dep = self.create(items.DependencyItem)
+        actor1 = self.create(ActorItem, UML.Actor)
+        actor2 = self.create(ActorItem, UML.Actor)
+        dep = self.create(DependencyItem)
 
         glued = self.allow(dep, dep.head, actor1)
         self.assertTrue(glued)
@@ -30,9 +35,9 @@ class DependencyTestCase(TestCase):
     def test_dependency_connect(self):
         """Test dependency connecting to two actor items
         """
-        actor1 = self.create(items.ActorItem, UML.Actor)
-        actor2 = self.create(items.ActorItem, UML.Actor)
-        dep = self.create(items.DependencyItem)
+        actor1 = self.create(ActorItem, UML.Actor)
+        actor2 = self.create(ActorItem, UML.Actor)
+        dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, actor1)
         self.connect(dep, dep.tail, actor2)
@@ -52,10 +57,10 @@ class DependencyTestCase(TestCase):
     def test_dependency_reconnection(self):
         """Test dependency reconnection
         """
-        a1 = self.create(items.ActorItem, UML.Actor)
-        a2 = self.create(items.ActorItem, UML.Actor)
-        a3 = self.create(items.ActorItem, UML.Actor)
-        dep = self.create(items.DependencyItem)
+        a1 = self.create(ActorItem, UML.Actor)
+        a2 = self.create(ActorItem, UML.Actor)
+        a3 = self.create(ActorItem, UML.Actor)
+        dep = self.create(DependencyItem)
 
         # connect: a1 -> a2
         self.connect(dep, dep.head, a1)
@@ -76,9 +81,9 @@ class DependencyTestCase(TestCase):
     def test_dependency_disconnect(self):
         """Test dependency disconnecting using two actor items
         """
-        actor1 = self.create(items.ActorItem, UML.Actor)
-        actor2 = self.create(items.ActorItem, UML.Actor)
-        dep = self.create(items.DependencyItem)
+        actor1 = self.create(ActorItem, UML.Actor)
+        actor2 = self.create(ActorItem, UML.Actor)
+        dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, actor1)
         self.connect(dep, dep.tail, actor2)
@@ -95,9 +100,9 @@ class DependencyTestCase(TestCase):
     def test_dependency_reconnect(self):
         """Test dependency reconnection using two actor items
         """
-        actor1 = self.create(items.ActorItem, UML.Actor)
-        actor2 = self.create(items.ActorItem, UML.Actor)
-        dep = self.create(items.DependencyItem)
+        actor1 = self.create(ActorItem, UML.Actor)
+        actor2 = self.create(ActorItem, UML.Actor)
+        dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, actor1)
         self.connect(dep, dep.tail, actor2)
@@ -121,11 +126,11 @@ class DependencyTestCase(TestCase):
         Dependency should appear in a new diagram, bound on a new
         dependency item.
         """
-        actoritem1 = self.create(items.ActorItem, UML.Actor)
-        actoritem2 = self.create(items.ActorItem, UML.Actor)
+        actoritem1 = self.create(ActorItem, UML.Actor)
+        actoritem2 = self.create(ActorItem, UML.Actor)
         actor1 = actoritem1.subject
         actor2 = actoritem2.subject
-        dep = self.create(items.DependencyItem)
+        dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, actoritem1)
         self.connect(dep, dep.tail, actoritem2)
@@ -139,9 +144,9 @@ class DependencyTestCase(TestCase):
         # Do the same thing, but now on a new diagram:
 
         diagram2 = self.element_factory.create(UML.Diagram)
-        actoritem3 = diagram2.create(items.ActorItem, subject=actor1)
-        actoritem4 = diagram2.create(items.ActorItem, subject=actor2)
-        dep2 = diagram2.create(items.DependencyItem)
+        actoritem3 = diagram2.create(ActorItem, subject=actor1)
+        actoritem4 = diagram2.create(ActorItem, subject=actor2)
+        dep2 = diagram2.create(DependencyItem)
 
         self.connect(dep2, dep2.head, actoritem3)
         cinfo = diagram2.canvas.get_connection(dep2.head)
@@ -159,9 +164,9 @@ class DependencyTestCase(TestCase):
     def test_dependency_type_auto(self):
         """Test dependency type automatic determination
         """
-        cls = self.create(items.ClassItem, UML.Class)
-        iface = self.create(items.InterfaceItem, UML.Interface)
-        dep = self.create(items.DependencyItem)
+        cls = self.create(ClassItem, UML.Class)
+        iface = self.create(InterfaceItem, UML.Interface)
+        dep = self.create(DependencyItem)
 
         assert dep.auto_dependency
 
@@ -181,9 +186,9 @@ class GeneralizationTestCase(TestCase):
     def test_glue(self):
         """Test generalization item gluing using two classes."""
 
-        gen = self.create(items.GeneralizationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
+        gen = self.create(GeneralizationItem)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
 
         glued = self.allow(gen, gen.tail, c1)
         self.assertTrue(glued)
@@ -198,9 +203,9 @@ class GeneralizationTestCase(TestCase):
     def test_connection(self):
         """Test generalization item connection using two classes
         """
-        gen = self.create(items.GeneralizationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
+        gen = self.create(GeneralizationItem)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
 
         self.connect(gen, gen.tail, c1)
         assert self.get_connected(gen.tail) is c1
@@ -215,9 +220,9 @@ class GeneralizationTestCase(TestCase):
 
         On reconnection a new Generalization is created.
         """
-        gen = self.create(items.GeneralizationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
+        gen = self.create(GeneralizationItem)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
 
         self.connect(gen, gen.tail, c1)
         assert self.get_connected(gen.tail) is c1
@@ -229,9 +234,9 @@ class GeneralizationTestCase(TestCase):
 
         # Now do the same on a new diagram:
         diagram2 = self.element_factory.create(UML.Diagram)
-        c3 = diagram2.create(items.ClassItem, subject=c1.subject)
-        c4 = diagram2.create(items.ClassItem, subject=c2.subject)
-        gen2 = diagram2.create(items.GeneralizationItem)
+        c3 = diagram2.create(ClassItem, subject=c1.subject)
+        c4 = diagram2.create(ClassItem, subject=c2.subject)
+        gen2 = diagram2.create(GeneralizationItem)
 
         self.connect(gen2, gen2.head, c3)
         cinfo = diagram2.canvas.get_connection(gen2.head)
@@ -248,10 +253,10 @@ class GeneralizationTestCase(TestCase):
     def test_reconnection2(self):
         """Test reconnection of generalization
         """
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
-        c3 = self.create(items.ClassItem, UML.Class)
-        gen = self.create(items.GeneralizationItem)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
+        c3 = self.create(ClassItem, UML.Class)
+        gen = self.create(GeneralizationItem)
 
         # connect: c1 -> c2
         self.connect(gen, gen.head, c1)
@@ -276,9 +281,9 @@ class AssociationConnectorTestCase(TestCase):
     def test_glue(self):
         """Test association item glue
         """
-        asc = self.create(items.AssociationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
+        asc = self.create(AssociationItem)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
 
         glued = self.allow(asc, asc.head, c1)
         self.assertTrue(glued)
@@ -291,9 +296,9 @@ class AssociationConnectorTestCase(TestCase):
     def test_connect(self):
         """Test association item connection
         """
-        asc = self.create(items.AssociationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
+        asc = self.create(AssociationItem)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
 
         self.connect(asc, asc.head, c1)
         self.assertTrue(asc.subject is None)  # no UML metaclass yet
@@ -309,10 +314,10 @@ class AssociationConnectorTestCase(TestCase):
     def test_reconnect(self):
         """Test association item reconnection
         """
-        asc = self.create(items.AssociationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
-        c3 = self.create(items.ClassItem, UML.Class)
+        asc = self.create(AssociationItem)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
+        c3 = self.create(ClassItem, UML.Class)
 
         self.connect(asc, asc.head, c1)
         self.connect(asc, asc.tail, c2)
@@ -332,9 +337,9 @@ class AssociationConnectorTestCase(TestCase):
     def test_disconnect(self):
         """Test association item disconnection
         """
-        asc = self.create(items.AssociationItem)
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
+        asc = self.create(AssociationItem)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
 
         self.connect(asc, asc.head, c1)
         self.assertTrue(asc.subject is None)  # no UML metaclass yet

@@ -4,8 +4,8 @@ Test classes.
 import logging
 
 from gaphor import UML
-from gaphor.diagram.classes.klass import ClassItem
 from gaphor.tests.testcase import TestCase
+from ..klass import ClassItem
 
 log = logging.getLogger(__name__)
 

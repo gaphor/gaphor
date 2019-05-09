@@ -4,7 +4,7 @@ Test classes.
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.classes.interface import InterfaceItem
+from ..interface import InterfaceItem
 
 
 class InterfaceTestCase(TestCase):

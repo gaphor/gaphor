@@ -5,15 +5,21 @@ Test connections to folded interface.
 from gaphor import UML
 from gaphor.diagram import items
 from gaphor.tests import TestCase
+from ..implementation import ImplementationItem
+from ..interface import InterfaceItem
+from ..association import AssociationItem
+from ..dependency import DependencyItem
+from ..generalization import GeneralizationItem
+from gaphor.diagram.general.commentline import CommentLineItem
 
 
 class ImplementationTestCase(TestCase):
     def test_folded_interface_connection(self):
         """Test connecting implementation to folded interface
         """
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_PROVIDED
-        impl = self.create(items.ImplementationItem)
+        impl = self.create(ImplementationItem)
 
         assert not impl._solid
         self.connect(impl, impl.head, iface, iface.ports()[0])
@@ -22,9 +28,9 @@ class ImplementationTestCase(TestCase):
     def test_folded_interface_disconnection(self):
         """Test disconnection implementation from folded interface
         """
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_PROVIDED
-        impl = self.create(items.ImplementationItem)
+        impl = self.create(ImplementationItem)
 
         assert not impl._solid
         self.connect(impl, impl.head, iface, iface.ports()[0])
@@ -38,9 +44,9 @@ class DependencyTestCase(TestCase):
     def test_folded_interface_connection(self):
         """Test connecting dependency to folded interface
         """
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_PROVIDED
-        dep = self.create(items.DependencyItem)
+        dep = self.create(DependencyItem)
 
         assert not dep._solid
         self.connect(dep, dep.head, iface, iface.ports()[0])
@@ -51,9 +57,9 @@ class DependencyTestCase(TestCase):
     def test_folded_interface_disconnection(self):
         """Test disconnection dependency from folded interface
         """
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_PROVIDED
-        dep = self.create(items.DependencyItem)
+        dep = self.create(DependencyItem)
 
         assert not dep._solid
         self.connect(dep, dep.head, iface, iface.ports()[0])
@@ -67,8 +73,8 @@ class DependencyTestCase(TestCase):
     def test_unfolded_interface_disconnection(self):
         """Test disconnection dependency from unfolded interface
         """
-        iface = self.create(items.InterfaceItem, UML.Interface)
-        dep = self.create(items.DependencyItem)
+        iface = self.create(InterfaceItem, UML.Interface)
+        dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, iface, iface.ports()[0])
         assert not dep._solid
@@ -81,11 +87,11 @@ class DependencyTestCase(TestCase):
 
 
 LINES = (
-    items.ImplementationItem,
-    items.DependencyItem,
-    items.GeneralizationItem,
-    items.AssociationItem,
-    items.CommentLineItem,
+    ImplementationItem,
+    DependencyItem,
+    GeneralizationItem,
+    AssociationItem,
+    CommentLineItem,
 )
 
 
@@ -98,13 +104,13 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
     def setUp(self):
         super(FoldedInterfaceMultipleLinesTestCase, self).setUp()
 
-        self.iface = self.create(items.InterfaceItem, UML.Interface)
+        self.iface = self.create(InterfaceItem, UML.Interface)
         self.iface.folded = self.iface.FOLDED_PROVIDED
 
     def test_interface_with_implementation(self):
         """Test gluing different lines to folded interface with implementation."""
 
-        impl = self.create(items.ImplementationItem)
+        impl = self.create(ImplementationItem)
         self.connect(impl, impl.head, self.iface, self.iface.ports()[0])
 
         for cls in LINES:
@@ -115,7 +121,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
 
     def test_interface_with_dependency(self):
         """Test gluing different lines to folded interface with dependency."""
-        dep = self.create(items.DependencyItem)
+        dep = self.create(DependencyItem)
         self.connect(dep, dep.head, self.iface, self.iface.ports()[0])
 
         for cls in LINES:
@@ -134,7 +140,7 @@ class FoldedInterfaceSingleLineTestCase(TestCase):
     def test_interface_with_forbidden_lines(self):
         """Test gluing forbidden lines to folded interface."""
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_PROVIDED
 
         for cls in LINES[2:]:
