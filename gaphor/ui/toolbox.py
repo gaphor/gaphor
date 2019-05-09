@@ -111,7 +111,13 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox.show()
 
         self._toolbox = toolbox
-        return toolbox
+
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
+        scrolled_window.add(toolbox)
+        scrolled_window.show()
+        return scrolled_window
 
     def _on_key_press_event(self, view, event):
         """
