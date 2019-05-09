@@ -5,14 +5,16 @@ Test extend item connections.
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
+from ..usecase import UseCaseItem
+from ..extend import ExtendItem
 
 
 class ExtendItemTestCase(TestCase):
     def test_use_case_glue(self):
         """Test "extend" gluing to use cases."""
 
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        extend = self.create(items.ExtendItem)
+        uc1 = self.create(UseCaseItem, UML.UseCase)
+        extend = self.create(ExtendItem)
 
         glued = self.allow(extend, extend.head, uc1)
         self.assertTrue(glued)
@@ -20,9 +22,9 @@ class ExtendItemTestCase(TestCase):
     def test_use_case_connect(self):
         """Test connecting "extend" to use cases
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
-        extend = self.create(items.ExtendItem)
+        uc1 = self.create(UseCaseItem, UML.UseCase)
+        uc2 = self.create(UseCaseItem, UML.UseCase)
+        extend = self.create(ExtendItem)
 
         self.connect(extend, extend.head, uc1)
         self.assertTrue(self.get_connected(extend.head), uc1)
@@ -33,10 +35,10 @@ class ExtendItemTestCase(TestCase):
     def test_use_case_connect(self):
         """Test reconnecting use cases with "extend"
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
-        uc3 = self.create(items.UseCaseItem, UML.UseCase)
-        extend = self.create(items.ExtendItem)
+        uc1 = self.create(UseCaseItem, UML.UseCase)
+        uc2 = self.create(UseCaseItem, UML.UseCase)
+        uc3 = self.create(UseCaseItem, UML.UseCase)
+        extend = self.create(ExtendItem)
 
         # connect: uc1 -> uc2
         self.connect(extend, extend.head, uc1)
@@ -53,9 +55,9 @@ class ExtendItemTestCase(TestCase):
     def test_use_case_disconnect(self):
         """Test disconnecting "extend" from use cases
         """
-        uc1 = self.create(items.UseCaseItem, UML.UseCase)
-        uc2 = self.create(items.UseCaseItem, UML.UseCase)
-        extend = self.create(items.ExtendItem)
+        uc1 = self.create(UseCaseItem, UML.UseCase)
+        uc2 = self.create(UseCaseItem, UML.UseCase)
+        extend = self.create(ExtendItem)
 
         self.connect(extend, extend.head, uc1)
         self.connect(extend, extend.tail, uc2)
