@@ -6,8 +6,11 @@ import logging
 
 from gaphor import UML
 from gaphor.adapters.connectors import UnaryRelationshipConnect
-from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
+from .action import ActionItem, SendSignalActionItem, AcceptEventActionItem
+from .activitynodes import ForkNodeItem, ActivityNodeItem, DecisionNodeItem
+from .flow import FlowItem
+from .objectnode import ObjectNodeItem
 
 log = logging.getLogger(__name__)
 
@@ -55,7 +58,7 @@ class FlowConnect(UnaryRelationshipConnect):
         #       decision/merge node)
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
-        if isinstance(c1, items.ObjectNodeItem) or isinstance(c2, items.ObjectNodeItem):
+        if isinstance(c1, ObjectNodeItem) or isinstance(c2, ObjectNodeItem):
             relation = self.relationship_or_new(
                 UML.ObjectFlow, UML.ObjectFlow.source, UML.ObjectFlow.target
             )
@@ -66,7 +69,7 @@ class FlowConnect(UnaryRelationshipConnect):
         line.subject = relation
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
-        if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
+        if opposite and isinstance(otc, (ForkNodeItem, DecisionNodeItem)):
             adapter = IConnect(otc, line)
             adapter.combine_nodes()
 
@@ -76,16 +79,16 @@ class FlowConnect(UnaryRelationshipConnect):
         line = self.line
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
-        if opposite and isinstance(otc, (items.ForkNodeItem, items.DecisionNodeItem)):
+        if opposite and isinstance(otc, (ForkNodeItem, DecisionNodeItem)):
             adapter = IConnect(otc, line)
             adapter.decombine_nodes()
 
 
-IConnect.register(items.ActionItem, items.FlowItem)(FlowConnect)
-IConnect.register(items.ActivityNodeItem, items.FlowItem)(FlowConnect)
-IConnect.register(items.ObjectNodeItem, items.FlowItem)(FlowConnect)
-IConnect.register(items.SendSignalActionItem, items.FlowItem)(FlowConnect)
-IConnect.register(items.AcceptEventActionItem, items.FlowItem)(FlowConnect)
+IConnect.register(ActionItem, FlowItem)(FlowConnect)
+IConnect.register(ActivityNodeItem, FlowItem)(FlowConnect)
+IConnect.register(ObjectNodeItem, FlowItem)(FlowConnect)
+IConnect.register(SendSignalActionItem, FlowItem)(FlowConnect)
+IConnect.register(AcceptEventActionItem, FlowItem)(FlowConnect)
 
 
 class FlowForkDecisionNodeConnect(FlowConnect):
@@ -199,7 +202,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             self.decombine_nodes()
 
 
-@IConnect.register(items.ForkNodeItem, items.FlowItem)
+@IConnect.register(ForkNodeItem, FlowItem)
 class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """Connect Flow to a ForkNode."""
 
@@ -207,7 +210,7 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     join_node_cls = UML.JoinNode
 
 
-@IConnect.register(items.DecisionNodeItem, items.FlowItem)
+@IConnect.register(DecisionNodeItem, FlowItem)
 class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
     """Connect Flow to a DecisionNode."""
 
