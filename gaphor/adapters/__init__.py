@@ -1,4 +1,4 @@
-import gaphor.adapters.editors
+import gaphor.diagram.editors
 import gaphor.adapters.grouping
 
 import gaphor.diagram.components.connectorconnect

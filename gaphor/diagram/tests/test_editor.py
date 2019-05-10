@@ -1,7 +1,7 @@
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import Editor
+from ..editors import Editor
 from gaphor.adapters.propertypages import AttributesPage, OperationsPage
 from gi.repository import Gtk
 

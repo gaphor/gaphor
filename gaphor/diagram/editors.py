@@ -8,10 +8,16 @@ from functools import singledispatch
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import Editor
 from gaphor.misc.rattr import rgetattr, rsetattr
 
+from .general import CommentItem
+
 log = logging.getLogger(__name__)
+
+
+@singledispatch
+def Editor(obj):
+    pass
 
 
 @singledispatch
@@ -75,7 +81,7 @@ class AbstractEditor(metaclass=abc.ABCMeta):
         """
 
 
-@Editor.register(items.CommentItem)
+@Editor.register(CommentItem)
 class CommentItemEditor(AbstractEditor):
     """Text edit support for Comment item."""
 

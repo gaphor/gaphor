@@ -13,11 +13,6 @@ from functools import singledispatch
 from gaphor.misc.generic.multidispatch import multidispatch
 
 
-@singledispatch
-def Editor(obj):
-    pass
-
-
 @multidispatch(object, object)
 class Group:
     def __init__(self, parent, item):
