@@ -2,11 +2,12 @@
 
 from gaphor.adapters.connectors import AbstractConnect
 from gaphor import UML
-from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
+from .lifeline import LifelineItem
+from .message import MessageItem
 
 
-@IConnect.register(items.LifelineItem, items.MessageItem)
+@IConnect.register(LifelineItem, MessageItem)
 class MessageLifelineConnect(AbstractConnect):
     """Connect lifeline with a message.
 

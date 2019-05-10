@@ -49,7 +49,7 @@ from .interactions.lifeline import LifelineItem
 from .interactions.message import MessageItem
 
 # States
-from .states import VertexItem
+from .states.state import VertexItem
 from .states.state import StateItem
 from .states.transition import TransitionItem
 from .states.finalstate import FinalStateItem

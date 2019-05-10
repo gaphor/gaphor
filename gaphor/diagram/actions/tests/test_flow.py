@@ -1,17 +1,17 @@
 import gaphor.UML as UML
-from gaphor.diagram import items
 from gaphor.tests.testcase import TestCase
+from ..flow import FlowItem
 
 
 class FlowTestCase(TestCase):
     def test_flow(self):
-        self.create(items.FlowItem, UML.ControlFlow)
+        self.create(FlowItem, UML.ControlFlow)
 
     def test_name(self):
         """
         Test updating of flow name text.
         """
-        flow = self.create(items.FlowItem, UML.ControlFlow)
+        flow = self.create(FlowItem, UML.ControlFlow)
         flow.subject.name = "Blah"
 
         self.assertEqual("Blah", flow._name.text)
@@ -24,7 +24,7 @@ class FlowTestCase(TestCase):
         """
         Test updating of flow guard text.
         """
-        flow = self.create(items.FlowItem, UML.ControlFlow)
+        flow = self.create(FlowItem, UML.ControlFlow)
 
         self.assertEqual("", flow._guard.text)
 

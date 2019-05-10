@@ -1,13 +1,12 @@
 from gaphor.tests import TestCase
-from gaphor.adapters.profiles.stereotypepage import StereotypePage
-from gaphor.diagram import items
 from gaphor import UML
-from gi.repository import Gtk
+from ..stereotypepage import StereotypePage
+from gaphor.diagram.classes.klass import ClassItem
 
 
 class MetaclassEditorTest(TestCase):
     def test_stereotype_page_with_no_stereotype(self):
-        ci = self.create(items.ClassItem, UML.Class)
+        ci = self.create(ClassItem, UML.Class)
         ci.subject.name = "Class"
         editor = StereotypePage(ci)
         page = editor.construct()
@@ -24,7 +23,7 @@ class MetaclassEditorTest(TestCase):
         attr.name = "Property"
         # stereotype.ownedAttribute = attr
 
-        ci = self.create(items.ClassItem, UML.Class)
+        ci = self.create(ClassItem, UML.Class)
         ci.subject.name = "Foo"
         editor = StereotypePage(ci)
         page = editor.construct()
@@ -32,6 +31,3 @@ class MetaclassEditorTest(TestCase):
         editor.refresh()
         assert len(editor.model) == 1
         assert page is not None
-
-
-# vim:sw=4:et:ai

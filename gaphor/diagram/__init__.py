@@ -104,6 +104,3 @@ class DiagramItemMeta(type):
                 style.add(name, value)
 
         self.style = style
-
-
-# vim:sw=4:et

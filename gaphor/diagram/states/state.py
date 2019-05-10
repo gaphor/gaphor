@@ -6,7 +6,7 @@ import operator
 
 from gaphor import UML
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
-from gaphor.diagram.states import VertexItem
+from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.classifier import CompartmentItem
 from gaphor.diagram.compartment import FeatureItem
 from gaphor.core import inject
@@ -15,6 +15,15 @@ DX = 15
 DY = 8
 DDX = 0.4 * DX
 DDY = 0.4 * DY
+
+
+class VertexItem(NamedItem):
+    """
+    Abstract class for all vertices. All state, pseudostate items derive
+    from VertexItem, which simplifies transition connection adapters.
+    """
+
+    pass
 
 
 class StateItem(CompartmentItem, VertexItem):

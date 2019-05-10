@@ -7,7 +7,6 @@ from gi.repository import GObject, Gtk
 from gaphor import UML
 from gaphor.core import _, inject, transactional
 from gaphor.diagram.diagramitem import StereotypeSupport
-from gaphor.diagram import items
 from gaphor.ui.abc import PropertyPageBase
 from gaphor.ui.interfaces import PropertyPages
 

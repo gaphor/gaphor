@@ -4,15 +4,16 @@ Message connection adapter tests.
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
+from gaphor.diagram.interactions.lifeline import LifelineItem
+from gaphor.diagram.interactions.message import MessageItem
 
 
 class BasicMessageConnectionsTestCase(TestCase):
     def test_head_glue(self):
         """Test message head glue
         """
-        ll = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         # get head port
         port = ll.ports()[0]
@@ -22,8 +23,8 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_invisible_lifetime_glue(self):
         """Test message to invisible lifetime glue
         """
-        ll = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         glued = self.allow(msg, msg.head, ll, ll.lifetime.port)
 
@@ -33,8 +34,8 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_visible_lifetime_glue(self):
         """Test message to visible lifetime glue
         """
-        ll = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         ll.lifetime.visible = True
 
@@ -44,8 +45,8 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_lost_message_connection(self):
         """Test lost message connection
         """
-        ll = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         self.connect(msg, msg.head, ll)
 
@@ -64,8 +65,8 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_found_message_connection(self):
         """Test found message connection
         """
-        ll = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         self.connect(msg, msg.tail, ll)
 
@@ -84,9 +85,9 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_complete_message_connection(self):
         """Test complete message connection
         """
-        ll1 = self.create(items.LifelineItem)
-        ll2 = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll1 = self.create(LifelineItem)
+        ll2 = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         self.connect(msg, msg.head, ll1)
         self.connect(msg, msg.tail, ll2)
@@ -107,9 +108,9 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_lifetime_connection(self):
         """Test messages' lifetimes connection
         """
-        msg = self.create(items.MessageItem)
-        ll1 = self.create(items.LifelineItem)
-        ll2 = self.create(items.LifelineItem)
+        msg = self.create(MessageItem)
+        ll1 = self.create(LifelineItem)
+        ll2 = self.create(LifelineItem)
 
         # make lifelines to be in sequence diagram mode
         ll1.lifetime.visible = True
@@ -126,9 +127,9 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_disconnection(self):
         """Test message disconnection
         """
-        ll1 = self.create(items.LifelineItem)
-        ll2 = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll1 = self.create(LifelineItem)
+        ll2 = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         self.connect(msg, msg.head, ll1)
         self.connect(msg, msg.tail, ll2)
@@ -144,8 +145,8 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_lifetime_connectivity_on_head(self):
         """Test lifeline's lifetime connectivity change on head connection
         """
-        ll = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         # connect message to lifeline's head, lifeline's lifetime
         # visibility and connectivity should change
@@ -162,8 +163,8 @@ class BasicMessageConnectionsTestCase(TestCase):
     def test_lifetime_connectivity_on_lifetime(self):
         """Test lifeline's lifetime connectivity change on lifetime connection
         """
-        ll = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         ll.lifetime.visible = True
 
@@ -184,9 +185,9 @@ class DiagramModeMessageConnectionTestCase(TestCase):
     def test_message_glue_cd(self):
         """Test gluing message on communication diagram."""
 
-        lifeline1 = self.create(items.LifelineItem)
-        lifeline2 = self.create(items.LifelineItem)
-        message = self.create(items.MessageItem)
+        lifeline1 = self.create(LifelineItem)
+        lifeline2 = self.create(LifelineItem)
+        message = self.create(MessageItem)
 
         # make second lifeline to be in sequence diagram mode
         lifeline2.lifetime.visible = True
@@ -202,9 +203,9 @@ class DiagramModeMessageConnectionTestCase(TestCase):
     def test_message_glue_sd(self):
         """Test gluing message on sequence diagram."""
 
-        msg = self.create(items.MessageItem)
-        ll1 = self.create(items.LifelineItem)
-        ll2 = self.create(items.LifelineItem)
+        msg = self.create(MessageItem)
+        ll1 = self.create(LifelineItem)
+        ll2 = self.create(LifelineItem)
 
         # 1st lifeline - communication diagram
         # 2nd lifeline - sequence diagram
@@ -221,9 +222,9 @@ class DiagramModeMessageConnectionTestCase(TestCase):
     def test_messages_disconnect_cd(self):
         """Test disconnecting messages on communication diagram
         """
-        ll1 = self.create(items.LifelineItem)
-        ll2 = self.create(items.LifelineItem)
-        msg = self.create(items.MessageItem)
+        ll1 = self.create(LifelineItem)
+        ll2 = self.create(LifelineItem)
+        msg = self.create(MessageItem)
 
         self.connect(msg, msg.head, ll1)
         self.connect(msg, msg.tail, ll2)

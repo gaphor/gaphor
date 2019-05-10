@@ -18,14 +18,3 @@ There are separate diagram items for pseudostates
     with an option deep/shallow. [This section is going to be extended as
     we start to implement more pseudostates].
 """
-
-from gaphor.diagram.nameditem import NamedItem
-
-
-class VertexItem(NamedItem):
-    """
-    Abstract class for all vertices. All state, pseudostate items derive
-    from VertexItem, which simplifies transition connection adapters.
-    """
-
-    pass

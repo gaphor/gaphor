@@ -1,17 +1,17 @@
 import gaphor.UML as UML
-from gaphor.diagram import items
 from gaphor.tests.testcase import TestCase
+from ..objectnode import ObjectNodeItem
 
 
 class ObjectNodeTestCase(TestCase):
     def test_object_node(self):
-        self.create(items.ObjectNodeItem, UML.ObjectNode)
+        self.create(ObjectNodeItem, UML.ObjectNode)
 
     def test_name(self):
         """
         Test updating of object node name
         """
-        node = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        node = self.create(ObjectNodeItem, UML.ObjectNode)
         node.subject.name = "Blah"
 
         self.assertEqual("Blah", node._name.text)
@@ -29,7 +29,7 @@ class ObjectNodeTestCase(TestCase):
         """
         Test updating of ObjectNodeItem.ordering.
         """
-        node = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        node = self.create(ObjectNodeItem, UML.ObjectNode)
         node.subject.ordering = "unordered"
 
         self.assertEqual("{ ordering = unordered }", node._ordering.text)

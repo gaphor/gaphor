@@ -5,8 +5,12 @@ import logging
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
-from gaphor.adapters.components.connectorconnect import ConnectorConnectBase
+from ..component import ComponentItem
+from ..connector import ConnectorItem
+from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.implementation import ImplementationItem
+from ..connectorconnect import ConnectorConnectBase
 
 log = logging.getLogger(__name__)
 
@@ -19,8 +23,8 @@ class ComponentConnectTestCase(TestCase):
     def test_glue(self):
         """Test gluing connector to component."""
 
-        component = self.create(items.ComponentItem, UML.Component)
-        line = self.create(items.ConnectorItem)
+        component = self.create(ComponentItem, UML.Component)
+        line = self.create(ConnectorItem)
 
         glued = self.allow(line, line.head, component)
         self.assertTrue(glued)
@@ -28,8 +32,8 @@ class ComponentConnectTestCase(TestCase):
     def test_connection(self):
         """Test connecting connector to a component
         """
-        component = self.create(items.ComponentItem, UML.Component)
-        line = self.create(items.ConnectorItem)
+        component = self.create(ComponentItem, UML.Component)
+        line = self.create(ConnectorItem)
 
         self.connect(line, line.head, component)
         self.assertTrue(line.subject is None)
@@ -38,9 +42,9 @@ class ComponentConnectTestCase(TestCase):
     def test_glue_both(self):
         """Test gluing connector to component when one is connected."""
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
-        line = self.create(items.ConnectorItem)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
+        line = self.create(ConnectorItem)
 
         self.connect(line, line.head, c1)
         glued = self.allow(line, line.tail, c2)
@@ -55,8 +59,8 @@ class InterfaceConnectTestCase(TestCase):
     def test_non_folded_glue(self):
         """Test non-folded interface gluing."""
 
-        iface = self.create(items.InterfaceItem, UML.Component)
-        line = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        line = self.create(ConnectorItem)
 
         glued = self.allow(line, line.head, iface)
         self.assertFalse(glued)
@@ -64,8 +68,8 @@ class InterfaceConnectTestCase(TestCase):
     def test_folded_glue(self):
         """Test folded interface gluing."""
 
-        iface = self.create(items.InterfaceItem, UML.Component)
-        line = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        line = self.create(ConnectorItem)
 
         iface.folded = iface.FOLDED_REQUIRED
         glued = self.allow(line, line.head, iface)
@@ -74,9 +78,9 @@ class InterfaceConnectTestCase(TestCase):
     def test_glue_when_dependency_connected(self):
         """Test interface gluing, when dependency connected."""
 
-        iface = self.create(items.InterfaceItem, UML.Component)
-        dep = self.create(items.DependencyItem)
-        line = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        dep = self.create(DependencyItem)
+        line = self.create(ConnectorItem)
 
         self.connect(dep, dep.head, iface)
 
@@ -87,9 +91,9 @@ class InterfaceConnectTestCase(TestCase):
     def test_glue_when_implementation_connected(self):
         """Test interface gluing, when implementation connected."""
 
-        iface = self.create(items.InterfaceItem, UML.Component)
-        impl = self.create(items.ImplementationItem)
-        line = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        impl = self.create(ImplementationItem)
+        line = self.create(ConnectorItem)
 
         self.connect(impl, impl.head, iface)
 
@@ -100,11 +104,11 @@ class InterfaceConnectTestCase(TestCase):
     def test_glue_when_connector_connected(self):
         """Test interface gluing, when connector connected."""
 
-        iface = self.create(items.InterfaceItem, UML.Component)
+        iface = self.create(InterfaceItem, UML.Component)
         iface.folded = iface.FOLDED_REQUIRED
 
-        line1 = self.create(items.ConnectorItem)
-        line2 = self.create(items.ConnectorItem)
+        line1 = self.create(ConnectorItem)
+        line2 = self.create(ConnectorItem)
 
         self.connect(line1, line1.head, iface)
         self.assertEqual(iface.FOLDED_ASSEMBLY, iface.folded)
@@ -115,8 +119,8 @@ class InterfaceConnectTestCase(TestCase):
     def test_simple_connection(self):
         """Test simple connection to an interface
         """
-        iface = self.create(items.InterfaceItem, UML.Component)
-        line = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        line = self.create(ConnectorItem)
 
         iface.folded = iface.FOLDED_PROVIDED
         pport = iface.ports()[0]
@@ -146,8 +150,8 @@ class InterfaceConnectTestCase(TestCase):
     def test_connection_angle_change(self):
         """Test angle after connection to an interface
         """
-        iface = self.create(items.InterfaceItem, UML.Component)
-        line = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        line = self.create(ConnectorItem)
 
         iface.folded = iface.FOLDED_PROVIDED
         pport = iface.ports()[1]
@@ -164,9 +168,9 @@ class InterfaceConnectTestCase(TestCase):
     def test_connection_of_two_connectors_one_side(self):
         """Test connection of two connectors to required port of an interface
         """
-        iface = self.create(items.InterfaceItem, UML.Component)
-        c1 = self.create(items.ConnectorItem)
-        c2 = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        c1 = self.create(ConnectorItem)
+        c2 = self.create(ConnectorItem)
 
         iface.folded = iface.FOLDED_PROVIDED
         pport = iface.ports()[0]
@@ -193,9 +197,9 @@ class InterfaceConnectTestCase(TestCase):
     def test_connection_of_two_connectors_two_sides(self):
         """Test connection of two connectors to required and provided ports of an interface
         """
-        iface = self.create(items.InterfaceItem, UML.Component)
-        c1 = self.create(items.ConnectorItem)
-        c2 = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        c1 = self.create(ConnectorItem)
+        c2 = self.create(ConnectorItem)
 
         iface.folded = iface.FOLDED_PROVIDED
         pport = iface.ports()[0]
@@ -221,8 +225,8 @@ class InterfaceConnectTestCase(TestCase):
     def test_simple_disconnection(self):
         """Test disconnection of simple connection to an interface
         """
-        iface = self.create(items.InterfaceItem, UML.Component)
-        line = self.create(items.ConnectorItem)
+        iface = self.create(InterfaceItem, UML.Component)
+        line = self.create(ConnectorItem)
 
         iface.folded = iface.FOLDED_PROVIDED
         pport = iface.ports()[1]
@@ -280,11 +284,11 @@ class AssemblyConnectorTestCase(TestCase):
     def test_getting_component(self):
         """Test getting component
         """
-        conn1 = self.create(items.ConnectorItem)
-        conn2 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
+        conn2 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
 
         # connect component
         self.connect(conn1, conn1.tail, c1)
@@ -296,13 +300,13 @@ class AssemblyConnectorTestCase(TestCase):
     def test_connection(self):
         """Test basic assembly connection
         """
-        conn1 = self.create(items.ConnectorItem)
-        conn2 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
+        conn2 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
@@ -353,13 +357,13 @@ class AssemblyConnectorTestCase(TestCase):
     def test_required_port_glue(self):
         """Test if required port gluing works."""
 
-        conn1 = self.create(items.ConnectorItem)
-        conn2 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
+        conn2 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
@@ -378,15 +382,15 @@ class AssemblyConnectorTestCase(TestCase):
     def test_wrong_port_glue(self):
         """Test if incorrect port gluing is forbidden."""
 
-        conn1 = self.create(items.ConnectorItem)
-        conn2 = self.create(items.ConnectorItem)
-        conn3 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
+        conn2 = self.create(ConnectorItem)
+        conn3 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
-        c3 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
+        c3 = self.create(ComponentItem, UML.Component)
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
@@ -414,11 +418,11 @@ class AssemblyConnectorTestCase(TestCase):
     def test_port_status(self):
         """Test if port type is set properly
         """
-        conn1 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
@@ -439,13 +443,13 @@ class AssemblyConnectorTestCase(TestCase):
     def test_connection_order(self):
         """Test connection order of assembly connection
         """
-        conn1 = self.create(items.ConnectorItem)
-        conn2 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
+        conn2 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
@@ -470,15 +474,15 @@ class AssemblyConnectorTestCase(TestCase):
     def test_addtional_connections(self):
         """Test additional connections to assembly connection
         """
-        conn1 = self.create(items.ConnectorItem)
-        conn2 = self.create(items.ConnectorItem)
-        conn3 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
+        conn2 = self.create(ConnectorItem)
+        conn3 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
-        c3 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
+        c3 = self.create(ComponentItem, UML.Component)
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
@@ -525,13 +529,13 @@ class AssemblyConnectorTestCase(TestCase):
     def test_disconnection(self):
         """Test assembly connector disconnection
         """
-        conn1 = self.create(items.ConnectorItem)
-        conn2 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
+        conn2 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
@@ -564,15 +568,15 @@ class AssemblyConnectorTestCase(TestCase):
     def test_disconnection_order(self):
         """Test assembly connector disconnection order
         """
-        conn1 = self.create(items.ConnectorItem)
-        conn2 = self.create(items.ConnectorItem)
-        conn3 = self.create(items.ConnectorItem)
+        conn1 = self.create(ConnectorItem)
+        conn2 = self.create(ConnectorItem)
+        conn3 = self.create(ConnectorItem)
 
-        c1 = self.create(items.ComponentItem, UML.Component)
-        c2 = self.create(items.ComponentItem, UML.Component)
-        c3 = self.create(items.ComponentItem, UML.Component)
+        c1 = self.create(ComponentItem, UML.Component)
+        c2 = self.create(ComponentItem, UML.Component)
+        c3 = self.create(ComponentItem, UML.Component)
 
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = iface.FOLDED_ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]

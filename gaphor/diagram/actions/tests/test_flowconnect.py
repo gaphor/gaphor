@@ -4,7 +4,17 @@ Flow item connection adapters tests.
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
+from ..action import ActionItem
+from ..flow import FlowItem
+from ..activitynodes import (
+    InitialNodeItem,
+    ForkNodeItem,
+    FlowFinalNodeItem,
+    ActivityFinalNodeItem,
+    ActivityNodeItem,
+    DecisionNodeItem,
+)
+from ..objectnode import ObjectNodeItem
 
 
 class FlowItemBasicNodesConnectionTestCase(TestCase):
@@ -15,8 +25,8 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
     def test_initial_node_glue(self):
         """Test flow item gluing to initial node item."""
 
-        flow = self.create(items.FlowItem)
-        node = self.create(items.InitialNodeItem, UML.InitialNode)
+        flow = self.create(FlowItem)
+        node = self.create(InitialNodeItem, UML.InitialNode)
 
         # tail may not connect to initial node item
         allowed = self.allow(flow, flow.tail, node)
@@ -28,8 +38,8 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
     def test_flow_final_node_glue(self):
         """Test flow item gluing to flow final node item."""
 
-        flow = self.create(items.FlowItem)
-        node = self.create(items.FlowFinalNodeItem, UML.FlowFinalNode)
+        flow = self.create(FlowItem)
+        node = self.create(FlowFinalNodeItem, UML.FlowFinalNode)
 
         # head may not connect to flow final node item
         allowed = self.allow(flow, flow.head, node)
@@ -41,8 +51,8 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
     def test_activity_final_node_glue(self):
         """Test flow item gluing to activity final node item
         """
-        flow = self.create(items.FlowItem)
-        node = self.create(items.ActivityFinalNodeItem, UML.ActivityFinalNode)
+        flow = self.create(FlowItem)
+        node = self.create(ActivityFinalNodeItem, UML.ActivityFinalNode)
 
         # head may not connect to activity final node item
         glued = self.allow(flow, flow.head, node)
@@ -60,17 +70,17 @@ class FlowItemObjectNodeTestCase(TestCase):
     def test_glue(self):
         """Test gluing to object node."""
 
-        flow = self.create(items.FlowItem)
-        onode = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        flow = self.create(FlowItem)
+        onode = self.create(ObjectNodeItem, UML.ObjectNode)
         glued = self.allow(flow, flow.head, onode)
         self.assertTrue(glued)
 
     def test_connection(self):
         """Test connection to object node
         """
-        flow = self.create(items.FlowItem)
-        anode = self.create(items.ActionItem, UML.Action)
-        onode = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        flow = self.create(FlowItem)
+        anode = self.create(ActionItem, UML.Action)
+        onode = self.create(ObjectNodeItem, UML.ObjectNode)
 
         self.connect(flow, flow.head, anode)
         self.connect(flow, flow.tail, onode)
@@ -89,10 +99,10 @@ class FlowItemObjectNodeTestCase(TestCase):
     def test_reconnection(self):
         """Test object flow reconnection
         """
-        flow = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
-        o2 = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        flow = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        o1 = self.create(ObjectNodeItem, UML.ObjectNode)
+        o2 = self.create(ObjectNodeItem, UML.ObjectNode)
 
         # connect: a1 -> o1
         self.connect(flow, flow.head, a1)
@@ -122,10 +132,10 @@ class FlowItemObjectNodeTestCase(TestCase):
     def test_control_flow_reconnection(self):
         """Test control flow becoming object flow due to reconnection
         """
-        flow = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
-        o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        flow = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
+        o1 = self.create(ObjectNodeItem, UML.ObjectNode)
 
         # connect with control flow: a1 -> a2
         self.connect(flow, flow.head, a1)
@@ -162,9 +172,9 @@ class FlowItemActionTestCase(TestCase):
     def test_glue(self):
         """Test flow item gluing to action items."""
 
-        flow = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
+        flow = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
 
         glued = self.allow(flow, flow.head, a1)
         self.assertTrue(glued)
@@ -177,9 +187,9 @@ class FlowItemActionTestCase(TestCase):
     def test_connect(self):
         """Test flow item connecting to action items
         """
-        flow = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
+        flow = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
 
         self.connect(flow, flow.head, a1)
         self.connect(flow, flow.tail, a2)
@@ -199,9 +209,9 @@ class FlowItemActionTestCase(TestCase):
     def test_disconnect(self):
         """Test flow item disconnection from action items
         """
-        flow = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
+        flow = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
 
         self.connect(flow, flow.head, a1)
         self.connect(flow, flow.tail, a2)
@@ -216,10 +226,10 @@ class FlowItemActionTestCase(TestCase):
     def test_reconnect(self):
         """Test flow item reconnection
         """
-        flow = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
-        a3 = self.create(items.ActionItem, UML.Action)
+        flow = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
+        a3 = self.create(ActionItem, UML.Action)
 
         # a1 -> a2
         self.connect(flow, flow.head, a1)
@@ -248,10 +258,10 @@ class FlowItemActionTestCase(TestCase):
     def test_object_flow_reconnection(self):
         """Test object flow becoming control flow due to reconnection
         """
-        flow = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
-        o1 = self.create(items.ObjectNodeItem, UML.ObjectNode)
+        flow = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
+        o1 = self.create(ObjectNodeItem, UML.ObjectNode)
 
         # connect with control flow: a1 -> o1
         self.connect(flow, flow.head, a1)
@@ -302,8 +312,8 @@ class FlowItemDesisionAndForkNodes:
     def test_glue(self):
         """Test decision/fork nodes glue
         """
-        flow = self.create(items.FlowItem)
-        action = self.create(items.ActionItem, UML.Action)
+        flow = self.create(FlowItem)
+        action = self.create(ActionItem, UML.Action)
         node = self.create(self.item_cls, self.join_node_cls)
 
         glued = self.allow(flow, flow.head, node)
@@ -326,12 +336,12 @@ class FlowItemDesisionAndForkNodes:
 
         Node class changes due to two incoming edges and one outgoing edge.
         """
-        flow1 = self.create(items.FlowItem)
-        flow2 = self.create(items.FlowItem)
-        flow3 = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
-        a3 = self.create(items.ActionItem, UML.Action)
+        flow1 = self.create(FlowItem)
+        flow2 = self.create(FlowItem)
+        flow3 = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
+        a3 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.fork_node_cls)
 
         assert isinstance(jn.subject, self.fork_node_cls)
@@ -359,12 +369,12 @@ class FlowItemDesisionAndForkNodes:
             [ a1 ] --flow1--> [ jn ]
                                  | --flow3-->[ a3 ]
         """
-        flow1 = self.create(items.FlowItem)
-        flow2 = self.create(items.FlowItem)
-        flow3 = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
-        a3 = self.create(items.ActionItem, UML.Action)
+        flow1 = self.create(FlowItem)
+        flow2 = self.create(FlowItem)
+        flow3 = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
+        a3 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
@@ -400,14 +410,14 @@ class FlowItemDesisionAndForkNodes:
 
         Flow `flow4` will force the node to become a combined node.
         """
-        flow1 = self.create(items.FlowItem)
-        flow2 = self.create(items.FlowItem)
-        flow3 = self.create(items.FlowItem)
-        flow4 = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
-        a3 = self.create(items.ActionItem, UML.Action)
-        a4 = self.create(items.ActionItem, UML.Action)
+        flow1 = self.create(FlowItem)
+        flow2 = self.create(FlowItem)
+        flow3 = self.create(FlowItem)
+        flow4 = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
+        a3 = self.create(ActionItem, UML.Action)
+        a4 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
@@ -443,14 +453,14 @@ class FlowItemDesisionAndForkNodes:
         """
         canvas = self.diagram.canvas
 
-        flow1 = self.create(items.FlowItem)
-        flow2 = self.create(items.FlowItem)
-        flow3 = self.create(items.FlowItem)
-        flow4 = self.create(items.FlowItem)
-        a1 = self.create(items.ActionItem, UML.Action)
-        a2 = self.create(items.ActionItem, UML.Action)
-        a3 = self.create(items.ActionItem, UML.Action)
-        a4 = self.create(items.ActionItem, UML.Action)
+        flow1 = self.create(FlowItem)
+        flow2 = self.create(FlowItem)
+        flow3 = self.create(FlowItem)
+        flow4 = self.create(FlowItem)
+        a1 = self.create(ActionItem, UML.Action)
+        a2 = self.create(ActionItem, UML.Action)
+        a3 = self.create(ActionItem, UML.Action)
+        a4 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
@@ -483,12 +493,12 @@ class FlowItemDesisionAndForkNodes:
 
 
 class FlowItemForkNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
-    item_cls = items.ForkNodeItem
+    item_cls = ForkNodeItem
     fork_node_cls = UML.ForkNode
     join_node_cls = UML.JoinNode
 
 
 class FlowItemDecisionNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
-    item_cls = items.DecisionNodeItem
+    item_cls = DecisionNodeItem
     fork_node_cls = UML.DecisionNode
     join_node_cls = UML.MergeNode

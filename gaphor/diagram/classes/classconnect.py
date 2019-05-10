@@ -4,13 +4,19 @@ import logging
 
 from gaphor import UML
 from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
-from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
+from ..nameditem import NamedItem
+from ..classifier import ClassifierItem
+from .dependency import DependencyItem
+from .implementation import ImplementationItem
+from .generalization import GeneralizationItem
+from .interface import InterfaceItem
+from .association import AssociationItem
 
 log = logging.getLogger(__name__)
 
 
-@IConnect.register(items.NamedItem, items.DependencyItem)
+@IConnect.register(NamedItem, DependencyItem)
 class DependencyConnect(RelationshipConnect):
     """Connect two NamedItem elements using a Dependency."""
 
@@ -64,7 +70,7 @@ class DependencyConnect(RelationshipConnect):
         line.subject = relation
 
 
-@IConnect.register(items.ClassifierItem, items.GeneralizationItem)
+@IConnect.register(ClassifierItem, GeneralizationItem)
 class GeneralizationConnect(RelationshipConnect):
     """Connect Classifiers with a Generalization relationship."""
 
@@ -82,7 +88,7 @@ class GeneralizationConnect(RelationshipConnect):
         self.line.subject = relation
 
 
-@IConnect.register(items.ClassifierItem, items.AssociationItem)
+@IConnect.register(ClassifierItem, AssociationItem)
 class AssociationConnect(UnaryRelationshipConnect):
     """Connect association to classifier."""
 
@@ -165,7 +171,7 @@ class AssociationConnect(UnaryRelationshipConnect):
                 old.unlink()
 
 
-@IConnect.register(items.NamedItem, items.ImplementationItem)
+@IConnect.register(NamedItem, ImplementationItem)
 class ImplementationConnect(RelationshipConnect):
     """Connect Interface and a BehavioredClassifier using an Implementation."""
 

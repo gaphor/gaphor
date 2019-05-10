@@ -7,9 +7,9 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
 from gaphor.core import _, transactional
-from gaphor.diagram import items
 from gaphor.ui.abc import PropertyPageBase
 from gaphor.ui.interfaces import PropertyPages
+from .metaclass import MetaclassItem
 
 
 def _issubclass(c, b):
@@ -19,7 +19,7 @@ def _issubclass(c, b):
         return False
 
 
-@PropertyPages.register(items.MetaclassItem)
+@PropertyPages.register(MetaclassItem)
 class MetaclassNameEditor(PropertyPageBase):
     """
     Metaclass name editor. Provides editable combo box entry with

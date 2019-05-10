@@ -8,12 +8,14 @@ for details.
 
 from gaphor import UML
 
-from gaphor.diagram import items
 from gaphor.diagram.interfaces import IConnect
 from .classconnect import DependencyConnect, ImplementationConnect
+from .interface import InterfaceItem
+from .implementation import ImplementationItem
+from .dependency import DependencyItem
 
 
-@IConnect.register(items.InterfaceItem, items.ImplementationItem)
+@IConnect.register(InterfaceItem, ImplementationItem)
 class ImplementationInterfaceConnect(ImplementationConnect):
     """Connect interface item and a behaviored classifier using an
     implementation.
@@ -38,7 +40,7 @@ class ImplementationInterfaceConnect(ImplementationConnect):
             self.line._solid = False
 
 
-@IConnect.register(items.InterfaceItem, items.DependencyItem)
+@IConnect.register(InterfaceItem, DependencyItem)
 class DependencyInterfaceConnect(DependencyConnect):
     """Connect interface item with dependency item."""
 

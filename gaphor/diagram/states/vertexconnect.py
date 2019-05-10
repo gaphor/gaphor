@@ -7,9 +7,11 @@ gaphor.adapter package.
 """
 
 from gaphor import UML
-from gaphor.diagram import items
 from gaphor.adapters.connectors import RelationshipConnect
 from gaphor.diagram.interfaces import IConnect
+from .transition import TransitionItem
+from .state import VertexItem
+from .pseudostates import InitialPseudostateItem, HistoryPseudostateItem
 
 
 class VertexConnect(RelationshipConnect):
@@ -31,7 +33,7 @@ class VertexConnect(RelationshipConnect):
             relation.guard = self.element_factory.create(UML.Constraint)
 
 
-@IConnect.register(items.VertexItem, items.TransitionItem)
+@IConnect.register(VertexItem, TransitionItem)
 class TransitionConnect(VertexConnect):
     """Connect two state vertices using transition item."""
 
@@ -55,7 +57,7 @@ class TransitionConnect(VertexConnect):
             return None
 
 
-@IConnect.register(items.InitialPseudostateItem, items.TransitionItem)
+@IConnect.register(InitialPseudostateItem, TransitionItem)
 class InitialPseudostateTransitionConnect(VertexConnect):
     """Connect initial pseudostate using transition item.
 
@@ -77,7 +79,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         connected_items = [
             c
             for c in connections
-            if isinstance(c.item, items.TransitionItem) and c.item is not line
+            if isinstance(c.item, TransitionItem) and c.item is not line
         ]
         if handle is line.head and not any(connected_items):
             return super(InitialPseudostateTransitionConnect, self).allow(handle, port)
@@ -85,7 +87,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
             return None
 
 
-@IConnect.register(items.HistoryPseudostateItem, items.TransitionItem)
+@IConnect.register(HistoryPseudostateItem, TransitionItem)
 class HistoryPseudostateTransitionConnect(VertexConnect):
     """Connect history pseudostate using transition item.
 

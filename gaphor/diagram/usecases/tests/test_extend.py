@@ -4,7 +4,6 @@ Test extend item connections.
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
 from ..usecase import UseCaseItem
 from ..extend import ExtendItem
 

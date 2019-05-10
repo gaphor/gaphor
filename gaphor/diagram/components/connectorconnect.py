@@ -6,9 +6,11 @@ Implemented using interface item in assembly connector mode, see
 """
 
 from gaphor import UML
-from gaphor.diagram import items
 from gaphor.adapters.connectors import AbstractConnect
 from gaphor.diagram.interfaces import IConnect
+from .component import ComponentItem
+from .connector import ConnectorItem
+from ..classes.interface import InterfaceItem
 
 
 class ConnectorConnectBase(AbstractConnect):
@@ -56,9 +58,9 @@ class ConnectorConnectBase(AbstractConnect):
         c1 = canvas.get_connection(connector.head)
         c2 = canvas.get_connection(connector.tail)
         component = None
-        if c1 and isinstance(c1.connected, items.ComponentItem):
+        if c1 and isinstance(c1.connected, ComponentItem):
             component = c1.connected
-        elif c2 and isinstance(c2.connected, items.ComponentItem):
+        elif c2 and isinstance(c2.connected, ComponentItem):
             component = c2.connected
         return component
 
@@ -107,17 +109,17 @@ class ConnectorConnectBase(AbstractConnect):
         iface = self.element
         component = self.get_connected(self.line.opposite(handle))
 
-        if isinstance(component, items.InterfaceItem):
+        if isinstance(component, InterfaceItem):
             component, iface = iface, component
             port = self.get_connected_port(self.line.opposite(handle))
 
         # connect only components and interfaces but not two interfaces nor
         # two components
         glue_ok = not (
-            isinstance(component, items.ComponentItem)
-            and isinstance(iface, items.ComponentItem)
-            or isinstance(component, items.InterfaceItem)
-            and isinstance(iface, items.InterfaceItem)
+            isinstance(component, ComponentItem)
+            and isinstance(iface, ComponentItem)
+            or isinstance(component, InterfaceItem)
+            and isinstance(iface, InterfaceItem)
         )
 
         # if port type is known, then allow connection to proper port only
@@ -128,8 +130,8 @@ class ConnectorConnectBase(AbstractConnect):
             and (port.required or port.provided)
         ):
 
-            assert isinstance(component, items.ComponentItem)
-            assert isinstance(iface, items.InterfaceItem)
+            assert isinstance(component, ComponentItem)
+            assert isinstance(iface, InterfaceItem)
 
             glue_ok = (
                 port.provided
@@ -153,8 +155,8 @@ class ConnectorConnectBase(AbstractConnect):
             # reference interface and component correctly
             iface = c1
             component = c2
-            if isinstance(component, items.InterfaceItem):
-                assert isinstance(iface, items.ComponentItem)
+            if isinstance(component, InterfaceItem):
+                assert isinstance(iface, ComponentItem)
                 component, iface = iface, component
 
             connections = self.get_connecting(iface, both=True)
@@ -192,7 +194,7 @@ class ConnectorConnectBase(AbstractConnect):
             return
 
         iface = self.get_connected(line.head)
-        if not isinstance(iface, items.InterfaceItem):
+        if not isinstance(iface, InterfaceItem):
             iface = self.get_connected(line.tail)
 
         connections = list(self.get_connecting(iface, both=True))
@@ -213,14 +215,14 @@ class ConnectorConnectBase(AbstractConnect):
             self.drop_uml(line, c)
 
 
-@IConnect.register(items.ComponentItem, items.ConnectorItem)
+@IConnect.register(ComponentItem, ConnectorItem)
 class ComponentConnectorConnect(ConnectorConnectBase):
     """Connection of connector item to a component."""
 
     pass
 
 
-@IConnect.register(items.InterfaceItem, items.ConnectorItem)
+@IConnect.register(InterfaceItem, ConnectorItem)
 class InterfaceConnectorConnect(ConnectorConnectBase):
     """Connect connector to an interface to maintain assembly connection.
 
@@ -242,9 +244,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
             canvas = self.element.canvas
             connections = self.get_connecting(self.element)
             lines = [
-                c.item
-                for c in connections
-                if not isinstance(c.item, items.ConnectorItem)
+                c.item for c in connections if not isinstance(c.item, ConnectorItem)
             ]
             glue_ok = len(lines) == 0
 
