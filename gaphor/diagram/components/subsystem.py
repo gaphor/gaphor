@@ -11,7 +11,7 @@ use cases diagram.
 
 from gaphor import UML
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
-from gaphor.diagram import uml
+from ..support import uml
 from .component import ComponentItem
 
 

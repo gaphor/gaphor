@@ -18,3 +18,10 @@ There are separate diagram items for pseudostates
     with an option deep/shallow. [This section is going to be extended as
     we start to implement more pseudostates].
 """
+
+from .finalstate import FinalStateItem
+from .pseudostates import HistoryPseudostateItem, InitialPseudostateItem
+from .state import StateItem
+from .transition import TransitionItem
+
+# from . import propertypages, vertexconnect

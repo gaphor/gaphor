@@ -14,7 +14,7 @@ from gaphas.aspect import ConnectionSink, Connector
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.connectors import IConnect
-from gaphor.diagram.interfaces import Group
+from gaphor.diagram.grouping import Group
 
 # For DiagramItemConnector aspect:
 import gaphor.ui.diagramtools

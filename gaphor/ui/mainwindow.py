@@ -34,6 +34,8 @@ from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import Namespace
 from gaphor.ui.toolbox import Toolbox
 
+import gaphor.adapters
+
 log = logging.getLogger(__name__)
 
 ICONS = (

@@ -1,5 +1,5 @@
 import gaphor.diagram.editors
-import gaphor.adapters.grouping
+import gaphor.diagram.grouping
 
 import gaphor.diagram.components.connectorconnect
 import gaphor.diagram.interactions.messageconnect

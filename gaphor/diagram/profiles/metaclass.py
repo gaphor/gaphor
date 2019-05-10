@@ -2,9 +2,9 @@
 Metaclass item for Metaclass UML metaclass :) from profiles.
 """
 
-from gaphor.diagram.classes.klass import ClassItem
-from gaphor.diagram import uml
 from gaphor import UML
+from ..classes import ClassItem
+from ..support import uml
 
 
 @uml(UML.Component, stereotype="metaclass")
