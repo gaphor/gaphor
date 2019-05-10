@@ -1,8 +1,7 @@
 from gaphor import UML
-from gaphor.adapters.connectors import RelationshipConnect
 from gaphor.diagram.classifier import ClassifierItem
 from .extension import ExtensionItem
-from gaphor.diagram.interfaces import IConnect
+from ..connectors import IConnect, RelationshipConnect
 
 
 @IConnect.register(ClassifierItem, ExtensionItem)

@@ -3,8 +3,7 @@
 import logging
 
 from gaphor import UML
-from gaphor.adapters.connectors import UnaryRelationshipConnect, RelationshipConnect
-from gaphor.diagram.interfaces import IConnect
+from ..connectors import IConnect, UnaryRelationshipConnect, RelationshipConnect
 from ..nameditem import NamedItem
 from ..classifier import ClassifierItem
 from .dependency import DependencyItem

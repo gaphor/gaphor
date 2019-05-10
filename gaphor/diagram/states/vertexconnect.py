@@ -7,8 +7,7 @@ gaphor.adapter package.
 """
 
 from gaphor import UML
-from gaphor.adapters.connectors import RelationshipConnect
-from gaphor.diagram.interfaces import IConnect
+from ..connectors import IConnect, RelationshipConnect
 from .transition import TransitionItem
 from .state import VertexItem
 from .pseudostates import InitialPseudostateItem, HistoryPseudostateItem

@@ -6,8 +6,7 @@ Implemented using interface item in assembly connector mode, see
 """
 
 from gaphor import UML
-from gaphor.adapters.connectors import AbstractConnect
-from gaphor.diagram.interfaces import IConnect
+from ..connectors import IConnect, AbstractConnect
 from .component import ComponentItem
 from .connector import ConnectorItem
 from ..classes.interface import InterfaceItem

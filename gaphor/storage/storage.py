@@ -25,12 +25,12 @@ from gaphor.diagram import items
 from gaphor.i18n import _
 from gaphor.storage import parser
 
-# import gaphor.adapters.connectors package, so diagram items can find
+# import gaphor.diagram.connectors package, so diagram items can find
 # their appropriate connectors (i.e. diagram line requires this);
 # this allows external scripts to load diagram properly... or should
 # this be done using services? i.e. request storage service, which should
 # depend on connectors service?
-from gaphor.adapters import connectors
+from gaphor.diagram import connectors
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"

@@ -8,7 +8,7 @@ for details.
 
 from gaphor import UML
 
-from gaphor.diagram.interfaces import IConnect
+from ..connectors import IConnect
 from .classconnect import DependencyConnect, ImplementationConnect
 from .interface import InterfaceItem
 from .implementation import ImplementationItem

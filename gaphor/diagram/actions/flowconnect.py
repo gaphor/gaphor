@@ -5,8 +5,7 @@ Flow item adapter connections.
 import logging
 
 from gaphor import UML
-from gaphor.adapters.connectors import UnaryRelationshipConnect
-from gaphor.diagram.interfaces import IConnect
+from ..connectors import IConnect, UnaryRelationshipConnect
 from .action import ActionItem, SendSignalActionItem, AcceptEventActionItem
 from .activitynodes import ForkNodeItem, ActivityNodeItem, DecisionNodeItem
 from .flow import FlowItem

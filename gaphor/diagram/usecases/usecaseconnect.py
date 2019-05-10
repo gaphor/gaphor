@@ -6,8 +6,7 @@ from gaphor import UML
 from .usecase import UseCaseItem
 from .extend import ExtendItem
 from .include import IncludeItem
-from gaphor.adapters.connectors import RelationshipConnect
-from gaphor.diagram.interfaces import IConnect
+from ..connectors import IConnect, RelationshipConnect
 
 
 @IConnect.register(UseCaseItem, IncludeItem)
