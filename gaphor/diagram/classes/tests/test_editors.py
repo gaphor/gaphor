@@ -1,24 +1,22 @@
+from gi.repository import Gtk
+
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
-from ..editors import Editor
-from gaphor.adapters.propertypages import AttributesPage, OperationsPage
-from gi.repository import Gtk
+from ...editors import Editor
+from .. import ClassItem, AssociationItem
+from ..classespropertypages import AttributesPage, OperationsPage
 
 
 class EditorTestCase(TestCase):
-    def setUp(self):
-        super(EditorTestCase, self).setUp()
-
     def test_association_editor(self):
-        assoc = self.create(items.AssociationItem)
+        assoc = self.create(AssociationItem)
         adapter = Editor(assoc)
         assert not adapter.is_editable(10, 10)
         assert adapter._edit is None
 
         # Intermezzo: connect the association between two classes
-        class1 = self.create(items.ClassItem, UML.Class)
-        class2 = self.create(items.ClassItem, UML.Class)
+        class1 = self.create(ClassItem, UML.Class)
+        class2 = self.create(ClassItem, UML.Class)
 
         assoc.handles()[0].pos = 10, 10
         assoc.handles()[-1].pos = 100, 100
@@ -40,22 +38,11 @@ class EditorTestCase(TestCase):
         self.assertTrue(adapter.is_editable(*pos))
         self.assertTrue(adapter._edit is assoc.tail_end)
 
-    def test_objectnode_editor(self):
-        node = self.create(items.ObjectNodeItem, UML.ObjectNode)
-        self.diagram.canvas.update_now()
-
-        adapter = Editor(node)
-        self.assertTrue(adapter.is_editable(10, 10))
-        # assert not adapter.edit_tag
-
-        # assert adapter.is_editable(*node.tag_bounds[:2])
-        # assert adapter.edit_tag
-
     def test_classifier_editor(self):
         """
         Test classifier editor
         """
-        klass = self.create(items.ClassItem, UML.Class)
+        klass = self.create(ClassItem, UML.Class)
         klass.subject.name = "Class1"
 
         self.diagram.canvas.update()
@@ -93,7 +80,7 @@ class EditorTestCase(TestCase):
         self.assertEqual("+ method()", edit.get_text())
 
     def test_class_attribute_editor(self):
-        klass = self.create(items.ClassItem, UML.Class)
+        klass = self.create(ClassItem, UML.Class)
         klass.subject.name = "Class1"
 
         editor = AttributesPage(klass)
@@ -117,7 +104,7 @@ class EditorTestCase(TestCase):
         page.destroy()
 
     def test_class_operation_editor(self):
-        klass = self.create(items.ClassItem, UML.Class)
+        klass = self.create(ClassItem, UML.Class)
         klass.subject.name = "Class1"
 
         editor = OperationsPage(klass)

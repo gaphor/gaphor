@@ -6,7 +6,6 @@ diagram).
 
 import uuid
 
-from . import connectors, grouping
 from . import (
     actions,
     classes,

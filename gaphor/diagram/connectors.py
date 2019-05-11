@@ -11,9 +11,6 @@ from gaphor import UML
 from gaphor.core import inject
 from gaphor.misc.generic.multidispatch import multidispatch
 from .abc import ConnectBase
-from .classes.interface import InterfaceItem
-from .classes.implementation import ImplementationItem
-from .classes.dependency import DependencyItem
 
 logger = logging.getLogger(__name__)
 
@@ -97,6 +94,10 @@ class AbstractConnect(ConnectBase):
 
         Returns `True` by default.
         """
+        from .classes.interface import InterfaceItem
+        from .classes.implementation import ImplementationItem
+        from .classes.dependency import DependencyItem
+
         iface = self.element
         if isinstance(iface, InterfaceItem) and iface.folded:
             canvas = self.canvas

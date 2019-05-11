@@ -4,4 +4,9 @@ from .connector import ConnectorItem
 from .node import NodeItem
 from .subsystem import SubsystemItem
 
-# from . import componentsgrouping, connectorconnect
+
+def _load():
+    from . import componentsgrouping, connectorconnect, componentspropertypage
+
+
+_load()

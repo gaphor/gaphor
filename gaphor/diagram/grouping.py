@@ -19,7 +19,6 @@ import abc
 
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.diagram import items
 from gaphor.misc.generic.multidispatch import multidispatch
 
 log = logging.getLogger(__name__)

@@ -1,4 +1,9 @@
 from .extension import ExtensionItem
 from .metaclass import MetaclassItem
 
-# from . import extensionconnect, metaclasseditor, stereotypepage
+
+def _load():
+    from . import extensionconnect, metaclasseditor, stereotypepage
+
+
+_load()

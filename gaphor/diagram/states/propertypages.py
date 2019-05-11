@@ -10,8 +10,7 @@ from gaphor.core import _, inject, transactional
 from gaphor import UML
 from .transition import TransitionItem
 from .state import StateItem
-from gaphor.adapters.propertypages import NamedItemPropertyPage, create_hbox_label
-from gaphor.ui.interfaces import PropertyPages
+from ..propertypages import PropertyPages, NamedItemPropertyPage, create_hbox_label
 
 
 @PropertyPages.register(TransitionItem)

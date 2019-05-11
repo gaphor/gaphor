@@ -4,9 +4,8 @@ from gi.repository import Gtk
 
 from gaphor import UML
 
-from gaphor.adapters.propertypages import NamedItemPropertyPage
 from gaphor.core import _, inject, transactional
-from gaphor.ui.interfaces import PropertyPages
+from ..propertypages import PropertyPages, NamedItemPropertyPage
 from .partition import PartitionItem
 
 

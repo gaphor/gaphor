@@ -9,7 +9,7 @@ from gaphor.UML.event import AssociationChangeEvent
 from gaphor.core import _, inject, event_handler, action, build_action_group
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.interfaces import PropertyPages
+from gaphor.diagram.propertypages import PropertyPages
 from gaphor.ui.event import DiagramSelectionChange
 
 log = logging.getLogger(__name__)

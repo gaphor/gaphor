@@ -1,13 +1,14 @@
 from gi.repository import Gtk
-from gaphor import UML
-from gaphor.diagram import items
+
 from gaphor.tests import TestCase
-from gaphor.adapters.propertypages import ClassAttributes
+from gaphor import UML
+from .. import ClassItem, AssociationItem
+from ..classespropertypages import ClassAttributes
 
 
-class ClassAttributesTestCase(TestCase):
+class ClassPropertyPagesTestCase(TestCase):
     def test_attribute_editing(self):
-        class_item = self.create(items.ClassItem, UML.Class)
+        class_item = self.create(ClassItem, UML.Class)
         model = ClassAttributes(class_item, (str, bool, object))
         model.append([None, False, None])
         path = Gtk.TreePath.new_first()

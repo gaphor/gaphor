@@ -26,20 +26,3 @@ class UIComponent(metaclass=abc.ABCMeta):
         Close the UI component. The component can decide to hide or destroy the UI
         components.
         """
-
-
-class PropertyPageBase(metaclass=abc.ABCMeta):
-    """
-    A property page which can display itself in a notebook
-    """
-
-    order = 0  # Order number, used for ordered display
-    name = "Properties"
-
-    @abc.abstractmethod
-    def construct(self):
-        """
-        Create the page (Gtk.Widget) that belongs to the Property page.
-
-        Returns the page's toplevel widget (Gtk.Widget).
-        """

@@ -24,4 +24,9 @@ from .pseudostates import HistoryPseudostateItem, InitialPseudostateItem
 from .state import StateItem
 from .transition import TransitionItem
 
-# from . import propertypages, vertexconnect
+
+def _load():
+    from . import propertypages, vertexconnect
+
+
+_load()

@@ -5,10 +5,9 @@ Metaclass item editors.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.adapters.propertypages import create_hbox_label, EventWatcher
+from ..propertypages import create_hbox_label, EventWatcher
 from gaphor.core import _, transactional
-from gaphor.ui.abc import PropertyPageBase
-from gaphor.ui.interfaces import PropertyPages
+from ..propertypages import PropertyPages, PropertyPageBase
 from .metaclass import MetaclassItem
 
 
