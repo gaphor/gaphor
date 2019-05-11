@@ -5,14 +5,11 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-import logging
+import abc
 
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.misc.generic.multidispatch import multidispatch
-from .abc import ConnectBase
-
-logger = logging.getLogger(__name__)
 
 
 @multidispatch(object, object)
@@ -28,6 +25,40 @@ class IConnect:
 
     def allow(self, handle, port):
         return False
+
+
+class ConnectBase(metaclass=abc.ABCMeta):
+    """
+    This interface is used by the HandleTool to allow connecting
+    lines to element items. For each specific case (Element, Line) an
+    adapter could be written.
+    """
+
+    @abc.abstractmethod
+    def allow(self, handle, port):
+        """
+        Determine if a connection is allowed.
+
+        Do some extra checks to see if the items actually can be connected.
+        """
+
+    @abc.abstractmethod
+    def connect(self, handle, port):
+        """
+        Connect a line's handle to element.
+
+        Note that at the moment of the connect, handle.connected_to may point
+        to some other item. The implementor should do the disconnect of
+        the other element themselves.
+        """
+
+    @abc.abstractmethod
+    def disconnect(self, handle):
+        """
+        The true disconnect. Disconnect a handle.connected_to from an
+        element. This requires that the relationship is also removed at
+        model level.
+        """
 
 
 class AbstractConnect(ConnectBase):
