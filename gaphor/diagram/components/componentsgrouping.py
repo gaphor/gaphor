@@ -1,5 +1,3 @@
-import logging
-
 from gaphor import UML
 from ..grouping import Group, AbstractGroup
 from .node import NodeItem
@@ -7,9 +5,6 @@ from .subsystem import SubsystemItem
 from .component import ComponentItem
 from .artifact import ArtifactItem
 from ..usecases import UseCaseItem
-
-
-log = logging.getLogger(__name__)
 
 
 @Group.register(NodeItem, NodeItem)
@@ -68,7 +63,6 @@ class NodeComponentGroup(AbstractGroup):
                 e1.unlink()
                 e2.unlink()
                 connector.unlink()
-                log.debug("Removed %s from node %s" % (component, node))
 
 
 @Group.register(NodeItem, ArtifactItem)
@@ -92,7 +86,6 @@ class NodeArtifactGroup(AbstractGroup):
         for deployment in node.deployment:
             if deployment.deployedArtifact[0] is artifact:
                 deployment.unlink()
-                log.debug("Removed %s from node %s" % (artifact, node))
 
 
 @Group.register(SubsystemItem, UseCaseItem)

@@ -1,7 +1,6 @@
 """
 Test connector item connectors.
 """
-import logging
 
 from gaphor.tests import TestCase
 from gaphor import UML
@@ -11,8 +10,6 @@ from gaphor.diagram.classes.interface import InterfaceItem
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from ..connectorconnect import ConnectorConnectBase
-
-log = logging.getLogger(__name__)
 
 
 class ComponentConnectTestCase(TestCase):
@@ -601,10 +598,7 @@ class AssemblyConnectorTestCase(TestCase):
 
         # disconnect from provided port
         # assembly should be destroyed
-        log.debug("Perform disconnect from here")
         self.disconnect(conn1, conn1.head)
-
-        log.debug("Disconnect done")
 
         self.assertTrue(conn1.subject is None)
         self.assertTrue(conn2.subject is None)

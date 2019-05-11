@@ -2,16 +2,12 @@
 Flow item adapter connections.
 """
 
-import logging
-
 from gaphor import UML
 from ..connectors import IConnect, UnaryRelationshipConnect
 from .action import ActionItem, SendSignalActionItem, AcceptEventActionItem
 from .activitynodes import ForkNodeItem, ActivityNodeItem, DecisionNodeItem
 from .flow import FlowItem
 from .objectnode import ObjectNodeItem
-
-log = logging.getLogger(__name__)
 
 
 class FlowConnect(UnaryRelationshipConnect):
@@ -35,7 +31,6 @@ class FlowConnect(UnaryRelationshipConnect):
 
     def reconnect(self, handle, port):
         line = self.line
-        log.debug("Reconnection of %s (guard %s)" % (line.subject, line.subject.guard))
         old_flow = line.subject
         # Secure properties before old_flow is removed:
         name = old_flow.name
@@ -46,7 +41,6 @@ class FlowConnect(UnaryRelationshipConnect):
             relation.name = name
             if guard_value:
                 relation.guard = guard_value
-            log.debug("unlinking old flow instance %s" % old_flow)
             # old_flow.unlink()
 
     def connect_subject(self, handle):
@@ -73,7 +67,6 @@ class FlowConnect(UnaryRelationshipConnect):
             adapter.combine_nodes()
 
     def disconnect_subject(self, handle):
-        log.debug("Performing disconnect for handle %s" % handle)
         super(FlowConnect, self).disconnect_subject(handle)
         line = self.line
         opposite = line.opposite(handle)

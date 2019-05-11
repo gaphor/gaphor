@@ -14,14 +14,11 @@ instance of an item to be grouped is created. This happens when item
 is about to be created. Therefore `AbstractGroup.can_contain` has
 to be aware that `AbstractGroup.item` can be null.
 """
-import logging
 import abc
 
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.misc.generic.multidispatch import multidispatch
-
-log = logging.getLogger(__name__)
 
 
 @multidispatch(object, object)

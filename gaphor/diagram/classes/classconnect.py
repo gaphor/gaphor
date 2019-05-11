@@ -1,7 +1,5 @@
 """Classes related (dependency, implementation) adapter connections."""
 
-import logging
-
 from gaphor import UML
 from ..connectors import IConnect, UnaryRelationshipConnect, RelationshipConnect
 from ..nameditem import NamedItem
@@ -11,8 +9,6 @@ from .implementation import ImplementationItem
 from .generalization import GeneralizationItem
 from .interface import InterfaceItem
 from .association import AssociationItem
-
-log = logging.getLogger(__name__)
 
 
 @IConnect.register(NamedItem, DependencyItem)
@@ -79,11 +75,9 @@ class GeneralizationConnect(RelationshipConnect):
         )
 
     def connect_subject(self, handle):
-        log.debug("connect_subject: %s" % (handle,))
         relation = self.relationship_or_new(
             UML.Generalization, UML.Generalization.general, UML.Generalization.specific
         )
-        log.debug("found: %s" % (relation,))
         self.line.subject = relation
 
 
