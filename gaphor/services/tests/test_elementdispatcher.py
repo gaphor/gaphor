@@ -21,9 +21,7 @@ class ElementDispatcherTestCase(TestCase):
     def test_register_handler(self):
         dispatcher = self.dispatcher
         element = self.element_factory.create(UML.Class)
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
         assert len(dispatcher._handlers) == 1
         assert list(dispatcher._handlers.keys())[0] == (
             element,
@@ -40,9 +38,7 @@ class ElementDispatcherTestCase(TestCase):
         )
         # 3:
         p.name = "func"
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
         self.assertEqual(3, len(self.events))
         self.assertEqual(3, len(dispatcher._handlers))
 
@@ -59,24 +55,16 @@ class ElementDispatcherTestCase(TestCase):
         p = element.ownedOperation[0].formalParameter = self.element_factory.create(
             UML.Parameter
         )
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
 
         n_handlers = len(dispatcher._handlers)
 
         self.assertEqual(0, len(self.events))
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
         self.assertEqual(n_handlers, len(dispatcher._handlers))
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
         self.assertEqual(n_handlers, len(dispatcher._handlers))
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
         self.assertEqual(n_handlers, len(dispatcher._handlers))
 
         p.name = "func"
@@ -92,21 +80,19 @@ class ElementDispatcherTestCase(TestCase):
             UML.Parameter
         )
         p.name = "func"
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
         assert len(dispatcher._handlers) == 3
         assert dispatcher._handlers[element, UML.Class.ownedOperation]
         assert dispatcher._handlers[o, UML.Operation.parameter]
         assert dispatcher._handlers[p, UML.Parameter.name]
 
-        dispatcher.unregister_handler(self._handler)
+        dispatcher.unsubscribe(self._handler)
 
         assert len(dispatcher._handlers) == 0, dispatcher._handlers
         assert len(dispatcher._reverse) == 0, dispatcher._reverse
         # assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
         # Should not fail here too:
-        dispatcher.unregister_handler(self._handler)
+        dispatcher.unsubscribe(self._handler)
 
     def test_notification(self):
         """
@@ -119,9 +105,7 @@ class ElementDispatcherTestCase(TestCase):
             UML.Parameter
         )
         p.name = "func"
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
@@ -142,7 +126,7 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = self.element_factory.create(UML.Transition)
         g = element.guard = self.element_factory.create(UML.Constraint)
-        dispatcher.register_handler(self._handler, element, "guard.specification")
+        dispatcher.subscribe(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
         assert (element.guard, UML.Constraint.specification) in list(
@@ -166,7 +150,7 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = self.element_factory.create(UML.Transition)
         g = element.guard = self.element_factory.create(UML.Constraint)
-        dispatcher.register_handler(self._handler, element, "guard.specification")
+        dispatcher.subscribe(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
 
@@ -187,9 +171,7 @@ class ElementDispatcherTestCase(TestCase):
             UML.Constraint
         )
         p.name = "func"
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.precondition.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.precondition.name")
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
@@ -203,7 +185,7 @@ class ElementDispatcherTestCase(TestCase):
         dispatcher = self.dispatcher
         element = self.element_factory.create(UML.Transition)
         g = element.guard = self.element_factory.create(UML.Constraint)
-        dispatcher.register_handler(self._handler, element, "guard.specification")
+        dispatcher.subscribe(self._handler, element, "guard.specification")
         assert len(dispatcher._handlers) == 2
         assert not self.events
         assert (element.guard, UML.Constraint.specification) in list(
@@ -257,9 +239,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
             UML.Parameter
         )
         p.name = "func"
-        dispatcher.register_handler(
-            self._handler, element, "ownedOperation.parameter.name"
-        )
+        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
         assert len(dispatcher._handlers) == 3
         assert not self.events
 
@@ -285,7 +265,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         p2 = element.memberEnd = self.element_factory.create(UML.Property)
 
         assert len(element.memberEnd) == 2
-        dispatcher.register_handler(self._handler, element, "memberEnd.name")
+        dispatcher.subscribe(self._handler, element, "memberEnd.name")
         assert len(dispatcher._handlers) == 3, len(dispatcher._handlers)
         assert not self.events
 
@@ -317,11 +297,11 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(element.memberEnd) == 2
 
         base = "memberEnd<Property>."
-        dispatcher.register_handler(self._handler, element, base + "name")
-        dispatcher.register_handler(self._handler, element, base + "aggregation")
-        dispatcher.register_handler(self._handler, element, base + "classifier")
-        dispatcher.register_handler(self._handler, element, base + "lowerValue")
-        dispatcher.register_handler(self._handler, element, base + "upperValue")
+        dispatcher.subscribe(self._handler, element, base + "name")
+        dispatcher.subscribe(self._handler, element, base + "aggregation")
+        dispatcher.subscribe(self._handler, element, base + "classifier")
+        dispatcher.subscribe(self._handler, element, base + "lowerValue")
+        dispatcher.subscribe(self._handler, element, base + "upperValue")
 
         assert len(dispatcher._handlers) == 11, len(dispatcher._handlers)
         assert not self.events

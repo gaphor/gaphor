@@ -20,7 +20,7 @@ class SanitizerService(Service):
 
     logger = getLogger("Sanitizer")
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
     element_factory = inject("element_factory")
     property_dispatcher = inject("property_dispatcher")
 
@@ -28,16 +28,16 @@ class SanitizerService(Service):
         pass
 
     def init(self, app=None):
-        self.component_registry.register_handler(self._unlink_on_presentation_delete)
-        self.component_registry.register_handler(self._unlink_on_stereotype_delete)
-        self.component_registry.register_handler(self._unlink_on_extension_delete)
-        self.component_registry.register_handler(self._disconnect_extension_end)
+        self.event_manager.subscribe(self._unlink_on_presentation_delete)
+        self.event_manager.subscribe(self._unlink_on_stereotype_delete)
+        self.event_manager.subscribe(self._unlink_on_extension_delete)
+        self.event_manager.subscribe(self._disconnect_extension_end)
 
     def shutdown(self):
-        self.component_registry.unregister_handler(self._unlink_on_presentation_delete)
-        self.component_registry.unregister_handler(self._unlink_on_stereotype_delete)
-        self.component_registry.unregister_handler(self._unlink_on_extension_delete)
-        self.component_registry.unregister_handler(self._disconnect_extension_end)
+        self.event_manager.unsubscribe(self._unlink_on_presentation_delete)
+        self.event_manager.unsubscribe(self._unlink_on_stereotype_delete)
+        self.event_manager.unsubscribe(self._unlink_on_extension_delete)
+        self.event_manager.unsubscribe(self._disconnect_extension_end)
 
     @event_handler(AssociationDeleteEvent)
     def _unlink_on_presentation_delete(self, event):

@@ -70,6 +70,7 @@ class HandleToolTestCase(unittest.TestCase):
     """
 
     component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def setUp(self):
         Application.init(
@@ -107,7 +108,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
-        self.component_registry.handle(DiagramShow(diagram))
+        self.event_manager.handle(DiagramShow(diagram))
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )
@@ -147,7 +148,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
-        self.component_registry.handle(DiagramShow(diagram))
+        self.event_manager.handle(DiagramShow(diagram))
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )

@@ -2,7 +2,7 @@
 
 This module provides API for event management. There are two APIs provided:
 
-* Global event management API: subscribe, unsubscribe, fire.
+* Global event management API: subscribe, unsubscribe, handle.
 * Local event management API: Manager
 
 If you run only one instance of your application per Python
@@ -25,7 +25,7 @@ class Manager(object):
 
     Provides API for subscribing for and firing events. There's also global
     event manager instantiated at module level with functions
-    :func:`.subscribe`, :func:`.fire` and decorator :func:`.subscriber` aliased
+    :func:`.subscribe`, :func:`.handle` and decorator :func:`.subscriber` aliased
     to corresponding methods of class.
     """
 
@@ -46,7 +46,7 @@ class Manager(object):
         if handler_set and handler in handler_set:
             handler_set.remove(handler)
 
-    def fire(self, event):
+    def handle(self, event):
         """ Fire ``event``
 
         All subscribers will be executed with no determined order.
@@ -76,7 +76,7 @@ class Manager(object):
             ...     # handle event
             ...     return
 
-            >>> mymanager.fire(MyEvent())
+            >>> mymanager.handle(MyEvent())
 
         """
 

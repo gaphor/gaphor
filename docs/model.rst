@@ -2,9 +2,9 @@ UML datamodel
 =============
 
 Gaphor uses the UML metamodel specs as guidelines for its data storage.
-In fact, the datamodel is generated for a model file. 
+In fact, the datamodel is generated for a model file.
 
-The model is built using smart properties (descriptors). Those descriptors fire
+The model is built using smart properties (descriptors). Those descriptors handle
 events when they're changed. This allows the rest of the application (visuals,
 undo system) to update their state accordingly. The events are send using Zope
 (3)'s signalling mechanism, called Handlers.

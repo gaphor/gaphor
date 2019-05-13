@@ -27,7 +27,7 @@ class ComponentLookupError(LookupError):
     pass
 
 
-_ESSENTIAL_SERVICES = ["component_registry", "element_dispatcher"]
+_ESSENTIAL_SERVICES = ["component_registry", "event_manager", "element_dispatcher"]
 
 
 class _Application:
@@ -45,6 +45,7 @@ class _Application:
         self._app = None
         self._essential_services = list(_ESSENTIAL_SERVICES)
         self.component_registry = None
+        self.event_manager = None
 
     def init(self, services=None):
         """
@@ -104,9 +105,12 @@ class _Application:
             # Bootstrap hassle:
             if name == "component_registry":
                 self.component_registry = srv
+            elif name == "event_manager":
+                self.event_manager = srv
 
             self.component_registry.register(srv, name)
-            self.component_registry.handle(ServiceInitializedEvent(name, srv))
+            if self.event_manager:
+                self.event_manager.handle(ServiceInitializedEvent(name, srv))
             return srv
 
     distribution = property(
@@ -135,7 +139,7 @@ class _Application:
 
     def shutdown_service(self, name):
         srv = self.component_registry.get_service(name)
-        self.component_registry.handle(ServiceShutdownEvent(name, srv))
+        self.event_manager.handle(ServiceShutdownEvent(name, srv))
         self.component_registry.unregister(srv)
         srv.shutdown()
 

@@ -38,7 +38,7 @@ log = logging.getLogger(__name__)
 
 class DiagramPage(ActionProvider):
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
     element_factory = inject("element_factory")
     action_manager = inject("action_manager")
 
@@ -89,7 +89,7 @@ class DiagramPage(ActionProvider):
         self.widget = None
         self.action_group = build_action_group(self)
         self.toolbox = None
-        self.component_registry.register_handler(self._on_element_delete)
+        self.event_manager.subscribe(self._on_element_delete)
 
     title = property(lambda s: s.diagram and s.diagram.name or _("<None>"))
 
@@ -152,7 +152,7 @@ class DiagramPage(ActionProvider):
         be done if File->Close was pressed.
         """
         self.widget.destroy()
-        self.component_registry.unregister_handler(self._on_element_delete)
+        self.event_manager.unsubscribe(self._on_element_delete)
         self.view = None
 
     @action(name="diagram-zoom-in", stock_id="gtk-zoom-in")
@@ -276,7 +276,7 @@ class DiagramPage(ActionProvider):
                 self.delete_selected_items()
 
     def _on_view_selection_changed(self, view, selection_or_focus):
-        self.component_registry.handle(
+        self.event_manager.handle(
             DiagramSelectionChange(view, view.focused_item, view.selected_items)
         )
 

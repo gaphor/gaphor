@@ -173,7 +173,7 @@ class ElementFactory:
 class ElementFactoryService(Service, ElementFactory):
     """Service version of the ElementFactory."""
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def __init__(self):
         super(ElementFactoryService, self).__init__()
@@ -234,4 +234,4 @@ class ElementFactoryService(Service, ElementFactory):
         Handle events coming from elements (used internally).
         """
         if not self._block_events:
-            self.component_registry.handle(event)
+            self.event_manager.handle(event)

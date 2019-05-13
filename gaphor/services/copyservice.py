@@ -27,7 +27,7 @@ class CopyService(Service, ActionProvider):
       on the canvas and make the uml element visible again.
     """
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
     element_factory = inject("element_factory")
     main_window = inject("main_window")
 
@@ -52,11 +52,11 @@ class CopyService(Service, ActionProvider):
         self.action_group.get_action("edit-copy").props.sensitive = False
         self.action_group.get_action("edit-paste").props.sensitive = False
 
-        self.component_registry.register_handler(self._update)
+        self.event_manager.subscribe(self._update)
 
     def shutdown(self):
         self.copy_buffer = set()
-        self.component_registry.unregister_handler(self._update)
+        self.event_manager.unsubscribe(self._update)
 
     @event_handler(DiagramSelectionChange)
     def _update(self, event):

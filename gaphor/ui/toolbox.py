@@ -32,7 +32,7 @@ class Toolbox(UIComponent, ActionProvider):
     title = _("Toolbox")
     placement = ("left", "diagrams")
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
     main_window = inject("main_window")
     properties = inject("properties")
 
@@ -63,14 +63,14 @@ class Toolbox(UIComponent, ActionProvider):
         self.main_window.window.connect_after(
             "key-press-event", self._on_key_press_event
         )
-        self.component_registry.register_handler(self._on_diagram_page_change)
+        self.event_manager.subscribe(self._on_diagram_page_change)
         return widget
 
     def close(self):
         if self._toolbox:
             self._toolbox.destroy()
             self._toolbox = None
-        self.component_registry.unregister_handler(self._on_diagram_page_change)
+        self.event_manager.unsubscribe(self._on_diagram_page_change)
 
     def construct(self):
         def toolbox_button(action_name, stock_id, label, shortcut):

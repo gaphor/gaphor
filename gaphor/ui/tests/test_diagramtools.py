@@ -15,13 +15,14 @@ logging.basicConfig(level=logging.DEBUG)
 class DiagramItemConnectorTestCase(TestCase):
     services = TestCase.services + ["main_window", "action_manager", "properties"]
     component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def setUp(self):
         super(DiagramItemConnectorTestCase, self).setUp()
         mw = self.get_service("main_window")
         mw.open()
         self.main_window = mw
-        self.component_registry.handle(DiagramShow(self.diagram))
+        self.event_manager.handle(DiagramShow(self.diagram))
 
     def test_item_reconnect(self):
         # Setting the stage:

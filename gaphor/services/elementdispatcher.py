@@ -55,7 +55,7 @@ class EventWatcher:
 
         for path, handler in self._watched_paths.items():
 
-            dispatcher.register_handler(handler, element, path)
+            dispatcher.subscribe(handler, element, path)
 
     def unregister_handlers(self, *args):
         """
@@ -67,7 +67,7 @@ class EventWatcher:
 
         for path, handler in self._watched_paths.items():
 
-            dispatcher.unregister_handler(handler)
+            dispatcher.unsubscribe(handler)
 
 
 class ElementDispatcher(Service):
@@ -85,7 +85,7 @@ class ElementDispatcher(Service):
     that's represented by this item (gaphor.UML.Transition), you can register
     a handler like this::
 
-      dispatcher.register_handler(element,
+      dispatcher.subscribe(element,
               'guard.specification<LiteralSpecification>.value', self._handler)
 
     Note the '<' and '>'. This is because guard references ValueSpecification,
@@ -99,7 +99,7 @@ class ElementDispatcher(Service):
 
     logger = getLogger("ElementDispatcher")
 
-    component_registry = inject("component_registry")
+    event_manager = inject("event_manager")
 
     def __init__(self):
         # Table used to fire events:
@@ -111,12 +111,12 @@ class ElementDispatcher(Service):
         self._reverse = dict()
 
     def init(self, app):
-        self.component_registry.register_handler(self.on_model_loaded)
-        self.component_registry.register_handler(self.on_element_change_event)
+        self.event_manager.subscribe(self.on_model_loaded)
+        self.event_manager.subscribe(self.on_element_change_event)
 
     def shutdown(self):
-        self.component_registry.unregister_handler(self.on_element_change_event)
-        self.component_registry.unregister_handler(self.on_model_loaded)
+        self.event_manager.unsubscribe(self.on_element_change_event)
+        self.event_manager.unsubscribe(self.on_model_loaded)
 
     def _path_to_properties(self, element, path):
         """
@@ -214,7 +214,7 @@ class ElementDispatcher(Service):
         if not handlers:
             del self._handlers[key]
 
-    def register_handler(self, handler, element, path):
+    def subscribe(self, handler, element, path):
 
         # self.logger.info('Registering handler')
         # self.logger.debug('Handler is %s' % handler)
@@ -224,7 +224,7 @@ class ElementDispatcher(Service):
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
 
-    def unregister_handler(self, handler):
+    def unsubscribe(self, handler):
         """
         Unregister a handler from the registy.
         """
