@@ -127,7 +127,7 @@ class Transaction:
         try:
             event_manager = self.event_manager
         except (application.NotInitializedError, application.ComponentLookupError):
-            log.warning("Could not lookup component_registry. Not emitting events.")
+            log.warning("Could not lookup event_manager. Not emitting events.")
         else:
             event_manager.handle(event)
 
