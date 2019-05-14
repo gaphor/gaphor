@@ -19,7 +19,7 @@ __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
 # Actions: ((section (name, label, stock_id, shortcut)), ...)
 TOOLBOX_ACTIONS = (
     (
-        "",
+        _("General"),
         (
             ("toolbox-pointer", _("Pointer"), "gaphor-pointer", "Escape"),
             ("toolbox-line", _("Line"), "gaphor-line", "l"),
