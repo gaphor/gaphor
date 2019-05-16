@@ -1,6 +1,6 @@
 import gaphor.UML as UML
 from gaphor.tests.testcase import TestCase
-from ..flow import FlowItem
+from gaphor.diagram.actions.flow import FlowItem
 
 
 class FlowTestCase(TestCase):

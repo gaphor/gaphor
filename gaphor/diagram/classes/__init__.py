@@ -1,14 +1,18 @@
-from .association import AssociationItem
-from .dependency import DependencyItem
-from .generalization import GeneralizationItem
-from .implementation import ImplementationItem
-from .interface import InterfaceItem
-from .klass import ClassItem
-from .package import PackageItem
+from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.generalization import GeneralizationItem
+from gaphor.diagram.classes.implementation import ImplementationItem
+from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.classes.package import PackageItem
 
 
 def _load():
-    from . import classconnect, interfaceconnect, classespropertypages
+    from gaphor.diagram.classes import (
+        classconnect,
+        interfaceconnect,
+        classespropertypages,
+    )
 
 
 _load()

@@ -8,9 +8,13 @@ from gi.repository import Gtk
 
 from gaphor.core import _, inject, transactional
 from gaphor import UML
-from .transition import TransitionItem
-from .state import StateItem
-from ..propertypages import PropertyPages, NamedItemPropertyPage, create_hbox_label
+from gaphor.diagram.states.transition import TransitionItem
+from gaphor.diagram.states.state import StateItem
+from gaphor.diagram.propertypages import (
+    PropertyPages,
+    NamedItemPropertyPage,
+    create_hbox_label,
+)
 
 
 @PropertyPages.register(TransitionItem)

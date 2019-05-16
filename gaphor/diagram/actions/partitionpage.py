@@ -5,8 +5,8 @@ from gi.repository import Gtk
 from gaphor import UML
 
 from gaphor.core import _, inject, transactional
-from ..propertypages import PropertyPages, NamedItemPropertyPage
-from .partition import PartitionItem
+from gaphor.diagram.propertypages import PropertyPages, NamedItemPropertyPage
+from gaphor.diagram.actions.partition import PartitionItem
 
 
 @PropertyPages.register(PartitionItem)

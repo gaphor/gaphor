@@ -4,8 +4,8 @@
 
 import inspect
 
-from .event import AssociationChangeEvent
-from .listmixins import querymixin, recursemixin
+from gaphor.UML.event import AssociationChangeEvent
+from gaphor.UML.listmixins import querymixin, recursemixin
 
 
 class collectionlist(recursemixin, querymixin, list):

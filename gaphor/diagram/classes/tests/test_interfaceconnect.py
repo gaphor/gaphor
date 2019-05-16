@@ -4,11 +4,11 @@ Test connections to folded interface.
 
 from gaphor import UML
 from gaphor.tests import TestCase
-from ..implementation import ImplementationItem
-from ..interface import InterfaceItem
-from ..association import AssociationItem
-from ..dependency import DependencyItem
-from ..generalization import GeneralizationItem
+from gaphor.diagram.classes.implementation import ImplementationItem
+from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.generalization import GeneralizationItem
 from gaphor.diagram.general.commentline import CommentLineItem
 
 

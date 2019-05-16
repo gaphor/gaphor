@@ -1,10 +1,10 @@
-from .comment import CommentItem
-from .commentline import CommentLineItem
-from .simpleitem import Box, Ellipse, Line
+from gaphor.diagram.general.comment import CommentItem
+from gaphor.diagram.general.commentline import CommentLineItem
+from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 
 
 def _load():
-    from . import connectors, generalpropertypages
+    from gaphor.diagram.general import connectors, generalpropertypages
 
 
 _load()

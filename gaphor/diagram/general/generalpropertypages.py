@@ -3,7 +3,7 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core import _, transactional
 from gaphor.services.elementdispatcher import EventWatcher
-from ..propertypages import PropertyPages, PropertyPageBase
+from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 
 
 @PropertyPages.register(UML.Comment)

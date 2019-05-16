@@ -4,11 +4,11 @@ Comment and comment line items connection adapters tests.
 
 from gaphor import UML
 from gaphor.tests import TestCase
-from ..comment import CommentItem
-from ..commentline import CommentLineItem
-from ...usecases.actor import ActorItem
-from ...classes.klass import ClassItem
-from ...classes.generalization import GeneralizationItem
+from gaphor.diagram.general.comment import CommentItem
+from gaphor.diagram.general.commentline import CommentLineItem
+from gaphor.diagram.usecases.actor import ActorItem
+from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.classes.generalization import GeneralizationItem
 
 
 class CommentLineTestCase(TestCase):

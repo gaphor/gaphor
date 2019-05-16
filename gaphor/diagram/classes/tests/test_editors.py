@@ -2,9 +2,9 @@ from gi.repository import Gtk
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from ...editors import Editor
-from .. import ClassItem, AssociationItem
-from ..classespropertypages import AttributesPage, OperationsPage
+from gaphor.diagram.editors import Editor
+from gaphor.diagram.classes import ClassItem, AssociationItem
+from gaphor.diagram.classes.classespropertypages import AttributesPage, OperationsPage
 
 
 class EditorTestCase(TestCase):

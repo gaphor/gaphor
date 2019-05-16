@@ -4,7 +4,7 @@ CommentLine -- A line that connects a comment to another model element.
 """
 
 from gaphor.diagram.diagramline import DiagramLine
-from ..connectors import IConnect
+from gaphor.diagram.connectors import IConnect
 
 
 class CommentLineItem(DiagramLine):

@@ -8,7 +8,7 @@ from gaphor import UML
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
 from gaphas.util import path_ellipse
 from gaphor.diagram.textelement import text_center
-from .state import VertexItem
+from gaphor.diagram.states.state import VertexItem
 
 
 class InitialPseudostateItem(VertexItem):

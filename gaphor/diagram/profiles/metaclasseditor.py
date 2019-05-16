@@ -5,10 +5,10 @@ Metaclass item editors.
 from gi.repository import Gtk
 
 from gaphor import UML
-from ..propertypages import create_hbox_label, EventWatcher
+from gaphor.diagram.propertypages import create_hbox_label, EventWatcher
 from gaphor.core import _, transactional
-from ..propertypages import PropertyPages, PropertyPageBase
-from .metaclass import MetaclassItem
+from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
+from gaphor.diagram.profiles.metaclass import MetaclassItem
 
 
 def _issubclass(c, b):

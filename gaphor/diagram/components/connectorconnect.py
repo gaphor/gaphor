@@ -6,10 +6,10 @@ Implemented using interface item in assembly connector mode, see
 """
 
 from gaphor import UML
-from ..connectors import IConnect, AbstractConnect
-from .component import ComponentItem
-from .connector import ConnectorItem
-from ..classes.interface import InterfaceItem
+from gaphor.diagram.connectors import IConnect, AbstractConnect
+from gaphor.diagram.components.component import ComponentItem
+from gaphor.diagram.components.connector import ConnectorItem
+from gaphor.diagram.classes.interface import InterfaceItem
 
 
 class ConnectorConnectBase(AbstractConnect):

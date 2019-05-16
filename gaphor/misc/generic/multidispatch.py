@@ -12,7 +12,7 @@ Note that this module does not support annotated functions.
 import functools
 import inspect
 
-from .registry import Registry, TypeAxis
+from gaphor.misc.generic.registry import Registry, TypeAxis
 
 __all__ = "multidispatch"
 

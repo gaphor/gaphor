@@ -1,12 +1,16 @@
-from .artifact import ArtifactItem
-from .component import ComponentItem
-from .connector import ConnectorItem
-from .node import NodeItem
-from .subsystem import SubsystemItem
+from gaphor.diagram.components.artifact import ArtifactItem
+from gaphor.diagram.components.component import ComponentItem
+from gaphor.diagram.components.connector import ConnectorItem
+from gaphor.diagram.components.node import NodeItem
+from gaphor.diagram.components.subsystem import SubsystemItem
 
 
 def _load():
-    from . import componentsgrouping, connectorconnect, componentspropertypage
+    from gaphor.diagram.components import (
+        componentsgrouping,
+        connectorconnect,
+        componentspropertypage,
+    )
 
 
 _load()

@@ -19,14 +19,17 @@ There are separate diagram items for pseudostates
     we start to implement more pseudostates].
 """
 
-from .finalstate import FinalStateItem
-from .pseudostates import HistoryPseudostateItem, InitialPseudostateItem
-from .state import StateItem
-from .transition import TransitionItem
+from gaphor.diagram.states.finalstate import FinalStateItem
+from gaphor.diagram.states.pseudostates import (
+    HistoryPseudostateItem,
+    InitialPseudostateItem,
+)
+from gaphor.diagram.states.state import StateItem
+from gaphor.diagram.states.transition import TransitionItem
 
 
 def _load():
-    from . import propertypages, vertexconnect
+    from gaphor.diagram.states import propertypages, vertexconnect
 
 
 _load()

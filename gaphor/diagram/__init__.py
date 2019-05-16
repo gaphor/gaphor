@@ -6,16 +6,14 @@ diagram).
 
 import uuid
 
-from . import (
-    actions,
-    classes,
-    components,
-    general,
-    interactions,
-    profiles,
-    states,
-    usecases,
-)
+import gaphor.diagram.actions
+import gaphor.diagram.classes
+import gaphor.diagram.components
+import gaphor.diagram.general
+import gaphor.diagram.interactions
+import gaphor.diagram.profiles
+import gaphor.diagram.states
+import gaphor.diagram.usecases
 
 
 def create(type):

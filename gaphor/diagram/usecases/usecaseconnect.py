@@ -3,10 +3,10 @@ Use cases related connection adapters.
 """
 
 from gaphor import UML
-from .usecase import UseCaseItem
-from .extend import ExtendItem
-from .include import IncludeItem
-from ..connectors import IConnect, RelationshipConnect
+from gaphor.diagram.usecases.usecase import UseCaseItem
+from gaphor.diagram.usecases.extend import ExtendItem
+from gaphor.diagram.usecases.include import IncludeItem
+from gaphor.diagram.connectors import IConnect, RelationshipConnect
 
 
 @IConnect.register(UseCaseItem, IncludeItem)

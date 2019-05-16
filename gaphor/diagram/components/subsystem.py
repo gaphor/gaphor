@@ -11,8 +11,8 @@ use cases diagram.
 
 from gaphor import UML
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
-from ..support import uml
-from .component import ComponentItem
+from gaphor.diagram.support import uml
+from gaphor.diagram.components.component import ComponentItem
 
 
 @uml(UML.Component, stereotype="subsystem")

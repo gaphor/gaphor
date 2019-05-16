@@ -2,7 +2,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, inject, transactional
-from ..propertypages import (
+from gaphor.diagram.propertypages import (
     PropertyPages,
     NamedItemPropertyPage,
     EditableTreeModel,
@@ -10,7 +10,7 @@ from ..propertypages import (
     create_tree_view,
     create_uml_combo,
 )
-from . import MessageItem
+from gaphor.diagram.interactions import MessageItem
 
 
 class CommunicationMessageModel(EditableTreeModel):

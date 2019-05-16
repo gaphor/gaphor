@@ -1,10 +1,10 @@
 from gaphor import UML
-from ..grouping import Group, AbstractGroup
-from .node import NodeItem
-from .subsystem import SubsystemItem
-from .component import ComponentItem
-from .artifact import ArtifactItem
-from ..usecases import UseCaseItem
+from gaphor.diagram.grouping import Group, AbstractGroup
+from gaphor.diagram.components.node import NodeItem
+from gaphor.diagram.components.subsystem import SubsystemItem
+from gaphor.diagram.components.component import ComponentItem
+from gaphor.diagram.components.artifact import ArtifactItem
+from gaphor.diagram.usecases import UseCaseItem
 
 
 @Group.register(NodeItem, NodeItem)

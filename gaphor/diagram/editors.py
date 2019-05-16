@@ -9,7 +9,7 @@ from gaphor.core import inject
 from gaphor.diagram import items
 from gaphor.misc.rattr import rgetattr, rsetattr
 
-from .general import CommentItem
+from gaphor.diagram.general import CommentItem
 
 
 @singledispatch

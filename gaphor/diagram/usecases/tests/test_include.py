@@ -4,8 +4,8 @@ Test include item connections.
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from ..usecase import UseCaseItem
-from ..include import IncludeItem
+from gaphor.diagram.usecases.usecase import UseCaseItem
+from gaphor.diagram.usecases.include import IncludeItem
 
 
 class IncludeItemTestCase(TestCase):

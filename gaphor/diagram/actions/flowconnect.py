@@ -3,11 +3,19 @@ Flow item adapter connections.
 """
 
 from gaphor import UML
-from ..connectors import IConnect, UnaryRelationshipConnect
-from .action import ActionItem, SendSignalActionItem, AcceptEventActionItem
-from .activitynodes import ForkNodeItem, ActivityNodeItem, DecisionNodeItem
-from .flow import FlowItem
-from .objectnode import ObjectNodeItem
+from gaphor.diagram.connectors import IConnect, UnaryRelationshipConnect
+from gaphor.diagram.actions.action import (
+    ActionItem,
+    SendSignalActionItem,
+    AcceptEventActionItem,
+)
+from gaphor.diagram.actions.activitynodes import (
+    ForkNodeItem,
+    ActivityNodeItem,
+    DecisionNodeItem,
+)
+from gaphor.diagram.actions.flow import FlowItem
+from gaphor.diagram.actions.objectnode import ObjectNodeItem
 
 
 class FlowConnect(UnaryRelationshipConnect):

@@ -4,18 +4,18 @@ is a shorthand for importing each module individually.
 """
 
 # Base classes:
-from .diagramitem import DiagramItem
-from .diagramline import DiagramLine, NamedLine
-from .elementitem import ElementItem
-from .nameditem import NamedItem
-from .compartment import CompartmentItem, FeatureItem
-from .classifier import ClassifierItem
+from gaphor.diagram.diagramitem import DiagramItem
+from gaphor.diagram.diagramline import DiagramLine, NamedLine
+from gaphor.diagram.elementitem import ElementItem
+from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.compartment import CompartmentItem, FeatureItem
+from gaphor.diagram.classifier import ClassifierItem
 
-from .actions import *
-from .classes import *
-from .components import *
-from .general import *
-from .interactions import *
-from .profiles import *
-from .states import *
-from .usecases import *
+from gaphor.diagram.actions import *
+from gaphor.diagram.classes import *
+from gaphor.diagram.components import *
+from gaphor.diagram.general import *
+from gaphor.diagram.interactions import *
+from gaphor.diagram.profiles import *
+from gaphor.diagram.states import *
+from gaphor.diagram.usecases import *

@@ -1,9 +1,9 @@
 """Message item connection adapters."""
 
 from gaphor import UML
-from ..connectors import IConnect, AbstractConnect
-from .lifeline import LifelineItem
-from .message import MessageItem
+from gaphor.diagram.connectors import IConnect, AbstractConnect
+from gaphor.diagram.interactions.lifeline import LifelineItem
+from gaphor.diagram.interactions.message import MessageItem
 
 
 @IConnect.register(LifelineItem, MessageItem)

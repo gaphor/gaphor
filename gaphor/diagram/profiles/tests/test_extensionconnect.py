@@ -4,7 +4,7 @@ Extension item connection adapter tests.
 
 from gaphor.tests import TestCase
 from gaphor import UML
-from ..extension import ExtensionItem
+from gaphor.diagram.profiles.extension import ExtensionItem
 from gaphor.diagram.classes.klass import ClassItem
 
 

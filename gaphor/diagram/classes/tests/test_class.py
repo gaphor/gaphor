@@ -4,7 +4,7 @@ Test classes.
 
 from gaphor import UML
 from gaphor.tests.testcase import TestCase
-from ..klass import ClassItem
+from gaphor.diagram.classes.klass import ClassItem
 
 
 class ClassTestCase(TestCase):

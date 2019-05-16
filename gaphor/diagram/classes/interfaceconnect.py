@@ -8,11 +8,11 @@ for details.
 
 from gaphor import UML
 
-from ..connectors import IConnect
-from .classconnect import DependencyConnect, ImplementationConnect
-from .interface import InterfaceItem
-from .implementation import ImplementationItem
-from .dependency import DependencyItem
+from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.classes.classconnect import DependencyConnect, ImplementationConnect
+from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.implementation import ImplementationItem
+from gaphor.diagram.classes.dependency import DependencyItem
 
 
 @IConnect.register(InterfaceItem, ImplementationItem)

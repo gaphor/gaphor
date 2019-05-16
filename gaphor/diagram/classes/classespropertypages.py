@@ -5,8 +5,8 @@ from gaphas.decorators import AsyncIO
 from gaphor import UML
 from gaphor.core import _, inject, transactional
 from gaphor.services.elementdispatcher import EventWatcher
-from ..propertypages import PropertyPages, PropertyPageBase
-from ..propertypages import (
+from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
+from gaphor.diagram.propertypages import (
     NamedElementPropertyPage,
     NamedItemPropertyPage,
     EditableTreeModel,
@@ -14,7 +14,7 @@ from ..propertypages import (
     create_hbox_label,
     create_uml_combo,
 )
-from . import (
+from gaphor.diagram.classes import (
     ClassItem,
     InterfaceItem,
     AssociationItem,

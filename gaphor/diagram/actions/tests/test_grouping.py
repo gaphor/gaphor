@@ -4,7 +4,7 @@ Tests for grouping functionality in Gaphor.
 
 from gaphor import UML
 from gaphor.tests import TestCase
-from .. import PartitionItem, ActionItem
+from gaphor.diagram.actions import PartitionItem, ActionItem
 
 
 class PartitionGroupTestCase(TestCase):

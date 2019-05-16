@@ -1,6 +1,6 @@
-from ..grouping import Group, AbstractGroup
-from .interaction import InteractionItem
-from .lifeline import LifelineItem
+from gaphor.diagram.grouping import Group, AbstractGroup
+from gaphor.diagram.interactions.interaction import InteractionItem
+from gaphor.diagram.interactions.lifeline import LifelineItem
 
 
 @Group.register(InteractionItem, LifelineItem)

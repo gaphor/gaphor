@@ -5,11 +5,11 @@ Classes related adapter connection tests.
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.usecases.actor import ActorItem
-from ..dependency import DependencyItem
-from ..klass import ClassItem
-from ..interface import InterfaceItem
-from ..association import AssociationItem
-from ..generalization import GeneralizationItem
+from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.generalization import GeneralizationItem
 
 
 class DependencyTestCase(TestCase):

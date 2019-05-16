@@ -1,7 +1,7 @@
 from gaphor.tests import TestCase
 from gaphor import UML
-from .. import ObjectNodeItem
-from ...editors import Editor
+from gaphor.diagram.actions import ObjectNodeItem
+from gaphor.diagram.editors import Editor
 
 
 class EditorTestCase(TestCase):

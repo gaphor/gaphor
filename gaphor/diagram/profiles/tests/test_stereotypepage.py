@@ -1,6 +1,6 @@
 from gaphor.tests import TestCase
 from gaphor import UML
-from ..stereotypepage import StereotypePage
+from gaphor.diagram.profiles.stereotypepage import StereotypePage
 from gaphor.diagram.classes.klass import ClassItem
 
 

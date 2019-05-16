@@ -125,9 +125,9 @@ class AbstractConnect(ConnectBase):
 
         Returns `True` by default.
         """
-        from .classes.interface import InterfaceItem
-        from .classes.implementation import ImplementationItem
-        from .classes.dependency import DependencyItem
+        from gaphor.diagram.classes.interface import InterfaceItem
+        from gaphor.diagram.classes.implementation import ImplementationItem
+        from gaphor.diagram.classes.dependency import DependencyItem
 
         iface = self.element
         if isinstance(iface, InterfaceItem) and iface.folded:

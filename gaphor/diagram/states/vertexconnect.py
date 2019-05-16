@@ -7,10 +7,13 @@ gaphor.adapter package.
 """
 
 from gaphor import UML
-from ..connectors import IConnect, RelationshipConnect
-from .transition import TransitionItem
-from .state import VertexItem
-from .pseudostates import InitialPseudostateItem, HistoryPseudostateItem
+from gaphor.diagram.connectors import IConnect, RelationshipConnect
+from gaphor.diagram.states.transition import TransitionItem
+from gaphor.diagram.states.state import VertexItem
+from gaphor.diagram.states.pseudostates import (
+    InitialPseudostateItem,
+    HistoryPseudostateItem,
+)
 
 
 class VertexConnect(RelationshipConnect):
