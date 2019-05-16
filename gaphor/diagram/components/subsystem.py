@@ -3,16 +3,16 @@ Subsystem item represents a component with stereotype subsystem (see table
 B.1 UML Keywords in UML 2.2 specification).
 
 Subsystem item is part of components Gaphor package because it will show
-components, nodes and other items within cotext of a subsystem. 
+components, nodes and other items within cotext of a subsystem.
 
 At the moment (in the future additionally) it makes only sense to use it on
 use cases diagram.
 """
 
 from gaphor import UML
-from gaphor.diagram.component import ComponentItem
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
-from gaphor.diagram import uml
+from gaphor.diagram.support import uml
+from gaphor.diagram.components.component import ComponentItem
 
 
 @uml(UML.Component, stereotype="subsystem")

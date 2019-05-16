@@ -6,7 +6,7 @@ from gaphas.aspect import ConnectionSink, Connector
 from gaphor import UML
 from gaphor.core import inject
 from gaphor.diagram import items
-from gaphor.diagram.interfaces import IConnect
+from gaphor.diagram.connectors import IConnect
 from gaphor.plugins.pynsource.pynsource import PySourceAsText
 
 BASE_CLASSES = ("object", "type", "dict", "list", "tuple", "int", "float")

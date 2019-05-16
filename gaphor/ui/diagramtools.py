@@ -26,7 +26,9 @@ from gi.repository import Gtk
 from gaphor.core import Transaction, transactional
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.interfaces import Editor, IConnect, Group
+from gaphor.diagram.grouping import Group
+from gaphor.diagram.editors import Editor
+from gaphor.diagram.connectors import IConnect
 
 # cursor to indicate grouping
 IN_CURSOR = Gdk.Cursor.new(Gdk.CursorType.DIAMOND_CROSS)

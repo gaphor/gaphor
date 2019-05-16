@@ -1,13 +1,10 @@
 """
 Test classes.
 """
-import logging
 
 from gaphor import UML
-from gaphor.diagram.classes.klass import ClassItem
 from gaphor.tests.testcase import TestCase
-
-log = logging.getLogger(__name__)
+from gaphor.diagram.classes.klass import ClassItem
 
 
 class ClassTestCase(TestCase):
@@ -135,7 +132,6 @@ class ClassTestCase(TestCase):
         self.assertEqual(100, klass.width)
 
         attr.name = "x" * 25
-        log.debug("name: %s" % attr.name)
 
         diagram.canvas.update()
 

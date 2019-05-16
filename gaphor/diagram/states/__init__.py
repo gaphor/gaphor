@@ -19,13 +19,17 @@ There are separate diagram items for pseudostates
     we start to implement more pseudostates].
 """
 
-from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.states.finalstate import FinalStateItem
+from gaphor.diagram.states.pseudostates import (
+    HistoryPseudostateItem,
+    InitialPseudostateItem,
+)
+from gaphor.diagram.states.state import StateItem
+from gaphor.diagram.states.transition import TransitionItem
 
 
-class VertexItem(NamedItem):
-    """
-    Abstract class for all vertices. All state, pseudostate items derive
-    from VertexItem, which simplifies transition connection adapters.
-    """
+def _load():
+    from gaphor.diagram.states import propertypages, vertexconnect
 
-    pass
+
+_load()

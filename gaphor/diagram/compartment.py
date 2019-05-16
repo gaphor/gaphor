@@ -112,7 +112,6 @@ class Compartment(list):
         self.use_extra_space = False
 
     def save(self, save_func):
-        # log.debug('Compartment.save: %s' % self)
         for item in self:
             save_func(None, item)
 
@@ -429,8 +428,6 @@ class CompartmentItem(NamedItem):
             else:
                 compartment.append(mapping[el])
 
-        # log.debug('elements order in model: %s' % [f.name for f in elements])
-        # log.debug('elements order in diagram: %s' % [f.subject.name for f in compartment])
         assert tuple([f.subject for f in compartment]) == tuple(elements)
 
         self.request_update()

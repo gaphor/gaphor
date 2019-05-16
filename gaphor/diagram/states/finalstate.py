@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.diagram.style import ALIGN_RIGHT, ALIGN_BOTTOM
 from gaphas.util import path_ellipse
 
-from gaphor.diagram.states import VertexItem
+from gaphor.diagram.states.state import VertexItem
 
 
 class FinalStateItem(VertexItem):

@@ -14,7 +14,7 @@ and have one instance of Manager object per application instance.
 
 from collections import namedtuple
 
-from .registry import Registry, TypeAxis
+from gaphor.misc.generic.registry import Registry, TypeAxis
 
 
 __all__ = "Manager"
