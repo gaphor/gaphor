@@ -398,6 +398,15 @@ class Namespace(UIComponent, ActionProvider):
         return scrolled_window
 
     def iter_for_element(self, element, old_namespace=0):
+        """Get the Gtk.TreeIter for an element in the Namespace.
+
+        Args:
+            element: The element contained in the in the Namespace.
+            old_namespace: The old namespace containing the element, optional.
+
+        Returns: Gtk.TreeIter object
+        """
+
         # Using `0` as sentinel
         if old_namespace != 0:
             parent_iter = self.iter_for_element(old_namespace)
@@ -466,7 +475,8 @@ class Namespace(UIComponent, ActionProvider):
         element = event.element
         if type(element) in self.filter:
             iter = self.iter_for_element(element)
-            # iter should be here, unless we try to delete an element who's parent element is already deleted, so let's be lenient.
+            # iter should be here, unless we try to delete an element who's
+            # parent element is already deleted, so let's be lenient.
             if iter:
                 self.model.remove(iter)
 
@@ -546,18 +556,20 @@ class Namespace(UIComponent, ActionProvider):
         self.close()
 
     def select_element(self, element):
-        """
-        Select an element from the Namespace view.
+        """Select an element from the Namespace view.
+
         The element is selected. After this an action may be executed,
         such as OpenModelElement, which will try to open the element (if it's
         a Diagram).
         """
-        path = Gtk.TreePath.new_from_indices(
-            self._namespace.get_model().path_from_element(element)
-        )
+
+        tree_iter = self.iter_for_element(element)
+        path = self.model.get_path(tree_iter)
+
         # Expand the first row:
         if len(path.get_indices()) > 1:
             self._namespace.expand_row(path=path, open_all=False)
+
         selection = self._namespace.get_selection()
         selection.select_path(path)
         self._on_view_cursor_changed(self._namespace)
@@ -577,7 +589,9 @@ class Namespace(UIComponent, ActionProvider):
         view = self._namespace
         element = view.get_selected_element()
         if element is not None:
-            path = view.get_model().path_from_element(element)
+            selection = view.get_selection()
+            model, iter = selection.get_selected()
+            path = model.get_path(iter)
             column = view.get_column(0)
             cell = column.get_cells()[1]
             cell.set_property("editable", 1)
