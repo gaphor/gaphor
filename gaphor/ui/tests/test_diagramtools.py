@@ -4,7 +4,7 @@ from gi.repository import Gdk
 
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.diagram import items
+from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.tests import TestCase
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramShow
@@ -26,9 +26,9 @@ class DiagramItemConnectorTestCase(TestCase):
 
     def test_item_reconnect(self):
         # Setting the stage:
-        ci1 = self.create(items.ClassItem, UML.Class)
-        ci2 = self.create(items.ClassItem, UML.Class)
-        a = self.create(items.AssociationItem)
+        ci1 = self.create(ClassItem, UML.Class)
+        ci2 = self.create(ClassItem, UML.Class)
+        a = self.create(AssociationItem)
 
         self.connect(a, a.head, ci1)
         self.connect(a, a.tail, ci2)

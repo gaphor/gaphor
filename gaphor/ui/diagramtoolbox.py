@@ -11,7 +11,7 @@ from gaphas.item import SE
 from gaphor import UML
 from gaphor.UML.event import DiagramItemCreateEvent
 from gaphor.core import _, inject, radio_action, build_action_group
-from gaphor.diagram import items
+from gaphor import diagram
 from gaphor.ui.diagramtools import PlacementTool, GroupPlacementTool, DefaultTool
 
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
@@ -258,14 +258,14 @@ class DiagramToolbox:
     def toolbox_line(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.Line),
+            item_factory=self._item_factory(diagram.general.Line),
             after_handler=self._after_handler,
         )
 
     def toolbox_box(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.Box),
+            item_factory=self._item_factory(diagram.general.Box),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -273,7 +273,7 @@ class DiagramToolbox:
     def toolbox_ellipse(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.Ellipse),
+            item_factory=self._item_factory(diagram.general.Ellipse),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -281,7 +281,7 @@ class DiagramToolbox:
     def toolbox_comment(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.CommentItem, UML.Comment),
+            item_factory=self._item_factory(diagram.general.CommentItem, UML.Comment),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -289,7 +289,7 @@ class DiagramToolbox:
     def toolbox_comment_line(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.CommentLineItem),
+            item_factory=self._item_factory(diagram.general.CommentLineItem),
             after_handler=self._after_handler,
         )
 
@@ -298,7 +298,9 @@ class DiagramToolbox:
     def toolbox_class(self):
         return PlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.ClassItem, UML.Class),
+            item_factory=self._namespace_item_factory(
+                diagram.classes.ClassItem, UML.Class
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -307,7 +309,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                items.InterfaceItem, UML.Interface
+                diagram.classes.InterfaceItem, UML.Interface
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -316,7 +318,9 @@ class DiagramToolbox:
     def toolbox_package(self):
         return PlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.PackageItem, UML.Package),
+            item_factory=self._namespace_item_factory(
+                diagram.classes.PackageItem, UML.Package
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -324,28 +328,28 @@ class DiagramToolbox:
     def toolbox_association(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.AssociationItem),
+            item_factory=self._item_factory(diagram.classes.AssociationItem),
             after_handler=self._after_handler,
         )
 
     def toolbox_dependency(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.DependencyItem),
+            item_factory=self._item_factory(diagram.classes.DependencyItem),
             after_handler=self._after_handler,
         )
 
     def toolbox_generalization(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.GeneralizationItem),
+            item_factory=self._item_factory(diagram.classes.GeneralizationItem),
             after_handler=self._after_handler,
         )
 
     def toolbox_implementation(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.ImplementationItem),
+            item_factory=self._item_factory(diagram.classes.ImplementationItem),
             after_handler=self._after_handler,
         )
 
@@ -355,7 +359,7 @@ class DiagramToolbox:
         return GroupPlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                items.ComponentItem, UML.Component
+                diagram.components.ComponentItem, UML.Component
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -364,7 +368,9 @@ class DiagramToolbox:
     def toolbox_artifact(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.ArtifactItem, UML.Artifact),
+            item_factory=self._namespace_item_factory(
+                diagram.components.ArtifactItem, UML.Artifact
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -372,7 +378,9 @@ class DiagramToolbox:
     def toolbox_node(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.NodeItem, UML.Node),
+            item_factory=self._namespace_item_factory(
+                diagram.components.NodeItem, UML.Node
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -380,7 +388,9 @@ class DiagramToolbox:
     def toolbox_device(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.NodeItem, UML.Device),
+            item_factory=self._namespace_item_factory(
+                diagram.components.NodeItem, UML.Device
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -389,7 +399,7 @@ class DiagramToolbox:
         return GroupPlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                items.SubsystemItem, UML.Component, "subsystem"
+                diagram.components.SubsystemItem, UML.Component, "subsystem"
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -398,7 +408,7 @@ class DiagramToolbox:
     def toolbox_connector(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.ConnectorItem),
+            item_factory=self._item_factory(diagram.components.ConnectorItem),
             after_handler=self._after_handler,
         )
 
@@ -407,7 +417,9 @@ class DiagramToolbox:
     def toolbox_action(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.ActionItem, UML.Action),
+            item_factory=self._namespace_item_factory(
+                diagram.actions.ActionItem, UML.Action
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -416,7 +428,7 @@ class DiagramToolbox:
         return GroupPlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                items.SendSignalActionItem, UML.SendSignalAction
+                diagram.actions.SendSignalActionItem, UML.SendSignalAction
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -426,7 +438,7 @@ class DiagramToolbox:
         return GroupPlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                items.AcceptEventActionItem, UML.AcceptEventAction
+                diagram.actions.AcceptEventActionItem, UML.AcceptEventAction
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -435,7 +447,9 @@ class DiagramToolbox:
     def toolbox_initial_node(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._item_factory(items.InitialNodeItem, UML.InitialNode),
+            item_factory=self._item_factory(
+                diagram.actions.InitialNodeItem, UML.InitialNode
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -444,7 +458,7 @@ class DiagramToolbox:
         return GroupPlacementTool(
             self.view,
             item_factory=self._item_factory(
-                items.ActivityFinalNodeItem, UML.ActivityFinalNode
+                diagram.actions.ActivityFinalNodeItem, UML.ActivityFinalNode
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -453,7 +467,9 @@ class DiagramToolbox:
     def toolbox_flow_final_node(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._item_factory(items.FlowFinalNodeItem, UML.FlowFinalNode),
+            item_factory=self._item_factory(
+                diagram.actions.FlowFinalNodeItem, UML.FlowFinalNode
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -461,7 +477,9 @@ class DiagramToolbox:
     def toolbox_decision_node(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._item_factory(items.DecisionNodeItem, UML.DecisionNode),
+            item_factory=self._item_factory(
+                diagram.actions.DecisionNodeItem, UML.DecisionNode
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -469,7 +487,7 @@ class DiagramToolbox:
     def toolbox_fork_node(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._item_factory(items.ForkNodeItem, UML.JoinNode),
+            item_factory=self._item_factory(diagram.actions.ForkNodeItem, UML.JoinNode),
             handle_index=1,
             after_handler=self._after_handler,
         )
@@ -478,7 +496,7 @@ class DiagramToolbox:
         return GroupPlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                items.ObjectNodeItem, UML.ObjectNode
+                diagram.actions.ObjectNodeItem, UML.ObjectNode
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -488,7 +506,7 @@ class DiagramToolbox:
         # note no subject, which is created by grouping adapter
         return GroupPlacementTool(
             self.view,
-            item_factory=self._item_factory(items.PartitionItem),
+            item_factory=self._item_factory(diagram.actions.PartitionItem),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -496,7 +514,7 @@ class DiagramToolbox:
     def toolbox_flow(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.FlowItem),
+            item_factory=self._item_factory(diagram.actions.FlowItem),
             after_handler=self._after_handler,
         )
 
@@ -505,7 +523,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                items.InteractionItem, UML.Interaction
+                diagram.interactions.InteractionItem, UML.Interaction
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -514,7 +532,9 @@ class DiagramToolbox:
     def toolbox_lifeline(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.LifelineItem, UML.Lifeline),
+            item_factory=self._namespace_item_factory(
+                diagram.interactions.LifelineItem, UML.Lifeline
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -522,7 +542,7 @@ class DiagramToolbox:
     def toolbox_message(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.MessageItem),
+            item_factory=self._item_factory(diagram.interactions.MessageItem),
             after_handler=self._after_handler,
         )
 
@@ -530,7 +550,9 @@ class DiagramToolbox:
     def toolbox_state(self):
         return PlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.StateItem, UML.State),
+            item_factory=self._namespace_item_factory(
+                diagram.states.StateItem, UML.State
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -542,7 +564,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                items.InitialPseudostateItem, UML.Pseudostate, set_state
+                diagram.states.InitialPseudostateItem, UML.Pseudostate, set_state
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -555,7 +577,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                items.InitialPseudostateItem, UML.Pseudostate, set_state
+                diagram.states.InitialPseudostateItem, UML.Pseudostate, set_state
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -568,7 +590,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                items.HistoryPseudostateItem, UML.Pseudostate, set_state
+                diagram.states.HistoryPseudostateItem, UML.Pseudostate, set_state
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -577,7 +599,9 @@ class DiagramToolbox:
     def toolbox_final_state(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.FinalStateItem, UML.FinalState),
+            item_factory=self._item_factory(
+                diagram.states.FinalStateItem, UML.FinalState
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -585,7 +609,7 @@ class DiagramToolbox:
     def toolbox_transition(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.TransitionItem),
+            item_factory=self._item_factory(diagram.states.TransitionItem),
             after_handler=self._after_handler,
         )
 
@@ -594,7 +618,9 @@ class DiagramToolbox:
     def toolbox_usecase(self):
         return GroupPlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.UseCaseItem, UML.UseCase),
+            item_factory=self._namespace_item_factory(
+                diagram.usecases.UseCaseItem, UML.UseCase
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -602,7 +628,9 @@ class DiagramToolbox:
     def toolbox_actor(self):
         return PlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.ActorItem, UML.Actor),
+            item_factory=self._namespace_item_factory(
+                diagram.usecases.ActorItem, UML.Actor
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -610,21 +638,21 @@ class DiagramToolbox:
     def toolbox_usecase_association(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.AssociationItem),
+            item_factory=self._item_factory(diagram.classes.AssociationItem),
             after_handler=self._after_handler,
         )
 
     def toolbox_include(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.IncludeItem),
+            item_factory=self._item_factory(diagram.usecases.IncludeItem),
             after_handler=self._after_handler,
         )
 
     def toolbox_extend(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.ExtendItem),
+            item_factory=self._item_factory(diagram.usecases.ExtendItem),
             after_handler=self._after_handler,
         )
 
@@ -633,7 +661,9 @@ class DiagramToolbox:
     def toolbox_profile(self):
         return PlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.PackageItem, UML.Profile),
+            item_factory=self._namespace_item_factory(
+                diagram.classes.PackageItem, UML.Profile
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -642,7 +672,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                items.MetaclassItem, UML.Class, "metaclass", name="Class"
+                diagram.profiles.MetaclassItem, UML.Class, "metaclass", name="Class"
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -651,7 +681,9 @@ class DiagramToolbox:
     def toolbox_stereotype(self):
         return PlacementTool(
             self.view,
-            item_factory=self._namespace_item_factory(items.ClassItem, UML.Stereotype),
+            item_factory=self._namespace_item_factory(
+                diagram.classes.ClassItem, UML.Stereotype
+            ),
             handle_index=SE,
             after_handler=self._after_handler,
         )
@@ -659,9 +691,6 @@ class DiagramToolbox:
     def toolbox_extension(self):
         return PlacementTool(
             self.view,
-            item_factory=self._item_factory(items.ExtensionItem),
+            item_factory=self._item_factory(diagram.profiles.ExtensionItem),
             after_handler=self._after_handler,
         )
-
-
-# vim:sw=4:et:ai

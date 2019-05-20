@@ -5,7 +5,7 @@ from gaphas.aspect import ConnectionSink, Connector
 
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.diagram import items
+from gaphor.diagram.classes import AssociationItem, ClassItem, GeneralizationItem
 from gaphor.diagram.connectors import IConnect
 from gaphor.plugins.pynsource.pynsource import PySourceAsText
 
@@ -76,7 +76,7 @@ class Engineer:
         c = self.element_factory.create(UML.Class)
         c.name = name
         c.package = self.diagram.namespace
-        ci = self.diagram.create(items.ClassItem)
+        ci = self.diagram.create(ClassItem)
         ci.subject = c
         clazz.gaphor_class = c
         clazz.gaphor_class_item = ci
@@ -99,7 +99,7 @@ class Engineer:
                     if others:
                         superclass = others[0]
                         print("Found class in factory: %s" % superclass.name)
-                        superclass_item = self.diagram.create(items.ClassItem)
+                        superclass_item = self.diagram.create(ClassItem)
                         superclass_item.subject = superclass
                     else:
                         continue
@@ -108,7 +108,7 @@ class Engineer:
                 # gen = self.element_factory.create(UML.Generalization)
                 # gen.general = superclass
                 # gen.specific = clazz.gaphor_class
-                geni = self.diagram.create(items.GeneralizationItem)
+                geni = self.diagram.create(GeneralizationItem)
                 # geni.subject = gen
 
                 self.connect(geni, geni.tail, clazz.gaphor_class_item)
@@ -164,7 +164,7 @@ class Engineer:
             if others:
                 superclass = others[0]
                 print("Found class in factory: %s" % superclass.name)
-                superclass_item = self.diagram.create(items.ClassItem)
+                superclass_item = self.diagram.create(ClassItem)
                 superclass_item.subject = superclass
             else:
                 return None, None
@@ -219,7 +219,7 @@ class Engineer:
             # association.tail_end.subject = tail_end
 
             # Create the diagram item:
-            association = self.diagram.create(items.AssociationItem)
+            association = self.diagram.create(AssociationItem)
 
             adapter = IConnect(head_type_item, association)
             assert adapter
