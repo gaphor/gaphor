@@ -81,16 +81,17 @@ class Toolbox(UIComponent, ActionProvider):
                 button.set_tooltip_text("%s (%s)" % (label, shortcut))
 
             # Enable Drag and Drop
-            inner_button = button.get_children()[0]
-            inner_button.drag_source_set(
-                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-                self.DND_TARGETS,
-                Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-            )
-            inner_button.drag_source_set_icon_stock(stock_id)
-            inner_button.connect(
-                "drag-data-get", self._button_drag_data_get, action_name
-            )
+            if action_name != "toolbox-pointer":
+                inner_button = button.get_children()[0]
+                inner_button.drag_source_set(
+                    Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                    self.DND_TARGETS,
+                    Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+                )
+                inner_button.drag_source_set_icon_stock(stock_id)
+                inner_button.connect(
+                    "drag-data-get", self._button_drag_data_get, action_name
+                )
 
             return button
 
