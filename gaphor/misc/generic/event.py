@@ -53,7 +53,7 @@ class Manager(object):
         """
         handler_sets = self.registry.query(event)
         for handler_set in handler_sets:
-            for handler in handler_set:
+            for handler in set(handler_set):
                 handler(event)
 
     def _register_handler_set(self, event_type):
