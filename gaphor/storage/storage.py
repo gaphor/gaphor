@@ -21,16 +21,9 @@ from gaphor import UML
 from gaphor import diagram
 from gaphor.UML.collection import collection
 from gaphor.application import Application, NotInitializedError
-from gaphor.diagram import items
 from gaphor.i18n import _
-from gaphor.storage import parser
+from gaphor.storage import parser, diagramitems
 
-# import gaphor.diagram.connectors package, so diagram items can find
-# their appropriate connectors (i.e. diagram line requires this);
-# this allows external scripts to load diagram properly... or should
-# this be done using services? i.e. request storage service, which should
-# depend on connectors service?
-from gaphor.diagram import connectors
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
@@ -205,7 +198,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
         """
         for item in canvasitems:
-            cls = getattr(items, item.type)
+            cls = getattr(diagramitems, item.type)
             item.element = diagram.create_as(cls, item.id)
             canvas.add(item.element, parent=parent)
             assert canvas.get_parent(item.element) is parent
