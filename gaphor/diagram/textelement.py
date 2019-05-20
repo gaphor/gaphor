@@ -72,6 +72,8 @@ def text_align(
     padding_x - padding (extra offset), always > 0
     padding_y - padding (extra offset), always > 0
     """
+    if isinstance(cr, FreeHandCairoContext):
+        cr = cr.cr
     if not isinstance(cr, cairo.Context):
         return
     if not text:
