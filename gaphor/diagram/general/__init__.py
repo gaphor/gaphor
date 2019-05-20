@@ -4,7 +4,7 @@ from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 
 
 def _load():
-    from gaphor.diagram.general import connectors, generalpropertypages
+    from gaphor.diagram.general import connectors, generaleditors, generalpropertypages
 
 
 _load()

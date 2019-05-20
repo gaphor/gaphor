@@ -21,6 +21,7 @@ def _load():
         actionsgrouping,
         flowconnect,
         partitionpage,
+        actionseditors,
         actionspropertypages,
     )
 

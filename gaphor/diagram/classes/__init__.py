@@ -11,6 +11,7 @@ def _load():
     from gaphor.diagram.classes import (
         classconnect,
         interfaceconnect,
+        classeseditors,
         classespropertypages,
     )
 

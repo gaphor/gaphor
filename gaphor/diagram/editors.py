@@ -6,10 +6,10 @@ from functools import singledispatch
 
 from gaphor import UML
 from gaphor.core import inject
-from gaphor.diagram import items
+from gaphor.diagram.nameditem import NamedItem
+from gaphor.diagram.diagramitem import DiagramItem
+from gaphor.diagram.compartment import CompartmentItem
 from gaphor.misc.rattr import rgetattr, rsetattr
-
-from gaphor.diagram.general import CommentItem
 
 
 @singledispatch
@@ -78,30 +78,7 @@ class AbstractEditor(metaclass=abc.ABCMeta):
         """
 
 
-@Editor.register(CommentItem)
-class CommentItemEditor(AbstractEditor):
-    """Text edit support for Comment item."""
-
-    def __init__(self, item):
-        self._item = item
-
-    def is_editable(self, x, y):
-        return True
-
-    def get_text(self):
-        return self._item.subject.body
-
-    def get_bounds(self):
-        return None
-
-    def update_text(self, text):
-        self._item.subject.body = text
-
-    def key_pressed(self, pos, key):
-        pass
-
-
-@Editor.register(items.NamedItem)
+@Editor.register(NamedItem)
 class NamedItemEditor(AbstractEditor):
     """Text edit support for Named items."""
 
@@ -127,7 +104,7 @@ class NamedItemEditor(AbstractEditor):
         pass
 
 
-@Editor.register(items.DiagramItem)
+@Editor.register(DiagramItem)
 class DiagramItemTextEditor(AbstractEditor):
     """Text edit support for diagram items containing text elements."""
 
@@ -161,7 +138,7 @@ class DiagramItemTextEditor(AbstractEditor):
         pass
 
 
-@Editor.register(items.CompartmentItem)
+@Editor.register(CompartmentItem)
 class CompartmentItemEditor(AbstractEditor):
     """Text editor support for compartment items."""
 
@@ -185,85 +162,6 @@ class CompartmentItemEditor(AbstractEditor):
 
     def update_text(self, text):
         UML.parse(editable(self._edit.subject), text)
-
-    def key_pressed(self, pos, key):
-        pass
-
-
-@Editor.register(items.AssociationItem)
-class AssociationItemEditor(AbstractEditor):
-    def __init__(self, item):
-        self._item = item
-        self._edit = None
-
-    def is_editable(self, x, y):
-        """Find out what's located at point (x, y), is it in the
-        name part or is it text in some compartment
-        """
-        item = self._item
-        if not item.subject:
-            return False
-        if item.head_end.point((x, y)) <= 0:
-            self._edit = item.head_end
-        elif item.tail_end.point((x, y)) <= 0:
-            self._edit = item.tail_end
-        else:
-            self._edit = item
-        return True
-
-    def get_text(self):
-        if self._edit is self._item:
-            return self._edit.subject.name
-        return UML.format(
-            self._edit.subject,
-            visibility=True,
-            is_derived=True,
-            type=True,
-            multiplicity=True,
-            default=True,
-        )
-
-    def get_bounds(self):
-        return None
-
-    def update_text(self, text):
-        UML.parse(self._edit.subject, text)
-
-    def key_pressed(self, pos, key):
-        pass
-
-
-@Editor.register(items.ForkNodeItem)
-class ForkNodeItemEditor(AbstractEditor):
-    """Text edit support for fork node join specification."""
-
-    element_factory = inject("element_factory")
-
-    def __init__(self, item):
-        self._item = item
-
-    def is_editable(self, x, y):
-        return True
-
-    def get_text(self):
-        """
-        Get join specification text.
-        """
-        if self._item.subject.joinSpec:
-            return self._item.subject.joinSpec
-        else:
-            return ""
-
-    def get_bounds(self):
-        return None
-
-    def update_text(self, text):
-        """
-        Set join specification text.
-        """
-        spec = self._item.subject.joinSpec
-        if not spec:
-            spec = text
 
     def key_pressed(self, pos, key):
         pass
