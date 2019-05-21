@@ -31,10 +31,10 @@ from gaphor.diagram.editors import Editor
 from gaphor.diagram.connectors import IConnect
 
 # cursor to indicate grouping
-IN_CURSOR = Gdk.Cursor.new(Gdk.CursorType.DIAMOND_CROSS)
+IN_CURSOR_TYPE = Gdk.CursorType.DIAMOND_CROSS
 
 # cursor to indicate ungrouping
-OUT_CURSOR = Gdk.Cursor.new(Gdk.CursorType.CROSSHAIR)
+OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 
 log = logging.getLogger(__name__)
 
@@ -380,19 +380,26 @@ class DropZoneInMotion(GuidedItemInMotion):
             view.window.set_cursor(None)
             return
 
-        if current_parent and not over_item:  # are we going to remove from parent?
-            adapter = Group(current_parent, item)
-            if adapter:
-                view.window.set_cursor(OUT_CURSOR)
+        if current_parent and not over_item:
+            # are we going to remove from parent?
+            group = Group(current_parent, item)
+            if group:
+                cursor = Gdk.Cursor.new_for_display(
+                    view.window.get_display(), OUT_CURSOR_TYPE
+                )
+                view.window.set_cursor(cursor)
                 view.dropzone_item = current_parent
                 current_parent.request_update(matrix=False)
 
         if over_item:
             # are we going to add to parent?
-            adapter = Group(over_item, item)
-            if adapter and adapter.can_contain():
+            group = Group(over_item, item)
+            if group and group.can_contain():
+                cursor = Gdk.Cursor.new_for_display(
+                    view.window.get_display(), IN_CURSOR_TYPE
+                )
+                view.window.set_cursor(cursor)
                 view.dropzone_item = over_item
-                view.window.set_cursor(IN_CURSOR)
                 over_item.request_update(matrix=False)
 
     def stop_move(self):
