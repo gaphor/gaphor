@@ -163,11 +163,13 @@ class build_pot(Command):
         for filename in source_files:
             if self.verbose:
                 print("Working on %s" % filename)
-            fp = open(filename)
+            fp = open(filename, "rb")
             try:
                 eater.set_filename(filename)
                 try:
-                    tokenize.tokenize(fp.readline, eater)
+                    tokens = tokenize.tokenize(fp.readline)
+                    for _token in tokens:
+                        eater(*_token)
                 except tokenize.TokenError as e:
                     print(
                         "%s: %s, line %d, column %d"
