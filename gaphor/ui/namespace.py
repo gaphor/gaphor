@@ -143,7 +143,7 @@ class NamespaceView(Gtk.TreeView):
         except KeyError:
             stock_id = stock.get_stock_id(t, p)
             if stock_id:
-                icon = self.render_icon(stock_id, Gtk.IconSize.MENU, "")
+                icon = Gtk.IconTheme.get_default().load_icon(stock_id, 16, 0)
             else:
                 icon = None
             self.icon_cache[q] = icon
@@ -359,7 +359,7 @@ class Namespace(UIComponent, ActionProvider):
         em.unsubscribe(self._on_attribute_change)
 
     def construct(self):
-        sorted_model = Gtk.TreeModelSort(self.model)
+        sorted_model = Gtk.TreeModelSort(model=self.model)
 
         def sort_func(model, iter_a, iter_b, userdata):
             a = (model.get_value(iter_a, 0).name or "").lower()

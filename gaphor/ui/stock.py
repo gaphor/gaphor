@@ -12,9 +12,6 @@ from gaphor.storage.parser import ParserException
 
 XMLNS = "http://gaphor.sourceforge.net/gaphor/stock-icons"
 
-_icon_factory = Gtk.IconFactory()
-_icon_factory.add_default()
-
 _uml_to_stock_id_map = {}
 
 log = logging.getLogger(__name__)
@@ -31,21 +28,8 @@ def get_stock_id(element, option=None):
             return None  # STOCK_POINTER
 
 
-def add_stock_icon(id, icon_dir, icon_files, uml_class=None, option=None):
+def add_stock_icon(id, uml_class=None, option=None):
     global _uml_to_stock_id_map
-    global _icon_factory
-    set = Gtk.IconSet()
-    for icon in icon_files:
-        source = Gtk.IconSource()
-        if icon.find("16") != -1:
-            source.set_size(Gtk.IconSize.MENU)
-        elif icon.find("24") != -1:
-            source.set_size(Gtk.IconSize.SMALL_TOOLBAR)
-        elif icon.find("48") != -1:
-            source.set_size(Gtk.IconSize.LARGE_TOOLBAR)
-        source.set_filename(os.path.join(icon_dir, icon))
-        set.add_source(source)
-    _icon_factory.add(id, set)
     if uml_class:
         _uml_to_stock_id_map[(uml_class, option)] = id
 
@@ -89,9 +73,7 @@ class StockIconLoader(handler.ContentHandler):
         if name == "icon":
             assert self.id
             assert self.files
-            add_stock_icon(
-                self.id, self.icon_dir, self.files, self.element, self.option
-            )
+            add_stock_icon(self.id, self.element, self.option)
             self.option = None
         elif name == "element":
             try:
@@ -122,8 +104,8 @@ class StockIconLoader(handler.ContentHandler):
 
 
 def load_stock_icons():
-    """Load stock icon definitions from the DataDir location
-    (usually /usr/local/share/gaphor).
+    """
+    Load stock icon definitions from the DataDir location.
     """
 
     parser = make_parser()
@@ -138,8 +120,3 @@ def load_stock_icons():
         pkg_resources.resource_filename("gaphor.ui", "icons.xml")
     )
     parser.parse(filename)
-
-
-# load_stock_icons()
-
-# vim:sw=4:et
