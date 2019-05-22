@@ -7,12 +7,6 @@ a result only classifiers are shown here.
 import logging
 import operator
 
-# PyGTKCompat used for Gtk.GenericTreeModel Support
-import pygtkcompat
-
-pygtkcompat.enable()
-pygtkcompat.enable_gtk("3.0")
-
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk

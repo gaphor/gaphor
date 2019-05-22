@@ -485,7 +485,7 @@ class Diagrams(UIComponent, ActionProvider):
     def tab_label(self, title, widget):
         tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
         label = Gtk.Label(label=title)
-        tab_box.pack_start(label)
+        tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
 
         close_image = Gtk.Image.new_from_icon_name(
             icon_name="window-close", size=Gtk.IconSize.MENU
