@@ -223,7 +223,7 @@ class EditableTextSupport:
             txt.bounds.width = max(15, w)
             txt.bounds.height = max(10, h)
 
-    def _set_text_group_size(self, context, name, texts):
+    def _set_text_group_size(self, name, texts):
         """
         Calculate size of a group.
 
@@ -232,8 +232,6 @@ class EditableTextSupport:
          - name:    group name
          - texts:   list of group texts
         """
-        cr = context.cairo
-
         texts = self._get_visible_texts(texts)
 
         if not texts:
@@ -249,12 +247,10 @@ class EditableTextSupport:
         """
         Calculate sizes of text elements and text groups.
         """
-        cr = context.cairo
-
         # calculate sizes of text groups
         for name, texts in self._get_text_groups():
             self._set_text_sizes(context, texts)
-            self._set_text_group_size(context, name, texts)
+            self._set_text_group_size(name, texts)
 
         # calculate sizes of ungrouped texts
         texts = self._text_groups[None]
