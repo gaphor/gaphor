@@ -31,7 +31,6 @@ from gaphor.core import (
 )
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramPageChange, DiagramShow
-from gaphor.ui import stock
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconoption import get_icon_option
 from gaphor.ui.iconname import get_icon_name
@@ -145,14 +144,14 @@ class NamespaceView(Gtk.TreeView):
         """
         Set font and of model elements in tree view.
         """
-        value = model.get_value(iter, 0)
-        text = value and (value.name or "").replace("\n", " ") or "&lt;None&gt;"
+        element = model.get_value(iter, 0)
+        text = element and (element.name or "").replace("\n", " ") or "&lt;None&gt;"
 
-        if isinstance(value, UML.Diagram):
+        if isinstance(element, UML.Diagram):
             text = "<b>%s</b>" % text
         elif (
-            isinstance(value, UML.Classifier) or isinstance(value, UML.Operation)
-        ) and value.isAbstract:
+            isinstance(element, UML.Classifier) or isinstance(element, UML.Operation)
+        ) and element.isAbstract:
             text = "<i>%s</i>" % text
 
         cell.set_property("markup", text)
