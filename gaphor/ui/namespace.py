@@ -34,6 +34,7 @@ from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui import stock
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconoption import get_icon_option
+from gaphor.ui.iconname import get_icon_name
 
 # The following items will be shown in the treeview, although they
 # are UML.Namespace elements.
@@ -73,7 +74,6 @@ class NamespaceView(Gtk.TreeView):
         GObject.GObject.__init__(self)
         self.set_model(model)
         self.factory = factory
-        self.icon_cache = {}
 
         self.set_property("headers-visible", False)
         self.set_property("search-column", 0)
@@ -131,22 +131,14 @@ class NamespaceView(Gtk.TreeView):
         self.expand_row(path=Gtk.TreePath.new_first(), open_all=False)
 
     def _set_pixbuf(self, column, cell, model, iter, data):
-        value = model.get_value(iter, 0)
-        q = t = type(value)
+        element = model.get_value(iter, 0)
 
-        p = get_icon_option(value)
-        if p is not None:
-            q = (t, p)
+        icon_name = get_icon_name(element)
 
-        try:
-            icon = self.icon_cache[q]
-        except KeyError:
-            stock_id = stock.get_stock_id(t, p)
-            if stock_id:
-                icon = Gtk.IconTheme.get_default().load_icon(stock_id, 16, 0)
-            else:
-                icon = None
-            self.icon_cache[q] = icon
+        if icon_name:
+            icon = Gtk.IconTheme.get_default().load_icon(icon_name, 16, 0)
+        else:
+            icon = None
         cell.set_property("pixbuf", icon)
 
     def _set_text(self, column, cell, model, iter, data):
