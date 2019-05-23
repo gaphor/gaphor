@@ -1,5 +1,6 @@
 from gaphor import UML
-from gaphor.diagram import items
+from gaphor.diagram.general import CommentItem
+from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.services.copyservice import CopyService
 from gaphor.application import Application
 from gaphor.tests.testcase import TestCase
@@ -25,7 +26,7 @@ class CopyServiceTestCase(TestCase):
 
         ef = self.element_factory
         diagram = ef.create(UML.Diagram)
-        ci = diagram.create(items.CommentItem, subject=ef.create(UML.Comment))
+        ci = diagram.create(CommentItem, subject=ef.create(UML.Comment))
 
         service.copy([ci])
         assert diagram.canvas.get_all_items() == [ci]
@@ -40,7 +41,7 @@ class CopyServiceTestCase(TestCase):
 
         ef = self.element_factory
         diagram = ef.create(UML.Diagram)
-        c = diagram.create(items.ClassItem, subject=ef.create(UML.Class))
+        c = diagram.create(ClassItem, subject=ef.create(UML.Class))
 
         c.subject.name = "Name"
 
@@ -73,9 +74,9 @@ class CopyServiceTestCase(TestCase):
         service.init(Application)
 
         # Setting the stage:
-        ci1 = self.create(items.ClassItem, UML.Class)
-        ci2 = self.create(items.ClassItem, UML.Class)
-        a = self.create(items.AssociationItem)
+        ci1 = self.create(ClassItem, UML.Class)
+        ci2 = self.create(ClassItem, UML.Class)
+        a = self.create(AssociationItem)
 
         self.connect(a, a.head, ci1)
         self.connect(a, a.tail, ci2)

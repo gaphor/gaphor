@@ -1,6 +1,6 @@
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
+from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.core import transactional
 
 
@@ -14,13 +14,13 @@ class UndoTest(TestCase):
 
         self.assertEqual(0, len(self.diagram.canvas.solver.constraints))
 
-        ci1 = self.create(items.ClassItem, UML.Class)
+        ci1 = self.create(ClassItem, UML.Class)
         self.assertEqual(2, len(self.diagram.canvas.solver.constraints))
 
-        ci2 = self.create(items.ClassItem, UML.Class)
+        ci2 = self.create(ClassItem, UML.Class)
         self.assertEqual(4, len(self.diagram.canvas.solver.constraints))
 
-        a = self.create(items.AssociationItem)
+        a = self.create(AssociationItem)
 
         self.connect(a, a.head, ci1)
         self.connect(a, a.tail, ci2)

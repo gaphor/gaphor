@@ -1,6 +1,6 @@
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
+from gaphor.diagram.classes import ClassItem
 
 
 class SanitizerServiceTest(TestCase):
@@ -13,7 +13,7 @@ class SanitizerServiceTest(TestCase):
         """
         ef = self.element_factory
 
-        klassitem = self.create(items.ClassItem, UML.Class)
+        klassitem = self.create(ClassItem, UML.Class)
         klass = klassitem.subject
 
         assert klassitem.subject.presentation[0] is klassitem

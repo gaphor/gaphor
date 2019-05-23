@@ -11,7 +11,8 @@ from io import StringIO
 import pkg_resources
 
 from gaphor import UML
-from gaphor.diagram import items
+from gaphor.diagram.general import CommentItem
+from gaphor.diagram.classes import AssociationItem, ClassItem, InterfaceItem
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage
 from gaphor.tests.testcase import TestCase
@@ -65,9 +66,7 @@ class StorageTestCase(TestCase):
         """Save a diagranm item too.
         """
         diagram = self.element_factory.create(UML.Diagram)
-        diagram.create(
-            items.CommentItem, subject=self.element_factory.create(UML.Comment)
-        )
+        diagram.create(CommentItem, subject=self.element_factory.create(UML.Comment))
 
         out = PseudoFile()
         storage.save(XMLWriter(out), factory=self.element_factory)
@@ -103,9 +102,9 @@ class StorageTestCase(TestCase):
         Test loading of a freshly saved model.
         """
         self.element_factory.create(UML.Package)
-        self.create(items.CommentItem, UML.Comment)
-        self.create(items.ClassItem, UML.Class)
-        iface = self.create(items.InterfaceItem, UML.Interface)
+        self.create(CommentItem, UML.Comment)
+        self.create(ClassItem, UML.Class)
+        iface = self.create(InterfaceItem, UML.Interface)
         iface.subject.name = "Circus"
         iface.matrix.translate(10, 10)
 
@@ -138,7 +137,7 @@ class StorageTestCase(TestCase):
         assert len(d.canvas.get_all_items()) == 3
         for item in d.canvas.get_all_items():
             assert item.subject, "No subject for %s" % item
-        d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
+        d1 = d.canvas.select(lambda e: isinstance(e, ClassItem))[0]
         assert d1
 
     def test_load_with_whitespace_name(self):
@@ -167,10 +166,10 @@ class StorageTestCase(TestCase):
         Test loading of a freshly saved model with relationship objects.
         """
         self.element_factory.create(UML.Package)
-        self.create(items.CommentItem, UML.Comment)
-        c1 = self.create(items.ClassItem, UML.Class)
+        self.create(CommentItem, UML.Comment)
+        c1 = self.create(ClassItem, UML.Class)
 
-        a = self.diagram.create(items.AssociationItem)
+        a = self.diagram.create(AssociationItem)
         a.handles()[0].pos = (10, 20)
         a.handles()[1].pos = (50, 60)
         assert 10 == a.handles()[0].pos.x, a.handles()[0].pos
@@ -194,12 +193,12 @@ class StorageTestCase(TestCase):
         # Check load/save of other canvas items.
         assert len(d.canvas.get_all_items()) == 3
         for item in d.canvas.get_all_items():
-            if isinstance(item, items.AssociationItem):
+            if isinstance(item, AssociationItem):
                 aa = item
         assert aa
         assert list(map(float, aa.handles()[0].pos)) == [0, 0], aa.handles()[0].pos
         assert list(map(float, aa.handles()[1].pos)) == [40, 40], aa.handles()[1].pos
-        d1 = d.canvas.select(lambda e: isinstance(e, items.ClassItem))[0]
+        d1 = d.canvas.select(lambda e: isinstance(e, ClassItem))[0]
         assert d1
 
     def test_connection(self):
@@ -207,13 +206,13 @@ class StorageTestCase(TestCase):
         Test connection loading of an association and two classes.
         (Should count for all line-like objects alike if this works).
         """
-        c1 = self.create(items.ClassItem, UML.Class)
-        c2 = self.create(items.ClassItem, UML.Class)
+        c1 = self.create(ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
         c2.matrix.translate(200, 200)
         self.diagram.canvas.update_matrix(c2)
         assert tuple(self.diagram.canvas.get_matrix_i2c(c2)) == (1, 0, 0, 1, 200, 200)
 
-        a = self.create(items.AssociationItem)
+        a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
         head_pos = a.head.pos
@@ -244,7 +243,7 @@ class StorageTestCase(TestCase):
         diagrams = list(self.kindof(UML.Diagram))
         self.assertEqual(1, len(diagrams))
         d = diagrams[0]
-        a = d.canvas.select(lambda e: isinstance(e, items.AssociationItem))[0]
+        a = d.canvas.select(lambda e: isinstance(e, AssociationItem))[0]
         self.assertTrue(a.subject is not None)
         self.assertEqual(old_a_subject_id, a.subject.id)
         cinfo_head = a.canvas.get_connection(a.head)

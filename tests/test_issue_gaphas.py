@@ -1,8 +1,7 @@
 from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram import items
+from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphas.aspect import ConnectionSink
-import gaphor.diagram.classes.classconnect
 
 
 class GaphasTest(TestCase):
@@ -10,12 +9,12 @@ class GaphasTest(TestCase):
     services = TestCase.services + ["sanitizer_service", "undo_manager"]
 
     def test_remove_class_with_association(self):
-        c1 = self.create(items.ClassItem, UML.Class)
+        c1 = self.create(ClassItem, UML.Class)
         c1.name = "klassitem1"
-        c2 = self.create(items.ClassItem, UML.Class)
+        c2 = self.create(ClassItem, UML.Class)
         c2.name = "klassitem2"
 
-        a = self.create(items.AssociationItem)
+        a = self.create(AssociationItem)
 
         assert 3 == len(self.diagram.canvas.get_all_items())
 

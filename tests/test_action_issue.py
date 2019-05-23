@@ -4,7 +4,7 @@ import pkg_resources
 from gaphor import UML
 from gaphor.tests import TestCase
 from gaphor.storage import storage
-from gaphor.diagram.items import FlowItem, ActionItem
+from gaphor.diagram.actions import FlowItem, ActionItem
 
 
 class ActionIssueTestCase(TestCase):
