@@ -35,7 +35,7 @@ class StateItem(CompartmentItem, VertexItem):
         "extra-space": "compartment",
     }
 
-    def __init__(self, id):
+    def __init__(self, id=None):
         super(StateItem, self).__init__(id)
         self.drawing_style = self.DRAW_COMPARTMENT
         self._activities = self.create_compartment("activities")

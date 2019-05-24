@@ -381,4 +381,6 @@ def version_lower_than(gaphor_version, version):
 def upgrade_canvas_item_to_1_1_0(item):
     if item.type == "MetaclassItem":
         item.type = "ClassItem"
+    elif item.type == "SubsystemItem":
+        item.type = "ComponentItem"
     return item

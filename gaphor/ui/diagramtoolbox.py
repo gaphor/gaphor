@@ -58,7 +58,6 @@ TOOLBOX_ACTIONS = (
             ("toolbox-artifact", _("Artifact"), "gaphor-artifact", "h"),
             ("toolbox-node", _("Node"), "gaphor-node", "n"),
             ("toolbox-device", _("Device"), "gaphor-device", "d"),
-            ("toolbox-subsystem", _("Subsystem"), "gaphor-subsystem", "y"),
             ("toolbox-connector", _("Connector"), "gaphor-connector", "C"),
         ),
     ),
@@ -134,10 +133,10 @@ TOOLBOX_ACTIONS = (
     (
         _("Use Cases"),
         (
-            ("toolbox-usecase", _("Use case"), "gaphor-usecase", "u"),
+            ("toolbox-use-case", _("Use case"), "gaphor-use-case", "u"),
             ("toolbox-actor", _("Actor"), "gaphor-actor", "t"),
             (
-                "toolbox-usecase-association",
+                "toolbox-use-case-association",
                 _("Association"),
                 "gaphor-association",
                 "B",
@@ -391,16 +390,6 @@ class DiagramToolbox:
             after_handler=self._after_handler,
         )
 
-    def toolbox_subsystem(self):
-        return GroupPlacementTool(
-            self.view,
-            item_factory=self._namespace_item_factory(
-                diagram.components.SubsystemItem, UML.Component, name="NewSubsystem"
-            ),
-            handle_index=SE,
-            after_handler=self._after_handler,
-        )
-
     def toolbox_connector(self):
         return PlacementTool(
             self.view,
@@ -611,7 +600,7 @@ class DiagramToolbox:
 
     # Use cases:
 
-    def toolbox_usecase(self):
+    def toolbox_use_case(self):
         return GroupPlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
@@ -631,7 +620,7 @@ class DiagramToolbox:
             after_handler=self._after_handler,
         )
 
-    def toolbox_usecase_association(self):
+    def toolbox_use_case_association(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.classes.AssociationItem),

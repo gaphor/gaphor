@@ -1,11 +1,6 @@
 from gaphor import UML
 from gaphor.tests import TestCase
-from gaphor.diagram.components import (
-    NodeItem,
-    ComponentItem,
-    SubsystemItem,
-    ArtifactItem,
-)
+from gaphor.diagram.components import NodeItem, ComponentItem, ArtifactItem
 from gaphor.diagram.usecases import UseCaseItem
 
 
@@ -107,7 +102,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
     def test_grouping(self):
         """Test adding an use case to a subsystem
         """
-        s = self.create(SubsystemItem, UML.Component)
+        s = self.create(ComponentItem, UML.Component)
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
 
@@ -122,7 +117,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
     def test_grouping_with_namespace(self):
         """Test adding an use case to a subsystem (with namespace)
         """
-        s = self.create(SubsystemItem, UML.Component)
+        s = self.create(ComponentItem, UML.Component)
         uc = self.create(UseCaseItem, UML.UseCase)
 
         # manipulate namespace
@@ -137,7 +132,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
     def test_ungrouping(self):
         """Test removal of use case from subsystem
         """
-        s = self.create(SubsystemItem, UML.Component)
+        s = self.create(ComponentItem, UML.Component)
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
 

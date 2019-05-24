@@ -31,16 +31,6 @@ def get_name_for_class(element):
         return "gaphor-class"
 
 
-@get_icon_name.register(UML.Component)
-def get_name_for_component(element):
-    for p in element.presentation:
-        try:
-            if p.__stereotype__ == "subsystem":
-                return "gaphor-subsystem"
-        except AttributeError:
-            return "gaphor-component"
-
-
 @get_icon_name.register(UML.Property)
 def get_name_for_property(element):
     if element.association:
