@@ -25,7 +25,9 @@ def get_icon_name(element):
 
 @get_icon_name.register(UML.Class)
 def get_name_for_class(element):
-    if element.extension:
+    if isinstance(element, UML.Stereotype):
+        return "gaphor-stereotype"
+    elif element.extension:
         return "gaphor-metaclass"
     else:
         return "gaphor-class"
