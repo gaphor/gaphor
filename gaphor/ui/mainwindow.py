@@ -116,7 +116,6 @@ class MainWindow(Service, ActionProvider):
     def init(self, app=None):
         self.app = app
         self.init_styling()
-        self.init_stock_icons()
         self.init_action_group()
         self.init_ui_components()
 
@@ -129,12 +128,6 @@ class MainWindow(Service, ActionProvider):
             style_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
-
-    def init_stock_icons(self):
-        # Load stock items
-        import gaphor.ui.stock
-
-        gaphor.ui.stock.load_stock_icons()
 
     def init_ui_components(self):
         component_registry = self.component_registry
