@@ -328,17 +328,11 @@ class DiagramPage(ActionProvider):
             and data.get_format() == 8
             and info == DiagramPage.VIEW_TARGET_ELEMENT_ID
         ):
-            print("drag_data_received:", data.get_data(), info)
-            n, p = data.get_data().decode().split("#")
-            element = self.element_factory.lookup(n)
+            element_id = data.get_data().decode()
+            element = self.element_factory.lookup(element_id)
             assert element
 
-            # TODO: use adapters to execute code below
-
-            q = type(element)
-            if p:
-                q = q, p
-            item_class = get_diagram_item(q)
+            item_class = get_diagram_item(type(element))
             if isinstance(element, UML.Diagram):
                 self.action_manager.execute("OpenModelElement")
             elif item_class:
