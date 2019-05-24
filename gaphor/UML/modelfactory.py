@@ -152,6 +152,14 @@ def create_extension(factory, element, stereotype):
 extend_with_stereotype = create_extension
 
 
+def is_metaclass(element):
+    return (
+        (not isinstance(element, Stereotype))
+        and hasattr(element, "extension")
+        and bool(element.extension)
+    )
+
+
 def add_slot(factory, instance, definingFeature):
     """
     Add slot to instance specification for an attribute.

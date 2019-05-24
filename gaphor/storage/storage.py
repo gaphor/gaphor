@@ -198,6 +198,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
         """
         for item in canvasitems:
+            item = upgrade_canvas_item_to_1_1_0(item)
             cls = getattr(diagramitems, item.type)
             item.element = diagram.create_as(cls, item.id)
             canvas.add(item.element, parent=parent)
@@ -358,7 +359,7 @@ def load_generator(filename, factory):
             gc.collect()
             yield 100
         except Exception as e:
-            log.warning("file %s could not be loaded" % filename)
+            log.warning("file %s could not be loaded" % filename, e)
             raise
     factory.notify_model()
 
@@ -377,4 +378,7 @@ def version_lower_than(gaphor_version, version):
         return tuple(map(int, parts)) <= version
 
 
-# vim: sw=4:et:ai
+def upgrade_canvas_item_to_1_1_0(item):
+    if item.type == "MetaclassItem":
+        item.type = "ClassItem"
+    return item

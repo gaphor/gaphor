@@ -217,9 +217,7 @@ class DiagramToolbox:
         factory_method.item_class = item_class
         return factory_method
 
-    def _namespace_item_factory(
-        self, item_class, subject_class, stereotype=None, name=None
-    ):
+    def _namespace_item_factory(self, item_class, subject_class, name=None):
         """
         Returns a factory method for Namespace classes.
         To be used by the PlacementTool.
@@ -231,8 +229,6 @@ class DiagramToolbox:
             subject.package = self.namespace
             if name is not None:
                 subject.name = name
-            elif stereotype:
-                subject.name = "New%s" % stereotype.capitalize()
             else:
                 subject.name = "New%s" % subject_class.__name__
             return item
@@ -399,7 +395,7 @@ class DiagramToolbox:
         return GroupPlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                diagram.components.SubsystemItem, UML.Component, "subsystem"
+                diagram.components.SubsystemItem, UML.Component, name="NewSubsystem"
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -672,7 +668,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                diagram.profiles.MetaclassItem, UML.Class, "metaclass", name="Class"
+                diagram.classes.ClassItem, UML.Class, name="Class"
             ),
             handle_index=SE,
             after_handler=self._after_handler,
