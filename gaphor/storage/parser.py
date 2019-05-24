@@ -67,25 +67,25 @@ class base:
 
 
 class element(base):
-    def __init__(self, id, type):
+    def __init__(self, id, type, canvas=None):
         base.__init__(self)
         self.id = id
         self.type = type
-        self.canvas = None
+        self.canvas = canvas
 
 
 class canvas(base):
-    def __init__(self):
+    def __init__(self, canvasitems=None):
         base.__init__(self)
-        self.canvasitems = []
+        self.canvasitems = canvasitems or []
 
 
 class canvasitem(base):
-    def __init__(self, id, type):
+    def __init__(self, id, type, canvasitems=None):
         base.__init__(self)
         self.id = id
         self.type = type
-        self.canvasitems = []
+        self.canvasitems = canvasitems or []
 
 
 XMLNS = "http://gaphor.sourceforge.net/model"
