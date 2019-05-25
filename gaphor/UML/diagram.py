@@ -91,7 +91,7 @@ class Diagram(Namespace, PackageableElement):
         optional parent and subject."""
 
         assert issubclass(type, gaphas.Item)
-        obj = type(str(uuid.uuid1()))
+        obj = type(str(uuid.uuid1()), self.factory)
         if subject:
             obj.subject = subject
         self.canvas.add(obj, parent)

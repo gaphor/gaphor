@@ -33,8 +33,8 @@ class ObjectNodeItem(NamedItem):
         "text-align-group": "bottom",
     }
 
-    def __init__(self, id=None):
-        NamedItem.__init__(self, id)
+    def __init__(self, id=None, factory=None):
+        NamedItem.__init__(self, id, factory)
 
         self._show_ordering = False
 

@@ -13,7 +13,7 @@ class Line(_Line):
 
     __style__ = {"line-width": 2, "line-color": (0, 0, 0, 1)}
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, factory=None):
         super(Line, self).__init__()
         self.style = Style(Line.__style__)
         self._id = id
@@ -64,7 +64,7 @@ class Line(_Line):
 class Box(Element):
     """
     A Box has 4 handles (for a start)::
-     
+
     NW +---+ NE
     SW +---+ SE
     """
@@ -75,7 +75,7 @@ class Box(Element):
         "fill-color": (1, 1, 1, 0),
     }
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, factory=None):
         super(Box, self).__init__(10, 10)
         self.style = Style(Box.__style__)
         self._id = id
@@ -120,7 +120,7 @@ class Ellipse(Element):
         "fill-color": (1, 1, 1, 0),
     }
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, factory=None):
         super(Ellipse, self).__init__()
         self.style = Style(Ellipse.__style__)
         self._id = id

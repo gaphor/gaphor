@@ -260,8 +260,8 @@ class CompartmentItem(NamedItem):
     ICON_MARGIN_X = 10
     ICON_MARGIN_Y = 10
 
-    def __init__(self, id=None):
-        NamedItem.__init__(self, id)
+    def __init__(self, id=None, factory=None):
+        NamedItem.__init__(self, id, factory)
         self._compartments = []
 
         self._drawing_style = CompartmentItem.DRAW_NONE

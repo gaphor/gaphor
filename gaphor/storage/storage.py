@@ -200,7 +200,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         for item in canvasitems:
             item = upgrade_canvas_item_to_1_1_0(item)
             cls = getattr(diagramitems, item.type)
-            item.element = diagram.create_as(cls, item.id)
+            item.element = diagram.create_as(cls, item.id, factory)
             canvas.add(item.element, parent=parent)
             assert canvas.get_parent(item.element) is parent
             create_canvasitems(canvas, item.canvasitems, parent=item.element)

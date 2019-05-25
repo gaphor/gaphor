@@ -16,9 +16,9 @@ import gaphor.diagram.states
 import gaphor.diagram.usecases
 
 
-def create(type):
-    return create_as(type, str(uuid.uuid1()))
+def create(type, factory):
+    return create_as(type, str(uuid.uuid1()), factory)
 
 
-def create_as(type, id):
-    return type(id)
+def create_as(type, id, factory):
+    return type(id, factory)

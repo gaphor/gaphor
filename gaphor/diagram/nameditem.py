@@ -21,11 +21,11 @@ class NamedItem(ElementItem):
         "name-rotated": False,
     }
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, factory=None):
         """
         Create named item.
         """
-        ElementItem.__init__(self, id)
+        ElementItem.__init__(self, id, factory)
 
         # create (from ...) text to distinguish diagram items from
         # different namespace

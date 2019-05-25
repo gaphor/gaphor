@@ -15,8 +15,8 @@ class ArtifactItem(ClassifierItem):
 
     ICON_HEIGHT = 20
 
-    def __init__(self, id=None):
-        ClassifierItem.__init__(self, id)
+    def __init__(self, id=None, factory=None):
+        ClassifierItem.__init__(self, id, factory)
         self.height = 50
         self.width = 120
         # Set drawing style to compartment w/ small icon

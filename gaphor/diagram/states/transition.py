@@ -17,10 +17,8 @@ class TransitionItem(NamedLine):
 
     __style__ = {"name-align": (ALIGN_RIGHT, ALIGN_TOP), "name-padding": (5, 15, 5, 5)}
 
-    element_factory = inject("element_factory")
-
-    def __init__(self, id=None):
-        NamedLine.__init__(self, id)
+    def __init__(self, id=None, factory=None):
+        NamedLine.__init__(self, id, factory)
         self._guard = self.add_text("guard.specification", editable=True)
         self.watch("subject<Transition>.guard<Constraint>.specification", self.on_guard)
 

@@ -18,8 +18,8 @@ class ClassifierItem(CompartmentItem):
         "abstract-name-font": "sans bold italic 10",
     }
 
-    def __init__(self, id=None):
-        super(ClassifierItem, self).__init__(id)
+    def __init__(self, id=None, factory=None):
+        super(ClassifierItem, self).__init__(id, factory)
         self.watch("subject<Classifier>.isAbstract", self.on_classifier_is_abstract)
 
     def on_classifier_is_abstract(self, event):
