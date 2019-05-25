@@ -10,6 +10,14 @@ import uuid
 from gaphor.UML.properties import umlproperty
 
 
+class UnlinkEvent:
+    """Used to tell event handlers this element should be unlinked.
+    """
+
+    def __init__(self, element):
+        self.element = element
+
+
 class Element:
     """
     Base class for UML data classes.
@@ -92,8 +100,7 @@ class Element:
 
                 prop.unlink(self)
 
-            if self._factory:
-                self._factory._unlink_element(self)
+            self.handle(UnlinkEvent(self))
         finally:
             self._unlink_lock -= 1
 
