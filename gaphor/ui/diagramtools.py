@@ -31,10 +31,10 @@ from gaphor.diagram.editors import Editor
 from gaphor.diagram.connectors import IConnect
 
 # cursor to indicate grouping
-IN_CURSOR = Gdk.Cursor.new(Gdk.CursorType.DIAMOND_CROSS)
+IN_CURSOR_TYPE = Gdk.CursorType.DIAMOND_CROSS
 
 # cursor to indicate ungrouping
-OUT_CURSOR = Gdk.Cursor.new(Gdk.CursorType.CROSSHAIR)
+OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 
 log = logging.getLogger(__name__)
 
@@ -322,18 +322,21 @@ class GroupPlacementTool(PlacementTool):
             adapter = Group(parent, self._factory.item_class())
             if adapter and adapter.can_contain():
                 view.dropzone_item = parent
-                view.window.set_cursor(IN_CURSOR)
+                cursor = Gdk.Cursor.new_for_display(
+                    view.get_window().get_display(), IN_CURSOR_TYPE
+                )
+                view.get_window().set_cursor(cursor)
                 self._parent = parent
             else:
                 view.dropzone_item = None
-                view.window.set_cursor(None)
+                view.get_window().set_cursor(None)
                 self._parent = None
             parent.request_update(matrix=False)
         else:
             if view.dropzone_item:
                 view.dropzone_item.request_update(matrix=False)
             view.dropzone_item = None
-            view.window.set_cursor(None)
+            view.get_window().set_cursor(None)
 
     def _create_item(self, pos, **kw):
         """
@@ -357,7 +360,7 @@ class GroupPlacementTool(PlacementTool):
         finally:
             self._parent = None
             view.dropzone_item = None
-            view.window.set_cursor(None)
+            view.get_window().set_cursor(None)
         return item
 
 
@@ -377,22 +380,29 @@ class DropZoneInMotion(GuidedItemInMotion):
 
         if not over_item:
             view.dropzone_item = None
-            view.window.set_cursor(None)
+            view.get_window().set_cursor(None)
             return
 
-        if current_parent and not over_item:  # are we going to remove from parent?
-            adapter = Group(current_parent, item)
-            if adapter:
-                view.window.set_cursor(OUT_CURSOR)
+        if current_parent and not over_item:
+            # are we going to remove from parent?
+            group = Group(current_parent, item)
+            if group:
+                cursor = Gdk.Cursor.new_for_display(
+                    view.get_window().get_display(), OUT_CURSOR_TYPE
+                )
+                view.get_window().set_cursor(cursor)
                 view.dropzone_item = current_parent
                 current_parent.request_update(matrix=False)
 
         if over_item:
             # are we going to add to parent?
-            adapter = Group(over_item, item)
-            if adapter and adapter.can_contain():
+            group = Group(over_item, item)
+            if group and group.can_contain():
+                cursor = Gdk.Cursor.new_for_display(
+                    view.get_window().get_display(), IN_CURSOR_TYPE
+                )
+                view.get_window().set_cursor(cursor)
                 view.dropzone_item = over_item
-                view.window.set_cursor(IN_CURSOR)
                 over_item.request_update(matrix=False)
 
     def stop_move(self):
@@ -433,7 +443,7 @@ class DropZoneInMotion(GuidedItemInMotion):
                 new_parent.request_update()
         finally:
             view.dropzone_item = None
-            view.window.set_cursor(None)
+            view.get_window().set_cursor(None)
 
 
 class TransactionalToolChain(ToolChain):

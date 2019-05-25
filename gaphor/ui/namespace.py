@@ -7,12 +7,6 @@ a result only classifiers are shown here.
 import logging
 import operator
 
-# PyGTKCompat used for Gtk.GenericTreeModel Support
-import pygtkcompat
-
-pygtkcompat.enable()
-pygtkcompat.enable_gtk("3.0")
-
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
@@ -37,9 +31,9 @@ from gaphor.core import (
 )
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramPageChange, DiagramShow
-from gaphor.ui import stock
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconoption import get_icon_option
+from gaphor.ui.iconname import get_icon_name
 
 # The following items will be shown in the treeview, although they
 # are UML.Namespace elements.
@@ -79,7 +73,6 @@ class NamespaceView(Gtk.TreeView):
         GObject.GObject.__init__(self)
         self.set_model(model)
         self.factory = factory
-        self.icon_cache = {}
 
         self.set_property("headers-visible", False)
         self.set_property("search-column", 0)
@@ -137,36 +130,28 @@ class NamespaceView(Gtk.TreeView):
         self.expand_row(path=Gtk.TreePath.new_first(), open_all=False)
 
     def _set_pixbuf(self, column, cell, model, iter, data):
-        value = model.get_value(iter, 0)
-        q = t = type(value)
+        element = model.get_value(iter, 0)
 
-        p = get_icon_option(value)
-        if p is not None:
-            q = (t, p)
+        icon_name = get_icon_name(element)
 
-        try:
-            icon = self.icon_cache[q]
-        except KeyError:
-            stock_id = stock.get_stock_id(t, p)
-            if stock_id:
-                icon = self.render_icon(stock_id, Gtk.IconSize.MENU, "")
-            else:
-                icon = None
-            self.icon_cache[q] = icon
+        if icon_name:
+            icon = Gtk.IconTheme.get_default().load_icon(icon_name, 16, 0)
+        else:
+            icon = None
         cell.set_property("pixbuf", icon)
 
     def _set_text(self, column, cell, model, iter, data):
         """
         Set font and of model elements in tree view.
         """
-        value = model.get_value(iter, 0)
-        text = value and (value.name or "").replace("\n", " ") or "&lt;None&gt;"
+        element = model.get_value(iter, 0)
+        text = element and (element.name or "").replace("\n", " ") or "&lt;None&gt;"
 
-        if isinstance(value, UML.Diagram):
+        if isinstance(element, UML.Diagram):
             text = "<b>%s</b>" % text
         elif (
-            isinstance(value, UML.Classifier) or isinstance(value, UML.Operation)
-        ) and value.isAbstract:
+            isinstance(element, UML.Classifier) or isinstance(element, UML.Operation)
+        ) and element.isAbstract:
             text = "<i>%s</i>" % text
 
         cell.set_property("markup", text)
@@ -365,7 +350,7 @@ class Namespace(UIComponent, ActionProvider):
         em.unsubscribe(self._on_attribute_change)
 
     def construct(self):
-        sorted_model = Gtk.TreeModelSort(self.model)
+        sorted_model = Gtk.TreeModelSort(model=self.model)
 
         def sort_func(model, iter_a, iter_b, userdata):
             a = (model.get_value(iter_a, 0).name or "").lower()

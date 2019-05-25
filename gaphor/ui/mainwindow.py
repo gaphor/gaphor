@@ -116,7 +116,6 @@ class MainWindow(Service, ActionProvider):
     def init(self, app=None):
         self.app = app
         self.init_styling()
-        self.init_stock_icons()
         self.init_action_group()
         self.init_ui_components()
 
@@ -129,12 +128,6 @@ class MainWindow(Service, ActionProvider):
             style_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
-
-    def init_stock_icons(self):
-        # Load stock items
-        import gaphor.ui.stock
-
-        gaphor.ui.stock.load_stock_icons()
 
     def init_ui_components(self):
         component_registry = self.component_registry
@@ -485,7 +478,7 @@ class Diagrams(UIComponent, ActionProvider):
     def tab_label(self, title, widget):
         tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
         label = Gtk.Label(label=title)
-        tab_box.pack_start(label)
+        tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
 
         close_image = Gtk.Image.new_from_icon_name(
             icon_name="window-close", size=Gtk.IconSize.MENU

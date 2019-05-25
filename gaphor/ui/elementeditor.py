@@ -179,7 +179,7 @@ class ElementEditor(UIComponent, ActionProvider):
         if item is None:
             label = Gtk.Label()
             label.set_markup("<b>No item selected</b>")
-            self.vbox.pack_start(label, expand=False, padding=10)
+            self.vbox.pack_start(child=label, expand=False, fill=True, padding=10)
             label.show()
             return
         self.create_pages(item)

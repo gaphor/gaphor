@@ -26,6 +26,9 @@ class Group:
     def __init__(self, parent, item):
         pass
 
+    def can_contain(self):
+        return False
+
 
 # TODO: I think this should have been called Namespacing or something similar,
 # since that's the modeling concept.

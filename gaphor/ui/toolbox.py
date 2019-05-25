@@ -73,9 +73,10 @@ class Toolbox(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self._on_diagram_page_change)
 
     def construct(self):
-        def toolbox_button(action_name, stock_id, label, shortcut):
+        def toolbox_button(action_name, icon_name, label, shortcut):
             button = Gtk.ToggleToolButton.new()
-            button.set_icon_name(stock_id)
+            icon = Gtk.Image.new_from_icon_name(icon_name, 48)
+            button.set_icon_widget(icon)
             button.action_name = action_name
             if label:
                 button.set_tooltip_text("%s (%s)" % (label, shortcut))
@@ -88,7 +89,7 @@ class Toolbox(UIComponent, ActionProvider):
                     self.DND_TARGETS,
                     Gdk.DragAction.COPY | Gdk.DragAction.LINK,
                 )
-                inner_button.drag_source_set_icon_stock(stock_id)
+                inner_button.drag_source_set_icon_name(icon_name)
                 inner_button.connect(
                     "drag-data-get", self._button_drag_data_get, action_name
                 )
@@ -103,7 +104,7 @@ class Toolbox(UIComponent, ActionProvider):
             for action_name, label, stock_id, shortcut in items:
                 button = toolbox_button(action_name, stock_id, label, shortcut)
                 tool_item_group.insert(button, -1)
-                button.show()
+                button.show_all()
                 self.buttons.append(button)
                 self.shortcuts[shortcut] = action_name
             toolbox.add(tool_item_group)
