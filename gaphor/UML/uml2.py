@@ -1381,7 +1381,7 @@ ownedEnd.""",
 del extension_metaclass
 # 57: override Class.extension derives Extension.metaclass
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
-# It defines `Extension.allInstances()`, which basically beans we have to query the element factory.
+# It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 def class_extension(self):
     return list(
         self._factory.select(lambda e: e.isKindOf(Extension) and self is e.metaclass)

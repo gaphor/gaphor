@@ -3,7 +3,7 @@ comment
 
   Parts are separated by '%%' (no training spaces) on a line.
   Comment parts start with 'comment' on the line below the percentage
-  symbols, 'override' is used to define a overridden variable. 
+  symbols, 'override' is used to define a overridden variable.
 
   Overrides may in their turn derive from other properties, in that case
   the 'derives' keyword may be used. It's only useful to declare the
@@ -55,6 +55,8 @@ Association.endType.filter = lambda self: [end.type for end in self.memberEnd if
 
 %%
 override Class.extension derives Extension.metaclass
+# See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
+# It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 def class_extension(self):
     return list(self._factory.select(lambda e: e.isKindOf(Extension) and self is e.metaclass))
 
@@ -69,14 +71,14 @@ are typed by the Class.""")
 del class_extension
 %%
 override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
+# See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
 def extension_metaclass(self):
     ownedEnd = self.ownedEnd
     metaend = [e for e in self.memberEnd if e is not ownedEnd]
     if metaend:
         return metaend[0].type
 
-# Don't use derived now, as derived() does not properly propagate the events
-# NOTE: let function return a list once this can be turned on
+# Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
 #Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 #Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(extension_metaclass, doc=\
@@ -218,7 +220,7 @@ def component_provided(self):
     return tuple(set(itertools.chain(implementations, realizations, *rc_realizations)))
 
 Component.provided = property(component_provided, doc="""
-    Interfaces provided to component environment. 
+    Interfaces provided to component environment.
     """)
 del component_provided
 %%
@@ -233,7 +235,7 @@ def component_required(self):
     return tuple(set(itertools.chain(usages, *rc_usages)))
 
 Component.required = property(component_required, doc="""
-    Interfaces required by component. 
+    Interfaces required by component.
     """)
 del component_required
 %%

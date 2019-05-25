@@ -23,8 +23,6 @@ class ObjectNodeItem(NamedItem):
     Ordering information can be hidden by user.
     """
 
-    element_factory = inject("element_factory")
-
     __uml__ = UML.ObjectNode
 
     STYLE_BOTTOM = {

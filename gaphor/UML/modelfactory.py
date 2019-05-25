@@ -129,9 +129,9 @@ def get_applied_stereotypes(element):
     return element.appliedStereotype[:].classifier
 
 
-def create_extension(factory, element, stereotype):
+def create_extension(factory, metaclass, stereotype):
     """
-    Extend an element with a stereotype.
+    Create an Extension association between an metaclass and a stereotype.
     """
     ext = factory.create(Extension)
     p = factory.create(Property)
@@ -142,9 +142,10 @@ def create_extension(factory, element, stereotype):
     ext.ownedEnd = ext_end
     ext_end.type = stereotype
     ext_end.aggregation = "composite"
-    p.type = element
+    p.type = metaclass
     p.name = "baseClass"
     stereotype.ownedAttribute = p
+    metaclass.ownedAttribute = ext_end
 
     return ext
 
