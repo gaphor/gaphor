@@ -1,6 +1,6 @@
 {
   "projectName": "gaphor",
-  "projectOwner": "danyeaw",
+  "projectOwner": "gaphor",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
@@ -206,6 +206,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "ezickler",
+      "name": "Enno Zickler",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3604310?v=4",
+      "profile": "https://github.com/ezickler",
+      "contributions": [
+        "bug"
+      ]
     }
-  ]
+  ],
+  "contributorsPerLine": 7
 }
