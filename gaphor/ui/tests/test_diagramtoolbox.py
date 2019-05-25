@@ -137,14 +137,14 @@ class DiagramToolboxTestCase(TestCase):
 
     # Use cases:
 
-    def test_usecase(self):
-        self._test_placement_action("toolbox-usecase")
+    def test_use_case(self):
+        self._test_placement_action("toolbox-use-case")
 
     def test_actor(self):
         self._test_placement_action("toolbox-actor")
 
-    def test_usecase_association(self):
-        self._test_placement_action("toolbox-usecase-association")
+    def test_use_case_association(self):
+        self._test_placement_action("toolbox-use-case-association")
 
     def test_include(self):
         self._test_placement_action("toolbox-include")

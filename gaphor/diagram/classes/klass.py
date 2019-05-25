@@ -41,9 +41,7 @@ class ClassItem(ClassifierItem):
 
     __stereotype__ = {
         "stereotype": UML.Stereotype,
-        "metaclass": lambda self: (not isinstance(self.subject, UML.Stereotype))
-        and hasattr(self.subject, "extension")
-        and self.subject.extension,
+        "metaclass": lambda s: UML.model.is_metaclass(s.subject),
     }
 
     __style__ = {

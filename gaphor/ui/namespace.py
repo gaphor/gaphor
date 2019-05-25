@@ -32,7 +32,6 @@ from gaphor.core import (
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.iconoption import get_icon_option
 from gaphor.ui.iconname import get_icon_name
 
 # The following items will be shown in the treeview, although they
@@ -184,18 +183,13 @@ class NamespaceView(Gtk.TreeView):
         model, iter = selection.get_selected()
         if iter:
             element = model.get_value(iter, 0)
-            p = get_icon_option(element)
-            p = p if p else ""
-            # 'id#stereotype' is being send
             if info == NamespaceView.TARGET_ELEMENT_ID:
                 selection_data.set(
-                    selection_data.get_target(), 8, ("%s#%s" % (element.id, p)).encode()
+                    selection_data.get_target(), 8, str(element.id).encode()
                 )
             else:
                 selection_data.set(
-                    selection_data.get_target(),
-                    8,
-                    ("%s#%s" % (element.name, p)).encode(),
+                    selection_data.get_target(), 8, str(element.name).encode()
                 )
         return True
 
@@ -223,14 +217,14 @@ class NamespaceView(Gtk.TreeView):
         """
         self.stop_emission_by_name("drag-data-received")
         if info == NamespaceView.TARGET_ELEMENT_ID:
-            n, _p = selection.get_data().decode().split("#")
+            element_id = selection.get_data().decode()
             drop_info = self.get_dest_row_at_pos(x, y)
         else:
             drop_info = None
 
         if drop_info:
             model = self.get_model()
-            element = self.factory.lookup(n)
+            element = self.factory.lookup(element_id)
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)

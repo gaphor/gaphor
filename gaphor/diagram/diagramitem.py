@@ -203,7 +203,6 @@ class DiagramItem(
     @cvar style: styles information (derived from DiagramItemMeta)
     """
 
-    dispatcher = inject("element_dispatcher")
     element_factory = inject("element_factory")
 
     def __init__(self, id=None):

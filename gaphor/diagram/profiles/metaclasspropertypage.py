@@ -7,8 +7,8 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.diagram.propertypages import create_hbox_label, EventWatcher
 from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
-from gaphor.diagram.profiles.metaclass import MetaclassItem
+from gaphor.diagram.propertypages import PropertyPages, NamedElementPropertyPage
+from gaphor.diagram.classes import ClassItem
 
 
 def _issubclass(c, b):
@@ -18,8 +18,8 @@ def _issubclass(c, b):
         return False
 
 
-@PropertyPages.register(MetaclassItem)
-class MetaclassNameEditor(PropertyPageBase):
+@PropertyPages.register(UML.Class)
+class MetaclassNamePropertyPage(NamedElementPropertyPage):
     """
     Metaclass name editor. Provides editable combo box entry with
     predefined list of names of UML classes.
@@ -37,15 +37,13 @@ class MetaclassNameEditor(PropertyPageBase):
         )
     )
 
-    def __init__(self, item):
-        self.item = item
-        self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
-        self.watcher = EventWatcher(item.subject)
-
     def construct(self):
+        if not UML.model.is_metaclass(self.subject):
+            return super().construct()
+
         page = Gtk.VBox()
 
-        subject = self.item.subject
+        subject = self.subject
         if not subject:
             return page
 
@@ -80,7 +78,3 @@ class MetaclassNameEditor(PropertyPageBase):
         entry.connect("destroy", self.watcher.unregister_handlers)
         page.show_all()
         return page
-
-    @transactional
-    def _on_name_change(self, entry):
-        self.item.subject.name = entry.get_text()

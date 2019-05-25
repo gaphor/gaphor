@@ -431,7 +431,7 @@ class NamedElementPropertyPage(PropertyPageBase):
 
 class NamedItemPropertyPage(NamedElementPropertyPage):
     """
-    Base class for named item based adapters.
+    Base class for named _diagram item_ based adapters.
     """
 
     def __init__(self, item):

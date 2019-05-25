@@ -90,7 +90,7 @@ class SanitizerService(Service):
             if isinstance(p, UML.ExtensionEnd):
                 p, ext = ext, p
             st = ext.type
-            meta = p.type and getattr(UML, p.type.name)
+            meta = p.type and getattr(UML, p.type.name, None)
             self.perform_unlink_for_instances(st, meta)
 
     @event_handler(AssociationSetEvent)
@@ -107,7 +107,7 @@ class SanitizerService(Service):
             if not p:
                 return
             st = event.old_value
-            meta = getattr(UML, p.type.name)
+            meta = getattr(UML, p.type.name, None)
             self.perform_unlink_for_instances(st, meta)
 
     @event_handler(AssociationDeleteEvent)

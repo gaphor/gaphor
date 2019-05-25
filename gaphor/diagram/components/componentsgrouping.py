@@ -1,7 +1,6 @@
 from gaphor import UML
 from gaphor.diagram.grouping import Group, AbstractGroup
 from gaphor.diagram.components.node import NodeItem
-from gaphor.diagram.components.subsystem import SubsystemItem
 from gaphor.diagram.components.component import ComponentItem
 from gaphor.diagram.components.artifact import ArtifactItem
 from gaphor.diagram.usecases import UseCaseItem
@@ -88,7 +87,7 @@ class NodeArtifactGroup(AbstractGroup):
                 deployment.unlink()
 
 
-@Group.register(SubsystemItem, UseCaseItem)
+@Group.register(ComponentItem, UseCaseItem)
 class SubsystemUseCaseGroup(AbstractGroup):
     """
     Make subsystem a subject of an use case.

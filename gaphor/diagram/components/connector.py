@@ -130,7 +130,7 @@ class ConnectorItem(NamedLine):
     __uml__ = UML.Connector
     __style__ = {"name-align": (ALIGN_CENTER, ALIGN_BOTTOM), "name-outside": True}
 
-    def __init__(self, id):
+    def __init__(self, id=None):
         super(ConnectorItem, self).__init__(id)
         self._interface = self.add_text(
             "end.role.name", style={"text-align-group": "stereotype"}

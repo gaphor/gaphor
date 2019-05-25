@@ -58,7 +58,6 @@ TOOLBOX_ACTIONS = (
             ("toolbox-artifact", _("Artifact"), "gaphor-artifact", "h"),
             ("toolbox-node", _("Node"), "gaphor-node", "n"),
             ("toolbox-device", _("Device"), "gaphor-device", "d"),
-            ("toolbox-subsystem", _("Subsystem"), "gaphor-subsystem", "y"),
             ("toolbox-connector", _("Connector"), "gaphor-connector", "C"),
         ),
     ),
@@ -125,7 +124,7 @@ TOOLBOX_ACTIONS = (
             (
                 "toolbox-history-pseudostate",
                 _("History Pseudostate"),
-                "gaphor-history-pseudostate",
+                "gaphor-pseudostate",
                 "q",
             ),
             ("toolbox-transition", _("Transition"), "gaphor-transition", "T"),
@@ -134,10 +133,10 @@ TOOLBOX_ACTIONS = (
     (
         _("Use Cases"),
         (
-            ("toolbox-usecase", _("Use case"), "gaphor-usecase", "u"),
+            ("toolbox-use-case", _("Use case"), "gaphor-use-case", "u"),
             ("toolbox-actor", _("Actor"), "gaphor-actor", "t"),
             (
-                "toolbox-usecase-association",
+                "toolbox-use-case-association",
                 _("Association"),
                 "gaphor-association",
                 "B",
@@ -217,9 +216,7 @@ class DiagramToolbox:
         factory_method.item_class = item_class
         return factory_method
 
-    def _namespace_item_factory(
-        self, item_class, subject_class, stereotype=None, name=None
-    ):
+    def _namespace_item_factory(self, item_class, subject_class, name=None):
         """
         Returns a factory method for Namespace classes.
         To be used by the PlacementTool.
@@ -231,8 +228,6 @@ class DiagramToolbox:
             subject.package = self.namespace
             if name is not None:
                 subject.name = name
-            elif stereotype:
-                subject.name = "New%s" % stereotype.capitalize()
             else:
                 subject.name = "New%s" % subject_class.__name__
             return item
@@ -390,16 +385,6 @@ class DiagramToolbox:
             self.view,
             item_factory=self._namespace_item_factory(
                 diagram.components.NodeItem, UML.Device
-            ),
-            handle_index=SE,
-            after_handler=self._after_handler,
-        )
-
-    def toolbox_subsystem(self):
-        return GroupPlacementTool(
-            self.view,
-            item_factory=self._namespace_item_factory(
-                diagram.components.SubsystemItem, UML.Component, "subsystem"
             ),
             handle_index=SE,
             after_handler=self._after_handler,
@@ -615,7 +600,7 @@ class DiagramToolbox:
 
     # Use cases:
 
-    def toolbox_usecase(self):
+    def toolbox_use_case(self):
         return GroupPlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
@@ -635,7 +620,7 @@ class DiagramToolbox:
             after_handler=self._after_handler,
         )
 
-    def toolbox_usecase_association(self):
+    def toolbox_use_case_association(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.classes.AssociationItem),
@@ -672,7 +657,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._namespace_item_factory(
-                diagram.profiles.MetaclassItem, UML.Class, "metaclass", name="Class"
+                diagram.classes.ClassItem, UML.Class, name="Class"
             ),
             handle_index=SE,
             after_handler=self._after_handler,
