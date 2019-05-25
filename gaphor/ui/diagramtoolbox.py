@@ -124,7 +124,7 @@ TOOLBOX_ACTIONS = (
             (
                 "toolbox-history-pseudostate",
                 _("History Pseudostate"),
-                "gaphor-history-pseudostate",
+                "gaphor-pseudostate",
                 "q",
             ),
             ("toolbox-transition", _("Transition"), "gaphor-transition", "T"),
