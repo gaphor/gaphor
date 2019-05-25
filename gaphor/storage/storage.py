@@ -193,17 +193,15 @@ def load_elements_generator(elements, factory, gaphor_version=None):
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
 
-    def create_canvasitems(canvas, canvasitems, parent=None):
+    def create_canvasitems(diagram, canvasitems, parent=None):
         """
         Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
         """
         for item in canvasitems:
             item = upgrade_canvas_item_to_1_1_0(item)
             cls = getattr(diagramitems, item.type)
-            item.element = diagram.create_as(cls, item.id, factory)
-            canvas.add(item.element, parent=parent)
-            assert canvas.get_parent(item.element) is parent
-            create_canvasitems(canvas, item.canvasitems, parent=item.element)
+            item.element = diagram.create_as(cls, item.id, parent=parent)
+            create_canvasitems(diagram, item.canvasitems, parent=item.element)
 
     for id, elem in list(elements.items()):
         st = update_status_queue()
@@ -215,7 +213,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             elem.element = factory.create_as(cls, id)
             if elem.canvas is not None:
                 elem.element.canvas.block_updates = True
-                create_canvasitems(elem.element.canvas, elem.canvas.canvasitems)
+                create_canvasitems(elem.element, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):
             raise ValueError(
                 'Item with id "%s" and type %s can not be instantiated'

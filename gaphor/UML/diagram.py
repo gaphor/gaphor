@@ -90,12 +90,15 @@ class Diagram(Namespace, PackageableElement):
         parameter is the element class to create.  The new element also has an
         optional parent and subject."""
 
+        return self.create_as(type, str(uuid.uuid1()), parent, subject)
+
+    def create_as(self, type, id, parent=None, subject=None):
         assert issubclass(type, gaphas.Item)
-        obj = type(str(uuid.uuid1()), self.factory)
+        item = type(id, self.factory)
         if subject:
-            obj.subject = subject
-        self.canvas.add(obj, parent)
-        return obj
+            item.subject = subject
+        self.canvas.add(item, parent)
+        return item
 
     def unlink(self):
         """Unlink all canvas items then unlink this diagram."""
