@@ -1,6 +1,6 @@
 {
   "projectName": "gaphor",
-  "projectOwner": "danyeaw",
+  "projectOwner": "gaphor",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
@@ -206,6 +206,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "ruimaciel",
+      "name": "Rui Maciel",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/169121?v=4",
+      "profile": "https://github.com/ruimaciel",
+      "contributions": [
+        "ideas"
+      ]
     }
-  ]
+  ],
+  "contributorsPerLine": 7
 }
