@@ -599,7 +599,7 @@ Property.aggregation = enumeration(
 Property.isDerivedUnion = attribute("isDerivedUnion", int, default=False)
 Property.isDerived = attribute("isDerived", int, default=False)
 Property.isReadOnly = attribute("isReadOnly", int, default=False)
-# 135: override Property.navigability
+# 137: override Property.navigability
 
 
 def property_navigability(self):
@@ -635,7 +635,7 @@ Comment.body = attribute("body", str)
 PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
-# 240: override Message.messageKind
+# 242: override Message.messageKind
 
 
 def message_messageKind(self):
@@ -1153,7 +1153,7 @@ MultiplicityElement.upper = derived(
 )
 MultiplicityElement.upper.filter = lambda obj: [obj.upperValue]
 # MultiplicityElement.upper = MultiplicityElement.upperValue
-# 127: override Property.isComposite derives Property.aggregation
+# 129: override Property.isComposite derives Property.aggregation
 # Property.isComposite = property(lambda self: self.aggregation == 'composite')
 Property.isComposite = derivedunion("isComposite", bool, 0, 1, Property.aggregation)
 Property.isComposite.filter = lambda obj: [obj.aggregation == "composite"]
@@ -1208,7 +1208,7 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 106: override Property.opposite
+# 108: override Property.opposite
 
 
 def property_opposite(self):
@@ -1322,7 +1322,7 @@ Namespace.ownedMember = derivedunion(
     Class.ownedReception,
     Interface.ownedReception,
 )
-# 91: override Classifier.general
+# 93: override Classifier.general
 def classifier_general(self):
     return [g.general for g in self.generalization]
 
@@ -1356,11 +1356,12 @@ Classifier.attribute = derivedunion(
     Actor.ownedAttribute,
     Signal.ownedAttribute,
 )
-# 132: override Constraint.context
+# 134: override Constraint.context
 Constraint.context = derivedunion("context", Namespace, 0, 1)
-# 160: override Operation.type
+# 162: override Operation.type
 Operation.type = derivedunion("type", DataType, 0, 1)
-# 71: override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
+# 73: override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
+# See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
 def extension_metaclass(self):
     ownedEnd = self.ownedEnd
     metaend = [e for e in self.memberEnd if e is not ownedEnd]
@@ -1368,8 +1369,7 @@ def extension_metaclass(self):
         return metaend[0].type
 
 
-# Don't use derived now, as derived() does not properly propagate the events
-# NOTE: let function return a list once this can be turned on
+# Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
 # Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 # Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(
@@ -1380,6 +1380,8 @@ ownedEnd.""",
 )
 del extension_metaclass
 # 57: override Class.extension derives Extension.metaclass
+# See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
+# It defines `Extension.allInstances()`, which basically beans we have to query the element factory.
 def class_extension(self):
     return list(
         self._factory.select(lambda e: e.isKindOf(Extension) and self is e.metaclass)
@@ -1438,7 +1440,7 @@ ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, 0, 1)
 ActivityGroup.subgroup = derivedunion(
     "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
 )
-# 88: override Classifier.inheritedMember
+# 90: override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
 StructuredClassifier.role = derivedunion(
     "role",
@@ -1459,7 +1461,7 @@ Namespace.member = derivedunion(
     Classifier.inheritedMember,
     StructuredClassifier.role,
 )
-# 225: override Component.required
+# 227: override Component.required
 def component_required(self):
     usages = _pr_interface_deps(self, Usage)
 
@@ -1473,14 +1475,14 @@ def component_required(self):
 Component.required = property(
     component_required,
     doc="""
-    Interfaces required by component. 
+    Interfaces required by component.
     """,
 )
 del component_required
-# 103: override Namespace.importedMember
+# 105: override Namespace.importedMember
 Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
 Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
-# 189: override Component.provided
+# 191: override Component.provided
 import itertools
 
 
@@ -1528,11 +1530,11 @@ def component_provided(self):
 Component.provided = property(
     component_provided,
     doc="""
-    Interfaces provided to component environment. 
+    Interfaces provided to component environment.
     """,
 )
 del component_provided
-# 88: override Classifier.inheritedMember
+# 90: override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
 Element.owner = derivedunion(
     "owner",
@@ -1591,7 +1593,7 @@ StructuredClassifier.role = derivedunion(
     Collaboration.collaborationRole,
 )
 ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
-# 259: override StructuredClassifier.part
+# 261: override StructuredClassifier.part
 def structuredclassifier_part(self):
     return tuple(a for a in self.ownedAttribute if a.isComposite)
 
@@ -1604,7 +1606,7 @@ StructuredClassifier.part = property(
 )
 del structuredclassifier_part
 Transition.redefintionContext = derivedunion("redefintionContext", Classifier, 1, 1)
-# 100: override Class.superClass
+# 102: override Class.superClass
 Class.superClass = Classifier.general
 ActivityNode.redefinedElement = redefine(
     ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
@@ -1645,12 +1647,12 @@ State.redefinedState = redefine(
 Transition.redefinedTransition = redefine(
     Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
 )
-# 163: override Lifeline.parse
+# 165: override Lifeline.parse
 from gaphor.UML.umllex import parse_lifeline
 
 Lifeline.parse = parse_lifeline
 del parse_lifeline
-# 168: override Lifeline.render
+# 170: override Lifeline.render
 from gaphor.UML.umllex import render_lifeline
 
 Lifeline.render = render_lifeline
