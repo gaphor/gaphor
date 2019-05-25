@@ -127,25 +127,3 @@ class Element:
         Returns true if the object is of the same type as other.
         """
         return isinstance(self, type(other))
-
-    def __getstate__(self):
-        d = dict(self.__dict__)
-        try:
-            del d["_factory"]
-        except KeyError:
-            pass
-        return d
-
-    def __setstate__(self, state):
-        self._factory = None
-        self.__dict__.update(state)
-
-
-try:
-    import psyco
-except ImportError:
-    pass
-else:
-    psyco.bind(Element)
-
-# vim:sw=4:et
