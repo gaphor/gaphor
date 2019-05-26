@@ -6,7 +6,7 @@ gaphor.adapter package.
 
 from gi.repository import Gtk
 
-from gaphor.core import _, inject, transactional
+from gaphor.core import _, transactional
 from gaphor import UML
 from gaphor.diagram.states.transition import TransitionItem
 from gaphor.diagram.states.state import StateItem
@@ -20,8 +20,6 @@ from gaphor.diagram.propertypages import (
 @PropertyPages.register(TransitionItem)
 class TransitionPropertyPage(NamedItemPropertyPage):
     """Transition property page allows to edit guard specification."""
-
-    element_factory = inject("element_factory")
 
     def construct(self):
         page = super(TransitionPropertyPage, self).construct()
@@ -64,8 +62,6 @@ class TransitionPropertyPage(NamedItemPropertyPage):
 @PropertyPages.register(StateItem)
 class StatePropertyPage(NamedItemPropertyPage):
     """State property page."""
-
-    element_factory = inject("element_factory")
 
     def construct(self):
         page = super(StatePropertyPage, self).construct()

@@ -4,7 +4,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 
-from gaphor.core import _, inject, transactional
+from gaphor.core import _, transactional
 from gaphor.diagram.propertypages import PropertyPages, NamedItemPropertyPage
 from gaphor.diagram.actions.partition import PartitionItem
 
@@ -12,8 +12,6 @@ from gaphor.diagram.actions.partition import PartitionItem
 @PropertyPages.register(PartitionItem)
 class PartitionPropertyPage(NamedItemPropertyPage):
     """Partition property page."""
-
-    element_factory = inject("element_factory")
 
     def construct(self):
         item = self.item

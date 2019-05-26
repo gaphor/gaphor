@@ -3,7 +3,7 @@ from gi.repository import Gtk
 
 from gaphas.decorators import AsyncIO
 from gaphor import UML
-from gaphor.core import _, inject, transactional
+from gaphor.core import _, transactional
 from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 from gaphor.diagram.propertypages import (
@@ -343,8 +343,6 @@ class DependencyPropertyPage(PropertyPageBase):
 
     order = 0
 
-    element_factory = inject("element_factory")
-
     DEPENDENCY_TYPES = (
         (_("Dependency"), UML.Dependency),
         (_("Usage"), UML.Usage),
@@ -402,8 +400,9 @@ class DependencyPropertyPage(PropertyPageBase):
         combo = self.combo
         cls = combo.get_model().get_value(combo.get_active())
         self.item.dependency_type = cls
-        if self.item.subject:
-            self.element_factory.swap_element(self.item.subject, cls)
+        subject = self.item.subject
+        if subject:
+            subject.factory.swap_element(self.item.subject, cls)
             self.item.request_update()
 
     @transactional
