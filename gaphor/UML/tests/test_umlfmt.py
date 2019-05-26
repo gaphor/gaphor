@@ -24,7 +24,7 @@ class AttributeTestCase(unittest.TestCase):
         """
         a = factory.create(UML.Property)
         a.name = "myattr"
-        self.assertEqual("+ myattr", format(a))
+        assert "+ myattr" == format(a)
 
         a.typeValue = "int"
-        self.assertEqual("+ myattr: int", format(a))
+        assert "+ myattr: int" == format(a)

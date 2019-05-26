@@ -49,12 +49,12 @@ class SanitizerServiceTest(TestCase):
 
         # Now, what happens if the attribute is deleted:
         self.assertTrue(st_attr in stereotype.ownedMember)
-        self.assertTrue(slot in instspec.slot)
+        assert slot in instspec.slot
 
         st_attr.unlink()
 
-        self.assertEqual([], list(stereotype.ownedMember))
-        self.assertEqual([], list(instspec.slot))
+        assert [] == list(stereotype.ownedMember)
+        assert [] == list(instspec.slot)
 
     def test_extension_disconnect(self):
         factory = self.element_factory
@@ -73,12 +73,12 @@ class SanitizerServiceTest(TestCase):
         instspec = UML.model.apply_stereotype(factory, klass, stereotype)
         slot = UML.model.add_slot(factory, instspec, st_attr)
 
-        self.assertTrue(stereotype in klass.appliedStereotype[:].classifier)
+        assert stereotype in klass.appliedStereotype[:].classifier
 
         # Causes set event
         del ext.ownedEnd.type
 
-        self.assertEqual([], list(klass.appliedStereotype))
+        assert [] == list(klass.appliedStereotype)
 
     def test_extension_deletion(self):
         factory = self.element_factory
@@ -97,11 +97,11 @@ class SanitizerServiceTest(TestCase):
         instspec = UML.model.apply_stereotype(factory, klass, stereotype)
         slot = UML.model.add_slot(factory, instspec, st_attr)
 
-        self.assertTrue(stereotype in klass.appliedStereotype[:].classifier)
+        assert stereotype in klass.appliedStereotype[:].classifier
 
         ext.unlink()
 
-        self.assertEqual([], list(klass.appliedStereotype))
+        assert [] == list(klass.appliedStereotype)
 
     def test_extension_deletion_with_2_metaclasses(self):
         factory = self.element_factory
@@ -125,14 +125,14 @@ class SanitizerServiceTest(TestCase):
         instspec2 = UML.model.apply_stereotype(factory, iface, stereotype)
         slot = UML.model.add_slot(factory, instspec1, st_attr)
 
-        self.assertTrue(stereotype in klass.appliedStereotype[:].classifier)
-        self.assertTrue(klass in self.element_factory)
+        assert stereotype in klass.appliedStereotype[:].classifier
+        assert klass in self.element_factory
 
         ext1.unlink()
 
-        self.assertEqual([], list(klass.appliedStereotype))
-        self.assertTrue(klass in self.element_factory)
-        self.assertEqual([instspec2], list(iface.appliedStereotype))
+        assert [] == list(klass.appliedStereotype)
+        assert klass in self.element_factory
+        assert [instspec2] == list(iface.appliedStereotype)
 
     def test_stereotype_deletion(self):
         factory = self.element_factory
@@ -151,8 +151,8 @@ class SanitizerServiceTest(TestCase):
         instspec = UML.model.apply_stereotype(factory, klass, stereotype)
         slot = UML.model.add_slot(factory, instspec, st_attr)
 
-        self.assertTrue(stereotype in klass.appliedStereotype[:].classifier)
+        assert stereotype in klass.appliedStereotype[:].classifier
 
         stereotype.unlink()
 
-        self.assertEqual([], list(klass.appliedStereotype))
+        assert [] == list(klass.appliedStereotype)

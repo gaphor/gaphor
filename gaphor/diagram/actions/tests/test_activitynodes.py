@@ -24,7 +24,7 @@ class ActivityNodesTestCase(TestCase):
         self.load(data)
 
         item = self.diagram.canvas.select(lambda e: isinstance(e, DecisionNodeItem))[0]
-        self.assertTrue(item.combined is None, item.combined)
+        assert item.combined is None, item.combined
 
         merge_node = factory.create(UML.MergeNode)
         item.combined = merge_node
@@ -32,8 +32,8 @@ class ActivityNodesTestCase(TestCase):
         self.load(data)
 
         item = self.diagram.canvas.select(lambda e: isinstance(e, DecisionNodeItem))[0]
-        self.assertTrue(item.combined is not None, item.combined)
-        self.assertTrue(isinstance(item.combined, UML.MergeNode))
+        assert item.combined is not None, item.combined
+        assert isinstance(item.combined, UML.MergeNode)
 
     def test_fork_node_persistence(self):
         """Test saving/loading of fork node
@@ -45,7 +45,7 @@ class ActivityNodesTestCase(TestCase):
         self.load(data)
 
         item = self.diagram.canvas.select(lambda e: isinstance(e, ForkNodeItem))[0]
-        self.assertTrue(item.combined is None, item.combined)
+        assert item.combined is None, item.combined
 
         merge_node = factory.create(UML.JoinNode)
         item.combined = merge_node
@@ -53,5 +53,5 @@ class ActivityNodesTestCase(TestCase):
         self.load(data)
 
         item = self.diagram.canvas.select(lambda e: isinstance(e, ForkNodeItem))[0]
-        self.assertTrue(item.combined is not None, item.combined)
-        self.assertTrue(isinstance(item.combined, UML.JoinNode))
+        assert item.combined is not None, item.combined
+        assert isinstance(item.combined, UML.JoinNode)

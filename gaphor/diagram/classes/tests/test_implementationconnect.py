@@ -27,7 +27,7 @@ class ImplementationTestCase(TestCase):
         impl = self.create(ImplementationItem)
 
         glued = self.allow(impl, impl.head, iface)
-        self.assertTrue(glued)
+        assert glued
 
     def test_classifier_glue(self):
         """Test classifier gluing with implementation
@@ -36,7 +36,7 @@ class ImplementationTestCase(TestCase):
         clazz = self.create(ClassItem, UML.Class)
 
         glued = self.allow(impl, impl.tail, clazz)
-        self.assertTrue(glued)
+        assert glued
 
     def test_connection(self):
         """Test connection of class and interface with implementation
@@ -51,10 +51,10 @@ class ImplementationTestCase(TestCase):
         # check the datamodel
         self.assertTrue(isinstance(impl.subject, UML.Implementation))
         ct = self.get_connected(impl.head)
-        self.assertTrue(ct is iface)
-        self.assertTrue(impl.subject is not None)
-        self.assertTrue(impl.subject.contract[0] is iface.subject)
-        self.assertTrue(impl.subject.implementatingClassifier[0] is clazz.subject)
+        assert ct is iface
+        assert impl.subject is not None
+        assert impl.subject.contract[0] is iface.subject
+        assert impl.subject.implementatingClassifier[0] is clazz.subject
 
     def test_reconnection(self):
         """Test reconnection of class and interface with implementation
@@ -74,11 +74,10 @@ class ImplementationTestCase(TestCase):
         self.connect(impl, impl.tail, c2)
 
         self.assertSame(s, impl.subject)
-        self.assertEqual(1, len(impl.subject.contract))
-        self.assertEqual(1, len(impl.subject.implementatingClassifier))
-        self.assertTrue(iface.subject in impl.subject.contract)
-        self.assertTrue(c2.subject in impl.subject.implementatingClassifier)
-        self.assertTrue(
-            c1.subject not in impl.subject.implementatingClassifier,
-            impl.subject.implementatingClassifier,
-        )
+        assert 1 == len(impl.subject.contract)
+        assert 1 == len(impl.subject.implementatingClassifier)
+        assert iface.subject in impl.subject.contract
+        assert c2.subject in impl.subject.implementatingClassifier
+        assert (
+            c1.subject not in impl.subject.implementatingClassifier
+        ), impl.subject.implementatingClassifier

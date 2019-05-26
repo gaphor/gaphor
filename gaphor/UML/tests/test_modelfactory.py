@@ -16,19 +16,19 @@ class StereotypesTestCase(TestCaseBase):
         """
         stereotype = self.factory.create(UML.Stereotype)
         stereotype.name = "Test"
-        self.assertEqual("test", UML.model.stereotype_name(stereotype))
+        assert "test" == UML.model.stereotype_name(stereotype)
 
         stereotype.name = "TEST"
-        self.assertEqual("TEST", UML.model.stereotype_name(stereotype))
+        assert "TEST" == UML.model.stereotype_name(stereotype)
 
         stereotype.name = "T"
-        self.assertEqual("t", UML.model.stereotype_name(stereotype))
+        assert "t" == UML.model.stereotype_name(stereotype)
 
         stereotype.name = ""
-        self.assertEqual("", UML.model.stereotype_name(stereotype))
+        assert "" == UML.model.stereotype_name(stereotype)
 
         stereotype.name = None
-        self.assertEqual("", UML.model.stereotype_name(stereotype))
+        assert "" == UML.model.stereotype_name(stereotype)
 
     def test_stereotypes_conversion(self):
         """Test stereotypes conversion
@@ -45,13 +45,13 @@ class StereotypesTestCase(TestCaseBase):
         UML.model.apply_stereotype(self.factory, cls, s2)
         UML.model.apply_stereotype(self.factory, cls, s3)
 
-        self.assertEqual(fmt % "s1, s2, s3", UML.model.stereotypes_str(cls))
+        assert (fmt % "s1, s2, s3") == UML.model.stereotypes_str(cls)
 
     def test_no_stereotypes(self):
         """Test stereotypes conversion without applied stereotypes
         """
         cls = self.factory.create(UML.Class)
-        self.assertEqual("", UML.model.stereotypes_str(cls))
+        assert "" == UML.model.stereotypes_str(cls)
 
     def test_additional_stereotypes(self):
         """Test additional stereotypes conversion
@@ -69,7 +69,7 @@ class StereotypesTestCase(TestCaseBase):
         UML.model.apply_stereotype(self.factory, cls, s3)
 
         result = UML.model.stereotypes_str(cls, ("test",))
-        self.assertEqual(fmt % "test, s1, s2, s3", result)
+        assert (fmt % "test, s1, s2, s3") == result
 
     def test_just_additional_stereotypes(self):
         """Test additional stereotypes conversion without applied stereotypes
@@ -77,7 +77,7 @@ class StereotypesTestCase(TestCaseBase):
         cls = self.factory.create(UML.Class)
 
         result = UML.model.stereotypes_str(cls, ("test",))
-        self.assertEqual(fmt % "test", result)
+        assert (fmt % "test") == result
 
     def test_getting_stereotypes(self):
         """Test getting possible stereotypes
@@ -95,7 +95,7 @@ class StereotypesTestCase(TestCaseBase):
 
         c1 = self.factory.create(UML.Class)
         result = tuple(st.name for st in UML.model.get_stereotypes(self.factory, c1))
-        self.assertEqual(("st1", "st2"), result)
+        assert ("st1", "st2") == result
 
     def test_getting_stereotypes_unique(self):
         """Test if possible stereotypes are unique
@@ -118,7 +118,7 @@ class StereotypesTestCase(TestCaseBase):
 
         c1 = self.factory.create(UML.Component)
         result = tuple(st.name for st in UML.model.get_stereotypes(self.factory, c1))
-        self.assertEqual(("st1", "st2"), result)
+        assert ("st1", "st2") == result
 
     def test_finding_stereotype_instances(self):
         """Test finding stereotype instances
@@ -137,9 +137,9 @@ class StereotypesTestCase(TestCaseBase):
         result = [
             e.classifier[0].name for e in UML.model.find_instances(self.factory, s1)
         ]
-        self.assertEqual(2, len(result))
-        self.assertTrue("s1" in result, result)
-        self.assertFalse("s2" in result, result)
+        assert 2 == len(result)
+        assert "s1" in result, result
+        assert "s2" not in result, result
 
 
 class AssociationTestCase(TestCaseBase):
@@ -154,15 +154,15 @@ class AssociationTestCase(TestCaseBase):
         c2 = self.factory.create(UML.Class)
         assoc = UML.model.create_association(self.factory, c1, c2)
         types = [p.type for p in assoc.memberEnd]
-        self.assertTrue(c1 in types, assoc.memberEnd)
-        self.assertTrue(c2 in types, assoc.memberEnd)
+        assert c1 in types, assoc.memberEnd
+        assert c2 in types, assoc.memberEnd
 
         c1 = self.factory.create(UML.Interface)
         c2 = self.factory.create(UML.Interface)
         assoc = UML.model.create_association(self.factory, c1, c2)
         types = [p.type for p in assoc.memberEnd]
-        self.assertTrue(c1 in types, assoc.memberEnd)
-        self.assertTrue(c2 in types, assoc.memberEnd)
+        assert c1 in types, assoc.memberEnd
+        assert c2 in types, assoc.memberEnd
 
 
 class AssociationEndNavigabilityTestCase(TestCaseBase):
@@ -186,40 +186,40 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         # class/interface navigability, Association.navigableOwnedEnd not
         # involved
         self.assertTrue(end not in assoc.navigableOwnedEnd)
-        self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end in c2.ownedAttribute)
-        self.assertTrue(end.navigability is True)
+        assert end not in assoc.ownedEnd
+        assert end in c2.ownedAttribute
+        assert end.navigability is True
 
         # unknown navigability
         UML.model.set_navigability(assoc, end, None)
-        self.assertTrue(end not in assoc.navigableOwnedEnd)
-        self.assertTrue(end in assoc.ownedEnd)
-        self.assertTrue(end not in c2.ownedAttribute)
-        self.assertTrue(end.owner is assoc)
-        self.assertTrue(end.navigability is None)
+        assert end not in assoc.navigableOwnedEnd
+        assert end in assoc.ownedEnd
+        assert end not in c2.ownedAttribute
+        assert end.owner is assoc
+        assert end.navigability is None
 
         # non-navigability
         UML.model.set_navigability(assoc, end, False)
-        self.assertTrue(end not in assoc.navigableOwnedEnd)
-        self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end not in c2.ownedAttribute)
-        self.assertTrue(end.owner is None)
-        self.assertTrue(end.navigability is False)
+        assert end not in assoc.navigableOwnedEnd
+        assert end not in assoc.ownedEnd
+        assert end not in c2.ownedAttribute
+        assert end.owner is None
+        assert end.navigability is False
 
         # check other navigability change possibilities
         UML.model.set_navigability(assoc, end, None)
-        self.assertTrue(end not in assoc.navigableOwnedEnd)
-        self.assertTrue(end in assoc.ownedEnd)
-        self.assertTrue(end not in c2.ownedAttribute)
-        self.assertTrue(end.owner is assoc)
-        self.assertTrue(end.navigability is None)
+        assert end not in assoc.navigableOwnedEnd
+        assert end in assoc.ownedEnd
+        assert end not in c2.ownedAttribute
+        assert end.owner is assoc
+        assert end.navigability is None
 
         UML.model.set_navigability(assoc, end, True)
-        self.assertTrue(end not in assoc.navigableOwnedEnd)
-        self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end in c2.ownedAttribute)
-        self.assertTrue(end.owner is c2)
-        self.assertTrue(end.navigability is True)
+        assert end not in assoc.navigableOwnedEnd
+        assert end not in assoc.ownedEnd
+        assert end in c2.ownedAttribute
+        assert end.owner is c2
+        assert end.navigability is True
 
     def test_relationship_navigability(self):
         """Test navigable relationship of a classifier
@@ -236,31 +236,31 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         # class/interface navigability, Association.navigableOwnedEnd not
         # involved
         self.assertTrue(end in assoc.navigableOwnedEnd)
-        self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end.navigability is True)
+        assert end not in assoc.ownedEnd
+        assert end.navigability is True
 
         # unknown navigability
         UML.model.set_navigability(assoc, end, None)
-        self.assertTrue(end not in assoc.navigableOwnedEnd)
-        self.assertTrue(end in assoc.ownedEnd)
-        self.assertTrue(end.navigability is None)
+        assert end not in assoc.navigableOwnedEnd
+        assert end in assoc.ownedEnd
+        assert end.navigability is None
 
         # non-navigability
         UML.model.set_navigability(assoc, end, False)
-        self.assertTrue(end not in assoc.navigableOwnedEnd)
-        self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end.navigability is False)
+        assert end not in assoc.navigableOwnedEnd
+        assert end not in assoc.ownedEnd
+        assert end.navigability is False
 
         # check other navigability change possibilities
         UML.model.set_navigability(assoc, end, None)
-        self.assertTrue(end not in assoc.navigableOwnedEnd)
-        self.assertTrue(end in assoc.ownedEnd)
-        self.assertTrue(end.navigability is None)
+        assert end not in assoc.navigableOwnedEnd
+        assert end in assoc.ownedEnd
+        assert end.navigability is None
 
         UML.model.set_navigability(assoc, end, True)
-        self.assertTrue(end in assoc.navigableOwnedEnd)
-        self.assertTrue(end not in assoc.ownedEnd)
-        self.assertTrue(end.navigability is True)
+        assert end in assoc.navigableOwnedEnd
+        assert end not in assoc.ownedEnd
+        assert end.navigability is True
 
 
 class DependencyTypeTestCase(TestCaseBase):
@@ -274,7 +274,7 @@ class DependencyTypeTestCase(TestCaseBase):
         cls = self.factory.create(UML.Class)
         iface = self.factory.create(UML.Interface)
         dt = UML.model.dependency_type(cls, iface)
-        self.assertEqual(UML.Usage, dt)
+        assert UML.Usage == dt
 
     def test_usage_by_component(self):
         """Test automatic dependency: usage (by component)
@@ -292,7 +292,7 @@ class DependencyTypeTestCase(TestCaseBase):
         c = self.factory.create(UML.Component)
         cls = self.factory.create(UML.Class)
         dt = UML.model.dependency_type(c, cls)
-        self.assertEqual(UML.Realization, dt)
+        assert UML.Realization == dt
 
 
 class MessageTestCase(TestCaseBase):
@@ -318,11 +318,11 @@ class MessageTestCase(TestCaseBase):
         m1 = UML.model.create_message(self.factory, m, False)
         m2 = UML.model.create_message(self.factory, m, True)
 
-        self.assertTrue(m1.sendEvent.covered is sl)
-        self.assertTrue(m1.receiveEvent.covered is rl)
+        assert m1.sendEvent.covered is sl
+        assert m1.receiveEvent.covered is rl
 
-        self.assertTrue(m2.sendEvent.covered is rl)
-        self.assertTrue(m2.receiveEvent.covered is sl)
+        assert m2.sendEvent.covered is rl
+        assert m2.receiveEvent.covered is sl
 
 
 # vim:sw=4:et

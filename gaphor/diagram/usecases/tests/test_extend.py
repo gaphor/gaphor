@@ -16,7 +16,7 @@ class ExtendItemTestCase(TestCase):
         extend = self.create(ExtendItem)
 
         glued = self.allow(extend, extend.head, uc1)
-        self.assertTrue(glued)
+        assert glued
 
     def test_use_case_connect(self):
         """Test connecting "extend" to use cases
@@ -26,10 +26,10 @@ class ExtendItemTestCase(TestCase):
         extend = self.create(ExtendItem)
 
         self.connect(extend, extend.head, uc1)
-        self.assertTrue(self.get_connected(extend.head), uc1)
+        assert self.get_connected(extend.head), uc1
 
         self.connect(extend, extend.tail, uc2)
-        self.assertTrue(self.get_connected(extend.tail), uc2)
+        assert self.get_connected(extend.tail), uc2
 
     def test_use_case_connect(self):
         """Test reconnecting use cases with "extend"
@@ -62,8 +62,8 @@ class ExtendItemTestCase(TestCase):
         self.connect(extend, extend.tail, uc2)
 
         self.disconnect(extend, extend.head)
-        self.assertTrue(self.get_connected(extend.head) is None)
-        self.assertTrue(extend.subject is None)
+        assert self.get_connected(extend.head) is None
+        assert extend.subject is None
 
         self.disconnect(extend, extend.tail)
-        self.assertTrue(self.get_connected(extend.tail) is None)
+        assert self.get_connected(extend.tail) is None

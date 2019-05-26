@@ -130,18 +130,18 @@ class HandleToolTestCase(unittest.TestCase):
         tool.grab_handle(line, handle)
         handle.pos = (comment_bb.x, comment_bb.y)
         item = tool.glue(line, handle, handle.pos)
-        self.assertTrue(item is not None)
+        assert item is not None
 
         tool.connect(line, handle, handle.pos)
         cinfo = diagram.canvas.get_connection(handle)
-        self.assertTrue(cinfo.constraint is not None)
-        self.assertTrue(cinfo.connected is actor, cinfo.connected)
+        assert cinfo.constraint is not None
+        assert cinfo.connected is actor, cinfo.connected
 
         Connector(line, handle).disconnect()
 
         cinfo = diagram.canvas.get_connection(handle)
 
-        self.assertTrue(cinfo is None)
+        assert cinfo is None
 
     def test_iconnect_2(self):
         """Test connect/disconnect on comment and actor using comment-line.
@@ -172,9 +172,9 @@ class HandleToolTestCase(unittest.TestCase):
 
         tool.connect(line, handle, handle.pos)
         cinfo = diagram.canvas.get_connection(handle)
-        self.assertTrue(cinfo is not None, None)
-        self.assertTrue(cinfo.item is line)
-        self.assertTrue(cinfo.connected is comment)
+        assert cinfo is not None, None
+        assert cinfo.item is line
+        assert cinfo.connected is comment
 
         # Connect the other end to the Actor:
         handle = line.handles()[-1]
@@ -183,25 +183,25 @@ class HandleToolTestCase(unittest.TestCase):
 
         handle.pos = actor_bb.x1, actor_bb.y1
         sink = tool.glue(line, handle, handle.pos)
-        self.assertTrue(sink.item is actor)
+        assert sink.item is actor
         tool.connect(line, handle, handle.pos)
 
         cinfo = view.canvas.get_connection(handle)
-        self.assertTrue(cinfo.item is line)
-        self.assertTrue(cinfo.connected is actor)
+        assert cinfo.item is line
+        assert cinfo.connected is actor
 
         # Try to connect far away from any item will only do a full disconnect
         self.assertEqual(
             len(comment.subject.annotatedElement), 1, comment.subject.annotatedElement
         )
-        self.assertTrue(actor.subject in comment.subject.annotatedElement)
+        assert actor.subject in comment.subject.annotatedElement
 
         sink = tool.glue(line, handle, (500, 500))
-        self.assertTrue(sink is None, sink)
+        assert sink is None, sink
         tool.connect(line, handle, (500, 500))
 
         cinfo = view.canvas.get_connection(handle)
-        self.assertTrue(cinfo is None)
+        assert cinfo is None
 
     def skiptest_connect_3(self):
         """Test connecting through events (button press/release, motion).
@@ -234,11 +234,11 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(Gdk.Event(x=0, y=0, state=0))
 
         handle = line.handles()[0]
-        self.assertEqual(
-            (0.0, 0.0), view.canvas.get_matrix_i2c(line).transform_point(*handle.pos)
+        assert (0.0, 0.0) == view.canvas.get_matrix_i2c(line).transform_point(
+            *handle.pos
         )
         cinfo = diagram.canvas.get_connection(handle)
-        self.assertTrue(cinfo.connected is comment)
+        assert cinfo.connected is comment
         # self.assertTrue(handle.connected_to is comment, 'c = ' + str(handle.connected_to))
         # self.assertTrue(handle.connection_data is not None)
 
@@ -249,12 +249,11 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(Gdk.Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
-        self.assertEqual(
-            (200, 200),
-            view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y),
+        assert (200, 200) == view.canvas.get_matrix_i2c(line).transform_point(
+            handle.x, handle.y
         )
         cinfo = diagram.canvas.get_connection(handle)
-        self.assertTrue(cinfo.connected is actor)
+        assert cinfo.connected is actor
         # self.assertTrue(handle.connection_data is not None)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
@@ -265,12 +264,11 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(Gdk.Event(x=200, y=200, state=0))
 
         handle = line.handles()[-1]
-        self.assertEqual(
-            (200, 200),
-            view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y),
+        assert (200, 200) == view.canvas.get_matrix_i2c(line).transform_point(
+            handle.x, handle.y
         )
         cinfo = diagram.canvas.get_connection(handle)
-        self.assertTrue(cinfo.connected is actor)
+        assert cinfo.connected is actor
         # self.assertTrue(handle.connection_data is not None)
         self.assertTrue(actor.subject in comment.subject.annotatedElement)
 
@@ -281,11 +279,10 @@ class HandleToolTestCase(unittest.TestCase):
         tool.on_button_release(Gdk.Event(x=500, y=500, state=0))
 
         handle = line.handles()[-1]
-        self.assertEqual(
-            (500, 500),
-            view.canvas.get_matrix_i2c(line).transform_point(handle.x, handle.y),
+        assert (500, 500) == view.canvas.get_matrix_i2c(line).transform_point(
+            handle.x, handle.y
         )
         cinfo = diagram.canvas.get_connection(handle)
-        self.assertTrue(cinfo is None)
+        assert cinfo is None
         # self.assertTrue(handle.connection_data is None)
         self.assertEqual(len(comment.subject.annotatedElement), 0)

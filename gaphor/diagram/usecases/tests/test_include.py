@@ -16,7 +16,7 @@ class IncludeItemTestCase(TestCase):
         include = self.create(IncludeItem)
 
         glued = self.allow(include, include.head, uc1)
-        self.assertTrue(glued)
+        assert glued
 
     def test_use_case_connect(self):
         """Test connecting "include" to use cases
@@ -26,10 +26,10 @@ class IncludeItemTestCase(TestCase):
         include = self.create(IncludeItem)
 
         self.connect(include, include.head, uc1)
-        self.assertTrue(self.get_connected(include.head), uc1)
+        assert self.get_connected(include.head), uc1
 
         self.connect(include, include.tail, uc2)
-        self.assertTrue(self.get_connected(include.tail), uc2)
+        assert self.get_connected(include.tail), uc2
 
     def test_use_case_connect(self):
         """Test reconnecting use cases with "include"
@@ -62,8 +62,8 @@ class IncludeItemTestCase(TestCase):
         self.connect(include, include.tail, uc2)
 
         self.disconnect(include, include.head)
-        self.assertTrue(self.get_connected(include.head) is None)
-        self.assertTrue(include.subject is None)
+        assert self.get_connected(include.head) is None
+        assert include.subject is None
 
         self.disconnect(include, include.tail)
-        self.assertTrue(self.get_connected(include.tail) is None)
+        assert self.get_connected(include.tail) is None

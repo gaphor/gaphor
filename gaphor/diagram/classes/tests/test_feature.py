@@ -21,15 +21,15 @@ class FeatureTestCase(TestCase):
 
         clazzitem = self.create(ClassItem, UML.Class)
         clazzitem.subject.ownedAttribute = attr
-        self.assertEqual(1, len(clazzitem._compartments[0]))
+        assert 1 == len(clazzitem._compartments[0])
 
         item = clazzitem._compartments[0][0]
-        self.assertTrue(isinstance(item, FeatureItem))
+        assert isinstance(item, FeatureItem)
 
         size = item.get_size()
-        self.assertNotEqual((0, 0), size)
+        assert (0, 0) != size
 
         attr.defaultValue = "myDefault"
 
         self.diagram.canvas.update()
-        self.assertTrue(size < item.get_size())
+        assert size < item.get_size()

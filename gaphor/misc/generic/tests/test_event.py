@@ -20,16 +20,16 @@ class ManagerTests(unittest.TestCase):
         events.subscribe(self.makeHandler("handler1"), EventA)
         e = EventA()
         events.handle(e)
-        self.assertEqual(len(e.effects), 1)
-        self.assertTrue("handler1" in e.effects)
+        assert len(e.effects) == 1
+        assert "handler1" in e.effects
 
     def test_subscribe_via_decorator(self):
         events = self.createManager()
         events.subscriber(EventA)(self.makeHandler("handler1"))
         e = EventA()
         events.handle(e)
-        self.assertEqual(len(e.effects), 1)
-        self.assertTrue("handler1" in e.effects)
+        assert len(e.effects) == 1
+        assert "handler1" in e.effects
 
     def test_subscribe_event_inheritance(self):
         events = self.createManager()
@@ -38,14 +38,14 @@ class ManagerTests(unittest.TestCase):
 
         ea = EventA()
         events.handle(ea)
-        self.assertEqual(len(ea.effects), 1)
-        self.assertTrue("handler1" in ea.effects)
+        assert len(ea.effects) == 1
+        assert "handler1" in ea.effects
 
         eb = EventB()
         events.handle(eb)
-        self.assertEqual(len(eb.effects), 2)
-        self.assertTrue("handler1" in eb.effects)
-        self.assertTrue("handler2" in eb.effects)
+        assert len(eb.effects) == 2
+        assert "handler1" in eb.effects
+        assert "handler2" in eb.effects
 
     def test_subscribe_event_multiple_inheritance(self):
         events = self.createManager()
@@ -55,27 +55,27 @@ class ManagerTests(unittest.TestCase):
 
         ea = EventA()
         events.handle(ea)
-        self.assertEqual(len(ea.effects), 1)
-        self.assertTrue("handler1" in ea.effects)
+        assert len(ea.effects) == 1
+        assert "handler1" in ea.effects
 
         ec = EventC()
         events.handle(ec)
-        self.assertEqual(len(ec.effects), 1)
-        self.assertTrue("handler2" in ec.effects)
+        assert len(ec.effects) == 1
+        assert "handler2" in ec.effects
 
         ed = EventD()
         events.handle(ed)
-        self.assertEqual(len(ed.effects), 3)
-        self.assertTrue("handler1" in ed.effects)
-        self.assertTrue("handler2" in ed.effects)
-        self.assertTrue("handler3" in ed.effects)
+        assert len(ed.effects) == 3
+        assert "handler1" in ed.effects
+        assert "handler2" in ed.effects
+        assert "handler3" in ed.effects
 
     def test_subscribe_no_events(self):
         events = self.createManager()
 
         ea = EventA()
         events.handle(ea)
-        self.assertEqual(len(ea.effects), 0)
+        assert len(ea.effects) == 0
 
     def test_subscribe_base_event(self):
         events = self.createManager()
@@ -83,8 +83,8 @@ class ManagerTests(unittest.TestCase):
 
         ea = EventB()
         events.handle(ea)
-        self.assertEqual(len(ea.effects), 1)
-        self.assertTrue("handler1" in ea.effects)
+        assert len(ea.effects) == 1
+        assert "handler1" in ea.effects
 
     def test_subscribe_event_malformed_multiple_inheritance(self):
         events = self.createManager()
@@ -94,21 +94,21 @@ class ManagerTests(unittest.TestCase):
 
         ea = EventA()
         events.handle(ea)
-        self.assertEqual(len(ea.effects), 1)
-        self.assertTrue("handler1" in ea.effects)
+        assert len(ea.effects) == 1
+        assert "handler1" in ea.effects
 
         ed = EventD()
         events.handle(ed)
-        self.assertEqual(len(ed.effects), 2)
-        self.assertTrue("handler1" in ed.effects)
-        self.assertTrue("handler2" in ed.effects)
+        assert len(ed.effects) == 2
+        assert "handler1" in ed.effects
+        assert "handler2" in ed.effects
 
         ee = EventE()
         events.handle(ee)
-        self.assertEqual(len(ee.effects), 3)
-        self.assertTrue("handler1" in ee.effects)
-        self.assertTrue("handler2" in ee.effects)
-        self.assertTrue("handler3" in ee.effects)
+        assert len(ee.effects) == 3
+        assert "handler1" in ee.effects
+        assert "handler2" in ee.effects
+        assert "handler3" in ee.effects
 
     def test_subscribe_event_with_no_subscribers_in_the_middle_of_mro(self):
         events = self.createManager()
@@ -117,9 +117,9 @@ class ManagerTests(unittest.TestCase):
 
         eb = EventB()
         events.handle(eb)
-        self.assertEqual(len(eb.effects), 2)
-        self.assertTrue("handler1" in eb.effects)
-        self.assertTrue("handler2" in eb.effects)
+        assert len(eb.effects) == 2
+        assert "handler1" in eb.effects
+        assert "handler2" in eb.effects
 
     def test_unsubscribe_single_event(self):
         events = self.createManager()
@@ -128,7 +128,7 @@ class ManagerTests(unittest.TestCase):
         events.unsubscribe(handler, EventA)
         e = EventA()
         events.handle(e)
-        self.assertEqual(len(e.effects), 0)
+        assert len(e.effects) == 0
 
     def test_unsubscribe_event_inheritance(self):
         events = self.createManager()
@@ -140,12 +140,12 @@ class ManagerTests(unittest.TestCase):
 
         ea = EventA()
         events.handle(ea)
-        self.assertEqual(len(ea.effects), 0)
+        assert len(ea.effects) == 0
 
         eb = EventB()
         events.handle(eb)
-        self.assertEqual(len(eb.effects), 1)
-        self.assertTrue("handler2" in eb.effects)
+        assert len(eb.effects) == 1
+        assert "handler2" in eb.effects
 
 
 class Event:

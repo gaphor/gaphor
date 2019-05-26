@@ -24,9 +24,8 @@ class ClassesTestCase(unittest.TestCase):
 
             self.fail("Association elements are not part of the meta-model")
 
-        self.assertFalse(
-            element.isDerived,
-            "The isDerived property should default to False - %s" % element.isDerived,
+        assert not element.isDerived, (
+            "The isDerived property should default to False - %s" % element.isDerived
         )
 
         property1 = self.factory.create(UML.Property)
@@ -39,28 +38,23 @@ class ClassesTestCase(unittest.TestCase):
 
         element.navigableOwnedEnd = property1
 
-        self.assertTrue(
-            property1 in element.member,
-            "Namespace.member does not contain memberEnd - %s" % element.member,
+        assert property1 in element.member, (
+            "Namespace.member does not contain memberEnd - %s" % element.member
         )
-        self.assertTrue(
-            property2 in element.member,
-            "Namespace.member does not contain memberEnd - %s" % element.member,
+        assert property2 in element.member, (
+            "Namespace.member does not contain memberEnd - %s" % element.member
         )
 
-        self.assertTrue(
-            property1 in element.feature,
-            "Classifier.feature does not contain ownedEnd - %s" % element.feature,
+        assert property1 in element.feature, (
+            "Classifier.feature does not contain ownedEnd - %s" % element.feature
         )
-        self.assertTrue(
-            property1 in element.ownedMember,
-            "Namespace.ownedMember does not contain ownedEnd - %s" % element.ownedEnd,
+        assert property1 in element.ownedMember, (
+            "Namespace.ownedMember does not contain ownedEnd - %s" % element.ownedEnd
         )
 
-        self.assertTrue(
-            property1 in element.ownedEnd,
+        assert property1 in element.ownedEnd, (
             "Association.ownedEnd does not contain navigableOwnedEnd - %s"
-            % element.ownedEnd,
+            % element.ownedEnd
         )
 
     #    def test_association_class(self):
@@ -87,25 +81,21 @@ class ClassesTestCase(unittest.TestCase):
         element.ownedAttribute = property1
         element.ownedOperation = operation1
 
-        self.assertTrue(
-            property1 in element.attribute,
+        assert property1 in element.attribute, (
             "Classifier.attribute does not contain ownedAttribute - %s"
-            % element.attribute,
+            % element.attribute
         )
-        self.assertTrue(
-            property1 in element.ownedMember,
+        assert property1 in element.ownedMember, (
             "Namespace.ownedMember does not contain ownedAttribute - %s"
-            % element.ownedMember,
+            % element.ownedMember
         )
 
-        self.assertTrue(
-            operation1 in element.feature,
-            "Classifier.feature does not contain ownedOperation - %s" % element.feature,
+        assert operation1 in element.feature, (
+            "Classifier.feature does not contain ownedOperation - %s" % element.feature
         )
-        self.assertTrue(
-            operation1 in element.ownedMember,
+        assert operation1 in element.ownedMember, (
             "Namespace.ownedMember does not contain ownedOperation"
-            % element.ownedMember,
+            % element.ownedMember
         )
 
     def test_comment(self):
@@ -122,17 +112,16 @@ class ClassesTestCase(unittest.TestCase):
 
         element.body = "Comment body"
 
-        self.assertTrue(
-            element.body == "Comment body", "Incorrect comment body - %s" % element.body
+        assert element.body == "Comment body", (
+            "Incorrect comment body - %s" % element.body
         )
 
         annotatedElement = self.factory.create(UML.Class)
 
         element.annotatedElement = annotatedElement
 
-        self.assertTrue(
-            annotatedElement in element.annotatedElement,
-            "Incorrect annotated element - %s" % element.annotatedElement,
+        assert annotatedElement in element.annotatedElement, (
+            "Incorrect annotated element - %s" % element.annotatedElement
         )
 
     def test_constraint(self):
@@ -152,14 +141,12 @@ class ClassesTestCase(unittest.TestCase):
         element.constrainedElement = constrainedElement
         element.specification = "Constraint specification"
 
-        self.assertTrue(
-            constrainedElement in element.constrainedElement,
+        assert constrainedElement in element.constrainedElement, (
             "Constraint.constrainedElement does not contain the correct element - %s"
-            % element.constrainedElement,
+            % element.constrainedElement
         )
-        self.assertTrue(
-            element.specification == "Constraint specification",
-            "Constraint.specification is incorrect - %s" % element.specification,
+        assert element.specification == "Constraint specification", (
+            "Constraint.specification is incorrect - %s" % element.specification
         )
 
     def test_dependency(self):
@@ -180,13 +167,11 @@ class ClassesTestCase(unittest.TestCase):
         element.client = client
         element.supplier = supplier
 
-        self.assertTrue(
-            client in element.client,
-            "Dependency.client does not contain client - %s" % element.client,
+        assert client in element.client, (
+            "Dependency.client does not contain client - %s" % element.client
         )
-        self.assertTrue(
-            supplier in element.supplier,
-            "Dependency.supplier does not contain supplier - %s" % element.supplier,
+        assert supplier in element.supplier, (
+            "Dependency.supplier does not contain supplier - %s" % element.supplier
         )
 
     def test_element_import(self):
@@ -303,9 +288,9 @@ class Uml2TestCase(unittest.TestCase):
         c = factory.create(UML.Class)
         p = factory.create(UML.Package)
         c.package = p
-        self.assertEqual(c.package, p)
-        self.assertEqual(c.namespace, p)
-        self.assertTrue(c in p.ownedElement)
+        assert c.package == p
+        assert c.namespace == p
+        assert c in p.ownedElement
 
     def testOwnedMember_Unlink(self):
         factory = UML.ElementFactory()
@@ -315,7 +300,7 @@ class Uml2TestCase(unittest.TestCase):
 
         c.unlink()
 
-        self.assertEqual([p], factory.lselect())
+        assert [p] == factory.lselect()
 
     #    def test_lower_upper(self):
     #        """
@@ -393,11 +378,11 @@ class Uml2TestCase(unittest.TestCase):
         c = factory.create(UML.Class)
         c.name = "Class"
 
-        self.assertEqual(("Class",), c.qualifiedName)
+        assert ("Class",) == c.qualifiedName
 
         p.ownedClassifier = c
 
-        self.assertEqual(("Package", "Class"), c.qualifiedName)
+        assert ("Package", "Class") == c.qualifiedName
 
     def test_extension_metaclass(self):
         factory = UML.ElementFactory()
@@ -408,7 +393,7 @@ class Uml2TestCase(unittest.TestCase):
 
         e = UML.model.create_extension(factory, c, s)
 
-        self.assertEqual(c, e.metaclass)
+        assert c == e.metaclass
 
     def test_metaclass_extension(self):
         factory = UML.ElementFactory()
@@ -417,19 +402,19 @@ class Uml2TestCase(unittest.TestCase):
         s = factory.create(UML.Stereotype)
         s.name = "Stereotype"
 
-        self.assertEqual([], c.extension)
-        self.assertEqual([], s.extension)
+        assert [] == c.extension
+        assert [] == s.extension
 
         e = UML.model.create_extension(factory, c, s)
 
         print(e.memberEnd)
-        self.assertEqual([e], c.extension)
-        self.assertEqual([], s.extension)
+        assert [e] == c.extension
+        assert [] == s.extension
         assert e.ownedEnd.type is s
 
     def test_operation_parameter_deletion(self):
         factory = UML.ElementFactory()
-        self.assertEqual(0, len(factory.lselect()))
+        assert 0 == len(factory.lselect())
 
         c = factory.create(UML.Class)
         c.name = "Class"
@@ -439,4 +424,4 @@ class Uml2TestCase(unittest.TestCase):
 
         c.unlink()
 
-        self.assertEqual(0, len(factory.lselect()), factory.lselect())
+        assert 0 == len(factory.lselect()), factory.lselect()

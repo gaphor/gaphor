@@ -27,14 +27,14 @@ class AssociationItemTestCase(TestCase):
         self.connect(self.assoc, self.assoc.head, self.class1)
         self.connect(self.assoc, self.assoc.tail, self.class2)
 
-        self.assertTrue(isinstance(self.assoc.subject, UML.Association))
-        self.assertTrue(self.assoc.head_end.subject is not None)
-        self.assertTrue(self.assoc.tail_end.subject is not None)
+        assert isinstance(self.assoc.subject, UML.Association)
+        assert self.assoc.head_end.subject is not None
+        assert self.assoc.tail_end.subject is not None
 
-        self.assertFalse(self.assoc.show_direction)
+        assert not self.assoc.show_direction
 
         self.assoc.show_direction = True
-        self.assertTrue(self.assoc.show_direction)
+        assert self.assoc.show_direction
 
     def test_invert_direction(self):
         """Test association direction inverting
@@ -47,8 +47,8 @@ class AssociationItemTestCase(TestCase):
 
         self.assoc.invert_direction()
 
-        self.assertTrue(head_subject is self.assoc.subject.memberEnd[1])
-        self.assertTrue(tail_subject is self.assoc.subject.memberEnd[0])
+        assert head_subject is self.assoc.subject.memberEnd[1]
+        assert tail_subject is self.assoc.subject.memberEnd[0]
 
     def test_association_end_updates(self):
         """Test association end navigability connected to a class"""
@@ -61,11 +61,11 @@ class AssociationItemTestCase(TestCase):
 
         self.connect(a, a.head, c1)
         c = self.get_connected(a.head)
-        self.assertTrue(c is c1)
+        assert c is c1
 
         self.connect(a, a.tail, c2)
         c = self.get_connected(a.tail)
-        self.assertTrue(c is c2)
+        assert c is c2
 
         assert a.subject.memberEnd, a.subject.memberEnd
 
@@ -86,12 +86,12 @@ class AssociationItemTestCase(TestCase):
 
         self.connect(a, a.head, c1)
         c = self.get_connected(a.head)
-        self.assertTrue(c is c1)
+        assert c is c1
 
         a.matrix.translate(100, 100)
         self.connect(a, a.tail, c2)
         c = self.get_connected(a.tail)
-        self.assertTrue(c is c2)
+        assert c is c2
 
         try:
             a.orthogonal = True

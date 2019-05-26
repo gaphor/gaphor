@@ -28,7 +28,7 @@ class CommentLineTestCase(TestCase):
         self.connect(line, line.head, comment)
         # connected, but no annotated element yet
         self.assertTrue(self.get_connected(line.head) is not None)
-        self.assertFalse(comment.subject.annotatedElement)
+        assert not comment.subject.annotatedElement
 
     def test_commentline_same_comment_glue(self):
         """Test comment line item gluing to already connected comment item."""
@@ -38,7 +38,7 @@ class CommentLineTestCase(TestCase):
 
         self.connect(line, line.head, comment)
         glued = self.allow(line, line.tail, comment)
-        self.assertFalse(glued)
+        assert not glued
 
     def test_commentline_element_connect(self):
         """Test comment line connecting to comment and actor items.
@@ -49,9 +49,9 @@ class CommentLineTestCase(TestCase):
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
-        self.assertTrue(self.get_connected(line.tail) is ac)
-        self.assertEqual(1, len(comment.subject.annotatedElement))
-        self.assertTrue(ac.subject in comment.subject.annotatedElement)
+        assert self.get_connected(line.tail) is ac
+        assert 1 == len(comment.subject.annotatedElement)
+        assert ac.subject in comment.subject.annotatedElement
 
     def test_commentline_element_connect(self):
         """Test comment line connecting to comment and actor items.
@@ -62,9 +62,9 @@ class CommentLineTestCase(TestCase):
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
-        self.assertTrue(self.get_connected(line.tail) is ac)
-        self.assertEqual(1, len(comment.subject.annotatedElement))
-        self.assertTrue(ac.subject in comment.subject.annotatedElement)
+        assert self.get_connected(line.tail) is ac
+        assert 1 == len(comment.subject.annotatedElement)
+        assert ac.subject in comment.subject.annotatedElement
 
     def test_commentline_element_reconnect(self):
         """Test comment line connecting to comment and actor items.
@@ -75,17 +75,17 @@ class CommentLineTestCase(TestCase):
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
-        self.assertTrue(self.get_connected(line.tail) is ac)
-        self.assertEqual(1, len(comment.subject.annotatedElement))
-        self.assertTrue(ac.subject in comment.subject.annotatedElement)
+        assert self.get_connected(line.tail) is ac
+        assert 1 == len(comment.subject.annotatedElement)
+        assert ac.subject in comment.subject.annotatedElement
 
         ac2 = self.create(ActorItem, UML.Actor)
         # ac.canvas.disconnect_item(line, line.tail)
         self.disconnect(line, line.tail)
         self.connect(line, line.tail, ac2)
-        self.assertTrue(self.get_connected(line.tail) is ac2)
-        self.assertEqual(1, len(comment.subject.annotatedElement))
-        self.assertTrue(ac2.subject in comment.subject.annotatedElement)
+        assert self.get_connected(line.tail) is ac2
+        assert 1 == len(comment.subject.annotatedElement)
+        assert ac2.subject in comment.subject.annotatedElement
 
     def test_commentline_element_disconnect(self):
         """Test comment line connecting to comment and disconnecting actor item.
@@ -97,10 +97,10 @@ class CommentLineTestCase(TestCase):
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, ac)
 
-        self.assertTrue(self.get_connected(line.tail) is ac)
+        assert self.get_connected(line.tail) is ac
 
         self.disconnect(line, line.tail)
-        self.assertFalse(self.get_connected(line.tail) is ac)
+        assert not self.get_connected(line.tail) is ac
 
     def test_commentline_unlink(self):
         """Test comment line unlinking.
@@ -111,25 +111,23 @@ class CommentLineTestCase(TestCase):
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, clazz)
-        self.assertTrue(clazz.subject in comment.subject.annotatedElement)
-        self.assertTrue(comment.subject in clazz.subject.ownedComment)
+        assert clazz.subject in comment.subject.annotatedElement
+        assert comment.subject in clazz.subject.ownedComment
 
-        self.assertTrue(line.canvas)
+        assert line.canvas
 
         # FixMe: This should invoke the disconnect handler of the line's
         #  handles.
 
         line.unlink()
 
-        self.assertFalse(line.canvas)
-        self.assertFalse(clazz.subject in comment.subject.annotatedElement)
-        self.assertFalse(comment.subject in clazz.subject.ownedComment)
-        self.assertTrue(
-            len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
-        )
-        self.assertTrue(
-            len(clazz.subject.ownedComment) == 0, clazz.subject.ownedComment
-        )
+        assert not line.canvas
+        assert clazz.subject not in comment.subject.annotatedElement
+        assert comment.subject not in clazz.subject.ownedComment
+        assert (
+            len(comment.subject.annotatedElement) == 0
+        ), comment.subject.annotatedElement
+        assert len(clazz.subject.ownedComment) == 0, clazz.subject.ownedComment
 
     def test_commentline_element_unlink(self):
         """Test comment line unlinking using a class item.
@@ -140,10 +138,10 @@ class CommentLineTestCase(TestCase):
 
         self.connect(line, line.head, comment)
         self.connect(line, line.tail, clazz)
-        self.assertTrue(clazz.subject in comment.subject.annotatedElement)
-        self.assertTrue(comment.subject in clazz.subject.ownedComment)
+        assert clazz.subject in comment.subject.annotatedElement
+        assert comment.subject in clazz.subject.ownedComment
 
-        self.assertTrue(line.canvas)
+        assert line.canvas
 
         clazz_subject = clazz.subject
 
@@ -152,10 +150,10 @@ class CommentLineTestCase(TestCase):
 
         clazz.unlink()
 
-        self.assertFalse(clazz.canvas)
-        self.assertTrue(line.canvas)
-        self.assertFalse(comment.subject.annotatedElement)
-        self.assertTrue(len(clazz_subject.ownedComment) == 0)
+        assert not clazz.canvas
+        assert line.canvas
+        assert not comment.subject.annotatedElement
+        assert len(clazz_subject.ownedComment) == 0
 
     def test_commentline_relationship_unlink(self):
         """Test comment line to a relationship item connection and unlink.
@@ -197,15 +195,15 @@ class CommentLineTestCase(TestCase):
         self.connect(line1, line1.head, comment)
         self.connect(line1, line1.tail, clazz)
 
-        self.assertTrue(clazz.subject in comment.subject.annotatedElement)
-        self.assertTrue(comment.subject in clazz.subject.ownedComment)
+        assert clazz.subject in comment.subject.annotatedElement
+        assert comment.subject in clazz.subject.ownedComment
 
         # Now add another line
 
         line2 = self.create(CommentLineItem)
         self.connect(line2, line2.head, comment)
 
-        self.assertFalse(self.allow(line2, line2.tail, clazz))
+        assert not self.allow(line2, line2.tail, clazz)
 
 
 # vim: sw=4:et:ai

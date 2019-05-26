@@ -24,8 +24,8 @@ class StyleTestCase(unittest.TestCase):
         Test minimum size calculation
         """
         width, height = get_min_size(10, 10, (1, 2, 3, 4))
-        self.assertEqual(width, 16)
-        self.assertEqual(height, 14)
+        assert width == 16
+        assert height == 14
 
     def test_align_box(self):
         """
@@ -61,15 +61,15 @@ class StyleTestCase(unittest.TestCase):
                     point_expected = data[(halign, valign, outside)]
                     point = get_text_point(extents, 160, 40, align, padding, outside)
 
-                    self.assertEqual(
+                    assert point[0] == point_expected[0], "%s, %s -> %s" % (
+                        align,
+                        outside,
                         point[0],
-                        point_expected[0],
-                        "%s, %s -> %s" % (align, outside, point[0]),
                     )
-                    self.assertEqual(
+                    assert point[1] == point_expected[1], "%s, %s -> %s" % (
+                        align,
+                        outside,
                         point[1],
-                        point_expected[1],
-                        "%s, %s -> %s" % (align, outside, point[1]),
                     )
 
     def test_align_line(self):
@@ -84,27 +84,27 @@ class StyleTestCase(unittest.TestCase):
         x, y = get_text_point_at_line(
             extents, p1, p2, (ALIGN_LEFT, ALIGN_TOP), (2, 2, 2, 2)
         )
-        self.assertEqual(x, 5)
-        self.assertEqual(y, -10)
+        assert x == 5
+        assert y == (-10)
 
         x, y = get_text_point_at_line(
             extents, p1, p2, (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2)
         )
-        self.assertEqual(x, 5)
-        self.assertEqual(y, -10)
+        assert x == 5
+        assert y == (-10)
 
         p2 = -20, 20
         x, y = get_text_point_at_line(
             extents, p1, p2, (ALIGN_LEFT, ALIGN_TOP), (2, 2, 2, 2)
         )
-        self.assertEqual(x, -15)
-        self.assertEqual(y, -10)
+        assert x == (-15)
+        assert y == (-10)
 
         x, y = get_text_point_at_line(
             extents, p1, p2, (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2)
         )
-        self.assertEqual(x, -15)
-        self.assertEqual(y, -10)
+        assert x == (-15)
+        assert y == (-10)
 
     def test_align_line2_h(self):
         """

@@ -14,7 +14,7 @@ class ObjectNodeTestCase(TestCase):
         node = self.create(ObjectNodeItem, UML.ObjectNode)
         node.subject.name = "Blah"
 
-        self.assertEqual("Blah", node._name.text)
+        assert "Blah" == node._name.text
 
         node.subject = None
         # Undefined
@@ -32,11 +32,11 @@ class ObjectNodeTestCase(TestCase):
         node = self.create(ObjectNodeItem, UML.ObjectNode)
         node.subject.ordering = "unordered"
 
-        self.assertEqual("{ ordering = unordered }", node._ordering.text)
+        assert "{ ordering = unordered }" == node._ordering.text
 
         node.show_ordering = True
 
-        self.assertEqual("{ ordering = unordered }", node._ordering.text)
+        assert "{ ordering = unordered }" == node._ordering.text
 
     def test_persistence(self):
         """

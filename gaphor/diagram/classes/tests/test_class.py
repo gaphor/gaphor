@@ -16,24 +16,24 @@ class ClassTestCase(TestCase):
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
-        self.assertEqual(2, len(klass._compartments))
-        self.assertEqual(0, len(klass._compartments[0]))
-        self.assertEqual(0, len(klass._compartments[1]))
-        self.assertEqual((10, 10), klass._compartments[0].get_size())
+        assert 2 == len(klass._compartments)
+        assert 0 == len(klass._compartments[0])
+        assert 0 == len(klass._compartments[1])
+        assert (10, 10) == klass._compartments[0].get_size()
 
         diagram.canvas.update()
 
-        self.assertEqual((10, 10), klass._compartments[0].get_size())
-        self.assertEqual(50, float(klass.min_height))  # min_height
-        self.assertEqual(100, float(klass.min_width))
+        assert (10, 10) == klass._compartments[0].get_size()
+        assert 50 == float(klass.min_height)  # min_height
+        assert 100 == float(klass.min_width)
 
         attr = element_factory.create(UML.Property)
         attr.name = 4 * "x"  # about 44 pixels
         klass.subject.ownedAttribute = attr
 
         diagram.canvas.update()
-        self.assertEqual(1, len(klass._compartments[0]))
-        self.assertGreater(klass._compartments[0].get_size(), (44.0, 20.0))
+        assert 1 == len(klass._compartments[0])
+        assert klass._compartments[0].get_size() > (44.0, 20.0)
 
         oper = element_factory.create(UML.Operation)
         oper.name = 4 * "x"  # about 44 pixels
@@ -44,8 +44,8 @@ class ClassTestCase(TestCase):
         klass.subject.ownedOperation = oper
 
         diagram.canvas.update()
-        self.assertEqual(2, len(klass._compartments[1]))
-        self.assertGreater(klass._compartments[1].get_size(), (63.0, 34.0))
+        assert 2 == len(klass._compartments[1])
+        assert klass._compartments[1].get_size() > (63.0, 34.0)
 
     def test_attribute_removal(self):
 
@@ -67,12 +67,12 @@ class ClassTestCase(TestCase):
         klass.subject.ownedAttribute = attr
 
         diagram.canvas.update()
-        self.assertEqual(3, len(klass._compartments[0]))
+        assert 3 == len(klass._compartments[0])
 
         attr2.unlink()
 
         diagram.canvas.update()
-        self.assertEqual(2, len(klass._compartments[0]))
+        assert 2 == len(klass._compartments[0])
 
     def test_item_at(self):
         """
@@ -129,11 +129,11 @@ class ClassTestCase(TestCase):
         oper.name = "method"
         klass.subject.ownedOperation = oper
 
-        self.assertEqual(100, klass.width)
+        assert 100 == klass.width
 
         attr.name = "x" * 25
 
         diagram.canvas.update()
 
         width = klass.width
-        self.assertGreater(width, 170.0)
+        assert width > 170.0

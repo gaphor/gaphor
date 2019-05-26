@@ -23,9 +23,9 @@ class RegistryTests(unittest.TestCase):
         registry.register(a)
         registry.register(b, "foo")
 
-        self.assertEqual(registry.lookup(), a)
-        self.assertEqual(registry.lookup("foo"), b)
-        self.assertEqual(registry.lookup("bar"), None)
+        assert registry.lookup() == a
+        assert registry.lookup("foo") == b
+        assert registry.lookup("bar") is None
 
     def test_subtyping_on_axes(self):
         registry = Registry(("type", TypeAxis()))
@@ -39,9 +39,9 @@ class RegistryTests(unittest.TestCase):
         target3 = "three"
         registry.register(target3, DummyB)
 
-        self.assertEqual(registry.lookup(object()), target1)
-        self.assertEqual(registry.lookup(DummyA()), target2)
-        self.assertEqual(registry.lookup(DummyB()), target3)
+        assert registry.lookup(object()) == target1
+        assert registry.lookup(DummyA()) == target2
+        assert registry.lookup(DummyB()) == target3
 
     def test_query_subtyping_on_axes(self):
         registry = Registry(("type", TypeAxis()))
@@ -58,10 +58,10 @@ class RegistryTests(unittest.TestCase):
         target4 = "four"
         registry.register(target4, int)
 
-        self.assertEqual(list(registry.query(object())), [target1])
-        self.assertEqual(list(registry.query(DummyA())), [target2, target1])
-        self.assertEqual(list(registry.query(DummyB())), [target3, target2, target1])
-        self.assertEqual(list(registry.query(3)), [target4, target1])
+        assert list(registry.query(object())) == [target1]
+        assert list(registry.query(DummyA())) == [target2, target1]
+        assert list(registry.query(DummyB())) == [target3, target2, target1]
+        assert list(registry.query(3)) == [target4, target1]
 
     def test_two_axes(self):
         registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
@@ -76,26 +76,26 @@ class RegistryTests(unittest.TestCase):
         registry.register(target3, DummyA, "foo")
 
         context1 = object()
-        self.assertEqual(registry.lookup(context1), target1)
+        assert registry.lookup(context1) == target1
 
         context2 = DummyB()
-        self.assertEqual(registry.lookup(context2), target2)
-        self.assertEqual(registry.lookup(context2, "foo"), target3)
+        assert registry.lookup(context2) == target2
+        assert registry.lookup(context2, "foo") == target3
 
         target4 = object()
         registry.register(target4, DummyB)
 
-        self.assertEqual(registry.lookup(context2), target4)
-        self.assertEqual(registry.lookup(context2, "foo"), target3)
+        assert registry.lookup(context2) == target4
+        assert registry.lookup(context2, "foo") == target3
 
     def test_get_registration(self):
         registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
         registry.register("one", object)
         registry.register("two", DummyA, "foo")
-        self.assertEqual(registry.get_registration(object), "one")
-        self.assertEqual(registry.get_registration(DummyA, "foo"), "two")
-        self.assertEqual(registry.get_registration(object, "foo"), None)
-        self.assertEqual(registry.get_registration(DummyA), None)
+        assert registry.get_registration(object) == "one"
+        assert registry.get_registration(DummyA, "foo") == "two"
+        assert registry.get_registration(object, "foo") is None
+        assert registry.get_registration(DummyA) is None
 
     def test_register_too_many_keys(self):
         registry = Registry(("name", SimpleAxis()))
@@ -115,14 +115,14 @@ class RegistryTests(unittest.TestCase):
             ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
         )
         registry.register("foo", one=1, three=3)
-        self.assertEqual(registry.lookup(1, three=3), "foo")
+        assert registry.lookup(1, three=3) == "foo"
 
     def test_miss(self):
         registry = Registry(
             ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
         )
         registry.register("foo", 1, 2)
-        self.assertEqual(registry.lookup(one=1, three=3), None)
+        assert registry.lookup(one=1, three=3) is None
 
     def test_bad_lookup(self):
         registry = Registry(("name", SimpleAxis()), ("grade", SimpleAxis()))
