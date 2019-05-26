@@ -49,7 +49,7 @@ class DiagramToolboxTestCase(TestCase):
 
             if key is not None:
 
-                self.assertEqual(len(val), 1, "Duplicate toolbox shortcut")
+                assert len(val) == 1, "Duplicate toolbox shortcut"
 
     def test_standalone_construct_with_diagram(self):
         pass  # is setUp()
@@ -126,11 +126,11 @@ class DiagramToolboxTestCase(TestCase):
 
     def test_placement_object_node(self):
         self._test_placement_action("toolbox-object-node")
-        self.assertEqual(1, len(self.kindof(UML.ObjectNode)))
+        assert 1 == len(self.kindof(UML.ObjectNode))
 
     def test_placement_partition(self):
         self._test_placement_action("toolbox-partition")
-        self.assertEqual(0, len(self.kindof(UML.ActivityPartition)))
+        assert 0 == len(self.kindof(UML.ActivityPartition))
 
     def test_placement_flow(self):
         self._test_placement_action("toolbox-flow")

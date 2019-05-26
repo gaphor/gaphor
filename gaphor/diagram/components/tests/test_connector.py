@@ -16,7 +16,7 @@ class ConnectorItemTestCase(TestCase):
         """Test creation of connector item
         """
         conn = self.create(ConnectorItem, UML.Connector)
-        self.assertFalse(conn.subject is None)
+        assert not conn.subject is None
         # self.assertTrue(conn.end is None)
 
     def test_name(self):
@@ -33,7 +33,7 @@ class ConnectorItemTestCase(TestCase):
         self.assertEqual("", conn._interface.text)
 
         iface.name = "RedSea"
-        self.assertEqual("RedSea", conn._interface.text)
+        assert "RedSea" == conn._interface.text
 
     def test_setting_end(self):
         """Test creation of connector item
@@ -50,7 +50,7 @@ class ConnectorItemTestCase(TestCase):
 
         del conn.subject.end[end]
         conn.end = None
-        self.assertEqual("", conn._interface.text)
+        assert "" == conn._interface.text
 
     def test_persistence(self):
         """Test connector item saving/loading
@@ -61,7 +61,7 @@ class ConnectorItemTestCase(TestCase):
         # conn.end = end
 
         data = self.save()
-        self.assertTrue(end.id in data)
+        assert end.id in data
 
         self.load(data)
 

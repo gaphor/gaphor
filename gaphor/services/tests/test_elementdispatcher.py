@@ -39,8 +39,8 @@ class ElementDispatcherTestCase(TestCase):
         # 3:
         p.name = "func"
         dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        self.assertEqual(3, len(self.events))
-        self.assertEqual(3, len(dispatcher._handlers))
+        assert 3 == len(self.events)
+        assert 3 == len(dispatcher._handlers)
 
     def test_register_handler_twice(self):
         """
@@ -59,16 +59,16 @@ class ElementDispatcherTestCase(TestCase):
 
         n_handlers = len(dispatcher._handlers)
 
-        self.assertEqual(0, len(self.events))
+        assert 0 == len(self.events)
         dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        self.assertEqual(n_handlers, len(dispatcher._handlers))
+        assert n_handlers == len(dispatcher._handlers)
         dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        self.assertEqual(n_handlers, len(dispatcher._handlers))
+        assert n_handlers == len(dispatcher._handlers)
         dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        self.assertEqual(n_handlers, len(dispatcher._handlers))
+        assert n_handlers == len(dispatcher._handlers)
 
         p.name = "func"
-        self.assertEqual(1, len(self.events))
+        assert 1 == len(self.events)
 
     def test_unregister_handler(self):
 
@@ -331,7 +331,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[1].one = a.one.two[0].one
         a.one.two[0].one.two = A()
 
-        self.assertEqual(6, len(self.events))
+        assert 6 == len(self.events)
 
         a.unlink()
         watcher.unregister_handlers()
@@ -356,12 +356,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[0].one.two = A()
         a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        self.assertEqual(7, len(self.events))
+        assert 7 == len(self.events)
 
         a.unlink()
         watcher.unregister_handlers()
         watcher.unregister_handlers()
-        self.assertEqual(0, len(self.dispatcher._handlers))
+        assert 0 == len(self.dispatcher._handlers)
 
     def test_braking_big_diamond(self):
         """
@@ -382,14 +382,14 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[0].one.two = A()
         a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        self.assertEqual(7, len(self.events))
-        self.assertEqual(6, len(self.dispatcher._handlers))
+        assert 7 == len(self.events)
+        assert 6 == len(self.dispatcher._handlers)
 
         del a.one.two[0].one
         # a.unlink()
         watcher.unregister_handlers()
         watcher.unregister_handlers()
-        self.assertEqual(0, len(self.dispatcher._handlers))
+        assert 0 == len(self.dispatcher._handlers)
 
     def test_cyclic(self):
         """
@@ -407,13 +407,13 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two = A()
         a.one.two[0].one = a
 
-        self.assertEqual(4, len(self.events))
+        assert 4 == len(self.events)
 
         # a.one.two[0].one.two = A()
         # a.one.two[0].one.two = A()
 
         a.unlink()
-        self.assertEqual(1, len(self.dispatcher._handlers))
+        assert 1 == len(self.dispatcher._handlers)
 
 
 # vim: sw=4:et:ai

@@ -12,14 +12,14 @@ class MetaclassPropertyPageTest(TestCase):
         class_.name = "Class"
         editor = MetaclassNamePropertyPage(class_)
         page = editor.construct()
-        self.assertTrue(page)
+        assert page
         entry = page.get_children()[0].get_children()[1]
         self.assertSame(Gtk.Entry, type(entry))
 
-        self.assertEqual("Class", entry.get_text())
+        assert "Class" == entry.get_text()
 
         class_.name = "Blah"
-        self.assertEqual("Blah", entry.get_text())
+        assert "Blah" == entry.get_text()
 
     def test_name_selection_for_metaclass(self):
         metaclass = self.element_factory.create(UML.Class)
@@ -30,11 +30,11 @@ class MetaclassPropertyPageTest(TestCase):
 
         editor = MetaclassNamePropertyPage(metaclass)
         page = editor.construct()
-        self.assertTrue(page)
+        assert page
         combo = page.get_children()[0].get_children()[1]
         self.assertSame(Gtk.ComboBox, type(combo))
 
-        self.assertEqual("Class", combo.get_child().get_text())
+        assert "Class" == combo.get_child().get_text()
 
         metaclass.name = "Blah"
-        self.assertEqual("Blah", combo.get_child().get_text())
+        assert "Blah" == combo.get_child().get_text()

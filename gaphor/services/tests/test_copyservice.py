@@ -47,8 +47,8 @@ class CopyServiceTestCase(TestCase):
 
         diagram.canvas.update_now()
         i = list(diagram.canvas.get_all_items())
-        self.assertEqual(1, len(i), i)
-        self.assertEqual("Name", i[0]._name.text)
+        assert 1 == len(i), i
+        assert "Name" == i[0]._name.text
 
         service.copy([c])
         assert diagram.canvas.get_all_items() == [c]
@@ -57,12 +57,12 @@ class CopyServiceTestCase(TestCase):
 
         i = diagram.canvas.get_all_items()
 
-        self.assertEqual(2, len(i), i)
+        assert 2 == len(i), i
 
         diagram.canvas.update_now()
 
-        self.assertEqual("Name", i[0]._name.text)
-        self.assertEqual("Name", i[1]._name.text)
+        assert "Name" == i[0]._name.text
+        assert "Name" == i[1]._name.text
 
     def _skip_test_copy_paste_undo(self):
         """
@@ -81,9 +81,9 @@ class CopyServiceTestCase(TestCase):
         self.connect(a, a.head, ci1)
         self.connect(a, a.tail, ci2)
 
-        self.assertTrue(a.subject)
-        self.assertTrue(a.head_end.subject)
-        self.assertTrue(a.tail_end.subject)
+        assert a.subject
+        assert a.head_end.subject
+        assert a.tail_end.subject
 
         # The act: copy and paste, perform undo afterwards
         service.copy([ci1, ci2, a])
@@ -92,8 +92,8 @@ class CopyServiceTestCase(TestCase):
 
         all_items = list(self.diagram.canvas.get_all_items())
 
-        self.assertEqual(6, len(all_items))
-        self.assertFalse(orphan_references(self.element_factory))
+        assert 6 == len(all_items)
+        assert not orphan_references(self.element_factory)
 
         self.assertSame(all_items[0].subject, all_items[3].subject)
         self.assertSame(all_items[1].subject, all_items[4].subject)
@@ -103,5 +103,5 @@ class CopyServiceTestCase(TestCase):
 
         undo_manager.undo_transaction()
 
-        self.assertEqual(3, len(self.diagram.canvas.get_all_items()))
-        self.assertFalse(orphan_references(self.element_factory))
+        assert 3 == len(self.diagram.canvas.get_all_items())
+        assert not orphan_references(self.element_factory)

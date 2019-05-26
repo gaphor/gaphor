@@ -37,19 +37,17 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
         # Unlink the presentation
         profiles[0].presentation[0].unlink()
 
-        self.assertFalse(element_factory.lselect(lambda e: e.isKindOf(UML.Profile)))
+        assert not element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
 
         classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-        self.assertEqual(1, len(classes))
+        assert 1 == len(classes)
 
         # Check if the link is really removed:
         self.assertFalse(classes[0].appliedStereotype)
-        self.assertFalse(
-            element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification))
+        assert not element_factory.lselect(
+            lambda e: e.isKindOf(UML.InstanceSpecification)
         )
-        self.assertEqual(
-            3, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))
-        )
+        assert 3 == len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))
 
     def testPackageRemovalByRemovingTheDiagram(self):
         element_factory = Application.get_service("element_factory")
@@ -58,20 +56,18 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
             lambda e: e.isKindOf(UML.Diagram) and e.name == "Stereotypes diagram"
         )[0]
 
-        self.assertTrue(diagram)
+        assert diagram
 
         diagram.unlink()
 
-        self.assertFalse(element_factory.lselect(lambda e: e.isKindOf(UML.Profile)))
+        assert not element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
 
         classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-        self.assertEqual(1, len(classes))
+        assert 1 == len(classes)
 
         # Check if the link is really removed:
         self.assertFalse(classes[0].appliedStereotype)
-        self.assertFalse(
-            element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification))
+        assert not element_factory.lselect(
+            lambda e: e.isKindOf(UML.InstanceSpecification)
         )
-        self.assertEqual(
-            2, len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))
-        )
+        assert 2 == len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))

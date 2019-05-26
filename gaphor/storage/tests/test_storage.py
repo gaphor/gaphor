@@ -33,17 +33,17 @@ class StorageTestCase(TestCase):
     def test_version_check(self):
         from gaphor.storage.storage import version_lower_than
 
-        self.assertTrue(version_lower_than("0.3.0", (0, 15, 0)))
-        self.assertTrue(version_lower_than("0", (0, 15, 0)))
-        self.assertTrue(version_lower_than("0.14", (0, 15, 0)))
-        self.assertTrue(version_lower_than("0.14.1111", (0, 15, 0)))
-        self.assertFalse(version_lower_than("0.15.0", (0, 15, 0)))
-        self.assertFalse(version_lower_than("1.33.0", (0, 15, 0)))
-        self.assertTrue(version_lower_than("0.15.0.b123", (0, 15, 0)))
-        self.assertTrue(version_lower_than("0.14.0.b1", (0, 15, 0)))
-        self.assertTrue(version_lower_than("0.15.b1", (0, 15, 0)))
-        self.assertFalse(version_lower_than("0.16.b1", (0, 15, 0)))
-        self.assertFalse(version_lower_than("0.15.0.b2", (0, 14, 99)))
+        assert version_lower_than("0.3.0", (0, 15, 0))
+        assert version_lower_than("0", (0, 15, 0))
+        assert version_lower_than("0.14", (0, 15, 0))
+        assert version_lower_than("0.14.1111", (0, 15, 0))
+        assert not version_lower_than("0.15.0", (0, 15, 0))
+        assert not version_lower_than("1.33.0", (0, 15, 0))
+        assert version_lower_than("0.15.0.b123", (0, 15, 0))
+        assert version_lower_than("0.14.0.b1", (0, 15, 0))
+        assert version_lower_than("0.15.b1", (0, 15, 0))
+        assert not version_lower_than("0.16.b1", (0, 15, 0))
+        assert not version_lower_than("0.15.0.b2", (0, 14, 99))
 
     def test_save_uml(self):
         """Saving gaphor.UML model elements.
@@ -241,16 +241,16 @@ class StorageTestCase(TestCase):
         fd.close()
 
         diagrams = list(self.kindof(UML.Diagram))
-        self.assertEqual(1, len(diagrams))
+        assert 1 == len(diagrams)
         d = diagrams[0]
         a = d.canvas.select(lambda e: isinstance(e, AssociationItem))[0]
-        self.assertTrue(a.subject is not None)
-        self.assertEqual(old_a_subject_id, a.subject.id)
+        assert a.subject is not None
+        assert old_a_subject_id == a.subject.id
         cinfo_head = a.canvas.get_connection(a.head)
-        self.assertTrue(cinfo_head.connected is not None)
+        assert cinfo_head.connected is not None
         cinfo_tail = a.canvas.get_connection(a.tail)
-        self.assertTrue(cinfo_tail.connected is not None)
-        self.assertTrue(not cinfo_head.connected is cinfo_tail.connected)
+        assert cinfo_tail.connected is not None
+        assert not cinfo_head.connected is cinfo_tail.connected
         # assert a.head_end._name
 
     def test_load_save(self):
@@ -282,7 +282,7 @@ class StorageTestCase(TestCase):
         copy = expr.sub("%VER%", copy)
 
         self.maxDiff = None
-        self.assertEqual(copy, orig, "Saved model does not match copy")
+        assert copy == orig, "Saved model does not match copy"
 
     def test_loading_an_old_version(self):
 

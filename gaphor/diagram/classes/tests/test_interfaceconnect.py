@@ -22,7 +22,7 @@ class ImplementationTestCase(TestCase):
 
         assert not impl._solid
         self.connect(impl, impl.head, iface, iface.ports()[0])
-        self.assertTrue(impl._solid)
+        assert impl._solid
 
     def test_folded_interface_disconnection(self):
         """Test disconnection implementation from folded interface
@@ -36,7 +36,7 @@ class ImplementationTestCase(TestCase):
         assert impl._solid
 
         self.disconnect(impl, impl.head)
-        self.assertTrue(not impl._solid)
+        assert not impl._solid
 
 
 class DependencyTestCase(TestCase):
@@ -49,7 +49,7 @@ class DependencyTestCase(TestCase):
 
         assert not dep._solid
         self.connect(dep, dep.head, iface, iface.ports()[0])
-        self.assertTrue(dep._solid)
+        assert dep._solid
         # at the end, interface folded notation shall be `required' one
         self.assertEqual(iface.folded, iface.FOLDED_REQUIRED)
 
@@ -65,7 +65,7 @@ class DependencyTestCase(TestCase):
         assert dep._solid
 
         self.disconnect(dep, dep.head)
-        self.assertTrue(not dep._solid)
+        assert not dep._solid
         # after disconnection, interface folded notation shall be `provided' one
         self.assertEqual(iface.folded, iface.FOLDED_PROVIDED)
 
@@ -79,7 +79,7 @@ class DependencyTestCase(TestCase):
         assert not dep._solid
 
         self.disconnect(dep, dep.head)
-        self.assertTrue(not dep._solid)
+        assert not dep._solid
         # after disconnection, interface folded property shall be
         # `FOLDED_NONE'
         self.assertEqual(iface.folded, iface.FOLDED_NONE)

@@ -15,14 +15,12 @@ class LoadServiceTestCase(unittest.TestCase):
 
         Application.init(["undo_manager", "file_manager", "properties"])
 
-        self.assertTrue(
-            Application.get_service("undo_manager") is not None,
-            "Failed to load the undo manager service",
-        )
+        assert (
+            Application.get_service("undo_manager") is not None
+        ), "Failed to load the undo manager service"
 
-        self.assertTrue(
-            Application.get_service("file_manager") is not None,
-            "Failed to load the file manager service",
-        )
+        assert (
+            Application.get_service("file_manager") is not None
+        ), "Failed to load the file manager service"
 
         Application.shutdown()

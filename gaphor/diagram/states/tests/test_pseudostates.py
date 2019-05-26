@@ -19,7 +19,7 @@ class InitialPseudostate(TestCase):
         """Test creation of initial pseudostate
         """
         item = self.create(InitialPseudostateItem, UML.Pseudostate)
-        self.assertEqual("initial", item.subject.kind)
+        assert "initial" == item.subject.kind
 
     def test_history_pseudostate(self):
         """Test creation of initial pseudostate
@@ -27,4 +27,4 @@ class InitialPseudostate(TestCase):
         item = self.create(HistoryPseudostateItem, UML.Pseudostate)
         # history setting is done in the DiagramToolbox factory:
         item.subject.kind = "shallowHistory"
-        self.assertEqual("shallowHistory", item.subject.kind)
+        assert "shallowHistory" == item.subject.kind

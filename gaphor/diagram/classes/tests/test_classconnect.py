@@ -25,12 +25,12 @@ class DependencyTestCase(TestCase):
         dep = self.create(DependencyItem)
 
         glued = self.allow(dep, dep.head, actor1)
-        self.assertTrue(glued)
+        assert glued
 
         self.connect(dep, dep.head, actor1)
 
         glued = self.allow(dep, dep.tail, actor2)
-        self.assertTrue(glued)
+        assert glued
 
     def test_dependency_connect(self):
         """Test dependency connecting to two actor items
@@ -42,17 +42,17 @@ class DependencyTestCase(TestCase):
         self.connect(dep, dep.head, actor1)
         self.connect(dep, dep.tail, actor2)
 
-        self.assertTrue(dep.subject is not None)
-        self.assertTrue(isinstance(dep.subject, UML.Dependency))
-        self.assertTrue(dep.subject in self.element_factory.select())
+        assert dep.subject is not None
+        assert isinstance(dep.subject, UML.Dependency)
+        assert dep.subject in self.element_factory.select()
 
         hct = self.get_connected(dep.head)
         tct = self.get_connected(dep.tail)
-        self.assertTrue(hct is actor1)
-        self.assertTrue(tct is actor2)
+        assert hct is actor1
+        assert tct is actor2
 
-        self.assertTrue(actor1.subject in dep.subject.supplier)
-        self.assertTrue(actor2.subject in dep.subject.client)
+        assert actor1.subject in dep.subject.supplier
+        assert actor2.subject in dep.subject.client
 
     def test_dependency_reconnection(self):
         """Test dependency reconnection
@@ -72,11 +72,11 @@ class DependencyTestCase(TestCase):
         self.connect(dep, dep.tail, a3)
 
         self.assertSame(d, dep.subject)
-        self.assertEqual(1, len(dep.subject.supplier))
-        self.assertEqual(1, len(dep.subject.client))
-        self.assertTrue(a1.subject in dep.subject.supplier)
-        self.assertTrue(a3.subject in dep.subject.client)
-        self.assertTrue(a2.subject not in dep.subject.client, dep.subject.client)
+        assert 1 == len(dep.subject.supplier)
+        assert 1 == len(dep.subject.client)
+        assert a1.subject in dep.subject.supplier
+        assert a3.subject in dep.subject.client
+        assert a2.subject not in dep.subject.client, dep.subject.client
 
     def test_dependency_disconnect(self):
         """Test dependency disconnecting using two actor items
@@ -91,11 +91,11 @@ class DependencyTestCase(TestCase):
         dep_subj = dep.subject
         self.disconnect(dep, dep.tail)
 
-        self.assertTrue(dep.subject is None)
-        self.assertTrue(self.get_connected(dep.tail) is None)
-        self.assertTrue(dep_subj not in self.element_factory.select())
-        self.assertTrue(dep_subj not in actor1.subject.supplierDependency)
-        self.assertTrue(dep_subj not in actor2.subject.clientDependency)
+        assert dep.subject is None
+        assert self.get_connected(dep.tail) is None
+        assert dep_subj not in self.element_factory.select()
+        assert dep_subj not in actor1.subject.supplierDependency
+        assert dep_subj not in actor2.subject.clientDependency
 
     def test_dependency_reconnect(self):
         """Test dependency reconnection using two actor items
@@ -113,10 +113,10 @@ class DependencyTestCase(TestCase):
         # reconnect
         self.connect(dep, dep.tail, actor2)
 
-        self.assertTrue(dep.subject is not None)
-        self.assertTrue(dep.subject is not dep_subj)  # the old subject has been deleted
-        self.assertTrue(dep.subject in actor1.subject.supplierDependency)
-        self.assertTrue(dep.subject in actor2.subject.clientDependency)
+        assert dep.subject is not None
+        assert dep.subject is not dep_subj  # the old subject has been deleted
+        assert dep.subject in actor1.subject.supplierDependency
+        assert dep.subject in actor2.subject.clientDependency
         # TODO: test with interface (usage) and component (realization)
         # TODO: test with multiple diagrams (should reuse existing relationships first)
 
@@ -135,11 +135,11 @@ class DependencyTestCase(TestCase):
         self.connect(dep, dep.head, actoritem1)
         self.connect(dep, dep.tail, actoritem2)
 
-        self.assertTrue(dep.subject)
-        self.assertEqual(1, len(actor1.supplierDependency))
-        self.assertTrue(actor1.supplierDependency[0] is dep.subject)
-        self.assertEqual(1, len(actor2.clientDependency))
-        self.assertTrue(actor2.clientDependency[0] is dep.subject)
+        assert dep.subject
+        assert 1 == len(actor1.supplierDependency)
+        assert actor1.supplierDependency[0] is dep.subject
+        assert 1 == len(actor2.clientDependency)
+        assert actor2.clientDependency[0] is dep.subject
 
         # Do the same thing, but now on a new diagram:
 
@@ -154,10 +154,10 @@ class DependencyTestCase(TestCase):
         self.assertSame(cinfo.connected, actoritem3)
         self.connect(dep2, dep2.tail, actoritem4)
         self.assertNotSame(dep2.subject, None)
-        self.assertEqual(1, len(actor1.supplierDependency))
-        self.assertTrue(actor1.supplierDependency[0] is dep.subject)
-        self.assertEqual(1, len(actor2.clientDependency))
-        self.assertTrue(actor2.clientDependency[0] is dep.subject)
+        assert 1 == len(actor1.supplierDependency)
+        assert actor1.supplierDependency[0] is dep.subject
+        assert 1 == len(actor2.clientDependency)
+        assert actor2.clientDependency[0] is dep.subject
 
         self.assertSame(dep.subject, dep2.subject)
 
@@ -173,9 +173,9 @@ class DependencyTestCase(TestCase):
         self.connect(dep, dep.tail, cls)  # connect client
         self.connect(dep, dep.head, iface)  # connect supplier
 
-        self.assertTrue(dep.subject is not None)
-        self.assertTrue(isinstance(dep.subject, UML.Usage), dep.subject)
-        self.assertTrue(dep.subject in self.element_factory.select())
+        assert dep.subject is not None
+        assert isinstance(dep.subject, UML.Usage), dep.subject
+        assert dep.subject in self.element_factory.select()
 
 
 class GeneralizationTestCase(TestCase):
@@ -191,14 +191,14 @@ class GeneralizationTestCase(TestCase):
         c2 = self.create(ClassItem, UML.Class)
 
         glued = self.allow(gen, gen.tail, c1)
-        self.assertTrue(glued)
+        assert glued
 
         self.connect(gen, gen.tail, c1)
-        self.assertTrue(self.get_connected(gen.tail) is c1)
-        self.assertTrue(gen.subject is None)
+        assert self.get_connected(gen.tail) is c1
+        assert gen.subject is None
 
         glued = self.allow(gen, gen.head, c2)
-        self.assertTrue(glued)
+        assert glued
 
     def test_connection(self):
         """Test generalization item connection using two classes
@@ -211,9 +211,9 @@ class GeneralizationTestCase(TestCase):
         assert self.get_connected(gen.tail) is c1
 
         self.connect(gen, gen.head, c2)
-        self.assertTrue(gen.subject is not None)
-        self.assertTrue(gen.subject.general is c2.subject)
-        self.assertTrue(gen.subject.specific is c1.subject)
+        assert gen.subject is not None
+        assert gen.subject.general is c2.subject
+        assert gen.subject.specific is c1.subject
 
     def test_reconnection(self):
         """Test generalization item connection using two classes
@@ -228,9 +228,9 @@ class GeneralizationTestCase(TestCase):
         assert self.get_connected(gen.tail) is c1
 
         self.connect(gen, gen.head, c2)
-        self.assertTrue(gen.subject is not None)
-        self.assertTrue(gen.subject.general is c2.subject)
-        self.assertTrue(gen.subject.specific is c1.subject)
+        assert gen.subject is not None
+        assert gen.subject.general is c2.subject
+        assert gen.subject.specific is c1.subject
 
         # Now do the same on a new diagram:
         diagram2 = self.element_factory.create(UML.Diagram)
@@ -245,7 +245,7 @@ class GeneralizationTestCase(TestCase):
 
         self.connect(gen2, gen2.tail, c4)
         self.assertNotSame(gen.subject, gen2.subject)
-        self.assertEqual(1, len(c1.subject.generalization))
+        assert 1 == len(c1.subject.generalization)
         self.assertSame(c1.subject.generalization[0], gen.subject)
         # self.assertEqual(1, len(actor2.clientDependency))
         # self.assertTrue(actor2.clientDependency[0] is dep.subject)
@@ -286,12 +286,12 @@ class AssociationConnectorTestCase(TestCase):
         c2 = self.create(ClassItem, UML.Class)
 
         glued = self.allow(asc, asc.head, c1)
-        self.assertTrue(glued)
+        assert glued
 
         self.connect(asc, asc.head, c1)
 
         glued = self.allow(asc, asc.tail, c2)
-        self.assertTrue(glued)
+        assert glued
 
     def test_connect(self):
         """Test association item connection
@@ -301,15 +301,15 @@ class AssociationConnectorTestCase(TestCase):
         c2 = self.create(ClassItem, UML.Class)
 
         self.connect(asc, asc.head, c1)
-        self.assertTrue(asc.subject is None)  # no UML metaclass yet
+        assert asc.subject is None  # no UML metaclass yet
 
         self.connect(asc, asc.tail, c2)
-        self.assertTrue(asc.subject is not None)
+        assert asc.subject is not None
 
         # Diagram, Class *2, Property *2, Association
         self.assertEqual(6, len(list(self.element_factory.select())))
-        self.assertTrue(asc.head_end.subject is not None)
-        self.assertTrue(asc.tail_end.subject is not None)
+        assert asc.head_end.subject is not None
+        assert asc.tail_end.subject is not None
 
     def test_reconnect(self):
         """Test association item reconnection
@@ -329,10 +329,10 @@ class AssociationConnectorTestCase(TestCase):
 
         self.assertSame(a, asc.subject)
         ends = [p.type for p in asc.subject.memberEnd]
-        self.assertTrue(c1.subject in ends)
-        self.assertTrue(c3.subject in ends)
-        self.assertTrue(c2.subject not in ends)
-        self.assertTrue(asc.tail_end.subject.navigability)
+        assert c1.subject in ends
+        assert c3.subject in ends
+        assert c2.subject not in ends
+        assert asc.tail_end.subject.navigability
 
     def test_disconnect(self):
         """Test association item disconnection
@@ -342,7 +342,7 @@ class AssociationConnectorTestCase(TestCase):
         c2 = self.create(ClassItem, UML.Class)
 
         self.connect(asc, asc.head, c1)
-        self.assertTrue(asc.subject is None)  # no UML metaclass yet
+        assert asc.subject is None  # no UML metaclass yet
 
         self.connect(asc, asc.tail, c2)
         assert asc.subject is not None

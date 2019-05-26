@@ -21,7 +21,7 @@ class ExtensionConnectorTestCase(TestCase):
 
         # cannot connect extension item tail to a class
         glued = self.allow(ext, ext.tail, cls)
-        self.assertFalse(glued)
+        assert not glued
 
     def test_stereotype_glue(self):
         """Test extension item gluing to a stereotype."""
@@ -35,7 +35,7 @@ class ExtensionConnectorTestCase(TestCase):
         # can connect extension item head to a Stereotype UML metaclass,
         # because it derives from Class UML metaclass
         glued = self.allow(ext, ext.head, st)
-        self.assertTrue(glued)
+        assert glued
 
     def test_glue(self):
         """Test extension item glue
@@ -45,12 +45,12 @@ class ExtensionConnectorTestCase(TestCase):
         cls = self.create(ClassItem, UML.Class)
 
         glued = self.allow(ext, ext.tail, st)
-        self.assertTrue(glued)
+        assert glued
 
         self.connect(ext, ext.tail, st)
 
         glued = self.allow(ext, ext.head, cls)
-        self.assertTrue(glued)
+        assert glued
 
     def test_connection(self):
         """Test extension item connection

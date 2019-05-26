@@ -28,7 +28,7 @@ class MainWindowTestCase(unittest.TestCase):
         # MainWindow should be created as resource
         main_w = Application.get_service("main_window")
         main_w.open()
-        self.assertEqual(self.get_current_diagram(), None)
+        assert self.get_current_diagram() is None
 
     def test_show_diagram(self):
         main_w = Application.get_service("main_window")
@@ -36,4 +36,4 @@ class MainWindowTestCase(unittest.TestCase):
         diagram = element_factory.create(UML.Diagram)
         main_w.open()
         self.event_manager.handle(DiagramShow(diagram))
-        self.assertEqual(self.get_current_diagram(), diagram)
+        assert self.get_current_diagram() == diagram

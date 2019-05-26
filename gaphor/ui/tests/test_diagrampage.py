@@ -25,9 +25,9 @@ class DiagramPageTestCase(unittest.TestCase):
         self.diagram = self.element_factory.create(UML.Diagram)
         self.page = DiagramPage(self.diagram)
         self.page.construct()
-        self.assertEqual(self.page.diagram, self.diagram)
-        self.assertEqual(self.page.view.canvas, self.diagram.canvas)
-        self.assertEqual(len(self.element_factory.lselect()), 1)
+        assert self.page.diagram == self.diagram
+        assert self.page.view.canvas == self.diagram.canvas
+        assert len(self.element_factory.lselect()) == 1
 
     def tearDown(self):
         self.page.close()
@@ -49,4 +49,4 @@ class DiagramPageTestCase(unittest.TestCase):
         comment = self.diagram.create(
             CommentItem, subject=self.element_factory.create(UML.Comment)
         )
-        self.assertEqual(len(self.element_factory.lselect()), 2)
+        assert len(self.element_factory.lselect()) == 2

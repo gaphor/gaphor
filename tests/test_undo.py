@@ -12,13 +12,13 @@ class UndoTest(TestCase):
         factory = self.element_factory
         undo_manager = self.get_service("undo_manager")
 
-        self.assertEqual(0, len(self.diagram.canvas.solver.constraints))
+        assert 0 == len(self.diagram.canvas.solver.constraints)
 
         ci1 = self.create(ClassItem, UML.Class)
-        self.assertEqual(2, len(self.diagram.canvas.solver.constraints))
+        assert 2 == len(self.diagram.canvas.solver.constraints)
 
         ci2 = self.create(ClassItem, UML.Class)
-        self.assertEqual(4, len(self.diagram.canvas.solver.constraints))
+        assert 4 == len(self.diagram.canvas.solver.constraints)
 
         a = self.create(AssociationItem)
 
@@ -27,33 +27,30 @@ class UndoTest(TestCase):
 
         # Diagram, Association, 2x Class, Property, LiteralSpecification
         self.assertEqual(6, len(factory.lselect()))
-        self.assertEqual(6, len(self.diagram.canvas.solver.constraints))
+        assert 6 == len(self.diagram.canvas.solver.constraints)
 
         @transactional
         def delete_class():
             ci2.unlink()
 
         undo_manager.clear_undo_stack()
-        self.assertFalse(undo_manager.can_undo())
+        assert not undo_manager.can_undo()
 
         delete_class()
 
-        self.assertTrue(undo_manager.can_undo())
+        assert undo_manager.can_undo()
 
-        self.assertEqual(ci1, self.get_connected(a.head))
-        self.assertEqual(None, self.get_connected(a.tail))
+        assert ci1 == self.get_connected(a.head)
+        assert None is self.get_connected(a.tail)
 
         for i in range(3):
-            # Diagram, Class
-            # self.assertEqual(2, len(factory.lselect()), factory.lselect())
-
-            self.assertEqual(3, len(self.diagram.canvas.solver.constraints))
+            assert 3 == len(self.diagram.canvas.solver.constraints)
 
             undo_manager.undo_transaction()
 
-            self.assertEqual(6, len(self.diagram.canvas.solver.constraints))
+            assert 6 == len(self.diagram.canvas.solver.constraints)
 
-            self.assertEqual(ci1, self.get_connected(a.head))
-            self.assertEqual(ci2, self.get_connected(a.tail))
+            assert ci1 == self.get_connected(a.head)
+            assert ci2 == self.get_connected(a.tail)
 
             undo_manager.redo_transaction()

@@ -19,26 +19,26 @@ class ActionIssueTestCase(TestCase):
 
         actions = ef.lselect(lambda e: e.isKindOf(UML.Action))
         flows = ef.lselect(lambda e: e.isKindOf(UML.ControlFlow))
-        self.assertEqual(3, len(actions))
-        self.assertEqual(3, len(flows))
+        assert 3 == len(actions)
+        assert 3 == len(flows)
 
         # Actions live in partitions:
         partitions = ef.lselect(lambda e: e.isKindOf(UML.ActivityPartition))
-        self.assertEqual(2, len(partitions))
+        assert 2 == len(partitions)
 
         # Okay, so far the data model is saved correctly. Now, how do the
         # handles behave?
         diagrams = ef.lselect(lambda e: e.isKindOf(UML.Diagram))
-        self.assertEqual(1, len(diagrams))
+        assert 1 == len(diagrams)
 
         canvas = diagrams[0].canvas
         assert 9 == len(canvas.get_all_items())
         # Part, Part, Act, Act, Part, Act, Flow, Flow, Flow
 
         for e in actions + flows:
-            self.assertEqual(1, len(e.presentation), e)
+            assert 1 == len(e.presentation), e
         for i in canvas.select(lambda e: isinstance(e, (FlowItem, ActionItem))):
-            self.assertTrue(i.subject, i)
+            assert i.subject, i
 
         # Loaded as:
         #
@@ -49,7 +49,7 @@ class ActionIssueTestCase(TestCase):
         # start element:
         self.assertSame(actions[0].outgoing[0], flows[0])
         self.assertSame(actions[0].outgoing[1], flows[1])
-        self.assertFalse(actions[0].incoming)
+        assert not actions[0].incoming
 
         cinfo, = canvas.get_connections(handle=flows[0].presentation[0].head)
         self.assertSame(cinfo.connected, actions[0].presentation[0])
@@ -77,6 +77,6 @@ class ActionIssueTestCase(TestCase):
         # Test the parent-child connectivity
         for a in actions:
             p, = a.inPartition
-            self.assertTrue(p)
-            self.assertTrue(canvas.get_parent(a.presentation[0]))
+            assert p
+            assert canvas.get_parent(a.presentation[0])
             self.assertSame(canvas.get_parent(a.presentation[0]), p.presentation[0])
