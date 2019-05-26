@@ -9,7 +9,6 @@ from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.classifier import CompartmentItem
 from gaphor.diagram.compartment import FeatureItem
-from gaphor.core import inject
 
 DX = 15
 DY = 8

@@ -6,7 +6,6 @@ import itertools
 
 from gaphas.state import observed, reversible_property
 from gaphor import UML
-from gaphor.core import inject
 
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM

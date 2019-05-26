@@ -3,7 +3,6 @@ State transition implementation.
 """
 
 from gaphor import UML
-from gaphor.core import inject
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 

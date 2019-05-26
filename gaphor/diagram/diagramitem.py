@@ -8,7 +8,6 @@ from gaphas.state import observed, reversible_property
 import logging
 from gaphor import UML
 from gaphor.services.elementdispatcher import EventWatcher
-from gaphor.core import inject
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import Style, ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.support import set_diagram_item

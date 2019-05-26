@@ -11,7 +11,6 @@ from gaphas.constraint import EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
 
 from gaphor import UML
-from gaphor.core import inject
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import (
