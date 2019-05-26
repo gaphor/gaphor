@@ -620,23 +620,28 @@ class derived(umlproperty):
             if self.upper == 1:
                 # This is a [0..1] event
                 # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
-                assert isinstance(event, AssociationSetEvent)
-                old_value, new_value = event.old_value, event.new_value
-                self.handle(DerivedSetEvent(event.element, self, old_value, new_value))
+                assert isinstance(
+                    event, AssociationSetEvent
+                ), f"Can only handle [0..1] set-events, not {event} for {event.element}"
+                self.handle(
+                    DerivedSetEvent(
+                        event.element, self, event.old_value, event.new_value
+                    )
+                )
             else:
                 if isinstance(event, AssociationSetEvent):
-                    old_value, new_value = event.old_value, event.new_value
-                    # Do a filter? Change to
-                    self.handle(DerivedDeleteEvent(event.element, self, old_value))
-                    self.handle(DerivedAddEvent(event.element, self, new_value))
+                    self.handle(
+                        DerivedDeleteEvent(event.element, self, event.old_value)
+                    )
+                    self.handle(DerivedAddEvent(event.element, self, event.new_value))
 
                 elif isinstance(event, AssociationAddEvent):
-                    new_value = event.new_value
-                    self.handle(DerivedAddEvent(event.element, self, new_value))
+                    self.handle(DerivedAddEvent(event.element, self, event.new_value))
 
                 elif isinstance(event, AssociationDeleteEvent):
-                    old_value = event.old_value
-                    self.handle(DerivedDeleteEvent(event.element, self, old_value))
+                    self.handle(
+                        DerivedDeleteEvent(event.element, self, event.old_value)
+                    )
 
                 elif isinstance(event, AssociationChangeEvent):
                     self.handle(DerivedChangeEvent(event.element, self))

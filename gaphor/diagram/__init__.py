@@ -4,8 +4,6 @@ The diagram package contains items (to be drawn on the diagram), tools
 diagram).
 """
 
-import uuid
-
 import gaphor.diagram.actions
 import gaphor.diagram.classes
 import gaphor.diagram.components
@@ -14,11 +12,3 @@ import gaphor.diagram.interactions
 import gaphor.diagram.profiles
 import gaphor.diagram.states
 import gaphor.diagram.usecases
-
-
-def create(type):
-    return create_as(type, str(uuid.uuid1()))
-
-
-def create_as(type, id):
-    return type(id)

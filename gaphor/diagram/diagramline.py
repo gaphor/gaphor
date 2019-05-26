@@ -17,9 +17,9 @@ class DiagramLine(gaphas.Line, DiagramItem):
     Base class for diagram lines.
     """
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, factory=None):
         gaphas.Line.__init__(self)
-        DiagramItem.__init__(self, id)
+        DiagramItem.__init__(self, id, factory)
         self.fuzziness = 2
 
     head = property(lambda self: self._handles[0])
@@ -101,7 +101,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
         Instant port finder.
 
         This is not the nicest place for such method.
-        
+
         TODO: figure out if part of this functionality can be provided by
         the storage code.
         """
@@ -208,8 +208,8 @@ class NamedLine(DiagramLine):
         "name-align-str": None,
     }
 
-    def __init__(self, id=None):
-        DiagramLine.__init__(self, id)
+    def __init__(self, id=None, factory=None):
+        DiagramLine.__init__(self, id, factory)
         self._name = self.add_text(
             "name",
             style={

@@ -23,7 +23,6 @@ class EventWatcher:
     element_dispatcher = inject("element_dispatcher")
 
     def __init__(self, element, default_handler=None):
-        super(EventWatcher, self).__init__()
         self.element = element
         self.default_handler = default_handler
         self._watched_paths = dict()
@@ -37,9 +36,8 @@ class EventWatcher:
         Watches should be set in the constructor, so they can be registered
         and unregistered in one shot.
 
-        This interface is fluent(returns self).
+        This interface is fluent (returns self).
         """
-
         if handler:
             self._watched_paths[path] = handler
         elif self.default_handler:
@@ -49,12 +47,10 @@ class EventWatcher:
         return self
 
     def register_handlers(self):
-
         dispatcher = self.element_dispatcher
         element = self.element
 
         for path, handler in self._watched_paths.items():
-
             dispatcher.subscribe(handler, element, path)
 
     def unregister_handlers(self, *args):
@@ -62,19 +58,17 @@ class EventWatcher:
         Unregister handlers. Extra arguments are ignored (makes connecting to
         destroy signals much easier though).
         """
-
         dispatcher = self.element_dispatcher
 
         for path, handler in self._watched_paths.items():
-
             dispatcher.unsubscribe(handler)
 
 
 class ElementDispatcher(Service):
     """
     The Element based Dispatcher allows handlers to receive only events
-    related to certain elements. Those elements should be registered to. Also
-    a path should be provided, that is used to find those changes.
+    related to certain elements. Those elements should be registered too.
+    A path should be provided, that is used to find those changes.
 
     The handlers are registered on their property attribute. This avoids
     subclass lookups and is pretty specific. As a result this dispatcher is
@@ -215,12 +209,6 @@ class ElementDispatcher(Service):
             del self._handlers[key]
 
     def subscribe(self, handler, element, path):
-
-        # self.logger.info('Registering handler')
-        # self.logger.debug('Handler is %s' % handler)
-        # self.logger.debug('Element is %s' % element)
-        # self.logger.debug('Path is %s' % path)
-
         props = self._path_to_properties(element, path)
         self._add_handlers(element, props, handler)
 
@@ -228,10 +216,6 @@ class ElementDispatcher(Service):
         """
         Unregister a handler from the registy.
         """
-
-        # self.logger.info('Unregistering handler')
-        # self.logger.debug('Handler is %s' % handler)
-
         try:
             reverse = reversed(self._reverse[handler])
         except KeyError:
@@ -253,19 +237,8 @@ class ElementDispatcher(Service):
 
     @event_handler(ElementChangeEvent)
     def on_element_change_event(self, event):
-
-        # self.logger.info('Handling ElementChangeEvent')
-        # self.logger.debug('Element is %s' % event.element)
-        # self.logger.debug('Property is %s' % event.property)
-
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
-            # log.debug('')
-            # log.debug('Element change for %s %s [%s]' % (str(type(event)), event.element, event.property))
-            # if hasattr(event, 'old_value'):
-            #    log.debug('    old value: %s' % (event.old_value))
-            # if hasattr(event, 'new_value'):
-            #    log.debug('    new value: %s' % (event.new_value))
             for handler in handlers.keys():
                 try:
                     handler(event)

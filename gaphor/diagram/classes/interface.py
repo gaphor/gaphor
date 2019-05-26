@@ -83,7 +83,7 @@ from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
 class InterfacePort(LinePort):
     """
     Interface connection port.
-    
+
     It is simple line port, which changes glue behaviour depending on
     interface folded state. If interface is folded, then
     `InterfacePort.glue` method suggests connection in the middle of the
@@ -160,8 +160,8 @@ class InterfaceItem(ClassItem):
     # Folded mode, notation of assembly connector icon mode (ball&socket).
     FOLDED_ASSEMBLY = 3
 
-    def __init__(self, id=None):
-        ClassItem.__init__(self, id)
+    def __init__(self, id=None, factory=None):
+        ClassItem.__init__(self, id, factory)
         self._folded = self.FOLDED_NONE
         self._angle = 0
         old_f = self._name.is_visible

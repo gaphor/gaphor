@@ -204,23 +204,26 @@ from gaphor.UML.properties import association
 from gaphor.services.elementdispatcher import EventWatcher
 
 
+class A(Element):
+    def __init__(self, id=None, event_handler=None):
+        super().__init__(id, event_handler)
+
+
+A.one = association("one", A, lower=0, upper=1, composite=True)
+A.two = association("two", A, lower=0, upper=2, composite=True)
+
+
 class ElementDispatcherAsServiceTestCase(TestCase):
 
     services = TestCase.services + ["element_dispatcher"]
+
+    def A(self):
+        return self.element_factory.create(A)
 
     def setUp(self):
         super(ElementDispatcherAsServiceTestCase, self).setUp()
         self.events = []
         self.dispatcher = Application.get_service("element_dispatcher")
-        element_factory = self.element_factory
-
-        class A(Element):
-            def __init__(self):
-                super().__init__(factory=element_factory)
-
-        A.one = association("one", A, lower=0, upper=1, composite=True)
-        A.two = association("two", A, lower=0, upper=2, composite=True)
-        self.A = A
 
     def tearDown(self):
         super(ElementDispatcherAsServiceTestCase, self).tearDown()

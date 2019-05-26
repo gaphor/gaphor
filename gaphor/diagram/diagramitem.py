@@ -203,14 +203,10 @@ class DiagramItem(
     @cvar style: styles information (derived from DiagramItemMeta)
     """
 
-    element_factory = inject("element_factory")
-
-    def __init__(self, id=None):
-        UML.Presentation.__init__(self, factory=self.element_factory)
+    def __init__(self, id=None, factory=None):
+        UML.Presentation.__init__(self, id, factory)
         EditableTextSupport.__init__(self)
         StereotypeSupport.__init__(self)
-
-        self._id = id
 
         # properties, which should be saved in file
         self._persistent_props = set()
@@ -224,8 +220,6 @@ class DiagramItem(
             "subject.appliedStereotype.classifier.name",
             self.on_element_applied_stereotype,
         )
-
-    id = property(lambda self: self._id, doc="Id")
 
     def set_prop_persistent(self, name):
         """

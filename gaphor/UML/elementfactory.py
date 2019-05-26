@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 
 from gaphor.UML.diagram import Diagram
-from gaphor.UML.element import Element
+from gaphor.UML.element import Element, UnlinkEvent
 from gaphor.UML.event import (
     ElementChangeEvent,
     ElementCreateEvent,
@@ -167,7 +167,8 @@ class ElementFactory:
         """
         Handle events coming from elements.
         """
-        pass
+        if type(event) is UnlinkEvent:
+            self._unlink_element(event.element)
 
 
 class ElementFactoryService(Service, ElementFactory):
@@ -222,16 +223,12 @@ class ElementFactoryService(Service, ElementFactory):
         finally:
             self._block_events -= 1
 
-    def _unlink_element(self, element):
-        """
-        NOTE: Invoked from Element.unlink() to perform an element unlink.
-        """
-        super(ElementFactoryService, self)._unlink_element(element)
-        self._handle(ElementDeleteEvent(self, element))
-
     def _handle(self, event):
         """
         Handle events coming from elements (used internally).
         """
+        super()._handle(event)
         if not self._block_events:
+            if type(event) is UnlinkEvent:
+                event = ElementDeleteEvent(self, event.element)
             self.event_manager.handle(event)

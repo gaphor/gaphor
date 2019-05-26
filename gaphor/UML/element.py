@@ -10,6 +10,14 @@ import uuid
 from gaphor.UML.properties import umlproperty
 
 
+class UnlinkEvent:
+    """Used to tell event handlers this element should be unlinked.
+    """
+
+    def __init__(self, element):
+        self.element = element
+
+
 class Element:
     """
     Base class for UML data classes.
@@ -34,6 +42,8 @@ class Element:
         self._unlink_lock = 0
 
     id = property(lambda self: self._id, doc="Id")
+
+    factory = property(lambda self: self._factory, doc="the owning element factory")
 
     def umlproperties(self):
         """
@@ -92,8 +102,7 @@ class Element:
 
                 prop.unlink(self)
 
-            if self._factory:
-                self._factory._unlink_element(self)
+            self.handle(UnlinkEvent(self))
         finally:
             self._unlink_lock -= 1
 
@@ -118,25 +127,3 @@ class Element:
         Returns true if the object is of the same type as other.
         """
         return isinstance(self, type(other))
-
-    def __getstate__(self):
-        d = dict(self.__dict__)
-        try:
-            del d["_factory"]
-        except KeyError:
-            pass
-        return d
-
-    def __setstate__(self, state):
-        self._factory = None
-        self.__dict__.update(state)
-
-
-try:
-    import psyco
-except ImportError:
-    pass
-else:
-    psyco.bind(Element)
-
-# vim:sw=4:et

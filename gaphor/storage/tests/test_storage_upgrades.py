@@ -7,7 +7,7 @@ from gaphor.storage import diagramitems
 
 
 @pytest.fixture
-def application(services=["element_factory", "action_manager"]):
+def application(services=["element_factory"]):
     Application.init(services=services)
     yield Application
     Application.shutdown()

@@ -19,9 +19,9 @@ class ElementItem(gaphas.Element, DiagramItem):
         "background-gradient": ((0.8, 0.8, 0.8, 0.5), (1.0, 1.0, 1.0, 0.5)),
     }
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, factory=None):
         gaphas.Element.__init__(self)
-        DiagramItem.__init__(self, id)
+        DiagramItem.__init__(self, id, factory)
 
         self.min_width = self.style.min_size[0]
         self.min_height = self.style.min_size[1]

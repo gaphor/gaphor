@@ -12,15 +12,15 @@ from gaphor.diagram.diagramline import NamedLine
 
 class ExtensionItem(NamedLine):
     """
-    ExtensionItem represents associations. 
+    ExtensionItem represents associations.
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
     represents a Property (with Property.association == my association).
     """
 
     __uml__ = UML.Extension
 
-    def __init__(self, id=None):
-        NamedLine.__init__(self, id)
+    def __init__(self, id=None, factory=None):
+        NamedLine.__init__(self, id, factory)
         self.watch("subject<Extension>.ownedEnd")
 
     def draw_head(self, context):

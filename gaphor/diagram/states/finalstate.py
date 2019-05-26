@@ -21,8 +21,8 @@ class FinalStateItem(VertexItem):
     RADIUS_1 = 10
     RADIUS_2 = 15
 
-    def __init__(self, id=None):
-        super(FinalStateItem, self).__init__(id)
+    def __init__(self, id=None, factory=None):
+        super().__init__(id, factory)
         for h in self.handles():
             h.movable = False
 

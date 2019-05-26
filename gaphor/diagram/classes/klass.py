@@ -49,14 +49,14 @@ class ClassItem(ClassifierItem):
         "abstract-feature-font": "sans italic 10",
     }
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, factory=None):
         """Constructor.  Initialize the ClassItem.  This will also call the
 		ClassifierItem constructor.
 
 		The drawing style is set here as well.  The class item will create
 		two compartments - one for attributes and another for operations."""
 
-        ClassifierItem.__init__(self, id)
+        ClassifierItem.__init__(self, id, factory)
         self.drawing_style = self.DRAW_COMPARTMENT
         self._attributes = self.create_compartment("attributes")
         self._attributes.font = self.style.feature_font

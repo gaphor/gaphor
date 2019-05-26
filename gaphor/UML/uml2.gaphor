@@ -3949,10 +3949,10 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 796.0, 114.0)</val>
 </matrix>
 <width>
-<val>472.0</val>
+<val>278.0</val>
 </width>
 <height>
-<val>294.0</val>
+<val>295.5</val>
 </height>
 <subject>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4024,7 +4024,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (363.0, 0.7792642140468047)]</val>
+<val>[(0.0, 0.0), (363.0, 1.1454849498327633)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:6C8E65AC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4053,7 +4053,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 845.6333333333332, 19.19999999999999)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 836.6333333333332, 17.19999999999999)</val>
 </matrix>
 <width>
 <val>168.0</val>
@@ -4076,7 +4076,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 930.3367149758458, 79.19999999999999)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 921.3367149758458, 77.19999999999999)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -4085,7 +4085,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (81.85116590102393, 34.8)]</val>
+<val>[(0.0, 0.0), (1.9942826592597385, 36.8)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:6F1514F4-4B53-11D7-A5E6-6257AF3C5118"/>
@@ -4137,7 +4137,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 796.0, 236.9096989966555)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 796.0, 237.53678929765886)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -4146,7 +4146,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-164.0, 0.0), (-164.0, 53.09698996655521), (0.0, 53.09698996655521)]</val>
+<val>[(0.0, 0.0), (-164.0, 0.0), (-164.0, 53.36789297658862), (0.0, 53.36789297658862)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:7DDC7BDC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4172,7 +4172,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 796.0, 330.3210702341137)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 796.0, 331.4247491638796)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -4181,7 +4181,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-164.0, 0.0), (-164.0, 53.09698996655521), (0.0, 53.09698996655521)]</val>
+<val>[(0.0, 0.0), (-164.0, 0.0), (-164.0, 53.36789297658862), (0.0, 53.36789297658862)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:7DDC7BDC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4216,7 +4216,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (211.0, 0.0), (211.0, 77.22916387959867), (308.0, 77.22916387959867)]</val>
+<val>[(0.0, 0.0), (211.0, 0.0), (211.0, 77.30441471571908), (308.0, 77.30441471571908)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:61913AB0-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4283,10 +4283,10 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 331.9004524886878, 473.20000000000005)</val>
 </matrix>
 <width>
-<val>178.0</val>
+<val>100.0</val>
 </width>
 <height>
-<val>133.0</val>
+<val>50.0</val>
 </height>
 <subject>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
@@ -4312,7 +4312,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-214.0, 0.0), (-214.0, 160.88571808741614), (-1.0995475113122097, 160.88571808741614)]</val>
+<val>[(0.0, 0.0), (-214.0, 0.0), (-214.0, 125.58186782003645), (-1.0995475113122097, 125.58186782003645)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:6C8E65AC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4341,10 +4341,10 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1392.0, 115.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1440.0, 140.0)</val>
 </matrix>
 <width>
-<val>472.0</val>
+<val>195.0</val>
 </width>
 <height>
 <val>128.0</val>
@@ -4364,7 +4364,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1090.0, 114.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1074.0, 157.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -4373,7 +4373,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (302.0, 17.925619834710744)]</val>
+<val>[(0.0, 0.0), (366.0, -0.07438016528925573)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:7DDC7BDC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4402,13 +4402,13 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1361.4027149321266, 13.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1422.5, 19.19999999999999)</val>
 </matrix>
 <width>
-<val>129.0</val>
+<val>101.0</val>
 </width>
 <height>
-<val>50.0</val>
+<val>51.80000000000001</val>
 </height>
 <subject>
 <ref refid="DCE:38CB97A8-45CF-11D7-B5CA-613352B2821F"/>
@@ -4428,10 +4428,10 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1498.1656184486374, 14.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1543.0, 13.0)</val>
 </matrix>
 <width>
-<val>156.0</val>
+<val>107.16561844863736</val>
 </width>
 <height>
 <val>58.0</val>
@@ -4451,7 +4451,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1428.532778280543, 63.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1475.0591968851943, 71.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -4460,7 +4460,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (49.386514797388145, 52.0)]</val>
+<val>[(0.0, 0.0), (0.43712122962892863, 69.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:38B9F838-4B56-11D7-A5E6-6257AF3C5118"/>
@@ -4477,7 +4477,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1576.7984978422126, 72.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1597.0175714782667, 71.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -4486,7 +4486,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (192.29173288870197, 43.0)]</val>
+<val>[(0.0, 0.0), (-1.2281753076558743, 69.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:4EDEF382-4B56-11D7-A5E6-6257AF3C5118"/>
@@ -4503,7 +4503,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1864.0, 179.5663716814159)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1635.0, 204.5663716814159)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -4512,7 +4512,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-131.0589390962673, -17.673514538558692)]</val>
+<val>[(0.0, 0.0), (106.9410609037327, -0.1367252408998354)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:F3BEEB38-4B55-11D7-A5E6-6257AF3C5118"/>
@@ -4538,7 +4538,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1090.0, 114.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1074.0, 209.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -4547,7 +4547,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (302.0, 79.28099173553719)]</val>
+<val>[(0.0, 0.0), (222.0, -1.0), (235.0, 15.0), (366.0, 15.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:7DDC7BDC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4576,7 +4576,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1393.156186612576, 249.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 839.6333333333332, 535.0)</val>
 </matrix>
 <width>
 <val>174.0</val>
@@ -4599,7 +4599,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1393.156186612576, 273.83999999999986)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 925.4771467207572, 535.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -4608,7 +4608,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-303.156186612576, 134.16000000000014)]</val>
+<val>[(0.0, 0.0), (-0.48985858516402914, -125.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:B656013A-4B57-11D7-A5E6-6257AF3C5118"/>
@@ -4634,16 +4634,16 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1090.0, 408.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1043.0, 409.5)</val>
 </matrix>
 <orthogonal>
-<val>1</val>
+<val>0</val>
 </orthogonal>
 <horizontal>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (36.0, 0.0), (36.0, 0.0), (0.0, 0.0)]</val>
+<val>[(0.0, 0.0), (2.0, 70.5), (-37.0, 69.5), (-36.73305084745766, 0.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:7DDC7BDC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -4672,7 +4672,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1732.9410609037327, 145.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1741.9410609037327, 187.53678929765886)</val>
 </matrix>
 <width>
 <val>100.0</val>
@@ -4692,10 +4692,10 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 403.0, 97.0)</val>
 </matrix>
 <width>
-<val>162.0</val>
+<val>160.83773413400422</val>
 </width>
 <height>
-<val>78.0</val>
+<val>54.0</val>
 </height>
 <subject>
 <ref refid="DCE:F65CB798-AE1F-11D8-8639-00C00C03A405"/>
@@ -4712,7 +4712,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1392.0, 237.49462365591398)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1440.0, 262.494623655914)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -4721,7 +4721,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-302.0, -123.49462365591398)]</val>
+<val>[(0.0, 0.0), (-366.0, 0.5053763440860166)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:F3BEEB38-4B55-11D7-A5E6-6257AF3C5118"/>
@@ -9604,7 +9604,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (205.0, 0.28000000000000114)]</val>
+<val>[(0.0, 0.0), (205.0, -1.7199999999999989)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:0D9DCE64-97BA-11D8-9E36-00C00C03A405"/>
@@ -9720,7 +9720,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 819.437119831, 24.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 836.937119831, 24.0)</val>
 </matrix>
 <width>
 <val>158.125760338</val>
@@ -9778,7 +9778,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (176.0, -1.0645161290322562)]</val>
+<val>[(0.0, 0.0), (176.0, -1.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:33965FE4-97BA-11D8-9E36-00C00C03A405"/>
@@ -9804,7 +9804,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 893.4282221095541, 74.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 910.9282221095541, 74.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -9813,7 +9813,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (16.696558580003966, 47.0)]</val>
+<val>[(0.0, 0.0), (0.071777890445901, 47.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:ECAB3CAE-97BA-11D8-9E38-00C00C03A405"/>
@@ -9833,7 +9833,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1070.0, 120.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 841.0, 349.0)</val>
 </matrix>
 <width>
 <val>136.0</val>
@@ -9859,7 +9859,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1072.0, 20.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 843.0665431725, 484.0)</val>
 </matrix>
 <width>
 <val>131.866913655</val>
@@ -9882,7 +9882,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1137.9273592177235, 78.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 910.0, 484.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -9891,7 +9891,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-0.562873236414589, 42.0)]</val>
+<val>[(0.0, 0.0), (1.0, -79.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:5EBD14E8-97BB-11D8-9E39-00C00C03A405"/>
@@ -9908,7 +9908,7 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1011.0, 145.51522035438435)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 914.0, 190.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -9917,7 +9917,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (59.0, 0.4847796456156459)]</val>
+<val>[(0.0, 0.0), (0.0, 159.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:F740EC70-97BA-11D8-9E38-00C00C03A405"/>
@@ -9943,16 +9943,16 @@ BehavioredClassifier.</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1124.0, 176.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 841.0, 373.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
 </orthogonal>
 <horizontal>
-<val>1</val>
+<val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (2.0, 195.0), (-466.0, 197.6785714285715)]</val>
+<val>[(0.0, 0.0), (-183.0, 0.6785714285715017)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:5264DEA4-97BB-11D8-9E39-00C00C03A405"/>
@@ -21918,10 +21918,10 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 501.0127388535032, 432.0)</val>
 </matrix>
 <width>
-<val>472.0</val>
+<val>197.0</val>
 </width>
 <height>
-<val>81.0</val>
+<val>86.0</val>
 </height>
 <subject>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
@@ -21938,7 +21938,7 @@ specially for Gaphor</val>
 <val>0</val>
 </show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 501.0127388535032, 474.3050847457627)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 501.0127388535032, 476.91650973006904)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -21947,7 +21947,7 @@ specially for Gaphor</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-310.70661640452363, 0.0), (-310.70661640452363, -52.30508474576271)]</val>
+<val>[(0.0, 0.0), (-310.70661640452363, 0.0), (-310.70661640452363, -54.91650973006904)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:B8514532-4B32-11D7-B391-02BBFE4396CE"/>
@@ -51613,7 +51613,7 @@ to accomodate simpleAttribute</val>
 <val>(1.0, 0.0, 0.0, 1.0, 149.0, 310.0)</val>
 </matrix>
 <width>
-<val>102.0</val>
+<val>107.0</val>
 </width>
 <height>
 <val>61.0</val>

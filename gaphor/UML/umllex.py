@@ -159,7 +159,7 @@ def parse_attribute(el, s):
             el.defaultValue = None
     else:
         g = m.group
-        create = el._factory.create
+        create = el.factory.create
         _set_visibility(el, g("vis"))
         el.isDerived = g("derived") and True or False
         el.name = g("name")
@@ -182,7 +182,7 @@ def parse_association_end(el, s):
     two strings. It is automatically figured out which string is fed to the
     parser.
     """
-    create = el._factory.create
+    create = el.factory.create
 
     # if no name, then clear as there could be some garbage
     # due to previous parsing (i.e. '[1'
@@ -258,7 +258,7 @@ def parse_operation(el, s):
         list(map(Parameter.unlink, list(el.formalParameter)))
     else:
         g = m.group
-        create = el._factory.create
+        create = el.factory.create
         _set_visibility(el, g("vis"))
         el.name = g("name")
         if not el.returnResult:
