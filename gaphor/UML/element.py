@@ -111,7 +111,7 @@ class Element:
         """
         model = self._model
         if model:
-            model._handle(event)
+            model.handle(event)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
