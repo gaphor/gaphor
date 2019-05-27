@@ -18,8 +18,8 @@ class PackageItem(NamedItem):
         "tab-y": 20,
     }
 
-    def __init__(self, id=None, factory=None):
-        super(PackageItem, self).__init__(id, factory)
+    def __init__(self, id=None, model=None):
+        super(PackageItem, self).__init__(id, model)
 
     def draw(self, context):
         super(PackageItem, self).draw(context)

@@ -33,8 +33,8 @@ class StateItem(CompartmentItem, VertexItem):
         "extra-space": "compartment",
     }
 
-    def __init__(self, id=None, factory=None):
-        super().__init__(id, factory)
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
         self.drawing_style = self.DRAW_COMPARTMENT
         self._activities = self.create_compartment("activities")
         self._activities.use_extra_space = True
@@ -48,7 +48,7 @@ class StateItem(CompartmentItem, VertexItem):
     def _set_activity(self, act, attr, text):
         if text and act not in self._activities:
             self._activities.append(act)
-            act.subject = self.factory.create(UML.Activity)
+            act.subject = self.model.create(UML.Activity)
             act.subject.name = text
             setattr(self.subject, attr, act.subject)
 

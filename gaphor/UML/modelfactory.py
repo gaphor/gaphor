@@ -56,29 +56,29 @@ def stereotype_name(stereotype):
         return name[0].lower() + name[1:]
 
 
-def apply_stereotype(factory, element, stereotype):
+def apply_stereotype(model, element, stereotype):
     """
     Apply a stereotype to an element.
 
     :Parameters:
-     factory
-        UML metamodel factory.
+     model
+        UML metamodel model.
      element
         UML metamodel class instance.
      stereotype
         UML metamodel stereotype instance.
     """
-    obj = factory.create(InstanceSpecification)
+    obj = model.create(InstanceSpecification)
     obj.classifier = stereotype
     element.appliedStereotype = obj
     return obj
 
 
-def find_instances(factory, element):
+def find_instances(model, element):
     """
     Find instance specification which extend classifier `element`.
     """
-    return factory.select(
+    return model.select(
         lambda e: e.isKindOf(InstanceSpecification)
         and e.classifier
         and e.classifier[0] == element
@@ -102,7 +102,7 @@ def remove_stereotype(element, stereotype):
             break
 
 
-def get_stereotypes(factory, element):
+def get_stereotypes(model, element):
     """
     Get sorted collection of possible stereotypes for specified element.
     """
@@ -116,7 +116,7 @@ def get_stereotypes(factory, element):
     names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
 
     # find stereotypes that extend element class
-    classes = factory.select(lambda e: e.isKindOf(Class) and e.name in names)
+    classes = model.select(lambda e: e.isKindOf(Class) and e.name in names)
 
     stereotypes = set(ext.ownedEnd.type for cls in classes for ext in cls.extension)
     return sorted(stereotypes, key=lambda st: st.name)
@@ -129,13 +129,13 @@ def get_applied_stereotypes(element):
     return element.appliedStereotype[:].classifier
 
 
-def create_extension(factory, metaclass, stereotype):
+def create_extension(model, metaclass, stereotype):
     """
     Create an Extension association between an metaclass and a stereotype.
     """
-    ext = factory.create(Extension)
-    p = factory.create(Property)
-    ext_end = factory.create(ExtensionEnd)
+    ext = model.create(Extension)
+    p = model.create(Property)
+    ext_end = model.create(ExtensionEnd)
 
     ext.memberEnd = p
     ext.memberEnd = ext_end
@@ -161,51 +161,51 @@ def is_metaclass(element):
     )
 
 
-def add_slot(factory, instance, definingFeature):
+def add_slot(model, instance, definingFeature):
     """
     Add slot to instance specification for an attribute.
     """
-    slot = factory.create(Slot)
+    slot = model.create(Slot)
     slot.definingFeature = definingFeature
     instance.slot = slot
     return slot
 
 
-def create_dependency(factory, supplier, client):
-    dep = factory.create(Dependency)
+def create_dependency(model, supplier, client):
+    dep = model.create(Dependency)
     dep.supplier = supplier
     dep.client = client
     return dep
 
 
-def create_realization(factory, realizingClassifier, abstraction):
-    dep = factory.create(Realization)
+def create_realization(model, realizingClassifier, abstraction):
+    dep = model.create(Realization)
     dep.realizingClassifier = realizingClassifier
     dep.abstraction = abstraction
     return dep
 
 
-def create_generalization(factory, general, specific):
-    gen = factory.create(Generalization)
+def create_generalization(model, general, specific):
+    gen = model.create(Generalization)
     gen.general = general
     gen.specific = specific
     return gen
 
 
-def create_implementation(factory, contract, implementatingClassifier):
-    impl = factory.create(Implementation)
+def create_implementation(model, contract, implementatingClassifier):
+    impl = model.create(Implementation)
     impl.contract = contract
     impl.implementatingClassifier = implementatingClassifier
     return impl
 
 
-def create_association(factory, type_a, type_b):
+def create_association(model, type_a, type_b):
     """
     Create an association between two items.
     """
-    assoc = factory.create(Association)
-    end_a = factory.create(Property)
-    end_b = factory.create(Property)
+    assoc = model.create(Association)
+    end_a = model.create(Property)
+    end_b = model.create(Property)
     assoc.memberEnd = end_a
     assoc.memberEnd = end_b
     end_a.type = type_a
@@ -309,22 +309,22 @@ def dependency_type(client, supplier):
     return dt
 
 
-def create_message(factory, msg, inverted=False):
+def create_message(model, msg, inverted=False):
     """
     Create new message based on speciied message.
 
     If inverted is set to True, then inverted message is created.
     """
-    message = factory.create(Message)
+    message = model.create(Message)
     send = None
     receive = None
 
     if msg.sendEvent:
-        send = factory.create(MessageOccurrenceSpecification)
+        send = model.create(MessageOccurrenceSpecification)
         sl = msg.sendEvent.covered
         send.covered = sl
     if msg.receiveEvent:
-        receive = factory.create(MessageOccurrenceSpecification)
+        receive = model.create(MessageOccurrenceSpecification)
         rl = msg.receiveEvent.covered
         receive.covered = rl
 

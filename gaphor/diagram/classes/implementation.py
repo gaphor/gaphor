@@ -10,8 +10,8 @@ class ImplementationItem(DiagramLine):
 
     __uml__ = UML.Implementation
 
-    def __init__(self, id=None, factory=None):
-        DiagramLine.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        DiagramLine.__init__(self, id, model)
         self._solid = False
 
     def draw_head(self, context):

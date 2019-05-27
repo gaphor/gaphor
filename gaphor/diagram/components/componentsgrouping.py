@@ -30,18 +30,18 @@ class NodeComponentGroup(AbstractGroup):
         component = self.item.subject
 
         # node attribute
-        a1 = node.factory.create(UML.Property)
+        a1 = node.model.create(UML.Property)
         a1.aggregation = "composite"
         # component attribute
-        a2 = node.factory.create(UML.Property)
+        a2 = node.model.create(UML.Property)
 
-        e1 = node.factory.create(UML.ConnectorEnd)
-        e2 = node.factory.create(UML.ConnectorEnd)
+        e1 = node.model.create(UML.ConnectorEnd)
+        e2 = node.model.create(UML.ConnectorEnd)
 
         # create connection between node and component
         e1.role = a1
         e2.role = a2
-        connector = node.factory.create(UML.Connector)
+        connector = node.model.create(UML.Connector)
         connector.end = e1
         connector.end = e2
 
@@ -75,7 +75,7 @@ class NodeArtifactGroup(AbstractGroup):
         artifact = self.item.subject
 
         # deploy artifact on node
-        deployment = node.factory.create(UML.Deployment)
+        deployment = node.model.create(UML.Deployment)
         node.deployment = deployment
         deployment.deployedArtifact = artifact
 

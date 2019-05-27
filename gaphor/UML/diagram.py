@@ -66,11 +66,11 @@ class Diagram(Namespace, PackageableElement):
     """Diagrams may contain model elements and can be owned by a Package.
     A diagram is a Namespace and a PackageableElement."""
 
-    def __init__(self, id=None, factory=None):
-        """Initialize the diagram with an optional id and element factory.
+    def __init__(self, id=None, model=None):
+        """Initialize the diagram with an optional id and element model.
         The diagram also has a canvas."""
 
-        super(Diagram, self).__init__(id, factory)
+        super(Diagram, self).__init__(id, model)
         self.canvas = DiagramCanvas(self)
 
     def save(self, save_func):
@@ -94,7 +94,7 @@ class Diagram(Namespace, PackageableElement):
 
     def create_as(self, type, id, parent=None, subject=None):
         assert issubclass(type, gaphas.Item)
-        item = type(id, self.factory)
+        item = type(id, self.model)
         if subject:
             item.subject = subject
         self.canvas.add(item, parent)

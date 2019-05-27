@@ -29,8 +29,8 @@ class NodeItem(ClassifierItem):
 
     DEPTH = 10
 
-    def __init__(self, id=None, factory=None):
-        ClassifierItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        ClassifierItem.__init__(self, id, model)
         self.drawing_style = self.DRAW_COMPARTMENT
         self.height = 50
         self.width = 120

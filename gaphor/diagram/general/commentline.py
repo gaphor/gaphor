@@ -8,8 +8,8 @@ from gaphor.diagram.connectors import IConnect
 
 
 class CommentLineItem(DiagramLine):
-    def __init__(self, id=None, factory=None):
-        DiagramLine.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        DiagramLine.__init__(self, id, model)
 
     def save(self, save_func):
         DiagramLine.save(self, save_func)

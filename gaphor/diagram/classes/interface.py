@@ -160,8 +160,8 @@ class InterfaceItem(ClassItem):
     # Folded mode, notation of assembly connector icon mode (ball&socket).
     FOLDED_ASSEMBLY = 3
 
-    def __init__(self, id=None, factory=None):
-        ClassItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        ClassItem.__init__(self, id, model)
         self._folded = self.FOLDED_NONE
         self._angle = 0
         old_f = self._name.is_visible

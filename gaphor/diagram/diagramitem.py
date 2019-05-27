@@ -202,8 +202,8 @@ class DiagramItem(
     @cvar style: styles information (derived from DiagramItemMeta)
     """
 
-    def __init__(self, id=None, factory=None):
-        UML.Presentation.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        UML.Presentation.__init__(self, id, model)
         EditableTextSupport.__init__(self)
         StereotypeSupport.__init__(self)
 

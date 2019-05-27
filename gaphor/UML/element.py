@@ -23,9 +23,9 @@ class Element:
     Base class for UML data classes.
     """
 
-    def __init__(self, id=None, factory=None):
+    def __init__(self, id=None, model=None):
         """
-        Create an element. As optional parameters an id and factory can be
+        Create an element. As optional parameters an id and model can be
         given.
 
         Id is a serial number for the element. The default id is None and will
@@ -33,17 +33,16 @@ class Element:
         int or string) can be provided as well. An id False will result in no
         id being  given (for "transient" or helper classes).
 
-        Factory can be provided to refer to the class that maintains the
-        lifecycle of the element.
+        A model can be provided to refer to the model this element belongs to.
         """
         self._id = id or (id is not False and str(uuid.uuid1()) or False)
-        # The factory this element belongs to.
-        self._factory = factory
+        # The model this element belongs to.
+        self._model = model
         self._unlink_lock = 0
 
     id = property(lambda self: self._id, doc="Id")
 
-    factory = property(lambda self: self._factory, doc="the owning element factory")
+    model = property(lambda self: self._model, doc="the owning model")
 
     def umlproperties(self):
         """
@@ -110,9 +109,9 @@ class Element:
         """
         Propagate incoming events
         """
-        factory = self._factory
-        if factory:
-            factory._handle(event)
+        model = self._model
+        if model:
+            model._handle(event)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 

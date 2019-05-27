@@ -150,8 +150,8 @@ class LifelineItem(NamedItem):
     __uml__ = UML.Lifeline
     __style__ = {"name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
-    def __init__(self, id=None, factory=None):
-        NamedItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        NamedItem.__init__(self, id, model)
 
         self.is_destroyed = False
 

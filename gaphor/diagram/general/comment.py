@@ -17,8 +17,8 @@ class CommentItem(ElementItem):
     EAR = 15
     OFFSET = 5
 
-    def __init__(self, id=None, factory=None):
-        ElementItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        ElementItem.__init__(self, id, model)
         self.min_width = CommentItem.EAR + 2 * CommentItem.OFFSET
         self.height = 50
         self.width = 100

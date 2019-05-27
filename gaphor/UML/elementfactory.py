@@ -58,12 +58,12 @@ class ElementFactory:
         Bind an already created element to the element factory.
         The element may not be bound to another factory already.
         """
-        if hasattr(element, "_factory") and element._factory:
+        if hasattr(element, "_model") and element._model:
             raise AttributeError("element is already bound")
         if self._elements.get(element.id):
             raise AttributeError("an element already exists with the same id")
 
-        element._factory = self
+        element._model = self
         self._elements[element.id] = element
 
     def size(self):

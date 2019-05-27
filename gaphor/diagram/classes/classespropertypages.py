@@ -402,7 +402,7 @@ class DependencyPropertyPage(PropertyPageBase):
         self.item.dependency_type = cls
         subject = self.item.subject
         if subject:
-            subject.factory.swap_element(self.item.subject, cls)
+            subject.model.swap_element(self.item.subject, cls)
             self.item.request_update()
 
     @transactional

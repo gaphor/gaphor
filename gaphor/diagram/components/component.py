@@ -17,8 +17,8 @@ class ComponentItem(ClassifierItem):
     BAR_HEIGHT = 5
     BAR_PADDING = 5
 
-    def __init__(self, id=None, factory=None):
-        ClassifierItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        ClassifierItem.__init__(self, id, model)
         # Set drawing style to compartment w// small icon
         self.drawing_style = self.DRAW_COMPARTMENT_ICON
 
