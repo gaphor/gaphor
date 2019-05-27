@@ -85,7 +85,7 @@ class StereotypePage(PropertyPageBase):
         if subject is None:
             return None
 
-        stereotypes = UML.model.get_stereotypes(subject.model, subject)
+        stereotypes = UML.model.get_stereotypes(subject)
         if not stereotypes:
             return None
 
@@ -121,7 +121,7 @@ class StereotypePage(PropertyPageBase):
     def refresh(self):
         self.model.clear()
         subject = self.item.subject
-        stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
+        stereotypes = UML.model.get_stereotypes(subject)
         instances = subject.appliedStereotype
 
         # shortcut map stereotype -> slot (InstanceSpecification)
@@ -175,7 +175,7 @@ class StereotypePage(PropertyPageBase):
 
         subject = self.item.subject
         if value:
-            UML.model.apply_stereotype(self.element_factory, subject, stereotype)
+            UML.model.apply_stereotype(self.item.model, subject, stereotype)
         else:
             UML.model.remove_stereotype(subject, stereotype)
 
@@ -200,7 +200,7 @@ class StereotypePage(PropertyPageBase):
             return  # nothing to do and don't create slot without value
 
         if slot is None:
-            slot = UML.model.add_slot(self.element_factory, obj, attr)
+            slot = UML.model.add_slot(self.item.model, obj, attr)
 
         assert slot
 

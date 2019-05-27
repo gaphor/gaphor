@@ -32,7 +32,7 @@ class VertexConnect(RelationshipConnect):
         )
         self.line.subject = relation
         if relation.guard is None:
-            relation.guard = self.element_factory.create(UML.Constraint)
+            relation.guard = self.line.model.create(UML.Constraint)
 
 
 @IConnect.register(VertexItem, TransitionItem)

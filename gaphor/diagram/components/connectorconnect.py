@@ -80,9 +80,9 @@ class ConnectorConnectBase(AbstractConnect):
         """
         connector.subject = assembly
 
-        end = self.element_factory.create(UML.ConnectorEnd)
+        end = connector.model.create(UML.ConnectorEnd)
         end.role = iface
-        end.partWithPort = self.element_factory.create(UML.Port)
+        end.partWithPort = connector.model.create(UML.Port)
         assembly.end = end
 
         component.subject.ownedPort = end.partWithPort
@@ -173,7 +173,7 @@ class ConnectorConnectBase(AbstractConnect):
                         break
 
                 if assembly is None:
-                    assembly = self.element_factory.create(UML.Connector)
+                    assembly = self.element.model.create(UML.Connector)
                     assembly.kind = "assembly"
                     for c in connections:
                         connector = c.item

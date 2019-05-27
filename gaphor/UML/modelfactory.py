@@ -74,10 +74,11 @@ def apply_stereotype(model, element, stereotype):
     return obj
 
 
-def find_instances(model, element):
+def find_instances(element):
     """
     Find instance specification which extend classifier `element`.
     """
+    model = element.model
     return model.select(
         lambda e: e.isKindOf(InstanceSpecification)
         and e.classifier
@@ -102,10 +103,11 @@ def remove_stereotype(element, stereotype):
             break
 
 
-def get_stereotypes(model, element):
+def get_stereotypes(element):
     """
     Get sorted collection of possible stereotypes for specified element.
     """
+    model = element.model
     # UML specs does not allow to extend stereotypes with stereotypes
     if isinstance(element, Stereotype):
         return ()
@@ -129,10 +131,15 @@ def get_applied_stereotypes(element):
     return element.appliedStereotype[:].classifier
 
 
-def create_extension(model, metaclass, stereotype):
+def create_extension(metaclass, stereotype):
     """
     Create an Extension association between an metaclass and a stereotype.
     """
+    assert (
+        metaclass.model is stereotype.model
+    ), "Metaclass and Srtereotype are from different models"
+
+    model = metaclass.model
     ext = model.create(Extension)
     p = model.create(Property)
     ext_end = model.create(ExtensionEnd)
@@ -148,9 +155,6 @@ def create_extension(model, metaclass, stereotype):
     metaclass.ownedAttribute = ext_end
 
     return ext
-
-
-extend_with_stereotype = create_extension
 
 
 def is_metaclass(element):

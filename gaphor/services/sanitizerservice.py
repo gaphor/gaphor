@@ -18,8 +18,6 @@ class SanitizerService(Service):
     model that have no presentations (and should have some).
     """
 
-    logger = getLogger("Sanitizer")
-
     event_manager = inject("event_manager")
     element_factory = inject("element_factory")
     property_dispatcher = inject("property_dispatcher")
@@ -45,12 +43,6 @@ class SanitizerService(Service):
         Unlink the model element if no more presentations link to the `item`'s
         subject or the deleted item was the only item currently linked.
         """
-
-        self.logger.debug("Handling AssociationDeleteEvent")
-        # self.logger.debug('Property is %s' % event.property.name)
-        # self.logger.debug('Element is %s' % event.element)
-        # self.logger.debug('Old value is %s' % event.old_value)
-
         if event.property is UML.Element.presentation:
             old_presentation = event.old_value
             if old_presentation and not event.element.presentation:
@@ -58,11 +50,7 @@ class SanitizerService(Service):
 
     def perform_unlink_for_instances(self, st, meta):
 
-        self.logger.debug("Performing unlink for instances")
-        # self.logger.debug('Stereotype is %s' % st)
-        # self.logger.debug('Meta is %s' % meta)
-
-        inst = UML.model.find_instances(self.element_factory, st)
+        inst = UML.model.find_instances(st)
 
         for i in list(inst):
             for e in i.extended:
@@ -74,12 +62,6 @@ class SanitizerService(Service):
         """
         Remove applied stereotypes when extension is deleted.
         """
-
-        self.logger.debug("Handling AssociationDeleteEvent")
-        # self.logger.debug('Property is %s' % event.property.name)
-        # self.logger.debug('Element is %s' % event.element)
-        # self.logger.debug('Old value is %s' % event.old_value)
-
         if (
             isinstance(event.element, UML.Extension)
             and event.property is UML.Association.memberEnd
@@ -91,16 +73,11 @@ class SanitizerService(Service):
                 p, ext = ext, p
             st = ext.type
             meta = p.type and getattr(UML, p.type.name, None)
-            self.perform_unlink_for_instances(st, meta)
+            if st:
+                self.perform_unlink_for_instances(st, meta)
 
     @event_handler(AssociationSetEvent)
     def _disconnect_extension_end(self, event):
-
-        self.logger.debug("Handling AssociationSetEvent")
-        # self.logger.debug('Property is %s' % event.property.name)
-        # self.logger.debug('Element is %s' % event.element)
-        # self.logger.debug('Old value is %s' % event.old_value)
-
         if event.property is UML.ExtensionEnd.type and event.old_value:
             ext = event.element
             p = ext.opposite
@@ -108,19 +85,14 @@ class SanitizerService(Service):
                 return
             st = event.old_value
             meta = getattr(UML, p.type.name, None)
-            self.perform_unlink_for_instances(st, meta)
+            if st:
+                self.perform_unlink_for_instances(st, meta)
 
     @event_handler(AssociationDeleteEvent)
     def _unlink_on_stereotype_delete(self, event):
         """
         Remove applied stereotypes when stereotype is deleted.
         """
-
-        self.logger.debug("Handling AssociationDeleteEvent")
-        # self.logger.debug('Property is %s' % event.property)
-        # self.logger.debug('Element is %s' % event.element)
-        # self.logger.debug('Old value is %s' % event.old_value)
-
         if event.property is UML.InstanceSpecification.classifier:
             if isinstance(event.old_value, UML.Stereotype):
                 event.element.unlink()

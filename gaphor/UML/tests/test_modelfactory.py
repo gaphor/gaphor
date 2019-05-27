@@ -90,11 +90,11 @@ class StereotypesTestCase(TestCaseBase):
         st2.name = "st2"
 
         # first extend with st2, to check sorting
-        UML.model.extend_with_stereotype(self.factory, cls, st2)
-        UML.model.extend_with_stereotype(self.factory, cls, st1)
+        UML.model.create_extension(cls, st2)
+        UML.model.create_extension(cls, st1)
 
         c1 = self.factory.create(UML.Class)
-        result = tuple(st.name for st in UML.model.get_stereotypes(self.factory, c1))
+        result = tuple(st.name for st in UML.model.get_stereotypes(c1))
         assert ("st1", "st2") == result
 
     def test_getting_stereotypes_unique(self):
@@ -110,14 +110,14 @@ class StereotypesTestCase(TestCaseBase):
         st2.name = "st2"
 
         # first extend with st2, to check sorting
-        UML.model.extend_with_stereotype(self.factory, cls1, st2)
-        UML.model.extend_with_stereotype(self.factory, cls1, st1)
+        UML.model.create_extension(cls1, st2)
+        UML.model.create_extension(cls1, st1)
 
-        UML.model.extend_with_stereotype(self.factory, cls2, st1)
-        UML.model.extend_with_stereotype(self.factory, cls2, st2)
+        UML.model.create_extension(cls2, st1)
+        UML.model.create_extension(cls2, st2)
 
         c1 = self.factory.create(UML.Component)
-        result = tuple(st.name for st in UML.model.get_stereotypes(self.factory, c1))
+        result = tuple(st.name for st in UML.model.get_stereotypes(c1))
         assert ("st1", "st2") == result
 
     def test_finding_stereotype_instances(self):
@@ -134,9 +134,7 @@ class StereotypesTestCase(TestCaseBase):
         UML.model.apply_stereotype(self.factory, c1, s2)
         UML.model.apply_stereotype(self.factory, c2, s1)
 
-        result = [
-            e.classifier[0].name for e in UML.model.find_instances(self.factory, s1)
-        ]
+        result = [e.classifier[0].name for e in UML.model.find_instances(s1)]
         assert 2 == len(result)
         assert "s1" in result, result
         assert "s2" not in result, result

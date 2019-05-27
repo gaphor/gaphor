@@ -33,8 +33,8 @@ class StereotypesAttributesTestCase(TestCase):
         attr.name = "st2_attr_1"
         st2.ownedAttribute = attr
 
-        self.ext1 = UML.model.extend_with_stereotype(factory, cls, st1)
-        self.ext2 = UML.model.extend_with_stereotype(factory, cls, st2)
+        self.ext1 = UML.model.create_extension(cls, st1)
+        self.ext2 = UML.model.create_extension(cls, st2)
 
     def tearDown(self):
         del self.st1

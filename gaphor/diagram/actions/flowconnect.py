@@ -145,10 +145,10 @@ class FlowForkDecisionNodeConnect(FlowConnect):
                 flow_class = UML.ControlFlow
 
             UML.model.swap_element(join_node, join_node_cls)
-            fork_node = self.element_factory.create(fork_node_cls)
+            fork_node = element.model.create(fork_node_cls)
             for flow in list(join_node.outgoing):
                 flow.source = fork_node
-            flow = self.element_factory.create(flow_class)
+            flow = element.model.create(flow_class)
             flow.source = join_node
             flow.target = fork_node
 

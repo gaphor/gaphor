@@ -35,7 +35,7 @@ class ClassAttributes(EditableTreeModel):
                 yield [UML.format(attr), attr.isStatic, attr]
 
     def _create_object(self):
-        attr = self.element_factory.create(UML.Property)
+        attr = self._item.model.create(UML.Property)
         self._item.subject.ownedAttribute = attr
         return attr
 
@@ -70,7 +70,7 @@ class ClassOperations(EditableTreeModel):
             ]
 
     def _create_object(self):
-        operation = self.element_factory.create(UML.Operation)
+        operation = self._item.model.create(UML.Operation)
         self._item.subject.ownedOperation = operation
         return operation
 

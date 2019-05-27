@@ -221,7 +221,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         relation = self.relationship(type, head, tail)
         if not relation:
             line = self.line
-            relation = self.element_factory.create(type)
+            relation = line.model.create(type)
             setattr(relation, head.name, self.get_connected(line.head).subject)
             setattr(relation, tail.name, self.get_connected(line.tail).subject)
         return relation

@@ -391,7 +391,7 @@ class Uml2TestCase(unittest.TestCase):
         s = factory.create(UML.Stereotype)
         s.name = "Stereotype"
 
-        e = UML.model.create_extension(factory, c, s)
+        e = UML.model.create_extension(c, s)
 
         assert c == e.metaclass
 
@@ -405,7 +405,7 @@ class Uml2TestCase(unittest.TestCase):
         assert [] == c.extension
         assert [] == s.extension
 
-        e = UML.model.create_extension(factory, c, s)
+        e = UML.model.create_extension(c, s)
 
         print(e.memberEnd)
         assert [e] == c.extension
