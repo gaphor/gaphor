@@ -19,7 +19,8 @@ class ActivityPartitionsGroup(AbstractGroup):
 
     def group(self):
         p = self.parent.subject
-        sp = self.element_factory.create(UML.ActivityPartition)
+        model = self.item.model
+        sp = model.create(UML.ActivityPartition)
         self.item.subject = sp
         sp.name = "Swimlane"
         if p:

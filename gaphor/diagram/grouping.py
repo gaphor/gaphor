@@ -46,8 +46,6 @@ class AbstractGroup(metaclass=abc.ABCMeta):
         Item to be grouped.
     """
 
-    element_factory = inject("element_factory")
-
     def __init__(self, parent, item):
         self.parent = parent
         self.item = item
