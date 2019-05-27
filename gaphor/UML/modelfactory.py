@@ -339,4 +339,12 @@ def create_message(model, msg, inverted=False):
     return message
 
 
-# vim:sw=4:et:ai
+def swap_element(element, new_class):
+    """
+    A "trick" to swap the element type.
+
+    Used in certain cases where the underlaying element type
+    may change.
+    """
+    if element.__class__ is not new_class:
+        element.__class__ = new_class
