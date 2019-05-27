@@ -167,48 +167,70 @@ def is_metaclass(element):
     )
 
 
-def add_slot(model, instance, definingFeature):
+def add_slot(instance, definingFeature):
     """
     Add slot to instance specification for an attribute.
     """
+    assert (
+        instance.model is definingFeature.model
+    ), "Instance and Defining feature are from different models"
+    model = instance.model
     slot = model.create(Slot)
     slot.definingFeature = definingFeature
     instance.slot = slot
     return slot
 
 
-def create_dependency(model, supplier, client):
+def create_dependency(supplier, client):
+    assert (
+        supplier.model is client.model
+    ), "Supplier and Client are from different models"
+    model = supplier.model
     dep = model.create(Dependency)
     dep.supplier = supplier
     dep.client = client
     return dep
 
 
-def create_realization(model, realizingClassifier, abstraction):
+def create_realization(realizingClassifier, abstraction):
+    assert (
+        realizingClassifier.model is stereoabstractiontype.model
+    ), "Realizing classifier and Abstraction are from different models"
+    model = realizingClassifier.model
     dep = model.create(Realization)
     dep.realizingClassifier = realizingClassifier
     dep.abstraction = abstraction
     return dep
 
 
-def create_generalization(model, general, specific):
+def create_generalization(general, specific):
+    assert (
+        general.model is specific.model
+    ), "General and Specific are from different models"
+    model = general.model
     gen = model.create(Generalization)
     gen.general = general
     gen.specific = specific
     return gen
 
 
-def create_implementation(model, contract, implementatingClassifier):
+def create_implementation(contract, implementatingClassifier):
+    assert (
+        contract.model is implementatingClassifier.model
+    ), "Contract and Implementating classifier are from different models"
+    model = contract.model
     impl = model.create(Implementation)
     impl.contract = contract
     impl.implementatingClassifier = implementatingClassifier
     return impl
 
 
-def create_association(model, type_a, type_b):
+def create_association(type_a, type_b):
     """
     Create an association between two items.
     """
+    assert type_a.model is type_b.model, "Head and Tail end are from different models"
+    model = type_a.model
     assoc = model.create(Association)
     end_a = model.create(Property)
     end_b = model.create(Property)
@@ -315,12 +337,13 @@ def dependency_type(client, supplier):
     return dt
 
 
-def create_message(model, msg, inverted=False):
+def create_message(msg, inverted=False):
     """
     Create new message based on speciied message.
 
     If inverted is set to True, then inverted message is created.
     """
+    model = msg.model
     message = model.create(Message)
     send = None
     receive = None

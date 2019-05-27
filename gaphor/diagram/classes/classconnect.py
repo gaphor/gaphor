@@ -118,7 +118,7 @@ class AssociationConnect(UnaryRelationshipConnect):
                     return
 
             # Create new association
-            relation = UML.model.create_association(element.model, head_type, tail_type)
+            relation = UML.model.create_association(head_type, tail_type)
             relation.package = element.canvas.diagram.namespace
 
             line.head_end.subject = relation.memberEnd[0]

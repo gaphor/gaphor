@@ -150,14 +150,14 @@ class AssociationTestCase(TestCaseBase):
         """
         c1 = self.factory.create(UML.Class)
         c2 = self.factory.create(UML.Class)
-        assoc = UML.model.create_association(self.factory, c1, c2)
+        assoc = UML.model.create_association(c1, c2)
         types = [p.type for p in assoc.memberEnd]
         assert c1 in types, assoc.memberEnd
         assert c2 in types, assoc.memberEnd
 
         c1 = self.factory.create(UML.Interface)
         c2 = self.factory.create(UML.Interface)
-        assoc = UML.model.create_association(self.factory, c1, c2)
+        assoc = UML.model.create_association(c1, c2)
         types = [p.type for p in assoc.memberEnd]
         assert c1 in types, assoc.memberEnd
         assert c2 in types, assoc.memberEnd
@@ -173,7 +173,7 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         """
         c1 = self.factory.create(UML.Class)
         c2 = self.factory.create(UML.Class)
-        assoc = UML.model.create_association(self.factory, c1, c2)
+        assoc = UML.model.create_association(c1, c2)
 
         end = assoc.memberEnd[0]
         assert end.type is c1
@@ -224,7 +224,7 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         """
         n1 = self.factory.create(UML.Node)
         n2 = self.factory.create(UML.Node)
-        assoc = UML.model.create_association(self.factory, n1, n2)
+        assoc = UML.model.create_association(n1, n2)
 
         end = assoc.memberEnd[0]
         assert end.type is n1
@@ -313,14 +313,11 @@ class MessageTestCase(TestCaseBase):
         m.sendEvent = send
         m.receiveEvent = receive
 
-        m1 = UML.model.create_message(self.factory, m, False)
-        m2 = UML.model.create_message(self.factory, m, True)
+        m1 = UML.model.create_message(m, False)
+        m2 = UML.model.create_message(m, True)
 
         assert m1.sendEvent.covered is sl
         assert m1.receiveEvent.covered is rl
 
         assert m2.sendEvent.covered is rl
         assert m2.receiveEvent.covered is sl
-
-
-# vim:sw=4:et

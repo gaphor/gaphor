@@ -67,7 +67,7 @@ class StereotypesAttributesTestCase(TestCase):
         # test precondition
         assert not c._compartments[0].visible
 
-        slot = UML.model.add_slot(factory, obj, self.st1.ownedAttribute[0])
+        slot = UML.model.add_slot(obj, self.st1.ownedAttribute[0])
 
         compartment = c._compartments[0]
         assert compartment.visible
@@ -82,7 +82,7 @@ class StereotypesAttributesTestCase(TestCase):
         c.show_stereotypes_attrs = True
         obj = UML.model.apply_stereotype(c.subject, self.st1)
 
-        slot = UML.model.add_slot(factory, obj, self.st1.ownedAttribute[0])
+        slot = UML.model.add_slot(obj, self.st1.ownedAttribute[0])
 
         compartment = c._compartments[0]
         # test precondition
@@ -163,7 +163,7 @@ class StereotypesAttributesTestCase(TestCase):
         assert len(self.kindof(UML.Slot)) == 0
 
         attr = self.st1.ownedAttribute[0]
-        slot = UML.model.add_slot(factory, obj, attr)
+        slot = UML.model.add_slot(obj, attr)
         assert len(obj.slot) == 1
         assert len(self.kindof(UML.Slot)) == 1
         assert slot.definingFeature
@@ -188,7 +188,7 @@ class StereotypesAttributesTestCase(TestCase):
 
         # change attribute of 2nd stereotype
         attr = self.st2.ownedAttribute[0]
-        slot = UML.model.add_slot(self.element_factory, obj, attr)
+        slot = UML.model.add_slot(obj, attr)
         slot.value = "st2 test21"
 
         data = self.save()
@@ -219,9 +219,9 @@ class StereotypesAttributesTestCase(TestCase):
         assert attr3.name == "baseClass", attr3.name
 
         obj = c.subject.appliedStereotype[0]
-        slot = UML.model.add_slot(self.element_factory, obj, attr1)
+        slot = UML.model.add_slot(obj, attr1)
         slot.value = "st1 test1"
-        slot = UML.model.add_slot(self.element_factory, obj, attr2)
+        slot = UML.model.add_slot(obj, attr2)
         slot.value = "st1 test2"
 
         data = self.save()

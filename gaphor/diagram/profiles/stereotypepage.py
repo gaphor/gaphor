@@ -200,7 +200,7 @@ class StereotypePage(PropertyPageBase):
             return  # nothing to do and don't create slot without value
 
         if slot is None:
-            slot = UML.model.add_slot(self.item.model, obj, attr)
+            slot = UML.model.add_slot(obj, attr)
 
         assert slot
 

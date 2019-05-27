@@ -39,7 +39,7 @@ class CommunicationMessageModel(EditableTreeModel):
     def _create_object(self):
         item = self._item
         subject = item.subject
-        message = UML.model.create_message(item.model, subject, self.inverted)
+        message = UML.model.create_message(subject, self.inverted)
         item.add_message(message, self.inverted)
         return message
 

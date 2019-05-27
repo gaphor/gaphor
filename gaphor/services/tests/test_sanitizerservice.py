@@ -45,7 +45,7 @@ class SanitizerServiceTest(TestCase):
 
         # Apply stereotype to class and create slot
         instspec = UML.model.apply_stereotype(klass, stereotype)
-        slot = UML.model.add_slot(factory, instspec, st_attr)
+        slot = UML.model.add_slot(instspec, st_attr)
 
         # Now, what happens if the attribute is deleted:
         self.assertTrue(st_attr in stereotype.ownedMember)
@@ -71,7 +71,7 @@ class SanitizerServiceTest(TestCase):
 
         # Apply stereotype to class and create slot
         instspec = UML.model.apply_stereotype(klass, stereotype)
-        slot = UML.model.add_slot(factory, instspec, st_attr)
+        slot = UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 
@@ -95,7 +95,7 @@ class SanitizerServiceTest(TestCase):
 
         # Apply stereotype to class and create slot
         instspec = UML.model.apply_stereotype(klass, stereotype)
-        slot = UML.model.add_slot(factory, instspec, st_attr)
+        slot = UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 
@@ -123,7 +123,7 @@ class SanitizerServiceTest(TestCase):
         # Apply stereotype to class and create slot
         instspec1 = UML.model.apply_stereotype(klass, stereotype)
         instspec2 = UML.model.apply_stereotype(iface, stereotype)
-        slot = UML.model.add_slot(factory, instspec1, st_attr)
+        slot = UML.model.add_slot(instspec1, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
         assert klass in self.element_factory
@@ -149,7 +149,7 @@ class SanitizerServiceTest(TestCase):
 
         # Apply stereotype to class and create slot
         instspec = UML.model.apply_stereotype(klass, stereotype)
-        slot = UML.model.add_slot(factory, instspec, st_attr)
+        slot = UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 
