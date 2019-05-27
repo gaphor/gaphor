@@ -41,9 +41,9 @@ class StereotypesTestCase(TestCaseBase):
         s3.name = "s3"
 
         cls = self.factory.create(UML.Class)
-        UML.model.apply_stereotype(self.factory, cls, s1)
-        UML.model.apply_stereotype(self.factory, cls, s2)
-        UML.model.apply_stereotype(self.factory, cls, s3)
+        UML.model.apply_stereotype(cls, s1)
+        UML.model.apply_stereotype(cls, s2)
+        UML.model.apply_stereotype(cls, s3)
 
         assert (fmt % "s1, s2, s3") == UML.model.stereotypes_str(cls)
 
@@ -64,9 +64,9 @@ class StereotypesTestCase(TestCaseBase):
         s3.name = "s3"
 
         cls = self.factory.create(UML.Class)
-        UML.model.apply_stereotype(self.factory, cls, s1)
-        UML.model.apply_stereotype(self.factory, cls, s2)
-        UML.model.apply_stereotype(self.factory, cls, s3)
+        UML.model.apply_stereotype(cls, s1)
+        UML.model.apply_stereotype(cls, s2)
+        UML.model.apply_stereotype(cls, s3)
 
         result = UML.model.stereotypes_str(cls, ("test",))
         assert (fmt % "test, s1, s2, s3") == result
@@ -130,9 +130,9 @@ class StereotypesTestCase(TestCaseBase):
 
         c1 = self.factory.create(UML.Class)
         c2 = self.factory.create(UML.Class)
-        UML.model.apply_stereotype(self.factory, c1, s1)
-        UML.model.apply_stereotype(self.factory, c1, s2)
-        UML.model.apply_stereotype(self.factory, c2, s1)
+        UML.model.apply_stereotype(c1, s1)
+        UML.model.apply_stereotype(c1, s2)
+        UML.model.apply_stereotype(c2, s1)
 
         result = [e.classifier[0].name for e in UML.model.find_instances(s1)]
         assert 2 == len(result)

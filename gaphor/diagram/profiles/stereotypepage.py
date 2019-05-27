@@ -175,7 +175,7 @@ class StereotypePage(PropertyPageBase):
 
         subject = self.item.subject
         if value:
-            UML.model.apply_stereotype(self.item.model, subject, stereotype)
+            UML.model.apply_stereotype(subject, stereotype)
         else:
             UML.model.remove_stereotype(subject, stereotype)
 

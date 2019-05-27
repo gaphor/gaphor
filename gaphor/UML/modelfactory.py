@@ -56,18 +56,20 @@ def stereotype_name(stereotype):
         return name[0].lower() + name[1:]
 
 
-def apply_stereotype(model, element, stereotype):
+def apply_stereotype(element, stereotype):
     """
     Apply a stereotype to an element.
 
     :Parameters:
-     model
-        UML metamodel model.
      element
         UML metamodel class instance.
      stereotype
         UML metamodel stereotype instance.
     """
+    assert (
+        element.model is stereotype.model
+    ), "Element and Stereotype are from different models"
+    model = element.model
     obj = model.create(InstanceSpecification)
     obj.classifier = stereotype
     element.appliedStereotype = obj
@@ -137,7 +139,7 @@ def create_extension(metaclass, stereotype):
     """
     assert (
         metaclass.model is stereotype.model
-    ), "Metaclass and Srtereotype are from different models"
+    ), "Metaclass and Stereotype are from different models"
 
     model = metaclass.model
     ext = model.create(Extension)

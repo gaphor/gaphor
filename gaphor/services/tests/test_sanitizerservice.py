@@ -44,7 +44,7 @@ class SanitizerServiceTest(TestCase):
         # ext = UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
+        instspec = UML.model.apply_stereotype(klass, stereotype)
         slot = UML.model.add_slot(factory, instspec, st_attr)
 
         # Now, what happens if the attribute is deleted:
@@ -70,7 +70,7 @@ class SanitizerServiceTest(TestCase):
         ext = UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
+        instspec = UML.model.apply_stereotype(klass, stereotype)
         slot = UML.model.add_slot(factory, instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
@@ -94,7 +94,7 @@ class SanitizerServiceTest(TestCase):
         ext = UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
+        instspec = UML.model.apply_stereotype(klass, stereotype)
         slot = UML.model.add_slot(factory, instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
@@ -121,8 +121,8 @@ class SanitizerServiceTest(TestCase):
         ext2 = UML.model.create_extension(metaiface, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec1 = UML.model.apply_stereotype(factory, klass, stereotype)
-        instspec2 = UML.model.apply_stereotype(factory, iface, stereotype)
+        instspec1 = UML.model.apply_stereotype(klass, stereotype)
+        instspec2 = UML.model.apply_stereotype(iface, stereotype)
         slot = UML.model.add_slot(factory, instspec1, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
@@ -148,7 +148,7 @@ class SanitizerServiceTest(TestCase):
         ext = UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
+        instspec = UML.model.apply_stereotype(klass, stereotype)
         slot = UML.model.add_slot(factory, instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
