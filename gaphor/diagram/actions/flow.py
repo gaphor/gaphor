@@ -29,8 +29,8 @@ class FlowItem(NamedLine):
 
     __style__ = {"name-align": (ALIGN_RIGHT, ALIGN_TOP), "name-padding": (5, 15, 5, 5)}
 
-    def __init__(self, id=None, factory=None):
-        super().__init__(id, factory)
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
         self._guard = self.add_text("guard.value", editable=True)
         self.watch("subject<ControlFlow>.guard", self.on_control_flow_guard)
         self.watch("subject<ObjectFlow>.guard", self.on_control_flow_guard)

@@ -19,8 +19,8 @@ class ExtensionItem(NamedLine):
 
     __uml__ = UML.Extension
 
-    def __init__(self, id=None, factory=None):
-        NamedLine.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        NamedLine.__init__(self, id, model)
         self.watch("subject<Extension>.ownedEnd")
 
     def draw_head(self, context):

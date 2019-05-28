@@ -29,8 +29,8 @@ class AssociationItem(NamedLine):
 
     __uml__ = UML.Association
 
-    def __init__(self, id=None, factory=None):
-        NamedLine.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        NamedLine.__init__(self, id, model)
 
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.

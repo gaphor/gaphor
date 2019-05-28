@@ -6,7 +6,6 @@ import itertools
 
 from gaphas.state import observed, reversible_property
 from gaphor import UML
-from gaphor.core import inject
 
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
@@ -31,8 +30,8 @@ class ObjectNodeItem(NamedItem):
         "text-align-group": "bottom",
     }
 
-    def __init__(self, id=None, factory=None):
-        NamedItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        NamedItem.__init__(self, id, model)
 
         self._show_ordering = False
 

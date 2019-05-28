@@ -18,8 +18,8 @@ class UseCaseItem(ClassifierItem):
     __uml__ = UML.UseCase
     __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
-    def __init__(self, id=None, factory=None):
-        super().__init__(id, factory)
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
         self.drawing_style = -1
 
     def pre_update(self, context):

@@ -1384,7 +1384,7 @@ del extension_metaclass
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 def class_extension(self):
     return list(
-        self._factory.select(lambda e: e.isKindOf(Extension) and self is e.metaclass)
+        self.model.select(lambda e: e.isKindOf(Extension) and self is e.metaclass)
     )
 
 

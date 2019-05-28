@@ -58,12 +58,12 @@ class ElementFactory:
         Bind an already created element to the element factory.
         The element may not be bound to another factory already.
         """
-        if hasattr(element, "_factory") and element._factory:
+        if hasattr(element, "_model") and element._model:
             raise AttributeError("element is already bound")
         if self._elements.get(element.id):
             raise AttributeError("an element already exists with the same id")
 
-        element._factory = self
+        element._model = self
         self._elements[element.id] = element
 
     def size(self):
@@ -163,7 +163,7 @@ class ElementFactory:
         if element.__class__ is not new_class:
             element.__class__ = new_class
 
-    def _handle(self, event):
+    def handle(self, event):
         """
         Handle events coming from elements.
         """
@@ -191,7 +191,7 @@ class ElementFactoryService(Service, ElementFactory):
         Create a new model element of type ``type``.
         """
         obj = super(ElementFactoryService, self).create(type)
-        self._handle(ElementCreateEvent(self, obj))
+        self.handle(ElementCreateEvent(self, obj))
         return obj
 
     def flush(self):
@@ -199,7 +199,7 @@ class ElementFactoryService(Service, ElementFactory):
         This method will emit a single FlushFactoryEvent,
         all individual events are suppressed."""
 
-        self._handle(FlushFactoryEvent(self))
+        self.handle(FlushFactoryEvent(self))
 
         with self.block_events():
             super(ElementFactoryService, self).flush()
@@ -209,7 +209,7 @@ class ElementFactoryService(Service, ElementFactory):
         Send notification that a new model has been loaded by means of the
         ModelFactoryEvent event from gaphor.UML.event.
         """
-        self._handle(ModelFactoryEvent(self))
+        self.handle(ModelFactoryEvent(self))
 
     @contextmanager
     def block_events(self):
@@ -223,11 +223,11 @@ class ElementFactoryService(Service, ElementFactory):
         finally:
             self._block_events -= 1
 
-    def _handle(self, event):
+    def handle(self, event):
         """
         Handle events coming from elements (used internally).
         """
-        super()._handle(event)
+        super().handle(event)
         if not self._block_events:
             if type(event) is UnlinkEvent:
                 event = ElementDeleteEvent(self, event.element)

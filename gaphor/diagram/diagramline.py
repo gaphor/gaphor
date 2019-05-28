@@ -17,9 +17,9 @@ class DiagramLine(gaphas.Line, DiagramItem):
     Base class for diagram lines.
     """
 
-    def __init__(self, id=None, factory=None):
+    def __init__(self, id=None, model=None):
         gaphas.Line.__init__(self)
-        DiagramItem.__init__(self, id, factory)
+        DiagramItem.__init__(self, id, model)
         self.fuzziness = 2
 
     head = property(lambda self: self._handles[0])
@@ -208,8 +208,8 @@ class NamedLine(DiagramLine):
         "name-align-str": None,
     }
 
-    def __init__(self, id=None, factory=None):
-        DiagramLine.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        DiagramLine.__init__(self, id, model)
         self._name = self.add_text(
             "name",
             style={

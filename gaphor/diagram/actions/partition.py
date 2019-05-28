@@ -20,8 +20,8 @@ class PartitionItem(NamedItem):
 
     DELTA = 30
 
-    def __init__(self, id=None, factory=None):
-        super().__init__(id, factory)
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
         self._toplevel = False
         self._bottom = False
         self._subpart = False

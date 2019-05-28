@@ -14,8 +14,8 @@ class IncludeItem(DiagramLine):
     __uml__ = UML.Include
     __stereotype__ = "include"
 
-    def __init__(self, id=None, factory=None):
-        DiagramLine.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        DiagramLine.__init__(self, id, model)
 
     def draw_head(self, context):
         cr = context.cairo

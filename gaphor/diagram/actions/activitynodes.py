@@ -11,7 +11,6 @@ from gaphas.constraint import EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
 
 from gaphor import UML
-from gaphor.core import inject
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import (
@@ -34,8 +33,8 @@ class ActivityNodeItem(NamedItem):
 
     __style__ = {"name-outside": True, "name-padding": (2, 2, 2, 2)}
 
-    def __init__(self, id=None, factory=None):
-        NamedItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        NamedItem.__init__(self, id, model)
         # Do not allow resizing of the node
         for h in self._handles:
             h.movable = False
@@ -129,8 +128,8 @@ class DecisionNodeItem(ActivityNodeItem):
 
     RADIUS = 15
 
-    def __init__(self, id=None, factory=None):
-        ActivityNodeItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        ActivityNodeItem.__init__(self, id, model)
         self._combined = None
         # self.set_prop_persistent('combined')
 
@@ -187,9 +186,9 @@ class ForkNodeItem(Item, DiagramItem):
 
     STYLE_TOP = {"text-align": (ALIGN_CENTER, ALIGN_TOP), "text-outside": True}
 
-    def __init__(self, id=None, factory=None):
+    def __init__(self, id=None, model=None):
         Item.__init__(self)
-        DiagramItem.__init__(self, id, factory)
+        DiagramItem.__init__(self, id, model)
 
         h1, h2 = Handle(), Handle()
         self._handles.append(h1)

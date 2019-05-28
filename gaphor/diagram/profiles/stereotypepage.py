@@ -85,7 +85,7 @@ class StereotypePage(PropertyPageBase):
         if subject is None:
             return None
 
-        stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
+        stereotypes = UML.model.get_stereotypes(subject.model, subject)
         if not stereotypes:
             return None
 

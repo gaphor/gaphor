@@ -80,8 +80,8 @@ class MessageItem(NamedLine):
     # name padding on communication diagram
     CD_PADDING = (10, 10, 10, 10)
 
-    def __init__(self, id=None, factory=None):
-        super().__init__(id, factory)
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
         self._is_communication = False
         self._arrow_pos = 0, 0
         self._arrow_angle = 0

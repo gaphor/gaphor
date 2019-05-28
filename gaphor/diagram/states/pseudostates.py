@@ -26,8 +26,8 @@ class InitialPseudostateItem(VertexItem):
 
     RADIUS = 10
 
-    def __init__(self, id=None, factory=None):
-        super().__init__(id, factory)
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
         for h in self.handles():
             h.movable = False
 
@@ -59,8 +59,8 @@ class HistoryPseudostateItem(VertexItem):
 
     RADIUS = 15
 
-    def __init__(self, id=None, factory=None):
-        super().__init__(id, factory)
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
         for h in self.handles():
             h.movable = False
 

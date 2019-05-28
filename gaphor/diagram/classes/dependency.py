@@ -42,8 +42,8 @@ class DependencyItem(DiagramLine):
         "implements": lambda self: self._dependency_type == UML.Implementation,
     }
 
-    def __init__(self, id=None, factory=None):
-        DiagramLine.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        DiagramLine.__init__(self, id, model)
 
         self._dependency_type = UML.Dependency
         self.auto_dependency = True

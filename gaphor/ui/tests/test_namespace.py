@@ -121,7 +121,7 @@ def test_element_model_factory(namespace, element_factory):
 
     with element_factory.block_events():
         p1 = element_factory.create(UML.Package)
-        p2 = UML.Package(factory=element_factory)
+        p2 = UML.Package(model=element_factory)
 
         p2.package = p1
     element_factory.notify_model()

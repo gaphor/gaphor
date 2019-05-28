@@ -77,7 +77,7 @@ if not args:
     # sys.exit(1)
 
 
-factory = UML.ElementFactory()
+model = UML.ElementFactory()
 
 
 name_re = None
@@ -87,10 +87,10 @@ if options.regex:
 # we should have some gaphor files to be processed at this point
 for model in args:
     message("loading model %s" % model)
-    storage.load(model, factory)
+    storage.load(model, model)
     message("\nready for rendering\n")
 
-    for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
+    for diagram in model.select(lambda e: e.isKindOf(UML.Diagram)):
         odir = pkg2dir(diagram.package)
 
         # just diagram name

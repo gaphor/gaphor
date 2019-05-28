@@ -8,7 +8,6 @@ from gaphas.state import observed, reversible_property
 import logging
 from gaphor import UML
 from gaphor.services.elementdispatcher import EventWatcher
-from gaphor.core import inject
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import Style, ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.support import set_diagram_item
@@ -203,8 +202,8 @@ class DiagramItem(
     @cvar style: styles information (derived from DiagramItemMeta)
     """
 
-    def __init__(self, id=None, factory=None):
-        UML.Presentation.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        UML.Presentation.__init__(self, id, model)
         EditableTextSupport.__init__(self)
         StereotypeSupport.__init__(self)
 

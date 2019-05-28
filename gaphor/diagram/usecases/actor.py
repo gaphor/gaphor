@@ -29,8 +29,8 @@ class ActorItem(ClassifierItem):
         "name-outside": True,
     }
 
-    def __init__(self, id=None, factory=None):
-        ClassifierItem.__init__(self, id, factory)
+    def __init__(self, id=None, model=None):
+        ClassifierItem.__init__(self, id, model)
 
         self.drawing_style = self.DRAW_ICON
 
