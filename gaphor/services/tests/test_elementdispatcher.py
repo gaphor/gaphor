@@ -327,7 +327,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         watcher = EventWatcher(a, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
-        watcher.register_handlers()
+        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -339,8 +339,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert 6 == len(self.events)
 
         a.unlink()
-        watcher.unregister_handlers()
-        watcher.unregister_handlers()
+        watcher.unsubscribe_all()
+        watcher.unsubscribe_all()
 
     def test_big_diamond(self):
         """
@@ -351,7 +351,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         watcher = EventWatcher(a, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
-        watcher.register_handlers()
+        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -364,8 +364,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert 7 == len(self.events)
 
         a.unlink()
-        watcher.unregister_handlers()
-        watcher.unregister_handlers()
+        watcher.unsubscribe_all()
+        watcher.unsubscribe_all()
         assert 0 == len(self.dispatcher._handlers)
 
     def test_braking_big_diamond(self):
@@ -377,7 +377,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         watcher = EventWatcher(a, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
-        watcher.register_handlers()
+        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -392,8 +392,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         del a.one.two[0].one
         # a.unlink()
-        watcher.unregister_handlers()
-        watcher.unregister_handlers()
+        watcher.unsubscribe_all()
+        watcher.unsubscribe_all()
         assert 0 == len(self.dispatcher._handlers)
 
     def test_cyclic(self):
@@ -405,7 +405,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         watcher = EventWatcher(a, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
-        watcher.register_handlers()
+        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()

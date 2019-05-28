@@ -313,8 +313,8 @@ class DiagramItem(
         self.watcher.watch(path, handler)
         return self
 
-    def register_handlers(self):
-        self.watcher.register_handlers()
+    def subscribe_all(self):
+        self.watcher.subscribe_all()
 
-    def unregister_handlers(self):
-        self.watcher.unregister_handlers()
+    def unsubscribe_all(self):
+        self.watcher.unsubscribe_all()

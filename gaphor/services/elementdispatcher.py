@@ -46,14 +46,14 @@ class EventWatcher:
             raise ValueError("No handler provided for path " + path)
         return self
 
-    def register_handlers(self):
+    def subscribe_all(self):
         dispatcher = self.element_dispatcher
         element = self.element
 
         for path, handler in self._watched_paths.items():
             dispatcher.subscribe(handler, element, path)
 
-    def unregister_handlers(self, *args):
+    def unsubscribe_all(self, *args):
         """
         Unregister handlers. Extra arguments are ignored (makes connecting to
         destroy signals much easier though).

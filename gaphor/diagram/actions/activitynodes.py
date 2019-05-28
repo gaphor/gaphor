@@ -254,7 +254,7 @@ class ForkNodeItem(Item, DiagramItem):
 
     def setup_canvas(self):
         super(ForkNodeItem, self).setup_canvas()
-        self.register_handlers()
+        self.subscribe_all()
 
         h1, h2 = self._handles
         cadd = self.canvas.solver.add_constraint
@@ -266,7 +266,7 @@ class ForkNodeItem(Item, DiagramItem):
     def teardown_canvas(self):
         super(ForkNodeItem, self).teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
-        self.unregister_handlers()
+        self.unsubscribe_all()
 
     def is_join_spec_visible(self):
         """

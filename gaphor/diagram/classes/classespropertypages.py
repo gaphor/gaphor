@@ -252,8 +252,8 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
             "ownedAttribute.defaultValue", handler
         ).watch(
             "ownedAttribute.typeValue", handler
-        ).register_handlers()
-        tree_view.connect("destroy", self.watcher.unregister_handlers)
+        ).subscribe_all()
+        tree_view.connect("destroy", self.watcher.unsubscribe_all)
         return page
 
     @transactional
@@ -326,8 +326,8 @@ Add and edit class operations according to UML syntax. Operation syntax examples
             "ownedOperation.formalParameter.typeValue", handler
         ).watch(
             "ownedOperation.formalParameter.defaultValue", handler
-        ).register_handlers()
-        tree_view.connect("destroy", self.watcher.unregister_handlers)
+        ).subscribe_all()
+        tree_view.connect("destroy", self.watcher.unsubscribe_all)
 
         return page
 
@@ -373,8 +373,8 @@ class DependencyPropertyPage(PropertyPageBase):
         button.connect("toggled", self._on_auto_dependency_change)
         hbox.pack_start(button, True, True, 0)
 
-        self.watcher.watch("subject", self._on_subject_change).register_handlers()
-        button.connect("destroy", self.watcher.unregister_handlers)
+        self.watcher.watch("subject", self._on_subject_change).subscribe_all()
+        button.connect("destroy", self.watcher.unsubscribe_all)
 
         self.update()
 
@@ -565,8 +565,8 @@ class AssociationEndPropertyPage(PropertyPageBase):
 
         self.watcher.watch("name", handler).watch("aggregation", handler).watch(
             "visibility", handler
-        ).watch("lowerValue", handler).watch("upperValue", handler).register_handlers()
-        entry.connect("destroy", self.watcher.unregister_handlers)
+        ).watch("lowerValue", handler).watch("upperValue", handler).subscribe_all()
+        entry.connect("destroy", self.watcher.unsubscribe_all)
 
         vbox.pack_start(entry, True, True, 0)
 
