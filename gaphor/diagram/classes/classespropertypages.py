@@ -4,7 +4,7 @@ from gi.repository import Gtk
 from gaphas.decorators import AsyncIO
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.services.elementdispatcher import EventWatcher
+from gaphor.UML.elementdispatcher import EventWatcher
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 from gaphor.diagram.propertypages import (
     NamedElementPropertyPage,

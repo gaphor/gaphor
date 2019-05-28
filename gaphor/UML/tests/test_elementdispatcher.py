@@ -2,8 +2,8 @@ import unittest
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.services.elementdispatcher import ElementDispatcher
 from gaphor.services.eventmanager import EventManager
+from gaphor.UML.elementdispatcher import ElementDispatcher
 from gaphor.UML.elementfactory import ElementFactory
 
 
@@ -203,7 +203,7 @@ class ElementDispatcherTestCase(unittest.TestCase):
 
 from gaphor.UML import Element
 from gaphor.UML.properties import association
-from gaphor.services.elementdispatcher import EventWatcher
+from gaphor.UML.elementdispatcher import EventWatcher
 
 
 class A(Element):

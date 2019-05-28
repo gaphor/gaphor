@@ -5,7 +5,7 @@
 from logging import getLogger
 from gaphor.core import inject, event_handler
 from gaphor.abc import Service
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.UML.event import (
     ElementChangeEvent,
     AssociationSetEvent,
@@ -125,7 +125,7 @@ class ElementDispatcher(Service):
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
-                c = getattr(UML, cname)
+                c = getattr(uml2, cname)
                 assert issubclass(c, prop.type), "%s should be a subclass of %s" % (
                     c,
                     prop.type,

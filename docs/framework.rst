@@ -60,4 +60,4 @@ element_dispatcher
   interest and will only signal in case this element changes.
   This makes complex dispatching very efficient.
 
-.. autoclass:: gaphor.services.elementdispatcher.ElementDispatcher
+.. autoclass:: gaphor.UML.elementdispatcher.ElementDispatcher

@@ -113,7 +113,7 @@ setup(
             "main_window = gaphor.ui.mainwindow:MainWindow",
             "copy = gaphor.services.copyservice:CopyService",
             "sanitizer = gaphor.services.sanitizerservice:SanitizerService",
-            "element_dispatcher = gaphor.services.elementdispatcher:ElementDispatcher",
+            "element_dispatcher = gaphor.UML.elementdispatcher:ElementDispatcher",
             "xmi_export = gaphor.plugins.xmiexport:XMIExport",
             "diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout",
             "pynsource = gaphor.plugins.pynsource:PyNSource",
