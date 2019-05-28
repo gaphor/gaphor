@@ -17,7 +17,6 @@ to be aware that `AbstractGroup.item` can be null.
 import abc
 
 from gaphor import UML
-from gaphor.core import inject
 from gaphor.misc.generic.multidispatch import multidispatch
 
 

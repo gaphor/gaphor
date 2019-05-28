@@ -32,7 +32,7 @@ from gi.repository import Gdk
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _, inject, transactional
+from gaphor.core import _, transactional
 from gaphor.services.elementdispatcher import EventWatcher
 
 
@@ -95,8 +95,6 @@ class EditableTreeModel(Gtk.ListStore):
     Attributes:
     - _item: diagram item owning tree model
     """
-
-    element_factory = inject("element_factory")
 
     def __init__(self, item, cols=None):
         """Create new model.

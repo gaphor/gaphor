@@ -5,7 +5,7 @@ Stereotype property page.
 from gi.repository import GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import _, inject, transactional
+from gaphor.core import _, transactional
 from gaphor.diagram.diagramitem import StereotypeSupport
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 
@@ -72,8 +72,6 @@ class StereotypePage(PropertyPageBase):
 
     order = 40
     name = "Stereotypes"
-
-    element_factory = inject("element_factory")
 
     def __init__(self, item):
         self.item = item

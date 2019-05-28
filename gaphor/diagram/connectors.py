@@ -8,7 +8,6 @@ gaphor.adapter package.
 import abc
 
 from gaphor import UML
-from gaphor.core import inject
 from gaphor.misc.generic.multidispatch import multidispatch
 
 
@@ -84,8 +83,6 @@ class AbstractConnect(ConnectBase):
     By convention the adapters are registered by (element, line) -- in that order.
 
     """
-
-    element_factory = inject("element_factory")
 
     def __init__(self, element, line):
         self.element = element
@@ -164,8 +161,6 @@ class UnaryRelationshipConnect(AbstractConnect):
     find an existing relationship in the model that does not yet exist
     on the canvas.
     """
-
-    element_factory = inject("element_factory")
 
     def relationship(self, required_type, head, tail):
         """
