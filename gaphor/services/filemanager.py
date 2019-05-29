@@ -29,8 +29,9 @@ class FileManagerStateChanged(ServiceEvent):
     Event class used to send state changes on the Undo Manager.
     """
 
-    def __init__(self, service):
+    def __init__(self, service, filename=None):
         self.service = service
+        self.filename = filename
 
 
 class FileManager(Service, ActionProvider):
@@ -194,7 +195,7 @@ class FileManager(Service, ActionProvider):
         filename = self.recent_files[index]
 
         self.load(filename)
-        self.event_manager.handle(FileManagerStateChanged(self))
+        self.event_manager.handle(FileManagerStateChanged(self, filename))
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
@@ -439,7 +440,7 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.load(filename)
-            self.event_manager.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FileManagerStateChanged(self, filename))
 
     @action(name="file-save", stock_id="gtk-save")
     def action_save(self):
@@ -454,7 +455,7 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.event_manager.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FileManagerStateChanged(self, filename))
             return True
         else:
             return self.action_save_as()
@@ -478,7 +479,7 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.event_manager.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FileManagerStateChanged(self, filename))
             return True
 
         return False

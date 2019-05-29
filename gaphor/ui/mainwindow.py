@@ -58,7 +58,6 @@ class MainWindow(Service, ActionProvider):
     action_manager = inject("action_manager")
     file_manager = inject("file_manager")
 
-    title = "Gaphor"
     size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
     resizable = True
 
@@ -73,8 +72,10 @@ class MainWindow(Service, ActionProvider):
     """
 
     def __init__(self):
+        self.title = "Gaphor"
         self.app = None
         self.window = None
+        self.filename = None
         self.model_changed = False
         self.layout = None
 
@@ -135,12 +136,6 @@ class MainWindow(Service, ActionProvider):
             self.action_group.add_action(a)
 
         self.action_manager.register_action_provider(self)
-
-    def get_filename(self):
-        """
-        Return the file name of the currently opened model.
-        """
-        return self.file_manager.filename
 
     def ask_to_close(self):
         """
@@ -255,10 +250,9 @@ class MainWindow(Service, ActionProvider):
         """
         Sets the window title.
         """
-        filename = self.file_manager.filename
         if self.window:
-            if filename:
-                title = "%s - %s" % (self.title, filename)
+            if self.filename:
+                title = "%s - %s" % (self.title, self.filename)
             else:
                 title = self.title
             if self.model_changed:
@@ -281,18 +275,17 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(FileManagerStateChanged)
     def _on_file_manager_state_changed(self, event):
-        # We're only interested in file operations
-        if event.service is self.file_manager:
-            self.model_changed = False
-            self.set_title()
+        self.model_changed = False
+        self.filename = event.filename
+        self.set_title()
 
     @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
         """
         """
         undo_manager = event.service
-        if not self.model_changed and undo_manager.can_undo():
-            self.model_changed = True
+        if self.model_changed != undo_manager.can_undo():
+            self.model_changed = undo_manager.can_undo()
             self.set_title()
 
     def _on_window_delete(self, window=None, event=None):
