@@ -73,7 +73,7 @@ class FileManager(Service, ActionProvider):
       </ui>
     """
 
-    def __init__(self):
+    def __init__(self, event_manager, properties):
         """File manager constructor.  There is no current filename yet."""
 
         self._filename = None

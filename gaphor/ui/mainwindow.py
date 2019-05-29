@@ -64,7 +64,14 @@ class MainWindow(Service, ActionProvider):
       </ui>
     """
 
-    def __init__(self):
+    def __init__(
+        self,
+        event_manager,
+        component_registry,
+        element_factory,
+        action_manager,
+        properties,
+    ):
         self.title = "Gaphor"
         self.app = None
         self.window = None
