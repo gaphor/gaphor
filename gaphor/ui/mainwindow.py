@@ -60,50 +60,15 @@ class MainWindow(Service, ActionProvider):
 
     title = "Gaphor"
     size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
-    menubar_path = "/mainwindow"
-    toolbar_path = "/mainwindow-toolbar"
     resizable = True
 
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
           <menu action="file">
-            <placeholder name="primary" />
-            <separator />
-            <menu action="file-export" />
-            <menu action="file-import" />
-            <separator />
-            <placeholder name="secondary" />
-            <placeholder name="ternary" />
-            <separator />
             <menuitem action="file-quit" />
           </menu>
-          <menu action="edit">
-            <placeholder name="primary" />
-            <placeholder name="secondary" />
-            <placeholder name="ternary" />
-          </menu>
-          <menu action="diagram">
-            <placeholder name="primary" />
-            <placeholder name="secondary" />
-            <placeholder name="ternary" />
-          </menu>
-          <menu action="tools">
-            <placeholder name="primary" />
-            <placeholder name="secondary" />
-            <placeholder name="ternary" />
-          </menu>
-          <menu action="help">
-            <placeholder name="primary" />
-            <placeholder name="secondary" />
-            <placeholder name="ternary" />
-          </menu>
         </menubar>
-        <toolbar name='mainwindow-toolbar'>
-            <placeholder name="left" />
-            <separator expand="true" />
-            <placeholder name="right" />
-        </toolbar>
       </ui>
     """
 
@@ -244,11 +209,11 @@ class MainWindow(Service, ActionProvider):
         self.window.add(vbox)
         vbox.show()
 
-        menubar = self.action_manager.get_widget(self.menubar_path)
+        menubar = self.action_manager.get_widget(self.action_manager.menubar_path)
         if menubar:
             vbox.pack_start(menubar, False, True, 0)
 
-        toolbar = self.action_manager.get_widget(self.toolbar_path)
+        toolbar = self.action_manager.get_widget(self.action_manager.toolbar_path)
         if toolbar:
             vbox.pack_start(toolbar, False, True, 0)
 
