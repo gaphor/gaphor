@@ -158,11 +158,6 @@ class ElementFactory:
         except KeyError:
             pass
 
-    def swap_element(self, element, new_class):
-        assert element in list(self._elements.values())
-        if element.__class__ is not new_class:
-            element.__class__ = new_class
-
     def handle(self, event):
         """
         Handle events coming from elements.

@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _, inject, transactional
+from gaphor.core import _, transactional
 from gaphor.diagram.propertypages import (
     PropertyPages,
     NamedItemPropertyPage,
@@ -39,7 +39,7 @@ class CommunicationMessageModel(EditableTreeModel):
     def _create_object(self):
         item = self._item
         subject = item.subject
-        message = UML.model.create_message(self.element_factory, subject, self.inverted)
+        message = UML.model.create_message(subject, self.inverted)
         item.add_message(message, self.inverted)
         return message
 
@@ -60,8 +60,6 @@ class MessagePropertyPage(NamedItemPropertyPage):
     When message is on communication diagram, then additional messages can
     be added. On sequence diagram sort of message can be changed.
     """
-
-    element_factory = inject("element_factory")
 
     NAME_LABEL = _("Message")
 

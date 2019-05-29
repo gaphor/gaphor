@@ -46,7 +46,7 @@ class ExtensionConnect(RelationshipConnect):
 
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.
-            for assoc in self.element_factory.select():
+            for assoc in line.model.select():
                 if isinstance(assoc, UML.Extension):
                     end1 = assoc.memberEnd[0]
                     end2 = assoc.memberEnd[1]
@@ -63,9 +63,7 @@ class ExtensionConnect(RelationshipConnect):
                             return
             else:
                 # Create a new Extension relationship
-                relation = UML.model.extend_with_stereotype(
-                    self.element_factory, head_type, tail_type
-                )
+                relation = UML.model.create_extension(head_type, tail_type)
                 line.subject = relation
 
     def disconnect_subject(self, handle):

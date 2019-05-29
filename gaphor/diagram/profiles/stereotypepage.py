@@ -5,7 +5,7 @@ Stereotype property page.
 from gi.repository import GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import _, inject, transactional
+from gaphor.core import _, transactional
 from gaphor.diagram.diagramitem import StereotypeSupport
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 
@@ -73,8 +73,6 @@ class StereotypePage(PropertyPageBase):
     order = 40
     name = "Stereotypes"
 
-    element_factory = inject("element_factory")
-
     def __init__(self, item):
         self.item = item
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
@@ -85,7 +83,7 @@ class StereotypePage(PropertyPageBase):
         if subject is None:
             return None
 
-        stereotypes = UML.model.get_stereotypes(subject.model, subject)
+        stereotypes = UML.model.get_stereotypes(subject)
         if not stereotypes:
             return None
 
@@ -121,7 +119,7 @@ class StereotypePage(PropertyPageBase):
     def refresh(self):
         self.model.clear()
         subject = self.item.subject
-        stereotypes = UML.model.get_stereotypes(self.element_factory, subject)
+        stereotypes = UML.model.get_stereotypes(subject)
         instances = subject.appliedStereotype
 
         # shortcut map stereotype -> slot (InstanceSpecification)
@@ -175,7 +173,7 @@ class StereotypePage(PropertyPageBase):
 
         subject = self.item.subject
         if value:
-            UML.model.apply_stereotype(self.element_factory, subject, stereotype)
+            UML.model.apply_stereotype(subject, stereotype)
         else:
             UML.model.remove_stereotype(subject, stereotype)
 
@@ -200,7 +198,7 @@ class StereotypePage(PropertyPageBase):
             return  # nothing to do and don't create slot without value
 
         if slot is None:
-            slot = UML.model.add_slot(self.element_factory, obj, attr)
+            slot = UML.model.add_slot(obj, attr)
 
         assert slot
 

@@ -41,9 +41,9 @@ class StereotypesTestCase(TestCaseBase):
         s3.name = "s3"
 
         cls = self.factory.create(UML.Class)
-        UML.model.apply_stereotype(self.factory, cls, s1)
-        UML.model.apply_stereotype(self.factory, cls, s2)
-        UML.model.apply_stereotype(self.factory, cls, s3)
+        UML.model.apply_stereotype(cls, s1)
+        UML.model.apply_stereotype(cls, s2)
+        UML.model.apply_stereotype(cls, s3)
 
         assert (fmt % "s1, s2, s3") == UML.model.stereotypes_str(cls)
 
@@ -64,9 +64,9 @@ class StereotypesTestCase(TestCaseBase):
         s3.name = "s3"
 
         cls = self.factory.create(UML.Class)
-        UML.model.apply_stereotype(self.factory, cls, s1)
-        UML.model.apply_stereotype(self.factory, cls, s2)
-        UML.model.apply_stereotype(self.factory, cls, s3)
+        UML.model.apply_stereotype(cls, s1)
+        UML.model.apply_stereotype(cls, s2)
+        UML.model.apply_stereotype(cls, s3)
 
         result = UML.model.stereotypes_str(cls, ("test",))
         assert (fmt % "test, s1, s2, s3") == result
@@ -90,11 +90,11 @@ class StereotypesTestCase(TestCaseBase):
         st2.name = "st2"
 
         # first extend with st2, to check sorting
-        UML.model.extend_with_stereotype(self.factory, cls, st2)
-        UML.model.extend_with_stereotype(self.factory, cls, st1)
+        UML.model.create_extension(cls, st2)
+        UML.model.create_extension(cls, st1)
 
         c1 = self.factory.create(UML.Class)
-        result = tuple(st.name for st in UML.model.get_stereotypes(self.factory, c1))
+        result = tuple(st.name for st in UML.model.get_stereotypes(c1))
         assert ("st1", "st2") == result
 
     def test_getting_stereotypes_unique(self):
@@ -110,14 +110,14 @@ class StereotypesTestCase(TestCaseBase):
         st2.name = "st2"
 
         # first extend with st2, to check sorting
-        UML.model.extend_with_stereotype(self.factory, cls1, st2)
-        UML.model.extend_with_stereotype(self.factory, cls1, st1)
+        UML.model.create_extension(cls1, st2)
+        UML.model.create_extension(cls1, st1)
 
-        UML.model.extend_with_stereotype(self.factory, cls2, st1)
-        UML.model.extend_with_stereotype(self.factory, cls2, st2)
+        UML.model.create_extension(cls2, st1)
+        UML.model.create_extension(cls2, st2)
 
         c1 = self.factory.create(UML.Component)
-        result = tuple(st.name for st in UML.model.get_stereotypes(self.factory, c1))
+        result = tuple(st.name for st in UML.model.get_stereotypes(c1))
         assert ("st1", "st2") == result
 
     def test_finding_stereotype_instances(self):
@@ -130,13 +130,11 @@ class StereotypesTestCase(TestCaseBase):
 
         c1 = self.factory.create(UML.Class)
         c2 = self.factory.create(UML.Class)
-        UML.model.apply_stereotype(self.factory, c1, s1)
-        UML.model.apply_stereotype(self.factory, c1, s2)
-        UML.model.apply_stereotype(self.factory, c2, s1)
+        UML.model.apply_stereotype(c1, s1)
+        UML.model.apply_stereotype(c1, s2)
+        UML.model.apply_stereotype(c2, s1)
 
-        result = [
-            e.classifier[0].name for e in UML.model.find_instances(self.factory, s1)
-        ]
+        result = [e.classifier[0].name for e in UML.model.find_instances(s1)]
         assert 2 == len(result)
         assert "s1" in result, result
         assert "s2" not in result, result
@@ -152,14 +150,14 @@ class AssociationTestCase(TestCaseBase):
         """
         c1 = self.factory.create(UML.Class)
         c2 = self.factory.create(UML.Class)
-        assoc = UML.model.create_association(self.factory, c1, c2)
+        assoc = UML.model.create_association(c1, c2)
         types = [p.type for p in assoc.memberEnd]
         assert c1 in types, assoc.memberEnd
         assert c2 in types, assoc.memberEnd
 
         c1 = self.factory.create(UML.Interface)
         c2 = self.factory.create(UML.Interface)
-        assoc = UML.model.create_association(self.factory, c1, c2)
+        assoc = UML.model.create_association(c1, c2)
         types = [p.type for p in assoc.memberEnd]
         assert c1 in types, assoc.memberEnd
         assert c2 in types, assoc.memberEnd
@@ -175,7 +173,7 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         """
         c1 = self.factory.create(UML.Class)
         c2 = self.factory.create(UML.Class)
-        assoc = UML.model.create_association(self.factory, c1, c2)
+        assoc = UML.model.create_association(c1, c2)
 
         end = assoc.memberEnd[0]
         assert end.type is c1
@@ -226,7 +224,7 @@ class AssociationEndNavigabilityTestCase(TestCaseBase):
         """
         n1 = self.factory.create(UML.Node)
         n2 = self.factory.create(UML.Node)
-        assoc = UML.model.create_association(self.factory, n1, n2)
+        assoc = UML.model.create_association(n1, n2)
 
         end = assoc.memberEnd[0]
         assert end.type is n1
@@ -315,14 +313,11 @@ class MessageTestCase(TestCaseBase):
         m.sendEvent = send
         m.receiveEvent = receive
 
-        m1 = UML.model.create_message(self.factory, m, False)
-        m2 = UML.model.create_message(self.factory, m, True)
+        m1 = UML.model.create_message(m, False)
+        m2 = UML.model.create_message(m, True)
 
         assert m1.sendEvent.covered is sl
         assert m1.receiveEvent.covered is rl
 
         assert m2.sendEvent.covered is rl
         assert m2.receiveEvent.covered is sl
-
-
-# vim:sw=4:et

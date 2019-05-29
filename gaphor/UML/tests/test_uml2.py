@@ -359,7 +359,7 @@ class Uml2TestCase(unittest.TestCase):
 
         c1 = factory.create(UML.Class)
         c2 = factory.create(UML.Class)
-        a = UML.model.create_association(factory, c1, c2)
+        a = UML.model.create_association(c1, c2)
         assert a.memberEnd[0].navigability is None
         assert a.memberEnd[1].navigability is None
 
@@ -391,7 +391,7 @@ class Uml2TestCase(unittest.TestCase):
         s = factory.create(UML.Stereotype)
         s.name = "Stereotype"
 
-        e = UML.model.create_extension(factory, c, s)
+        e = UML.model.create_extension(c, s)
 
         assert c == e.metaclass
 
@@ -405,7 +405,7 @@ class Uml2TestCase(unittest.TestCase):
         assert [] == c.extension
         assert [] == s.extension
 
-        e = UML.model.create_extension(factory, c, s)
+        e = UML.model.create_extension(c, s)
 
         print(e.memberEnd)
         assert [e] == c.extension

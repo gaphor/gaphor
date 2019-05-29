@@ -26,7 +26,7 @@ class MetaclassPropertyPageTest(TestCase):
         metaclass.name = "Class"
         stereotype = self.element_factory.create(UML.Stereotype)
         stereotype.name = "NewStereotype"
-        UML.model.create_extension(self.element_factory, metaclass, stereotype)
+        UML.model.create_extension(metaclass, stereotype)
 
         editor = MetaclassNamePropertyPage(metaclass)
         page = editor.construct()

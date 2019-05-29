@@ -56,28 +56,31 @@ def stereotype_name(stereotype):
         return name[0].lower() + name[1:]
 
 
-def apply_stereotype(model, element, stereotype):
+def apply_stereotype(element, stereotype):
     """
     Apply a stereotype to an element.
 
     :Parameters:
-     model
-        UML metamodel model.
      element
         UML metamodel class instance.
      stereotype
         UML metamodel stereotype instance.
     """
+    assert (
+        element.model is stereotype.model
+    ), "Element and Stereotype are from different models"
+    model = element.model
     obj = model.create(InstanceSpecification)
     obj.classifier = stereotype
     element.appliedStereotype = obj
     return obj
 
 
-def find_instances(model, element):
+def find_instances(element):
     """
     Find instance specification which extend classifier `element`.
     """
+    model = element.model
     return model.select(
         lambda e: e.isKindOf(InstanceSpecification)
         and e.classifier
@@ -102,10 +105,11 @@ def remove_stereotype(element, stereotype):
             break
 
 
-def get_stereotypes(model, element):
+def get_stereotypes(element):
     """
     Get sorted collection of possible stereotypes for specified element.
     """
+    model = element.model
     # UML specs does not allow to extend stereotypes with stereotypes
     if isinstance(element, Stereotype):
         return ()
@@ -129,10 +133,15 @@ def get_applied_stereotypes(element):
     return element.appliedStereotype[:].classifier
 
 
-def create_extension(model, metaclass, stereotype):
+def create_extension(metaclass, stereotype):
     """
     Create an Extension association between an metaclass and a stereotype.
     """
+    assert (
+        metaclass.model is stereotype.model
+    ), "Metaclass and Stereotype are from different models"
+
+    model = metaclass.model
     ext = model.create(Extension)
     p = model.create(Property)
     ext_end = model.create(ExtensionEnd)
@@ -150,9 +159,6 @@ def create_extension(model, metaclass, stereotype):
     return ext
 
 
-extend_with_stereotype = create_extension
-
-
 def is_metaclass(element):
     return (
         (not isinstance(element, Stereotype))
@@ -161,48 +167,70 @@ def is_metaclass(element):
     )
 
 
-def add_slot(model, instance, definingFeature):
+def add_slot(instance, definingFeature):
     """
     Add slot to instance specification for an attribute.
     """
+    assert (
+        instance.model is definingFeature.model
+    ), "Instance and Defining feature are from different models"
+    model = instance.model
     slot = model.create(Slot)
     slot.definingFeature = definingFeature
     instance.slot = slot
     return slot
 
 
-def create_dependency(model, supplier, client):
+def create_dependency(supplier, client):
+    assert (
+        supplier.model is client.model
+    ), "Supplier and Client are from different models"
+    model = supplier.model
     dep = model.create(Dependency)
     dep.supplier = supplier
     dep.client = client
     return dep
 
 
-def create_realization(model, realizingClassifier, abstraction):
+def create_realization(realizingClassifier, abstraction):
+    assert (
+        realizingClassifier.model is stereoabstractiontype.model
+    ), "Realizing classifier and Abstraction are from different models"
+    model = realizingClassifier.model
     dep = model.create(Realization)
     dep.realizingClassifier = realizingClassifier
     dep.abstraction = abstraction
     return dep
 
 
-def create_generalization(model, general, specific):
+def create_generalization(general, specific):
+    assert (
+        general.model is specific.model
+    ), "General and Specific are from different models"
+    model = general.model
     gen = model.create(Generalization)
     gen.general = general
     gen.specific = specific
     return gen
 
 
-def create_implementation(model, contract, implementatingClassifier):
+def create_implementation(contract, implementatingClassifier):
+    assert (
+        contract.model is implementatingClassifier.model
+    ), "Contract and Implementating classifier are from different models"
+    model = contract.model
     impl = model.create(Implementation)
     impl.contract = contract
     impl.implementatingClassifier = implementatingClassifier
     return impl
 
 
-def create_association(model, type_a, type_b):
+def create_association(type_a, type_b):
     """
     Create an association between two items.
     """
+    assert type_a.model is type_b.model, "Head and Tail end are from different models"
+    model = type_a.model
     assoc = model.create(Association)
     end_a = model.create(Property)
     end_b = model.create(Property)
@@ -309,12 +337,13 @@ def dependency_type(client, supplier):
     return dt
 
 
-def create_message(model, msg, inverted=False):
+def create_message(msg, inverted=False):
     """
     Create new message based on speciied message.
 
     If inverted is set to True, then inverted message is created.
     """
+    model = msg.model
     message = model.create(Message)
     send = None
     receive = None
@@ -339,4 +368,12 @@ def create_message(model, msg, inverted=False):
     return message
 
 
-# vim:sw=4:et:ai
+def swap_element(element, new_class):
+    """
+    A "trick" to swap the element type.
+
+    Used in certain cases where the underlaying element type
+    may change.
+    """
+    if element.__class__ is not new_class:
+        element.__class__ = new_class

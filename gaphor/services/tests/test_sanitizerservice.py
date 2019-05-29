@@ -41,11 +41,11 @@ class SanitizerServiceTest(TestCase):
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
         stereotype.ownedAttribute = st_attr
-        # ext = UML.model.create_extension(factory, metaklass, stereotype)
+        # ext = UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
-        slot = UML.model.add_slot(factory, instspec, st_attr)
+        instspec = UML.model.apply_stereotype(klass, stereotype)
+        slot = UML.model.add_slot(instspec, st_attr)
 
         # Now, what happens if the attribute is deleted:
         self.assertTrue(st_attr in stereotype.ownedMember)
@@ -67,11 +67,11 @@ class SanitizerServiceTest(TestCase):
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
         stereotype.ownedAttribute = st_attr
-        ext = UML.model.create_extension(factory, metaklass, stereotype)
+        ext = UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
-        slot = UML.model.add_slot(factory, instspec, st_attr)
+        instspec = UML.model.apply_stereotype(klass, stereotype)
+        slot = UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 
@@ -91,11 +91,11 @@ class SanitizerServiceTest(TestCase):
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
         stereotype.ownedAttribute = st_attr
-        ext = UML.model.create_extension(factory, metaklass, stereotype)
+        ext = UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
-        slot = UML.model.add_slot(factory, instspec, st_attr)
+        instspec = UML.model.apply_stereotype(klass, stereotype)
+        slot = UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 
@@ -117,13 +117,13 @@ class SanitizerServiceTest(TestCase):
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
         stereotype.ownedAttribute = st_attr
-        ext1 = UML.model.create_extension(factory, metaklass, stereotype)
-        ext2 = UML.model.create_extension(factory, metaiface, stereotype)
+        ext1 = UML.model.create_extension(metaklass, stereotype)
+        ext2 = UML.model.create_extension(metaiface, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec1 = UML.model.apply_stereotype(factory, klass, stereotype)
-        instspec2 = UML.model.apply_stereotype(factory, iface, stereotype)
-        slot = UML.model.add_slot(factory, instspec1, st_attr)
+        instspec1 = UML.model.apply_stereotype(klass, stereotype)
+        instspec2 = UML.model.apply_stereotype(iface, stereotype)
+        slot = UML.model.add_slot(instspec1, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
         assert klass in self.element_factory
@@ -145,11 +145,11 @@ class SanitizerServiceTest(TestCase):
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
         stereotype.ownedAttribute = st_attr
-        ext = UML.model.create_extension(factory, metaklass, stereotype)
+        ext = UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
-        instspec = UML.model.apply_stereotype(factory, klass, stereotype)
-        slot = UML.model.add_slot(factory, instspec, st_attr)
+        instspec = UML.model.apply_stereotype(klass, stereotype)
+        slot = UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 

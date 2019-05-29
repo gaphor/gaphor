@@ -25,6 +25,7 @@ from gaphor.UML.event import (
     AttributeChangeEvent,
     ModelFactoryEvent,
 )
+from gaphor.UML.properties import association as association_property
 from gaphor.action import action, build_action_group
 from gaphor.core import inject, event_handler
 from gaphor.event import (
@@ -369,6 +370,8 @@ class UndoManager(Service, ActionProvider):
     @event_handler(AssociationSetEvent)
     def undo_association_set_event(self, event):
         association = event.property
+        if type(association) is not association_property:
+            return
         element = event.element
         value = event.old_value
         # print 'got new set event', association, element, value
@@ -383,6 +386,8 @@ class UndoManager(Service, ActionProvider):
     @event_handler(AssociationAddEvent)
     def undo_association_add_event(self, event):
         association = event.property
+        if type(association) is not association_property:
+            return
         element = event.element
         value = event.new_value
 
@@ -397,6 +402,8 @@ class UndoManager(Service, ActionProvider):
     @event_handler(AssociationDeleteEvent)
     def undo_association_delete_event(self, event):
         association = event.property
+        if type(association) is not association_property:
+            return
         element = event.element
         value = event.old_value
 
