@@ -24,12 +24,11 @@ from gaphor.core import (
 )
 from gaphor.abc import Service, ActionProvider
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
-from gaphor.services.filemanager import FileManagerStateChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.ui.event import DiagramPageChange, DiagramShow
+from gaphor.ui.event import DiagramPageChange, DiagramShow, FilenameChanged, WindowClose
 from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import Namespace
 from gaphor.ui.toolbox import Toolbox
@@ -56,18 +55,12 @@ class MainWindow(Service, ActionProvider):
     properties = inject("properties")
     element_factory = inject("element_factory")
     action_manager = inject("action_manager")
-    file_manager = inject("file_manager")
 
     size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
     resizable = True
 
     menu_xml = """
       <ui>
-        <menubar name="mainwindow">
-          <menu action="file">
-            <menuitem action="file-quit" />
-          </menu>
-        </menubar>
       </ui>
     """
 
@@ -136,41 +129,6 @@ class MainWindow(Service, ActionProvider):
             self.action_group.add_action(a)
 
         self.action_manager.register_action_provider(self)
-
-    def ask_to_close(self):
-        """
-        Ask user to close window if the model has changed.
-        The user is asked to either discard the changes, keep the
-        application running or save the model and quit afterwards.
-        """
-        if self.model_changed:
-            dialog = Gtk.MessageDialog(
-                self.window,
-                Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                Gtk.MessageType.WARNING,
-                Gtk.ButtonsType.NONE,
-                _("Save changed to your model before closing?"),
-            )
-            dialog.format_secondary_text(
-                _("If you close without saving, your changes will be discarded.")
-            )
-            dialog.add_buttons(
-                "Close _without saving",
-                Gtk.ResponseType.REJECT,
-                Gtk.STOCK_CANCEL,
-                Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_SAVE,
-                Gtk.ResponseType.YES,
-            )
-            dialog.set_default_response(Gtk.ResponseType.YES)
-            response = dialog.run()
-            dialog.destroy()
-
-            if response == Gtk.ResponseType.YES:
-                # On filedialog.cancel, the application should not close.
-                return self.file_manager.action_save()
-            return response == Gtk.ResponseType.REJECT
-        return True
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
@@ -273,7 +231,7 @@ class MainWindow(Service, ActionProvider):
         ):
             self.event_manager.handle(DiagramShow(diagram))
 
-    @event_handler(FileManagerStateChanged)
+    @event_handler(FilenameChanged)
     def _on_file_manager_state_changed(self, event):
         self.model_changed = False
         self.filename = event.filename
@@ -289,7 +247,8 @@ class MainWindow(Service, ActionProvider):
             self.set_title()
 
     def _on_window_delete(self, window=None, event=None):
-        return not self.ask_to_close()
+        self.event_manager.handle(WindowClose(self))
+        return True
 
     def _on_window_size_allocate(self, window, allocation):
         """
@@ -297,15 +256,9 @@ class MainWindow(Service, ActionProvider):
         """
         self.properties.set("ui.window-size", (allocation.width, allocation.height))
 
-    # Actions:
-
-    @action(name="file-quit", stock_id="gtk-quit")
     def quit(self):
-        # TODO: check for changes (e.g. undo manager), fault-save
-        close = self.ask_to_close()
-        if close and self.app:
+        if self.app:
             self.app.quit()
-        return close
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
