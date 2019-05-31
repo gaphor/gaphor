@@ -29,11 +29,6 @@ class FileManager(Service, ActionProvider):
     The file service, responsible for loading and saving Gaphor models.
     """
 
-    event_manager = inject("event_manager")
-    element_factory = inject("element_factory")
-    main_window = inject("main_window")
-    properties = inject("properties")
-
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
@@ -73,17 +68,13 @@ class FileManager(Service, ActionProvider):
       </ui>
     """
 
-    def __init__(self, event_manager, properties):
+    def __init__(self, event_manager, element_factory, main_window, properties):
         """File manager constructor.  There is no current filename yet."""
-
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+        self.main_window = main_window
+        self.properties = properties
         self._filename = None
-
-    def init(self, app):
-        """File manager service initialization.  The app parameter
-        is the main application object.  This method builds the
-        action group in the file menu.  The list of recent
-        Gaphor files is then updated in the file menu."""
-
         self.action_group = build_action_group(self)
 
         for name, label in (("file-recent-files", "_Recent files"),):
@@ -99,7 +90,10 @@ class FileManager(Service, ActionProvider):
 
         self.update_recent_files()
 
-        self.event_manager.subscribe(self._on_window_close)
+        event_manager.subscribe(self._on_window_close)
+
+    def init(self, app):
+        pass
 
     def shutdown(self):
         """Called when shutting down the file manager service."""
