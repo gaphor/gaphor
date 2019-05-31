@@ -90,7 +90,7 @@ class _Application:
         self.component_registry = services_by_name["component_registry"]
 
         for name in self.essential_services:
-            logger.info("Initializing service", name)
+            logger.info(f"Initializing service {name}")
             srv = services_by_name.pop(name)
             srv.init(self)
             self.component_registry.register(srv, name)
