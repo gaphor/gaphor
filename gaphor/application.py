@@ -86,11 +86,13 @@ class _Application:
     def init_all_services(self):
         services_by_name = init_services(self._uninitialized_services)
 
+        self.event_manager = services_by_name["event_manager"]
+        self.component_registry = services_by_name["component_registry"]
+
         for name in self.essential_services:
             print("Initializing service", name)
             srv = services_by_name.pop(name)
             srv.init(self)
-            setattr(self, name, srv)
             self.component_registry.register(srv, name)
 
         print(str(services_by_name))
