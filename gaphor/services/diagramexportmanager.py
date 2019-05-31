@@ -22,10 +22,6 @@ class DiagramExportManager(Service, ActionProvider):
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
 
-    component_registry = inject("component_registry")
-    main_window = inject("main_window")
-    properties = inject("properties")
-
     menu_xml = """
       <ui>
         <menubar action="mainwindow">
@@ -41,7 +37,9 @@ class DiagramExportManager(Service, ActionProvider):
       </ui>
     """
 
-    def __init__(self):
+    def __init__(self, component_registry, properties):
+        self.component_registry = component_registry
+        self.properties = properties
         self.action_group = build_action_group(self)
 
     def init(self, app):
