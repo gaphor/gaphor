@@ -11,7 +11,7 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 
-from gaphor import UML
+from gaphor import UML, Application
 from gaphor.UML.event import ModelFactoryEvent
 from gaphor.core import (
     _,
@@ -72,18 +72,20 @@ class MainWindow(Service, ActionProvider):
         action_manager,
         properties,
     ):
+        self.event_manager = event_manager
+        self.component_registry = component_registry
+        self.element_factory = element_factory
+        self.action_manager = action_manager
+        self.properties = properties
+
         self.title = "Gaphor"
-        self.app = None
         self.window = None
         self.filename = None
         self.model_changed = False
         self.layout = None
 
-    def init(self, app=None):
-        self.app = app
         self.init_styling()
         self.init_action_group()
-        self.init_ui_components()
 
     def init_styling(self):
         css_file = pkg_resources.resource_filename("gaphor.ui", "layout.css")
@@ -107,6 +109,9 @@ class MainWindow(Service, ActionProvider):
             component_registry.register(uicomp, ep.name)
             if isinstance(uicomp, ActionProvider):
                 self.action_manager.register_action_provider(uicomp)
+
+    def init(self, app):
+        pass
 
     def shutdown(self):
         log.info("Shutting down")
@@ -144,6 +149,7 @@ class MainWindow(Service, ActionProvider):
         """Open the main window.
         """
         load_accel_map()
+        self.init_ui_components()
 
         self.window = (
             Gtk.ApplicationWindow.new(gtk_app)
@@ -264,8 +270,7 @@ class MainWindow(Service, ActionProvider):
         self.properties.set("ui.window-size", (allocation.width, allocation.height))
 
     def quit(self):
-        if self.app:
-            self.app.quit()
+        Application.quit()
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
