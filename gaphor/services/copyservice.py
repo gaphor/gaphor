@@ -27,10 +27,6 @@ class CopyService(Service, ActionProvider):
       on the canvas and make the uml element visible again.
     """
 
-    event_manager = inject("event_manager")
-    element_factory = inject("element_factory")
-    main_window = inject("main_window")
-
     menu_xml = """
       <ui>
         <menubar action="mainwindow">
@@ -44,15 +40,20 @@ class CopyService(Service, ActionProvider):
       </ui>
     """
 
-    def __init__(self):
+    def __init__(self, event_manager, element_factory, main_window):
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+        self.main_window = main_window
         self.copy_buffer = set()
         self.action_group = build_action_group(self)
 
-    def init(self, app):
         self.action_group.get_action("edit-copy").props.sensitive = False
         self.action_group.get_action("edit-paste").props.sensitive = False
 
-        self.event_manager.subscribe(self._update)
+        event_manager.subscribe(self._update)
+
+    def init(self, app):
+        pass
 
     def shutdown(self):
         self.copy_buffer = set()
