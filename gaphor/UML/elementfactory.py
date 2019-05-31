@@ -169,10 +169,9 @@ class ElementFactory:
 class ElementFactoryService(Service, ElementFactory):
     """Service version of the ElementFactory."""
 
-    event_manager = inject("event_manager")
-
-    def __init__(self):
+    def __init__(self, event_manager):
         super(ElementFactoryService, self).__init__()
+        self.event_manager = event_manager
         self._block_events = 0
 
     def init(self, app):
