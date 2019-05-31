@@ -17,9 +17,6 @@ class ActionManager(Service):
     This service is responsible for maintaining actions.
     """
 
-    component_registry = inject("component_registry")
-    event_manager = inject("event_manager")
-
     menubar_path = "/mainwindow"
     toolbar_path = "/mainwindow-toolbar"
 
@@ -65,11 +62,12 @@ class ActionManager(Service):
       </ui>
     """
 
-    def __init__(self):
+    def __init__(self, event_manager, component_registry):
+        self.event_manager = event_manager
+        self.component_registry = component_registry
         self.ui_manager = Gtk.UIManager()
         self.ui_manager.add_ui_from_string(self.menu_skeleton_xml)
 
-    def init(self, app):
         logger.info("Loading action provider services")
 
         for service, name in self.component_registry.all(ActionProvider):
@@ -77,6 +75,9 @@ class ActionManager(Service):
             self.register_action_provider(service)
 
         self.event_manager.subscribe(self._service_initialized_handler)
+
+    def init(self, app):
+        pass
 
     def shutdown(self):
 
