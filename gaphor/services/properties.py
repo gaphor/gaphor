@@ -32,13 +32,11 @@ class Properties(Service):
 
     Properties are persisted to the local file system."""
 
-    event_manager = inject("event_manager")
-
-    def __init__(self, backend=None):
+    def __init__(self, event_manager, backend=None):
         """Constructor.  Initialize the Gaphor application object, the
         dictionary for storing properties in memory, and the storage backend.
         This defaults to FileBackend"""
-
+        self.event_manager = event_manager
         self._resources = {}
         self._backend = backend or FileBackend()
         self._backend.load(self._resources)
