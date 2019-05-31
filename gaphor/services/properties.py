@@ -41,12 +41,12 @@ class Properties(Service):
 
         self._resources = {}
         self._backend = backend or FileBackend()
+        self._backend.load(self._resources)
 
     def init(self, app):
         """Initialize the properties service.  This will load any stored
         properties from the file system."""
-
-        self._backend.load(self._resources)
+        pass
 
     def shutdown(self):
         """Shutdown the properties service.  This will ensure that all

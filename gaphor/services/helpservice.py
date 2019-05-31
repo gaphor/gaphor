@@ -29,10 +29,10 @@ class HelpService(Service, ActionProvider):
     main_window = inject("main_window")
 
     def __init__(self):
-        pass
+        self.action_group = build_action_group(self)
 
     def init(self, app):
-        self.action_group = build_action_group(self)
+        pass
 
     def shutdown(self):
         pass
