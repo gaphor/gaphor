@@ -23,8 +23,11 @@ class EventManager(Service):
     The Event Manager.
     """
 
-    def init(self, app):
+    def __init__(self):
         self._events = _Manager()
+
+    def init(self, app):
+        pass
 
     def shutdown(self):
         pass
