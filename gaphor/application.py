@@ -90,14 +90,13 @@ class _Application:
         self.component_registry = services_by_name["component_registry"]
 
         for name in self.essential_services:
-            print("Initializing service", name)
+            logger.info("Initializing service", name)
             srv = services_by_name.pop(name)
             srv.init(self)
             self.component_registry.register(srv, name)
 
-        print(str(services_by_name))
         for name, srv in services_by_name.items():
-            print(f"Initializing {srv} as {name}")
+            logger.info(f"Initializing {srv} as {name}")
             srv.init(self)
             self.component_registry.register(srv, name)
             if self.event_manager:
