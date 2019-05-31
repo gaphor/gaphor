@@ -117,9 +117,6 @@ class FileManager(Service, ActionProvider):
         property.  Setting the current filename will update the recent file
         list."""
 
-        log.info("Setting current file")
-        log.debug("Filename is %s" % filename)
-
         if filename != self._filename:
             self._filename = filename
             self.update_recent_files(filename)
@@ -129,23 +126,13 @@ class FileManager(Service, ActionProvider):
     def get_recent_files(self):
         """Returns the recent file list from the properties service.  This
         method is used by the recent_files property."""
-
-        try:
-            return self.properties.get("recent-files", [])
-        except component.interfaces.ComponentLookupError:
-            return []
+        return self.properties.get("recent-files", [])
 
     def set_recent_files(self, recent_files):
         """Updates the properties service with the supplied list of recent
         files.  This method is used by the recent_files property."""
 
-        log.info("Storing recent files")
-        log.debug("Recent files are %s" % recent_files)
-
-        try:
-            self.properties.set("recent-files", recent_files)
-        except component.interfaces.ComponentLookupError:
-            return
+        self.properties.set("recent-files", recent_files)
 
     recent_files = property(get_recent_files, set_recent_files)
 
@@ -155,9 +142,6 @@ class FileManager(Service, ActionProvider):
 
         The default recent file placeholder actions are hidden.  The real
         actions are then built using the recent file list."""
-
-        log.info("Updating recent files")
-        log.debug("New file is %s" % new_filename)
 
         recent_files = self.recent_files
 
@@ -182,10 +166,6 @@ class FileManager(Service, ActionProvider):
         a FilenameChanged event.  The recent files are stored in
         the recent_files property."""
 
-        log.info("Loading recent file")
-        log.debug("Action is %s" % action)
-        log.debug("Index is %s" % index)
-
         filename = self.recent_files[index]
 
         self.load(filename)
@@ -197,9 +177,6 @@ class FileManager(Service, ActionProvider):
         queue.  The loader is passed to a GIdleThread which executes the load
         generator.  If loading is successful, the filename is set."""
 
-        log.info("Loading file")
-        log.debug("Path is %s" % filename)
-
         queue = Queue()
 
         try:
@@ -210,7 +187,8 @@ class FileManager(Service, ActionProvider):
                 parent=main_window.window,
                 queue=queue,
             )
-        except component.interfaces.ComponentLookupError:
+        except:
+            log.warning("Could not create status window, proceding without.")
             status_window = None
 
         try:
@@ -268,9 +246,6 @@ class FileManager(Service, ActionProvider):
         extension.  If not, the extension is added to the filename
         and returned."""
 
-        log.debug("Verifying file name")
-        log.debug("File name is %s" % filename)
-
         if not filename.endswith(DEFAULT_EXT):
             filename = filename + DEFAULT_EXT
 
@@ -282,9 +257,6 @@ class FileManager(Service, ActionProvider):
         references.  It will also verify that the filename has the correct
         extension.  A status window is displayed while the GIdleThread
         is executed.  This thread actually saves the model."""
-
-        log.info("Saving file")
-        log.debug("File name is %s" % filename)
 
         if not filename or not len(filename):
             return
