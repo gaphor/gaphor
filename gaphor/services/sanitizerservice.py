@@ -18,18 +18,16 @@ class SanitizerService(Service):
     model that have no presentations (and should have some).
     """
 
-    event_manager = inject("event_manager")
-    element_factory = inject("element_factory")
-    property_dispatcher = inject("property_dispatcher")
+    def __init__(self, event_manager):
+        self.event_manager = event_manager
 
-    def __init__(self):
-        pass
+        event_manager.subscribe(self._unlink_on_presentation_delete)
+        event_manager.subscribe(self._unlink_on_stereotype_delete)
+        event_manager.subscribe(self._unlink_on_extension_delete)
+        event_manager.subscribe(self._disconnect_extension_end)
 
     def init(self, app=None):
-        self.event_manager.subscribe(self._unlink_on_presentation_delete)
-        self.event_manager.subscribe(self._unlink_on_stereotype_delete)
-        self.event_manager.subscribe(self._unlink_on_extension_delete)
-        self.event_manager.subscribe(self._disconnect_extension_end)
+        pass
 
     def shutdown(self):
         self.event_manager.unsubscribe(self._unlink_on_presentation_delete)
