@@ -14,11 +14,11 @@ logging.basicConfig(level=logging.DEBUG)
 
 class DiagramItemConnectorTestCase(TestCase):
     services = TestCase.services + ["main_window", "action_manager", "properties"]
-    component_registry = inject("component_registry")
-    event_manager = inject("event_manager")
 
     def setUp(self):
         super(DiagramItemConnectorTestCase, self).setUp()
+        self.component_registry = self.get_service("component_registry")
+        self.event_manager = self.get_service("event_manager")
         mw = self.get_service("main_window")
         mw.open()
         self.main_window = mw

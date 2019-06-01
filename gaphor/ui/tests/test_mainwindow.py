@@ -13,8 +13,8 @@ class MainWindowTestCase(unittest.TestCase):
             services=["element_factory", "properties", "main_window", "action_manager"]
         )
 
-    component_registry = inject("component_registry")
-    event_manager = inject("event_manager")
+        self.component_registry = Application.get_service("component_registry")
+        self.event_manager = Application.get_service("event_manager")
 
     def tearDown(self):
         Application.shutdown()

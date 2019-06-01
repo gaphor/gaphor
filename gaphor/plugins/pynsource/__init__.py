@@ -30,7 +30,9 @@ class PyNSource(Service, ActionProvider):
         </menubar>
       </ui>"""
 
-    def __init__(self, main_window):
+    def __init__(self, element_factory, diagram_layout, main_window):
+        self.element_factory = element_factory
+        self.diagram_layout = diagram_layout
         self.main_window = main_window
         self.win = None
         self.action_group = build_action_group(self)
@@ -64,7 +66,7 @@ class PyNSource(Service, ActionProvider):
     def process(self, files):
         """Create a diagram based on a list of files.
         """
-        engineer = Engineer()
+        engineer = Engineer(self.element_factory, self.diagram_layout)
         engineer.process(files)
 
         main_window = self.main_window

@@ -50,12 +50,6 @@ class MainWindow(Service, ActionProvider):
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
 
-    component_registry = inject("component_registry")
-    event_manager = inject("event_manager")
-    properties = inject("properties")
-    element_factory = inject("element_factory")
-    action_manager = inject("action_manager")
-
     size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
     resizable = True
 
