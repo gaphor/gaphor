@@ -25,9 +25,6 @@ log = logging.getLogger(__name__)
 
 class DiagramLayout(Service, ActionProvider):
 
-    component_registry = inject("component_registry")
-    main_window = inject("main_window")
-
     menu_xml = """
       <ui>
         <menubar action="mainwindow">
@@ -37,7 +34,8 @@ class DiagramLayout(Service, ActionProvider):
         </menubar>
       </ui>"""
 
-    def __init__(self):
+    def __init__(self, component_registry):
+        self.component_registry = component_registry
         self.action_group = build_action_group(self)
 
     def init(self, app):

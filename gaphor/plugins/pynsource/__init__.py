@@ -19,8 +19,6 @@ NAME_COLUMN = 0
 
 class PyNSource(Service, ActionProvider):
 
-    main_window = inject("main_window")
-
     menu_xml = """
       <ui>
         <menubar action="mainwindow">
@@ -32,7 +30,8 @@ class PyNSource(Service, ActionProvider):
         </menubar>
       </ui>"""
 
-    def __init__(self):
+    def __init__(self, main_window):
+        self.main_window = main_window
         self.win = None
         self.action_group = build_action_group(self)
 
