@@ -20,10 +20,9 @@ class EventWatcher:
     A helper for easy registering and unregistering event handlers.
     """
 
-    element_dispatcher = inject("element_dispatcher")
-
-    def __init__(self, element, default_handler=None):
+    def __init__(self, element, element_dispatcher, default_handler=None):
         self.element = element
+        self.element_dispatcher = element_dispatcher
         self.default_handler = default_handler
         self._watched_paths = dict()
 

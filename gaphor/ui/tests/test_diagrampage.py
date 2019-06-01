@@ -11,13 +11,7 @@ from gaphor.ui.mainwindow import DiagramPage
 class DiagramPageTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
-            services=[
-                "element_factory",
-                "main_window",
-                "action_manager",
-                "properties",
-                "element_dispatcher",
-            ]
+            services=["element_factory", "main_window", "action_manager", "properties"]
         )
         main_window = Application.get_service("main_window")
         main_window.open()

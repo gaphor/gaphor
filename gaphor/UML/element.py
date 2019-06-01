@@ -115,7 +115,8 @@ class Element:
             model.handle(event)
 
     def watcher(self, default_handler=None):
-        return EventWatcher(self, default_handler)
+        dispatcher = self.model.element_dispatcher if self.model else None
+        return EventWatcher(self, dispatcher, default_handler)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 

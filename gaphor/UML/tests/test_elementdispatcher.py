@@ -216,16 +216,13 @@ A.two = association("two", A, lower=0, upper=2, composite=True)
 
 
 class ElementDispatcherAsServiceTestCase(TestCase):
-
-    services = TestCase.services + ["element_dispatcher"]
-
     def A(self):
         return self.element_factory.create(A)
 
     def setUp(self):
         super(ElementDispatcherAsServiceTestCase, self).setUp()
         self.events = []
-        self.dispatcher = Application.get_service("element_dispatcher")
+        self.dispatcher = self.element_factory.element_dispatcher
 
     def tearDown(self):
         super(ElementDispatcherAsServiceTestCase, self).tearDown()
@@ -324,7 +321,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         A = self.A
         a = A()
-        watcher = EventWatcher(a, self._handler)
+        watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
         watcher.subscribe_all()
@@ -348,7 +345,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         A = self.A
         a = A()
-        watcher = EventWatcher(a, self._handler)
+        watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
         watcher.subscribe_all()
@@ -374,7 +371,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         A = self.A
         a = A()
-        watcher = EventWatcher(a, self._handler)
+        watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
         watcher.subscribe_all()
@@ -402,7 +399,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         A = self.A
         a = A()
-        watcher = EventWatcher(a, self._handler)
+        watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
         watcher.subscribe_all()

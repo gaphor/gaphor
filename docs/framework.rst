@@ -59,5 +59,6 @@ element_dispatcher
   elements reaching from the root (e.g. from a diagram item) to the element of
   interest and will only signal in case this element changes.
   This makes complex dispatching very efficient.
+  The dispatcher functionality is available through `Element.watcher()`.
 
 .. autoclass:: gaphor.UML.elementdispatcher.ElementDispatcher

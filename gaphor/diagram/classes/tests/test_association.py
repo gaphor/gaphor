@@ -12,9 +12,6 @@ from gaphor.diagram.classes.association import AssociationItem
 
 
 class AssociationItemTestCase(TestCase):
-
-    services = TestCase.services + ["element_dispatcher"]
-
     def setUp(self):
         super().setUp()
         self.assoc = self.create(AssociationItem)
@@ -73,7 +70,6 @@ class AssociationItemTestCase(TestCase):
         assert a.subject.memberEnd[1] is a.tail_end.subject
         assert a.subject.memberEnd[0].name is None
 
-        dispatcher = self.get_service("element_dispatcher")
         a.subject.memberEnd[0].name = "blah"
         self.diagram.canvas.update()
 
