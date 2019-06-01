@@ -19,3 +19,22 @@ class DiagramSelectionChange:
         self.diagram_view = diagram_view
         self.focused_item = focused_item
         self.selected_items = selected_items
+
+
+class WindowClose:
+    """
+    The user requested the window to be closed.
+    """
+
+    def __init__(self, service):
+        self.service = service
+
+
+class FilenameChanged:
+    """
+    Event class used to send state changes on the Undo Manager.
+    """
+
+    def __init__(self, service, filename=None):
+        self.service = service
+        self.filename = filename

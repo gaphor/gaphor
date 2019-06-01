@@ -156,8 +156,6 @@ class _Application:
         )
         self._app = app
 
-        self.essential_services.append("main_window")
-
         def app_startup(app):
             self.init()
 

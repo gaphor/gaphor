@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class XMIExport(Service, ActionProvider):
 
     element_factory = inject("element_factory")
-    main_window = inject("main_window")
+    file_manager = inject("file_manager")
 
     menu_xml = """
       <ui>
@@ -43,7 +43,7 @@ class XMIExport(Service, ActionProvider):
         tooltip=_("Export model to XMI (XML Model Interchange) format"),
     )
     def execute(self):
-        filename = self.main_window.get_filename()
+        filename = self.file_manager.filename
         if filename:
             filename = filename.replace(".gaphor", ".xmi")
         else:

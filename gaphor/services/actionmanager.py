@@ -20,8 +20,54 @@ class ActionManager(Service):
     component_registry = inject("component_registry")
     event_manager = inject("event_manager")
 
+    menubar_path = "/mainwindow"
+    toolbar_path = "/mainwindow-toolbar"
+
+    menu_skeleton_xml = """
+      <ui>
+        <menubar name="mainwindow">
+          <menu action="file">
+            <placeholder name="primary" />
+            <separator />
+            <menu action="file-export" />
+            <menu action="file-import" />
+            <separator />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+            <separator />
+          </menu>
+          <menu action="edit">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
+          <menu action="diagram">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
+          <menu action="tools">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
+          <menu action="help">
+            <placeholder name="primary" />
+            <placeholder name="secondary" />
+            <placeholder name="ternary" />
+          </menu>
+        </menubar>
+        <toolbar name='mainwindow-toolbar'>
+            <placeholder name="left" />
+            <separator expand="true" />
+            <placeholder name="right" />
+        </toolbar>
+      </ui>
+    """
+
     def __init__(self):
         self.ui_manager = Gtk.UIManager()
+        self.ui_manager.add_ui_from_string(self.menu_skeleton_xml)
 
     def init(self, app):
         logger.info("Loading action provider services")

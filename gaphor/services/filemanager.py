@@ -7,13 +7,13 @@ import logging
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _, inject, action, build_action_group
+from gaphor.core import _, inject, action, build_action_group, event_handler
 from gaphor.abc import Service, ActionProvider
-from gaphor.event import ServiceEvent
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
+from gaphor.ui.event import FilenameChanged, WindowClose
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -22,15 +22,6 @@ DEFAULT_EXT = ".gaphor"
 MAX_RECENT = 10
 
 log = logging.getLogger(__name__)
-
-
-class FileManagerStateChanged(ServiceEvent):
-    """
-    Event class used to send state changes on the Undo Manager.
-    """
-
-    def __init__(self, service):
-        self.service = service
 
 
 class FileManager(Service, ActionProvider):
@@ -67,6 +58,7 @@ class FileManager(Service, ActionProvider):
               <menuitem action="file-save-as" />
               <separator />
             </placeholder>
+            <menuitem action="file-quit" />
           </menu>
         </menubar>
         <toolbar action="mainwindow-toolbar">
@@ -107,10 +99,13 @@ class FileManager(Service, ActionProvider):
 
         self.update_recent_files()
 
+        self.event_manager.subscribe(self._on_window_close)
+
     def shutdown(self):
         """Called when shutting down the file manager service."""
 
         log.info("Shutting down")
+        self.event_manager.unsubscribe(self._on_window_close)
 
     def get_filename(self):
         """Return the current file name.  This method is used by the filename
@@ -122,9 +117,6 @@ class FileManager(Service, ActionProvider):
         property.  Setting the current filename will update the recent file
         list."""
 
-        log.info("Setting current file")
-        log.debug("Filename is %s" % filename)
-
         if filename != self._filename:
             self._filename = filename
             self.update_recent_files(filename)
@@ -134,23 +126,13 @@ class FileManager(Service, ActionProvider):
     def get_recent_files(self):
         """Returns the recent file list from the properties service.  This
         method is used by the recent_files property."""
-
-        try:
-            return self.properties.get("recent-files", [])
-        except component.interfaces.ComponentLookupError:
-            return []
+        return self.properties.get("recent-files", [])
 
     def set_recent_files(self, recent_files):
         """Updates the properties service with the supplied list of recent
         files.  This method is used by the recent_files property."""
 
-        log.info("Storing recent files")
-        log.debug("Recent files are %s" % recent_files)
-
-        try:
-            self.properties.set("recent-files", recent_files)
-        except component.interfaces.ComponentLookupError:
-            return
+        self.properties.set("recent-files", recent_files)
 
     recent_files = property(get_recent_files, set_recent_files)
 
@@ -160,9 +142,6 @@ class FileManager(Service, ActionProvider):
 
         The default recent file placeholder actions are hidden.  The real
         actions are then built using the recent file list."""
-
-        log.info("Updating recent files")
-        log.debug("New file is %s" % new_filename)
 
         recent_files = self.recent_files
 
@@ -184,26 +163,19 @@ class FileManager(Service, ActionProvider):
 
     def load_recent(self, action, index):
         """Load the recent file at the specified index.  This will trigger
-        a FileManagerStateChanged event.  The recent files are stored in
+        a FilenameChanged event.  The recent files are stored in
         the recent_files property."""
-
-        log.info("Loading recent file")
-        log.debug("Action is %s" % action)
-        log.debug("Index is %s" % index)
 
         filename = self.recent_files[index]
 
         self.load(filename)
-        self.event_manager.handle(FileManagerStateChanged(self))
+        self.event_manager.handle(FilenameChanged(self, filename))
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
         displays the loading progress.  The load generator updates the progress
         queue.  The loader is passed to a GIdleThread which executes the load
         generator.  If loading is successful, the filename is set."""
-
-        log.info("Loading file")
-        log.debug("Path is %s" % filename)
 
         queue = Queue()
 
@@ -215,7 +187,8 @@ class FileManager(Service, ActionProvider):
                 parent=main_window.window,
                 queue=queue,
             )
-        except component.interfaces.ComponentLookupError:
+        except:
+            log.warning("Could not create status window, proceding without.")
             status_window = None
 
         try:
@@ -273,9 +246,6 @@ class FileManager(Service, ActionProvider):
         extension.  If not, the extension is added to the filename
         and returned."""
 
-        log.debug("Verifying file name")
-        log.debug("File name is %s" % filename)
-
         if not filename.endswith(DEFAULT_EXT):
             filename = filename + DEFAULT_EXT
 
@@ -287,9 +257,6 @@ class FileManager(Service, ActionProvider):
         references.  It will also verify that the filename has the correct
         extension.  A status window is displayed while the GIdleThread
         is executed.  This thread actually saves the model."""
-
-        log.info("Saving file")
-        log.debug("File name is %s" % filename)
 
         if not filename or not len(filename):
             return
@@ -396,7 +363,7 @@ class FileManager(Service, ActionProvider):
         # main_window.select_element(diagram)
         # main_window.show_diagram(diagram)
 
-        self.event_manager.handle(FileManagerStateChanged(self))
+        self.event_manager.handle(FilenameChanged(self))
 
     @action(name="file-new-template", label=_("New from template"))
     def action_new_from_template(self):
@@ -418,7 +385,7 @@ class FileManager(Service, ActionProvider):
         if filename:
             self.load(filename)
             self.filename = None
-            self.event_manager.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FilenameChanged(self))
 
     @action(name="file-open", stock_id="gtk-open")
     def action_open(self):
@@ -439,7 +406,7 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.load(filename)
-            self.event_manager.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FilenameChanged(self, filename))
 
     @action(name="file-save", stock_id="gtk-save")
     def action_save(self):
@@ -454,7 +421,7 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.event_manager.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FilenameChanged(self, filename))
             return True
         else:
             return self.action_save_as()
@@ -478,7 +445,50 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.event_manager.handle(FileManagerStateChanged(self))
+            self.event_manager.handle(FilenameChanged(self, filename))
             return True
 
         return False
+
+    @action(name="file-quit", stock_id="gtk-quit")
+    def file_quit(self):
+        """
+        Ask user to close window if the model has changed.
+        The user is asked to either discard the changes, keep the
+        application running or save the model and quit afterwards.
+        """
+        if self.main_window.model_changed:
+            dialog = Gtk.MessageDialog(
+                self.main_window.window,
+                Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                Gtk.MessageType.WARNING,
+                Gtk.ButtonsType.NONE,
+                _("Save changed to your model before closing?"),
+            )
+            dialog.format_secondary_text(
+                _("If you close without saving, your changes will be discarded.")
+            )
+            dialog.add_buttons(
+                _("Close _without saving"),
+                Gtk.ResponseType.REJECT,
+                Gtk.STOCK_CANCEL,
+                Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_SAVE,
+                Gtk.ResponseType.YES,
+            )
+            dialog.set_default_response(Gtk.ResponseType.YES)
+            response = dialog.run()
+            dialog.destroy()
+
+            if response == Gtk.ResponseType.YES:
+                saved = self.action_save()
+                if saved:
+                    self.main_window.quit()
+            if response == Gtk.ResponseType.REJECT:
+                self.main_window.quit()
+        else:
+            self.main_window.quit()
+
+    @event_handler(WindowClose)
+    def _on_window_close(self, event):
+        self.file_quit()
