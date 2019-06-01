@@ -2,8 +2,9 @@
 Parsing of UML model elements from string tests.
 """
 
-import unittest
+import pytest
 from gaphor.application import Application
+from gaphor.services.eventmanager import EventManager
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML.umllex import parse
 from gaphor.UML.umllex import attribute_pat, operation_pat, parameter_pat
@@ -41,189 +42,168 @@ dump_oper("   myfunc2 ( ): type")
 dump_oper('myfunc(aap:str[1] = "aap" { tag1, tag2 }, out two {tag3}): type')
 
 
-factory = ElementFactory()
+@pytest.fixture
+def factory():
+    event_manager = EventManager()
+    return ElementFactory(event_manager)
 
 
-class AttributeTestCase(unittest.TestCase):
+def test_parse_property_simple(factory):
+    """Test simple property parsing
     """
-    Parsing an attribute tests.
+    a = factory.create(UML.Property)
+    UML.parse(a, "myattr")
+    assert not a.isDerived
+    assert "myattr" == a.name
+    assert a.typeValue is None, a.typeValue
+    assert a.lowerValue is None, a.lowerValue
+    assert a.upperValue is None, a.upperValue
+    assert a.defaultValue is None, a.defaultValue
+
+
+def test_parse_property_complex(factory):
+    """Test complex property parsing
     """
+    a = factory.create(UML.Property)
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        factory.flush()
-
-    def test_parse_property_simple(self):
-        """Test simple property parsing
-        """
-        a = factory.create(UML.Property)
-        UML.parse(a, "myattr")
-        assert not a.isDerived
-        assert "myattr" == a.name
-        assert a.typeValue is None, a.typeValue
-        assert a.lowerValue is None, a.lowerValue
-        assert a.upperValue is None, a.upperValue
-        assert a.defaultValue is None, a.defaultValue
-
-    def test_parse_property_complex(self):
-        """Test complex property parsing
-        """
-        a = factory.create(UML.Property)
-
-        UML.parse(a, '+ / name : str[0..*] = "aap" { static }')
-        assert "public" == a.visibility
-        assert a.isDerived
-        assert "name" == a.name
-        assert "str" == a.typeValue
-        assert "0" == a.lowerValue
-        assert "*" == a.upperValue
-        assert '"aap"' == a.defaultValue
-
-    def test_parse_property_invalid(self):
-        """Test parsing property with invalid syntax
-        """
-        a = factory.create(UML.Property)
-
-        UML.parse(a, '+ name = str[*] = "aap" { static }')
-        assert '+ name = str[*] = "aap" { static }' == a.name
-        assert not a.isDerived
-        assert not a.typeValue
-        assert not a.lowerValue
-        assert not a.upperValue
-        assert not a.defaultValue
+    UML.parse(a, '+ / name : str[0..*] = "aap" { static }')
+    assert "public" == a.visibility
+    assert a.isDerived
+    assert "name" == a.name
+    assert "str" == a.typeValue
+    assert "0" == a.lowerValue
+    assert "*" == a.upperValue
+    assert '"aap"' == a.defaultValue
 
 
-class AssociationEndTestCase(unittest.TestCase):
+def test_parse_property_invalid(factory):
+    """Test parsing property with invalid syntax
     """
-    Parsing association end tests.
+    a = factory.create(UML.Property)
+
+    UML.parse(a, '+ name = str[*] = "aap" { static }')
+    assert '+ name = str[*] = "aap" { static }' == a.name
+    assert not a.isDerived
+    assert not a.typeValue
+    assert not a.lowerValue
+    assert not a.upperValue
+    assert not a.defaultValue
+
+
+def test_parse_association_end(factory):
+    """Test parsing of association end
     """
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        factory.flush()
-
-    def test_parse_association_end(self):
-        """Test parsing of association end
-        """
-        a = factory.create(UML.Association)
-        p = factory.create(UML.Property)
-        p.association = a
-
-        UML.parse(p, "end")
-        assert "end" == p.name
-        assert not p.typeValue
-        assert not p.lowerValue
-        assert not p.upperValue
-        assert not p.defaultValue
-
-    def test_parse_multiplicity(self):
-        """Test parsing of multiplicity
-        """
-        a = factory.create(UML.Association)
-        p = factory.create(UML.Property)
-        p.association = a
-        UML.parse(p, "0..2 { tag }")
-        assert p.name is None
-        assert not p.typeValue
-        assert "0" == p.lowerValue
-        assert "2" == p.upperValue
-        assert not p.defaultValue
-
-    def test_parse_multiplicity2(self):
-        """Test parsing of multiplicity with multiline constraints
-        """
-        a = factory.create(UML.Association)
-        p = factory.create(UML.Property)
-        p.association = a
-        UML.parse(p, "0..2 { tag1, \ntag2}")
-        assert p.name is None
-        assert not p.typeValue
-        assert "0" == p.lowerValue
-        assert "2" == p.upperValue
-        assert not p.defaultValue
-
-    def test_parse_derived_end(self):
-        """Test parsing derived association end
-        """
-        a = factory.create(UML.Association)
-        p = factory.create(UML.Property)
-        p.association = a
-        UML.parse(p, "-/end[*] { mytag}")
-        assert "private" == p.visibility
-        assert p.isDerived
-        assert "end" == p.name
-        assert not p.typeValue
-        assert not p.lowerValue
-        assert "*" == p.upperValue
-        assert not p.defaultValue
+    UML.parse(p, "end")
+    assert "end" == p.name
+    assert not p.typeValue
+    assert not p.lowerValue
+    assert not p.upperValue
+    assert not p.defaultValue
 
 
-class OperationTestCase(unittest.TestCase):
+def test_parse_association_end_multiplicity(factory):
+    """Test parsing of multiplicity
     """
-    Operation parsing tests.
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+    UML.parse(p, "0..2 { tag }")
+    assert p.name is None
+    assert not p.typeValue
+    assert "0" == p.lowerValue
+    assert "2" == p.upperValue
+    assert not p.defaultValue
+
+
+def test_parse_association_end_multiplicity2(factory):
+    """Test parsing of multiplicity with multiline constraints
     """
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+    UML.parse(p, "0..2 { tag1, \ntag2}")
+    assert p.name is None
+    assert not p.typeValue
+    assert "0" == p.lowerValue
+    assert "2" == p.upperValue
+    assert not p.defaultValue
 
-    def setUp(self):
-        factory.flush()
 
-    def tearDown(self):
-        factory.flush()
+def test_parse_association_end_derived_end(factory):
+    """Test parsing derived association end
+    """
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+    UML.parse(p, "-/end[*] { mytag}")
+    assert "private" == p.visibility
+    assert p.isDerived
+    assert "end" == p.name
+    assert not p.typeValue
+    assert not p.lowerValue
+    assert "*" == p.upperValue
+    assert not p.defaultValue
 
-    def test_parse_operation(self):
-        """Test parsing simple operation
-        """
-        o = factory.create(UML.Operation)
-        UML.parse(o, "myfunc()")
-        assert "myfunc" == o.name
-        assert not o.returnResult[0].typeValue
-        assert not o.formalParameter
 
-    def test_parse_operation_return(self):
-        """Test parsing operation with return value
-        """
-        o = factory.create(UML.Operation)
-        UML.parse(o, "+ myfunc(): int")
-        assert "myfunc" == o.name
-        assert "int" == o.returnResult[0].typeValue
-        assert "public" == o.visibility
-        assert not o.formalParameter
+def test_parse_operation(factory):
+    """Test parsing simple operation
+    """
+    o = factory.create(UML.Operation)
+    UML.parse(o, "myfunc()")
+    assert "myfunc" == o.name
+    assert not o.returnResult[0].typeValue
+    assert not o.formalParameter
 
-    def test_parse_operation_2_params(self):
-        """Test parsing of operation with two parameters
-        """
-        o = factory.create(UML.Operation)
-        UML.parse(o, "# myfunc2 (a: str, b: int = 3 {  static}): float")
-        assert "myfunc2" == o.name
-        assert "float" == o.returnResult[0].typeValue
-        assert "protected" == o.visibility
-        assert 2 == len(o.formalParameter)
-        assert "a" == o.formalParameter[0].name
-        assert "str" == o.formalParameter[0].typeValue
-        assert o.formalParameter[0].defaultValue is None
-        assert "b" == o.formalParameter[1].name
-        assert "int" == o.formalParameter[1].typeValue
-        assert "3" == o.formalParameter[1].defaultValue
 
-    def test_parse_operation_1_param(self):
-        """Test parsing of operation with one parameter
-        """
-        o = factory.create(UML.Operation)
-        UML.parse(o, "- myfunc2 (a: node): double")
-        assert "myfunc2" == o.name
-        assert "double" == o.returnResult[0].typeValue
-        assert "private" == o.visibility
-        assert 1 == len(o.formalParameter)
-        assert "a" == o.formalParameter[0].name
-        assert "node" == o.formalParameter[0].typeValue
-        assert o.formalParameter[0].defaultValue is None
+def test_parse_operation_return(factory):
+    """Test parsing operation with return value
+    """
+    o = factory.create(UML.Operation)
+    UML.parse(o, "+ myfunc(): int")
+    assert "myfunc" == o.name
+    assert "int" == o.returnResult[0].typeValue
+    assert "public" == o.visibility
+    assert not o.formalParameter
 
-    def test_parse_operation_invalid_syntax(self):
-        """Test operation parsing with invalid syntax
-        """
-        o = factory.create(UML.Operation)
-        UML.parse(o, "- myfunc2: myType2")
-        assert "- myfunc2: myType2" == o.name
+
+def test_parse_operation_2_params(factory):
+    """Test parsing of operation with two parameters
+    """
+    o = factory.create(UML.Operation)
+    UML.parse(o, "# myfunc2 (a: str, b: int = 3 {  static}): float")
+    assert "myfunc2" == o.name
+    assert "float" == o.returnResult[0].typeValue
+    assert "protected" == o.visibility
+    assert 2 == len(o.formalParameter)
+    assert "a" == o.formalParameter[0].name
+    assert "str" == o.formalParameter[0].typeValue
+    assert o.formalParameter[0].defaultValue is None
+    assert "b" == o.formalParameter[1].name
+    assert "int" == o.formalParameter[1].typeValue
+    assert "3" == o.formalParameter[1].defaultValue
+
+
+def test_parse_operation_1_param(factory):
+    """Test parsing of operation with one parameter
+    """
+    o = factory.create(UML.Operation)
+    UML.parse(o, "- myfunc2 (a: node): double")
+    assert "myfunc2" == o.name
+    assert "double" == o.returnResult[0].typeValue
+    assert "private" == o.visibility
+    assert 1 == len(o.formalParameter)
+    assert "a" == o.formalParameter[0].name
+    assert "node" == o.formalParameter[0].typeValue
+    assert o.formalParameter[0].defaultValue is None
+
+
+def test_parse_operation_invalid_syntax(factory):
+    """Test operation parsing with invalid syntax
+    """
+    o = factory.create(UML.Operation)
+    UML.parse(o, "- myfunc2: myType2")
+    assert "- myfunc2: myType2" == o.name

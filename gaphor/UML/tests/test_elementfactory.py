@@ -1,72 +1,69 @@
+import pytest
 import unittest
 from gaphor.event import ServiceEvent
+from gaphor.services.eventmanager import EventManager
 from gaphor.UML import *
 from gaphor.UML.event import *
 import gc
 import weakref, sys
 
 
-class ElementFactoryTestCase(unittest.TestCase):
-    def setUp(self):
-        self.factory = ElementFactory()
+@pytest.fixture
+def factory():
+    event_manager = EventManager()
+    return ElementFactory(event_manager)
 
-    def tearDown(self):
-        del self.factory
 
-    def testCreate(self):
-        ef = self.factory
+def test_create(factory):
+    p = factory.create(Parameter)
+    assert len(list(factory.values())) == 1
 
-        p = ef.create(Parameter)
-        assert len(list(ef.values())) == 1
 
-    def testFlush(self):
-        ef = self.factory
+def testFlush(factory):
+    p = factory.create(Parameter)
+    # wp = weakref.ref(p)
+    assert len(list(factory.values())) == 1
+    factory.flush()
+    del p
 
-        p = ef.create(Parameter)
-        # wp = weakref.ref(p)
-        assert len(list(ef.values())) == 1
-        ef.flush()
-        del p
+    gc.collect()
 
-        gc.collect()
+    # assert wp() is None
+    assert len(list(factory.values())) == 0, list(factory.values())
 
-        # assert wp() is None
-        assert len(list(ef.values())) == 0, list(ef.values())
 
-    def testWithoutApplication(self):
-        ef = ElementFactory()
+def test_without_application(factory):
+    p = factory.create(Parameter)
+    assert factory.size() == 1, factory.size()
 
-        p = ef.create(Parameter)
-        assert ef.size() == 1, ef.size()
+    factory.flush()
+    assert factory.size() == 0, factory.size()
 
-        ef.flush()
-        assert ef.size() == 0, ef.size()
+    p = factory.create(Parameter)
+    assert factory.size() == 1, factory.size()
 
-        p = ef.create(Parameter)
-        assert ef.size() == 1, ef.size()
+    p.unlink()
+    assert factory.size() == 0, factory.size()
 
-        p.unlink()
-        assert ef.size() == 0, ef.size()
 
-    def testUnlink(self):
-        ef = self.factory
-        p = ef.create(Parameter)
+def test_unlink(factory):
+    p = factory.create(Parameter)
 
-        assert len(list(ef.values())) == 1
+    assert len(list(factory.values())) == 1
 
-        p.unlink()
+    p.unlink()
 
-        assert len(list(ef.values())) == 0, list(ef.values())
+    assert len(list(factory.values())) == 0, list(factory.values())
 
-        p = ef.create(Parameter)
-        p.defaultValue = "l"
+    p = factory.create(Parameter)
+    p.defaultValue = "l"
 
-        assert len(list(ef.values())) == 1
+    assert len(list(factory.values())) == 1
 
-        p.unlink()
-        del p
+    p.unlink()
+    del p
 
-        assert len(list(ef.values())) == 0, list(ef.values())
+    assert len(list(factory.values())) == 0, list(factory.values())
 
 
 from gaphor.application import Application
@@ -108,39 +105,39 @@ class ElementFactoryServiceTestCase(unittest.TestCase):
         Application.shutdown()
 
     def testCreateEvent(self):
-        ef = self.factory
-        p = ef.create(Parameter)
+        factory = self.factory
+        p = factory.create(Parameter)
 
         assert isinstance(last_event, ElementCreateEvent)
         assert handled
 
     def testRemoveEvent(self):
-        ef = self.factory
-        p = ef.create(Parameter)
+        factory = self.factory
+        p = factory.create(Parameter)
         clearEvents()
         p.unlink()
 
         assert isinstance(last_event, ElementDeleteEvent)
 
     def testModelEvent(self):
-        ef = self.factory
-        ef.notify_model()
+        factory = self.factory
+        factory.notify_model()
 
         assert isinstance(last_event, ModelFactoryEvent)
 
     def testFlushEvent(self):
-        ef = self.factory
-        ef.create(Parameter)
+        factory = self.factory
+        factory.create(Parameter)
         del events[:]
 
-        ef.flush()
+        factory.flush()
 
         assert len(events) == 1, events
         assert isinstance(last_event, FlushFactoryEvent)
 
     def test_no_create_events_when_blocked(self):
-        ef = self.factory
-        with ef.block_events():
-            ef.create(Parameter)
+        factory = self.factory
+        with factory.block_events():
+            factory.create(Parameter)
 
         assert events == [], events

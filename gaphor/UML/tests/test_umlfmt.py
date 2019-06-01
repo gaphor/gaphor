@@ -2,29 +2,27 @@
 Formatting of UML model elements into text tests.
 """
 
-import unittest
+import pytest
 
 from gaphor.application import Application
+from gaphor.services.eventmanager import EventManager
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML.umlfmt import format
 import gaphor.UML.uml2 as UML
 
-factory = ElementFactory()
+
+@pytest.fixture
+def factory():
+    event_manager = EventManager()
+    return ElementFactory(event_manager)
 
 
-class AttributeTestCase(unittest.TestCase):
-    def setUp(self):
-        pass
+def test_simple_format(factory):
+    """Test simple attribute formatting
+    """
+    a = factory.create(UML.Property)
+    a.name = "myattr"
+    assert "+ myattr" == format(a)
 
-    def tearDown(self):
-        factory.flush()
-
-    def test_simple_format(self):
-        """Test simple attribute formatting
-        """
-        a = factory.create(UML.Property)
-        a.name = "myattr"
-        assert "+ myattr" == format(a)
-
-        a.typeValue = "int"
-        assert "+ myattr: int" == format(a)
+    a.typeValue = "int"
+    assert "+ myattr: int" == format(a)

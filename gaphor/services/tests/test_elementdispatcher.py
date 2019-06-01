@@ -4,14 +4,14 @@ from gaphor import UML
 from gaphor.application import Application
 from gaphor.services.elementdispatcher import ElementDispatcher
 from gaphor.services.eventmanager import EventManager
-from gaphor.UML.elementfactory import ElementFactoryService
+from gaphor.UML.elementfactory import ElementFactory
 
 
 class ElementDispatcherTestCase(unittest.TestCase):
     def setUp(self):
         self.events = []
         event_manager = EventManager()
-        self.element_factory = ElementFactoryService(event_manager)
+        self.element_factory = ElementFactory(event_manager)
         self.dispatcher = ElementDispatcher(event_manager)
 
     def tearDown(self):

@@ -1,5 +1,6 @@
 from gaphor import UML
 from gaphor.application import Application
+from gaphor.services.eventmanager import EventManager
 from gaphor.UML.modelfactory import STEREOTYPE_FMT as fmt
 
 import unittest
@@ -7,7 +8,8 @@ import unittest
 
 class TestCaseBase(unittest.TestCase):
     def setUp(self):
-        self.factory = UML.ElementFactory()
+        event_manager = EventManager()
+        self.factory = UML.ElementFactory(event_manager)
 
 
 class StereotypesTestCase(TestCaseBase):

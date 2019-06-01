@@ -6,7 +6,7 @@ from gaphor.core import event_handler
 from gaphor.tests.testcase import TestCase
 from gaphor.services.undomanager import UndoManager
 from gaphor.services.eventmanager import EventManager
-from gaphor.UML.elementfactory import ElementFactoryService
+from gaphor.UML.elementfactory import ElementFactory
 from gaphor.transaction import Transaction
 
 
@@ -108,7 +108,7 @@ class TestUndoManager(TestCase):
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
-        element_factory = ElementFactoryService(event_manager)
+        element_factory = ElementFactory(event_manager)
 
         class A(Element):
             attr = attribute("attr", bytes, default="default")
@@ -135,7 +135,7 @@ class TestUndoManager(TestCase):
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
-        element_factory = ElementFactoryService(event_manager)
+        element_factory = ElementFactory(event_manager)
 
         class A(Element):
             pass
@@ -188,7 +188,7 @@ class TestUndoManager(TestCase):
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
-        element_factory = ElementFactoryService(event_manager)
+        element_factory = ElementFactory(event_manager)
 
         class A(Element):
             pass
@@ -244,7 +244,7 @@ class TestUndoManager(TestCase):
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
-        element_factory = ElementFactoryService(event_manager)
+        element_factory = ElementFactory(event_manager)
 
         undo_manager.begin_transaction()
         p = element_factory.create(Element)
@@ -275,7 +275,7 @@ class TestUndoManager(TestCase):
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
-        element_factory = ElementFactoryService(event_manager)
+        element_factory = ElementFactory(event_manager)
 
         undo_manager.begin_transaction()
         p = element_factory.create(Element)
@@ -298,7 +298,7 @@ class TestUndoManager(TestCase):
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
-        element_factory = ElementFactoryService(event_manager)
+        element_factory = ElementFactory(event_manager)
 
         class A(Element):
             is_unlinked = False
@@ -350,7 +350,7 @@ class TestUndoManager(TestCase):
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
-        element_factory = ElementFactoryService(event_manager)
+        element_factory = ElementFactory(event_manager)
 
         undo_manager.begin_transaction()
 

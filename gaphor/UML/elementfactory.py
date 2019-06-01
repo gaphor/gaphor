@@ -18,7 +18,7 @@ from gaphor.abc import Service
 from gaphor.misc import odict
 
 
-class ElementFactory:
+class ElementFactory(Service):
     """
     The ElementFactory is used to create elements and do lookups to
     elements.
@@ -31,15 +31,21 @@ class ElementFactory:
     flushed: all element are removed from the factory (element is None)
     """
 
-    def __init__(self):
+    def __init__(self, event_manager=None):
+        self.event_manager = event_manager
         self._elements = odict.odict()
         self._observers = list()
+        self._block_events = 0
+
+    def shutdown(self):
+        self.flush()
 
     def create(self, type):
         """
         Create a new model element of type ``type``.
         """
         obj = self.create_as(type, str(uuid.uuid1()))
+        self.handle(ElementCreateEvent(self, obj))
         return obj
 
     def create_as(self, type, id):
@@ -137,63 +143,15 @@ class ElementFactory:
         Diagram elements are flushed first.  This is so that canvas updates
         are blocked.  The remaining elements are then flushed.
         """
-
-        flush_element = self._flush_element
-        for element in self.lselect(lambda e: isinstance(e, Diagram)):
-            element.canvas.block_updates = True
-            flush_element(element)
-
-        for element in self.lselect():
-            flush_element(element)
-
-    def _flush_element(self, element):
-        element.unlink()
-
-    def _unlink_element(self, element):
-        """
-        NOTE: Invoked from Element.unlink() to perform an element unlink.
-        """
-        try:
-            del self._elements[element.id]
-        except KeyError:
-            pass
-
-    def handle(self, event):
-        """
-        Handle events coming from elements.
-        """
-        if type(event) is UnlinkEvent:
-            self._unlink_element(event.element)
-
-
-class ElementFactoryService(Service, ElementFactory):
-    """Service version of the ElementFactory."""
-
-    def __init__(self, event_manager):
-        super(ElementFactoryService, self).__init__()
-        self.event_manager = event_manager
-        self._block_events = 0
-
-    def shutdown(self):
-        self.flush()
-
-    def create(self, type):
-        """
-        Create a new model element of type ``type``.
-        """
-        obj = super(ElementFactoryService, self).create(type)
-        self.handle(ElementCreateEvent(self, obj))
-        return obj
-
-    def flush(self):
-        """Flush all elements (remove them from the factory).
-        This method will emit a single FlushFactoryEvent,
-        all individual events are suppressed."""
-
         self.handle(FlushFactoryEvent(self))
 
         with self.block_events():
-            super(ElementFactoryService, self).flush()
+            for element in self.lselect(lambda e: isinstance(e, Diagram)):
+                element.canvas.block_updates = True
+                element.unlink()
+
+            for element in self.lselect():
+                element.unlink()
 
     def notify_model(self):
         """
@@ -216,10 +174,19 @@ class ElementFactoryService(Service, ElementFactory):
 
     def handle(self, event):
         """
-        Handle events coming from elements (used internally).
+        Handle events coming from elements.
         """
-        super().handle(event)
-        if not self._block_events:
-            if type(event) is UnlinkEvent:
-                event = ElementDeleteEvent(self, event.element)
+        if type(event) is UnlinkEvent:
+            self._unlink_element(event.element)
+            event = ElementDeleteEvent(self, event.element)
+        if self.event_manager and not self._block_events:
             self.event_manager.handle(event)
+
+    def _unlink_element(self, element):
+        """
+        NOTE: Invoked from Element.unlink() to perform an element unlink.
+        """
+        try:
+            del self._elements[element.id]
+        except KeyError:
+            pass
