@@ -2,7 +2,6 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.UML.elementdispatcher import EventWatcher
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 
 
@@ -14,7 +13,7 @@ class CommentItemPropertyPage(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.watcher = EventWatcher(subject)
+        self.watcher = subject.watcher()
 
     def construct(self):
         subject = self.subject

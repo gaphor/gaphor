@@ -33,7 +33,6 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.UML.elementdispatcher import EventWatcher
 
 
 class _PropertyPages:
@@ -392,7 +391,7 @@ class NamedElementPropertyPage(PropertyPageBase):
             subject
         )
         self.subject = subject
-        self.watcher = EventWatcher(subject)
+        self.watcher = subject.watcher()
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):

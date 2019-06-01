@@ -6,7 +6,6 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _
-from gaphor.UML.elementdispatcher import EventWatcher
 from gaphor.diagram.propertypages import create_hbox_label
 from gaphor.diagram.propertypages import PropertyPages, NamedElementPropertyPage
 from gaphor.diagram.classes import ClassItem

@@ -4,7 +4,6 @@ from gi.repository import Gtk
 from gaphas.decorators import AsyncIO
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.UML.elementdispatcher import EventWatcher
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 from gaphor.diagram.propertypages import (
     NamedElementPropertyPage,
@@ -200,7 +199,7 @@ class AttributesPage(PropertyPageBase):
     def __init__(self, item):
         super(AttributesPage, self).__init__()
         self.item = item
-        self.watcher = EventWatcher(item.subject)
+        self.watcher = item.subject.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -272,7 +271,7 @@ class OperationsPage(PropertyPageBase):
     def __init__(self, item):
         super(OperationsPage, self).__init__()
         self.item = item
-        self.watcher = EventWatcher(item.subject)
+        self.watcher = item.subject.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -354,7 +353,7 @@ class DependencyPropertyPage(PropertyPageBase):
         super(DependencyPropertyPage, self).__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
-        self.watcher = EventWatcher(self.item)
+        self.watcher = self.item.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -535,7 +534,7 @@ class AssociationEndPropertyPage(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.watcher = EventWatcher(subject)
+        self.watcher = subject.watcher()
 
     def construct(self):
         vbox = Gtk.VBox()

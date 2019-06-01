@@ -8,6 +8,7 @@ __all__ = ["Element"]
 import uuid
 
 from gaphor.UML.properties import umlproperty
+from gaphor.UML.elementdispatcher import EventWatcher
 
 
 class UnlinkEvent:
@@ -112,6 +113,9 @@ class Element:
         model = self._model
         if model:
             model.handle(event)
+
+    def watcher(self, default_handler=None):
+        return EventWatcher(self, default_handler)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
