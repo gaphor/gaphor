@@ -52,9 +52,6 @@ class CopyService(Service, ActionProvider):
 
         event_manager.subscribe(self._update)
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         self.copy_buffer = set()
         self.event_manager.unsubscribe(self._update)

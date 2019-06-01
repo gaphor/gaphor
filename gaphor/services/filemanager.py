@@ -92,9 +92,6 @@ class FileManager(Service, ActionProvider):
 
         event_manager.subscribe(self._on_window_close)
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         """Called when shutting down the file manager service."""
 

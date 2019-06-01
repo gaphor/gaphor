@@ -14,9 +14,6 @@ class ComponentRegistry(Service):
     def __init__(self):
         self._comp = set()
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         pass
 

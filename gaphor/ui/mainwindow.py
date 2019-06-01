@@ -110,9 +110,6 @@ class MainWindow(Service, ActionProvider):
             if isinstance(uicomp, ActionProvider):
                 self.action_manager.register_action_provider(uicomp)
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         log.info("Shutting down")
         if self.window:

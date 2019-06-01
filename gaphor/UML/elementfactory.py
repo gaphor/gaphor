@@ -174,9 +174,6 @@ class ElementFactoryService(Service, ElementFactory):
         self.event_manager = event_manager
         self._block_events = 0
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         self.flush()
 

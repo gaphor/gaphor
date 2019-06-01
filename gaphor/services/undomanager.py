@@ -128,9 +128,6 @@ class UndoManager(Service, ActionProvider):
         self._register_undo_handlers()
         self._action_executed()
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
 
         logger.info("Shutting down")

@@ -38,9 +38,6 @@ class DiagramLayout(Service, ActionProvider):
         self.component_registry = component_registry
         self.action_group = build_action_group(self)
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         pass
 

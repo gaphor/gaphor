@@ -92,12 +92,10 @@ class _Application:
         for name in self.essential_services:
             logger.info(f"Initializing service {name}")
             srv = services_by_name.pop(name)
-            srv.init(self)
             self.component_registry.register(srv, name)
 
         for name, srv in services_by_name.items():
             logger.info(f"Initializing {srv} as {name}")
-            srv.init(self)
             self.component_registry.register(srv, name)
             if self.event_manager:
                 self.event_manager.handle(ServiceInitializedEvent(name, srv))

@@ -34,9 +34,6 @@ class Alignment(Service, ActionProvider):
         self.event_manager.subscribe(self.update)
         self.update()
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         self.event_manager.unsubscribe(self.update)
 

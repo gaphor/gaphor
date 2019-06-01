@@ -7,13 +7,6 @@ class Service(metaclass=abc.ABCMeta):
     """
 
     @abc.abstractmethod
-    def init(self, application):
-        """
-        Initialize the service, this method is called after all services
-        are instantiated.
-        """
-
-    @abc.abstractmethod
     def shutdown(self):
         """
         Shutdown the services, free resources.

@@ -35,9 +35,6 @@ class PyNSource(Service, ActionProvider):
         self.win = None
         self.action_group = build_action_group(self)
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         pass
 

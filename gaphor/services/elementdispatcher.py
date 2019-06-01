@@ -106,9 +106,6 @@ class ElementDispatcher(Service):
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         self.event_manager.unsubscribe(self.on_element_change_event)
         self.event_manager.unsubscribe(self.on_model_loaded)

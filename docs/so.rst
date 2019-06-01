@@ -115,9 +115,6 @@ Here is a stripped version of the hello world class::
         def __init__(self):
             self.action_group = build_action_group(self) # 4.
 
-        def init(self, app):                             # 5.
-            self._app = app
-
         def shutdown(self):                              # 6.
             pass
 

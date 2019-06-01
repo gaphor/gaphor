@@ -26,9 +26,6 @@ class SanitizerService(Service):
         event_manager.subscribe(self._unlink_on_extension_delete)
         event_manager.subscribe(self._disconnect_extension_end)
 
-    def init(self, app=None):
-        pass
-
     def shutdown(self):
         self.event_manager.unsubscribe(self._unlink_on_presentation_delete)
         self.event_manager.unsubscribe(self._unlink_on_stereotype_delete)
