@@ -1,1 +1,0 @@
-from gaphor.plugins.checkmetamodel.checkmodelgui import CheckModelWindow
