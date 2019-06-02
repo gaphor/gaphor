@@ -17,7 +17,12 @@ class DiagramPageTestCase(unittest.TestCase):
         main_window.open()
         self.element_factory = Application.get_service("element_factory")
         self.diagram = self.element_factory.create(UML.Diagram)
-        self.page = DiagramPage(self.diagram)
+        self.page = DiagramPage(
+            self.diagram,
+            Application.get_service("event_manager"),
+            self.element_factory,
+            Application.get_service("properties"),
+        )
         self.page.construct()
         assert self.page.diagram == self.diagram
         assert self.page.view.canvas == self.diagram.canvas

@@ -285,6 +285,7 @@ class Diagrams(UIComponent, ActionProvider):
     placement = ("left", "diagrams")
 
     event_manager = inject("event_manager")
+    element_factory = inject("element_factory")
     properties = inject("properties")
     action_manager = inject("action_manager")
 
@@ -463,7 +464,9 @@ class Diagrams(UIComponent, ActionProvider):
                 return widget.diagram_page
 
         # No existing diagram page found, creating one
-        page = DiagramPage(diagram)
+        page = DiagramPage(
+            diagram, self.event_manager, self.element_factory, self.properties
+        )
         widget = page.construct()
         try:
             widget.set_css_name("diagram-tab")

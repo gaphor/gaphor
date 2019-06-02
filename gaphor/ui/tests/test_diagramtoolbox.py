@@ -21,7 +21,12 @@ class DiagramToolboxTestCase(TestCase):
     def setUp(self):
         TestCase.setUp(self)
         diagram = self.diagram
-        tab = DiagramPage(WindowOwner())
+        tab = DiagramPage(
+            WindowOwner(),
+            self.get_service("event_manager"),
+            self.element_factory,
+            self.get_service("properties"),
+        )
         tab.diagram = diagram
         tab.construct()
         self.tab = tab
