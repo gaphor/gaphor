@@ -7,6 +7,8 @@ class FileManagerTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
+                "event_manager",
+                "component_registry",
                 "file_manager",
                 "element_factory",
                 "properties",

@@ -49,7 +49,7 @@ class TestCaseExtras:
 
 class TestCase(TestCaseExtras, unittest.TestCase):
 
-    services = ["element_factory", "sanitizer"]
+    services = ["event_manager", "component_registry", "element_factory", "sanitizer"]
 
     def setUp(self):
         Application.init(services=self.services)

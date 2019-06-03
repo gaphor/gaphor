@@ -93,7 +93,7 @@ def clearEvents():
 
 class ElementFactoryServiceTestCase(unittest.TestCase):
     def setUp(self):
-        Application.init(["element_factory"])
+        Application.init(["event_manager", "component_registry", "element_factory"])
         self.factory = Application.get_service("element_factory")
         event_manager = Application.get_service("event_manager")
         event_manager.subscribe(handler)

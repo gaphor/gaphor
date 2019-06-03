@@ -1,21 +1,15 @@
 import pytest
 from gaphor.application import Application
 from gaphor.UML.elementfactory import ElementFactory
+from gaphor.services.eventmanager import EventManager
 from gaphor.storage.storage import load_elements
 from gaphor.storage.parser import element, canvas, canvasitem
 from gaphor.storage import diagramitems
 
 
 @pytest.fixture
-def application(services=["element_factory"]):
-    Application.init(services=services)
-    yield Application
-    Application.shutdown()
-
-
-@pytest.fixture
-def element_factory(application):
-    return application.get_service("element_factory")
+def element_factory():
+    return ElementFactory(EventManager())
 
 
 def test_upgrade_metaclass_item_to_class_item(element_factory):

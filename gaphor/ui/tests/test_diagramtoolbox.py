@@ -16,7 +16,14 @@ class WindowOwner:
 
 class DiagramToolboxTestCase(TestCase):
 
-    services = ["element_factory", "properties"]
+    services = [
+        "event_manager",
+        "component_registry",
+        "element_factory",
+        "properties",
+        "action_manager",
+        "main_window",
+    ]
 
     def setUp(self):
         TestCase.setUp(self)

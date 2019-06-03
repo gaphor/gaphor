@@ -12,6 +12,8 @@ class DiagramPageTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
+                "event_manager",
+                "component_registry",
                 "element_factory",
                 "main_window",
                 "action_manager",

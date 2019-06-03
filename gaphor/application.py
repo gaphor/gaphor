@@ -16,7 +16,7 @@ import pkg_resources
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.abc import Service
-from gaphor.misc.odict import odict
+
 
 logger = logging.getLogger(__name__)
 
@@ -27,9 +27,6 @@ class NotInitializedError(Exception):
 
 class ComponentLookupError(LookupError):
     pass
-
-
-_ESSENTIAL_SERVICES = ["component_registry", "event_manager"]
 
 
 class _Application:
@@ -43,9 +40,7 @@ class _Application:
 
     def __init__(self):
         self._uninitialized_services = {}
-        self._event_filter = None
         self._app = None
-        self._essential_services = list(_ESSENTIAL_SERVICES)
         self.component_registry = None
         self.event_manager = None
 
@@ -56,25 +51,12 @@ class _Application:
         self.load_services(services)
         self.init_all_services()
 
-    essential_services = property(
-        lambda s: s._essential_services,
-        doc="""
-        Provide an ordered list of services that need to be loaded first.
-        """,
-    )
-
     def load_services(self, services=None):
         """
         Load services from resources.
 
         Service should provide an interface gaphor.abc.Service.
         """
-        # Ensure essential services are always loaded.
-        if services:
-            for name in self.essential_services:
-                if name not in services:
-                    services.append(name)
-
         for ep in pkg_resources.iter_entry_points("gaphor.services"):
             cls = ep.load()
             if isinstance(cls, Service):
@@ -89,16 +71,10 @@ class _Application:
         self.event_manager = services_by_name["event_manager"]
         self.component_registry = services_by_name["component_registry"]
 
-        for name in self.essential_services:
-            logger.info(f"Initializing service {name}")
-            srv = services_by_name.pop(name)
-            self.component_registry.register(srv, name)
-
         for name, srv in services_by_name.items():
-            logger.info(f"Initializing {srv} as {name}")
+            logger.info(f"Initializing service {name}")
             self.component_registry.register(srv, name)
-            if self.event_manager:
-                self.event_manager.handle(ServiceInitializedEvent(name, srv))
+            self.event_manager.handle(ServiceInitializedEvent(name, srv))
 
     distribution = property(
         lambda s: pkg_resources.get_distribution("gaphor"),
@@ -113,15 +89,12 @@ class _Application:
 
     def shutdown(self):
         for srv, name in self.component_registry.all(Service):
-            if name not in self.essential_services:
-                self.shutdown_service(name)
-
-        for name in reversed(self.essential_services):
             self.shutdown_service(name)
 
         self.component_registry = None
 
     def shutdown_service(self, name):
+        logger.info(f"Shutting down service {name}")
         srv = self.component_registry.get_service(name)
         self.event_manager.handle(ServiceShutdownEvent(name, srv))
         self.component_registry.unregister(srv)
@@ -189,7 +162,7 @@ def init_services(uninitialized_services):
     Given a dictionary `{name: service-class}`,
     return a map `{name: service-instance}`.
     """
-    ready = odict()
+    ready = {}
 
     def pop(name):
         try:

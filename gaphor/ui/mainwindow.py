@@ -92,7 +92,6 @@ class MainWindow(Service, ActionProvider):
         )
 
     def shutdown(self):
-        log.info("Shutting down")
         if self.window:
             self.window.destroy()
             self.window = None

@@ -11,6 +11,8 @@ class MainWindowTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
+                "event_manager",
+                "component_registry",
                 "element_factory",
                 "properties",
                 "main_window",
