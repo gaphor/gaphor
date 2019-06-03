@@ -10,7 +10,15 @@ from gaphor.ui.abc import UIComponent
 class MainWindowTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
-            services=["element_factory", "properties", "main_window", "action_manager"]
+            services=[
+                "element_factory",
+                "properties",
+                "main_window",
+                "action_manager",
+                "namespace",
+                "diagrams",
+                "toolbox",
+            ]
         )
 
         self.component_registry = Application.get_service("component_registry")

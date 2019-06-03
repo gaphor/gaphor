@@ -1,29 +1,36 @@
 import pytest
 import gaphor.UML as UML
 from gaphor.ui.namespace import Namespace
-from gaphor.application import Application
+import gaphor.services.eventmanager
+import gaphor.services.componentregistry
+import gaphor.services.actionmanager
 
 
 @pytest.fixture
-def application(services=["element_factory", "action_manager"]):
-    Application.init(services=services)
-    yield Application
-    Application.shutdown()
+def event_manager():
+    return gaphor.services.eventmanager.EventManager()
 
 
 @pytest.fixture
-def element_factory(application):
-    return application.get_service("element_factory")
+def element_factory(event_manager):
+    return UML.elementfactory.ElementFactory(event_manager)
 
 
 @pytest.fixture
-def component_registry(application):
-    return application.get_service("component_registry")
+def component_registry():
+    return gaphor.services.componentregistry.ComponentRegistry()
 
 
 @pytest.fixture
-def namespace(application):
-    namespace = Namespace()
+def action_manager(event_manager, component_registry):
+    return gaphor.services.actionmanager.ActionManager(
+        event_manager, component_registry
+    )
+
+
+@pytest.fixture
+def namespace(event_manager, element_factory, action_manager):
+    namespace = Namespace(event_manager, element_factory, action_manager)
     namespace.init()
     yield namespace
     namespace.close()

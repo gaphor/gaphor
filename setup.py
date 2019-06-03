@@ -118,8 +118,6 @@ setup(
             "pynsource = gaphor.plugins.pynsource:PyNSource",
             "alignment = gaphor.plugins.alignment:Alignment",
             "help = gaphor.services.helpservice:HelpService",
-        ],
-        "gaphor.uicomponents": [
             "namespace = gaphor.ui.mainwindow:Namespace",
             "toolbox = gaphor.ui.mainwindow:Toolbox",
             "diagrams = gaphor.ui.mainwindow:Diagrams",

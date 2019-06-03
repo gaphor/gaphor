@@ -67,8 +67,6 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "pynsource" = "gaphor.plugins.pynsource:PyNSource"
 "alignment" = "gaphor.plugins.alignment:Alignment"
 "help" = "gaphor.services.helpservice:HelpService"
-
-[tool.poetry.plugins."gaphor.uicomponents"]
 "namespace" = "gaphor.ui.mainwindow:Namespace"
 "toolbox" = "gaphor.ui.mainwindow:Toolbox"
 "diagrams" = "gaphor.ui.mainwindow:Diagrams"

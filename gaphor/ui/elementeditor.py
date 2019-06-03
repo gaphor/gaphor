@@ -20,10 +20,6 @@ class ElementEditor(UIComponent, ActionProvider):
     It will display the properties of the currently selected element in the
     diagram."""
 
-    element_factory = inject("element_factory")
-    main_window = inject("main_window")
-    event_manager = inject("event_manager")
-
     title = _("Element Editor")
     size = (275, -1)
     resizable = True
@@ -39,11 +35,13 @@ class ElementEditor(UIComponent, ActionProvider):
       </ui>
     """
 
-    def __init__(self):
+    def __init__(self, event_manager, element_factory, main_window):
         """Constructor. Build the action group for the element editor window.
         This will place a button for opening the window in the toolbar.
         The widget attribute is a PropertyEditor."""
-
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+        self.main_window = main_window
         self.action_group = build_action_group(self)
         self.window = None
         self.vbox = None
@@ -90,7 +88,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
         window.connect("destroy", self.close)
 
-    def close(self, _widget=None):
+    def close(self):
         """Hide the element editor window and deactivate the toolbar button.
         Both the widget and event parameters default to None and are
         idempotent if set."""

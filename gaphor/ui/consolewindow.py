@@ -18,9 +18,6 @@ log = logging.getLogger(__name__)
 
 class ConsoleWindow(UIComponent, ActionProvider):
 
-    component_registry = inject("component_registry")
-    main_window = inject("main_window")
-
     menu_xml = """
         <ui>
           <menubar name="mainwindow">
@@ -35,7 +32,9 @@ class ConsoleWindow(UIComponent, ActionProvider):
     size = (400, 400)
     placement = "floating"
 
-    def __init__(self):
+    def __init__(self, component_registry, main_window):
+        self.component_registry = component_registry
+        self.main_window = main_window
         self.action_group = build_action_group(self)
         self.window = None
 
@@ -63,8 +62,9 @@ class ConsoleWindow(UIComponent, ActionProvider):
 
     @action(name="ConsoleWindow:close", stock_id="gtk-close", accel="<Primary><Shift>w")
     def close(self, widget=None):
-        self.window.destroy()
-        self.window = None
+        if self.window:
+            self.window.destroy()
+            self.window = None
 
     def construct(self):
         window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
@@ -93,6 +93,3 @@ class ConsoleWindow(UIComponent, ActionProvider):
         window.connect("destroy", self.close)
 
         return console
-
-
-# vim:sw=4:et:ai

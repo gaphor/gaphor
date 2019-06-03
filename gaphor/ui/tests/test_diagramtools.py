@@ -13,7 +13,14 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 class DiagramItemConnectorTestCase(TestCase):
-    services = TestCase.services + ["main_window", "action_manager", "properties"]
+    services = TestCase.services + [
+        "main_window",
+        "action_manager",
+        "properties",
+        "namespace",
+        "diagrams",
+        "toolbox",
+    ]
 
     def setUp(self):
         super(DiagramItemConnectorTestCase, self).setUp()

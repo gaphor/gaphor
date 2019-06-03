@@ -1,7 +1,8 @@
 import abc
+from gaphor.abc import Service
 
 
-class UIComponent(metaclass=abc.ABCMeta):
+class UIComponent(Service):
     """
     A user interface component.
     """
@@ -26,3 +27,9 @@ class UIComponent(metaclass=abc.ABCMeta):
         Close the UI component. The component can decide to hide or destroy the UI
         components.
         """
+
+    def shutdown(self):
+        """
+        Shut down this component. It's not supposed to be opened again.
+        """
+        self.close()
