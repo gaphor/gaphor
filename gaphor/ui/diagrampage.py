@@ -339,7 +339,7 @@ class DiagramPage(ActionProvider):
 
             item_class = get_diagram_item(type(element))
             if item_class:
-                tx = Transaction()
+                tx = Transaction(self.event_manager)
                 item = self.diagram.create(item_class)
                 assert item
 
