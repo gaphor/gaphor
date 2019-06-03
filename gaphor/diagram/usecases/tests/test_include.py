@@ -47,9 +47,9 @@ class IncludeItemTestCase(TestCase):
         # reconnect: uc1 -> uc2
         self.connect(include, include.tail, uc3)
 
-        self.assertSame(e, include.subject)
-        self.assertSame(include.subject.addition, uc1.subject)
-        self.assertSame(include.subject.includingCase, uc3.subject)
+        assert e is include.subject
+        assert include.subject.addition is uc1.subject
+        assert include.subject.includingCase is uc3.subject
 
     def test_use_case_disconnect(self):
         """Test disconnecting "include" from use cases

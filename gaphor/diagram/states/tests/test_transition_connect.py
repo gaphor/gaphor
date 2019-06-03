@@ -57,7 +57,7 @@ class TransitionConnectorTestCase(TestCase):
         # reconnect: v1 -> v3
         self.connect(t, t.tail, v3)
 
-        self.assertSame(s, t.subject)
+        assert s is t.subject
         assert 1 == len(self.kindof(UML.Transition))
 
         assert t.subject == v1.subject.outgoing[0]

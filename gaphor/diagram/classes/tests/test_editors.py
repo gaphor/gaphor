@@ -86,13 +86,13 @@ class EditorTestCase(TestCase):
         editor = AttributesPage(klass)
         page = editor.construct()
         tree_view = page.get_children()[1]
-        self.assertSame(Gtk.TreeView, type(tree_view))
+        assert Gtk.TreeView is type(tree_view)
 
         attr = self.element_factory.create(UML.Property)
         attr.name = "blah"
         klass.subject.ownedAttribute = attr
 
-        self.assertSame(attr, tree_view.get_model()[0][-1])
+        assert attr is tree_view.get_model()[0][-1]
         assert "+ blah" == tree_view.get_model()[0][0]
 
         attr.name = "foo"
@@ -110,13 +110,13 @@ class EditorTestCase(TestCase):
         editor = OperationsPage(klass)
         page = editor.construct()
         tree_view = page.get_children()[1]
-        self.assertSame(Gtk.TreeView, type(tree_view))
+        assert Gtk.TreeView is type(tree_view)
 
         oper = self.element_factory.create(UML.Operation)
         oper.name = "o"
         klass.subject.ownedOperation = oper
 
-        self.assertSame(oper, tree_view.get_model()[0][-1])
+        assert oper is tree_view.get_model()[0][-1]
         assert "+ o()" == tree_view.get_model()[0][0]
         p = self.element_factory.create(UML.Parameter)
         p.name = "blah"

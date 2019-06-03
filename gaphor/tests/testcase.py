@@ -23,31 +23,7 @@ log = logging.getLogger("Gaphor")
 log.setLevel(logging.WARNING)
 
 
-class TestCaseExtras:
-    """
-    Mixin for some extra tests.
-    """
-
-    def failIfIdentityEqual(self, first, second, msg=None):
-        """Fail if the two objects are equal as determined by the 'is
-           operator.
-        """
-        if first is second:
-            raise self.failureException(msg or "%r is not %r" % (first, second))
-
-    assertNotSame = failIfIdentityEqual
-
-    def failUnlessIdentityEqual(self, first, second, msg=None):
-        """Fail if the two objects are not equal as determined by the 'is
-           operator.
-        """
-        if first is not second:
-            raise self.failureException(msg or "%r is not %r" % (first, second))
-
-    assertSame = failUnlessIdentityEqual
-
-
-class TestCase(TestCaseExtras, unittest.TestCase):
+class TestCase(unittest.TestCase):
 
     services = ["element_factory", "element_dispatcher", "sanitizer"]
 
@@ -109,8 +85,8 @@ class TestCase(TestCaseExtras, unittest.TestCase):
         connector.connect(sink)
 
         cinfo = canvas.get_connection(handle)
-        self.assertSame(cinfo.connected, item)
-        self.assertSame(cinfo.port, port)
+        assert cinfo.connected is item
+        assert cinfo.port is port
 
     def disconnect(self, line, handle):
         """

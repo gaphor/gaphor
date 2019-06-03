@@ -71,7 +71,7 @@ class DependencyTestCase(TestCase):
         # reconnect: a1 -> a3
         self.connect(dep, dep.tail, a3)
 
-        self.assertSame(d, dep.subject)
+        assert d is dep.subject
         assert 1 == len(dep.subject.supplier)
         assert 1 == len(dep.subject.client)
         assert a1.subject in dep.subject.supplier
@@ -150,16 +150,16 @@ class DependencyTestCase(TestCase):
 
         self.connect(dep2, dep2.head, actoritem3)
         cinfo = diagram2.canvas.get_connection(dep2.head)
-        self.assertNotSame(None, cinfo)
-        self.assertSame(cinfo.connected, actoritem3)
+        assert cinfo is not None
+        assert cinfo.connected is actoritem3
         self.connect(dep2, dep2.tail, actoritem4)
-        self.assertNotSame(dep2.subject, None)
+        assert dep2.subject is not None
         assert 1 == len(actor1.supplierDependency)
         assert actor1.supplierDependency[0] is dep.subject
         assert 1 == len(actor2.clientDependency)
         assert actor2.clientDependency[0] is dep.subject
 
-        self.assertSame(dep.subject, dep2.subject)
+        assert dep.subject is dep2.subject
 
     def test_dependency_type_auto(self):
         """Test dependency type automatic determination
@@ -240,13 +240,13 @@ class GeneralizationTestCase(TestCase):
 
         self.connect(gen2, gen2.head, c3)
         cinfo = diagram2.canvas.get_connection(gen2.head)
-        self.assertNotSame(None, cinfo)
-        self.assertSame(cinfo.connected, c3)
+        assert cinfo is not None
+        assert cinfo.connected is c3
 
         self.connect(gen2, gen2.tail, c4)
-        self.assertNotSame(gen.subject, gen2.subject)
+        assert gen.subject is not gen2.subject
         assert 1 == len(c1.subject.generalization)
-        self.assertSame(c1.subject.generalization[0], gen.subject)
+        assert c1.subject.generalization[0] is gen.subject
         # self.assertEqual(1, len(actor2.clientDependency))
         # self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
@@ -267,10 +267,10 @@ class GeneralizationTestCase(TestCase):
         # reconnect: c2 -> c3
         self.connect(gen, gen.tail, c3)
 
-        self.assertSame(s, gen.subject)
-        self.assertSame(c1.subject, gen.subject.general)
-        self.assertSame(c3.subject, gen.subject.specific)
-        self.assertNotSame(c2.subject, gen.subject.specific)
+        assert s is gen.subject
+        assert c1.subject is gen.subject.general
+        assert c3.subject is gen.subject.specific
+        assert c2.subject is not gen.subject.specific
 
 
 class AssociationConnectorTestCase(TestCase):
@@ -327,7 +327,7 @@ class AssociationConnectorTestCase(TestCase):
 
         self.connect(asc, asc.tail, c3)
 
-        self.assertSame(a, asc.subject)
+        assert a is asc.subject
         ends = [p.type for p in asc.subject.memberEnd]
         assert c1.subject in ends
         assert c3.subject in ends

@@ -14,7 +14,7 @@ class MetaclassPropertyPageTest(TestCase):
         page = editor.construct()
         assert page
         entry = page.get_children()[0].get_children()[1]
-        self.assertSame(Gtk.Entry, type(entry))
+        assert Gtk.Entry is type(entry)
 
         assert "Class" == entry.get_text()
 
@@ -32,7 +32,7 @@ class MetaclassPropertyPageTest(TestCase):
         page = editor.construct()
         assert page
         combo = page.get_children()[0].get_children()[1]
-        self.assertSame(Gtk.ComboBox, type(combo))
+        assert Gtk.ComboBox is type(combo)
 
         assert "Class" == combo.get_child().get_text()
 

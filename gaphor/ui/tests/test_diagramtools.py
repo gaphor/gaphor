@@ -42,7 +42,7 @@ class DiagramItemConnectorTestCase(TestCase):
         # The act: perform button press event and button release
         view = self.component_registry.get(UIComponent, "diagrams").get_current_view()
 
-        self.assertSame(self.diagram.canvas, view.canvas)
+        assert self.diagram.canvas is view.canvas
 
         p = view.get_matrix_i2v(a).transform_point(*a.head.pos)
 
@@ -56,7 +56,7 @@ class DiagramItemConnectorTestCase(TestCase):
 
         view.do_event(event)
 
-        self.assertSame(the_association, a.subject)
+        assert the_association is a.subject
 
         event = Gdk.Event()
         event.x, event.y, event.type, event.state = (
@@ -68,4 +68,4 @@ class DiagramItemConnectorTestCase(TestCase):
 
         view.do_event(event)
 
-        self.assertSame(the_association, a.subject)
+        assert the_association is a.subject

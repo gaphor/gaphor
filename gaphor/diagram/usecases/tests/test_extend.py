@@ -47,9 +47,9 @@ class ExtendItemTestCase(TestCase):
         # reconnect: uc1 -> uc2
         self.connect(extend, extend.tail, uc3)
 
-        self.assertSame(e, extend.subject)
-        self.assertSame(extend.subject.extendedCase, uc1.subject)
-        self.assertSame(extend.subject.extension, uc3.subject)
+        assert e is extend.subject
+        assert extend.subject.extendedCase is uc1.subject
+        assert extend.subject.extension is uc3.subject
 
     def test_use_case_disconnect(self):
         """Test disconnecting "extend" from use cases

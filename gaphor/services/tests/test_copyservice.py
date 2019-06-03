@@ -95,9 +95,9 @@ class CopyServiceTestCase(TestCase):
         assert 6 == len(all_items)
         assert not orphan_references(self.element_factory)
 
-        self.assertSame(all_items[0].subject, all_items[3].subject)
-        self.assertSame(all_items[1].subject, all_items[4].subject)
-        self.assertSame(all_items[2].subject, all_items[5].subject)
+        assert all_items[0].subject is all_items[3].subject
+        assert all_items[1].subject is all_items[4].subject
+        assert all_items[2].subject is all_items[5].subject
 
         undo_manager = self.get_service("undo_manager")
 

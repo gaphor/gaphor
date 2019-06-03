@@ -73,7 +73,7 @@ class ImplementationTestCase(TestCase):
         # reconnect: iface -> c2
         self.connect(impl, impl.tail, c2)
 
-        self.assertSame(s, impl.subject)
+        assert s is impl.subject
         assert 1 == len(impl.subject.contract)
         assert 1 == len(impl.subject.implementatingClassifier)
         assert iface.subject in impl.subject.contract
