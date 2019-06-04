@@ -100,9 +100,8 @@ Here is a stripped version of the hello world class::
 
     class HelloWorldPlugin(Service, ActionProvider):     # 1.
 
-        gui_manager = inject('gui_manager')              # 2.
 
-        menu_xml = """                                   # 3.
+        menu_xml = """                                   # 2.
           <ui>
             <menubar name="mainwindow">
               <menu action="help">
@@ -112,7 +111,8 @@ Here is a stripped version of the hello world class::
           </ui>
         """
 
-        def __init__(self):
+        def __init__(self, main_window):                 # 3.
+            self.main_window = main_window
             self.action_group = build_action_group(self) # 4.
 
         def shutdown(self):                              # 6.
@@ -122,18 +122,17 @@ Here is a stripped version of the hello world class::
                 label=_('Hello world'),
                 tooltip=_('Every application ...'))
         def helloworld_action(self):
-            main_window = self.gui_manager.main_window   # 8.
+            main_window = self.main_window   # 8.
             pass # gtk code left out
 
 1. As stated before, a plugin should implement the ``Service`` interface.
    It also implements ``ActionProvider``, saying it has some actions to
    be performed by the user.
-2. The plugin depends on the ``gui_manager`` service. The ``gui_manager`` can
-   be referenced as a normal attribute. The first time it's accessed the
-   dependency to the ``gui_manager`` is resolved.
-3. As part of the ``ActionProvider`` interface an attribute ``menu_xml``
+2. As part of the ``ActionProvider`` interface an attribute ``menu_xml``
    should be defined that contains some menu xml
    (see http://developer.gnome.org/doc/API/2.0/gtk/GtkUIManager.html#XML-UI).
+3. The plugin depends on the ``main_window`` service. The ``main_window`` will
+   be injected when our services is instantiated.
 4. ``ActionProvider`` also requires an ``action_group`` attribute (containing
    a ``gtk.ActionGroup``). This action group is created on instantiation.
    The actions itself are defined with an ``action`` decorator (see 7).

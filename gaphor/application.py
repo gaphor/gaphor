@@ -197,13 +197,10 @@ def init_services(uninitialized_services):
 
 class inject:
     """
+    DEPRECATED!
+
     Simple descriptor for dependency injection.
     This is technically a wrapper around Application.get_service().
-
-    Usage::
-
-    >>> class A:
-    ...     element_factory = inject('element_factory')
     """
 
     def __init__(self, name):
