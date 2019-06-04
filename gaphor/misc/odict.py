@@ -25,10 +25,15 @@ class odict(dict):
         return dict
 
     def items(self):
-        return list(zip(self._keys, list(self.values())))
+        return ((key, self[key]) for key in self._keys)
 
     def keys(self):
-        return self._keys
+        return iter(self._keys)
+
+    def pop(self, key):
+        val = dict.pop(self, key)
+        self._keys.remove(key)
+        return val
 
     def popitem(self):
         try:
@@ -64,5 +69,4 @@ class odict(dict):
         self._keys[i1], self._keys[i2] = self._keys[i2], self._keys[i1]
 
     def __iter__(self):
-        for k in self._keys:
-            yield k
+        return iter(self._keys)

@@ -19,6 +19,7 @@ def transactional(func):
 
     def _transactional(*args, **kwargs):
         r = None
+        # TODO: pass along an event handler
         tx = Transaction()
         try:
             r = func(*args, **kwargs)
@@ -75,9 +76,12 @@ class Transaction:
 
     _stack = []
 
-    def __init__(self):
+    def __init__(self, event_manager=None):
         """Initialize the transaction.  If this is the first transaction in
         the stack, a TransactionBegin event is emitted."""
+        # Set event manager, should replace inject() at some point
+        if event_manager:
+            self.event_manager = event_manager
 
         self._need_rollback = False
         if not self._stack:

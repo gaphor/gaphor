@@ -93,9 +93,8 @@ class ElementDispatcher(Service):
 
     logger = getLogger("ElementDispatcher")
 
-    event_manager = inject("event_manager")
-
-    def __init__(self):
+    def __init__(self, event_manager):
+        self.event_manager = event_manager
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
         self._handlers = dict()
@@ -104,7 +103,6 @@ class ElementDispatcher(Service):
         # handler: [(element, property), ..]
         self._reverse = dict()
 
-    def init(self, app):
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
 

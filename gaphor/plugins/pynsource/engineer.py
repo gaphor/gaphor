@@ -18,11 +18,9 @@ class Engineer:
     files.
     """
 
-    element_factory = inject("element_factory")
-    diagram_layout = inject("diagram_layout")
-
-    def process(self, files=None):
-
+    def process(self, element_factory, diagram_layout, files=None):
+        self.element_factory = element_factory
+        self.diagram_layout = diagram_layout
         # these are tuples between class names.
         # self.associations_generalisation = []
         # self.associations_composition = []

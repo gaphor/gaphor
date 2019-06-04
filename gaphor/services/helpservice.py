@@ -26,12 +26,8 @@ class HelpService(Service, ActionProvider):
       </ui>
     """
 
-    main_window = inject("main_window")
-
-    def __init__(self):
-        pass
-
-    def init(self, app):
+    def __init__(self, main_window):
+        self.main_window = main_window
         self.action_group = build_action_group(self)
 
     def shutdown(self):

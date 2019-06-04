@@ -14,9 +14,6 @@ logger = logging.getLogger(__name__)
 
 class XMIExport(Service, ActionProvider):
 
-    element_factory = inject("element_factory")
-    file_manager = inject("file_manager")
-
     menu_xml = """
       <ui>
         <menubar action="mainwindow">
@@ -28,11 +25,10 @@ class XMIExport(Service, ActionProvider):
         </menubar>
       </ui>"""
 
-    def __init__(self):
+    def __init__(self, element_factory, file_manager):
+        self.element_factory = element_factory
+        self.file_manager = file_manager
         self.action_group = build_action_group(self)
-
-    def init(self, app):
-        pass
 
     def shutdown(self):
         pass

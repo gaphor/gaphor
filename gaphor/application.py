@@ -11,10 +11,12 @@ All important services are present in the application object:
 
 import logging
 import functools
+import inspect
 import pkg_resources
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.abc import Service
+from gaphor.misc.odict import odict
 
 logger = logging.getLogger(__name__)
 
@@ -79,39 +81,24 @@ class _Application:
                 raise NameError("Entry point %s doesn" "t provide Service" % ep.name)
             if not services or ep.name in services:
                 logger.debug('found service entry point "%s"' % ep.name)
-                srv = cls()
-                self._uninitialized_services[ep.name] = srv
+                self._uninitialized_services[ep.name] = cls
 
     def init_all_services(self):
+        services_by_name = init_services(self._uninitialized_services)
+
+        self.event_manager = services_by_name["event_manager"]
+        self.component_registry = services_by_name["component_registry"]
+
         for name in self.essential_services:
-            self.init_service(name)
-        while self._uninitialized_services:
-            self.init_service(next(iter(list(self._uninitialized_services.keys()))))
+            logger.info(f"Initializing service {name}")
+            srv = services_by_name.pop(name)
+            self.component_registry.register(srv, name)
 
-    def init_service(self, name):
-        """
-        Initialize a not yet initialized service.
-
-        Raises ComponentLookupError if the service has not been found
-        """
-        try:
-            srv = self._uninitialized_services.pop(name)
-        except KeyError:
-            raise ComponentLookupError(Service, name)
-        else:
-            logger.info("initializing service service.%s" % name)
-            srv.init(self)
-
-            # Bootstrap hassle:
-            if name == "component_registry":
-                self.component_registry = srv
-            elif name == "event_manager":
-                self.event_manager = srv
-
+        for name, srv in services_by_name.items():
+            logger.info(f"Initializing {srv} as {name}")
             self.component_registry.register(srv, name)
             if self.event_manager:
                 self.event_manager.handle(ServiceInitializedEvent(name, srv))
-            return srv
 
     distribution = property(
         lambda s: pkg_resources.get_distribution("gaphor"),
@@ -122,10 +109,7 @@ class _Application:
         if not self.component_registry:
             raise NotInitializedError("First call Application.init() to load services")
 
-        try:
-            return self.component_registry.get_service(name)
-        except ComponentLookupError:
-            return self.init_service(name)
+        return self.component_registry.get_service(name)
 
     def shutdown(self):
         for srv, name in self.component_registry.all(Service):
@@ -198,6 +182,44 @@ class _Application:
 
 # Make sure there is only one!
 Application = _Application()
+
+
+def init_services(uninitialized_services):
+    """
+    Given a dictionary `{name: service-class}`,
+    return a map `{name: service-instance}`.
+    """
+    ready = odict()
+
+    def pop(name):
+        try:
+            return uninitialized_services.pop(name)
+        except KeyError:
+            return None
+
+    def init(name, cls):
+        kwargs = {}
+        for dep in inspect.signature(cls).parameters:
+            if dep not in ready:
+                depcls = pop(dep)
+                if depcls:
+                    kwargs[dep] = init(dep, depcls)
+                else:
+                    logger.info(
+                        f"Service {name} parameter {dep} does not reference a service"
+                    )
+            else:
+                kwargs[dep] = ready[dep]
+        srv = cls(**kwargs)
+        ready[name] = srv
+        return srv
+
+    while uninitialized_services:
+        name = next(iter(uninitialized_services.keys()))
+        cls = pop(name)
+        init(name, cls)
+
+    return ready
 
 
 class inject:

@@ -4,6 +4,7 @@ from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.services.copyservice import CopyService
 from gaphor.application import Application
 from gaphor.tests.testcase import TestCase
+from gaphor.storage.verify import orphan_references
 
 
 class CopyServiceTestCase(TestCase):
@@ -15,14 +16,16 @@ class CopyServiceTestCase(TestCase):
         "undo_manager",
     ]
 
-    def test_init(self):
-        service = CopyService()
-        service.init(Application)
-        # No exception? ok!
+    def setUp(self):
+        super().setUp()
+        self.service = CopyService(
+            self.get_service("event_manager"),
+            self.get_service("element_factory"),
+            self.get_service("main_window"),
+        )
 
     def test_copy(self):
-        service = CopyService()
-        service.init(Application)
+        service = self.service
 
         ef = self.element_factory
         diagram = ef.create(UML.Diagram)
@@ -36,8 +39,7 @@ class CopyServiceTestCase(TestCase):
         assert len(diagram.canvas.get_all_items()) == 2, diagram.canvas.get_all_items()
 
     def test_copy_named_item(self):
-        service = CopyService()
-        service.init(Application)
+        service = self.service
 
         ef = self.element_factory
         diagram = ef.create(UML.Diagram)
@@ -68,10 +70,8 @@ class CopyServiceTestCase(TestCase):
         """
         Test if copied data is undoable.
         """
-        from gaphor.storage.verify import orphan_references
 
-        service = CopyService()
-        service.init(Application)
+        service = self.service
 
         # Setting the stage:
         ci1 = self.create(ClassItem, UML.Class)

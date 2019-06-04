@@ -1,19 +1,21 @@
+import unittest
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.services.elementdispatcher import ElementDispatcher
+from gaphor.services.eventmanager import EventManager
+from gaphor.UML.elementfactory import ElementFactory
 
 
-class ElementDispatcherTestCase(TestCase):
+class ElementDispatcherTestCase(unittest.TestCase):
     def setUp(self):
-        super().setUp()
         self.events = []
-        self.dispatcher = ElementDispatcher()
-        self.dispatcher.init(Application)
+        event_manager = EventManager()
+        self.element_factory = ElementFactory(event_manager)
+        self.dispatcher = ElementDispatcher(event_manager)
 
     def tearDown(self):
         self.dispatcher.shutdown()
-        super().tearDown()
 
     def _handler(self, event):
         self.events.append(event)

@@ -106,7 +106,7 @@ setup(
             "event_manager = gaphor.services.eventmanager:EventManager",
             "properties = gaphor.services.properties:Properties",
             "undo_manager = gaphor.services.undomanager:UndoManager",
-            "element_factory = gaphor.UML.elementfactory:ElementFactoryService",
+            "element_factory = gaphor.UML.elementfactory:ElementFactory",
             "file_manager = gaphor.services.filemanager:FileManager",
             "diagram_export_manager = gaphor.services.diagramexportmanager:DiagramExportManager",
             "action_manager = gaphor.services.actionmanager:ActionManager",

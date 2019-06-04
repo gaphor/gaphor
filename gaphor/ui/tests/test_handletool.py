@@ -69,9 +69,6 @@ class HandleToolTestCase(unittest.TestCase):
     Handle connection tool integration tests.
     """
 
-    component_registry = inject("component_registry")
-    event_manager = inject("event_manager")
-
     def setUp(self):
         Application.init(
             services=[
@@ -83,6 +80,9 @@ class HandleToolTestCase(unittest.TestCase):
                 "element_dispatcher",
             ]
         )
+        self.component_registry = Application.get_service("component_registry")
+        self.event_manager = Application.get_service("event_manager")
+
         self.main_window = Application.get_service("main_window")
         self.main_window.open()
 

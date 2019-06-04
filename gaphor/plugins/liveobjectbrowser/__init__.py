@@ -25,9 +25,6 @@ class LiveObjectBrowser(Service, ActionProvider):
     def __init__(self):
         self.action_group = build_action_group(self)
 
-    def init(self, app):
-        pass
-
     def shutdown(self):
         pass
 

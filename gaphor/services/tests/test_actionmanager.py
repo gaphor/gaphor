@@ -1,22 +1,18 @@
-import unittest
+import pytest
+from gaphor.application import Application
 
 
-class ActionManagerTestCase(unittest.TestCase):
-    def setUp(self):
-        pass
+@pytest.fixture
+def action_manager():
+    Application.init()
+    return Application.get_service("action_manager")
 
-    def tearDown(self):
-        pass
 
-    def testLoadAll(self):
-        from gaphor.application import Application
+def test_load_all_menus(action_manager):
+    ui = action_manager.ui_manager.get_ui()
 
-        Application.init()
-        am = Application.get_service("action_manager")
-        ui = am.ui_manager.get_ui()
-
-        assert '<menuitem name="file-quit" action="file-quit"/>' in ui, ui
-        # From filemanager:
-        assert '<menuitem name="file-new" action="file-new"/>' in ui, ui
-        # From Undomanager
-        assert '<toolitem name="edit-undo" action="edit-undo"/>' in ui, ui
+    assert '<menuitem name="file-quit" action="file-quit"/>' in ui, ui
+    # From filemanager:
+    assert '<menuitem name="file-new" action="file-new"/>' in ui, ui
+    # From Undomanager
+    assert '<toolitem name="edit-undo" action="edit-undo"/>' in ui, ui

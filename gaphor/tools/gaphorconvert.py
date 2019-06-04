@@ -76,7 +76,6 @@ if not args:
     parser.print_help()
     # sys.exit(1)
 
-
 model = UML.ElementFactory()
 
 

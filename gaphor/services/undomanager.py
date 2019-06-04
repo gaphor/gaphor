@@ -110,24 +110,21 @@ class UndoManager(Service, ActionProvider):
       </ui>
     """
 
-    event_manager = inject("event_manager")
-
-    def __init__(self):
+    def __init__(self, event_manager):
+        self.event_manager = event_manager
         self._undo_stack = []
         self._redo_stack = []
         self._stack_depth = 20
         self._current_transaction = None
         self.action_group = build_action_group(self)
 
-    def init(self, app):
-
         logger.info("Starting")
 
-        self.event_manager.subscribe(self.reset)
-        self.event_manager.subscribe(self.begin_transaction)
-        self.event_manager.subscribe(self.commit_transaction)
-        self.event_manager.subscribe(self.rollback_transaction)
-        self.event_manager.subscribe(self._action_executed)
+        event_manager.subscribe(self.reset)
+        event_manager.subscribe(self.begin_transaction)
+        event_manager.subscribe(self.commit_transaction)
+        event_manager.subscribe(self.rollback_transaction)
+        event_manager.subscribe(self._action_executed)
         self._register_undo_handlers()
         self._action_executed()
 
@@ -203,7 +200,7 @@ class UndoManager(Service, ActionProvider):
         erroneous_tx = self._current_transaction
         self._current_transaction = None
         try:
-            with Transaction():
+            with Transaction(self.event_manager):
                 try:
                     erroneous_tx.execute()
                 except Exception as e:
@@ -239,7 +236,7 @@ class UndoManager(Service, ActionProvider):
         self._undo_stack = []
 
         try:
-            with Transaction():
+            with Transaction(self.event_manager):
                 transaction.execute()
         finally:
             # Restore stacks and put latest tx on the redo stack
@@ -263,7 +260,7 @@ class UndoManager(Service, ActionProvider):
 
         redo_stack = list(self._redo_stack)
         try:
-            with Transaction():
+            with Transaction(self.event_manager):
                 transaction.execute()
         finally:
             self._redo_stack = redo_stack

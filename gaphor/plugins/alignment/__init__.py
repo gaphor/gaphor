@@ -8,7 +8,6 @@ from gaphor.ui.event import DiagramSelectionChange
 
 
 class Alignment(Service, ActionProvider):
-    event_manager = inject("event_manager")
 
     menu_xml = """
       <ui>
@@ -28,11 +27,10 @@ class Alignment(Service, ActionProvider):
         </menubar>
       </ui>"""
 
-    def __init__(self):
+    def __init__(self, event_manager):
+        self.event_manager = event_manager
         self.action_group = build_action_group(self)
         self._last_update = None
-
-    def init(self, app):
         self.event_manager.subscribe(self.update)
         self.update()
 

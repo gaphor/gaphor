@@ -11,7 +11,7 @@ class ComponentRegistry(Service):
     The ComponentRegistry provides a home for application wide components.
     """
 
-    def init(self, app):
+    def __init__(self):
         self._comp = set()
 
     def shutdown(self):
