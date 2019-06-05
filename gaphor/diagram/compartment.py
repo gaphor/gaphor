@@ -221,7 +221,7 @@ class CompartmentItem(NamedItem):
     are displayed in separate compartments (one per stereotype).
 
     Compartment item has three drawing styles (changed with
-    `ClassifierItem.drawing_style` property)
+    `CompartmentItem.drawing_style` property)
 
      - the compartment view - often used by classes
      - a compartment view, but with a little stereotype icon in the right corner
@@ -361,11 +361,6 @@ class CompartmentItem(NamedItem):
         if style != self._drawing_style:
             self._drawing_style = style
             self.request_update()
-        #            if self.canvas:
-        #                request_resolve = self.canvas.solver.request_resolve
-        #                for h in self._handles:
-        #                    request_resolve(h.x)
-        #                    request_resolve(h.y)
 
         if self._drawing_style == self.DRAW_COMPARTMENT:
             self.draw = self.draw_compartment
