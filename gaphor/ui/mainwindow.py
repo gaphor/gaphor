@@ -6,6 +6,7 @@ import logging
 import os.path
 
 import pkg_resources
+import importlib.resources
 from gi.repository import GLib
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -82,14 +83,14 @@ class MainWindow(Service, ActionProvider):
         self.init_action_group()
 
     def init_styling(self):
-        css_file = pkg_resources.resource_filename("gaphor.ui", "layout.css")
-        style_provider = Gtk.CssProvider()
-        style_provider.load_from_path(css_file)
-        Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(),
-            style_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
+        with importlib.resources.path("gaphor.ui", "layout.css") as css_file:
+            style_provider = Gtk.CssProvider()
+            style_provider.load_from_path(str(css_file))
+            Gtk.StyleContext.add_provider_for_screen(
+                Gdk.Screen.get_default(),
+                style_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+            )
 
     def shutdown(self):
         if self.window:
@@ -136,13 +137,11 @@ class MainWindow(Service, ActionProvider):
         self.window.set_default_size(*self.size)
 
         # set default icons of gaphor windows
-        icon_dir = os.path.abspath(
-            pkg_resources.resource_filename("gaphor.ui", "pixmaps")
-        )
-        icons = (
-            GdkPixbuf.Pixbuf.new_from_file(os.path.join(icon_dir, f)) for f in ICONS
-        )
-        self.window.set_icon_list(list(icons))
+        with importlib.resources.path("gaphor.ui", "pixmaps") as icon_dir:
+            icons = (
+                GdkPixbuf.Pixbuf.new_from_file(os.path.join(icon_dir, f)) for f in ICONS
+            )
+            self.window.set_icon_list(list(icons))
 
         self.window.add_accel_group(self.action_manager.get_accel_group())
 
@@ -164,10 +163,9 @@ class MainWindow(Service, ActionProvider):
             log.debug("open component %s" % str(comp))
             return comp.open()
 
-        layout_file = pkg_resources.resource_filename("gaphor.ui", "layout.xml")
-        self.layout = []  # Gtk.Notebook()
+        self.layout = []
 
-        with open(layout_file) as f:
+        with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
             deserialize(self.layout, vbox, f.read(), _factory)
 
         vbox.show()
