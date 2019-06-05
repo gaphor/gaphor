@@ -41,11 +41,11 @@ class ElementItem(gaphas.Element, DiagramItem):
 
     def setup_canvas(self):
         gaphas.Element.setup_canvas(self)
-        self.register_handlers()
+        self.subscribe_all()
 
     def teardown_canvas(self):
         gaphas.Element.teardown_canvas(self)
-        self.unregister_handlers()
+        self.unsubscribe_all()
 
     def pre_update(self, context):
         # super(ElementItem, self).pre_update(context)

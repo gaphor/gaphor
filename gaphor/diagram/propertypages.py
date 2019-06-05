@@ -33,7 +33,6 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.services.elementdispatcher import EventWatcher
 
 
 class _PropertyPages:
@@ -392,7 +391,7 @@ class NamedElementPropertyPage(PropertyPageBase):
             subject
         )
         self.subject = subject
-        self.watcher = EventWatcher(subject)
+        self.watcher = subject.watcher()
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
@@ -417,8 +416,8 @@ class NamedElementPropertyPage(PropertyPageBase):
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
 
-        self.watcher.watch("name", handler).register_handlers()
-        entry.connect("destroy", self.watcher.unregister_handlers)
+        self.watcher.watch("name", handler).subscribe_all()
+        entry.connect("destroy", self.watcher.unsubscribe_all)
 
         return page
 

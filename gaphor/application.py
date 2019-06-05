@@ -29,7 +29,7 @@ class ComponentLookupError(LookupError):
     pass
 
 
-_ESSENTIAL_SERVICES = ["component_registry", "event_manager", "element_dispatcher"]
+_ESSENTIAL_SERVICES = ["component_registry", "event_manager"]
 
 
 class _Application:

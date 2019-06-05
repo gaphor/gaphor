@@ -2,8 +2,8 @@ import unittest
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.services.elementdispatcher import ElementDispatcher
 from gaphor.services.eventmanager import EventManager
+from gaphor.UML.elementdispatcher import ElementDispatcher
 from gaphor.UML.elementfactory import ElementFactory
 
 
@@ -203,7 +203,7 @@ class ElementDispatcherTestCase(unittest.TestCase):
 
 from gaphor.UML import Element
 from gaphor.UML.properties import association
-from gaphor.services.elementdispatcher import EventWatcher
+from gaphor.UML.elementdispatcher import EventWatcher
 
 
 class A(Element):
@@ -216,16 +216,13 @@ A.two = association("two", A, lower=0, upper=2, composite=True)
 
 
 class ElementDispatcherAsServiceTestCase(TestCase):
-
-    services = TestCase.services + ["element_dispatcher"]
-
     def A(self):
         return self.element_factory.create(A)
 
     def setUp(self):
         super(ElementDispatcherAsServiceTestCase, self).setUp()
         self.events = []
-        self.dispatcher = Application.get_service("element_dispatcher")
+        self.dispatcher = self.element_factory.element_dispatcher
 
     def tearDown(self):
         super(ElementDispatcherAsServiceTestCase, self).tearDown()
@@ -324,10 +321,10 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         A = self.A
         a = A()
-        watcher = EventWatcher(a, self._handler)
+        watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
-        watcher.register_handlers()
+        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -339,8 +336,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert 6 == len(self.events)
 
         a.unlink()
-        watcher.unregister_handlers()
-        watcher.unregister_handlers()
+        watcher.unsubscribe_all()
+        watcher.unsubscribe_all()
 
     def test_big_diamond(self):
         """
@@ -348,10 +345,10 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         A = self.A
         a = A()
-        watcher = EventWatcher(a, self._handler)
+        watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
-        watcher.register_handlers()
+        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -364,8 +361,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert 7 == len(self.events)
 
         a.unlink()
-        watcher.unregister_handlers()
-        watcher.unregister_handlers()
+        watcher.unsubscribe_all()
+        watcher.unsubscribe_all()
         assert 0 == len(self.dispatcher._handlers)
 
     def test_braking_big_diamond(self):
@@ -374,10 +371,10 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         A = self.A
         a = A()
-        watcher = EventWatcher(a, self._handler)
+        watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
-        watcher.register_handlers()
+        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -392,8 +389,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         del a.one.two[0].one
         # a.unlink()
-        watcher.unregister_handlers()
-        watcher.unregister_handlers()
+        watcher.unsubscribe_all()
+        watcher.unsubscribe_all()
         assert 0 == len(self.dispatcher._handlers)
 
     def test_cyclic(self):
@@ -402,10 +399,10 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         """
         A = self.A
         a = A()
-        watcher = EventWatcher(a, self._handler)
+        watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
         # watcher.watch('one.one.one.one')
-        watcher.register_handlers()
+        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()

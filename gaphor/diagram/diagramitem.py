@@ -7,7 +7,6 @@ from gaphas.state import observed, reversible_property
 
 import logging
 from gaphor import UML
-from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import Style, ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.support import set_diagram_item
@@ -213,7 +212,7 @@ class DiagramItem(
         def update(event):
             self.request_update()
 
-        self.watcher = EventWatcher(self, default_handler=update)
+        self._watcher = self.watcher(default_handler=update)
 
         self.watch("subject").watch(
             "subject.appliedStereotype.classifier.name",
@@ -310,11 +309,11 @@ class DiagramItem(
 
         This interface is fluent(returns self).
         """
-        self.watcher.watch(path, handler)
+        self._watcher.watch(path, handler)
         return self
 
-    def register_handlers(self):
-        self.watcher.register_handlers()
+    def subscribe_all(self):
+        self._watcher.subscribe_all()
 
-    def unregister_handlers(self):
-        self.watcher.unregister_handlers()
+    def unsubscribe_all(self):
+        self._watcher.unsubscribe_all()

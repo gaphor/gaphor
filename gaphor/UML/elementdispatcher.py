@@ -5,7 +5,7 @@
 from logging import getLogger
 from gaphor.core import inject, event_handler
 from gaphor.abc import Service
-from gaphor import UML
+from gaphor.UML import uml2
 from gaphor.UML.event import (
     ElementChangeEvent,
     AssociationSetEvent,
@@ -20,10 +20,9 @@ class EventWatcher:
     A helper for easy registering and unregistering event handlers.
     """
 
-    element_dispatcher = inject("element_dispatcher")
-
-    def __init__(self, element, default_handler=None):
+    def __init__(self, element, element_dispatcher, default_handler=None):
         self.element = element
+        self.element_dispatcher = element_dispatcher
         self.default_handler = default_handler
         self._watched_paths = dict()
 
@@ -46,14 +45,14 @@ class EventWatcher:
             raise ValueError("No handler provided for path " + path)
         return self
 
-    def register_handlers(self):
+    def subscribe_all(self):
         dispatcher = self.element_dispatcher
         element = self.element
 
         for path, handler in self._watched_paths.items():
             dispatcher.subscribe(handler, element, path)
 
-    def unregister_handlers(self, *args):
+    def unsubscribe_all(self, *args):
         """
         Unregister handlers. Extra arguments are ignored (makes connecting to
         destroy signals much easier though).
@@ -125,7 +124,7 @@ class ElementDispatcher(Service):
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
-                c = getattr(UML, cname)
+                c = getattr(uml2, cname)
                 assert issubclass(c, prop.type), "%s should be a subclass of %s" % (
                     c,
                     prop.type,

@@ -43,10 +43,8 @@ class TransitionPropertyPage(NamedItemPropertyPage):
             entry.set_text(v if v else "")
             entry.handler_unblock(changed_id)
 
-        self.watcher.watch(
-            "guard<Constraint>.specification", handler
-        ).register_handlers()
-        entry.connect("destroy", self.watcher.unregister_handlers)
+        self.watcher.watch("guard<Constraint>.specification", handler).subscribe_all()
+        entry.connect("destroy", self.watcher.unsubscribe_all)
 
         return page
 

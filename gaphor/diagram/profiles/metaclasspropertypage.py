@@ -5,8 +5,8 @@ Metaclass item editors.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.diagram.propertypages import create_hbox_label, EventWatcher
 from gaphor.core import _
+from gaphor.diagram.propertypages import create_hbox_label
 from gaphor.diagram.propertypages import PropertyPages, NamedElementPropertyPage
 from gaphor.diagram.classes import ClassItem
 
@@ -74,7 +74,7 @@ class MetaclassNamePropertyPage(NamedElementPropertyPage):
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
 
-        self.watcher.watch("name", handler).register_handlers()
-        entry.connect("destroy", self.watcher.unregister_handlers)
+        self.watcher.watch("name", handler).subscribe_all()
+        entry.connect("destroy", self.watcher.unsubscribe_all)
         page.show_all()
         return page

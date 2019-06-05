@@ -4,7 +4,6 @@ from gi.repository import Gtk
 from gaphas.decorators import AsyncIO
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 from gaphor.diagram.propertypages import (
     NamedElementPropertyPage,
@@ -200,7 +199,7 @@ class AttributesPage(PropertyPageBase):
     def __init__(self, item):
         super(AttributesPage, self).__init__()
         self.item = item
-        self.watcher = EventWatcher(item.subject)
+        self.watcher = item.subject.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -252,8 +251,8 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
             "ownedAttribute.defaultValue", handler
         ).watch(
             "ownedAttribute.typeValue", handler
-        ).register_handlers()
-        tree_view.connect("destroy", self.watcher.unregister_handlers)
+        ).subscribe_all()
+        tree_view.connect("destroy", self.watcher.unsubscribe_all)
         return page
 
     @transactional
@@ -272,7 +271,7 @@ class OperationsPage(PropertyPageBase):
     def __init__(self, item):
         super(OperationsPage, self).__init__()
         self.item = item
-        self.watcher = EventWatcher(item.subject)
+        self.watcher = item.subject.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -326,8 +325,8 @@ Add and edit class operations according to UML syntax. Operation syntax examples
             "ownedOperation.formalParameter.typeValue", handler
         ).watch(
             "ownedOperation.formalParameter.defaultValue", handler
-        ).register_handlers()
-        tree_view.connect("destroy", self.watcher.unregister_handlers)
+        ).subscribe_all()
+        tree_view.connect("destroy", self.watcher.unsubscribe_all)
 
         return page
 
@@ -354,7 +353,7 @@ class DependencyPropertyPage(PropertyPageBase):
         super(DependencyPropertyPage, self).__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
-        self.watcher = EventWatcher(self.item)
+        self.watcher = self.item.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -373,8 +372,8 @@ class DependencyPropertyPage(PropertyPageBase):
         button.connect("toggled", self._on_auto_dependency_change)
         hbox.pack_start(button, True, True, 0)
 
-        self.watcher.watch("subject", self._on_subject_change).register_handlers()
-        button.connect("destroy", self.watcher.unregister_handlers)
+        self.watcher.watch("subject", self._on_subject_change).subscribe_all()
+        button.connect("destroy", self.watcher.unsubscribe_all)
 
         self.update()
 
@@ -535,7 +534,7 @@ class AssociationEndPropertyPage(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.watcher = EventWatcher(subject)
+        self.watcher = subject.watcher()
 
     def construct(self):
         vbox = Gtk.VBox()
@@ -565,8 +564,8 @@ class AssociationEndPropertyPage(PropertyPageBase):
 
         self.watcher.watch("name", handler).watch("aggregation", handler).watch(
             "visibility", handler
-        ).watch("lowerValue", handler).watch("upperValue", handler).register_handlers()
-        entry.connect("destroy", self.watcher.unregister_handlers)
+        ).watch("lowerValue", handler).watch("upperValue", handler).subscribe_all()
+        entry.connect("destroy", self.watcher.unsubscribe_all)
 
         vbox.pack_start(entry, True, True, 0)
 

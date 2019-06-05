@@ -2,7 +2,6 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.services.elementdispatcher import EventWatcher
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 
 
@@ -14,7 +13,7 @@ class CommentItemPropertyPage(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.watcher = EventWatcher(subject)
+        self.watcher = subject.watcher()
 
     def construct(self):
         subject = self.subject
@@ -45,8 +44,8 @@ class CommentItemPropertyPage(PropertyPageBase):
                 buffer.set_text(event.new_value)
                 buffer.handler_unblock(changed_id)
 
-        self.watcher.watch("body", handler).register_handlers()
-        text_view.connect("destroy", self.watcher.unregister_handlers)
+        self.watcher.watch("body", handler).subscribe_all()
+        text_view.connect("destroy", self.watcher.unsubscribe_all)
 
         return page
 

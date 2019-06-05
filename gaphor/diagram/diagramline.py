@@ -27,11 +27,11 @@ class DiagramLine(gaphas.Line, DiagramItem):
 
     def setup_canvas(self):
         gaphas.Line.setup_canvas(self)
-        self.register_handlers()
+        self.subscribe_all()
 
     def teardown_canvas(self):
         gaphas.Line.teardown_canvas(self)
-        self.unregister_handlers()
+        self.unsubscribe_all()
 
     def pre_update(self, context):
         # first, update stereotype to know its text

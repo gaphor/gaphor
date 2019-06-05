@@ -6,6 +6,7 @@ from contextlib import contextmanager
 
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element, UnlinkEvent
+from gaphor.UML.elementdispatcher import ElementDispatcher
 from gaphor.UML.event import (
     ElementChangeEvent,
     ElementCreateEvent,
@@ -33,6 +34,9 @@ class ElementFactory(Service):
 
     def __init__(self, event_manager=None):
         self.event_manager = event_manager
+        self.element_dispatcher = (
+            ElementDispatcher(event_manager) if event_manager else None
+        )
         self._elements = odict.odict()
         self._observers = list()
         self._block_events = 0
