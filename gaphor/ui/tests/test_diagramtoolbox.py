@@ -16,12 +16,24 @@ class WindowOwner:
 
 class DiagramToolboxTestCase(TestCase):
 
-    services = ["element_factory", "properties"]
+    services = [
+        "event_manager",
+        "component_registry",
+        "element_factory",
+        "properties",
+        "action_manager",
+        "main_window",
+    ]
 
     def setUp(self):
         TestCase.setUp(self)
         diagram = self.diagram
-        tab = DiagramPage(WindowOwner())
+        tab = DiagramPage(
+            WindowOwner(),
+            self.get_service("event_manager"),
+            self.element_factory,
+            self.get_service("properties"),
+        )
         tab.diagram = diagram
         tab.construct()
         self.tab = tab

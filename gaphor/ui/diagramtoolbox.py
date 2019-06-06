@@ -171,13 +171,12 @@ class DiagramToolbox:
     Composite class for DiagramPage (diagrampage.py).
     """
 
-    element_factory = inject("element_factory")
-    event_manager = inject("event_manager")
-    properties = inject("properties")
-
-    def __init__(self, diagram, view):
-        self.view = view
+    def __init__(self, diagram, view, element_factory, event_manager, properties):
         self.diagram = diagram
+        self.view = view
+        self.element_factory = element_factory
+        self.event_manager = event_manager
+        self.properties = properties
         self.action_group = build_action_group(self)
 
     namespace = property(lambda s: s.diagram.namespace)

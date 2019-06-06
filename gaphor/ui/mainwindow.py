@@ -91,21 +91,7 @@ class MainWindow(Service, ActionProvider):
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
 
-    def init_ui_components(self):
-        component_registry = self.component_registry
-        for ep in pkg_resources.iter_entry_points("gaphor.uicomponents"):
-            log.debug("found entry point uicomponent.%s" % ep.name)
-            cls = ep.load()
-            if not issubclass(cls, UIComponent):
-                raise NameError("Entry point %s doesn't provide UIComponent" % ep.name)
-            uicomp = cls()
-            uicomp.ui_name = ep.name
-            component_registry.register(uicomp, ep.name)
-            if isinstance(uicomp, ActionProvider):
-                self.action_manager.register_action_provider(uicomp)
-
     def shutdown(self):
-        log.info("Shutting down")
         if self.window:
             self.window.destroy()
             self.window = None
@@ -140,7 +126,6 @@ class MainWindow(Service, ActionProvider):
         """Open the main window.
         """
         load_accel_map()
-        self.init_ui_components()
 
         self.window = (
             Gtk.ApplicationWindow.new(gtk_app)
@@ -284,10 +269,6 @@ class Diagrams(UIComponent, ActionProvider):
     title = _("Diagrams")
     placement = ("left", "diagrams")
 
-    event_manager = inject("event_manager")
-    properties = inject("properties")
-    action_manager = inject("action_manager")
-
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
@@ -300,7 +281,11 @@ class Diagrams(UIComponent, ActionProvider):
       </ui>
     """
 
-    def __init__(self):
+    def __init__(self, event_manager, element_factory, action_manager, properties):
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+        self.action_manager = action_manager
+        self.properties = properties
         self._notebook = None
         self.action_group = build_action_group(self)
         self.action_group.get_action("diagram-drawing-style").set_active(
@@ -329,8 +314,9 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
         self.event_manager.unsubscribe(self._on_show_diagram)
-        self._notebook.destroy()
-        self._notebook = None
+        if self._notebook:
+            self._notebook.destroy()
+            self._notebook = None
 
     def get_current_diagram(self):
         """Returns the current page of the notebook.
@@ -463,7 +449,9 @@ class Diagrams(UIComponent, ActionProvider):
                 return widget.diagram_page
 
         # No existing diagram page found, creating one
-        page = DiagramPage(diagram)
+        page = DiagramPage(
+            diagram, self.event_manager, self.element_factory, self.properties
+        )
         widget = page.construct()
         try:
             widget.set_css_name("diagram-tab")

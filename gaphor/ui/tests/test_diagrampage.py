@@ -11,13 +11,28 @@ from gaphor.ui.mainwindow import DiagramPage
 class DiagramPageTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
-            services=["element_factory", "main_window", "action_manager", "properties"]
+            services=[
+                "event_manager",
+                "component_registry",
+                "element_factory",
+                "main_window",
+                "action_manager",
+                "properties",
+                "namespace",
+                "diagrams",
+                "toolbox",
+            ]
         )
         main_window = Application.get_service("main_window")
         main_window.open()
         self.element_factory = Application.get_service("element_factory")
         self.diagram = self.element_factory.create(UML.Diagram)
-        self.page = DiagramPage(self.diagram)
+        self.page = DiagramPage(
+            self.diagram,
+            Application.get_service("event_manager"),
+            self.element_factory,
+            Application.get_service("properties"),
+        )
         self.page.construct()
         assert self.page.diagram == self.diagram
         assert self.page.view.canvas == self.diagram.canvas

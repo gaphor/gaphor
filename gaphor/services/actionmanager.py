@@ -77,9 +77,6 @@ class ActionManager(Service):
         self.event_manager.subscribe(self._service_initialized_handler)
 
     def shutdown(self):
-
-        logger.info("Shutting down")
-
         self.event_manager.unsubscribe(self._service_initialized_handler)
 
     def execute(self, action_id, active=None):

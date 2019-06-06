@@ -129,9 +129,6 @@ class UndoManager(Service, ActionProvider):
         self._action_executed()
 
     def shutdown(self):
-
-        logger.info("Shutting down")
-
         self.event_manager.unsubscribe(self.reset)
         self.event_manager.unsubscribe(self.begin_transaction)
         self.event_manager.unsubscribe(self.commit_transaction)

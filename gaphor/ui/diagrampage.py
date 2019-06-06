@@ -38,10 +38,6 @@ log = logging.getLogger(__name__)
 
 class DiagramPage(ActionProvider):
 
-    event_manager = inject("event_manager")
-    element_factory = inject("element_factory")
-    action_manager = inject("action_manager")
-
     menu_xml = """
       <ui>
         <menubar action="mainwindow">
@@ -83,7 +79,10 @@ class DiagramPage(ActionProvider):
         Gtk.TargetEntry.new("gaphor/toolbox-action", 0, VIEW_TARGET_TOOLBOX_ACTION),
     ]
 
-    def __init__(self, diagram):
+    def __init__(self, diagram, event_manager, element_factory, properties):
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+        self.properties = properties
         self.diagram = diagram
         self.view = None
         self.widget = None
@@ -136,7 +135,13 @@ class DiagramPage(ActionProvider):
 
         self.view = view
 
-        self.toolbox = DiagramToolbox(self.diagram, view)
+        self.toolbox = DiagramToolbox(
+            self.diagram,
+            view,
+            self.element_factory,
+            self.event_manager,
+            self.properties,
+        )
 
         return self.widget
 
@@ -333,10 +338,8 @@ class DiagramPage(ActionProvider):
             assert element
 
             item_class = get_diagram_item(type(element))
-            if isinstance(element, UML.Diagram):
-                self.action_manager.execute("OpenModelElement")
-            elif item_class:
-                tx = Transaction()
+            if item_class:
+                tx = Transaction(self.event_manager)
                 item = self.diagram.create(item_class)
                 assert item
 

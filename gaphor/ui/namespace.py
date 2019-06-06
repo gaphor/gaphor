@@ -278,10 +278,6 @@ class Namespace(UIComponent, ActionProvider):
     title = _("Namespace")
     placement = ("left", "diagrams")
 
-    event_manager = inject("event_manager")
-    element_factory = inject("element_factory")
-    action_manager = inject("action_manager")
-
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
@@ -308,7 +304,10 @@ class Namespace(UIComponent, ActionProvider):
       </ui>
     """
 
-    def __init__(self):
+    def __init__(self, event_manager, element_factory, action_manager):
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+        self.action_manager = action_manager
         self._namespace = None
         self.action_group = build_action_group(self)
         self.model = Gtk.TreeStore.new([object])

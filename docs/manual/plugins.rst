@@ -14,10 +14,10 @@ or plugin the element factory can be injected into the service like this::
 
   class MyThing:
 
-      element_factory = inject('element_factory')
 
       def do_something(self):
-	  items = element_factory.select()
+          element_factory = Application.get_service('element_factory')
+	        items = element_factory.select()
 
 .. note::
 

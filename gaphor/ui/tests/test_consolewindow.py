@@ -1,17 +1,30 @@
+import pytest
+
 from gaphor.ui.consolewindow import ConsoleWindow
-from gaphor.tests.testcase import TestCase
+import gaphor.services.componentregistry
 
 
-class ConsoleWindowTestCase(TestCase):
+class MainWindowStub:
+    def __init__(self):
+        self.window = None
 
-    services = TestCase.services + ["main_window", "action_manager", "properties"]
 
-    def test1(self):
-        from gi.repository import Gtk
+@pytest.fixture
+def component_registry():
+    return gaphor.services.componentregistry.ComponentRegistry()
 
-        window = ConsoleWindow()
-        assert (
-            len(window.action_group.list_actions()) == 2
-        ), window.action_group.list_actions()
-        window.open()
-        window.close()
+
+@pytest.fixture
+def main_window():
+    return MainWindowStub()
+
+
+def test_open_close(component_registry, main_window):
+    window = ConsoleWindow(component_registry, main_window)
+
+    window.open()
+    window.close()
+
+    assert (
+        len(window.action_group.list_actions()) == 2
+    ), window.action_group.list_actions()

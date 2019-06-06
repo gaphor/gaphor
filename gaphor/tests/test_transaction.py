@@ -37,7 +37,7 @@ class TransactionTestCase(TestCase):
         """Initialize Gaphor services and register transaction event
         handlers."""
 
-        Application.init(services=["component_registry"])
+        Application.init(services=["event_manager", "component_registry"])
 
         event_manager = Application.get_service("event_manager")
 

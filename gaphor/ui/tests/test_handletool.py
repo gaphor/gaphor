@@ -23,11 +23,16 @@ class DiagramItemConnectorTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
+                "event_manager",
+                "component_registry",
                 "element_factory",
                 "main_window",
                 "properties_manager",
                 "action_manager",
                 "properties",
+                "namespace",
+                "diagrams",
+                "toolbox",
             ]
         )
         self.main_window = Application.get_service("main_window")
@@ -71,11 +76,16 @@ class HandleToolTestCase(unittest.TestCase):
     def setUp(self):
         Application.init(
             services=[
+                "event_manager",
+                "component_registry",
                 "element_factory",
                 "main_window",
                 "properties_manager",
                 "action_manager",
                 "properties",
+                "namespace",
+                "diagrams",
+                "toolbox",
             ]
         )
         self.component_registry = Application.get_service("component_registry")

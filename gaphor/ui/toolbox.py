@@ -32,10 +32,6 @@ class Toolbox(UIComponent, ActionProvider):
     title = _("Toolbox")
     placement = ("left", "diagrams")
 
-    event_manager = inject("event_manager")
-    main_window = inject("main_window")
-    properties = inject("properties")
-
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
@@ -48,7 +44,12 @@ class Toolbox(UIComponent, ActionProvider):
       </ui>
     """
 
-    def __init__(self, toolbox_actions=TOOLBOX_ACTIONS):
+    def __init__(
+        self, event_manager, main_window, properties, toolbox_actions=TOOLBOX_ACTIONS
+    ):
+        self.event_manager = event_manager
+        self.main_window = main_window
+        self.properties = properties
         self._toolbox = None
         self._toolbox_actions = toolbox_actions
         self.action_group = build_action_group(self)

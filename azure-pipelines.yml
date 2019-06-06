@@ -18,9 +18,9 @@ jobs:
           architecture: 'x64'
 
       - script: |
-            pip install pre-commit
-            pre-commit install-hooks
-            pre-commit run --all-files
+          pip install pre-commit
+          pre-commit install-hooks
+          pre-commit run --all-files
 
   - job: Windows
     dependsOn: Lint

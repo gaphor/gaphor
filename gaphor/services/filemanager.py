@@ -94,8 +94,6 @@ class FileManager(Service, ActionProvider):
 
     def shutdown(self):
         """Called when shutting down the file manager service."""
-
-        log.info("Shutting down")
         self.event_manager.unsubscribe(self._on_window_close)
 
     def get_filename(self):
