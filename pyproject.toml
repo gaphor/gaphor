@@ -36,6 +36,7 @@ python = "^3.5"
 pycairo = "^1.16"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
+importlib_metadata = "^0.17"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.0"

@@ -5,7 +5,6 @@ The main application window.
 import logging
 import os.path
 
-import pkg_resources
 import importlib.resources
 from gi.repository import GLib
 from gi.repository import Gdk

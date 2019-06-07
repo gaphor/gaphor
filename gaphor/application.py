@@ -12,7 +12,7 @@ All important services are present in the application object:
 import logging
 import functools
 import inspect
-import pkg_resources
+import importlib_metadata
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.abc import Service
@@ -57,7 +57,7 @@ class _Application:
 
         Service should provide an interface gaphor.abc.Service.
         """
-        for ep in pkg_resources.iter_entry_points("gaphor.services"):
+        for ep in importlib_metadata.entry_points()["gaphor.services"]:
             cls = ep.load()
             if isinstance(cls, Service):
                 raise NameError("Entry point %s doesn" "t provide Service" % ep.name)
@@ -77,7 +77,7 @@ class _Application:
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
 
     distribution = property(
-        lambda s: pkg_resources.get_distribution("gaphor"),
+        lambda s: importlib_metadata.distribution("gaphor"),
         doc="The PkgResources distribution for Gaphor",
     )
 

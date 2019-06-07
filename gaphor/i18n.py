@@ -8,10 +8,10 @@ __all__ = ["_"]
 import os
 
 import gettext
-import pkg_resources
+import importlib_metadata
 
 localedir = os.path.join(
-    pkg_resources.get_distribution("gaphor").location, "gaphor", "data", "locale"
+    importlib_metadata.distribution("gaphor").locate_file("gaphor/data/locale")
 )
 
 try:

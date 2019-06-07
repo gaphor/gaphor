@@ -84,13 +84,6 @@ file contains an entry point::
 This refers to the class ``HelloWorldPlugin`` in package/module
 `gaphor.plugins.helloworld <https://github.com/amolenaar/gaphor.plugins.helloworld/blob/master/gaphor/plugins/helloworld/__init__.py>`_.
 
-Also notice that, since the package is defined as ``gaphor.plugins``, which is
-also a package in the default gaphor distribution, each package level contains
-a special statement in its ``__init__.py`` that tells setuptools
-its namespace declaration:::
-
-   __import__('pkg_resources').declare_namespace(__name__)
-
 Here is a stripped version of the hello world class::
 
 
