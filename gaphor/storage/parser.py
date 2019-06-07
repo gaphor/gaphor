@@ -35,8 +35,7 @@ __all__ = ["parse", "ParserException"]
 import io
 import os
 from xml.sax import handler
-
-from gaphor.misc.odict import odict
+from collections import OrderedDict
 
 
 class base:
@@ -153,7 +152,7 @@ class GaphorLoader(handler.ContentHandler):
         """
         self.version = None
         self.gaphor_version = None
-        self.elements = odict()  # map id: element/canvasitem
+        self.elements = OrderedDict()  # map id: element/canvasitem
         self.__stack = []
         self.text = ""
 

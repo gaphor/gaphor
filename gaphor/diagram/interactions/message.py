@@ -47,12 +47,11 @@ See also ``lifeline`` module documentation.
 """
 
 from math import pi
-
+from collections import OrderedDict
 from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.diagram.diagramline import NamedLine
-from gaphor.misc.odict import odict
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 
 PI_2 = pi / 2
@@ -85,8 +84,8 @@ class MessageItem(NamedLine):
         self._is_communication = False
         self._arrow_pos = 0, 0
         self._arrow_angle = 0
-        self._messages = odict()
-        self._inverted_messages = odict()
+        self._messages = OrderedDict()
+        self._inverted_messages = OrderedDict()
 
     def pre_update(self, context):
         """
@@ -327,15 +326,19 @@ class MessageItem(NamedLine):
         Swap order of two messages on communication diagram.
         """
         if inverted:
-            messages = self._inverted_messages
+            messages = self._inverted_messages = swap(self._inverted_messages, m1, m2)
         else:
-            messages = self._messages
+            messages = self._messages = swap(self._messages, m1, m2)
         t1 = messages[m1]
         t2 = messages[m2]
         self.swap_texts(t1, t2)
-        messages.swap(m1, m2)
         self.request_update()
         return True
 
 
-# vim:sw=4:et
+def swap(d, k1, k2):
+    keys = list(d.keys())
+    i1 = keys.index(k1)
+    i2 = keys.index(k2)
+    keys[i1], keys[i2] = keys[i2], keys[i1]
+    return type(d)((k, d[k]) for k in keys)

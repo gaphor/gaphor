@@ -2,8 +2,9 @@
 Test messages.
 """
 
+from collections import OrderedDict
 from gaphor import UML
-from gaphor.diagram.interactions.message import MessageItem
+from gaphor.diagram.interactions.message import MessageItem, swap
 from gaphor.tests.testcase import TestCase
 
 
@@ -123,3 +124,9 @@ class MessageTestCase(TestCase):
         # check for loaded messages and order of messages
         self.assertEqual(["m1", "m2"], [m.name for m in item._messages])
         assert ["m3", "m4"] == [m.name for m in item._inverted_messages]
+
+
+def test_swap():
+    d = OrderedDict([("a", 1), ("b", 2), ("c", 3), ("d", 4)])
+    new = swap(d, "a", "c")
+    assert list(new.keys()) == ["c", "b", "a", "d"]
