@@ -246,15 +246,12 @@ class PlacementTool(_PlacementTool):
             handle_index=handle_index,
         )
         self.after_handler = after_handler
-        self._tx = None
 
     @transactional
     def create_item(self, pos):
         return self._create_item(pos)
 
     def on_button_press(self, event):
-        assert not self._tx
-        self._tx = Transaction()
         view = self.view
         view.unselect_all()
         if _PlacementTool.on_button_press(self, event):
@@ -281,13 +278,9 @@ class PlacementTool(_PlacementTool):
         return False
 
     def on_button_release(self, event):
-        try:
-            if self.after_handler:
-                self.after_handler(self.new_item)
-            return _PlacementTool.on_button_release(self, event)
-        finally:
-            self._tx.commit()
-            self._tx = None
+        if self.after_handler:
+            self.after_handler(self.new_item)
+        return _PlacementTool.on_button_release(self, event)
 
 
 class GroupPlacementTool(PlacementTool):
@@ -452,8 +445,9 @@ class TransactionalToolChain(ToolChain):
     at button-press and commits the transaction at button-release.
     """
 
-    def __init__(self, view=None):
+    def __init__(self, event_manager, view=None):
         super(TransactionalToolChain, self).__init__(view)
+        self.event_manager = event_manager
         self._tx = None
 
     def handle(self, event):
@@ -461,7 +455,7 @@ class TransactionalToolChain(ToolChain):
         # print 'event', self.EVENT_HANDLERS.get(event.type)
         if self.EVENT_HANDLERS.get(event.type) in ("on_button_press",):
             assert not self._tx
-            self._tx = Transaction()
+            self._tx = Transaction(self.event_manager)
 
         try:
             super(TransactionalToolChain, self).handle(event)
@@ -475,11 +469,11 @@ class TransactionalToolChain(ToolChain):
                 self._tx = None
 
 
-def DefaultTool():
+def DefaultTool(event_manager):
     """
     The default tool chain build from HoverTool, ItemTool and HandleTool.
     """
-    chain = TransactionalToolChain()
+    chain = TransactionalToolChain(event_manager)
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())
     chain.append(ItemTool())

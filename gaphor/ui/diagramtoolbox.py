@@ -12,7 +12,12 @@ from gaphor import UML
 from gaphor.UML.event import DiagramItemCreateEvent
 from gaphor.core import _, inject, radio_action, build_action_group
 from gaphor import diagram
-from gaphor.ui.diagramtools import PlacementTool, GroupPlacementTool, DefaultTool
+from gaphor.ui.diagramtools import (
+    TransactionalToolChain,
+    PlacementTool,
+    GroupPlacementTool,
+    DefaultTool,
+)
 
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
 
@@ -195,7 +200,9 @@ class DiagramToolbox:
         Activate a tool based on its index in the TOOLBOX_ACTIONS list.
         """
         tool_name = list(itemiter(TOOLBOX_ACTIONS))[id][0]
-        self.view.tool = self.get_tool(tool_name)
+        tool = TransactionalToolChain(self.event_manager)
+        tool.append(self.get_tool(tool_name))
+        self.view.tool = tool
 
     def _item_factory(self, item_class, subject_class=None, config_func=None):
         """
@@ -247,7 +254,7 @@ class DiagramToolbox:
 
     def toolbox_pointer(self):
         if self.view:
-            return DefaultTool()
+            return DefaultTool(self.event_manager)
 
     def toolbox_line(self):
         return PlacementTool(

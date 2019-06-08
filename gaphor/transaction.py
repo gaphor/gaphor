@@ -5,7 +5,7 @@ Transaction support for Gaphor
 import logging
 
 
-from gaphor import application
+from gaphor import Application
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 
 log = logging.getLogger(__name__)
@@ -19,8 +19,8 @@ def transactional(func):
 
     def _transactional(*args, **kwargs):
         r = None
-        # TODO: pass along an event handler
-        tx = Transaction()
+        event_manager = Application.get_service("event_manager")
+        tx = Transaction(event_manager)
         try:
             r = func(*args, **kwargs)
         except Exception as e:
@@ -52,12 +52,15 @@ class Transaction:
     """
     The transaction. On start and end of a transaction an event is emitted.
 
+    >>> import gaphor.services.eventmanager
+    >>> event_manager = gaphor.services.eventmanager.EventManager()
+
     Transactions can be nested. If the outermost transaction is committed or
     rolled back, an event is emitted.
 
     Events can be handled programmatically:
 
-    >>> tx = Transaction()
+    >>> tx = Transaction(event_manager)
     >>> tx.commit()
 
     It can be assigned as decorator:
@@ -68,20 +71,16 @@ class Transaction:
 
     Or with the ``with`` statement:
 
-    >>> with Transaction():
+    >>> with Transaction(event_manager):
     ...     pass
     """
 
-    event_manager = application.inject("event_manager")
-
     _stack = []
 
-    def __init__(self, event_manager=None):
+    def __init__(self, event_manager):
         """Initialize the transaction.  If this is the first transaction in
         the stack, a TransactionBegin event is emitted."""
-        # Set event manager, should replace inject() at some point
-        if event_manager:
-            self.event_manager = event_manager
+        self.event_manager = event_manager
 
         self._need_rollback = False
         if not self._stack:

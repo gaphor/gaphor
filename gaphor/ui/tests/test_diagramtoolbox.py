@@ -1,3 +1,5 @@
+from gi.repository import Gtk
+
 from gaphor.tests.testcase import TestCase
 from gaphor import UML
 from gaphor.tests.testcase import TestCase
@@ -27,18 +29,21 @@ class DiagramToolboxTestCase(TestCase):
 
     def setUp(self):
         TestCase.setUp(self)
-        diagram = self.diagram
-        tab = DiagramPage(
+
+        self.tab = DiagramPage(
             WindowOwner(),
             self.get_service("event_manager"),
             self.element_factory,
             self.get_service("properties"),
         )
-        tab.diagram = diagram
-        tab.construct()
-        self.tab = tab
+        self.tab.diagram = self.diagram
+
+        self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+        self.window.add(self.tab.construct())
+        self.window.show()
 
     def tearDown(self):
+        self.window.destroy()
         TestCase.tearDown(self)
 
     def test_toolbox_actions_shortcut_unique(self):
@@ -67,10 +72,10 @@ class DiagramToolboxTestCase(TestCase):
         pass  # is setUp()
 
     def _test_placement_action(self, action):
-        self.tab.toolbox.action_group.get_action(action).activate()
-        assert self.tab.view.tool
+        tool = self.tab.toolbox.get_tool(action)
+
         # Ensure the factory is working
-        self.tab.view.tool._factory()
+        tool.create_item((0, 0))
         self.diagram.canvas.update()
 
     def test_placement_pointer(self):

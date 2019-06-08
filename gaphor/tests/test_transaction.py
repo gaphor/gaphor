@@ -5,6 +5,8 @@ from unittest import TestCase
 from gaphor.core import Application, event_handler
 from gaphor.transaction import Transaction, transactional, TransactionError
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
+from gaphor.services.eventmanager import EventManager
+
 
 begins = []
 commits = []
@@ -37,13 +39,11 @@ class TransactionTestCase(TestCase):
         """Initialize Gaphor services and register transaction event
         handlers."""
 
-        Application.init(services=["event_manager", "component_registry"])
+        self.event_manager = EventManager()
 
-        event_manager = Application.get_service("event_manager")
-
-        event_manager.subscribe(handle_begins)
-        event_manager.subscribe(handle_commits)
-        event_manager.subscribe(handle_rollback)
+        self.event_manager.subscribe(handle_begins)
+        self.event_manager.subscribe(handle_commits)
+        self.event_manager.subscribe(handle_rollback)
 
         del begins[:]
         del commits[:]
@@ -53,16 +53,14 @@ class TransactionTestCase(TestCase):
         """Finished with the test case.  Unregister event handlers that
         store transaction events."""
 
-        event_manager = Application.get_service("event_manager")
-
-        event_manager.unsubscribe(handle_begins)
-        event_manager.unsubscribe(handle_commits)
-        event_manager.unsubscribe(handle_rollback)
+        self.event_manager.unsubscribe(handle_begins)
+        self.event_manager.unsubscribe(handle_commits)
+        self.event_manager.unsubscribe(handle_rollback)
 
     def test_transaction_commit(self):
         """Test committing a transaction."""
 
-        tx = Transaction()
+        tx = Transaction(self.event_manager)
 
         assert tx._stack, "Transaction has no stack"
         assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
@@ -86,7 +84,7 @@ class TransactionTestCase(TestCase):
     def test_transaction_rollback(self):
         """Test rolling back a transaction."""
 
-        tx = Transaction()
+        tx = Transaction(self.event_manager)
 
         assert tx._stack, "Transaction has no stack"
         assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
@@ -105,8 +103,8 @@ class TransactionTestCase(TestCase):
         """Test committing one transaction after rolling back another
         transaction."""
 
-        tx1 = Transaction()
-        tx2 = Transaction()
+        tx1 = Transaction(self.event_manager)
+        tx2 = Transaction(self.event_manager)
 
         tx2.rollback()
         tx1.commit()
@@ -118,8 +116,8 @@ class TransactionTestCase(TestCase):
     def test_transaction_stack(self):
         """Test the transaction stack."""
 
-        tx1 = Transaction()
-        tx2 = Transaction()
+        tx1 = Transaction(self.event_manager)
+        tx2 = Transaction(self.event_manager)
 
         try:
             self.assertRaises(TransactionError, tx1.commit)
@@ -130,7 +128,7 @@ class TransactionTestCase(TestCase):
     def test_transaction_context(self):
         """Test the transaction context manager."""
 
-        with Transaction() as tx:
+        with Transaction(self.event_manager) as tx:
 
             assert isinstance(tx, Transaction), "Context is not a Transaction instance"
             assert (
@@ -143,7 +141,7 @@ class TransactionTestCase(TestCase):
         """Test the transaction context manager with errors."""
 
         try:
-            with Transaction():
+            with Transaction(self.event_manager):
                 raise TypeError("transaction error")
         except TypeError as e:
             assert "transaction error" == str(
@@ -153,16 +151,3 @@ class TransactionTestCase(TestCase):
             self.fail(
                 "Transaction context manager did not raise exception when it should have"
             )
-
-
-class TransactionWithoutComponentRegistryTestCase(TestCase):
-    """Test case for transactions with no component registry."""
-
-    def test_transaction(self):
-        """Test basic transaction functionality."""
-
-        tx = Transaction()
-        tx.rollback()
-
-        tx = Transaction()
-        tx.commit()
