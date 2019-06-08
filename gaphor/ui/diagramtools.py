@@ -458,7 +458,7 @@ class TransactionalToolChain(ToolChain):
             self._tx = Transaction(self.event_manager)
 
         try:
-            super().handle(event)
+            return super().handle(event)
         finally:
             if self._tx and self.EVENT_HANDLERS.get(event.type) in (
                 "on_button_release",
