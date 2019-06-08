@@ -8,6 +8,7 @@
 # Arjan Molenaar.
 
 import sys
+import ast
 
 sys.path.append("..")
 
@@ -31,7 +32,7 @@ def print_vars(cls):
 args = sys.argv[1:]
 
 if args:
-    cls = eval(args[0])
+    cls = ast.literal_eval(args[0])
     print_vars(cls)
 else:
     print("Usage: " + sys.argv[0] + " <UML class name>")

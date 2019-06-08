@@ -14,6 +14,7 @@ attributes and traverse them to generate the data model.
 """
 
 import sys
+import ast
 
 from gaphor.storage.parser import parse, base, element
 from utils.command import override
@@ -150,7 +151,7 @@ class Writer:
         full_name = "%s.%s" % (a.class_name, a.name)
         if self.overrides.has_override(full_name):
             self.overrides.write_override(self, full_name)
-        elif eval(a.isDerived or "0"):
+        elif ast.literal_eval(a.isDerived or "0"):
             msg(
                 "ignoring derived attribute %s.%s: no definition"
                 % (a.class_name, a.name)

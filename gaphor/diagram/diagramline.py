@@ -3,6 +3,7 @@ Basic functionality for canvas line based items on a diagram.
 """
 
 from math import atan2, pi
+import ast
 
 import gaphas
 
@@ -73,9 +74,9 @@ class DiagramLine(gaphas.Line, DiagramItem):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = eval(value)
+            self.matrix = ast.literal_eval(value)
         elif name == "points":
-            points = eval(value)
+            points = ast.literal_eval(value)
             for x in range(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
@@ -88,7 +89,7 @@ class DiagramLine(gaphas.Line, DiagramItem):
             self._update_ports()
 
         elif name == "orthogonal":
-            self._load_orthogonal = eval(value)
+            self._load_orthogonal = ast.literal_eval(value)
         elif name in ("head_connection", "head-connection"):
             self._load_head_connection = value
         elif name in ("tail_connection", "tail-connection"):

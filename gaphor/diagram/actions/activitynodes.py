@@ -3,6 +3,7 @@ Activity control nodes.
 """
 
 import math
+import ast
 
 from gaphas.util import path_ellipse
 from gaphas.state import observed, reversible_property
@@ -131,7 +132,6 @@ class DecisionNodeItem(ActivityNodeItem):
     def __init__(self, id=None, model=None):
         ActivityNodeItem.__init__(self, id, model)
         self._combined = None
-        # self.set_prop_persistent('combined')
 
     def save(self, save_func):
         if self._combined:
@@ -229,9 +229,9 @@ class ForkNodeItem(Item, DiagramItem):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = eval(value)
+            self.matrix = ast.literal_eval(value)
         elif name == "height":
-            self._handles[1].pos.y = eval(value)
+            self._handles[1].pos.y = ast.literal_eval(value)
         elif name == "combined":
             self._combined = value
         else:

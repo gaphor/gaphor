@@ -3,9 +3,11 @@ DiagramItem provides basic functionality for presentations.
 Such as a modifier 'subject' property and a unique id.
 """
 
+import ast
+import logging
+
 from gaphas.state import observed, reversible_property
 
-import logging
 from gaphor import UML
 from gaphor.diagram.textelement import EditableTextSupport
 from gaphor.diagram.style import Style, ALIGN_CENTER, ALIGN_TOP
@@ -206,9 +208,6 @@ class DiagramItem(
         EditableTextSupport.__init__(self)
         StereotypeSupport.__init__(self)
 
-        # properties, which should be saved in file
-        self._persistent_props = set()
-
         def update(event):
             self.request_update()
 
@@ -219,12 +218,6 @@ class DiagramItem(
             self.on_element_applied_stereotype,
         )
 
-    def set_prop_persistent(self, name):
-        """
-        Specify property of diagram item, which should be saved in file.
-        """
-        self._persistent_props.add(name)
-
     # TODO: Use adapters for load/save functionality
     def save(self, save_func):
         if self.subject:
@@ -232,18 +225,14 @@ class DiagramItem(
 
         save_func("show_stereotypes_attrs", self.show_stereotypes_attrs)
 
-        # save persistent properties
-        for p in self._persistent_props:
-            save_func(p, getattr(self, p.replace("-", "_")))
-
     def load(self, name, value):
         if name == "subject":
             type(self).subject.load(self, value)
         elif name == "show_stereotypes_attrs":
-            self._show_stereotypes_attrs = eval(value)
+            self._show_stereotypes_attrs = ast.literal_eval(value)
         else:
             try:
-                setattr(self, name.replace("-", "_"), eval(value))
+                setattr(self, name.replace("-", "_"), ast.literal_eval(value))
             except:
                 logger.warning(
                     "%s has no property named %s (value %s)" % (self, name, value)

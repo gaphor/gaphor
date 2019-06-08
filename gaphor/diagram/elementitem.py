@@ -2,6 +2,7 @@
 Abstract classes for element-like Diagram items.
 """
 
+import ast
 import cairo
 import gaphas
 
@@ -35,7 +36,7 @@ class ElementItem(gaphas.Element, DiagramItem):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = eval(value)
+            self.matrix = ast.literal_eval(value)
         else:
             DiagramItem.load(self, name, value)
 
