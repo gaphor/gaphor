@@ -8,7 +8,7 @@ import os.path
 import re
 from io import StringIO
 
-import pkg_resources
+import importlib_metadata
 
 from gaphor import UML
 from gaphor.diagram.general import CommentItem
@@ -155,8 +155,8 @@ class StorageTestCase(TestCase):
         Test if the meta model can be loaded.
         """
 
-        dist = pkg_resources.get_distribution("gaphor")
-        path = os.path.join(dist.location, "gaphor/UML/uml2.gaphor")
+        dist = importlib_metadata.distribution("gaphor")
+        path = dist.locate_file("gaphor/UML/uml2.gaphor")
 
         with io.open(path) as ifile:
             storage.load(ifile, factory=self.element_factory)
@@ -257,8 +257,8 @@ class StorageTestCase(TestCase):
 
         """Test loading and saving models"""
 
-        dist = pkg_resources.get_distribution("gaphor")
-        path = os.path.join(dist.location, "test-diagrams/simple-items.gaphor")
+        dist = importlib_metadata.distribution("gaphor")
+        path = dist.locate_file("test-diagrams/simple-items.gaphor")
 
         with io.open(path, "r") as ifile:
             storage.load(ifile, factory=self.element_factory)
@@ -288,8 +288,8 @@ class StorageTestCase(TestCase):
 
         """Test loading and saving models"""
 
-        dist = pkg_resources.get_distribution("gaphor")
-        path = os.path.join(dist.location, "test-diagrams/old-gaphor-version.gaphor")
+        dist = importlib_metadata.distribution("gaphor")
+        path = dist.locate_file("test-diagrams/old-gaphor-version.gaphor")
 
         def load_old_model():
             with io.open(path, "r") as ifile:

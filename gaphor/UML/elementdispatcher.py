@@ -4,7 +4,6 @@
 
 from logging import getLogger
 from gaphor.core import inject, event_handler
-from gaphor.abc import Service
 from gaphor.UML import uml2
 from gaphor.UML.event import (
     ElementChangeEvent,
@@ -52,7 +51,7 @@ class EventWatcher:
         for path, handler in self._watched_paths.items():
             dispatcher.subscribe(handler, element, path)
 
-    def unsubscribe_all(self, *args):
+    def unsubscribe_all(self, *_args):
         """
         Unregister handlers. Extra arguments are ignored (makes connecting to
         destroy signals much easier though).
@@ -63,7 +62,7 @@ class EventWatcher:
             dispatcher.unsubscribe(handler)
 
 
-class ElementDispatcher(Service):
+class ElementDispatcher:
     """
     The Element based Dispatcher allows handlers to receive only events
     related to certain elements. Those elements should be registered too.

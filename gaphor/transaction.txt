@@ -33,7 +33,7 @@ Same goes for commit and rollback events:
 
 A Transaction is started by initiating a Transaction instance:
 
-    >>> tx = transaction.Transaction()
+    >>> tx = transaction.Transaction(event_manager)
     tx begin
 
 On success, a transaction can be committed:
@@ -52,18 +52,18 @@ After a commit, a rollback is no longer allowed (the transaction is closed):
 
 Transactions may be nested:
 
-    >>> tx = transaction.Transaction()
+    >>> tx = transaction.Transaction(event_manager)
     tx begin
-    >>> tx2 = transaction.Transaction()
+    >>> tx2 = transaction.Transaction(event_manager)
     >>> tx2.commit()
     >>> tx.commit()
     tx commit
 
 Transactions should be closed in the right order (subtransactions first):
 
-    >>> tx = transaction.Transaction()
+    >>> tx = transaction.Transaction(event_manager)
     tx begin
-    >>> tx2 = transaction.Transaction()
+    >>> tx2 = transaction.Transaction(event_manager)
     >>> tx.commit()
     ... # doctest: +ELLIPSIS
     Traceback (most recent call last):
@@ -100,7 +100,7 @@ performed:
 
 All transactions are marked for rollback once an exception is raised:
 
-    >>> tx = transaction.Transaction()
+    >>> tx = transaction.Transaction(event_manager)
     tx begin
     >>> a()
     ... # doctest: +ELLIPSIS

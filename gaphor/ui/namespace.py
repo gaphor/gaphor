@@ -29,7 +29,6 @@ from gaphor.core import (
     inject,
     transactional,
 )
-from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name
@@ -155,6 +154,7 @@ class NamespaceView(Gtk.TreeView):
 
         cell.set_property("markup", text)
 
+    @transactional
     def _text_edited(self, cell, path_str, new_text):
         """
         The text has been edited. This method updates the data object.
@@ -165,9 +165,7 @@ class NamespaceView(Gtk.TreeView):
             model = self.get_property("model")
             iter = model.get_iter_from_string(path_str)
             element = model.get_value(iter, 0)
-            tx = Transaction()
             element.name = new_text
-            tx.commit()
         except Exception as e:
             log.error('Could not create path from string "%s"' % path_str)
 
@@ -211,6 +209,7 @@ class NamespaceView(Gtk.TreeView):
             )
         return True
 
+    @transactional
     def on_drag_data_received(self, context, x, y, selection, info, time):
         """
         Drop the data send by on_drag_data_get().
@@ -251,12 +250,10 @@ class NamespaceView(Gtk.TreeView):
 
                 # Set package. This only works for classifiers, packages and
                 # diagrams. Properties and operations should not be moved.
-                tx = Transaction()
                 if dest_element is None:
                     del element.package
                 else:
                     element.package = dest_element
-                tx.commit()
 
             except AttributeError as e:
                 log.info("Unable to drop data %s" % e)

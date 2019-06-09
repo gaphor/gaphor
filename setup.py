@@ -93,7 +93,7 @@ setup(
         "pycairo >= 1.17.0",
         "PyGObject >= 3.30.0",
         "gaphas >= 0.7.2",
-        "setuptools",
+        "importlib_metadata >= 0.17",
     ],
     zip_safe=False,
     entry_points={

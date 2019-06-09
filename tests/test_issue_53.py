@@ -1,7 +1,7 @@
 import os
 import unittest
 
-import pkg_resources
+import importlib_metadata
 
 from gaphor import UML
 from gaphor.application import Application
@@ -13,8 +13,8 @@ class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
         element_factory = Application.get_service("element_factory")
         from gaphor.storage.storage import load
 
-        dist = pkg_resources.get_distribution("gaphor")
-        path = os.path.join(dist.location, "test-diagrams/issue_53.gaphor")
+        dist = importlib_metadata.distribution("gaphor")
+        path = dist.locate_file("test-diagrams/issue_53.gaphor")
         load(path, element_factory)
 
     def tearDown(self):

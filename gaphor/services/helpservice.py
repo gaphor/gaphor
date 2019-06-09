@@ -2,7 +2,7 @@
 
 import os
 
-import pkg_resources
+import importlib_metadata
 from gi.repository import GdkPixbuf
 from gi.repository import Gtk
 
@@ -35,14 +35,10 @@ class HelpService(Service, ActionProvider):
 
     @action(name="help-about", stock_id="gtk-about")
     def about(self):
-        logo_file = os.path.join(
-            pkg_resources.get_distribution("gaphor").location,
-            "gaphor",
-            "ui",
-            "pixmaps",
-            "logo.png",
+        logo_file = importlib_metadata.distribution("gaphor").locate_file(
+            "gaphor/ui/pixmaps/logo.png"
         )
-        logo = GdkPixbuf.Pixbuf.new_from_file(logo_file)
+        logo = GdkPixbuf.Pixbuf.new_from_file(str(logo_file))
         version = __version__
         about = Gtk.Dialog.new()
         about.set_title(_("About Gaphor"))

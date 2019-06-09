@@ -4,13 +4,12 @@ main screen and diagram windows.
 """
 
 from gi.repository import Gtk, Gdk
-import pkg_resources
+import importlib.resources
 import os.path
 
 icon_theme = Gtk.IconTheme.get_default()
-icon_theme.append_search_path(
-    os.path.abspath(pkg_resources.resource_filename("gaphor.ui", "pixmaps"))
-)
+with importlib.resources.path("gaphor.ui", "pixmaps") as path:
+    icon_theme.append_search_path(str(path))
 
 import re
 

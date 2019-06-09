@@ -10,6 +10,7 @@ from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 from gaphor.diagram.textelement import text_extents
 
 
+# Note: this is a ClassifierItem, so associations can attach to it :/
 class UseCaseItem(ClassifierItem):
     """
     Presentation of gaphor.UML.UseCase.

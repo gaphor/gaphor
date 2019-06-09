@@ -2,7 +2,7 @@
 
 import uuid
 from contextlib import contextmanager
-
+from collections import OrderedDict
 
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element, UnlinkEvent
@@ -16,7 +16,6 @@ from gaphor.UML.event import (
 )
 from gaphor.core import inject
 from gaphor.abc import Service
-from gaphor.misc import odict
 
 
 class ElementFactory(Service):
@@ -37,7 +36,7 @@ class ElementFactory(Service):
         self.element_dispatcher = (
             ElementDispatcher(event_manager) if event_manager else None
         )
-        self._elements = odict.odict()
+        self._elements = OrderedDict()
         self._observers = list()
         self._block_events = 0
 

@@ -36,6 +36,7 @@ python = "^3.5"
 pycairo = "^1.16"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
+importlib_metadata = "^0.17"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.0"
@@ -44,7 +45,6 @@ pytest-cov = "^2.5"
 pytest-runner = "^4.2"
 black = { version = "^18.3-alpha.0", python = "^3.6" }
 pre-commit = "^1.12"
-briefcase = "^0.2.9"
 
 [tool.poetry.scripts]
 gaphor = 'gaphor:main'
