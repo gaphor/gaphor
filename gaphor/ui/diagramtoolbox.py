@@ -10,7 +10,7 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.UML.event import DiagramItemCreateEvent
-from gaphor.core import _, inject, radio_action, build_action_group
+from gaphor.core import _, radio_action, build_action_group
 from gaphor import diagram
 from gaphor.ui.diagramtools import (
     TransactionalToolChain,

@@ -6,7 +6,7 @@ import gaphas
 
 from gaphor.UML import Element
 from gaphor.UML.collection import collection
-from gaphor.core import inject, event_handler, action, build_action_group, transactional
+from gaphor.core import event_handler, action, build_action_group, transactional
 from gaphor.abc import Service, ActionProvider
 from gaphor.ui.event import DiagramSelectionChange
 

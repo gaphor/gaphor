@@ -8,7 +8,7 @@ from gi.repository import Gtk
 
 
 from gaphor import __version__
-from gaphor.core import _, inject, action, build_action_group
+from gaphor.core import _, action, build_action_group
 from gaphor.abc import Service, ActionProvider
 
 

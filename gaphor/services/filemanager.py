@@ -7,7 +7,7 @@ import logging
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _, inject, action, build_action_group, event_handler
+from gaphor.core import _, action, build_action_group, event_handler
 from gaphor.abc import Service, ActionProvider
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue

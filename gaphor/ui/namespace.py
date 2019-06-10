@@ -21,14 +21,7 @@ from gaphor.UML.event import (
     AttributeChangeEvent,
     DerivedSetEvent,
 )
-from gaphor.core import (
-    _,
-    event_handler,
-    action,
-    build_action_group,
-    inject,
-    transactional,
-)
+from gaphor.core import _, event_handler, action, build_action_group, transactional
 from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name

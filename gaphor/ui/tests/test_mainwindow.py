@@ -2,7 +2,6 @@ import unittest
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.core import inject
 from gaphor.ui.event import DiagramShow
 from gaphor.ui.abc import UIComponent
 

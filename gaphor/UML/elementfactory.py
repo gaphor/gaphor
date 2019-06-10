@@ -14,7 +14,6 @@ from gaphor.UML.event import (
     FlushFactoryEvent,
     ModelFactoryEvent,
 )
-from gaphor.core import inject
 from gaphor.abc import Service
 
 

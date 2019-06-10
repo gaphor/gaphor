@@ -10,7 +10,7 @@ Depends on the Diagram Layout plugin.
 from gi.repository import GObject
 from gi.repository import Gtk
 
-from gaphor.core import inject, action, build_action_group
+from gaphor.core import action, build_action_group
 from gaphor.abc import Service, ActionProvider
 from gaphor.plugins.pynsource.engineer import Engineer
 

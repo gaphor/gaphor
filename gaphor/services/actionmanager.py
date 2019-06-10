@@ -5,7 +5,7 @@ import logging
 
 from gi.repository import Gtk
 
-from gaphor.core import inject, event_handler
+from gaphor.core import event_handler
 from gaphor.event import ServiceInitializedEvent, ActionExecuted
 from gaphor.abc import Service, ActionProvider
 

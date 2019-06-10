@@ -10,7 +10,6 @@ from gaphas.decorators import AsyncIO
 from gaphor.misc import get_config_dir
 
 
-from gaphor.core import inject
 from gaphor.abc import Service
 
 

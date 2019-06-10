@@ -3,7 +3,6 @@ import logging
 from gi.repository import Gdk
 
 from gaphor import UML
-from gaphor.core import inject
 from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.tests import TestCase
 from gaphor.ui.abc import UIComponent

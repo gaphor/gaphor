@@ -9,7 +9,7 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 
 import logging
 
-from gaphas.aspect import Connector, InMotion
+from gaphas.aspect import Connector, InMotion, ItemConnector
 from gaphas.guide import GuidedItemInMotion
 from gaphas.tool import (
     Tool,
@@ -40,7 +40,7 @@ log = logging.getLogger(__name__)
 
 
 @Connector.when_type(DiagramLine)
-class DiagramItemConnector(Connector.default):
+class DiagramItemConnector(ItemConnector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
