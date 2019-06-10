@@ -193,23 +193,3 @@ def init_services(uninitialized_services):
         init(name, cls)
 
     return ready
-
-
-class inject:
-    """
-    DEPRECATED!
-
-    Simple descriptor for dependency injection.
-    This is technically a wrapper around Application.get_service().
-    """
-
-    def __init__(self, name):
-        self._name = name
-
-    def __get__(self, obj, class_=None):
-        """
-        Resolve a dependency, but only if we're called from an object instance.
-        """
-        if not obj:
-            return self
-        return Application.get_service(self._name)
