@@ -42,7 +42,7 @@ class build_uml(Command):
         """
         Generate gaphor/UML/uml2.py in the build directory.
         """
-        gen = os.path.join("utils", "command", "gen_uml.py")
+        gen = os.path.join("utils", "model", "gen_uml.py")
         overrides = os.path.join("gaphor", "UML", "uml2.override")
         model = os.path.join("gaphor", "UML", "uml2.gaphor")
         py_model = os.path.join("gaphor", "UML", "uml2.py")

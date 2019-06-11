@@ -11,10 +11,10 @@ import re
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
 
-from utils.command.build_mo import build_mo
-from utils.command.build_pot import build_pot
-from utils.command.build_uml import build_uml
-from utils.command.install_lib import install_lib
+from utils.i18n.build_mo import build_mo
+from utils.i18n.build_pot import build_pot
+from utils.model.build_uml import build_uml
+from utils.install_lib import install_lib
 
 VERSION = "1.0.1"
 LINGUAS = ["ca", "es", "fr", "nl", "sv"]

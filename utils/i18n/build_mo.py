@@ -8,7 +8,7 @@ import os.path
 from distutils.core import Command
 from distutils.dep_util import newer
 
-from utils.command import msgfmt
+from utils.i18n import msgfmt
 
 
 class build_mo(Command):

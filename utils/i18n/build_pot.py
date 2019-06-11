@@ -8,7 +8,7 @@ import os.path
 import sys
 from distutils.core import Command
 
-from utils.command import pygettext
+from utils.i18n import pygettext
 
 
 # from pygettext.main():
