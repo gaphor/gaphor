@@ -27,7 +27,7 @@ from gaphor.UML.event import (
 )
 from gaphor.UML.properties import association as association_property
 from gaphor.action import action, build_action_group
-from gaphor.core import inject, event_handler
+from gaphor.core import event_handler
 from gaphor.event import (
     ActionExecuted,
     ServiceEvent,

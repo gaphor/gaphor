@@ -4,12 +4,12 @@ file system.  These are things like preferences."""
 import os
 import pprint
 import sys
+import ast
 
 from gaphas.decorators import AsyncIO
 from gaphor.misc import get_config_dir
 
 
-from gaphor.core import inject
 from gaphor.abc import Service
 
 
@@ -137,7 +137,7 @@ class FileBackend:
             with open(filename) as ifile:
                 data = ifile.read()
 
-            for key, value in eval(data).items():
+            for key, value in ast.literal_eval(data).items():
                 resource[key] = value
 
     def save(self, resource):

@@ -9,7 +9,7 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 
 import logging
 
-from gaphas.aspect import Connector, InMotion
+from gaphas.aspect import Connector, InMotion, ItemConnector
 from gaphas.guide import GuidedItemInMotion
 from gaphas.tool import (
     Tool,
@@ -40,7 +40,7 @@ log = logging.getLogger(__name__)
 
 
 @Connector.when_type(DiagramLine)
-class DiagramItemConnector(Connector.default):
+class DiagramItemConnector(ItemConnector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
     to connect items to one-another.
@@ -446,7 +446,7 @@ class TransactionalToolChain(ToolChain):
     """
 
     def __init__(self, event_manager, view=None):
-        super(TransactionalToolChain, self).__init__(view)
+        super().__init__(view)
         self.event_manager = event_manager
         self._tx = None
 
@@ -458,7 +458,7 @@ class TransactionalToolChain(ToolChain):
             self._tx = Transaction(self.event_manager)
 
         try:
-            super(TransactionalToolChain, self).handle(event)
+            return super().handle(event)
         finally:
             if self._tx and self.EVENT_HANDLERS.get(event.type) in (
                 "on_button_release",

@@ -2,6 +2,8 @@
 Trivial drawing aids (box, line, ellipse).
 """
 
+import ast
+
 from gaphas.item import Element, NW
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
@@ -34,9 +36,9 @@ class Line(_Line):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = eval(value)
+            self.matrix = ast.literal_eval(value)
         elif name == "points":
-            points = eval(value)
+            points = ast.literal_eval(value)
             for x in range(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
@@ -44,9 +46,9 @@ class Line(_Line):
                 self.handles()[i].pos = p
             self._update_ports()
         elif name == "horizontal":
-            self.horizontal = eval(value)
+            self.horizontal = ast.literal_eval(value)
         elif name == "orthogonal":
-            self._load_orthogonal = eval(value)
+            self._load_orthogonal = ast.literal_eval(value)
 
     def postload(self):
         if hasattr(self, "_load_orthogonal"):
@@ -89,11 +91,11 @@ class Box(Element):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = eval(value)
+            self.matrix = ast.literal_eval(value)
         elif name == "width":
-            self.width = eval(value)
+            self.width = ast.literal_eval(value)
         elif name == "height":
-            self.height = eval(value)
+            self.height = ast.literal_eval(value)
 
     def postload(self):
         pass
@@ -134,11 +136,11 @@ class Ellipse(Element):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = eval(value)
+            self.matrix = ast.literal_eval(value)
         elif name == "width":
-            self.width = eval(value)
+            self.width = ast.literal_eval(value)
         elif name == "height":
-            self.height = eval(value)
+            self.height = ast.literal_eval(value)
 
     def postload(self):
         pass

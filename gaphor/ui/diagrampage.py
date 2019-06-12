@@ -19,14 +19,7 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.abc import ActionProvider
 from gaphor.UML.event import ElementDeleteEvent
-from gaphor.core import (
-    _,
-    inject,
-    event_handler,
-    transactional,
-    action,
-    build_action_group,
-)
+from gaphor.core import _, event_handler, transactional, action, build_action_group
 from gaphor.diagram.support import get_diagram_item
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.transaction import Transaction

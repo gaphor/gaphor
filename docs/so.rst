@@ -89,7 +89,7 @@ Here is a stripped version of the hello world class::
 
 
     from gaphor.abc import Service, ActionProvider
-    from gaphor.core import _, inject, action, build_action_group
+    from gaphor.core import _, action, build_action_group
 
     class HelloWorldPlugin(Service, ActionProvider):     # 1.
 
@@ -115,7 +115,7 @@ Here is a stripped version of the hello world class::
                 label=_('Hello world'),
                 tooltip=_('Every application ...'))
         def helloworld_action(self):
-            main_window = self.main_window   # 8.
+            main_window = self.main_window
             pass # gtk code left out
 
 1. As stated before, a plugin should implement the ``Service`` interface.
@@ -134,6 +134,3 @@ Here is a stripped version of the hello world class::
    event handlers for example.
 7. The action that can be invoked. The action is defined and will be picked
    up by ``build_action_group()`` (see 4.)
-8. The main window is retrieved from the ``gui_manager``. At this point the
-   "inject'ed" gui-manager reference is resolved.
-

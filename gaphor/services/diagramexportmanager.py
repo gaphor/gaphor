@@ -8,7 +8,7 @@ from gaphas.freehand import FreeHandPainter
 from gaphas.painter import ItemPainter, BoundingBoxPainter
 from gaphas.view import View
 
-from gaphor.core import _, inject, action, build_action_group
+from gaphor.core import _, action, build_action_group
 from gaphor.abc import Service, ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.filedialog import FileDialog

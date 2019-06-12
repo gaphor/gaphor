@@ -13,7 +13,7 @@ The layout is done like this:
 import logging
 import random
 
-from gaphor.core import inject, action, build_action_group, transactional
+from gaphor.core import action, build_action_group, transactional
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.classes import GeneralizationItem, ImplementationItem
 from gaphor.abc import Service, ActionProvider

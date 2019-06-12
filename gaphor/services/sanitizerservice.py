@@ -8,7 +8,7 @@ from logging import getLogger
 
 from gaphor import UML
 from gaphor.UML.event import AssociationDeleteEvent, AssociationSetEvent
-from gaphor.core import inject, event_handler
+from gaphor.core import event_handler
 from gaphor.abc import Service
 
 

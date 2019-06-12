@@ -3,6 +3,7 @@ Object node item.
 """
 
 import itertools
+import ast
 
 from gaphas.state import observed, reversible_property
 from gaphor import UML
@@ -87,7 +88,7 @@ class ObjectNodeItem(NamedItem):
 
     def load(self, name, value):
         if name == "show-ordering":
-            self._show_ordering = eval(value)
+            self._show_ordering = ast.literal_eval(value)
         else:
             super(ObjectNodeItem, self).load(name, value)
 

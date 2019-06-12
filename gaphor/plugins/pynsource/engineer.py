@@ -4,7 +4,6 @@
 from gaphas.aspect import ConnectionSink, Connector
 
 from gaphor import UML
-from gaphor.core import inject
 from gaphor.diagram.classes import AssociationItem, ClassItem, GeneralizationItem
 from gaphor.diagram.connectors import IConnect
 from gaphor.plugins.pynsource.pynsource import PySourceAsText

@@ -15,7 +15,6 @@ from gaphor import UML, Application
 from gaphor.UML.event import ModelFactoryEvent
 from gaphor.core import (
     _,
-    inject,
     event_handler,
     action,
     toggle_action,

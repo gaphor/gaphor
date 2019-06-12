@@ -2,7 +2,7 @@
 This plugin extends Gaphor with XMI alignment actions.
 """
 
-from gaphor.core import inject, event_handler, transactional, action, build_action_group
+from gaphor.core import event_handler, transactional, action, build_action_group
 from gaphor.abc import Service, ActionProvider
 from gaphor.ui.event import DiagramSelectionChange
 

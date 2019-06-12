@@ -3,7 +3,7 @@
 
 
 from logging import getLogger
-from gaphor.core import inject, event_handler
+from gaphor.core import event_handler
 from gaphor.UML import uml2
 from gaphor.UML.event import (
     ElementChangeEvent,
