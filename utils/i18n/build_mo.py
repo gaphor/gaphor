@@ -7,8 +7,10 @@ Generate .mo files from po files.
 import os.path
 from distutils.core import Command
 from distutils.dep_util import newer
+from distutils.dir_util import mkpath
 
 from utils.i18n import msgfmt
+from utils.i18n import LINGUAS
 
 
 class build_mo(Command):
@@ -39,21 +41,32 @@ class build_mo(Command):
 
     def run(self):
         """Run msgfmt.make() on all_linguas."""
-        if not self.all_linguas:
-            return
-
-        for lingua in self.all_linguas:
-            pofile = os.path.join("po", lingua + ".po")
-            outdir = os.path.join(self.build_dir, lingua, "LC_MESSAGES")
-            self.mkpath(outdir)
-            outfile = os.path.join(outdir, "gaphor.mo")
-            if self.force or newer(pofile, outfile):
-                print("converting %s -> %s" % (pofile, outfile))
-                msgfmt.make(pofile, outfile)
-            else:
-                print("not converting %s (output up-to-date)" % pofile)
+        po_to_mo(self.all_linguas, self.build_dir)
 
 
-from distutils.command.build import build
+def po_to_mo(all_linguas, output_dir, force=False):
+    if not all_linguas:
+        return
 
-build.sub_commands.append(("build_mo", None))
+    for lingua in all_linguas:
+        pofile = os.path.join("po", lingua + ".po")
+        outdir = os.path.join(output_dir, lingua, "LC_MESSAGES")
+        mkpath(outdir)
+        outfile = os.path.join(outdir, "gaphor.mo")
+        if force or newer(pofile, outfile):
+            print("converting %s -> %s" % (pofile, outfile))
+            msgfmt.make(pofile, outfile)
+        else:
+            print("not converting %s (output up-to-date)" % pofile)
+
+
+if __name__ == "__main__":
+    from utils.i18n import LINGUAS
+
+    output_dir = os.path.join("gaphor", "data", "locale")
+    po_to_mo(LINGUAS, output_dir)
+
+else:
+    from distutils.command.build import build
+
+    build.sub_commands.append(("build_mo", None))

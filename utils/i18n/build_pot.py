@@ -15,9 +15,6 @@ from distutils.core import Command
 from utils.i18n import pygettext
 
 
-LINGUAS = ["ca", "es", "fr", "nl", "sv"]
-
-
 # from pygettext.main():
 class Options:
     # constants
@@ -208,19 +205,18 @@ def merge_files(all_linguas, msgmerge, pot_file, output_dir, verbose=False):
             "pot": pot_file,
         }
         if verbose:
-            sys.stdout.write("Merging %(pot)s and %(po)s " % d)
-            sys.stdout.flush()
+            print("Merging %(pot)s and %(po)s " % d)
         res = os.system("%(msgmerge)s %(po)s %(pot)s -o %(po)s" % d)
         if res:
-            SystemExit, "error while running msgmerge."
+            raise SystemExit("error while running msgmerge.")
 
 
 if __name__ == "__main__":
     from setuptools import find_packages
+    from utils.i18n import LINGUAS
 
     packages = find_packages(exclude=["utils*", "docs", "tests"])
     output_dir = "po"
-    create_pot_file(packages, "po/gaphor.pot", verbose=True)
-    merge_files(
-        LINGUAS, "msgmerge", "po/gaphor.pot", output_dir=output_dir, verbose=True
-    )
+    pot_file = os.path.join(output_dir, "gaphor.pot")
+    create_pot_file(packages, pot_file, verbose=True)
+    merge_files(LINGUAS, "msgmerge", pot_file, output_dir=output_dir, verbose=True)
