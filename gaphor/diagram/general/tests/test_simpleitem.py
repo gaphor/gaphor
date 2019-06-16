@@ -1,8 +1,4 @@
-"""
-Unnit tests for simple items.
-"""
-
-import unittest
+"""Unit tests for simple items."""
 
 from gaphor.tests import TestCase
 from gaphor import UML

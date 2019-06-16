@@ -1,10 +1,8 @@
 """ Tests for :module:`gaphor.misc.generic.registry`."""
 
-import unittest
+import pytest
 
 from gaphor.misc.generic.registry import Registry, SimpleAxis, TypeAxis
-
-__all__ = ("RegistryTests",)
 
 
 class DummyA:
@@ -15,117 +13,132 @@ class DummyB(DummyA):
     pass
 
 
-class RegistryTests(unittest.TestCase):
-    def test_one_axis_no_specificity(self):
-        registry = Registry(("foo", SimpleAxis()))
-        a = object()
-        b = object()
-        registry.register(a)
-        registry.register(b, "foo")
+def test_one_axis_no_specificity():
+    registry = Registry(("foo", SimpleAxis()))
+    a = object()
+    b = object()
+    registry.register(a)
+    registry.register(b, "foo")
 
-        assert registry.lookup() == a
-        assert registry.lookup("foo") == b
-        assert registry.lookup("bar") is None
+    assert registry.lookup() == a
+    assert registry.lookup("foo") == b
+    assert registry.lookup("bar") is None
 
-    def test_subtyping_on_axes(self):
-        registry = Registry(("type", TypeAxis()))
 
-        target1 = "one"
-        registry.register(target1, object)
+def test_subtyping_on_axes():
+    registry = Registry(("type", TypeAxis()))
 
-        target2 = "two"
-        registry.register(target2, DummyA)
+    target1 = "one"
+    registry.register(target1, object)
 
-        target3 = "three"
-        registry.register(target3, DummyB)
+    target2 = "two"
+    registry.register(target2, DummyA)
 
-        assert registry.lookup(object()) == target1
-        assert registry.lookup(DummyA()) == target2
-        assert registry.lookup(DummyB()) == target3
+    target3 = "three"
+    registry.register(target3, DummyB)
 
-    def test_query_subtyping_on_axes(self):
-        registry = Registry(("type", TypeAxis()))
+    assert registry.lookup(object()) == target1
+    assert registry.lookup(DummyA()) == target2
+    assert registry.lookup(DummyB()) == target3
 
-        target1 = "one"
-        registry.register(target1, object)
 
-        target2 = "two"
-        registry.register(target2, DummyA)
+def test_query_subtyping_on_axes():
+    registry = Registry(("type", TypeAxis()))
 
-        target3 = "three"
-        registry.register(target3, DummyB)
+    target1 = "one"
+    registry.register(target1, object)
 
-        target4 = "four"
-        registry.register(target4, int)
+    target2 = "two"
+    registry.register(target2, DummyA)
 
-        assert list(registry.query(object())) == [target1]
-        assert list(registry.query(DummyA())) == [target2, target1]
-        assert list(registry.query(DummyB())) == [target3, target2, target1]
-        assert list(registry.query(3)) == [target4, target1]
+    target3 = "three"
+    registry.register(target3, DummyB)
 
-    def test_two_axes(self):
-        registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
+    target4 = "four"
+    registry.register(target4, int)
 
-        target1 = "one"
-        registry.register(target1, object)
+    assert list(registry.query(object())) == [target1]
+    assert list(registry.query(DummyA())) == [target2, target1]
+    assert list(registry.query(DummyB())) == [target3, target2, target1]
+    assert list(registry.query(3)) == [target4, target1]
 
-        target2 = "two"
-        registry.register(target2, DummyA)
 
-        target3 = "three"
-        registry.register(target3, DummyA, "foo")
+def test_two_axes():
+    registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
 
-        context1 = object()
-        assert registry.lookup(context1) == target1
+    target1 = "one"
+    registry.register(target1, object)
 
-        context2 = DummyB()
-        assert registry.lookup(context2) == target2
-        assert registry.lookup(context2, "foo") == target3
+    target2 = "two"
+    registry.register(target2, DummyA)
 
-        target4 = object()
-        registry.register(target4, DummyB)
+    target3 = "three"
+    registry.register(target3, DummyA, "foo")
 
-        assert registry.lookup(context2) == target4
-        assert registry.lookup(context2, "foo") == target3
+    context1 = object()
+    assert registry.lookup(context1) == target1
 
-    def test_get_registration(self):
-        registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
-        registry.register("one", object)
-        registry.register("two", DummyA, "foo")
-        assert registry.get_registration(object) == "one"
-        assert registry.get_registration(DummyA, "foo") == "two"
-        assert registry.get_registration(object, "foo") is None
-        assert registry.get_registration(DummyA) is None
+    context2 = DummyB()
+    assert registry.lookup(context2) == target2
+    assert registry.lookup(context2, "foo") == target3
 
-    def test_register_too_many_keys(self):
-        registry = Registry(("name", SimpleAxis()))
-        self.assertRaises(ValueError, registry.register, object(), "one", "two")
+    target4 = object()
+    registry.register(target4, DummyB)
 
-    def test_lookup_too_many_keys(self):
-        registry = Registry(("name", SimpleAxis()))
-        self.assertRaises(ValueError, registry.lookup, "one", "two")
+    assert registry.lookup(context2) == target4
+    assert registry.lookup(context2, "foo") == target3
 
-    def test_conflict_error(self):
-        registry = Registry(("name", SimpleAxis()))
-        registry.register(object(), name="foo")
-        self.assertRaises(ValueError, registry.register, object(), "foo")
 
-    def test_skip_nodes(self):
-        registry = Registry(
-            ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
-        )
-        registry.register("foo", one=1, three=3)
-        assert registry.lookup(1, three=3) == "foo"
+def test_get_registration():
+    registry = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
+    registry.register("one", object)
+    registry.register("two", DummyA, "foo")
+    assert registry.get_registration(object) == "one"
+    assert registry.get_registration(DummyA, "foo") == "two"
+    assert registry.get_registration(object, "foo") is None
+    assert registry.get_registration(DummyA) is None
 
-    def test_miss(self):
-        registry = Registry(
-            ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
-        )
-        registry.register("foo", 1, 2)
-        assert registry.lookup(one=1, three=3) is None
 
-    def test_bad_lookup(self):
-        registry = Registry(("name", SimpleAxis()), ("grade", SimpleAxis()))
-        self.assertRaises(ValueError, registry.register, 1, foo=1)
-        self.assertRaises(ValueError, registry.lookup, foo=1)
-        self.assertRaises(ValueError, registry.register, 1, "foo", name="foo")
+def test_register_too_many_keys():
+    registry = Registry(("name", SimpleAxis()))
+    with pytest.raises(ValueError):
+        registry.register(object, "one", "two")
+
+
+def test_lookup_too_many_keys():
+    registry = Registry(("name", SimpleAxis()))
+    with pytest.raises(ValueError):
+        registry.register(registry.lookup("one", "two"))
+
+
+def test_conflict_error():
+    registry = Registry(("name", SimpleAxis()))
+    registry.register(object(), name="foo")
+    with pytest.raises(ValueError):
+        registry.register(object, "foo")
+
+
+def test_skip_nodes():
+    registry = Registry(
+        ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
+    )
+    registry.register("foo", one=1, three=3)
+    assert registry.lookup(1, three=3) == "foo"
+
+
+def test_miss():
+    registry = Registry(
+        ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
+    )
+    registry.register("foo", 1, 2)
+    assert registry.lookup(one=1, three=3) is None
+
+
+def test_bad_lookup():
+    registry = Registry(("name", SimpleAxis()), ("grade", SimpleAxis()))
+    with pytest.raises(ValueError):
+        registry.register(1, foo=1)
+    with pytest.raises(ValueError):
+        registry.lookup(foo=1)
+    with pytest.raises(ValueError):
+        registry.register(1, "foo", name="foo")
