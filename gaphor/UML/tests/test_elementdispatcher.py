@@ -1,10 +1,13 @@
 import unittest
-from gaphor.tests import TestCase
+
 from gaphor import UML
-from gaphor.application import Application
-from gaphor.services.eventmanager import EventManager
+from gaphor.UML import Element
 from gaphor.UML.elementdispatcher import ElementDispatcher
+from gaphor.UML.elementdispatcher import EventWatcher
 from gaphor.UML.elementfactory import ElementFactory
+from gaphor.UML.properties import association
+from gaphor.services.eventmanager import EventManager
+from gaphor.tests import TestCase
 
 
 class ElementDispatcherTestCase(unittest.TestCase):
@@ -199,11 +202,6 @@ class ElementDispatcherTestCase(unittest.TestCase):
 
         g.specification = "a"
         assert len(self.events) == 2, self.events
-
-
-from gaphor.UML import Element
-from gaphor.UML.properties import association
-from gaphor.UML.elementdispatcher import EventWatcher
 
 
 class A(Element):
@@ -416,6 +414,3 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         a.unlink()
         assert 1 == len(self.dispatcher._handlers)
-
-
-# vim: sw=4:et:ai

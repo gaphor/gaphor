@@ -14,9 +14,13 @@ import functools
 import inspect
 import importlib_metadata
 
+import gi
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gio, Gtk
+
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.abc import Service
-
 
 logger = logging.getLogger(__name__)
 
@@ -105,8 +109,6 @@ class _Application:
 
         The file_manager service is used here to load a Gaphor model if one was
         specified on the command line."""
-
-        from gi.repository import Gio, Gtk
 
         app = Gtk.Application(
             application_id="org.gaphor.Gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE

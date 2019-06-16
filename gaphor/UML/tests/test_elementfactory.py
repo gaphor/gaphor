@@ -1,11 +1,13 @@
-import pytest
+import gc
 import unittest
-from gaphor.event import ServiceEvent
-from gaphor.services.eventmanager import EventManager
+
+import pytest
+
 from gaphor.UML import *
 from gaphor.UML.event import *
-import gc
-import weakref, sys
+from gaphor.application import Application
+from gaphor.core import event_handler
+from gaphor.services.eventmanager import EventManager
 
 
 @pytest.fixture
@@ -65,9 +67,6 @@ def test_unlink(factory):
 
     assert len(list(factory.values())) == 0, list(factory.values())
 
-
-from gaphor.application import Application
-from gaphor.core import event_handler
 
 # Event handlers are registered as persisting top level handlers, since no
 # unsubscribe functionality is provided.
