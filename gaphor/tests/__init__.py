@@ -1,1 +1,1 @@
-from gaphor.tests.testcase import TestCase, main
+from gaphor.tests.testcase import TestCase

@@ -173,6 +173,3 @@ class TestCase(unittest.TestCase):
         self.diagram = self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[
             0
         ]
-
-
-main = unittest.main
