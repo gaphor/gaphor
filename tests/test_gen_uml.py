@@ -1,7 +1,7 @@
 """Test case that checks the working of the utils/command/gen_uml.py module."""
 
 from utils.model.gen_uml import generate
-from pathlib import Path
+import importlib_metadata
 
 
 class PseudoFile:
@@ -16,8 +16,8 @@ class PseudoFile:
 
 
 def test_loading():
-    project_dir = Path(__file__).resolve().parent
-    model_file = project_dir.joinpath("test-model.gaphor")
+    dist = importlib_metadata.distribution("gaphor")
+    model_file = dist.locate_file("tests/test-model.gaphor")
     outfile = PseudoFile()
 
     generate(model_file, outfile)
