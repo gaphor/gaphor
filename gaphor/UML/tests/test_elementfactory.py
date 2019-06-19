@@ -1,5 +1,4 @@
 import gc
-import unittest
 
 import pytest
 
@@ -21,16 +20,14 @@ def test_create(factory):
     assert len(list(factory.values())) == 1
 
 
-def testFlush(factory):
+def test_flush(factory):
     p = factory.create(Parameter)
-    # wp = weakref.ref(p)
     assert len(list(factory.values())) == 1
     factory.flush()
     del p
 
     gc.collect()
 
-    # assert wp() is None
     assert len(list(factory.values())) == 0, list(factory.values())
 
 
@@ -83,60 +80,55 @@ def handler(event):
     last_event = event
 
 
-def clearEvents():
+def clear_events():
     global handled, events, last_event
     handled = False
     events = []
     last_event = None
 
 
-class ElementFactoryServiceTestCase(unittest.TestCase):
-    def setUp(self):
-        Application.init(["event_manager", "component_registry", "element_factory"])
-        self.factory = Application.get_service("element_factory")
-        event_manager = Application.get_service("event_manager")
-        event_manager.subscribe(handler)
-        clearEvents()
+@pytest.fixture
+def element_factory(
+    services=["event_manager", "component_registry", "element_factory"]
+):
+    Application.init(services=services)
+    event_manager = Application.get_service("event_manager")
+    event_manager.subscribe(handler)
+    clear_events()
+    factory = Application.get_service("element_factory")
+    yield factory
+    del factory
+    clear_events()
+    Application.shutdown()
 
-    def tearDown(self):
-        del self.factory
-        clearEvents()
-        Application.shutdown()
 
-    def testCreateEvent(self):
-        factory = self.factory
-        p = factory.create(Parameter)
+def test_create_event(element_factory):
+    p = element_factory.create(Parameter)
+    assert isinstance(last_event, ElementCreateEvent)
+    assert handled
 
-        assert isinstance(last_event, ElementCreateEvent)
-        assert handled
 
-    def testRemoveEvent(self):
-        factory = self.factory
-        p = factory.create(Parameter)
-        clearEvents()
-        p.unlink()
+def test_remove_event(element_factory):
+    p = element_factory.create(Parameter)
+    clear_events()
+    p.unlink()
+    assert isinstance(last_event, ElementDeleteEvent)
 
-        assert isinstance(last_event, ElementDeleteEvent)
 
-    def testModelEvent(self):
-        factory = self.factory
-        factory.notify_model()
+def test_model_event(element_factory):
+    element_factory.notify_model()
+    assert isinstance(last_event, ModelFactoryEvent)
 
-        assert isinstance(last_event, ModelFactoryEvent)
 
-    def testFlushEvent(self):
-        factory = self.factory
-        factory.create(Parameter)
-        del events[:]
+def test_flush_event(element_factory):
+    element_factory.create(Parameter)
+    del events[:]
+    element_factory.flush()
+    assert len(events) == 1, events
+    assert isinstance(last_event, FlushFactoryEvent)
 
-        factory.flush()
 
-        assert len(events) == 1, events
-        assert isinstance(last_event, FlushFactoryEvent)
-
-    def test_no_create_events_when_blocked(self):
-        factory = self.factory
-        with factory.block_events():
-            factory.create(Parameter)
-
-        assert events == [], events
+def test_no_create_events_when_blocked(element_factory):
+    with element_factory.block_events():
+        element_factory.create(Parameter)
+    assert events == [], events
