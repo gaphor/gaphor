@@ -22,8 +22,11 @@ class Box:
     def extents(self, cr):
         min_w, min_h = hasattr(self.style, "min_size") and self.style.min_size or (0, 0)
         widths, heights = list(zip(*[c.extents(cr) for c in self.children]))
-        # TODO: add padding
-        return max(min_w, max(widths)), max(min_h, sum(heights))
+        padding = hasattr(self.style, "padding") and self.style.padding or (0, 0, 0, 0)
+        return (
+            max(min_w, max(widths) + padding[1] + padding[3]),
+            max(min_h, sum(heights) + padding[0] + padding[2]),
+        )
 
     def draw(self, cr, bounding_box):
         self._draw(cr, bounding_box)
@@ -50,7 +53,11 @@ class ActionItem(ElementItem):
             ),
         )
 
-        self.layout = Box(self._name, style=Style(), draw=self.draw_border)
+        self.layout = Box(
+            self._name,
+            style=Style(min_size=(50, 30), padding=(5, 10, 5, 10)),
+            draw=self.draw_border,
+        )
 
         self.watch("subject<NamedElement>.name", self.on_named_element_name)
 
