@@ -6,7 +6,7 @@ import gi
 
 gi.require_version("PangoCairo", "1.0")
 
-
+from enum import Enum
 import cairo
 from gi.repository import Pango, PangoCairo
 
@@ -18,19 +18,18 @@ class Text:
         self.text = text
         self.style = style
 
-    def update_extents(self, cr):
+    def extents(self, cr):
         min_w, min_h = hasattr(self.style, "min_size") and self.style.min_size or (0, 0)
+        # TODO: can we create our own Cairo context? Will that be fast enough? And accurate?
         w, h = text_extents(cr, self.text, self.style.font)
-        self._width = max(min_w, w)
-        self._height = max(min_h, h)
+        return max(min_w, w), max(min_h, h)
 
-    @property
-    def width(self):
-        return self._width
-
-    @property
-    def height(self):
-        return self._height
+    def draw(self, cr, bounding_box):
+        cr.save()
+        try:
+            text_draw_in_box(cr, self.text, self.style.font, bounding_box)
+        except:
+            cr.restore()
 
 
 def _text_layout(cr, text, font, width):
@@ -39,7 +38,6 @@ def _text_layout(cr, text, font, width):
         layout.set_font_description(Pango.FontDescription.from_string(font))
     layout.set_text(text, length=-1)
     layout.set_width(int(width * Pango.SCALE))
-    # layout.set_height(height)
     return layout
 
 
@@ -50,31 +48,24 @@ def text_extents(cr, text, font=None, width=-1, height=-1):
     return layout.get_pixel_size()
 
 
-def text_align(
-    cr,
-    x,
-    y,
-    text,
-    font,
-    width=-1,
-    height=-1,
-    align_x=0,
-    align_y=0,
-    padding_x=0,
-    padding_y=0,
+def text_draw_in_box(
+    cr, text, font, bounding_box, align_x=0, align_y=0
 ):
     """
     Draw text relative to (x, y).
-    x, y - coordinates
     text - text to print (utf8)
     font - The font to render in
-    width
-    height
-    align_x - 1 (top), 0 (middle), -1 (bottom)
-    align_y - 1 (left), 0 (center), -1 (right)
-    padding_x - padding (extra offset), always > 0
-    padding_y - padding (extra offset), always > 0
+    bounding_box - width of the bounding box
+    align_x - -1 (left), 0 (center), 1 (right), see style.py
+    align_y - -1 (top), 0 (middle), 1 (bottom), see style.py
     """
+    if len(bounding_box) == 2:
+        x, y = bounding_box
+        width = 0
+        height = 0
+    else:
+        x, y, width, height = bounding_box
+
     if isinstance(cr, FreeHandCairoContext):
         cr = cr.cr
     if not isinstance(cr, cairo.Context):
@@ -87,27 +78,18 @@ def text_align(
     w, h = layout.get_pixel_size()
 
     if align_x == 0:
-        x = 0.5 - (w / 2) + x
+        x = ((width - w) / 2) + x
     elif align_x < 0:
-        x = -w + x - padding_x
+        x = x
     else:
-        x = x + padding_x
+        x = x + width
+
     if align_y == 0:
-        y = 0.5 - (h / 2) + y
+        y = ((height - h) / 2) + y
     elif align_y < 0:
-        y = -h + y - padding_y
+        y = y
     else:
-        y = y + padding_y
+        y = y + height
     cr.move_to(x, y)
 
     PangoCairo.show_layout(cr, layout)
-
-
-def text_center(cr, x, y, text, font):
-    text_align(cr, x, y, text, font=font, align_x=0, align_y=0)
-
-
-def text_multiline(cr, x, y, text, font, width=-1, height=-1):
-    text_align(
-        cr, x, y, text, font=font, width=width, height=height, align_x=1, align_y=1
-    )
