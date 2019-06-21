@@ -156,16 +156,6 @@ class AssociationItem(NamedLine):
         """
         Handle events and update text on association end.
         """
-        # if event:
-        #    element = event.element
-        #    for end in (self._head_end, self._tail_end):
-        #        subject = end.subject
-        #        if subject and element in (subject, subject.lowerValue, \
-        #                subject.upperValue, subject.taggedValue):
-        #            end.set_text()
-        #            self.request_update()
-        ##            break;
-        # else:
         for end in (self._head_end, self._tail_end):
             end.set_text()
         self.request_update()

@@ -147,14 +147,14 @@ def get_text_point(extents, width, height, align, padding, outside):
 def get_text_point_at_line(extents, p1, p2, align, padding):
     """
     Calculate position of the text relative to a line defined by points
-    (p1, p2). Text is aligned using align and padding information.
+    p1 and p2. Text is aligned using align and padding information.
 
     Parameters:
-     - extents: text extents like width, height, etc.
+     - extents: text extents, a (width, height) tuple
      - p1:      beginning of line
      - p2:      end of line
-     - align:   text align information (center, top, etc.)
-     - padding: text padding
+     - align:   text align information, E.g. (ALIGN_CENTER, ALIGN_TOP)
+     - padding: text padding, a (top, right, bottom, left) tuple
     """
     name_dx = 0.0
     name_dy = 0.0
@@ -210,16 +210,16 @@ def get_text_point_at_line(extents, p1, p2, align, padding):
 def get_text_point_at_line2(extents, p1, p2, align, padding):
     """
     Calculate position of the text relative to a line defined by points
-    (p1, p2). Text is aligned using align and padding information.
+    p1 and p2. Text is aligned using align and padding information.
 
     TODO: merge with get_text_point_at_line function
 
     Parameters:
-     - extents: text extents like width, height, etc.
+     - extents: text extents, a (width, height) tuple
      - p1:      beginning of line
      - p2:      end of line
-     - align:   text align information (center, top, etc.)
-     - padding: text padding
+     - align:   text align information, E.g. (ALIGN_CENTER, ALIGN_TOP)
+     - padding: text padding, a (top, right, bottom, left) tuple
     """
     x0 = (p1[0] + p2[0]) / 2.0
     y0 = (p1[1] + p2[1]) / 2.0
