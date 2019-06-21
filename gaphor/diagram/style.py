@@ -53,8 +53,11 @@ class Style:
         @param name:  style variable name
         @param value: style variable value
         """
-        name = name.replace("-", "_")
         setattr(self, name, value)
+
+    def __setattr__(self, name, value):
+        name = name.replace("-", "_")
+        self.__dict__[name] = value
 
     def update(self, style):
         for name, value in list(style.items()):
