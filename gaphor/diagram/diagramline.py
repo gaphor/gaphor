@@ -13,26 +13,17 @@ from gaphor.diagram.style import get_text_point_at_line2
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
-class DiagramLine(gaphas.Line, DiagramItem):
+class DiagramLine(DiagramItem, gaphas.Line):
     """
     Base class for diagram lines.
     """
 
     def __init__(self, id=None, model=None):
-        gaphas.Line.__init__(self)
-        DiagramItem.__init__(self, id, model)
+        super().__init__(id, model)
         self.fuzziness = 2
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
-
-    def setup_canvas(self):
-        gaphas.Line.setup_canvas(self)
-        self.subscribe_all()
-
-    def teardown_canvas(self):
-        gaphas.Line.teardown_canvas(self)
-        self.unsubscribe_all()
 
     def pre_update(self, context):
         # first, update stereotype to know its text

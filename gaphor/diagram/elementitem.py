@@ -10,7 +10,7 @@ from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.style import get_text_point
 
 
-class ElementItem(gaphas.Element, DiagramItem):
+class ElementItem(DiagramItem, gaphas.Element):
     __style__ = {
         "min-size": (0, 0),
         "stereotype-padding": (5, 10, 5, 10),
@@ -21,8 +21,7 @@ class ElementItem(gaphas.Element, DiagramItem):
     }
 
     def __init__(self, id=None, model=None):
-        gaphas.Element.__init__(self)
-        DiagramItem.__init__(self, id, model)
+        super().__init__(id, model)
 
         self.min_width = self.style.min_size[0]
         self.min_height = self.style.min_size[1]
@@ -39,14 +38,6 @@ class ElementItem(gaphas.Element, DiagramItem):
             self.matrix = ast.literal_eval(value)
         else:
             DiagramItem.load(self, name, value)
-
-    def setup_canvas(self):
-        gaphas.Element.setup_canvas(self)
-        self.subscribe_all()
-
-    def teardown_canvas(self):
-        gaphas.Element.teardown_canvas(self)
-        self.unsubscribe_all()
 
     def pre_update(self, context):
         # super(ElementItem, self).pre_update(context)

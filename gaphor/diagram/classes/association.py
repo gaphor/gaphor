@@ -382,7 +382,8 @@ class AssociationEnd(UML.Presentation):
     """
 
     def __init__(self, owner, id=None, end=None):
-        UML.Presentation.__init__(self, id=False)  # Transient object
+        super().__init__(id=False)  # Transient object
+        self.canvas = None
         self._owner = owner
         self._end = end
 
@@ -520,13 +521,6 @@ class AssociationEnd(UML.Presentation):
         drp = distance_rectangle_point
         d1 = drp(self._name_bounds, pos)
         d2 = drp(self._mult_bounds, pos)
-        #        try:
-        #            d3 = geometry.distance_point_point(self._point1, pos)
-        #            d4, dummy = distance_line_point(self._point1, self._point2, pos, 1.0, 0) #diacanvas.shape.CAP_ROUND)
-        #            if d3 < 15 and d4 < 5:
-        #                d3 = 0.0
-        #        except Exception, e:
-        #            log.error("Could not determine distance", exc_info=True)
         d3 = 1000.0
         return min(d1, d2, d3)
 
@@ -553,6 +547,3 @@ class AssociationEnd(UML.Presentation):
             b = self._mult_bounds
             cr.rectangle(b.x, b.y, b.width, b.height)
             cr.stroke()
-
-
-# vim:sw=4:et

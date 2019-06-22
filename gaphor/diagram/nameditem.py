@@ -25,7 +25,7 @@ class NamedItem(ElementItem):
         """
         Create named item.
         """
-        ElementItem.__init__(self, id, model)
+        super().__init__(id, model)
 
         # create (from ...) text to distinguish diagram items from
         # different namespace

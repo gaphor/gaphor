@@ -118,6 +118,7 @@ class EditableTextSupport:
     """
 
     def __init__(self):
+        super().__init__()
         self._texts = []
         self._text_groups = {None: []}
         self._text_groups_sizes = {}

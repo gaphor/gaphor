@@ -85,6 +85,7 @@ class StereotypeSupport:
     }
 
     def __init__(self):
+        super().__init__()
         self._stereotype = self.add_text(
             "stereotype",
             style=self.STEREOTYPE_ALIGN,
@@ -204,16 +205,9 @@ class DiagramItem(
     """
 
     def __init__(self, id=None, model=None):
-        UML.Presentation.__init__(self, id, model)
-        EditableTextSupport.__init__(self)
-        StereotypeSupport.__init__(self)
+        super().__init__(id, model)
 
-        def update(event):
-            self.request_update()
-
-        self._watcher = self.watcher(default_handler=update)
-
-        self.watch("subject").watch(
+        self.watch(
             "subject.appliedStereotype.classifier.name",
             self.on_element_applied_stereotype,
         )
@@ -249,27 +243,6 @@ class DiagramItem(
         """
         save_func(name, getattr(self, name.replace("-", "_")))
 
-    def save_properties(self, save_func, *names):
-        """
-        Save a property, this is a shorthand method.
-        """
-        for name in names:
-            self.save_property(save_func, name)
-
-    def unlink(self):
-        """
-        Remove the item from the canvas and set subject to None.
-        """
-        if self.canvas:
-            self.canvas.remove(self)
-        super(DiagramItem, self).unlink()
-
-    def request_update(self):
-        """
-        Placeholder for gaphor.Item's request_update() method.
-        """
-        pass
-
     def pre_update(self, context):
         EditableTextSupport.pre_update(self, context)
 
@@ -286,23 +259,3 @@ class DiagramItem(
         if self.subject:
             self.update_stereotype()
             self.request_update()
-
-    def watch(self, path, handler=None):
-        """
-        Watch a certain path of elements starting with the DiagramItem.
-        The handler is optional and will default to a simple
-        self.request_update().
-
-        Watches should be set in the constructor, so they can be registered
-        and unregistered in one shot.
-
-        This interface is fluent(returns self).
-        """
-        self._watcher.watch(path, handler)
-        return self
-
-    def subscribe_all(self):
-        self._watcher.subscribe_all()
-
-    def unsubscribe_all(self):
-        self._watcher.unsubscribe_all()

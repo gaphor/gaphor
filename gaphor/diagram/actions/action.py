@@ -5,7 +5,7 @@ Action diagram item.
 from math import pi
 
 from gaphor import UML
-from gaphor.diagram.elementitem import ElementItem
+from gaphor.UML.presentation import PresentationElement
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 from gaphor.diagram.support import set_diagram_item
@@ -41,9 +41,16 @@ class Box:
             c.draw(cr, bounding_box)
 
 
-class ActionItem(ElementItem):
-    __uml__ = UML.Action
+def represents(uml_element):
+    def wrapper(presentation):
+        set_diagram_item(uml_element, presentation)
+        return presentation
 
+    return wrapper
+
+
+@represents(UML.Action)
+class ActionItem(PresentationElement):
     def __init__(self, id=None, model=None):
         """
         Create named item.
@@ -99,9 +106,6 @@ class ActionItem(ElementItem):
         cr.arc(d, height - d, d, 0.5 * pi, pi)
         cr.close_path()
         cr.stroke()
-
-
-set_diagram_item(ActionItem.__uml__, ActionItem)
 
 
 class SendSignalActionItem(NamedItem):
