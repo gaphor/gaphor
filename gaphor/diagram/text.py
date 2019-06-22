@@ -18,10 +18,10 @@ class Text:
         self.text = text
         self.style = style
 
-    def extents(self, cr):
+    def size(self, cr):
         min_w, min_h = hasattr(self.style, "min_size") and self.style.min_size or (0, 0)
         # TODO: can we create our own Cairo context? Will that be fast enough? And accurate?
-        w, h = text_extents(cr, self.text, self.style.font)
+        w, h = text_size(cr, self.text, self.style.font)
         return max(min_w, w), max(min_h, h)
 
     def draw(self, cr, bounding_box):
@@ -41,16 +41,14 @@ def _text_layout(cr, text, font, width):
     return layout
 
 
-def text_extents(cr, text, font=None, width=-1, height=-1):
+def text_size(cr, text, font=None, width=-1):
     if not text:
         return 0, 0
     layout = _text_layout(cr, text, font, width)
     return layout.get_pixel_size()
 
 
-def text_draw_in_box(
-    cr, text, font, bounding_box, align_x=0, align_y=0
-):
+def text_draw_in_box(cr, text, font, bounding_box, align_x=0, align_y=0):
     """
     Draw text relative to (x, y).
     text - text to print (utf8)

@@ -19,9 +19,9 @@ class Box:
         self.style = style
         self._draw = draw
 
-    def extents(self, cr):
+    def size(self, cr):
         min_w, min_h = hasattr(self.style, "min_size") and self.style.min_size or (0, 0)
-        widths, heights = list(zip(*[c.extents(cr) for c in self.children]))
+        widths, heights = list(zip(*[c.size(cr) for c in self.children]))
         padding = hasattr(self.style, "padding") and self.style.padding or (0, 0, 0, 0)
         return (
             max(min_w, max(widths) + padding[1] + padding[3]),
@@ -71,7 +71,7 @@ class ActionItem(ElementItem):
 
     def pre_update(self, context):
         cr = context.cairo
-        self.min_width, self.min_height = self.layout.extents(cr)
+        self.min_width, self.min_height = self.layout.size(cr)
 
     def post_update(self, context):
         pass
