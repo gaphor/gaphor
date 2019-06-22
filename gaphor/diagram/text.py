@@ -13,21 +13,49 @@ from gi.repository import Pango, PangoCairo
 from gaphas.freehand import FreeHandCairoContext
 
 
+class TextAlign(Enum):
+    LEFT = "left"
+    CENTER = "center"
+    RIGHT = "right"
+
+
+class VerticalAlign(Enum):
+    TOP = "top"
+    MIDDLE = "middle"
+    BOTTOM = "bottom"
+
+
 class Text:
-    def __init__(self, text, style=None):
+    def __init__(self, text, style={}):
         self.text = text
-        self.style = style
+        self.style = {
+            "min-width": 0,
+            "min-height": 0,
+            "font": "sans 10",
+            "text-align": TextAlign.CENTER,
+            "vertical-align": VerticalAlign.MIDDLE,
+            **style,
+        }.__getitem__
 
     def size(self, cr):
-        min_w, min_h = hasattr(self.style, "min_size") and self.style.min_size or (0, 0)
+        min_w = self.style("min-width")
+        min_h = self.style("min-height")
+        font = self.style("font")
+
         # TODO: can we create our own Cairo context? Will that be fast enough? And accurate?
-        w, h = text_size(cr, self.text, self.style.font)
+        w, h = text_size(cr, self.text, font)
         return max(min_w, w), max(min_h, h)
 
     def draw(self, cr, bounding_box):
+        font = self.style("font")
+        text_align = self.style("text-align")
+        vertical_align = self.style("vertical-align")
+
         cr.save()
         try:
-            text_draw_in_box(cr, self.text, self.style.font, bounding_box)
+            text_draw_in_box(
+                cr, bounding_box, self.text, font, text_align, vertical_align
+            )
         except:
             cr.restore()
 
@@ -41,21 +69,21 @@ def _text_layout(cr, text, font, width):
     return layout
 
 
-def text_size(cr, text, font=None, width=-1):
+def text_size(cr, text, font, width=-1):
     if not text:
         return 0, 0
     layout = _text_layout(cr, text, font, width)
     return layout.get_pixel_size()
 
 
-def text_draw_in_box(cr, text, font, bounding_box, align_x=0, align_y=0):
+def text_draw_in_box(cr, bounding_box, text, font, text_align, vertical_align):
     """
     Draw text relative to (x, y).
     text - text to print (utf8)
     font - The font to render in
     bounding_box - width of the bounding box
-    align_x - -1 (left), 0 (center), 1 (right), see style.py
-    align_y - -1 (top), 0 (middle), 1 (bottom), see style.py
+    text_align - One of enum TextAlign
+    vertical_align - One of enum VerticalAlign
     """
     if len(bounding_box) == 2:
         x, y = bounding_box
@@ -75,19 +103,16 @@ def text_draw_in_box(cr, text, font, bounding_box, align_x=0, align_y=0):
 
     w, h = layout.get_pixel_size()
 
-    if align_x == 0:
+    if text_align is TextAlign.CENTER:
         x = ((width - w) / 2) + x
-    elif align_x < 0:
-        x = x
-    else:
-        x = x + width
+    elif text_align is TextAlign.RIGHT:
+        x = x + width - w
 
-    if align_y == 0:
+    if vertical_align is VerticalAlign.MIDDLE:
         y = ((height - h) / 2) + y
-    elif align_y < 0:
-        y = y
-    else:
+    elif vertical_align is VerticalAlign.BOTTOM:
         y = y + height
+
     cr.move_to(x, y)
 
     PangoCairo.show_layout(cr, layout)

@@ -10,33 +10,39 @@ from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 from gaphor.diagram.support import set_diagram_item
 from gaphor.diagram.text import Text
-from gaphor.diagram.style import Style
 
 
 class Box:
-    def __init__(self, *children, style=None, draw=None):
+    def __init__(self, *children, style={}, draw=None):
         self.children = children
-        self.style = style
+        self.style = {
+            "min-width": 0,
+            "min-height": 0,
+            "padding": (0, 0, 0, 0),
+            **style,
+        }.__getitem__
         self._draw = draw
 
     def size(self, cr):
-        min_w, min_h = hasattr(self.style, "min_size") and self.style.min_size or (0, 0)
+        style = self.style
+        min_width = style("min-width")
+        min_height = style("min-height")
+        padding = style("padding")
         widths, heights = list(zip(*[c.size(cr) for c in self.children]))
-        padding = hasattr(self.style, "padding") and self.style.padding or (0, 0, 0, 0)
         return (
-            max(min_w, max(widths) + padding[1] + padding[3]),
-            max(min_h, sum(heights) + padding[0] + padding[2]),
+            max(min_width, max(widths) + padding[1] + padding[3]),
+            max(min_height, sum(heights) + padding[0] + padding[2]),
         )
 
     def draw(self, cr, bounding_box):
-        self._draw(cr, bounding_box)
+        if self._draw:
+            self._draw(cr, bounding_box)
         for c in self.children:
             c.draw(cr, bounding_box)
 
 
 class ActionItem(ElementItem):
     __uml__ = UML.Action
-    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
     def __init__(self, id=None, model=None):
         """
@@ -44,18 +50,11 @@ class ActionItem(ElementItem):
         """
         super().__init__(id, model)
 
-        self._name = Text(
-            "name",
-            style=Style(
-                font="sans 10",
-                text_align=(ALIGN_CENTER, ALIGN_MIDDLE),
-                padding=(5, 10, 5, 10),
-            ),
-        )
+        self._name = Text("name")
 
         self.layout = Box(
             self._name,
-            style=Style(min_size=(50, 30), padding=(5, 10, 5, 10)),
+            style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
             draw=self.draw_border,
         )
 
@@ -80,8 +79,6 @@ class ActionItem(ElementItem):
         """
         Draw action symbol.
         """
-        # super().draw(context)
-
         cr = context.cairo
         self.layout.draw(cr, (0, 0, self.width, self.height))
         # self.draw_border(cr, (0, 0, self.width, self.height))
