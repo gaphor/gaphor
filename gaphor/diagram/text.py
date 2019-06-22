@@ -2,10 +2,6 @@
 Support classes for dealing with text.
 """
 
-import gi
-
-gi.require_version("PangoCairo", "1.0")
-
 from enum import Enum
 import cairo
 from gi.repository import Pango, PangoCairo
