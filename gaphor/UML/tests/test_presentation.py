@@ -5,6 +5,19 @@ from gaphor.UML.presentation import PresentationElement
 from gaphor.services.eventmanager import EventManager
 
 
+class DummyVisualComponent:
+    def size(self, cr):
+        return 0, 0
+
+    def draw(self, cr, bounding_box):
+        pass
+
+
+class TestElement(PresentationElement):
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model, layout=DummyVisualComponent())
+
+
 @pytest.fixture
 def element_factory():
     return ElementFactory(EventManager())
@@ -25,7 +38,7 @@ def test_creation(element_factory):
 
 def test_element_saving(element_factory, diagram):
     subject = element_factory.create(UML.Class)
-    p = diagram.create(PresentationElement, subject=subject)
+    p = diagram.create(TestElement, subject=subject)
 
     properties = {}
     referenced = set()
@@ -46,7 +59,7 @@ def test_element_saving(element_factory, diagram):
 
 def test_element_loading(element_factory, diagram):
     subject = element_factory.create(UML.Class)
-    p = diagram.create(PresentationElement)
+    p = diagram.create(TestElement)
 
     p.load("matrix", "(2.0, 0.0, 0.0, 2.0, 0.0, 0.0)")
     p.load("width", "20")

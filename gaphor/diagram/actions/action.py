@@ -6,8 +6,6 @@ from math import pi
 
 from gaphor import UML
 from gaphor.UML.presentation import PresentationElement
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
 from gaphor.diagram.support import set_diagram_item
 from gaphor.diagram.text import Text
 
@@ -41,6 +39,18 @@ class Box:
             c.draw(cr, bounding_box)
 
 
+def Name(presentation, style={}):
+    name = Text("name", style=style)
+
+    def on_named_element_name(event):
+        if presentation.subject:
+            name.text = presentation.subject.name
+            presentation.request_update()
+
+    presentation.watch("subject<NamedElement>.name", on_named_element_name)
+    return name
+
+
 def represents(uml_element):
     def wrapper(presentation):
         set_diagram_item(uml_element, presentation)
@@ -53,42 +63,16 @@ def represents(uml_element):
 class ActionItem(PresentationElement):
     def __init__(self, id=None, model=None):
         """
-        Create named item.
+        Create action item.
         """
         super().__init__(id, model)
-
-        self._name = Text("name")
+        self._name = Name(self)
 
         self.layout = Box(
             self._name,
             style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
             draw=self.draw_border,
         )
-
-        self.watch("subject<NamedElement>.name", self.on_named_element_name)
-
-    def on_named_element_name(self, event):
-        """
-        Callback to be invoked, when named element name is changed.
-        """
-        if self.subject:
-            self._name.text = self.subject.name
-            self.request_update()
-
-    def pre_update(self, context):
-        cr = context.cairo
-        self.min_width, self.min_height = self.layout.size(cr)
-
-    def post_update(self, context):
-        pass
-
-    def draw(self, context):
-        """
-        Draw action symbol.
-        """
-        cr = context.cairo
-        self.layout.draw(cr, (0, 0, self.width, self.height))
-        # self.draw_border(cr, (0, 0, self.width, self.height))
 
     def draw_border(self, cr, bounding_box):
         d = 15
@@ -108,51 +92,57 @@ class ActionItem(PresentationElement):
         cr.stroke()
 
 
-class SendSignalActionItem(NamedItem):
-    __uml__ = UML.SendSignalAction
-    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
-
-    def draw(self, context):
+@represents(UML.SendSignalAction)
+class SendSignalActionItem(PresentationElement):
+    def __init__(self, id=None, model=None):
         """
-        Draw action symbol.
+        Create action item.
         """
-        super(SendSignalActionItem, self).draw(context)
+        super().__init__(id, model)
+        self._name = Name(self)
 
-        c = context.cairo
+        self.layout = Box(
+            self._name,
+            style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
+            draw=self.draw_border,
+        )
 
+    def draw_border(self, cr, bounding_box):
         d = 15
-        w = self.width
-        h = self.height
-        c.move_to(0, 0)
-        c.line_to(w - d, 0)
-        c.line_to(w, h / 2)
-        c.line_to(w - d, h)
-        c.line_to(0, h)
-        c.close_path()
+        x, y, width, height = bounding_box
+        cr.move_to(0, 0)
+        cr.line_to(width - d, 0)
+        cr.line_to(width, height / 2)
+        cr.line_to(width - d, height)
+        cr.line_to(0, height)
+        cr.close_path()
 
-        c.stroke()
+        cr.stroke()
 
 
-class AcceptEventActionItem(NamedItem):
-    __uml__ = UML.SendSignalAction
-    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
-
-    def draw(self, context):
+@represents(UML.AcceptEventAction)
+class AcceptEventActionItem(PresentationElement):
+    def __init__(self, id=None, model=None):
         """
-        Draw action symbol.
+        Create action item.
         """
-        super(AcceptEventActionItem, self).draw(context)
+        super().__init__(id, model)
+        self._name = Name(self)
 
-        c = context.cairo
+        self.layout = Box(
+            self._name,
+            style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
+            draw=self.draw_border,
+        )
 
+    def draw_border(self, cr, bounding_box):
         d = 15
-        w = self.width
-        h = self.height
-        c.move_to(0, 0)
-        c.line_to(w, 0)
-        c.line_to(w, h)
-        c.line_to(0, h)
-        c.line_to(d, h / 2)
-        c.close_path()
+        x, y, width, height = bounding_box
+        cr.move_to(0, 0)
+        cr.line_to(width, 0)
+        cr.line_to(width, height)
+        cr.line_to(0, height)
+        cr.line_to(d, height / 2)
+        cr.close_path()
 
-        c.stroke()
+        cr.stroke()
