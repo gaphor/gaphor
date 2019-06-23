@@ -5,7 +5,7 @@ Action diagram item.
 from math import pi
 
 from gaphor import UML
-from gaphor.UML.presentation import PresentationElement
+from gaphor.UML.presentation import ElementPresentation
 from gaphor.diagram.support import set_diagram_item
 from gaphor.diagram.text import Text
 
@@ -60,7 +60,7 @@ def represents(uml_element):
 
 
 @represents(UML.Action)
-class ActionItem(PresentationElement):
+class ActionItem(ElementPresentation):
     def __init__(self, id=None, model=None):
         """
         Create action item.
@@ -93,7 +93,7 @@ class ActionItem(PresentationElement):
 
 
 @represents(UML.SendSignalAction)
-class SendSignalActionItem(PresentationElement):
+class SendSignalActionItem(ElementPresentation):
     def __init__(self, id=None, model=None):
         """
         Create action item.
@@ -121,7 +121,7 @@ class SendSignalActionItem(PresentationElement):
 
 
 @represents(UML.AcceptEventAction)
-class AcceptEventActionItem(PresentationElement):
+class AcceptEventActionItem(ElementPresentation):
     def __init__(self, id=None, model=None):
         """
         Create action item.

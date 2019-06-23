@@ -68,7 +68,7 @@ class Presentation(Element):
         super().teardown_canvas()
 
 
-class PresentationElement(Presentation, gaphas.Element):
+class ElementPresentation(Presentation, gaphas.Element):
     """
     Presentation for Gaphas Element (box-like) items.
     """

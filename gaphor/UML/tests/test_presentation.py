@@ -1,7 +1,7 @@
 import pytest
 from gaphor import UML
 from gaphor.UML.elementfactory import ElementFactory
-from gaphor.UML.presentation import PresentationElement
+from gaphor.UML.presentation import ElementPresentation
 from gaphor.services.eventmanager import EventManager
 
 
@@ -13,7 +13,7 @@ class DummyVisualComponent:
         pass
 
 
-class TestElement(PresentationElement):
+class TestElement(ElementPresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model, layout=DummyVisualComponent())
 
