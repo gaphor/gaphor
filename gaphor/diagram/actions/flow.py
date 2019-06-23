@@ -11,14 +11,6 @@ from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.style import ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
 
 
-node_classes = {
-    UML.ForkNode: UML.JoinNode,
-    UML.DecisionNode: UML.MergeNode,
-    UML.JoinNode: UML.ForkNode,
-    UML.MergeNode: UML.DecisionNode,
-}
-
-
 class FlowItem(NamedLine):
     """
     Representation of control flow and object flow. Flow item has name and

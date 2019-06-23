@@ -29,9 +29,7 @@ class Line(_Line):
         save_func("matrix", tuple(self.matrix))
         for prop in ("orthogonal", "horizontal"):
             save_func(prop, getattr(self, prop))
-        points = []
-        for h in self.handles():
-            points.append(tuple(map(float, h.pos)))
+        points = [tuple(map(float, h.pos)) for h in self.handles()]
         save_func("points", points)
 
     def load(self, name, value):
