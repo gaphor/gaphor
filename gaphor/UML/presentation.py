@@ -68,6 +68,9 @@ class Presentation(Element):
         super().teardown_canvas()
 
 
+# Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
+
+
 class ElementPresentation(Presentation, gaphas.Element):
     """
     Presentation for Gaphas Element (box-like) items.
@@ -101,3 +104,95 @@ class ElementPresentation(Presentation, gaphas.Element):
             pass
         else:
             super().load(name, value)
+
+
+class LinePresentation(Presentation, gaphas.Line):
+
+    head = property(lambda self: self._handles[0])
+    tail = property(lambda self: self._handles[-1])
+
+    def save(self, save_func):
+        def save_connection(name, handle):
+            c = self.canvas.get_connection(handle)
+            if c:
+                save_func(name, c.connected, reference=True)
+
+        super().save(save_func)
+        save_func("matrix", tuple(self.matrix))
+        for prop in ("orthogonal", "horizontal"):
+            save_func(prop, getattr(self, prop))
+        points = [tuple(map(float, h.pos)) for h in self.handles()]
+        save_func("points", points)
+
+        save_connection("head-connection", self.head)
+        save_connection("tail-connection", self.tail)
+
+    def load(self, name, value):
+        if name == "matrix":
+            self.matrix = ast.literal_eval(value)
+        elif name == "points":
+            points = ast.literal_eval(value)
+            for x in range(len(points) - 2):
+                h = self._create_handle((0, 0))
+                self._handles.insert(1, h)
+            for i, p in enumerate(points):
+                self.handles()[i].pos = p
+
+            # Update connection ports of the line. Only handles are saved
+            # in Gaphor file therefore ports need to be recreated after
+            # handles information is loaded.
+            self._update_ports()
+
+        elif name == "orthogonal":
+            self._load_orthogonal = ast.literal_eval(value)
+        elif name == "horizontal":
+            self.horizontal = ast.literal_eval(value)
+        elif name in ("head_connection", "head-connection"):
+            self._load_head_connection = value
+        elif name in ("tail_connection", "tail-connection"):
+            self._load_tail_connection = value
+        else:
+            super().load(name, value)
+
+    def postload(self):
+        def get_sink(handle, item):
+
+            hpos = self.canvas.get_matrix_i2i(self, item).transform_point(*handle.pos)
+            port = None
+            dist = 10e6
+            for p in item.ports():
+                pos, d = p.glue(hpos)
+                if not port or d < dist:
+                    port = p
+                    dist = d
+
+            return gaphas.aspect.ConnectionSink(item, port)
+
+        def postload_connect(handle, item):
+            connector = gaphas.aspect.Connector(self, handle)
+            sink = get_sink(handle, item)
+            connector.connect(sink)
+
+        if hasattr(self, "_load_orthogonal"):
+            # Ensure there are enough handles
+            if self._load_orthogonal and len(self._handles) < 3:
+                p0 = self._handles[-1].pos
+                self._handles.insert(1, self._create_handle(p0))
+            self.orthogonal = self._load_orthogonal
+            del self._load_orthogonal
+
+        # First update matrix and solve constraints (NE and SW handle are
+        # lazy and are resolved by the constraint solver rather than set
+        # directly.
+        self.canvas.update_matrix(self)
+        self.canvas.solver.solve()
+
+        if hasattr(self, "_load_head_connection"):
+            postload_connect(self.head, self._load_head_connection)
+            del self._load_head_connection
+
+        if hasattr(self, "_load_tail_connection"):
+            postload_connect(self.tail, self._load_tail_connection)
+            del self._load_tail_connection
+
+        super().postload()
