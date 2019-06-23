@@ -1,4 +1,6 @@
 """
+DEPRECATED
+
 Base classes related to items, which represent UML classes deriving
 from NamedElement.
 """

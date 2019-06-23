@@ -1,4 +1,6 @@
 """
+DEPRECATED
+
 Style classes and constants.
 """
 

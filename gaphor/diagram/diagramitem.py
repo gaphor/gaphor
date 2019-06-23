@@ -1,4 +1,6 @@
 """
+DEPRECATED
+
 DiagramItem provides basic functionality for presentations.
 Such as a modifier 'subject' property and a unique id.
 """

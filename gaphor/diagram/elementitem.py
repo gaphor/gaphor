@@ -1,4 +1,6 @@
 """
+DEPRECATED
+
 Abstract classes for element-like Diagram items.
 """
 

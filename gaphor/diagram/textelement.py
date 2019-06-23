@@ -1,4 +1,6 @@
 """
+DEPRECATED
+
 Support for editable text, a part of a diagram item, i.e. name of named
 item, guard of flow item, etc.
 """

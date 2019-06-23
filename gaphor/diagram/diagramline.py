@@ -1,4 +1,6 @@
 """
+DEPRECATED
+
 Basic functionality for canvas line based items on a diagram.
 """
 
