@@ -120,7 +120,7 @@ class AbstractConnect(ConnectBase):
         `gaphor.diagram.classes.interface` module documentation for
         connection to folded interface rules.
 
-        Returns `True` by default.
+        Returns `True` if connection is allowed.
         """
         from gaphor.diagram.classes.interface import InterfaceItem
         from gaphor.diagram.classes.implementation import ImplementationItem

@@ -8,6 +8,7 @@ from gaphor import UML
 from gaphor.UML.presentation import ElementPresentation
 from gaphor.diagram.support import set_diagram_item
 from gaphor.diagram.text import Text
+from gaphor.diagram.support import represents
 
 
 class Box:
@@ -49,14 +50,6 @@ def Name(presentation, style={}):
 
     presentation.watch("subject<NamedElement>.name", on_named_element_name)
     return name
-
-
-def represents(uml_element):
-    def wrapper(presentation):
-        set_diagram_item(uml_element, presentation)
-        return presentation
-
-    return wrapper
 
 
 @represents(UML.Action)
