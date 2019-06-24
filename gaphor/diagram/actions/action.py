@@ -34,7 +34,7 @@ class Box:
 
     def draw(self, cr, bounding_box):
         if self._draw:
-            self._draw(cr, bounding_box)
+            self._draw(self, cr, bounding_box)
         for c in self.children:
             c.draw(cr, bounding_box)
 
@@ -66,16 +66,20 @@ class ActionItem(ElementPresentation):
         Create action item.
         """
         super().__init__(id, model)
-        self._name = Name(self)
 
         self.layout = Box(
-            self._name,
-            style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
+            Name(self),
+            style={
+                "min-width": 50,
+                "min-height": 30,
+                "padding": (5, 10, 5, 10),
+                "border-radius": 15,
+            },
             draw=self.draw_border,
         )
 
-    def draw_border(self, cr, bounding_box):
-        d = 15
+    def draw_border(self, box, cr, bounding_box):
+        d = box.style("border-radius")
         x, y, width, height = bounding_box
         width += x
         height += y
@@ -99,15 +103,14 @@ class SendSignalActionItem(ElementPresentation):
         Create action item.
         """
         super().__init__(id, model)
-        self._name = Name(self)
 
         self.layout = Box(
-            self._name,
+            Name(self),
             style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
             draw=self.draw_border,
         )
 
-    def draw_border(self, cr, bounding_box):
+    def draw_border(self, box, cr, bounding_box):
         d = 15
         x, y, width, height = bounding_box
         cr.move_to(0, 0)
@@ -127,15 +130,14 @@ class AcceptEventActionItem(ElementPresentation):
         Create action item.
         """
         super().__init__(id, model)
-        self._name = Name(self)
 
         self.layout = Box(
-            self._name,
+            Name(self),
             style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
             draw=self.draw_border,
         )
 
-    def draw_border(self, cr, bounding_box):
+    def draw_border(self, box, cr, bounding_box):
         d = 15
         x, y, width, height = bounding_box
         cr.move_to(0, 0)
