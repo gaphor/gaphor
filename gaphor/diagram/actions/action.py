@@ -7,7 +7,7 @@ from math import pi
 from gaphor import UML
 from gaphor.UML.presentation import ElementPresentation
 from gaphor.diagram.support import set_diagram_item
-from gaphor.diagram.text import Text
+from gaphor.diagram.text import Name
 from gaphor.diagram.support import represents
 
 
@@ -38,18 +38,6 @@ class Box:
             self._draw(self, cr, bounding_box)
         for c in self.children:
             c.draw(cr, bounding_box)
-
-
-def Name(presentation, style={}):
-    name = Text("name", style=style)
-
-    def on_named_element_name(event):
-        if presentation.subject:
-            name.text = presentation.subject.name
-            presentation.request_update()
-
-    presentation.watch("subject<NamedElement>.name", on_named_element_name)
-    return name
 
 
 @represents(UML.Action)

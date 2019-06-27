@@ -56,6 +56,35 @@ class Text:
             cr.restore()
 
 
+def Name(presentation, style={}):
+    name = Text("name", style=style)
+
+    def on_named_element_name(event):
+        print("setting name for", presentation, presentation.subject)
+        name.text = presentation.subject and presentation.subject.name or ""
+        presentation.request_update()
+
+    presentation.watch("subject<NamedElement>.name", on_named_element_name)
+    return name
+
+
+def Guard(presentation):
+    guard = Text("")
+
+    def on_control_flow_guard(event):
+        subject = presentation.subject
+        try:
+            guard.text = subject.guard if subject else ""
+        except AttributeError as e:
+            guard.text = ""
+        presentation.request_update()
+
+    presentation.watch("subject<ControlFlow>.guard", on_control_flow_guard)
+    presentation.watch("subject<ObjectFlow>.guard", on_control_flow_guard)
+
+    return guard
+
+
 def _text_layout(cr, text, font, width):
     layout = PangoCairo.create_layout(cr)
     if font:
