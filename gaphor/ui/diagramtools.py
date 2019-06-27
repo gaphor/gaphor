@@ -23,6 +23,7 @@ from gaphas.tool import (
 from gi.repository import Gdk
 from gi.repository import Gtk
 
+from gaphor.UML.presentation import LinePresentation
 from gaphor.core import Transaction, transactional
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.elementitem import ElementItem
@@ -39,7 +40,7 @@ OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 log = logging.getLogger(__name__)
 
 
-@Connector.when_type(DiagramLine)
+@Connector.when_type(DiagramLine, LinePresentation)
 class DiagramItemConnector(ItemConnector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
@@ -96,7 +97,7 @@ class DiagramItemConnector(ItemConnector):
 
     @transactional
     def disconnect(self):
-        super(DiagramItemConnector, self).disconnect()
+        super().disconnect()
 
 
 class DisconnectHandle:
