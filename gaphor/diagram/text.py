@@ -6,7 +6,9 @@ from enum import Enum
 import cairo
 from gi.repository import Pango, PangoCairo
 
+from gaphas.geometry import Rectangle
 from gaphas.freehand import FreeHandCairoContext
+from gaphas.painter import CairoBoundingBoxContext
 
 
 class TextAlign(Enum):
@@ -30,19 +32,27 @@ class Text:
             "font": "sans 10",
             "text-align": TextAlign.CENTER,
             "vertical-align": VerticalAlign.MIDDLE,
+            "padding": (0, 0, 0, 0),
             **style,
         }.__getitem__
 
-    def size(self, cr):
+    def size(self, cr, points=()):
         min_w = self.style("min-width")
         min_h = self.style("min-height")
         font = self.style("font")
 
-        # TODO: can we create our own Cairo context? Will that be fast enough? And accurate?
         w, h = text_size(cr, self.text, font)
+        if points:
+            x, y = text_point_at_line(
+                points,
+                size,
+                self.style("text-align"),
+                self.style("vertical-align"),
+                self.style("padding"),
+            )
         return max(min_w, w), max(min_h, h)
 
-    def draw(self, cr, bounding_box):
+    def draw(self, cr, pos_or_bounding_box):
         font = self.style("font")
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
@@ -50,7 +60,7 @@ class Text:
         cr.save()
         try:
             text_draw_in_box(
-                cr, bounding_box, self.text, font, text_align, vertical_align
+                cr, pos_or_bounding_box, self.text, font, text_align, vertical_align
             )
         except:
             cr.restore()
@@ -60,7 +70,6 @@ def Name(presentation, style={}):
     name = Text("name", style=style)
 
     def on_named_element_name(event):
-        print("setting name for", presentation, presentation.subject)
         name.text = presentation.subject and presentation.subject.name or ""
         presentation.request_update()
 
@@ -88,30 +97,27 @@ def Guard(presentation):
 def text_size(cr, text, font, width=-1):
     if not text:
         return 0, 0
+
     layout = _text_layout(cr, text, font, width)
     return layout.get_pixel_size()
 
 
-def text_draw_in_box(cr, bounding_box, text, font, text_align, vertical_align):
+def text_draw_in_box(cr, pos_or_bounding_box, text, font, text_align, vertical_align):
     """
     Draw text relative to (x, y).
     text - text to print (utf8)
     font - The font to render in
-    bounding_box - width of the bounding box
+    pos_or_bounding_box - width of the bounding box
     text_align - One of enum TextAlign
     vertical_align - One of enum VerticalAlign
     """
-    if len(bounding_box) == 2:
-        x, y = bounding_box
+    if len(pos_or_bounding_box) == 2:
+        x, y = pos_or_bounding_box
         width = 0
         height = 0
     else:
-        x, y, width, height = bounding_box
+        x, y, width, height = pos_or_bounding_box
 
-    if isinstance(cr, FreeHandCairoContext):
-        cr = cr.cr
-    if not isinstance(cr, cairo.Context):
-        return
     if not text:
         return
 
@@ -131,16 +137,46 @@ def text_draw_in_box(cr, bounding_box, text, font, text_align, vertical_align):
 
     cr.move_to(x, y)
 
-    PangoCairo.show_layout(cr, layout)
+    _pango_cairo_show_layout(cr, layout)
 
 
 def _text_layout(cr, text, font, width):
-    layout = PangoCairo.create_layout(cr)
+    layout = _pango_cairo_create_layout(cr)
     if font:
         layout.set_font_description(Pango.FontDescription.from_string(font))
     layout.set_text(text, length=-1)
     layout.set_width(int(width * Pango.SCALE))
     return layout
+
+
+def _pango_cairo_create_layout(cr):
+    """
+    Deal with different types of contexts that are passed down,
+    namely FreeHandCairoContext and CairoBoundingBoxContext.
+    PangoCairo expects a true cairo.Context.
+    """
+    if isinstance(cr, FreeHandCairoContext):
+        cr = cr.cr
+    elif isinstance(cr, CairoBoundingBoxContext):
+        cr = cr._cairo
+    else:
+        assert isinstance(
+            cr, cairo.Context
+        ), f"cr should be a true Cairo.Context, not {cr}"
+
+    return PangoCairo.create_layout(cr)
+
+
+def _pango_cairo_show_layout(cr, layout):
+    if isinstance(cr, FreeHandCairoContext):
+        PangoCairo.show_layout(cr.cr, layout)
+    elif isinstance(cr, CairoBoundingBoxContext):
+        w, h = layout.get_pixel_size()
+        cr.move_to(0, 0)
+        cr.line_to(w, h)
+        cr.stroke()
+    else:
+        PangoCairo.show_layout(cr, layout)
 
 
 def text_point_at_line(points, size, text_align, vertical_align, padding):
@@ -165,7 +201,6 @@ def text_point_at_line(points, size, text_align, vertical_align, padding):
     elif text_align == TextAlign.RIGHT:
         p0 = points[-1]
         p1 = points[-2]
-        print("right", p0, p1)
         x, y = _text_point_at_line_end(size, p0, p1, padding)
 
     return x, y
@@ -194,8 +229,6 @@ def _text_point_at_line_end(size, p1, p2, padding):
     name_dx = 0.0
     name_dy = 0.0
     ofs = 5
-
-    print("in_func", size, p1, p2, padding)
 
     dx = float(p2[0]) - float(p1[0])
     dy = float(p2[1]) - float(p1[1])
