@@ -9,35 +9,7 @@ from gaphor.UML.presentation import ElementPresentation
 from gaphor.diagram.support import set_diagram_item
 from gaphor.diagram.text import Name
 from gaphor.diagram.support import represents
-
-
-class Box:
-    def __init__(self, *children, style={}, draw=None):
-        self.children = children
-        self.style = {
-            "min-width": 0,
-            "min-height": 0,
-            "padding": (0, 0, 0, 0),
-            **style,
-        }.__getitem__
-        self._draw = draw
-
-    def size(self, cr):
-        style = self.style
-        min_width = style("min-width")
-        min_height = style("min-height")
-        padding = style("padding")
-        widths, heights = list(zip(*[c.size(cr) for c in self.children]))
-        return (
-            max(min_width, max(widths) + padding[1] + padding[3]),
-            max(min_height, sum(heights) + padding[0] + padding[2]),
-        )
-
-    def draw(self, cr, bounding_box):
-        if self._draw:
-            self._draw(self, cr, bounding_box)
-        for c in self.children:
-            c.draw(cr, bounding_box)
+from gaphor.diagram.shapes import Box
 
 
 @represents(UML.Action)
