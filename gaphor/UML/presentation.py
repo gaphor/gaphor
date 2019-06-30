@@ -107,9 +107,21 @@ class ElementPresentation(Presentation, gaphas.Element):
 
 
 class LinePresentation(Presentation, gaphas.Line):
+    def __init__(self, id=None, model=None, layout=None):
+        super().__init__(id, model)
+        self.layout = layout
+        self.fuzziness = 2
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
+
+    def pre_update(self, context):
+        cr = context.cairo
+        self.min_width, self.min_height = self.layout.size(cr)
+
+    def draw(self, context):
+        cr = context.cairo
+        self.layout.draw(cr, (0, 0), [h.pos for h in self.handles()])
 
     def save(self, save_func):
         def save_connection(name, handle):
