@@ -4,21 +4,26 @@ DEPRECATED
 Style classes and constants.
 """
 
+from gaphor.diagram.text import TextAlign, VerticalAlign
+from gaphor.diagram.text import _text_point_at_line_end as get_text_point_at_line
+from gaphor.diagram.text import _text_point_at_line_center as get_text_point_at_line2
+
 # padding
 PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = list(range(4))
 
-# horizontal align
-ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = -1, 0, 1
+# horizontal align - old style
+ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT = (
+    TextAlign.LEFT,
+    TextAlign.CENTER,
+    TextAlign.RIGHT,
+)
 
-# vertical align
-ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = -1, 0, 1
-
-# hint tuples to move text depending on quadrant
-WIDTH_HINT = (0, 0, -1)  # width hint tuple
-R_WIDTH_HINT = (-1, -1, 0)  # width hint tuple
-PADDING_HINT = (1, 1, -1)  # padding hint tuple
-
-EPSILON = 1e-6
+# vertical align - old style
+ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM = (
+    VerticalAlign.TOP,
+    VerticalAlign.MIDDLE,
+    VerticalAlign.BOTTOM,
+)
 
 
 class Style:
@@ -144,141 +149,3 @@ def get_text_point(extents, width, height, align, padding, outside):
         else:
             assert False
     return x, y
-
-
-def get_text_point_at_line(extents, p1, p2, align, padding):
-    """
-    Calculate position of the text relative to a line defined by points
-    p1 and p2. Text is aligned using align and padding information.
-
-    Parameters:
-     - extents: text extents, a (width, height) tuple
-     - p1:      beginning of line
-     - p2:      end of line
-     - align:   text align information, E.g. (ALIGN_CENTER, ALIGN_TOP)
-     - padding: text padding, a (top, right, bottom, left) tuple
-    """
-    name_dx = 0.0
-    name_dy = 0.0
-    ofs = 5
-
-    dx = float(p2[0]) - float(p1[0])
-    dy = float(p2[1]) - float(p1[1])
-
-    name_w, name_h = extents
-
-    if dy == 0:
-        rc = 1000.0  # quite a lot...
-    else:
-        rc = dx / dy
-    abs_rc = abs(rc)
-    h = dx > 0  # right side of the box
-    v = dy > 0  # bottom side
-
-    if abs_rc > 6:
-        # horizontal line
-        if h:
-            name_dx = ofs
-            name_dy = -ofs - name_h
-        else:
-            name_dx = -ofs - name_w
-            name_dy = -ofs - name_h
-    elif 0 <= abs_rc <= 0.2:
-        # vertical line
-        if v:
-            name_dx = -ofs - name_w
-            name_dy = ofs
-        else:
-            name_dx = -ofs - name_w
-            name_dy = -ofs - name_h
-    else:
-        # Should both items be placed on the same side of the line?
-        r = abs_rc < 1.0
-
-        # Find out alignment of text (depends on the direction of the line)
-        align_left = (h and not r) or (r and not h)
-        align_bottom = (v and not r) or (r and not v)
-        if align_left:
-            name_dx = ofs
-        else:
-            name_dx = -ofs - name_w
-        if align_bottom:
-            name_dy = -ofs - name_h
-        else:
-            name_dy = ofs
-    return p1[0] + name_dx, p1[1] + name_dy
-
-
-def get_text_point_at_line2(extents, p1, p2, align, padding):
-    """
-    Calculate position of the text relative to a line defined by points
-    p1 and p2. Text is aligned using align and padding information.
-
-    TODO: merge with get_text_point_at_line function
-
-    Parameters:
-     - extents: text extents, a (width, height) tuple
-     - p1:      beginning of line
-     - p2:      end of line
-     - align:   text align information, E.g. (ALIGN_CENTER, ALIGN_TOP)
-     - padding: text padding, a (top, right, bottom, left) tuple
-    """
-    x0 = (p1[0] + p2[0]) / 2.0
-    y0 = (p1[1] + p2[1]) / 2.0
-    dx = p2[0] - p1[0]
-    dy = p2[1] - p1[1]
-
-    if abs(dx) < EPSILON:
-        d1 = -1.0
-        d2 = 1.0
-    elif abs(dy) < EPSILON:
-        d1 = 0.0
-        d2 = 0.0
-    else:
-        d1 = dy / dx
-        d2 = abs(d1)
-
-    width, height = extents
-    halign, valign = align
-
-    # move to center and move by delta depending on line angle
-    if d2 < 0.5774:  # <0, 30>, <150, 180>, <-180, -150>, <-30, 0>
-        # horizontal mode
-        w2 = width / 2.0
-        hint = w2 * d2
-
-        x = x0 - w2
-        if valign == ALIGN_TOP:
-            y = y0 - height - padding[PADDING_BOTTOM] - hint
-        else:
-            y = y0 + padding[PADDING_TOP] + hint
-    else:
-        # much better in case of vertical lines
-
-        # determine quadrant, we are interested in 1 or 3 and 2 or 4
-        # see hint tuples below
-        h2 = height / 2.0
-        q = (d1 > 0) - (d1 < 0)
-        if abs(dx) < EPSILON:
-            hint = 0
-        else:
-            hint = h2 / d2
-
-        if valign == ALIGN_TOP:
-            x = (
-                x0
-                + PADDING_HINT[q] * (padding[PADDING_LEFT] + hint)
-                + width * WIDTH_HINT[q]
-            )
-        else:
-            x = (
-                x0
-                - PADDING_HINT[q] * (padding[PADDING_RIGHT] + hint)
-                + width * R_WIDTH_HINT[q]
-            )
-        y = y0 - h2
-
-    return x, y
-
-
-# vim:sw=4:et

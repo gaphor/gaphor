@@ -14,6 +14,7 @@ from gaphor.diagram.style import (
     ALIGN_MIDDLE,
     ALIGN_BOTTOM,
 )
+from gaphor.diagram.text import TextAlign, VerticalAlign
 
 
 def test_min_size():
@@ -48,8 +49,8 @@ def test_align_box():
         (ALIGN_RIGHT, ALIGN_BOTTOM, True): (162, 43),
     }
 
-    for halign in range(-1, 2):
-        for valign in range(-1, 2):
+    for halign in (TextAlign.LEFT, TextAlign.CENTER, TextAlign.RIGHT):
+        for valign in (VerticalAlign.TOP, VerticalAlign.MIDDLE, VerticalAlign.BOTTOM):
             for outside in (True, False):
                 align = (halign, valign)
                 point_expected = data[(halign, valign, outside)]
@@ -74,28 +75,20 @@ def test_align_line():
 
     extents = 10, 5
 
-    x, y = get_text_point_at_line(
-        extents, p1, p2, (ALIGN_LEFT, ALIGN_TOP), (2, 2, 2, 2)
-    )
+    x, y = get_text_point_at_line(extents, p1, p2, (2, 2, 2, 2))
     assert x == 5
     assert y == (-10)
 
-    x, y = get_text_point_at_line(
-        extents, p1, p2, (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2)
-    )
+    x, y = get_text_point_at_line(extents, p1, p2, (2, 2, 2, 2))
     assert x == 5
     assert y == (-10)
 
     p2 = -20, 20
-    x, y = get_text_point_at_line(
-        extents, p1, p2, (ALIGN_LEFT, ALIGN_TOP), (2, 2, 2, 2)
-    )
+    x, y = get_text_point_at_line(extents, p1, p2, (2, 2, 2, 2))
     assert x == (-15)
     assert y == (-10)
 
-    x, y = get_text_point_at_line(
-        extents, p1, p2, (ALIGN_RIGHT, ALIGN_TOP), (2, 2, 2, 2)
-    )
+    x, y = get_text_point_at_line(extents, p1, p2, (2, 2, 2, 2))
     assert x == (-15)
     assert y == (-10)
 
@@ -107,59 +100,43 @@ def test_align_line2_h():
 
     # align top
     p2 = 22.0, 7.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(7)
     assert y == pytest.approx(-4.75)
 
     p2 = 22.0, -3.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(7)
     assert y == pytest.approx(-9.75)
 
     p2 = -18.0, 7.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(-13)
     assert y == pytest.approx(-4.75)
 
     p2 = -18.0, -3.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(-13)
     assert y == pytest.approx(-9.75)
 
     # align bottom
     p2 = 22.0, 7.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(7)
     assert y == pytest.approx(8.75)
 
     p2 = 22.0, -3.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(7)
     assert y == pytest.approx(3.75)
 
     p2 = -18.0, 7.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(-13)
     assert y == pytest.approx(8.75)
 
     p2 = -18.0, -3.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(-13)
     assert y == pytest.approx(3.75)
 
@@ -171,59 +148,43 @@ def test_align_line2_v():
 
     # top align
     p2 = 7.0, 22.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(7.125)
     assert y == pytest.approx(9.5)
 
     p2 = 7.0, -18.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(-8.125)
     assert y == pytest.approx(-10.5)
 
     p2 = -3.0, 22.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(-13.125)
     assert y == pytest.approx(9.5)
 
     p2 = -3.0, -18.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(2.125)
     assert y == pytest.approx(-10.5)
 
     # bottom align
     p2 = 7.0, 22.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(-8.125)
     assert y == pytest.approx(9.5)
 
     p2 = 7.0, -18.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(7.125)
     assert y == pytest.approx(-10.5)
 
     p2 = -3.0, 22.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(2.125)
     assert y == pytest.approx(9.5)
 
     p2 = -3.0, -18.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(-13.125)
     assert y == pytest.approx(-10.5)
 
@@ -235,58 +196,42 @@ def test_align_line2_o():
 
     # top align
     p2 = 22.0, 2.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(7)
     assert y == pytest.approx(-6)
 
     p2 = -18.0, 2.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(-13)
     assert y == pytest.approx(-6)
 
     p2 = 2.0, 22.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(-10.0)
     assert y == pytest.approx(9.5)
 
     p2 = 2.0, -18.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_TOP), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_TOP, (3, 2, 3, 2))
     assert x == pytest.approx(-10.0)
     assert y == pytest.approx(-10.5)
 
     # bottom align
     p2 = 22.0, 2.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(7)
     assert y == pytest.approx(5)
 
     p2 = -18.0, 2.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(-13.0)
     assert y == pytest.approx(5.0)
 
     p2 = 2.0, 22.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(4.0)
     assert y == pytest.approx(9.5)
 
     p2 = 2.0, -18.0
-    x, y = get_text_point_at_line2(
-        extents, p1, p2, (ALIGN_CENTER, ALIGN_BOTTOM), (3, 2, 3, 2)
-    )
+    x, y = get_text_point_at_line2(extents, p1, p2, ALIGN_BOTTOM, (3, 2, 3, 2))
     assert x == pytest.approx(4.0)
     assert y == pytest.approx(-10.5)

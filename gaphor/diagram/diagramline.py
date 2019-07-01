@@ -10,9 +10,8 @@ import ast
 import gaphas
 
 from gaphor.diagram.diagramitem import DiagramItem
-from gaphor.diagram.style import get_text_point_at_line
-from gaphor.diagram.style import get_text_point_at_line2
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT, ALIGN_TOP
+from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
+from gaphor.diagram.text import text_point_at_line
 
 
 class DiagramLine(DiagramItem, gaphas.Line):
@@ -174,23 +173,9 @@ class DiagramLine(DiagramItem, gaphas.Line):
         handles = self._handles
         halign, valign = align
 
-        if halign == ALIGN_LEFT:
-            p1 = handles[0].pos
-            p2 = handles[-1].pos
-            x, y = get_text_point_at_line(extents, p1, p2, align, padding)
-
-        elif halign == ALIGN_CENTER:
-            h0, h1 = self._get_middle_segment()
-            p1 = h0.pos
-            p2 = h1.pos
-            x, y = get_text_point_at_line2(extents, p1, p2, align, padding)
-        elif halign == ALIGN_RIGHT:
-            p1 = handles[-1].pos
-            p2 = handles[-2].pos
-
-            x, y = get_text_point_at_line(extents, p1, p2, align, padding)
-
-        return x, y
+        return text_point_at_line(
+            [h.pos for h in self.handles()], extents, halign, valign, padding
+        )
 
 
 class NamedLine(DiagramLine):

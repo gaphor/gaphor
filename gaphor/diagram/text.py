@@ -264,8 +264,8 @@ def _text_point_at_line_end(size, p1, p2, padding):
         r = abs_rc < 1.0
 
         # Find out alignment of text (depends on the direction of the line)
-        align_left = (h and not r) or (r and not h)
-        align_bottom = (v and not r) or (r and not v)
+        align_left = h ^ r
+        align_bottom = v ^ r
         if align_left:
             name_dx = ofs
         else:
