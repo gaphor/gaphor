@@ -115,9 +115,9 @@ class LinePresentation(Presentation, gaphas.Line):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
-    def pre_update(self, context):
-        cr = context.cairo
-        self.min_width, self.min_height = self.layout.size(cr)
+    def post_update(self, context):
+        # nothing to do here, since we do our drawing in separate classes.
+        pass
 
     def draw(self, context):
         cr = context.cairo

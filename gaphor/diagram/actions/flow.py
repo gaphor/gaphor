@@ -33,11 +33,6 @@ class FlowItem(LinePresentation):
         self.layout = Line(self._name, draw_tail=draw_arrow_tail)
 
     # TODO: draw name and guard (and possibly stereotype)
-    def pre_update(self, context):
-        cr = context.cairo
-        self.min_width, self.min_height = self.layout.size(
-            cr, points=[h.pos for h in self.handles()]
-        )
 
     def draw(self, context):
         self.layout.draw(context.cairo, [h.pos for h in self.handles()])

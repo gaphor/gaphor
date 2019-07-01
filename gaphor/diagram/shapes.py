@@ -106,4 +106,4 @@ class Line:
                 c.style("vertical-align"),
                 c.style("padding"),
             )
-            c.draw(cr, (x, y))
+            c.draw(cr, (x, y, *size))

@@ -42,17 +42,9 @@ class Text:
         font = self.style("font")
 
         w, h = text_size(cr, self.text, font)
-        if points:
-            x, y = text_point_at_line(
-                points,
-                size,
-                self.style("text-align"),
-                self.style("vertical-align"),
-                self.style("padding"),
-            )
         return max(min_w, w), max(min_h, h)
 
-    def draw(self, cr, pos_or_bounding_box):
+    def draw(self, cr, bounding_box):
         font = self.style("font")
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
@@ -60,7 +52,7 @@ class Text:
         cr.save()
         try:
             text_draw_in_box(
-                cr, pos_or_bounding_box, self.text, font, text_align, vertical_align
+                cr, bounding_box, self.text, font, text_align, vertical_align
             )
         except:
             cr.restore()
@@ -102,24 +94,19 @@ def text_size(cr, text, font, width=-1):
     return layout.get_pixel_size()
 
 
-def text_draw_in_box(cr, pos_or_bounding_box, text, font, text_align, vertical_align):
+def text_draw_in_box(cr, bounding_box, text, font, text_align, vertical_align):
     """
     Draw text relative to (x, y).
     text - text to print (utf8)
     font - The font to render in
-    pos_or_bounding_box - width of the bounding box
+    bounding_box - width of the bounding box
     text_align - One of enum TextAlign
     vertical_align - One of enum VerticalAlign
     """
-    if len(pos_or_bounding_box) == 2:
-        x, y = pos_or_bounding_box
-        width = 0
-        height = 0
-    else:
-        x, y, width, height = pos_or_bounding_box
-
     if not text:
         return
+
+    x, y, width, height = bounding_box
 
     layout = _text_layout(cr, text, font, width)
 
