@@ -1,4 +1,4 @@
-import unittest
+import pytest
 
 from gaphor import UML
 from gaphor.UML import Element
@@ -10,198 +10,234 @@ from gaphor.services.eventmanager import EventManager
 from gaphor.tests import TestCase
 
 
-class ElementDispatcherTestCase(unittest.TestCase):
-    def setUp(self):
+class Event:
+    def __init__(self):
         self.events = []
-        event_manager = EventManager()
-        self.element_factory = ElementFactory(event_manager)
-        self.dispatcher = ElementDispatcher(event_manager)
 
-    def tearDown(self):
-        self.dispatcher.shutdown()
-
-    def _handler(self, event):
+    def handler(self, event):
         self.events.append(event)
 
-    def test_register_handler(self):
-        dispatcher = self.dispatcher
-        element = self.element_factory.create(UML.Class)
-        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        assert len(dispatcher._handlers) == 1
-        assert list(dispatcher._handlers.keys())[0] == (
-            element,
-            UML.Class.ownedOperation,
-        )
 
-        # Add some properties:
+@pytest.fixture
+def event_manager():
+    return EventManager()
 
-        # 1:
-        element.ownedOperation = self.element_factory.create(UML.Operation)
-        # 2:
-        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
-            UML.Parameter
-        )
-        # 3:
-        p.name = "func"
-        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        assert 3 == len(self.events)
-        assert 3 == len(dispatcher._handlers)
 
-    def test_register_handler_twice(self):
-        """
-        Multiple registrations have no effect.
-        """
-        dispatcher = self.dispatcher
-        element = self.element_factory.create(UML.Class)
+@pytest.fixture
+def dispatcher(event_manager):
+    element_dispatcher = ElementDispatcher(event_manager)
+    yield element_dispatcher
+    element_dispatcher.shutdown()
 
-        # Add some properties:
 
-        element.ownedOperation = self.element_factory.create(UML.Operation)
-        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
-            UML.Parameter
-        )
-        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
+@pytest.fixture
+def element_factory(event_manager):
+    return ElementFactory(event_manager)
 
-        n_handlers = len(dispatcher._handlers)
 
-        assert 0 == len(self.events)
-        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        assert n_handlers == len(dispatcher._handlers)
-        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        assert n_handlers == len(dispatcher._handlers)
-        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        assert n_handlers == len(dispatcher._handlers)
+@pytest.fixture
+def uml_class(element_factory):
+    return element_factory.create(UML.Class)
 
-        p.name = "func"
-        assert 1 == len(self.events)
 
-    def test_unregister_handler(self):
+@pytest.fixture
+def uml_parameter(element_factory):
+    return element_factory.create(UML.Parameter)
 
-        # First some setup:
-        dispatcher = self.dispatcher
-        element = self.element_factory.create(UML.Class)
-        o = element.ownedOperation = self.element_factory.create(UML.Operation)
-        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
-            UML.Parameter
-        )
-        p.name = "func"
-        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        assert len(dispatcher._handlers) == 3
-        assert dispatcher._handlers[element, UML.Class.ownedOperation]
-        assert dispatcher._handlers[o, UML.Operation.parameter]
-        assert dispatcher._handlers[p, UML.Parameter.name]
 
-        dispatcher.unsubscribe(self._handler)
+@pytest.fixture
+def uml_operation(element_factory):
+    return element_factory.create(UML.Operation)
 
-        assert len(dispatcher._handlers) == 0, dispatcher._handlers
-        assert len(dispatcher._reverse) == 0, dispatcher._reverse
-        # assert dispatcher._handlers.keys()[0] == (element, UML.Class.ownedOperation)
-        # Should not fail here too:
-        dispatcher.unsubscribe(self._handler)
 
-    def test_notification(self):
-        """
-        Test notifications with Class object.
-        """
-        dispatcher = self.dispatcher
-        element = self.element_factory.create(UML.Class)
-        o = element.ownedOperation = self.element_factory.create(UML.Operation)
-        p = element.ownedOperation[0].formalParameter = self.element_factory.create(
-            UML.Parameter
-        )
-        p.name = "func"
-        dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        assert len(dispatcher._handlers) == 3
-        assert not self.events
+@pytest.fixture
+def uml_transition(element_factory):
+    return element_factory.create(UML.Transition)
 
-        element.ownedOperation = self.element_factory.create(UML.Operation)
-        assert len(self.events) == 1, self.events
-        assert len(dispatcher._handlers) == 4
 
-        p.name = "othername"
-        assert len(self.events) == 2, self.events
+@pytest.fixture
+def uml_constraint(element_factory):
+    return element_factory.create(UML.Constraint)
 
-        del element.ownedOperation[o]
-        assert len(dispatcher._handlers) == 2
 
-    def test_notification_2(self):
-        """
-        Test notifications with Transition object.
-        """
-        dispatcher = self.dispatcher
-        element = self.element_factory.create(UML.Transition)
-        g = element.guard = self.element_factory.create(UML.Constraint)
-        dispatcher.subscribe(self._handler, element, "guard.specification")
-        assert len(dispatcher._handlers) == 2
-        assert not self.events
-        assert (element.guard, UML.Constraint.specification) in list(
-            dispatcher._handlers.keys()
-        ), list(dispatcher._handlers.keys())
+@pytest.fixture
+def event():
+    return Event()
 
-        g.specification = "x"
-        assert len(self.events) == 1, self.events
 
-        element.guard = self.element_factory.create(UML.Constraint)
-        assert len(self.events) == 2, self.events
-        assert len(dispatcher._handlers) == 2, len(dispatcher._handlers)
-        assert (element.guard, UML.Constraint.specification) in list(
-            dispatcher._handlers.keys()
-        )
+def test_register_handler(dispatcher, uml_class, uml_parameter, uml_operation, event):
+    element = uml_class
+    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    assert len(dispatcher._handlers) == 1
+    assert list(dispatcher._handlers.keys())[0] == (element, UML.Class.ownedOperation)
 
-    def test_notification_of_change(self):
-        """
-        Test notifications with Transition object.
-        """
-        dispatcher = self.dispatcher
-        element = self.element_factory.create(UML.Transition)
-        g = element.guard = self.element_factory.create(UML.Constraint)
-        dispatcher.subscribe(self._handler, element, "guard.specification")
-        assert len(dispatcher._handlers) == 2
-        assert not self.events
+    # Add some properties:
 
-        g.specification = "x"
-        assert len(self.events) == 1, self.events
+    # 1:
+    element.ownedOperation = uml_operation
+    # 2:
+    p = element.ownedOperation[0].formalParameter = uml_parameter
+    # 3:
+    p.name = "func"
+    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    assert len(event.events) == 3
+    assert len(dispatcher._handlers) == 3
 
-        element.guard = self.element_factory.create(UML.Constraint)
-        assert len(self.events) == 2, self.events
 
-    def test_notification_with_composition(self):
-        """
-        Test unregister with composition. Use Class.ownedOperation.precondition.
-        """
-        dispatcher = self.dispatcher
-        element = self.element_factory.create(UML.Class)
-        o = element.ownedOperation = self.element_factory.create(UML.Operation)
-        p = element.ownedOperation[0].precondition = self.element_factory.create(
-            UML.Constraint
-        )
-        p.name = "func"
-        dispatcher.subscribe(self._handler, element, "ownedOperation.precondition.name")
-        assert len(dispatcher._handlers) == 3
-        assert not self.events
+def test_register_handler_twice(
+    dispatcher, uml_class, uml_operation, uml_parameter, event
+):
+    """
+    Multiple registrations have no effect.
+    """
+    # Add some properties:
+    element = uml_class
+    element.ownedOperation = uml_operation
+    p = element.ownedOperation[0].formalParameter = uml_parameter
+    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
 
-        del element.ownedOperation[o]
-        assert len(dispatcher._handlers) == 1
+    n_handlers = len(dispatcher._handlers)
 
-    def test_notification_with_incompatible_elements(self):
-        """
-        Test unregister with composition. Use Class.ownedOperation.precondition.
-        """
-        dispatcher = self.dispatcher
-        element = self.element_factory.create(UML.Transition)
-        g = element.guard = self.element_factory.create(UML.Constraint)
-        dispatcher.subscribe(self._handler, element, "guard.specification")
-        assert len(dispatcher._handlers) == 2
-        assert not self.events
-        assert (element.guard, UML.Constraint.specification) in list(
-            dispatcher._handlers.keys()
-        ), list(dispatcher._handlers.keys())
+    assert 0 == len(event.events)
+    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    assert n_handlers == len(dispatcher._handlers)
+    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    assert n_handlers == len(dispatcher._handlers)
+    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    assert n_handlers == len(dispatcher._handlers)
 
-        g.specification = "x"
-        assert len(self.events) == 1, self.events
+    p.name = "func"
+    assert len(event.events) == 1
 
-        g.specification = "a"
-        assert len(self.events) == 2, self.events
+
+def test_unregister_handler(dispatcher, uml_class, uml_operation, uml_parameter, event):
+    # First some setup:
+    element = uml_class
+    o = element.ownedOperation = uml_operation
+    p = element.ownedOperation[0].formalParameter = uml_parameter
+    p.name = "func"
+    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    assert len(dispatcher._handlers) == 3
+    assert dispatcher._handlers[element, UML.Class.ownedOperation]
+    assert dispatcher._handlers[o, UML.Operation.parameter]
+    assert dispatcher._handlers[p, UML.Parameter.name]
+
+    dispatcher.unsubscribe(event.handler)
+
+    assert len(dispatcher._handlers) == 0, dispatcher._handlers
+    assert len(dispatcher._reverse) == 0, dispatcher._reverse
+    # Should not fail here too:
+    dispatcher.unsubscribe(event.handler)
+
+
+def test_notification(
+    dispatcher, uml_class, uml_operation, uml_parameter, event, element_factory
+):
+    """
+    Test notifications with Class object.
+    """
+    element = uml_class
+    o = element.ownedOperation = uml_operation
+    p = element.ownedOperation[0].formalParameter = uml_parameter
+    p.name = "func"
+    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    assert len(dispatcher._handlers) == 3
+    assert not event.events
+
+    element.ownedOperation = element_factory.create(UML.Operation)
+    assert len(event.events) == 1, event.events
+    assert len(dispatcher._handlers) == 4
+
+    p.name = "othername"
+    assert len(event.events) == 2, event.events
+
+    del element.ownedOperation[o]
+    assert len(dispatcher._handlers) == 2
+
+
+def test_notification_2(
+    dispatcher, uml_transition, uml_constraint, event, element_factory
+):
+    """
+    Test notifications with Transition object.
+    """
+    element = uml_transition
+    g = element.guard = uml_constraint
+    dispatcher.subscribe(event.handler, element, "guard.specification")
+    assert len(dispatcher._handlers) == 2
+    assert not event.events
+    assert (element.guard, UML.Constraint.specification) in list(
+        dispatcher._handlers.keys()
+    ), list(dispatcher._handlers.keys())
+
+    g.specification = "x"
+    assert len(event.events) == 1, event.events
+
+    element.guard = element_factory.create(UML.Constraint)
+    assert len(event.events) == 2, event.events
+    assert len(dispatcher._handlers) == 2, len(dispatcher._handlers)
+    assert (element.guard, UML.Constraint.specification) in list(
+        dispatcher._handlers.keys()
+    )
+
+
+def test_notification_of_change(
+    dispatcher, uml_transition, uml_constraint, event, element_factory
+):
+    """
+    Test notifications with Transition object.
+    """
+    element = uml_transition
+    g = element.guard = uml_constraint
+    dispatcher.subscribe(event.handler, element, "guard.specification")
+    assert len(dispatcher._handlers) == 2
+    assert not event.events
+
+    g.specification = "x"
+    assert len(event.events) == 1, event.events
+
+    element.guard = element_factory.create(UML.Constraint)
+    assert len(event.events) == 2, event.events
+
+
+def test_notification_with_composition(
+    dispatcher, uml_class, uml_operation, uml_constraint, event
+):
+    """
+    Test unregister with composition. Use Class.ownedOperation.precondition.
+    """
+    element = uml_class
+    o = element.ownedOperation = uml_operation
+    p = element.ownedOperation[0].precondition = uml_constraint
+    p.name = "func"
+    dispatcher.subscribe(event.handler, element, "ownedOperation.precondition.name")
+    assert len(dispatcher._handlers) == 3
+    assert not event.events
+
+    del element.ownedOperation[o]
+    assert len(dispatcher._handlers) == 1
+
+
+def test_notification_with_incompatible_elements(
+    dispatcher, uml_transition, uml_constraint, event
+):
+    """
+    Test unregister with composition. Use Class.ownedOperation.precondition.
+    """
+    element = uml_transition
+    g = element.guard = uml_constraint
+    dispatcher.subscribe(event.handler, element, "guard.specification")
+    assert len(dispatcher._handlers) == 2
+    assert not event.events
+    assert (element.guard, UML.Constraint.specification) in list(
+        dispatcher._handlers.keys()
+    ), list(dispatcher._handlers.keys())
+
+    g.specification = "x"
+    assert len(event.events) == 1, event.events
+
+    g.specification = "a"
+    assert len(event.events) == 2, event.events
 
 
 class A(Element):
