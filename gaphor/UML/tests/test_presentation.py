@@ -18,6 +18,11 @@ class TestElement(ElementPresentation):
         super().__init__(id, model, layout=DummyVisualComponent())
 
 
+class TestLine(LinePresentation):
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model, layout=DummyVisualComponent())
+
+
 @pytest.fixture
 def element_factory():
     return ElementFactory(EventManager())
@@ -74,7 +79,7 @@ def test_element_loading(element_factory, diagram):
 
 def test_line_saving(element_factory, diagram):
     subject = element_factory.create(UML.Dependency)
-    p = diagram.create(LinePresentation, subject=subject)
+    p = diagram.create(TestLine, subject=subject)
 
     properties = {}
     referenced = set()
@@ -96,7 +101,7 @@ def test_line_saving(element_factory, diagram):
 
 
 def test_line_saving_without_subject(diagram):
-    p = diagram.create(LinePresentation)
+    p = diagram.create(TestLine)
 
     properties = {}
     referenced = set()
@@ -113,7 +118,7 @@ def test_line_saving_without_subject(diagram):
 
 def test_line_loading(element_factory, diagram):
     subject = element_factory.create(UML.Dependency)
-    p = diagram.create(LinePresentation)
+    p = diagram.create(TestLine)
 
     p.load("matrix", "(2.0, 0.0, 0.0, 2.0, 0.0, 0.0)")
     p.load("orthogonal", "0")

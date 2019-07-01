@@ -53,7 +53,7 @@ def test_draw_box_with_custom_draw_function():
 def test_line_size():
     line = Line()
 
-    assert line.size(cr=None) == (0, 0)
+    assert line.size(cr=None, points=()) == (0, 0)
 
 
 def test_draw_line():

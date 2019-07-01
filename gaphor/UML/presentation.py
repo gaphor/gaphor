@@ -163,6 +163,9 @@ class LinePresentation(Presentation, gaphas.Line):
             self._load_head_connection = value
         elif name in ("tail_connection", "tail-connection"):
             self._load_tail_connection = value
+        elif name == "show_stereotypes_attrs":
+            # TODO: should be handled in storage as an upgrader
+            pass
         else:
             super().load(name, value)
 
