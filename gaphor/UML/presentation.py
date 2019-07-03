@@ -121,7 +121,7 @@ class LinePresentation(Presentation, gaphas.Line):
 
     def draw(self, context):
         cr = context.cairo
-        self.layout.draw(cr, (0, 0), [h.pos for h in self.handles()])
+        self.layout.draw(cr, [h.pos for h in self.handles()])
 
     def save(self, save_func):
         def save_connection(name, handle):

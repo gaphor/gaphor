@@ -7,7 +7,7 @@ from math import pi
 from gaphor import UML
 from gaphor.UML.presentation import ElementPresentation
 from gaphor.diagram.support import set_diagram_item
-from gaphor.diagram.text import Name
+from gaphor.diagram.text import TextBox, watch_name
 from gaphor.diagram.support import represents
 from gaphor.diagram.shapes import Box
 
@@ -20,8 +20,12 @@ class ActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
+        name = TextBox(style={})
+
+        watch_name(self, name)
+
         self.layout = Box(
-            Name(self),
+            name,
             style={
                 "min-width": 50,
                 "min-height": 30,
@@ -57,8 +61,12 @@ class SendSignalActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
+        name = TextBox(style={})
+
+        watch_name(self, name),
+
         self.layout = Box(
-            Name(self),
+            name,
             style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
             draw=self.draw_border,
         )
@@ -84,8 +92,12 @@ class AcceptEventActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
+        name = TextBox(style={})
+
+        watch_name(self, name),
+
         self.layout = Box(
-            Name(self),
+            name,
             style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
             draw=self.draw_border,
         )

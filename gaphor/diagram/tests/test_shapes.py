@@ -1,7 +1,7 @@
 import cairo
 
 from gaphor.diagram.shapes import Box, Line
-from gaphor.diagram.text import Text
+from gaphor.diagram.text import TextBox
 
 
 def cairo_mock_context(recorder):
@@ -50,12 +50,6 @@ def test_draw_box_with_custom_draw_function():
     assert called
 
 
-def test_line_size():
-    line = Line()
-
-    assert line.size(cr=None, points=()) == (0, 0)
-
-
 def test_draw_line():
     line = Line()
     events = []
@@ -66,7 +60,7 @@ def test_draw_line():
 
 
 def test_draw_line_with_text():
-    line = Line(Text("name"))
+    line = Line(TextBox())
     events = []
     cr = cairo_mock_context(events.append)
     points = [(0, 0), (100, 100)]

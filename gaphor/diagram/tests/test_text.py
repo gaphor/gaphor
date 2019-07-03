@@ -2,7 +2,7 @@ import pytest
 import cairo
 
 import gaphor.diagram.text
-from gaphor.diagram.text import Text, text_point_at_line, TextAlign, VerticalAlign
+from gaphor.diagram.text import TextBox, text_point_at_line, TextAlign, VerticalAlign
 
 TEXT_SIZE = (60, 15)
 
@@ -23,14 +23,14 @@ def cr():
 
 
 def test_text_has_width(cr):
-    text = Text("some text")
+    text = TextBox("some text")
 
     w, _ = text.size(cr)
     assert w == TEXT_SIZE[0]
 
 
 def test_text_has_height(cr):
-    text = Text("some text")
+    text = TextBox("some text")
 
     _, h = text.size(cr)
     assert h == TEXT_SIZE[1]
@@ -38,7 +38,7 @@ def test_text_has_height(cr):
 
 def test_text_with_min_width(cr):
     style = {"min-width": 100, "min-height": 0}
-    text = Text("some text", style)
+    text = TextBox("some text", style)
 
     w, _ = text.size(cr)
     assert w == 100
@@ -46,7 +46,7 @@ def test_text_with_min_width(cr):
 
 def test_text_width_min_height(cr):
     style = {"min-width": 0, "min-height": 40}
-    text = Text("some text", style)
+    text = TextBox("some text", style)
 
     _, h = text.size(cr)
     assert h == 40

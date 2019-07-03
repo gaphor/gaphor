@@ -1,5 +1,4 @@
 from math import atan2
-from gaphor.diagram.text import Text, text_point_at_line
 
 
 class Box:
@@ -71,9 +70,6 @@ class Line:
         self._draw_head = draw_head
         self._draw_tail = draw_tail
 
-    def size(self, cr, points):
-        return 0, 0
-
     def draw(self, cr, points):
         def draw_line_end(p0, p1, draw):
             x0, y0 = p0
@@ -97,13 +93,4 @@ class Line:
         cr.stroke()
 
         for c in self.children:
-            assert isinstance(c, Text), f"All children should be of type Text ({c})"
-            size = c.size(cr)
-            x, y = text_point_at_line(
-                points,
-                size,
-                c.style("text-align"),
-                c.style("vertical-align"),
-                c.style("padding"),
-            )
-            c.draw(cr, (x, y, *size))
+            c.draw(cr, points)

@@ -23,8 +23,8 @@ class VerticalAlign(Enum):
     BOTTOM = "bottom"
 
 
-class Text:
-    def __init__(self, text, style={}):
+class TextBox:
+    def __init__(self, text="", style={}):
         self.text = text
         self.style = {
             "min-width": 0,
@@ -36,7 +36,7 @@ class Text:
             **style,
         }.__getitem__
 
-    def size(self, cr, points=()):
+    def size(self, cr):
         min_w = self.style("min-width")
         min_h = self.style("min-height")
         font = self.style("font")
@@ -49,41 +49,72 @@ class Text:
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
 
-        cr.save()
-        try:
-            text_draw_in_box(
-                cr, bounding_box, self.text, font, text_align, vertical_align
-            )
-        except:
-            cr.restore()
+        text_draw_in_box(cr, bounding_box, self.text, font, text_align, vertical_align)
 
 
-def Name(presentation, style={}):
-    name = Text("name", style=style)
+class FloatingText:
+    """
+    Text that's part of a line for example.
+    """
 
+    def __init__(self, style={}):
+        self.text = ""
+        self.style = {
+            "min-width": 0,
+            "min-height": 0,
+            "font": "sans 10",
+            "text-align": TextAlign.CENTER,
+            "vertical-align": VerticalAlign.MIDDLE,
+            "padding": (0, 0, 0, 0),
+            **style,
+        }.__getitem__
+
+    def size(self, cr):
+        min_w = self.style("min-width")
+        min_h = self.style("min-height")
+        font = self.style("font")
+
+        w, h = text_size(cr, self.text, font)
+        return max(min_w, w), max(min_h, h)
+
+    def draw(self, cr, points):
+        font = self.style("font")
+        text_align = self.style("text-align")
+        vertical_align = self.style("vertical-align")
+
+        size = text_size(cr, self.text, font)
+        x, y = text_point_at_line(
+            points,
+            size,
+            self.style("text-align"),
+            self.style("vertical-align"),
+            self.style("padding"),
+        )
+        text_draw_in_box(cr, (x, y, *size), self.text, font, text_align, vertical_align)
+
+
+def watch_name(presentation, text):
     def on_named_element_name(event):
-        name.text = presentation.subject and presentation.subject.name or ""
+        text.text = presentation.subject and presentation.subject.name or ""
         presentation.request_update()
 
     presentation.watch("subject<NamedElement>.name", on_named_element_name)
-    return name
+    return text
 
 
-def Guard(presentation):
-    guard = Text("")
-
+def watch_guard(presentation, text):
     def on_control_flow_guard(event):
         subject = presentation.subject
         try:
-            guard.text = subject.guard if subject else ""
+            text.text = subject.guard if subject else ""
         except AttributeError as e:
-            guard.text = ""
+            text.text = ""
         presentation.request_update()
 
     presentation.watch("subject<ControlFlow>.guard", on_control_flow_guard)
     presentation.watch("subject<ObjectFlow>.guard", on_control_flow_guard)
 
-    return guard
+    return text
 
 
 def text_size(cr, text, font, width=-1):
@@ -159,8 +190,7 @@ def _pango_cairo_show_layout(cr, layout):
         PangoCairo.show_layout(cr.cr, layout)
     elif isinstance(cr, CairoBoundingBoxContext):
         w, h = layout.get_pixel_size()
-        cr.move_to(0, 0)
-        cr.line_to(w, h)
+        cr.rel_line_to(w, h)
         cr.stroke()
     else:
         PangoCairo.show_layout(cr, layout)
