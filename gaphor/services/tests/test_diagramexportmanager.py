@@ -4,15 +4,15 @@ from gaphor.services.diagramexportmanager import DiagramExportManager
 
 
 @pytest.fixture
-def application(
-    services=[
-        "event_manager",
-        "component_registry",
-        "properties",
-        "diagram_export_manager",
-    ]
-):
-    Application.init(services=services)
+def application():
+    Application.init(
+        services=[
+            "event_manager",
+            "component_registry",
+            "properties",
+            "diagram_export_manager",
+        ]
+    )
     yield Application
     Application.shutdown()
 

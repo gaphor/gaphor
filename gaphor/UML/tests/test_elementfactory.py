@@ -88,10 +88,10 @@ def clear_events():
 
 
 @pytest.fixture
-def element_factory(
-    services=["event_manager", "component_registry", "element_factory"]
-):
-    Application.init(services=services)
+def element_factory():
+    Application.init(
+        services=["event_manager", "component_registry", "element_factory"]
+    )
     event_manager = Application.get_service("event_manager")
     event_manager.subscribe(handler)
     clear_events()

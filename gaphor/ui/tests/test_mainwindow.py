@@ -7,20 +7,20 @@ from gaphor.ui.abc import UIComponent
 
 
 @pytest.fixture
-def application(
-    services=[
-        "event_manager",
-        "component_registry",
-        "element_factory",
-        "properties",
-        "main_window",
-        "action_manager",
-        "namespace",
-        "diagrams",
-        "toolbox",
-    ]
-):
-    Application.init(services=services)
+def application():
+    Application.init(
+        services=[
+            "event_manager",
+            "component_registry",
+            "element_factory",
+            "properties",
+            "main_window",
+            "action_manager",
+            "namespace",
+            "diagrams",
+            "toolbox",
+        ]
+    )
     yield Application
     Application.shutdown()
 

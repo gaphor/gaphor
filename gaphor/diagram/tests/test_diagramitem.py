@@ -8,8 +8,10 @@ from gaphor.diagram.diagramitem import DiagramItem
 
 
 @pytest.fixture
-def application(services=["event_manager", "component_registry", "element_factory"]):
-    Application.init(services=services)
+def application():
+    Application.init(
+        services=["event_manager", "component_registry", "element_factory"]
+    )
     yield Application
     Application.shutdown()
 
