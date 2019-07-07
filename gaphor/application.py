@@ -106,6 +106,10 @@ class _Application:
         The file_manager service is used here to load a Gaphor model if one was
         specified on the command line."""
 
+        import gi
+
+        gi.require_version("Gtk", "3.0")
+
         from gi.repository import Gio, Gtk
 
         app = Gtk.Application(
