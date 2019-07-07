@@ -30,6 +30,8 @@ rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
 python3 -m venv --copies --prompt Gaphor.app "${APPHOME}"
 source "${APPHOME}/bin/activate"
 
+pip install "importlib_metadata >= 0.17"
+
 VERSION="$(python3 ../setup.py --version)"
 PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
 
