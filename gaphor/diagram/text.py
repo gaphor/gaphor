@@ -27,8 +27,8 @@ class TextBox:
     def __init__(self, text="", style={}):
         self.text = text
         self.style = {
-            "min-width": 0,
-            "min-height": 0,
+            "min-width": 30,
+            "min-height": 14,
             "font": "sans 10",
             "text-align": TextAlign.CENTER,
             "vertical-align": VerticalAlign.MIDDLE,
@@ -44,12 +44,30 @@ class TextBox:
         w, h = text_size(cr, self.text, font)
         return max(min_w, w), max(min_h, h)
 
-    def draw(self, cr, bounding_box):
+    def draw(self, context, bounding_box):
+        cr = context.cairo
+        min_w = self.style("min-width")
+        min_h = self.style("min-height")
         font = self.style("font")
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
 
-        text_draw_in_box(cr, bounding_box, self.text, font, text_align, vertical_align)
+        x, y, w, h = text_draw(
+            cr,
+            self.text,
+            font,
+            lambda w, h: text_point_in_box(
+                bounding_box, (w, h), text_align, vertical_align
+            ),
+            width=bounding_box[2],
+            default_size=(min_w, min_h),
+        )
+
+        if context.hovered or context.focused:
+            cr.set_source_rgb(0.6, 0.6, 0.6)
+            cr.set_line_width(0.5)
+            cr.rectangle(x, y, w, h)
+            cr.stroke()
 
 
 class FloatingText:
@@ -60,8 +78,8 @@ class FloatingText:
     def __init__(self, style={}):
         self.text = ""
         self.style = {
-            "min-width": 0,
-            "min-height": 0,
+            "min-width": 30,
+            "min-height": 14,
             "font": "sans 10",
             "text-align": TextAlign.CENTER,
             "vertical-align": VerticalAlign.MIDDLE,
@@ -77,20 +95,30 @@ class FloatingText:
         w, h = text_size(cr, self.text, font)
         return max(min_w, w), max(min_h, h)
 
-    def draw(self, cr, points):
+    def draw(self, context, points):
+        cr = context.cairo
+        min_w = self.style("min-width")
+        min_h = self.style("min-height")
         font = self.style("font")
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
+        padding = self.style("padding")
 
-        size = text_size(cr, self.text, font)
-        x, y = text_point_at_line(
-            points,
-            size,
-            self.style("text-align"),
-            self.style("vertical-align"),
-            self.style("padding"),
+        x, y, w, h = text_draw(
+            cr,
+            self.text,
+            font,
+            lambda w, h: text_point_at_line(
+                points, (w, h), text_align, vertical_align, padding
+            ),
+            default_size=(min_w, min_h),
         )
-        text_draw_in_box(cr, (x, y, *size), self.text, font, text_align, vertical_align)
+
+        if context.hovered or context.focused:
+            cr.set_source_rgb(0.6, 0.6, 0.6)
+            cr.set_line_width(0.5)
+            cr.rectangle(x, y, w, h)
+            cr.stroke()
 
 
 def watch_name(presentation, text):
@@ -117,45 +145,38 @@ def watch_guard(presentation, text):
     return text
 
 
-def text_size(cr, text, font, width=-1):
+def text_size(cr, text, font, width=-1, default_size=(0, 0)):
     if not text:
-        return 0, 0
+        return default_size
 
     layout = _text_layout(cr, text, font, width)
     return layout.get_pixel_size()
 
 
-def text_draw_in_box(cr, bounding_box, text, font, text_align, vertical_align):
+def text_draw(cr, text, font, calculate_pos, width=-1, default_size=(0, 0)):
     """
     Draw text relative to (x, y).
     text - text to print (utf8)
     font - The font to render in
-    bounding_box - width of the bounding box
-    text_align - One of enum TextAlign
-    vertical_align - One of enum VerticalAlign
+    calculate_pos - callback for text positioning
+    default_size - default text size, when no text is provided
     """
-    if not text:
-        return
 
-    x, y, width, height = bounding_box
+    if text:
+        layout = _text_layout(cr, text, font, width)
+        w, h = layout.get_pixel_size()
+    else:
+        layout = None
+        w, h = default_size
 
-    layout = _text_layout(cr, text, font, width)
-
-    w, h = layout.get_pixel_size()
-
-    if text_align is TextAlign.CENTER:
-        x = ((width - w) / 2) + x
-    elif text_align is TextAlign.RIGHT:
-        x = x + width - w
-
-    if vertical_align is VerticalAlign.MIDDLE:
-        y = ((height - h) / 2) + y
-    elif vertical_align is VerticalAlign.BOTTOM:
-        y = y + height
+    x, y = calculate_pos(w, h)
 
     cr.move_to(x, y)
 
-    _pango_cairo_show_layout(cr, layout)
+    if layout:
+        _pango_cairo_show_layout(cr, layout)
+
+    return (x, y, w, h)
 
 
 def _text_layout(cr, text, font, width):
@@ -194,6 +215,23 @@ def _pango_cairo_show_layout(cr, layout):
         cr.stroke()
     else:
         PangoCairo.show_layout(cr, layout)
+
+
+def text_point_in_box(bounding_box, text_size, text_align, vertical_align):
+    x, y, width, height = bounding_box
+    w, h = text_size
+
+    if text_align is TextAlign.CENTER:
+        x = ((width - w) / 2) + x
+    elif text_align is TextAlign.RIGHT:
+        x = x + width - w
+
+    if vertical_align is VerticalAlign.MIDDLE:
+        y = ((height - h) / 2) + y
+    elif vertical_align is VerticalAlign.BOTTOM:
+        y = y + height
+
+    return x, y
 
 
 def text_point_at_line(points, size, text_align, vertical_align, padding):

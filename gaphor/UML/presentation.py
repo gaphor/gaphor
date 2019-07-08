@@ -85,8 +85,7 @@ class ElementPresentation(Presentation, gaphas.Element):
         self.min_width, self.min_height = self.layout.size(cr)
 
     def draw(self, context):
-        cr = context.cairo
-        self.layout.draw(cr, (0, 0, self.width, self.height))
+        self.layout.draw(context, (0, 0, self.width, self.height))
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -120,8 +119,7 @@ class LinePresentation(Presentation, gaphas.Line):
         pass
 
     def draw(self, context):
-        cr = context.cairo
-        self.layout.draw(cr, [h.pos for h in self.handles()])
+        self.layout.draw(context, [h.pos for h in self.handles()])
 
     def save(self, save_func):
         def save_connection(name, handle):

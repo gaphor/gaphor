@@ -88,7 +88,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
         window.connect("destroy", self.close)
 
-    def close(self):
+    def close(self, widget=None):
         """Hide the element editor window and deactivate the toolbar button.
         Both the widget and event parameters default to None and are
         idempotent if set."""

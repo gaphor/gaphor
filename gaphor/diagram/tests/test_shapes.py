@@ -1,7 +1,8 @@
 import cairo
 
 from gaphor.diagram.shapes import Box, Line
-from gaphor.diagram.text import TextBox
+from gaphor.diagram.text import TextBox, FloatingText
+from gaphas.canvas import Context
 
 
 def cairo_mock_context(recorder):
@@ -31,21 +32,21 @@ def test_box_size():
 
 
 def test_draw_empty_box():
-    box = Box()
+    box = Box(draw=None)
 
-    box.draw(cr=None, bounding_box=None)
+    box.draw(context=None, bounding_box=None)
 
 
 def test_draw_box_with_custom_draw_function():
     called = False
 
-    def draw(box, cr, bounding_box):
+    def draw(box, context, bounding_box):
         nonlocal called
         called = True
 
     box = Box(draw=draw)
 
-    box.draw(cr=None, bounding_box=None)
+    box.draw(context=None, bounding_box=None)
 
     assert called
 
@@ -56,16 +57,16 @@ def test_draw_line():
     cr = cairo_mock_context(events.append)
     points = [(0, 0), (100, 100)]
 
-    line.draw(cr=cr, points=points)
+    line.draw(context=Context(cairo=cr), points=points)
 
 
 def test_draw_line_with_text():
-    line = Line(TextBox())
+    line = Line(FloatingText())
     events = []
     cr = cairo_mock_context(events.append)
     points = [(0, 0), (100, 100)]
 
-    line.draw(cr=cr, points=points)
+    line.draw(context=Context(cairo=cr, hovered=1, selected=0), points=points)
 
     assert ("move_to", (0, 0)) in events
 

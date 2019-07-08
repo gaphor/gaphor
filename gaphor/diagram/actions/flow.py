@@ -37,5 +37,5 @@ class FlowItem(LinePresentation):
         )
         watch_name(self, self.name)
 
-        self._guard = watch_guard(self, FloatingText())
+        self.guard = watch_guard(self, FloatingText())
         self.layout = Line(self.name, draw_tail=draw_arrow_tail)

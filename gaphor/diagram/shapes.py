@@ -1,8 +1,31 @@
-from math import atan2
+from math import pi, atan2
+
+
+def draw_default_box(box, context, bounding_box):
+    cr = context.cairo
+    d = box.style("border-radius")
+    x, y, width, height = bounding_box
+
+    cr.move_to(x, d)
+    if d:
+        x1 = width + x
+        y1 = height + y
+        cr.arc(d, d, d, pi, 1.5 * pi)
+        cr.line_to(x1 - d, y)
+        cr.arc(x1 - d, d, d, 1.5 * pi, y)
+        cr.line_to(x1, y1 - d)
+        cr.arc(x1 - d, y1 - d, d, 0, 0.5 * pi)
+        cr.line_to(d, y1)
+        cr.arc(d, y1 - d, d, 0.5 * pi, pi)
+    else:
+        cr.rectangle(x, y, width, height)
+
+    cr.close_path()
+    cr.stroke()
 
 
 class Box:
-    def __init__(self, *children, style={}, draw=None):
+    def __init__(self, *children, style={}, draw=draw_default_box):
         self.children = children
         self.style = {
             "min-width": 0,
@@ -10,7 +33,7 @@ class Box:
             "padding": (0, 0, 0, 0),
             **style,
         }.__getitem__
-        self._draw = draw
+        self._draw_border = draw
 
     def size(self, cr):
         style = self.style
@@ -27,28 +50,29 @@ class Box:
         else:
             return 0, 0
 
-    def draw(self, cr, bounding_box):
-        if self._draw:
-            self._draw(self, cr, bounding_box)
+    def draw(self, context, bounding_box):
+        if self._draw_border:
+            self._draw_border(self, context, bounding_box)
         for c in self.children:
-            c.draw(cr, bounding_box)
+            c.draw(context, bounding_box)
 
 
-def draw_default_head(line, cr):
+def draw_default_head(line, context):
     """
     Default head drawer: move cursor to the first handle.
     """
-    cr.move_to(0, 0)
+    context.cairo.move_to(0, 0)
 
 
-def draw_default_tail(line, cr):
+def draw_default_tail(line, context):
     """
     Default tail drawer: draw line to the last handle.
     """
-    cr.line_to(0, 0)
+    context.cairo.line_to(0, 0)
 
 
-def draw_arrow_tail(line, cr):
+def draw_arrow_tail(line, context):
+    cr = context.cairo
     cr.line_to(0, 0)
     cr.stroke()
     cr.move_to(15, -6)
@@ -70,7 +94,7 @@ class Line:
         self._draw_head = draw_head
         self._draw_tail = draw_tail
 
-    def draw(self, cr, points):
+    def draw(self, context, points):
         def draw_line_end(p0, p1, draw):
             x0, y0 = p0
             x1, y1 = p1
@@ -79,10 +103,11 @@ class Line:
             try:
                 cr.translate(*p0)
                 cr.rotate(angle)
-                draw(self, cr)
+                draw(self, context)
             finally:
                 cr.restore()
 
+        cr = context.cairo
         cr.set_line_width(self.style("line-width"))
         draw_line_end(points[0], points[1], self._draw_head)
         if self.style("dash-style"):
@@ -93,4 +118,4 @@ class Line:
         cr.stroke()
 
         for c in self.children:
-            c.draw(cr, points)
+            c.draw(context, points)
