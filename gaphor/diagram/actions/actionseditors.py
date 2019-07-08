@@ -1,5 +1,9 @@
-from gaphor.diagram.editors import Editor, AbstractEditor
+from gaphor.diagram.editors import Editor, AbstractEditor, NamedItemEditor
+from gaphor.diagram.actions.action import ActionItem
 from gaphor.diagram.actions.activitynodes import ForkNodeItem
+
+
+Editor.register(ActionItem, NamedItemEditor)
 
 
 @Editor.register(ForkNodeItem)

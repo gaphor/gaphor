@@ -213,11 +213,10 @@ class TextEditTool(Tool):
         view = self.view
         item = view.hovered_item
         if item:
-            try:
-                editor = Editor(item)
-            except TypeError:
-                # Could not adapt to Editor
+            editor = Editor(item)
+            if not editor:
                 return False
+
             log.debug("Found editor %r" % editor)
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
             if editor.is_editable(x, y):
