@@ -38,7 +38,7 @@ def test_text_has_height(cr):
 
 def test_text_with_min_width(cr):
     style = {"min-width": 100, "min-height": 0}
-    text = TextBox("some text", style)
+    text = TextBox("some text", style=style)
 
     w, _ = text.size(cr)
     assert w == 100
@@ -46,7 +46,7 @@ def test_text_with_min_width(cr):
 
 def test_text_width_min_height(cr):
     style = {"min-width": 0, "min-height": 40}
-    text = TextBox("some text", style)
+    text = TextBox("some text", style=style)
 
     _, h = text.size(cr)
     assert h == 40

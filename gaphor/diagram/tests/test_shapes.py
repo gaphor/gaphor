@@ -3,6 +3,7 @@ import cairo
 from gaphor.diagram.shapes import Box, Line
 from gaphor.diagram.text import TextBox, FloatingText
 from gaphas.canvas import Context
+from gaphas.geometry import Rectangle
 
 
 def cairo_mock_context(recorder):
@@ -34,7 +35,7 @@ def test_box_size():
 def test_draw_empty_box():
     box = Box(draw=None)
 
-    box.draw(context=None, bounding_box=None)
+    box.draw(context=None, bounding_box=Rectangle())
 
 
 def test_draw_box_with_custom_draw_function():
@@ -46,7 +47,7 @@ def test_draw_box_with_custom_draw_function():
 
     box = Box(draw=draw)
 
-    box.draw(context=None, bounding_box=None)
+    box.draw(context=None, bounding_box=Rectangle())
 
     assert called
 

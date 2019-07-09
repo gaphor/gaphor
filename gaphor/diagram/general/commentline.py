@@ -3,22 +3,15 @@ CommentLine -- A line that connects a comment to another model element.
 
 """
 
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.UML.presentation import LinePresentation
 from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.shapes import Line
 
 
-class CommentLineItem(DiagramLine):
+class CommentLineItem(LinePresentation):
     def __init__(self, id=None, model=None):
-        DiagramLine.__init__(self, id, model)
-
-    def save(self, save_func):
-        DiagramLine.save(self, save_func)
-
-    def load(self, name, value):
-        DiagramLine.load(self, name, value)
-
-    def postload(self):
-        DiagramLine.postload(self)
+        super().__init__(id, model)
+        self.layout = Line(style={"dash-style": (7.0, 5.0)})
 
     def unlink(self):
         canvas = self.canvas
@@ -27,8 +20,4 @@ class CommentLineItem(DiagramLine):
         if c1 and c2:
             adapter = IConnect(c1.connected, self)
             adapter.disconnect(self.head)
-        super(CommentLineItem, self).unlink()
-
-    def draw(self, context):
-        context.cairo.set_dash((7.0, 5.0), 0)
-        DiagramLine.draw(self, context)
+        super().unlink()

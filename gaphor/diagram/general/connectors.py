@@ -15,6 +15,7 @@ from gaphor.diagram.connectors import IConnect, AbstractConnect
 logger = logging.getLogger(__name__)
 
 
+@IConnect.register(CommentItem, CommentLineItem)
 @IConnect.register(ElementItem, CommentLineItem)
 class CommentLineElementConnect(AbstractConnect):
     """Connect a comment line to any element item."""

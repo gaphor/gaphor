@@ -1,4 +1,5 @@
 from math import pi, atan2
+from gaphas.geometry import Rectangle
 
 
 def draw_default_box(box, context, bounding_box):
@@ -53,8 +54,15 @@ class Box:
     def draw(self, context, bounding_box):
         if self._draw_border:
             self._draw_border(self, context, bounding_box)
+        padding = self.style("padding")
+        child_bb = Rectangle(
+            bounding_box.x + padding[3],
+            bounding_box.y + padding[0],
+            bounding_box.width - padding[1] - padding[3],
+            bounding_box.height - padding[0] - padding[2],
+        )
         for c in self.children:
-            c.draw(context, bounding_box)
+            c.draw(context, child_bb)
 
 
 def draw_default_head(line, context):

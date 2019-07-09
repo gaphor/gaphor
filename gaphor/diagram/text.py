@@ -30,9 +30,11 @@ class VerticalAlign(Enum):
 
 
 class TextBox:
-    def __init__(self, text=lambda: "", style={}):
+    def __init__(self, text=lambda: "", width=lambda: -1, style={}):
         self.text = text if callable(text) else lambda: text
+        self.width = width if callable(width) else lambda: width
         self.style = {
+            "width": -1,
             "min-width": 30,
             "min-height": 14,
             "font": "sans 10",
@@ -47,7 +49,7 @@ class TextBox:
         min_h = self.style("min-height")
         font = self.style("font")
 
-        w, h = text_size(cr, self.text(), font)
+        w, h = text_size(cr, self.text(), font, self.width())
         return max(min_w, w), max(min_h, h)
 
     def draw(self, context, bounding_box):
