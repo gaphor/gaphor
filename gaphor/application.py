@@ -10,13 +10,9 @@ All important services are present in the application object:
 """
 
 import logging
-import functools
 import inspect
 import importlib_metadata
 
-import gi
-
-gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, Gtk
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
