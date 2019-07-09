@@ -36,15 +36,15 @@ python = "^3.5"
 pycairo = "^1.16"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
-importlib_metadata = "^0.17"
-tomlkit = "^0.5.3"
+importlib_metadata = "^0.18"
+tomlkit = "^0.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.0"
 pytest-sugar = "^0.9.2"
 pytest-cov = "^2.5"
 pytest-runner = "^4.2"
-black = { version = "^18.3-alpha.0", python = "^3.6" }
+black = { version = "^19.3b0", python = "^3.6" }
 pre-commit = "^1.12"
 
 [tool.poetry.scripts]

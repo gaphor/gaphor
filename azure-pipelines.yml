@@ -12,33 +12,10 @@ jobs:
     pool:
       vmImage: ubuntu-16.04
     steps:
-      - script: |
-          # When you paste this, please make sure the indentation is preserved
-          # Fail out if any setups fail
-          set -e
-
-          # Delete old Python
-          rm -rf $AGENT_TOOLSDIRECTORY/Python/3.7.3
-
-          # Download new Pythons
-          azcopy --recursive \
-            --source https://vstsagenttools.blob.core.windows.net/tools/hostedtoolcache/linux/Python/3.7.2 \
-            --destination $AGENT_TOOLSDIRECTORY/Python/3.7.2
-
-          # Install new Pythons
-          original_directory=$PWD
-          setups=$(find $AGENT_TOOLSDIRECTORY/Python -name setup.sh)
-          for setup in $setups; do
-              chmod +x $setup;
-              cd $(dirname $setup);
-              ./$(basename $setup);
-              cd $original_directory;
-          done;
-        displayName: 'Workaround: roll back Python versions'
-
       - task: UsePythonVersion@0
         inputs:
           versionSpec: '3.7'
+          architecture: 'x64'
 
       - script: |
           pip install pre-commit

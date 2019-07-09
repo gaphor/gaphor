@@ -3,6 +3,10 @@ This module contains user interface related code, such as the
 main screen and diagram windows.
 """
 
+import gi
+
+gi.require_version("Gtk", "3.0")
+
 from gi.repository import Gtk, Gdk
 import importlib.resources
 import os.path
