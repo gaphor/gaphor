@@ -4,6 +4,7 @@ Base code for presentation elements
 
 import ast
 import gaphas
+from gaphas.geometry import Rectangle
 
 from gaphor.UML.uml2 import Element
 
@@ -85,7 +86,7 @@ class ElementPresentation(Presentation, gaphas.Element):
         self.min_width, self.min_height = self.layout.size(cr)
 
     def draw(self, context):
-        self.layout.draw(context, (0, 0, self.width, self.height))
+        self.layout.draw(context, Rectangle(0, 0, self.width, self.height))
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))

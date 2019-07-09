@@ -23,6 +23,12 @@ class VerticalAlign(Enum):
     BOTTOM = "bottom"
 
 
+# We can probably merge TextBox and FloatingText in one Text class, given the
+# only difference now is the text_point_{in_box|at_line} function call.
+# I just want to have a few more examples implemented. Most notably a Classifier
+# and AssociationItem.
+
+
 class TextBox:
     def __init__(self, text=lambda: "", style={}):
         self.text = text if callable(text) else lambda: text
@@ -51,13 +57,14 @@ class TextBox:
         font = self.style("font")
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
+        padding = self.style("padding")
 
         x, y, w, h = text_draw(
             cr,
             self.text(),
             font,
             lambda w, h: text_point_in_box(
-                bounding_box, (w, h), text_align, vertical_align
+                bounding_box, (w, h), text_align, vertical_align, padding
             ),
             width=bounding_box[2],
             default_size=(min_w, min_h),
@@ -196,7 +203,7 @@ def _pango_cairo_show_layout(cr, layout):
         PangoCairo.show_layout(cr, layout)
 
 
-def text_point_in_box(bounding_box, text_size, text_align, vertical_align):
+def text_point_in_box(bounding_box, text_size, text_align, vertical_align, _padding):
     x, y, width, height = bounding_box
     w, h = text_size
 
