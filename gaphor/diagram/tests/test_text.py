@@ -23,7 +23,7 @@ def cr():
 
 
 def test_text_has_width(cr):
-    text = TextBox("some text")
+    text = TextBox(lambda: "some text")
 
     w, _ = text.size(cr)
     assert w == TEXT_SIZE[0]

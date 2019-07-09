@@ -14,11 +14,11 @@ class FlowTestCase(TestCase):
         flow = self.create(FlowItem, UML.ControlFlow)
         flow.subject.name = "Blah"
 
-        assert "Blah" == flow.name.text
+        assert "Blah" == flow.name.text()
 
         flow.subject = None
 
-        assert "" == flow.name.text
+        assert "" == flow.name.text()
 
     def test_guard(self):
         """
@@ -26,10 +26,10 @@ class FlowTestCase(TestCase):
         """
         flow = self.create(FlowItem, UML.ControlFlow)
 
-        assert "" == flow.guard.text
+        assert "" == flow.guard.text()
 
         flow.subject.guard = "GuardMe"
-        assert "GuardMe" == flow.guard.text
+        assert "GuardMe" == flow.guard.text()
 
         flow.subject = None
-        assert "" == flow.guard.text
+        assert "" == flow.guard.text()

@@ -24,8 +24,8 @@ class VerticalAlign(Enum):
 
 
 class TextBox:
-    def __init__(self, text="", style={}):
-        self.text = text
+    def __init__(self, text=lambda: "", style={}):
+        self.text = text if callable(text) else lambda: text
         self.style = {
             "min-width": 30,
             "min-height": 14,
@@ -41,7 +41,7 @@ class TextBox:
         min_h = self.style("min-height")
         font = self.style("font")
 
-        w, h = text_size(cr, self.text, font)
+        w, h = text_size(cr, self.text(), font)
         return max(min_w, w), max(min_h, h)
 
     def draw(self, context, bounding_box):
@@ -54,7 +54,7 @@ class TextBox:
 
         x, y, w, h = text_draw(
             cr,
-            self.text,
+            self.text(),
             font,
             lambda w, h: text_point_in_box(
                 bounding_box, (w, h), text_align, vertical_align
@@ -62,12 +62,7 @@ class TextBox:
             width=bounding_box[2],
             default_size=(min_w, min_h),
         )
-
-        if context.hovered or context.focused:
-            cr.set_source_rgb(0.6, 0.6, 0.6)
-            cr.set_line_width(0.5)
-            cr.rectangle(x, y, w, h)
-            cr.stroke()
+        _draw_focus_box(context, x, y, w, h)
 
 
 class FloatingText:
@@ -75,8 +70,8 @@ class FloatingText:
     Text that's part of a line for example.
     """
 
-    def __init__(self, style={}):
-        self.text = ""
+    def __init__(self, text=lambda: "", style={}):
+        self.text = text if callable(text) else lambda: text
         self.style = {
             "min-width": 30,
             "min-height": 14,
@@ -92,7 +87,7 @@ class FloatingText:
         min_h = self.style("min-height")
         font = self.style("font")
 
-        w, h = text_size(cr, self.text, font)
+        w, h = text_size(cr, self.text(), font)
         return max(min_w, w), max(min_h, h)
 
     def draw(self, context, points):
@@ -106,43 +101,27 @@ class FloatingText:
 
         x, y, w, h = text_draw(
             cr,
-            self.text,
+            self.text(),
             font,
             lambda w, h: text_point_at_line(
                 points, (w, h), text_align, vertical_align, padding
             ),
             default_size=(min_w, min_h),
         )
+        _draw_focus_box(context, x, y, w, h)
 
-        if context.hovered or context.focused:
+
+def _draw_focus_box(context, x, y, w, h):
+    if context.hovered or context.focused:
+        cr = context.cairo
+        cr.save()
+        try:
             cr.set_source_rgb(0.6, 0.6, 0.6)
             cr.set_line_width(0.5)
             cr.rectangle(x, y, w, h)
             cr.stroke()
-
-
-def watch_name(presentation, text):
-    def on_named_element_name(event):
-        text.text = presentation.subject and presentation.subject.name or ""
-        presentation.request_update()
-
-    presentation.watch("subject<NamedElement>.name", on_named_element_name)
-    return text
-
-
-def watch_guard(presentation, text):
-    def on_control_flow_guard(event):
-        subject = presentation.subject
-        try:
-            text.text = subject.guard if subject else ""
-        except AttributeError as e:
-            text.text = ""
-        presentation.request_update()
-
-    presentation.watch("subject<ControlFlow>.guard", on_control_flow_guard)
-    presentation.watch("subject<ObjectFlow>.guard", on_control_flow_guard)
-
-    return text
+        finally:
+            cr.restore()
 
 
 def text_size(cr, text, font, width=-1, default_size=(0, 0)):

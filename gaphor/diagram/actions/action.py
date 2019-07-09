@@ -4,7 +4,7 @@ Action diagram item.
 
 from gaphor import UML
 from gaphor.UML.presentation import ElementPresentation
-from gaphor.diagram.text import TextBox, watch_name
+from gaphor.diagram.text import TextBox
 from gaphor.diagram.support import represents
 from gaphor.diagram.shapes import Box
 
@@ -17,9 +17,8 @@ class ActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
-        name = TextBox()
-
-        watch_name(self, name)
+        name = TextBox(text=lambda: self.subject and self.subject.name or "")
+        self.watch("subject<NamedElement>.name")
 
         self.layout = Box(
             name,
