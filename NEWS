@@ -1,6 +1,12 @@
 1.0.2
 -----
 - Remove dependency on zope.component and zope.interface libraries
+- Fix crash when running Gaphor with Wayland on Linux
+- Improved font rendering in macOS
+- Fix exceptions when renaming, deleting, or creating a package or diagram
+- Disable drag and drop from the selection tool
+- Fix many GTK deprecation warnings
+- Convert most tests to Pytest
 
 1.0.1
 -----

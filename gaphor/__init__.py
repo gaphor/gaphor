@@ -15,7 +15,7 @@ passes them to the main Application instance.
 # __version__ = '1.2.3'       # Final Release
 # __version__ = '1.2.3.post1' # Post Release 1
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __all__ = ["main"]
 
 from optparse import OptionParser
