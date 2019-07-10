@@ -71,7 +71,7 @@ class TextBox:
             width=bounding_box[2],
             default_size=(min_w, min_h),
         )
-        _draw_focus_box(context, x, y, w, h)
+        text_draw_focus_box(context, x, y, w, h)
 
 
 class FloatingText:
@@ -117,11 +117,11 @@ class FloatingText:
             ),
             default_size=(min_w, min_h),
         )
-        _draw_focus_box(context, x, y, w, h)
+        text_draw_focus_box(context, x, y, w, h)
 
 
-def _draw_focus_box(context, x, y, w, h):
-    if context.hovered or context.focused:
+def text_draw_focus_box(context, x, y, w, h):
+    if context.hovered or context.focused or context.draw_all:
         cr = context.cairo
         cr.save()
         try:
