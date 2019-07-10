@@ -13,8 +13,8 @@
   </categories>
   <screenshots>
     <screenshot type="default">
-      <caption>The Gaphor main window.</caption>
-      <image type="source" width="800" height="600">
+      <caption>The Gaphor main window</caption>
+      <image type="source" width="799" height="599">
         http://screenshots.debian.net/screenshots/000/016/772/large.png</image>
     </screenshot>
   </screenshots>
