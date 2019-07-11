@@ -1,73 +1,66 @@
-import os
-import unittest
-
 import importlib_metadata
+import pytest
 
 from gaphor import UML
 from gaphor.application import Application
+from gaphor.storage.storage import load
 
 
-class PackageWithStereotypesRemovalTestCase(unittest.TestCase):
-    def setUp(self):
-        Application.init()
-        element_factory = Application.get_service("element_factory")
-        from gaphor.storage.storage import load
+@pytest.fixture
+def element_factory():
+    Application.init()
+    element_factory = Application.get_service("element_factory")
+    dist = importlib_metadata.distribution("gaphor")
+    path = dist.locate_file("test-diagrams/issue_53.gaphor")
+    load(path, element_factory)
+    yield element_factory
+    Application.get_service("element_factory").shutdown()
+    Application.shutdown()
 
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("test-diagrams/issue_53.gaphor")
-        load(path, element_factory)
 
-    def tearDown(self):
-        Application.get_service("element_factory").shutdown()
-        Application.shutdown()
+def test_package_removal(element_factory):
+    # Load the application
+    element_factory = Application.get_service("element_factory")
 
-    def testPackageRemoval(self):
-        # Load the application
-        element_factory = Application.get_service("element_factory")
+    # Find all profile instances
+    profiles = element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
 
-        # Find all profile instances
-        profiles = element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
+    # Check there is 1 profile
+    assert len(profiles) == 1
 
-        # Check there is 1 profile
-        self.assertEqual(1, len(profiles))
+    # Check the profile has 1 presentation
+    assert len(profiles[0].presentation) == 1
 
-        # Check the profile has 1 presentation
-        self.assertEqual(1, len(profiles[0].presentation))
+    # Unlink the presentation
+    profiles[0].presentation[0].unlink()
 
-        # Unlink the presentation
-        profiles[0].presentation[0].unlink()
+    assert not element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
 
-        assert not element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
+    classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
+    assert len(classes) == 1
 
-        classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-        assert 1 == len(classes)
+    # Check if the link is really removed:
+    assert not classes[0].appliedStereotype
+    assert not element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification))
+    assert len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 3
 
-        # Check if the link is really removed:
-        self.assertFalse(classes[0].appliedStereotype)
-        assert not element_factory.lselect(
-            lambda e: e.isKindOf(UML.InstanceSpecification)
-        )
-        assert 3 == len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))
 
-    def testPackageRemovalByRemovingTheDiagram(self):
-        element_factory = Application.get_service("element_factory")
+def test_package_removal_by_removing_the_diagram(element_factory):
 
-        diagram = element_factory.lselect(
-            lambda e: e.isKindOf(UML.Diagram) and e.name == "Stereotypes diagram"
-        )[0]
+    diagram = element_factory.lselect(
+        lambda e: e.isKindOf(UML.Diagram) and e.name == "Stereotypes diagram"
+    )[0]
 
-        assert diagram
+    assert diagram
 
-        diagram.unlink()
+    diagram.unlink()
 
-        assert not element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
+    assert not element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
 
-        classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-        assert 1 == len(classes)
+    classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
+    assert len(classes) == 1
 
-        # Check if the link is really removed:
-        self.assertFalse(classes[0].appliedStereotype)
-        assert not element_factory.lselect(
-            lambda e: e.isKindOf(UML.InstanceSpecification)
-        )
-        assert 2 == len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram)))
+    # Check if the link is really removed:
+    assert not classes[0].appliedStereotype
+    assert not element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification))
+    assert len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 2

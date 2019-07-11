@@ -10,13 +10,11 @@ All important services are present in the application object:
 """
 
 import logging
-import functools
 import inspect
 import importlib_metadata
 
 from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.abc import Service
-
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,3 @@
-import pytest
-
 from gaphor.ui.iconname import to_kebab_case
 
 

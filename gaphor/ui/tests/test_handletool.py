@@ -3,6 +3,7 @@ Test handle tool functionality.
 """
 
 import unittest
+import pytest
 
 from gaphas.aspect import Connector, ConnectionSink
 from gi.repository import Gdk, Gtk
@@ -18,53 +19,78 @@ from gaphor.ui.event import DiagramShow
 from gaphor.ui.abc import UIComponent
 
 
-class DiagramItemConnectorTestCase(unittest.TestCase):
-    def setUp(self):
-        Application.init(
-            services=[
-                "event_manager",
-                "component_registry",
-                "element_factory",
-                "main_window",
-                "properties_manager",
-                "action_manager",
-                "properties",
-                "namespace",
-                "diagrams",
-                "toolbox",
-            ]
-        )
-        self.main_window = Application.get_service("main_window")
-        self.main_window.open()
-        self.element_factory = Application.get_service("element_factory")
-        self.diagram = self.element_factory.create(UML.Diagram)
-        self.comment = self.diagram.create(
-            CommentItem, subject=self.element_factory.create(UML.Comment)
-        )
-        self.commentline = self.diagram.create(CommentLineItem)
+@pytest.fixture
+def application():
+    Application.init(
+        services=[
+            "event_manager",
+            "component_registry",
+            "element_factory",
+            "main_window",
+            "properties_manager",
+            "action_manager",
+            "properties",
+            "namespace",
+            "diagrams",
+            "toolbox",
+        ]
+    )
+    main_window = Application.get_service("main_window")
+    main_window.open()
+    yield Application
+    Application.shutdown()
 
-    def test_aspect_type(self):
-        aspect = Connector(self.commentline, self.commentline.handles()[0])
-        assert isinstance(aspect, DiagramItemConnector)
 
-    def test_query(self):
-        assert IConnect(self.comment, self.commentline)
+@pytest.fixture
+def element_factory(application):
+    return application.get_service("element_factory")
 
-    def test_allow(self):
-        aspect = Connector(self.commentline, self.commentline.handles()[0])
-        assert aspect.item is self.commentline
-        assert aspect.handle is self.commentline.handles()[0]
 
-        sink = ConnectionSink(self.comment, self.comment.ports()[0])
-        assert aspect.allow(sink)
+@pytest.fixture
+def event_manager(application):
+    return application.get_service("event_manager")
 
-    def test_connect(self):
-        sink = ConnectionSink(self.comment, self.comment.ports()[0])
-        aspect = Connector(self.commentline, self.commentline.handles()[0])
-        aspect.connect(sink)
-        canvas = self.diagram.canvas
-        cinfo = canvas.get_connection(self.commentline.handles()[0])
-        assert cinfo, cinfo
+
+@pytest.fixture
+def diagram(element_factory):
+    return element_factory.create(UML.Diagram)
+
+
+@pytest.fixture
+def comment(element_factory, diagram):
+    return diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
+
+
+@pytest.fixture
+def commentline(diagram):
+    return diagram.create(CommentLineItem)
+
+
+def test_aspect_type(commentline):
+    aspect = Connector(commentline, commentline.handles()[0])
+    assert isinstance(aspect, DiagramItemConnector)
+
+
+def test_query(comment):
+    assert IConnect(comment, commentline)
+
+
+def test_allow(commentline, comment):
+    aspect = Connector(commentline, commentline.handles()[0])
+    assert aspect.item is commentline
+    assert aspect.handle is commentline.handles()[0]
+
+    sink = ConnectionSink(comment, comment.ports()[0])
+    assert aspect.allow(sink)
+
+
+def test_connect(diagram, comment, commentline):
+    sink = ConnectionSink(comment, comment.ports()[0])
+    aspect = Connector(commentline, commentline.handles()[0])
+    aspect.connect(sink)
+    canvas = diagram.canvas
+    cinfo = canvas.get_connection(commentline.handles()[0])
+    assert cinfo, cinfo
 
 
 class HandleToolTestCase(unittest.TestCase):

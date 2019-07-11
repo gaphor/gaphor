@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "1.0.1"
+version = "1.0.2"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -37,6 +37,7 @@ pycairo = "^1.16"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
 importlib_metadata = "^0.18"
+tomlkit = "^0.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.0"

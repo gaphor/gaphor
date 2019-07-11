@@ -1,9 +1,6 @@
-import unittest
-
 from gaphor import UML
-from gaphor.diagram.classes import ClassItem
-from gaphor.plugins.diagramlayout import DiagramLayout
 from gaphor.application import Application
+from gaphor.diagram.classes import ClassItem
 from gaphor.tests.testcase import TestCase
 
 
