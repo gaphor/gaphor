@@ -42,7 +42,7 @@ class SendSignalActionItem(ElementPresentation):
 
         name = TextBox()
 
-        watch_name(self, name)
+        self.watch("subject<NamedElement>.name")
 
         self.layout = Box(
             name,
@@ -74,7 +74,7 @@ class AcceptEventActionItem(ElementPresentation):
 
         name = TextBox(style={})
 
-        watch_name(self, name),
+        self.watch("subject<NamedElement>.name")
 
         self.layout = Box(
             name,
