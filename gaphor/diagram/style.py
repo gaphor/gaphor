@@ -5,8 +5,6 @@ Style classes and constants.
 """
 
 from gaphor.diagram.text import TextAlign, VerticalAlign
-from gaphor.diagram.text import _text_point_at_line_end as get_text_point_at_line
-from gaphor.diagram.text import _text_point_at_line_center as get_text_point_at_line2
 
 # padding
 PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = list(range(4))
