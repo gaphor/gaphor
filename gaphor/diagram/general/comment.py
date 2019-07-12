@@ -29,7 +29,7 @@ class CommentItem(ElementPresentation):
             style={"text-align": TextAlign.LEFT, "vertical-align": VerticalAlign.TOP},
         )
 
-        self.layout = Box(
+        self.shape = Box(
             self.body,
             style={"ear": EAR, "padding": (OFFSET, EAR + OFFSET, OFFSET, OFFSET)},
             draw=self.draw_border,

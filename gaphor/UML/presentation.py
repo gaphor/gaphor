@@ -77,16 +77,16 @@ class ElementPresentation(Presentation, gaphas.Element):
     Presentation for Gaphas Element (box-like) items.
     """
 
-    def __init__(self, id=None, model=None, layout=None):
+    def __init__(self, id=None, model=None, shape=None):
         super().__init__(id, model)
-        self.layout = layout
+        self.shape = shape
 
     def pre_update(self, context):
         cr = context.cairo
-        self.min_width, self.min_height = self.layout.size(cr)
+        self.min_width, self.min_height = self.shape.size(cr)
 
     def draw(self, context):
-        self.layout.draw(context, Rectangle(0, 0, self.width, self.height))
+        self.shape.draw(context, Rectangle(0, 0, self.width, self.height))
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))

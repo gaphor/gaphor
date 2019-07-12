@@ -20,7 +20,7 @@ class ActionItem(ElementPresentation):
         name = TextBox(text=lambda: self.subject and self.subject.name or "")
         self.watch("subject<NamedElement>.name")
 
-        self.layout = Box(
+        self.shape = Box(
             name,
             style={
                 "min-width": 50,
@@ -44,7 +44,7 @@ class SendSignalActionItem(ElementPresentation):
 
         self.watch("subject<NamedElement>.name")
 
-        self.layout = Box(
+        self.shape = Box(
             name,
             style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
             draw=self.draw_border,
@@ -76,7 +76,7 @@ class AcceptEventActionItem(ElementPresentation):
 
         self.watch("subject<NamedElement>.name")
 
-        self.layout = Box(
+        self.shape = Box(
             name,
             style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
             draw=self.draw_border,
