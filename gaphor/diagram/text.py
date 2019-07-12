@@ -112,9 +112,7 @@ class FloatingText:
             cr,
             self.text(),
             font,
-            lambda w, h: text_point_at_line(
-                points, (w, h), text_align, vertical_align, padding
-            ),
+            lambda w, h: text_point_at_line(points, (w, h), text_align),
             default_size=(min_w, min_h),
         )
         text_draw_focus_box(context, x, y, w, h)
@@ -222,7 +220,7 @@ def text_point_in_box(bounding_box, text_size, text_align, vertical_align, _padd
     return x, y
 
 
-def text_point_at_line(points, size, text_align, vertical_align, padding):
+def text_point_at_line(points, size, text_align):
     """
     Provide a position (x, y) to draw a text close to a line.
 
@@ -237,14 +235,14 @@ def text_point_at_line(points, size, text_align, vertical_align, padding):
     if text_align == TextAlign.LEFT:
         p0 = points[0]
         p1 = points[1]
-        x, y = _text_point_at_line_end(size, p0, p1, padding)
+        x, y = _text_point_at_line_end(size, p0, p1)
     elif text_align == TextAlign.CENTER:
         p0, p1 = middle_segment(points)
-        x, y = _text_point_at_line_center(size, p0, p1, vertical_align, padding)
+        x, y = _text_point_at_line_center(size, p0, p1)
     elif text_align == TextAlign.RIGHT:
         p0 = points[-1]
         p1 = points[-2]
-        x, y = _text_point_at_line_end(size, p0, p1, padding)
+        x, y = _text_point_at_line_end(size, p0, p1)
 
     return x, y
 
@@ -258,7 +256,7 @@ def middle_segment(points):
     return points[m - 1], points[m]
 
 
-def _text_point_at_line_end(size, p1, p2, padding):
+def _text_point_at_line_end(size, p1, p2):
     """
     Calculate position of the text relative to a line defined by points
     p1 and p2. Text is aligned using align and padding information.
@@ -267,7 +265,6 @@ def _text_point_at_line_end(size, p1, p2, padding):
      - size: text size, a (width, height) tuple
      - p1:      beginning of line segment
      - p2:      end of line segment
-     - padding: text padding, a (top, right, bottom, left) tuple
     """
     name_dx = 0.0
     name_dy = 0.0
@@ -331,7 +328,8 @@ PADDING_HINT = (1, 1, -1)  # padding hint tuple
 EPSILON = 1e-6
 
 
-def _text_point_at_line_center(size, p1, p2, vertical_align, padding):
+# TODO: ditch vertical_align and padding
+def _text_point_at_line_center(size, p1, p2):
     """
     Calculate position of the text relative to a line defined by points
     p1 and p2. Text is aligned using align and padding information.
@@ -343,6 +341,7 @@ def _text_point_at_line_center(size, p1, p2, vertical_align, padding):
      - vertical_align:   text align information, from VerticalAlign
      - padding: text padding, a (top, right, bottom, left) tuple
     """
+    print("_text_point_at_line_center", size, p1, p2)
     x0 = (p1[0] + p2[0]) / 2.0
     y0 = (p1[1] + p2[1]) / 2.0
     dx = p2[0] - p1[0]
@@ -367,10 +366,7 @@ def _text_point_at_line_center(size, p1, p2, vertical_align, padding):
         hint = w2 * d2
 
         x = x0 - w2
-        if vertical_align == VerticalAlign.TOP:
-            y = y0 - height - padding[PADDING_BOTTOM] - hint
-        else:
-            y = y0 + padding[PADDING_TOP] + hint
+        y = y0 + hint
     else:
         # much better in case of vertical lines
 
@@ -383,18 +379,7 @@ def _text_point_at_line_center(size, p1, p2, vertical_align, padding):
         else:
             hint = h2 / d2
 
-        if vertical_align == VerticalAlign.TOP:
-            x = (
-                x0
-                + PADDING_HINT[q] * (padding[PADDING_LEFT] + hint)
-                + width * WIDTH_HINT[q]
-            )
-        else:
-            x = (
-                x0
-                - PADDING_HINT[q] * (padding[PADDING_RIGHT] + hint)
-                + width * R_WIDTH_HINT[q]
-            )
+        x = x0 - hint + width * R_WIDTH_HINT[q]
         y = y0 - h2
 
     return x, y

@@ -62,9 +62,7 @@ def test_text_width_min_height(cr):
     ],
 )
 def test_point_at_left_top(points, point_at_line):
-    x, y = text_point_at_line(
-        points, (10, 5), TextAlign.LEFT, VerticalAlign.TOP, (2, 2, 2, 2)
-    )
+    x, y = text_point_at_line(points, (10, 5), TextAlign.LEFT)
 
     assert x == point_at_line[0]
     assert y == point_at_line[1]
@@ -80,9 +78,7 @@ def test_point_at_left_top(points, point_at_line):
     ],
 )
 def test_point_at_right_top(points, point_at_line):
-    x, y = text_point_at_line(
-        points, (10, 5), TextAlign.RIGHT, VerticalAlign.TOP, (2, 2, 2, 2)
-    )
+    x, y = text_point_at_line(points, (10, 5), TextAlign.RIGHT)
 
     assert x == point_at_line[0]
     assert y == point_at_line[1]
@@ -91,56 +87,25 @@ def test_point_at_right_top(points, point_at_line):
 @pytest.mark.parametrize(
     "points,point_at_line",
     [
-        [[(2.0, 2.0), (22.0, 7.0)], (7, -4.75)],
-        [[(2.0, 2.0), (22.0, -3.0)], (7, -9.75)],
-        [[(2.0, 2.0), (-18.0, 7.0)], (-13, -4.75)],
-        [[(2.0, 2.0), (-18.0, -3.0)], (-13, -9.75)],
-        [[(2.0, 2.0), (7.0, 22.0)], (7.125, 9.5)],
-        [[(2.0, 2.0), (7.0, -18.0)], (-8.125, -10.5)],
-        [[(2.0, 2.0), (-3.0, 22.0)], (-13.125, 9.5)],
-        [[(2.0, 2.0), (-3.0, -18.0)], (2.125, -10.5)],
-        [[(2.0, 2.0), (22.0, 2.0)], (7, -6)],
-        [[(2.0, 2.0), (-18.0, 2.0)], (-13, -6)],
-        [[(2.0, 2.0), (2.0, 22.0)], (-10, 9.5)],
-        [[(2.0, 2.0), (2.0, -18.0)], (-10, -10.5)],
-    ],
-)
-def test_point_at_center_top(points, point_at_line):
-    """
-    Test aligned at the line text position calculation, horizontal mode
-    """
-    x, y = text_point_at_line(
-        points, (10, 5), TextAlign.CENTER, VerticalAlign.TOP, (3, 2, 3, 2)
-    )
-
-    assert x == pytest.approx(point_at_line[0])
-    assert y == pytest.approx(point_at_line[1])
-
-
-@pytest.mark.parametrize(
-    "points,point_at_line",
-    [
-        [[(2.0, 2.0), (22.0, 7.0)], (7, 8.75)],
-        [[(2.0, 2.0), (22.0, -3.0)], (7, 3.75)],
-        [[(2.0, 2.0), (-18.0, 7.0)], (-13, 8.75)],
-        [[(2.0, 2.0), (-18.0, -3.0)], (-13, 3.75)],
-        [[(2.0, 2.0), (7.0, 22.0)], (-8.125, 9.5)],
-        [[(2.0, 2.0), (7.0, -18.0)], (7.125, -10.5)],
-        [[(2.0, 2.0), (-3.0, 22.0)], (2.125, 9.5)],
-        [[(2.0, 2.0), (-3.0, -18.0)], (-13.125, -10.5)],
-        [[(2.0, 2.0), (22.0, 2.0)], (7, 5)],
-        [[(2.0, 2.0), (-18.0, 2.0)], (-13, 5)],
-        [[(2.0, 2.0), (2.0, 22.0)], (4, 9.5)],
-        [[(2.0, 2.0), (2.0, -18.0)], (4, -10.5)],
+        [[(2.0, 2.0), (22.0, 7.0)], (7, 5.75)],
+        [[(2.0, 2.0), (22.0, -3.0)], (7, 0.75)],
+        [[(2.0, 2.0), (-18.0, 7.0)], (-13, 5.75)],
+        [[(2.0, 2.0), (-18.0, -3.0)], (-13, 0.75)],
+        [[(2.0, 2.0), (7.0, 22.0)], (-6.125, 9.5)],
+        [[(2.0, 2.0), (7.0, -18.0)], (3.875, -10.5)],
+        [[(2.0, 2.0), (-3.0, 22.0)], (-1.125, 9.5)],
+        [[(2.0, 2.0), (-3.0, -18.0)], (-11.125, -10.5)],
+        [[(2.0, 2.0), (22.0, 2.0)], (7, 2.0)],
+        [[(2.0, 2.0), (-18.0, 2.0)], (-13, 2.0)],
+        [[(2.0, 2.0), (2.0, 22.0)], (2.0, 9.5)],
+        [[(2.0, 2.0), (2.0, -18.0)], (2.0, -10.5)],
     ],
 )
 def test_point_at_center_bottom(points, point_at_line):
     """
     Test aligned at the line text position calculation, horizontal mode
     """
-    x, y = text_point_at_line(
-        points, (10, 5), TextAlign.CENTER, VerticalAlign.BOTTOM, (3, 2, 3, 2)
-    )
+    x, y = text_point_at_line(points, (10, 5), TextAlign.CENTER)
 
     assert x == pytest.approx(point_at_line[0])
     assert y == pytest.approx(point_at_line[1])

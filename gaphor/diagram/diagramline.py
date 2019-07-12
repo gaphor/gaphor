@@ -173,9 +173,7 @@ class DiagramLine(DiagramItem, gaphas.Line):
         handles = self._handles
         halign, valign = align
 
-        return text_point_at_line(
-            [h.pos for h in self.handles()], extents, halign, valign, padding
-        )
+        return text_point_at_line([h.pos for h in self.handles()], extents, halign)
 
 
 class NamedLine(DiagramLine):
