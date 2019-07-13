@@ -53,7 +53,7 @@ class AssociationItem(LinePresentation):
         self._dir_pos = 0, 0
 
         self.name = FloatingText(text=lambda: self.subject and self.subject.name or "")
-        self.layout = Line(
+        self.shape = Line(
             self.name,
             draw_head=lambda line, context: self.draw_head(line, context),
             draw_tail=lambda line, context: self.draw_tail(line, context),

@@ -20,7 +20,7 @@ class TestElement(ElementPresentation):
 
 class TestLine(LinePresentation):
     def __init__(self, id=None, model=None):
-        super().__init__(id, model, layout=DummyVisualComponent())
+        super().__init__(id, model, shape_middle=DummyVisualComponent())
 
 
 @pytest.fixture

@@ -40,7 +40,8 @@ OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 log = logging.getLogger(__name__)
 
 
-@Connector.when_type(DiagramLine, LinePresentation)
+@Connector.register(DiagramLine)
+@Connector.register(LinePresentation)
 class DiagramItemConnector(ItemConnector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
@@ -357,7 +358,7 @@ class GroupPlacementTool(PlacementTool):
         return item
 
 
-@InMotion.when_type(ElementItem)
+@InMotion.register(ElementItem)
 class DropZoneInMotion(GuidedItemInMotion):
     def move(self, pos):
         """

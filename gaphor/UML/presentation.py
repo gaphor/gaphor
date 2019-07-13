@@ -107,20 +107,45 @@ class ElementPresentation(Presentation, gaphas.Element):
 
 
 class LinePresentation(Presentation, gaphas.Line):
-    def __init__(self, id=None, model=None, layout=None):
+    def __init__(
+        self, id=None, model=None, shape_head=None, shape_middle=None, shape_tail=None
+    ):
         super().__init__(id, model)
-        self.layout = layout
+        self.shape_head = shape_head
+        self.shape_middle = shape_middle
+        self.shape_tail = shape_tail
+
         self.fuzziness = 2
+        self.shape_head_size = None
+        self.shape_middle_size = None
+        self.shape_tail_size = None
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
+    # TODO: in post update, calculate size and x,y for all shapes
     def post_update(self, context):
-        # nothing to do here, since we do our drawing in separate classes.
-        pass
+        super().post_update(context)
+        cr = context.cairo
+        self.shape_head_size = self.shape_head and self.shape_head.size(cr)
+        self.shape_middle_size = self.shape_middle and self.shape_middle.size(cr)
+        self.shape_tail_size = self.shape_tail and self.shape_tail.size(cr)
 
     def draw(self, context):
-        self.layout.draw(context, [h.pos for h in self.handles()])
+        from gaphor.diagram.text import text_point_at_line, TextAlign
+
+        super().draw(context)
+
+        points = [h.pos for h in self.handles()]
+        for shape, size, align in (
+            (self.shape_head, self.shape_head_size, TextAlign.LEFT),
+            (self.shape_middle, self.shape_middle_size, TextAlign.CENTER),
+            (self.shape_tail, self.shape_tail_size, TextAlign.RIGHT),
+        ):
+            if shape:
+                # TODO: reduce to a simple point_at_line:
+                x, y = text_point_at_line(points, size, align)
+                shape.draw(context, Rectangle(x, y, *size))
 
     def save(self, save_func):
         def save_connection(name, handle):

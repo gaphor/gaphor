@@ -4,9 +4,8 @@ Action diagram item.
 
 from gaphor import UML
 from gaphor.UML.presentation import ElementPresentation
-from gaphor.diagram.text import TextBox
 from gaphor.diagram.support import represents
-from gaphor.diagram.shapes import Box
+from gaphor.diagram.shapes import Box, EditableText, draw_boundry
 
 
 @represents(UML.Action)
@@ -17,7 +16,7 @@ class ActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
-        name = TextBox(text=lambda: self.subject and self.subject.name or "")
+        name = EditableText(text=lambda: self.subject and self.subject.name or "")
         self.watch("subject<NamedElement>.name")
 
         self.shape = Box(
@@ -29,6 +28,7 @@ class ActionItem(ElementPresentation):
                 "border-radius": 15,
                 "border": True,
             },
+            draw=draw_boundry,
         )
 
 
@@ -40,7 +40,7 @@ class SendSignalActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
-        name = TextBox()
+        name = EditableText(text=lambda: self.subject and self.subject.name or "")
 
         self.watch("subject<NamedElement>.name")
 
@@ -72,7 +72,7 @@ class AcceptEventActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
-        name = TextBox(style={})
+        name = EditableText(text=lambda: self.subject and self.subject.name or "")
 
         self.watch("subject<NamedElement>.name")
 

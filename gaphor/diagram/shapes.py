@@ -1,8 +1,17 @@
 from math import pi, atan2
 from gaphas.geometry import Rectangle
 
+from gaphor.diagram.text import (
+    text_point_in_box,
+    text_size,
+    text_draw,
+    text_draw_focus_box,
+    TextAlign,
+    VerticalAlign,
+)
 
-def draw_default_box(box, context, bounding_box):
+
+def draw_boundry(box, context, bounding_box):
     cr = context.cairo
     d = box.style("border-radius")
     x, y, width, height = bounding_box
@@ -26,8 +35,19 @@ def draw_default_box(box, context, bounding_box):
 
 
 class Box:
-    def __init__(self, *children, style={}, draw=draw_default_box):
+    """
+    A box like shape.
+
+    CSS properties:
+    - min-height
+    - min-width
+    - padding: a tuple (top, right, bottom, left)
+
+    """
+
+    def __init__(self, *children, style={}, draw=None):
         self.children = children
+        self.sizes = []
         self.style = {
             "min-width": 0,
             "min-height": 0,
@@ -41,7 +61,7 @@ class Box:
         min_width = style("min-width")
         min_height = style("min-height")
         padding = style("padding")
-        sizes = [c.size(cr) for c in self.children]
+        self.sizes = sizes = [c.size(cr) for c in self.children]
         if sizes:
             widths, heights = list(zip(*sizes))
             return (
@@ -49,37 +69,86 @@ class Box:
                 max(min_height, sum(heights) + padding[0] + padding[2]),
             )
         else:
-            return 0, 0
+            return min_width, min_height
 
     def draw(self, context, bounding_box):
+        padding = self.style("padding")
         if self._draw_border:
             self._draw_border(self, context, bounding_box)
+        x = bounding_box.x + padding[3]
+        y = bounding_box.y + padding[0]
+        w = bounding_box.width - padding[1] - padding[3]
+        for c, (_w, h) in zip(self.children, self.sizes):
+            c.draw(context, Rectangle(x, y, w, h))
+            y += h
+
+
+class Text:
+    def __init__(self, text=lambda: "", width=lambda: -1, style={}):
+        self.text = text if callable(text) else lambda: text
+        self.width = width if callable(width) else lambda: width
+        self.style = {
+            "width": -1,
+            "min-width": 30,
+            "min-height": 14,
+            "font": "sans 10",
+            "text-align": TextAlign.CENTER,
+            "vertical-align": VerticalAlign.MIDDLE,
+            "padding": (0, 0, 0, 0),
+            **style,
+        }.__getitem__
+
+    def size(self, cr):
+        min_w = self.style("min-width")
+        min_h = self.style("min-height")
+        font = self.style("font")
+
+        w, h = text_size(cr, self.text(), font, self.width())
+        return max(min_w, w), max(min_h, h)
+
+    def draw(self, context, bounding_box):
+        cr = context.cairo
+        min_w = self.style("min-width")
+        min_h = self.style("min-height")
+        font = self.style("font")
+        text_align = self.style("text-align")
+        vertical_align = self.style("vertical-align")
         padding = self.style("padding")
-        child_bb = Rectangle(
-            bounding_box.x + padding[3],
-            bounding_box.y + padding[0],
-            bounding_box.width - padding[1] - padding[3],
-            bounding_box.height - padding[0] - padding[2],
+
+        x, y, w, h = text_draw(
+            cr,
+            self.text(),
+            font,
+            lambda w, h: text_point_in_box(
+                bounding_box, (w, h), text_align, vertical_align, padding
+            ),
+            width=bounding_box.width,
+            default_size=(min_w, min_h),
         )
-        for c in self.children:
-            c.draw(context, child_bb)
+        return x, y, w, h
 
 
-def draw_default_head(line, context):
+class EditableText(Text):
+    def draw(self, context, bounding_box):
+        x, y, w, h = super().draw(context, bounding_box)
+        text_draw_focus_box(context, x, y, w, h)
+
+
+def draw_default_head(context):
     """
     Default head drawer: move cursor to the first handle.
     """
     context.cairo.move_to(0, 0)
 
 
-def draw_default_tail(line, context):
+def draw_default_tail(context):
     """
     Default tail drawer: draw line to the last handle.
     """
     context.cairo.line_to(0, 0)
 
 
-def draw_arrow_tail(line, context):
+def draw_arrow_tail(context):
     cr = context.cairo
     cr.line_to(0, 0)
     cr.stroke()
@@ -89,6 +158,15 @@ def draw_arrow_tail(line, context):
 
 
 class Line:
+    """
+    A line, rendered based on a list of points (Position objects).
+
+    CSS properties:
+
+    - line-width
+    - dash-style: tuple of floats (line, spacing, ...)
+    """
+
     def __init__(
         self,
         *children,
@@ -111,7 +189,7 @@ class Line:
             try:
                 cr.translate(*p0)
                 cr.rotate(angle)
-                draw(self, context)
+                draw(context)
             finally:
                 cr.restore()
 

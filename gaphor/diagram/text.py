@@ -228,8 +228,6 @@ def text_point_at_line(points, size, text_align):
      - points:  the line points, a list of (x, y) points
      - size:    size of the text, a (width, height) tuple
      - text_align: alignment to the line: left, beginning of the line, center, middle and right: end of the line
-     - vertical_align: vertical alignment of the text relative to the line
-     - padding: text padding, a (top, right, bottom, left) tuple
     """
 
     if text_align == TextAlign.LEFT:
@@ -317,18 +315,11 @@ def _text_point_at_line_end(size, p1, p2):
     return p1[0] + name_dx, p1[1] + name_dy
 
 
-# padding
-PADDING_TOP, PADDING_RIGHT, PADDING_BOTTOM, PADDING_LEFT = list(range(4))
-
 # hint tuples to move text depending on quadrant
-WIDTH_HINT = (0, 0, -1)  # width hint tuple
-R_WIDTH_HINT = (-1, -1, 0)  # width hint tuple
-PADDING_HINT = (1, 1, -1)  # padding hint tuple
-
+WIDTH_HINT = (-1, -1, 0)  # width hint tuple
 EPSILON = 1e-6
 
 
-# TODO: ditch vertical_align and padding
 def _text_point_at_line_center(size, p1, p2):
     """
     Calculate position of the text relative to a line defined by points
@@ -341,7 +332,6 @@ def _text_point_at_line_center(size, p1, p2):
      - vertical_align:   text align information, from VerticalAlign
      - padding: text padding, a (top, right, bottom, left) tuple
     """
-    print("_text_point_at_line_center", size, p1, p2)
     x0 = (p1[0] + p2[0]) / 2.0
     y0 = (p1[1] + p2[1]) / 2.0
     dx = p2[0] - p1[0]
@@ -379,7 +369,7 @@ def _text_point_at_line_center(size, p1, p2):
         else:
             hint = h2 / d2
 
-        x = x0 - hint + width * R_WIDTH_HINT[q]
+        x = x0 - hint + width * WIDTH_HINT[q]
         y = y0 - h2
 
     return x, y
