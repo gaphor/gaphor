@@ -25,11 +25,6 @@ class FlowItem(LinePresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self.name = EditableText(
-            text=lambda: self.subject and self.subject.name or "",
-            # style={"vertical-align": VerticalAlign.TOP},
-        )
-
         def stereotype_text():
             s = (
                 self.subject
@@ -42,13 +37,10 @@ class FlowItem(LinePresentation):
             )
             return s and f"«{s}»" or ""
 
-        self.stereotype = Text(
-            text=stereotype_text,
-            # style={"vertical-align": VerticalAlign.TOP, "min-width": 0, "min-height": 0},
-            style={"min-width": 0, "min-height": 0},
+        self.shape_tail = Box(
+            Text(text=stereotype_text, style={"min-width": 0, "min-height": 0}),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
-
-        self.shape_tail = Box(self.stereotype, self.name)
 
         self.watch("subject<NamedElement>.name")
         self.watch("subject.appliedStereotype.classifier.name")

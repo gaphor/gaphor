@@ -13,13 +13,15 @@ class FlowTestCase(TestCase):
         Test updating of flow name text.
         """
         flow = self.create(FlowItem, UML.ControlFlow)
+        name = flow.shape_tail.children[1]
+
         flow.subject.name = "Blah"
 
-        assert "Blah" == flow.name.text()
+        assert "Blah" == name.text()
 
         flow.subject = None
 
-        assert "" == flow.name.text()
+        assert "" == name.text()
 
     def test_guard_text_update(self):
         flow = self.create(FlowItem, UML.ControlFlow)
