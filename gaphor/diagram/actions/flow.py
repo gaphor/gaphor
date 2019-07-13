@@ -12,7 +12,7 @@ from gaphor.UML.presentation import LinePresentation
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.diagram.support import represents
-from gaphor.diagram.shapes import Box, Line, Text, EditableText, draw_arrow_tail
+from gaphor.diagram.shapes import Box, Text, EditableText, draw_arrow_tail
 
 
 @represents(UML.ControlFlow)

@@ -1,9 +1,27 @@
+import pytest
 import cairo
 
-from gaphor.diagram.shapes import Box, Line
-from gaphor.diagram.text import TextBox, FloatingText
+from gaphor.diagram.shapes import Box, Text
 from gaphas.canvas import Context
 from gaphas.geometry import Rectangle
+
+
+@pytest.fixture
+def fixed_text_size(monkeypatch):
+    size = (60, 15)
+
+    def text_size(*args):
+        return size
+
+    monkeypatch.setattr("gaphor.diagram.shapes.text_size", text_size)
+    return size
+
+
+@pytest.fixture
+def cr():
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
+    cr = cairo.Context(surface)
+    return cr
 
 
 def cairo_mock_context(recorder):
@@ -52,26 +70,31 @@ def test_draw_box_with_custom_draw_function():
     assert called
 
 
-def test_draw_line():
-    line = Line()
-    events = []
-    cr = cairo_mock_context(events.append)
-    points = [(0, 0), (100, 100)]
+def test_text_has_width(cr, fixed_text_size):
+    text = Text(lambda: "some text")
 
-    line.draw(context=Context(cairo=cr), points=points)
+    w, _ = text.size(cr)
+    assert w == fixed_text_size[0]
 
 
-def test_draw_line_with_text():
-    line = Line(FloatingText())
-    events = []
-    cr = cairo_mock_context(events.append)
-    points = [(0, 0), (100, 100)]
+def test_text_has_height(cr, fixed_text_size):
+    text = Text("some text")
 
-    line.draw(context=Context(cairo=cr, hovered=1, selected=0), points=points)
+    _, h = text.size(cr)
+    assert h == fixed_text_size[1]
 
-    assert ("move_to", (0, 0)) in events
 
-    # Endpoint is translated, then drawn, so arrows can draw
-    # themselves relative to their own origin.
-    assert ("translate", (100, 100)) in events
-    assert ("line_to", (0, 0)) in events
+def test_text_with_min_width(cr):
+    style = {"min-width": 100, "min-height": 0}
+    text = Text("some text", style=style)
+
+    w, _ = text.size(cr)
+    assert w == 100
+
+
+def test_text_width_min_height(cr):
+    style = {"min-width": 0, "min-height": 40}
+    text = Text("some text", style=style)
+
+    _, h = text.size(cr)
+    assert h == 40

@@ -8,8 +8,8 @@ from gaphor import UML
 from gaphor.UML.presentation import ElementPresentation
 
 # from gaphor.diagram.textelement import text_multiline, text_extents
-from gaphor.diagram.shapes import Box
-from gaphor.diagram.text import TextBox, TextAlign, VerticalAlign, text_size
+from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.text import TextAlign, VerticalAlign, text_size
 from gaphor.diagram.support import represents
 
 
@@ -23,7 +23,7 @@ class CommentItem(ElementPresentation):
         self.height = 50
         self.width = 100
 
-        self.body = TextBox(
+        self.body = Text(
             text=lambda: self.subject and self.subject.body or "",
             width=lambda: self.width - EAR - 2 * OFFSET,
             style={"text-align": TextAlign.LEFT, "vertical-align": VerticalAlign.TOP},
