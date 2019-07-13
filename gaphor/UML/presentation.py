@@ -108,9 +108,18 @@ class ElementPresentation(Presentation, gaphas.Element):
 
 class LinePresentation(Presentation, gaphas.Line):
     def __init__(
-        self, id=None, model=None, shape_head=None, shape_middle=None, shape_tail=None
+        self,
+        id=None,
+        model=None,
+        style={},
+        shape_head=None,
+        shape_middle=None,
+        shape_tail=None,
     ):
         super().__init__(id, model)
+
+        self.style = {"dash-style": (), "line-width": 2, **style}.__getitem__
+
         self.shape_head = shape_head
         self.shape_middle = shape_middle
         self.shape_tail = shape_tail
@@ -133,6 +142,11 @@ class LinePresentation(Presentation, gaphas.Line):
 
     def draw(self, context):
         from gaphor.diagram.text import text_point_at_line, TextAlign
+
+        cr = context.cairo
+        cr.set_line_width(self.style("line-width"))
+        if self.style("dash-style"):
+            cr.set_dash(self.style("dash-style"), 0)
 
         super().draw(context)
 

@@ -10,8 +10,7 @@ from gaphor.diagram.shapes import Line
 
 class CommentLineItem(LinePresentation):
     def __init__(self, id=None, model=None):
-        super().__init__(id, model)
-        self.shape = Line(style={"dash-style": (7.0, 5.0)})
+        super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
 
     def unlink(self):
         canvas = self.canvas
