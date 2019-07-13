@@ -5,7 +5,7 @@ Connect comments.
 import logging
 
 from gaphor import UML
-from gaphor.UML.presentation import ElementPresentation, LinePresentation
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.general.comment import CommentItem

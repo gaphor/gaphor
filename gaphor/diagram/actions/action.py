@@ -3,7 +3,7 @@ Action diagram item.
 """
 
 from gaphor import UML
-from gaphor.UML.presentation import ElementPresentation
+from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.support import represents
 from gaphor.diagram.shapes import Box, EditableText, draw_boundry
 

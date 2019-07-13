@@ -8,7 +8,7 @@ from math import atan, atan2, pi, sin, cos
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotype_name
-from gaphor.UML.presentation import LinePresentation
+from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.diagram.support import represents

@@ -20,7 +20,7 @@ from gaphas.state import reversible_property
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotype_name
-from gaphor.UML.presentation import LinePresentation
+from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import (
     Box,
     EditableText,

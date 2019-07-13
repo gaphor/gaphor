@@ -3,7 +3,7 @@ CommentLine -- A line that connects a comment to another model element.
 
 """
 
-from gaphor.UML.presentation import LinePresentation
+from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.connectors import IConnect
 
 

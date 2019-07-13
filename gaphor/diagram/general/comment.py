@@ -5,7 +5,7 @@ CommentItem diagram item
 from gaphas.item import NW
 
 from gaphor import UML
-from gaphor.UML.presentation import ElementPresentation
+from gaphor.diagram.presentation import ElementPresentation
 
 # from gaphor.diagram.textelement import text_multiline, text_extents
 from gaphor.diagram.shapes import Box, Text

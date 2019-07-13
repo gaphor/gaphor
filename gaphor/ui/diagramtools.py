@@ -23,7 +23,7 @@ from gaphas.tool import (
 from gi.repository import Gdk
 from gi.repository import Gtk
 
-from gaphor.UML.presentation import LinePresentation
+from gaphor.diagram.presentation import LinePresentation
 from gaphor.core import Transaction, transactional
 from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.elementitem import ElementItem
