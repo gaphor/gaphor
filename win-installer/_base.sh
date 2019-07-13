@@ -81,43 +81,40 @@ function extract_installer {
 }
 
 function install_deps {
-    # Temporarily using our own remote repository while waiting for
-    # https://github.com/msys2/MINGW-packages/pull/5114 to be merged
-    mkdir -p "$BUILD_ROOT"/etc
-    cp "${DIR}"/pacman.conf "$BUILD_ROOT"/etc/
     build_pacman --noconfirm -Syu
 
     build_pacman --noconfirm -S \
         mingw-w64-"${ARCH}"-gtk3 \
         mingw-w64-"${ARCH}"-python3 \
         mingw-w64-"${ARCH}"-python3-gobject \
-	mingw-w64-"${ARCH}"-gobject-introspection \
+	    mingw-w64-"${ARCH}"-gobject-introspection \
         mingw-w64-"${ARCH}"-python3-cairo \
         mingw-w64-"${ARCH}"-python3-pip \
-        mingw-w64-"${ARCH}"-python3-setuptools
+        mingw-w64-"${ARCH}"-python3-setuptools \
+    	mingw-w64-"${ARCH}"-python3-importlib-metadata
 
     # Temporary workaround until mingw64 python3 is patched
     # Line 296 changed to not raise a VC 6.0 version error
     cp "${DIR}"/msvc9compiler "${MINGW_ROOT}"/lib/python3.7/distutils/msvc9compiler.py
 
     PIP_REQUIREMENTS="\
-        pycairo==1.18.0
-        PyGObject==3.30.4
-        gaphas==1.0.0
-        tomlkit==0.5.3
+        pycairo==1.18.1
+        PyGObject==3.32.2
+        gaphas==1.1.1
+        tomlkit==0.5.5
         "
     build_pip install -I $(echo "$PIP_REQUIREMENTS" | tr ["\\n"] [" "])
 
 }
 
-# function get_version {
-# 	python3 - <<END
-# from tomlkit import parse
-# with open('../pyproject.toml', 'r') as f:
-# 	parsed_toml = parse(f.read())
-# 	print(parsed_toml["tool"]["poetry"]["version"])
-# END
-# }
+function get_version {
+	python3 - <<END
+from tomlkit import parse
+with open('../pyproject.toml', 'r') as f:
+	parsed_toml = parse(f.read())
+	print(parsed_toml["tool"]["poetry"]["version"])
+END
+}
 
 function install_gaphor {
     [ -z "$1" ] && (echo "Missing arg"; exit 1)
@@ -128,10 +125,6 @@ function install_gaphor {
     cd "${REPO_CLONE}"
     git checkout "$1" 
     
-    # Don't use PEP517 until Poetry unicode issues resolved
-    # https://github.com/sdispater/poetry/pull/1029
-    rm pyproject.toml
-
     build_python setup.py install
 
     cd "${DIR}"
