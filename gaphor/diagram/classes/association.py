@@ -19,10 +19,16 @@ from gaphas.geometry import distance_rectangle_point
 from gaphas.state import reversible_property
 
 from gaphor import UML
+from gaphor.UML.modelfactory import stereotype_name
 from gaphor.UML.presentation import LinePresentation
-from gaphor.diagram.shapes import Line, draw_default_head, draw_default_tail
+from gaphor.diagram.shapes import (
+    Box,
+    EditableText,
+    Text,
+    draw_default_head,
+    draw_default_tail,
+)
 from gaphor.diagram.text import (
-    FloatingText,
     text_size,
     text_draw,
     text_draw_focus_box,
@@ -52,18 +58,30 @@ class AssociationItem(LinePresentation):
         self._dir_angle = 0
         self._dir_pos = 0, 0
 
-        self.name = FloatingText(text=lambda: self.subject and self.subject.name or "")
-        self.shape = Line(
-            self.name,
-            draw_head=lambda line, context: self.draw_head(line, context),
-            draw_tail=lambda line, context: self.draw_tail(line, context),
+        def stereotype_text():
+            s = (
+                self.subject
+                and ", ".join(
+                    map(
+                        stereotype_name, self.subject.appliedStereotype[:].classifier[:]
+                    )
+                )
+                or ""
+            )
+            return s and f"«{s}»" or ""
+
+        self.shape_middle = Box(
+            Text(text=stereotype_text, style={"min-width": 0, "min-height": 0}),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
         # For the association ends:
         base = "subject<Association>.memberEnd<Property>"
         self.watch("subject<NamedElement>.name").watch(
-            f"{base}.name", self.on_association_end_value
-        ).watch(f"{base}.aggregation", self.on_association_end_value).watch(
+            "subject.appliedStereotype.classifier.name"
+        ).watch(f"{base}.name", self.on_association_end_value).watch(
+            f"{base}.aggregation", self.on_association_end_value
+        ).watch(
             f"{base}.classifier", self.on_association_end_value
         ).watch(
             f"{base}.visibility", self.on_association_end_value
@@ -78,14 +96,7 @@ class AssociationItem(LinePresentation):
         ).watch(
             f"{base}.type<Interface>.ownedAttribute", self.on_association_end_value
         ).watch(
-            f"{base}.appliedStereotype", self.on_association_end_value
-        ).watch(
-            f"{base}.appliedStereotype.slot", self.on_association_end_value
-        ).watch(
-            f"{base}.appliedStereotype.slot.definingFeature.name",
-            self.on_association_end_value,
-        ).watch(
-            f"{base}.appliedStereotype.slot.value", self.on_association_end_value
+            f"{base}.appliedStereotype.classifier", self.on_association_end_value
         ).watch(
             "subject<Association>.ownedEnd"
         ).watch(
