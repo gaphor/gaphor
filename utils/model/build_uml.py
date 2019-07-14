@@ -23,11 +23,11 @@ class build_uml(Command):
     boolean_options = ["force"]
 
     def initialize_options(self):
-        # self.build_lib = None
-        self.force = 0
+        self.force = None
 
     def finalize_options(self):
-        self.set_undefined_options(("force", "force"))
+        if self.force is None:
+            self.force = False
 
     def run(self):
         generate_uml2(self.force)
