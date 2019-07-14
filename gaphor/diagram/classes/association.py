@@ -19,7 +19,7 @@ from gaphas.geometry import distance_rectangle_point
 from gaphas.state import reversible_property
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotype_name
+from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import (
     Box,
@@ -58,20 +58,11 @@ class AssociationItem(LinePresentation):
         self._dir_angle = 0
         self._dir_pos = 0, 0
 
-        def stereotype_text():
-            s = (
-                self.subject
-                and ", ".join(
-                    map(
-                        stereotype_name, self.subject.appliedStereotype[:].classifier[:]
-                    )
-                )
-                or ""
-            )
-            return s and f"«{s}»" or ""
-
         self.shape_middle = Box(
-            Text(text=stereotype_text, style={"min-width": 0, "min-height": 0}),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 

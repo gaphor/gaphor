@@ -11,9 +11,6 @@ Functions collected in this module allow to
 import itertools
 from gaphor.UML.uml2 import *
 
-# '<<%s>>'
-STEREOTYPE_FMT = "<<%s>>"
-
 
 def stereotypes_str(element, stereotypes=()):
     """
@@ -33,7 +30,7 @@ def stereotypes_str(element, stereotypes=()):
         applied = ()
     s = ", ".join(itertools.chain(stereotypes, applied))
     if s:
-        return STEREOTYPE_FMT % s
+        return f"«{s}»"
     else:
         return ""
 

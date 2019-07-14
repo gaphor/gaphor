@@ -306,7 +306,7 @@ class CompartmentItem(NamedItem):
     def _create_stereotype_compartment(self, obj):
         st = obj.classifier[0].name
         c = Compartment(st, self, obj)
-        c.title = UML.model.STEREOTYPE_FMT % st
+        c.title = f"«{st}»"
         c.font = self.style.feature_font
         self._update_stereotype_compartment(c, obj)
         self._compartments.append(c)

@@ -7,7 +7,7 @@ Contains also implementation to split flows using activity edge connectors.
 from math import atan, atan2, pi, sin, cos
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotype_name
+from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.diagramline import NamedLine
 from gaphor.diagram.text import TextAlign, VerticalAlign
@@ -25,20 +25,11 @@ class FlowItem(LinePresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        def stereotype_text():
-            s = (
-                self.subject
-                and ", ".join(
-                    map(
-                        stereotype_name, self.subject.appliedStereotype[:].classifier[:]
-                    )
-                )
-                or ""
-            )
-            return s and f"«{s}»" or ""
-
         self.shape_tail = Box(
-            Text(text=stereotype_text, style={"min-width": 0, "min-height": 0}),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
