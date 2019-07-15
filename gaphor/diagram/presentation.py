@@ -1,7 +1,7 @@
 import ast
 
 import gaphas
-from gaphas.geometry import Rectangle
+from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.UML import Presentation
 from gaphor.diagram.text import text_point_at_line, TextAlign
@@ -88,6 +88,21 @@ class LinePresentation(Presentation, gaphas.Line):
         self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
         self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
+
+    def point(self, pos):
+        """Given a point (x, y) return the distance to the canvas item.
+        """
+        d0 = super().point(pos)
+        ds = [
+            distance_rectangle_point(shape, pos)
+            for shape in (
+                self._shape_head_rect,
+                self._shape_middle_rect,
+                self._shape_tail_rect,
+            )
+            if shape
+        ]
+        return min(d0, *ds)
 
     def draw(self, context):
         cr = context.cairo
