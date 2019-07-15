@@ -3,32 +3,24 @@ Use case inclusion relationship.
 """
 
 from gaphor import UML
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.shapes import Text, draw_arrow_head
+from gaphor.diagram.support import represents
 
 
-class IncludeItem(DiagramLine):
+@represents(UML.Include)
+class IncludeItem(LinePresentation):
     """
     Use case inclusion relationship.
     """
 
-    __uml__ = UML.Include
-    __stereotype__ = "include"
-
     def __init__(self, id=None, model=None):
-        DiagramLine.__init__(self, id, model)
+        super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
 
-    def draw_head(self, context):
-        cr = context.cairo
-        cr.set_dash((), 0)
-        cr.move_to(15, -6)
-        cr.line_to(0, 0)
-        cr.line_to(15, 6)
-        cr.stroke()
-        cr.move_to(0, 0)
-
-    def draw(self, context):
-        context.cairo.set_dash((7.0, 5.0), 0)
-        super(IncludeItem, self).draw(context)
-
-
-# vim:sw=4:et
+        self.shape_middle = Text(
+            text=lambda: stereotypes_str(self.subject, ("include",)),
+            style={"min-width": 0, "min-height": 0},
+        )
+        self.watch("subject.appliedStereotype.classifier.name")
+        self.draw_head = draw_arrow_head

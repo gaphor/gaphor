@@ -171,6 +171,16 @@ def draw_default_tail(context):
     context.cairo.line_to(0, 0)
 
 
+def draw_arrow_head(context):
+    cr = context.cairo
+    cr.set_dash((), 0)
+    cr.move_to(15, -6)
+    cr.line_to(0, 0)
+    cr.line_to(15, 6)
+    cr.stroke()
+    cr.move_to(0, 0)
+
+
 def draw_arrow_tail(context):
     cr = context.cairo
     cr.line_to(0, 0)
