@@ -56,7 +56,7 @@ class LinePresentation(Presentation, gaphas.Line):
     ):
         super().__init__(id, model)
 
-        self.style = {"dash-style": (), "line-width": 2, **style}.__getitem__
+        self._style = {"dash-style": (), "line-width": 2, **style}
 
         self.shape_head = shape_head
         self.shape_middle = shape_middle
@@ -69,6 +69,11 @@ class LinePresentation(Presentation, gaphas.Line):
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
+
+    style = property(
+        lambda self: self._style.__getitem__,
+        lambda self, style: self._style.update(style),
+    )
 
     # TODO: in post update, calculate size and x,y for all shapes
     def post_update(self, context):

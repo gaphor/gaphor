@@ -22,6 +22,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import Box, Text
 from gaphor.diagram.support import represents
+from gaphor.diagram.classes.interface import InterfacePort
 
 
 @represents(UML.Dependency)
@@ -42,7 +43,6 @@ class DependencyItem(LinePresentation):
         super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
 
         self._dependency_type = UML.Dependency
-        self._solid = False
         # auto_dependency is used by connection logic, not in this class itself
         self.auto_dependency = True
 
@@ -75,6 +75,21 @@ class DependencyItem(LinePresentation):
             self._dependency_type = self.subject.__class__
         super().postload()
 
+    def connected_to_folded_interface(self):
+        connection = self.canvas.get_connection(self.head)
+        return (
+            connection
+            and isinstance(connection.port, InterfacePort)
+            and connection.connected.folded
+        )
+
+    def post_update(self, context):
+        super().post_update(context)
+        if self.connected_to_folded_interface():
+            self.style = {"dash-style": ()}
+        else:
+            self.style = {"dash-style": (7.0, 5.0)}
+
     def set_dependency_type(self, dependency_type):
         self._dependency_type = dependency_type
 
@@ -82,7 +97,7 @@ class DependencyItem(LinePresentation):
 
     def draw_head(self, context):
         cr = context.cairo
-        if not self._solid:
+        if self.style("dash-style"):
             cr.set_dash((), 0)
             cr.move_to(15, -6)
             cr.line_to(0, 0)

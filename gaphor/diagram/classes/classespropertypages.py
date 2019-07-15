@@ -182,7 +182,6 @@ class InterfacePropertyPage(NamedItemPropertyPage):
             if fold and isinstance(line, DependencyItem):
                 item.folded = item.FOLDED_REQUIRED
 
-            line._solid = fold
             constraint = line.canvas.get_connection(line.head).constraint
             constraint.ratio_x = 0.5
             constraint.ratio_y = 0.5
