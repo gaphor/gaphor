@@ -221,7 +221,8 @@ def _text_point_at_line_end(size, p1, p2):
 
 
 # hint tuples to move text depending on quadrant
-WIDTH_HINT = (-1, -1, 0)  # width hint tuple
+WIDTH_HINT = (-1, -1, 0)
+PADDING_HINT = (1, 1, -1)
 EPSILON = 1e-6
 
 
@@ -239,6 +240,7 @@ def _text_point_at_line_center(size, p1, p2):
     y0 = (p1[1] + p2[1]) / 2.0
     dx = p2[0] - p1[0]
     dy = p2[1] - p1[1]
+    ofs = 3
 
     if abs(dx) < EPSILON:
         d1 = -1.0
@@ -259,7 +261,7 @@ def _text_point_at_line_center(size, p1, p2):
         hint = w2 * d2
 
         x = x0 - w2
-        y = y0 + hint
+        y = y0 + hint + ofs
     else:
         # much better in case of vertical lines
 
@@ -273,6 +275,7 @@ def _text_point_at_line_center(size, p1, p2):
             hint = h2 / d2
 
         x = x0 - hint + width * WIDTH_HINT[q]
+        x = x0 - (ofs + hint) * PADDING_HINT[q] + width * WIDTH_HINT[q]
         y = y0 - h2
 
     return x, y
