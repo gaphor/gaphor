@@ -63,9 +63,9 @@ class LinePresentation(Presentation, gaphas.Line):
         self.shape_tail = shape_tail
 
         self.fuzziness = 2
-        self.shape_head_size = None
-        self.shape_middle_size = None
-        self.shape_tail_size = None
+        self._shape_head_rect = None
+        self._shape_middle_rect = None
+        self._shape_tail_rect = None
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
@@ -75,13 +75,19 @@ class LinePresentation(Presentation, gaphas.Line):
         lambda self, style: self._style.update(style),
     )
 
-    # TODO: in post update, calculate size and x,y for all shapes
     def post_update(self, context):
+        def shape_bounds(shape, align):
+            if shape:
+                size = shape.size(cr)
+                x, y = text_point_at_line(points, size, align)
+                return Rectangle(x, y, *size)
+
         super().post_update(context)
         cr = context.cairo
-        self.shape_head_size = self.shape_head and self.shape_head.size(cr)
-        self.shape_middle_size = self.shape_middle and self.shape_middle.size(cr)
-        self.shape_tail_size = self.shape_tail and self.shape_tail.size(cr)
+        points = [h.pos for h in self.handles()]
+        self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
+        self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
+        self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
 
     def draw(self, context):
         cr = context.cairo
@@ -91,16 +97,13 @@ class LinePresentation(Presentation, gaphas.Line):
 
         super().draw(context)
 
-        points = [h.pos for h in self.handles()]
-        for shape, size, align in (
-            (self.shape_head, self.shape_head_size, TextAlign.LEFT),
-            (self.shape_middle, self.shape_middle_size, TextAlign.CENTER),
-            (self.shape_tail, self.shape_tail_size, TextAlign.RIGHT),
+        for shape, rect in (
+            (self.shape_head, self._shape_head_rect),
+            (self.shape_middle, self._shape_middle_rect),
+            (self.shape_tail, self._shape_tail_rect),
         ):
             if shape:
-                # TODO: reduce to a simple point_at_line:
-                x, y = text_point_at_line(points, size, align)
-                shape.draw(context, Rectangle(x, y, *size))
+                shape.draw(context, rect)
 
     def save(self, save_func):
         def save_connection(name, handle):

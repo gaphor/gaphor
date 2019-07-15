@@ -157,10 +157,10 @@ class InterfaceConnectTestCase(TestCase):
         # test preconditions
         assert not pport.provided and not pport.required
         assert not rport.provided and not rport.required
-        assert iface._angle == 0.0
+        assert iface.angle == 0.0
 
         self.connect(line, line.head, iface, pport)
-        assert rport.angle == iface._angle
+        assert rport.angle == iface.angle
 
     def test_connection_of_two_connectors_one_side(self):
         """Test connection of two connectors to required port of an interface
@@ -235,7 +235,7 @@ class InterfaceConnectTestCase(TestCase):
 
         self.disconnect(line, line.head)
         assert iface.FOLDED_PROVIDED == iface.folded
-        assert iface._angle == 0
+        assert iface.angle == 0
         assert iface._name.is_visible()
 
         assert not any(p.provided for p in iface.ports())

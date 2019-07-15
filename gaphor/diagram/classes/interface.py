@@ -94,19 +94,13 @@ class InterfacePort(LinePort):
     The rotation angle shall be used to determine rotation of required
     interface notation (socket's arc is in the same direction as the
     angle).
-
-    :IVariables:
-     angle
-        Rotation angle.
-     iface
-        Interface owning port.
-
     """
 
-    def __init__(self, start, end, iface, angle):
+    def __init__(self, start, end, is_folded, angle):
         super(InterfacePort, self).__init__(start, end)
+        self.is_folded = is_folded
+        # Used by connection logic:
         self.angle = angle
-        self.iface = iface
         self.required = False
         self.provided = False
 
@@ -115,15 +109,14 @@ class InterfacePort(LinePort):
         Behaves like simple line port, but for folded interface suggests
         connection to the middle point of a port.
         """
-        if self.iface.folded:
+        if self.is_folded():
             px = (self.start.x + self.end.x) / 2
             py = (self.start.y + self.end.y) / 2
             d = distance_point_point((px, py), pos)
             return (px, py), d
         else:
-            p1 = self.start
             p2 = self.end
-            d, pl = distance_line_point(p1, p2, pos)
+            d, pl = distance_line_point(self.start, self.end, pos)
             return pl, d
 
 
@@ -163,7 +156,7 @@ class InterfaceItem(ClassItem):
     def __init__(self, id=None, model=None):
         ClassItem.__init__(self, id, model)
         self._folded = self.FOLDED_NONE
-        self._angle = 0
+        self.angle = 0
         old_f = self._name.is_visible
         self._name.is_visible = lambda: old_f() and self._folded != self.FOLDED_ASSEMBLY
 
@@ -175,10 +168,10 @@ class InterfaceItem(ClassItem):
 
         # edge of element define default element ports
         self._ports = [
-            InterfacePort(h_nw.pos, h_ne.pos, self, 0),
-            InterfacePort(h_ne.pos, h_se.pos, self, pi / 2),
-            InterfacePort(h_se.pos, h_sw.pos, self, pi),
-            InterfacePort(h_sw.pos, h_nw.pos, self, pi * 1.5),
+            InterfacePort(h_nw.pos, h_ne.pos, self._is_folded, 0),
+            InterfacePort(h_ne.pos, h_se.pos, self._is_folded, pi / 2),
+            InterfacePort(h_se.pos, h_sw.pos, self._is_folded, pi),
+            InterfacePort(h_sw.pos, h_nw.pos, self._is_folded, pi * 1.5),
         ]
 
         self.watch(
@@ -265,15 +258,11 @@ class InterfaceItem(ClassItem):
         cr = context.cairo
         h_nw = self._handles[NW]
         cx, cy = (h_nw.pos.x + self.width / 2, h_nw.pos.y + self.height / 2)
-        required = (
-            self._folded == self.FOLDED_REQUIRED or self._folded == self.FOLDED_ASSEMBLY
-        )
-        provided = (
-            self._folded == self.FOLDED_PROVIDED or self._folded == self.FOLDED_ASSEMBLY
-        )
+        required = self._folded in (self.FOLDED_REQUIRED, self.FOLDED_ASSEMBLY)
+        provided = self._folded in (self.FOLDED_PROVIDED, self.FOLDED_ASSEMBLY)
         if required:
             cr.move_to(cx + self.RADIUS_REQUIRED, cy)
-            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self._angle, pi + self._angle)
+            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self.angle, pi + self.angle)
         if provided:
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
