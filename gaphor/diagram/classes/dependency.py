@@ -42,8 +42,9 @@ class DependencyItem(LinePresentation):
         super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
 
         self._dependency_type = UML.Dependency
-        self.auto_dependency = True
         self._solid = False
+        # auto_dependency is used by connection logic, not in this class itself
+        self.auto_dependency = True
 
         additional_stereotype = {
             UML.Usage: ("use",),
@@ -51,13 +52,11 @@ class DependencyItem(LinePresentation):
             UML.Implementation: ("implements",),
         }
 
-        self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject, additional_stereotype.get(self._dependency_type, ())
-                ),
-                style={"min-width": 0, "min-height": 0},
-            )
+        self.shape_middle = Text(
+            text=lambda: stereotypes_str(
+                self.subject, additional_stereotype.get(self._dependency_type, ())
+            ),
+            style={"min-width": 0, "min-height": 0},
         )
         self.watch("subject.appliedStereotype.classifier.name")
 
@@ -73,11 +72,8 @@ class DependencyItem(LinePresentation):
 
     def postload(self):
         if self.subject:
-            dependency_type = self.subject.__class__
-            super().postload()
-            self._dependency_type = dependency_type
-        else:
-            super().postload()
+            self._dependency_type = self.subject.__class__
+        super().postload()
 
     def set_dependency_type(self, dependency_type):
         self._dependency_type = dependency_type

@@ -15,11 +15,9 @@ class ImplementationItem(LinePresentation):
         super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
         self._solid = False
 
-        self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            )
+        self.shape_middle = Text(
+            text=lambda: stereotypes_str(self.subject),
+            style={"min-width": 0, "min-height": 0},
         )
         self.watch("subject.appliedStereotype.classifier.name")
 
