@@ -11,6 +11,13 @@ from gaphor.diagram.text import (
 )
 
 
+class Padding:  # Enum
+    TOP = 0
+    RIGHT = 1
+    BOTTOM = 2
+    LEFT = 3
+
+
 def draw_boundry(box, context, bounding_box):
     cr = context.cairo
     d = box.style("border-radius")
@@ -57,6 +64,7 @@ class Box:
         self._draw_border = draw
 
     def size(self, cr):
+        global Padding
         style = self.style
         min_width = style("min-width")
         min_height = style("min-height")
@@ -65,19 +73,26 @@ class Box:
         if sizes:
             widths, heights = list(zip(*sizes))
             return (
-                max(min_width, max(widths) + padding[1] + padding[3]),
-                max(min_height, sum(heights) + padding[0] + padding[2]),
+                max(
+                    min_width,
+                    max(widths) + padding[Padding.RIGHT] + padding[Padding.LEFT],
+                ),
+                max(
+                    min_height,
+                    sum(heights) + padding[Padding.TOP] + padding[Padding.BOTTOM],
+                ),
             )
         else:
             return min_width, min_height
 
     def draw(self, context, bounding_box):
+        global Padding
         padding = self.style("padding")
         if self._draw_border:
             self._draw_border(self, context, bounding_box)
-        x = bounding_box.x + padding[3]
-        y = bounding_box.y + padding[0]
-        w = bounding_box.width - padding[1] - padding[3]
+        x = bounding_box.x + padding[Padding.LEFT]
+        y = bounding_box.y + padding[Padding.TOP]
+        w = bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT]
         for c, (_w, h) in zip(self.children, self.sizes):
             c.draw(context, Rectangle(x, y, w, h))
             y += h
@@ -120,7 +135,7 @@ class Text:
             self.text(),
             font,
             lambda w, h: text_point_in_box(
-                bounding_box, (w, h), text_align, vertical_align, padding
+                bounding_box, (w, h), text_align, vertical_align
             ),
             width=bounding_box.width,
             default_size=(min_w, min_h),

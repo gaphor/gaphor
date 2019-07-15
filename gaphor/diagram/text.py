@@ -108,7 +108,7 @@ def _pango_cairo_show_layout(cr, layout):
         PangoCairo.show_layout(cr, layout)
 
 
-def text_point_in_box(bounding_box, text_size, text_align, vertical_align, _padding):
+def text_point_in_box(bounding_box, text_size, text_align, vertical_align):
     x, y, width, height = bounding_box
     w, h = text_size
 
@@ -162,7 +162,7 @@ def middle_segment(points):
 def _text_point_at_line_end(size, p1, p2):
     """
     Calculate position of the text relative to a line defined by points
-    p1 and p2. Text is aligned using align and padding information.
+    p1 and p2.
 
     Parameters:
      - size: text size, a (width, height) tuple
@@ -228,14 +228,12 @@ EPSILON = 1e-6
 def _text_point_at_line_center(size, p1, p2):
     """
     Calculate position of the text relative to a line defined by points
-    p1 and p2. Text is aligned using align and padding information.
+    p1 and p2.
 
     Parameters:
      - size:    text size, a (width, height) tuple
      - p1:      beginning of line
      - p2:      end of line
-     - vertical_align:   text align information, from VerticalAlign
-     - padding: text padding, a (top, right, bottom, left) tuple
     """
     x0 = (p1[0] + p2[0]) / 2.0
     y0 = (p1[1] + p2[1]) / 2.0
