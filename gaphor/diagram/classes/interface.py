@@ -272,9 +272,8 @@ class InterfaceItem(ClassItem):
             self._folded == self.FOLDED_PROVIDED or self._folded == self.FOLDED_ASSEMBLY
         )
         if required:
-            cr.save()
+            cr.move_to(cx + self.RADIUS_REQUIRED, cy)
             cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self._angle, pi + self._angle)
-            cr.restore()
         if provided:
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
