@@ -59,6 +59,7 @@ class Box:
             "min-width": 0,
             "min-height": 0,
             "padding": (0, 0, 0, 0),
+            "vertical-align": VerticalAlign.MIDDLE,
             **style,
         }.__getitem__
         self._draw_border = draw
@@ -88,10 +89,17 @@ class Box:
     def draw(self, context, bounding_box):
         global Padding
         padding = self.style("padding")
+        valign = self.style("vertical-align")
+        height = sum(h for _w, h in self.sizes)
         if self._draw_border:
             self._draw_border(self, context, bounding_box)
         x = bounding_box.x + padding[Padding.LEFT]
-        y = bounding_box.y + padding[Padding.TOP]
+        if valign is VerticalAlign.MIDDLE:
+            y = bounding_box.y + (bounding_box.height - height) / 2
+        elif valign is VerticalAlign.BOTTOM:
+            y = bounding_box.y + bounding_box.height - height - padding[Padding.BOTTOM]
+        else:
+            y = bounding_box.y + padding[Padding.TOP]
         w = bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT]
         for c, (_w, h) in zip(self.children, self.sizes):
             c.draw(context, Rectangle(x, y, w, h))
