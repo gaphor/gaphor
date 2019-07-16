@@ -106,6 +106,55 @@ class Box:
             y += h
 
 
+class IconBox:
+    """
+    A box like shape.
+
+    CSS properties:
+    - min-height
+    - min-width
+    - padding: a tuple (top, right, bottom, left)
+
+    """
+
+    def __init__(self, *children, style={}):
+        assert len(children) > 0
+        self.children = children
+        self.sizes = []
+        self.style = {
+            "min-width": 0,
+            "min-height": 0,
+            "padding": (0, 0, 0, 0),
+            **style,
+        }.__getitem__
+
+    def size(self, cr):
+        global Padding
+        style = self.style
+        min_width = style("min-width")
+        min_height = style("min-height")
+        padding = style("padding")
+        self.sizes = [c.size(cr) for c in self.children]
+        size = self.sizes[0]
+        return (
+            max(min_width, size[0] + padding[Padding.RIGHT] + padding[Padding.LEFT]),
+            max(min_height, size[1] + padding[Padding.TOP] + padding[Padding.BOTTOM]),
+        )
+
+    def draw(self, context, bounding_box):
+        global Padding
+        padding = self.style("padding")
+        x = bounding_box.x + padding[Padding.LEFT]
+        y = bounding_box.y + padding[Padding.TOP]
+        w = bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT]
+        h = bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM]
+        self.children[0].draw(context, Rectangle(x, y, w, h))
+        y = bounding_box.y + bounding_box.height
+        for c, (_w, h) in zip(self.children[1:], self.sizes[1:]):
+            c.draw(context, Rectangle(x, y, w, h))
+            y += h
+
+
 class Text:
     def __init__(self, text=lambda: "", width=lambda: -1, style={}):
         self.text = text if callable(text) else lambda: text

@@ -1,7 +1,7 @@
 import pytest
 import cairo
 
-from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.shapes import Box, IconBox, Text
 from gaphas.canvas import Context
 from gaphas.geometry import Rectangle
 
@@ -68,6 +68,21 @@ def test_draw_box_with_custom_draw_function():
     box.draw(context=None, bounding_box=Rectangle())
 
     assert called
+
+
+def test_draw_icon_box(cr):
+    box_drawn = None
+
+    def box_draw(box, context, bounding_box):
+        nonlocal box_drawn
+        box_drawn = bounding_box
+
+    shape = IconBox(Box(draw=box_draw), Text(text="some text"))
+
+    bounding_box = Rectangle(11, 12, 13, 14)
+    shape.draw(cr, bounding_box)
+
+    assert box_drawn == bounding_box
 
 
 def test_text_has_width(cr, fixed_text_size):
