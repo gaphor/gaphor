@@ -5,11 +5,12 @@ Actor item classes.
 from math import pi
 
 from gaphor import UML
+from gaphor.diagram.abc import Classified
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
 from gaphor.diagram.classifier import ClassifierItem
 
 
-class ActorItem(ClassifierItem):
+class ActorItem(ClassifierItem, Classified):
     """
     Actor item is a classifier in icon mode.
 

@@ -9,6 +9,7 @@ import ast
 
 import gaphas
 
+from gaphor.diagram.abc import Named
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.style import ALIGN_CENTER, ALIGN_TOP
 from gaphor.diagram.text import text_point_at_line
@@ -176,7 +177,7 @@ class DiagramLine(DiagramItem, gaphas.Line):
         return text_point_at_line([h.pos for h in self.handles()], extents, halign)
 
 
-class NamedLine(DiagramLine):
+class NamedLine(DiagramLine, Named):
 
     __style__ = {
         "name-align": (ALIGN_CENTER, ALIGN_TOP),

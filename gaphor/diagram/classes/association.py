@@ -20,6 +20,7 @@ from gaphas.state import reversible_property
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.abc import Named
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import (
     Box,
@@ -38,7 +39,7 @@ from gaphor.diagram.support import represents
 
 
 @represents(UML.Association)
-class AssociationItem(LinePresentation):
+class AssociationItem(LinePresentation, Named):
     """
     AssociationItem represents associations.
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item

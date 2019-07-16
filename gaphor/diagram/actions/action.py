@@ -4,13 +4,14 @@ Action diagram item.
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.abc import Named
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.support import represents
 from gaphor.diagram.shapes import Box, EditableText, Text, draw_boundry
 
 
 @represents(UML.Action)
-class ActionItem(ElementPresentation):
+class ActionItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
         """
         Create action item.
@@ -38,7 +39,7 @@ class ActionItem(ElementPresentation):
 
 
 @represents(UML.SendSignalAction)
-class SendSignalActionItem(ElementPresentation):
+class SendSignalActionItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
         """
         Create action item.
@@ -73,7 +74,7 @@ class SendSignalActionItem(ElementPresentation):
 
 
 @represents(UML.AcceptEventAction)
-class AcceptEventActionItem(ElementPresentation):
+class AcceptEventActionItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
         """
         Create action item.

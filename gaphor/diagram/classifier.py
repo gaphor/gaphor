@@ -2,10 +2,11 @@
 Classifier diagram item.
 """
 
+from gaphor.diagram.abc import Classified
 from gaphor.diagram.compartment import CompartmentItem
 
 
-class ClassifierItem(CompartmentItem):
+class ClassifierItem(CompartmentItem, Classified):
     """
     Base class for UML classifiers.
 
