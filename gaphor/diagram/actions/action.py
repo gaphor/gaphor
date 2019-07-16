@@ -3,9 +3,10 @@ Action diagram item.
 """
 
 from gaphor import UML
+from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.support import represents
-from gaphor.diagram.shapes import Box, EditableText, draw_boundry
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_boundry
 
 
 @represents(UML.Action)
@@ -16,11 +17,12 @@ class ActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
-        name = EditableText(text=lambda: self.subject and self.subject.name or "")
-        self.watch("subject<NamedElement>.name")
-
         self.shape = Box(
-            name,
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
             style={
                 "min-width": 50,
                 "min-height": 30,
@@ -31,6 +33,9 @@ class ActionItem(ElementPresentation):
             draw=draw_boundry,
         )
 
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
+
 
 @represents(UML.SendSignalAction)
 class SendSignalActionItem(ElementPresentation):
@@ -40,15 +45,18 @@ class SendSignalActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
-        name = EditableText(text=lambda: self.subject and self.subject.name or "")
-
-        self.watch("subject<NamedElement>.name")
-
         self.shape = Box(
-            name,
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
             style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
             draw=self.draw_border,
         )
+
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo
@@ -72,15 +80,18 @@ class AcceptEventActionItem(ElementPresentation):
         """
         super().__init__(id, model)
 
-        name = EditableText(text=lambda: self.subject and self.subject.name or "")
-
-        self.watch("subject<NamedElement>.name")
-
         self.shape = Box(
-            name,
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
             style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
             draw=self.draw_border,
         )
+
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo
