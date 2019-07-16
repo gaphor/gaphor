@@ -6,65 +6,80 @@ from math import pi
 
 from gaphor import UML
 from gaphor.diagram.abc import Classified
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
-from gaphor.diagram.classifier import ClassifierItem
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.shapes import Box, IconBox, EditableText, Text
+from gaphor.diagram.support import represents
 
 
-class ActorItem(ClassifierItem, Classified):
+HEAD = 11
+ARM = 19
+NECK = 10
+BODY = 20
+
+
+@represents(UML.Actor)
+class ActorItem(ElementPresentation, Classified):
     """
     Actor item is a classifier in icon mode.
 
     Maybe it should be possible to switch to comparment mode in the future.
     """
 
-    __uml__ = UML.Actor
-
-    HEAD = 11
-    ARM = 19
-    NECK = 10
-    BODY = 20
-    __style__ = {
-        "min-size": (ARM * 2, HEAD + NECK + BODY + ARM),
-        "name-align": (ALIGN_CENTER, ALIGN_BOTTOM),
-        "name-padding": (5, 0, 5, 0),
-        "name-outside": True,
-    }
-
     def __init__(self, id=None, model=None):
-        ClassifierItem.__init__(self, id, model)
+        super().__init__(id, model)
 
-        self.drawing_style = self.DRAW_ICON
+        self.shape = IconBox(
+            Box(
+                style={"min-width": ARM * 2, "min-height": HEAD + NECK + BODY + ARM},
+                draw=draw_actor,
+            ),
+            Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                    style={"min-width": 0, "min-height": 0},
+                ),
+                EditableText(
+                    text=lambda: self.subject and self.subject.name or "",
+                    style={"font": "sans bold 10"},
+                ),
+                style={"padding": (2, 0, 0, 0)},
+            ),
+        )
 
-    def draw_icon(self, context):
-        """
-        Draw actor's icon creature.
-        """
-        super(ActorItem, self).draw(context)
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
-        cr = context.cairo
-
-        head, neck, arm, body = self.HEAD, self.NECK, self.ARM, self.BODY
-
-        fx = self.width / (arm * 2)
-        fy = self.height / (head + neck + body + arm)
-
-        x = arm * fx
-        y = (head / 2) * fy
-        cy = head * fy
-
-        cr.move_to(x + head * fy / 2.0, y)
-        cr.arc(x, y, head * fy / 2.0, 0, 2 * pi)
-
-        cr.move_to(x, y + cy / 2)
-        cr.line_to(arm * fx, (head + neck + body) * fy)
-
-        cr.move_to(0, (head + neck) * fy)
-        cr.line_to(arm * 2 * fx, (head + neck) * fy)
-
-        cr.move_to(0, (head + neck + body + arm) * fy)
-        cr.line_to(arm * fx, (head + neck + body) * fy)
-        cr.line_to(arm * 2 * fx, (head + neck + body + arm) * fy)
-        cr.stroke()
+    def load(self, name, value):
+        if name == "drawing-style":
+            pass
+        else:
+            super().load(name, value)
 
 
-# vim:sw=4:et
+def draw_actor(box, context, bounding_box):
+    """
+    Draw actor's icon creature.
+    """
+    cr = context.cairo
+
+    fx = bounding_box.width / (ARM * 2)
+    fy = bounding_box.height / (HEAD + NECK + BODY + ARM)
+
+    x = ARM * fx
+    y = (HEAD / 2) * fy
+    cy = HEAD * fy
+
+    cr.move_to(x + HEAD * fy / 2.0, y)
+    cr.arc(x, y, HEAD * fy / 2.0, 0, 2 * pi)
+
+    cr.move_to(x, y + cy / 2)
+    cr.line_to(ARM * fx, (HEAD + NECK + BODY) * fy)
+
+    cr.move_to(0, (HEAD + NECK) * fy)
+    cr.line_to(ARM * 2 * fx, (HEAD + NECK) * fy)
+
+    cr.move_to(0, (HEAD + NECK + BODY + ARM) * fy)
+    cr.line_to(ARM * fx, (HEAD + NECK + BODY) * fy)
+    cr.line_to(ARM * 2 * fx, (HEAD + NECK + BODY + ARM) * fy)
+    cr.stroke()
