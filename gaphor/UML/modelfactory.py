@@ -334,7 +334,7 @@ def dependency_type(client, supplier):
     return dt
 
 
-def create_message(msg, inverted=False):
+def clone_message(msg, inverted=False):
     """
     Create new message based on speciied message.
 
@@ -347,12 +347,10 @@ def create_message(msg, inverted=False):
 
     if msg.sendEvent:
         send = model.create(MessageOccurrenceSpecification)
-        sl = msg.sendEvent.covered
-        send.covered = sl
+        send.covered = msg.sendEvent.covered
     if msg.receiveEvent:
         receive = model.create(MessageOccurrenceSpecification)
-        rl = msg.receiveEvent.covered
-        receive.covered = rl
+        receive.covered = msg.receiveEvent.covered
 
     if inverted:
         # inverted message goes in different direction, than original

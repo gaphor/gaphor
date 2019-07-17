@@ -299,8 +299,8 @@ def test_create(factory):
     m.sendEvent = send
     m.receiveEvent = receive
 
-    m1 = UML.model.create_message(m, False)
-    m2 = UML.model.create_message(m, True)
+    m1 = UML.model.clone_message(m, False)
+    m2 = UML.model.clone_message(m, True)
 
     assert m1.sendEvent.covered is sl
     assert m1.receiveEvent.covered is rl
