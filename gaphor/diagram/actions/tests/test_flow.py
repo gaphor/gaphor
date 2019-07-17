@@ -25,14 +25,15 @@ class FlowTestCase(TestCase):
 
     def test_guard_text_update(self):
         flow = self.create(FlowItem, UML.ControlFlow)
+        guard = flow.shape_middle
 
-        assert "" == flow.guard.text()
+        assert "" == guard.text()
 
         flow.subject.guard = "GuardMe"
-        assert "GuardMe" == flow.guard.text()
+        assert "GuardMe" == guard.text()
 
         flow.subject = None
-        assert "" == flow.guard.text()
+        assert "" == guard.text()
 
     def test_draw(self):
         flow = self.create(FlowItem, UML.ControlFlow)

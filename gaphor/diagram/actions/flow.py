@@ -35,10 +35,9 @@ class FlowItem(LinePresentation):
         self.watch("subject<NamedElement>.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-        self.guard = EditableText(
+        self.shape_middle = EditableText(
             text=lambda: self.subject and self.subject.guard or ""
         )
-        self.shape_middle = self.guard
 
         self.watch("subject<ControlFlow>.guard")
         self.watch("subject<ObjectFlow>.guard")

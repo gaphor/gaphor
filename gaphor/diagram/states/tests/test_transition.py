@@ -16,18 +16,19 @@ class TransitionTestCase(TestCase):
         """Test events of transition.guard.
         """
         item = self.create(TransitionItem, UML.Transition)
-        assert item._guard.text == ""
+        guard = item.shape_middle
+        assert guard.text() == ""
 
         c = self.element_factory.create(UML.Constraint)
         c.specification = "blah"
-        assert item._guard.text == ""
+        assert guard.text() == ""
 
         item.subject.guard = c
         assert item.subject.guard is c
-        assert item._guard.text == "blah", item._guard.text
+        assert guard.text() == "blah", guard.text()
 
         del c.specification
-        assert item._guard.text == "", item._guard.text
+        assert guard.text() == "", guard.text()
 
         c.specification = "foo"
-        assert item._guard.text == "foo", item._guard.text
+        assert guard.text() == "foo", item._guard.text()
