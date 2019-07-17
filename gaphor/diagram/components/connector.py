@@ -102,6 +102,7 @@ interfaces are connectable elements.
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.abc import Named
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.support import represents
@@ -109,7 +110,7 @@ from operator import attrgetter
 
 
 @represents(UML.Connector)
-class ConnectorItem(LinePresentation):
+class ConnectorItem(LinePresentation, Named):
     """
     Connector item line.
 

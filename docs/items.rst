@@ -34,18 +34,6 @@ Classifer (UML metamodel) representation.
 
 .. autoclass:: gaphor.diagram.classifier.ClassifierItem
 
-DiagramLine
------------
-Line canvas item.
-
-.. autoclass:: gaphor.diagram.diagramline.DiagramLine
-
-NamedLine
----------
-NamedElement (UML metamodel) representation using line canvas item.
-
-.. autoclass:: gaphor.diagram.diagramline.NamedLine
-
 FeatureItem
 -----------
 Diagram representation of UML metamodel classes like property, operation,

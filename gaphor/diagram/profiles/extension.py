@@ -8,13 +8,14 @@ ExtensionItem -- Graphical representation of an association.
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.abc import Named
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.support import represents
 
 
 @represents(UML.Extension)
-class ExtensionItem(LinePresentation):
+class ExtensionItem(LinePresentation, Named):
     """
     ExtensionItem represents associations.
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
