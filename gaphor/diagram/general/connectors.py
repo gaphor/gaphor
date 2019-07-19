@@ -7,7 +7,6 @@ import logging
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.connectors import IConnect, AbstractConnect
@@ -98,7 +97,6 @@ class CommentLineElementConnect(AbstractConnect):
         super(CommentLineElementConnect, self).disconnect(handle)
 
 
-@IConnect.register(DiagramLine, CommentLineItem)
 @IConnect.register(LinePresentation, CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
     """Connect a comment line to any diagram line."""
@@ -162,7 +160,6 @@ class CommentLineLineConnect(AbstractConnect):
         super(CommentLineLineConnect, self).disconnect(handle)
 
 
-@IConnect.register(CommentLineItem, DiagramLine)
 @IConnect.register(CommentLineItem, LinePresentation)
 class InverseCommentLineLineConnect(CommentLineLineConnect):
     """

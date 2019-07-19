@@ -14,7 +14,7 @@ import logging
 import random
 
 from gaphor.core import action, build_action_group, transactional
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.classes import GeneralizationItem, ImplementationItem
 from gaphor.abc import Service, ActionProvider
 from gaphor.plugins.diagramlayout import toposort
@@ -94,7 +94,7 @@ def layout_diagram(diag):
                 primary_nodes.extend(relations[-1])
             except Exception as e:
                 log.error(e)
-        elif isinstance(item, DiagramLine):
+        elif isinstance(item, LinePresentation):
             # Secondary (associations, dependencies) may be drawn top-down
             # or left-right
             try:
@@ -173,7 +173,7 @@ def simple_layout_lines(diag):
     """
     lines = {}
     for item in diag.canvas.get_root_items():
-        if isinstance(item, DiagramLine):
+        if isinstance(item, LinePresentation):
             # Secondary (associations, dependencies) may be drawn top-down
             # or left-right
             try:

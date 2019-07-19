@@ -25,7 +25,6 @@ from gi.repository import Gtk
 
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.core import Transaction, transactional
-from gaphor.diagram.diagramline import DiagramLine
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.editors import Editor
@@ -40,7 +39,6 @@ OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 log = logging.getLogger(__name__)
 
 
-@Connector.register(DiagramLine)
 @Connector.register(LinePresentation)
 class DiagramItemConnector(ItemConnector):
     """
