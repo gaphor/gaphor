@@ -4,19 +4,12 @@ Test messages.
 
 from collections import OrderedDict
 from gaphor import UML
-from gaphor.diagram.interactions.message import MessageItem, swap
+from gaphor.diagram.interactions.message import MessageItem
 from gaphor.tests.testcase import TestCase
 
 
 class MessageTestCase(TestCase):
-    def test_message(self):
-        """Test creation of messages
-        """
-        self.create(MessageItem, UML.Message)
-
     def test_adding_message(self):
-        """Test adding message on communication diagram
-        """
         factory = self.element_factory
         item = self.create(MessageItem, UML.Message)
 
@@ -26,40 +19,21 @@ class MessageTestCase(TestCase):
         item.add_message(message, False)
         assert message in item._messages
         assert message not in item._inverted_messages
-        assert item._messages[message].text == "test-message"
+        assert item.shape_middle.children[2].text() == "test-message"
 
-        message = factory.create(UML.Message)
-        message.name = "test-inverted-message"
-        item.add_message(message, True)
-        assert message in item._inverted_messages
-        assert message not in item._messages
-        assert item._inverted_messages[message].text == "test-inverted-message"
-
-    def test_changing_message_text(self):
-        """Test changing message text
-        """
+    def test_adding_inverted_message(self):
         factory = self.element_factory
         item = self.create(MessageItem, UML.Message)
 
         message = factory.create(UML.Message)
-        message.name = "test-message"
-        item.add_message(message, False)
-        assert item._messages[message].text == "test-message"
+        message.name = "test-inverted-message"
 
-        item.set_message_text(message, "test-message-changed", False)
-        assert item._messages[message].text == "test-message-changed"
-
-        message = factory.create(UML.Message)
-        message.name = "test-message"
         item.add_message(message, True)
-        assert item._inverted_messages[message].text == "test-message"
-
-        item.set_message_text(message, "test-message-changed", True)
-        assert item._inverted_messages[message].text == "test-message-changed"
+        assert message in item._inverted_messages
+        assert message not in item._messages
+        assert item.shape_middle.children[2].text() == "test-inverted-message"
 
     def test_message_removal(self):
-        """Test message removal
-        """
         factory = self.element_factory
         item = self.create(MessageItem, UML.Message)
 
@@ -69,6 +43,10 @@ class MessageTestCase(TestCase):
 
         item.remove_message(message, False)
         assert message not in item._messages
+
+    def test_inverted_message_removal(self):
+        factory = self.element_factory
+        item = self.create(MessageItem, UML.Message)
 
         message = factory.create(UML.Message)
         item.add_message(message, True)
@@ -124,9 +102,3 @@ class MessageTestCase(TestCase):
         # check for loaded messages and order of messages
         self.assertEqual(["m1", "m2"], [m.name for m in item._messages])
         assert ["m3", "m4"] == [m.name for m in item._inverted_messages]
-
-
-def test_swap():
-    d = OrderedDict([("a", 1), ("b", 2), ("c", 3), ("d", 4)])
-    new = swap(d, "a", "c")
-    assert list(new.keys()) == ["c", "b", "a", "d"]
