@@ -35,7 +35,7 @@ class ActivityNodeItem(NamedItem):
     __style__ = {"name-outside": True, "name-padding": (2, 2, 2, 2)}
 
     def __init__(self, id=None, model=None):
-        NamedItem.__init__(self, id, model)
+        super().__init__(id, model)
         # Do not allow resizing of the node
         for h in self._handles:
             h.movable = False
@@ -60,7 +60,7 @@ class InitialNodeItem(ActivityNodeItem):
         cr.set_line_width(0.01)
         cr.fill()
 
-        super(InitialNodeItem, self).draw(context)
+        super().draw(context)
 
 
 class ActivityFinalNodeItem(ActivityNodeItem):
@@ -88,7 +88,7 @@ class ActivityFinalNodeItem(ActivityNodeItem):
         cr.set_line_width(2)
         cr.stroke()
 
-        super(ActivityFinalNodeItem, self).draw(context)
+        super().draw(context)
 
 
 class FlowFinalNodeItem(ActivityNodeItem):
@@ -116,7 +116,7 @@ class FlowFinalNodeItem(ActivityNodeItem):
         cr.line_to(d - dr, dr)
         cr.stroke()
 
-        super(FlowFinalNodeItem, self).draw(context)
+        super().draw(context)
 
 
 class DecisionNodeItem(ActivityNodeItem):
@@ -130,19 +130,19 @@ class DecisionNodeItem(ActivityNodeItem):
     RADIUS = 15
 
     def __init__(self, id=None, model=None):
-        ActivityNodeItem.__init__(self, id, model)
+        super().__init__(id, model)
         self._combined = None
 
     def save(self, save_func):
         if self._combined:
             save_func("combined", self._combined, reference=True)
-        super(DecisionNodeItem, self).save(save_func)
+        super().save(save_func)
 
     def load(self, name, value):
         if name == "combined":
             self._combined = value
         else:
-            super(DecisionNodeItem, self).load(name, value)
+            super().load(name, value)
 
     @observed
     def _set_combined(self, value):
@@ -166,10 +166,10 @@ class DecisionNodeItem(ActivityNodeItem):
         cr.close_path()
         cr.stroke()
 
-        super(DecisionNodeItem, self).draw(context)
+        super().draw(context)
 
 
-class ForkNodeItem(Item, DiagramItem):
+class ForkNodeItem(DiagramItem, Item):
     """
     Representation of fork and join node.
     """
@@ -187,8 +187,7 @@ class ForkNodeItem(Item, DiagramItem):
     STYLE_TOP = {"text-align": (ALIGN_CENTER, ALIGN_TOP), "text-outside": True}
 
     def __init__(self, id=None, model=None):
-        Item.__init__(self)
-        DiagramItem.__init__(self, id, model)
+        super().__init__(id, model)
 
         h1, h2 = Handle(), Handle()
         self._handles.append(h1)
@@ -225,7 +224,7 @@ class ForkNodeItem(Item, DiagramItem):
         save_func("height", float(self._handles[1].pos.y))
         if self._combined:
             save_func("combined", self._combined, reference=True)
-        DiagramItem.save(self, save_func)
+        super().save(save_func)
 
     def load(self, name, value):
         if name == "matrix":
@@ -236,14 +235,14 @@ class ForkNodeItem(Item, DiagramItem):
             self._combined = value
         else:
             # DiagramItem.load(self, name, value)
-            super(ForkNodeItem, self).load(name, value)
+            super().load(name, value)
 
     def postload(self):
         subject = self.subject
         if subject and isinstance(subject, UML.JoinNode) and subject.joinSpec:
             self._join_spec.text = self.subject.joinSpec
         self.on_named_element_name(None)
-        super(ForkNodeItem, self).postload()
+        super().postload()
 
     @observed
     def _set_combined(self, value):
@@ -253,7 +252,7 @@ class ForkNodeItem(Item, DiagramItem):
     combined = reversible_property(lambda s: s._combined, _set_combined)
 
     def setup_canvas(self):
-        super(ForkNodeItem, self).setup_canvas()
+        super().setup_canvas()
         self.subscribe_all()
 
         h1, h2 = self._handles
@@ -264,7 +263,7 @@ class ForkNodeItem(Item, DiagramItem):
         list(map(self.canvas.solver.add_constraint, self.__constraints))
 
     def teardown_canvas(self):
-        super(ForkNodeItem, self).teardown_canvas()
+        super().teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
         self.unsubscribe_all()
 
@@ -300,8 +299,7 @@ class ForkNodeItem(Item, DiagramItem):
         Draw vertical line - symbol of fork and join nodes. Join
         specification is also drawn above the item.
         """
-        Item.draw(self, context)
-        DiagramItem.draw(self, context)
+        super().draw(context)
 
         cr = context.cairo
 

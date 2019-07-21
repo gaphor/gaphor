@@ -98,7 +98,7 @@ class PartitionItem(NamedItem):
             cr.line_to(self.width, h)
             cr.line_to(self.width, self.height)
 
-        super(PartitionItem, self).draw(context)
+        super().draw(context)
 
         if self._subpart:
             # header line for all subparitions

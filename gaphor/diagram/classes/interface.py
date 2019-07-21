@@ -154,7 +154,7 @@ class InterfaceItem(ClassItem):
     FOLDED_ASSEMBLY = 3
 
     def __init__(self, id=None, model=None):
-        ClassItem.__init__(self, id, model)
+        super().__init__(id, model)
         self._folded = self.FOLDED_NONE
         self.angle = 0
         old_f = self._name.is_visible
@@ -188,7 +188,7 @@ class InterfaceItem(ClassItem):
         In addition to setting the drawing style, the handles are
         make non-movable if the icon (folded) style is used.
         """
-        super(InterfaceItem, self).set_drawing_style(style)
+        super().set_drawing_style(style)
         if self._drawing_style == self.DRAW_ICON:
             self.folded = self.FOLDED_PROVIDED  # set default folded mode
         else:
@@ -240,7 +240,7 @@ class InterfaceItem(ClassItem):
 
         # call super method to avoid recursion (set_drawing_style calls
         # _set_folded method)
-        super(InterfaceItem, self).set_drawing_style(draw_mode)
+        super().set_drawing_style(draw_mode)
         self._name.style.update(name_style)
 
         for h in self._handles:
@@ -267,4 +267,4 @@ class InterfaceItem(ClassItem):
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
         cr.stroke()
-        super(InterfaceItem, self).draw(context)
+        super().draw(context)

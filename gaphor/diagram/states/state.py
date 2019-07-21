@@ -74,7 +74,7 @@ class StateItem(CompartmentItem, VertexItem):
         self._set_activity(self._do_activity, "doActivity", text)
 
     def postload(self):
-        super(StateItem, self).postload()
+        super().postload()
         if self.subject.entry:
             self.set_entry(self.subject.entry.name)
         if self.subject.exit:
@@ -106,6 +106,3 @@ class StateItem(CompartmentItem, VertexItem):
         c.close_path()
 
         c.stroke()
-
-
-# vim:sw=4:et

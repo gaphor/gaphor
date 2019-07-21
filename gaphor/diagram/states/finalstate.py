@@ -43,7 +43,4 @@ class FinalStateItem(VertexItem):
         cr.set_line_width(2)
         cr.stroke()
 
-        super(FinalStateItem, self).draw(context)
-
-
-# vim:sw=4:et
+        super().draw(context)

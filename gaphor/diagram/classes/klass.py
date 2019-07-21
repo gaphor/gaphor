@@ -56,7 +56,7 @@ class ClassItem(ClassifierItem):
 		The drawing style is set here as well.  The class item will create
 		two compartments - one for attributes and another for operations."""
 
-        ClassifierItem.__init__(self, id, model)
+        super().__init__(id, model)
         self.drawing_style = self.DRAW_COMPARTMENT
         self._attributes = self.create_compartment("attributes")
         self._attributes.font = self.style.feature_font
@@ -115,13 +115,13 @@ class ClassItem(ClassifierItem):
 
         self.save_property(save_func, "show-attributes")
         self.save_property(save_func, "show-operations")
-        ClassifierItem.save(self, save_func)
+        super().save(save_func)
 
     def postload(self):
         """Called once the ClassItem has been loaded.  First the ClassifierItem
 		is "post-loaded", then the attributes and operations are
 		synchronized."""
-        super(ClassItem, self).postload()
+        super().postload()
         self.sync_attributes()
         self.sync_operations()
 

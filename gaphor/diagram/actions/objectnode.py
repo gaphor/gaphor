@@ -32,7 +32,7 @@ class ObjectNodeItem(NamedItem):
     }
 
     def __init__(self, id=None, model=None):
-        NamedItem.__init__(self, id, model)
+        super().__init__(id, model)
 
         self._show_ordering = False
 
@@ -84,27 +84,27 @@ class ObjectNodeItem(NamedItem):
 
     def save(self, save_func):
         save_func("show-ordering", self._show_ordering)
-        super(ObjectNodeItem, self).save(save_func)
+        super().save(save_func)
 
     def load(self, name, value):
         if name == "show-ordering":
             self._show_ordering = ast.literal_eval(value)
         else:
-            super(ObjectNodeItem, self).load(name, value)
+            super().load(name, value)
 
     def postload(self):
         if self.subject and self.subject.upperBound:
             self._upper_bound.text = self.subject.upperBound
         if self.subject and self._show_ordering:
             self.set_ordering(self.subject.ordering)
-        super(ObjectNodeItem, self).postload()
+        super().postload()
 
     def draw(self, context):
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
 
-        super(ObjectNodeItem, self).draw(context)
+        super().draw(context)
 
     def set_upper_bound(self, value):
         """
@@ -116,7 +116,6 @@ class ObjectNodeItem(NamedItem):
                 value = DEFAULT_UPPER_BOUND
 
             subject.upperBound = value
-            # self._upper_bound.text = value
 
     def set_ordering(self, value):
         """
@@ -125,6 +124,3 @@ class ObjectNodeItem(NamedItem):
         subject = self.subject
         subject.ordering = value
         self._ordering.text = value
-
-
-# vim:sw=4:et:ai

@@ -30,7 +30,7 @@ class NodeItem(ClassifierItem):
     DEPTH = 10
 
     def __init__(self, id=None, model=None):
-        ClassifierItem.__init__(self, id, model)
+        super().__init__(id, model)
         self.drawing_style = self.DRAW_COMPARTMENT
         self.height = 50
         self.width = 120
@@ -38,7 +38,7 @@ class NodeItem(ClassifierItem):
     def draw_compartment(self, context):
         cr = context.cairo
         cr.save()
-        super(NodeItem, self).draw_compartment(context)
+        super().draw_compartment(context)
         cr.restore()
 
         d = self.DEPTH
@@ -54,6 +54,3 @@ class NodeItem(ClassifierItem):
         cr.line_to(w + d, -d)
 
         cr.stroke()
-
-
-# vim:sw=4:et

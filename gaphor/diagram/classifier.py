@@ -20,7 +20,7 @@ class ClassifierItem(CompartmentItem, Classified):
     }
 
     def __init__(self, id=None, model=None):
-        super(ClassifierItem, self).__init__(id, model)
+        super().__init__(id, model)
         self.watch("subject<Classifier>.isAbstract", self.on_classifier_is_abstract)
 
     def on_classifier_is_abstract(self, event):
@@ -32,7 +32,7 @@ class ClassifierItem(CompartmentItem, Classified):
         self.request_update()
 
     def postload(self):
-        super(ClassifierItem, self).postload()
+        super().postload()
         self.on_classifier_is_abstract(None)
 
 

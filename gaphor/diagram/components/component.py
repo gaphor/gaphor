@@ -18,7 +18,7 @@ class ComponentItem(ClassifierItem):
     BAR_PADDING = 5
 
     def __init__(self, id=None, model=None):
-        ClassifierItem.__init__(self, id, model)
+        super().__init__(id, model)
         # Set drawing style to compartment w// small icon
         self.drawing_style = self.DRAW_COMPARTMENT_ICON
 
@@ -50,6 +50,3 @@ class ComponentItem(ClassifierItem):
         cr.fill_preserve()
         cr.set_source(color)
         cr.stroke()
-
-
-# vim:sw=4:et

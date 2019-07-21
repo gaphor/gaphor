@@ -16,7 +16,7 @@ class ArtifactItem(ClassifierItem):
     ICON_HEIGHT = 20
 
     def __init__(self, id=None, model=None):
-        ClassifierItem.__init__(self, id, model)
+        super().__init__(id, model)
         self.height = 50
         self.width = 120
         # Set drawing style to compartment w/ small icon
@@ -24,7 +24,7 @@ class ArtifactItem(ClassifierItem):
         self._line = []
 
     def pre_update_compartment_icon(self, context):
-        super(ArtifactItem, self).pre_update_compartment_icon(context)
+        super().pre_update_compartment_icon(context)
         w = self.ICON_WIDTH
         h = self.ICON_HEIGHT
         ix, iy = self.get_icon_pos()
@@ -55,6 +55,3 @@ class ArtifactItem(ClassifierItem):
         for x, y in self._line:
             cr.line_to(x, y)
         cr.stroke()
-
-
-# vim:sw=4:et

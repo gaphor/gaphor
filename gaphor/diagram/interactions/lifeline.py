@@ -151,7 +151,7 @@ class LifelineItem(NamedItem):
     __style__ = {"name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
     def __init__(self, id=None, model=None):
-        NamedItem.__init__(self, id, model)
+        super().__init__(id, model)
 
         self.is_destroyed = False
 
@@ -165,7 +165,7 @@ class LifelineItem(NamedItem):
         self._ports.append(self.lifetime.port)
 
     def setup_canvas(self):
-        super(LifelineItem, self).setup_canvas()
+        super().setup_canvas()
 
         top = self.lifetime.top
         bottom = self.lifetime.bottom
@@ -188,18 +188,18 @@ class LifelineItem(NamedItem):
         list(map(self.canvas.solver.add_constraint, self.__constraints))
 
     def teardown_canvas(self):
-        super(LifelineItem, self).teardown_canvas()
+        super().teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
 
     def save(self, save_func):
-        super(LifelineItem, self).save(save_func)
+        super().save(save_func)
         save_func("lifetime-length", self.lifetime.length)
 
     def load(self, name, value):
         if name == "lifetime-length":
             self.lifetime.bottom.pos.y = self.height + float(value)
         else:
-            super(LifelineItem, self).load(name, value)
+            super().load(name, value)
 
     def draw(self, context):
         """
@@ -209,7 +209,7 @@ class LifelineItem(NamedItem):
 
         Lifeline's lifetime is drawn when lifetime is visible.
         """
-        super(LifelineItem, self).draw(context)
+        super().draw(context)
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
@@ -242,11 +242,8 @@ class LifelineItem(NamedItem):
         Distance to lifeline's head and lifeline's lifetime is calculated
         and minimum is returned.
         """
-        d1 = super(LifelineItem, self).point(pos)
+        d1 = super().point(pos)
         top = self.lifetime.top
         bottom = self.lifetime.bottom
         d2 = distance_line_point(top.pos, bottom.pos, pos)[0]
         return min(d1, d2)
-
-
-# vim:sw=4:et

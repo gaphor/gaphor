@@ -35,7 +35,7 @@ class InitialPseudostateItem(VertexItem):
         """
         Draw intial pseudostate symbol.
         """
-        super(InitialPseudostateItem, self).draw(context)
+        super().draw(context)
         cr = context.cairo
         r = self.RADIUS
         d = r * 2
@@ -68,7 +68,7 @@ class HistoryPseudostateItem(VertexItem):
         """
         Draw intial pseudostate symbol.
         """
-        super(HistoryPseudostateItem, self).draw(context)
+        super().draw(context)
         cr = context.cairo
         r = self.RADIUS
         d = r * 2
@@ -76,6 +76,3 @@ class HistoryPseudostateItem(VertexItem):
         # cr.set_line_width(1)
         cr.stroke()
         text_center(cr, r, r, "H", self.style.name_font)
-
-
-# vim:sw=4:et

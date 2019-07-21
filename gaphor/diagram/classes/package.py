@@ -19,10 +19,10 @@ class PackageItem(NamedItem):
     }
 
     def __init__(self, id=None, model=None):
-        super(PackageItem, self).__init__(id, model)
+        super().__init__(id, model)
 
     def draw(self, context):
-        super(PackageItem, self).draw(context)
+        super().draw(context)
 
         cr = context.cairo
         o = 0.0
@@ -38,6 +38,3 @@ class PackageItem(NamedItem):
         cr.line_to(w, y)
         cr.line_to(o, y)
         cr.stroke()
-
-
-# vim:sw=4:et

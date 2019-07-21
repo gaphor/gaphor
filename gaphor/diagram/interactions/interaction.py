@@ -16,7 +16,7 @@ class InteractionItem(NamedItem):
     def draw(self, context):
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
-        super(InteractionItem, self).draw(context)
+        super().draw(context)
         # draw pentagon
         w, h = self._header_size
         h2 = h / 2.0
@@ -25,6 +25,3 @@ class InteractionItem(NamedItem):
         cr.line_to(w, h2)
         cr.line_to(w, 0)
         cr.stroke()
-
-
-# vim:sw=4:et
