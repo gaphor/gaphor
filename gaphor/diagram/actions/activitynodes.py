@@ -9,7 +9,7 @@ from gaphas.util import path_ellipse
 from gaphas.state import observed, reversible_property
 from gaphas.item import Handle, Item, LinePort
 from gaphas.constraint import EqualsConstraint, LessThanConstraint
-from gaphas.geometry import distance_line_point
+from gaphas.geometry import Rectangle, distance_line_point
 
 from gaphor import UML
 from gaphor.diagram.diagramitem import DiagramItem
@@ -23,8 +23,19 @@ from gaphor.diagram.style import (
 )
 from gaphor.diagram.style import get_text_point
 
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.abc import Named
+from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.support import represents
+from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_boundry
+
 
 DEFAULT_JOIN_SPEC = "and"
+
+
+def no_movable_handles(item):
+    for h in item._handles:
+        h.movable = False
 
 
 class ActivityNodeItem(NamedItem):
@@ -37,101 +48,151 @@ class ActivityNodeItem(NamedItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         # Do not allow resizing of the node
-        for h in self._handles:
-            h.movable = False
+        no_movable_handles(self)
 
 
-class InitialNodeItem(ActivityNodeItem):
+@represents(UML.InitialNode)
+class InitialNodeItem(ElementPresentation, Named):
     """
     Representation of initial node. Initial node has name which is put near
     top-left side of node.
     """
 
-    __uml__ = UML.InitialNode
-    __style__ = {"min-size": (20, 20), "name-align": (ALIGN_LEFT, ALIGN_TOP)}
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        no_movable_handles(self)
 
-    RADIUS = 10
+        self.shape = IconBox(
+            Box(style={"min-width": 20, "min-height": 20}, draw=draw_initial_node),
+            # Text should be left-top
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
+        )
 
-    def draw(self, context):
-        cr = context.cairo
-        r = self.RADIUS
-        d = r * 2
-        path_ellipse(cr, r, r, d, d)
-        cr.set_line_width(0.01)
-        cr.fill()
-
-        super().draw(context)
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
-class ActivityFinalNodeItem(ActivityNodeItem):
+def draw_initial_node(_box, context, _bounding_box):
+    cr = context.cairo
+    r = 10
+    d = r * 2
+    path_ellipse(cr, r, r, d, d)
+    cr.set_line_width(0.01)
+    cr.fill()
+
+
+@represents(UML.ActivityFinalNode)
+class ActivityFinalNodeItem(ElementPresentation, Named):
     """Representation of activity final node. Activity final node has name
     which is put near right-bottom side of node.
     """
 
-    __uml__ = UML.ActivityFinalNode
-    __style__ = {"min-size": (30, 30), "name-align": (ALIGN_RIGHT, ALIGN_BOTTOM)}
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        no_movable_handles(self)
 
-    RADIUS_1 = 10
-    RADIUS_2 = 15
+        self.shape = IconBox(
+            Box(
+                style={"min-width": 30, "min-height": 30}, draw=draw_activity_final_node
+            ),
+            # Text should be right-bottom
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
+        )
 
-    def draw(self, context):
-        cr = context.cairo
-        r = self.RADIUS_2 + 1
-        d = self.RADIUS_1 * 2
-        path_ellipse(cr, r, r, d, d)
-        cr.set_line_width(0.01)
-        cr.fill()
-
-        d = r * 2
-        path_ellipse(cr, r, r, d, d)
-        cr.set_line_width(0.01)
-        cr.set_line_width(2)
-        cr.stroke()
-
-        super().draw(context)
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
-class FlowFinalNodeItem(ActivityNodeItem):
+def draw_activity_final_node(_box, context, _bounding_box):
+    cr = context.cairo
+    inner_radius = 10
+    outer_radius = 15
+
+    r = outer_radius + 1
+    d = inner_radius * 2
+    path_ellipse(cr, r, r, d, d)
+    cr.set_line_width(0.01)
+    cr.fill()
+
+    d = r * 2
+    path_ellipse(cr, r, r, d, d)
+    cr.set_line_width(0.01)
+    cr.set_line_width(2)
+    cr.stroke()
+
+
+@represents(UML.FlowFinalNode)
+class FlowFinalNodeItem(ElementPresentation, Named):
     """
     Representation of flow final node. Flow final node has name which is
     put near right-bottom side of node.
     """
 
-    __uml__ = UML.FlowFinalNode
-    __style__ = {"min-size": (20, 20), "name-align": (ALIGN_RIGHT, ALIGN_BOTTOM)}
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        no_movable_handles(self)
 
-    RADIUS = 10
+        self.shape = IconBox(
+            Box(style={"min-width": 20, "min-height": 20}, draw=draw_flow_final_node),
+            # Text should be right-bottom
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
+        )
 
-    def draw(self, context):
-        cr = context.cairo
-        r = self.RADIUS
-        d = r * 2
-        path_ellipse(cr, r, r, d, d)
-        cr.stroke()
-
-        dr = (1 - math.sin(math.pi / 4)) * r
-        cr.move_to(dr, dr)
-        cr.line_to(d - dr, d - dr)
-        cr.move_to(dr, d - dr)
-        cr.line_to(d - dr, dr)
-        cr.stroke()
-
-        super().draw(context)
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
-class DecisionNodeItem(ActivityNodeItem):
+def draw_flow_final_node(_box, context, _bounding_box):
+    cr = context.cairo
+    r = 10
+    d = r * 2
+    path_ellipse(cr, r, r, d, d)
+    cr.stroke()
+
+    dr = (1 - math.sin(math.pi / 4)) * r
+    cr.move_to(dr, dr)
+    cr.line_to(d - dr, d - dr)
+    cr.move_to(dr, d - dr)
+    cr.line_to(d - dr, dr)
+    cr.stroke()
+
+
+@represents(UML.DecisionNode)
+class DecisionNodeItem(ElementPresentation, Named):
     """
     Representation of decision or merge node.
     """
 
-    __uml__ = UML.DecisionNode
-    __style__ = {"min-size": (20, 30), "name-align": (ALIGN_LEFT, ALIGN_TOP)}
-
-    RADIUS = 15
-
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
+        no_movable_handles(self)
+
         self._combined = None
+
+        self.shape = IconBox(
+            Box(style={"min-width": 20, "min-height": 30}, draw=draw_decision_node),
+            # Text should be left-top
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
+        )
+
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
     def save(self, save_func):
         if self._combined:
@@ -146,45 +207,32 @@ class DecisionNodeItem(ActivityNodeItem):
 
     @observed
     def _set_combined(self, value):
-        # self.preserve_property('combined')
         self._combined = value
 
     combined = reversible_property(lambda s: s._combined, _set_combined)
 
-    def draw(self, context):
-        """
-        Draw diamond shape, which represents decision and merge nodes.
-        """
-        cr = context.cairo
-        r = self.RADIUS
-        r2 = r * 2 / 3
 
-        cr.move_to(r2, 0)
-        cr.line_to(r2 * 2, r)
-        cr.line_to(r2, r * 2)
-        cr.line_to(0, r)
-        cr.close_path()
-        cr.stroke()
+def draw_decision_node(_box, context, _bounding_box):
+    """
+    Draw diamond shape, which represents decision and merge nodes.
+    """
+    cr = context.cairo
+    r = 15
+    r2 = r * 2 / 3
 
-        super().draw(context)
+    cr.move_to(r2, 0)
+    cr.line_to(r2 * 2, r)
+    cr.line_to(r2, r * 2)
+    cr.line_to(0, r)
+    cr.close_path()
+    cr.stroke()
 
 
-class ForkNodeItem(DiagramItem, Item):
+@represents(UML.ForkNode)
+class ForkNodeItem(UML.Presentation, Item):
     """
     Representation of fork and join node.
     """
-
-    __uml__ = UML.ForkNode
-
-    __style__ = {
-        "min-size": (6, 45),
-        "name-align": (ALIGN_CENTER, ALIGN_BOTTOM),
-        "name-padding": (2, 2, 2, 2),
-        "name-outside": True,
-        "name-align-str": None,
-    }
-
-    STYLE_TOP = {"text-align": (ALIGN_CENTER, ALIGN_TOP), "text-outside": True}
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
@@ -196,28 +244,25 @@ class ForkNodeItem(DiagramItem, Item):
 
         self._combined = None
 
-        self._join_spec = self.add_text(
-            "joinSpec",
-            pattern="{ joinSpec = %s }",
-            style=self.STYLE_TOP,
-            visible=self.is_join_spec_visible,
+        self.shape = IconBox(
+            Box(style={"min-width": 0, "min-height": 45}, draw=self.draw_fork_node),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            Text(
+                text=lambda: isinstance(self.subject, UML.JoinNode)
+                and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
+                and f"{{ joinSpec = {self.subject.joinSpec} }}"
+                or "",
+                style={"min-width": 0, "min-height": 0},
+            ),
         )
 
-        self._name = self.add_text(
-            "name",
-            style={
-                "text-align": self.style.name_align,
-                "text-padding": self.style.name_padding,
-                "text-outside": self.style.name_outside,
-                "text-align-str": self.style.name_align_str,
-                "text-align-group": "stereotype",
-            },
-            editable=True,
-        )
-
-        self.watch("subject<NamedElement>.name", self.on_named_element_name).watch(
-            "subject<JoinNode>.joinSpec", self.on_join_node_join_spec
-        )
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject<JoinNode>.joinSpec")
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -233,16 +278,12 @@ class ForkNodeItem(DiagramItem, Item):
             self._handles[1].pos.y = ast.literal_eval(value)
         elif name == "combined":
             self._combined = value
+        elif name == "show_stereotypes_attrs":
+            # TODO: should be handled in storage as an upgrader
+            pass
         else:
             # DiagramItem.load(self, name, value)
             super().load(name, value)
-
-    def postload(self):
-        subject = self.subject
-        if subject and isinstance(subject, UML.JoinNode) and subject.joinSpec:
-            self._join_spec.text = self.subject.joinSpec
-        self.on_named_element_name(None)
-        super().postload()
 
     @observed
     def _set_combined(self, value):
@@ -253,7 +294,6 @@ class ForkNodeItem(DiagramItem, Item):
 
     def setup_canvas(self):
         super().setup_canvas()
-        self.subscribe_all()
 
         h1, h2 = self._handles
         cadd = self.canvas.solver.add_constraint
@@ -265,42 +305,23 @@ class ForkNodeItem(DiagramItem, Item):
     def teardown_canvas(self):
         super().teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
-        self.unsubscribe_all()
-
-    def is_join_spec_visible(self):
-        """
-        Check if join specification should be displayed.
-        """
-        return (
-            isinstance(self.subject, UML.JoinNode)
-            and self.subject.joinSpec is not None
-            and self.subject.joinSpec != DEFAULT_JOIN_SPEC
-        )
-
-    def text_align(self, extents, align, padding, outside):
-        h1, h2 = self._handles
-        w, _ = self.style.min_size
-        h = h2.pos.y - h1.pos.y
-        x, y = get_text_point(extents, w, h, align, padding, outside)
-
-        return x, y
 
     def pre_update(self, context):
-        self.update_stereotype()
-        Item.pre_update(self, context)
-        DiagramItem.pre_update(self, context)
-
-    def post_update(self, context):
-        Item.post_update(self, context)
-        DiagramItem.post_update(self, context)
+        cr = context.cairo
+        _, h2 = self.handles()
+        _, height = self.shape.size(cr)
+        h2.pos.y = max(h2.pos.y, height)
 
     def draw(self, context):
+        h1, h2 = self.handles()
+        height = h2.pos.y - h1.pos.y
+        self.shape.draw(context, Rectangle(0, 0, 1, height))
+
+    def draw_fork_node(self, _box, context, _bounding_box):
         """
         Draw vertical line - symbol of fork and join nodes. Join
         specification is also drawn above the item.
         """
-        super().draw(context)
-
         cr = context.cairo
 
         cr.set_line_width(6)
@@ -315,25 +336,3 @@ class ForkNodeItem(DiagramItem, Item):
         d, p = distance_line_point(h1.pos, h2.pos, pos)
         # Substract line_width / 2
         return d - 3
-
-    def on_named_element_name(self, event):
-        subject = self.subject
-        if subject:
-            self._name.text = subject.name
-            self.request_update()
-
-    def on_join_node_join_spec(self, event):
-        subject = self.subject
-        if subject:
-            self._join_spec.text = subject.joinSpec or DEFAULT_JOIN_SPEC
-            self.request_update()
-
-
-def is_join_node(subject):
-    """
-    Check if ``subject`` is join node.
-    """
-    return subject and isinstance(subject, UML.JoinNode)
-
-
-# vim:sw=4:et

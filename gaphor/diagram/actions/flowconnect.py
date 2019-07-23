@@ -12,6 +12,9 @@ from gaphor.diagram.actions.action import (
 from gaphor.diagram.actions.activitynodes import (
     ForkNodeItem,
     ActivityNodeItem,
+    InitialNodeItem,
+    ActivityFinalNodeItem,
+    FlowFinalNodeItem,
     DecisionNodeItem,
 )
 from gaphor.diagram.actions.flow import FlowItem
@@ -85,6 +88,9 @@ class FlowConnect(UnaryRelationshipConnect):
 
 
 IConnect.register(ActionItem, FlowItem)(FlowConnect)
+IConnect.register(InitialNodeItem, FlowItem)(FlowConnect)
+IConnect.register(ActivityFinalNodeItem, FlowItem)(FlowConnect)
+IConnect.register(FlowFinalNodeItem, FlowItem)(FlowConnect)
 IConnect.register(ActivityNodeItem, FlowItem)(FlowConnect)
 IConnect.register(ObjectNodeItem, FlowItem)(FlowConnect)
 IConnect.register(SendSignalActionItem, FlowItem)(FlowConnect)

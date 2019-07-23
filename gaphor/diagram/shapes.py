@@ -150,9 +150,10 @@ class IconBox:
         h = bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM]
         self.children[0].draw(context, Rectangle(x, y, w, h))
         y = bounding_box.y + bounding_box.height
-        for c, (_w, h) in zip(self.children[1:], self.sizes[1:]):
-            c.draw(context, Rectangle(x, y, w, h))
-            y += h
+        for c, (cw, ch) in zip(self.children[1:], self.sizes[1:]):
+            mw = max(w, cw)
+            c.draw(context, Rectangle(x - (mw - w) / 2, y, mw, ch))
+            y += ch
 
 
 class Text:
@@ -180,8 +181,8 @@ class Text:
 
     def draw(self, context, bounding_box):
         cr = context.cairo
-        min_w = self.style("min-width")
-        min_h = self.style("min-height")
+        min_w = max(self.style("min-width"), bounding_box.width)
+        min_h = max(self.style("min-height"), bounding_box.height)
         font = self.style("font")
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
