@@ -60,6 +60,7 @@ class Box:
             "min-height": 0,
             "padding": (0, 0, 0, 0),
             "vertical-align": VerticalAlign.MIDDLE,
+            "border-radius": 0,
             **style,
         }.__getitem__
         self._draw_border = draw

@@ -29,7 +29,6 @@ class ActionItem(ElementPresentation, Named):
                 "min-height": 30,
                 "padding": (5, 10, 5, 10),
                 "border-radius": 15,
-                "border": True,
             },
             draw=draw_boundry,
         )
