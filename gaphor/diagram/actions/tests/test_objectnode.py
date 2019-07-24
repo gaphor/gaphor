@@ -12,7 +12,7 @@ class ObjectNodeTestCase(TestCase):
         Test updating of object node name
         """
         node = self.create(ObjectNodeItem, UML.ObjectNode)
-        name = node.shape.children[0].children[1]
+        name = node.shape.icon.children[1]
 
         node.subject.name = "Blah"
 
@@ -23,7 +23,7 @@ class ObjectNodeTestCase(TestCase):
         Test updating of ObjectNodeItem.ordering.
         """
         node = self.create(ObjectNodeItem, UML.ObjectNode)
-        ordering = node.shape.children[2]
+        ordering = node.shape.children[1]
 
         node.subject.ordering = "unordered"
         node.show_ordering = True

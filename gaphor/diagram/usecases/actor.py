@@ -34,16 +34,13 @@ class ActorItem(ElementPresentation, Classified):
                 style={"min-width": ARM * 2, "min-height": HEAD + NECK + BODY + ARM},
                 draw=draw_actor,
             ),
-            Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                    style={"min-width": 0, "min-height": 0},
-                ),
-                EditableText(
-                    text=lambda: self.subject and self.subject.name or "",
-                    style={"font": "sans bold 10"},
-                ),
-                style={"padding": (2, 0, 0, 0)},
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(
+                text=lambda: self.subject and self.subject.name or "",
+                style={"font": "sans bold 10"},
             ),
         )
 
