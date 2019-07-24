@@ -5,7 +5,7 @@ import abc
 from functools import singledispatch
 
 from gaphor import UML
-from gaphor.diagram.abc import Named
+from gaphor.diagram.presentation import Named
 from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.compartment import CompartmentItem

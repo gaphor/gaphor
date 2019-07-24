@@ -7,6 +7,22 @@ from gaphor.UML import Presentation
 from gaphor.diagram.text import text_point_at_line, TextAlign
 
 
+class Named:
+    """
+    Marker for any NamedElement presentations.
+    """
+
+    pass
+
+
+class Classified(Named):
+    """
+    Marker for Classifier presentations.
+    """
+
+    pass
+
+
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
 
 

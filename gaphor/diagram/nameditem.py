@@ -6,7 +6,7 @@ from NamedElement.
 """
 
 from gaphor import UML
-from gaphor.diagram.abc import Named
+from gaphor.diagram.presentation import Named
 from gaphor.diagram.elementitem import ElementItem
 from gaphor.diagram.style import get_min_size, ALIGN_CENTER, ALIGN_TOP
 

@@ -6,8 +6,7 @@ from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
-from gaphor.diagram.abc import Classified
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.presentation import ElementPresentation, Classified
 from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.support import represents
 

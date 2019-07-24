@@ -2,7 +2,7 @@
 Classifier diagram item.
 """
 
-from gaphor.diagram.abc import Classified
+from gaphor.diagram.presentation import Classified
 from gaphor.diagram.compartment import CompartmentItem
 
 

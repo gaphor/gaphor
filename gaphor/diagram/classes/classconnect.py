@@ -6,7 +6,7 @@ from gaphor.diagram.connectors import (
     UnaryRelationshipConnect,
     RelationshipConnect,
 )
-from gaphor.diagram.abc import Named, Classified
+from gaphor.diagram.presentation import Named, Classified
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.generalization import GeneralizationItem

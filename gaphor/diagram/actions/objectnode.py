@@ -8,8 +8,7 @@ import ast
 from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
-from gaphor.diagram.abc import Named
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_boundry
 from gaphor.diagram.support import represents
 
