@@ -41,6 +41,19 @@ def draw_boundry(box, context, bounding_box):
     cr.stroke()
 
 
+def draw_highlight(context):
+    highlight_color = (0, 0, 1, 0.4)
+    cr = context.cairo
+    cr.save()
+    try:
+        if context.dropzone:
+            cr.set_source_rgba(*highlight_color)
+            cr.set_line_width(cr.get_line_width() * 3.141)
+            cr.stroke_preserve()
+    finally:
+        cr.restore()
+
+
 class Box:
     """
     A box like shape.

@@ -8,15 +8,16 @@ TODO: partition can be resized only horizontally or vertically, therefore
 """
 
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.abc import Named
+from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.support import represents
+from gaphor.diagram.text import VerticalAlign
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_highlight
 
 
-class PartitionItem(NamedItem):
-    __uml__ = UML.ActivityPartition
-
-    __stereotype__ = {"external": lambda self: self.subject and self.subject.isExternal}
-
-    __style__ = {"min-size": (100, 300), "line-width": 2.4}
+@represents(UML.ActivityPartition)
+class PartitionItem(ElementPresentation, Named):
 
     DELTA = 30
 
@@ -27,8 +28,31 @@ class PartitionItem(NamedItem):
         self._subpart = False
         self._hdmax = 0  # maximum subpartition header height
 
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(
+                    self.subject,
+                    ("external",) if self.subject and self.subject.isExternal else (),
+                ),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            Text(text=lambda: self.subject and self.subject.name or ""),
+            style={
+                "min-width": 0,
+                "min-height": 0,
+                "line-width": 2.4,
+                "vertical-align": VerticalAlign.TOP,
+                "padding": (2, 2, 2, 2),
+            },
+            draw=self.draw_partition,
+        )
+        self.min_width = 100
+        self.min_height = 300
+
     def pre_update(self, context):
-        super(PartitionItem, self).pre_update(context)
+        # super().pre_update(context)
+
+        self._header_size = self.shape.size(context.cairo)
 
         # get subpartitions
         children = list(
@@ -77,34 +101,31 @@ class PartitionItem(NamedItem):
                 sl.height = sl.min_height = max(0, self.height - self._header_size[1])
                 dp += sl.width
 
-    def draw(self, context):
+    def draw_partition(self, box, context, bounding_box):
         """
-        By default horizontal partition is drawn. It is open on right side
-        (or bottom side when horizontal).
+        By default vertical partition is drawn. It is open on the bottom.
         """
         cr = context.cairo
-        cr.set_line_width(self.style.line_width)
+        cr.set_line_width(box.style("line-width"))
 
         if self.subject and not self.subject.isDimension and self._toplevel:
             cr.move_to(0, 0)
-            cr.line_to(self.width, 0)
+            cr.line_to(bounding_box.width, 0)
 
         h = self._header_size[1]
 
         # draw outside lines if this item is toplevel partition
         if self._toplevel:
-            cr.move_to(0, self.height)
+            cr.move_to(0, bounding_box.height)
             cr.line_to(0, h)
-            cr.line_to(self.width, h)
-            cr.line_to(self.width, self.height)
-
-        super().draw(context)
+            cr.line_to(bounding_box.width, h)
+            cr.line_to(bounding_box.width, bounding_box.height)
 
         if self._subpart:
             # header line for all subparitions
             hd = h + self._hdmax
             cr.move_to(0, hd)
-            cr.line_to(self.width, hd)
+            cr.line_to(bounding_box.width, hd)
 
         if self._subpart:
             # draw inside lines for all children but last one
@@ -112,7 +133,7 @@ class PartitionItem(NamedItem):
             for sl in self.canvas.get_children(self)[:-1]:
                 dp += sl.width
                 cr.move_to(dp, h)
-                cr.line_to(dp, self.height)
+                cr.line_to(dp, bounding_box.height)
 
         cr.stroke()
 
@@ -120,10 +141,7 @@ class PartitionItem(NamedItem):
             cr.save()
             cr.set_dash((1.0, 5.0), 0)
             cr.set_line_width(1.0)
-            cr.rectangle(0, 0, self.width, self.height)
-            self.highlight(context)
+            cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
+            draw_highlight(context)
             cr.stroke()
             cr.restore()
-
-
-# vim:sw=4:et
