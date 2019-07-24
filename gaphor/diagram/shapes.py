@@ -45,7 +45,7 @@ class Box:
     """
     A box like shape.
 
-    CSS properties:
+    Style properties:
     - min-height
     - min-width
     - padding: a tuple (top, right, bottom, left)
@@ -109,9 +109,10 @@ class Box:
 
 class IconBox:
     """
-    A box like shape.
+    A special type of box: the main element is given the full width/height and
+    all other shapes are drawn below the main shape.
 
-    CSS properties:
+    Style properties:
     - min-height
     - min-width
     - padding: a tuple (top, right, bottom, left)
