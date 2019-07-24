@@ -12,17 +12,6 @@ from gaphas.constraint import EqualsConstraint, LessThanConstraint
 from gaphas.geometry import Rectangle, distance_line_point
 
 from gaphor import UML
-from gaphor.diagram.diagramitem import DiagramItem
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.style import (
-    ALIGN_LEFT,
-    ALIGN_CENTER,
-    ALIGN_TOP,
-    ALIGN_RIGHT,
-    ALIGN_BOTTOM,
-)
-from gaphor.diagram.style import get_text_point
-
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.abc import Named
 from gaphor.diagram.presentation import ElementPresentation
@@ -38,21 +27,16 @@ def no_movable_handles(item):
         h.movable = False
 
 
-class ActivityNodeItem(NamedItem):
+class ActivityNodeItem(Named):
     """Basic class for simple activity nodes.
     Simple activity node is not resizable.
     """
 
-    __style__ = {"name-outside": True, "name-padding": (2, 2, 2, 2)}
-
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
-        # Do not allow resizing of the node
-        no_movable_handles(self)
+    pass
 
 
 @represents(UML.InitialNode)
-class InitialNodeItem(ElementPresentation, Named):
+class InitialNodeItem(ElementPresentation, ActivityNodeItem):
     """
     Representation of initial node. Initial node has name which is put near
     top-left side of node.
@@ -86,7 +70,7 @@ def draw_initial_node(_box, context, _bounding_box):
 
 
 @represents(UML.ActivityFinalNode)
-class ActivityFinalNodeItem(ElementPresentation, Named):
+class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
     """Representation of activity final node. Activity final node has name
     which is put near right-bottom side of node.
     """
@@ -130,7 +114,7 @@ def draw_activity_final_node(_box, context, _bounding_box):
 
 
 @represents(UML.FlowFinalNode)
-class FlowFinalNodeItem(ElementPresentation, Named):
+class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
     """
     Representation of flow final node. Flow final node has name which is
     put near right-bottom side of node.
@@ -170,7 +154,7 @@ def draw_flow_final_node(_box, context, _bounding_box):
 
 
 @represents(UML.DecisionNode)
-class DecisionNodeItem(ElementPresentation, Named):
+class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
     """
     Representation of decision or merge node.
     """

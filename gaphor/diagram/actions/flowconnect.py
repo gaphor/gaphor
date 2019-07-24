@@ -88,9 +88,6 @@ class FlowConnect(UnaryRelationshipConnect):
 
 
 IConnect.register(ActionItem, FlowItem)(FlowConnect)
-IConnect.register(InitialNodeItem, FlowItem)(FlowConnect)
-IConnect.register(ActivityFinalNodeItem, FlowItem)(FlowConnect)
-IConnect.register(FlowFinalNodeItem, FlowItem)(FlowConnect)
 IConnect.register(ActivityNodeItem, FlowItem)(FlowConnect)
 IConnect.register(ObjectNodeItem, FlowItem)(FlowConnect)
 IConnect.register(SendSignalActionItem, FlowItem)(FlowConnect)
