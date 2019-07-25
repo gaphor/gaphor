@@ -38,8 +38,7 @@ class ActorItem(ElementPresentation, Classified):
                 style={"min-width": 0, "min-height": 0},
             ),
             EditableText(
-                text=lambda: self.subject and self.subject.name or "",
-                style={"font": "sans bold 10"},
+                text=lambda: self.subject.name or "", style={"font": "sans bold 10"}
             ),
         )
 

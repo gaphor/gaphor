@@ -36,25 +36,19 @@ class StateItem(ElementPresentation, VertexItem):
     def update_shapes(self, event=None):
         compartment = Box(
             Text(
-                text=lambda: self.subject
-                and self.subject.entry
-                and self.subject.entry.name
+                text=lambda: self.subject.entry.name
                 and f"entry / {self.subject.entry.name}"
                 or "",
                 style={"text-align": TextAlign.LEFT, "min-height": 0},
             ),
             Text(
-                text=lambda: self.subject
-                and self.subject.exit
-                and self.subject.exit.name
+                text=lambda: self.subject.exit.name
                 and f"exit / {self.subject.exit.name}"
                 or "",
                 style={"text-align": TextAlign.LEFT, "min-height": 0},
             ),
             Text(
-                text=lambda: self.subject
-                and self.subject.doActivity
-                and self.subject.doActivity.name
+                text=lambda: self.subject.doActivity.name
                 and f"do / {self.subject.doActivity.name}"
                 or "",
                 style={"text-align": TextAlign.LEFT, "min-height": 0},
@@ -71,7 +65,7 @@ class StateItem(ElementPresentation, VertexItem):
                     text=lambda: stereotypes_str(self.subject),
                     style={"min-width": 0, "min-height": 0},
                 ),
-                EditableText(text=lambda: self.subject and self.subject.name or ""),
+                EditableText(text=lambda: self.subject.name or ""),
                 style={"padding": (5, 5, 5, 5)},
             ),
             compartment,

@@ -175,7 +175,7 @@ class IconBox:
 
 class Text:
     def __init__(self, text=lambda: "", width=lambda: -1, style={}):
-        self.text = text if callable(text) else lambda: text
+        self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
         self.style = {
             "width": -1,
@@ -187,6 +187,12 @@ class Text:
             "padding": (0, 0, 0, 0),
             **style,
         }.__getitem__
+
+    def text(self):
+        try:
+            return self._text()
+        except AttributeError:
+            return ""
 
     def size(self, cr):
         min_w = self.style("min-width")

@@ -36,20 +36,17 @@ class ObjectNodeItem(ElementPresentation, Named):
                     text=lambda: stereotypes_str(self.subject),
                     style={"min-width": 0, "min-height": 0},
                 ),
-                EditableText(text=lambda: self.subject and self.subject.name or ""),
+                EditableText(text=lambda: self.subject.name or ""),
                 style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
                 draw=draw_boundry,
             ),
             Text(
-                text=lambda: self.subject
-                and self.subject.upperBound not in (None, DEFAULT_UPPER_BOUND)
-                and self.subject.upperBound
+                text=lambda: self.subject.upperBound not in (None, DEFAULT_UPPER_BOUND)
                 and f"{{ upperBound = {self.subject.upperBound} }}",
                 style={"min-width": 0, "min-height": 0},
             ),
             Text(
                 text=lambda: self._show_ordering
-                and self.subject
                 and self.subject.ordering
                 and f"{{ ordering = {self.subject.ordering} }}",
                 style={"min-width": 0, "min-height": 0},

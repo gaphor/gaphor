@@ -63,7 +63,7 @@ class AssociationItem(LinePresentation, Named):
                 text=lambda: stereotypes_str(self.subject),
                 style={"min-width": 0, "min-height": 0},
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            EditableText(text=lambda: self.subject.name or ""),
         )
 
         # For the association ends:

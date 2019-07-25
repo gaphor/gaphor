@@ -35,7 +35,7 @@ class PartitionItem(ElementPresentation, Named):
                 ),
                 style={"min-width": 0, "min-height": 0},
             ),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=lambda: self.subject.name or ""),
             style={
                 "min-width": 0,
                 "min-height": 0,

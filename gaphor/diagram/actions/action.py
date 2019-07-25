@@ -22,7 +22,7 @@ class ActionItem(ElementPresentation, Named):
                 text=lambda: stereotypes_str(self.subject),
                 style={"min-width": 0, "min-height": 0},
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            EditableText(text=lambda: self.subject.name or ""),
             style={
                 "min-width": 50,
                 "min-height": 30,
@@ -49,7 +49,7 @@ class SendSignalActionItem(ElementPresentation, Named):
                 text=lambda: stereotypes_str(self.subject),
                 style={"min-width": 0, "min-height": 0},
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            EditableText(text=lambda: self.subject.name or ""),
             style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
             draw=self.draw_border,
         )
@@ -84,7 +84,7 @@ class AcceptEventActionItem(ElementPresentation, Named):
                 text=lambda: stereotypes_str(self.subject),
                 style={"min-width": 0, "min-height": 0},
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            EditableText(text=lambda: self.subject.name or ""),
             style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
             draw=self.draw_border,
         )

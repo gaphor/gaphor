@@ -24,7 +24,7 @@ class CommentItem(ElementPresentation):
         self.width = 100
 
         self.body = Text(
-            text=lambda: self.subject and self.subject.body or "",
+            text=lambda: self.subject.body or "",
             width=lambda: self.width - EAR - 2 * OFFSET,
             style={"text-align": TextAlign.LEFT, "vertical-align": VerticalAlign.TOP},
         )
