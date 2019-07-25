@@ -71,33 +71,45 @@ class StatePropertyPage(NamedItemPropertyPage):
 
         hbox = create_hbox_label(self, page, _("Entry"))
         entry = Gtk.Entry()
-        if self.item._entry.subject:
-            entry.set_text(self.item._entry.subject.name)
-        entry.connect("changed", self._on_text_change, self.item.set_entry)
+        if subject.entry:
+            entry.set_text(subject.entry.name or "")
+        entry.connect("changed", self.on_text_change, self.set_entry)
         hbox.pack_start(entry, True, True, 0)
 
         hbox = create_hbox_label(self, page, _("Exit"))
         entry = Gtk.Entry()
-        if self.item._exit.subject:
-            entry.set_text(self.item._exit.subject.name)
-        entry.connect("changed", self._on_text_change, self.item.set_exit)
+        if subject.exit:
+            entry.set_text(subject.exit.name or "")
+        entry.connect("changed", self.on_text_change, self.set_exit)
         hbox.pack_start(entry, True, True, 0)
 
         hbox = create_hbox_label(self, page, _("Do Activity"))
         entry = Gtk.Entry()
-        if self.item._do_activity.subject:
-            entry.set_text(self.item._do_activity.subject.name)
-        entry.connect("changed", self._on_text_change, self.item.set_do_activity)
+        if subject.doActivity:
+            entry.set_text(self.subject.doActivity.name or "")
+        entry.connect("changed", self.on_text_change, self.set_do_activity)
         hbox.pack_start(entry, True, True, 0)
 
         page.show_all()
 
         return page
 
-    def update(self):
-        pass
-
     @transactional
-    def _on_text_change(self, entry, method):
+    def on_text_change(self, entry, method):
         value = entry.get_text().strip()
         method(value)
+
+    def set_entry(self, text):
+        if not self.subject.entry:
+            self.subject.entry = self.subject.model.create(UML.Activity)
+        self.subject.entry.name = text
+
+    def set_exit(self, text):
+        if not self.subject.exit:
+            self.subject.exit = self.subject.model.create(UML.Activity)
+        self.subject.exit.name = text
+
+    def set_do_activity(self, text):
+        if not self.subject.doActivity:
+            self.subject.doActivity = self.subject.model.create(UML.Activity)
+        self.subject.doActivity.name = text

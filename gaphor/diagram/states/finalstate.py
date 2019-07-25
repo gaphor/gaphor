@@ -5,11 +5,11 @@ Final state diagram item.
 from gaphor import UML
 from gaphor.diagram.style import ALIGN_RIGHT, ALIGN_BOTTOM
 from gaphas.util import path_ellipse
-
+from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.states.state import VertexItem
 
 
-class FinalStateItem(VertexItem):
+class FinalStateItem(NamedItem, VertexItem):
     __uml__ = UML.FinalState
     __style__ = {
         "min-size": (30, 30),
