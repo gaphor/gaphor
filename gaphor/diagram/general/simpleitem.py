@@ -12,12 +12,9 @@ from gaphor.diagram.style import Style
 
 
 class Line(_Line):
-
-    __style__ = {"line-width": 2, "line-color": (0, 0, 0, 1)}
-
     def __init__(self, id=None, model=None):
         super(Line, self).__init__()
-        self.style = Style(Line.__style__)
+        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
         self.fuzziness = 2
         self._handles[0].connectable = False
@@ -56,8 +53,8 @@ class Line(_Line):
     def draw(self, context):
         cr = context.cairo
         style = self.style
-        cr.set_line_width(style.line_width)
-        cr.set_source_rgba(*style.line_color)
+        cr.set_line_width(style("line-width"))
+        cr.set_source_rgba(*style("color"))
         super(Line, self).draw(context)
 
 
@@ -69,15 +66,9 @@ class Box(Element):
     SW +---+ SE
     """
 
-    __style__ = {
-        "border-width": 2,
-        "border-color": (0, 0, 0, 1),
-        "fill-color": (1, 1, 1, 0),
-    }
-
     def __init__(self, id=None, model=None):
         super(Box, self).__init__(10, 10)
-        self.style = Style(Box.__style__)
+        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
 
     id = property(lambda self: self._id, doc="Id")
@@ -103,10 +94,10 @@ class Box(Element):
         nw = self._handles[NW]
         style = self.style
         cr.rectangle(nw.pos.x, nw.pos.y, self.width, self.height)
-        cr.set_source_rgba(*style.fill_color)
-        cr.fill_preserve()
-        cr.set_source_rgba(*style.border_color)
-        cr.set_line_width(style.border_width)
+        # cr.set_source_rgba(*style("color"))
+        # cr.fill_preserve()
+        cr.set_source_rgba(*style("color"))
+        cr.set_line_width(style("line-width"))
         cr.stroke()
 
 
@@ -114,15 +105,9 @@ class Ellipse(Element):
     """
     """
 
-    __style__ = {
-        "border-width": 2,
-        "border-color": (0, 0, 0, 1),
-        "fill-color": (1, 1, 1, 0),
-    }
-
     def __init__(self, id=None, model=None):
         super(Ellipse, self).__init__()
-        self.style = Style(Ellipse.__style__)
+        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
 
     id = property(lambda self: self._id, doc="Id")
@@ -153,11 +138,8 @@ class Ellipse(Element):
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)
-        cr.set_source_rgba(*style.fill_color)
-        cr.fill_preserve()
-        cr.set_source_rgba(*style.border_color)
-        cr.set_line_width(style.border_width)
+        # cr.set_source_rgba(*style.fill_color)
+        # cr.fill_preserve()
+        cr.set_source_rgba(*style("color"))
+        cr.set_line_width(style("line-width"))
         cr.stroke()
-
-
-# vim:sw=4:et:ai
