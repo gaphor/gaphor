@@ -105,8 +105,6 @@ is highly recommended.
 
 #### Windows
 
-NOTE: Use of virtual environments with msys2 is currently
-[broken](https://github.com/msys2/MINGW-packages/issues/5001).
 To setup a development environment in Windows:
 1) Go to http://www.msys2.org/ and download the x86_64 installer
 1) Follow the instructions on the page for setting up the basic environment
@@ -121,7 +119,7 @@ Install git if it isn't already installed in msys2 with `pacman -S git`
 git clone the repository to C:\msys64\home\<user>
 ```bash
 $ cd gaphor
-$ pip3 install -e .
+$ source ./venv
 ```
 
 #### Linux
