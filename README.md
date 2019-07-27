@@ -116,10 +116,11 @@ $ pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-python3-setuptools
 ```
 Install git if it isn't already installed in msys2 with `pacman -S git`
 
-git clone the repository to C:\msys64\home\<user>
+[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
 ```bash
 $ cd gaphor
 $ source ./venv
+$ poetry run gaphor
 ```
 
 #### Linux
@@ -127,7 +128,13 @@ To setup a development environment with Linux:
 ```bash
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
     gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
+```
+[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+
+```
+$ cd gaphor
 $ source ./venv
+$ poetry run gaphor
 ```
 
 #### macOS
@@ -136,7 +143,12 @@ To setup a development environment with macOS:
 1. Open a terminal and execute:
 ```bash
 $ brew install gobject-introspection gtk+3
+```
+[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+```
+$ cd gaphor
 $ source ./venv
+$ poetry run gaphor
 ```
 
 ## :flashlight: Usage
