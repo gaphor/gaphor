@@ -7,6 +7,7 @@ from gaphor.i18n import _
 
 from gaphor.diagram.classifier import ClassifierItem
 from gaphor.diagram.compartment import FeatureItem
+from gaphor.diagram.support import represents
 
 
 class OperationItem(FeatureItem):
@@ -28,6 +29,8 @@ class OperationItem(FeatureItem):
         )
 
 
+@represents(UML.Class)
+@represents(UML.Stereotype)
 class ClassItem(ClassifierItem):
     """This item visualizes a Class instance.
 
@@ -36,8 +39,6 @@ class ClassItem(ClassifierItem):
 	the ClassItem implements the CanvasGroupable interface.
 	Items can be added by callling class.add() and class.remove().
 	This is used to handle CanvasItems, not UML objects!"""
-
-    __uml__ = UML.Class, UML.Stereotype
 
     __stereotype__ = {
         "stereotype": UML.Stereotype,

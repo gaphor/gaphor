@@ -17,14 +17,16 @@ module.
 
 from gaphor import UML
 from gaphor.diagram.classifier import ClassifierItem
+from gaphor.diagram.support import represents
 
 
+@represents(UML.Node)
+@represents(UML.Device)
 class NodeItem(ClassifierItem):
     """
     Representation of node or device from UML Deployment package.
     """
 
-    __uml__ = UML.Node, UML.Device
     __stereotype__ = {"device": UML.Device}
 
     DEPTH = 10

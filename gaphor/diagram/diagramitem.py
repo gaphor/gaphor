@@ -22,8 +22,6 @@ logger = logging.getLogger(__name__)
 class DiagramItemMeta(type):
     """
     Initialize a new diagram item.
-    1. Register UML.Elements by means of the __uml__ attribute (see
-       map_uml_class method).
     2. Set items style information.
 
     @ivar style: style information
@@ -32,24 +30,7 @@ class DiagramItemMeta(type):
     def __init__(self, name, bases, data):
         type.__init__(self, name, bases, data)
 
-        self.map_uml_class(data)
         self.set_style(data)
-
-    def map_uml_class(self, data):
-        """
-        Map UML class to diagram item.
-
-        @param cls:  new instance of item class
-        @param data: metaclass data with UML class information
-
-        """
-        if "__uml__" in data:
-            obj = data["__uml__"]
-            if isinstance(obj, (tuple, set, list)):
-                for c in obj:
-                    set_diagram_item(c, self)
-            else:
-                set_diagram_item(obj, self)
 
     def set_style(self, data):
         """

@@ -78,6 +78,7 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
+from gaphor.diagram.support import represents
 
 
 class InterfacePort(LinePort):
@@ -120,6 +121,7 @@ class InterfacePort(LinePort):
             return pl, d
 
 
+@represents(UML.Interface)
 class InterfaceItem(ClassItem):
     """
     Interface item supporting class box, folded notations and assembly
@@ -128,7 +130,6 @@ class InterfaceItem(ClassItem):
     When in folded mode, provided (ball) notation is used by default.
     """
 
-    __uml__ = UML.Interface
     __stereotype__ = {"interface": lambda self: self.drawing_style != self.DRAW_ICON}
     __style__ = {
         "icon-size": (20, 20),

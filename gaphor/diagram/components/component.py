@@ -4,11 +4,12 @@ Component item.
 
 from gaphor import UML
 from gaphor.diagram.classifier import ClassifierItem
+from gaphor.diagram.support import represents
 
 
+@represents(UML.Component)
 class ComponentItem(ClassifierItem):
 
-    __uml__ = UML.Component
     __icon__ = True
 
     __style__ = {"name-padding": (10, 25, 10, 10)}
