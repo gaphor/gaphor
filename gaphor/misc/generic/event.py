@@ -36,7 +36,7 @@ class Manager(object):
     def subscribe(self, handler, event_type):
         """ Subscribe ``handler`` to specified ``event_type``"""
         handler_set = self.registry.get_registration(event_type)
-        if not handler_set:
+        if handler_set is None:
             handler_set = self._register_handler_set(event_type)
         handler_set.add(handler)
 
