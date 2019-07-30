@@ -32,8 +32,10 @@ from gaphas.constraint import (
 )
 
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.support import represents
 
 
 class LifetimePort(LinePort):
@@ -133,7 +135,8 @@ class LifetimeItem:
     visible = property(_is_visible, _set_visible)
 
 
-class LifelineItem(NamedItem):
+@represents(UML.Lifeline)
+class LifelineItem(ElementPresentation, Named):
     """
     Lifeline item.
 
@@ -146,9 +149,6 @@ class LifelineItem(NamedItem):
      is_destroyed
         Check if delete message is connected.
     """
-
-    __uml__ = UML.Lifeline
-    __style__ = {"name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
@@ -163,6 +163,21 @@ class LifelineItem(NamedItem):
         self._handles.append(top)
         self._handles.append(bottom)
         self._ports.append(self.lifetime.port)
+
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(
+                text=lambda: self.subject.name or "", style={"font": "sans bold 10"}
+            ),
+            style={"min-width": 100, "min-height": 50},
+            draw=self.draw_lifeline,
+        )
+
+        self.watch("subject<NamedElement>.name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
     def setup_canvas(self):
         super().setup_canvas()
@@ -201,7 +216,7 @@ class LifelineItem(NamedItem):
         else:
             super().load(name, value)
 
-    def draw(self, context):
+    def draw_lifeline(self, box, context, bounding_box):
         """
         Draw lifeline.
 
@@ -209,7 +224,6 @@ class LifelineItem(NamedItem):
 
         Lifeline's lifetime is drawn when lifetime is visible.
         """
-        super().draw(context)
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
