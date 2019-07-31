@@ -41,6 +41,14 @@ def draw_boundry(box, context, bounding_box):
     cr.stroke()
 
 
+def draw_top_separator(box, context, bounding_box):
+    x, y, w, h = bounding_box
+    cr = context.cairo
+    cr.move_to(x, y)
+    cr.line_to(x + w, y)
+    cr.stroke()
+
+
 def draw_highlight(context):
     highlight_color = (0, 0, 1, 0.4)
     cr = context.cairo

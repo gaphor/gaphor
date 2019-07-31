@@ -7,7 +7,7 @@ import operator
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_top_separator
 from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.diagram.support import represents
 
@@ -81,14 +81,6 @@ class StateItem(ElementPresentation, VertexItem):
     def postload(self):
         super().postload()
         self.update_shapes()
-
-
-def draw_top_separator(box, context, bounding_box):
-    x, y, w, h = bounding_box
-    cr = context.cairo
-    cr.move_to(x, y)
-    cr.line_to(x + w, y)
-    cr.stroke()
 
 
 def draw_state(box, context, bounding_box):
