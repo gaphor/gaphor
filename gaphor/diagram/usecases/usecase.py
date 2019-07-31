@@ -34,12 +34,6 @@ class UseCaseItem(ElementPresentation, Classified):
         self.watch("subject<NamedElement>.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-    def load(self, name, value):
-        if name == "drawing-style":
-            pass
-        else:
-            super().load(name, value)
-
 
 def draw_usecase(box, context, bounding_box):
     cr = context.cairo

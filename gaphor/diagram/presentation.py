@@ -55,6 +55,10 @@ class ElementPresentation(Presentation, gaphas.Element):
             setattr(self, name, ast.literal_eval(value))
         elif name == "show_stereotypes_attrs":
             # TODO: should be handled in storage as an upgrader
+            if hasattr(self, "show_stereotypes_attrs"):
+                self.show_stereotypes_attrs = ast.literal_eval(value)
+        elif name == "drawing-style":  # for classifiers
+            # TODO: should be handled in storage as an upgrader
             pass
         else:
             super().load(name, value)

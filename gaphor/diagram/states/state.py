@@ -78,12 +78,6 @@ class StateItem(ElementPresentation, VertexItem):
         )
         self.request_update()
 
-    def load(self, name, value):
-        if name == "drawing-style":
-            pass
-        else:
-            super().load(name, value)
-
     def postload(self):
         super().postload()
         self.update_shapes()
