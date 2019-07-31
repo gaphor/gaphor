@@ -88,7 +88,7 @@ class StereotypePage(PropertyPageBase):
             return None
 
         # show stereotypes attributes toggle
-        if isinstance(self.item, StereotypeSupport):
+        if hasattr(self.item, "show_stereotypes_attrs"):
             hbox = Gtk.HBox()
             label = Gtk.Label(label="")
             hbox.pack_start(label, False, True, 0)
