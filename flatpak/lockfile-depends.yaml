@@ -1,0 +1,27 @@
+name: poetry-deps
+buildsystem: simple
+build-commands:
+  - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST}
+    future gaphas importlib-metadata pycairo pygobject tomlkit zipp
+sources:
+  - type: file
+    url: https://files.pythonhosted.org/packages/90/52/e20466b85000a181e1e144fd8305caf2cf475e2f9674e797b222f8105f5f/future-0.17.1.tar.gz
+    sha256: 67045236dcfd6816dc439556d009594abf643e5eb48992e36beac09c2ca659b8
+  - type: file
+    url: https://files.pythonhosted.org/packages/65/81/d1d7c68c7ad64b0ef35659fe7a6aaa47635dab6aec0cf12dcf7d0ee5932a/gaphas-1.1.1-py2.py3-none-any.whl
+    sha256: 210d36249f56ade49d394c79ae7f62a2ecec85ef75b87ac3f2ff231ce6fcaaa2
+  - type: file
+    url: https://files.pythonhosted.org/packages/bd/23/dce4879ec58acf3959580bfe769926ed8198727250c5e395e6785c764a02/importlib_metadata-0.18-py2.py3-none-any.whl
+    sha256: 6dfd58dfe281e8d240937776065dd3624ad5469c835248219bd16cf2e12dbeb7
+  - type: file
+    url: https://files.pythonhosted.org/packages/48/20/5e83af98eb897935bf7dc39455e892ba866feebb9b7c3b392982866f9958/pycairo-1.18.1.tar.gz
+    sha256: 70172e58b6bad7572a3518c26729b074acdde15e6fee6cbab6d3528ad552b786
+  - type: file
+    url: https://files.pythonhosted.org/packages/40/ee/8daf797cda4ffe7724b9d47cbb5e2b44ca6235764622d163c586bd9bd7c5/PyGObject-3.32.2.tar.gz
+    sha256: fa82746df059b9e0dcf473e0a9ff0693aa5e064f1ca1e2c46b5ac815bceda1ad
+  - type: file
+    url: https://files.pythonhosted.org/packages/29/22/716eb55bb154d2519752a2d91cf7e91d58dd24e8150c47aaaa67aae75aa6/tomlkit-0.5.5-py2.py3-none-any.whl
+    sha256: c6b0c11b85e888c12330c7605d43c1446aa148cd421163f90ca46ea813f2c336
+  - type: file
+    url: https://files.pythonhosted.org/packages/da/bd/1a5fdf15aa44231fd09f63ecf175b60f057ae37ec65b343bb009364923f3/zipp-0.5.2-py2.py3-none-any.whl
+    sha256: 8a5712cfd3bb4248015eb3b0b3c54a5f6ee3f2425963ef2a0125b8bc40aafaec
