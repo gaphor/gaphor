@@ -20,19 +20,20 @@ def stereotype_compartments(subject):
 
 
 def _create_stereotype_compartment(appliedStereotype):
-    slots = [
-        Text(text=lambda: UML.format(slot), style={"text-align": TextAlign.LEFT})
-        for slot in appliedStereotype.slot
-        if slot.value
-    ]
+    slots = [slot for slot in appliedStereotype.slot if slot.value]
 
-    if any(t.text() for t in slots):
+    if slots:
         return Box(
             Text(
                 text=lambda: f"«{UML.model.stereotype_name(appliedStereotype.classifier[0])}»",
                 style={"padding": (0, 0, 4, 0)},
             ),
-            *slots,
+            *(
+                Text(
+                    text=lambda: UML.format(slot), style={"text-align": TextAlign.LEFT}
+                )
+                for slot in slots
+            ),
             style={"padding": (4, 4, 4, 4), "vertical-align": VerticalAlign.TOP},
             draw=draw_top_separator,
         )
