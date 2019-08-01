@@ -19,7 +19,6 @@ class ComponentItem(ElementPresentation, Classified):
 
         self.watch("show_stereotypes_attrs", self.update_shapes)
         self.watch("subject<NamedElement>.name")
-        self.watch("subject<Classifier>.isAbstract", self.update_shapes)
         self.watch("subject.appliedStereotype", self.update_shapes)
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject.appliedStereotype.slot", self.update_shapes)
