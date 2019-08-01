@@ -6,7 +6,6 @@ from functools import singledispatch
 
 from gaphor import UML
 from gaphor.diagram.presentation import Named
-from gaphor.diagram.nameditem import NamedItem
 from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.diagram.compartment import CompartmentItem
 from gaphor.misc.rattr import rgetattr, rsetattr
@@ -78,7 +77,6 @@ class AbstractEditor(metaclass=abc.ABCMeta):
         """
 
 
-@Editor.register(NamedItem)
 @Editor.register(Named)
 class NamedItemEditor(AbstractEditor):
     """Text edit support for Named items."""
