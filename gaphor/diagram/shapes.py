@@ -18,7 +18,7 @@ class Padding:  # Enum
     LEFT = 3
 
 
-def draw_boundry(box, context, bounding_box):
+def draw_border(box, context, bounding_box):
     cr = context.cairo
     d = box.style("border-radius")
     x, y, width, height = bounding_box

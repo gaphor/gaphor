@@ -7,7 +7,7 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.diagram.profiles.stereotype import stereotype_compartments
 from gaphor.diagram.presentation import ElementPresentation, Classified
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_boundry
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
 from gaphor.diagram.text import VerticalAlign
 from gaphor.diagram.support import represents
 
@@ -51,7 +51,7 @@ class ComponentItem(ElementPresentation, Classified):
                 "min-height": 50,
                 "vertical-align": VerticalAlign.TOP,
             },
-            draw=draw_boundry
+            draw=draw_border
         )
         self.request_update()
 

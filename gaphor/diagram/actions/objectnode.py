@@ -9,7 +9,7 @@ from gaphas.state import observed, reversible_property
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_boundry
+from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_border
 from gaphor.diagram.support import represents
 
 
@@ -38,7 +38,7 @@ class ObjectNodeItem(ElementPresentation, Named):
                 ),
                 EditableText(text=lambda: self.subject.name or ""),
                 style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
-                draw=draw_boundry,
+                draw=draw_border,
             ),
             Text(
                 text=lambda: self.subject.upperBound not in (None, DEFAULT_UPPER_BOUND)

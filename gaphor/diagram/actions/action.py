@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.support import represents
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_boundry
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
 
 
 @represents(UML.Action)
@@ -29,7 +29,7 @@ class ActionItem(ElementPresentation, Named):
                 "padding": (5, 10, 5, 10),
                 "border-radius": 15,
             },
-            draw=draw_boundry,
+            draw=draw_border,
         )
 
         self.watch("subject<NamedElement>.name")
