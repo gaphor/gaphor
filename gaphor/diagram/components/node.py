@@ -16,10 +16,9 @@ module.
 """
 
 from gaphor import UML
-from gaphor.diagram.profiles.stereotype import stereotype_compartments
+from gaphor.diagram.classes.stereotype import stereotype_compartments
 from gaphor.diagram.presentation import ElementPresentation, Classified
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
-from gaphor.diagram.text import VerticalAlign
+from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.support import represents
 
 
@@ -55,7 +54,9 @@ class NodeItem(ElementPresentation, Classified):
                     ),
                     style={"min-width": 0, "min-height": 0},
                 ),
-                EditableText(text=lambda: self.subject.name or ""),
+                EditableText(
+                    text=lambda: self.subject.name or "", style={"font": "sans bold 10"}
+                ),
                 style={"padding": (4, 4, 4, 4)},
             ),
             *(
