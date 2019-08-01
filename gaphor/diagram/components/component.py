@@ -2,8 +2,6 @@
 Component item.
 """
 
-from gaphas.state import observed, reversible_property
-
 from gaphor import UML
 from gaphor.diagram.profiles.stereotype import stereotype_compartments
 from gaphor.diagram.presentation import ElementPresentation, Classified
