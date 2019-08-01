@@ -11,7 +11,7 @@ from gaphor.UML import uml2 as UML
 
 
 @singledispatch
-def format(el, pattern=None):
+def format(el):
     """
     Format an UML element.
     """
@@ -21,7 +21,7 @@ def format(el, pattern=None):
 
 
 @format.register(UML.Property)
-def format_property(el, pattern=None, *args, **kwargs):
+def format_property(el, *args, **kwargs):
     """
     Format property or an association end.
     """
@@ -216,13 +216,13 @@ def format_operation(
 
 
 @format.register(UML.Slot)
-def format_slot(el, pattern=None):
+def format_slot(el):
     return '%s = "%s"' % (el.definingFeature.name, el.value)
 
 
 @format.register(UML.NamedElement)
-def format_namedelement(el, pattern="%s"):
+def format_namedelement(el):
     """
     Format named element.
     """
-    return pattern % el.name
+    return el.name

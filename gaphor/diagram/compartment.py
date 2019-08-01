@@ -26,7 +26,7 @@ class FeatureItem:
     Note that features can also be used inside objects.
     """
 
-    def __init__(self, pattern="%s", order=0):
+    def __init__(self, order=0):
         super(FeatureItem, self).__init__()
         self.width = 0
         self.height = 0
@@ -34,7 +34,6 @@ class FeatureItem:
         self.font = None
         self.subject = None
         self.order = order
-        self.pattern = pattern
 
     def save(self, save_func):
         DiagramItem.save(self, save_func)
@@ -73,7 +72,7 @@ class FeatureItem:
         """
         Return a rendered feature, as a string.
         """
-        return UML.format(self.subject, pattern=self.pattern) or ""
+        return UML.format(self.subject) or ""
 
     def draw(self, context):
         cr = context.cairo
