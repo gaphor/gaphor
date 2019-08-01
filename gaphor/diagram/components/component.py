@@ -38,7 +38,8 @@ class ComponentItem(ElementPresentation, Classified):
                     style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(text=lambda: self.subject.name or ""),
-                style={"padding": (4, 4, 4, 4)},
+                style={"padding": (4, 34, 4, 4), "min-height": 44},
+                draw=draw_component_icon,
             ),
             *(
                 self.show_stereotypes_attrs
@@ -50,7 +51,7 @@ class ComponentItem(ElementPresentation, Classified):
                 "min-height": 50,
                 "vertical-align": VerticalAlign.TOP,
             },
-            draw=draw_component,
+            draw=draw_boundry
         )
         self.request_update()
 
@@ -59,19 +60,14 @@ class ComponentItem(ElementPresentation, Classified):
         self.update_shapes()
 
 
-def draw_component(box, context, bounding_box):
-    draw_boundry(box, context, bounding_box)
-    draw_component_icon(box, context, bounding_box)
-
-
 def draw_component_icon(box, context, bounding_box):
-    bar_width = 10
-    bar_height = 5
-    bar_padding = 5
-    icon_width = 15
-    icon_height = 25
-    icon_margin_x = 10
-    icon_margin_y = 10
+    bar_width = 12
+    bar_height = 4
+    bar_padding = 4
+    icon_width = 16
+    icon_height = 20
+    icon_margin_x = 6
+    icon_margin_y = 12
 
     cr = context.cairo
 
