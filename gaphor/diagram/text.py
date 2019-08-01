@@ -113,14 +113,14 @@ def text_point_in_box(bounding_box, text_size, text_align, vertical_align):
     w, h = text_size
 
     if text_align is TextAlign.CENTER:
-        x = ((width - w) / 2) + x
+        x += (width - w) / 2
     elif text_align is TextAlign.RIGHT:
-        x = x + width - w
+        x += width - w
 
     if vertical_align is VerticalAlign.MIDDLE:
-        y = ((height - h) / 2) + y
+        y += (height - h) / 2
     elif vertical_align is VerticalAlign.BOTTOM:
-        y = y + height
+        y += height
 
     return x, y
 

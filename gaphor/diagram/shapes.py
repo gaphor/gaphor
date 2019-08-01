@@ -87,7 +87,6 @@ class Box:
         self._draw_border = draw
 
     def size(self, cr):
-        global Padding
         style = self.style
         min_width = style("min-width")
         min_height = style("min-height")
@@ -109,7 +108,6 @@ class Box:
             return min_width, min_height
 
     def draw(self, context, bounding_box):
-        global Padding
         padding = self.style("padding")
         valign = self.style("vertical-align")
         height = sum(h for _w, h in self.sizes)
@@ -153,7 +151,6 @@ class IconBox:
         }.__getitem__
 
     def size(self, cr):
-        global Padding
         style = self.style
         min_width = style("min-width")
         min_height = style("min-height")
@@ -166,7 +163,6 @@ class IconBox:
         )
 
     def draw(self, context, bounding_box):
-        global Padding
         padding = self.style("padding")
         vertical_spacing = self.style("vertical-spacing")
         x = bounding_box.x + padding[Padding.LEFT]
@@ -206,9 +202,13 @@ class Text:
         min_w = self.style("min-width")
         min_h = self.style("min-height")
         font = self.style("font")
+        padding = self.style("padding")
 
-        w, h = text_size(cr, self.text(), font, self.width())
-        return max(min_w, w), max(min_h, h)
+        width, height = text_size(cr, self.text(), font, self.width())
+        return (
+            max(min_w, width + padding[Padding.RIGHT] + padding[Padding.LEFT]),
+            max(min_h, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
+        )
 
     def draw(self, context, bounding_box):
         cr = context.cairo
@@ -219,14 +219,21 @@ class Text:
         vertical_align = self.style("vertical-align")
         padding = self.style("padding")
 
+        text_box = Rectangle(
+            bounding_box.x + padding[Padding.LEFT],
+            bounding_box.y + padding[Padding.TOP],
+            bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT],
+            bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM],
+        )
+
         x, y, w, h = text_draw(
             cr,
             self.text(),
             font,
             lambda w, h: text_point_in_box(
-                bounding_box, (w, h), text_align, vertical_align
+                text_box, (w, h), text_align, vertical_align
             ),
-            width=bounding_box.width,
+            width=text_box.width,
             default_size=(min_w, min_h),
         )
         return x, y, w, h
