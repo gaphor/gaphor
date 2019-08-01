@@ -53,7 +53,7 @@ class StateItem(ElementPresentation, VertexItem):
                 or "",
                 style={"text-align": TextAlign.LEFT, "min-height": 0},
             ),
-            style={"padding": (5, 5, 5, 5), "vertical-align": VerticalAlign.TOP},
+            style={"padding": (4, 4, 4, 4), "vertical-align": VerticalAlign.TOP},
             draw=draw_top_separator,
         )
         if not any(t.text() for t in compartment.children):
@@ -66,7 +66,7 @@ class StateItem(ElementPresentation, VertexItem):
                     style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(text=lambda: self.subject.name or ""),
-                style={"padding": (5, 5, 5, 5)},
+                style={"padding": (4, 4, 4, 4)},
             ),
             compartment,
             style={

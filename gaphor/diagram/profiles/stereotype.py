@@ -29,10 +29,11 @@ def _create_stereotype_compartment(appliedStereotype):
     if any(t.text() for t in slots):
         return Box(
             Text(
-                text=lambda: f"«{UML.model.stereotype_name(appliedStereotype.classifier[0])}»"
+                text=lambda: f"«{UML.model.stereotype_name(appliedStereotype.classifier[0])}»",
+                style={"padding": (0, 0, 4, 0)},
             ),
             *slots,
-            style={"padding": (5, 5, 5, 5), "vertical-align": VerticalAlign.TOP},
+            style={"padding": (4, 4, 4, 4), "vertical-align": VerticalAlign.TOP},
             draw=draw_top_separator,
         )
     else:

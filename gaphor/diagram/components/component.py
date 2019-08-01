@@ -38,7 +38,7 @@ class ComponentItem(ElementPresentation, Classified):
                     style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(text=lambda: self.subject.name or ""),
-                style={"padding": (5, 5, 5, 5)},
+                style={"padding": (4, 4, 4, 4)},
             ),
             *(
                 self.show_stereotypes_attrs
