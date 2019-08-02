@@ -149,7 +149,7 @@ class LinePresentation(Presentation, gaphas.Line):
             )
             if shape
         ]
-        return min(d0, *ds)
+        return min(d0, *ds) if ds else d0
 
     def draw(self, context):
         cr = context.cairo
