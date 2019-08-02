@@ -117,7 +117,12 @@ class ClassItem(ElementPresentation, Classified):
                     style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(
-                    text=lambda: self.subject.name or "", style={"font": "sans bold 10"}
+                    text=lambda: self.subject.name or "",
+                    style={
+                        "font": "sans bold italic 10"
+                        if self.subject and self.subject.isAbstract
+                        else "sans bold 10"
+                    },
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),
@@ -166,11 +171,14 @@ class ClassItem(ElementPresentation, Classified):
 
 
 def attributes_compartment(subject):
+    # We need to fix the attribute value, since the for loop changes it.
+    def lazy_format(attribute):
+        # str(), so we never ever get an error on a property part of an association
+        return lambda: (UML.format(attribute))
+
     return Box(
         *(
-            Text(
-                text=lambda: UML.format(attribute), style={"text-align": TextAlign.LEFT}
-            )
+            Text(text=lazy_format(attribute), style={"text-align": TextAlign.LEFT})
             for attribute in subject.ownedAttribute
             if not attribute.association
         ),
@@ -180,17 +188,19 @@ def attributes_compartment(subject):
 
 
 def operations_compartment(subject):
+    def lazy_format(operation):
+        return lambda: UML.format(
+            operation, visibility=True, type=True, multiplicity=True, default=True
+        )
+
     return Box(
         *(
             Text(
-                text=lambda: UML.format(
-                    operation,
-                    visibility=True,
-                    type=True,
-                    multiplicity=True,
-                    default=True,
-                ),
-                style={"text-align": TextAlign.LEFT},
+                text=lazy_format(operation),
+                style={
+                    "text-align": TextAlign.LEFT,
+                    "font": "sans italic 10" if operation.isAbstract else "sans 10",
+                },
             )
             for operation in subject.ownedOperation
         ),
