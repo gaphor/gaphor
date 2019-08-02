@@ -32,8 +32,6 @@ class NodeItem(ElementPresentation, Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self.update_shapes()
-
         self.watch("show_stereotypes_attrs", self.update_shapes)
         self.watch("subject<NamedElement>.name")
         self.watch("subject.appliedStereotype", self.update_shapes)
@@ -67,11 +65,6 @@ class NodeItem(ElementPresentation, Classified):
             style={"min-width": 100, "min-height": 50},
             draw=draw_node
         )
-        self.request_update()
-
-    def postload(self):
-        super().postload()
-        self.update_shapes()
 
 
 def draw_node(box, context, bounding_box):

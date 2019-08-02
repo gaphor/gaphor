@@ -29,18 +29,40 @@ class Classified(Named):
 class ElementPresentation(Presentation, gaphas.Element):
     """
     Presentation for Gaphas Element (box-like) items.
+
+    To create a shape (boxes, text), assign a shape to `self.shape`.
+    If the shape can change, for example because styling needs to change, implement
+    the method `update_shapes()` and set self.shape there.
     """
 
     def __init__(self, id=None, model=None, shape=None):
         super().__init__(id, model)
-        self.shape = shape
+        self._shape = shape
+
+    def _set_shape(self, shape):
+        self._shape = shape
+        self.request_update()
+
+    shape = property(lambda s: s._shape, _set_shape)
+
+    def update_shapes(self, event=None):
+        """
+        Updating the shape configuration, e.g. when extra elements have to
+        be drawn or when styling changes.
+        """
+        pass
 
     def pre_update(self, context):
         cr = context.cairo
         self.min_width, self.min_height = self.shape.size(cr)
 
     def draw(self, context):
-        self.shape.draw(context, Rectangle(0, 0, self.width, self.height))
+        self._shape.draw(context, Rectangle(0, 0, self.width, self.height))
+
+    def setup_canvas(self):
+        super().setup_canvas()
+        # Invoke here, since we do not receive events, unless we're attached to a canvas
+        self.update_shapes()
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -62,6 +84,10 @@ class ElementPresentation(Presentation, gaphas.Element):
             pass
         else:
             super().load(name, value)
+
+    def postload(self):
+        super().postload()
+        self.update_shapes()
 
 
 class LinePresentation(Presentation, gaphas.Line):
@@ -93,6 +119,7 @@ class LinePresentation(Presentation, gaphas.Line):
     style = property(
         lambda self: self._style.__getitem__,
         lambda self, style: self._style.update(style),
+        """A line, contrary to an element, has some styling of it's own.""",
     )
 
     def post_update(self, context):

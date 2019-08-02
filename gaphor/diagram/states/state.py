@@ -25,7 +25,6 @@ class VertexItem(Named):
 class StateItem(ElementPresentation, VertexItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self.update_shapes()
 
         self.watch("subject<NamedElement>.name")
         self.watch("subject.appliedStereotype.classifier.name")
@@ -76,11 +75,6 @@ class StateItem(ElementPresentation, VertexItem):
             },
             draw=draw_state,
         )
-        self.request_update()
-
-    def postload(self):
-        super().postload()
-        self.update_shapes()
 
 
 def draw_state(box, context, bounding_box):

@@ -89,8 +89,6 @@ class MessageItem(LinePresentation, Named):
         self._messages = []
         self._inverted_messages = []
 
-        self.update_shapes()
-
         self.watch("subject<NamedElement>.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
@@ -124,6 +122,11 @@ class MessageItem(LinePresentation, Named):
             pos, angle = self._get_center_pos()
             self._arrow_pos = pos
             self._arrow_angle = angle
+
+    def setup_canvas(self):
+        super().setup_canvas()
+        # Invoke here, since we do not receive events, unless we're attached to a canvas
+        self.update_shapes()
 
     def _get_center_pos(self):
         """

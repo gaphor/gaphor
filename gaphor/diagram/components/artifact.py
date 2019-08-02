@@ -15,8 +15,6 @@ class ArtifactItem(ElementPresentation, Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self.update_shapes()
-
         self.watch("show_stereotypes_attrs", self.update_shapes)
         self.watch("subject<NamedElement>.name")
         self.watch("subject.appliedStereotype", self.update_shapes)
@@ -52,11 +50,6 @@ class ArtifactItem(ElementPresentation, Classified):
             },
             draw=draw_border
         )
-        self.request_update()
-
-    def postload(self):
-        super().postload()
-        self.update_shapes()
 
 
 def draw_artifact_icon(box, context, bounding_box):
