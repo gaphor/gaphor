@@ -267,7 +267,7 @@ def get_center_pos(points, inverted=False):
     return pos, angle
 
 
-def draw_head_none(line, context):
+def draw_head_none(context):
     """
     Draw an 'x' on the line end to indicate no navigability at
     association head.
@@ -281,7 +281,7 @@ def draw_head_none(line, context):
     cr.move_to(0, 0)
 
 
-def draw_tail_none(line, context):
+def draw_tail_none(context):
     """
     Draw an 'x' on the line end to indicate no navigability at
     association tail.
@@ -307,7 +307,7 @@ def _draw_diamond(cr):
     cr.close_path()
 
 
-def draw_head_composite(line, context):
+def draw_head_composite(context):
     """
     Draw a closed diamond on the line end to indicate composite
     aggregation at association head.
@@ -319,7 +319,7 @@ def draw_head_composite(line, context):
     cr.move_to(20, 0)
 
 
-def draw_tail_composite(line, context):
+def draw_tail_composite(context):
     """
     Draw a closed diamond on the line end to indicate composite
     aggregation at association tail.
@@ -332,7 +332,7 @@ def draw_tail_composite(line, context):
     cr.stroke()
 
 
-def draw_head_shared(line, context):
+def draw_head_shared(context):
     """
     Draw an open diamond on the line end to indicate shared aggregation
     at association head.
@@ -342,7 +342,7 @@ def draw_head_shared(line, context):
     cr.move_to(20, 0)
 
 
-def draw_tail_shared(line, context):
+def draw_tail_shared(context):
     """
     Draw an open diamond on the line end to indicate shared aggregation
     at association tail.
@@ -354,7 +354,7 @@ def draw_tail_shared(line, context):
     cr.stroke()
 
 
-def draw_head_navigable(line, context):
+def draw_head_navigable(context):
     """
     Draw a normal arrow to indicate association end navigability at
     association head.
@@ -367,7 +367,7 @@ def draw_head_navigable(line, context):
     cr.move_to(0, 0)
 
 
-def draw_tail_navigable(line, context):
+def draw_tail_navigable(context):
     """
     Draw a normal arrow to indicate association end navigability at
     association tail.
