@@ -8,6 +8,9 @@ from gaphor.diagram.text import (
     text_draw_focus_box,
     TextAlign,
     VerticalAlign,
+    FontStyle,
+    FontWeight,
+    TextDecoration,
 )
 
 
@@ -195,6 +198,9 @@ class Text:
             "min-width": 30,
             "min-height": 14,
             "font": "sans 10",
+            "font-style": FontStyle.NORMAL,
+            "font-weight": None,
+            "text-decoration": None,
             "text-align": TextAlign.CENTER,
             "vertical-align": VerticalAlign.MIDDLE,
             "padding": (0, 0, 0, 0),
@@ -207,13 +213,21 @@ class Text:
         except AttributeError:
             return ""
 
+    def font(self):
+        style = self.style
+        return {
+            "font": style("font"),
+            "font-style": style("font-style"),
+            "font-weight": style("font-weight"),
+            "text-decoration": style("text-decoration"),
+        }
+
     def size(self, cr):
         min_w = self.style("min-width")
         min_h = self.style("min-height")
-        font = self.style("font")
         padding = self.style("padding")
 
-        width, height = text_size(cr, self.text(), font, self.width())
+        width, height = text_size(cr, self.text(), self.font(), self.width())
         return (
             max(min_w, width + padding[Padding.RIGHT] + padding[Padding.LEFT]),
             max(min_h, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
@@ -223,7 +237,6 @@ class Text:
         cr = context.cairo
         min_w = max(self.style("min-width"), bounding_box.width)
         min_h = max(self.style("min-height"), bounding_box.height)
-        font = self.style("font")
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
         padding = self.style("padding")
@@ -238,7 +251,7 @@ class Text:
         x, y, w, h = text_draw(
             cr,
             self.text(),
-            font,
+            self.font(),
             lambda w, h: text_point_in_box(
                 text_box, (w, h), text_align, vertical_align
             ),

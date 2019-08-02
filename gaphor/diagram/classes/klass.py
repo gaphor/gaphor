@@ -8,7 +8,13 @@ from gaphor.diagram.shapes import (
     draw_border,
     draw_top_separator,
 )
-from gaphor.diagram.text import TextAlign, VerticalAlign
+from gaphor.diagram.text import (
+    TextAlign,
+    VerticalAlign,
+    FontStyle,
+    FontWeight,
+    TextDecoration,
+)
 from gaphor.diagram.support import represents
 
 
@@ -119,9 +125,10 @@ class ClassItem(ElementPresentation, Classified):
                 EditableText(
                     text=lambda: self.subject.name or "",
                     style={
-                        "font": "sans bold italic 10"
+                        "font-weight": FontWeight.BOLD,
+                        "font-style": FontStyle.ITALIC
                         if self.subject and self.subject.isAbstract
-                        else "sans bold 10"
+                        else FontStyle.NORMAL,
                     },
                 ),
                 style={"padding": (12, 4, 12, 4)},

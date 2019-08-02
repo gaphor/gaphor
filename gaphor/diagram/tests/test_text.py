@@ -1,8 +1,17 @@
 import pytest
 import cairo
 
+from gaphas.canvas import instant_cairo_context
 import gaphor.diagram.text
-from gaphor.diagram.text import text_point_at_line, TextAlign, VerticalAlign
+from gaphor.diagram.text import (
+    text_size,
+    text_point_at_line,
+    TextAlign,
+    VerticalAlign,
+    FontStyle,
+    FontWeight,
+    TextDecoration,
+)
 
 
 @pytest.mark.parametrize(
@@ -62,3 +71,50 @@ def test_point_at_center_bottom(points, point_at_line):
 
     assert x == pytest.approx(point_at_line[0])
     assert y == pytest.approx(point_at_line[1])
+
+
+@pytest.fixture
+def cr():
+    return instant_cairo_context()
+
+
+def test_text_with_font_as_string(cr):
+    w, h = text_size(cr, "Example", "sans 10")
+    assert w
+    assert h
+
+
+def test_text_with_font_as_dict(cr):
+    w, h = text_size(
+        cr,
+        "Example",
+        {
+            "font": "sans 10",
+            "font-style": FontStyle.ITALIC,
+            "font-weight": FontWeight.BOLD,
+            "text-decoration": TextDecoration.UNDERLINE,
+        },
+    )
+    assert w
+    assert h
+
+
+def test_text_with_font_as_dict_with_values_set_to_none(cr):
+    w, h = text_size(
+        cr,
+        "Example",
+        {
+            "font": "sans bold 10",
+            "font-style": None,
+            "font-weight": None,
+            "text-decoration": TextDecoration.NONE,
+        },
+    )
+    assert w
+    assert h
+
+
+def test_text_with_just_font_as_dict(cr):
+    w, h = text_size(cr, "Example", {"font": "sans 10"})
+    assert w
+    assert h

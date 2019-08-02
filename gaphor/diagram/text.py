@@ -4,7 +4,7 @@ Support classes for dealing with text.
 
 from enum import Enum
 import cairo
-from gi.repository import Pango, PangoCairo
+from gi.repository import GLib, Pango, PangoCairo
 
 from gaphas.geometry import Rectangle
 from gaphas.freehand import FreeHandCairoContext
@@ -21,6 +21,21 @@ class VerticalAlign(Enum):
     TOP = "top"
     MIDDLE = "middle"
     BOTTOM = "bottom"
+
+
+class FontStyle(Enum):
+    NORMAL = "normal"
+    ITALIC = "italic"
+
+
+class FontWeight(Enum):
+    NORMAL = "normal"
+    BOLD = "bold"
+
+
+class TextDecoration(Enum):
+    NONE = "none"
+    UNDERLINE = "underline"
 
 
 def text_draw_focus_box(context, x, y, w, h):
@@ -48,7 +63,7 @@ def text_draw(cr, text, font, calculate_pos, width=-1, default_size=(0, 0)):
     """
     Draw text relative to (x, y).
     text - text to print (utf8)
-    font - The font to render in
+    font - The font to render in, either a string, or a dict with "font", and optional "font-style" and "text-decoration"
     calculate_pos - callback for text positioning
     default_size - default text size, when no text is provided
     """
@@ -71,10 +86,29 @@ def text_draw(cr, text, font, calculate_pos, width=-1, default_size=(0, 0)):
 
 
 def _text_layout(cr, text, font, width):
+    underline = False
     layout = _pango_cairo_create_layout(cr)
-    if font:
+
+    if isinstance(font, dict):
+        fd = Pango.FontDescription.from_string(font["font"])
+        font_weight = font.get("font-weight")
+        font_style = font.get("font-style")
+        if font_weight:
+            fd.set_weight(getattr(Pango.Weight, font_weight.name))
+        if font_style:
+            fd.set_style(getattr(Pango.Style, font_style.name))
+        layout.set_font_description(fd)
+        underline = (
+            font.get("text-decoration", TextDecoration.NONE) == TextDecoration.UNDERLINE
+        )
+    else:
         layout.set_font_description(Pango.FontDescription.from_string(font))
-    layout.set_text(text, length=-1)
+
+    if underline:
+        # TODO: can this be done via Pango attributes instead?
+        layout.set_markup(f"<u>{GLib.markup_escape_text(text)}</u>", length=-1)
+    else:
+        layout.set_text(text, length=-1)
     layout.set_width(int(width * Pango.SCALE))
     return layout
 

@@ -35,6 +35,7 @@ from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.text import FontWeight
 from gaphor.diagram.support import represents
 
 
@@ -170,7 +171,8 @@ class LifelineItem(ElementPresentation, Named):
                 style={"min-width": 0, "min-height": 0},
             ),
             EditableText(
-                text=lambda: self.subject.name or "", style={"font": "sans bold 10"}
+                text=lambda: self.subject.name or "",
+                style={"font-weight": FontWeight.BOLD},
             ),
             style={"min-width": 100, "min-height": 50},
             draw=self.draw_lifeline,

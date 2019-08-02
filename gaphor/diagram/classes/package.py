@@ -6,6 +6,7 @@ from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.text import FontWeight
 from gaphor.diagram.support import represents
 
 
@@ -25,7 +26,7 @@ class PackageItem(ElementPresentation, Named):
             ),
             EditableText(
                 text=lambda: self.subject and self.subject.name or "",
-                style={"font": "sans bold 10"},
+                style={"font-weight": FontWeight.BOLD},
             ),
             style={"min-width": 50, "min-height": 70, "padding": (25, 10, 5, 10)},
             draw=draw_package,
