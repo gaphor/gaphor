@@ -185,7 +185,15 @@ def attributes_compartment(subject):
 
     return Box(
         *(
-            Text(text=lazy_format(attribute), style={"text-align": TextAlign.LEFT})
+            Text(
+                text=lazy_format(attribute),
+                style={
+                    "text-align": TextAlign.LEFT,
+                    "text-decoration": TextDecoration.UNDERLINE
+                    if attribute.isStatic
+                    else TextDecoration.NONE,
+                },
+            )
             for attribute in subject.ownedAttribute
             if not attribute.association
         ),
@@ -206,7 +214,12 @@ def operations_compartment(subject):
                 text=lazy_format(operation),
                 style={
                     "text-align": TextAlign.LEFT,
-                    "font": "sans italic 10" if operation.isAbstract else "sans 10",
+                    "font-style": FontStyle.ITALIC
+                    if operation.isAbstract
+                    else FontStyle.NORMAL,
+                    "text-decoration": TextDecoration.UNDERLINE
+                    if operation.isStatic
+                    else TextDecoration.NONE,
                 },
             )
             for operation in subject.ownedOperation
