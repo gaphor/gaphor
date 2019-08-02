@@ -107,10 +107,10 @@ class CompartmentItemEditor(AbstractEditor):
         return bool(self._edit)
 
     def get_text(self):
-        return UML.format(editable(self._edit))
+        return UML.format(editable(self._edit.subject))
 
     def update_text(self, text):
-        UML.parse(editable(self._edit), text)
+        UML.parse(editable(self._edit.subject), text)
 
     def key_pressed(self, pos, key):
         pass

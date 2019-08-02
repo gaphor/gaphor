@@ -86,6 +86,15 @@ class Box:
         }.__getitem__
         self._draw_border = draw
 
+    def __len__(self):
+        return len(self.children)
+
+    def __iter__(self):
+        return iter(self.children)
+
+    def __getitem__(self, index):
+        return self.children[index]
+
     def size(self, cr):
         style = self.style
         min_width = style("min-width")
