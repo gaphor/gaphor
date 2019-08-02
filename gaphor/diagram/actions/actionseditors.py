@@ -25,9 +25,6 @@ class ForkNodeItemEditor(AbstractEditor):
         else:
             return ""
 
-    def get_bounds(self):
-        return None
-
     def update_text(self, text):
         """
         Set join specification text.
