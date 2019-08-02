@@ -10,7 +10,7 @@ from gaphor import UML
 
 from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.classes.classconnect import DependencyConnect, ImplementationConnect
-from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.interface import InterfaceItem, Folded
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.dependency import DependencyItem
 
@@ -54,8 +54,8 @@ class DependencyInterfaceConnect(DependencyConnect):
         # connecting to the interface, which is supplier - assuming usage
         # dependency
         if handle is line.head:
-            if self.element.folded != self.element.FOLDED_NONE:
-                self.element.folded = self.element.FOLDED_REQUIRED
+            if self.element.folded != Folded.NONE:
+                self.element.folded = Folded.REQUIRED
             # change interface angle even when it is unfolded, this way
             # required interface will be rotated properly when folded by
             # user
@@ -74,5 +74,5 @@ class DependencyInterfaceConnect(DependencyConnect):
             # don't change folding notation when interface is unfolded, see
             # test_unfolded_interface_disconnection as well
             if iface.folded:
-                iface.folded = iface.FOLDED_PROVIDED
+                iface.folded = Folded.PROVIDED
             self.line.request_update()

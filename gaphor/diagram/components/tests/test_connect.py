@@ -6,7 +6,7 @@ from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.components import ComponentItem
 from gaphor.diagram.components import ConnectorItem
-from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.interface import InterfaceItem, Folded
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.components.connectorconnect import ConnectorConnectBase
@@ -68,7 +68,7 @@ class InterfaceConnectTestCase(TestCase):
         iface = self.create(InterfaceItem, UML.Component)
         line = self.create(ConnectorItem)
 
-        iface.folded = iface.FOLDED_REQUIRED
+        iface.folded = Folded.REQUIRED
         glued = self.allow(line, line.head, iface)
         assert glued
 
@@ -81,7 +81,7 @@ class InterfaceConnectTestCase(TestCase):
 
         self.connect(dep, dep.head, iface)
 
-        iface.folded = iface.FOLDED_REQUIRED
+        iface.folded = Folded.REQUIRED
         glued = self.allow(line, line.head, iface)
         assert not glued
 
@@ -94,7 +94,7 @@ class InterfaceConnectTestCase(TestCase):
 
         self.connect(impl, impl.head, iface)
 
-        iface.folded = iface.FOLDED_REQUIRED
+        iface.folded = Folded.REQUIRED
         glued = self.allow(line, line.head, iface)
         assert not glued
 
@@ -102,13 +102,13 @@ class InterfaceConnectTestCase(TestCase):
         """Test interface gluing, when connector connected."""
 
         iface = self.create(InterfaceItem, UML.Component)
-        iface.folded = iface.FOLDED_REQUIRED
+        iface.folded = Folded.REQUIRED
 
         line1 = self.create(ConnectorItem)
         line2 = self.create(ConnectorItem)
 
         self.connect(line1, line1.head, iface)
-        assert iface.FOLDED_ASSEMBLY == iface.folded
+        assert Folded.ASSEMBLY == iface.folded
 
         glued = self.allow(line2, line2.head, iface)
         assert glued
@@ -119,7 +119,7 @@ class InterfaceConnectTestCase(TestCase):
         iface = self.create(InterfaceItem, UML.Component)
         line = self.create(ConnectorItem)
 
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -129,8 +129,7 @@ class InterfaceConnectTestCase(TestCase):
 
         self.connect(line, line.head, iface, pport)
         # interface goes into assembly mode
-        self.assertEqual(iface.FOLDED_ASSEMBLY, iface.folded)
-        assert not iface._name.is_visible()
+        self.assertEqual(Folded.ASSEMBLY, iface.folded)
 
         # no UML metamodel yet
         self.assertTrue(line.subject is None)
@@ -150,7 +149,7 @@ class InterfaceConnectTestCase(TestCase):
         iface = self.create(InterfaceItem, UML.Component)
         line = self.create(ConnectorItem)
 
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         pport = iface.ports()[1]
         rport = iface.ports()[3]
 
@@ -169,7 +168,7 @@ class InterfaceConnectTestCase(TestCase):
         c1 = self.create(ConnectorItem)
         c2 = self.create(ConnectorItem)
 
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -198,7 +197,7 @@ class InterfaceConnectTestCase(TestCase):
         c1 = self.create(ConnectorItem)
         c2 = self.create(ConnectorItem)
 
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -225,7 +224,7 @@ class InterfaceConnectTestCase(TestCase):
         iface = self.create(InterfaceItem, UML.Component)
         line = self.create(ConnectorItem)
 
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         pport = iface.ports()[1]
 
         self.connect(line, line.head, iface, pport)
@@ -234,9 +233,8 @@ class InterfaceConnectTestCase(TestCase):
         assert pport.provided and not pport.required and pport.connectable
 
         self.disconnect(line, line.head)
-        assert iface.FOLDED_PROVIDED == iface.folded
+        assert Folded.PROVIDED == iface.folded
         assert iface.angle == 0
-        assert iface._name.is_visible()
 
         assert not any(p.provided for p in iface.ports())
         assert not any(p.required for p in iface.ports())
@@ -304,7 +302,7 @@ class AssemblyConnectorTestCase(TestCase):
         c2 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -361,7 +359,7 @@ class AssemblyConnectorTestCase(TestCase):
         c2 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -388,7 +386,7 @@ class AssemblyConnectorTestCase(TestCase):
         c3 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -420,7 +418,7 @@ class AssemblyConnectorTestCase(TestCase):
         c1 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -447,7 +445,7 @@ class AssemblyConnectorTestCase(TestCase):
         c2 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -480,7 +478,7 @@ class AssemblyConnectorTestCase(TestCase):
         c3 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -533,7 +531,7 @@ class AssemblyConnectorTestCase(TestCase):
         c2 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 
@@ -574,7 +572,7 @@ class AssemblyConnectorTestCase(TestCase):
         c3 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
         pport = iface.ports()[0]
         rport = iface.ports()[2]
 

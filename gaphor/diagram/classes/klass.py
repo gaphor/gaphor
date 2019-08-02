@@ -38,8 +38,6 @@ class ClassItem(ElementPresentation, Classified):
         self.watch("show_stereotypes_attrs", self.update_shapes).watch(
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
-            "subject", self.update_shapes
-        ).watch(
             "subject<NamedElement>.name"
         ).watch(
             "subject.appliedStereotype", self.update_shapes

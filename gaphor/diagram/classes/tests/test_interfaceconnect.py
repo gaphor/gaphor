@@ -5,7 +5,7 @@ Test connections to folded interface.
 from gaphor import UML
 from gaphor.tests import TestCase
 from gaphor.diagram.classes.implementation import ImplementationItem
-from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.interface import InterfaceItem, Folded
 from gaphor.diagram.classes.association import AssociationItem
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.generalization import GeneralizationItem
@@ -22,7 +22,7 @@ class ImplementationTestCase(TestCase):
         """Test connecting implementation to folded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         impl = self.create(ImplementationItem)
 
         self.connect(impl, impl.head, iface, iface.ports()[0])
@@ -33,7 +33,7 @@ class ImplementationTestCase(TestCase):
         """Test disconnection implementation from folded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         impl = self.create(ImplementationItem)
 
         self.connect(impl, impl.head, iface, iface.ports()[0])
@@ -53,19 +53,19 @@ class DependencyTestCase(TestCase):
         """Test connecting dependency to folded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, iface, iface.ports()[0])
 
         assert not dep.style("dash-style")
-        assert iface.folded == iface.FOLDED_REQUIRED
+        assert iface.folded == Folded.REQUIRED
 
     def test_folded_interface_disconnection(self):
         """Test disconnection dependency from folded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, iface, iface.ports()[0])
@@ -73,7 +73,7 @@ class DependencyTestCase(TestCase):
         dep.request_update()
 
         assert dep.style("dash-style")
-        assert iface.folded == iface.FOLDED_PROVIDED
+        assert iface.folded == Folded.PROVIDED
 
     def test_unfolded_interface_connection(self):
         """Test disconnection dependency from unfolded interface
@@ -82,7 +82,7 @@ class DependencyTestCase(TestCase):
         dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, iface, iface.ports()[0])
-        assert dep.style("dash-style")
+        assert () == dep.style("dash-style")
 
 
 LINES = (
@@ -104,7 +104,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
         super().setUp()
 
         self.iface = self.create(InterfaceItem, UML.Interface)
-        self.iface.folded = self.iface.FOLDED_PROVIDED
+        self.iface.folded = Folded.PROVIDED
 
     def test_interface_with_implementation(self):
         """Test gluing different lines to folded interface with implementation."""
@@ -140,7 +140,7 @@ class FoldedInterfaceSingleLineTestCase(TestCase):
         """Test gluing forbidden lines to folded interface."""
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
 
         for cls in LINES[2:]:
             line = self.create(cls)

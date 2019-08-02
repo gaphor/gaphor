@@ -69,16 +69,31 @@ Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
 from math import pi
+from enum import Enum
 
 from gaphas.connector import LinePort
 from gaphas.geometry import distance_line_point, distance_point_point
 from gaphas.item import NW, NE, SE, SW
-from gaphas.state import observed, reversible_property
 
 from gaphor import UML
-from gaphor.diagram.classes.klass import ClassItem
-from gaphor.diagram.style import ALIGN_TOP, ALIGN_BOTTOM, ALIGN_CENTER
+from gaphor.diagram.presentation import ElementPresentation, Classified
+from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_border
+from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.diagram.support import represents
+
+from gaphor.diagram.classes.klass import attributes_compartment, operations_compartment
+from gaphor.diagram.classes.stereotype import stereotype_compartments
+
+
+class Folded(Enum):
+    # Non-folded mode.
+    NONE = 0
+    # Folded mode, provided (ball) notation.
+    PROVIDED = 1
+    # Folded mode, required (socket) notation.
+    REQUIRED = 2
+    # Folded mode, notation of assembly connector icon mode (ball&socket).
+    ASSEMBLY = 3
 
 
 class InterfacePort(LinePort):
@@ -122,7 +137,7 @@ class InterfacePort(LinePort):
 
 
 @represents(UML.Interface)
-class InterfaceItem(ClassItem):
+class InterfaceItem(ElementPresentation, Classified):
     """
     Interface item supporting class box, folded notations and assembly
     connector icon mode.
@@ -130,25 +145,12 @@ class InterfaceItem(ClassItem):
     When in folded mode, provided (ball) notation is used by default.
     """
 
-    UNFOLDED_STYLE = {"text-align": (ALIGN_CENTER, ALIGN_TOP), "text-outside": False}
-
-    FOLDED_STYLE = {"text-align": (ALIGN_CENTER, ALIGN_BOTTOM), "text-outside": True}
-
     RADIUS_PROVIDED = 10
     RADIUS_REQUIRED = 14
 
-    # Non-folded mode.
-    FOLDED_NONE = 0
-    # Folded mode, provided (ball) notation.
-    FOLDED_PROVIDED = 1
-    # Folded mode, required (socket) notation.
-    FOLDED_REQUIRED = 2
-    # Folded mode, notation of assembly connector icon mode (ball&socket).
-    FOLDED_ASSEMBLY = 3
-
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self._folded = self.FOLDED_NONE
+        self._folded = Folded.NONE
         self.angle = 0
 
         handles = self.handles()
@@ -165,23 +167,85 @@ class InterfaceItem(ClassItem):
             InterfacePort(h_sw.pos, h_nw.pos, self._is_folded, pi * 1.5),
         ]
 
-        self.watch("subject<Interface>.supplierDependency", self.update_shapes)
+        self.watch("show_stereotypes_attrs", self.update_shapes).watch(
+            "show_attributes", self.update_shapes
+        ).watch("show_operations", self.update_shapes).watch(
+            "subject<NamedElement>.name"
+        ).watch(
+            "subject.appliedStereotype", self.update_shapes
+        ).watch(
+            "subject.appliedStereotype.classifier.name"
+        ).watch(
+            "subject.appliedStereotype.slot", self.update_shapes
+        ).watch(
+            "subject.appliedStereotype.slot.definingFeature.name"
+        ).watch(
+            "subject.appliedStereotype.slot.value", self.update_shapes
+        ).watch(
+            "subject<Interface>.ownedAttribute", self.update_shapes
+        ).watch(
+            "subject<Interface>.ownedOperation", self.update_shapes
+        ).watch(
+            "subject<Interface>.ownedAttribute.association", self.update_shapes
+        ).watch(
+            "subject<Interface>.ownedAttribute.name"
+        ).watch(
+            "subject<Interface>.ownedAttribute.isStatic", self.update_shapes
+        ).watch(
+            "subject<Interface>.ownedAttribute.isDerived"
+        ).watch(
+            "subject<Interface>.ownedAttribute.visibility"
+        ).watch(
+            "subject<Interface>.ownedAttribute.lowerValue"
+        ).watch(
+            "subject<Interface>.ownedAttribute.upperValue"
+        ).watch(
+            "subject<Interface>.ownedAttribute.defaultValue"
+        ).watch(
+            "subject<Interface>.ownedAttribute.typeValue"
+        ).watch(
+            "subject<Interface>.ownedOperation.name"
+        ).watch(
+            "subject<Interface>.ownedOperation.isAbstract", self.update_shapes
+        ).watch(
+            "subject<Interface>.ownedOperation.isStatic", self.update_shapes
+        ).watch(
+            "subject<Interface>.ownedOperation.visibility"
+        ).watch(
+            "subject<Interface>.ownedOperation.returnResult.lowerValue"
+        ).watch(
+            "subject<Interface>.ownedOperation.returnResult.upperValue"
+        ).watch(
+            "subject<Interface>.ownedOperation.returnResult.typeValue"
+        ).watch(
+            "subject<Interface>.ownedOperation.formalParameter.lowerValue"
+        ).watch(
+            "subject<Interface>.ownedOperation.formalParameter.upperValue"
+        ).watch(
+            "subject<Interface>.ownedOperation.formalParameter.typeValue"
+        ).watch(
+            "subject<Interface>.ownedOperation.formalParameter.defaultValue"
+        ).watch(
+            "subject<Interface>.supplierDependency", self.update_shapes
+        )
 
-    @observed
-    def set_drawing_style(self, style):
-        """
-        In addition to setting the drawing style, the handles are
-        make non-movable if the icon (folded) style is used.
-        """
-        super().set_drawing_style(style)
-        if self._drawing_style == self.DRAW_ICON:
-            self.folded = self.FOLDED_PROVIDED  # set default folded mode
+    show_stereotypes_attrs = UML.properties.attribute("show_stereotypes_attrs", int)
+
+    show_attributes = UML.properties.attribute("show_attributes", int, default=1)
+
+    show_operations = UML.properties.attribute("show_operations", int, default=1)
+
+    # TODO: translate "drawing-style"(int) to folded
+    def load(self, name, value):
+        if name == "drawing-style":
+            if value == "3":  # DRAW_ICON
+                self.folded = Folded.PROVIDED
+            else:
+                self.folded = Folded.NONE
+        elif name in ("show-attributes", "show-operations"):
+            super().load(name.replace("-", "_"), value)
         else:
-            self.folded = self.FOLDED_NONE  # unset default folded mode
-
-    drawing_style = reversible_property(
-        lambda self: self._drawing_style, set_drawing_style
-    )
+            super().load(name, value)
 
     def _is_folded(self):
         """
@@ -193,22 +257,21 @@ class InterfaceItem(ClassItem):
         """
         Set folded notation.
 
-        :param folded: Folded state, see FOLDED_* constants.
+        :param folded: Folded state, see Folded.* enum.
         """
 
         self._folded = folded
 
-        if folded == self.FOLDED_NONE:
+        if folded == Folded.NONE:
             movable = True
-            name_style = self.UNFOLDED_STYLE
         else:
-            if self._folded == self.FOLDED_PROVIDED:
-                icon_size = self.RADIUS_PROVIDED * 2, self.RADIUS_PROVIDED * 2
+            if self._folded == Folded.PROVIDED:
+                icon_size = self.RADIUS_PROVIDED * 2
             else:  # required interface or assembly icon mode
-                icon_size = self.RADIUS_REQUIRED * 2, self.RADIUS_REQUIRED * 2
+                icon_size = self.RADIUS_REQUIRED * 2
 
-            self.min_width, self.min_height = icon_size
-            self.width, self.height = icon_size
+            self.min_width, self.min_height = icon_size, icon_size
+            self.width, self.height = icon_size, icon_size
 
             # update only h_se handle - rest of handles should be updated by
             # constraints
@@ -218,18 +281,71 @@ class InterfaceItem(ClassItem):
             h_se.pos.y = h_nw.pos.y + self.min_height
 
             movable = False
-            name_style = self.FOLDED_STYLE
 
         for h in self._handles:
             h.movable = movable
 
-        self.request_update()
+        self.update_shapes()
 
     folded = property(
-        _is_folded,
-        _set_folded,
-        doc="Check or set folded notation, see FOLDED_* constants.",
+        _is_folded, _set_folded, doc="Check or set folded notation, see Folded.* enum."
     )
+
+    def update_shapes(self, event=None):
+        if self._folded == Folded.NONE:
+            self.shape = Box(
+                Box(
+                    Text(
+                        text=lambda: UML.model.stereotypes_str(
+                            self.subject, ("interface",)
+                        ),
+                        style={"min-width": 0, "min-height": 0},
+                    ),
+                    EditableText(
+                        text=lambda: self.subject.name or "",
+                        style={"font-weight": FontWeight.BOLD},
+                    ),
+                    style={"padding": (12, 4, 12, 4)},
+                ),
+                *(
+                    self.show_attributes
+                    and self.subject
+                    and [attributes_compartment(self.subject)]
+                    or []
+                ),
+                *(
+                    self.show_operations
+                    and self.subject
+                    and [operations_compartment(self.subject)]
+                    or []
+                ),
+                *(
+                    self.show_stereotypes_attrs
+                    and stereotype_compartments(self.subject)
+                    or []
+                ),
+                style={
+                    "min-width": 100,
+                    "min-height": 50,
+                    "vertical-align": VerticalAlign.TOP,
+                },
+                draw=draw_border,
+            )
+        else:
+            self.shape = IconBox(
+                Box(
+                    style={"min-width": self.min_width, "min-height": self.min_height},
+                    draw=self.draw_interface_ball_and_socket,
+                ),
+                Text(
+                    text=lambda: UML.model.stereotypes_str(self.subject),
+                    style={"min-width": 0, "min-height": 0},
+                ),
+                EditableText(
+                    text=lambda: self.subject.name or "",
+                    style={"font-weight": FontWeight.BOLD},
+                ),
+            )
 
     def draw_interface_ball_and_socket(self, _box, context, _bounding_box):
         cr = context.cairo
@@ -237,11 +353,11 @@ class InterfaceItem(ClassItem):
         h_nw = self._handles[NW]
         cx, cy = (h_nw.pos.x + self.width / 2, h_nw.pos.y + self.height / 2)
 
-        if self._folded in (self.FOLDED_REQUIRED, self.FOLDED_ASSEMBLY):
+        if self._folded in (Folded.REQUIRED, Folded.ASSEMBLY):
             cr.move_to(cx + self.RADIUS_REQUIRED, cy)
             cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self.angle, pi + self.angle)
 
-        if self._folded in (self.FOLDED_PROVIDED, self.FOLDED_ASSEMBLY):
+        if self._folded in (Folded.PROVIDED, Folded.ASSEMBLY):
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
 
