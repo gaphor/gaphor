@@ -8,8 +8,6 @@ from gaphas.item import Element, NW
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
-from gaphor.diagram.style import Style
-
 
 class Line(_Line):
     def __init__(self, id=None, model=None):

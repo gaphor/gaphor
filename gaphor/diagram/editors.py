@@ -6,7 +6,6 @@ from functools import singledispatch
 
 from gaphor import UML
 from gaphor.diagram.presentation import Named, Classified
-from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.misc.rattr import rgetattr, rsetattr
 
 
@@ -91,7 +90,7 @@ class NamedItemEditor(AbstractEditor):
 
 # TODO: Needs implementing
 @Editor.register(Classified)
-class CompartmentItemEditor(AbstractEditor):
+class ClassifiedItemEditor(AbstractEditor):
     """Text editor support for compartment items."""
 
     def __init__(self, item):

@@ -25,7 +25,7 @@ from gi.repository import Gtk
 
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.core import Transaction, transactional
-from gaphor.diagram.elementitem import ElementItem
+from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.editors import Editor
 from gaphor.diagram.connectors import IConnect
@@ -356,7 +356,7 @@ class GroupPlacementTool(PlacementTool):
         return item
 
 
-@InMotion.register(ElementItem)
+@InMotion.register(ElementPresentation)
 class DropZoneInMotion(GuidedItemInMotion):
     def move(self, pos):
         """

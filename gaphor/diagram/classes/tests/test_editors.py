@@ -59,7 +59,7 @@ class EditorTestCase(TestCase):
 
         edit = Editor(klass)
 
-        assert "CompartmentItemEditor" == edit.__class__.__name__
+        assert "ClassifiedItemEditor" == edit.__class__.__name__
 
         assert edit.is_editable(10, 10)
 
