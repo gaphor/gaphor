@@ -80,12 +80,6 @@ setup(
             "utils*",
             "docs",
             "tests",
-            "windows",
-            "macOS",
-            "linux",
-            "iOS",
-            "android",
-            "django",
         ]
     ),
     include_package_data=True,
@@ -134,16 +128,6 @@ setup(
     },
     tests_require=["pytest"],
     options={
-        "app": {"formal_name": "Gaphor", "bundle": "org.gaphor"},
-        # Desktop/laptop deployments
-        "macos": {"app_requires": [], "icon": "package/gaphor"},
-        "linux": {"app_requires": []},
-        "windows": {"app_requires": []},
-        # Mobile deployments
-        "ios": {"app_requires": []},
-        "android": {"app_requires": []},
-        # Web deployments
-        "django": {"app_requires": []},
         # Translations
         "build_pot": {"all_linguas": ",".join(LINGUAS)},
         "build_mo": {"all_linguas": ",".join(LINGUAS)},
