@@ -1,6 +1,10 @@
 from gaphor import UML
 from gaphor.diagram.classes.stereotype import stereotype_compartments
-from gaphor.diagram.presentation import ElementPresentation, Classified
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    Classified,
+    from_package_str,
+)
 from gaphor.diagram.shapes import (
     Box,
     EditableText,
@@ -39,6 +43,8 @@ class ClassItem(ElementPresentation, Classified):
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject<NamedElement>.name"
+        ).watch(
+            "subject<NamedElement>.namespace"
         ).watch(
             "subject.appliedStereotype", self.update_shapes
         ).watch(
@@ -128,6 +134,10 @@ class ClassItem(ElementPresentation, Classified):
                         if self.subject and self.subject.isAbstract
                         else FontStyle.NORMAL,
                     },
+                ),
+                Text(
+                    text=lambda: from_package_str(self),
+                    style={"font": "sans 8", "min-width": 0, "min-height": 0},
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),

@@ -4,7 +4,7 @@ Package diagram item.
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.presentation import ElementPresentation, Named, from_package_str
 from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.text import FontWeight
 from gaphor.diagram.support import represents
@@ -28,11 +28,16 @@ class PackageItem(ElementPresentation, Named):
                 text=lambda: self.subject and self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},
             ),
+            Text(
+                text=lambda: from_package_str(self),
+                style={"font": "sans 8", "min-width": 0, "min-height": 0},
+            ),
             style={"min-width": 50, "min-height": 70, "padding": (25, 10, 5, 10)},
             draw=draw_package,
         )
 
         self.watch("subject<NamedElement>.name")
+        self.watch("subject<NamedElement>.namespace")
         self.watch("subject.appliedStereotype.classifier.name")
 
 

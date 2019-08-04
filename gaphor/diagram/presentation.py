@@ -23,6 +23,29 @@ class Classified(Named):
     pass
 
 
+def from_package_str(item):
+    """
+    Display name space info when it is different, then diagram's or
+    parent's namespace.
+    """
+    subject = item.subject
+    canvas = item.canvas
+
+    if not subject or not canvas:
+        return False
+
+    namespace = subject.namespace
+    parent = canvas.get_parent(item)
+
+    # if there is a parent (i.e. interaction)
+    if parent and parent.subject and parent.subject.namespace is not namespace:
+        return False
+
+    return (
+        f"(from {namespace.name})" if namespace is not canvas.diagram.namespace else ""
+    )
+
+
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
 
 

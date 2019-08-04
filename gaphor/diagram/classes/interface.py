@@ -76,7 +76,11 @@ from gaphas.geometry import distance_line_point, distance_point_point
 from gaphas.item import NW, NE, SE, SW
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, Classified
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    Classified,
+    from_package_str,
+)
 from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_border
 from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.diagram.support import represents
@@ -171,6 +175,8 @@ class InterfaceItem(ElementPresentation, Classified):
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject<NamedElement>.name"
+        ).watch(
+            "subject<NamedElement>.namespace"
         ).watch(
             "subject.appliedStereotype", self.update_shapes
         ).watch(
@@ -308,6 +314,10 @@ class InterfaceItem(ElementPresentation, Classified):
                     EditableText(
                         text=lambda: self.subject.name or "",
                         style={"font-weight": FontWeight.BOLD},
+                    ),
+                    Text(
+                        text=lambda: from_package_str(self),
+                        style={"font": "sans 8", "min-width": 0, "min-height": 0},
                     ),
                     style={"padding": (12, 4, 12, 4)},
                 ),
