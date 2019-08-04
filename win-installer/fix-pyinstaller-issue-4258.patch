@@ -1,0 +1,12 @@
+--- .venv/lib/python3.7/site-packages/importlib_metadata/__init__.py	2019-08-03 13:41:57.600422600 -0400
++++ .venv/lib/python3.7/site-packages/importlib_metadata/__init__-patched.py	2019-08-03 22:38:12.805590700 -0400
+@@ -468,4 +468,8 @@
+     return distribution(package).requires
+ 
+ 
+-__version__ = version(__name__)
++try:
++    __version__ = version(__name__)
++except PackageNotFoundError:
++    __version__ = '0.18'
++
