@@ -15,9 +15,6 @@ class CommentItemEditor(AbstractEditor):
     def get_text(self):
         return self._item.subject.body
 
-    def get_bounds(self):
-        return None
-
     def update_text(self, text):
         self._item.subject.body = text
 

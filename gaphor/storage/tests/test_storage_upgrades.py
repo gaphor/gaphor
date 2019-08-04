@@ -1,5 +1,4 @@
 import pytest
-from gaphor.application import Application
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.services.eventmanager import EventManager
 from gaphor.storage.storage import load_elements

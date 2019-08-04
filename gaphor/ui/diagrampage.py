@@ -21,7 +21,6 @@ from gaphor.abc import ActionProvider
 from gaphor.UML.event import ElementDeleteEvent
 from gaphor.core import _, event_handler, transactional, action, build_action_group
 from gaphor.diagram.support import get_diagram_item
-from gaphor.diagram.diagramitem import DiagramItem
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from gaphor.ui.event import DiagramSelectionChange
@@ -181,7 +180,7 @@ class DiagramPage(ActionProvider):
     def delete_selected_items(self):
         items = self.view.selected_items
         for i in list(items):
-            if isinstance(i, DiagramItem):
+            if isinstance(i, UML.Presentation):
                 i.unlink()
             else:
                 if i.canvas:

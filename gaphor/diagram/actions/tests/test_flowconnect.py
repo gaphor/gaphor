@@ -67,17 +67,13 @@ class FlowItemObjectNodeTestCase(TestCase):
     Flow item connecting to object node item tests.
     """
 
-    def test_glue(self):
-        """Test gluing to object node."""
-
+    def test_glue_to_object_node(self):
         flow = self.create(FlowItem)
         onode = self.create(ObjectNodeItem, UML.ObjectNode)
         glued = self.allow(flow, flow.head, onode)
         assert glued
 
-    def test_connection(self):
-        """Test connection to object node
-        """
+    def test_connect_to_object_node(self):
         flow = self.create(FlowItem)
         anode = self.create(ActionItem, UML.Action)
         onode = self.create(ObjectNodeItem, UML.ObjectNode)
@@ -96,9 +92,7 @@ class FlowItemObjectNodeTestCase(TestCase):
         assert flow.subject
         assert isinstance(flow.subject, UML.ObjectFlow)
 
-    def test_reconnection(self):
-        """Test object flow reconnection
-        """
+    def test_object_flow_reconnect(self):
         flow = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         o1 = self.create(ObjectNodeItem, UML.ObjectNode)
@@ -184,9 +178,7 @@ class FlowItemActionTestCase(TestCase):
         glued = self.allow(flow, flow.tail, a2)
         assert glued
 
-    def test_connect(self):
-        """Test flow item connecting to action items
-        """
+    def test_connect_to_action_item(self):
         flow = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
@@ -206,7 +198,7 @@ class FlowItemActionTestCase(TestCase):
         assert flow.subject in a2.subject.incoming
         assert flow.subject.target is a2.subject
 
-    def test_disconnect(self):
+    def test_disconnect_from_action_item(self):
         """Test flow item disconnection from action items
         """
         flow = self.create(FlowItem)

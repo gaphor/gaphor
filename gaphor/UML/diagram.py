@@ -22,7 +22,7 @@ class DiagramCanvas(gaphas.Canvas):
         """Initialize the diagram canvas with the supplied diagram.  By default,
         updates are not blocked."""
 
-        super(DiagramCanvas, self).__init__()
+        super().__init__()
         self._diagram = diagram
         self._block_updates = False
 
@@ -64,7 +64,7 @@ class DiagramCanvas(gaphas.Canvas):
 
 class Diagram(Namespace, PackageableElement):
     """Diagrams may contain model elements and can be owned by a Package.
-    A diagram is a Namespace and a PackageableElement."""
+    """
 
     def __init__(self, id=None, model=None):
         """Initialize the diagram with an optional id and element model.

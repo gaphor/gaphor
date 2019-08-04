@@ -18,10 +18,15 @@ type of a dependency in automatic way.
 import ast
 
 from gaphor import UML
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.support import represents
+from gaphor.diagram.classes.interface import InterfacePort
 
 
-class DependencyItem(DiagramLine):
+@represents(UML.Dependency)
+class DependencyItem(LinePresentation):
     """
     Dependency item represents several types of dependencies, i.e. normal
     dependency or usage.
@@ -34,40 +39,56 @@ class DependencyItem(DiagramLine):
     drawn as solid line without arrow head.
     """
 
-    __uml__ = UML.Dependency
-
-    # do not use issubclass, because issubclass(UML.Implementation, UML.Realization)
-    # we need to be very strict here
-    __stereotype__ = {
-        "use": lambda self: self._dependency_type == UML.Usage,
-        "realize": lambda self: self._dependency_type == UML.Realization,
-        "implements": lambda self: self._dependency_type == UML.Implementation,
-    }
-
     def __init__(self, id=None, model=None):
-        DiagramLine.__init__(self, id, model)
+        super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
 
         self._dependency_type = UML.Dependency
+        # auto_dependency is used by connection logic, not in this class itself
         self.auto_dependency = True
-        self._solid = False
+
+        additional_stereotype = {
+            UML.Usage: ("use",),
+            UML.Realization: ("realize",),
+            UML.Implementation: ("implements",),
+        }
+
+        self.shape_middle = Text(
+            text=lambda: stereotypes_str(
+                self.subject, additional_stereotype.get(self._dependency_type, ())
+            ),
+            style={"min-width": 0, "min-height": 0},
+        )
+        self.watch("subject.appliedStereotype.classifier.name")
 
     def save(self, save_func):
-        DiagramLine.save(self, save_func)
+        super().save(save_func)
         save_func("auto_dependency", self.auto_dependency)
 
     def load(self, name, value):
         if name == "auto_dependency":
             self.auto_dependency = ast.literal_eval(value)
         else:
-            DiagramLine.load(self, name, value)
+            super().load(name, value)
 
     def postload(self):
         if self.subject:
-            dependency_type = self.subject.__class__
-            DiagramLine.postload(self)
-            self._dependency_type = dependency_type
+            self._dependency_type = self.subject.__class__
+        super().postload()
+
+    def connected_to_folded_interface(self):
+        connection = self.canvas.get_connection(self.head)
+        return (
+            connection
+            and isinstance(connection.port, InterfacePort)
+            and connection.connected.folded
+        )
+
+    def post_update(self, context):
+        super().post_update(context)
+        if self.connected_to_folded_interface():
+            self.style = {"dash-style": ()}
         else:
-            DiagramLine.postload(self)
+            self.style = {"dash-style": (7.0, 5.0)}
 
     def set_dependency_type(self, dependency_type):
         self._dependency_type = dependency_type
@@ -76,18 +97,10 @@ class DependencyItem(DiagramLine):
 
     def draw_head(self, context):
         cr = context.cairo
-        if not self._solid:
+        if self.style("dash-style"):
             cr.set_dash((), 0)
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
             cr.stroke()
         cr.move_to(0, 0)
-
-    def draw(self, context):
-        if not self._solid:
-            context.cairo.set_dash((7.0, 5.0), 0)
-        super(DependencyItem, self).draw(context)
-
-
-# vim:sw=4:et

@@ -12,6 +12,9 @@ from gaphor.diagram.actions.action import (
 from gaphor.diagram.actions.activitynodes import (
     ForkNodeItem,
     ActivityNodeItem,
+    InitialNodeItem,
+    ActivityFinalNodeItem,
+    FlowFinalNodeItem,
     DecisionNodeItem,
 )
 from gaphor.diagram.actions.flow import FlowItem

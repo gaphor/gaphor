@@ -3,6 +3,18 @@ For ease of creation, maintain a mapping from UML Element to Diagram Item.
 """
 
 
+def represents(uml_element):
+    """
+    A decorator to assign a default UML Element type to a diagram item.
+    """
+
+    def wrapper(presentation):
+        set_diagram_item(uml_element, presentation)
+        return presentation
+
+    return wrapper
+
+
 # Map UML elements to their (default) representation.
 _uml_to_item_map = {}
 

@@ -19,6 +19,7 @@ from gaphor.diagram.classes import (
     AssociationItem,
     DependencyItem,
     ImplementationItem,
+    Folded,
 )
 
 
@@ -174,15 +175,14 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         fold = button.get_active()
 
         if fold:
-            item.folded = item.FOLDED_PROVIDED
+            item.folded = Folded.PROVIDED
         else:
-            item.folded = item.FOLDED_NONE
+            item.folded = Folded.NONE
 
         if line:
             if fold and isinstance(line, DependencyItem):
-                item.folded = item.FOLDED_REQUIRED
+                item.folded = Folded.REQUIRED
 
-            line._solid = fold
             constraint = line.canvas.get_connection(line.head).constraint
             constraint.ratio_x = 0.5
             constraint.ratio_y = 0.5
@@ -190,6 +190,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
 
 @PropertyPages.register(ClassItem)
+@PropertyPages.register(InterfaceItem)
 class AttributesPage(PropertyPageBase):
     """An editor for attributes associated with classes and interfaces."""
 
@@ -262,6 +263,7 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 
 
 @PropertyPages.register(ClassItem)
+@PropertyPages.register(InterfaceItem)
 class OperationsPage(PropertyPageBase):
     """An editor for operations associated with classes and interfaces."""
 

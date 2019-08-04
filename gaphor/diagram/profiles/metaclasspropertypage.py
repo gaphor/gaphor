@@ -8,7 +8,6 @@ from gaphor import UML
 from gaphor.core import _
 from gaphor.diagram.propertypages import create_hbox_label
 from gaphor.diagram.propertypages import PropertyPages, NamedElementPropertyPage
-from gaphor.diagram.classes import ClassItem
 
 
 def _issubclass(c, b):

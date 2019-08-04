@@ -311,8 +311,8 @@ class Parameter(TypedElement, MultiplicityElement):
     pass
 
 
-class Presentation(Element):
-    pass
+# 20: override Presentation
+from gaphor.UML.presentation import Presentation
 
 
 class BehavioralFeature(Feature, Namespace):
@@ -427,7 +427,7 @@ class Region(Namespace, RedefinableElement):
     pass
 
 
-# 20: override Transition
+# 23: override Transition
 class Transition(RedefinableElement, NamedElement):
     pass
 
@@ -557,7 +557,7 @@ NamedElement.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
 NamedElement.name = attribute("name", str)
-# 33: override NamedElement.qualifiedName
+# 36: override NamedElement.qualifiedName
 
 
 def namedelement_qualifiedname(self):
@@ -599,7 +599,7 @@ Property.aggregation = enumeration(
 Property.isDerivedUnion = attribute("isDerivedUnion", int, default=False)
 Property.isDerived = attribute("isDerived", int, default=False)
 Property.isReadOnly = attribute("isReadOnly", int, default=False)
-# 137: override Property.navigability
+# 140: override Property.navigability
 
 
 def property_navigability(self):
@@ -635,7 +635,7 @@ Comment.body = attribute("body", str)
 PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
-# 242: override Message.messageKind
+# 245: override Message.messageKind
 
 
 def message_messageKind(self):
@@ -1141,19 +1141,19 @@ SendOperationEvent.operation = association("operation", Operation, lower=1, uppe
 SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
 ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-# 23: override MultiplicityElement.lower derives MultiplicityElement.lowerValue
+# 26: override MultiplicityElement.lower derives MultiplicityElement.lowerValue
 MultiplicityElement.lower = derived(
     "lower", object, 0, 1, MultiplicityElement.lowerValue
 )
 MultiplicityElement.lower.filter = lambda obj: [obj.lowerValue]
 # MultiplicityElement.lower = MultiplicityElement.lowerValue
-# 28: override MultiplicityElement.upper derives MultiplicityElement.upperValue
+# 31: override MultiplicityElement.upper derives MultiplicityElement.upperValue
 MultiplicityElement.upper = derived(
     "upper", object, 0, 1, MultiplicityElement.upperValue
 )
 MultiplicityElement.upper.filter = lambda obj: [obj.upperValue]
 # MultiplicityElement.upper = MultiplicityElement.upperValue
-# 129: override Property.isComposite derives Property.aggregation
+# 132: override Property.isComposite derives Property.aggregation
 # Property.isComposite = property(lambda self: self.aggregation == 'composite')
 Property.isComposite = derivedunion("isComposite", bool, 0, 1, Property.aggregation)
 Property.isComposite.filter = lambda obj: [obj.aggregation == "composite"]
@@ -1208,7 +1208,7 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 108: override Property.opposite
+# 111: override Property.opposite
 
 
 def property_opposite(self):
@@ -1322,7 +1322,7 @@ Namespace.ownedMember = derivedunion(
     Class.ownedReception,
     Interface.ownedReception,
 )
-# 93: override Classifier.general
+# 96: override Classifier.general
 def classifier_general(self):
     return [g.general for g in self.generalization]
 
@@ -1334,7 +1334,7 @@ Classifier.general = property(
     """,
 )
 del classifier_general
-# 48: override Association.endType derives Association.memberEnd Property.type
+# 51: override Association.endType derives Association.memberEnd Property.type
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -1356,11 +1356,11 @@ Classifier.attribute = derivedunion(
     Actor.ownedAttribute,
     Signal.ownedAttribute,
 )
-# 134: override Constraint.context
+# 137: override Constraint.context
 Constraint.context = derivedunion("context", Namespace, 0, 1)
-# 162: override Operation.type
+# 165: override Operation.type
 Operation.type = derivedunion("type", DataType, 0, 1)
-# 73: override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
+# 76: override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
 def extension_metaclass(self):
     ownedEnd = self.ownedEnd
@@ -1379,7 +1379,7 @@ property is derived from the type of the memberEnd that is not the
 ownedEnd.""",
 )
 del extension_metaclass
-# 57: override Class.extension derives Extension.metaclass
+# 60: override Class.extension derives Extension.metaclass
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 def class_extension(self):
@@ -1440,7 +1440,7 @@ ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, 0, 1)
 ActivityGroup.subgroup = derivedunion(
     "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
 )
-# 90: override Classifier.inheritedMember
+# 93: override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
 StructuredClassifier.role = derivedunion(
     "role",
@@ -1461,7 +1461,7 @@ Namespace.member = derivedunion(
     Classifier.inheritedMember,
     StructuredClassifier.role,
 )
-# 227: override Component.required
+# 230: override Component.required
 def component_required(self):
     usages = _pr_interface_deps(self, Usage)
 
@@ -1479,10 +1479,10 @@ Component.required = property(
     """,
 )
 del component_required
-# 105: override Namespace.importedMember
+# 108: override Namespace.importedMember
 Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
 Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
-# 191: override Component.provided
+# 194: override Component.provided
 import itertools
 
 
@@ -1534,7 +1534,7 @@ Component.provided = property(
     """,
 )
 del component_provided
-# 90: override Classifier.inheritedMember
+# 93: override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
 Element.owner = derivedunion(
     "owner",
@@ -1593,7 +1593,7 @@ StructuredClassifier.role = derivedunion(
     Collaboration.collaborationRole,
 )
 ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
-# 261: override StructuredClassifier.part
+# 264: override StructuredClassifier.part
 def structuredclassifier_part(self):
     return tuple(a for a in self.ownedAttribute if a.isComposite)
 
@@ -1606,7 +1606,7 @@ StructuredClassifier.part = property(
 )
 del structuredclassifier_part
 Transition.redefintionContext = derivedunion("redefintionContext", Classifier, 1, 1)
-# 102: override Class.superClass
+# 105: override Class.superClass
 Class.superClass = Classifier.general
 ActivityNode.redefinedElement = redefine(
     ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
@@ -1647,12 +1647,12 @@ State.redefinedState = redefine(
 Transition.redefinedTransition = redefine(
     Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
 )
-# 165: override Lifeline.parse
+# 168: override Lifeline.parse
 from gaphor.UML.umllex import parse_lifeline
 
 Lifeline.parse = parse_lifeline
 del parse_lifeline
-# 170: override Lifeline.render
+# 173: override Lifeline.render
 from gaphor.UML.umllex import render_lifeline
 
 Lifeline.render = render_lifeline

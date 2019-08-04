@@ -11,21 +11,6 @@ from gaphor import UML
 from gaphor.misc.generic.multidispatch import multidispatch
 
 
-@multidispatch(object, object)
-class IConnect:
-    """
-    This function is used by the HandleTool to allow connecting
-    lines to element items. For each specific case (Element, Line) an
-    adapter could be written.
-    """
-
-    def __init__(self, item, line_item):
-        pass
-
-    def allow(self, handle, port):
-        return False
-
-
 class ConnectBase(metaclass=abc.ABCMeta):
     """
     This interface is used by the HandleTool to allow connecting
@@ -58,6 +43,28 @@ class ConnectBase(metaclass=abc.ABCMeta):
         element. This requires that the relationship is also removed at
         model level.
         """
+
+
+@multidispatch(object, object)
+class IConnect(ConnectBase):
+    """
+    This function is used by the HandleTool to allow connecting
+    lines to element items. For each specific case (Element, Line) an
+    adapter could be written.
+    """
+
+    def __init__(self, item, line_item):
+        self.item = item
+        self.line_item = line_item
+
+    def allow(self, handle, port):
+        return False
+
+    def connect(self, handle, port):
+        raise NotImplementedError(f"No connector for {self.item} and {self.line_item}")
+
+    def disconnect(self, handle):
+        raise NotImplementedError(f"No connector for {self.item} and {self.line_item}")
 
 
 class AbstractConnect(ConnectBase):
@@ -120,7 +127,7 @@ class AbstractConnect(ConnectBase):
         `gaphor.diagram.classes.interface` module documentation for
         connection to folded interface rules.
 
-        Returns `True` by default.
+        Returns `True` if connection is allowed.
         """
         from gaphor.diagram.classes.interface import InterfaceItem
         from gaphor.diagram.classes.implementation import ImplementationItem
@@ -280,8 +287,6 @@ class UnaryRelationshipConnect(AbstractConnect):
         connections = list(canvas.get_connections(connected=line))
         for cinfo in connections:
             adapter = IConnect(cinfo.item, cinfo.connected)
-            assert adapter
-            print(adapter)
             adapter.disconnect(cinfo.handle)
         return connections
 

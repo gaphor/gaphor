@@ -13,6 +13,7 @@ class EditorTestCase(TestCase):
         self.diagram.canvas.update_now()
 
         adapter = Editor(node)
+        print(node, adapter)
         assert adapter.is_editable(10, 10)
         # assert not adapter.edit_tag
 

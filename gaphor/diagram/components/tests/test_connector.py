@@ -25,15 +25,16 @@ class ConnectorItemTestCase(TestCase):
         conn = self.create(ConnectorItem, UML.Connector)
         end = self.element_factory.create(UML.ConnectorEnd)
         iface = self.element_factory.create(UML.Interface)
+        interface_text = conn.shape_middle.children[-1]
         end.role = iface
         conn.subject.end = end
         # conn.end = end
         # self.assertTrue(conn._end is end)
 
-        self.assertEqual("", conn._interface.text)
+        self.assertEqual("", interface_text.text())
 
         iface.name = "RedSea"
-        assert "RedSea" == conn._interface.text
+        assert "RedSea" == interface_text.text()
 
     def test_setting_end(self):
         """Test creation of connector item
@@ -41,16 +42,18 @@ class ConnectorItemTestCase(TestCase):
         conn = self.create(ConnectorItem, UML.Connector)
         end = self.element_factory.create(UML.ConnectorEnd)
         iface = self.element_factory.create(UML.Interface)
+        interface_text = conn.shape_middle.children[-1]
         end.role = iface
         iface.name = "RedSea"
         conn.subject.end = end
         # conn.end = end
         # self.assertTrue(conn._end is end)
-        self.assertEqual("RedSea", conn._interface.text)
+
+        self.assertEqual("RedSea", interface_text.text())
 
         del conn.subject.end[end]
         conn.end = None
-        assert "" == conn._interface.text
+        assert "" == interface_text.text()
 
     def test_persistence(self):
         """Test connector item saving/loading

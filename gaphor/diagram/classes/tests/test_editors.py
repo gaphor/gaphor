@@ -59,25 +59,13 @@ class EditorTestCase(TestCase):
 
         edit = Editor(klass)
 
-        assert "CompartmentItemEditor" == edit.__class__.__name__
+        assert "ClassifiedItemEditor" == edit.__class__.__name__
 
         assert edit.is_editable(10, 10)
 
         # Test the inner working of the editor
         self.assertEqual(klass, edit._edit)
         assert "Class1" == edit.get_text()
-
-        # The attribute:
-        y = klass._header_size[1] + klass.style.compartment_padding[0] + 3
-        assert edit.is_editable(4, y)
-        assert attr == edit._edit.subject
-        assert "+ blah" == edit.get_text()
-
-        y += klass.compartments[0].height
-        # The operation
-        self.assertEqual(True, edit.is_editable(3, y))
-        assert oper == edit._edit.subject
-        assert "+ method()" == edit.get_text()
 
     def test_class_attribute_editor(self):
         klass = self.create(ClassItem, UML.Class)

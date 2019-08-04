@@ -23,9 +23,9 @@ from gaphas.tool import (
 from gi.repository import Gdk
 from gi.repository import Gtk
 
+from gaphor.diagram.presentation import LinePresentation
 from gaphor.core import Transaction, transactional
-from gaphor.diagram.diagramline import DiagramLine
-from gaphor.diagram.elementitem import ElementItem
+from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.editors import Editor
 from gaphor.diagram.connectors import IConnect
@@ -39,7 +39,7 @@ OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 log = logging.getLogger(__name__)
 
 
-@Connector.when_type(DiagramLine)
+@Connector.register(LinePresentation)
 class DiagramItemConnector(ItemConnector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
@@ -96,7 +96,7 @@ class DiagramItemConnector(ItemConnector):
 
     @transactional
     def disconnect(self):
-        super(DiagramItemConnector, self).disconnect()
+        super().disconnect()
 
 
 class DisconnectHandle:
@@ -212,11 +212,10 @@ class TextEditTool(Tool):
         view = self.view
         item = view.hovered_item
         if item:
-            try:
-                editor = Editor(item)
-            except TypeError:
-                # Could not adapt to Editor
+            editor = Editor(item)
+            if not editor:
                 return False
+
             log.debug("Found editor %r" % editor)
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
             if editor.is_editable(x, y):
@@ -357,7 +356,7 @@ class GroupPlacementTool(PlacementTool):
         return item
 
 
-@InMotion.when_type(ElementItem)
+@InMotion.register(ElementPresentation)
 class DropZoneInMotion(GuidedItemInMotion):
     def move(self, pos):
         """

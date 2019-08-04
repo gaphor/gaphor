@@ -1,7 +1,6 @@
 import pytest
 
 from gaphor import UML
-from gaphor.UML.modelfactory import STEREOTYPE_FMT as fmt
 from gaphor.services.eventmanager import EventManager
 
 
@@ -44,7 +43,7 @@ def test_stereotypes_conversion(factory):
     UML.model.apply_stereotype(cls, s2)
     UML.model.apply_stereotype(cls, s3)
 
-    assert (fmt % "s1, s2, s3") == UML.model.stereotypes_str(cls)
+    assert ("«s1, s2, s3»") == UML.model.stereotypes_str(cls)
 
 
 def test_no_stereotypes(factory):
@@ -68,7 +67,7 @@ def test_additional_stereotypes(factory):
     UML.model.apply_stereotype(cls, s3)
 
     result = UML.model.stereotypes_str(cls, ("test",))
-    assert (fmt % "test, s1, s2, s3") == result
+    assert ("«test, s1, s2, s3»") == result
 
 
 def test_just_additional_stereotypes(factory):
@@ -76,7 +75,7 @@ def test_just_additional_stereotypes(factory):
     cls = factory.create(UML.Class)
 
     result = UML.model.stereotypes_str(cls, ("test",))
-    assert (fmt % "test") == result
+    assert ("«test»") == result
 
 
 def test_getting_stereotypes(factory):
@@ -300,8 +299,8 @@ def test_create(factory):
     m.sendEvent = send
     m.receiveEvent = receive
 
-    m1 = UML.model.create_message(m, False)
-    m2 = UML.model.create_message(m, True)
+    m1 = UML.model.clone_message(m, False)
+    m2 = UML.model.clone_message(m, True)
 
     assert m1.sendEvent.covered is sl
     assert m1.receiveEvent.covered is rl

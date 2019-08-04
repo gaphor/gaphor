@@ -235,14 +235,14 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         assert subject.sendEvent and subject.receiveEvent
 
         # add some more messages
-        m1 = UML.model.create_message(subject)
-        m2 = UML.model.create_message(subject)
+        m1 = UML.model.clone_message(subject)
+        m2 = UML.model.clone_message(subject)
         msg.add_message(m1, False)
         msg.add_message(m2, False)
 
         # add some inverted messages
-        m3 = UML.model.create_message(subject, True)
-        m4 = UML.model.create_message(subject, True)
+        m3 = UML.model.clone_message(subject, True)
+        m4 = UML.model.clone_message(subject, True)
         msg.add_message(m3, True)
         msg.add_message(m4, True)
 

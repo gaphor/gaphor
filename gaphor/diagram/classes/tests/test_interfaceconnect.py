@@ -5,7 +5,7 @@ Test connections to folded interface.
 from gaphor import UML
 from gaphor.tests import TestCase
 from gaphor.diagram.classes.implementation import ImplementationItem
-from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.interface import InterfaceItem, Folded
 from gaphor.diagram.classes.association import AssociationItem
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.generalization import GeneralizationItem
@@ -13,76 +13,76 @@ from gaphor.diagram.general.commentline import CommentLineItem
 
 
 class ImplementationTestCase(TestCase):
+    def test_default_line_style(self):
+        impl = self.create(ImplementationItem)
+
+        assert impl.style("dash-style")
+
     def test_folded_interface_connection(self):
         """Test connecting implementation to folded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         impl = self.create(ImplementationItem)
 
-        assert not impl._solid
         self.connect(impl, impl.head, iface, iface.ports()[0])
-        assert impl._solid
+
+        assert not impl.style("dash-style")
 
     def test_folded_interface_disconnection(self):
         """Test disconnection implementation from folded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         impl = self.create(ImplementationItem)
 
-        assert not impl._solid
         self.connect(impl, impl.head, iface, iface.ports()[0])
-        assert impl._solid
-
         self.disconnect(impl, impl.head)
-        assert not impl._solid
+        impl.request_update()
+
+        assert impl.style("dash-style")
 
 
 class DependencyTestCase(TestCase):
+    def test_default_line_style(self):
+        dep = self.create(DependencyItem)
+
+        assert dep.style("dash-style")
+
     def test_folded_interface_connection(self):
         """Test connecting dependency to folded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         dep = self.create(DependencyItem)
 
-        assert not dep._solid
         self.connect(dep, dep.head, iface, iface.ports()[0])
-        assert dep._solid
-        # at the end, interface folded notation shall be `required' one
-        self.assertEqual(iface.folded, iface.FOLDED_REQUIRED)
+
+        assert not dep.style("dash-style")
+        assert iface.folded == Folded.REQUIRED
 
     def test_folded_interface_disconnection(self):
         """Test disconnection dependency from folded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
         dep = self.create(DependencyItem)
 
-        assert not dep._solid
         self.connect(dep, dep.head, iface, iface.ports()[0])
-        assert dep._solid
-
         self.disconnect(dep, dep.head)
-        assert not dep._solid
-        # after disconnection, interface folded notation shall be `provided' one
-        self.assertEqual(iface.folded, iface.FOLDED_PROVIDED)
+        dep.request_update()
 
-    def test_unfolded_interface_disconnection(self):
+        assert dep.style("dash-style")
+        assert iface.folded == Folded.PROVIDED
+
+    def test_unfolded_interface_connection(self):
         """Test disconnection dependency from unfolded interface
         """
         iface = self.create(InterfaceItem, UML.Interface)
         dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, iface, iface.ports()[0])
-        assert not dep._solid
-
-        self.disconnect(dep, dep.head)
-        assert not dep._solid
-        # after disconnection, interface folded property shall be
-        # `FOLDED_NONE'
-        self.assertEqual(iface.folded, iface.FOLDED_NONE)
+        assert () == dep.style("dash-style")
 
 
 LINES = (
@@ -101,10 +101,10 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
     """
 
     def setUp(self):
-        super(FoldedInterfaceMultipleLinesTestCase, self).setUp()
+        super().setUp()
 
         self.iface = self.create(InterfaceItem, UML.Interface)
-        self.iface.folded = self.iface.FOLDED_PROVIDED
+        self.iface.folded = Folded.PROVIDED
 
     def test_interface_with_implementation(self):
         """Test gluing different lines to folded interface with implementation."""
@@ -116,7 +116,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
             line = self.create(cls)
             glued = self.allow(line, line.head, self.iface)
             # no additional lines (specified above) can be glued
-            self.assertFalse(glued, "gluing of %s should not be allowed" % cls)
+            assert not glued, f"gluing of {cls} should not be allowed"
 
     def test_interface_with_dependency(self):
         """Test gluing different lines to folded interface with dependency."""
@@ -127,7 +127,7 @@ class FoldedInterfaceMultipleLinesTestCase(TestCase):
             line = self.create(cls)
             glued = self.allow(line, line.head, self.iface)
             # no additional lines (specified above) can be glued
-            self.assertFalse(glued, "gluing of %s should not be allowed" % cls)
+            assert not glued, f"gluing of {cls} should not be allowed"
 
 
 class FoldedInterfaceSingleLineTestCase(TestCase):
@@ -140,10 +140,10 @@ class FoldedInterfaceSingleLineTestCase(TestCase):
         """Test gluing forbidden lines to folded interface."""
 
         iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = iface.FOLDED_PROVIDED
+        iface.folded = Folded.PROVIDED
 
         for cls in LINES[2:]:
             line = self.create(cls)
             glued = self.allow(line, line.head, iface)
             # no additional lines (specified above) can be glued
-            self.assertFalse(glued, "gluing of %s should not be allowed" % cls)
+            assert not glued, f"gluing of {cls} should not be allowed"

@@ -17,6 +17,9 @@ from gaphor.UML.element import Element
 override Diagram
 from gaphor.UML.diagram import Diagram
 %%
+override Presentation
+from gaphor.UML.presentation import Presentation
+%%
 override Transition
 class Transition(RedefinableElement, NamedElement): pass
 %%

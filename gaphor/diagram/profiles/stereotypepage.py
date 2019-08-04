@@ -6,7 +6,6 @@ from gi.repository import GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.diagram.diagramitem import StereotypeSupport
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 
 
@@ -88,7 +87,7 @@ class StereotypePage(PropertyPageBase):
             return None
 
         # show stereotypes attributes toggle
-        if isinstance(self.item, StereotypeSupport):
+        if hasattr(self.item, "show_stereotypes_attrs"):
             hbox = Gtk.HBox()
             label = Gtk.Label(label="")
             hbox.pack_start(label, False, True, 0)

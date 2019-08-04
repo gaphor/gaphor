@@ -5,9 +5,7 @@ import abc
 from functools import singledispatch
 
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.diagramitem import DiagramItem
-from gaphor.diagram.compartment import CompartmentItem
+from gaphor.diagram.presentation import Named, Classified
 from gaphor.misc.rattr import rgetattr, rsetattr
 
 
@@ -54,16 +52,6 @@ class AbstractEditor(metaclass=abc.ABCMeta):
         """
 
     @abc.abstractmethod
-    def get_bounds(self):
-        """
-        Get the bounding box of the (current) text. The edit tool is not
-        required to do anything with this information but it might help for
-        some nicer displaying of the text widget.
-
-        Returns: a gaphas.geometry.Rectangle
-        """
-
-    @abc.abstractmethod
     def update_text(self, text):
         """
         Update with the new text.
@@ -77,7 +65,7 @@ class AbstractEditor(metaclass=abc.ABCMeta):
         """
 
 
-@Editor.register(NamedItem)
+@Editor.register(Named)
 class NamedItemEditor(AbstractEditor):
     """Text edit support for Named items."""
 
@@ -91,9 +79,6 @@ class NamedItemEditor(AbstractEditor):
         s = self._item.subject
         return s.name if s else ""
 
-    def get_bounds(self):
-        return None
-
     def update_text(self, text):
         if self._item.subject:
             self._item.subject.name = text
@@ -103,42 +88,9 @@ class NamedItemEditor(AbstractEditor):
         pass
 
 
-@Editor.register(DiagramItem)
-class DiagramItemTextEditor(AbstractEditor):
-    """Text edit support for diagram items containing text elements."""
-
-    def __init__(self, item):
-        self._item = item
-        self._text_element = None
-
-    def is_editable(self, x, y):
-        if not self._item.subject:
-            return False
-
-        for txt in self._item.texts():
-            if (x, y) in txt.bounds:
-                self._text_element = txt
-                break
-        return self._text_element is not None
-
-    def get_text(self):
-        if self._text_element:
-            return rgetattr(self._item.subject, self._text_element.attr)
-
-    def get_bounds(self):
-        return None
-
-    def update_text(self, text):
-        if self._text_element:
-            self._text_element.text = text
-            rsetattr(self._item.subject, self._text_element.attr, text)
-
-    def key_pressed(self, pos, key):
-        pass
-
-
-@Editor.register(CompartmentItem)
-class CompartmentItemEditor(AbstractEditor):
+# TODO: Needs implementing
+@Editor.register(Classified)
+class ClassifiedItemEditor(AbstractEditor):
     """Text editor support for compartment items."""
 
     def __init__(self, item):
@@ -150,14 +102,11 @@ class CompartmentItemEditor(AbstractEditor):
         Find out what's located at point (x, y), is it in the
         name part or is it text in some compartment
         """
-        self._edit = self._item.item_at(x, y)
-        return bool(self._edit and self._edit.subject)
+        self._edit = hasattr(self._item, "item_at") and self._item.item_at(x, y)
+        return bool(self._edit)
 
     def get_text(self):
         return UML.format(editable(self._edit.subject))
-
-    def get_bounds(self):
-        return None
 
     def update_text(self, text):
         UML.parse(editable(self._edit.subject), text)

@@ -9,7 +9,7 @@ from gaphor import UML
 from gaphor.diagram.connectors import IConnect, AbstractConnect
 from gaphor.diagram.components.component import ComponentItem
 from gaphor.diagram.components.connector import ConnectorItem
-from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.interface import InterfaceItem, Folded
 
 
 class ConnectorConnectBase(AbstractConnect):
@@ -237,7 +237,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
 
         glue_ok = super(InterfaceConnectorConnect, self).allow(handle, port)
         iface = self.element
-        glue_ok = glue_ok and iface.folded != iface.FOLDED_NONE
+        glue_ok = glue_ok and iface.folded != Folded.NONE
         if glue_ok:
             # find connected items, which are not connectors
             canvas = self.element.canvas
@@ -253,7 +253,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         super(InterfaceConnectorConnect, self).connect(handle, port)
 
         iface = self.element
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
 
         # determine required and provided ports
         pport = port
@@ -268,7 +268,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
             pport.provided = True
             rport.required = True
 
-            iface._angle = rport.angle
+            iface.angle = rport.angle
 
             ports[(index + 1) % 4].connectable = False
             ports[(index + 3) % 4].connectable = False
@@ -279,8 +279,8 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         # about to disconnect last connector
         if len(list(self.get_connecting(iface))) == 1:
             ports = iface.ports()
-            iface.folded = iface.FOLDED_PROVIDED
-            iface._angle = ports[0].angle
+            iface.folded = Folded.PROVIDED
+            iface.angle = ports[0].angle
             for p in ports:
                 p.connectable = True
                 p.provided = False

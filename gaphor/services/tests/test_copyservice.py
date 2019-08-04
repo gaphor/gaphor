@@ -38,34 +38,6 @@ class CopyServiceTestCase(TestCase):
 
         assert len(diagram.canvas.get_all_items()) == 2, diagram.canvas.get_all_items()
 
-    def test_copy_named_item(self):
-        service = self.service
-
-        ef = self.element_factory
-        diagram = ef.create(UML.Diagram)
-        c = diagram.create(ClassItem, subject=ef.create(UML.Class))
-
-        c.subject.name = "Name"
-
-        diagram.canvas.update_now()
-        i = list(diagram.canvas.get_all_items())
-        assert 1 == len(i), i
-        assert "Name" == i[0]._name.text
-
-        service.copy([c])
-        assert diagram.canvas.get_all_items() == [c]
-
-        service.paste(diagram)
-
-        i = diagram.canvas.get_all_items()
-
-        assert 2 == len(i), i
-
-        diagram.canvas.update_now()
-
-        assert "Name" == i[0]._name.text
-        assert "Name" == i[1]._name.text
-
     def _skip_test_copy_paste_undo(self):
         """
         Test if copied data is undoable.

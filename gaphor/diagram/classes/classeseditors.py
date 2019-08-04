@@ -36,9 +36,6 @@ class AssociationItemEditor(AbstractEditor):
             default=True,
         )
 
-    def get_bounds(self):
-        return None
-
     def update_text(self, text):
         UML.parse(self._edit.subject, text)
 

@@ -176,7 +176,7 @@ class HandleToolTestCase(unittest.TestCase):
 
         assert cinfo is None
 
-    def test_iconnect_2(self):
+    def test_connect_comment_and_actor(self):
         """Test connect/disconnect on comment and actor using comment-line.
         """
         element_factory = Application.get_service("element_factory")
@@ -214,8 +214,9 @@ class HandleToolTestCase(unittest.TestCase):
         tool.grab_handle(line, handle)
         actor_bb = view.get_item_bounding_box(actor)
 
-        handle.pos = actor_bb.x1, actor_bb.y1
+        handle.pos = actor_bb.x, actor_bb.y
         sink = tool.glue(line, handle, handle.pos)
+        assert sink, f"No sink at {handle.pos}"
         assert sink.item is actor
         tool.connect(line, handle, handle.pos)
 
