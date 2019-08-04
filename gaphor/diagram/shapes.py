@@ -127,7 +127,11 @@ class Box:
             self._draw_border(self, context, bounding_box)
         x = bounding_box.x + padding[Padding.LEFT]
         if valign is VerticalAlign.MIDDLE:
-            y = bounding_box.y + (bounding_box.height - height) / 2
+            y = (
+                bounding_box.y
+                + padding[Padding.TOP]
+                + (max(height, bounding_box.height - padding[Padding.TOP]) - height) / 2
+            )
         elif valign is VerticalAlign.BOTTOM:
             y = bounding_box.y + bounding_box.height - height - padding[Padding.BOTTOM]
         else:
