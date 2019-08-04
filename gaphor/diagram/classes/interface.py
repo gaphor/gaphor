@@ -247,6 +247,10 @@ class InterfaceItem(ElementPresentation, Classified):
         else:
             super().load(name, value)
 
+    def save(self, save_func):
+        super().save(save_func)
+        save_func("drawing-style", 3 if self.folded == Folded.PROVIDED else 0)
+
     def _is_folded(self):
         """
         Check if interface item is folded interface item.
