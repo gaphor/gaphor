@@ -93,7 +93,6 @@ class ElementEditor(UIComponent, ActionProvider):
         Both the widget and event parameters default to None and are
         idempotent if set."""
 
-        log.debug("ElementEditor.close")
         self.event_manager.unsubscribe(self._selection_change)
         self.event_manager.unsubscribe(self._element_changed)
         self.window = None

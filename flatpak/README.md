@@ -4,16 +4,20 @@
  
 1. Install flatpak-builder
  
-        $ sudo apt-get install flatpak-builder
+       $ sudo apt-get install flatpak-builder
 
 1. Install the GNOME SDK
 
-        $ flatpak install flathub org.gnome.Sdk 3.30
+       $ flatpak install flathub org.gnome.Sdk 3.30
 
+1. Add the Flathub repository and install the necessary SDK:
+
+       $ make setup
+	
 1. Build Gaphor
 
-        $ flatpak-builder --gpg-sign=E4089A143589D73655DF66774E9C27AE08850F1E --gpg-homedir=../.gpg --force-clean --repo=gaphor-repo build org.gaphor.Gaphor.yaml
+       $ flatpak-builder --gpg-sign=E4089A143589D73655DF66774E9C27AE08850F1E --gpg-homedir=../.gpg --force-clean --repo=gaphor-repo build org.gaphor.Gaphor.yaml
         
 1. Create a Single-file Bundle
 
-        $ flatpak build-bundle gaphor-repo gaphor-MAJOR.MINOR.PATCH.flatpak org.gaphor.Gaphor
+       $ flatpak build-bundle gaphor-repo gaphor-MAJOR.MINOR.PATCH.flatpak org.gaphor.Gaphor
