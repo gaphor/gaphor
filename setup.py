@@ -16,7 +16,7 @@ from utils.i18n.build_pot import build_pot
 from utils.model.build_uml import build_uml
 from utils.install_lib import install_lib
 
-VERSION = "1.0.2"
+VERSION = "1.1.0"
 LINGUAS = ["ca", "es", "fr", "nl", "sv"]
 
 sys.path.insert(0, ".")
