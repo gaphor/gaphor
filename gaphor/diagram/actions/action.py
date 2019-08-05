@@ -32,7 +32,7 @@ class ActionItem(ElementPresentation, Named):
             draw=draw_border,
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 
@@ -54,7 +54,7 @@ class SendSignalActionItem(ElementPresentation, Named):
             draw=self.draw_border,
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     def draw_border(self, box, context, bounding_box):
@@ -89,7 +89,7 @@ class AcceptEventActionItem(ElementPresentation, Named):
             draw=self.draw_border,
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     def draw_border(self, box, context, bounding_box):

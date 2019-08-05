@@ -44,7 +44,7 @@ class ActorItem(ElementPresentation, Classified):
             ),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 

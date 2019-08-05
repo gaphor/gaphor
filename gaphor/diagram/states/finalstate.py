@@ -28,7 +28,7 @@ class FinalStateItem(ElementPresentation, VertexItem):
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 

@@ -42,9 +42,9 @@ class ClassItem(ElementPresentation, Classified):
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
-            "subject<NamedElement>.name"
+            "subject[NamedElement].name"
         ).watch(
-            "subject<NamedElement>.namespace"
+            "subject[NamedElement].namespace"
         ).watch(
             "subject.appliedStereotype", self.update_shapes
         ).watch(
@@ -56,51 +56,51 @@ class ClassItem(ElementPresentation, Classified):
         ).watch(
             "subject.appliedStereotype.slot.value", self.update_shapes
         ).watch(
-            "subject<Classifier>.isAbstract", self.update_shapes
+            "subject[Classifier].isAbstract", self.update_shapes
         ).watch(
-            "subject<Class>.ownedAttribute", self.update_shapes
+            "subject[Class].ownedAttribute", self.update_shapes
         ).watch(
-            "subject<Class>.ownedOperation", self.update_shapes
+            "subject[Class].ownedOperation", self.update_shapes
         ).watch(
-            "subject<Class>.ownedAttribute.association", self.update_shapes
+            "subject[Class].ownedAttribute.association", self.update_shapes
         ).watch(
-            "subject<Class>.ownedAttribute.name"
+            "subject[Class].ownedAttribute.name"
         ).watch(
-            "subject<Class>.ownedAttribute.isStatic", self.update_shapes
+            "subject[Class].ownedAttribute.isStatic", self.update_shapes
         ).watch(
-            "subject<Class>.ownedAttribute.isDerived"
+            "subject[Class].ownedAttribute.isDerived"
         ).watch(
-            "subject<Class>.ownedAttribute.visibility"
+            "subject[Class].ownedAttribute.visibility"
         ).watch(
-            "subject<Class>.ownedAttribute.lowerValue"
+            "subject[Class].ownedAttribute.lowerValue"
         ).watch(
-            "subject<Class>.ownedAttribute.upperValue"
+            "subject[Class].ownedAttribute.upperValue"
         ).watch(
-            "subject<Class>.ownedAttribute.defaultValue"
+            "subject[Class].ownedAttribute.defaultValue"
         ).watch(
-            "subject<Class>.ownedAttribute.typeValue"
+            "subject[Class].ownedAttribute.typeValue"
         ).watch(
-            "subject<Class>.ownedOperation.name"
+            "subject[Class].ownedOperation.name"
         ).watch(
-            "subject<Class>.ownedOperation.isAbstract", self.update_shapes
+            "subject[Class].ownedOperation.isAbstract", self.update_shapes
         ).watch(
-            "subject<Class>.ownedOperation.isStatic", self.update_shapes
+            "subject[Class].ownedOperation.isStatic", self.update_shapes
         ).watch(
-            "subject<Class>.ownedOperation.visibility"
+            "subject[Class].ownedOperation.visibility"
         ).watch(
-            "subject<Class>.ownedOperation.returnResult.lowerValue"
+            "subject[Class].ownedOperation.returnResult.lowerValue"
         ).watch(
-            "subject<Class>.ownedOperation.returnResult.upperValue"
+            "subject[Class].ownedOperation.returnResult.upperValue"
         ).watch(
-            "subject<Class>.ownedOperation.returnResult.typeValue"
+            "subject[Class].ownedOperation.returnResult.typeValue"
         ).watch(
-            "subject<Class>.ownedOperation.formalParameter.lowerValue"
+            "subject[Class].ownedOperation.formalParameter.lowerValue"
         ).watch(
-            "subject<Class>.ownedOperation.formalParameter.upperValue"
+            "subject[Class].ownedOperation.formalParameter.upperValue"
         ).watch(
-            "subject<Class>.ownedOperation.formalParameter.typeValue"
+            "subject[Class].ownedOperation.formalParameter.typeValue"
         ).watch(
-            "subject<Class>.ownedOperation.formalParameter.defaultValue"
+            "subject[Class].ownedOperation.formalParameter.defaultValue"
         )
 
     show_stereotypes = UML.properties.attribute("show_stereotypes", int)

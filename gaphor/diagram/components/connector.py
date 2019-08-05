@@ -142,9 +142,9 @@ class ConnectorItem(LinePresentation, Named):
             Text(text=role_name, style={"min-width": 0, "min-height": 0}),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject<Connector>.end.role.name")
+        self.watch("subject[Connector].end.role.name")
 
     def draw_tail(self, context):
         cr = context.cairo

@@ -34,7 +34,7 @@ class NodeItem(ElementPresentation, Classified):
         super().__init__(id, model)
 
         self.watch("show_stereotypes", self.update_shapes)
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype", self.update_shapes)
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject.appliedStereotype.slot", self.update_shapes)

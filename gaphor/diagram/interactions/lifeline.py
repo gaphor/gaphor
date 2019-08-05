@@ -178,7 +178,7 @@ class LifelineItem(ElementPresentation, Named):
             draw=self.draw_lifeline,
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     def setup_canvas(self):

@@ -33,7 +33,7 @@ class UseCaseItem(ElementPresentation, Classified):
             draw=draw_usecase,
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 

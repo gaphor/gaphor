@@ -26,7 +26,7 @@ class TransitionItem(LinePresentation, Named):
             EditableText(text=lambda: self.subject.name or ""),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
         self.shape_middle = EditableText(
@@ -36,6 +36,6 @@ class TransitionItem(LinePresentation, Named):
             or ""
         )
 
-        self.watch("subject<Transition>.guard<Constraint>.specification")
+        self.watch("subject[Transition].guard[Constraint].specification")
 
         self.draw_tail = draw_arrow_tail

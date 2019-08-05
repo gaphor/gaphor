@@ -175,9 +175,9 @@ class InterfaceItem(ElementPresentation, Classified):
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
-            "subject<NamedElement>.name"
+            "subject[NamedElement].name"
         ).watch(
-            "subject<NamedElement>.namespace"
+            "subject[NamedElement].namespace"
         ).watch(
             "subject.appliedStereotype", self.update_shapes
         ).watch(
@@ -189,51 +189,51 @@ class InterfaceItem(ElementPresentation, Classified):
         ).watch(
             "subject.appliedStereotype.slot.value", self.update_shapes
         ).watch(
-            "subject<Interface>.ownedAttribute", self.update_shapes
+            "subject[Interface].ownedAttribute", self.update_shapes
         ).watch(
-            "subject<Interface>.ownedOperation", self.update_shapes
+            "subject[Interface].ownedOperation", self.update_shapes
         ).watch(
-            "subject<Interface>.ownedAttribute.association", self.update_shapes
+            "subject[Interface].ownedAttribute.association", self.update_shapes
         ).watch(
-            "subject<Interface>.ownedAttribute.name"
+            "subject[Interface].ownedAttribute.name"
         ).watch(
-            "subject<Interface>.ownedAttribute.isStatic", self.update_shapes
+            "subject[Interface].ownedAttribute.isStatic", self.update_shapes
         ).watch(
-            "subject<Interface>.ownedAttribute.isDerived"
+            "subject[Interface].ownedAttribute.isDerived"
         ).watch(
-            "subject<Interface>.ownedAttribute.visibility"
+            "subject[Interface].ownedAttribute.visibility"
         ).watch(
-            "subject<Interface>.ownedAttribute.lowerValue"
+            "subject[Interface].ownedAttribute.lowerValue"
         ).watch(
-            "subject<Interface>.ownedAttribute.upperValue"
+            "subject[Interface].ownedAttribute.upperValue"
         ).watch(
-            "subject<Interface>.ownedAttribute.defaultValue"
+            "subject[Interface].ownedAttribute.defaultValue"
         ).watch(
-            "subject<Interface>.ownedAttribute.typeValue"
+            "subject[Interface].ownedAttribute.typeValue"
         ).watch(
-            "subject<Interface>.ownedOperation.name"
+            "subject[Interface].ownedOperation.name"
         ).watch(
-            "subject<Interface>.ownedOperation.isAbstract", self.update_shapes
+            "subject[Interface].ownedOperation.isAbstract", self.update_shapes
         ).watch(
-            "subject<Interface>.ownedOperation.isStatic", self.update_shapes
+            "subject[Interface].ownedOperation.isStatic", self.update_shapes
         ).watch(
-            "subject<Interface>.ownedOperation.visibility"
+            "subject[Interface].ownedOperation.visibility"
         ).watch(
-            "subject<Interface>.ownedOperation.returnResult.lowerValue"
+            "subject[Interface].ownedOperation.returnResult.lowerValue"
         ).watch(
-            "subject<Interface>.ownedOperation.returnResult.upperValue"
+            "subject[Interface].ownedOperation.returnResult.upperValue"
         ).watch(
-            "subject<Interface>.ownedOperation.returnResult.typeValue"
+            "subject[Interface].ownedOperation.returnResult.typeValue"
         ).watch(
-            "subject<Interface>.ownedOperation.formalParameter.lowerValue"
+            "subject[Interface].ownedOperation.formalParameter.lowerValue"
         ).watch(
-            "subject<Interface>.ownedOperation.formalParameter.upperValue"
+            "subject[Interface].ownedOperation.formalParameter.upperValue"
         ).watch(
-            "subject<Interface>.ownedOperation.formalParameter.typeValue"
+            "subject[Interface].ownedOperation.formalParameter.typeValue"
         ).watch(
-            "subject<Interface>.ownedOperation.formalParameter.defaultValue"
+            "subject[Interface].ownedOperation.formalParameter.defaultValue"
         ).watch(
-            "subject<Interface>.supplierDependency", self.update_shapes
+            "subject[Interface].supplierDependency", self.update_shapes
         )
 
     show_stereotypes = UML.properties.attribute("show_stereotypes", int)

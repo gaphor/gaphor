@@ -26,11 +26,11 @@ class StateItem(ElementPresentation, VertexItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject<State>.entry.name", self.update_shapes)
-        self.watch("subject<State>.exit.name", self.update_shapes)
-        self.watch("subject<State>.doActivity.name", self.update_shapes)
+        self.watch("subject[State].entry.name", self.update_shapes)
+        self.watch("subject[State].exit.name", self.update_shapes)
+        self.watch("subject[State].doActivity.name", self.update_shapes)
 
     def update_shapes(self, event=None):
         compartment = Box(

@@ -32,14 +32,14 @@ class FlowItem(LinePresentation):
             EditableText(text=lambda: self.subject.name or ""),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
         self.shape_middle = EditableText(
             text=lambda: self.subject and self.subject.guard or ""
         )
 
-        self.watch("subject<ControlFlow>.guard")
-        self.watch("subject<ObjectFlow>.guard")
+        self.watch("subject[ControlFlow].guard")
+        self.watch("subject[ObjectFlow].guard")
 
         self.draw_tail = draw_arrow_tail

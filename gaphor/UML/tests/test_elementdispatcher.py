@@ -332,7 +332,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         assert len(element.memberEnd) == 2
 
-        base = "memberEnd<Property>."
+        base = "memberEnd[Property]."
         dispatcher.subscribe(self._handler, element, base + "name")
         dispatcher.subscribe(self._handler, element, base + "aggregation")
         dispatcher.subscribe(self._handler, element, base + "classifier")

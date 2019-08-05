@@ -53,10 +53,10 @@ class ObjectNodeItem(ElementPresentation, Named):
             ),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject<ObjectNode>.upperBound")
-        self.watch("subject<ObjectNode>.ordering")
+        self.watch("subject[ObjectNode].upperBound")
+        self.watch("subject[ObjectNode].ordering")
 
     @observed
     def _set_show_ordering(self, value):

@@ -445,7 +445,7 @@ def generate(filename, outfile=None, overridesfile=None):
         e.enumerates = tuple(values)
 
     # Remove metaclasses from classes dict
-    # should check for Extension.memberEnd<Property>.type
+    # should check for Extension.memberEnd[Property].type
     for e in list(extensions.values()):
         ends = []
         for end in e.memberEnd:

@@ -55,7 +55,7 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 
@@ -90,7 +90,7 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 
@@ -133,7 +133,7 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 
@@ -174,7 +174,7 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     def save(self, save_func):
@@ -243,9 +243,9 @@ class ForkNodeItem(UML.Presentation, Item):
             ),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject<JoinNode>.joinSpec")
+        self.watch("subject[JoinNode].joinSpec")
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))

@@ -33,7 +33,7 @@ class CommentItem(ElementPresentation):
             style={"ear": EAR, "padding": (OFFSET, EAR + OFFSET, OFFSET, OFFSET)},
             draw=self.draw_border,
         )
-        self.watch("subject<Comment>.body")
+        self.watch("subject[Comment].body")
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo

@@ -36,8 +36,8 @@ class PackageItem(ElementPresentation, Named):
             draw=draw_package,
         )
 
-        self.watch("subject<NamedElement>.name")
-        self.watch("subject<NamedElement>.namespace")
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].namespace")
         self.watch("subject.appliedStereotype.classifier.name")
 
 

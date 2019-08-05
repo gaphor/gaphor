@@ -32,7 +32,7 @@ class ExtensionItem(LinePresentation, Named):
             EditableText(text=lambda: self.subject.name or ""),
         )
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     def draw_head(self, context):

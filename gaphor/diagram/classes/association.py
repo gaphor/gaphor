@@ -67,8 +67,8 @@ class AssociationItem(LinePresentation, Named):
         )
 
         # For the association ends:
-        base = "subject<Association>.memberEnd<Property>"
-        self.watch("subject<NamedElement>.name").watch(
+        base = "subject[Association].memberEnd[Property]"
+        self.watch("subject[NamedElement].name").watch(
             "subject.appliedStereotype.classifier.name"
         ).watch(f"{base}.name", self.on_association_end_value).watch(
             f"{base}.aggregation", self.on_association_end_value
@@ -83,15 +83,15 @@ class AssociationItem(LinePresentation, Named):
         ).watch(
             f"{base}.owningAssociation", self.on_association_end_value
         ).watch(
-            f"{base}.type<Class>.ownedAttribute", self.on_association_end_value
+            f"{base}.type[Class].ownedAttribute", self.on_association_end_value
         ).watch(
-            f"{base}.type<Interface>.ownedAttribute", self.on_association_end_value
+            f"{base}.type[Interface].ownedAttribute", self.on_association_end_value
         ).watch(
             f"{base}.appliedStereotype.classifier", self.on_association_end_value
         ).watch(
-            "subject<Association>.ownedEnd"
+            "subject[Association].ownedEnd"
         ).watch(
-            "subject<Association>.navigableOwnedEnd"
+            "subject[Association].navigableOwnedEnd"
         )
 
     def set_show_direction(self, dir):

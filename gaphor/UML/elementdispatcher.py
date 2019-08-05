@@ -78,7 +78,7 @@ class ElementDispatcher:
     a handler like this::
 
       dispatcher.subscribe(element,
-              'guard.specification<LiteralSpecification>.value', self._handler)
+              'guard.specification[LiteralSpecification].value', self._handler)
 
     Note the '<' and '>'. This is because guard references ValueSpecification,
     which does not have a value attribute. Therefore the default reference type
@@ -117,9 +117,9 @@ class ElementDispatcher:
         tpath = []
         for attr in path.split("."):
             cname = ""
-            if "<" in attr:
-                assert attr.endswith(">"), '"%s" should end with ">"' % attr
-                attr, cname = attr[:-1].split("<")
+            if "[" in attr:
+                assert attr.endswith("]"), '"%s" should end with ">"' % attr
+                attr, cname = attr[:-1].split("[")
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:

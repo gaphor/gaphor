@@ -89,7 +89,7 @@ class MessageItem(LinePresentation, Named):
         self._messages = []
         self._inverted_messages = []
 
-        self.watch("subject<NamedElement>.name")
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     def update_shapes(self):
