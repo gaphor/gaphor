@@ -8,8 +8,6 @@ from gaphor.UML.uml2 import Element
 class Presentation(Element):
     """
     This presentation is used to link the behaviors of `gaphor.UML.Element` and `gaphas.Item`.
-
-    This class should be inherited before the
     """
 
     def __init__(self, id=None, model=None):

@@ -68,6 +68,7 @@ follows
 Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
+import ast
 from math import pi
 from enum import Enum
 
@@ -171,7 +172,7 @@ class InterfaceItem(ElementPresentation, Classified):
             InterfacePort(h_sw.pos, h_nw.pos, self._is_folded, pi * 1.5),
         ]
 
-        self.watch("show_stereotypes_attrs", self.update_shapes).watch(
+        self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject<NamedElement>.name"
@@ -235,27 +236,21 @@ class InterfaceItem(ElementPresentation, Classified):
             "subject<Interface>.supplierDependency", self.update_shapes
         )
 
-    show_stereotypes_attrs = UML.properties.attribute("show_stereotypes_attrs", int)
+    show_stereotypes = UML.properties.attribute("show_stereotypes", int)
 
-    show_attributes = UML.properties.attribute("show_attributes", int, default=1)
+    show_attributes = UML.properties.attribute("show_attributes", int, default=True)
 
-    show_operations = UML.properties.attribute("show_operations", int, default=1)
+    show_operations = UML.properties.attribute("show_operations", int, default=True)
 
-    # TODO: translate "drawing-style"(int) to folded
     def load(self, name, value):
-        if name == "drawing-style":
-            if value == "3":  # DRAW_ICON
-                self.folded = Folded.PROVIDED
-            else:
-                self.folded = Folded.NONE
-        elif name in ("show-attributes", "show-operations"):
-            super().load(name.replace("-", "_"), value)
+        if name == "folded":
+            self.folded = Folded(ast.literal_eval(value))
         else:
             super().load(name, value)
 
     def save(self, save_func):
         super().save(save_func)
-        save_func("drawing-style", 3 if self.folded == Folded.PROVIDED else 0)
+        save_func("folded", self.folded.value)
 
     def _is_folded(self):
         """
@@ -334,7 +329,7 @@ class InterfaceItem(ElementPresentation, Classified):
                     or []
                 ),
                 *(
-                    self.show_stereotypes_attrs
+                    self.show_stereotypes
                     and stereotype_compartments(self.subject)
                     or []
                 ),

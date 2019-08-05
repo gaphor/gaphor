@@ -98,13 +98,6 @@ class ElementPresentation(Presentation, gaphas.Element):
             self.matrix = ast.literal_eval(value)
         elif name in ("width", "height"):
             setattr(self, name, ast.literal_eval(value))
-        elif name == "show_stereotypes_attrs":
-            # TODO: should be handled in storage as an upgrader
-            if hasattr(self, "show_stereotypes_attrs"):
-                self.show_stereotypes_attrs = ast.literal_eval(value)
-        elif name == "drawing-style":  # for classifiers
-            # TODO: should be handled in storage as an upgrader
-            pass
         else:
             super().load(name, value)
 
@@ -230,9 +223,6 @@ class LinePresentation(Presentation, gaphas.Line):
             self._load_head_connection = value
         elif name in ("tail_connection", "tail-connection"):
             self._load_tail_connection = value
-        elif name == "show_stereotypes_attrs":
-            # TODO: should be handled in storage as an upgrader
-            pass
         else:
             super().load(name, value)
 

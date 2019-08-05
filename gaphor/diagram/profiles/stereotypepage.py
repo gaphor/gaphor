@@ -87,13 +87,13 @@ class StereotypePage(PropertyPageBase):
             return None
 
         # show stereotypes attributes toggle
-        if hasattr(self.item, "show_stereotypes_attrs"):
+        if hasattr(self.item, "show_stereotypes"):
             hbox = Gtk.HBox()
             label = Gtk.Label(label="")
             hbox.pack_start(label, False, True, 0)
             button = Gtk.CheckButton(label=_("Show stereotypes attributes"))
-            button.set_active(self.item.show_stereotypes_attrs)
-            button.connect("toggled", self._on_show_stereotypes_attrs_change)
+            button.set_active(self.item.show_stereotypes)
+            button.connect("toggled", self._on_show_stereotypes_change)
             hbox.pack_start(button, True, True, 0)
             page.pack_start(hbox, False, True, 0)
 
@@ -111,9 +111,8 @@ class StereotypePage(PropertyPageBase):
         return page
 
     @transactional
-    def _on_show_stereotypes_attrs_change(self, button):
-        self.item.show_stereotypes_attrs = button.get_active()
-        self.item.request_update()
+    def _on_show_stereotypes_change(self, button):
+        self.item.show_stereotypes = button.get_active()
 
     def refresh(self):
         self.model.clear()

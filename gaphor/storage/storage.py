@@ -168,13 +168,13 @@ def save_generator(writer, factory):
     writer.endDocument()
 
 
-def load_elements(elements, factory, status_queue=None):
-    for status in load_elements_generator(elements, factory):
+def load_elements(elements, factory, gaphor_version="1.0.0", status_queue=None):
+    for status in load_elements_generator(elements, factory, gaphor_version):
         if status_queue:
             status_queue(status)
 
 
-def load_elements_generator(elements, factory, gaphor_version=None):
+def load_elements_generator(elements, factory, gaphor_version):
     """
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
@@ -198,7 +198,9 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
         """
         for item in canvasitems:
-            item = upgrade_canvas_item_to_1_1_0(item)
+            item = upgrade_canvas_item_to_1_0_2(item)
+            if version_lower_than(gaphor_version, (1, 1, 0)):
+                item = upgrade_presentation_item_to_1_1_0(item)
             cls = getattr(diagramitems, item.type)
             item.element = diagram.create_as(cls, item.id, parent=parent)
             create_canvasitems(diagram, item.canvasitems, parent=item.element)
@@ -376,9 +378,37 @@ def version_lower_than(gaphor_version, version):
         return tuple(map(int, parts)) <= version
 
 
-def upgrade_canvas_item_to_1_1_0(item):
+def upgrade_canvas_item_to_1_0_2(item):
     if item.type == "MetaclassItem":
         item.type = "ClassItem"
     elif item.type == "SubsystemItem":
         item.type = "ComponentItem"
+    return item
+
+
+def upgrade_presentation_item_to_1_1_0(item):
+    if "show_stereotypes_attrs" in item.values:
+        if item.type in (
+            "ClassItem",
+            "InterfaceItem",
+            "ArtifactItem",
+            "ComponentItem",
+            "NodeItem",
+        ):
+            item.values["show_stereotypes"] = item.values["show_stereotypes_attrs"]
+        del item.values["show_stereotypes_attrs"]
+
+    if "drawing-style" in item.values:
+        if item.type == "InterfaceItem":
+            item.values["folded"] = "1" if item.values["drawing-style"] == "3" else "0"
+        del item.values["drawing-style"]
+
+    if "show-attributes" in item.values and item.type in ("ClassItem", "InterfaceItem"):
+        item.values["show_attributes"] = item.values["show-attributes"]
+        del item.values["show-attributes"]
+
+    if "show-operations" in item.values and item.type in ("ClassItem", "InterfaceItem"):
+        item.values["show_operations"] = item.values["show-operations"]
+        del item.values["show-operations"]
+
     return item

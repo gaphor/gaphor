@@ -33,7 +33,7 @@ class NodeItem(ElementPresentation, Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self.watch("show_stereotypes_attrs", self.update_shapes)
+        self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject<NamedElement>.name")
         self.watch("subject.appliedStereotype", self.update_shapes)
         self.watch("subject.appliedStereotype.classifier.name")
@@ -41,7 +41,7 @@ class NodeItem(ElementPresentation, Classified):
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
 
-    show_stereotypes_attrs = UML.properties.attribute("show_stereotypes_attrs", int)
+    show_stereotypes = UML.properties.attribute("show_stereotypes", int)
 
     def update_shapes(self, event=None):
         self.shape = Box(
@@ -59,11 +59,7 @@ class NodeItem(ElementPresentation, Classified):
                 ),
                 style={"padding": (4, 4, 4, 4)},
             ),
-            *(
-                self.show_stereotypes_attrs
-                and stereotype_compartments(self.subject)
-                or []
-            ),
+            *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={"min-width": 100, "min-height": 50},
             draw=draw_node
         )

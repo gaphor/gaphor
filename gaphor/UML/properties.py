@@ -116,21 +116,15 @@ class attribute(umlproperty):
         self.upper = upper
 
     def load(self, obj, value):
-
         """Load the attribute value."""
-
         try:
-
             setattr(obj, self._name, self.type(value))
-
         except ValueError:
-
             error_msg = "Failed to load attribute %s of type %s with value %s" % (
                 self._name,
                 self.type,
                 value,
             )
-
             raise TypeError(error_msg)
 
     def __str__(self):

@@ -39,7 +39,7 @@ class ClassItem(ElementPresentation, Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self.watch("show_stereotypes_attrs", self.update_shapes).watch(
+        self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject<NamedElement>.name"
@@ -103,11 +103,11 @@ class ClassItem(ElementPresentation, Classified):
             "subject<Class>.ownedOperation.formalParameter.defaultValue"
         )
 
-    show_stereotypes_attrs = UML.properties.attribute("show_stereotypes_attrs", int)
+    show_stereotypes = UML.properties.attribute("show_stereotypes", int)
 
-    show_attributes = UML.properties.attribute("show_attributes", int, default=1)
+    show_attributes = UML.properties.attribute("show_attributes", int, default=True)
 
-    show_operations = UML.properties.attribute("show_operations", int, default=1)
+    show_operations = UML.properties.attribute("show_operations", int, default=True)
 
     def update_shapes(self, event=None):
         def additional_stereotypes():
@@ -153,11 +153,7 @@ class ClassItem(ElementPresentation, Classified):
                 and [operations_compartment(self.subject)]
                 or []
             ),
-            *(
-                self.show_stereotypes_attrs
-                and stereotype_compartments(self.subject)
-                or []
-            ),
+            *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
                 "min-width": 100,
                 "min-height": 50,
@@ -165,12 +161,6 @@ class ClassItem(ElementPresentation, Classified):
             },
             draw=draw_border,
         )
-
-    def load(self, name, value):
-        if name in ("show-attributes", "show-operations"):
-            super().load(name.replace("-", "_"), value)
-        else:
-            super().load(name, value)
 
     # TODO: Needs implementing, see also gaphor/diagram/editors.py
     def item_at(self, x, y):

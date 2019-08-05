@@ -261,9 +261,6 @@ class ForkNodeItem(UML.Presentation, Item):
             self._handles[1].pos.y = ast.literal_eval(value)
         elif name == "combined":
             self._combined = value
-        elif name == "show_stereotypes_attrs":
-            # TODO: should be handled in storage as an upgrader
-            pass
         else:
             # DiagramItem.load(self, name, value)
             super().load(name, value)
