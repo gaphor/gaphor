@@ -9,16 +9,6 @@ from gaphor.UML.properties import (
     redefine,
 )
 
-# class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
-# class 'InstanceValue' has been stereotyped as 'SimpleAttribute' too
-# class 'Expression' has been stereotyped as 'SimpleAttribute' too
-# class 'LiteralSpecification' has been stereotyped as 'SimpleAttribute' too
-# class 'LiteralUnlimitedNatural' has been stereotyped as 'SimpleAttribute' too
-# class 'LiteralBoolean' has been stereotyped as 'SimpleAttribute' too
-# class 'LiteralInteger' has been stereotyped as 'SimpleAttribute' too
-# class 'LiteralString' has been stereotyped as 'SimpleAttribute' too
-# class 'LiteralNull' has been stereotyped as 'SimpleAttribute' too
-# class 'OpaqueExpression' has been stereotyped as 'SimpleAttribute' too
 # 14: override Element
 from gaphor.UML.element import Element
 
@@ -544,6 +534,16 @@ class Reception(BehavioralFeature):
     pass
 
 
+# class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
+# class 'InstanceValue' has been stereotyped as 'SimpleAttribute' too
+# class 'Expression' has been stereotyped as 'SimpleAttribute' too
+# class 'LiteralSpecification' has been stereotyped as 'SimpleAttribute' too
+# class 'LiteralUnlimitedNatural' has been stereotyped as 'SimpleAttribute' too
+# class 'LiteralBoolean' has been stereotyped as 'SimpleAttribute' too
+# class 'LiteralInteger' has been stereotyped as 'SimpleAttribute' too
+# class 'LiteralString' has been stereotyped as 'SimpleAttribute' too
+# class 'LiteralNull' has been stereotyped as 'SimpleAttribute' too
+# class 'OpaqueExpression' has been stereotyped as 'SimpleAttribute' too
 Extension.isRequired = attribute("isRequired", int)
 Feature.isStatic = attribute("isStatic", int, default=False)
 RedefinableElement.isLeaf = attribute("isLeaf", int, default=True)
@@ -575,6 +575,7 @@ NamedElement.qualifiedName = property(
 )
 
 del namedelement_qualifiedname
+
 Component.isIndirectlyInstantiated = attribute(
     "isIndirectlyInstantiated", int, default=True
 )
@@ -628,6 +629,7 @@ Property.navigability = property(
 )
 
 del property_navigability
+
 Behavior.isReentrant = attribute("isReentrant", int)
 BehavioralFeature.isAbstract = attribute("isAbstract", int)
 Action.effect = attribute("effect", str)
@@ -1147,16 +1149,19 @@ MultiplicityElement.lower = derived(
 )
 MultiplicityElement.lower.filter = lambda obj: [obj.lowerValue]
 # MultiplicityElement.lower = MultiplicityElement.lowerValue
+
 # 31: override MultiplicityElement.upper derives MultiplicityElement.upperValue
 MultiplicityElement.upper = derived(
     "upper", object, 0, 1, MultiplicityElement.upperValue
 )
 MultiplicityElement.upper.filter = lambda obj: [obj.upperValue]
 # MultiplicityElement.upper = MultiplicityElement.upperValue
+
 # 132: override Property.isComposite derives Property.aggregation
 # Property.isComposite = property(lambda self: self.aggregation == 'composite')
 Property.isComposite = derivedunion("isComposite", bool, 0, 1, Property.aggregation)
 Property.isComposite.filter = lambda obj: [obj.aggregation == "composite"]
+
 RedefinableElement.redefinedElement = derivedunion(
     "redefinedElement",
     RedefinableElement,
@@ -1231,6 +1236,7 @@ def property_opposite(self):
 Property.opposite = property(property_opposite, doc=property_opposite.__doc__)
 
 del property_opposite
+
 
 BehavioralFeature.parameter = derivedunion(
     "parameter",
@@ -1334,6 +1340,7 @@ Classifier.general = property(
     """,
 )
 del classifier_general
+
 # 51: override Association.endType derives Association.memberEnd Property.type
 
 # References the classifiers that are used as types of the ends of the
@@ -1343,6 +1350,7 @@ Association.endType = derived(
     "endType", Type, 0, "*", Association.memberEnd, Property.type
 )
 Association.endType.filter = lambda self: [end.type for end in self.memberEnd if end]
+
 
 Classifier.attribute = derivedunion(
     "attribute",
@@ -1358,8 +1366,10 @@ Classifier.attribute = derivedunion(
 )
 # 137: override Constraint.context
 Constraint.context = derivedunion("context", Namespace, 0, 1)
+
 # 165: override Operation.type
 Operation.type = derivedunion("type", DataType, 0, 1)
+
 # 76: override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
 def extension_metaclass(self):
@@ -1379,6 +1389,7 @@ property is derived from the type of the memberEnd that is not the
 ownedEnd.""",
 )
 del extension_metaclass
+
 # 60: override Class.extension derives Extension.metaclass
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
@@ -1399,6 +1410,7 @@ metaclass. The property is derived from the extensions whose memberEnds
 are typed by the Class.""",
 )
 del class_extension
+
 DirectedRelationship.target = derivedunion(
     "target",
     Element,
@@ -1442,6 +1454,7 @@ ActivityGroup.subgroup = derivedunion(
 )
 # 93: override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
+
 StructuredClassifier.role = derivedunion(
     "role",
     ConnectableElement,
@@ -1479,8 +1492,10 @@ Component.required = property(
     """,
 )
 del component_required
+
 # 108: override Namespace.importedMember
 Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
+
 Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
 # 194: override Component.provided
 import itertools
@@ -1534,8 +1549,10 @@ Component.provided = property(
     """,
 )
 del component_provided
+
 # 93: override Classifier.inheritedMember
 Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
+
 Element.owner = derivedunion(
     "owner",
     Element,
@@ -1605,9 +1622,11 @@ StructuredClassifier.part = property(
 """,
 )
 del structuredclassifier_part
+
 Transition.redefintionContext = derivedunion("redefintionContext", Classifier, 1, 1)
 # 105: override Class.superClass
 Class.superClass = Classifier.general
+
 ActivityNode.redefinedElement = redefine(
     ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
 )
@@ -1652,6 +1671,7 @@ from gaphor.UML.umllex import parse_lifeline
 
 Lifeline.parse = parse_lifeline
 del parse_lifeline
+
 # 173: override Lifeline.render
 from gaphor.UML.umllex import render_lifeline
 

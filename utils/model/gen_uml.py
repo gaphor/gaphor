@@ -15,6 +15,7 @@ attributes and traverse them to generate the data model.
 
 import sys
 import ast
+from collections import OrderedDict
 
 from gaphor.storage.parser import parse, base, element
 from utils.model import override
@@ -67,20 +68,32 @@ def msg(s):
 
 
 class Writer:
-    def __init__(self, filename, overrides=None):
+    def __init__(self, overrides=None):
         self.overrides = overrides
+        self.classdefs = OrderedDict()
+        self.features = []
+
+    def write(self, filename, header):
         if filename:
-            self.out = hasattr(filename, "write") and filename or open(filename, "w")
+            out = hasattr(filename, "write") and filename or open(filename, "w")
         else:
-            self.out = sys.stdout
+            out = sys.stdout
 
-    def write(self, data):
-        self.out.write(data)
+        try:
+            out.write(header)
+            for d in self.classdefs.values():
+                out.write(d)
+                out.write("\n")
 
-    def close(self):
-        self.out.close()
+            out.write("\n")
 
-    def write_classdef(self, clazz):
+            for d in self.features:
+                out.write(d)
+                out.write("\n")
+        finally:
+            out.close()
+
+    def add_classdef(self, clazz):
         """
         Write a class definition (class xx(x): pass).
         First the parent classes are examined. After that its own definition
@@ -90,27 +103,34 @@ class Writer:
         if not clazz.written:
             s = ""
             for g in clazz.generalization:
-                self.write_classdef(g)
+                self.add_classdef(g)
                 if s:
                     s += ", "
                 s = s + g["name"]
-            if not self.overrides.write_override(self, clazz["name"]):
-                self.write("class {}".format(clazz["name"]))
+            override = self.overrides.get_override(clazz["name"])
+            if override:
+                self.classdefs[clazz["name"]] = override
+            else:
+                line = f"class {clazz['name']}"
                 if s:
-                    self.write(f"({s})")
-                self.write(": pass\n")
+                    line += f"({s})"
+                line += ": pass"
+                self.classdefs[clazz["name"]] = line
         clazz.written = True
 
-    def write_property(self, full_name, value):
+    def add_comment(self, line):
+        self.features.append(f"# {line}")
+
+    def add_property(self, class_name, name, value, type):
         """
         Write a property to the file. If the property is overridden, use the
-        overridden value. full_name should be like Class.attribute. value is
+        overridden value. value is
         free format text.
         """
-        if not self.overrides.write_override(self, full_name):
-            self.write(f"{full_name} = {value}\n")
+        override = self.overrides.get_override(f"{class_name}.{name}")
+        self.features.append(override or f"{class_name}.{name} = {value}")
 
-    def write_attribute(self, a, enumerations={}):
+    def add_attribute(self, a, enumerations={}):
         """
         Write a definition for attribute a. Enumerations may be a dict
         of enumerations, indexed by ID. These are used to identify enums.
@@ -150,7 +170,12 @@ class Writer:
 
         full_name = f"{a.class_name}.{a.name}"
         if self.overrides.has_override(full_name):
-            self.overrides.write_override(self, full_name)
+            self.add_property(
+                a.class_name,
+                a.name,
+                self.overrides.get_override(full_name),
+                self.overrides.get_type(full_name),
+            )
         elif ast.literal_eval(a.isDerived or "0"):
             msg(
                 "ignoring derived attribute %s.%s: no definition"
@@ -160,10 +185,11 @@ class Writer:
             e = list(filter(lambda e: e["name"] == type, list(enumerations.values())))[
                 0
             ]
-            self.write_property(
-                f"{a.class_name}.{a.name}",
-                "enumeration('%s', %s, '%s')"
-                % (a.name, e.enumerates, default or e.enumerates[0]),
+            self.add_property(
+                a.class_name,
+                a.name,
+                f"enumeration('{a.name}', {e.enumerates}, '{default or e.enumerates[0]}')",
+                type="enumeration",
             )
         else:
             if params:
@@ -172,12 +198,17 @@ class Writer:
                 )
             else:
                 attribute = f"attribute('{a.name}', {type})"
-            self.write_property(f"{a.class_name}.{a.name}", attribute)
+            self.add_property(a.class_name, a.name, attribute, type="attribute")
 
-    def write_operation(self, o):
+    def add_operation(self, o):
         full_name = f"{o.class_name}.{o.name}"
         if self.overrides.has_override(full_name):
-            self.overrides.write_override(self, full_name)
+            self.add_property(
+                o.class_name,
+                o.name,
+                self.overrides.get_override(full_name),
+                self.overrides.get_type(full_name),
+            )
         else:
             msg(f"No override for operation {full_name}")
 
@@ -219,9 +250,9 @@ class Writer:
                 ), "One end is derived, the other end not ???"
                 a += f", opposite='{o_name}'"
 
-        self.write_property(f"{head.class_name}.{head.name}", a + ")")
+        self.add_property(head.class_name, head.name, a + ")", type="association")
 
-    def write_derivedunion(self, d):
+    def add_derivedunion(self, d):
         """
         Write a derived union. If there are no subsets a warning
         is issued. The derivedunion is still created though.
@@ -232,13 +263,14 @@ class Writer:
         subs = ""
         for u in d.union:
             if u.derived and not u.written:
-                self.write_derivedunion(u)
+                self.add_derivedunion(u)
             if subs:
                 subs += ", "
             subs += f"{u.class_name}.{u.name}"
         if subs:
-            self.write_property(
-                f"{d.class_name}.{d.name}",
+            self.add_property(
+                d.class_name,
+                d.name,
                 "derivedunion('%s', %s, %s, %s, %s)"
                 % (
                     d.name,
@@ -247,6 +279,7 @@ class Writer:
                     d.upper == "*" and "'*'" or d.upper,
                     subs,
                 ),
+                type="derivedunion",
             )
         else:
             if not self.overrides.has_override(f"{d.class_name}.{d.name}"):
@@ -254,8 +287,9 @@ class Writer:
                     "no subsets for derived union: %s.%s[%s..%s]"
                     % (d.class_name, d.name, d.lower, d.upper)
                 )
-            self.write_property(
-                f"{d.class_name}.{d.name}",
+            self.add_property(
+                d.class_name,
+                d.name,
                 "derivedunion('%s', %s, %s, %s)"
                 % (
                     d.name,
@@ -263,18 +297,21 @@ class Writer:
                     d.lower,
                     d.upper == "*" and "'*'" or d.upper,
                 ),
+                type="derivedunion",
             )
         d.written = True
 
-    def write_redefine(self, r):
+    def add_redefine(self, r):
         """
         Redefines may be created for associations that were returned
         False by write_association().
         """
-        self.write_property(
-            f"{r.class_name}.{r.name}",
+        self.add_property(
+            r.class_name,
+            r.name,
             "redefine(%s, '%s', %s, %s)"
             % (r.class_name, r.name, r.opposite_class_name, r.redefines),
+            type="redefine",
         )
 
 
@@ -378,7 +415,7 @@ def generate(filename, outfile=None, overridesfile=None):
             val.references[attr] = all_elements[refs]
 
     overrides = override.Overrides(overridesfile)
-    writer = Writer(outfile, overrides)
+    writer = Writer(overrides)
 
     # extract usable elements from all_elements. Some elements are given
     # some extra attributes.
@@ -456,9 +493,6 @@ def generate(filename, outfile=None, overridesfile=None):
         if ends:
             del classes[e.memberEnd[0].type.id]
 
-    # create file header
-    writer.write(header)
-
     # Tag classes with appliedStereotype
     for c in list(classes.values()):
         if c.get("appliedStereotype"):
@@ -467,17 +501,15 @@ def generate(filename, outfile=None, overridesfile=None):
             instSpec = all_elements[c.appliedStereotype[0]]
             sType = all_elements[instSpec.classifier[0]]
             c.stereotypeName = sType.name
-            writer.write(
-                "# class '%s' has been stereotyped as '%s'\n"
-                % (c.name, c.stereotypeName)
+            writer.add_comment(
+                f"class '{c.name}' has been stereotyped as '{c.stereotypeName}'"
             )
             # c.written = True
             def tag_children(me):
                 for child in me.specialization:
                     child.stereotypeName = sType.name
-                    writer.write(
-                        "# class '%s' has been stereotyped as '%s' too\n"
-                        % (child.name, child.stereotypeName)
+                    writer.add_comment(
+                        f"class '{child.name}' has been stereotyped as '{child.stereotypeName}' too"
                     )
                     # child.written = True
                     tag_children(child)
@@ -491,20 +523,20 @@ def generate(filename, outfile=None, overridesfile=None):
         if c.stereotypeName == "SimpleAttribute":
             ignored_classes.add(c)
         else:
-            writer.write_classdef(c)
+            writer.add_classdef(c)
 
     # create attributes and enumerations
     derivedattributes = {}
     for c in [c for c in list(classes.values()) if c not in ignored_classes]:
         for p in c.get("ownedAttribute") or []:
             a = properties.get(p)
-            # set class_name, since write_attribute depends on it
+            # set class_name, since add_attribute depends on it
             a.class_name = c["name"]
             if not a.get("association"):
                 if overrides.derives(f"{a.class_name}.{a.name}"):
                     derivedattributes[a.name] = a
                 else:
-                    writer.write_attribute(a, enumerations)
+                    writer.add_attribute(a, enumerations)
 
     # create associations, derivedunions are held back
     derivedunions = {}  # indexed by name in stead of id
@@ -531,13 +563,13 @@ def generate(filename, outfile=None, overridesfile=None):
         for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
             if a.asAttribute is not None:
                 if a.asAttribute is e1 and e1.navigable:
-                    writer.write(
-                        f"# '{e2.type.name}.{e1.name}' is a simple attribute\n"
+                    writer.add_comment(
+                        f"'{e2.type.name}.{e1.name}' is a simple attribute"
                     )
                     e1.class_name = e2.type.name
                     e1.typeValue = "str"
 
-                    writer.write_attribute(e1, enumerations)
+                    writer.add_attribute(e1, enumerations)
                     e1.written = True
                     e2.written = True
             elif e1.redefines:
@@ -566,23 +598,23 @@ def generate(filename, outfile=None, overridesfile=None):
     #       may depend on other derived attributes or associations.
 
     for d in list(derivedattributes.values()):
-        writer.write_attribute(d)
+        writer.add_attribute(d)
 
     for d in list(derivedunions.values()):
-        writer.write_derivedunion(d)
+        writer.add_derivedunion(d)
 
     for r in redefines or ():
         msg(f"redefining {r.redefines} -> {r.class_name}.{r.name}")
-        writer.write_redefine(r)
+        writer.add_redefine(r)
 
     # create operations
     for c in [c for c in list(classes.values()) if c not in ignored_classes]:
         for p in c.get("ownedOperation") or ():
             o = operations.get(p)
             o.class_name = c["name"]
-            writer.write_operation(o)
+            writer.add_operation(o)
 
-    writer.close()
+    writer.write(outfile, header)
 
 
 if __name__ == "__main__":

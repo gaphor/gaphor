@@ -68,16 +68,16 @@ class Overrides:
     def has_override(self, key):
         return bool(self.overrides.get(key))
 
-    def derives(self, key):
-        return self.overrides.get(key, ((), None))[0]
-
-    def write_override(self, fp, key):
+    def get_override(self, key):
         """Write override data for 'key' to a file refered to by 'fp'."""
         deps, data, line = self.overrides.get(key, ((), None, None))
         if not data:
-            return False
+            return None
 
-        fp.write("# ")
-        fp.write(line)
-        fp.write(data)
-        return True
+        return f"# {line}{data}"
+
+    def get_type(self, key):
+        return "property"
+
+    def derives(self, key):
+        return self.overrides.get(key, ((), None))[0]
