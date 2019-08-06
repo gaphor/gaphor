@@ -3,6 +3,7 @@ Transaction support for Gaphor
 """
 
 import logging
+from typing import List
 
 from gaphor import application
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
@@ -74,7 +75,7 @@ class Transaction:
     ...     pass
     """
 
-    _stack = []
+    _stack: List = []
 
     def __init__(self, event_manager):
         """Initialize the transaction.  If this is the first transaction in

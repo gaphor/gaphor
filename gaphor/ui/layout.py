@@ -2,6 +2,7 @@
 Layout code from a simple XML description.
 """
 
+from typing import Dict, Callable
 from xml.etree.ElementTree import fromstring
 
 from gi.repository import Gtk
@@ -9,7 +10,7 @@ from gi.repository import Gtk
 from gaphor.core import _
 
 
-widget_factory = {}
+widget_factory: Dict[str, Callable] = {}
 
 
 def deserialize(layout, container, layoutstr, itemfactory):

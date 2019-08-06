@@ -23,11 +23,11 @@ def _repl(m):
     return len(v) == 1 and v or "%c-%c" % tuple(v)
 
 
-_repl.expr = "(.?[A-Z])"
+_expr = "(.?[A-Z])"
 
 
 def icon_for_element(element):
-    return re.sub(_repl.expr, _repl, type(element).__name__)
+    return re.sub(_expr, _repl, type(element).__name__)
 
 
 # Set style for model canvas
