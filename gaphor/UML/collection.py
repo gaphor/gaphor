@@ -162,7 +162,7 @@ class collection:
         return not self.isEmpty()
 
     def sum(self):
-        r = 0
+        o = r = 0
         for o in self.items:
             r = r + o
         return o

@@ -191,7 +191,7 @@ def create_dependency(supplier, client):
 
 def create_realization(realizingClassifier, abstraction):
     assert (
-        realizingClassifier.model is stereoabstractiontype.model
+        realizingClassifier.model is abstraction.model
     ), "Realizing classifier and Abstraction are from different models"
     model = realizingClassifier.model
     dep = model.create(Realization)

@@ -90,7 +90,7 @@ class DerivedChangeEvent(AssociationChangeEvent):
     pass
 
 
-class DerivedSetEvent(DerivedChangeEvent, AssociationSetEvent):
+class DerivedSetEvent(AssociationSetEvent, DerivedChangeEvent):
     """A generic derived set event."""
 
     def __init__(self, element, association, old_value, new_value):
@@ -101,7 +101,7 @@ class DerivedSetEvent(DerivedChangeEvent, AssociationSetEvent):
         super().__init__(element, association, old_value, new_value)
 
 
-class DerivedAddEvent(DerivedChangeEvent, AssociationAddEvent):
+class DerivedAddEvent(AssociationAddEvent, DerivedChangeEvent):
     """A derived property has been added."""
 
     def __init__(self, element, association, new_value):
@@ -112,7 +112,7 @@ class DerivedAddEvent(DerivedChangeEvent, AssociationAddEvent):
         super().__init__(element, association, new_value)
 
 
-class DerivedDeleteEvent(DerivedChangeEvent, AssociationDeleteEvent):
+class DerivedDeleteEvent(AssociationDeleteEvent, DerivedChangeEvent):
     """A derived property has been deleted."""
 
     def __init__(self, element, association, old_value):

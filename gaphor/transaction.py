@@ -4,8 +4,7 @@ Transaction support for Gaphor
 
 import logging
 
-
-from gaphor import Application
+from gaphor import application
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 
 log = logging.getLogger(__name__)
@@ -19,7 +18,7 @@ def transactional(func):
 
     def _transactional(*args, **kwargs):
         r = None
-        event_manager = Application.get_service("event_manager")
+        event_manager = application.Application.get_service("event_manager")
         tx = Transaction(event_manager)
         try:
             r = func(*args, **kwargs)

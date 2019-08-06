@@ -694,9 +694,9 @@ def test_redefine():
     class A(Element):
         is_unlinked = False
 
-        def unlink():
+        def unlink(self):
             self.is_unlinked = True
-            Element.unlink()
+            super().unlink()
 
     A.a = association("a", A, upper=1)
 
