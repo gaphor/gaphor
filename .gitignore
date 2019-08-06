@@ -20,6 +20,9 @@ pip-wheel-metadata
 # PyTest
 .pytest_cache
 
+# MyPy
+.mypy_cache/
+
 # Coverage
 .coverage
 
