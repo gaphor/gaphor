@@ -2,6 +2,7 @@
 Base code for presentation elements
 """
 
+from gaphor.UML.properties import umlproperty
 from gaphor.UML.uml2 import Element
 
 
@@ -19,6 +20,8 @@ class Presentation(Element):
         self._watcher = self.watcher(default_handler=update)
 
         self.watch("subject")
+
+    subject: umlproperty[Element, Element]
 
     def watch(self, path, handler=None):
         """

@@ -9,6 +9,7 @@ import uuid
 
 import gaphas
 
+from gaphor.UML.properties import umlproperty
 from gaphor.UML.uml2 import Namespace, PackageableElement
 
 
@@ -72,6 +73,8 @@ class Diagram(Namespace, PackageableElement):
 
         super().__init__(id, model)
         self.canvas = DiagramCanvas(self)
+
+    package: umlproperty[Namespace, Namespace]
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""

@@ -21,7 +21,16 @@ override Presentation
 from gaphor.UML.presentation import Presentation
 %%
 override Transition
-class Transition(RedefinableElement, NamedElement): pass
+# Invert order of superclasses to avoid MRO issues
+class Transition(RedefinableElement, NamedElement):
+    kind: EnumerationType
+    container: AssociationType
+    source: AssociationType
+    target: AssociationType
+    effect: AssociationType
+    guard: AssociationType
+    redefintionContext: DerivedunionType
+    redefinedTransition: RedefineType
 %%
 override MultiplicityElement.lower derives MultiplicityElement.lowerValue
 MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)

@@ -7,6 +7,7 @@ __all__ = ["Element"]
 
 import uuid
 
+from typing import Sequence
 from gaphor.UML.properties import umlproperty
 from gaphor.UML.elementdispatcher import EventWatcher
 
@@ -45,6 +46,12 @@ class Element:
     id = property(lambda self: self._id, doc="Id")
 
     model = property(lambda self: self._model, doc="the owning model")
+
+    appliedStereotype: umlproperty["Element", Sequence["Element"]]
+    owner: umlproperty["Element", Sequence["Element"]]
+    ownedComment: umlproperty["Element", Sequence["Element"]]
+    ownedElement: umlproperty["Element", Sequence["Element"]]
+    presentation: umlproperty["Element", Sequence["Element"]]
 
     def umlproperties(self):
         """
