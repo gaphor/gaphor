@@ -472,7 +472,7 @@ def test_derivedunion():
 
 
 @pytest.mark.skip
-def test_deriveduntion_notify():
+def test_derivedunion_notify():
     class A(Element):
         pass
 
@@ -535,37 +535,6 @@ def test_composite():
     a.unlink()
     assert a.is_unlinked
     assert b.is_unlinked
-
-
-@pytest.mark.skip
-def test_derivedunion():
-    class A(Element):
-        is_unlinked = False
-
-        def unlink(self):
-            self.is_unlinked = True
-            Element.unlink(self)
-
-    A.a = association("a", A, upper=1)
-    A.b = association("b", A)
-
-    A.derived_a = derivedunion("derived_a", A, 0, 1, A.a)
-    A.derived_b = derivedunion("derived_b", A, 0, "*", A.b)
-    events = []
-
-    @event_handler(AssociationChangeEvent)
-    def handler(event, events=events):
-        events.append(event)
-
-    Application.register_handler(handler)
-    try:
-        a = A()
-        a.a = A()
-        assert len(events) == 2, events
-        assert events[0].property is A.derived_a
-        assert events[1].property is A.a
-    finally:
-        Application.unregister_handler(handler)
 
 
 @pytest.mark.skip

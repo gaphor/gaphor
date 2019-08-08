@@ -423,17 +423,6 @@ class AssociationEnd(UML.Presentation):
                 self._mult = m
                 self.request_update()
 
-    def point_name(self, pos):
-        drp = distance_rectangle_point
-        return drp(self._name_bounds, pos)
-
-    def point_mult(self, pos):
-        drp = distance_rectangle_point
-        return drp(self._mult_bounds, pos)
-
-    def point(self, pos):
-        return min(self.point_name(pos), self.point_mult(pos))
-
     def get_name(self):
         return self._name
 
