@@ -505,7 +505,7 @@ class derived(umlproperty):
     applied to the derived property.
     """
 
-    def __init__(self, name, type, lower, upper, *subsets):
+    def __init__(self, name, type, lower, upper, filter, *subsets):
         super().__init__()
         self.name = name
         self._name = "_" + name
@@ -513,6 +513,7 @@ class derived(umlproperty):
         self.type = type
         self.lower = lower
         self.upper = upper
+        self.filter = filter
         self.subsets = set(subsets)
         self.single = len(subsets) == 1
 
@@ -533,12 +534,6 @@ class derived(umlproperty):
 
     def __str__(self):
         return f"<derived {self.name}: {str(list(map(str, self.subsets)))[1:-1]}>"
-
-    def filter(self, obj):
-        """
-        Filter should return something iterable.
-        """
-        raise NotImplementedError("Implement this in the property.")
 
     def _update(self, obj):
         """
@@ -644,6 +639,9 @@ class derivedunion(derived):
     The subsets are the properties that participate in the union (Element.name).
     """
 
+    def __init__(self, name, type, lower, upper, *subsets):
+        super().__init__(name, type, lower, upper, self._union, *subsets)
+
     def _union(self, obj, exclude=None):
         """
         Returns a union of all values as a set.
@@ -663,9 +661,6 @@ class derivedunion(derived):
                         # [0..1] property
                         u.add(tmp)
             return collectionlist(u)
-
-    # Filter is our default filter
-    filter = _union
 
     def propagate(self, event):
         """

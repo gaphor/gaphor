@@ -24,14 +24,10 @@ override Transition
 class Transition(RedefinableElement, NamedElement): pass
 %%
 override MultiplicityElement.lower derives MultiplicityElement.lowerValue
-MultiplicityElement.lower = derived('lower', object, 0, 1, MultiplicityElement.lowerValue)
-MultiplicityElement.lower.filter = lambda obj: [ obj.lowerValue ]
-#MultiplicityElement.lower = MultiplicityElement.lowerValue
+MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
 %%
 override MultiplicityElement.upper derives MultiplicityElement.upperValue
-MultiplicityElement.upper = derived('upper', object, 0, 1, MultiplicityElement.upperValue)
-MultiplicityElement.upper.filter = lambda obj: [ obj.upperValue ]
-#MultiplicityElement.upper = MultiplicityElement.upperValue
+MultiplicityElement.upper = derived('upper', object, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
 %%
 override NamedElement.qualifiedName
 
@@ -53,8 +49,7 @@ override Association.endType derives Association.memberEnd Property.type
 # References the classifiers that are used as types of the ends of the
 # association.
 
-Association.endType = derived('endType', Type, 0, '*', Association.memberEnd, Property.type)
-Association.endType.filter = lambda self: [end.type for end in self.memberEnd if end]
+Association.endType = derived('endType', Type, 0, '*', lambda self: [end.type for end in self.memberEnd if end], Association.memberEnd, Property.type)
 
 %%
 override Class.extension derives Extension.metaclass
@@ -64,8 +59,7 @@ def class_extension(self):
     return list(self.model.select(lambda e: e.isKindOf(Extension) and self is e.metaclass))
 
 # TODO: use those as soon as Extension.metaclass can be used.
-#Class.extension = derived('extension', Extension, 0, '*', Extension.metaclass)
-#Class.extension.filter = class_extension
+#Class.extension = derived('extension', Extension, 0, '*', class_extension, Extension.metaclass)
 
 Class.extension = property(class_extension, doc=\
 """References the Extensions that specify additional properties of the
