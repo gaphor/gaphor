@@ -50,7 +50,6 @@ class MainWindow(Service, ActionProvider):
     """
 
     size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
-    resizable = True
 
     menu_xml = """
       <ui>
@@ -263,7 +262,6 @@ Gtk.AccelMap.add_filter("gaphor")
 class Diagrams(UIComponent, ActionProvider):
 
     title = _("Diagrams")
-    placement = ("left", "diagrams")
 
     menu_xml = """
       <ui>

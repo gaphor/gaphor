@@ -8,13 +8,11 @@ class UIComponent(Service):
     A user interface component.
     """
 
-    ui_name: str = "The UIComponent name, provided by the loader"
+    ui_name: str  # "The UIComponent name, provided by the loader"
 
-    title: str = "Title of the component"
+    title: str  # "Title of the component"
 
-    size: Tuple[int, int] = "Size used for floating the component"
-
-    placement: Union[Tuple[str, str], str] = 'placement. E.g. ("left", "diagrams")'
+    size: Tuple[int, int]  # "Size used for floating the component"
 
     @abc.abstractmethod
     def open(self):

@@ -266,7 +266,6 @@ class NamespaceView(Gtk.TreeView):
 class Namespace(UIComponent, ActionProvider):
 
     title = _("Namespace")
-    placement = ("left", "diagrams")
 
     menu_xml = """
       <ui>

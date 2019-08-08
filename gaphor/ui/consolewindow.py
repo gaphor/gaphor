@@ -29,7 +29,6 @@ class ConsoleWindow(UIComponent, ActionProvider):
 
     title = "Gaphor Console"
     size = (400, 400)
-    placement = "floating"
 
     def __init__(self, component_registry, main_window):
         self.component_registry = component_registry

@@ -22,8 +22,6 @@ class ElementEditor(UIComponent, ActionProvider):
 
     title = _("Element Editor")
     size = (275, -1)
-    resizable = True
-    placement = "floating"
     menu_xml = """
       <ui>
         <menubar name="mainwindow">

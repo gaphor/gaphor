@@ -30,7 +30,6 @@ class Toolbox(UIComponent, ActionProvider):
     ]
 
     title = _("Toolbox")
-    placement = ("left", "diagrams")
 
     menu_xml = """
       <ui>
