@@ -2,6 +2,7 @@
 Flow item connection adapters tests.
 """
 
+from typing import Type
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.actions.action import ActionItem
@@ -297,9 +298,9 @@ class FlowItemDesisionAndForkNodes:
       object flows or all control flows.
     """
 
-    item_cls = None
-    fork_node_cls = None
-    join_node_cls = None
+    item_cls: Type[UML.Presentation]
+    fork_node_cls: Type[UML.ControlNode]
+    join_node_cls: Type[UML.ControlNode]
 
     def test_glue(self):
         """Test decision/fork nodes glue
