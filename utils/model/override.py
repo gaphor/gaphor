@@ -24,30 +24,30 @@ class Overrides:
         """
         fp = open(filename, "r")
         # read all the components of the file ...
-        # bufs contains a list of (lines, startline) pairs.
+        # bufs contains a list of (lines, line_number) pairs.
         bufs = []
-        startline = 1
+        line_number = 1
         lines = []
         line = fp.readline()
         linenum = 1
         while line:
             if line == "%%\n" or line == "%%":
                 if lines:
-                    bufs.append((list(lines), startline))
-                startline = linenum + 1
+                    bufs.append((list(lines), line_number))
+                line_number = linenum + 1
                 lines = []
             else:
                 lines.append(line)
             line = fp.readline()
             linenum = linenum + 1
         if lines:
-            bufs.append((list(lines), startline))
+            bufs.append((list(lines), line_number))
 
         if not bufs:
             return
 
         # Parse the parts of the file
-        for lines, startline in bufs:
+        for lines, line_number in bufs:
             line = lines[0]
             rest = lines[1:]
             words = line.split()
@@ -58,11 +58,11 @@ class Overrides:
                 deps = ()
                 if len(words) > 3 and words[2] == "derives":
                     deps = tuple(words[3:])
-                self.overrides[func] = (deps, "".join(rest), f"{startline:d}: {line}")
+                self.overrides[func] = (deps, "".join(rest), f"{line_number:d}: {line}")
             elif words[0] == "comment":
                 pass  # ignore comments
             else:
-                print("Unknown word: '%s', line %d"(words[0], startline))
+                print(f"Unknown word: '{words[0]}', line {line_number:d}")
                 raise SystemExit
 
     def has_override(self, key):
@@ -77,7 +77,7 @@ class Overrides:
         return f"# {line}{data}"
 
     def get_type(self, key):
-        return "property"
+        return "Any"
 
     def derives(self, key):
         return self.overrides.get(key, ((), None))[0]

@@ -132,10 +132,13 @@ class LinePresentation(Presentation, gaphas.Line):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
+    def _set_style(self, style):
+        self._style.update(style)
+
     style = property(
         lambda self: self._style.__getitem__,
-        lambda self, style: self._style.update(style),
-        """A line, contrary to an element, has some styling of it's own.""",
+        _set_style,
+        doc="""A line, contrary to an element, has some styling of it's own.""",
     )
 
     def post_update(self, context):
