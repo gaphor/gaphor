@@ -550,6 +550,8 @@ class derived(umlproperty[T, G]):
     -Delete- and Set events, this gives just an assumption that something
     may have changed. If something actually changed depends on the filter
     applied to the derived property.
+
+    NB. filter returns a *list* of filtered items, even when upper bound is 1.
     """
 
     def __init__(self, name, type, lower, upper, filter, *subsets):

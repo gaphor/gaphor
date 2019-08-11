@@ -10,7 +10,7 @@ import re
 
 
 OVERRIDE_RE = re.compile(
-    r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],]+))?$"
+    r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],\"]+))?$"
 )
 
 
@@ -62,6 +62,8 @@ class Overrides:
             # TODO: Create a mech to define dependencies
             if words[0] == "override":
                 m = OVERRIDE_RE.match(line.strip())
+                if not m:
+                    raise Exception(f"Could not parse override line '{line.strip()}'")
                 func = m.group("name")
                 derived = m.group("derived")
                 deps = tuple(map(str.strip, derived.split(","))) if derived else ()

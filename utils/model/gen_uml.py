@@ -151,9 +151,14 @@ class Writer:
         overridden value. value is
         free format text.
         """
-        override = self.overrides.get_override(f"{class_name}.{name}")
+        full_name = f"{class_name}.{name}"
+        if self.overrides.has_override(full_name):
+            type = self.overrides.get_type(full_name)
+            impl = self.overrides.get_override(full_name)
+        else:
+            impl = f"{class_name}.{name} = {value}"
+
         decl = f"    {name}: {type}"
-        impl = override or f"{class_name}.{name} = {value}"
         if decl in self.classdefs[class_name]:
             msg(f"feature '{class_name}.{name}' is already defined; skipping")
             assert (
@@ -201,19 +206,10 @@ class Writer:
 
         # kind, derived, a.name, type, default, lower, upper = parse_attribute(a)
 
-        full_name = f"{a.class_name}.{a.name}"
-        if self.overrides.has_override(full_name):
-            self.add_property(
-                a.class_name,
-                a.name,
-                self.overrides.get_override(full_name),
-                self.overrides.get_type(full_name),
-            )
-        elif ast.literal_eval(a.isDerived or "0"):
-            msg(
-                "ignoring derived attribute %s.%s: no definition"
-                % (a.class_name, a.name)
-            )
+        if ast.literal_eval(a.isDerived or "0") and not self.overrides.has_override(
+            f"{a.class_name}.{a.name}"
+        ):
+            msg(f"ignoring derived attribute {a.class_name}.{a.name}): no definition")
         elif type.endswith("Kind") or type.endswith("Sort"):
             e = list(filter(lambda e: e["name"] == type, list(enumerations.values())))[
                 0
@@ -231,7 +227,9 @@ class Writer:
                 )
             else:
                 attribute = f"attribute('{a.name}', {type})"
-            self.add_property(a.class_name, a.name, attribute, type=f"umlproperty[{type}, {type}]")
+            self.add_property(
+                a.class_name, a.name, attribute, type=f"umlproperty[{type}, {type}]"
+            )
 
     def add_operation(self, o):
         full_name = f"{o.class_name}.{o.name}"
@@ -379,8 +377,6 @@ def parse_association_tags(appliedStereotypes):
 
     for stereotype in appliedStereotypes or []:
         for slot in stereotype.slot or []:
-
-            msg(f"scanning {slot.definingFeature.name} = {slot.value}")
 
             if slot.definingFeature.name == "subsets":
                 value = slot.value
@@ -621,7 +617,9 @@ def generate(filename, outfile=None, overridesfile=None):
                     e2.written = True
             elif e1.redefines:
                 redefines.append(e1)
-            elif e1.derived or overrides.derives(f"{e1.class_name}.{e1.name}"):
+            elif e1.derived or overrides.derives(
+                f"{e1.get('class_name')}.{e1.get('name')}"
+            ):
                 assert not derivedunions.get(e1.name), (
                     "%s.%s is already in derived union set in class %s"
                     % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)

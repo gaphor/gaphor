@@ -66,7 +66,7 @@ class Namespace(NamedElement):
     packageImport: umlproperty["PackageImport", Sequence["PackageImport"]]
     ownedMember: umlproperty["NamedElement", Sequence["NamedElement"]]
     member: umlproperty["NamedElement", Sequence["NamedElement"]]
-    importedMember: umlproperty["PackageableElement", Sequence["PackageableElement"]]
+    importedMember: umlproperty[PackageableElement, Sequence[PackageableElement]]
 
 
 class Type(PackageableElement):
@@ -87,8 +87,8 @@ class Classifier(Namespace, Type, RedefinableElement):
     substitution: umlproperty["Substitution", Sequence["Substitution"]]
     attribute: umlproperty["Property", Sequence["Property"]]
     feature: umlproperty["Feature", Sequence["Feature"]]
-    general: umlproperty["Classifier", Sequence["Classifier"]]
-    inheritedMember: umlproperty["NamedElement", Sequence["NamedElement"]]
+    general: property
+    inheritedMember: umlproperty[NamedElement, Sequence[NamedElement]]
 
 
 class Association(Classifier, Relationship):
@@ -96,13 +96,13 @@ class Association(Classifier, Relationship):
     memberEnd: umlproperty["Property", Sequence["Property"]]
     ownedEnd: umlproperty["Property", Sequence["Property"]]
     navigableOwnedEnd: umlproperty["Property", Sequence["Property"]]
-    endType: umlproperty["Type", Sequence["Type"]]
+    endType: Any
 
 
 class Extension(Association):
     isRequired: umlproperty[int, int]
     ownedEnd: umlproperty["ExtensionEnd", Sequence["ExtensionEnd"]]
-    metaclass: umlproperty["Class", Sequence["Class"]]
+    metaclass: Any
 
 
 class Actor(Classifier):
@@ -205,7 +205,7 @@ class StructuredClassifier(Classifier):
     ownedConnector: umlproperty["Connector", Sequence["Connector"]]
     ownedAttribute: umlproperty["Property", Sequence["Property"]]
     role: umlproperty["ConnectableElement", Sequence["ConnectableElement"]]
-    part: umlproperty["Property", Sequence["Property"]]
+    part: property
 
 
 class EncapsulatedClassifer(StructuredClassifier):
@@ -217,8 +217,8 @@ class Class(BehavioredClassifier, EncapsulatedClassifer):
     nestedClassifier: umlproperty["Classifier", Sequence["Classifier"]]
     ownedAttribute: umlproperty["Property", Sequence["Property"]]
     ownedReception: umlproperty["Reception", Sequence["Reception"]]
-    extension: umlproperty["Extension", Sequence["Extension"]]
-    superClass: umlproperty["Class", Sequence["Class"]]
+    extension: property
+    superClass: property
 
 
 class DeploymentTarget(NamedElement):
@@ -266,8 +266,8 @@ class Manifestation(Abstraction):
 class Component(Class):
     isIndirectlyInstantiated: umlproperty[int, int]
     realization: umlproperty["Realization", Sequence["Realization"]]
-    required: umlproperty["Interface", Sequence["Interface"]]
-    provided: umlproperty["Interface", Sequence["Interface"]]
+    required: property
+    provided: property
     ownedMember: umlproperty["PackageableElement", Sequence["PackageableElement"]]
 
 
@@ -318,7 +318,7 @@ class Property(StructuralFeature, ConnectableElement):
     isDerivedUnion: umlproperty[int, int]
     isDerived: umlproperty[int, int]
     isReadOnly: umlproperty[int, int]
-    navigability: Any
+    navigability: property
     datatype: umlproperty["DataType", Sequence["DataType"]]
     subsettedProperty: umlproperty["Property", Sequence["Property"]]
     classifier: umlproperty["Classifier", Sequence["Classifier"]]
@@ -330,8 +330,8 @@ class Property(StructuralFeature, ConnectableElement):
     owningAssociation: umlproperty["Association", Sequence["Association"]]
     useCase: umlproperty["UseCase", Sequence["UseCase"]]
     actor: umlproperty["Actor", Sequence["Actor"]]
-    isComposite: Any
-    opposite: umlproperty["Property", Sequence["Property"]]
+    isComposite: umlproperty[Namespace, Namespace]
+    opposite: property
 
 
 class ExtensionEnd(Property):
@@ -460,7 +460,7 @@ class Operation(BehavioralFeature):
     postcondition: umlproperty["Constraint", Sequence["Constraint"]]
     interface_: umlproperty["Interface", Sequence["Interface"]]
     raisedException: umlproperty["Type", Sequence["Type"]]
-    type: umlproperty["Type", Sequence["Type"]]
+    type: umlproperty[DataType, DataType]
     formalParameter: umlproperty["Parameter", Sequence["Parameter"]]
 
 
@@ -516,7 +516,7 @@ class Constraint(PackageableElement):
     constrainedElement: umlproperty["Element", Sequence["Element"]]
     specification: umlproperty[str, str]
     owningState: umlproperty["State", Sequence["State"]]
-    context: umlproperty["Namespace", Sequence["Namespace"]]
+    context: umlproperty[Namespace, Namespace]
 
 
 class InteractionFragment(NamedElement):
@@ -550,7 +550,7 @@ class Lifeline(NamedElement):
 
 
 class Message(NamedElement):
-    messageKind: Any
+    messageKind: property
     messageSort: umlproperty[str, str]
     argument: umlproperty[str, str]
     signature: umlproperty["NamedElement", Sequence["NamedElement"]]
@@ -826,7 +826,7 @@ Property.aggregation = enumeration(
 Property.isDerivedUnion = attribute("isDerivedUnion", int, default=False)
 Property.isDerived = attribute("isDerived", int, default=False)
 Property.isReadOnly = attribute("isReadOnly", int, default=False)
-# 143: override Property.navigability
+# 141: override Property.navigability: property
 
 
 def property_navigability(self):
@@ -863,7 +863,7 @@ Comment.body = attribute("body", str)
 PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
-# 248: override Message.messageKind
+# 246: override Message.messageKind: property
 
 
 def message_messageKind(self):
@@ -1379,10 +1379,15 @@ MultiplicityElement.upper = derived(
     "upper", object, 0, 1, lambda obj: [obj.upperValue], MultiplicityElement.upperValue
 )
 
-# 135: override Property.isComposite(Property.aggregation)
-# Property.isComposite = property(lambda self: self.aggregation == 'composite')
-Property.isComposite = derivedunion("isComposite", bool, 0, 1, Property.aggregation)
-Property.isComposite.filter = lambda obj: [obj.aggregation == "composite"]
+# 135: override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
+Property.isComposite = derived(
+    "isComposite",
+    bool,
+    0,
+    1,
+    lambda obj: [obj.aggregation == "composite"],
+    Property.aggregation,
+)
 
 RedefinableElement.redefinedElement = derivedunion(
     "redefinedElement",
@@ -1435,7 +1440,7 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 114: override Property.opposite
+# 114: override Property.opposite: property
 
 
 def property_opposite(self):
@@ -1550,7 +1555,7 @@ Namespace.ownedMember = derivedunion(
     Class.ownedReception,
     Interface.ownedReception,
 )
-# 99: override Classifier.general
+# 99: override Classifier.general: property
 def classifier_general(self):
     return [g.general for g in self.generalization]
 
@@ -1579,10 +1584,10 @@ Association.endType = derived(
 )
 
 
-# 140: override Constraint.context
+# 138: override Constraint.context: umlproperty[Namespace, Namespace]
 Constraint.context = derivedunion("context", Namespace, 0, 1)
 
-# 168: override Operation.type
+# 166: override Operation.type: umlproperty[DataType, DataType]
 Operation.type = derivedunion("type", DataType, 0, 1)
 
 # 79: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd)
@@ -1605,7 +1610,7 @@ ownedEnd.""",
 )
 del extension_metaclass
 
-# 64: override Class.extension(Extension.metaclass)
+# 64: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 def class_extension(self):
@@ -1666,7 +1671,7 @@ ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, 0, 1)
 ActivityGroup.subgroup = derivedunion(
     "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
 )
-# 96: override Classifier.inheritedMember
+# 96: override Classifier.inheritedMember: umlproperty[NamedElement, Sequence[NamedElement]]
 Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
 
 StructuredClassifier.role = derivedunion(
@@ -1688,7 +1693,7 @@ Namespace.member = derivedunion(
     Classifier.inheritedMember,
     StructuredClassifier.role,
 )
-# 233: override Component.required
+# 231: override Component.required: property
 def component_required(self):
     usages = _pr_interface_deps(self, Usage)
 
@@ -1707,11 +1712,11 @@ Component.required = property(
 )
 del component_required
 
-# 111: override Namespace.importedMember
+# 111: override Namespace.importedMember: umlproperty[PackageableElement, Sequence[PackageableElement]]
 Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
 
 Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
-# 197: override Component.provided
+# 195: override Component.provided: property
 import itertools
 
 
@@ -1813,7 +1818,7 @@ Element.ownedElement = derivedunion(
     DeploymentTarget.deployment,
 )
 ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
-# 267: override StructuredClassifier.part
+# 265: override StructuredClassifier.part: property
 def structuredclassifier_part(self):
     return tuple(a for a in self.ownedAttribute if a.isComposite)
 
@@ -1826,7 +1831,7 @@ StructuredClassifier.part = property(
 )
 del structuredclassifier_part
 
-# 108: override Class.superClass
+# 108: override Class.superClass: property
 Class.superClass = Classifier.general
 
 ActivityNode.redefinedElement = redefine(
@@ -1868,13 +1873,13 @@ State.redefinedState = redefine(
 Transition.redefinedTransition = redefine(
     Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
 )
-# 171: override Lifeline.parse
+# 169: override Lifeline.parse
 from gaphor.UML.umllex import parse_lifeline
 
 Lifeline.parse = parse_lifeline
 del parse_lifeline
 
-# 176: override Lifeline.render
+# 174: override Lifeline.render
 from gaphor.UML.umllex import render_lifeline
 
 Lifeline.render = render_lifeline
