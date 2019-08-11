@@ -20,7 +20,7 @@ class ExtensionConnect(RelationshipConnect):
             # Element at the tail should be a stereotype
             allow = isinstance(subject, UML.Stereotype)
 
-        return allow and super(ExtensionConnect, self).allow(handle, port)
+        return allow and super().allow(handle, port)
 
     def connect_subject(self, handle):
         element = self.element

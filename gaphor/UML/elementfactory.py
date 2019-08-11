@@ -96,8 +96,7 @@ class ElementFactory(Service):
         Iterate elements that comply with expression.
         """
         if expression is None:
-            for e in self._elements.values():
-                yield e
+            yield from self._elements.values()
         else:
             for e in self._elements.values():
                 if expression(e):

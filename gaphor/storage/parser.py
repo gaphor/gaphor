@@ -284,8 +284,7 @@ def parse_generator(filename, loader):
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    for percentage in parse_file(filename, parser):
-        yield percentage
+    yield from parse_file(filename, parser)
 
 
 class ProgressGenerator:
@@ -338,10 +337,9 @@ def parse_file(filename, parser):
         file_obj = filename
     else:
         is_fd = False
-        file_obj = io.open(filename, "r")
+        file_obj = open(filename, "r")
 
-    for progress in ProgressGenerator(file_obj, parser):
-        yield progress
+    yield from ProgressGenerator(file_obj, parser)
 
     parser.close()
 

@@ -105,7 +105,7 @@ class EditableTreeModel(Gtk.ListStore):
 
         if cols is None:
             cols = (str, object)
-        super(EditableTreeModel, self).__init__(*cols)
+        super().__init__(*cols)
         self._item = item
 
         for data in self._get_rows():
@@ -165,7 +165,7 @@ class EditableTreeModel(Gtk.ListStore):
         o2 = self[b][-1]
         if o1 and o2 and self._swap_objects(o1, o2):
             # self._item.request_update(matrix=False)
-            super(EditableTreeModel, self).swap(a, b)
+            super().swap(a, b)
 
     def _add_empty(self):
         """
@@ -203,7 +203,7 @@ class EditableTreeModel(Gtk.ListStore):
         if obj:
             obj.unlink()
             # self._item.request_update(matrix=False)
-            return super(EditableTreeModel, self).remove(iter)
+            return super().remove(iter)
         else:
             return iter
 
@@ -270,7 +270,7 @@ class UMLComboModel(Gtk.ListStore):
     """
 
     def __init__(self, data):
-        super(UMLComboModel, self).__init__(str)
+        super().__init__(str)
 
         self._indices = {}
         self._data = data
@@ -444,7 +444,7 @@ class LineStylePage(PropertyPageBase):
     name = "Style"
 
     def __init__(self, item):
-        super(LineStylePage, self).__init__()
+        super().__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 

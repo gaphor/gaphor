@@ -88,7 +88,7 @@ class LifetimeItem:
     MIN_LENGTH_VISIBLE = 3 * MIN_LENGTH
 
     def __init__(self):
-        super(LifetimeItem, self).__init__()
+        super().__init__()
 
         self.top = Handle(strength=STRONG - 1)
         self.bottom = Handle(strength=STRONG)

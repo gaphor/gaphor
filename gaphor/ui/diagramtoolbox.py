@@ -167,8 +167,7 @@ def itemiter(toolbox_actions):
     Iterate toolbox items, irregardless section headers
     """
     for name, section in toolbox_actions:
-        for e in section:
-            yield e
+        yield from section
 
 
 class DiagramToolbox:

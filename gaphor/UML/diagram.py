@@ -43,7 +43,7 @@ class DiagramCanvas(gaphas.Canvas):
 
         if self._block_updates:
             return
-        super(DiagramCanvas, self).update_now()
+        super().update_now()
 
     def save(self, save_func):
         """Apply the supplied save function to all root diagram items."""
@@ -70,18 +70,18 @@ class Diagram(Namespace, PackageableElement):
         """Initialize the diagram with an optional id and element model.
         The diagram also has a canvas."""
 
-        super(Diagram, self).__init__(id, model)
+        super().__init__(id, model)
         self.canvas = DiagramCanvas(self)
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
 
-        super(Diagram, self).save(save_func)
+        super().save(save_func)
         save_func("canvas", self.canvas)
 
     def postload(self):
         """Handle post-load functionality for the diagram canvas."""
-        super(Diagram, self).postload()
+        super().postload()
         self.canvas.postload()
 
     def create(self, type, parent=None, subject=None):
@@ -109,4 +109,4 @@ class Diagram(Namespace, PackageableElement):
             except:
                 pass
 
-        super(Diagram, self).unlink()
+        super().unlink()

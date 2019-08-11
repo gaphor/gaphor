@@ -626,7 +626,7 @@ def main():
             fp = open(options.excludefilename)
             options.toexclude = fp.readlines()
             fp.close()
-        except IOError:
+        except OSError:
             print(
                 _("Can't read --exclude-file: %s") % options.excludefilename,
                 file=sys.stderr,
@@ -691,6 +691,6 @@ if __name__ == "__main__":
     # some more test strings
     _("a unicode string")
     _(
-        '*** Seen unexpected token "%(token)s"' % {"token": "test"}
+        '*** Seen unexpected token "{token}"'.format(token="test")
     )  # this one creates a warning
     _("more" "than" "one" "string")

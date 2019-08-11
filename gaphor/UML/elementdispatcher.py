@@ -124,9 +124,8 @@ class ElementDispatcher:
             tpath.append(prop)
             if cname:
                 c = getattr(uml2, cname)
-                assert issubclass(c, prop.type), "%s should be a subclass of %s" % (
-                    c,
-                    prop.type,
+                assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
+                    c, prop.type
                 )
             else:
                 c = prop.type
@@ -166,7 +165,7 @@ class ElementDispatcher:
 
         # Apply remaining path
         if remainder:
-            if property.upper is "*" or property.upper > 1:
+            if property.upper == "*" or property.upper > 1:
                 for e in property._get(element):
                     self._add_handlers(e, remainder, handler)
             else:
@@ -183,7 +182,7 @@ class ElementDispatcher:
         if not handlers:
             return
 
-        if property.upper is "*" or property.upper > 1:
+        if property.upper == "*" or property.upper > 1:
             for remainder in handlers.get(handler, ()):
                 for e in property._get(element):
                     # log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))

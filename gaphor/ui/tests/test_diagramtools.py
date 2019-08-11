@@ -22,7 +22,7 @@ class DiagramItemConnectorTestCase(TestCase):
     ]
 
     def setUp(self):
-        super(DiagramItemConnectorTestCase, self).setUp()
+        super().setUp()
         self.component_registry = self.get_service("component_registry")
         self.event_manager = self.get_service("event_manager")
         mw = self.get_service("main_window")

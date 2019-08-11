@@ -124,7 +124,7 @@ class build_pot(Command):
                 fp = open(self.exclude_file)
                 options.toexclude = fp.readlines()
                 fp.close()
-            except IOError:
+            except OSError:
                 raise SystemExit(f"Can't read --exclude-file: {self.exclude_file}")
         # skip: self.no_docstrings
         if self.all_linguas:

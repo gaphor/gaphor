@@ -14,9 +14,7 @@ class Registry:
     def __init__(self, *axes):
         self._tree = _TreeNode()
         self._axes = [axis for name, axis in axes]
-        self._axes_dict = dict(
-            [(name, (i, axis)) for i, (name, axis) in enumerate(axes)]
-        )
+        self._axes_dict = {name: (i, axis) for i, (name, axis) in enumerate(axes)}
 
     def register(self, target, *arg_keys, **kw_keys):
         self._register(target, self._align_with_axes(arg_keys, kw_keys))
@@ -63,14 +61,12 @@ class Registry:
             if obj is None:
                 next_node = tree_node.get(None, None)
                 if next_node is not None:
-                    for target in self._query(next_node, objs[1:], axes[1:]):
-                        yield target
+                    yield from self._query(next_node, objs[1:], axes[1:])
             else:
                 # Get matches on this axis and iterate from most to least specific
                 axis = axes[0]
                 for match_key in axis.matches(obj, tree_node.keys()):
-                    for target in self._query(tree_node[match_key], objs[1:], axes[1:]):
-                        yield target
+                    yield from self._query(tree_node[match_key], objs[1:], axes[1:])
 
     def _align_with_axes(self, args, kw):
         """ Create a list matching up all args and kwargs with their

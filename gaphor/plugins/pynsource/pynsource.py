@@ -681,10 +681,8 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
     def _DumpAttribute(self, attrobj):
         compositescreated = self._GetCompositeCreatedClassesFor(attrobj.attrname)
         if compositescreated and self.embedcompositeswithattributelist:
-            self.result += "%s %s <@>----> %s" % (
-                attrobj.attrname,
-                self.staticmessage,
-                str(compositescreated),
+            self.result += "{} {} <@>----> {}".format(
+                attrobj.attrname, self.staticmessage, str(compositescreated)
             )
         else:
             self.result += f"{attrobj.attrname} {self.staticmessage}"
@@ -702,9 +700,8 @@ class PySourceAsText(HandleModuleLevelDefsAndAttrs):
         if self.classentry.ismodulenotrealclass:
             self.result += f"{self.aclass}  (file)\n"
         else:
-            self.result += "%s  --------|> %s\n" % (
-                self.aclass,
-                self.classentry.classesinheritsfrom,
+            self.result += "{}  --------|> {}\n".format(
+                self.aclass, self.classentry.classesinheritsfrom
             )
         self._Line()
 
@@ -822,18 +819,14 @@ class PySourceAsJava(PySourceAsText):
         attrname = self._NiceNameToPreventCompilerErrors(attrobj.attrname)
 
         if compositecreated and self.embedcompositeswithattributelist:
-            self.result += "    public %s %s %s = new %s();\n" % (
-                self.staticmessage,
-                compositecreated,
-                attrname,
-                compositecreated,
+            self.result += "    public {} {} {} = new {}();\n".format(
+                self.staticmessage, compositecreated, attrname, compositecreated
             )
         else:
             ##            self.result +=  "    public %s void %s;\n" % (self.staticmessage, attrobj.attrname)
             ##            self.result +=  "    public %s int %s;\n" % (self.staticmessage, attrname)
-            self.result += "    public %s variant %s;\n" % (
-                self.staticmessage,
-                attrname,
+            self.result += "    public {} variant {};\n".format(
+                self.staticmessage, attrname
             )
 
         """
@@ -1077,9 +1070,8 @@ class PySourceAsDelphi(PySourceAsText):
                 compositescreated and self.embedcompositeswithattributelist
             ):  # latter variable always seems to be true! Never reset!?
                 compositecreated = compositescreated[0]
-                self.result += "    %s := %s.Create();\n" % (
-                    attrobj.attrname,
-                    compositecreated,
+                self.result += "    {} := {}.Create();\n".format(
+                    attrobj.attrname, compositecreated
                 )
 
     def GetUses(self):
@@ -1224,9 +1216,10 @@ if __name__ == "__main__":
         print(listofoptionvaluepairs, params)
 
         def EnsurePathExists(outdir, outlanguagemsg):
-            assert outdir, "Need to specify output folder for %s output - got %s." % (
-                outlanguagemsg,
-                outdir,
+            assert (
+                outdir
+            ), "Need to specify output folder for {} output - got {}.".format(
+                outlanguagemsg, outdir
             )
             if not os.path.exists(outdir):
                 raise RuntimeError(

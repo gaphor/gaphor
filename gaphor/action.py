@@ -54,9 +54,7 @@ class toggle_action(action):
     def __init__(
         self, name, label=None, tooltip=None, stock_id=None, accel=None, active=False
     ):
-        super(toggle_action, self).__init__(
-            name, label, tooltip, stock_id, accel=accel, active=active
-        )
+        super().__init__(name, label, tooltip, stock_id, accel=accel, active=active)
 
 
 class radio_action(action):
@@ -70,7 +68,7 @@ class radio_action(action):
     def __init__(
         self, names, labels=None, tooltips=None, stock_ids=None, accels=None, active=0
     ):
-        super(radio_action, self).__init__(
+        super().__init__(
             names[0],
             names=names,
             labels=labels,

@@ -616,15 +616,11 @@ def test_derivedunion_events():
         del a.a1
         assert len(events) == 2, len(events)
         assert events[0].property is A.derived_a
-        assert events[0].new_value is a.a2, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[3].new_value,
+        assert events[0].new_value is a.a2, "{} {} {}".format(
+            a.a1, a.a2, events[3].new_value
         )
-        assert events[0].old_value is old_a1, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[3].old_value,
+        assert events[0].old_value is old_a1, "{} {} {}".format(
+            a.a1, a.a2, events[3].old_value
         )
         assert events[1].property is A.a1
 
@@ -633,15 +629,11 @@ def test_derivedunion_events():
         del a.a2
         assert len(events) == 2, len(events)
         assert events[0].property is A.derived_a
-        assert events[0].new_value is None, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[5].new_value,
+        assert events[0].new_value is None, "{} {} {}".format(
+            a.a1, a.a2, events[5].new_value
         )
-        assert events[0].old_value is old_a2, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[5].old_value,
+        assert events[0].old_value is old_a2, "{} {} {}".format(
+            a.a1, a.a2, events[5].old_value
         )
         assert events[1].property is A.a2
 

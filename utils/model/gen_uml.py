@@ -95,7 +95,7 @@ class Writer:
                     s += ", "
                 s = s + g["name"]
             if not self.overrides.write_override(self, clazz["name"]):
-                self.write("class %s" % (clazz["name"],))
+                self.write("class {}".format(clazz["name"]))
                 if s:
                     self.write(f"({s})")
                 self.write(": pass\n")
@@ -167,10 +167,8 @@ class Writer:
             )
         else:
             if params:
-                attribute = "attribute('%s', %s, %s)" % (
-                    a.name,
-                    type,
-                    ", ".join(map("=".join, list(params.items()))),
+                attribute = "attribute('{}', {}, {})".format(
+                    a.name, type, ", ".join(map("=".join, list(params.items())))
                 )
             else:
                 attribute = f"attribute('{a.name}', {type})"

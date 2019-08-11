@@ -9,7 +9,7 @@ class UndoRedoBugTestCase(TestCase):
     services = TestCase.services + ["undo_manager"]
 
     def setUp(self):
-        super(UndoRedoBugTestCase, self).setUp()
+        super().setUp()
         self.undo_manager = self.get_service("undo_manager")
 
     @transactional

@@ -8,7 +8,7 @@ from gaphas import View
 
 class SimpleItemTestCase(TestCase):
     def setUp(self):
-        super(SimpleItemTestCase, self).setUp()
+        super().setUp()
         self.view = View(self.diagram.canvas)
 
     def test_line(self):

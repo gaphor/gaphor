@@ -18,7 +18,7 @@ class CommunicationMessageModel(EditableTreeModel):
 
     def __init__(self, item, cols=None, inverted=False):
         self.inverted = inverted
-        super(CommunicationMessageModel, self).__init__(item, cols)
+        super().__init__(item, cols)
 
     def _get_rows(self):
         if self.inverted:
@@ -33,7 +33,7 @@ class CommunicationMessageModel(EditableTreeModel):
 
         message = self._get_object(iter)
         item = self._item
-        super(CommunicationMessageModel, self).remove(iter)
+        super().remove(iter)
         item.remove_message(message, self.inverted)
 
     def _create_object(self):
@@ -73,7 +73,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
     )
 
     def construct(self):
-        page = super(MessagePropertyPage, self).construct()
+        page = super().construct()
 
         item = self.item
         subject = item.subject

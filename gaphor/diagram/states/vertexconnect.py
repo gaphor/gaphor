@@ -54,7 +54,7 @@ class TransitionConnect(VertexConnect):
             or handle is line.tail
             and is_final
         ):
-            return super(TransitionConnect, self).allow(handle, port)
+            return super().allow(handle, port)
         else:
             return None
 
@@ -84,7 +84,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
             if isinstance(c.item, TransitionItem) and c.item is not line
         ]
         if handle is line.head and not any(connected_items):
-            return super(InitialPseudostateTransitionConnect, self).allow(handle, port)
+            return super().allow(handle, port)
         else:
             return None
 
@@ -100,4 +100,4 @@ class HistoryPseudostateTransitionConnect(VertexConnect):
     def allow(self, handle, port):
         """
         """
-        return super(HistoryPseudostateTransitionConnect, self).allow(handle, port)
+        return super().allow(handle, port)

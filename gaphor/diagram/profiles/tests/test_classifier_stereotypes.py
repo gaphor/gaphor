@@ -17,7 +17,7 @@ class StereotypesAttributesTestCase(TestCase):
         Create two stereotypes and extend component UML metaclass using
         them.
         """
-        super(StereotypesAttributesTestCase, self).setUp()
+        super().setUp()
         factory = self.element_factory
         cls = factory.create(UML.Class)
         cls.name = "Component"

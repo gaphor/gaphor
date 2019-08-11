@@ -254,12 +254,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         return self.element_factory.create(A)
 
     def setUp(self):
-        super(ElementDispatcherAsServiceTestCase, self).setUp()
+        super().setUp()
         self.events = []
         self.dispatcher = self.element_factory.element_dispatcher
 
     def tearDown(self):
-        super(ElementDispatcherAsServiceTestCase, self).tearDown()
+        super().tearDown()
 
     def _handler(self, event):
         self.events.append(event)

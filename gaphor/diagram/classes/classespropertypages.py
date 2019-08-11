@@ -198,7 +198,7 @@ class AttributesPage(PropertyPageBase):
     name = "Attributes"
 
     def __init__(self, item):
-        super(AttributesPage, self).__init__()
+        super().__init__()
         self.item = item
         self.watcher = item.subject.watcher()
 
@@ -271,7 +271,7 @@ class OperationsPage(PropertyPageBase):
     name = "Operations"
 
     def __init__(self, item):
-        super(OperationsPage, self).__init__()
+        super().__init__()
         self.item = item
         self.watcher = item.subject.watcher()
 
@@ -352,7 +352,7 @@ class DependencyPropertyPage(PropertyPageBase):
     )
 
     def __init__(self, item):
-        super(DependencyPropertyPage, self).__init__()
+        super().__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = self.item.watcher()
@@ -434,7 +434,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         return frame
 
     def construct(self):
-        page = super(AssociationPropertyPage, self).construct()
+        page = super().construct()
 
         if not self.subject:
             return page

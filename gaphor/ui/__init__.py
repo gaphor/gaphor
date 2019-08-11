@@ -37,4 +37,4 @@ screen = Gdk.Display.get_default().get_default_screen()
 Gtk.StyleContext.add_provider_for_screen(
     screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 )
-css_provider.load_from_data("#diagram-tab { background: white }".encode("utf-8"))
+css_provider.load_from_data(b"#diagram-tab { background: white }")

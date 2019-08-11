@@ -11,7 +11,7 @@ from gaphas.util import path_ellipse
 
 class Line(_Line):
     def __init__(self, id=None, model=None):
-        super(Line, self).__init__()
+        super().__init__()
         self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
         self.fuzziness = 2
@@ -53,7 +53,7 @@ class Line(_Line):
         style = self.style
         cr.set_line_width(style("line-width"))
         cr.set_source_rgba(*style("color"))
-        super(Line, self).draw(context)
+        super().draw(context)
 
 
 class Box(Element):
@@ -65,7 +65,7 @@ class Box(Element):
     """
 
     def __init__(self, id=None, model=None):
-        super(Box, self).__init__(10, 10)
+        super().__init__(10, 10)
         self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
 
@@ -104,7 +104,7 @@ class Ellipse(Element):
     """
 
     def __init__(self, id=None, model=None):
-        super(Ellipse, self).__init__()
+        super().__init__()
         self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
 

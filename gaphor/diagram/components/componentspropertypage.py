@@ -12,7 +12,7 @@ class ComponentPropertyPage(NamedItemPropertyPage):
     """
 
     def construct(self):
-        page = super(ComponentPropertyPage, self).construct()
+        page = super().construct()
 
         subject = self.subject
 
