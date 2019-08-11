@@ -32,10 +32,10 @@ class Transition(RedefinableElement, NamedElement):
     redefintionContext: DerivedunionType
     redefinedTransition: RedefineType
 %%
-override MultiplicityElement.lower derives MultiplicityElement.lowerValue
+override MultiplicityElement.lower(MultiplicityElement.lowerValue)
 MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
 %%
-override MultiplicityElement.upper derives MultiplicityElement.upperValue
+override MultiplicityElement.upper(MultiplicityElement.upperValue)
 MultiplicityElement.upper = derived('upper', object, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
 %%
 override NamedElement.qualifiedName
@@ -53,7 +53,7 @@ NamedElement.qualifiedName = property(namedelement_qualifiedname, doc=namedeleme
 
 del namedelement_qualifiedname
 %%
-override Association.endType derives Association.memberEnd Property.type
+override Association.endType(Association.memberEnd, Property.type)
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -61,7 +61,7 @@ override Association.endType derives Association.memberEnd Property.type
 Association.endType = derived('endType', Type, 0, '*', lambda self: [end.type for end in self.memberEnd if end], Association.memberEnd, Property.type)
 
 %%
-override Class.extension derives Extension.metaclass
+override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 def class_extension(self):
@@ -76,7 +76,7 @@ metaclass. The property is derived from the extensions whose memberEnds
 are typed by the Class.""")
 del class_extension
 %%
-override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
+override Extension.metaclass(Extension.ownedEnd, Association.memberEnd)
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
 def extension_metaclass(self):
     ownedEnd = self.ownedEnd
@@ -93,10 +93,10 @@ property is derived from the type of the memberEnd that is not the
 ownedEnd.""")
 del extension_metaclass
 %%
-override Classifier.inheritedMember
+override Classifier.inheritedMember: umlproperty[NamedElement, Sequence[NamedElement]]
 Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 %%
-override Classifier.general
+override Classifier.general: property
 def classifier_general(self):
     return [g.general for g in self.generalization]
 
@@ -105,13 +105,13 @@ Classifier.general = property(classifier_general, doc="""
     """)
 del classifier_general
 %%
-override Class.superClass
+override Class.superClass: property
 Class.superClass = Classifier.general
 %%
-override Namespace.importedMember
+override Namespace.importedMember: umlproperty[PackageableElement, Sequence[PackageableElement]]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 %%
-override Property.opposite
+override Property.opposite: property
 
 def property_opposite(self):
     """
@@ -132,15 +132,13 @@ Property.opposite = property(property_opposite, doc=property_opposite.__doc__)
 del property_opposite
 
 %%
-override Property.isComposite derives Property.aggregation
-#Property.isComposite = property(lambda self: self.aggregation == 'composite')
-Property.isComposite = derivedunion('isComposite', bool, 0, 1, Property.aggregation)
-Property.isComposite.filter = lambda obj: [obj.aggregation == 'composite']
+override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
+Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'], Property.aggregation)
 %%
-override Constraint.context
+override Constraint.context: umlproperty[Namespace, Namespace]
 Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
-override Property.navigability
+override Property.navigability: property
 
 def property_navigability(self):
     """
@@ -165,7 +163,7 @@ Property.navigability = property(property_navigability, doc=property_navigabilit
 
 del property_navigability
 %%
-override Operation.type
+override Operation.type: umlproperty[DataType, DataType]
 Operation.type = derivedunion('type', DataType, 0, 1)
 %%
 override Lifeline.parse
@@ -178,7 +176,7 @@ from gaphor.UML.umllex import render_lifeline
 Lifeline.render = render_lifeline
 del render_lifeline
 %%
-override Extenstion.metaclass
+override Extenstion.metaclass: Class
 
 def extension_metaclass(self):
     """
@@ -194,7 +192,7 @@ def extension_metaclass(self):
 Extenstion.metaclass = property(extension_metaclass, doc=extension_metaclass.__doc__)
 del extension_metaclass
 %%
-override Component.provided
+override Component.provided: property
 import itertools
 
 def _pr_interface_deps(classifier, dep_type):
@@ -230,7 +228,7 @@ Component.provided = property(component_provided, doc="""
     """)
 del component_provided
 %%
-override Component.required
+override Component.required: property
 def component_required(self):
     usages = _pr_interface_deps(self, Usage)
 
@@ -245,7 +243,7 @@ Component.required = property(component_required, doc="""
     """)
 del component_required
 %%
-override Message.messageKind
+override Message.messageKind: property
 
 def message_messageKind(self):
     kind = 'unknown'
@@ -264,7 +262,7 @@ del message_messageKind
 
 
 %%
-override StructuredClassifier.part
+override StructuredClassifier.part: property
 def structuredclassifier_part(self):
     return tuple(a for a in self.ownedAttribute if a.isComposite)
 

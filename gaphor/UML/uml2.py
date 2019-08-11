@@ -1369,17 +1369,17 @@ SendOperationEvent.operation = association("operation", Operation, lower=1, uppe
 SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
 ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-# 35: override MultiplicityElement.lower derives MultiplicityElement.lowerValue
+# 35: override MultiplicityElement.lower(MultiplicityElement.lowerValue)
 MultiplicityElement.lower = derived(
     "lower", object, 0, 1, lambda obj: [obj.lowerValue], MultiplicityElement.lowerValue
 )
 
-# 38: override MultiplicityElement.upper derives MultiplicityElement.upperValue
+# 38: override MultiplicityElement.upper(MultiplicityElement.upperValue)
 MultiplicityElement.upper = derived(
     "upper", object, 0, 1, lambda obj: [obj.upperValue], MultiplicityElement.upperValue
 )
 
-# 135: override Property.isComposite derives Property.aggregation
+# 135: override Property.isComposite(Property.aggregation)
 # Property.isComposite = property(lambda self: self.aggregation == 'composite')
 Property.isComposite = derivedunion("isComposite", bool, 0, 1, Property.aggregation)
 Property.isComposite.filter = lambda obj: [obj.aggregation == "composite"]
@@ -1563,7 +1563,7 @@ Classifier.general = property(
 )
 del classifier_general
 
-# 56: override Association.endType derives Association.memberEnd Property.type
+# 56: override Association.endType(Association.memberEnd, Property.type)
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -1585,7 +1585,7 @@ Constraint.context = derivedunion("context", Namespace, 0, 1)
 # 168: override Operation.type
 Operation.type = derivedunion("type", DataType, 0, 1)
 
-# 79: override Extension.metaclass derives Extension.ownedEnd Association.memberEnd
+# 79: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd)
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
 def extension_metaclass(self):
     ownedEnd = self.ownedEnd
@@ -1605,7 +1605,7 @@ ownedEnd.""",
 )
 del extension_metaclass
 
-# 64: override Class.extension derives Extension.metaclass
+# 64: override Class.extension(Extension.metaclass)
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 def class_extension(self):

@@ -1,6 +1,8 @@
 """Test case that checks the working of the utils/command/gen_uml.py module."""
 
+from typing import Optional
 from utils.model.gen_uml import generate
+from utils.model.override import Overrides
 import importlib_metadata
 
 
@@ -82,3 +84,74 @@ SubClass.value = attribute('value', str)
 SubClass.abstract = derivedunion('abstract', C, 0, '*', SubClass.concrete)
 SubClass.name4 = redefine(SubClass, 'name4', D, name2)
 """
+
+
+class OverridesFile:
+    def __init__(self, lines):
+        self.lines_iter = iter(lines)
+
+    def readline(self):
+        try:
+            return next(self.lines_iter) + "\n"
+        except StopIteration:
+            return None
+
+
+def test_overrides():
+    pf = OverridesFile(["override Transition", "placeholder"])
+    overrides = Overrides()
+    overrides.read_overrides(pf)
+
+    assert overrides.has_override("Transition"), overrides.overrides
+    assert overrides.derives("Transition") == (), overrides.overrides
+    assert overrides.get_type("Transition") == "Any", overrides.overrides
+
+
+def test_overrides_with_derived_items():
+    pf = OverridesFile(["override Transition(Foo, Bar)", "placeholder"])
+    overrides = Overrides()
+    overrides.read_overrides(pf)
+
+    assert overrides.has_override("Transition"), overrides.overrides
+    assert overrides.derives("Transition") == ("Foo", "Bar"), overrides.overrides
+    assert overrides.get_type("Transition") == "Any", overrides.overrides
+
+
+def test_overrides_of_fatures_with_derived_items():
+    pf = OverridesFile(["override Transition.foo(Bar.baz)", "placeholder"])
+    overrides = Overrides()
+    overrides.read_overrides(pf)
+
+    assert overrides.has_override("Transition.foo"), overrides.overrides
+    assert overrides.derives("Transition.foo") == ("Bar.baz",), overrides.overrides
+    assert overrides.get_type("Transition") == "Any", overrides.overrides
+
+
+def test_overrides_with_type():
+    pf = OverridesFile(["override Transition: Foo[str, str]", "placeholder"])
+    overrides = Overrides()
+    overrides.read_overrides(pf)
+
+    assert overrides.has_override("Transition"), overrides.overrides
+    assert overrides.derives("Transition") == (), overrides.overrides
+    assert overrides.get_type("Transition") == "Foo[str, str]", overrides.overrides
+
+
+def test_overrides_with_type_with_quotes():
+    pf = OverridesFile(['override Transition: Foo["Type"]', "placeholder"])
+    overrides = Overrides()
+    overrides.read_overrides(pf)
+
+    assert overrides.has_override("Transition"), overrides.overrides
+    assert overrides.derives("Transition") == (), overrides.overrides
+    assert overrides.get_type("Transition") == 'Foo["Type"]', overrides.overrides
+
+
+def test_overrides_with_derived_items_and_type():
+    pf = OverridesFile(["override Transition(Foo, Bar): Baz[str, str]", "placeholder"])
+    overrides = Overrides()
+    overrides.read_overrides(pf)
+
+    assert overrides.has_override("Transition"), overrides.overrides
+    assert overrides.derives("Transition") == ("Foo", "Bar"), overrides.overrides
+    assert overrides.get_type("Transition") == "Baz[str, str]", overrides.overrides

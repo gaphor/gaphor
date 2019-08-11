@@ -6,14 +6,22 @@ do its job correctly.
 This is a simple rip-off of the override script used in PyGTK.
 """
 
+import re
+
+
+OVERRIDE_RE = re.compile(
+    r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],]+))?$"
+)
+
 
 class Overrides:
     def __init__(self, filename=None):
         self.overrides = {}
         if filename:
-            self.read_overrides(filename)
+            with open(filename) as fp:
+                self.read_overrides(fp)
 
-    def read_overrides(self, filename):
+    def read_overrides(self, fp):
         """Read a file and return a dictionary of overriden properties
         and their implementation.
 
@@ -22,7 +30,6 @@ class Overrides:
         <implementation>
         %%
         """
-        fp = open(filename, "r")
         # read all the components of the file ...
         # bufs contains a list of (lines, line_number) pairs.
         bufs = []
@@ -54,11 +61,17 @@ class Overrides:
 
             # TODO: Create a mech to define dependencies
             if words[0] == "override":
-                func = words[1]
-                deps = ()
-                if len(words) > 3 and words[2] == "derives":
-                    deps = tuple(words[3:])
-                self.overrides[func] = (deps, "".join(rest), f"{line_number:d}: {line}")
+                m = OVERRIDE_RE.match(line.strip())
+                func = m.group("name")
+                derived = m.group("derived")
+                deps = tuple(map(str.strip, derived.split(","))) if derived else ()
+                type_hint = m.group("type_hint") or "Any"
+                self.overrides[func] = (
+                    deps,
+                    type_hint,
+                    "".join(rest),
+                    f"{line_number:d}: {line}",
+                )
             elif words[0] == "comment":
                 pass  # ignore comments
             else:
@@ -70,14 +83,14 @@ class Overrides:
 
     def get_override(self, key):
         """Write override data for 'key' to a file refered to by 'fp'."""
-        deps, data, line = self.overrides.get(key, ((), None, None))
+        _deps, _type_hint, data, line = self.overrides.get(key, ((), None, None, None))
         if not data:
             return None
 
         return f"# {line}{data}"
 
     def get_type(self, key):
-        return "Any"
+        return self.overrides.get(key, (None, "Any"))[1]
 
     def derives(self, key):
-        return self.overrides.get(key, ((), None))[0]
+        return self.overrides.get(key, ((),))[0]
