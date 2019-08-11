@@ -264,7 +264,7 @@ def load_elements_generator(elements, factory, gaphor_version):
                 try:
                     ref = elements[refids]
                 except:
-                    raise ValueError("Invalid ID for reference (%s)" % refids)
+                    raise ValueError(f"Invalid ID for reference ({refids})")
                 else:
                     try:
                         elem.element.load(name, ref.element)
@@ -359,7 +359,7 @@ def load_generator(filename, factory):
             gc.collect()
             yield 100
         except Exception as e:
-            log.warning("file %s could not be loaded" % filename, e)
+            log.warning(f"file {filename} could not be loaded", e)
             raise
     factory.notify_model()
 

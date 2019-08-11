@@ -136,7 +136,7 @@ class StorageTestCase(TestCase):
         # Check load/save of other canvas items.
         assert len(d.canvas.get_all_items()) == 3
         for item in d.canvas.get_all_items():
-            assert item.subject, "No subject for %s" % item
+            assert item.subject, f"No subject for {item}"
         d1 = d.canvas.select(lambda e: isinstance(e, ClassItem))[0]
         assert d1
 

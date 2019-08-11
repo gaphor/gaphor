@@ -58,9 +58,9 @@ class _Application:
         for ep in importlib_metadata.entry_points()["gaphor.services"]:
             cls = ep.load()
             if isinstance(cls, Service):
-                raise NameError("Entry point %s doesn" "t provide Service" % ep.name)
+                raise NameError(f"Entry point {ep.name} doesnt provide Service")
             if not services or ep.name in services:
-                logger.debug('found service entry point "%s"' % ep.name)
+                logger.debug(f'found service entry point "{ep.name}"')
                 self._uninitialized_services[ep.name] = cls
 
     def init_all_services(self):

@@ -88,11 +88,11 @@ class DiagramExportManager(Service, ActionProvider):
     def update_painters(self, view):
 
         logger.info("Updating painters")
-        logger.debug("View is %s" % view)
+        logger.debug(f"View is {view}")
 
         sloppiness = self.properties("diagram.sloppiness", 0)
 
-        logger.debug("Sloppiness is %s" % sloppiness)
+        logger.debug(f"Sloppiness is {sloppiness}")
 
         if sloppiness:
             view.painter = FreeHandPainter(ItemPainter(), sloppiness)
@@ -105,7 +105,7 @@ class DiagramExportManager(Service, ActionProvider):
     def save_svg(self, filename, canvas):
 
         logger.info("Exporting to SVG")
-        logger.debug("SVG path is %s" % filename)
+        logger.debug(f"SVG path is {filename}")
 
         view = View(canvas)
 
@@ -131,7 +131,7 @@ class DiagramExportManager(Service, ActionProvider):
     def save_png(self, filename, canvas):
 
         logger.info("Exporting to PNG")
-        logger.debug("PNG path is %s" % filename)
+        logger.debug(f"PNG path is {filename}")
 
         view = View(canvas)
 
@@ -156,7 +156,7 @@ class DiagramExportManager(Service, ActionProvider):
     def save_pdf(self, filename, canvas):
 
         logger.info("Exporting to PDF")
-        logger.debug("PDF path is %s" % filename)
+        logger.debug(f"PDF path is {filename}")
 
         view = View(canvas)
 

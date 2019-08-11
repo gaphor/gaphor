@@ -89,7 +89,7 @@ class Registry:
         for k, v in kw.items():
             i_axis = axes_dict.get(k, None)
             if i_axis is None:
-                raise ValueError("No axis with name: %s" % k)
+                raise ValueError(f"No axis with name: {k}")
 
             i, axis = i_axis
             if aligned[i] is not None:
@@ -110,7 +110,7 @@ class _TreeNode(dict):
     target = None
 
     def __str__(self):
-        return "<TreeNode %s %s>" % (self.target, dict.__str__(self))
+        return f"<TreeNode {self.target} {dict.__str__(self)}>"
 
 
 class SimpleAxis:

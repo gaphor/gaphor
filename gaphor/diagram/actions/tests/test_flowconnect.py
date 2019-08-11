@@ -389,7 +389,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
         assert 2 == len(jn.subject.outgoing)
 
-        assert isinstance(jn.subject, self.fork_node_cls), "%s" % jn.subject
+        assert isinstance(jn.subject, self.fork_node_cls), f"{jn.subject}"
 
     def test_combined_nodes_connection(self):
         """Test combined nodes connection
@@ -480,8 +480,8 @@ class FlowItemDesisionAndForkNodes:
 
         flows = self.kindof(UML.ControlFlow)
         nodes = self.kindof(self.fork_node_cls)
-        assert cnode not in nodes, "%s in %s" % (cnode, nodes)
-        assert cflow not in flows, "%s in %s" % (cflow, flows)
+        assert cnode not in nodes, f"{cnode} in {nodes}"
+        assert cflow not in flows, f"{cflow} in {flows}"
 
 
 class FlowItemForkNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):

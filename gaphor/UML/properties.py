@@ -205,7 +205,7 @@ class enumeration(umlproperty):
         self.upper = 1
 
     def __str__(self):
-        return "<enumeration %s: %s = %s>" % (self.name, self.values, self.default)
+        return f"<enumeration {self.name}: {self.values} = {self.default}>"
 
     def _get(self, obj):
         try:
@@ -293,7 +293,7 @@ class association(umlproperty):
 
     def __str__(self):
         if self.lower == self.upper:
-            s = "<association %s: %s[%s]" % (self.name, self.type.__name__, self.lower)
+            s = f"<association {self.name}: {self.type.__name__}[{self.lower}]"
         else:
             s = "<association %s: %s[%s..%s]" % (
                 self.name,
@@ -327,7 +327,7 @@ class association(umlproperty):
         This method is called from the opposite association property.
         """
         if not (isinstance(value, self.type) or (value is None and self.upper == 1)):
-            raise AttributeError("Value should be of type %s" % self.type.__name__)
+            raise AttributeError(f"Value should be of type {self.type.__name__}")
         # Remove old value only for uni-directional associations
         if self.upper == 1:
             old = self._get(obj)
@@ -544,7 +544,7 @@ class derived(umlproperty):
         pass
 
     def __str__(self):
-        return "<derived %s: %s>" % (self.name, str(list(map(str, self.subsets)))[1:-1])
+        return f"<derived {self.name}: {str(list(map(str, self.subsets)))[1:-1]}>"
 
     def filter(self, obj):
         """
@@ -806,7 +806,7 @@ class redefine(umlproperty):
     def __set__(self, obj, value):
         # No longer needed
         if not isinstance(value, self.type):
-            raise AttributeError("Value should be of type %s" % self.type.__name__)
+            raise AttributeError(f"Value should be of type {self.type.__name__}")
         self.original.__set__(obj, value)
 
     def __delete__(self, obj, value=None):

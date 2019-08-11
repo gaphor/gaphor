@@ -127,9 +127,9 @@ class DisconnectHandle:
         cinfo = canvas.get_connection(handle)
 
         if self.disable:
-            log.debug("Not disconnecting %s.%s (disabled)" % (item, handle))
+            log.debug(f"Not disconnecting {item}.{handle} (disabled)")
         else:
-            log.debug("Disconnecting %s.%s" % (item, handle))
+            log.debug(f"Disconnecting {item}.{handle}")
             if cinfo:
                 adapter = IConnect(cinfo.connected, item)
                 adapter.disconnect(handle)
@@ -216,7 +216,7 @@ class TextEditTool(Tool):
             if not editor:
                 return False
 
-            log.debug("Found editor %r" % editor)
+            log.debug(f"Found editor {editor!r}")
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
             if editor.is_editable(x, y):
                 text = editor.get_text()

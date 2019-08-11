@@ -118,7 +118,7 @@ class ElementDispatcher:
         for attr in path.split("."):
             cname = ""
             if "[" in attr:
-                assert attr.endswith("]"), '"%s" should end with ">"' % attr
+                assert attr.endswith("]"), f'"{attr}" should end with ">"'
                 attr, cname = attr[:-1].split("[")
             prop = getattr(c, attr)
             tpath.append(prop)
@@ -198,7 +198,7 @@ class ElementDispatcher:
             del handlers[handler]
         except KeyError:
             self.logger.warning(
-                "Handler %s is not registered for %s.%s" % (handler, element, property)
+                f"Handler {handler} is not registered for {element}.{property}"
             )
 
         if not handlers:
@@ -239,7 +239,7 @@ class ElementDispatcher:
                 try:
                     handler(event)
                 except Exception as e:
-                    self.logger.error("Problem executing handler %s" % handler, e)
+                    self.logger.error(f"Problem executing handler {handler}", e)
 
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties

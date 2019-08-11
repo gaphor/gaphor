@@ -22,7 +22,7 @@ def error_handler(message=None, exc_info=None):
         message = _("An error occurred.")
 
     buttons = Gtk.ButtonsType.OK
-    message = "%s\n\nTechnical details:\n\t%s\n\t%s" % (message, exc_type, exc_value)
+    message = f"{message}\n\nTechnical details:\n\t{exc_type}\n\t{exc_value}"
 
     if __debug__ and sys.stdin.isatty():
         buttons = Gtk.ButtonsType.YES_NO

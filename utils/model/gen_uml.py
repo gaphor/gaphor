@@ -97,7 +97,7 @@ class Writer:
             if not self.overrides.write_override(self, clazz["name"]):
                 self.write("class %s" % (clazz["name"],))
                 if s:
-                    self.write("(%s)" % (s,))
+                    self.write(f"({s})")
                 self.write(": pass\n")
         clazz.written = True
 
@@ -108,7 +108,7 @@ class Writer:
         free format text.
         """
         if not self.overrides.write_override(self, full_name):
-            self.write("%s = %s\n" % (full_name, value))
+            self.write(f"{full_name} = {value}\n")
 
     def write_attribute(self, a, enumerations={}):
         """
@@ -148,7 +148,7 @@ class Writer:
 
         # kind, derived, a.name, type, default, lower, upper = parse_attribute(a)
 
-        full_name = "%s.%s" % (a.class_name, a.name)
+        full_name = f"{a.class_name}.{a.name}"
         if self.overrides.has_override(full_name):
             self.overrides.write_override(self, full_name)
         elif ast.literal_eval(a.isDerived or "0"):
@@ -161,7 +161,7 @@ class Writer:
                 0
             ]
             self.write_property(
-                "%s.%s" % (a.class_name, a.name),
+                f"{a.class_name}.{a.name}",
                 "enumeration('%s', %s, '%s')"
                 % (a.name, e.enumerates, default or e.enumerates[0]),
             )
@@ -173,15 +173,15 @@ class Writer:
                     ", ".join(map("=".join, list(params.items()))),
                 )
             else:
-                attribute = "attribute('%s', %s)" % (a.name, type)
-            self.write_property("%s.%s" % (a.class_name, a.name), attribute)
+                attribute = f"attribute('{a.name}', {type})"
+            self.write_property(f"{a.class_name}.{a.name}", attribute)
 
     def write_operation(self, o):
-        full_name = "%s.%s" % (o.class_name, o.name)
+        full_name = f"{o.class_name}.{o.name}"
         if self.overrides.has_override(full_name):
             self.overrides.write_override(self, full_name)
         else:
-            msg("No override for operation %s" % full_name)
+            msg(f"No override for operation {full_name}")
 
     def write_association(self, head, tail):
         """
@@ -196,11 +196,11 @@ class Writer:
         assert not head.derived
         assert not head.redefines
 
-        a = "association('%s', %s" % (head.name, head.opposite_class_name)
+        a = f"association('{head.name}', {head.opposite_class_name}"
         if head.lower not in ("0", 0):
-            a += ", lower=%s" % head.lower
+            a += f", lower={head.lower}"
         if head.upper != "*":
-            a += ", upper=%s" % head.upper
+            a += f", upper={head.upper}"
         if head.composite:
             a += ", composite=True"
 
@@ -219,9 +219,9 @@ class Writer:
                 assert not (
                     head.derived and not o_derived
                 ), "One end is derived, the other end not ???"
-                a += ", opposite='%s'" % o_name
+                a += f", opposite='{o_name}'"
 
-        self.write_property("%s.%s" % (head.class_name, head.name), a + ")")
+        self.write_property(f"{head.class_name}.{head.name}", a + ")")
 
     def write_derivedunion(self, d):
         """
@@ -237,10 +237,10 @@ class Writer:
                 self.write_derivedunion(u)
             if subs:
                 subs += ", "
-            subs += "%s.%s" % (u.class_name, u.name)
+            subs += f"{u.class_name}.{u.name}"
         if subs:
             self.write_property(
-                "%s.%s" % (d.class_name, d.name),
+                f"{d.class_name}.{d.name}",
                 "derivedunion('%s', %s, %s, %s, %s)"
                 % (
                     d.name,
@@ -251,13 +251,13 @@ class Writer:
                 ),
             )
         else:
-            if not self.overrides.has_override("%s.%s" % (d.class_name, d.name)):
+            if not self.overrides.has_override(f"{d.class_name}.{d.name}"):
                 msg(
                     "no subsets for derived union: %s.%s[%s..%s]"
                     % (d.class_name, d.name, d.lower, d.upper)
                 )
             self.write_property(
-                "%s.%s" % (d.class_name, d.name),
+                f"{d.class_name}.{d.name}",
                 "derivedunion('%s', %s, %s, %s)"
                 % (
                     d.name,
@@ -274,7 +274,7 @@ class Writer:
         False by write_association().
         """
         self.write_property(
-            "%s.%s" % (r.class_name, r.name),
+            f"{r.class_name}.{r.name}",
             "redefine(%s, '%s', %s, %s)"
             % (r.class_name, r.name, r.opposite_class_name, r.redefines),
         )
@@ -299,7 +299,7 @@ def parse_association_tags(appliedStereotypes):
     for stereotype in appliedStereotypes or []:
         for slot in stereotype.slot or []:
 
-            msg("scanning %s = %s" % (slot.definingFeature.name, slot.value))
+            msg(f"scanning {slot.definingFeature.name} = {slot.value}")
 
             if slot.definingFeature.name == "subsets":
                 value = slot.value
@@ -503,7 +503,7 @@ def generate(filename, outfile=None, overridesfile=None):
             # set class_name, since write_attribute depends on it
             a.class_name = c["name"]
             if not a.get("association"):
-                if overrides.derives("%s.%s" % (a.class_name, a.name)):
+                if overrides.derives(f"{a.class_name}.{a.name}"):
                     derivedattributes[a.name] = a
                 else:
                     writer.write_attribute(a, enumerations)
@@ -534,7 +534,7 @@ def generate(filename, outfile=None, overridesfile=None):
             if a.asAttribute is not None:
                 if a.asAttribute is e1 and e1.navigable:
                     writer.write(
-                        "# '%s.%s' is a simple attribute\n" % (e2.type.name, e1.name)
+                        f"# '{e2.type.name}.{e1.name}' is a simple attribute\n"
                     )
                     e1.class_name = e2.type.name
                     e1.typeValue = "str"
@@ -544,7 +544,7 @@ def generate(filename, outfile=None, overridesfile=None):
                     e2.written = True
             elif e1.redefines:
                 redefines.append(e1)
-            elif e1.derived or overrides.derives("%s.%s" % (e1.class_name, e1.name)):
+            elif e1.derived or overrides.derives(f"{e1.class_name}.{e1.name}"):
                 assert not derivedunions.get(e1.name), (
                     "%s.%s is already in derived union set in class %s"
                     % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)
@@ -562,7 +562,7 @@ def generate(filename, outfile=None, overridesfile=None):
                 if a.type not in ignored_classes:
                     derivedunions[s].union.append(a)
             except KeyError:
-                msg("not a derived union: %s.%s" % (a.class_name, s))
+                msg(f"not a derived union: {a.class_name}.{s}")
 
     # TODO: We should do something smart here, since derived attributes (mostly)
     #       may depend on other derived attributes or associations.
@@ -574,7 +574,7 @@ def generate(filename, outfile=None, overridesfile=None):
         writer.write_derivedunion(d)
 
     for r in redefines or ():
-        msg("redefining %s -> %s.%s" % (r.redefines, r.class_name, r.name))
+        msg(f"redefining {r.redefines} -> {r.class_name}.{r.name}")
         writer.write_redefine(r)
 
     # create operations

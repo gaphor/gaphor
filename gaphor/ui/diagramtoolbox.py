@@ -235,7 +235,7 @@ class DiagramToolbox:
             if name is not None:
                 subject.name = name
             else:
-                subject.name = "New%s" % subject_class.__name__
+                subject.name = f"New{subject_class.__name__}"
             return item
 
         factory_method.item_class = item_class

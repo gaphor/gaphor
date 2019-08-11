@@ -423,7 +423,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
             return None
 
         # TODO: use Gtk.Frame here
-        frame = Gtk.Frame.new("%s (: %s)" % (title, end.subject.type.name))
+        frame = Gtk.Frame.new(f"{title} (: {end.subject.type.name})")
         vbox = Gtk.VBox()
         vbox.set_border_width(6)
         vbox.set_spacing(6)
@@ -516,7 +516,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                 else:
                     expander = Gtk.Expander()
                     expander.set_use_markup(True)
-                    expander.set_label("<b>%s</b>" % name)
+                    expander.set_label(f"<b>{name}</b>")
                     expander.add(page)
                     expander.show_all()
                     vbox.pack_start(expander, False, True, 0)

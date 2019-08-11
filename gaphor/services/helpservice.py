@@ -67,7 +67,7 @@ class HelpService(Service, ActionProvider):
             label.set_justify(Gtk.Justification.CENTER)
             tab_vbox.pack_start(label, True, True, 0)
 
-        add_label('<span weight="bold">Version %s</span>' % version)
+        add_label(f'<span weight="bold">Version {version}</span>')
         add_label(
             '<span variant="smallcaps">Gaphor is the simple modeling tool written in Python</span>',
             8,

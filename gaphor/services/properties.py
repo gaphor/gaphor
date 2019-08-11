@@ -82,7 +82,7 @@ class Properties(Service):
             return self._resources[key]
         except KeyError:
             if default is _no_default:
-                raise KeyError('No resource with name "%s"' % key)
+                raise KeyError(f'No resource with name "{key}"')
 
             self.set(key, default)
             return default

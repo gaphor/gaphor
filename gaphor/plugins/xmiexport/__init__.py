@@ -52,12 +52,12 @@ class XMIExport(Service, ActionProvider):
         filename = file_dialog.selection
 
         if filename and len(filename) > 0:
-            logger.debug("Exporting XMI model to: %s" % filename)
+            logger.debug(f"Exporting XMI model to: {filename}")
             export = exportmodel.XMIExport(self.element_factory)
             try:
                 export.export(filename)
             except Exception as e:
-                logger.error("Error while saving model to file %s: %s" % (filename, e))
+                logger.error(f"Error while saving model to file {filename}: {e}")
 
 
 # vim:sw=4:et

@@ -67,7 +67,7 @@ class FunctionDispatcher:
         self.argspec = argspec
         self.params_arity = params_arity
 
-        axis = [("arg_%d" % n, TypeAxis()) for n in range(params_arity)]
+        axis = [(f"arg_{n:d}", TypeAxis()) for n in range(params_arity)]
         self.registry = Registry(*axis)
 
     def check_rule(self, rule, *argtypes):
@@ -109,7 +109,7 @@ class FunctionDispatcher:
         trimmed_args = args[: self.params_arity]
         rule = self.registry.lookup(*trimmed_args)
         if not rule:
-            raise TypeError("No available rule found for %r" % (trimmed_args,))
+            raise TypeError(f"No available rule found for {trimmed_args!r}")
         return rule(*args, **kwargs)
 
 

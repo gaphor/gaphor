@@ -30,7 +30,7 @@ def test_recent_files(application):
     properties.set("recent-files", [])
     fileman.update_recent_files()
     for i in range(0, 9):
-        a = fileman.action_group.get_action("file-recent-%d" % i)
+        a = fileman.action_group.get_action(f"file-recent-{i:d}")
         assert a
         assert a.get_property("visible") == False, "%s, %d" % (
             a.get_property("visible"),
@@ -43,6 +43,6 @@ def test_recent_files(application):
     assert a.get_property("visible") == True
     assert a.props.label == "_1. firstfile", a.props.label
     for i in range(1, 9):
-        a = fileman.action_group.get_action("file-recent-%d" % i)
+        a = fileman.action_group.get_action(f"file-recent-{i:d}")
         assert a
         assert a.get_property("visible") == False

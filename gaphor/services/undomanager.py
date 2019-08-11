@@ -66,7 +66,7 @@ class ActionStack:
             try:
                 action()
             except Exception as e:
-                logger.error("Error while undoing action %s" % action, exc_info=True)
+                logger.error(f"Error while undoing action {action}", exc_info=True)
 
 
 class UndoManagerStateChanged(ServiceEvent):
@@ -342,7 +342,7 @@ class UndoManager(Service, ActionProvider):
         if not factory:
             return
         element = event.element
-        assert factory, "No factory defined for %s (%s)" % (element, factory)
+        assert factory, f"No factory defined for {element} ({factory})"
 
         def _undo_delete_event():
             factory._elements[element.id] = element

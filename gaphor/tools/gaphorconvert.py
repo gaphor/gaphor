@@ -84,7 +84,7 @@ def main():
 
     # we should have some gaphor files to be processed at this point
     for model in args:
-        message("loading model %s" % model)
+        message(f"loading model {model}")
         storage.load(model, model)
         message("\nready for rendering\n")
 
@@ -94,26 +94,26 @@ def main():
             # just diagram name
             dname = diagram.name
             # full diagram name including package path
-            pname = "%s/%s" % (odir, dname)
+            pname = f"{odir}/{dname}"
 
             if options.underscores:
                 odir = odir.replace(" ", "_")
                 dname = dname.replace(" ", "_")
 
             if name_re and not name_re.search(pname):
-                message("skipping %s" % pname)
+                message(f"skipping {pname}")
                 continue
 
             if options.dir:
-                odir = "%s/%s" % (options.dir, odir)
+                odir = f"{options.dir}/{odir}"
 
-            outfilename = "%s/%s.%s" % (odir, dname, options.format)
+            outfilename = f"{odir}/{dname}.{options.format}"
 
             if not os.path.exists(odir):
-                message("creating dir %s" % odir)
+                message(f"creating dir {odir}")
                 os.makedirs(odir)
 
-            message("rendering: %s -> %s..." % (pname, outfilename))
+            message(f"rendering: {pname} -> {outfilename}...")
 
             view = View(diagram.canvas)
             view.painter = ItemPainter()
@@ -134,7 +134,7 @@ def main():
                     cairo.FORMAT_ARGB32, int(w + 1), int(h + 1)
                 )
             else:
-                assert False, "unknown format %s" % options.format
+                assert False, f"unknown format {options.format}"
             cr = cairo.Context(surface)
             view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
             view.paint(cr)

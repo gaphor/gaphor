@@ -24,22 +24,22 @@ def test_association(factory):
 
     element.navigableOwnedEnd = property1
 
-    assert not element.isDerived, (
-        "The isDerived property should default to False - %s" % element.isDerived
-    )
-    assert property1 in element.member, (
-        "Namespace.member does not contain memberEnd - %s" % element.member
-    )
-    assert property2 in element.member, (
-        "Namespace.member does not contain memberEnd - %s" % element.member
-    )
+    assert (
+        not element.isDerived
+    ), f"The isDerived property should default to False - {element.isDerived}"
+    assert (
+        property1 in element.member
+    ), f"Namespace.member does not contain memberEnd - {element.member}"
+    assert (
+        property2 in element.member
+    ), f"Namespace.member does not contain memberEnd - {element.member}"
 
-    assert property1 in element.feature, (
-        "Classifier.feature does not contain ownedEnd - %s" % element.feature
-    )
-    assert property1 in element.ownedMember, (
-        "Namespace.ownedMember does not contain ownedEnd - %s" % element.ownedEnd
-    )
+    assert (
+        property1 in element.feature
+    ), f"Classifier.feature does not contain ownedEnd - {element.feature}"
+    assert (
+        property1 in element.ownedMember
+    ), f"Namespace.ownedMember does not contain ownedEnd - {element.ownedEnd}"
 
     assert property1 in element.ownedEnd, (
         "Association.ownedEnd does not contain navigableOwnedEnd - %s"
@@ -62,17 +62,17 @@ def test_class(factory):
     element.ownedAttribute = property1
     element.ownedOperation = operation1
 
-    assert property1 in element.attribute, (
-        "Classifier.attribute does not contain ownedAttribute - %s" % element.attribute
-    )
+    assert (
+        property1 in element.attribute
+    ), f"Classifier.attribute does not contain ownedAttribute - {element.attribute}"
     assert property1 in element.ownedMember, (
         "Namespace.ownedMember does not contain ownedAttribute - %s"
         % element.ownedMember
     )
 
-    assert operation1 in element.feature, (
-        "Classifier.feature does not contain ownedOperation - %s" % element.feature
-    )
+    assert (
+        operation1 in element.feature
+    ), f"Classifier.feature does not contain ownedOperation - {element.feature}"
     assert operation1 in element.ownedMember, (
         "Namespace.ownedMember does not contain ownedOperation" % element.ownedMember
     )
@@ -85,10 +85,10 @@ def test_comment(factory):
     annotatedElement = factory.create(UML.Class)
     element.annotatedElement = annotatedElement
 
-    assert element.body == "Comment body", "Incorrect comment body - %s" % element.body
-    assert annotatedElement in element.annotatedElement, (
-        "Incorrect annotated element - %s" % element.annotatedElement
-    )
+    assert element.body == "Comment body", f"Incorrect comment body - {element.body}"
+    assert (
+        annotatedElement in element.annotatedElement
+    ), f"Incorrect annotated element - {element.annotatedElement}"
 
 
 def test_constraint(factory):
@@ -104,9 +104,9 @@ def test_constraint(factory):
         "Constraint.constrainedElement does not contain the correct element - %s"
         % element.constrainedElement
     )
-    assert element.specification == "Constraint specification", (
-        "Constraint.specification is incorrect - %s" % element.specification
-    )
+    assert (
+        element.specification == "Constraint specification"
+    ), f"Constraint.specification is incorrect - {element.specification}"
 
 
 def test_dependency(factory):
@@ -121,12 +121,12 @@ def test_dependency(factory):
     element.client = client
     element.supplier = supplier
 
-    assert client in element.client, (
-        "Dependency.client does not contain client - %s" % element.client
-    )
-    assert supplier in element.supplier, (
-        "Dependency.supplier does not contain supplier - %s" % element.supplier
-    )
+    assert (
+        client in element.client
+    ), f"Dependency.client does not contain client - {element.client}"
+    assert (
+        supplier in element.supplier
+    ), f"Dependency.supplier does not contain supplier - {element.supplier}"
 
 
 def test_element_import(factory):

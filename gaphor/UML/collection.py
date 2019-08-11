@@ -90,13 +90,13 @@ class collection:
         if isinstance(value, self.type):
             self.property._set(self.object, value)
         else:
-            raise TypeError("Object is not of type %s" % self.type.__name__)
+            raise TypeError(f"Object is not of type {self.type.__name__}")
 
     def remove(self, value):
         if value in self.items:
             self.property.__delete__(self.object, value)
         else:
-            raise ValueError("%s not in collection" % value)
+            raise ValueError(f"{value} not in collection")
 
     def index(self, key):
         """
