@@ -96,7 +96,7 @@ class MessageLifelineConnect(AbstractConnect):
         return not (lifetime.visible ^ (port is element.lifetime.port))
 
     def connect(self, handle, port):
-        super(MessageLifelineConnect, self).connect(handle, port)
+        super().connect(handle, port)
 
         line = self.line
         send = self.get_connected(line.head)
@@ -112,7 +112,7 @@ class MessageLifelineConnect(AbstractConnect):
             lifetime.connectable = False
 
     def disconnect(self, handle):
-        super(MessageLifelineConnect, self).disconnect(handle)
+        super().disconnect(handle)
 
         line = self.line
         send = self.get_connected(line.head)

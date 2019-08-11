@@ -111,7 +111,7 @@ class build_pot(Command):
             elif self.style == "solaris":
                 options.locationstyle = self.SOLARIS
             else:
-                raise SystemExit("Invalid value for --style: %s" % self.style)
+                raise SystemExit(f"Invalid value for --style: {self.style}")
         if not self.output:
             self.output = self.distribution.get_name() + ".pot"
         if not self.output_dir:
@@ -124,8 +124,8 @@ class build_pot(Command):
                 fp = open(self.exclude_file)
                 options.toexclude = fp.readlines()
                 fp.close()
-            except IOError:
-                raise SystemExit("Can't read --exclude-file: %s" % self.exclude_file)
+            except OSError:
+                raise SystemExit(f"Can't read --exclude-file: {self.exclude_file}")
         # skip: self.no_docstrings
         if self.all_linguas:
             self.all_linguas = self.all_linguas.split(",")
@@ -170,7 +170,7 @@ def create_pot_file(packages, pot_file, options=Options(), verbose=False):
     eater = pygettext.TokenEater(options)
     for filename in source_files:
         if verbose:
-            print("Working on %s" % filename)
+            print(f"Working on {filename}")
         fp = open(filename, "rb")
         try:
             eater.set_filename(filename)
@@ -179,7 +179,7 @@ def create_pot_file(packages, pot_file, options=Options(), verbose=False):
                 for _token in tokens:
                     eater(*_token)
             except tokenize.TokenError as e:
-                print("%s: %s, line %d, column %d" % (e[0], filename, e[1][0], e[1][1]))
+                print(f"{e[0]}: {filename}, line {e[1][0]:d}, column {e[1][1]:d}")
         finally:
             fp.close()
 
@@ -205,8 +205,8 @@ def merge_files(all_linguas, msgmerge, pot_file, output_dir, verbose=False):
             "pot": pot_file,
         }
         if verbose:
-            print("Merging %(pot)s and %(po)s " % d)
-        res = os.system("%(msgmerge)s %(po)s %(pot)s -o %(po)s" % d)
+            print(f"Merging {d['pot']} and {d['po']} ")
+        res = os.system(f"{d['msgmerge']} {d['po']} {d['pot']} -o {d['po']}")
         if res:
             raise SystemExit("error while running msgmerge.")
 

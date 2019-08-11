@@ -95,13 +95,13 @@ class Engineer:
                     )
                     if others:
                         superclass = others[0]
-                        print("Found class in factory: %s" % superclass.name)
+                        print(f"Found class in factory: {superclass.name}")
                         superclass_item = self.diagram.create(ClassItem)
                         superclass_item.subject = superclass
                     else:
                         continue
                 # Finally, create the generalization relationship
-                print("Creating Generalization for %s" % clazz, superclass)
+                print(f"Creating Generalization for {clazz}", superclass)
                 # gen = self.element_factory.create(UML.Generalization)
                 # gen.general = superclass
                 # gen.specific = clazz.gaphor_class
@@ -160,7 +160,7 @@ class Engineer:
             )
             if others:
                 superclass = others[0]
-                print("Found class in factory: %s" % superclass.name)
+                print(f"Found class in factory: {superclass.name}")
                 superclass_item = self.diagram.create(ClassItem)
                 superclass_item.subject = superclass
             else:

@@ -120,28 +120,19 @@ class attribute(umlproperty):
         try:
             setattr(obj, self._name, self.type(value))
         except ValueError:
-            error_msg = "Failed to load attribute %s of type %s with value %s" % (
-                self._name,
-                self.type,
-                value,
+            error_msg = "Failed to load attribute {} of type {} with value {}".format(
+                self._name, self.type, value
             )
             raise TypeError(error_msg)
 
     def __str__(self):
         if self.lower == self.upper:
-            return "<attribute %s: %s[%s] = %s>" % (
-                self.name,
-                self.type,
-                self.lower,
-                self.default,
+            return "<attribute {}: {}[{}] = {}>".format(
+                self.name, self.type, self.lower, self.default
             )
         else:
-            return "<attribute %s: %s[%s..%s] = %s>" % (
-                self.name,
-                self.type,
-                self.lower,
-                self.upper,
-                self.default,
+            return "<attribute {}: {}[{}..{}] = {}>".format(
+                self.name, self.type, self.lower, self.upper, self.default
             )
 
     def _get(self, obj):
@@ -205,7 +196,7 @@ class enumeration(umlproperty):
         self.upper = 1
 
     def __str__(self):
-        return "<enumeration %s: %s = %s>" % (self.name, self.values, self.default)
+        return f"<enumeration {self.name}: {self.values} = {self.default}>"
 
     def _get(self, obj):
         try:
@@ -293,16 +284,13 @@ class association(umlproperty):
 
     def __str__(self):
         if self.lower == self.upper:
-            s = "<association %s: %s[%s]" % (self.name, self.type.__name__, self.lower)
+            s = f"<association {self.name}: {self.type.__name__}[{self.lower}]"
         else:
-            s = "<association %s: %s[%s..%s]" % (
-                self.name,
-                self.type.__name__,
-                self.lower,
-                self.upper,
+            s = "<association {}: {}[{}..{}]".format(
+                self.name, self.type.__name__, self.lower, self.upper
             )
         if self.opposite:
-            s += " %s-> %s" % (self.composite and "<>" or "", self.opposite)
+            s += " {}-> {}".format(self.composite and "<>" or "", self.opposite)
         return s + ">"
 
     def _get(self, obj):
@@ -327,7 +315,7 @@ class association(umlproperty):
         This method is called from the opposite association property.
         """
         if not (isinstance(value, self.type) or (value is None and self.upper == 1)):
-            raise AttributeError("Value should be of type %s" % self.type.__name__)
+            raise AttributeError(f"Value should be of type {self.type.__name__}")
         # Remove old value only for uni-directional associations
         if self.upper == 1:
             old = self._get(obj)
@@ -485,7 +473,7 @@ class associationstub(umlproperty):
         try:
             getattr(obj, self._name).add(value)
         except AttributeError:
-            setattr(obj, self._name, set([value]))
+            setattr(obj, self._name, {value})
 
     def _del(self, obj, value, from_opposite=False):
         try:
@@ -544,7 +532,7 @@ class derived(umlproperty):
         pass
 
     def __str__(self):
-        return "<derived %s: %s>" % (self.name, str(list(map(str, self.subsets)))[1:-1])
+        return f"<derived {self.name}: {str(list(map(str, self.subsets)))[1:-1]}>"
 
     def filter(self, obj):
         """
@@ -791,10 +779,8 @@ class redefine(umlproperty):
             self.original.unlink(obj)
 
     def __str__(self):
-        return "<redefine %s: %s = %s>" % (
-            self.name,
-            self.type.__name__,
-            str(self.original),
+        return "<redefine {}: {} = {}>".format(
+            self.name, self.type.__name__, str(self.original)
         )
 
     def __get__(self, obj, class_=None):
@@ -806,7 +792,7 @@ class redefine(umlproperty):
     def __set__(self, obj, value):
         # No longer needed
         if not isinstance(value, self.type):
-            raise AttributeError("Value should be of type %s" % self.type.__name__)
+            raise AttributeError(f"Value should be of type {self.type.__name__}")
         self.original.__set__(obj, value)
 
     def __delete__(self, obj, value=None):

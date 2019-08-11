@@ -45,8 +45,8 @@ class ConsoleWindow(UIComponent, ActionProvider):
             with open(console_py) as f:
                 for line in f:
                     console.push(line)
-        except IOError:
-            log.info("No initiation script %s" % console_py)
+        except OSError:
+            log.info(f"No initiation script {console_py}")
 
     @action(name="ConsoleWindow:open", label="_Console")
     def open_console(self):

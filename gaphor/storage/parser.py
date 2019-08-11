@@ -185,7 +185,7 @@ class GaphorLoader(handler.ContentHandler):
         elif state in (CANVAS, ITEM) and name == "item":
             id = attrs["id"]
             c = canvasitem(id, attrs["type"])
-            assert id not in list(self.elements.keys()), "%s already defined" % id
+            assert id not in list(self.elements.keys()), f"{id} already defined"
             self.elements[id] = c
             self.peek().canvasitems.append(c)
             self.push(c, ITEM)
@@ -234,7 +234,7 @@ class GaphorLoader(handler.ContentHandler):
 
         else:
             raise ParserException(
-                "Invalid XML: tag <%s> not known (state = %s)" % (name, state)
+                f"Invalid XML: tag <{name}> not known (state = {state})"
             )
 
     def endElement(self, name):
@@ -284,8 +284,7 @@ def parse_generator(filename, loader):
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    for percentage in parse_file(filename, parser):
-        yield percentage
+    yield from parse_file(filename, parser)
 
 
 class ProgressGenerator:
@@ -338,10 +337,9 @@ def parse_file(filename, parser):
         file_obj = filename
     else:
         is_fd = False
-        file_obj = io.open(filename, "r")
+        file_obj = open(filename, "r")
 
-    for progress in ProgressGenerator(file_obj, parser):
-        yield progress
+    yield from ProgressGenerator(file_obj, parser)
 
     parser.close()
 

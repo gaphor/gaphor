@@ -54,10 +54,10 @@ def po_to_mo(all_linguas, output_dir, force=False):
         mkpath(outdir)
         outfile = os.path.join(outdir, "gaphor.mo")
         if force or newer(pofile, outfile):
-            print("converting %s -> %s" % (pofile, outfile))
+            print(f"converting {pofile} -> {outfile}")
             msgfmt.make(pofile, outfile)
         else:
-            print("not converting %s (output up-to-date)" % pofile)
+            print(f"not converting {pofile} (output up-to-date)")
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ from gaphor.misc.generic.registry import Registry, TypeAxis
 __all__ = "Manager"
 
 
-class Manager(object):
+class Manager:
     """ Event manager
 
     Provides API for subscribing for and firing events. There's also global

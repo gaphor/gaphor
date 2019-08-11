@@ -118,7 +118,7 @@ class InterfacePort(LinePort):
     """
 
     def __init__(self, start, end, is_folded, angle):
-        super(InterfacePort, self).__init__(start, end)
+        super().__init__(start, end)
         self.is_folded = is_folded
         # Used by connection logic:
         self.angle = angle

@@ -34,7 +34,7 @@ def deserialize(layout, container, layoutstr, itemfactory):
         else:
             factory = widget_factory[element.tag]
             widget = factory(parent=parent_widget, index=index, **element.attrib)
-            assert widget, "No widget (%s)" % widget
+            assert widget, f"No widget ({widget})"
             if len(element):
                 list(map(_des, element, counter(), [widget] * len(element)))
         return widget

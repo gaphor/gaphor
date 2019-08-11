@@ -127,9 +127,9 @@ class DisconnectHandle:
         cinfo = canvas.get_connection(handle)
 
         if self.disable:
-            log.debug("Not disconnecting %s.%s (disabled)" % (item, handle))
+            log.debug(f"Not disconnecting {item}.{handle} (disabled)")
         else:
-            log.debug("Disconnecting %s.%s" % (item, handle))
+            log.debug(f"Disconnecting {item}.{handle}")
             if cinfo:
                 adapter = IConnect(cinfo.connected, item)
                 adapter.disconnect(handle)
@@ -216,7 +216,7 @@ class TextEditTool(Tool):
             if not editor:
                 return False
 
-            log.debug("Found editor %r" % editor)
+            log.debug(f"Found editor {editor!r}")
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
             if editor.is_editable(x, y):
                 text = editor.get_text()
@@ -288,9 +288,7 @@ class GroupPlacementTool(PlacementTool):
     """
 
     def __init__(self, view, item_factory, after_handler=None, handle_index=-1):
-        super(GroupPlacementTool, self).__init__(
-            view, item_factory, after_handler, handle_index
-        )
+        super().__init__(view, item_factory, after_handler, handle_index)
         self._parent = None
 
     def on_motion_notify(self, event):
@@ -341,7 +339,7 @@ class GroupPlacementTool(PlacementTool):
             if parent and adapter and adapter.can_contain():
                 kw["parent"] = parent
 
-            item = super(GroupPlacementTool, self)._create_item(pos, **kw)
+            item = super()._create_item(pos, **kw)
 
             adapter = Group(parent, item)
             if parent and item and adapter:
@@ -362,7 +360,7 @@ class DropZoneInMotion(GuidedItemInMotion):
         """
         Move the item. x and y are in view coordinates.
         """
-        super(DropZoneInMotion, self).move(pos)
+        super().move(pos)
         item = self.item
         view = self.view
         x, y = pos
@@ -401,7 +399,7 @@ class DropZoneInMotion(GuidedItemInMotion):
         """
         Motion stops: drop!
         """
-        super(DropZoneInMotion, self).stop_move()
+        super().stop_move()
         item = self.item
         view = self.view
         canvas = view.canvas

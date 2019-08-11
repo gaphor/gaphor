@@ -321,8 +321,7 @@ class AssemblyConnectorTestCase(TestCase):
 
         # test UML data model
         self.assertTrue(
-            conn1.subject is conn2.subject,
-            "%s is not %s" % (conn1.subject, conn2.subject),
+            conn1.subject is conn2.subject, f"{conn1.subject} is not {conn2.subject}"
         )
         assembly = conn1.subject
         assert isinstance(assembly, UML.Connector)

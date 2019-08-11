@@ -137,7 +137,7 @@ class ElementEditor(UIComponent, ActionProvider):
                 else:
                     expander = Gtk.Expander()
                     expander.set_use_markup(True)
-                    expander.set_label("<b>%s</b>" % name)
+                    expander.set_label(f"<b>{name}</b>")
                     expander.add(page)
                     expander.show_all()
                     expander.set_expanded(self._expanded_pages.get(name, True))

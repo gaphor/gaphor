@@ -114,12 +114,12 @@ def get_stereotypes(element):
     cls = type(element)
 
     # find out names of classes, which are superclasses of element class
-    names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
+    names = {c.__name__ for c in cls.__mro__ if issubclass(c, Element)}
 
     # find stereotypes that extend element class
     classes = model.select(lambda e: e.isKindOf(Class) and e.name in names)
 
-    stereotypes = set(ext.ownedEnd.type for cls in classes for ext in cls.extension)
+    stereotypes = {ext.ownedEnd.type for cls in classes for ext in cls.extension}
     return sorted(stereotypes, key=lambda st: st.name)
 
 

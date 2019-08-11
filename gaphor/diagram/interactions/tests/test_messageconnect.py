@@ -102,8 +102,8 @@ class BasicMessageConnectionsTestCase(TestCase):
         assert 1 == len(messages)
         assert 2 == len(occurences)
         assert messages[0] is msg.subject
-        assert msg.subject.sendEvent in occurences, "%s" % occurences
-        assert msg.subject.receiveEvent in occurences, "%s" % occurences
+        assert msg.subject.sendEvent in occurences, f"{occurences}"
+        assert msg.subject.receiveEvent in occurences, f"{occurences}"
 
     def test_lifetime_connection(self):
         """Test messages' lifetimes connection
@@ -136,11 +136,11 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # one side disconnection
         self.disconnect(msg, msg.head)
-        assert msg.subject is not None, "%s" % msg.subject
+        assert msg.subject is not None, f"{msg.subject}"
 
         # 2nd side disconnection
         self.disconnect(msg, msg.tail)
-        assert msg.subject is None, "%s" % msg.subject
+        assert msg.subject is None, f"{msg.subject}"
 
     def test_lifetime_connectivity_on_head(self):
         """Test lifeline's lifetime connectivity change on head connection

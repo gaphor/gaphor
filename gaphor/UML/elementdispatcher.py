@@ -118,15 +118,14 @@ class ElementDispatcher:
         for attr in path.split("."):
             cname = ""
             if "[" in attr:
-                assert attr.endswith("]"), '"%s" should end with ">"' % attr
+                assert attr.endswith("]"), f'"{attr}" should end with ">"'
                 attr, cname = attr[:-1].split("[")
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
                 c = getattr(uml2, cname)
-                assert issubclass(c, prop.type), "%s should be a subclass of %s" % (
-                    c,
-                    prop.type,
+                assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
+                    c, prop.type
                 )
             else:
                 c = prop.type
@@ -166,7 +165,7 @@ class ElementDispatcher:
 
         # Apply remaining path
         if remainder:
-            if property.upper is "*" or property.upper > 1:
+            if property.upper == "*" or property.upper > 1:
                 for e in property._get(element):
                     self._add_handlers(e, remainder, handler)
             else:
@@ -183,7 +182,7 @@ class ElementDispatcher:
         if not handlers:
             return
 
-        if property.upper is "*" or property.upper > 1:
+        if property.upper == "*" or property.upper > 1:
             for remainder in handlers.get(handler, ()):
                 for e in property._get(element):
                     # log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
@@ -198,7 +197,7 @@ class ElementDispatcher:
             del handlers[handler]
         except KeyError:
             self.logger.warning(
-                "Handler %s is not registered for %s.%s" % (handler, element, property)
+                f"Handler {handler} is not registered for {element}.{property}"
             )
 
         if not handlers:
@@ -239,7 +238,7 @@ class ElementDispatcher:
                 try:
                     handler(event)
                 except Exception as e:
-                    self.logger.error("Problem executing handler %s" % handler, e)
+                    self.logger.error(f"Problem executing handler {handler}", e)
 
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties

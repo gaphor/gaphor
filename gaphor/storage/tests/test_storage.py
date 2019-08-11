@@ -136,7 +136,7 @@ class StorageTestCase(TestCase):
         # Check load/save of other canvas items.
         assert len(d.canvas.get_all_items()) == 3
         for item in d.canvas.get_all_items():
-            assert item.subject, "No subject for %s" % item
+            assert item.subject, f"No subject for {item}"
         d1 = d.canvas.select(lambda e: isinstance(e, ClassItem))[0]
         assert d1
 
@@ -158,7 +158,7 @@ class StorageTestCase(TestCase):
         dist = importlib_metadata.distribution("gaphor")
         path = dist.locate_file("gaphor/UML/uml2.gaphor")
 
-        with io.open(path) as ifile:
+        with open(path) as ifile:
             storage.load(ifile, factory=self.element_factory)
 
     def test_load_uml_relationships(self):
@@ -260,20 +260,20 @@ class StorageTestCase(TestCase):
         dist = importlib_metadata.distribution("gaphor")
         path = dist.locate_file("test-diagrams/simple-items.gaphor")
 
-        with io.open(path, "r") as ifile:
+        with open(path, "r") as ifile:
             storage.load(ifile, factory=self.element_factory)
 
         pf = PseudoFile()
 
         storage.save(XMLWriter(pf), factory=self.element_factory)
 
-        with io.open(path, "r") as ifile:
+        with open(path, "r") as ifile:
 
             orig = ifile.read()
 
         copy = pf.data
 
-        with io.open("tmp.gaphor", "w") as ofile:
+        with open("tmp.gaphor", "w") as ofile:
 
             ofile.write(copy)
 
@@ -292,7 +292,7 @@ class StorageTestCase(TestCase):
         path = dist.locate_file("test-diagrams/old-gaphor-version.gaphor")
 
         def load_old_model():
-            with io.open(path, "r") as ifile:
+            with open(path, "r") as ifile:
                 storage.load(ifile, factory=self.element_factory)
 
         self.assertRaises(ValueError, load_old_model)

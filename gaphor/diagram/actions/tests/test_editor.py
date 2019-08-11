@@ -6,7 +6,7 @@ from gaphor.diagram.editors import Editor
 
 class EditorTestCase(TestCase):
     def setUp(self):
-        super(EditorTestCase, self).setUp()
+        super().setUp()
 
     def test_objectnode_editor(self):
         node = self.create(ObjectNodeItem, UML.ObjectNode)

@@ -139,11 +139,11 @@ class NamespaceView(Gtk.TreeView):
         text = element and (element.name or "").replace("\n", " ") or "&lt;None&gt;"
 
         if isinstance(element, UML.Diagram):
-            text = "<b>%s</b>" % text
+            text = f"<b>{text}</b>"
         elif (
             isinstance(element, UML.Classifier) or isinstance(element, UML.Operation)
         ) and element.isAbstract:
-            text = "<i>%s</i>" % text
+            text = f"<i>{text}</i>"
 
         cell.set_property("markup", text)
 
@@ -160,7 +160,7 @@ class NamespaceView(Gtk.TreeView):
             element = model.get_value(iter, 0)
             element.name = new_text
         except Exception as e:
-            log.error('Could not create path from string "%s"' % path_str)
+            log.error(f'Could not create path from string "{path_str}"')
 
     def on_drag_begin(self, context):
         return True
@@ -249,7 +249,7 @@ class NamespaceView(Gtk.TreeView):
                     element.package = dest_element
 
             except AttributeError as e:
-                log.info("Unable to drop data %s" % e)
+                log.info(f"Unable to drop data {e}")
                 context.finish(False, False, time)
             else:
                 context.finish(True, True, time)
@@ -552,7 +552,7 @@ class Namespace(UIComponent, ActionProvider):
             self.event_manager.handle(DiagramShow(element))
 
         else:
-            log.debug("No action defined for element %s" % type(element).__name__)
+            log.debug(f"No action defined for element {type(element).__name__}")
 
     @action(name="tree-view-rename", label=_("Rename"), accel="F2")
     def tree_view_rename_selected(self):
@@ -581,7 +581,7 @@ class Namespace(UIComponent, ActionProvider):
         diagram.package = element
 
         if element:
-            diagram.name = "%s diagram" % element.name
+            diagram.name = f"{element.name} diagram"
         else:
             diagram.name = "New diagram"
 
@@ -627,7 +627,7 @@ class Namespace(UIComponent, ActionProvider):
         package.package = element
 
         if element:
-            package.name = "%s package" % element.name
+            package.name = f"{element.name} package"
         else:
             package.name = "New model"
 

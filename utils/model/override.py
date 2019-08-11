@@ -58,11 +58,7 @@ class Overrides:
                 deps = ()
                 if len(words) > 3 and words[2] == "derives":
                     deps = tuple(words[3:])
-                self.overrides[func] = (
-                    deps,
-                    "".join(rest),
-                    "%d: %s" % (startline, line),
-                )
+                self.overrides[func] = (deps, "".join(rest), f"{startline:d}: {line}")
             elif words[0] == "comment":
                 pass  # ignore comments
             else:

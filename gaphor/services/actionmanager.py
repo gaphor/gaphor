@@ -71,7 +71,7 @@ class ActionManager(Service):
         logger.info("Loading action provider services")
 
         for service, name in self.component_registry.all(ActionProvider):
-            logger.debug("Service is %s" % service)
+            logger.debug(f"Service is {service}")
             self.register_action_provider(service)
 
         self.event_manager.subscribe(self._service_initialized_handler)
@@ -81,14 +81,14 @@ class ActionManager(Service):
 
     def execute(self, action_id, active=None):
 
-        logger.debug("Executing action, action_id is %s" % action_id)
+        logger.debug(f"Executing action, action_id is {action_id}")
 
         a = self.get_action(action_id)
         if a:
             a.activate()
             self.event_manager.handle(ActionExecuted(action_id, a))
         else:
-            logger.warning("Unknown action %s" % action_id)
+            logger.warning(f"Unknown action {action_id}")
 
     def update_actions(self):
 
@@ -103,7 +103,7 @@ class ActionManager(Service):
 
     def register_action_provider(self, action_provider):
 
-        logger.debug("Registering action provider %s" % action_provider)
+        logger.debug(f"Registering action provider {action_provider}")
 
         try:
             # Check if the action provider is not already registered
@@ -136,11 +136,11 @@ class ActionManager(Service):
     def _service_initialized_handler(self, event):
 
         logger.debug("Handling ServiceInitializedEvent")
-        logger.debug("Service is %s" % event.service)
+        logger.debug(f"Service is {event.service}")
 
         if isinstance(event.service, ActionProvider):
 
-            logger.debug("Loading registered service %s" % event.service)
+            logger.debug(f"Loading registered service {event.service}")
 
             self.register_action_provider(event.service)
 

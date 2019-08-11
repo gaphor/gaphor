@@ -313,7 +313,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super(UnaryRelationshipConnect, self).connect(handle, port):
+        if super().connect(handle, port):
             opposite = self.line.opposite(handle)
             oct = self.get_connected(opposite)
             if oct:
@@ -337,7 +337,7 @@ class UnaryRelationshipConnect(AbstractConnect):
             connections = self.disconnect_connected_items()
             self.disconnect_subject(handle)
 
-        super(UnaryRelationshipConnect, self).disconnect(handle)
+        super().disconnect(handle)
 
 
 class RelationshipConnect(UnaryRelationshipConnect):
@@ -366,4 +366,4 @@ class RelationshipConnect(UnaryRelationshipConnect):
         ):
             return None
 
-        return super(RelationshipConnect, self).allow(handle, port)
+        return super().allow(handle, port)

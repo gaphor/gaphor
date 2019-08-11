@@ -20,7 +20,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
     def construct(self):
-        page = super(ObjectNodePropertyPage, self).construct()
+        page = super().construct()
 
         subject = self.subject
 
@@ -73,7 +73,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     """
 
     def construct(self):
-        page = super(JoinNodePropertyPage, self).construct()
+        page = super().construct()
 
         subject = self.subject
 
@@ -117,7 +117,7 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
     """Flow item element editor."""
 
     def construct(self):
-        page = super(FlowPropertyPageAbstract, self).construct()
+        page = super().construct()
 
         subject = self.subject
 

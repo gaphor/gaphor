@@ -20,7 +20,7 @@ class IncludeConnect(RelationshipConnect):
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(IncludeConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def reconnect(self, handle, port):
         self.reconnect_relationship(
@@ -45,7 +45,7 @@ class ExtendConnect(RelationshipConnect):
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
             return None
 
-        return super(ExtendConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def reconnect(self, handle, port):
         self.reconnect_relationship(

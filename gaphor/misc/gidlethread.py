@@ -182,8 +182,7 @@ class Queue:
 if __name__ == "__main__":
 
     def counter(max):
-        for i in range(max):
-            yield i
+        yield from range(max)
 
     def shower(queue):
         # Never stop reading the queue:

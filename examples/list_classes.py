@@ -45,10 +45,10 @@ file_manager.load(model)
 # Find all classes using factory select.
 for cls in element_factory.select(lambda e: e.isKindOf(UML.Class)):
 
-    print("Found class %s" % cls.name)
+    print(f"Found class {cls.name}")
 
     if options.attrs:
 
         for attr in cls.ownedAttribute:
 
-            print(" Attribute: %s" % attr.name)
+            print(f" Attribute: {attr.name}")

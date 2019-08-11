@@ -80,7 +80,7 @@ class Toolbox(UIComponent, ActionProvider):
             button.set_icon_widget(icon)
             button.action_name = action_name
             if label:
-                button.set_tooltip_text("%s (%s)" % (label, shortcut))
+                button.set_tooltip_text(f"{label} ({shortcut})")
 
             # Enable Drag and Drop
             if action_name != "toolbox-pointer":
@@ -166,7 +166,7 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox = self._toolbox
         if shortcut and toolbox:
             action_name = self.shortcuts.get(shortcut)
-            log.debug("Action for shortcut %s: %s" % (shortcut, action_name))
+            log.debug(f"Action for shortcut {shortcut}: {action_name}")
             if not action_name:
                 return
 

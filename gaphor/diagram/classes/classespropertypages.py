@@ -198,7 +198,7 @@ class AttributesPage(PropertyPageBase):
     name = "Attributes"
 
     def __init__(self, item):
-        super(AttributesPage, self).__init__()
+        super().__init__()
         self.item = item
         self.watcher = item.subject.watcher()
 
@@ -271,7 +271,7 @@ class OperationsPage(PropertyPageBase):
     name = "Operations"
 
     def __init__(self, item):
-        super(OperationsPage, self).__init__()
+        super().__init__()
         self.item = item
         self.watcher = item.subject.watcher()
 
@@ -352,7 +352,7 @@ class DependencyPropertyPage(PropertyPageBase):
     )
 
     def __init__(self, item):
-        super(DependencyPropertyPage, self).__init__()
+        super().__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = self.item.watcher()
@@ -423,7 +423,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
             return None
 
         # TODO: use Gtk.Frame here
-        frame = Gtk.Frame.new("%s (: %s)" % (title, end.subject.type.name))
+        frame = Gtk.Frame.new(f"{title} (: {end.subject.type.name})")
         vbox = Gtk.VBox()
         vbox.set_border_width(6)
         vbox.set_spacing(6)
@@ -434,7 +434,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         return frame
 
     def construct(self):
-        page = super(AssociationPropertyPage, self).construct()
+        page = super().construct()
 
         if not self.subject:
             return page
@@ -516,7 +516,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                 else:
                     expander = Gtk.Expander()
                     expander.set_use_markup(True)
-                    expander.set_label("<b>%s</b>" % name)
+                    expander.set_label(f"<b>{name}</b>")
                     expander.add(page)
                     expander.show_all()
                     vbox.pack_start(expander, False, True, 0)

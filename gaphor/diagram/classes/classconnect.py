@@ -183,7 +183,7 @@ class ImplementationConnect(RelationshipConnect):
         ):
             return None
 
-        return super(ImplementationConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def reconnect(self, handle, port):
         line = self.line

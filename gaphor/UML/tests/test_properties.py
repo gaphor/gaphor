@@ -131,12 +131,12 @@ def test_association_1_n():
     b1.two = a1
     assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
     assert a1 in b1.two
-    assert a1.one is b1, "%s/%s" % (a1.one, b1)
+    assert a1.one is b1, f"{a1.one}/{b1}"
     b1.two = a1
     b1.two = a1
     assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
     assert a1 in b1.two
-    assert a1.one is b1, "%s/%s" % (a1.one, b1)
+    assert a1.one is b1, f"{a1.one}/{b1}"
     # assert len(a1._observers.get('__unlink__')) == 0
     # assert len(b1._observers.get('__unlink__')) == 0
 
@@ -449,23 +449,23 @@ def test_derivedunion():
     A.u = derivedunion("u", object, 0, "*", A.a, A.b)
 
     a = A()
-    assert len(a.a) == 0, "a.a = %s" % a.a
-    assert len(a.u) == 0, "a.u = %s" % a.u
+    assert len(a.a) == 0, f"a.a = {a.a}"
+    assert len(a.u) == 0, f"a.u = {a.u}"
     a.a = b = A()
     a.a = c = A()
-    assert len(a.a) == 2, "a.a = %s" % a.a
+    assert len(a.a) == 2, f"a.a = {a.a}"
     assert b in a.a
     assert c in a.a
-    assert len(a.u) == 2, "a.u = %s" % a.u
+    assert len(a.u) == 2, f"a.u = {a.u}"
     assert b in a.u
     assert c in a.u
 
     a.b = d = A()
-    assert len(a.a) == 2, "a.a = %s" % a.a
+    assert len(a.a) == 2, f"a.a = {a.a}"
     assert b in a.a
     assert c in a.a
     assert d == a.b
-    assert len(a.u) == 3, "a.u = %s" % a.u
+    assert len(a.u) == 3, f"a.u = {a.u}"
     assert b in a.u
     assert c in a.u
     assert d in a.u
@@ -616,15 +616,11 @@ def test_derivedunion_events():
         del a.a1
         assert len(events) == 2, len(events)
         assert events[0].property is A.derived_a
-        assert events[0].new_value is a.a2, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[3].new_value,
+        assert events[0].new_value is a.a2, "{} {} {}".format(
+            a.a1, a.a2, events[3].new_value
         )
-        assert events[0].old_value is old_a1, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[3].old_value,
+        assert events[0].old_value is old_a1, "{} {} {}".format(
+            a.a1, a.a2, events[3].old_value
         )
         assert events[1].property is A.a1
 
@@ -633,15 +629,11 @@ def test_derivedunion_events():
         del a.a2
         assert len(events) == 2, len(events)
         assert events[0].property is A.derived_a
-        assert events[0].new_value is None, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[5].new_value,
+        assert events[0].new_value is None, "{} {} {}".format(
+            a.a1, a.a2, events[5].new_value
         )
-        assert events[0].old_value is old_a2, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[5].old_value,
+        assert events[0].old_value is old_a2, "{} {} {}".format(
+            a.a1, a.a2, events[5].old_value
         )
         assert events[1].property is A.a2
 

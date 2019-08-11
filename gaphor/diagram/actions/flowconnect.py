@@ -38,7 +38,7 @@ class FlowConnect(UnaryRelationshipConnect):
         ):
             return None
 
-        return super(FlowConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def reconnect(self, handle, port):
         line = self.line
@@ -78,7 +78,7 @@ class FlowConnect(UnaryRelationshipConnect):
             adapter.combine_nodes()
 
     def disconnect_subject(self, handle):
-        super(FlowConnect, self).disconnect_subject(handle)
+        super().disconnect_subject(handle)
         line = self.line
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
@@ -117,7 +117,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         ):
             return None
 
-        return super(FlowForkDecisionNodeConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def combine_nodes(self):
         """
@@ -193,14 +193,14 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         For readability, parameters are named after the classes used by
         Join/Fork nodes.
         """
-        super(FlowForkDecisionNodeConnect, self).connect_subject(handle)
+        super().connect_subject(handle)
 
         # Switch class for self.element Join/Fork depending on the number
         # of incoming/outgoing edges.
         self.combine_nodes()
 
     def disconnect_subject(self, handle):
-        super(FlowForkDecisionNodeConnect, self).disconnect_subject(handle)
+        super().disconnect_subject(handle)
         if self.element.combined:
             self.decombine_nodes()
 

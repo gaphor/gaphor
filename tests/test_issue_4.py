@@ -17,7 +17,7 @@ class CyclicDiagramTestCase(TestCase):
     # services = TestCase.services + ['undo_manager']
 
     def setUp(self):
-        super(CyclicDiagramTestCase, self).setUp()
+        super().setUp()
 
     def test_bug(self):
         """

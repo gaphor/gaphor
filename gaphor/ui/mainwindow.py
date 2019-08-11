@@ -195,7 +195,7 @@ class MainWindow(Service, ActionProvider):
         """
         if self.window:
             if self.filename:
-                title = "%s - %s" % (self.title, self.filename)
+                title = f"{self.title} - {self.filename}"
             else:
                 title = self.title
             if self.model_changed:

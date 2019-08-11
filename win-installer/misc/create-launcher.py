@@ -90,7 +90,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 }
     """
 
-    launch_code = "import sys; from %s import %s; sys.exit(%s())" % (module, func, func)
+    launch_code = f"import sys; from {module} import {func}; sys.exit({func}())"
     return template % launch_code
 
 

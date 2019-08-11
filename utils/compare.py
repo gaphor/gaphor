@@ -48,10 +48,10 @@ class Compare:
             msg += " <canvas>:"
         else:
             if self.show_id:
-                msg += " %s" % element.id
+                msg += f" {element.id}"
             n = element.get("name")
             if n:
-                msg += " (%s)" % n
+                msg += f" ({n})"
             if self.show_id or n:
                 msg += ":"
 
@@ -62,16 +62,16 @@ class Compare:
         )
 
         if name:
-            msg += ".%s" % name
+            msg += f".{name}"
             if value:
                 if isref:
                     if self.show_id:
-                        msg += " = %s" % value
+                        msg += f" = {value}"
                     obj = factory.lookup(value)
                     if hasattr(obj, "name"):
-                        msg += " (%s)" % obj.name
+                        msg += f" ({obj.name})"
                 else:
-                    msg += " = %s" % value
+                    msg += f" = {value}"
 
         self.out(msg)
 
@@ -84,7 +84,7 @@ class Compare:
         try:
             gaphor.storage.load_elements(elements, factory)
         except Exception as e:
-            self.out("! File %s could not be loaded completely." % filename)
+            self.out(f"! File {filename} could not be loaded completely.")
             self.out("! Trying to diff on parsed elements only.")
             self.out(e)
         return elements, factory
@@ -183,7 +183,7 @@ class Compare:
 if __name__ == "__main__":
     import sys
 
-    usage = "usage: %s [-v][-h|--help] old_model new_model" % sys.argv[0]
+    usage = f"usage: {sys.argv[0]} [-v][-h|--help] old_model new_model"
     files = []
     show_id = False
 
@@ -196,7 +196,7 @@ if __name__ == "__main__":
                 print(usage)
                 sys.exit(0)
             else:
-                print('%s: invalid option "%s".' % (sys.argv[0], arg))
+                print(f'{sys.argv[0]}: invalid option "{arg}".')
                 print(usage)
                 sys.exit(1)
         else:

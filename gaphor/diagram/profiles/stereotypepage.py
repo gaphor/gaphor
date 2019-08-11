@@ -21,7 +21,7 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
 
     # Stereotype/Attributes
     col = Gtk.TreeViewColumn.new()
-    col.set_title("%s / %s" % (_("Stereotype"), _("Attribute")))
+    col.set_title("{} / {}".format(_("Stereotype"), _("Attribute")))
     col.set_expand(True)
     renderer = Gtk.CellRendererToggle()
     renderer.set_property("active", True)

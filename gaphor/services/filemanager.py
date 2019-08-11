@@ -83,7 +83,7 @@ class FileManager(Service, ActionProvider):
             self.action_group.add_action(action)
 
         for i in range(0, (MAX_RECENT - 1)):
-            action = Gtk.Action.new("file-recent-%d" % i, None, None, None)
+            action = Gtk.Action.new(f"file-recent-{i:d}", None, None, None)
             action.set_property("visible", False)
             self.action_group.add_action(action)
             action.connect("activate", self.load_recent, i)
@@ -140,14 +140,14 @@ class FileManager(Service, ActionProvider):
             self.recent_files = recent_files
 
         for i in range(0, (MAX_RECENT - 1)):
-            action = self.action_group.get_action("file-recent-%d" % i)
+            action = self.action_group.get_action(f"file-recent-{i:d}")
             action.set_property("visible", False)
 
         for i, filename in enumerate(recent_files):
-            id = "file-recent%d" % i
-            action = self.action_group.get_action("file-recent-%d" % i)
+            id = f"file-recent{i:d}"
+            action = self.action_group.get_action(f"file-recent-{i:d}")
             action.props.label = "_%d. %s" % (i + 1, filename.replace("_", "__"))
-            action.props.tooltip = "Load %s." % filename
+            action.props.tooltip = f"Load {filename}."
             action.props.visible = True
 
     def load_recent(self, action, index):

@@ -36,7 +36,7 @@ class BuildPyWithSubCommands(build_py):
 
 
 version_file = os.path.join(os.path.dirname(__file__), "gaphor", "__init__.py")
-with io.open(version_file, encoding="utf8") as version_file:
+with open(version_file, encoding="utf8") as version_file:
     version_match = re.search(
         r"^__version__ = ['\"]([^'\"]*)['\"]", version_file.read(), re.M
     )
@@ -48,7 +48,7 @@ with io.open(version_file, encoding="utf8") as version_file:
 BuildPyWithSubCommands.sub_commands.append(("build_uml", None))
 
 readme = os.path.join(os.path.dirname(__file__), "README.md")
-with io.open(readme, encoding="utf8") as readme:
+with open(readme, encoding="utf8") as readme:
     long_description = readme.read()
 
 setup(

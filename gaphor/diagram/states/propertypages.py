@@ -22,7 +22,7 @@ class TransitionPropertyPage(NamedItemPropertyPage):
     """Transition property page allows to edit guard specification."""
 
     def construct(self):
-        page = super(TransitionPropertyPage, self).construct()
+        page = super().construct()
 
         subject = self.subject
 
@@ -62,7 +62,7 @@ class StatePropertyPage(NamedItemPropertyPage):
     """State property page."""
 
     def construct(self):
-        page = super(StatePropertyPage, self).construct()
+        page = super().construct()
 
         subject = self.subject
 
