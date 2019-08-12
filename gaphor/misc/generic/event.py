@@ -12,15 +12,17 @@ to have different configurations for them -- you should use local API
 and have one instance of Manager object per application instance.
 """
 
-from typing import Callable, Set
+from typing import Callable, Set, TypeVar
 
 from gaphor.misc.generic.registry import Registry, TypeAxis
 
 
 __all__ = "Manager"
 
+T = TypeVar("T")
 EventType = type
-Handler = Callable[[EventType], None]
+Handler = Callable[[object], None]
+HandlerSet = Set[Handler]
 
 
 class Manager:
@@ -34,22 +36,22 @@ class Manager:
 
     def __init__(self):
         axes = (("event_type", TypeAxis()),)
-        self.registry = Registry[EventType, Set[Handler]](*axes)
+        self.registry = Registry[HandlerSet, EventType](*axes)
 
-    def subscribe(self, handler, event_type):
+    def subscribe(self, handler: Handler, event_type: EventType) -> None:
         """ Subscribe ``handler`` to specified ``event_type``"""
         handler_set = self.registry.get_registration(event_type)
         if handler_set is None:
             handler_set = self._register_handler_set(event_type)
         handler_set.add(handler)
 
-    def unsubscribe(self, handler, event_type):
+    def unsubscribe(self, handler: Handler, event_type: EventType) -> None:
         """ Unsubscribe ``handler`` from ``event_type``"""
         handler_set = self.registry.get_registration(event_type)
         if handler_set and handler in handler_set:
             handler_set.remove(handler)
 
-    def handle(self, event):
+    def handle(self, event: object) -> None:
         """ Fire ``event``
 
         All subscribers will be executed with no determined order.
@@ -59,14 +61,14 @@ class Manager:
             for handler in set(handler_set):
                 handler(event)
 
-    def _register_handler_set(self, event_type):
+    def _register_handler_set(self, event_type: EventType) -> HandlerSet:
         """ Register new handler set for ``event_type``.
         """
-        handler_set: Set[Handler] = set()
+        handler_set: HandlerSet = set()
         self.registry.register(handler_set, event_type)
         return handler_set
 
-    def subscriber(self, event_type):
+    def subscriber(self, event_type: EventType) -> Callable[[Handler], Handler]:
         """ Decorator for subscribing handlers
 
         Works like this:
@@ -83,7 +85,7 @@ class Manager:
 
         """
 
-        def registrator(func):
+        def registrator(func: Handler) -> Handler:
             self.subscribe(func, event_type)
             return func
 

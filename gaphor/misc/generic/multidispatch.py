@@ -9,7 +9,7 @@ The interface has been made in line with `functools.singledispatch`.
 Note that this module does not support annotated functions.
 """
 
-from typing import cast, Any, Callable, Tuple, Type
+from typing import cast, Any, Callable, Generic, TypeVar
 
 import functools
 import inspect
@@ -18,10 +18,10 @@ from gaphor.misc.generic.registry import Registry, TypeAxis
 
 __all__ = "multidispatch"
 
+T = TypeVar("T", bound="Callable")
 
-def multidispatch(
-    *argtypes: Type[object]
-) -> Callable[[Callable[..., Any]], "FunctionDispatcher"]:
+
+def multidispatch(*argtypes: type) -> Callable[[T], "FunctionDispatcher[T]"]:
     """ Declare function as multidispatch
 
     This decorator takes ``argtypes`` argument types and replace decorated
@@ -29,7 +29,7 @@ def multidispatch(
     multiple dispatch feature.
     """
 
-    def _replace_with_dispatcher(func: Callable[..., Any]) -> "FunctionDispatcher":
+    def _replace_with_dispatcher(func: T) -> "FunctionDispatcher[T]":
         nonlocal argtypes
         argspec = inspect.getfullargspec(func)
         if not argtypes:
@@ -39,8 +39,9 @@ def multidispatch(
                 arity -= 1
             argtypes = (object,) * arity
 
-        dispatcher = functools.update_wrapper(
-            FunctionDispatcher(argspec, len(argtypes)), func
+        dispatcher = cast(
+            FunctionDispatcher[T],
+            functools.update_wrapper(FunctionDispatcher(argspec, len(argtypes)), func),
         )
         dispatcher.register_rule(func, *argtypes)
         return dispatcher
@@ -48,7 +49,7 @@ def multidispatch(
     return _replace_with_dispatcher
 
 
-class FunctionDispatcher:
+class FunctionDispatcher(Generic[T]):
     """ Multidispatcher for functions
 
     This object dispatch calls to function by its argument types. Usually it is
@@ -72,9 +73,9 @@ class FunctionDispatcher:
         self.params_arity = params_arity
 
         axis = [(f"arg_{n:d}", TypeAxis()) for n in range(params_arity)]
-        self.registry = Registry[type, Callable[..., Any]](*axis)
+        self.registry = Registry[T, type](*axis)
 
-    def check_rule(self, rule: Callable[..., Any], *argtypes: Any) -> None:
+    def check_rule(self, rule: T, *argtypes: type) -> None:
         # Check if we have the right number of parametrized types
         if len(argtypes) != self.params_arity:
             raise TypeError(
@@ -82,18 +83,18 @@ class FunctionDispatcher:
             )
 
         # Check if we have the same argspec (by number of args)
-        rule_argspec = inspect.getfullargspec(rule)  # type ignore
+        rule_argspec = inspect.getfullargspec(rule)
         left_spec = tuple(x and len(x) or 0 for x in rule_argspec[:4])
         right_spec = tuple(x and len(x) or 0 for x in self.argspec[:4])
         if left_spec != right_spec:
             raise TypeError("Rule does not conform to previous implementations.")
 
-    def register_rule(self, rule: Callable[..., Any], *argtypes: Any) -> None:
+    def register_rule(self, rule: T, *argtypes: type) -> None:
         """ Register new ``rule`` for ``argtypes``."""
         self.check_rule(rule, *argtypes)
         self.registry.register(rule, *argtypes)
 
-    def register(self, *argtypes: Any) -> Callable[..., Any]:
+    def register(self, *argtypes: type) -> Callable[[T], T]:
         """ Decorator for registering new case for multidispatch
 
         New case will be registered for types identified by ``argtypes``. The
@@ -102,7 +103,7 @@ class FunctionDispatcher:
         also indicated the number of arguments multidispatch dispatches on.
         """
 
-        def register_rule(func: Callable[..., Any]) -> Callable[..., Any]:
+        def register_rule(func: T) -> T:
             self.register_rule(func, *argtypes)
             return func
 
