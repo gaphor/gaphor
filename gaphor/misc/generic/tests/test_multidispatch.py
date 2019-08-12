@@ -8,11 +8,19 @@ from gaphor.misc.generic.multidispatch import multidispatch
 def create_dispatcher(
     params_arity, args=None, varargs=None, keywords=None, defaults=None
 ):
-    from inspect import ArgSpec
+    from inspect import FullArgSpec
     from gaphor.misc.generic.multidispatch import FunctionDispatcher
 
     return FunctionDispatcher(
-        ArgSpec(args=args, varargs=varargs, keywords=keywords, defaults=defaults),
+        FullArgSpec(
+            args=args,
+            varargs=varargs,
+            varkw=keywords,
+            defaults=defaults,
+            kwonlyargs=[],
+            kwonlydefaults={},
+            annotations={},
+        ),
         params_arity,
     )
 

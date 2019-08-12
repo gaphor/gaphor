@@ -9,6 +9,8 @@ The interface has been made in line with `functools.singledispatch`.
 Note that this module does not support annotated functions.
 """
 
+from typing import cast, Any, Callable, Tuple, Type
+
 import functools
 import inspect
 
@@ -17,7 +19,9 @@ from gaphor.misc.generic.registry import Registry, TypeAxis
 __all__ = "multidispatch"
 
 
-def multidispatch(*argtypes):
+def multidispatch(
+    *argtypes: Type[object]
+) -> Callable[[Callable[..., Any]], "FunctionDispatcher"]:
     """ Declare function as multidispatch
 
     This decorator takes ``argtypes`` argument types and replace decorated
@@ -25,7 +29,7 @@ def multidispatch(*argtypes):
     multiple dispatch feature.
     """
 
-    def _replace_with_dispatcher(func):
+    def _replace_with_dispatcher(func: Callable[..., Any]) -> "FunctionDispatcher":
         nonlocal argtypes
         argspec = inspect.getfullargspec(func)
         if not argtypes:
@@ -33,7 +37,7 @@ def multidispatch(*argtypes):
             if isinstance(func, type):
                 # It's a class we deal with:
                 arity -= 1
-            argtypes = [object] * arity
+            argtypes = (object,) * arity
 
         dispatcher = functools.update_wrapper(
             FunctionDispatcher(argspec, len(argtypes)), func
@@ -53,7 +57,7 @@ class FunctionDispatcher:
     You should not manually create objects of this type.
     """
 
-    def __init__(self, argspec, params_arity):
+    def __init__(self, argspec: "inspect.FullArgSpec", params_arity: int):
         """ Initialize dispatcher with ``argspec`` of type
         :class:`inspect.ArgSpec` and ``params_arity`` that represent number
         params."""
@@ -68,9 +72,9 @@ class FunctionDispatcher:
         self.params_arity = params_arity
 
         axis = [(f"arg_{n:d}", TypeAxis()) for n in range(params_arity)]
-        self.registry = Registry(*axis)
+        self.registry = Registry[type, Callable[..., Any]](*axis)
 
-    def check_rule(self, rule, *argtypes):
+    def check_rule(self, rule: Callable[..., Any], *argtypes: Any) -> None:
         # Check if we have the right number of parametrized types
         if len(argtypes) != self.params_arity:
             raise TypeError(
@@ -78,18 +82,18 @@ class FunctionDispatcher:
             )
 
         # Check if we have the same argspec (by number of args)
-        rule_argspec = inspect.getfullargspec(rule)
+        rule_argspec = inspect.getfullargspec(rule)  # type ignore
         left_spec = tuple(x and len(x) or 0 for x in rule_argspec[:4])
         right_spec = tuple(x and len(x) or 0 for x in self.argspec[:4])
         if left_spec != right_spec:
             raise TypeError("Rule does not conform to previous implementations.")
 
-    def register_rule(self, rule, *argtypes):
+    def register_rule(self, rule: Callable[..., Any], *argtypes: Any) -> None:
         """ Register new ``rule`` for ``argtypes``."""
         self.check_rule(rule, *argtypes)
         self.registry.register(rule, *argtypes)
 
-    def register(self, *argtypes):
+    def register(self, *argtypes: Any) -> Callable[..., Any]:
         """ Decorator for registering new case for multidispatch
 
         New case will be registered for types identified by ``argtypes``. The
@@ -98,13 +102,13 @@ class FunctionDispatcher:
         also indicated the number of arguments multidispatch dispatches on.
         """
 
-        def register_rule(func):
+        def register_rule(func: Callable[..., Any]) -> Callable[..., Any]:
             self.register_rule(func, *argtypes)
             return func
 
         return register_rule
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
         """ Dispatch call to appropriate rule."""
         trimmed_args = args[: self.params_arity]
         rule = self.registry.lookup(*trimmed_args)
@@ -113,7 +117,7 @@ class FunctionDispatcher:
         return rule(*args, **kwargs)
 
 
-def _arity(argspec):
+def _arity(argspec: "inspect.FullArgSpec") -> int:
     """ Determinal positional arity of argspec."""
     args = argspec.args if argspec.args else []
     defaults = argspec.defaults if argspec.defaults else []

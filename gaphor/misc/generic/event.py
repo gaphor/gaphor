@@ -12,12 +12,15 @@ to have different configurations for them -- you should use local API
 and have one instance of Manager object per application instance.
 """
 
-from collections import namedtuple
+from typing import Callable, Set
 
 from gaphor.misc.generic.registry import Registry, TypeAxis
 
 
 __all__ = "Manager"
+
+EventType = type
+Handler = Callable[[EventType], None]
 
 
 class Manager:
@@ -31,7 +34,7 @@ class Manager:
 
     def __init__(self):
         axes = (("event_type", TypeAxis()),)
-        self.registry = Registry(*axes)
+        self.registry = Registry[EventType, Set[Handler]](*axes)
 
     def subscribe(self, handler, event_type):
         """ Subscribe ``handler`` to specified ``event_type``"""
@@ -59,7 +62,7 @@ class Manager:
     def _register_handler_set(self, event_type):
         """ Register new handler set for ``event_type``.
         """
-        handler_set = set()
+        handler_set: Set[Handler] = set()
         self.registry.register(handler_set, event_type)
         return handler_set
 

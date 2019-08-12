@@ -1,6 +1,6 @@
 """ Tests for :module:`gaphor.misc.generic.event`."""
 
-
+from typing import List
 from gaphor.misc.generic.event import Manager
 
 
@@ -156,7 +156,7 @@ def test_unsubscribe_event_inheritance():
 
 class Event:
     def __init__(self):
-        self.effects = []
+        self.effects: List[object] = []
 
 
 class EventA(Event):
