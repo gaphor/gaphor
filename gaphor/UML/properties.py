@@ -85,11 +85,11 @@ class umlproperty(Generic[T, G]):
 
     @overload
     def __get__(self, obj: None, class_=None) -> "umlproperty":
-        pass
+        ...
 
     @overload
     def __get__(self, obj, class_=None) -> G:
-        pass
+        ...
 
     def __get__(self, obj, class_=None):
         if obj:

@@ -7,7 +7,7 @@ class Service(metaclass=abc.ABCMeta):
     """
 
     @abc.abstractmethod
-    def shutdown(self):
+    def shutdown(self) -> None:
         """
         Shutdown the services, free resources.
         """

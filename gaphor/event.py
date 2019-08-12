@@ -2,13 +2,15 @@
 Application wide events are managed here.
 """
 
+from gaphor.abc import Service
+
 
 class ServiceEvent:
     """
     An event emitted by a service.
     """
 
-    def __init__(self, service):
+    def __init__(self, service: Service):
         self.service = service
 
 
@@ -17,7 +19,7 @@ class ServiceInitializedEvent(ServiceEvent):
     This event is emitted every time a new service has been initialized.
     """
 
-    def __init__(self, name, service):
+    def __init__(self, name: str, service: Service):
         self.name = name
         self.service = service
 
@@ -27,7 +29,7 @@ class ServiceShutdownEvent(ServiceEvent):
     This event is emitted every time a service has been shut down.
     """
 
-    def __init__(self, name, service):
+    def __init__(self, name: str, service: Service):
         self.name = name
         self.service = service
 
