@@ -18,7 +18,7 @@ from gaphor.misc.generic.registry import Registry, TypeAxis
 
 __all__ = "multidispatch"
 
-T = TypeVar("T", bound="Callable")
+T = TypeVar("T", bound=Callable[..., Any])
 
 
 def multidispatch(*argtypes: type) -> Callable[[T], "FunctionDispatcher[T]"]:

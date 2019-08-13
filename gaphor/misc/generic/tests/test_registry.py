@@ -44,7 +44,7 @@ def test_subtyping_on_axes():
 
 
 def test_query_subtyping_on_axes():
-    registry: Registry[str, type] = Registry(("type", TypeAxis()))
+    registry: Registry[str, object] = Registry(("type", TypeAxis()))
 
     target1 = "one"
     registry.register(target1, object)
@@ -65,7 +65,7 @@ def test_query_subtyping_on_axes():
 
 
 def test_two_axes():
-    registry: Registry[Union[str, object], Union[type, str]] = Registry(
+    registry: Registry[Union[str, object], Union[object, str]] = Registry(
         ("type", TypeAxis()), ("name", SimpleAxis())
     )
 
