@@ -7,7 +7,7 @@ from gaphor.diagram.classes.association import AssociationItem
 class AssociationItemEditor(AbstractEditor):
     def __init__(self, item):
         self._item = item
-        self._edit = None
+        self._edit: AssociationItem = None
 
     def is_editable(self, x, y):
         """Find out what's located at point (x, y), is it in the

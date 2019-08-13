@@ -69,7 +69,7 @@ class AbstractGroup(metaclass=abc.ABCMeta):
 
 
 # Until we can deal with types (esp. typing.Any) we use this as a workaround:
-@Group.register(None, object)
+@Group.register(None, object)  # type: ignore
 class NoParentGroup(AbstractGroup):
     def group(self):
         pass
