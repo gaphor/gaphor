@@ -9,6 +9,8 @@ The interface has been made in line with `functools.singledispatch`.
 Note that this module does not support annotated functions.
 """
 
+from __future__ import annotations
+
 from typing import cast, Any, Callable, Generic, TypeVar
 
 import functools
@@ -21,7 +23,7 @@ __all__ = "multidispatch"
 T = TypeVar("T", bound=Callable[..., Any])
 
 
-def multidispatch(*argtypes: type) -> Callable[[T], "FunctionDispatcher[T]"]:
+def multidispatch(*argtypes: type) -> Callable[[T], FunctionDispatcher[T]]:
     """ Declare function as multidispatch
 
     This decorator takes ``argtypes`` argument types and replace decorated
@@ -29,7 +31,7 @@ def multidispatch(*argtypes: type) -> Callable[[T], "FunctionDispatcher[T]"]:
     multiple dispatch feature.
     """
 
-    def _replace_with_dispatcher(func: T) -> "FunctionDispatcher[T]":
+    def _replace_with_dispatcher(func: T) -> FunctionDispatcher[T]:
         nonlocal argtypes
         argspec = inspect.getfullargspec(func)
         if not argtypes:
@@ -87,7 +89,9 @@ class FunctionDispatcher(Generic[T]):
         left_spec = tuple(x and len(x) or 0 for x in rule_argspec[:4])
         right_spec = tuple(x and len(x) or 0 for x in self.argspec[:4])
         if left_spec != right_spec:
-            raise TypeError("Rule does not conform to previous implementations.")
+            raise TypeError(
+                f"Rule does not conform to previous implementations: {left_spec} != {right_spec}."
+            )
 
     def register_rule(self, rule: T, *argtypes: type) -> None:
         """ Register new ``rule`` for ``argtypes``."""

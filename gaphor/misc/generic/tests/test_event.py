@@ -1,32 +1,9 @@
 """ Tests for :module:`gaphor.misc.generic.event`."""
 
+from __future__ import annotations
+
 from typing import Callable, List, TypeVar
 from gaphor.misc.generic.event import Manager
-
-
-class Event:
-    def __init__(self) -> None:
-        self.effects: List[object] = []
-
-
-class EventA(Event):
-    pass
-
-
-class EventB(EventA):
-    pass
-
-
-class EventC(Event):
-    pass
-
-
-class EventD(EventA, EventC):
-    pass
-
-
-class EventE(EventD, EventA):
-    pass
 
 
 def make_handler(effect: object) -> Callable[[Event], None]:
@@ -177,3 +154,28 @@ def test_unsubscribe_event_inheritance():
     events.handle(eb)
     assert len(eb.effects) == 1
     assert "handler2" in eb.effects
+
+
+class Event:
+    def __init__(self) -> None:
+        self.effects: List[object] = []
+
+
+class EventA(Event):
+    pass
+
+
+class EventB(EventA):
+    pass
+
+
+class EventC(Event):
+    pass
+
+
+class EventD(EventA, EventC):
+    pass
+
+
+class EventE(EventD, EventA):
+    pass
