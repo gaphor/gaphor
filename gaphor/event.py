@@ -67,6 +67,6 @@ class ActionExecuted:
     Once an operation has successfully been executed this event is raised.
     """
 
-    def __init__(self, name, action):
+    def __init__(self, name: str, action: object) -> None:
         self.name = name
         self.action = action
