@@ -20,7 +20,7 @@ class PackageItem(ElementPresentation, Named):
             Text(
                 text=lambda: stereotypes_str(
                     self.subject,
-                    ("profile",) if isinstance(self.subject, UML.Profile) else (),
+                    isinstance(self.subject, UML.Profile) and ("profile",) or (),
                 ),
                 style={"min-width": 0, "min-height": 0},
             ),

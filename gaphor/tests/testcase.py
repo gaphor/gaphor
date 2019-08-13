@@ -5,6 +5,7 @@ Everything is about services so the TestCase can define it's required
 services and start off.
 """
 
+from typing import Type, TypeVar
 import logging
 import unittest
 from io import StringIO
@@ -18,6 +19,8 @@ from gaphor.diagram.grouping import Group
 
 # For DiagramItemConnector aspect:
 import gaphor.ui.diagramtools
+
+T = TypeVar("T")
 
 log = logging.getLogger("Gaphor")
 log.setLevel(logging.WARNING)
@@ -45,7 +48,7 @@ class TestCase(unittest.TestCase):
     def get_service(self, name):
         return Application.get_service(name)
 
-    def create(self, item_cls, subject_cls=None, subject=None):
+    def create(self, item_cls: Type[T], subject_cls=None, subject=None) -> T:
         """
         Create an item with specified subject.
         """

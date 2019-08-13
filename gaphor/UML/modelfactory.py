@@ -8,11 +8,12 @@ Functions collected in this module allow to
 
 """
 
+from typing import Sequence, Iterable
 import itertools
 from gaphor.UML.uml2 import *
 
 
-def stereotypes_str(element, stereotypes=()):
+def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
     """
     Identify stereotypes of an UML metamodel instance and return coma
     separated stereotypes as string.
@@ -25,7 +26,9 @@ def stereotypes_str(element, stereotypes=()):
     """
     # generate string with stereotype names separated by coma
     if element:
-        applied = (stereotype_name(st) for st in get_applied_stereotypes(element))
+        applied: Iterable[str] = (
+            stereotype_name(st) for st in get_applied_stereotypes(element)
+        )
     else:
         applied = ()
     s = ", ".join(itertools.chain(stereotypes, applied))

@@ -2,6 +2,8 @@
 Support classes for dealing with text.
 """
 
+from typing import Tuple
+
 from enum import Enum
 import cairo
 from gi.repository import GLib, Pango, PangoCairo
@@ -51,12 +53,14 @@ def text_draw_focus_box(context, x, y, w, h):
             cr.restore()
 
 
-def text_size(cr, text, font, width=-1, default_size=(0, 0)):
+def text_size(
+    cr, text: str, font: str, width=-1, default_size: Tuple[int, int] = (0, 0)
+) -> Tuple[int, int]:
     if not text:
         return default_size
 
     layout = _text_layout(cr, text, font, width)
-    return layout.get_pixel_size()
+    return layout.get_pixel_size()  # type: ignore
 
 
 def text_draw(cr, text, font, calculate_pos, width=-1, default_size=(0, 0)):

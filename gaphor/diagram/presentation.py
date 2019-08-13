@@ -3,7 +3,7 @@ import ast
 import gaphas
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
-from gaphor.UML import Presentation
+from gaphor.UML.presentation import Presentation, S
 from gaphor.diagram.text import text_point_at_line, TextAlign
 
 
@@ -49,7 +49,7 @@ def from_package_str(item):
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
 
 
-class ElementPresentation(Presentation, gaphas.Element):
+class ElementPresentation(Presentation[S], gaphas.Element):
     """
     Presentation for Gaphas Element (box-like) items.
 
@@ -106,7 +106,7 @@ class ElementPresentation(Presentation, gaphas.Element):
         self.update_shapes()
 
 
-class LinePresentation(Presentation, gaphas.Line):
+class LinePresentation(Presentation[S], gaphas.Line):
     def __init__(
         self,
         id=None,

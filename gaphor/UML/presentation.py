@@ -2,11 +2,15 @@
 Base code for presentation elements
 """
 
+from typing import Generic, TypeVar
 from gaphor.UML.properties import umlproperty
 from gaphor.UML.uml2 import Element
 
 
-class Presentation(Element):
+S = TypeVar("S", bound=Element)
+
+
+class Presentation(Element, Generic[S]):
     """
     This presentation is used to link the behaviors of `gaphor.UML.Element` and `gaphas.Item`.
     """
@@ -21,7 +25,7 @@ class Presentation(Element):
 
         self.watch("subject")
 
-    subject: umlproperty[Element, Element]
+    subject: umlproperty[S, S]
 
     def watch(self, path, handler=None):
         """
