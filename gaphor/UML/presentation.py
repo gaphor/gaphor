@@ -4,7 +4,7 @@ Base code for presentation elements
 
 from typing import Generic, TypeVar
 from gaphor.UML.properties import umlproperty
-from gaphor.UML.uml2 import Element
+from gaphor.UML.element import Element
 
 
 S = TypeVar("S", bound=Element)
