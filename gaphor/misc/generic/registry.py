@@ -7,6 +7,8 @@ This implementation was borrowed from happy[1] project by Chris Rossi.
 
 __all__ = ("Registry", "SimpleAxis", "TypeAxis")
 
+from __future__ import annotations
+
 from typing import (
     Any,
     Dict,
@@ -15,6 +17,7 @@ from typing import (
     Generator,
     List,
     Optional,
+    Sequence,
     Tuple,
     Type,
     TypeVar,
@@ -65,7 +68,7 @@ class Registry(Generic[T, K]):
         return self._query(self._tree, objs, axes)
 
     def _query(
-        self, tree_node: "_TreeNode[T]", objs: List[Optional[K]], axes: List[Axis]
+        self, tree_node: _TreeNode[T], objs: List[Optional[K]], axes: List[Axis]
     ) -> Generator[Optional[T], None, None]:
         """ Recursively traverse registration tree, from left to right, most
         specific to least specific, returning the first target found on a
@@ -77,7 +80,7 @@ class Registry(Generic[T, K]):
 
             # Skip non-participating nodes
             if obj is None:
-                next_node = tree_node.get(None, None)
+                next_node: Optional[_TreeNode[T]] = tree_node.get(None, None)
                 if next_node is not None:
                     yield from self._query(next_node, objs[1:], axes[1:])
             else:
@@ -87,7 +90,7 @@ class Registry(Generic[T, K]):
                     yield from self._query(tree_node[match_key], objs[1:], axes[1:])
 
     def _align_with_axes(
-        self, args: Tuple[S, ...], kw: Dict[str, S]
+        self, args: Sequence[S], kw: Dict[str, S]
     ) -> List[Optional[S]]:
         """ Create a list matching up all args and kwargs with their
         corresponding axes, in order, using ``None`` as a placeholder for

@@ -11,7 +11,7 @@ Note that this module does not support annotated functions.
 
 from __future__ import annotations
 
-from typing import cast, Any, Callable, Generic, TypeVar
+from typing import cast, Any, Callable, Generic, TypeVar, Union
 
 import functools
 import inspect
@@ -20,7 +20,8 @@ from gaphor.misc.generic.registry import Registry, TypeAxis
 
 __all__ = "multidispatch"
 
-T = TypeVar("T", bound=Callable[..., Any])
+T = TypeVar("T", bound=Union[Callable[..., Any], type])
+ArgType = Union[type, None]
 
 
 def multidispatch(*argtypes: type) -> Callable[[T], FunctionDispatcher[T]]:
@@ -60,7 +61,9 @@ class FunctionDispatcher(Generic[T]):
     You should not manually create objects of this type.
     """
 
-    def __init__(self, argspec: "inspect.FullArgSpec", params_arity: int):
+    registry: Registry[T, ArgType]
+
+    def __init__(self, argspec: inspect.FullArgSpec, params_arity: int) -> None:
         """ Initialize dispatcher with ``argspec`` of type
         :class:`inspect.ArgSpec` and ``params_arity`` that represent number
         params."""
@@ -75,9 +78,9 @@ class FunctionDispatcher(Generic[T]):
         self.params_arity = params_arity
 
         axis = [(f"arg_{n:d}", TypeAxis()) for n in range(params_arity)]
-        self.registry = Registry[T, type](*axis)
+        self.registry = Registry(*axis)
 
-    def check_rule(self, rule: T, *argtypes: type) -> None:
+    def check_rule(self, rule: T, *argtypes: ArgType) -> None:
         # Check if we have the right number of parametrized types
         if len(argtypes) != self.params_arity:
             raise TypeError(
@@ -93,12 +96,12 @@ class FunctionDispatcher(Generic[T]):
                 f"Rule does not conform to previous implementations: {left_spec} != {right_spec}."
             )
 
-    def register_rule(self, rule: T, *argtypes: type) -> None:
+    def register_rule(self, rule: T, *argtypes: ArgType) -> None:
         """ Register new ``rule`` for ``argtypes``."""
         self.check_rule(rule, *argtypes)
         self.registry.register(rule, *argtypes)
 
-    def register(self, *argtypes: type) -> Callable[[T], T]:
+    def register(self, *argtypes: ArgType) -> Callable[[T], T]:
         """ Decorator for registering new case for multidispatch
 
         New case will be registered for types identified by ``argtypes``. The
@@ -122,7 +125,7 @@ class FunctionDispatcher(Generic[T]):
         return rule(*args, **kwargs)
 
 
-def _arity(argspec: "inspect.FullArgSpec") -> int:
+def _arity(argspec: inspect.FullArgSpec) -> int:
     """ Determinal positional arity of argspec."""
     args = argspec.args if argspec.args else []
     defaults = argspec.defaults if argspec.defaults else []

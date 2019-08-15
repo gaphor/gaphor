@@ -8,7 +8,7 @@ gaphor.adapter package.
 import abc
 
 from gaphor import UML
-from gaphor.misc.generic.multidispatch import multidispatch
+from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
 
 
 class ConnectBase(metaclass=abc.ABCMeta):
@@ -45,8 +45,13 @@ class ConnectBase(metaclass=abc.ABCMeta):
         """
 
 
+# Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
+# This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
+IConnect: FunctionDispatcher[ConnectBase]
+
+
 @multidispatch(object, object)
-class IConnect(ConnectBase):
+class IConnect(ConnectBase):  # type: ignore
     """
     This function is used by the HandleTool to allow connecting
     lines to element items. For each specific case (Element, Line) an

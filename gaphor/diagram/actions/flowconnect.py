@@ -2,6 +2,8 @@
 Flow item adapter connections.
 """
 
+from typing import Type
+
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect, UnaryRelationshipConnect
 from gaphor.diagram.actions.action import (
@@ -143,7 +145,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
 
             # determine flow class:
             if [f for f in join_node.incoming if isinstance(f, UML.ObjectFlow)]:
-                flow_class = UML.ObjectFlow
+                flow_class: Type[UML.ActivityEdge] = UML.ObjectFlow
             else:
                 flow_class = UML.ControlFlow
 

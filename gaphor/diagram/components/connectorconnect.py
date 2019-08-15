@@ -215,14 +215,14 @@ class ConnectorConnectBase(AbstractConnect):
             self.drop_uml(line, c)
 
 
-@IConnect.register(ComponentItem, ConnectorItem)  # type: ignore
+@IConnect.register(ComponentItem, ConnectorItem)
 class ComponentConnectorConnect(ConnectorConnectBase):
     """Connection of connector item to a component."""
 
     pass
 
 
-@IConnect.register(InterfaceItem, ConnectorItem)  # type: ignore
+@IConnect.register(InterfaceItem, ConnectorItem)
 class InterfaceConnectorConnect(ConnectorConnectBase):
     """Connect connector to an interface to maintain assembly connection.
 

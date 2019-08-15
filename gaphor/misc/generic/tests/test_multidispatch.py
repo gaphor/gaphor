@@ -7,7 +7,7 @@ from gaphor.misc.generic.multidispatch import multidispatch
 
 def create_dispatcher(
     params_arity, args=None, varargs=None, keywords=None, defaults=None
-):
+) -> FunctionDispatcher:
     from inspect import FullArgSpec
     from gaphor.misc.generic.multidispatch import FunctionDispatcher
 

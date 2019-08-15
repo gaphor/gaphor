@@ -7,6 +7,8 @@ TODO: partition can be resized only horizontally or vertically, therefore
   or vertical size change
 """
 
+from typing import List
+
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
@@ -31,7 +33,7 @@ class PartitionItem(ElementPresentation, Named):
             Text(
                 text=lambda: stereotypes_str(
                     self.subject,
-                    ("external",) if self.subject and self.subject.isExternal else (),
+                    self.subject and self.subject.isExternal and ("external",) or (),
                 ),
                 style={"min-width": 0, "min-height": 0},
             ),
@@ -54,7 +56,7 @@ class PartitionItem(ElementPresentation, Named):
         self._header_size = self.shape.size(context.cairo)
 
         # get subpartitions
-        children = list(
+        children: List[PartitionItem] = list(
             k for k in self.canvas.get_children(self) if isinstance(k, PartitionItem)
         )
 
@@ -82,7 +84,7 @@ class PartitionItem(ElementPresentation, Named):
             h2.visible = h2.movable = True
 
         if self._subpart:
-            wsum = sum(sl.width for sl in children)
+            wsum: int = sum(sl.width for sl in children)
             self._hdmax = max(sl._header_size[1] for sl in children)
 
             # extend width of swimline due the children but keep the height

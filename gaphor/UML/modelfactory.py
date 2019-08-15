@@ -133,7 +133,7 @@ def get_applied_stereotypes(element):
     return element.appliedStereotype[:].classifier
 
 
-def create_extension(metaclass, stereotype):
+def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
     """
     Create an Extension association between an metaclass and a stereotype.
     """
