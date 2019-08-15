@@ -5,6 +5,7 @@ Implemented using interface item in assembly connector mode, see
 `gaphor.diagram.connector` module for details.
 """
 
+import operator
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect, AbstractConnect
 from gaphor.diagram.components.component import ComponentItem
@@ -214,14 +215,14 @@ class ConnectorConnectBase(AbstractConnect):
             self.drop_uml(line, c)
 
 
-@IConnect.register(ComponentItem, ConnectorItem)
+@IConnect.register(ComponentItem, ConnectorItem)  # type: ignore
 class ComponentConnectorConnect(ConnectorConnectBase):
     """Connection of connector item to a component."""
 
     pass
 
 
-@IConnect.register(InterfaceItem, ConnectorItem)
+@IConnect.register(InterfaceItem, ConnectorItem)  # type: ignore
 class InterfaceConnectorConnect(ConnectorConnectBase):
     """Connect connector to an interface to maintain assembly connection.
 

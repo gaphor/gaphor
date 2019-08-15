@@ -49,7 +49,7 @@ class NodeItem(ElementPresentation, Classified):
                 Text(
                     text=lambda: UML.model.stereotypes_str(
                         self.subject,
-                        ("device",) if isinstance(self.subject, UML.Device) else (),
+                        isinstance(self.subject, UML.Device) and ("device",) or (),
                     ),
                     style={"min-width": 0, "min-height": 0},
                 ),

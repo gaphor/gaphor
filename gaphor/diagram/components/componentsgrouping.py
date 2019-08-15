@@ -6,7 +6,7 @@ from gaphor.diagram.components.artifact import ArtifactItem
 from gaphor.diagram.usecases import UseCaseItem
 
 
-@Group.register(NodeItem, NodeItem)
+@Group.register(NodeItem, NodeItem)  # type: ignore
 class NodeGroup(AbstractGroup):
     """
     Add node to another node.
@@ -19,7 +19,7 @@ class NodeGroup(AbstractGroup):
         del self.parent.subject.nestedNode[self.item.subject]
 
 
-@Group.register(NodeItem, ComponentItem)
+@Group.register(NodeItem, ComponentItem)  # type: ignore
 class NodeComponentGroup(AbstractGroup):
     """
     Add components to node using internal structures.
@@ -64,7 +64,7 @@ class NodeComponentGroup(AbstractGroup):
                 connector.unlink()
 
 
-@Group.register(NodeItem, ArtifactItem)
+@Group.register(NodeItem, ArtifactItem)  # type: ignore
 class NodeArtifactGroup(AbstractGroup):
     """
     Deploy artifact on node.
@@ -87,7 +87,7 @@ class NodeArtifactGroup(AbstractGroup):
                 deployment.unlink()
 
 
-@Group.register(ComponentItem, UseCaseItem)
+@Group.register(ComponentItem, UseCaseItem)  # type: ignore
 class SubsystemUseCaseGroup(AbstractGroup):
     """
     Make subsystem a subject of an use case.
