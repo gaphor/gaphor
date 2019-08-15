@@ -2,14 +2,13 @@
 
 import pytest
 
-from gaphor.misc.generic.multidispatch import multidispatch
+from inspect import FullArgSpec
+from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
 
 
 def create_dispatcher(
     params_arity, args=None, varargs=None, keywords=None, defaults=None
 ) -> FunctionDispatcher:
-    from inspect import FullArgSpec
-    from gaphor.misc.generic.multidispatch import FunctionDispatcher
 
     return FunctionDispatcher(
         FullArgSpec(

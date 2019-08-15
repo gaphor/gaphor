@@ -5,9 +5,9 @@ This implementation was borrowed from happy[1] project by Chris Rossi.
 [1]: http://bitbucket.org/chrisrossi/happy
 """
 
-__all__ = ("Registry", "SimpleAxis", "TypeAxis")
-
 from __future__ import annotations
+
+__all__ = ("Registry", "SimpleAxis", "TypeAxis")
 
 from typing import (
     Any,
@@ -15,11 +15,9 @@ from typing import (
     Generic,
     KeysView,
     Generator,
-    List,
     Optional,
     Sequence,
     Tuple,
-    Type,
     TypeVar,
     Union,
 )
@@ -27,10 +25,11 @@ from typing import (
 K = TypeVar("K")
 S = TypeVar("S")
 T = TypeVar("T")
+V = TypeVar("V")
 Axis = Union["SimpleAxis", "TypeAxis"]
 
 
-class Registry(Generic[T, K]):
+class Registry(Generic[T]):
     """ Registry implementation."""
 
     def __init__(self, *axes: Tuple[str, Axis]):
@@ -59,16 +58,16 @@ class Registry(Generic[T, K]):
 
         return tree_node.target
 
-    def lookup(self, *arg_objs: K, **kw_objs: K) -> Optional[T]:
+    def lookup(self, *arg_objs: V, **kw_objs: V) -> Optional[T]:
         return next(self.query(*arg_objs, **kw_objs), None)
 
-    def query(self, *arg_objs: K, **kw_objs: K) -> Generator[Optional[T], None, None]:
+    def query(self, *arg_objs: V, **kw_objs: V) -> Generator[Optional[T], None, None]:
         objs = self._align_with_axes(arg_objs, kw_objs)
         axes = self._axes
         return self._query(self._tree, objs, axes)
 
     def _query(
-        self, tree_node: _TreeNode[T], objs: List[Optional[K]], axes: List[Axis]
+        self, tree_node: _TreeNode[T], objs: Sequence[Optional[V]], axes: Sequence[Axis]
     ) -> Generator[Optional[T], None, None]:
         """ Recursively traverse registration tree, from left to right, most
         specific to least specific, returning the first target found on a
@@ -91,12 +90,12 @@ class Registry(Generic[T, K]):
 
     def _align_with_axes(
         self, args: Sequence[S], kw: Dict[str, S]
-    ) -> List[Optional[S]]:
+    ) -> Sequence[Optional[S]]:
         """ Create a list matching up all args and kwargs with their
         corresponding axes, in order, using ``None`` as a placeholder for
         skipped axes.  """
         axes_dict = self._axes_dict
-        aligned: List[Optional[S]] = [None for i in range(len(axes_dict))]
+        aligned: Sequence[Optional[S]] = [None for i in range(len(axes_dict))]
 
         args_len = len(args)
         if args_len + len(kw) > len(aligned):

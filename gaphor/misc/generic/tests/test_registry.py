@@ -15,7 +15,7 @@ class DummyB(DummyA):
 
 
 def test_one_axis_no_specificity():
-    registry: Registry[object, str] = Registry(("foo", SimpleAxis()))
+    registry: Registry[object] = Registry(("foo", SimpleAxis()))
     a = object()
     b = object()
     registry.register(a)
@@ -27,7 +27,7 @@ def test_one_axis_no_specificity():
 
 
 def test_subtyping_on_axes():
-    registry: Registry[str, object] = Registry(("type", TypeAxis()))
+    registry: Registry[str] = Registry(("type", TypeAxis()))
 
     target1 = "one"
     registry.register(target1, object)
@@ -44,7 +44,7 @@ def test_subtyping_on_axes():
 
 
 def test_query_subtyping_on_axes():
-    registry: Registry[str, object] = Registry(("type", TypeAxis()))
+    registry: Registry[str] = Registry(("type", TypeAxis()))
 
     target1 = "one"
     registry.register(target1, object)
@@ -65,7 +65,7 @@ def test_query_subtyping_on_axes():
 
 
 def test_two_axes():
-    registry: Registry[Union[str, object], Union[object, str]] = Registry(
+    registry: Registry[Union[str, object]] = Registry(
         ("type", TypeAxis()), ("name", SimpleAxis())
     )
 
@@ -93,9 +93,7 @@ def test_two_axes():
 
 
 def test_get_registration():
-    registry: Registry[str, Union[type, str]] = Registry(
-        ("type", TypeAxis()), ("name", SimpleAxis())
-    )
+    registry: Registry[str] = Registry(("type", TypeAxis()), ("name", SimpleAxis()))
     registry.register("one", object)
     registry.register("two", DummyA, "foo")
     assert registry.get_registration(object) == "one"
@@ -105,26 +103,26 @@ def test_get_registration():
 
 
 def test_register_too_many_keys():
-    registry: Registry[type, str] = Registry(("name", SimpleAxis()))
+    registry: Registry[type] = Registry(("name", SimpleAxis()))
     with pytest.raises(ValueError):
         registry.register(object, "one", "two")
 
 
 def test_lookup_too_many_keys():
-    registry: Registry[object, str] = Registry(("name", SimpleAxis()))
+    registry: Registry[object] = Registry(("name", SimpleAxis()))
     with pytest.raises(ValueError):
         registry.register(registry.lookup("one", "two"))
 
 
 def test_conflict_error():
-    registry: Registry[Union[object, type], str] = Registry(("name", SimpleAxis()))
+    registry: Registry[Union[object, type]] = Registry(("name", SimpleAxis()))
     registry.register(object(), name="foo")
     with pytest.raises(ValueError):
         registry.register(object, "foo")
 
 
 def test_skip_nodes():
-    registry: Registry[str, int] = Registry(
+    registry: Registry[str] = Registry(
         ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
     )
     registry.register("foo", one=1, three=3)
@@ -132,7 +130,7 @@ def test_skip_nodes():
 
 
 def test_miss():
-    registry: Registry[str, int] = Registry(
+    registry: Registry[str] = Registry(
         ("one", SimpleAxis()), ("two", SimpleAxis()), ("three", SimpleAxis())
     )
     registry.register("foo", 1, 2)
@@ -140,9 +138,7 @@ def test_miss():
 
 
 def test_bad_lookup():
-    registry: Registry[int, Union[int, str]] = Registry(
-        ("name", SimpleAxis()), ("grade", SimpleAxis())
-    )
+    registry: Registry[int] = Registry(("name", SimpleAxis()), ("grade", SimpleAxis()))
     with pytest.raises(ValueError):
         registry.register(1, foo=1)
     with pytest.raises(ValueError):

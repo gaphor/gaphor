@@ -21,10 +21,10 @@ from gaphor.misc.generic.registry import Registry, TypeAxis
 __all__ = "multidispatch"
 
 T = TypeVar("T", bound=Union[Callable[..., Any], type])
-ArgType = Union[type, None]
+KeyType = Union[type, None]
 
 
-def multidispatch(*argtypes: type) -> Callable[[T], FunctionDispatcher[T]]:
+def multidispatch(*argtypes: KeyType) -> Callable[[T], FunctionDispatcher[T]]:
     """ Declare function as multidispatch
 
     This decorator takes ``argtypes`` argument types and replace decorated
@@ -61,7 +61,7 @@ class FunctionDispatcher(Generic[T]):
     You should not manually create objects of this type.
     """
 
-    registry: Registry[T, ArgType]
+    registry: Registry[T]
 
     def __init__(self, argspec: inspect.FullArgSpec, params_arity: int) -> None:
         """ Initialize dispatcher with ``argspec`` of type
@@ -80,7 +80,7 @@ class FunctionDispatcher(Generic[T]):
         axis = [(f"arg_{n:d}", TypeAxis()) for n in range(params_arity)]
         self.registry = Registry(*axis)
 
-    def check_rule(self, rule: T, *argtypes: ArgType) -> None:
+    def check_rule(self, rule: T, *argtypes: KeyType) -> None:
         # Check if we have the right number of parametrized types
         if len(argtypes) != self.params_arity:
             raise TypeError(
@@ -96,12 +96,12 @@ class FunctionDispatcher(Generic[T]):
                 f"Rule does not conform to previous implementations: {left_spec} != {right_spec}."
             )
 
-    def register_rule(self, rule: T, *argtypes: ArgType) -> None:
+    def register_rule(self, rule: T, *argtypes: KeyType) -> None:
         """ Register new ``rule`` for ``argtypes``."""
         self.check_rule(rule, *argtypes)
         self.registry.register(rule, *argtypes)
 
-    def register(self, *argtypes: ArgType) -> Callable[[T], T]:
+    def register(self, *argtypes: KeyType) -> Callable[[T], T]:
         """ Decorator for registering new case for multidispatch
 
         New case will be registered for types identified by ``argtypes``. The

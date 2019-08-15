@@ -35,7 +35,7 @@ class Manager:
 
     def __init__(self) -> None:
         axes = (("event_type", TypeAxis()),)
-        self.registry = Registry[HandlerSet, Event](*axes)
+        self.registry = Registry[HandlerSet](*axes)
 
     def subscribe(self, handler: Handler, event_type: Type[Event]) -> None:
         """ Subscribe ``handler`` to specified ``event_type``"""
