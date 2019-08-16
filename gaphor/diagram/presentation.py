@@ -58,6 +58,9 @@ class ElementPresentation(Presentation[S], gaphas.Element):
     the method `update_shapes()` and set self.shape there.
     """
 
+    width: int
+    height: int
+
     def __init__(self, id=None, model=None, shape=None):
         super().__init__(id, model)
         self._shape = shape

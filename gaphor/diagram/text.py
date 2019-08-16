@@ -2,7 +2,7 @@
 Support classes for dealing with text.
 """
 
-from typing import Tuple
+from typing import Any, Tuple, Dict, TypeVar
 
 from enum import Enum
 import cairo
@@ -11,6 +11,8 @@ from gi.repository import GLib, Pango, PangoCairo
 from gaphas.geometry import Rectangle
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.painter import CairoBoundingBoxContext
+
+Font = TypeVar("Font", Dict[str, Any], str)
 
 
 class TextAlign(Enum):
@@ -54,7 +56,7 @@ def text_draw_focus_box(context, x, y, w, h):
 
 
 def text_size(
-    cr, text: str, font: str, width=-1, default_size: Tuple[int, int] = (0, 0)
+    cr, text: str, font: Font, width=-1, default_size: Tuple[int, int] = (0, 0)
 ) -> Tuple[int, int]:
     if not text:
         return default_size
