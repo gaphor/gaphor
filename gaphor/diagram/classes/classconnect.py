@@ -14,7 +14,7 @@ from gaphor.diagram.classes.interface import InterfaceItem
 from gaphor.diagram.classes.association import AssociationItem
 
 
-@IConnect.register(Named, DependencyItem)  # type: ignore
+@IConnect.register(Named, DependencyItem)
 class DependencyConnect(RelationshipConnect):
     """Connect two Named elements using a Dependency."""
 
@@ -68,7 +68,7 @@ class DependencyConnect(RelationshipConnect):
         line.subject = relation
 
 
-@IConnect.register(Classified, GeneralizationItem)  # type: ignore
+@IConnect.register(Classified, GeneralizationItem)
 class GeneralizationConnect(RelationshipConnect):
     """Connect Classifiers with a Generalization relationship."""
 
@@ -84,7 +84,7 @@ class GeneralizationConnect(RelationshipConnect):
         self.line.subject = relation
 
 
-@IConnect.register(Classified, AssociationItem)  # type: ignore
+@IConnect.register(Classified, AssociationItem)
 class AssociationConnect(UnaryRelationshipConnect):
     """Connect association to classifier."""
 
@@ -165,7 +165,7 @@ class AssociationConnect(UnaryRelationshipConnect):
                 old.unlink()
 
 
-@IConnect.register(Named, ImplementationItem)  # type: ignore
+@IConnect.register(Named, ImplementationItem)
 class ImplementationConnect(RelationshipConnect):
     """Connect Interface and a BehavioredClassifier using an Implementation."""
 

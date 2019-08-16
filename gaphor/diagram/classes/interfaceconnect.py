@@ -15,7 +15,7 @@ from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.dependency import DependencyItem
 
 
-@IConnect.register(InterfaceItem, ImplementationItem)  # type: ignore
+@IConnect.register(InterfaceItem, ImplementationItem)
 class ImplementationInterfaceConnect(ImplementationConnect):
     """Connect interface item and a behaviored classifier using an
     implementation.
@@ -40,7 +40,7 @@ class ImplementationInterfaceConnect(ImplementationConnect):
             self.line.request_update()
 
 
-@IConnect.register(InterfaceItem, DependencyItem)  # type: ignore
+@IConnect.register(InterfaceItem, DependencyItem)
 class DependencyInterfaceConnect(DependencyConnect):
     """Connect interface item with dependency item."""
 

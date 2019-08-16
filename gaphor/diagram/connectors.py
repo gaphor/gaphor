@@ -56,7 +56,9 @@ class ConnectBase:
 
 # Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
 # This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
-IConnect = multidispatch(object, object)(ConnectBase)
+IConnect: FunctionDispatcher[Type[ConnectBase]] = multidispatch(object, object)(
+    ConnectBase
+)
 
 
 class AbstractConnect(ConnectBase):
@@ -212,7 +214,7 @@ class UnaryRelationshipConnect(AbstractConnect):
 
             # Check for this entry on line.canvas
             item: Union[ElementPresentation, LinePresentation]
-            for item in gen.presentation:
+            for item in gen.presentation:  # type: ignore
                 # Allow line to be returned. Avoids strange
                 # behaviour during loading
                 if item.canvas is line.canvas and item is not line:

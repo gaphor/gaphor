@@ -14,8 +14,8 @@ from gaphor.diagram.connectors import IConnect, AbstractConnect
 logger = logging.getLogger(__name__)
 
 
-@IConnect.register(CommentItem, CommentLineItem)  # type: ignore
-@IConnect.register(ElementPresentation, CommentLineItem)  # type: ignore
+@IConnect.register(CommentItem, CommentLineItem)
+@IConnect.register(ElementPresentation, CommentLineItem)
 class CommentLineElementConnect(AbstractConnect):
     """Connect a comment line to any element item."""
 
@@ -95,7 +95,7 @@ class CommentLineElementConnect(AbstractConnect):
         super().disconnect(handle)
 
 
-@IConnect.register(LinePresentation, CommentLineItem)  # type: ignore
+@IConnect.register(LinePresentation, CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
     """Connect a comment line to any diagram line."""
 
@@ -158,7 +158,7 @@ class CommentLineLineConnect(AbstractConnect):
         super().disconnect(handle)
 
 
-@IConnect.register(CommentLineItem, LinePresentation)  # type: ignore
+@IConnect.register(CommentLineItem, LinePresentation)
 class InverseCommentLineLineConnect(CommentLineLineConnect):
     """
     In case a line is disconnected that contains a comment-line,
