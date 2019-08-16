@@ -79,7 +79,9 @@ class NoGrouping(AbstractGroup):
         pass
 
 
-Group = multidispatch(object, object)(NoGrouping)
+Group: FunctionDispatcher[Type[AbstractGroup]] = multidispatch(object, object)(
+    NoGrouping
+)
 
 # Until we can deal with types (esp. typing.Any) we use this as a workaround:
 Group.register(None, object)(NoGrouping)
