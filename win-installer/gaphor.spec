@@ -1,4 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import copy_metadata
+
+
 def Datafiles(*filenames, **kw):
     import os
     
@@ -22,11 +25,18 @@ pngfiles = Datafiles('gaphor/ui/pixmaps/*.png')
 block_cipher = None
 
 
-a = Analysis(['gaphor.py'],
+a = Analysis(['gaphor-script.py'],
              pathex=['C:/tools/msys64/home/DYEAW/gaphor'],
              binaries=[],
-             datas=[],
-             hiddenimports=['_struct'],
+             datas=[
+	     	('../gaphor/ui/layout.xml', 'gaphor/ui'),
+		('../gaphor/ui/layout.css', 'gaphor/ui'),
+		('../gaphor/ui/pixmaps/*.png', 'gaphor/ui/pixmaps')
+		]+copy_metadata('gaphor'),
+             hiddenimports=[
+	     'six',
+	     '_struct'
+	     ],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -50,9 +60,6 @@ coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
                a.datas,
-               xmlfiles,
-               pngfiles,
-               cssfiles,
                strip=False,
                upx=False,
                name='gaphor')
