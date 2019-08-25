@@ -17,6 +17,7 @@ OVERRIDE_RE = re.compile(
 class Overrides:
     def __init__(self, filename=None):
         self.overrides = {}
+        self.header = ""
         if filename:
             with open(filename) as fp:
                 self.read_overrides(fp)
@@ -74,6 +75,9 @@ class Overrides:
                     "".join(rest),
                     f"{line_number:d}: {line}",
                 )
+            elif words[0] == "header":
+                assert not self.header
+                self.header = "".join(rest)
             elif words[0] == "comment":
                 pass  # ignore comments
             else:

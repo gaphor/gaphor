@@ -18,7 +18,9 @@ DerivedType = derived
 DerivedunionType = umlproperty
 RedefineType = umlproperty
 
-# 14: override Element
+import gaphor.UML.uml2overrides as overrides
+
+# 17: override Element
 from gaphor.UML.element import Element
 
 
@@ -365,7 +367,7 @@ class Stereotype(Class):
     pass
 
 
-# 17: override Diagram
+# 20: override Diagram
 from gaphor.UML.diagram import Diagram
 
 
@@ -435,7 +437,7 @@ class Parameter(TypedElement, MultiplicityElement):
     operation: umlproperty["Operation", "Operation"]
 
 
-# 20: override Presentation
+# 23: override Presentation
 from gaphor.UML.presentation import Presentation
 
 
@@ -613,7 +615,7 @@ class Region(Namespace, RedefinableElement):
     extendedRegion: umlproperty["Region", Sequence["Region"]]
 
 
-# 23: override Transition
+# 26: override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
     kind: EnumerationType
@@ -781,24 +783,13 @@ NamedElement.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
 NamedElement.name = attribute("name", str)
-# 41: override NamedElement.qualifiedName
-
-
-def namedelement_qualifiedname(self):
-    """
-    Returns the qualified name of the element as a tuple
-    """
-    if self.namespace:
-        return self.namespace.qualifiedName + (self.name,)
-    else:
-        return (self.name,)
-
+# 44: override NamedElement.qualifiedName
 
 NamedElement.qualifiedName = property(
-    namedelement_qualifiedname, doc=namedelement_qualifiedname.__doc__
+    overrides.namedelement_qualifiedname,
+    doc=overrides.namedelement_qualifiedname.__doc__,
 )
 
-del namedelement_qualifiedname
 
 Component.isIndirectlyInstantiated = attribute(
     "isIndirectlyInstantiated", int, default=True
@@ -824,35 +815,10 @@ Property.aggregation = enumeration(
 Property.isDerivedUnion = attribute("isDerivedUnion", int, default=False)
 Property.isDerived = attribute("isDerived", int, default=False)
 Property.isReadOnly = attribute("isReadOnly", int, default=False)
-# 141: override Property.navigability: property
-
-
-def property_navigability(self):
-    """
-    Get navigability of an association end.
-    If no association is related to the property, then unknown navigability
-    is assumed.
-    """
-    assoc = self.association
-    if not assoc or not self.opposite:
-        return None  # assume unknown
-    owner = self.opposite.type
-    if owner and (
-        (type(self.type) in (Class, Interface) and self in owner.ownedAttribute)
-        or self in assoc.navigableOwnedEnd
-    ):
-        return True
-    elif self in assoc.ownedEnd:
-        return None
-    else:
-        return False
-
-
+# 98: override Property.navigability: property
 Property.navigability = property(
-    property_navigability, doc=property_navigability.__doc__
+    overrides.property_navigability, doc=overrides.property_navigability.__doc__
 )
-
-del property_navigability
 
 Behavior.isReentrant = attribute("isReentrant", int)
 BehavioralFeature.isAbstract = attribute("isAbstract", int)
@@ -861,28 +827,10 @@ Comment.body = attribute("body", str)
 PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
-# 246: override Message.messageKind: property
-
-
-def message_messageKind(self):
-    kind = "unknown"
-    if self.sendEvent:
-        kind = "lost"
-        if self.receiveEvent:
-            kind = "complete"
-    elif self.receiveEvent:
-        kind = "found"
-    return kind
-
-
+# 118: override Message.messageKind: property
 Message.messageKind = property(
-    message_messageKind,
-    doc="""
-    MessageKind
-    """,
+    overrides.message_messageKind, doc=overrides.message_messageKind.__doc__
 )
-del message_messageKind
-
 
 Message.messageSort = enumeration(
     "messageSort",
@@ -1367,17 +1315,17 @@ SendOperationEvent.operation = association("operation", Operation, lower=1, uppe
 SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
 ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-# 35: override MultiplicityElement.lower(MultiplicityElement.lowerValue)
+# 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue)
 MultiplicityElement.lower = derived(
     "lower", object, 0, 1, lambda obj: [obj.lowerValue], MultiplicityElement.lowerValue
 )
 
-# 38: override MultiplicityElement.upper(MultiplicityElement.upperValue)
+# 41: override MultiplicityElement.upper(MultiplicityElement.upperValue)
 MultiplicityElement.upper = derived(
     "upper", object, 0, 1, lambda obj: [obj.upperValue], MultiplicityElement.upperValue
 )
 
-# 135: override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
+# 92: override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
 Property.isComposite = derived(
     "isComposite",
     bool,
@@ -1438,30 +1386,10 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 114: override Property.opposite: property
-
-
-def property_opposite(self):
-    """
-    In the case where the property is one navigable end of a binary
-    association with both ends navigable, this gives the other end.
-
-    For Gaphor the property on the other end is returned regardless the
-    navigability.
-    """
-    if self.association is not None and len(self.association.memberEnd) == 2:
-        return (
-            self.association.memberEnd[0] is self
-            and self.association.memberEnd[1]
-            or self.association.memberEnd[0]
-        )
-    return None
-
-
-Property.opposite = property(property_opposite, doc=property_opposite.__doc__)
-
-del property_opposite
-
+# 89: override Property.opposite: property
+Property.opposite = property(
+    overrides.property_opposite, doc=overrides.property_opposite.__doc__
+)
 
 BehavioralFeature.parameter = derivedunion(
     "parameter",
@@ -1553,20 +1481,15 @@ Namespace.ownedMember = derivedunion(
     Class.ownedReception,
     Interface.ownedReception,
 )
-# 99: override Classifier.general: property
-def classifier_general(self):
-    return [g.general for g in self.generalization]
-
-
+# 78: override Classifier.general: property
 Classifier.general = property(
-    classifier_general,
+    lambda self: [g.general for g in self.generalization],
     doc="""
     Return a list of all superclasses for class (iterating the Generalizations.
     """,
 )
-del classifier_general
 
-# 56: override Association.endType(Association.memberEnd, Property.type)
+# 49: override Association.endType(Association.memberEnd, Property.type)
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -1582,51 +1505,35 @@ Association.endType = derived(
 )
 
 
-# 138: override Constraint.context: umlproperty[Namespace, Namespace]
+# 95: override Constraint.context: umlproperty[Namespace, Namespace]
 Constraint.context = derivedunion("context", Namespace, 0, 1)
 
-# 166: override Operation.type: umlproperty[DataType, DataType]
+# 101: override Operation.type: umlproperty[DataType, DataType]
 Operation.type = derivedunion("type", DataType, 0, 1)
 
-# 79: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd)
-# See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
-def extension_metaclass(self):
-    ownedEnd = self.ownedEnd
-    metaend = [e for e in self.memberEnd if e is not ownedEnd]
-    if metaend:
-        return metaend[0].type
-
-
+# 69: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd)
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
 # Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 # Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(
-    extension_metaclass,
-    doc="""References the Class that is extended through an Extension. The
-property is derived from the type of the memberEnd that is not the
-ownedEnd.""",
+    overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__
 )
-del extension_metaclass
 
-# 64: override Class.extension(Extension.metaclass): property
+# 57: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
-def class_extension(self):
-    return list(
-        self.model.select(lambda e: e.isKindOf(Extension) and self is e.metaclass)
-    )
-
 
 # TODO: use those as soon as Extension.metaclass can be used.
 # Class.extension = derived('extension', Extension, 0, '*', class_extension, Extension.metaclass)
 
 Class.extension = property(
-    class_extension,
+    lambda self: self.model.lselect(
+        lambda e: e.isKindOf(Extension) and self is e.metaclass
+    ),
     doc="""References the Extensions that specify additional properties of the
 metaclass. The property is derived from the extensions whose memberEnds
 are typed by the Class.""",
 )
-del class_extension
 
 DirectedRelationship.target = derivedunion(
     "target",
@@ -1669,7 +1576,7 @@ ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, 0, 1)
 ActivityGroup.subgroup = derivedunion(
     "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
 )
-# 96: override Classifier.inheritedMember: umlproperty[NamedElement, Sequence[NamedElement]]
+# 75: override Classifier.inheritedMember: umlproperty[NamedElement, Sequence[NamedElement]]
 Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
 
 StructuredClassifier.role = derivedunion(
@@ -1691,81 +1598,19 @@ Namespace.member = derivedunion(
     Classifier.inheritedMember,
     StructuredClassifier.role,
 )
-# 231: override Component.required: property
-def component_required(self):
-    usages = _pr_interface_deps(self, Usage)
-
-    # realizing classifiers usages
-    # this generator of generators, so flatten it later
-    rc_usages = _pr_rc_interface_deps(self, Usage)
-
-    return tuple(set(itertools.chain(usages, *rc_usages)))
-
-
+# 115: override Component.required: property
 Component.required = property(
-    component_required,
-    doc="""
-    Interfaces required by component.
-    """,
+    overrides.component_required, doc=overrides.component_required.__doc__
 )
-del component_required
 
-# 111: override Namespace.importedMember: umlproperty[PackageableElement, Sequence[PackageableElement]]
+# 86: override Namespace.importedMember: umlproperty[PackageableElement, Sequence[PackageableElement]]
 Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
 
 Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
-# 195: override Component.provided: property
-import itertools
-
-
-def _pr_interface_deps(classifier, dep_type):
-    """
-    Return all interfaces, which are connected to a classifier with given
-    dependency type.
-    """
-    return (
-        dep.supplier[0]
-        for dep in classifier.clientDependency
-        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(Interface)
-    )
-
-
-def _pr_rc_interface_deps(component, dep_type):
-    """
-    Return all interfaces, which are connected to realizing classifiers of
-    specified component. Returned interfaces are connected to realizing
-    classifiers with given dependency type.
-
-    Generator of generators is returned. Do not forget to flat it later.
-    """
-    return (
-        _pr_interface_deps(r.realizingClassifier, dep_type)
-        for r in component.realization
-    )
-
-
-def component_provided(self):
-    implementations = (
-        impl.contract[0]
-        for impl in self.implementation
-        if impl.isKindOf(Implementation)
-    )
-    realizations = _pr_interface_deps(self, Realization)
-
-    # realizing classifiers realizations
-    # this generator of generators, so flatten it later
-    rc_realizations = _pr_rc_interface_deps(self, Realization)
-
-    return tuple(set(itertools.chain(implementations, realizations, *rc_realizations)))
-
-
+# 112: override Component.provided: property
 Component.provided = property(
-    component_provided,
-    doc="""
-    Interfaces provided to component environment.
-    """,
+    overrides.component_provided, doc=overrides.component_provided.__doc__
 )
-del component_provided
 
 Element.owner = derivedunion(
     "owner",
@@ -1816,20 +1661,15 @@ Element.ownedElement = derivedunion(
     DeploymentTarget.deployment,
 )
 ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
-# 265: override StructuredClassifier.part: property
-def structuredclassifier_part(self):
-    return tuple(a for a in self.ownedAttribute if a.isComposite)
-
-
+# 121: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
-    structuredclassifier_part,
+    lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
     doc="""
     Properties owned by a classifier by composition.
 """,
 )
-del structuredclassifier_part
 
-# 108: override Class.superClass: property
+# 83: override Class.superClass: property
 Class.superClass = Classifier.general
 
 ActivityNode.redefinedElement = redefine(
@@ -1871,14 +1711,12 @@ State.redefinedState = redefine(
 Transition.redefinedTransition = redefine(
     Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
 )
-# 169: override Lifeline.parse
+# 104: override Lifeline.parse
 from gaphor.UML.umllex import parse_lifeline
 
 Lifeline.parse = parse_lifeline
-del parse_lifeline
 
-# 174: override Lifeline.render
+# 108: override Lifeline.render
 from gaphor.UML.umllex import render_lifeline
 
 Lifeline.render = render_lifeline
-del render_lifeline
