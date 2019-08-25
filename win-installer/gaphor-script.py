@@ -1,6 +1,5 @@
 #!C:/tools/msys64/home/DYEAW/gaphor/.venv/bin/python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'gaphor','console_scripts','gaphor'
-import importlib_metadata
 
 
 if __name__ == '__main__':

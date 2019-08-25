@@ -2,28 +2,7 @@
 from PyInstaller.utils.hooks import copy_metadata
 
 
-def Datafiles(*filenames, **kw):
-    import os
-    
-    def datafile(path, strip_path=True):
-        parts = path.split('/')
-        path = name = os.path.join(*parts)
-        if strip_path:
-            name = os.path.basename(path)
-        return name, path, 'DATA'
-
-    strip_path = kw.get('strip_path', True)
-    return TOC(
-        datafile(filename, strip_path=strip_path)
-        for filename in filenames
-        if os.path.isfile(filename))
-
-xmlfiles = Datafiles('gaphor/ui/layout.xml')
-cssfiles = Datafiles('gaphor/ui/layout.css')
-pngfiles = Datafiles('gaphor/ui/pixmaps/*.png')
-
 block_cipher = None
-
 
 a = Analysis(['gaphor-script.py'],
              pathex=['C:/tools/msys64/home/DYEAW/gaphor'],
@@ -31,12 +10,10 @@ a = Analysis(['gaphor-script.py'],
              datas=[
 	     	('../gaphor/ui/layout.xml', 'gaphor/ui'),
 		('../gaphor/ui/layout.css', 'gaphor/ui'),
-		('../gaphor/ui/pixmaps/*.png', 'gaphor/ui/pixmaps')
+		('../gaphor/ui/pixmaps/*.png', 'gaphor/ui/pixmaps'),
+		('../LICENSE.txt', 'LICENSE.txt')
 		]+copy_metadata('gaphor'),
-             hiddenimports=[
-	     'six',
-	     '_struct'
-	     ],
+             hiddenimports=['six', '_struct'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
