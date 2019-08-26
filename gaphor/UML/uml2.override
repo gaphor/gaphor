@@ -13,6 +13,7 @@ comment
 %%
 header
 import gaphor.UML.uml2overrides as overrides
+import gaphor.UML.umllex as umllex
 %%
 override Element
 from gaphor.UML.element import Element
@@ -26,14 +27,14 @@ from gaphor.UML.presentation import Presentation
 override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
-    kind: EnumerationType
-    container: AssociationType
-    source: AssociationType
-    target: AssociationType
-    effect: AssociationType
-    guard: AssociationType
-    redefintionContext: DerivedunionType
-    redefinedTransition: RedefineType
+    kind: umlproperty[str, str]
+    container: umlproperty[Region, Region]
+    source: umlproperty[Vertex, Vertex]
+    target: umlproperty[Vertex, Vertex]
+    effect: umlproperty[Behavior, Behavior]
+    guard: umlproperty[Constraint, Constraint]
+    redefintionContext: umlproperty[Classifier, Classifier]
+    redefinedTransition: umlproperty[Transition, Transition]
 %%
 override MultiplicityElement.lower(MultiplicityElement.lowerValue)
 MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
@@ -72,7 +73,7 @@ override Extension.metaclass(Extension.ownedEnd, Association.memberEnd)
 #Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__)
 %%
-override Classifier.inheritedMember: umlproperty[NamedElement, Sequence[NamedElement]]
+override Classifier.inheritedMember: umlproperty[NamedElement, collection[NamedElement]]
 Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 %%
 override Classifier.general: property
@@ -83,7 +84,7 @@ Classifier.general = property(lambda self: [g.general for g in self.generalizati
 override Class.superClass: property
 Class.superClass = Classifier.general
 %%
-override Namespace.importedMember: umlproperty[PackageableElement, Sequence[PackageableElement]]
+override Namespace.importedMember: umlproperty[PackageableElement, collection[PackageableElement]]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 %%
 override Property.opposite: property
@@ -102,12 +103,10 @@ override Operation.type: umlproperty[DataType, DataType]
 Operation.type = derivedunion('type', DataType, 0, 1)
 %%
 override Lifeline.parse
-from gaphor.UML.umllex import parse_lifeline
-Lifeline.parse = parse_lifeline
+Lifeline.parse = umllex.parse_lifeline
 %%
 override Lifeline.render
-from gaphor.UML.umllex import render_lifeline
-Lifeline.render = render_lifeline
+Lifeline.render = umllex.render_lifeline
 %%
 override Component.provided: property
 Component.provided = property(overrides.component_provided, doc=overrides.component_provided.__doc__)
