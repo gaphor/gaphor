@@ -24,6 +24,8 @@ methods:
     save(save_func):  send the value of the property to save_func(name, value)
 """
 
+from __future__ import annotations
+
 __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
 
 import logging
@@ -37,6 +39,7 @@ from typing import (
     TypeVar,
     Optional,
     Callable,
+    Set,
 )
 
 from gaphor.UML.collection import collection, collectionlist
@@ -79,12 +82,12 @@ class umlproperty(Generic[T, G]):
     """
 
     def __init__(self):
-        self._dependent_properties = set()
+        self._dependent_properties: Sequence[umlproperty] = set()
         self.name: str
         self._name: str
 
     @overload
-    def __get__(self, obj: None, class_=None) -> "umlproperty":
+    def __get__(self, obj: None, class_=None) -> umlproperty:
         ...
 
     @overload
@@ -376,7 +379,7 @@ class association(umlproperty[T, G]):
                 self._del(obj, old, from_opposite=from_opposite, do_notify=False)
 
             if do_notify:
-                event = AssociationSetEvent(obj, self, old, value)
+                event: AssociationChangeEvent = AssociationSetEvent(obj, self, old, value)
 
             if value is None:
                 if do_notify:
@@ -431,7 +434,7 @@ class association(umlproperty[T, G]):
             if self.stub:
                 self.stub._del(value, obj, from_opposite=True)
 
-        event = None
+        event: Optional[AssociationChangeEvent] = None
         if self.upper == 1:
             try:
                 delattr(obj, self._name)
@@ -698,7 +701,7 @@ class derivedunion(derived[T, G]):
         if self.single:
             return next(iter(self.subsets)).__get__(obj)
         else:
-            u = set()
+            u: Set[T] = set()
             for s in self.subsets:
                 if s is exclude:
                     continue

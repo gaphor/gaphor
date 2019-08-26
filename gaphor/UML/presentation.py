@@ -3,7 +3,7 @@ Base code for presentation elements
 """
 
 from typing import Generic, TypeVar
-from gaphor.UML.properties import umlproperty
+from gaphor.UML.properties import umlproperty, association
 from gaphor.UML.element import Element
 
 
@@ -25,7 +25,7 @@ class Presentation(Element, Generic[S]):
 
         self.watch("subject")
 
-    subject: umlproperty[S, S]
+    subject: umlproperty[S, S] = association('subject', Element, upper=1, opposite='presentation')
 
     def watch(self, path, handler=None):
         """
@@ -60,11 +60,3 @@ class Presentation(Element, Generic[S]):
         if self.canvas:
             self.canvas.remove(self)
         super().unlink()
-
-    def setup_canvas(self):
-        super().setup_canvas()
-        self.subscribe_all()
-
-    def teardown_canvas(self):
-        self.unsubscribe_all()
-        super().teardown_canvas()

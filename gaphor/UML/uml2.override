@@ -24,6 +24,9 @@ from gaphor.UML.diagram import Diagram
 override Presentation
 from gaphor.UML.presentation import Presentation
 %%
+override Presentation.subject
+# Presentation.subject is directly defined in the Presentation class
+%%
 override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
@@ -36,18 +39,18 @@ class Transition(RedefinableElement, NamedElement):
     redefintionContext: umlproperty[Classifier, Classifier]
     redefinedTransition: umlproperty[Transition, Transition]
 %%
-override MultiplicityElement.lower(MultiplicityElement.lowerValue)
+override MultiplicityElement.lower(MultiplicityElement.lowerValue): umlproperty[str, str]
 MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
 %%
-override MultiplicityElement.upper(MultiplicityElement.upperValue)
+override MultiplicityElement.upper(MultiplicityElement.upperValue): umlproperty[str, str]
 MultiplicityElement.upper = derived('upper', object, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
 %%
-override NamedElement.qualifiedName
+override NamedElement.qualifiedName: property
 
 NamedElement.qualifiedName = property(overrides.namedelement_qualifiedname, doc=overrides.namedelement_qualifiedname.__doc__)
 
 %%
-override Association.endType(Association.memberEnd, Property.type)
+override Association.endType(Association.memberEnd, Property.type): umlproperty[Type, collection[Type]]
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -67,7 +70,7 @@ Class.extension = property(lambda self: self.model.lselect(lambda e: e.isKindOf(
 metaclass. The property is derived from the extensions whose memberEnds
 are typed by the Class.""")
 %%
-override Extension.metaclass(Extension.ownedEnd, Association.memberEnd)
+override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
 #Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 #Extension.metaclass.filter = extension_metaclass
@@ -102,10 +105,10 @@ Property.navigability = property(overrides.property_navigability, doc=overrides.
 override Operation.type: umlproperty[DataType, DataType]
 Operation.type = derivedunion('type', DataType, 0, 1)
 %%
-override Lifeline.parse
+override Lifeline.parse: Callable[[Lifeline, str], None]
 Lifeline.parse = umllex.parse_lifeline
 %%
-override Lifeline.render
+override Lifeline.render: Callable[[Lifeline], str]
 Lifeline.render = umllex.render_lifeline
 %%
 override Component.provided: property

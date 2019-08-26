@@ -3,14 +3,14 @@
 """
 
 import inspect
-from typing import Generic, Type, TypeVar
+from typing import Generic, List, Type, TypeVar
 from gaphor.UML.event import AssociationChangeEvent
 from gaphor.UML.listmixins import querymixin, recursemixin
 
-T = TypeVar("T")
+T = TypeVar("T", covariant=True)
 
 
-class collectionlist(recursemixin, querymixin, list):
+class collectionlist(recursemixin, querymixin, List[T]):
     """
     >>> c = collectionlist()
     >>> c.append('a')
@@ -57,7 +57,7 @@ class collection(Generic[T]):
         self.property = property
         self.object = object
         self.type = type
-        self.items = collectionlist()
+        self.items: collectionlist[T] = collectionlist()
 
     def __len__(self):
         return len(self.items)

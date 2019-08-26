@@ -87,8 +87,13 @@ class ElementPresentation(Presentation[S], gaphas.Element):
 
     def setup_canvas(self):
         super().setup_canvas()
+        self.subscribe_all()
         # Invoke here, since we do not receive events, unless we're attached to a canvas
         self.update_shapes()
+
+    def teardown_canvas(self):
+        self.unsubscribe_all()
+        super().teardown_canvas()
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -126,6 +131,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self.shape_head = shape_head
         self.shape_middle = shape_middle
         self.shape_tail = shape_tail
+
 
         self.fuzziness = 2
         self._shape_head_rect = None
@@ -188,6 +194,14 @@ class LinePresentation(Presentation[S], gaphas.Line):
         ):
             if shape:
                 shape.draw(context, rect)
+
+    def setup_canvas(self):
+        super().setup_canvas()
+        self.subscribe_all()
+
+    def teardown_canvas(self):
+        self.unsubscribe_all()
+        super().teardown_canvas()
 
     def save(self, save_func):
         def save_connection(name, handle):

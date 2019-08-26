@@ -1,5 +1,6 @@
 """Factory for and registration of model elements."""
 
+from typing import Dict
 import uuid
 from contextlib import contextmanager
 from collections import OrderedDict
@@ -35,8 +36,7 @@ class ElementFactory(Service):
         self.element_dispatcher = (
             ElementDispatcher(event_manager) if event_manager else None
         )
-        self._elements = OrderedDict()
-        self._observers = list()
+        self._elements: Dict[str, Element] = OrderedDict()
         self._block_events = 0
 
     def shutdown(self):

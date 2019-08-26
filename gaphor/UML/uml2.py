@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Callable
 from gaphor.UML.properties import (
     umlproperty,
     association,
@@ -22,7 +22,7 @@ from gaphor.UML.element import Element
 class NamedElement(Element):
     visibility: umlproperty[str, str]
     name: umlproperty[str, str]
-    qualifiedName: Any
+    qualifiedName: property
     clientDependency: umlproperty[Dependency, collection[Dependency]]
     supplierDependency: umlproperty[Dependency, collection[Dependency]]
     namespace: umlproperty["Namespace", "Namespace"]
@@ -93,13 +93,13 @@ class Association(Classifier, Relationship):
     memberEnd: umlproperty[Property, collection[Property]]
     ownedEnd: umlproperty[Property, collection[Property]]
     navigableOwnedEnd: umlproperty[Property, collection[Property]]
-    endType: Any
+    endType: umlproperty[Type, collection[Type]]
 
 
 class Extension(Association):
     isRequired: umlproperty[int, int]
     ownedEnd: umlproperty["ExtensionEnd", "ExtensionEnd"]
-    metaclass: Any
+    metaclass: property
 
 
 class Actor(Classifier):
@@ -235,8 +235,8 @@ class MultiplicityElement(Element):
     isOrdered: umlproperty[int, int]
     upperValue: umlproperty[str, str]
     lowerValue: umlproperty[str, str]
-    lower: Any
-    upper: Any
+    lower: umlproperty[str, str]
+    upper: umlproperty[str, str]
 
 
 class StructuralFeature(MultiplicityElement, TypedElement, Feature):
@@ -540,8 +540,8 @@ class Lifeline(NamedElement):
     coveredBy: umlproperty[InteractionFragment, collection[InteractionFragment]]
     interaction: umlproperty["Interaction", "Interaction"]
     discriminator: umlproperty[str, str]
-    parse: Any
-    render: Any
+    parse: Callable[[Lifeline, str], None]
+    render: Callable[[Lifeline], str]
 
 
 class Message(NamedElement):
@@ -610,7 +610,7 @@ class Region(Namespace, RedefinableElement):
     extendedRegion: umlproperty[Region, collection[Region]]
 
 
-# 27: override Transition
+# 30: override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
     kind: umlproperty[str, str]
@@ -777,7 +777,7 @@ ObjectNode.isControlType = attribute('isControlType', int, default=False)
 StructuralFeature.isReadOnly = attribute('isReadOnly', int, default=False)
 NamedElement.visibility = enumeration('visibility', ('public', 'private', 'package', 'protected'), 'public')
 NamedElement.name = attribute('name', str)
-# 45: override NamedElement.qualifiedName
+# 48: override NamedElement.qualifiedName: property
 
 NamedElement.qualifiedName = property(overrides.namedelement_qualifiedname, doc=overrides.namedelement_qualifiedname.__doc__)
 
@@ -798,7 +798,7 @@ Property.aggregation = enumeration('aggregation', ('none', 'shared', 'composite'
 Property.isDerivedUnion = attribute('isDerivedUnion', int, default=False)
 Property.isDerived = attribute('isDerived', int, default=False)
 Property.isReadOnly = attribute('isReadOnly', int, default=False)
-# 99: override Property.navigability: property
+# 102: override Property.navigability: property
 Property.navigability = property(overrides.property_navigability, doc=overrides.property_navigability.__doc__)
 
 Behavior.isReentrant = attribute('isReentrant', int)
@@ -806,7 +806,7 @@ BehavioralFeature.isAbstract = attribute('isAbstract', int)
 Action.effect = attribute('effect', str)
 Comment.body = attribute('body', str)
 PackageImport.visibility = enumeration('visibility', ('public', 'private', 'package', 'protected'), 'public')
-# 117: override Message.messageKind: property
+# 120: override Message.messageKind: property
 Message.messageKind = property(overrides.message_messageKind, doc=overrides.message_messageKind.__doc__)
 
 Message.messageSort = enumeration('messageSort', ('synchCall', 'asynchCall', 'asynchSignal', 'createMessage', 'deleteMessage', 'reply'), 'synchCall')
@@ -838,7 +838,9 @@ Property.datatype = association('datatype', DataType, upper=1, opposite='ownedAt
 DataType.ownedAttribute = association('ownedAttribute', Property, composite=True, opposite='datatype')
 TypedElement.type = association('type', Type, upper=1)
 Element.presentation = association('presentation', Presentation, composite=True, opposite='subject')
-Presentation.subject = association('subject', Element, upper=1, opposite='presentation')
+# 27: override Presentation.subject
+# Presentation.subject is directly defined in the Presentation class
+
 ActivityParameterNode.parameter = association('parameter', Parameter, lower=1, upper=1)
 Dependency.supplier = association('supplier', NamedElement, lower=1, opposite='supplierDependency')
 NamedElement.supplierDependency = association('supplierDependency', Dependency, opposite='supplier')
@@ -1056,20 +1058,20 @@ SendOperationEvent.operation = association('operation', Operation, lower=1, uppe
 SendSignalEvent.signal = association('signal', Signal, lower=1, upper=1)
 ReceiveOperationEvent.operation = association('operation', Operation, lower=1, upper=1)
 ReceiveSignalEvent.signal = association('signal', Signal, lower=1, upper=1)
-# 39: override MultiplicityElement.lower(MultiplicityElement.lowerValue)
+# 42: override MultiplicityElement.lower(MultiplicityElement.lowerValue): umlproperty[str, str]
 MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
 
-# 42: override MultiplicityElement.upper(MultiplicityElement.upperValue)
+# 45: override MultiplicityElement.upper(MultiplicityElement.upperValue): umlproperty[str, str]
 MultiplicityElement.upper = derived('upper', object, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
 
-# 93: override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
+# 96: override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
 Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'], Property.aggregation)
 
 RedefinableElement.redefinedElement = derivedunion('redefinedElement', RedefinableElement, 0, '*', Property.redefinedProperty, Classifier.redefinedClassifier, Operation.redefinedOperation, Interface.redefinedInterface, Behavior.redefinedBehavior, Connector.redefinedConnector)
 Classifier.attribute = derivedunion('attribute', Property, 0, '*', Class.ownedAttribute, DataType.ownedAttribute, Interface.ownedAttribute, UseCase.ownedAttribute, Actor.ownedAttribute, Signal.ownedAttribute)
 Classifier.feature = derivedunion('feature', Feature, 0, '*', Interface.ownedOperation, UseCase.extensionPoint, DataType.ownedOperation, Class.ownedOperation, Association.ownedEnd, Classifier.attribute, StructuredClassifier.ownedConnector, Class.ownedReception, Interface.ownedReception)
 Feature.featuringClassifier = derivedunion('featuringClassifier', Classifier, 1, '*', Property.class_, Property.owningAssociation, Operation.class_, Operation.datatype, Property.datatype, Operation.interface_)
-# 90: override Property.opposite: property
+# 93: override Property.opposite: property
 Property.opposite = property(overrides.property_opposite, doc=overrides.property_opposite.__doc__)
 
 BehavioralFeature.parameter = derivedunion('parameter', Parameter, 0, '*', BehavioralFeature.returnResult, BehavioralFeature.formalParameter)
@@ -1078,12 +1080,12 @@ Transition.redefintionContext = derivedunion('redefintionContext', Classifier, 1
 RedefinableElement.redefinitionContext = derivedunion('redefinitionContext', Classifier, 0, '*', Operation.class_, Property.classifier, Operation.datatype, Transition.redefintionContext)
 NamedElement.namespace = derivedunion('namespace', Namespace, 0, 1, Parameter.ownerReturnParam, Property.interface_, Property.class_, Property.owningAssociation, Operation.class_, EnumerationLiteral.enumeration, Diagram.package, Operation.datatype, Type.package, Property.datatype, Operation.interface_, Package.package, Parameter.ownerFormalParam, Property.useCase, Property.actor, Lifeline.interaction, Message.interaction, Region.stateMachine, Transition.container, Vertex.container, Pseudostate.stateMachine, Region.state, ConnectionPointReference.state)
 Namespace.ownedMember = derivedunion('ownedMember', NamedElement, 0, '*', Interface.ownedOperation, Enumeration.literal, Package.ownedDiagram, Namespace.ownedRule, UseCase.extensionPoint, DataType.ownedOperation, Operation.precondition, BehavioralFeature.returnResult, Profile.ownedStereotype, Class.nestedClassifier, Class.ownedAttribute, BehavioralFeature.formalParameter, Classifier.ownedUseCase, DataType.ownedAttribute, Class.ownedOperation, Operation.postcondition, Association.ownedEnd, Package.ownedClassifier, Interface.ownedAttribute, Operation.bodyCondition, Extend.constraint, Package.nestedPackage, BehavioredClassifier.ownedBehavior, UseCase.ownedAttribute, Actor.ownedAttribute, StateInvariant.invariant, Interaction.lifeline, Interaction.message, StateMachine.region, Region.subvertex, Node.nestedNode, BehavioredClassifier.ownedTrigger, Signal.ownedAttribute, Class.ownedReception, Interface.ownedReception)
-# 79: override Classifier.general: property
+# 82: override Classifier.general: property
 Classifier.general = property(lambda self: [g.general for g in self.generalization], doc="""
     Return a list of all superclasses for class (iterating the Generalizations.
     """)
 
-# 50: override Association.endType(Association.memberEnd, Property.type)
+# 53: override Association.endType(Association.memberEnd, Property.type): umlproperty[Type, collection[Type]]
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -1091,19 +1093,19 @@ Classifier.general = property(lambda self: [g.general for g in self.generalizati
 Association.endType = derived('endType', Type, 0, '*', lambda self: [end.type for end in self.memberEnd if end], Association.memberEnd, Property.type)
 
 
-# 96: override Constraint.context: umlproperty[Namespace, Namespace]
+# 99: override Constraint.context: umlproperty[Namespace, Namespace]
 Constraint.context = derivedunion('context', Namespace, 0, 1)
 
-# 102: override Operation.type: umlproperty[DataType, DataType]
+# 105: override Operation.type: umlproperty[DataType, DataType]
 Operation.type = derivedunion('type', DataType, 0, 1)
 
-# 70: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd)
+# 73: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
 #Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 #Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__)
 
-# 58: override Class.extension(Extension.metaclass): property
+# 61: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
@@ -1121,30 +1123,30 @@ Action.context_ = derivedunion('context_', Classifier, 0, 1)
 Relationship.relatedElement = derivedunion('relatedElement', Element, 1, '*', DirectedRelationship.target, DirectedRelationship.source)
 ActivityGroup.superGroup = derivedunion('superGroup', ActivityGroup, 0, 1)
 ActivityGroup.subgroup = derivedunion('subgroup', ActivityGroup, 0, '*', ActivityPartition.subpartition)
-# 76: override Classifier.inheritedMember: umlproperty[NamedElement, collection[NamedElement]]
+# 79: override Classifier.inheritedMember: umlproperty[NamedElement, collection[NamedElement]]
 Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 
 StructuredClassifier.role = derivedunion('role', ConnectableElement, 0, '*', StructuredClassifier.ownedAttribute, Collaboration.collaborationRole)
 Namespace.member = derivedunion('member', NamedElement, 0, '*', BehavioralFeature.parameter, Namespace.ownedMember, Association.memberEnd, Classifier.inheritedMember, StructuredClassifier.role)
-# 114: override Component.required: property
+# 117: override Component.required: property
 Component.required = property(overrides.component_required, doc=overrides.component_required.__doc__)
 
-# 87: override Namespace.importedMember: umlproperty[PackageableElement, collection[PackageableElement]]
+# 90: override Namespace.importedMember: umlproperty[PackageableElement, collection[PackageableElement]]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 
 Action.input = derivedunion('input', InputPin, 0, '*', SendSignalAction.target)
-# 111: override Component.provided: property
+# 114: override Component.provided: property
 Component.provided = property(overrides.component_provided, doc=overrides.component_provided.__doc__)
 
 Element.owner = derivedunion('owner', Element, 0, 1, Slot.owningInstance, Realization.abstraction, ElementImport.importingNamespace, Generalization.specific, ActivityEdge.activity, ActivityGroup.superGroup, ActivityGroup.activity, PackageImport.importingNamespace, PackageMerge.mergingPackage, NamedElement.namespace, Pseudostate.state)
 Element.ownedElement = derivedunion('ownedElement', Element, 0, '*', Artifact.manifestation, Element.ownedComment, Action.input, Classifier.generalization, Namespace.ownedMember, Namespace.elementImport, Activity.group, Component.realization, Namespace.packageImport, Package.packageExtension, Substitution.contract, ActivityGroup.subgroup, Activity.edge, Activity.node, Action.output, Interaction.fragment, InteractionFragment.generalOrdering, Connector.end, State.entry, State.exit, State.doActivity, Transition.effect, State.statevariant, Transition.guard, DeploymentTarget.deployment)
 ConnectorEnd.definingEnd = derivedunion('definingEnd', Property, 0, 1)
-# 120: override StructuredClassifier.part: property
+# 123: override StructuredClassifier.part: property
 StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""
     Properties owned by a classifier by composition.
 """)
 
-# 84: override Class.superClass: property
+# 87: override Class.superClass: property
 Class.superClass = Classifier.general
 
 ActivityNode.redefinedElement = redefine(ActivityNode, 'redefinedElement', ActivityNode, RedefinableElement.redefinedElement)
@@ -1159,9 +1161,9 @@ Component.ownedMember = redefine(Component, 'ownedMember', PackageableElement, N
 Region.extendedRegion = redefine(Region, 'extendedRegion', Region, RedefinableElement.redefinedElement)
 State.redefinedState = redefine(State, 'redefinedState', State, RedefinableElement.redefinedElement)
 Transition.redefinedTransition = redefine(Transition, 'redefinedTransition', Transition, RedefinableElement.redefinedElement)
-# 105: override Lifeline.parse
+# 108: override Lifeline.parse: Callable[[Lifeline, str], None]
 Lifeline.parse = umllex.parse_lifeline
 
-# 108: override Lifeline.render
+# 111: override Lifeline.render: Callable[[Lifeline], str]
 Lifeline.render = umllex.render_lifeline
 

@@ -83,14 +83,10 @@ def test_association_1_1():
 
     assert a.one is b
     assert b.two is a
-    # assert len(a._observers.get('__unlink__')) == 0
-    # assert len(b._observers.get('__unlink__')) == 0
 
     a.one = B()
     assert a.one is not b
     assert b.two is None
-    # assert len(a._observers.get('__unlink__')) == 0
-    # assert len(b._observers.get('__unlink__')) == 0
 
     c = C()
     try:
@@ -103,8 +99,6 @@ def test_association_1_1():
     del a.one
     assert a.one is None
     assert b.two is None
-    # assert len(a._observers.get('__unlink__')) == 0
-    # assert len(b._observers.get('__unlink__')) == 0
 
 
 def test_association_1_n():
@@ -137,8 +131,6 @@ def test_association_1_n():
     assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
     assert a1 in b1.two
     assert a1.one is b1, f"{a1.one}/{b1}"
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     b1.two = a2
     assert a1 in b1.two
@@ -165,8 +157,6 @@ def test_association_1_n():
     assert a2 in b1.two
     assert a1.one is None
     assert a2.one is b1
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     a2.one = b2
 
@@ -217,8 +207,6 @@ def test_association_n_n():
     assert a1 in b1.two
     assert a1 in b2.two
     assert not a2.one
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     a2.one = b1
     assert len(a1.one) == 2
@@ -243,8 +231,6 @@ def test_association_n_n():
     assert a1 in b2.two
     assert b1 in a2.one
     assert a2 in b1.two
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
 
 def test_association_swap():
@@ -315,15 +301,10 @@ def test_association_unlink_1():
     assert b2 in a1.one
 
     a2.one = b1
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     # remove b1 from all elements connected to b1
     # also the signal should be removed
     b1.unlink()
-
-    # assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
-    # assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
 
     assert b1 not in a1.one
     assert b2 in a1.one
@@ -358,15 +339,10 @@ def test_association_unlink_2():
     assert a1 in b2.two
 
     a2.one = b1
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     # remove b1 from all elements connected to b1
     # also the signal should be removed
     b1.unlink()
-
-    # assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
-    # assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
 
     assert b1 not in a1.one
     assert b2 in a1.one

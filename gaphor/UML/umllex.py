@@ -310,7 +310,7 @@ def parse_operation(el, s):
             fp.unlink()
 
 
-def parse_lifeline(el, s):
+def parse_lifeline(el: uml2.Lifeline, s: str) -> None:
     """
     Parse string s in a lifeline. If a class is defined and can be found
     in the datamodel, then a class is connected to the lifelines 'represents'
@@ -320,8 +320,6 @@ def parse_lifeline(el, s):
     g = m.group
     if not m or g("garbage"):
         el.name = s
-        if hasattr(el, "represents"):
-            del el.represents
     else:
         el.name = g("name") + ": "
         t = g("type")
@@ -331,7 +329,7 @@ def parse_lifeline(el, s):
         # Lifeline.represents: ConnectableElement
 
 
-def render_lifeline(el):
+def render_lifeline(el: uml2.Lifeline) -> str:
     """
     """
     return el.name
