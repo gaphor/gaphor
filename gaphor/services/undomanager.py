@@ -12,6 +12,7 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
+from typing import Callable, List
 import logging
 from gaphas import state
 
@@ -51,7 +52,7 @@ class ActionStack:
     """
 
     def __init__(self):
-        self._actions = []
+        self._actions: List[Callable[[], None]] = []
 
     def add(self, action):
         self._actions.append(action)
@@ -112,8 +113,8 @@ class UndoManager(Service, ActionProvider):
 
     def __init__(self, event_manager):
         self.event_manager = event_manager
-        self._undo_stack = []
-        self._redo_stack = []
+        self._undo_stack: List[ActionStack] = []
+        self._redo_stack: List[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
         self.action_group = build_action_group(self)
@@ -223,7 +224,7 @@ class UndoManager(Service, ActionProvider):
             return
 
         if self._current_transaction:
-            log.warning("Trying to undo a transaction, while in a transaction")
+            logger.warning("Trying to undo a transaction, while in a transaction")
             self.commit_transaction()
         transaction = self._undo_stack.pop()
 

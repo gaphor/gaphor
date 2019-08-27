@@ -2,6 +2,7 @@
 The file service is responsible for loading and saving the user data.
 """
 
+from typing import Optional
 import logging
 
 from gi.repository import Gtk
@@ -167,7 +168,7 @@ class FileManager(Service, ActionProvider):
         generator.  If loading is successful, the filename is set."""
 
         queue = Queue()
-
+        status_window: Optional[StatusWindow]
         try:
             main_window = self.main_window
             status_window = StatusWindow(

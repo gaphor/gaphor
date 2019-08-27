@@ -1,6 +1,7 @@
 """The properties module allows Gaphor properties to be saved to the local
 file system.  These are things like preferences."""
 
+from typing import Dict
 import os
 import pprint
 import sys
@@ -37,7 +38,7 @@ class Properties(Service):
         dictionary for storing properties in memory, and the storage backend.
         This defaults to FileBackend"""
         self.event_manager = event_manager
-        self._resources = {}
+        self._resources: Dict[str, object] = {}
         self._backend = backend or FileBackend()
         self._backend.load(self._resources)
 
@@ -71,7 +72,7 @@ class Properties(Service):
         """
         pprint.pprint(list(self._resources.items()), stream)
 
-    def get(self, key, default=_no_default):
+    def get(self, key: str, default=_no_default):
         """Locate a property.
 
         Resource should be the class of the resource to look for or a string. In

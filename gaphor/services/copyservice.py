@@ -2,6 +2,8 @@
 Copy / Paste functionality
 """
 
+from typing import Dict, Set
+
 import gaphas
 
 from gaphor.UML import Element
@@ -44,7 +46,7 @@ class CopyService(Service, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.main_window = main_window
-        self.copy_buffer = set()
+        self.copy_buffer: Set[Element] = set()
         self.action_group = build_action_group(self)
 
         self.action_group.get_action("edit-copy").props.sensitive = False
@@ -108,7 +110,7 @@ class CopyService(Service, ActionProvider):
         copy_items = [c for c in self.copy_buffer if c.canvas]
 
         # Mapping original id -> new item
-        self._new_items = {}
+        self._new_items: Dict[str, Element] = {}
 
         # Create new id's that have to be used to create the items:
         for ci in copy_items:
