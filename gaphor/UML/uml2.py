@@ -28,7 +28,7 @@ class NamedElement(Element):
     qualifiedName: Any
     clientDependency: umlproperty["Dependency", Sequence["Dependency"]]
     supplierDependency: umlproperty["Dependency", Sequence["Dependency"]]
-    namespace: umlproperty["Namespace", Sequence["Namespace"]]
+    namespace: umlproperty["Namespace", "Namespace"]
 
 
 class PackageableElement(NamedElement):
@@ -43,7 +43,7 @@ class InstanceSpecification(PackageableElement):
 
 
 class EnumerationLiteral(InstanceSpecification):
-    enumeration: umlproperty["Enumeration", Sequence["Enumeration"]]
+    enumeration: umlproperty["Enumeration", "Enumeration"]
 
 
 class Relationship(Element):
@@ -56,8 +56,8 @@ class DirectedRelationship(Relationship):
 
 
 class PackageMerge(DirectedRelationship):
-    mergingPackage: umlproperty["Package", Sequence["Package"]]
-    mergedPackage: umlproperty["Package", Sequence["Package"]]
+    mergingPackage: umlproperty["Package", "Package"]
+    mergedPackage: umlproperty["Package", "Package"]
 
 
 class Namespace(NamedElement):
@@ -70,7 +70,7 @@ class Namespace(NamedElement):
 
 
 class Type(PackageableElement):
-    package: umlproperty["Package", Sequence["Package"]]
+    package: umlproperty["Package", "Package"]
 
 
 class RedefinableElement(NamedElement):
@@ -101,7 +101,7 @@ class Association(Classifier, Relationship):
 
 class Extension(Association):
     isRequired: umlproperty[int, int]
-    ownedEnd: umlproperty["ExtensionEnd", Sequence["ExtensionEnd"]]
+    ownedEnd: umlproperty["ExtensionEnd", "ExtensionEnd"]
     metaclass: Any
 
 
@@ -131,10 +131,10 @@ class Feature(RedefinableElement):
 
 
 class ActivityEdge(RedefinableElement):
-    activity: umlproperty["Activity", Sequence["Activity"]]
+    activity: umlproperty["Activity", "Activity"]
     guard: umlproperty[str, str]
-    source: umlproperty["ActivityNode", Sequence["ActivityNode"]]
-    target: umlproperty["ActivityNode", Sequence["ActivityNode"]]
+    source: umlproperty["ActivityNode", "ActivityNode"]
+    target: umlproperty["ActivityNode", "ActivityNode"]
     inGroup: umlproperty["ActivityGroup", Sequence["ActivityGroup"]]
     redefinedElement: umlproperty["ActivityEdge", Sequence["ActivityEdge"]]
 
@@ -169,12 +169,12 @@ class Abstraction(Dependency):
 
 
 class Realization(Abstraction):
-    realizingClassifier: umlproperty["Classifier", Sequence["Classifier"]]
-    abstraction: umlproperty["Component", Sequence["Component"]]
+    realizingClassifier: umlproperty["Classifier", "Classifier"]
+    abstraction: umlproperty["Component", "Component"]
 
 
 class TypedElement(NamedElement):
-    type: umlproperty["Type", Sequence["Type"]]
+    type: umlproperty["Type", "Type"]
     typeValue: umlproperty[str, str]
 
 
@@ -182,7 +182,7 @@ class ObjectNode(TypedElement, ActivityNode):
     ordering: umlproperty[str, str]
     isControlType: umlproperty[int, int]
     upperBound: umlproperty[str, str]
-    selection: umlproperty["Behavior", Sequence["Behavior"]]
+    selection: umlproperty["Behavior", "Behavior"]
 
 
 class Pin(ObjectNode):
@@ -191,8 +191,8 @@ class Pin(ObjectNode):
 
 class Generalization(DirectedRelationship):
     isSubstitutable: umlproperty[int, int]
-    general: umlproperty["Classifier", Sequence["Classifier"]]
-    specific: umlproperty["Classifier", Sequence["Classifier"]]
+    general: umlproperty["Classifier", "Classifier"]
+    specific: umlproperty["Classifier", "Classifier"]
 
 
 class BehavioredClassifier(Classifier):
@@ -284,22 +284,22 @@ class Interface(Classifier, ConnectableElement):
 
 
 class Include(DirectedRelationship):
-    addition: umlproperty["UseCase", Sequence["UseCase"]]
-    includingCase: umlproperty["UseCase", Sequence["UseCase"]]
+    addition: umlproperty["UseCase", "UseCase"]
+    includingCase: umlproperty["UseCase", "UseCase"]
 
 
 class PackageImport(DirectedRelationship):
     visibility: umlproperty[str, str]
-    importedPackage: umlproperty["Package", Sequence["Package"]]
-    importingNamespace: umlproperty["Namespace", Sequence["Namespace"]]
+    importedPackage: umlproperty["Package", "Package"]
+    importingNamespace: umlproperty["Namespace", "Namespace"]
 
 
 class ProfileApplication(PackageImport):
-    importedProfile: umlproperty["Profile", Sequence["Profile"]]
+    importedProfile: umlproperty["Profile", "Profile"]
 
 
 class ExtensionPoint(RedefinableElement):
-    useCase: umlproperty["UseCase", Sequence["UseCase"]]
+    useCase: umlproperty["UseCase", "UseCase"]
 
 
 class Usage(Dependency):
@@ -309,8 +309,8 @@ class Usage(Dependency):
 class ElementImport(DirectedRelationship):
     visibility: umlproperty[str, str]
     alias: umlproperty[str, str]
-    importingNamespace: umlproperty["Namespace", Sequence["Namespace"]]
-    importedElement: umlproperty["PackageableElement", Sequence["PackageableElement"]]
+    importingNamespace: umlproperty["Namespace", "Namespace"]
+    importedElement: umlproperty["PackageableElement", "PackageableElement"]
 
 
 class Property(StructuralFeature, ConnectableElement):
@@ -319,23 +319,23 @@ class Property(StructuralFeature, ConnectableElement):
     isDerived: umlproperty[int, int]
     isReadOnly: umlproperty[int, int]
     navigability: property
-    datatype: umlproperty["DataType", Sequence["DataType"]]
+    datatype: umlproperty["DataType", "DataType"]
     subsettedProperty: umlproperty["Property", Sequence["Property"]]
-    classifier: umlproperty["Classifier", Sequence["Classifier"]]
+    classifier: umlproperty["Classifier", "Classifier"]
     redefinedProperty: umlproperty["Property", Sequence["Property"]]
-    class_: umlproperty["Class", Sequence["Class"]]
+    class_: umlproperty["Class", "Class"]
     defaultValue: umlproperty[str, str]
-    association: umlproperty["Association", Sequence["Association"]]
-    interface_: umlproperty["Interface", Sequence["Interface"]]
-    owningAssociation: umlproperty["Association", Sequence["Association"]]
-    useCase: umlproperty["UseCase", Sequence["UseCase"]]
-    actor: umlproperty["Actor", Sequence["Actor"]]
+    association: umlproperty["Association", "Association"]
+    interface_: umlproperty["Interface", "Interface"]
+    owningAssociation: umlproperty["Association", "Association"]
+    useCase: umlproperty["UseCase", "UseCase"]
+    actor: umlproperty["Actor", "Actor"]
     isComposite: umlproperty[Namespace, Namespace]
     opposite: property
 
 
 class ExtensionEnd(Property):
-    type: umlproperty["Stereotype", Sequence["Stereotype"]]
+    type: umlproperty["Stereotype", "Stereotype"]
 
 
 class DataType(Classifier):
@@ -349,10 +349,8 @@ class Enumeration(DataType):
 
 class Slot(Element):
     value: umlproperty[str, str]
-    owningInstance: umlproperty[
-        "InstanceSpecification", Sequence["InstanceSpecification"]
-    ]
-    definingFeature: umlproperty["StructuralFeature", Sequence["StructuralFeature"]]
+    owningInstance: umlproperty["InstanceSpecification", "InstanceSpecification"]
+    definingFeature: umlproperty["StructuralFeature", "StructuralFeature"]
 
 
 class ExecutableNode(ActivityNode):
@@ -380,7 +378,7 @@ class Artifact(Classifier, DeployedArtifact):
 
 
 class ActivityParameterNode(ObjectNode):
-    parameter: umlproperty["Parameter", Sequence["Parameter"]]
+    parameter: umlproperty["Parameter", "Parameter"]
 
 
 class PrimitiveType(DataType):
@@ -388,13 +386,13 @@ class PrimitiveType(DataType):
 
 
 class DecisionNode(ControlNode):
-    decisionInput: umlproperty["Behavior", Sequence["Behavior"]]
+    decisionInput: umlproperty["Behavior", "Behavior"]
 
 
 class Package(Namespace, PackageableElement):
     ownedDiagram: umlproperty["Diagram", Sequence["Diagram"]]
     nestedPackage: umlproperty["Package", Sequence["Package"]]
-    package: umlproperty["Package", Sequence["Package"]]
+    package: umlproperty["Package", "Package"]
     ownedClassifier: umlproperty["Type", Sequence["Type"]]
     packageExtension: umlproperty["PackageMerge", Sequence["PackageMerge"]]
     appliedProfile: umlproperty["ProfileApplication", Sequence["ProfileApplication"]]
@@ -410,7 +408,7 @@ class Profile(Package):
 class Behavior(Class):
     isReentrant: umlproperty[int, int]
     redefinedBehavior: umlproperty["Behavior", Sequence["Behavior"]]
-    context: umlproperty["BehavioredClassifier", Sequence["BehavioredClassifier"]]
+    context: umlproperty["BehavioredClassifier", "BehavioredClassifier"]
 
 
 class Activity(Behavior):
@@ -423,18 +421,18 @@ class Activity(Behavior):
 
 
 class Implementation(Realization):
-    contract: umlproperty["Interface", Sequence["Interface"]]
+    contract: umlproperty["Interface", "Interface"]
     implementatingClassifier: umlproperty[
-        "BehavioredClassifier", Sequence["BehavioredClassifier"]
+        "BehavioredClassifier", "BehavioredClassifier"
     ]
 
 
 class Parameter(TypedElement, MultiplicityElement):
     direction: umlproperty[str, str]
     defaultValue: umlproperty[str, str]
-    ownerFormalParam: umlproperty["BehavioralFeature", Sequence["BehavioralFeature"]]
-    ownerReturnParam: umlproperty["BehavioralFeature", Sequence["BehavioralFeature"]]
-    operation: umlproperty["Operation", Sequence["Operation"]]
+    ownerFormalParam: umlproperty["BehavioralFeature", "BehavioralFeature"]
+    ownerReturnParam: umlproperty["BehavioralFeature", "BehavioralFeature"]
+    operation: umlproperty["Operation", "Operation"]
 
 
 # 20: override Presentation
@@ -453,12 +451,12 @@ class BehavioralFeature(Feature, Namespace):
 class Operation(BehavioralFeature):
     isQuery: umlproperty[int, int]
     precondition: umlproperty["Constraint", Sequence["Constraint"]]
-    bodyCondition: umlproperty["Constraint", Sequence["Constraint"]]
+    bodyCondition: umlproperty["Constraint", "Constraint"]
     redefinedOperation: umlproperty["Operation", Sequence["Operation"]]
-    class_: umlproperty["Class", Sequence["Class"]]
-    datatype: umlproperty["DataType", Sequence["DataType"]]
+    class_: umlproperty["Class", "Class"]
+    datatype: umlproperty["DataType", "DataType"]
     postcondition: umlproperty["Constraint", Sequence["Constraint"]]
-    interface_: umlproperty["Interface", Sequence["Interface"]]
+    interface_: umlproperty["Interface", "Interface"]
     raisedException: umlproperty["Type", Sequence["Type"]]
     type: umlproperty[DataType, DataType]
     formalParameter: umlproperty["Parameter", Sequence["Parameter"]]
@@ -469,8 +467,8 @@ class ControlFlow(ActivityEdge):
 
 
 class Substitution(Realization):
-    contract: umlproperty["Classifier", Sequence["Classifier"]]
-    substitutingClassifier: umlproperty["Classifier", Sequence["Classifier"]]
+    contract: umlproperty["Classifier", "Classifier"]
+    substitutingClassifier: umlproperty["Classifier", "Classifier"]
 
 
 class OutputPin(Pin):
@@ -484,7 +482,7 @@ class ValuePin(InputPin):
 class Action(ExecutableNode):
     effect: umlproperty[str, str]
     output: umlproperty["OutputPin", Sequence["OutputPin"]]
-    context_: umlproperty["Classifier", Sequence["Classifier"]]
+    context_: umlproperty["Classifier", "Classifier"]
     input: umlproperty["InputPin", Sequence["InputPin"]]
 
 
@@ -498,30 +496,30 @@ class ExecutionEnvironment(Node):
 
 
 class Extend(DirectedRelationship):
-    extendedCase: umlproperty["UseCase", Sequence["UseCase"]]
+    extendedCase: umlproperty["UseCase", "UseCase"]
     extensionLocation: umlproperty["ExtensionPoint", Sequence["ExtensionPoint"]]
-    extension: umlproperty["UseCase", Sequence["UseCase"]]
-    constraint: umlproperty["Constraint", Sequence["Constraint"]]
+    extension: umlproperty["UseCase", "UseCase"]
+    constraint: umlproperty["Constraint", "Constraint"]
 
 
 class ActivityGroup(Element):
-    activity: umlproperty["Activity", Sequence["Activity"]]
+    activity: umlproperty["Activity", "Activity"]
     edgeContents: umlproperty["ActivityEdge", Sequence["ActivityEdge"]]
     nodeContents: umlproperty["ActivityNode", Sequence["ActivityNode"]]
-    superGroup: umlproperty["ActivityGroup", Sequence["ActivityGroup"]]
+    superGroup: umlproperty["ActivityGroup", "ActivityGroup"]
     subgroup: umlproperty["ActivityGroup", Sequence["ActivityGroup"]]
 
 
 class Constraint(PackageableElement):
     constrainedElement: umlproperty["Element", Sequence["Element"]]
     specification: umlproperty[str, str]
-    owningState: umlproperty["State", Sequence["State"]]
+    owningState: umlproperty["State", "State"]
     context: umlproperty[Namespace, Namespace]
 
 
 class InteractionFragment(NamedElement):
-    enclosingInteraction: umlproperty["Interaction", Sequence["Interaction"]]
-    covered: umlproperty["Lifeline", Sequence["Lifeline"]]
+    enclosingInteraction: umlproperty["Interaction", "Interaction"]
+    covered: umlproperty["Lifeline", "Lifeline"]
     generalOrdering: umlproperty["GeneralOrdering", Sequence["GeneralOrdering"]]
 
 
@@ -532,18 +530,18 @@ class Interaction(Behavior, InteractionFragment):
 
 
 class ExecutionOccurence(InteractionFragment):
-    finish: umlproperty["OccurrenceSpecification", Sequence["OccurrenceSpecification"]]
-    start: umlproperty["OccurrenceSpecification", Sequence["OccurrenceSpecification"]]
+    finish: umlproperty["OccurrenceSpecification", "OccurrenceSpecification"]
+    start: umlproperty["OccurrenceSpecification", "OccurrenceSpecification"]
     behavior: umlproperty["Behavior", Sequence["Behavior"]]
 
 
 class StateInvariant(InteractionFragment):
-    invariant: umlproperty["Constraint", Sequence["Constraint"]]
+    invariant: umlproperty["Constraint", "Constraint"]
 
 
 class Lifeline(NamedElement):
     coveredBy: umlproperty["InteractionFragment", Sequence["InteractionFragment"]]
-    interaction: umlproperty["Interaction", Sequence["Interaction"]]
+    interaction: umlproperty["Interaction", "Interaction"]
     discriminator: umlproperty[str, str]
     parse: Any
     render: Any
@@ -553,15 +551,15 @@ class Message(NamedElement):
     messageKind: property
     messageSort: umlproperty[str, str]
     argument: umlproperty[str, str]
-    signature: umlproperty["NamedElement", Sequence["NamedElement"]]
-    sendEvent: umlproperty["MessageEnd", Sequence["MessageEnd"]]
-    receiveEvent: umlproperty["MessageEnd", Sequence["MessageEnd"]]
-    interaction: umlproperty["Interaction", Sequence["Interaction"]]
+    signature: umlproperty["NamedElement", "NamedElement"]
+    sendEvent: umlproperty["MessageEnd", "MessageEnd"]
+    receiveEvent: umlproperty["MessageEnd", "MessageEnd"]
+    interaction: umlproperty["Interaction", "Interaction"]
 
 
 class MessageEnd(NamedElement):
-    sendMessage: umlproperty["Message", Sequence["Message"]]
-    receiveMessage: umlproperty["Message", Sequence["Message"]]
+    sendMessage: umlproperty["Message", "Message"]
+    receiveMessage: umlproperty["Message", "Message"]
 
 
 class OccurrenceSpecification(InteractionFragment):
@@ -572,22 +570,22 @@ class OccurrenceSpecification(InteractionFragment):
 
 
 class GeneralOrdering(NamedElement):
-    before: umlproperty["OccurrenceSpecification", Sequence["OccurrenceSpecification"]]
-    after: umlproperty["OccurrenceSpecification", Sequence["OccurrenceSpecification"]]
+    before: umlproperty["OccurrenceSpecification", "OccurrenceSpecification"]
+    after: umlproperty["OccurrenceSpecification", "OccurrenceSpecification"]
 
 
 class Connector(Feature):
     kind: umlproperty[str, str]
     redefinedConnector: umlproperty["Connector", Sequence["Connector"]]
-    type: umlproperty["Association", Sequence["Association"]]
+    type: umlproperty["Association", "Association"]
     end: umlproperty["ConnectorEnd", Sequence["ConnectorEnd"]]
     contract: umlproperty["Behavior", Sequence["Behavior"]]
 
 
 class ConnectorEnd(MultiplicityElement):
-    role: umlproperty["ConnectableElement", Sequence["ConnectableElement"]]
-    partWithPort: umlproperty["Property", Sequence["Property"]]
-    definingEnd: umlproperty["Property", Sequence["Property"]]
+    role: umlproperty["ConnectableElement", "ConnectableElement"]
+    partWithPort: umlproperty["Property", "Property"]
+    definingEnd: umlproperty["Property", "Property"]
 
 
 class FlowFinalNode(FinalNode):
@@ -605,13 +603,13 @@ class ForkNode(ControlNode):
 
 class StateMachine(Behavior):
     region: umlproperty["Region", Sequence["Region"]]
-    extendedStateMachine: umlproperty["StateMachine", Sequence["StateMachine"]]
+    extendedStateMachine: umlproperty["StateMachine", "StateMachine"]
 
 
 class Region(Namespace, RedefinableElement):
-    stateMachine: umlproperty["StateMachine", Sequence["StateMachine"]]
+    stateMachine: umlproperty["StateMachine", "StateMachine"]
     subvertex: umlproperty["Vertex", Sequence["Vertex"]]
-    state: umlproperty["State", Sequence["State"]]
+    state: umlproperty["State", "State"]
     extendedRegion: umlproperty["Region", Sequence["Region"]]
 
 
@@ -629,30 +627,30 @@ class Transition(RedefinableElement, NamedElement):
 
 
 class Vertex(NamedElement):
-    container: umlproperty["Region", Sequence["Region"]]
+    container: umlproperty["Region", "Region"]
     outgoing: umlproperty["Transition", Sequence["Transition"]]
     incoming: umlproperty["Transition", Sequence["Transition"]]
 
 
 class Pseudostate(Vertex):
     kind: umlproperty[str, str]
-    stateMachine: umlproperty["StateMachine", Sequence["StateMachine"]]
-    state: umlproperty["State", Sequence["State"]]
+    stateMachine: umlproperty["StateMachine", "StateMachine"]
+    state: umlproperty["State", "State"]
 
 
 class ConnectionPointReference(Vertex):
     entry: umlproperty["Pseudostate", Sequence["Pseudostate"]]
     exit: umlproperty["Pseudostate", Sequence["Pseudostate"]]
-    state: umlproperty["State", Sequence["State"]]
+    state: umlproperty["State", "State"]
 
 
 class State(Vertex, Namespace, RedefinableElement):
-    entry: umlproperty["Behavior", Sequence["Behavior"]]
-    exit: umlproperty["Behavior", Sequence["Behavior"]]
-    doActivity: umlproperty["Behavior", Sequence["Behavior"]]
-    statevariant: umlproperty["Constraint", Sequence["Constraint"]]
-    submachine: umlproperty["StateMachine", Sequence["StateMachine"]]
-    redefinedState: umlproperty["State", Sequence["State"]]
+    entry: umlproperty["Behavior", "Behavior"]
+    exit: umlproperty["Behavior", "Behavior"]
+    doActivity: umlproperty["Behavior", "Behavior"]
+    statevariant: umlproperty["Constraint", "Constraint"]
+    submachine: umlproperty["StateMachine", "StateMachine"]
+    redefinedState: umlproperty["State", "State"]
 
 
 class FinalState(State):
@@ -672,7 +670,7 @@ class ActivityPartition(ActivityGroup, NamedElement):
     isDimension: umlproperty[int, int]
     isExternal: umlproperty[int, int]
     node: umlproperty["ActivityNode", Sequence["ActivityNode"]]
-    represents: umlproperty["Element", Sequence["Element"]]
+    represents: umlproperty["Element", "Element"]
     subpartition: umlproperty["ActivityPartition", Sequence["ActivityPartition"]]
 
 
@@ -686,18 +684,18 @@ class AcceptEventAction(Action):
 
 
 class ReplyAction(Action):
-    replyValue: umlproperty["InputPin", Sequence["InputPin"]]
-    returnInformation: umlproperty["InputPin", Sequence["InputPin"]]
+    replyValue: umlproperty["InputPin", "InputPin"]
+    returnInformation: umlproperty["InputPin", "InputPin"]
 
 
 class UnmarshallAction(Action):
     result: umlproperty["OutputPin", Sequence["OutputPin"]]
-    unmarshallType: umlproperty["Classifier", Sequence["Classifier"]]
-    object: umlproperty["InputPin", Sequence["InputPin"]]
+    unmarshallType: umlproperty["Classifier", "Classifier"]
+    object: umlproperty["InputPin", "InputPin"]
 
 
 class AcceptCallAction(AcceptEventAction):
-    returnInformation: umlproperty["OutputPin", Sequence["OutputPin"]]
+    returnInformation: umlproperty["OutputPin", "OutputPin"]
 
 
 class InvocationAction(Action):
@@ -713,7 +711,7 @@ class Collaboration(StructuredClassifier, BehavioredClassifier):
 
 
 class Trigger(NamedElement):
-    event: umlproperty["Event", Sequence["Event"]]
+    event: umlproperty["Event", "Event"]
 
 
 class Event(PackageableElement):
@@ -737,19 +735,19 @@ class DestructionEvent(Event):
 
 
 class SendOperationEvent(MessageEvent):
-    operation: umlproperty["Operation", Sequence["Operation"]]
+    operation: umlproperty["Operation", "Operation"]
 
 
 class SendSignalEvent(MessageEvent):
-    signal: umlproperty["Signal", Sequence["Signal"]]
+    signal: umlproperty["Signal", "Signal"]
 
 
 class ReceiveOperationEvent(MessageEvent):
-    operation: umlproperty["Operation", Sequence["Operation"]]
+    operation: umlproperty["Operation", "Operation"]
 
 
 class ReceiveSignalEvent(MessageEvent):
-    signal: umlproperty["Signal", Sequence["Signal"]]
+    signal: umlproperty["Signal", "Signal"]
 
 
 class Signal(Classifier):
@@ -757,7 +755,7 @@ class Signal(Classifier):
 
 
 class Reception(BehavioralFeature):
-    signal: umlproperty["Signal", Sequence["Signal"]]
+    signal: umlproperty["Signal", "Signal"]
 
 
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'

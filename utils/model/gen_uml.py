@@ -286,7 +286,7 @@ class Writer:
             head.name,
             a + ")",
             type=f'umlproperty["{head.opposite_class_name}", "{head.opposite_class_name}"]'
-            if head.upper == 1
+            if head.upper == "1"
             else f'umlproperty["{head.opposite_class_name}", Sequence["{head.opposite_class_name}"]]',
         )
 
@@ -318,7 +318,7 @@ class Writer:
                     subs,
                 ),
                 type=f'umlproperty["{d.opposite_class_name}", "{d.opposite_class_name}"]'
-                if d.upper == 1
+                if d.upper == "1"
                 else f'umlproperty["{d.opposite_class_name}", Sequence["{d.opposite_class_name}"]]',
             )
         else:
@@ -338,7 +338,7 @@ class Writer:
                     d.upper == "*" and "'*'" or d.upper,
                 ),
                 type=f'umlproperty["{d.opposite_class_name}", "{d.opposite_class_name}"]'
-                if d.upper == 1
+                if d.upper == "1"
                 else f'umlproperty["{d.opposite_class_name}", Sequence["{d.opposite_class_name}"]]',
             )
         d.written = True
@@ -354,7 +354,7 @@ class Writer:
             "redefine(%s, '%s', %s, %s)"
             % (r.class_name, r.name, r.opposite_class_name, r.redefines),
             type=f'umlproperty["{r.opposite_class_name}", "{r.opposite_class_name}"]'
-            if r.upper == 1
+            if r.upper == "1"
             else f'umlproperty["{r.opposite_class_name}", Sequence["{r.opposite_class_name}"]]',
         )
 
