@@ -18,6 +18,7 @@ from gaphor.UML.collection import collection
 from gaphor.UML.element import Element
 
 
+
 class NamedElement(Element):
     visibility: umlproperty[str, str]
     name: umlproperty[str, str]
@@ -365,6 +366,7 @@ class Stereotype(Class):
 from gaphor.UML.diagram import Diagram
 
 
+
 class DeployedArtifact(NamedElement):
     pass
 
@@ -431,6 +433,7 @@ class Parameter(TypedElement, MultiplicityElement):
 
 # 24: override Presentation
 from gaphor.UML.presentation import Presentation
+
 
 
 class BehavioralFeature(Feature, Namespace):
@@ -620,6 +623,7 @@ class Transition(RedefinableElement, NamedElement):
     redefinedTransition: umlproperty[Transition, Transition]
 
 
+
 class Vertex(NamedElement):
     container: umlproperty[Region, Region]
     outgoing: umlproperty[Transition, collection[Transition]]
@@ -754,7 +758,6 @@ class Reception(BehavioralFeature):
 
 import gaphor.UML.uml2overrides as overrides
 import gaphor.UML.umllex as umllex
-
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
 # class 'InstanceValue' has been stereotyped as 'SimpleAttribute' too
 # class 'Expression' has been stereotyped as 'SimpleAttribute' too
@@ -765,951 +768,402 @@ import gaphor.UML.umllex as umllex
 # class 'LiteralString' has been stereotyped as 'SimpleAttribute' too
 # class 'LiteralNull' has been stereotyped as 'SimpleAttribute' too
 # class 'OpaqueExpression' has been stereotyped as 'SimpleAttribute' too
-Extension.isRequired = attribute("isRequired", int)
-Feature.isStatic = attribute("isStatic", int, default=False)
-RedefinableElement.isLeaf = attribute("isLeaf", int, default=True)
-Generalization.isSubstitutable = attribute("isSubstitutable", int)
-ObjectNode.ordering = enumeration(
-    "ordering", ("unordered", "ordered", "LIFO", "FIFO"), "FIFO"
-)
-ObjectNode.isControlType = attribute("isControlType", int, default=False)
-StructuralFeature.isReadOnly = attribute("isReadOnly", int, default=False)
-NamedElement.visibility = enumeration(
-    "visibility", ("public", "private", "package", "protected"), "public"
-)
-NamedElement.name = attribute("name", str)
+Extension.isRequired = attribute('isRequired', int)
+Feature.isStatic = attribute('isStatic', int, default=False)
+RedefinableElement.isLeaf = attribute('isLeaf', int, default=True)
+Generalization.isSubstitutable = attribute('isSubstitutable', int)
+ObjectNode.ordering = enumeration('ordering', ('unordered', 'ordered', 'LIFO', 'FIFO'), 'FIFO')
+ObjectNode.isControlType = attribute('isControlType', int, default=False)
+StructuralFeature.isReadOnly = attribute('isReadOnly', int, default=False)
+NamedElement.visibility = enumeration('visibility', ('public', 'private', 'package', 'protected'), 'public')
+NamedElement.name = attribute('name', str)
 # 48: override NamedElement.qualifiedName: property
 
-NamedElement.qualifiedName = property(
-    overrides.namedelement_qualifiedname,
-    doc=overrides.namedelement_qualifiedname.__doc__,
-)
+NamedElement.qualifiedName = property(overrides.namedelement_qualifiedname, doc=overrides.namedelement_qualifiedname.__doc__)
 
 
-Component.isIndirectlyInstantiated = attribute(
-    "isIndirectlyInstantiated", int, default=True
-)
-Association.isDerived = attribute("isDerived", int, default=False)
-PackageableElement.visibility = enumeration(
-    "visibility", ("public", "private", "package", "protected"), "public"
-)
-ElementImport.visibility = enumeration(
-    "visibility", ("public", "private", "package", "protected"), "public"
-)
-ElementImport.alias = attribute("alias", str)
-MultiplicityElement.isUnique = attribute("isUnique", int, default=True)
-MultiplicityElement.isOrdered = attribute("isOrdered", int, default=True)
-Activity.body = attribute("body", str)
-Activity.language = attribute("language", str)
-Classifier.isAbstract = attribute("isAbstract", int, default=False)
-Parameter.direction = enumeration("direction", ("inout", "in", "out", "return"), "in")
-Operation.isQuery = attribute("isQuery", int, default=False)
-Property.aggregation = enumeration(
-    "aggregation", ("none", "shared", "composite"), "none"
-)
-Property.isDerivedUnion = attribute("isDerivedUnion", int, default=False)
-Property.isDerived = attribute("isDerived", int, default=False)
-Property.isReadOnly = attribute("isReadOnly", int, default=False)
+Component.isIndirectlyInstantiated = attribute('isIndirectlyInstantiated', int, default=True)
+Association.isDerived = attribute('isDerived', int, default=False)
+PackageableElement.visibility = enumeration('visibility', ('public', 'private', 'package', 'protected'), 'public')
+ElementImport.visibility = enumeration('visibility', ('public', 'private', 'package', 'protected'), 'public')
+ElementImport.alias = attribute('alias', str)
+MultiplicityElement.isUnique = attribute('isUnique', int, default=True)
+MultiplicityElement.isOrdered = attribute('isOrdered', int, default=True)
+Activity.body = attribute('body', str)
+Activity.language = attribute('language', str)
+Classifier.isAbstract = attribute('isAbstract', int, default=False)
+Parameter.direction = enumeration('direction', ('inout', 'in', 'out', 'return'), 'in')
+Operation.isQuery = attribute('isQuery', int, default=False)
+Property.aggregation = enumeration('aggregation', ('none', 'shared', 'composite'), 'none')
+Property.isDerivedUnion = attribute('isDerivedUnion', int, default=False)
+Property.isDerived = attribute('isDerived', int, default=False)
+Property.isReadOnly = attribute('isReadOnly', int, default=False)
 # 102: override Property.navigability: property
-Property.navigability = property(
-    overrides.property_navigability, doc=overrides.property_navigability.__doc__
-)
+Property.navigability = property(overrides.property_navigability, doc=overrides.property_navigability.__doc__)
 
-Behavior.isReentrant = attribute("isReentrant", int)
-BehavioralFeature.isAbstract = attribute("isAbstract", int)
-Action.effect = attribute("effect", str)
-Comment.body = attribute("body", str)
-PackageImport.visibility = enumeration(
-    "visibility", ("public", "private", "package", "protected"), "public"
-)
+Behavior.isReentrant = attribute('isReentrant', int)
+BehavioralFeature.isAbstract = attribute('isAbstract', int)
+Action.effect = attribute('effect', str)
+Comment.body = attribute('body', str)
+PackageImport.visibility = enumeration('visibility', ('public', 'private', 'package', 'protected'), 'public')
 # 120: override Message.messageKind: property
-Message.messageKind = property(
-    overrides.message_messageKind, doc=overrides.message_messageKind.__doc__
-)
+Message.messageKind = property(overrides.message_messageKind, doc=overrides.message_messageKind.__doc__)
 
-Message.messageSort = enumeration(
-    "messageSort",
-    (
-        "synchCall",
-        "asynchCall",
-        "asynchSignal",
-        "createMessage",
-        "deleteMessage",
-        "reply",
-    ),
-    "synchCall",
-)
-Connector.kind = enumeration("kind", ("assembly", "delegation"), "assembly")
-JoinNode.isCombineDuplicate = attribute("isCombineDuplicate", int, default=True)
-Transition.kind = enumeration("kind", ("internal", "local", "external"), "internal")
-Pseudostate.kind = enumeration(
-    "kind",
-    (
-        "initial",
-        "deepHistory",
-        "shallowHistory",
-        "join",
-        "fork",
-        "junction",
-        "choice",
-        "entryPoint",
-        "exitPoint",
-        "terminate",
-    ),
-    "initial",
-)
-Port.isBehavior = attribute("isBehavior", int)
-Port.isService = attribute("isService", int)
-ActivityPartition.isDimension = attribute("isDimension", int, default=False)
-ActivityPartition.isExternal = attribute("isExternal", int, default=False)
-AcceptEventAction.isUnmarshall = attribute("isUnmarshall", int, default=False)
-Operation.precondition = association("precondition", Constraint, composite=True)
-Package.ownedDiagram = association(
-    "ownedDiagram", Diagram, composite=True, opposite="package"
-)
-Diagram.package = association("package", Package, upper=1, opposite="ownedDiagram")
-Package.nestedPackage = association(
-    "nestedPackage", Package, composite=True, opposite="package"
-)
-Package.package = association("package", Package, upper=1, opposite="nestedPackage")
-NamedElement.clientDependency = association(
-    "clientDependency", Dependency, opposite="client"
-)
-Dependency.client = association(
-    "client", NamedElement, lower=1, opposite="clientDependency"
-)
-DecisionNode.decisionInput = association("decisionInput", Behavior, upper=1)
-Activity.edge = association("edge", ActivityEdge, composite=True, opposite="activity")
-ActivityEdge.activity = association("activity", Activity, upper=1, opposite="edge")
-Substitution.contract = association("contract", Classifier, lower=1, upper=1)
-Operation.bodyCondition = association(
-    "bodyCondition", Constraint, upper=1, composite=True
-)
+Message.messageSort = enumeration('messageSort', ('synchCall', 'asynchCall', 'asynchSignal', 'createMessage', 'deleteMessage', 'reply'), 'synchCall')
+Connector.kind = enumeration('kind', ('assembly', 'delegation'), 'assembly')
+JoinNode.isCombineDuplicate = attribute('isCombineDuplicate', int, default=True)
+Transition.kind = enumeration('kind', ('internal', 'local', 'external'), 'internal')
+Pseudostate.kind = enumeration('kind', ('initial', 'deepHistory', 'shallowHistory', 'join', 'fork', 'junction', 'choice', 'entryPoint', 'exitPoint', 'terminate'), 'initial')
+Port.isBehavior = attribute('isBehavior', int)
+Port.isService = attribute('isService', int)
+ActivityPartition.isDimension = attribute('isDimension', int, default=False)
+ActivityPartition.isExternal = attribute('isExternal', int, default=False)
+AcceptEventAction.isUnmarshall = attribute('isUnmarshall', int, default=False)
+Operation.precondition = association('precondition', Constraint, composite=True)
+Package.ownedDiagram = association('ownedDiagram', Diagram, composite=True, opposite='package')
+Diagram.package = association('package', Package, upper=1, opposite='ownedDiagram')
+Package.nestedPackage = association('nestedPackage', Package, composite=True, opposite='package')
+Package.package = association('package', Package, upper=1, opposite='nestedPackage')
+NamedElement.clientDependency = association('clientDependency', Dependency, opposite='client')
+Dependency.client = association('client', NamedElement, lower=1, opposite='clientDependency')
+DecisionNode.decisionInput = association('decisionInput', Behavior, upper=1)
+Activity.edge = association('edge', ActivityEdge, composite=True, opposite='activity')
+ActivityEdge.activity = association('activity', Activity, upper=1, opposite='edge')
+Substitution.contract = association('contract', Classifier, lower=1, upper=1)
+Operation.bodyCondition = association('bodyCondition', Constraint, upper=1, composite=True)
 # 'InstanceSpecification.specification' is a simple attribute
-InstanceSpecification.specification = attribute("specification", str)
-BehavioralFeature.method = association("method", Behavior)
-Property.datatype = association(
-    "datatype", DataType, upper=1, opposite="ownedAttribute"
-)
-DataType.ownedAttribute = association(
-    "ownedAttribute", Property, composite=True, opposite="datatype"
-)
-TypedElement.type = association("type", Type, upper=1)
-Element.presentation = association(
-    "presentation", Presentation, composite=True, opposite="subject"
-)
+InstanceSpecification.specification = attribute('specification', str)
+BehavioralFeature.method = association('method', Behavior)
+Property.datatype = association('datatype', DataType, upper=1, opposite='ownedAttribute')
+DataType.ownedAttribute = association('ownedAttribute', Property, composite=True, opposite='datatype')
+TypedElement.type = association('type', Type, upper=1)
+Element.presentation = association('presentation', Presentation, composite=True, opposite='subject')
 # 27: override Presentation.subject
 # Presentation.subject is directly defined in the Presentation class
 
-ActivityParameterNode.parameter = association("parameter", Parameter, lower=1, upper=1)
-Dependency.supplier = association(
-    "supplier", NamedElement, lower=1, opposite="supplierDependency"
-)
-NamedElement.supplierDependency = association(
-    "supplierDependency", Dependency, opposite="supplier"
-)
-Operation.redefinedOperation = association("redefinedOperation", Operation)
-Activity.group = association(
-    "group", ActivityGroup, composite=True, opposite="activity"
-)
-ActivityGroup.activity = association("activity", Activity, upper=1, opposite="group")
-Package.ownedClassifier = association(
-    "ownedClassifier", Type, composite=True, opposite="package"
-)
-Type.package = association("package", Package, upper=1, opposite="ownedClassifier")
-Property.subsettedProperty = association("subsettedProperty", Property)
-Property.classifier = association(
-    "classifier", Classifier, upper=1, opposite="attribute"
-)
-ExtensionEnd.type = association("type", Stereotype, lower=1, upper=1)
-Profile.metamodelReference = association(
-    "metamodelReference", PackageImport, composite=True
-)
+ActivityParameterNode.parameter = association('parameter', Parameter, lower=1, upper=1)
+Dependency.supplier = association('supplier', NamedElement, lower=1, opposite='supplierDependency')
+NamedElement.supplierDependency = association('supplierDependency', Dependency, opposite='supplier')
+Operation.redefinedOperation = association('redefinedOperation', Operation)
+Activity.group = association('group', ActivityGroup, composite=True, opposite='activity')
+ActivityGroup.activity = association('activity', Activity, upper=1, opposite='group')
+Package.ownedClassifier = association('ownedClassifier', Type, composite=True, opposite='package')
+Type.package = association('package', Package, upper=1, opposite='ownedClassifier')
+Property.subsettedProperty = association('subsettedProperty', Property)
+Property.classifier = association('classifier', Classifier, upper=1, opposite='attribute')
+Profile.metamodelReference = association('metamodelReference', PackageImport, composite=True)
 # 'ActivityEdge.guard' is a simple attribute
-ActivityEdge.guard = attribute("guard", str)
-Class.ownedOperation = association(
-    "ownedOperation", Operation, composite=True, opposite="class_"
-)
-Operation.class_ = association("class_", Class, upper=1, opposite="ownedOperation")
-Enumeration.literal = association(
-    "literal", EnumerationLiteral, composite=True, opposite="enumeration"
-)
-EnumerationLiteral.enumeration = association(
-    "enumeration", Enumeration, upper=1, opposite="literal"
-)
-ActivityEdge.source = association(
-    "source", ActivityNode, lower=1, upper=1, opposite="outgoing"
-)
-ActivityNode.outgoing = association("outgoing", ActivityEdge, opposite="source")
-Profile.ownedStereotype = association("ownedStereotype", Stereotype, composite=True)
-Property.redefinedProperty = association("redefinedProperty", Property)
-DataType.ownedOperation = association(
-    "ownedOperation", Operation, composite=True, opposite="datatype"
-)
-Operation.datatype = association(
-    "datatype", DataType, upper=1, opposite="ownedOperation"
-)
-Generalization.general = association("general", Classifier, lower=1, upper=1)
-Classifier.ownedUseCase = association("ownedUseCase", UseCase, composite=True)
+ActivityEdge.guard = attribute('guard', str)
+Class.ownedOperation = association('ownedOperation', Operation, composite=True, opposite='class_')
+Operation.class_ = association('class_', Class, upper=1, opposite='ownedOperation')
+Enumeration.literal = association('literal', EnumerationLiteral, composite=True, opposite='enumeration')
+EnumerationLiteral.enumeration = association('enumeration', Enumeration, upper=1, opposite='literal')
+ActivityEdge.source = association('source', ActivityNode, lower=1, upper=1, opposite='outgoing')
+ActivityNode.outgoing = association('outgoing', ActivityEdge, opposite='source')
+Profile.ownedStereotype = association('ownedStereotype', Stereotype, composite=True)
+Property.redefinedProperty = association('redefinedProperty', Property)
+DataType.ownedOperation = association('ownedOperation', Operation, composite=True, opposite='datatype')
+Operation.datatype = association('datatype', DataType, upper=1, opposite='ownedOperation')
+Generalization.general = association('general', Classifier, lower=1, upper=1)
+Classifier.ownedUseCase = association('ownedUseCase', UseCase, composite=True)
 # 'MultiplicityElement.upperValue' is a simple attribute
-MultiplicityElement.upperValue = attribute("upperValue", str)
-PackageMerge.mergingPackage = association(
-    "mergingPackage", Package, lower=1, upper=1, opposite="packageExtension"
-)
-Package.packageExtension = association(
-    "packageExtension", PackageMerge, composite=True, opposite="mergingPackage"
-)
-Package.appliedProfile = association(
-    "appliedProfile", ProfileApplication, composite=True
-)
-Activity.node = association("node", ActivityNode, composite=True)
+MultiplicityElement.upperValue = attribute('upperValue', str)
+PackageMerge.mergingPackage = association('mergingPackage', Package, lower=1, upper=1, opposite='packageExtension')
+Package.packageExtension = association('packageExtension', PackageMerge, composite=True, opposite='mergingPackage')
+Package.appliedProfile = association('appliedProfile', ProfileApplication, composite=True)
+Activity.node = association('node', ActivityNode, composite=True)
 # 'Parameter.defaultValue' is a simple attribute
-Parameter.defaultValue = attribute("defaultValue", str)
-Class.nestedClassifier = association("nestedClassifier", Classifier, composite=True)
+Parameter.defaultValue = attribute('defaultValue', str)
+Class.nestedClassifier = association('nestedClassifier', Classifier, composite=True)
 # 'Slot.value' is a simple attribute
-Slot.value = attribute("value", str)
-Include.addition = association("addition", UseCase, lower=1, upper=1)
-Realization.realizingClassifier = association(
-    "realizingClassifier", Classifier, lower=1, upper=1
-)
+Slot.value = attribute('value', str)
+Include.addition = association('addition', UseCase, lower=1, upper=1)
+Realization.realizingClassifier = association('realizingClassifier', Classifier, lower=1, upper=1)
 # 'TypedElement.typeValue' is a simple attribute
-TypedElement.typeValue = attribute("typeValue", str)
-Constraint.constrainedElement = association("constrainedElement", Element)
-PackageMerge.mergedPackage = association("mergedPackage", Package, lower=1, upper=1)
-BehavioralFeature.formalParameter = association(
-    "formalParameter", Parameter, composite=True, opposite="ownerFormalParam"
-)
-Parameter.ownerFormalParam = association(
-    "ownerFormalParam", BehavioralFeature, upper=1, opposite="formalParameter"
-)
-Class.ownedAttribute = association(
-    "ownedAttribute", Property, composite=True, opposite="class_"
-)
-Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute")
-Extend.extendedCase = association("extendedCase", UseCase, lower=1, upper=1)
+TypedElement.typeValue = attribute('typeValue', str)
+Constraint.constrainedElement = association('constrainedElement', Element)
+PackageMerge.mergedPackage = association('mergedPackage', Package, lower=1, upper=1)
+BehavioralFeature.formalParameter = association('formalParameter', Parameter, composite=True, opposite='ownerFormalParam')
+Parameter.ownerFormalParam = association('ownerFormalParam', BehavioralFeature, upper=1, opposite='formalParameter')
+Class.ownedAttribute = association('ownedAttribute', Property, composite=True, opposite='class_')
+Property.class_ = association('class_', Class, upper=1, opposite='ownedAttribute')
+Extend.extendedCase = association('extendedCase', UseCase, lower=1, upper=1)
 # 'Property.defaultValue' is a simple attribute
-Property.defaultValue = attribute("defaultValue", str)
-Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
-Property.association = association(
-    "association", Association, upper=1, opposite="memberEnd"
-)
-Association.memberEnd = association(
-    "memberEnd", Property, lower=2, composite=True, opposite="association"
-)
-Classifier.generalization = association(
-    "generalization", Generalization, composite=True, opposite="specific"
-)
-Generalization.specific = association(
-    "specific", Classifier, lower=1, upper=1, opposite="generalization"
-)
-Realization.abstraction = association(
-    "abstraction", Component, upper=1, opposite="realization"
-)
-Component.realization = association(
-    "realization", Realization, composite=True, opposite="abstraction"
-)
+Property.defaultValue = attribute('defaultValue', str)
+Namespace.ownedRule = association('ownedRule', Constraint, composite=True)
+Property.association = association('association', Association, upper=1, opposite='memberEnd')
+Association.memberEnd = association('memberEnd', Property, lower=2, composite=True, opposite='association')
+Classifier.generalization = association('generalization', Generalization, composite=True, opposite='specific')
+Generalization.specific = association('specific', Classifier, lower=1, upper=1, opposite='generalization')
+Realization.abstraction = association('abstraction', Component, upper=1, opposite='realization')
+Component.realization = association('realization', Realization, composite=True, opposite='abstraction')
 # 'ValuePin.value_' is a simple attribute
-ValuePin.value_ = attribute("value_", str)
-BehavioralFeature.raisedException = association("raisedException", Type)
-Activity.action = association("action", Action, composite=True)
+ValuePin.value_ = attribute('value_', str)
+BehavioralFeature.raisedException = association('raisedException', Type)
+Activity.action = association('action', Action, composite=True)
 # 'Abstraction.mapping' is a simple attribute
-Abstraction.mapping = attribute("mapping", str)
-ActivityNode.incoming = association("incoming", ActivityEdge, opposite="target")
-ActivityEdge.target = association(
-    "target", ActivityNode, lower=1, upper=1, opposite="incoming"
-)
-Extend.extensionLocation = association("extensionLocation", ExtensionPoint, lower=1)
-Property.interface_ = association(
-    "interface_", Interface, upper=1, opposite="ownedAttribute"
-)
-Interface.ownedAttribute = association(
-    "ownedAttribute", Property, composite=True, opposite="interface_"
-)
-ActivityGroup.edgeContents = association(
-    "edgeContents", ActivityEdge, opposite="inGroup"
-)
-ActivityEdge.inGroup = association("inGroup", ActivityGroup, opposite="edgeContents")
-Slot.owningInstance = association(
-    "owningInstance", InstanceSpecification, lower=1, upper=1, opposite="slot"
-)
-InstanceSpecification.slot = association(
-    "slot", Slot, composite=True, opposite="owningInstance"
-)
-UseCase.subject = association("subject", Classifier)
-Property.owningAssociation = association(
-    "owningAssociation", Association, upper=1, opposite="ownedEnd"
-)
-Association.ownedEnd = association(
-    "ownedEnd", Property, composite=True, opposite="owningAssociation"
-)
-Interface.redefinedInterface = association("redefinedInterface", Interface)
-Artifact.manifestation = association("manifestation", Manifestation, composite=True)
-ExtensionPoint.useCase = association(
-    "useCase", UseCase, lower=1, upper=1, opposite="extensionPoint"
-)
-UseCase.extensionPoint = association(
-    "extensionPoint", ExtensionPoint, opposite="useCase"
-)
-Operation.postcondition = association("postcondition", Constraint, composite=True)
-Extension.ownedEnd = association(
-    "ownedEnd", ExtensionEnd, lower=1, upper=1, composite=True
-)
+Abstraction.mapping = attribute('mapping', str)
+ActivityNode.incoming = association('incoming', ActivityEdge, opposite='target')
+ActivityEdge.target = association('target', ActivityNode, lower=1, upper=1, opposite='incoming')
+Extend.extensionLocation = association('extensionLocation', ExtensionPoint, lower=1)
+Property.interface_ = association('interface_', Interface, upper=1, opposite='ownedAttribute')
+Interface.ownedAttribute = association('ownedAttribute', Property, composite=True, opposite='interface_')
+ActivityGroup.edgeContents = association('edgeContents', ActivityEdge, opposite='inGroup')
+ActivityEdge.inGroup = association('inGroup', ActivityGroup, opposite='edgeContents')
+Slot.owningInstance = association('owningInstance', InstanceSpecification, lower=1, upper=1, opposite='slot')
+InstanceSpecification.slot = association('slot', Slot, composite=True, opposite='owningInstance')
+UseCase.subject = association('subject', Classifier)
+Property.owningAssociation = association('owningAssociation', Association, upper=1, opposite='ownedEnd')
+Association.ownedEnd = association('ownedEnd', Property, composite=True, opposite='owningAssociation')
+Interface.redefinedInterface = association('redefinedInterface', Interface)
+Artifact.manifestation = association('manifestation', Manifestation, composite=True)
+ExtensionPoint.useCase = association('useCase', UseCase, lower=1, upper=1, opposite='extensionPoint')
+UseCase.extensionPoint = association('extensionPoint', ExtensionPoint, opposite='useCase')
+Operation.postcondition = association('postcondition', Constraint, composite=True)
+Extension.ownedEnd = association('ownedEnd', ExtensionEnd, lower=1, upper=1, composite=True)
 # 'Constraint.specification' is a simple attribute
-Constraint.specification = attribute("specification", str)
-Profile.metaclassReference = association(
-    "metaclassReference", ElementImport, composite=True
-)
-Namespace.elementImport = association(
-    "elementImport", ElementImport, composite=True, opposite="importingNamespace"
-)
-ElementImport.importingNamespace = association(
-    "importingNamespace", Namespace, upper=1, opposite="elementImport"
-)
+Constraint.specification = attribute('specification', str)
+Profile.metaclassReference = association('metaclassReference', ElementImport, composite=True)
+Namespace.elementImport = association('elementImport', ElementImport, composite=True, opposite='importingNamespace')
+ElementImport.importingNamespace = association('importingNamespace', Namespace, upper=1, opposite='elementImport')
 # 'MultiplicityElement.lowerValue' is a simple attribute
-MultiplicityElement.lowerValue = attribute("lowerValue", str)
-Interface.nestedInterface = association("nestedInterface", Interface, composite=True)
-InstanceSpecification.classifier = association("classifier", Classifier)
-Interface.ownedOperation = association(
-    "ownedOperation", Operation, composite=True, opposite="interface_"
-)
-Operation.interface_ = association(
-    "interface_", Interface, upper=1, opposite="ownedOperation"
-)
-ElementImport.importedElement = association(
-    "importedElement", PackageableElement, lower=1, upper=1
-)
-Parameter.ownerReturnParam = association(
-    "ownerReturnParam", BehavioralFeature, upper=1, opposite="returnResult"
-)
-BehavioralFeature.returnResult = association(
-    "returnResult", Parameter, composite=True, opposite="ownerReturnParam"
-)
-Classifier.redefinedClassifier = association("redefinedClassifier", Classifier)
-Substitution.substitutingClassifier = association(
-    "substitutingClassifier", Classifier, lower=1, upper=1, opposite="substitution"
-)
-Classifier.substitution = association(
-    "substitution", Substitution, composite=True, opposite="substitutingClassifier"
-)
-Operation.raisedException = association("raisedException", Type)
-PackageImport.importedPackage = association(
-    "importedPackage", Package, lower=1, upper=1
-)
-StructuralFeature.slot = association(
-    "slot", Slot, composite=True, opposite="definingFeature"
-)
-Slot.definingFeature = association(
-    "definingFeature", StructuralFeature, lower=1, upper=1, opposite="slot"
-)
-Include.includingCase = association(
-    "includingCase", UseCase, lower=1, upper=1, opposite="include"
-)
-UseCase.include = association(
-    "include", Include, composite=True, opposite="includingCase"
-)
-Extend.extension = association(
-    "extension", UseCase, lower=1, upper=1, opposite="extend"
-)
-UseCase.extend = association("extend", Extend, composite=True, opposite="extension")
-Extend.constraint = association("constraint", Constraint, upper=1, composite=True)
-ProfileApplication.importedProfile = association(
-    "importedProfile", Profile, lower=1, upper=1
-)
-Namespace.packageImport = association(
-    "packageImport", PackageImport, composite=True, opposite="importingNamespace"
-)
-PackageImport.importingNamespace = association(
-    "importingNamespace", Namespace, upper=1, opposite="packageImport"
-)
-Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
-Element.ownedComment = association("ownedComment", Comment, opposite="annotatedElement")
-Comment.annotatedElement = association(
-    "annotatedElement", Element, opposite="ownedComment"
-)
-Behavior.context = association(
-    "context", BehavioredClassifier, upper=1, opposite="ownedBehavior"
-)
-BehavioredClassifier.ownedBehavior = association(
-    "ownedBehavior", Behavior, composite=True, opposite="context"
-)
-ActivityGroup.nodeContents = association(
-    "nodeContents", ActivityNode, opposite="inGroup"
-)
-ActivityNode.inGroup = association("inGroup", ActivityGroup, opposite="nodeContents")
-UseCase.ownedAttribute = association(
-    "ownedAttribute", Property, composite=True, opposite="useCase"
-)
-Property.useCase = association("useCase", UseCase, upper=1, opposite="ownedAttribute")
-Property.actor = association("actor", Actor, upper=1, opposite="ownedAttribute")
-Actor.ownedAttribute = association(
-    "ownedAttribute", Property, composite=True, opposite="actor"
-)
-InteractionFragment.enclosingInteraction = association(
-    "enclosingInteraction", Interaction, upper=1, opposite="fragment"
-)
-Interaction.fragment = association(
-    "fragment", InteractionFragment, opposite="enclosingInteraction"
-)
-StateInvariant.invariant = association(
-    "invariant", Constraint, lower=1, upper=1, composite=True
-)
-Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
-InteractionFragment.covered = association(
-    "covered", Lifeline, lower=1, upper=1, opposite="coveredBy"
-)
-Lifeline.interaction = association(
-    "interaction", Interaction, lower=1, upper=1, opposite="lifeline"
-)
-Interaction.lifeline = association(
-    "lifeline", Lifeline, composite=True, opposite="interaction"
-)
+MultiplicityElement.lowerValue = attribute('lowerValue', str)
+Interface.nestedInterface = association('nestedInterface', Interface, composite=True)
+InstanceSpecification.classifier = association('classifier', Classifier)
+Interface.ownedOperation = association('ownedOperation', Operation, composite=True, opposite='interface_')
+Operation.interface_ = association('interface_', Interface, upper=1, opposite='ownedOperation')
+ElementImport.importedElement = association('importedElement', PackageableElement, lower=1, upper=1)
+Parameter.ownerReturnParam = association('ownerReturnParam', BehavioralFeature, upper=1, opposite='returnResult')
+BehavioralFeature.returnResult = association('returnResult', Parameter, composite=True, opposite='ownerReturnParam')
+Classifier.redefinedClassifier = association('redefinedClassifier', Classifier)
+Substitution.substitutingClassifier = association('substitutingClassifier', Classifier, lower=1, upper=1, opposite='substitution')
+Classifier.substitution = association('substitution', Substitution, composite=True, opposite='substitutingClassifier')
+Operation.raisedException = association('raisedException', Type)
+PackageImport.importedPackage = association('importedPackage', Package, lower=1, upper=1)
+StructuralFeature.slot = association('slot', Slot, composite=True, opposite='definingFeature')
+Slot.definingFeature = association('definingFeature', StructuralFeature, lower=1, upper=1, opposite='slot')
+Include.includingCase = association('includingCase', UseCase, lower=1, upper=1, opposite='include')
+UseCase.include = association('include', Include, composite=True, opposite='includingCase')
+Extend.extension = association('extension', UseCase, lower=1, upper=1, opposite='extend')
+UseCase.extend = association('extend', Extend, composite=True, opposite='extension')
+Extend.constraint = association('constraint', Constraint, upper=1, composite=True)
+ProfileApplication.importedProfile = association('importedProfile', Profile, lower=1, upper=1)
+Namespace.packageImport = association('packageImport', PackageImport, composite=True, opposite='importingNamespace')
+PackageImport.importingNamespace = association('importingNamespace', Namespace, upper=1, opposite='packageImport')
+Behavior.redefinedBehavior = association('redefinedBehavior', Behavior)
+Element.ownedComment = association('ownedComment', Comment, opposite='annotatedElement')
+Comment.annotatedElement = association('annotatedElement', Element, opposite='ownedComment')
+Behavior.context = association('context', BehavioredClassifier, upper=1, opposite='ownedBehavior')
+BehavioredClassifier.ownedBehavior = association('ownedBehavior', Behavior, composite=True, opposite='context')
+ActivityGroup.nodeContents = association('nodeContents', ActivityNode, opposite='inGroup')
+ActivityNode.inGroup = association('inGroup', ActivityGroup, opposite='nodeContents')
+UseCase.ownedAttribute = association('ownedAttribute', Property, composite=True, opposite='useCase')
+Property.useCase = association('useCase', UseCase, upper=1, opposite='ownedAttribute')
+Property.actor = association('actor', Actor, upper=1, opposite='ownedAttribute')
+Actor.ownedAttribute = association('ownedAttribute', Property, composite=True, opposite='actor')
+InteractionFragment.enclosingInteraction = association('enclosingInteraction', Interaction, upper=1, opposite='fragment')
+Interaction.fragment = association('fragment', InteractionFragment, opposite='enclosingInteraction')
+StateInvariant.invariant = association('invariant', Constraint, lower=1, upper=1, composite=True)
+Lifeline.coveredBy = association('coveredBy', InteractionFragment, opposite='covered')
+InteractionFragment.covered = association('covered', Lifeline, lower=1, upper=1, opposite='coveredBy')
+Lifeline.interaction = association('interaction', Interaction, lower=1, upper=1, opposite='lifeline')
+Interaction.lifeline = association('lifeline', Lifeline, composite=True, opposite='interaction')
 # 'Lifeline.discriminator' is a simple attribute
-Lifeline.discriminator = attribute("discriminator", str)
+Lifeline.discriminator = attribute('discriminator', str)
 # 'Message.argument' is a simple attribute
-Message.argument = attribute("argument", str)
-Message.signature = association("signature", NamedElement, upper=1)
-MessageEnd.sendMessage = association(
-    "sendMessage", Message, upper=1, opposite="sendEvent"
-)
-Message.sendEvent = association(
-    "sendEvent", MessageEnd, upper=1, composite=True, opposite="sendMessage"
-)
-MessageEnd.receiveMessage = association(
-    "receiveMessage", Message, upper=1, opposite="receiveEvent"
-)
-Message.receiveEvent = association(
-    "receiveEvent", MessageEnd, upper=1, composite=True, opposite="receiveMessage"
-)
-Message.interaction = association(
-    "interaction", Interaction, lower=1, upper=1, opposite="message"
-)
-Interaction.message = association(
-    "message", Message, composite=True, opposite="interaction"
-)
-InteractionFragment.generalOrdering = association(
-    "generalOrdering", GeneralOrdering, composite=True
-)
-GeneralOrdering.before = association(
-    "before", OccurrenceSpecification, lower=1, upper=1, opposite="toAfter"
-)
-OccurrenceSpecification.toAfter = association(
-    "toAfter", GeneralOrdering, opposite="before"
-)
-GeneralOrdering.after = association(
-    "after", OccurrenceSpecification, lower=1, upper=1, opposite="toBefore"
-)
-OccurrenceSpecification.toBefore = association(
-    "toBefore", GeneralOrdering, opposite="after"
-)
-ExecutionOccurence.finish = association(
-    "finish", OccurrenceSpecification, lower=1, upper=1, opposite="finishExec"
-)
-OccurrenceSpecification.finishExec = association(
-    "finishExec", ExecutionOccurence, opposite="finish"
-)
-ExecutionOccurence.start = association(
-    "start", OccurrenceSpecification, lower=1, upper=1, opposite="startExec"
-)
-OccurrenceSpecification.startExec = association(
-    "startExec", ExecutionOccurence, opposite="start"
-)
-ExecutionOccurence.behavior = association("behavior", Behavior)
-StructuredClassifier.ownedConnector = association(
-    "ownedConnector", Connector, composite=True
-)
-Connector.redefinedConnector = association("redefinedConnector", Connector)
-Connector.type = association("type", Association, upper=1)
-Connector.end = association("end", ConnectorEnd, lower=2, composite=True)
-Connector.contract = association("contract", Behavior)
-ConnectorEnd.role = association("role", ConnectableElement, upper=1, opposite="end")
-ConnectableElement.end = association("end", ConnectorEnd, opposite="role")
-StructuredClassifier.ownedAttribute = association(
-    "ownedAttribute", Property, composite=True
-)
+Message.argument = attribute('argument', str)
+Message.signature = association('signature', NamedElement, upper=1)
+MessageEnd.sendMessage = association('sendMessage', Message, upper=1, opposite='sendEvent')
+Message.sendEvent = association('sendEvent', MessageEnd, upper=1, composite=True, opposite='sendMessage')
+MessageEnd.receiveMessage = association('receiveMessage', Message, upper=1, opposite='receiveEvent')
+Message.receiveEvent = association('receiveEvent', MessageEnd, upper=1, composite=True, opposite='receiveMessage')
+Message.interaction = association('interaction', Interaction, lower=1, upper=1, opposite='message')
+Interaction.message = association('message', Message, composite=True, opposite='interaction')
+InteractionFragment.generalOrdering = association('generalOrdering', GeneralOrdering, composite=True)
+GeneralOrdering.before = association('before', OccurrenceSpecification, lower=1, upper=1, opposite='toAfter')
+OccurrenceSpecification.toAfter = association('toAfter', GeneralOrdering, opposite='before')
+GeneralOrdering.after = association('after', OccurrenceSpecification, lower=1, upper=1, opposite='toBefore')
+OccurrenceSpecification.toBefore = association('toBefore', GeneralOrdering, opposite='after')
+ExecutionOccurence.finish = association('finish', OccurrenceSpecification, lower=1, upper=1, opposite='finishExec')
+OccurrenceSpecification.finishExec = association('finishExec', ExecutionOccurence, opposite='finish')
+ExecutionOccurence.start = association('start', OccurrenceSpecification, lower=1, upper=1, opposite='startExec')
+OccurrenceSpecification.startExec = association('startExec', ExecutionOccurence, opposite='start')
+ExecutionOccurence.behavior = association('behavior', Behavior)
+StructuredClassifier.ownedConnector = association('ownedConnector', Connector, composite=True)
+Connector.redefinedConnector = association('redefinedConnector', Connector)
+Connector.type = association('type', Association, upper=1)
+Connector.end = association('end', ConnectorEnd, lower=2, composite=True)
+Connector.contract = association('contract', Behavior)
+ConnectorEnd.role = association('role', ConnectableElement, upper=1, opposite='end')
+ConnectableElement.end = association('end', ConnectorEnd, opposite='role')
+StructuredClassifier.ownedAttribute = association('ownedAttribute', Property, composite=True)
 # 'ObjectNode.upperBound' is a simple attribute
-ObjectNode.upperBound = attribute("upperBound", str)
-ObjectNode.selection = association("selection", Behavior, upper=1)
+ObjectNode.upperBound = attribute('upperBound', str)
+ObjectNode.selection = association('selection', Behavior, upper=1)
 # 'JoinNode.joinSpec' is a simple attribute
-JoinNode.joinSpec = attribute("joinSpec", str)
-StateMachine.region = association(
-    "region", Region, lower=1, composite=True, opposite="stateMachine"
-)
-Region.stateMachine = association(
-    "stateMachine", StateMachine, upper=1, opposite="region"
-)
-Transition.container = association("container", Region, lower=1, upper=1)
-Region.subvertex = association(
-    "subvertex", Vertex, composite=True, opposite="container"
-)
-Vertex.container = association("container", Region, upper=1, opposite="subvertex")
-Transition.source = association("source", Vertex, lower=1, upper=1, opposite="outgoing")
-Vertex.outgoing = association("outgoing", Transition, opposite="source")
-Transition.target = association("target", Vertex, lower=1, upper=1, opposite="incoming")
-Vertex.incoming = association("incoming", Transition, opposite="target")
-ConnectionPointReference.entry = association("entry", Pseudostate)
-ConnectionPointReference.exit = association("exit", Pseudostate)
-Pseudostate.stateMachine = association("stateMachine", StateMachine, upper=1)
-Region.state = association("state", State, upper=1)
-Pseudostate.state = association("state", State, upper=1)
-ConnectionPointReference.state = association("state", State, upper=1)
-State.entry = association("entry", Behavior, upper=1, composite=True)
-State.exit = association("exit", Behavior, upper=1, composite=True)
-State.doActivity = association("doActivity", Behavior, upper=1, composite=True)
-Transition.effect = association("effect", Behavior, upper=1, composite=True)
-State.statevariant = association(
-    "statevariant", Constraint, upper=1, composite=True, opposite="owningState"
-)
-Constraint.owningState = association(
-    "owningState", State, upper=1, opposite="statevariant"
-)
-Transition.guard = association("guard", Constraint, upper=1, composite=True)
-State.submachine = association("submachine", StateMachine, upper=1)
-StateMachine.extendedStateMachine = association(
-    "extendedStateMachine", StateMachine, upper=1
-)
-ConnectorEnd.partWithPort = association("partWithPort", Property, upper=1)
-EncapsulatedClassifer.ownedPort = association("ownedPort", Port, composite=True)
-Element.appliedStereotype = association(
-    "appliedStereotype", InstanceSpecification, opposite="extended"
-)
-InstanceSpecification.extended = association(
-    "extended", Element, opposite="appliedStereotype"
-)
-Node.nestedNode = association("nestedNode", Node, composite=True)
-DeploymentTarget.deployment = association("deployment", Deployment, composite=True)
-Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
-ActivityNode.inPartition = association(
-    "inPartition", ActivityPartition, opposite="node"
-)
-ActivityPartition.node = association("node", ActivityNode, opposite="inPartition")
-ActivityPartition.represents = association("represents", Element, upper=1)
-ActivityPartition.subpartition = association("subpartition", ActivityPartition)
-Association.navigableOwnedEnd = association("navigableOwnedEnd", Property)
-AcceptEventAction.result = association("result", OutputPin, composite=True)
-UnmarshallAction.result = association("result", OutputPin, composite=True)
-AcceptCallAction.returnInformation = association(
-    "returnInformation", OutputPin, lower=1, upper=1, composite=True
-)
-UnmarshallAction.unmarshallType = association(
-    "unmarshallType", Classifier, lower=1, upper=1
-)
-UnmarshallAction.object = association(
-    "object", InputPin, lower=1, upper=1, composite=True
-)
-ReplyAction.replyValue = association("replyValue", InputPin, upper=1, composite=True)
-ReplyAction.returnInformation = association(
-    "returnInformation", InputPin, lower=1, upper=1, composite=True
-)
-SendSignalAction.target = association("target", InputPin, composite=True)
-Collaboration.collaborationRole = association("collaborationRole", ConnectableElement)
-BehavioredClassifier.ownedTrigger = association("ownedTrigger", Trigger, composite=True)
-Trigger.event = association("event", Event, lower=1, upper=1)
-Signal.ownedAttribute = association("ownedAttribute", Property, composite=True)
-Reception.signal = association("signal", Signal, upper=1)
-Class.ownedReception = association("ownedReception", Reception, composite=True)
-Interface.ownedReception = association("ownedReception", Reception, composite=True)
-SendOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
-SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
-ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
+JoinNode.joinSpec = attribute('joinSpec', str)
+StateMachine.region = association('region', Region, lower=1, composite=True, opposite='stateMachine')
+Region.stateMachine = association('stateMachine', StateMachine, upper=1, opposite='region')
+Transition.container = association('container', Region, lower=1, upper=1)
+Region.subvertex = association('subvertex', Vertex, composite=True, opposite='container')
+Vertex.container = association('container', Region, upper=1, opposite='subvertex')
+Transition.source = association('source', Vertex, lower=1, upper=1, opposite='outgoing')
+Vertex.outgoing = association('outgoing', Transition, opposite='source')
+Transition.target = association('target', Vertex, lower=1, upper=1, opposite='incoming')
+Vertex.incoming = association('incoming', Transition, opposite='target')
+ConnectionPointReference.entry = association('entry', Pseudostate)
+ConnectionPointReference.exit = association('exit', Pseudostate)
+Pseudostate.stateMachine = association('stateMachine', StateMachine, upper=1)
+Region.state = association('state', State, upper=1)
+Pseudostate.state = association('state', State, upper=1)
+ConnectionPointReference.state = association('state', State, upper=1)
+State.entry = association('entry', Behavior, upper=1, composite=True)
+State.exit = association('exit', Behavior, upper=1, composite=True)
+State.doActivity = association('doActivity', Behavior, upper=1, composite=True)
+Transition.effect = association('effect', Behavior, upper=1, composite=True)
+State.statevariant = association('statevariant', Constraint, upper=1, composite=True, opposite='owningState')
+Constraint.owningState = association('owningState', State, upper=1, opposite='statevariant')
+Transition.guard = association('guard', Constraint, upper=1, composite=True)
+State.submachine = association('submachine', StateMachine, upper=1)
+StateMachine.extendedStateMachine = association('extendedStateMachine', StateMachine, upper=1)
+ConnectorEnd.partWithPort = association('partWithPort', Property, upper=1)
+EncapsulatedClassifer.ownedPort = association('ownedPort', Port, composite=True)
+Element.appliedStereotype = association('appliedStereotype', InstanceSpecification, opposite='extended')
+InstanceSpecification.extended = association('extended', Element, opposite='appliedStereotype')
+Node.nestedNode = association('nestedNode', Node, composite=True)
+DeploymentTarget.deployment = association('deployment', Deployment, composite=True)
+Deployment.deployedArtifact = association('deployedArtifact', DeployedArtifact)
+ActivityNode.inPartition = association('inPartition', ActivityPartition, opposite='node')
+ActivityPartition.node = association('node', ActivityNode, opposite='inPartition')
+ActivityPartition.represents = association('represents', Element, upper=1)
+ActivityPartition.subpartition = association('subpartition', ActivityPartition)
+Association.navigableOwnedEnd = association('navigableOwnedEnd', Property)
+AcceptEventAction.result = association('result', OutputPin, composite=True)
+UnmarshallAction.result = association('result', OutputPin, composite=True)
+AcceptCallAction.returnInformation = association('returnInformation', OutputPin, lower=1, upper=1, composite=True)
+UnmarshallAction.unmarshallType = association('unmarshallType', Classifier, lower=1, upper=1)
+UnmarshallAction.object = association('object', InputPin, lower=1, upper=1, composite=True)
+ReplyAction.replyValue = association('replyValue', InputPin, upper=1, composite=True)
+ReplyAction.returnInformation = association('returnInformation', InputPin, lower=1, upper=1, composite=True)
+SendSignalAction.target = association('target', InputPin, composite=True)
+Collaboration.collaborationRole = association('collaborationRole', ConnectableElement)
+BehavioredClassifier.ownedTrigger = association('ownedTrigger', Trigger, composite=True)
+Trigger.event = association('event', Event, lower=1, upper=1)
+Signal.ownedAttribute = association('ownedAttribute', Property, composite=True)
+Reception.signal = association('signal', Signal, upper=1)
+Class.ownedReception = association('ownedReception', Reception, composite=True)
+Interface.ownedReception = association('ownedReception', Reception, composite=True)
+SendOperationEvent.operation = association('operation', Operation, lower=1, upper=1)
+SendSignalEvent.signal = association('signal', Signal, lower=1, upper=1)
+ReceiveOperationEvent.operation = association('operation', Operation, lower=1, upper=1)
+ReceiveSignalEvent.signal = association('signal', Signal, lower=1, upper=1)
 # 42: override MultiplicityElement.lower(MultiplicityElement.lowerValue): umlproperty[str, str]
-MultiplicityElement.lower = derived(
-    "lower", object, 0, 1, lambda obj: [obj.lowerValue], MultiplicityElement.lowerValue
-)
+MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
 
 # 45: override MultiplicityElement.upper(MultiplicityElement.upperValue): umlproperty[str, str]
-MultiplicityElement.upper = derived(
-    "upper", object, 0, 1, lambda obj: [obj.upperValue], MultiplicityElement.upperValue
-)
+MultiplicityElement.upper = derived('upper', object, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
 
 # 96: override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
-Property.isComposite = derived(
-    "isComposite",
-    bool,
-    0,
-    1,
-    lambda obj: [obj.aggregation == "composite"],
-    Property.aggregation,
-)
+Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'], Property.aggregation)
 
-RedefinableElement.redefinedElement = derivedunion(
-    "redefinedElement",
-    RedefinableElement,
-    0,
-    "*",
-    Property.redefinedProperty,
-    Classifier.redefinedClassifier,
-    Operation.redefinedOperation,
-    Interface.redefinedInterface,
-    Behavior.redefinedBehavior,
-    Connector.redefinedConnector,
-)
-Classifier.attribute = derivedunion(
-    "attribute",
-    Property,
-    0,
-    "*",
-    Class.ownedAttribute,
-    DataType.ownedAttribute,
-    Interface.ownedAttribute,
-    UseCase.ownedAttribute,
-    Actor.ownedAttribute,
-    Signal.ownedAttribute,
-)
-Classifier.feature = derivedunion(
-    "feature",
-    Feature,
-    0,
-    "*",
-    Interface.ownedOperation,
-    UseCase.extensionPoint,
-    DataType.ownedOperation,
-    Class.ownedOperation,
-    Association.ownedEnd,
-    Classifier.attribute,
-    StructuredClassifier.ownedConnector,
-    Class.ownedReception,
-    Interface.ownedReception,
-)
-Feature.featuringClassifier = derivedunion(
-    "featuringClassifier",
-    Classifier,
-    1,
-    "*",
-    Property.class_,
-    Property.owningAssociation,
-    Operation.class_,
-    Operation.datatype,
-    Property.datatype,
-    Operation.interface_,
-)
+RedefinableElement.redefinedElement = derivedunion('redefinedElement', RedefinableElement, 0, '*', Property.redefinedProperty, Classifier.redefinedClassifier, Operation.redefinedOperation, Interface.redefinedInterface, Behavior.redefinedBehavior, Connector.redefinedConnector)
+Classifier.attribute = derivedunion('attribute', Property, 0, '*', Class.ownedAttribute, DataType.ownedAttribute, Interface.ownedAttribute, UseCase.ownedAttribute, Actor.ownedAttribute, Signal.ownedAttribute)
+Classifier.feature = derivedunion('feature', Feature, 0, '*', Interface.ownedOperation, UseCase.extensionPoint, DataType.ownedOperation, Class.ownedOperation, Association.ownedEnd, Classifier.attribute, StructuredClassifier.ownedConnector, Class.ownedReception, Interface.ownedReception)
+Feature.featuringClassifier = derivedunion('featuringClassifier', Classifier, 1, '*', Property.class_, Property.owningAssociation, Operation.class_, Operation.datatype, Property.datatype, Operation.interface_)
 # 93: override Property.opposite: property
-Property.opposite = property(
-    overrides.property_opposite, doc=overrides.property_opposite.__doc__
-)
+Property.opposite = property(overrides.property_opposite, doc=overrides.property_opposite.__doc__)
 
-BehavioralFeature.parameter = derivedunion(
-    "parameter",
-    Parameter,
-    0,
-    "*",
-    BehavioralFeature.returnResult,
-    BehavioralFeature.formalParameter,
-)
-Action.output = derivedunion("output", OutputPin, 0, "*")
-Transition.redefintionContext = derivedunion("redefintionContext", Classifier, 1, 1)
-RedefinableElement.redefinitionContext = derivedunion(
-    "redefinitionContext",
-    Classifier,
-    0,
-    "*",
-    Operation.class_,
-    Property.classifier,
-    Operation.datatype,
-    Transition.redefintionContext,
-)
-NamedElement.namespace = derivedunion(
-    "namespace",
-    Namespace,
-    0,
-    1,
-    Parameter.ownerReturnParam,
-    Property.interface_,
-    Property.class_,
-    Property.owningAssociation,
-    Operation.class_,
-    EnumerationLiteral.enumeration,
-    Diagram.package,
-    Operation.datatype,
-    Type.package,
-    Property.datatype,
-    Operation.interface_,
-    Package.package,
-    Parameter.ownerFormalParam,
-    Property.useCase,
-    Property.actor,
-    Lifeline.interaction,
-    Message.interaction,
-    Region.stateMachine,
-    Transition.container,
-    Vertex.container,
-    Pseudostate.stateMachine,
-    Region.state,
-    ConnectionPointReference.state,
-)
-Namespace.ownedMember = derivedunion(
-    "ownedMember",
-    NamedElement,
-    0,
-    "*",
-    Interface.ownedOperation,
-    Enumeration.literal,
-    Package.ownedDiagram,
-    Namespace.ownedRule,
-    UseCase.extensionPoint,
-    DataType.ownedOperation,
-    Operation.precondition,
-    BehavioralFeature.returnResult,
-    Profile.ownedStereotype,
-    Class.nestedClassifier,
-    Class.ownedAttribute,
-    BehavioralFeature.formalParameter,
-    Classifier.ownedUseCase,
-    DataType.ownedAttribute,
-    Class.ownedOperation,
-    Operation.postcondition,
-    Association.ownedEnd,
-    Package.ownedClassifier,
-    Interface.ownedAttribute,
-    Operation.bodyCondition,
-    Extend.constraint,
-    Package.nestedPackage,
-    BehavioredClassifier.ownedBehavior,
-    UseCase.ownedAttribute,
-    Actor.ownedAttribute,
-    StateInvariant.invariant,
-    Interaction.lifeline,
-    Interaction.message,
-    StateMachine.region,
-    Region.subvertex,
-    Node.nestedNode,
-    BehavioredClassifier.ownedTrigger,
-    Signal.ownedAttribute,
-    Class.ownedReception,
-    Interface.ownedReception,
-)
+BehavioralFeature.parameter = derivedunion('parameter', Parameter, 0, '*', BehavioralFeature.returnResult, BehavioralFeature.formalParameter)
+Action.output = derivedunion('output', OutputPin, 0, '*')
+RedefinableElement.redefinitionContext = derivedunion('redefinitionContext', Classifier, 0, '*', Operation.class_, Property.classifier, Operation.datatype)
+NamedElement.namespace = derivedunion('namespace', Namespace, 0, 1, Parameter.ownerReturnParam, Property.interface_, Property.class_, Property.owningAssociation, Operation.class_, EnumerationLiteral.enumeration, Diagram.package, Operation.datatype, Type.package, Property.datatype, Operation.interface_, Package.package, Parameter.ownerFormalParam, Property.useCase, Property.actor, Lifeline.interaction, Message.interaction, Region.stateMachine, Transition.container, Vertex.container, Pseudostate.stateMachine, Region.state, ConnectionPointReference.state)
+Namespace.ownedMember = derivedunion('ownedMember', NamedElement, 0, '*', Interface.ownedOperation, Enumeration.literal, Package.ownedDiagram, Namespace.ownedRule, UseCase.extensionPoint, DataType.ownedOperation, Operation.precondition, BehavioralFeature.returnResult, Profile.ownedStereotype, Class.nestedClassifier, Class.ownedAttribute, BehavioralFeature.formalParameter, Classifier.ownedUseCase, DataType.ownedAttribute, Class.ownedOperation, Operation.postcondition, Association.ownedEnd, Package.ownedClassifier, Interface.ownedAttribute, Operation.bodyCondition, Extend.constraint, Package.nestedPackage, BehavioredClassifier.ownedBehavior, UseCase.ownedAttribute, Actor.ownedAttribute, StateInvariant.invariant, Interaction.lifeline, Interaction.message, StateMachine.region, Region.subvertex, Node.nestedNode, BehavioredClassifier.ownedTrigger, Signal.ownedAttribute, Class.ownedReception, Interface.ownedReception)
 # 82: override Classifier.general: property
-Classifier.general = property(
-    lambda self: [g.general for g in self.generalization],
-    doc="""
+Classifier.general = property(lambda self: [g.general for g in self.generalization], doc="""
     Return a list of all superclasses for class (iterating the Generalizations.
-    """,
-)
+    """)
 
 # 53: override Association.endType(Association.memberEnd, Property.type): umlproperty[Type, collection[Type]]
 
 # References the classifiers that are used as types of the ends of the
 # association.
 
-Association.endType = derived(
-    "endType",
-    Type,
-    0,
-    "*",
-    lambda self: [end.type for end in self.memberEnd if end],
-    Association.memberEnd,
-    Property.type,
-)
+Association.endType = derived('endType', Type, 0, '*', lambda self: [end.type for end in self.memberEnd if end], Association.memberEnd, Property.type)
 
 
 # 99: override Constraint.context: umlproperty[Namespace, Namespace]
-Constraint.context = derivedunion("context", Namespace, 0, 1)
+Constraint.context = derivedunion('context', Namespace, 0, 1)
 
 # 105: override Operation.type: umlproperty[DataType, DataType]
-Operation.type = derivedunion("type", DataType, 0, 1)
+Operation.type = derivedunion('type', DataType, 0, 1)
 
 # 73: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
-# Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
-# Extension.metaclass.filter = extension_metaclass
-Extension.metaclass = property(
-    overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__
-)
+#Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
+#Extension.metaclass.filter = extension_metaclass
+Extension.metaclass = property(overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__)
 
 # 61: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
 # TODO: use those as soon as Extension.metaclass can be used.
-# Class.extension = derived('extension', Extension, 0, '*', class_extension, Extension.metaclass)
+#Class.extension = derived('extension', Extension, 0, '*', class_extension, Extension.metaclass)
 
-Class.extension = property(
-    lambda self: self.model.lselect(
-        lambda e: e.isKindOf(Extension) and self is e.metaclass
-    ),
-    doc="""References the Extensions that specify additional properties of the
+Class.extension = property(lambda self: self.model.lselect(lambda e: e.isKindOf(Extension) and self is e.metaclass), doc=\
+"""References the Extensions that specify additional properties of the
 metaclass. The property is derived from the extensions whose memberEnds
-are typed by the Class.""",
-)
+are typed by the Class.""")
 
-DirectedRelationship.target = derivedunion(
-    "target",
-    Element,
-    1,
-    "*",
-    PackageImport.importedPackage,
-    PackageMerge.mergedPackage,
-    Generalization.general,
-    Include.addition,
-    Extend.extendedCase,
-    Realization.realizingClassifier,
-    ElementImport.importedElement,
-    Substitution.contract,
-)
-DirectedRelationship.source = derivedunion(
-    "source",
-    Element,
-    1,
-    "*",
-    Extend.extension,
-    Realization.abstraction,
-    Substitution.substitutingClassifier,
-    Include.includingCase,
-    ElementImport.importingNamespace,
-    Generalization.specific,
-    PackageImport.importingNamespace,
-    PackageMerge.mergingPackage,
-)
-Action.context_ = derivedunion("context_", Classifier, 0, 1)
-Relationship.relatedElement = derivedunion(
-    "relatedElement",
-    Element,
-    1,
-    "*",
-    DirectedRelationship.target,
-    DirectedRelationship.source,
-)
-ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, 0, 1)
-ActivityGroup.subgroup = derivedunion(
-    "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
-)
+DirectedRelationship.target = derivedunion('target', Element, 1, '*', PackageImport.importedPackage, PackageMerge.mergedPackage, Generalization.general, Include.addition, Extend.extendedCase, Realization.realizingClassifier, ElementImport.importedElement, Substitution.contract)
+DirectedRelationship.source = derivedunion('source', Element, 1, '*', Extend.extension, Realization.abstraction, Substitution.substitutingClassifier, Include.includingCase, ElementImport.importingNamespace, Generalization.specific, PackageImport.importingNamespace, PackageMerge.mergingPackage)
+Action.context_ = derivedunion('context_', Classifier, 0, 1)
+Relationship.relatedElement = derivedunion('relatedElement', Element, 1, '*', DirectedRelationship.target, DirectedRelationship.source)
+ActivityGroup.superGroup = derivedunion('superGroup', ActivityGroup, 0, 1)
+ActivityGroup.subgroup = derivedunion('subgroup', ActivityGroup, 0, '*', ActivityPartition.subpartition)
 # 79: override Classifier.inheritedMember: umlproperty[NamedElement, collection[NamedElement]]
-Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
+Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 
-StructuredClassifier.role = derivedunion(
-    "role",
-    ConnectableElement,
-    0,
-    "*",
-    StructuredClassifier.ownedAttribute,
-    Collaboration.collaborationRole,
-)
-Namespace.member = derivedunion(
-    "member",
-    NamedElement,
-    0,
-    "*",
-    BehavioralFeature.parameter,
-    Namespace.ownedMember,
-    Association.memberEnd,
-    Classifier.inheritedMember,
-    StructuredClassifier.role,
-)
+StructuredClassifier.role = derivedunion('role', ConnectableElement, 0, '*', StructuredClassifier.ownedAttribute, Collaboration.collaborationRole)
+Namespace.member = derivedunion('member', NamedElement, 0, '*', BehavioralFeature.parameter, Namespace.ownedMember, Association.memberEnd, Classifier.inheritedMember, StructuredClassifier.role)
 # 117: override Component.required: property
-Component.required = property(
-    overrides.component_required, doc=overrides.component_required.__doc__
-)
+Component.required = property(overrides.component_required, doc=overrides.component_required.__doc__)
 
 # 90: override Namespace.importedMember: umlproperty[PackageableElement, collection[PackageableElement]]
-Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
+Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 
-Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
+Action.input = derivedunion('input', InputPin, 0, '*', SendSignalAction.target)
 # 114: override Component.provided: property
-Component.provided = property(
-    overrides.component_provided, doc=overrides.component_provided.__doc__
-)
+Component.provided = property(overrides.component_provided, doc=overrides.component_provided.__doc__)
 
-Element.owner = derivedunion(
-    "owner",
-    Element,
-    0,
-    1,
-    Slot.owningInstance,
-    Realization.abstraction,
-    ElementImport.importingNamespace,
-    Generalization.specific,
-    ActivityEdge.activity,
-    ActivityGroup.superGroup,
-    ActivityGroup.activity,
-    PackageImport.importingNamespace,
-    PackageMerge.mergingPackage,
-    NamedElement.namespace,
-    Pseudostate.state,
-)
-Element.ownedElement = derivedunion(
-    "ownedElement",
-    Element,
-    0,
-    "*",
-    Artifact.manifestation,
-    Element.ownedComment,
-    Action.input,
-    Classifier.generalization,
-    Namespace.ownedMember,
-    Namespace.elementImport,
-    Activity.group,
-    Component.realization,
-    Namespace.packageImport,
-    Package.packageExtension,
-    Substitution.contract,
-    ActivityGroup.subgroup,
-    Activity.edge,
-    Activity.node,
-    Action.output,
-    Interaction.fragment,
-    InteractionFragment.generalOrdering,
-    Connector.end,
-    State.entry,
-    State.exit,
-    State.doActivity,
-    Transition.effect,
-    State.statevariant,
-    Transition.guard,
-    DeploymentTarget.deployment,
-)
-ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
+Element.owner = derivedunion('owner', Element, 0, 1, Slot.owningInstance, Realization.abstraction, ElementImport.importingNamespace, Generalization.specific, ActivityEdge.activity, ActivityGroup.superGroup, ActivityGroup.activity, PackageImport.importingNamespace, PackageMerge.mergingPackage, NamedElement.namespace, Pseudostate.state)
+Element.ownedElement = derivedunion('ownedElement', Element, 0, '*', Artifact.manifestation, Element.ownedComment, Action.input, Classifier.generalization, Namespace.ownedMember, Namespace.elementImport, Activity.group, Component.realization, Namespace.packageImport, Package.packageExtension, Substitution.contract, ActivityGroup.subgroup, Activity.edge, Activity.node, Action.output, Interaction.fragment, InteractionFragment.generalOrdering, Connector.end, State.entry, State.exit, State.doActivity, Transition.effect, State.statevariant, Transition.guard, DeploymentTarget.deployment)
+ConnectorEnd.definingEnd = derivedunion('definingEnd', Property, 0, 1)
 # 123: override StructuredClassifier.part: property
-StructuredClassifier.part = property(
-    lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
-    doc="""
+StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""
     Properties owned by a classifier by composition.
-""",
-)
+""")
 
 # 87: override Class.superClass: property
 Class.superClass = Classifier.general
 
-ActivityNode.redefinedElement = redefine(
-    ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
-)
-Implementation.contract = redefine(
-    Implementation, "contract", Interface, Dependency.supplier
-)
-BehavioredClassifier.implementation = redefine(
-    BehavioredClassifier,
-    "implementation",
-    Implementation,
-    NamedElement.clientDependency,
-)
-Implementation.implementatingClassifier = redefine(
-    Implementation, "implementatingClassifier", BehavioredClassifier, Dependency.client
-)
-Parameter.operation = redefine(
-    Parameter, "operation", Operation, Parameter.ownerFormalParam
-)
-Operation.formalParameter = redefine(
-    Operation, "formalParameter", Parameter, BehavioralFeature.formalParameter
-)
-ActivityEdge.redefinedElement = redefine(
-    ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement
-)
-Package.ownedMember = redefine(
-    Package, "ownedMember", PackageableElement, Namespace.ownedMember
-)
-Component.ownedMember = redefine(
-    Component, "ownedMember", PackageableElement, Namespace.ownedMember
-)
-Region.extendedRegion = redefine(
-    Region, "extendedRegion", Region, RedefinableElement.redefinedElement
-)
-State.redefinedState = redefine(
-    State, "redefinedState", State, RedefinableElement.redefinedElement
-)
-Transition.redefinedTransition = redefine(
-    Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
-)
+ExtensionEnd.type = redefine(ExtensionEnd, 'type', Stereotype, Property.type)
+ActivityNode.redefinedElement = redefine(ActivityNode, 'redefinedElement', ActivityNode, RedefinableElement.redefinedElement)
+Implementation.contract = redefine(Implementation, 'contract', Interface, Dependency.supplier)
+BehavioredClassifier.implementation = redefine(BehavioredClassifier, 'implementation', Implementation, NamedElement.clientDependency)
+Implementation.implementatingClassifier = redefine(Implementation, 'implementatingClassifier', BehavioredClassifier, Dependency.client)
+Parameter.operation = redefine(Parameter, 'operation', Operation, Parameter.ownerFormalParam)
+Operation.formalParameter = redefine(Operation, 'formalParameter', Parameter, BehavioralFeature.formalParameter)
+ActivityEdge.redefinedElement = redefine(ActivityEdge, 'redefinedElement', ActivityEdge, RedefinableElement.redefinedElement)
+Package.ownedMember = redefine(Package, 'ownedMember', PackageableElement, Namespace.ownedMember)
+Component.ownedMember = redefine(Component, 'ownedMember', PackageableElement, Namespace.ownedMember)
+Transition.redefinitionContext = redefine(Transition, 'redefinitionContext', Classifier, RedefinableElement.redefinitionContext)
+Region.extendedRegion = redefine(Region, 'extendedRegion', Region, RedefinableElement.redefinedElement)
+State.redefinedState = redefine(State, 'redefinedState', State, RedefinableElement.redefinedElement)
+Transition.redefinedTransition = redefine(Transition, 'redefinedTransition', Transition, RedefinableElement.redefinedElement)
 # 108: override Lifeline.parse: Callable[[Lifeline, str], None]
 Lifeline.parse = umllex.parse_lifeline
 
 # 111: override Lifeline.render: Callable[[Lifeline], str]
 Lifeline.render = umllex.render_lifeline
+
