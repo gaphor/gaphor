@@ -32,7 +32,7 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-	  icon='misc/gaphor.ico',
+          icon='misc/gaphor.ico',
           console=True )
 coll = COLLECT(exe,
                a.binaries,
