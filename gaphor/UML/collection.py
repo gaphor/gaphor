@@ -7,7 +7,7 @@ from typing import Generic, List, Type, TypeVar
 from gaphor.UML.event import AssociationChangeEvent
 from gaphor.UML.listmixins import querymixin, recursemixin
 
-T = TypeVar("T", covariant=True)
+T = TypeVar("T")
 
 
 class collectionlist(recursemixin, querymixin, List[T]):

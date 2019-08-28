@@ -1,6 +1,6 @@
 """Factory for and registration of model elements."""
 
-from typing import Dict
+from typing import Dict, Optional, Type, TypeVar, TYPE_CHECKING
 import uuid
 from contextlib import contextmanager
 from collections import OrderedDict
@@ -16,6 +16,11 @@ from gaphor.UML.event import (
     ModelFactoryEvent,
 )
 from gaphor.abc import Service
+if TYPE_CHECKING:
+    from gaphor.services.eventmanager import EventManager
+
+
+T = TypeVar("T", bound=Element)
 
 
 class ElementFactory(Service):
@@ -31,7 +36,7 @@ class ElementFactory(Service):
     flushed: all element are removed from the factory (element is None)
     """
 
-    def __init__(self, event_manager=None):
+    def __init__(self, event_manager: Optional["EventManager"]=None):
         self.event_manager = event_manager
         self.element_dispatcher = (
             ElementDispatcher(event_manager) if event_manager else None
@@ -42,7 +47,7 @@ class ElementFactory(Service):
     def shutdown(self):
         self.flush()
 
-    def create(self, type):
+    def create(self, type: Type[T]) -> T:
         """
         Create a new model element of type ``type``.
         """
@@ -50,7 +55,7 @@ class ElementFactory(Service):
         self.handle(ElementCreateEvent(self, obj))
         return obj
 
-    def create_as(self, type, id):
+    def create_as(self, type: Type[T], id: str) -> T:
         """
         Create a new model element of type 'type' with 'id' as its ID.
         This method should only be used when loading models, since it does
@@ -61,16 +66,17 @@ class ElementFactory(Service):
         self._elements[id] = obj
         return obj
 
-    def bind(self, element):
+    def bind(self, element: Element):
         """
         Bind an already created element to the element factory.
         The element may not be bound to another factory already.
         """
         if hasattr(element, "_model") and element._model:
             raise AttributeError("element is already bound")
+        if not isinstance(element.id, str):
+            raise AttributeError(f"Element should contain a string id (found: {element.id}")
         if self._elements.get(element.id):
             raise AttributeError("an element already exists with the same id")
-
         element._model = self
         self._elements[element.id] = element
 
@@ -80,7 +86,7 @@ class ElementFactory(Service):
         """
         return len(self._elements)
 
-    def lookup(self, id):
+    def lookup(self, id: str):
         """
         Find element with a specific id.
         """

@@ -1,7 +1,7 @@
 """
 """
 
-
+from typing import Callable, Dict, Optional, Tuple
 from logging import getLogger
 from gaphor.core import event_handler
 from gaphor.UML import uml2
@@ -14,18 +14,20 @@ from gaphor.UML.event import (
 )
 
 
+Handler = Callable[[ElementChangeEvent], None]
+
 class EventWatcher:
     """
     A helper for easy registering and unregistering event handlers.
     """
 
-    def __init__(self, element, element_dispatcher, default_handler=None):
+    def __init__(self, element, element_dispatcher, default_handler: Optional[Handler]=None):
         self.element = element
         self.element_dispatcher = element_dispatcher
         self.default_handler = default_handler
-        self._watched_paths = dict()
+        self._watched_paths: Dict[str, Handler] = dict()
 
-    def watch(self, path, handler=None):
+    def watch(self, path: str, handler: Optional[Handler]=None):
         """
         Watch a certain path of elements starting with the DiagramItem.
         The handler is optional and will default the default provided at
@@ -95,11 +97,11 @@ class ElementDispatcher:
         self.event_manager = event_manager
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers = dict()
+        self._handlers: Dict[Tuple[uml2.Element, uml2.umlproperty], Handler] = dict()
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse = dict()
+        self._reverse: Dict[Tuple[uml2.Element, uml2.umlproperty], Handler] = dict()
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
