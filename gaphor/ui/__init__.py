@@ -15,20 +15,6 @@ icon_theme = Gtk.IconTheme.get_default()
 with importlib.resources.path("gaphor.ui", "pixmaps") as path:
     icon_theme.append_search_path(str(path))
 
-import re
-
-
-def _repl(m):
-    v = m.group(1).lower()
-    return len(v) == 1 and v or "%c-%c" % tuple(v)
-
-
-_expr = "(.?[A-Z])"
-
-
-def icon_for_element(element):
-    return re.sub(_expr, _repl, type(element).__name__)
-
 
 # Set style for model canvas
 css_provider = Gtk.CssProvider.new()

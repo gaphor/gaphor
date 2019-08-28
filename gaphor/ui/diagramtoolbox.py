@@ -218,7 +218,7 @@ class DiagramToolbox:
                 config_func(item)
             return item
 
-        factory_method.item_class = item_class
+        factory_method.item_class = item_class  # type: ignore
         return factory_method
 
     def _namespace_item_factory(self, item_class, subject_class, name=None):
@@ -237,7 +237,7 @@ class DiagramToolbox:
                 subject.name = f"New{subject_class.__name__}"
             return item
 
-        factory_method.item_class = item_class
+        factory_method.item_class = item_class  # type: ignore
         return factory_method
 
     def _after_handler(self, new_item):

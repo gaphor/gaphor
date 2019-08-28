@@ -2,6 +2,8 @@
 Toolbox.
 """
 
+from typing import Dict, List
+
 import logging
 
 from gi.repository import GObject
@@ -55,8 +57,8 @@ class Toolbox(UIComponent, ActionProvider):
         self.action_group.get_action("reset-tool-after-create").set_active(
             self.properties.get("reset-tool-after-create", True)
         )
-        self.buttons = []
-        self.shortcuts = {}
+        self.buttons: List[Gtk.Button] = []
+        self.shortcuts: Dict[str, str] = {}
 
     def open(self):
         widget = self.construct()

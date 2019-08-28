@@ -2,6 +2,8 @@
 The main application window.
 """
 
+from typing import List, Tuple
+
 import logging
 import os.path
 
@@ -396,7 +398,7 @@ class Diagrams(UIComponent, ActionProvider):
             List of tuples (page, widget) of the currently open Notebook pages.
         """
 
-        widgets_on_pages = []
+        widgets_on_pages: List[Tuple[int, Gtk.Widget]] = []
         if not self._notebook:
             return widgets_on_pages
 
