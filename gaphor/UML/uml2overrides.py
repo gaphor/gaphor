@@ -13,6 +13,7 @@ def extension_metaclass(self):
     if metaend:
         return metaend[0].type
 
+
 def property_opposite(self):
     """
     In the case where the property is one navigable end of a binary
@@ -22,9 +23,11 @@ def property_opposite(self):
     navigability.
     """
     if self.association is not None and len(self.association.memberEnd) == 2:
-        return self.association.memberEnd[0] is self \
-               and self.association.memberEnd[1] \
-               or self.association.memberEnd[0]
+        return (
+            self.association.memberEnd[0] is self
+            and self.association.memberEnd[1]
+            or self.association.memberEnd[0]
+        )
     return None
 
 
@@ -35,13 +38,15 @@ def property_navigability(self):
     is assumed.
     """
     from gaphor.UML.uml2 import Class, Interface
+
     assoc = self.association
     if not assoc or not self.opposite:
-        return None # assume unknown
+        return None  # assume unknown
     owner = self.opposite.type
-    if owner and ((type(self.type) in (Class, Interface) \
-                and self in owner.ownedAttribute) \
-            or self in assoc.navigableOwnedEnd):
+    if owner and (
+        (type(self.type) in (Class, Interface) and self in owner.ownedAttribute)
+        or self in assoc.navigableOwnedEnd
+    ):
         return True
     elif self in assoc.ownedEnd:
         return None
@@ -55,8 +60,13 @@ def _pr_interface_deps(classifier, dep_type):
     dependency type.
     """
     from gaphor.UML.uml2 import Interface
-    return (dep.supplier[0] for dep in classifier.clientDependency \
-        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(Interface))
+
+    return (
+        dep.supplier[0]
+        for dep in classifier.clientDependency
+        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(Interface)
+    )
+
 
 def _pr_rc_interface_deps(component, dep_type):
     """
@@ -66,14 +76,23 @@ def _pr_rc_interface_deps(component, dep_type):
 
     Generator of generators is returned. Do not forget to flat it later.
     """
-    return (_pr_interface_deps(r.realizingClassifier, dep_type) for r in component.realization)
+    return (
+        _pr_interface_deps(r.realizingClassifier, dep_type)
+        for r in component.realization
+    )
+
 
 def component_provided(self):
     """
     Interfaces provided to component environment.
     """
     from gaphor.UML.uml2 import Implementation, Realization
-    implementations = (impl.contract[0] for impl in self.implementation if impl.isKindOf(Implementation))
+
+    implementations = (
+        impl.contract[0]
+        for impl in self.implementation
+        if impl.isKindOf(Implementation)
+    )
     realizations = _pr_interface_deps(self, Realization)
 
     # realizing classifiers realizations
@@ -82,11 +101,13 @@ def component_provided(self):
 
     return tuple(set(itertools.chain(implementations, realizations, *rc_realizations)))
 
+
 def component_required(self):
     """
     Interfaces required by component.
     """
     from gaphor.UML.uml2 import Usage
+
     usages = _pr_interface_deps(self, Usage)
 
     # realizing classifiers usages
@@ -100,14 +121,15 @@ def message_messageKind(self):
     """
     MessageKind
     """
-    kind = 'unknown'
+    kind = "unknown"
     if self.sendEvent:
-        kind = 'lost'
+        kind = "lost"
         if self.receiveEvent:
-            kind = 'complete'
+            kind = "complete"
     elif self.receiveEvent:
-        kind = 'found'
+        kind = "found"
     return kind
+
 
 def namedelement_qualifiedname(self):
     """
@@ -117,4 +139,3 @@ def namedelement_qualifiedname(self):
         return self.namespace.qualifiedName + (self.name,)
     else:
         return (self.name,)
-

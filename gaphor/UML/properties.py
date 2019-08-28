@@ -379,7 +379,9 @@ class association(umlproperty[T, G]):
                 self._del(obj, old, from_opposite=from_opposite, do_notify=False)
 
             if do_notify:
-                event: AssociationChangeEvent = AssociationSetEvent(obj, self, old, value)
+                event: AssociationChangeEvent = AssociationSetEvent(
+                    obj, self, old, value
+                )
 
             if value is None:
                 if do_notify:

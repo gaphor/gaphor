@@ -5,6 +5,7 @@ Base code for presentation elements
 from typing import Generic, Optional, TypeVar, TYPE_CHECKING
 from gaphor.UML.properties import umlproperty, association
 from gaphor.UML.element import Element
+
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas
 
@@ -26,10 +27,12 @@ class Presentation(Element, Generic[S]):
 
         self.watch("subject")
 
-    subject: umlproperty[S, S] = association('subject', Element, upper=1, opposite='presentation')
+    subject: umlproperty[S, S] = association(
+        "subject", Element, upper=1, opposite="presentation"
+    )
 
     canvas: Optional["Canvas"]
-    
+
     def watch(self, path, handler=None):
         """
         Watch a certain path of elements starting with the DiagramItem.

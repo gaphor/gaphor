@@ -132,7 +132,6 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self.shape_middle = shape_middle
         self.shape_tail = shape_tail
 
-
         self.fuzziness = 2
         self._shape_head_rect = None
         self._shape_middle_rect = None

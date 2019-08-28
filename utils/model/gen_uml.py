@@ -108,7 +108,7 @@ class Writer:
                 out.write("\n\n")
 
             out.write(self.overrides.header)
- 
+
             for d in self.features:
                 out.write(d)
                 out.write("\n")
@@ -283,9 +283,9 @@ class Writer:
             head.class_name,
             head.name,
             a + ")",
-            type=f'umlproperty[{head.opposite_class_name}, {head.opposite_class_name}]'
+            type=f"umlproperty[{head.opposite_class_name}, {head.opposite_class_name}]"
             if head.upper == "1"
-            else f'umlproperty[{head.opposite_class_name}, collection[{head.opposite_class_name}]]',
+            else f"umlproperty[{head.opposite_class_name}, collection[{head.opposite_class_name}]]",
         )
 
     def add_derivedunion(self, d):
@@ -315,9 +315,9 @@ class Writer:
                     d.upper == "*" and "'*'" or d.upper,
                     subs,
                 ),
-                type=f'umlproperty[{d.opposite_class_name}, {d.opposite_class_name}]'
+                type=f"umlproperty[{d.opposite_class_name}, {d.opposite_class_name}]"
                 if d.upper == "1"
-                else f'umlproperty[{d.opposite_class_name}, collection[{d.opposite_class_name}]]',
+                else f"umlproperty[{d.opposite_class_name}, collection[{d.opposite_class_name}]]",
             )
         else:
             if not self.overrides.has_override(f"{d.class_name}.{d.name}"):
@@ -335,9 +335,9 @@ class Writer:
                     d.lower,
                     d.upper == "*" and "'*'" or d.upper,
                 ),
-                type=f'umlproperty[{d.opposite_class_name}, {d.opposite_class_name}]'
+                type=f"umlproperty[{d.opposite_class_name}, {d.opposite_class_name}]"
                 if d.upper == "1"
-                else f'umlproperty[{d.opposite_class_name}, collection[{d.opposite_class_name}]]',
+                else f"umlproperty[{d.opposite_class_name}, collection[{d.opposite_class_name}]]",
             )
         d.written = True
 
@@ -351,9 +351,9 @@ class Writer:
             r.name,
             "redefine(%s, '%s', %s, %s)"
             % (r.class_name, r.name, r.opposite_class_name, r.redefines),
-            type=f'umlproperty[{r.opposite_class_name}, {r.opposite_class_name}]'
+            type=f"umlproperty[{r.opposite_class_name}, {r.opposite_class_name}]"
             if r.upper == "1"
-            else f'umlproperty[{r.opposite_class_name}, collection[{r.opposite_class_name}]]',
+            else f"umlproperty[{r.opposite_class_name}, collection[{r.opposite_class_name}]]",
         )
 
 

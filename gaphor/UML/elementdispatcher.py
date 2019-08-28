@@ -16,18 +16,21 @@ from gaphor.UML.event import (
 
 Handler = Callable[[ElementChangeEvent], None]
 
+
 class EventWatcher:
     """
     A helper for easy registering and unregistering event handlers.
     """
 
-    def __init__(self, element, element_dispatcher, default_handler: Optional[Handler]=None):
+    def __init__(
+        self, element, element_dispatcher, default_handler: Optional[Handler] = None
+    ):
         self.element = element
         self.element_dispatcher = element_dispatcher
         self.default_handler = default_handler
         self._watched_paths: Dict[str, Handler] = dict()
 
-    def watch(self, path: str, handler: Optional[Handler]=None):
+    def watch(self, path: str, handler: Optional[Handler] = None):
         """
         Watch a certain path of elements starting with the DiagramItem.
         The handler is optional and will default the default provided at

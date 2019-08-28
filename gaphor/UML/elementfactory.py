@@ -16,6 +16,7 @@ from gaphor.UML.event import (
     ModelFactoryEvent,
 )
 from gaphor.abc import Service
+
 if TYPE_CHECKING:
     from gaphor.services.eventmanager import EventManager
 
@@ -36,7 +37,7 @@ class ElementFactory(Service):
     flushed: all element are removed from the factory (element is None)
     """
 
-    def __init__(self, event_manager: Optional["EventManager"]=None):
+    def __init__(self, event_manager: Optional["EventManager"] = None):
         self.event_manager = event_manager
         self.element_dispatcher = (
             ElementDispatcher(event_manager) if event_manager else None
@@ -74,7 +75,9 @@ class ElementFactory(Service):
         if hasattr(element, "_model") and element._model:
             raise AttributeError("element is already bound")
         if not isinstance(element.id, str):
-            raise AttributeError(f"Element should contain a string id (found: {element.id}")
+            raise AttributeError(
+                f"Element should contain a string id (found: {element.id}"
+            )
         if self._elements.get(element.id):
             raise AttributeError("an element already exists with the same id")
         element._model = self

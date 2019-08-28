@@ -12,6 +12,7 @@ import uuid
 from typing import Generator, Optional, Sequence, Union, Type, TYPE_CHECKING
 from gaphor.UML.properties import umlproperty
 from gaphor.UML.elementdispatcher import EventWatcher
+
 if TYPE_CHECKING:
     from gaphor.UML.elementfactory import ElementFactory
     from gaphor.UML.presentation import Presentation
@@ -24,14 +25,18 @@ class UnlinkEvent:
     def __init__(self, element: Element):
         self.element = element
 
+
 Id = Union[str, bool]
+
 
 class Element:
     """
     Base class for UML data classes.
     """
 
-    def __init__(self, id: Optional[Id]=None, model: Optional["ElementFactory"]=None):
+    def __init__(
+        self, id: Optional[Id] = None, model: Optional["ElementFactory"] = None
+    ):
         """
         Create an element. As optional parameters an id and model can be
         given.
@@ -57,7 +62,9 @@ class Element:
     @property
     def model(self) -> "ElementFactory":
         "The owning model, raises AssertionError when model is not set."
-        assert self._model, "You can not retrieve the model since it's not set on construction"
+        assert (
+            self._model
+        ), "You can not retrieve the model since it's not set on construction"
         return self._model
 
     appliedStereotype: umlproperty[Element, Sequence[Element]]
