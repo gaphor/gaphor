@@ -105,7 +105,7 @@ class umlproperty(Generic[T, G]):
     def __delete__(self, obj, value=None):
         self._del(obj, value)
 
-    def save(self, obj, save_func: Callable[[str, Any], None]):
+    def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
             save_func(self.name, self._get(obj))
 
