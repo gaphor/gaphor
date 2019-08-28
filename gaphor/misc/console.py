@@ -6,6 +6,8 @@
 #  license details.
 #
 
+from typing import List
+
 import code
 import sys
 import pydoc
@@ -94,8 +96,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.interpreter.locals["help"] = Help()
         self.completer = Completer(self.interpreter.locals)
-        self.buffer = []
-        self.history = []
+        self.buffer: List[str] = []
+        self.history: List[str] = []
         self.banner = banner
         self.ps1 = ">>> "
         self.ps2 = "... "
@@ -268,7 +270,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         if tokens:
             token = tokens[-1]
-            completions = []
+            completions: List[str] = []
             p = self.completer.complete(token, len(completions))
             while p != None:
                 completions.append(p)

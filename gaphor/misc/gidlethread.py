@@ -12,6 +12,7 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
 
+from typing import List
 import types
 import sys
 from gi.repository import GLib
@@ -154,7 +155,7 @@ class Queue:
     """
 
     def __init__(self, size=0, dispose_oldest=True):
-        self._queue = []
+        self._queue: List[object] = []
         self._size = size
         self._dispose_oldest = dispose_oldest
 
