@@ -90,10 +90,11 @@ class AbstractConnect(ConnectBase):
         element: ElementPresentation[UML.Element],
         line: LinePresentation[UML.Element],
     ) -> None:
+        assert element.canvas
+        assert element.canvas == line.canvas
         self.element = element
         self.line = line
-        self.canvas = self.element.canvas
-        assert self.canvas == self.element.canvas == self.line.canvas
+        self.canvas = element.canvas
 
     def get_connection(self, handle: Handle) -> Optional[Connection]:
         """

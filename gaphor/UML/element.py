@@ -14,6 +14,7 @@ from gaphor.UML.properties import umlproperty
 from gaphor.UML.elementdispatcher import EventWatcher
 if TYPE_CHECKING:
     from gaphor.UML.elementfactory import ElementFactory
+    from gaphor.UML.presentation import Presentation
 
 
 class UnlinkEvent:
@@ -59,11 +60,11 @@ class Element:
         assert self._model, "You can not retrieve the model since it's not set on construction"
         return self._model
 
-    appliedStereotype: umlproperty["Element", Sequence["Element"]]
-    owner: umlproperty["Element", Sequence["Element"]]
-    ownedComment: umlproperty["Element", Sequence["Element"]]
-    ownedElement: umlproperty["Element", Sequence["Element"]]
-    presentation: umlproperty["Element", Sequence["Element"]]
+    appliedStereotype: umlproperty[Element, Sequence[Element]]
+    owner: umlproperty[Element, Sequence[Element]]
+    ownedComment: umlproperty[Element, Sequence[Element]]
+    ownedElement: umlproperty[Element, Sequence[Element]]
+    presentation: umlproperty["Presentation", Sequence["Presentation"]]
 
     def umlproperties(self):
         """
