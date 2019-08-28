@@ -3,6 +3,8 @@
 See also gaphor/service/actionmanager.py for the management module.
 """
 
+from typing import Optional, Sequence
+
 from gaphor.application import Application
 
 
@@ -51,6 +53,8 @@ class toggle_action(action):
     An extra 'active' attribute is provided than gives the initial status.
     """
 
+    active: bool
+
     def __init__(
         self, name, label=None, tooltip=None, stock_id=None, accel=None, active=False
     ):
@@ -64,6 +68,13 @@ class radio_action(action):
     The callback function should have an extra value property, which is
     given the index number of the activated radio button action.
     """
+
+    names: Sequence[str]
+    labels: Sequence[Optional[str]]
+    tooltips: Sequence[Optional[str]]
+    stock_ids: Sequence[Optional[str]]
+    accels: Sequence[Optional[str]]
+    active: int
 
     def __init__(
         self, names, labels=None, tooltips=None, stock_ids=None, accels=None, active=0
@@ -150,6 +161,7 @@ def build_action_group(obj, name=None):
                     gtkact.props.group = actgroup
                 group.add_action_with_accel(gtkact, act.accels[i])
 
+            assert actgroup
             actgroup.connect("changed", _radio_action_changed, obj, attrname)
             actgroup.set_current_value(act.active)
 
