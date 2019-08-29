@@ -18,7 +18,6 @@ to be aware that `AbstractGroup.item` can be null.
 from __future__ import annotations
 
 from typing import Type
-from typing_extensions import Protocol
 import abc
 
 from gaphor import UML
