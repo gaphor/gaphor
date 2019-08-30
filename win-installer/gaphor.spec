@@ -13,7 +13,7 @@ a = Analysis(['gaphor-script.py'],
 		('../gaphor/ui/pixmaps/*.png', 'gaphor/ui/pixmaps'),
 		('../LICENSE.txt', 'gaphor')
 		]+copy_metadata('gaphor'),
-             hiddenimports=['_struct'],
+             hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
