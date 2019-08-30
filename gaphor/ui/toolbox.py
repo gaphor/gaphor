@@ -100,8 +100,16 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox = Gtk.ToolPalette.new()
         toolbox.connect("destroy", self._on_toolbox_destroyed)
 
-        for title, items in self._toolbox_actions:
+        collapsed = self.properties.get("toolbox-collapsed", {})
+
+        def on_collapsed(widget, prop, index):
+            collapsed[index] = widget.get_property("collapsed")
+            self.properties.set("toolbox-collapsed", collapsed)
+
+        for index, (title, items) in enumerate(self._toolbox_actions):
             tool_item_group = Gtk.ToolItemGroup.new(title)
+            tool_item_group.set_property("collapsed", collapsed.get(index, False))
+            tool_item_group.connect("notify::collapsed", on_collapsed, index)
             for action_name, label, stock_id, shortcut in items:
                 button = toolbox_button(action_name, stock_id, label, shortcut)
                 tool_item_group.insert(button, -1)
