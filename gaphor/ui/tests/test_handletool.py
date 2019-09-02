@@ -185,7 +185,7 @@ class HandleToolTestCase(unittest.TestCase):
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )
-        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
+
         line = diagram.create(CommentLineItem)
 
         view = self.get_diagram_view(diagram)
@@ -197,8 +197,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle = line.handles()[0]
         tool.grab_handle(line, handle)
 
-        comment_bb = view.get_item_bounding_box(comment)
-        handle.pos = (comment_bb.x1, comment_bb.y1)
+        handle.pos = (0, 0)
         sink = tool.glue(line, handle, handle.pos)
         assert sink is not None
         assert sink.item is comment
@@ -210,11 +209,12 @@ class HandleToolTestCase(unittest.TestCase):
         assert cinfo.connected is comment
 
         # Connect the other end to the Actor:
+        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
+
         handle = line.handles()[-1]
         tool.grab_handle(line, handle)
-        actor_bb = view.get_item_bounding_box(actor)
 
-        handle.pos = actor_bb.x, actor_bb.y
+        handle.pos = (0, 0)
         sink = tool.glue(line, handle, handle.pos)
         assert sink, f"No sink at {handle.pos}"
         assert sink.item is actor
