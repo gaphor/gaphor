@@ -5,7 +5,7 @@ from PyInstaller.utils.hooks import copy_metadata
 block_cipher = None
 
 a = Analysis(['gaphor-script.py'],
-             pathex=['C:/tools/msys64/home/DYEAW/gaphor'],
+             pathex=['../'],
              binaries=[],
              datas=[
 	     	('../gaphor/ui/layout.xml', 'gaphor/ui'),
