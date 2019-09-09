@@ -3,7 +3,7 @@ import ast
 import gaphas
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
-from gaphor.UML import Presentation
+from gaphor.UML.presentation import Presentation, S
 from gaphor.diagram.text import text_point_at_line, TextAlign
 
 
@@ -49,7 +49,7 @@ def from_package_str(item):
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
 
 
-class ElementPresentation(Presentation, gaphas.Element):
+class ElementPresentation(Presentation[S], gaphas.Element):
     """
     Presentation for Gaphas Element (box-like) items.
 
@@ -57,6 +57,9 @@ class ElementPresentation(Presentation, gaphas.Element):
     If the shape can change, for example because styling needs to change, implement
     the method `update_shapes()` and set self.shape there.
     """
+
+    width: int
+    height: int
 
     def __init__(self, id=None, model=None, shape=None):
         super().__init__(id, model)
@@ -84,8 +87,13 @@ class ElementPresentation(Presentation, gaphas.Element):
 
     def setup_canvas(self):
         super().setup_canvas()
+        self.subscribe_all()
         # Invoke here, since we do not receive events, unless we're attached to a canvas
         self.update_shapes()
+
+    def teardown_canvas(self):
+        self.unsubscribe_all()
+        super().teardown_canvas()
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -106,7 +114,7 @@ class ElementPresentation(Presentation, gaphas.Element):
         self.update_shapes()
 
 
-class LinePresentation(Presentation, gaphas.Line):
+class LinePresentation(Presentation[S], gaphas.Line):
     def __init__(
         self,
         id=None,
@@ -132,10 +140,13 @@ class LinePresentation(Presentation, gaphas.Line):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
+    def _set_style(self, style):
+        self._style.update(style)
+
     style = property(
         lambda self: self._style.__getitem__,
-        lambda self, style: self._style.update(style),
-        """A line, contrary to an element, has some styling of it's own.""",
+        _set_style,
+        doc="""A line, contrary to an element, has some styling of it's own.""",
     )
 
     def post_update(self, context):
@@ -182,6 +193,14 @@ class LinePresentation(Presentation, gaphas.Line):
         ):
             if shape:
                 shape.draw(context, rect)
+
+    def setup_canvas(self):
+        super().setup_canvas()
+        self.subscribe_all()
+
+    def teardown_canvas(self):
+        self.unsubscribe_all()
+        super().teardown_canvas()
 
     def save(self, save_func):
         def save_connection(name, handle):

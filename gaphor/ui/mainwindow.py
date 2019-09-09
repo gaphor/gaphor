@@ -2,6 +2,8 @@
 The main application window.
 """
 
+from typing import List, Tuple
+
 import logging
 import os.path
 
@@ -50,7 +52,6 @@ class MainWindow(Service, ActionProvider):
     """
 
     size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
-    resizable = True
 
     menu_xml = """
       <ui>
@@ -263,7 +264,6 @@ Gtk.AccelMap.add_filter("gaphor")
 class Diagrams(UIComponent, ActionProvider):
 
     title = _("Diagrams")
-    placement = ("left", "diagrams")
 
     menu_xml = """
       <ui>
@@ -398,7 +398,7 @@ class Diagrams(UIComponent, ActionProvider):
             List of tuples (page, widget) of the currently open Notebook pages.
         """
 
-        widgets_on_pages = []
+        widgets_on_pages: List[Tuple[int, Gtk.Widget]] = []
         if not self._notebook:
             return widgets_on_pages
 

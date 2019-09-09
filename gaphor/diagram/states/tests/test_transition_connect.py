@@ -44,7 +44,6 @@ class TransitionConnectorTestCase(TestCase):
         v3 = self.create(StateItem, UML.State)
 
         t = self.create(TransitionItem)
-        assert t.subject is None
 
         # connect: v1 -> v2
         self.connect(t, t.head, v1)

@@ -11,7 +11,7 @@ __all__ = ["parse_property", "parse_operation"]
 
 import re
 from functools import singledispatch
-from gaphor.UML.uml2 import Property, NamedElement, Operation, Parameter
+import gaphor.UML.uml2 as uml2
 
 
 @singledispatch
@@ -236,7 +236,7 @@ def parse_association_end(el, s):
             #        el.taggedValue = tv
 
 
-@parse.register(Property)
+@parse.register(uml2.Property)
 def parse_property(el, s):
     if el.association:
         parse_association_end(el, s)
@@ -244,7 +244,7 @@ def parse_property(el, s):
         parse_attribute(el, s)
 
 
-@parse.register(Operation)
+@parse.register(uml2.Operation)
 def parse_operation(el, s):
     """
     Parse string s in the operation. Tagged values, parameters and
@@ -254,15 +254,15 @@ def parse_operation(el, s):
     if not m or m.group("garbage"):
         el.name = s
         del el.visibility
-        list(map(Parameter.unlink, list(el.returnResult)))
-        list(map(Parameter.unlink, list(el.formalParameter)))
+        list(map(uml2.Parameter.unlink, list(el.returnResult)))
+        list(map(uml2.Parameter.unlink, list(el.formalParameter)))
     else:
         g = m.group
         create = el.model.create
         _set_visibility(el, g("vis"))
         el.name = g("name")
         if not el.returnResult:
-            el.returnResult = create(Parameter)
+            el.returnResult = create(uml2.Parameter)
         p = el.returnResult[0]
         p.direction = "return"
         p.typeValue = g("type")
@@ -286,7 +286,7 @@ def parse_operation(el, s):
             try:
                 p = el.formalParameter[pindex]
             except IndexError:
-                p = create(Parameter)
+                p = create(uml2.Parameter)
             p.direction = g("dir") or "in"
             p.name = g("name")
             p.typeValue = g("type")
@@ -310,7 +310,7 @@ def parse_operation(el, s):
             fp.unlink()
 
 
-def parse_lifeline(el, s):
+def parse_lifeline(el: uml2.Lifeline, s: str) -> None:
     """
     Parse string s in a lifeline. If a class is defined and can be found
     in the datamodel, then a class is connected to the lifelines 'represents'
@@ -320,8 +320,6 @@ def parse_lifeline(el, s):
     g = m.group
     if not m or g("garbage"):
         el.name = s
-        if hasattr(el, "represents"):
-            del el.represents
     else:
         el.name = g("name") + ": "
         t = g("type")
@@ -331,13 +329,13 @@ def parse_lifeline(el, s):
         # Lifeline.represents: ConnectableElement
 
 
-def render_lifeline(el):
+def render_lifeline(el: uml2.Lifeline) -> str:
     """
     """
     return el.name
 
 
-@parse.register(NamedElement)
+@parse.register(uml2.NamedElement)
 def parse_namedelement(el, text):
     """
     Parse named element by simply assigning text to its name.

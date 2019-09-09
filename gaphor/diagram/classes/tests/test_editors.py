@@ -9,7 +9,7 @@ from gaphor.diagram.classes.classespropertypages import AttributesPage, Operatio
 
 class EditorTestCase(TestCase):
     def test_association_editor(self):
-        assoc = self.create(AssociationItem)
+        assoc: AssociationItem = self.create(AssociationItem)
         adapter = Editor(assoc)
         assert not adapter.is_editable(10, 10)
         assert adapter._edit is None

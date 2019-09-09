@@ -9,6 +9,7 @@ All important services are present in the application object:
  - action sets
 """
 
+from typing import Dict, Type
 import logging
 import inspect
 import importlib_metadata
@@ -37,7 +38,7 @@ class _Application:
     """
 
     def __init__(self):
-        self._uninitialized_services = {}
+        self._uninitialized_services: Dict[str, Type[Service]] = {}
         self._app = None
         self.component_registry = None
         self.event_manager = None
@@ -164,7 +165,7 @@ def init_services(uninitialized_services):
     Given a dictionary `{name: service-class}`,
     return a map `{name: service-instance}`.
     """
-    ready = {}
+    ready: Dict[str, Service] = {}
 
     def pop(name):
         try:

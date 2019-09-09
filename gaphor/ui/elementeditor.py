@@ -22,8 +22,6 @@ class ElementEditor(UIComponent, ActionProvider):
 
     title = _("Element Editor")
     size = (275, -1)
-    resizable = True
-    placement = "floating"
     menu_xml = """
       <ui>
         <menubar name="mainwindow">
@@ -184,7 +182,7 @@ class ElementEditor(UIComponent, ActionProvider):
     @event_handler(AssociationChangeEvent)
     def _element_changed(self, event):
         element = event.element
-        if event.property is Presentation.subject:
+        if event.property is Presentation.subject:  # type: ignore
             if element is self._current_item:
                 self.clear_pages()
                 self.create_pages(self._current_item)

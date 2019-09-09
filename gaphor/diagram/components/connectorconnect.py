@@ -5,6 +5,7 @@ Implemented using interface item in assembly connector mode, see
 `gaphor.diagram.connector` module for details.
 """
 
+import operator
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect, AbstractConnect
 from gaphor.diagram.components.component import ComponentItem

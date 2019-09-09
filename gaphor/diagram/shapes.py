@@ -1,3 +1,4 @@
+from typing import List, Tuple
 from math import pi, atan2
 from gaphas.geometry import Rectangle
 
@@ -78,7 +79,7 @@ class Box:
 
     def __init__(self, *children, style={}, draw=None):
         self.children = children
-        self.sizes = []
+        self.sizes: List[Tuple[int, int]] = []
         self.style = {
             "min-width": 0,
             "min-height": 0,
@@ -157,7 +158,7 @@ class IconBox:
     def __init__(self, icon, *children, style={}):
         self.icon = icon
         self.children = children
-        self.sizes = []
+        self.sizes: List[Tuple[int, int]] = []
         self.style = {
             "min-width": 0,
             "min-height": 0,

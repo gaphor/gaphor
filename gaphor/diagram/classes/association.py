@@ -11,6 +11,8 @@ Plan:
 #   are connected to the same Class, the head_end property is connected to the
 #   tail end and visa versa.
 
+from typing import Tuple
+
 import ast
 from math import pi, atan2
 
@@ -423,17 +425,6 @@ class AssociationEnd(UML.Presentation):
                 self._mult = m
                 self.request_update()
 
-    def point_name(self, pos):
-        drp = distance_rectangle_point
-        return drp(self._name_bounds, pos)
-
-    def point_mult(self, pos):
-        drp = distance_rectangle_point
-        return drp(self._mult_bounds, pos)
-
-    def point(self, pos):
-        return min(self.point_name(pos), self.point_mult(pos))
-
     def get_name(self):
         return self._name
 
@@ -457,8 +448,13 @@ class AssociationEnd(UML.Presentation):
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
 
-        name_w, name_h = list(map(max, text_size(cr, self._name, self.font), (10, 10)))
-        mult_w, mult_h = list(map(max, text_size(cr, self._mult, self.font), (10, 10)))
+        def max_text_size(size1, size2):
+            w1, h1 = size1
+            w2, h2 = size2
+            return (max(w1, w2), max(h1, h2))
+
+        name_w, name_h = max_text_size(text_size(cr, self._name, self.font), (10, 10))
+        mult_w, mult_h = max_text_size(text_size(cr, self._mult, self.font), (10, 10))
 
         if dy == 0:
             rc = 1000.0  # quite a lot...

@@ -1,4 +1,5 @@
 import pytest
+
 import cairo
 
 from gaphor.diagram.shapes import Box, IconBox, Text
@@ -22,26 +23,6 @@ def cr():
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
     cr = cairo.Context(surface)
     return cr
-
-
-def cairo_mock_context(recorder):
-    class MethodMock:
-        def __init__(self, name):
-            self.name = name
-
-        # As far as I know, cairo methods are never called as keyword arguments
-        def __call__(self, *args):
-            recorder((self.name, args))
-
-    class CairoContextMock(cairo.Context):
-        def __init__(self, surface):
-            self.events = []
-            super().__init__()
-
-        def __getattribute__(self, name):
-            return MethodMock(name)
-
-    return CairoContextMock(cairo.SVGSurface(None, 100, 100))
 
 
 def test_box_size():

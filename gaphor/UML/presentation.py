@@ -2,10 +2,17 @@
 Base code for presentation elements
 """
 
-from gaphor.UML.uml2 import Element
+from typing import Generic, Optional, TypeVar, TYPE_CHECKING
+from gaphor.UML.properties import umlproperty, association
+from gaphor.UML.element import Element
+
+if TYPE_CHECKING:
+    from gaphas.canvas import Canvas
+
+S = TypeVar("S", bound=Element)
 
 
-class Presentation(Element):
+class Presentation(Element, Generic[S]):
     """
     This presentation is used to link the behaviors of `gaphor.UML.Element` and `gaphas.Item`.
     """
@@ -19,6 +26,12 @@ class Presentation(Element):
         self._watcher = self.watcher(default_handler=update)
 
         self.watch("subject")
+
+    subject: umlproperty[S, S] = association(
+        "subject", Element, upper=1, opposite="presentation"
+    )
+
+    canvas: Optional["Canvas"]
 
     def watch(self, path, handler=None):
         """
@@ -53,11 +66,3 @@ class Presentation(Element):
         if self.canvas:
             self.canvas.remove(self)
         super().unlink()
-
-    def setup_canvas(self):
-        super().setup_canvas()
-        self.subscribe_all()
-
-    def teardown_canvas(self):
-        self.unsubscribe_all()
-        super().teardown_canvas()

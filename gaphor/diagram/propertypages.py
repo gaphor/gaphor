@@ -25,6 +25,8 @@ TODO:
      key focuses its associated control.
 """
 
+from typing import Dict, List, Tuple, Type
+
 import abc
 import gaphas.item
 from gi.repository import GObject
@@ -42,8 +44,8 @@ class _PropertyPages:
     Property pages are collected on type.
     """
 
-    def __init__(self):
-        self.pages = []
+    def __init__(self) -> None:
+        self.pages: List[Tuple[Type[UML.Element], object]] = []
 
     def register(self, subject_type):
         def reg(func):
@@ -272,7 +274,7 @@ class UMLComboModel(Gtk.ListStore):
     def __init__(self, data):
         super().__init__(str)
 
-        self._indices = {}
+        self._indices: Dict[Tuple[str, str], int] = {}
         self._data = data
 
         # add labels to underlying model and store index information
@@ -386,7 +388,7 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     NAME_LABEL = _("Name")
 
-    def __init__(self, subject):
+    def __init__(self, subject: UML.NamedElement):
         assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
             subject
         )

@@ -67,6 +67,7 @@ then the command is
 """
 
 from functools import cmp_to_key
+from typing import List
 import os
 import pprint
 import token
@@ -1200,7 +1201,7 @@ if __name__ == "__main__":
     import sys, glob, getopt
 
     SIMPLE = 0
-    globbed = []
+    globbed: List[str] = []
 
     optionVerbose = 0
     optionModuleAsClass = 0

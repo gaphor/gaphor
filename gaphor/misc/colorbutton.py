@@ -5,7 +5,7 @@ Gaphor is using color values from 0 to 1 (cairo standard), so that required some
 on the color widget. The standard format is `(red, green, blue, alpha)`.
 """
 
-from gi.repository import Gtk
+from gi.repository import GObject, Gdk, Gtk
 
 
 class ColorButton(Gtk.ColorButton):
@@ -13,7 +13,7 @@ class ColorButton(Gtk.ColorButton):
     __gtype_name__ = "GaphorColorButton"
 
     def __init__(self, r, g, b, a):
-        GObject.GObject.__init__(self)
+        super().__init__(self)
         self.set_color(Gdk.Color(int(r * 65535), int(g * 65535), int(b * 65535)))
         self.set_use_alpha(True)
         self.set_alpha(int(a * 65535))

@@ -46,6 +46,7 @@ operation information in message's name.
 See also ``lifeline`` module documentation.
 """
 
+from typing import List
 from math import pi, atan2
 from collections import OrderedDict
 from gaphas.util import path_ellipse
@@ -86,8 +87,8 @@ class MessageItem(LinePresentation, Named):
         self._is_communication = False
         self._arrow_pos = 0, 0
         self._arrow_angle = 0
-        self._messages = []
-        self._inverted_messages = []
+        self._messages: List[UML.Message] = []
+        self._inverted_messages: List[UML.Message] = []
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")

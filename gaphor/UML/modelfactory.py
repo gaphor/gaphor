@@ -8,11 +8,12 @@ Functions collected in this module allow to
 
 """
 
+from typing import Sequence, Iterable
 import itertools
 from gaphor.UML.uml2 import *
 
 
-def stereotypes_str(element, stereotypes=()):
+def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
     """
     Identify stereotypes of an UML metamodel instance and return coma
     separated stereotypes as string.
@@ -25,7 +26,9 @@ def stereotypes_str(element, stereotypes=()):
     """
     # generate string with stereotype names separated by coma
     if element:
-        applied = (stereotype_name(st) for st in get_applied_stereotypes(element))
+        applied: Iterable[str] = (
+            stereotype_name(st) for st in get_applied_stereotypes(element)
+        )
     else:
         applied = ()
     s = ", ".join(itertools.chain(stereotypes, applied))
@@ -130,7 +133,7 @@ def get_applied_stereotypes(element):
     return element.appliedStereotype[:].classifier
 
 
-def create_extension(metaclass, stereotype):
+def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
     """
     Create an Extension association between an metaclass and a stereotype.
     """
@@ -191,7 +194,7 @@ def create_dependency(supplier, client):
 
 def create_realization(realizingClassifier, abstraction):
     assert (
-        realizingClassifier.model is stereoabstractiontype.model
+        realizingClassifier.model is abstraction.model
     ), "Realizing classifier and Abstraction are from different models"
     model = realizingClassifier.model
     dep = model.create(Realization)

@@ -3,20 +3,30 @@
 Base class for UML model elements.
 """
 
+from __future__ import annotations
+
 __all__ = ["Element"]
 
 import uuid
 
+from typing import Generator, Optional, Sequence, Union, Type, TYPE_CHECKING
 from gaphor.UML.properties import umlproperty
 from gaphor.UML.elementdispatcher import EventWatcher
+
+if TYPE_CHECKING:
+    from gaphor.UML.elementfactory import ElementFactory
+    from gaphor.UML.presentation import Presentation
 
 
 class UnlinkEvent:
     """Used to tell event handlers this element should be unlinked.
     """
 
-    def __init__(self, element):
+    def __init__(self, element: Element):
         self.element = element
+
+
+Id = Union[str, bool]
 
 
 class Element:
@@ -24,7 +34,9 @@ class Element:
     Base class for UML data classes.
     """
 
-    def __init__(self, id=None, model=None):
+    def __init__(
+        self, id: Optional[Id] = None, model: Optional["ElementFactory"] = None
+    ):
         """
         Create an element. As optional parameters an id and model can be
         given.
@@ -37,14 +49,29 @@ class Element:
         A model can be provided to refer to the model this element belongs to.
         """
         super().__init__()
-        self._id = id or (id is not False and str(uuid.uuid1()) or False)
+        self._id: Id = id or (id is not False and str(uuid.uuid1()) or False)
         # The model this element belongs to.
         self._model = model
         self._unlink_lock = 0
 
-    id = property(lambda self: self._id, doc="Id")
+    @property
+    def id(self) -> Id:
+        "Id"
+        return self._id
 
-    model = property(lambda self: self._model, doc="the owning model")
+    @property
+    def model(self) -> "ElementFactory":
+        "The owning model, raises AssertionError when model is not set."
+        assert (
+            self._model
+        ), "You can not retrieve the model since it's not set on construction"
+        return self._model
+
+    appliedStereotype: umlproperty[Element, Sequence[Element]]
+    owner: umlproperty[Element, Sequence[Element]]
+    ownedComment: umlproperty[Element, Sequence[Element]]
+    ownedElement: umlproperty[Element, Sequence[Element]]
+    presentation: umlproperty["Presentation", Sequence["Presentation"]]
 
     def umlproperties(self):
         """
@@ -98,7 +125,6 @@ class Element:
             self._unlink_lock += 1
 
             for prop in self.umlproperties():
-
                 prop.unlink(self)
 
             self.handle(UnlinkEvent(self))
@@ -114,18 +140,18 @@ class Element:
             model.handle(event)
 
     def watcher(self, default_handler=None):
-        dispatcher = self.model.element_dispatcher if self.model else None
+        dispatcher = self._model.element_dispatcher if self._model else None
         return EventWatcher(self, dispatcher, default_handler)
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
-    def isKindOf(self, class_):
+    def isKindOf(self, class_: Type[Element]):
         """
         Returns true if the object is an instance of `class_`.
         """
         return isinstance(self, class_)
 
-    def isTypeOf(self, other):
+    def isTypeOf(self, other: Element):
         """
         Returns true if the object is of the same type as other.
         """

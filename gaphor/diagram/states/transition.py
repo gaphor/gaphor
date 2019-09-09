@@ -10,7 +10,7 @@ from gaphor.diagram.support import represents
 
 
 @represents(UML.Transition)
-class TransitionItem(LinePresentation, Named):
+class TransitionItem(LinePresentation[UML.Transition], Named):
     """
     Representation of state transition.
     """

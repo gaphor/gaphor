@@ -24,9 +24,23 @@ methods:
     save(save_func):  send the value of the property to save_func(name, value)
 """
 
+from __future__ import annotations
+
 __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
 
 import logging
+from typing import (
+    overload,
+    Any,
+    Sequence,
+    Type,
+    Union,
+    Generic,
+    TypeVar,
+    Optional,
+    Callable,
+    Set,
+)
 
 from gaphor.UML.collection import collection, collectionlist
 from gaphor.UML.event import (
@@ -48,8 +62,13 @@ from gaphor.UML.event import (
 
 log = logging.getLogger(__name__)
 
+T = TypeVar("T", covariant=True)
+G = TypeVar("G", covariant=True)
 
-class umlproperty:
+Upper = Union[str, int]
+
+
+class umlproperty(Generic[T, G]):
     """
     Superclass for attribute, enumeration and association.
 
@@ -63,20 +82,30 @@ class umlproperty:
     """
 
     def __init__(self):
-        self._dependent_properties = set()
+        self._dependent_properties: Sequence[umlproperty] = set()
+        self.name: str
+        self._name: str
+
+    @overload
+    def __get__(self, obj: None, class_=None) -> umlproperty:
+        ...
+
+    @overload
+    def __get__(self, obj, class_=None) -> G:
+        ...
 
     def __get__(self, obj, class_=None):
         if obj:
             return self._get(obj)
         return self
 
-    def __set__(self, obj, value):
+    def __set__(self, obj, value) -> None:
         self._set(obj, value)
 
     def __delete__(self, obj, value=None):
         self._del(obj, value)
 
-    def save(self, obj, save_func):
+    def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
             save_func(self.name, self._get(obj))
 
@@ -92,13 +121,22 @@ class umlproperty:
         """
         pass
 
+    def _get(self, obj) -> Optional[G]:
+        raise NotImplementedError()
+
+    def _set(self, obj, value: Optional[T]) -> None:
+        raise NotImplementedError()
+
+    def _del(self, obj, value: Optional[T]) -> None:
+        raise NotImplementedError()
+
     def handle(self, event):
         event.element.handle(event)
         for d in self._dependent_properties:
             d.propagate(event)
 
 
-class attribute(umlproperty):
+class attribute(umlproperty[T, T]):
     """
     Attribute.
 
@@ -106,7 +144,14 @@ class attribute(umlproperty):
     """
 
     # TODO: check if lower and upper are actually needed for attributes
-    def __init__(self, name, type, default=None, lower=0, upper=1):
+    def __init__(
+        self,
+        name: str,
+        type: Type[T],
+        default: Optional[T] = None,
+        lower: int = 0,
+        upper: int = 1,
+    ):
         super().__init__()
         self.name = name
         self._name = "_" + name
@@ -115,10 +160,10 @@ class attribute(umlproperty):
         self.lower = lower
         self.upper = upper
 
-    def load(self, obj, value):
+    def load(self, obj, value: str):
         """Load the attribute value."""
         try:
-            setattr(obj, self._name, self.type(value))
+            setattr(obj, self._name, self.type(value))  # type: ignore
         except ValueError:
             error_msg = "Failed to load attribute {} of type {} with value {}".format(
                 self._name, self.type, value
@@ -153,8 +198,6 @@ class attribute(umlproperty):
         if value == self._get(obj):
             return
 
-        # undoattributeaction(self, obj, self._get(obj))
-
         old = self._get(obj)
         if value == self.default and hasattr(obj, self._name):
             delattr(obj, self._name)
@@ -165,7 +208,6 @@ class attribute(umlproperty):
     def _del(self, obj, value=None):
         old = self._get(obj)
         try:
-            # undoattributeaction(self, obj, self._get(obj))
             delattr(obj, self._name)
         except AttributeError:
             pass
@@ -173,7 +215,7 @@ class attribute(umlproperty):
             self.handle(AttributeChangeEvent(obj, self, old, self.default))
 
 
-class enumeration(umlproperty):
+class enumeration(umlproperty[str, str]):
     """
     Enumeration
 
@@ -186,7 +228,7 @@ class enumeration(umlproperty):
     # All enumerations have a type 'str'
     type = property(lambda s: str)
 
-    def __init__(self, name, values, default):
+    def __init__(self, name: str, values: Sequence[str], default: str):
         super().__init__()
         self.name = name
         self._name = "_" + name
@@ -232,7 +274,7 @@ class enumeration(umlproperty):
             self.handle(AttributeChangeEvent(obj, self, old, self.default))
 
 
-class association(umlproperty):
+class association(umlproperty[T, G]):
     """
     Association, both uni- and bi-directional.
 
@@ -246,7 +288,15 @@ class association(umlproperty):
     unlink all elements attached to if it is unlinked.
     """
 
-    def __init__(self, name, type, lower=0, upper="*", composite=False, opposite=None):
+    def __init__(
+        self,
+        name,
+        type: Type,
+        lower: int = 0,
+        upper: Upper = "*",
+        composite=False,
+        opposite=None,
+    ):
         super().__init__()
         self.name = name
         self._name = "_" + name
@@ -329,7 +379,9 @@ class association(umlproperty):
                 self._del(obj, old, from_opposite=from_opposite, do_notify=False)
 
             if do_notify:
-                event = AssociationSetEvent(obj, self, old, value)
+                event: AssociationChangeEvent = AssociationSetEvent(
+                    obj, self, old, value
+                )
 
             if value is None:
                 if do_notify:
@@ -384,7 +436,7 @@ class association(umlproperty):
             if self.stub:
                 self.stub._del(value, obj, from_opposite=True)
 
-        event = None
+        event: Optional[AssociationChangeEvent] = None
         if self.upper == 1:
             try:
                 delattr(obj, self._name)
@@ -430,7 +482,7 @@ class AssociationStubError(Exception):
     pass
 
 
-class associationstub(umlproperty):
+class associationstub(umlproperty[T, G]):
     """
     An association stub is an internal thingy that ensures all associations
     are always bi-directional. This helps the application when one end of
@@ -494,7 +546,7 @@ class unioncache:
         self.version = version
 
 
-class derived(umlproperty):
+class derived(umlproperty[T, G]):
     """
     Base class for derived properties, both derived unions and custom
     properties.
@@ -503,9 +555,11 @@ class derived(umlproperty):
     -Delete- and Set events, this gives just an assumption that something
     may have changed. If something actually changed depends on the filter
     applied to the derived property.
+
+    NB. filter returns a *list* of filtered items, even when upper bound is 1.
     """
 
-    def __init__(self, name, type, lower, upper, *subsets):
+    def __init__(self, name, type, lower, upper, filter, *subsets):
         super().__init__()
         self.name = name
         self._name = "_" + name
@@ -513,6 +567,7 @@ class derived(umlproperty):
         self.type = type
         self.lower = lower
         self.upper = upper
+        self.filter = filter
         self.subsets = set(subsets)
         self.single = len(subsets) == 1
 
@@ -533,12 +588,6 @@ class derived(umlproperty):
 
     def __str__(self):
         return f"<derived {self.name}: {str(list(map(str, self.subsets)))[1:-1]}>"
-
-    def filter(self, obj):
-        """
-        Filter should return something iterable.
-        """
-        raise NotImplementedError("Implement this in the property.")
 
     def _update(self, obj):
         """
@@ -635,7 +684,7 @@ class derived(umlproperty):
                     )
 
 
-class derivedunion(derived):
+class derivedunion(derived[T, G]):
     """
     Derived union
 
@@ -644,6 +693,9 @@ class derivedunion(derived):
     The subsets are the properties that participate in the union (Element.name).
     """
 
+    def __init__(self, name, type, lower, upper, *subsets):
+        super().__init__(name, type, lower, upper, self._union, *subsets)
+
     def _union(self, obj, exclude=None):
         """
         Returns a union of all values as a set.
@@ -651,7 +703,7 @@ class derivedunion(derived):
         if self.single:
             return next(iter(self.subsets)).__get__(obj)
         else:
-            u = set()
+            u: Set[T] = set()
             for s in self.subsets:
                 if s is exclude:
                     continue
@@ -663,9 +715,6 @@ class derivedunion(derived):
                         # [0..1] property
                         u.add(tmp)
             return collectionlist(u)
-
-    # Filter is our default filter
-    filter = _union
 
     def propagate(self, event):
         """
@@ -738,7 +787,7 @@ class derivedunion(derived):
                     )
 
 
-class redefine(umlproperty):
+class redefine(umlproperty[T, G]):
     """
     Redefined association
 

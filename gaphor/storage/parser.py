@@ -32,8 +32,9 @@ takes a long time. The yielded values are the percentage of the file read.
 
 __all__ = ["parse", "ParserException"]
 
-import io
+from typing import Dict, List, Union, Tuple, IO
 import os
+import io
 from xml.sax import handler
 from collections import OrderedDict
 
@@ -43,8 +44,8 @@ class base:
     """
 
     def __init__(self):
-        self.values = {}
-        self.references = {}
+        self.values: Dict[str, str] = {}
+        self.references: Dict[str, str] = {}
 
     def __getattr__(self, key):
         try:
@@ -71,6 +72,7 @@ class element(base):
         self.id = id
         self.type = type
         self.canvas = canvas
+        self.element: object = None
 
 
 class canvas(base):
@@ -107,6 +109,8 @@ class ParserException(Exception):
     REFLIST,  # In a <reflist>
     REF,  # Reading contents of a <ref> tag
 ] = range(10)
+
+State = int
 
 
 class GaphorLoader(handler.ContentHandler):
@@ -152,8 +156,8 @@ class GaphorLoader(handler.ContentHandler):
         """
         self.version = None
         self.gaphor_version = None
-        self.elements = OrderedDict()  # map id: element/canvasitem
-        self.__stack = []
+        self.elements: Dict[str, Union[element, canvasitem]] = OrderedDict()
+        self.__stack: List[Tuple[Union[element, canvas, canvasitem], State]] = []
         self.text = ""
 
     def endDocument(self):
@@ -184,11 +188,11 @@ class GaphorLoader(handler.ContentHandler):
         # Items in a canvas are referenced by the <item> tag:
         elif state in (CANVAS, ITEM) and name == "item":
             id = attrs["id"]
-            c = canvasitem(id, attrs["type"])
+            ci = canvasitem(id, attrs["type"])
             assert id not in list(self.elements.keys()), f"{id} already defined"
-            self.elements[id] = c
-            self.peek().canvasitems.append(c)
-            self.push(c, ITEM)
+            self.elements[id] = ci
+            self.peek().canvasitems.append(ci)
+            self.push(ci, ITEM)
 
         # Store the attribute name on the stack, so we can use it later
         # to store the <ref>, <reflist> or <val> content:
@@ -334,7 +338,7 @@ def parse_file(filename, parser):
     is_fd = True
 
     if isinstance(filename, io.IOBase):
-        file_obj = filename
+        file_obj: Union[IO, io.IOBase] = filename
     else:
         is_fd = False
         file_obj = open(filename, "r")
