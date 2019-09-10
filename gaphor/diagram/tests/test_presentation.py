@@ -13,12 +13,12 @@ class DummyVisualComponent:
         pass
 
 
-class TestElement(ElementPresentation):
+class StubElement(ElementPresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model, shape=DummyVisualComponent())
 
 
-class TestLine(LinePresentation):
+class StubLine(LinePresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model, shape_middle=DummyVisualComponent())
 
@@ -43,7 +43,7 @@ def test_creation(element_factory):
 
 def test_element_saving(element_factory, diagram):
     subject = element_factory.create(UML.Class)
-    p = diagram.create(TestElement, subject=subject)
+    p = diagram.create(StubElement, subject=subject)
 
     properties = {}
     referenced = set()
@@ -64,7 +64,7 @@ def test_element_saving(element_factory, diagram):
 
 def test_element_loading(element_factory, diagram):
     subject = element_factory.create(UML.Class)
-    p = diagram.create(TestElement)
+    p = diagram.create(StubElement)
 
     p.load("matrix", "(2.0, 0.0, 0.0, 2.0, 0.0, 0.0)")
     p.load("width", "20")
@@ -79,7 +79,7 @@ def test_element_loading(element_factory, diagram):
 
 def test_line_saving(element_factory, diagram):
     subject = element_factory.create(UML.Dependency)
-    p = diagram.create(TestLine, subject=subject)
+    p = diagram.create(StubLine, subject=subject)
 
     properties = {}
     referenced = set()
@@ -101,7 +101,7 @@ def test_line_saving(element_factory, diagram):
 
 
 def test_line_saving_without_subject(diagram):
-    p = diagram.create(TestLine)
+    p = diagram.create(StubLine)
 
     properties = {}
     referenced = set()
@@ -118,7 +118,7 @@ def test_line_saving_without_subject(diagram):
 
 def test_line_loading(element_factory, diagram):
     subject = element_factory.create(UML.Dependency)
-    p = diagram.create(TestLine)
+    p = diagram.create(StubLine)
 
     p.load("matrix", "(2.0, 0.0, 0.0, 2.0, 0.0, 0.0)")
     p.load("orthogonal", "0")
