@@ -1,8 +1,4 @@
-#!C:/tools/msys64/home/DYEAW/gaphor/.venv/bin/python.exe
-# EASY-INSTALL-ENTRY-SCRIPT: 'gaphor','console_scripts','gaphor'
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     import gaphor
     from gaphor import core
     from gaphor.services.actionmanager import ActionManager
@@ -26,5 +22,5 @@ if __name__ == '__main__':
     from gaphor.ui.mainwindow import Toolbox
     from gaphor.services.undomanager import UndoManager
     from gaphor.plugins.xmiexport import XMIExport
-    gaphor.main()
 
+    gaphor.main()
