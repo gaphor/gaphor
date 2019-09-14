@@ -75,13 +75,7 @@ setup(
         "Topic :: Software Development :: Documentation",
     ],
     keywords="model modeling modelling uml diagram python tool",
-    packages=find_packages(
-        exclude=[
-            "utils*",
-            "docs",
-            "tests",
-        ]
-    ),
+    packages=find_packages(exclude=["utils*", "docs", "tests"]),
     include_package_data=True,
     install_requires=[
         "pycairo >= 1.17.0",

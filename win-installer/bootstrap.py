@@ -4,17 +4,19 @@ import subprocess
 # Update pacman packages
 subprocess.run("pacman -Suy")
 
-# Install PyGObject Development Environment
+# install pygobject development environment
 subprocess.run(
-    "pacman -S --needed --noconfirm"
-    "base-devel"
-    "mingw-w64-x68_64-toolchain"
-    "git"
-    "mingw-w64-x68_64-python3"
-    "mingw-w64-x68_64-python3-cairo"
-    "mingw-w64-x68_64-gobject-gobject"
-    "mingw-w64-x68_64-python3-pip"
-    "mingw-w64-x68_64-setuptools"
+    [
+        "pacman -s --needed --noconfirm",
+        "base-devel",
+        "mingw-w64-x86_64-toolchain",
+        "git",
+        "mingw-w64-x86_64-python3",
+        "mingw-w64-x86_64-python3-cairo",
+        "mingw-w64-x86_64-python3-gobject",
+        "mingw-w64-x86_64-python3-pip",
+        "mingw-w64-x86_64-setuptools",
+    ]
 )
 
 # Install Gaphor dependencies
