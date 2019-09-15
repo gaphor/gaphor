@@ -62,9 +62,6 @@ To install Gaphor in Linux use Flatpak:
 1. `flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
 1. `flatpak install --user flathub org.gaphor.Gaphor`
 
-Alternatively, you can download the [latest
-gaphor-linux.tar.gz](https://github.com/gaphor/gaphor/releases).
-
 ### macOS
 We are still working on packaging GTK with Gaphor and it is currently an
 installation pre-requisite.
@@ -83,23 +80,19 @@ to macOS security settings, please attempt to launch it a 2nd time if this
 happens.
 
 ### PyPI
-You can also install Gaphor using a wheel from PyPI.
+If you have the latest stable version of Python installed and the Gaphor
+dependencies installed, you can also install Gaphor using a wheel from PyPI.
 
-On Ubuntu 18.04, make sure the following packages are installed:
-
-* libcairo2-dev
-* libgirepository1.0-dev
-* gobject-introspection (a dependency of libgirepository1.0-dev)
-
-GTK+ 3.x is installed by default.
+If you don't have the latest stable version of Python and the Gaphor dependencies
+installed, follow the development environment setup instructions in the next
+section and instead of cloning the repository, create a
+[virtual environment](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments),
+and then execute the following:
 
 ```bash
 $ pip install gaphor
 $ gaphor
 ```
-Use of a
-[virtual environment](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments)
-is highly recommended.
 
 ### Development
 
@@ -124,7 +117,29 @@ $ poetry run gaphor
 ```
 
 #### Linux
-To setup a development environment with Linux:
+To setup a development environment with Linux, you first need the latest
+stable version of Python. In order to get the latest stable version, we
+recommend that you install [pyenv](https://github.com/pyenv/pyenv).
+Install the pyenv
+[prerequisites](https://github.com/pyenv/pyenv/wiki/Common-build-problems#prerequisites)
+first, and then install pyenv:
+
+```bash
+$ curl https://pyenv.run | bash
+```
+
+Make sure you follow the instruction at the end of the installation script
+to install the commands in your shell's rc file. Finally install the latest
+version of Python by executing:
+
+```bash
+$ pyenv install 3.x.x
+```
+Where 3.x.x is replaced by the latest stable version of Python.
+
+Next install the Gaphor prerequisites by installing the gobject introspection
+and cairo build dependencies, for example in Ubuntu execute:
+
 ```bash
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
     gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
@@ -142,7 +157,7 @@ To setup a development environment with macOS:
 1. Install [homebrew](https://brew.sh)
 1. Open a terminal and execute:
 ```bash
-$ brew install gobject-introspection gtk+3
+$ brew install python3 gobject-introspection gtk+3
 ```
 [Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
 ```
