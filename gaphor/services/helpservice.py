@@ -63,6 +63,7 @@ class HelpService(Service, ActionProvider):
             "Jordi Mallach (ca), "
             "Antonin Delpeuch (fr), "
             "Ygor Mutti (pt_BR)")
+        about.set_transient_for(self.main_window.window)
         about.show_all()
         about.run()
         about.destroy()
