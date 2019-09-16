@@ -36,82 +36,33 @@ class HelpService(Service, ActionProvider):
     @action(name="help-about", stock_id="gtk-about")
     def about(self):
         logo_file = importlib_metadata.distribution("gaphor").locate_file(
-            "gaphor/ui/pixmaps/logo.png"
+            "gaphor/ui/pixmaps/gaphor-96x96.png"
         )
         logo = GdkPixbuf.Pixbuf.new_from_file(str(logo_file))
-        version = __version__
-        about = Gtk.Dialog.new()
-        about.set_title(_("About Gaphor"))
-        about.set_modal(True)
-        about.set_transient_for(self.main_window.window)
-        about.add_buttons(Gtk.STOCK_OK, Gtk.ResponseType.OK)
-        about.set_default_response(Gtk.ResponseType.OK)
-        vbox = about.vbox
-
-        image = Gtk.Image()
-        image.set_from_pixbuf(logo)
-        vbox.pack_start(image, True, True, 0)
-
-        notebook = Gtk.Notebook()
-        notebook.set_scrollable(True)
-        notebook.set_border_width(4)
-        notebook.set_tab_pos(Gtk.PositionType.BOTTOM)
-        vbox.pack_start(notebook, True, True, 0)
-
-        tab_vbox = Gtk.VBox()
-
-        def add_label(text, padding_x=0, padding_y=0):
-            label = Gtk.Label(label=text)
-            label.set_property("use-markup", True)
-            label.set_padding(padding_x, padding_y)
-            label.set_justify(Gtk.Justification.CENTER)
-            tab_vbox.pack_start(label, True, True, 0)
-
-        add_label(f'<span weight="bold">Version {version}</span>')
-        add_label(
-            '<span variant="smallcaps">Gaphor is the simple modeling tool written in Python</span>',
-            8,
-            8,
+        about = Gtk.AboutDialog.new()
+        about.set_logo(logo)
+        about.set_title("About Gaphor")
+        about.set_program_name("Gaphor")
+        about.set_comments("Gaphor is the simple modeling tool written in Python")
+        about.set_version(str(__version__))
+        about.set_copyright("Copyright (c) 2001-2019 Arjan J. Molenaar and Dan Yeaw")
+        about.set_license(
+            "This software is published under the terms of the\n"
+            "Apache Software License, version 2.0.\n"
+            "See the LICENSE.txt file for details."
         )
-        add_label(
-            '<span size="small">Copyright (c) 2001-2019 Arjan J. Molenaar and Dan Yeaw</span>',
-            8,
-            8,
-        )
-
-        notebook.append_page(tab_vbox, Gtk.Label(label=_("About")))
-
-        tab_vbox = Gtk.VBox()
-
-        add_label(
-            "This software is published\n"
-            "under the terms of the\n"
-            '<span weight="bold">Apache Software License v2</span>.\n'
-            "See the LICENSE.txt file for details.",
-            0,
-            8,
-        )
-        notebook.append_page(tab_vbox, Gtk.Label(label=_("License")))
-
-        tab_vbox = Gtk.VBox()
-
-        add_label(
-            "Thanks to all the wonderful people that have contributed:\n\n"
-            "Arjan Molenaar\n"
-            "Artur Wroblewski\n"
-            "Jeroen Vloothuis\n"
-            "Dan Yeaw\n"
-            "Enno Groeper\n"
-            "Adam Boduch\n"
-            "Jordi Mallach\n"
-            "Ygor Mutti\n"
-            "Alexis Howells\n"
-            "Encolpe Degoute\n"
-            "Melis Dogan"
-        )
-        add_label("")
-        notebook.append_page(tab_vbox, Gtk.Label(label=_("Contributors")))
-
-        vbox.show_all()
+        about.set_website("https://github.com/gaphor/gaphor")
+        about.set_website_label("Fork me on GitHub")
+        about.set_authors([
+            "Arjan Molenaar, Artur Wroblewski,",
+            "Jeroen Vloothuis, Dan Yeaw, ",
+            "Enno Groeper, Adam Boduch, ",
+            "Alexis Howells, Melis Doğan"
+        ])
+        about.set_translator_credits(
+            "Jordi Mallach (ca), "
+            "Antonin Delpeuch (fr), "
+            "Ygor Mutti (pt_BR)")
+        about.show_all()
         about.run()
         about.destroy()
