@@ -58,7 +58,12 @@ class ConsoleWindow(UIComponent, ActionProvider):
         console = self.construct()
         self.load_console_py(console)
 
-    @action(name="ConsoleWindow:close", stock_id="gtk-close", accel="<Primary><Shift>w")
+    @action(
+        name="ConsoleWindow:close",
+        label="_Close",
+        icon_name="window-close",
+        accel="<Primary><Shift>w",
+    )
     def close(self, widget=None):
         if self.window:
             self.window.destroy()

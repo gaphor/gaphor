@@ -51,7 +51,7 @@ class DiagramToolboxTestCase(TestCase):
 
         for category, items in TOOLBOX_ACTIONS:
 
-            for action_name, label, stock_id, shortcut in items:
+            for action_name, label, icon_name, shortcut in items:
 
                 try:
 

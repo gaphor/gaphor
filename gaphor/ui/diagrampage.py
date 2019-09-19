@@ -142,7 +142,7 @@ class DiagramPage(ActionProvider):
         if event.element is self.diagram:
             self.close()
 
-    @action(name="diagram-close", stock_id="gtk-close")
+    @action(name="diagram-close", label=_("_Close"), icon_name="window-close")
     def close(self):
         """
         Tab is destroyed. Do the same thing that would
@@ -152,20 +152,20 @@ class DiagramPage(ActionProvider):
         self.event_manager.unsubscribe(self._on_element_delete)
         self.view = None
 
-    @action(name="diagram-zoom-in", stock_id="gtk-zoom-in")
+    @action(name="diagram-zoom-in", label=_("Zoom _In"), icon_name="zoom-in", accel="<Primary>plus")
     def zoom_in(self):
         self.view.zoom(1.2)
 
-    @action(name="diagram-zoom-out", stock_id="gtk-zoom-out")
+    @action(name="diagram-zoom-out", label=_("Zoom _Out"), icon_name="zoom-out", accel="<Primary>minus")
     def zoom_out(self):
         self.view.zoom(1 / 1.2)
 
-    @action(name="diagram-zoom-100", stock_id="gtk-zoom-100")
+    @action(name="diagram-zoom-100", label=_("_Normal Size"), icon_name="zoom-original", accel="<Primary>0")
     def zoom_100(self):
         zx = self.view.matrix[0]
         self.view.zoom(1 / zx)
 
-    @action(name="diagram-select-all", label="_Select all", accel="<Primary>a")
+    @action(name="diagram-select-all", label="_Select all", icon_name="edit-select-all", accel="<Primary>a")
     def select_all(self):
         self.view.select_all()
 
@@ -175,7 +175,7 @@ class DiagramPage(ActionProvider):
     def unselect_all(self):
         self.view.unselect_all()
 
-    @action(name="diagram-delete", stock_id="gtk-delete")
+    @action(name="diagram-delete", label=_("_Delete"), icon_name="edit-delete")
     @transactional
     def delete_selected_items(self):
         items = self.view.selected_items

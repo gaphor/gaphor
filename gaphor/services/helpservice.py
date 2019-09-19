@@ -33,7 +33,7 @@ class HelpService(Service, ActionProvider):
     def shutdown(self):
         pass
 
-    @action(name="help-about", stock_id="gtk-about")
+    @action(name="help-about", label=_("About Gaphor"), icon_name="help-about")
     def about(self):
         logo_file = importlib_metadata.distribution("gaphor").locate_file(
             "gaphor/ui/pixmaps/gaphor-96x96.png"
@@ -53,16 +53,17 @@ class HelpService(Service, ActionProvider):
         )
         about.set_website("https://github.com/gaphor/gaphor")
         about.set_website_label("Fork me on GitHub")
-        about.set_authors([
-            "Arjan Molenaar, Artur Wroblewski,",
-            "Jeroen Vloothuis, Dan Yeaw, ",
-            "Enno Groeper, Adam Boduch, ",
-            "Alexis Howells, Melis Doğan"
-        ])
+        about.set_authors(
+            [
+                "Arjan Molenaar, Artur Wroblewski,",
+                "Jeroen Vloothuis, Dan Yeaw, ",
+                "Enno Groeper, Adam Boduch, ",
+                "Alexis Howells, Melis Doğan",
+            ]
+        )
         about.set_translator_credits(
-            "Jordi Mallach (ca), "
-            "Antonin Delpeuch (fr), "
-            "Ygor Mutti (pt_BR)")
+            "Jordi Mallach (ca), " "Antonin Delpeuch (fr), " "Ygor Mutti (pt_BR)"
+        )
         about.set_transient_for(self.main_window.window)
         about.show_all()
         about.run()

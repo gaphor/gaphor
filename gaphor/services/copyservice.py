@@ -8,7 +8,7 @@ import gaphas
 
 from gaphor.UML import Element
 from gaphor.UML.collection import collection
-from gaphor.core import event_handler, action, build_action_group, transactional
+from gaphor.core import _, event_handler, action, build_action_group, transactional
 from gaphor.abc import Service, ActionProvider
 from gaphor.ui.event import DiagramSelectionChange
 
@@ -137,7 +137,9 @@ class CopyService(Service, ActionProvider):
         for item in list(self._new_items.values()):
             item.postload()
 
-    @action(name="edit-copy", stock_id="gtk-copy")
+    @action(
+        name="edit-copy", label=_("Copy"), icon_name="edit-copy", accel="<Primary>c"
+    )
     def copy_action(self):
         view = self.main_window.get_current_diagram_view()
         if view.is_focus():
@@ -147,7 +149,9 @@ class CopyService(Service, ActionProvider):
                 copy_items.append(i)
             self.copy(copy_items)
 
-    @action(name="edit-paste", stock_id="gtk-paste")
+    @action(
+        name="edit-paste", label="_Paste", icon_name="edit-paste", accel="<Primary>p"
+    )
     def paste_action(self):
         view = self.main_window.get_current_diagram_view()
         diagram = self.main_window.get_current_diagram()

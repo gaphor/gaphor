@@ -111,8 +111,8 @@ class Toolbox(UIComponent, ActionProvider):
             tool_item_group = Gtk.ToolItemGroup.new(title)
             tool_item_group.set_property("collapsed", collapsed.get(index, False))
             tool_item_group.connect("notify::collapsed", on_collapsed, index)
-            for action_name, label, stock_id, shortcut in items:
-                button = toolbox_button(action_name, stock_id, label, shortcut)
+            for action_name, label, icon_name, shortcut in items:
+                button = toolbox_button(action_name, icon_name, label, shortcut)
                 tool_item_group.insert(button, -1)
                 button.show_all()
                 self.buttons.append(button)

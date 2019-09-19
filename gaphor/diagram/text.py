@@ -129,12 +129,11 @@ def _pango_cairo_create_layout(cr):
         cr = cr._cairo
     if isinstance(cr, FreeHandCairoContext):
         cr = cr.cr
-    
-    assert isinstance(
-        cr, cairo.Context
-    ), f"cr should be a true Cairo.Context, not {cr}"
+
+    assert isinstance(cr, cairo.Context), f"cr should be a true Cairo.Context, not {cr}"
 
     return PangoCairo.create_layout(cr)
+
 
 def _pango_cairo_show_layout(cr, layout):
     if isinstance(cr, FreeHandCairoContext):

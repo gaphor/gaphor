@@ -315,7 +315,7 @@ class FileManager(Service, ActionProvider):
             return
         return filename
 
-    @action(name="file-new", stock_id="gtk-new")
+    @action(name="file-new", label=_("_New"), icon_name="document-new", accel="<Primary>n")
     def action_new(self):
         """The new model menu action.  This action will create a new
         UML model.  This will trigger a FileManagerStateChange event."""
@@ -377,7 +377,7 @@ class FileManager(Service, ActionProvider):
             self.filename = None
             self.event_manager.handle(FilenameChanged(self))
 
-    @action(name="file-open", stock_id="gtk-open")
+    @action(name="file-open", label=_("_Open"), icon_name="document-open", accel="<Primary>o")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
 
@@ -398,7 +398,7 @@ class FileManager(Service, ActionProvider):
             self.load(filename)
             self.event_manager.handle(FilenameChanged(self, filename))
 
-    @action(name="file-save", stock_id="gtk-save")
+    @action(name="file-save", label=_("_Save"), icon_name="document-save", accel="<Primary>s")
     def action_save(self):
         """
         Save the file. Depending on if there is a file name, either perform
@@ -416,7 +416,7 @@ class FileManager(Service, ActionProvider):
         else:
             return self.action_save_as()
 
-    @action(name="file-save-as", stock_id="gtk-save-as")
+    @action(name="file-save-as", label=_("Save _As"), icon_name="document-save-as", accel="<Primary><Shift>s")
     def action_save_as(self):
         """
         Save the model in the element_factory by allowing the
@@ -440,7 +440,7 @@ class FileManager(Service, ActionProvider):
 
         return False
 
-    @action(name="file-quit", stock_id="gtk-quit")
+    @action(name="file-quit", label=_("_Quit"), icon_name="application-exit", accel="<Primary>q")
     def file_quit(self):
         """
         Ask user to close window if the model has changed.

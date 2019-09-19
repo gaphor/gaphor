@@ -21,7 +21,7 @@ from gaphor.ui.diagramtools import (
 
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
 
-# Actions: ((section (name, label, stock_id, shortcut)), ...)
+# Actions: ((section (name, label, icon_name, shortcut)), ...)
 TOOLBOX_ACTIONS = (
     (
         _("General"),
@@ -193,7 +193,9 @@ class DiagramToolbox:
 
     action_list = list(zip(*list(itemiter(TOOLBOX_ACTIONS))))
 
-    @radio_action(names=action_list[0], labels=action_list[1], stock_ids=action_list[2])
+    @radio_action(
+        names=action_list[0], labels=action_list[1], icon_names=action_list[2]
+    )
     def _set_toolbox_action(self, id):
         """
         Activate a tool based on its index in the TOOLBOX_ACTIONS list.
