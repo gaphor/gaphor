@@ -28,7 +28,7 @@ from gaphor.UML.event import (
 )
 from gaphor.UML.properties import association as association_property
 from gaphor.action import action, build_action_group
-from gaphor.core import event_handler
+from gaphor.core import _, event_handler
 from gaphor.event import (
     ActionExecuted,
     ServiceEvent,
@@ -218,7 +218,9 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
-    @action(name="edit-undo", stock_id="gtk-undo", accel="<Primary>z")
+    @action(
+        name="edit-undo", label=_("_Undo"), icon_name="edit-undo", accel="<Primary>z"
+    )
     def undo_transaction(self):
         if not self._undo_stack:
             return
@@ -249,7 +251,12 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
-    @action(name="edit-redo", stock_id="gtk-redo", accel="<Primary>y")
+    @action(
+        name="edit-redo",
+        label=_("_Redo"),
+        icon_name="edit-redo",
+        accel="<Primary><Shift>z",
+    )
     def redo_transaction(self):
         if not self._redo_stack:
             return

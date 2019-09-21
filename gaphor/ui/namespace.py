@@ -571,7 +571,7 @@ class Namespace(UIComponent, ActionProvider):
     @action(
         name="tree-view-create-diagram",
         label=_("_New diagram"),
-        stock_id="gaphor-diagram",
+        icon_name="gaphor-diagram",
     )
     @transactional
     def tree_view_create_diagram(self):
@@ -591,7 +591,7 @@ class Namespace(UIComponent, ActionProvider):
     @action(
         name="tree-view-delete-diagram",
         label=_("_Delete diagram"),
-        stock_id="gtk-delete",
+        icon_name="edit-delete",
     )
     @transactional
     def tree_view_delete_diagram(self):
@@ -617,7 +617,7 @@ class Namespace(UIComponent, ActionProvider):
     @action(
         name="tree-view-create-package",
         label=_("New _package"),
-        stock_id="gaphor-package",
+        icon_name="gaphor-package",
     )
     @transactional
     def tree_view_create_package(self):
@@ -636,7 +636,7 @@ class Namespace(UIComponent, ActionProvider):
     @action(
         name="tree-view-delete-package",
         label=_("Delete pac_kage"),
-        stock_id="gtk-delete",
+        icon_name="edit-delete",
     )
     @transactional
     def tree_view_delete_package(self):

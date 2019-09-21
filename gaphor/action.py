@@ -33,12 +33,15 @@ class action:
     """
 
     def __init__(
-        self, name, label=None, tooltip=None, stock_id=None, accel=None, **kwargs
+        self, name, label=None, tooltip=None, icon_name=None, accel=None, **kwargs
     ):
-        self.name = name
+        if "." in name:
+            self.scope, self.name = name.split(".", 2)
+        else:
+            self.scope, self.name = "win", name
         self.label = label
         self.tooltip = tooltip
-        self.stock_id = stock_id
+        self.icon_name = icon_name
         self.accel = accel
         self.__dict__.update(kwargs)
 
@@ -56,15 +59,15 @@ class toggle_action(action):
     active: bool
 
     def __init__(
-        self, name, label=None, tooltip=None, stock_id=None, accel=None, active=False
+        self, name, label=None, tooltip=None, icon_name=None, accel=None, active=False
     ):
-        super().__init__(name, label, tooltip, stock_id, accel=accel, active=active)
+        super().__init__(name, label, tooltip, icon_name, accel=accel, active=active)
 
 
 class radio_action(action):
     """
     Radio buttons take a list of names, a list of labels and a list of
-    tooltips (and optionally, a list of stock_ids).
+    tooltips (and optionally, a list of icon names).
     The callback function should have an extra value property, which is
     given the index number of the activated radio button action.
     """
@@ -72,19 +75,19 @@ class radio_action(action):
     names: Sequence[str]
     labels: Sequence[Optional[str]]
     tooltips: Sequence[Optional[str]]
-    stock_ids: Sequence[Optional[str]]
+    icon_names: Sequence[Optional[str]]
     accels: Sequence[Optional[str]]
     active: int
 
     def __init__(
-        self, names, labels=None, tooltips=None, stock_ids=None, accels=None, active=0
+        self, names, labels=None, tooltips=None, icon_names=None, accels=None, active=0
     ):
         super().__init__(
             names[0],
             names=names,
             labels=labels,
             tooltips=tooltips,
-            stock_ids=stock_ids,
+            icon_names=icon_names,
             accels=accels,
             active=active,
         )
@@ -142,18 +145,20 @@ def build_action_group(obj, name=None):
                 act.labels = [None] * len(act.names)
             if not act.tooltips:
                 act.tooltips = [None] * len(act.names)
-            if not act.stock_ids:
-                act.stock_ids = [None] * len(act.names)
+            if not act.icon_names:
+                act.icon_names = [None] * len(act.names)
             if not act.accels:
                 act.accels = [None] * len(act.names)
             assert len(act.names) == len(act.labels)
             assert len(act.names) == len(act.tooltips)
-            assert len(act.names) == len(act.stock_ids)
+            assert len(act.names) == len(act.icon_names)
             assert len(act.names) == len(act.accels)
             for i, n in enumerate(act.names):
                 gtkact = Gtk.RadioAction.new(
-                    n, act.labels[i], act.tooltips[i], act.stock_ids[i], value=i
+                    n, act.labels[i], act.tooltips[i], None, value=i
                 )
+                if act.icon_name:
+                    gtkact.set_icon_name(act.icon_names[i])
 
                 if not actgroup:
                     actgroup = gtkact
@@ -166,15 +171,17 @@ def build_action_group(obj, name=None):
             actgroup.set_current_value(act.active)
 
         elif isinstance(act, toggle_action):
-            gtkact = Gtk.ToggleAction.new(
-                act.name, act.label, act.tooltip, act.stock_id
-            )
+            gtkact = Gtk.ToggleAction.new(act.name, act.label, act.tooltip, None)
+            if act.icon_name:
+                gtkact.set_icon_name(act.icon_name)
             gtkact.set_property("active", act.active)
             gtkact.connect("activate", _toggle_action_activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
 
         elif isinstance(act, action):
-            gtkact = Gtk.Action.new(act.name, act.label, act.tooltip, act.stock_id)
+            gtkact = Gtk.Action.new(act.name, act.label, act.tooltip, None)
+            if act.icon_name:
+                gtkact.set_icon_name(act.icon_name)
             gtkact.connect("activate", _action_activate, obj, attrname)
             group.add_action_with_accel(gtkact, act.accel)
 

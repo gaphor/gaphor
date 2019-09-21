@@ -49,7 +49,7 @@ class ElementEditor(UIComponent, ActionProvider):
     @action(
         name="ElementEditor:open",
         label=_("_Editor"),
-        stock_id="gtk-edit",
+        icon_name="dialog-information",
         accel="<Primary>e",
     )
     def open_elementeditor(self):

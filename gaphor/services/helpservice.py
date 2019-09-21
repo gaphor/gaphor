@@ -33,7 +33,7 @@ class HelpService(Service, ActionProvider):
     def shutdown(self):
         pass
 
-    @action(name="help-about", stock_id="gtk-about")
+    @action(name="help-about", label=_("About Gaphor"), icon_name="help-about")
     def about(self):
         logo_file = importlib_metadata.distribution("gaphor").locate_file(
             "gaphor/ui/pixmaps/gaphor-96x96.png"
