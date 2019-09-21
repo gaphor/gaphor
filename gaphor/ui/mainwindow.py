@@ -135,13 +135,6 @@ class MainWindow(Service, ActionProvider):
         self.window.set_title(self.title)
         self.window.set_default_size(*self.size)
 
-        # set default icons of gaphor windows
-        with importlib.resources.path("gaphor.ui", "pixmaps") as icon_dir:
-            icons = (
-                GdkPixbuf.Pixbuf.new_from_file(os.path.join(icon_dir, f)) for f in ICONS
-            )
-            self.window.set_icon_list(list(icons))
-
         self.window.add_accel_group(self.action_manager.get_accel_group())
 
         # Create a full featured window.
@@ -168,7 +161,6 @@ class MainWindow(Service, ActionProvider):
             deserialize(self.layout, vbox, f.read(), _factory)
 
         vbox.show()
-        # TODO: add statusbar
 
         self.window.present()
 

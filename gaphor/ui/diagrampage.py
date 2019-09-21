@@ -152,20 +152,40 @@ class DiagramPage(ActionProvider):
         self.event_manager.unsubscribe(self._on_element_delete)
         self.view = None
 
-    @action(name="diagram-zoom-in", label=_("Zoom _In"), icon_name="zoom-in", accel="<Primary>plus")
+    @action(
+        name="diagram-zoom-in",
+        label=_("Zoom _In"),
+        icon_name="zoom-in",
+        accel="<Primary>plus",
+    )
     def zoom_in(self):
         self.view.zoom(1.2)
 
-    @action(name="diagram-zoom-out", label=_("Zoom _Out"), icon_name="zoom-out", accel="<Primary>minus")
+    @action(
+        name="diagram-zoom-out",
+        label=_("Zoom _Out"),
+        icon_name="zoom-out",
+        accel="<Primary>minus",
+    )
     def zoom_out(self):
         self.view.zoom(1 / 1.2)
 
-    @action(name="diagram-zoom-100", label=_("_Normal Size"), icon_name="zoom-original", accel="<Primary>0")
+    @action(
+        name="diagram-zoom-100",
+        label=_("_Normal Size"),
+        icon_name="zoom-original",
+        accel="<Primary>0",
+    )
     def zoom_100(self):
         zx = self.view.matrix[0]
         self.view.zoom(1 / zx)
 
-    @action(name="diagram-select-all", label="_Select all", icon_name="edit-select-all", accel="<Primary>a")
+    @action(
+        name="diagram-select-all",
+        label="_Select all",
+        icon_name="edit-select-all",
+        accel="<Primary>a",
+    )
     def select_all(self):
         self.view.select_all()
 
@@ -277,37 +297,6 @@ class DiagramPage(ActionProvider):
             DiagramSelectionChange(view, view.focused_item, view.selected_items)
         )
 
-    #    def _on_drag_drop(self, view, context, x, y, time):
-    #        """The signal handler for the drag-drop signal.
-    #
-    #        The drag-drop signal is emitted on the drop site when the user drops
-    #        the data onto the widget.
-    #
-    #        Args:
-    #            view: The view that received the drop.
-    #            context (Gdk.DragContext) - The drag context.
-    #            x (int): The x coordinate of the current cursor position.
-    #            y (int): The y coordinate of the current cursor position.
-    #            time (int): The timestamp of the motion event.
-    #
-    #        Returns:
-    #            bool: Whether the cursor position is in the drop zone.
-    #
-    #        """
-    #        targets = context.list_targets()
-    #        # print('drag_drop on', targets)
-    #        for target in targets:
-    #            name = target.name()
-    #            if name == "gaphor/element-id":
-    #                target = Gdk.atom_intern(name, False)
-    #                view.drag_get_data(context, target, time)
-    #                return True
-    #            elif name == "gaphor/toolbox-action":
-    #                target = Gdk.atom_intern(name, False)
-    #                view.drag_get_data(context, target, time)
-    #                return True
-    #        return False
-
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
         """
         Handle data dropped on the canvas.
@@ -350,6 +339,3 @@ class DiagramPage(ActionProvider):
             context.finish(True, False, time)
         else:
             context.finish(False, False, time)
-
-
-# vim: sw=4:et:ai
