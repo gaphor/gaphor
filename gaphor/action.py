@@ -35,7 +35,10 @@ class action:
     def __init__(
         self, name, label=None, tooltip=None, icon_name=None, accel=None, **kwargs
     ):
-        self.name = name
+        if "." in name:
+            self.scope, self.name = name.split(".", 2)
+        else:
+            self.scope, self.name = "win", name
         self.label = label
         self.tooltip = tooltip
         self.icon_name = icon_name
@@ -168,9 +171,7 @@ def build_action_group(obj, name=None):
             actgroup.set_current_value(act.active)
 
         elif isinstance(act, toggle_action):
-            gtkact = Gtk.ToggleAction.new(
-                act.name, act.label, act.tooltip, None
-            )
+            gtkact = Gtk.ToggleAction.new(act.name, act.label, act.tooltip, None)
             if act.icon_name:
                 gtkact.set_icon_name(act.icon_name)
             gtkact.set_property("active", act.active)

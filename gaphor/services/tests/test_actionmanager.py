@@ -11,7 +11,7 @@ def action_manager():
 def test_load_all_menus(action_manager):
     ui = action_manager.ui_manager.get_ui()
 
-    assert '<menuitem name="file-quit" action="file-quit"/>' in ui, ui
+    assert '<menuitem name="quit" action="quit"/>' in ui, ui
     # From filemanager:
     assert '<menuitem name="file-new" action="file-new"/>' in ui, ui
     # From Undomanager

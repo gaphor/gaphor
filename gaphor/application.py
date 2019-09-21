@@ -105,55 +105,9 @@ class _Application:
         The file_manager service is used here to load a Gaphor model if one was
         specified on the command line."""
 
-        import gi
+        from gaphor.ui import run
 
-        gi.require_version("Gtk", "3.0")
-
-        from gi.repository import Gio, Gtk
-
-        app = Gtk.Application(
-            application_id="org.gaphor.Gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
-        )
-        self._app = app
-
-        def app_startup(app):
-            self.init()
-
-        def app_activate(app):
-            # Make sure gui is loaded ASAP.
-            # This prevents menu items from appearing at unwanted places.
-            main_window = self.get_service("main_window")
-            main_window.open(app)
-            app.add_window(main_window.window)
-
-            file_manager = self.get_service("file_manager")
-
-            if model:
-                file_manager.load(model)
-            else:
-                file_manager.action_new()
-
-        def app_shutdown(app):
-            self.shutdown()
-
-        def main_quit(action, param):
-            # Perform the "luxe" quit version, as defined in MainWindow
-            main_window = self.get_service("main_window")
-            return main_window.quit()
-
-        action = Gio.SimpleAction.new("quit", None)
-        action.connect("activate", main_quit)
-        app.add_action(action)
-
-        app.connect("startup", app_startup)
-        app.connect("activate", app_activate)
-        app.connect("shutdown", app_shutdown)
-        app.run()
-
-    def quit(self):
-        """Quit the GUI application."""
-        if self._app:
-            self._app.quit()
+        run(self, model)
 
 
 # Make sure there is only one!

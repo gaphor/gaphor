@@ -234,9 +234,6 @@ class MainWindow(Service, ActionProvider):
         """
         self.properties.set("ui.window-size", (allocation.width, allocation.height))
 
-    def quit(self):
-        Application.quit()
-
     # TODO: Does not belong here
     def create_item(self, ui_component):
         """
