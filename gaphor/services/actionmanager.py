@@ -3,13 +3,17 @@
 
 import logging
 
-from gi.repository import Gtk
+from gi.repository import GLib, Gio, Gtk
 
-from gaphor.core import event_handler
+from gaphor.core import event_handler, action, toggle_action, radio_action
 from gaphor.event import ServiceInitializedEvent, ActionExecuted
 from gaphor.abc import Service, ActionProvider
 
 logger = logging.getLogger(__name__)
+
+
+VARIANT_TYPE_BOOLEAN = GLib.VariantType.new("b")
+VARIANT_TYPE_INTEGER = GLib.VariantType.new("n")
 
 
 class ActionManager(Service):
@@ -65,6 +69,9 @@ class ActionManager(Service):
     def __init__(self, event_manager, component_registry):
         self.event_manager = event_manager
         self.component_registry = component_registry
+
+        self.action_providers = set()
+
         self.ui_manager = Gtk.UIManager()
         self.ui_manager.add_ui_from_string(self.menu_skeleton_xml)
 
@@ -105,6 +112,9 @@ class ActionManager(Service):
 
         logger.debug(f"Registering action provider {action_provider}")
 
+        self.action_providers.add(action_provider)
+
+        # Old code, to be deprecated
         try:
             # Check if the action provider is not already registered
             action_provider.__ui_merge_id
@@ -122,6 +132,10 @@ class ActionManager(Service):
                 )
 
     def unregister_action_provider(self, action_provider):
+
+        self.action_providers.remove(action_provider)
+
+        # Old code, to be deprecated
         try:
             # Check if the action provider is registered
             action_provider.__ui_merge_id
@@ -144,10 +158,36 @@ class ActionManager(Service):
 
             self.register_action_provider(event.service)
 
-    # UIManager methods:
+    # UIManager methods (deprecated):
 
     def get_widget(self, path):
         return self.ui_manager.get_widget(path)
 
     def get_accel_group(self):
         return self.ui_manager.get_accel_group()
+
+    # GIO ActionGroup methods:
+
+    def application_action_group(self):
+        return self.action_group_for_scope("app")
+
+    def window_action_group(self):
+        return self.action_group_for_scope("win")
+
+    def action_group_for_scope(self, scope):
+        action_group = Gio.SimpleActionGroup.new()
+        for provider in self.action_providers:
+            provider_class = type(provider)
+            for attrname in dir(provider_class):
+                method = getattr(provider_class, attrname)
+                act = getattr(method, "__action__", None)
+                if not act or act.scope != scope:
+                    continue
+
+                if isinstance(act, radio_action):
+                    action_group.add_action(Gio.SimpleAction.new_stateful(act.name, VARIANT_TYPE_INTEGER, GLib.Variant.new_int16(act.active)))
+                elif isinstance(act, toggle_action):
+                    action_group.add_action(Gio.SimpleAction.new_stateful(act.name, VARIANT_TYPE_BOOLEAN, GLib.Variant.new_boolean(act.active)))
+                elif isinstance(act, action):
+                    action_group.add_action(Gio.SimpleAction.new(act.name, None))
+        return action_group

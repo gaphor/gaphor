@@ -1,18 +1,55 @@
 import pytest
+from gaphor.services.actionmanager import ActionManager
+from gaphor.services.componentregistry import ComponentRegistry
+from gaphor.services.eventmanager import EventManager
+from gaphor.services.filemanager import FileManager
+from gaphor.services.properties import Properties
 from gaphor.application import Application
 
 
 @pytest.fixture
-def action_manager():
-    Application.init()
-    return Application.get_service("action_manager")
+def event_manager():
+    return EventManager()
 
 
-def test_load_all_menus(action_manager):
+@pytest.fixture
+def component_registry():
+    return ComponentRegistry()
+
+
+@pytest.fixture
+def action_manager(event_manager, component_registry):
+    return ActionManager(event_manager, component_registry)
+
+
+@pytest.fixture
+def file_manager(event_manager):
+    properties = Properties(event_manager)
+    return FileManager(event_manager, None, None, properties)
+
+
+def test_load_all_menus(action_manager, file_manager):
+    action_manager.register_action_provider(file_manager)
+
     ui = action_manager.ui_manager.get_ui()
 
     assert '<menuitem name="quit" action="quit"/>' in ui, ui
-    # From filemanager:
     assert '<menuitem name="file-new" action="file-new"/>' in ui, ui
-    # From Undomanager
-    assert '<toolitem name="edit-undo" action="edit-undo"/>' in ui, ui
+
+
+def test_window_action_group(action_manager, file_manager):
+    action_manager.register_action_provider(file_manager)
+
+    action_group = action_manager.window_action_group()
+
+    assert action_group.lookup("file-new")
+    assert not action_group.lookup("quit")
+
+    
+def test_application_action_group(action_manager, file_manager):
+    action_manager.register_action_provider(file_manager)
+
+    action_group = action_manager.application_action_group()
+
+    assert not action_group.lookup("file-new")
+    assert action_group.lookup("quit")

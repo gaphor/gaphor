@@ -26,6 +26,10 @@ class HelpService(Service, ActionProvider):
       </ui>
     """
 
+    menu_fragment = ("menu", "help", (
+      "win.help-about"
+    ))
+    
     def __init__(self, main_window):
         self.main_window = main_window
         self.action_group = build_action_group(self)

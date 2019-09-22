@@ -28,8 +28,8 @@ class Alignment(Service, ActionProvider):
       </ui>"""
 
     def __init__(self, event_manager):
-        self.event_manager = event_manager
         self.action_group = build_action_group(self)
+        self.event_manager = event_manager
         self._last_update = None
         self.event_manager.subscribe(self.update)
         self.update()
