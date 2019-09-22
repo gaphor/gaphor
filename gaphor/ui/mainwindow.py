@@ -8,10 +8,7 @@ import logging
 import os.path
 
 import importlib.resources
-from gi.repository import GLib
-from gi.repository import Gdk
-from gi.repository import GdkPixbuf
-from gi.repository import Gtk
+from gi.repository import Gio, Gdk, Gtk
 
 from gaphor import UML, Application
 from gaphor.UML.event import ModelFactoryEvent
@@ -43,6 +40,16 @@ ICONS = (
     "gaphor-96x96.png",
     "gaphor-256x256.png",
 )
+
+
+def create_dummy_popover(parent):
+    menu = Gio.Menu.new()
+
+    part1 = Gio.Menu.new()
+    part1.append_item(Gio.MenuItem.new("placeholder", "win.test"))
+    menu.append_section(None, part1)
+
+    return Gtk.Popover.new_from_model(parent, menu)
 
 
 class MainWindow(Service, ActionProvider):
@@ -132,7 +139,21 @@ class MainWindow(Service, ActionProvider):
             if gtk_app
             else Gtk.Window.new(type=Gtk.WindowType.TOPLEVEL)
         )
-        self.window.set_title(self.title)
+
+        header = Gtk.HeaderBar()
+        header.set_show_close_button(True)
+        self.window.set_titlebar(header)
+        header.show()
+
+        button = Gtk.MenuButton()
+        image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU)
+        button.add(image)
+        button.set_popover(create_dummy_popover(button))
+        header.pack_end(button)
+        button.show_all()
+
+        self.set_title()
+
         self.window.set_default_size(*self.size)
 
         self.window.add_accel_group(self.action_manager.get_accel_group())
@@ -187,13 +208,11 @@ class MainWindow(Service, ActionProvider):
         Sets the window title.
         """
         if self.window:
-            if self.filename:
-                title = f"{self.title} - {self.filename}"
-            else:
-                title = self.title
+            title = self.title
             if self.model_changed:
-                title += " *"
+                title += " [edited]"
             self.window.set_title(title)
+            self.window.get_titlebar().set_subtitle(self.filename or None)
 
     # Signal callbacks:
 
