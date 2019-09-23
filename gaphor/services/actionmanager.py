@@ -13,10 +13,6 @@ from gaphor.abc import Service, ActionProvider
 logger = logging.getLogger(__name__)
 
 
-VARIANT_TYPE_BOOLEAN = GLib.VariantType.new("b")
-VARIANT_TYPE_INTEGER = GLib.VariantType.new("n")
-
-
 class ActionManager(Service):
     """
     This service is responsible for maintaining actions.
@@ -71,8 +67,6 @@ class ActionManager(Service):
         self.event_manager = event_manager
         self.component_registry = component_registry
 
-        self.action_providers: Set[ActionProvider] = set()
-
         self.ui_manager = Gtk.UIManager()
         self.ui_manager.add_ui_from_string(self.menu_skeleton_xml)
 
@@ -113,8 +107,6 @@ class ActionManager(Service):
 
         logger.debug(f"Registering action provider {action_provider}")
 
-        self.action_providers.add(action_provider)
-
         # Old code, to be deprecated
         try:
             # Check if the action provider is not already registered
@@ -133,8 +125,6 @@ class ActionManager(Service):
                 )
 
     def unregister_action_provider(self, action_provider):
-
-        self.action_providers.remove(action_provider)
 
         # Old code, to be deprecated
         try:
@@ -176,7 +166,7 @@ class ActionManager(Service):
         return self.action_group_for_scope(Gio.SimpleActionGroup.new(), "win")
 
     def action_group_for_scope(self, action_group, scope):
-        for provider in self.action_providers:
+        for provider, _name in self.component_registry.all(ActionProvider):
             provider_class = type(provider)
             for attrname in dir(provider_class):
                 method = getattr(provider_class, attrname)
@@ -186,18 +176,18 @@ class ActionManager(Service):
 
                 if isinstance(act, radio_action):
                     a = Gio.SimpleAction.new_stateful(
-                        act.name,
-                        VARIANT_TYPE_INTEGER,
-                        GLib.Variant.new_int16(act.active),
+                        act.name, None, GLib.Variant.new_int16(act.active)
                     )
-                    a.connect("activate", _radio_action_activate, provider, attrname)
+                    a.connect(
+                        "change-state", _radio_action_activate, provider, attrname
+                    )
                 elif isinstance(act, toggle_action):
                     a = Gio.SimpleAction.new_stateful(
-                        act.name,
-                        VARIANT_TYPE_BOOLEAN,
-                        GLib.Variant.new_boolean(act.active),
+                        act.name, None, GLib.Variant.new_boolean(act.active)
                     )
-                    a.connect("activate", _toggle_action_activate, provider, attrname)
+                    a.connect(
+                        "change-state", _toggle_action_activate, provider, attrname
+                    )
                 elif isinstance(act, action):
                     a = Gio.SimpleAction.new(act.name, None)
                     a.connect("activate", _action_activate, provider, attrname)
@@ -214,9 +204,11 @@ def _action_activate(_action, _param, obj, name):
 
 def _toggle_action_activate(action, param, obj, name):
     method = getattr(obj, name)
+    action.set_state(param)
     method(param.get_boolean())
 
 
 def _radio_action_activate(action, param, obj, name):
     method = getattr(obj, name)
+    action.set_state(param)
     method(param.get_int16())

@@ -19,17 +19,13 @@ class HelpService(Service, ActionProvider):
         <menubar name="mainwindow">
           <menu action="help">
             <placeholder name="ternary">
-              <menuitem action="help-about" />
+              <menuitem action="about" />
             </placeholder>
           </menu>
         </menubar>
       </ui>
     """
 
-    menu_fragment = ("menu", "help", (
-      "win.help-about"
-    ))
-    
     def __init__(self, main_window):
         self.main_window = main_window
         self.action_group = build_action_group(self)
@@ -37,7 +33,7 @@ class HelpService(Service, ActionProvider):
     def shutdown(self):
         pass
 
-    @action(name="help-about", label=_("About Gaphor"), icon_name="help-about")
+    @action(name="app.about", label=_("About Gaphor"), icon_name="help-about")
     def about(self):
         logo_file = importlib_metadata.distribution("gaphor").locate_file(
             "gaphor/ui/pixmaps/gaphor-96x96.png"

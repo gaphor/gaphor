@@ -52,13 +52,32 @@ def hamburger_menu():
 
 
 def create_dummy_popover(parent):
-    menu = Gio.Menu.new()
+    model = Gio.Menu.new()
 
-    part1 = Gio.Menu.new()
-    part1.append_item(Gio.MenuItem.new("placeholder", "win.test"))
-    menu.append_section(None, part1)
+    part = Gio.Menu.new()
+    part.append_item(Gio.MenuItem.new(_("New from Template"), "win.file-new-template"))
+    part.append_item(Gio.MenuItem.new(_("Recent File..."), "win.file-recent"))
+    model.append_section(None, part)
 
-    return Gtk.Popover.new_from_model(parent, menu)
+    part = Gio.Menu.new()
+    part.append_item(Gio.MenuItem.new(_("Save As..."), "win.file-save-as"))
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    part.append_item(
+        Gio.MenuItem.new(_("Hand-Drawn Style"), "win.diagram-drawing-style")
+    )
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    part.append_item(Gio.MenuItem.new(_("Preferences"), "app.preferences"))
+    part.append_item(Gio.MenuItem.new(_("About Gaphor"), "app.about"))
+    model.append_section(None, part)
+
+    # return Gtk.Popover.new_from_model(parent, model)
+    popover = Gtk.PopoverMenu.new()
+    popover.bind_model(model, None)
+    return popover
 
 
 class MainWindow(Service, ActionProvider):
@@ -169,10 +188,6 @@ class MainWindow(Service, ActionProvider):
 
         self.window.set_default_size(*self.size)
 
-        action_group = self.action_manager.window_action_group()
-        self.window.insert_action_group("win", action_group)
-        self.window.add_accel_group(self.action_manager.get_accel_group())
-
         # Create a full featured window.
         vbox = Gtk.VBox()
         self.window.add(vbox)
@@ -197,6 +212,10 @@ class MainWindow(Service, ActionProvider):
             deserialize(self.layout, vbox, f.read(), _factory)
 
         vbox.show()
+
+        action_group = self.action_manager.window_action_group()
+        self.window.insert_action_group("win", action_group)
+        self.window.add_accel_group(self.action_manager.get_accel_group())
 
         self.window.present()
 
