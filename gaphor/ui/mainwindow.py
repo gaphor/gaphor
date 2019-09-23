@@ -42,6 +42,15 @@ ICONS = (
 )
 
 
+def hamburger_menu():
+    button = Gtk.MenuButton()
+    image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU)
+    button.add(image)
+    button.set_popover(create_dummy_popover(button))
+    button.show_all()
+    return button
+
+
 def create_dummy_popover(parent):
     menu = Gio.Menu.new()
 
@@ -140,17 +149,21 @@ class MainWindow(Service, ActionProvider):
             else Gtk.Window.new(type=Gtk.WindowType.TOPLEVEL)
         )
 
+        def button(label, action_name):
+            b = Gtk.Button.new_with_label(label)
+            b.set_action_name(action_name)
+            b.show()
+            return b
+
         header = Gtk.HeaderBar()
         header.set_show_close_button(True)
         self.window.set_titlebar(header)
         header.show()
 
-        button = Gtk.MenuButton()
-        image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU)
-        button.add(image)
-        button.set_popover(create_dummy_popover(button))
-        header.pack_end(button)
-        button.show_all()
+        header.pack_start(button(_("Open"), "win.file-open"))
+        header.pack_start(button(_("New"), "win.file-new"))
+        header.pack_end(hamburger_menu())
+        header.pack_end(button(_("Save"), "win.file-save"))
 
         self.set_title()
 
