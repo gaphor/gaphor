@@ -34,6 +34,9 @@ def run(application, model):
     def app_startup(app):
         application.init()
 
+        action_manager = application.get_service("action_manager")
+        action_manager.apply_application_actions(app)
+
     def app_activate(app):
         # Make sure gui is loaded ASAP.
         # This prevents menu items from appearing at unwanted places.
@@ -50,14 +53,6 @@ def run(application, model):
 
     def app_shutdown(app):
         application.shutdown()
-
-    def app_quit(action, param):
-        file_manager = application.get_service("file_manager")
-        return file_manager.file_quit()
-
-    action = Gio.SimpleAction.new("quit", None)
-    action.connect("activate", app_quit)
-    gtk_app.add_action(action)
 
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)

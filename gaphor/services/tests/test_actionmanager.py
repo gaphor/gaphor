@@ -1,4 +1,6 @@
 import pytest
+
+from gi.repository import Gio
 from gaphor.services.actionmanager import ActionManager
 from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.services.eventmanager import EventManager
@@ -46,10 +48,10 @@ def test_window_action_group(action_manager, file_manager):
     assert not action_group.lookup("quit")
 
     
-def test_application_action_group(action_manager, file_manager):
+def test_application_actions(action_manager, file_manager):
     action_manager.register_action_provider(file_manager)
 
-    action_group = action_manager.application_action_group()
+    action_group = action_manager.apply_application_actions(Gio.SimpleActionGroup.new())
 
     assert not action_group.lookup("file-new")
     assert action_group.lookup("quit")

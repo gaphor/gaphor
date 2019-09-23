@@ -168,14 +168,13 @@ class ActionManager(Service):
 
     # GIO ActionGroup methods:
 
-    def application_action_group(self):
-        return self.action_group_for_scope("app")
+    def apply_application_actions(self, gtk_app):
+        return self.action_group_for_scope(gtk_app, "app")
 
     def window_action_group(self):
-        return self.action_group_for_scope("win")
+        return self.action_group_for_scope(Gio.SimpleActionGroup.new(), "win")
 
-    def action_group_for_scope(self, scope):
-        action_group = Gio.SimpleActionGroup.new()
+    def action_group_for_scope(self, action_group, scope):
         for provider in self.action_providers:
             provider_class = type(provider)
             for attrname in dir(provider_class):
