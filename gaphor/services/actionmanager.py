@@ -1,6 +1,7 @@
 """
 """
 
+from typing import Set
 import logging
 
 from gi.repository import GLib, Gio, Gtk
@@ -70,7 +71,7 @@ class ActionManager(Service):
         self.event_manager = event_manager
         self.component_registry = component_registry
 
-        self.action_providers = set()
+        self.action_providers: Set[ActionProvider] = set()
 
         self.ui_manager = Gtk.UIManager()
         self.ui_manager.add_ui_from_string(self.menu_skeleton_xml)
@@ -184,9 +185,38 @@ class ActionManager(Service):
                     continue
 
                 if isinstance(act, radio_action):
-                    action_group.add_action(Gio.SimpleAction.new_stateful(act.name, VARIANT_TYPE_INTEGER, GLib.Variant.new_int16(act.active)))
+                    a = Gio.SimpleAction.new_stateful(
+                        act.name,
+                        VARIANT_TYPE_INTEGER,
+                        GLib.Variant.new_int16(act.active),
+                    )
+                    a.connect("activate", _radio_action_activate, provider, attrname)
                 elif isinstance(act, toggle_action):
-                    action_group.add_action(Gio.SimpleAction.new_stateful(act.name, VARIANT_TYPE_BOOLEAN, GLib.Variant.new_boolean(act.active)))
+                    a = Gio.SimpleAction.new_stateful(
+                        act.name,
+                        VARIANT_TYPE_BOOLEAN,
+                        GLib.Variant.new_boolean(act.active),
+                    )
+                    a.connect("activate", _toggle_action_activate, provider, attrname)
                 elif isinstance(act, action):
-                    action_group.add_action(Gio.SimpleAction.new(act.name, None))
+                    a = Gio.SimpleAction.new(act.name, None)
+                    a.connect("activate", _action_activate, provider, attrname)
+                else:
+                    raise ValueError(f"Action is not of a known action type ({act})")
+                action_group.add_action(a)
         return action_group
+
+
+def _action_activate(_action, _param, obj, name):
+    method = getattr(obj, name)
+    method()
+
+
+def _toggle_action_activate(action, param, obj, name):
+    method = getattr(obj, name)
+    method(param.get_boolean())
+
+
+def _radio_action_activate(action, param, obj, name):
+    method = getattr(obj, name)
+    method(param.get_int16())
