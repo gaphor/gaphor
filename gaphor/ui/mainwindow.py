@@ -156,6 +156,8 @@ class MainWindow(Service, ActionProvider):
 
         self.window.set_default_size(*self.size)
 
+        action_group = self.action_manager.window_action_group()
+        self.window.insert_action_group("win", action_group)
         self.window.add_accel_group(self.action_manager.get_accel_group())
 
         # Create a full featured window.
