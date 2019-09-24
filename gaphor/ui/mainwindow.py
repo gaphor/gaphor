@@ -55,11 +55,6 @@ def create_dummy_popover(parent):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append_item(Gio.MenuItem.new(_("New from Template"), "win.file-new-template"))
-    part.append_item(Gio.MenuItem.new(_("Recent File..."), "win.file-recent"))
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
     part.append_item(Gio.MenuItem.new(_("Save As..."), "win.file-save-as"))
     model.append_section(None, part)
 
@@ -74,10 +69,24 @@ def create_dummy_popover(parent):
     part.append_item(Gio.MenuItem.new(_("About Gaphor"), "app.about"))
     model.append_section(None, part)
 
-    # return Gtk.Popover.new_from_model(parent, model)
-    popover = Gtk.PopoverMenu.new()
-    popover.bind_model(model, None)
-    return popover
+    return Gtk.Popover.new_from_model(parent, model)
+
+
+def create_recent_files_popover(parent):
+    model = Gio.Menu.new()
+
+    part = Gio.Menu.new()
+    part.append_item(Gio.MenuItem.new(_("New"), "win.file-new"))
+    part.append_item(Gio.MenuItem.new(_("New from Template"), "win.file-new-template"))
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    part.append_item(
+        Gio.MenuItem.new("~/gaphor/UML/uml2.gaphor", "win.file-open-recent")
+    )
+    model.append_section(None, part)
+
+    return Gtk.Popover.new_from_model(parent, model)
 
 
 class MainWindow(Service, ActionProvider):
@@ -179,8 +188,19 @@ class MainWindow(Service, ActionProvider):
         self.window.set_titlebar(header)
         header.show()
 
-        header.pack_start(button(_("Open"), "win.file-open"))
-        header.pack_start(button(_("New"), "win.file-new"))
+        button_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        button_box.get_style_context().add_class("linked")
+        button_box.pack_start(button(_("Open"), "win.file-open"), False, False, 0)
+
+        b = Gtk.MenuButton()
+        image = Gtk.Image.new_from_icon_name("pan-down-symbolic", Gtk.IconSize.MENU)
+        b.add(image)
+        b.set_popover(create_recent_files_popover(b))
+        b.show_all()
+
+        button_box.pack_start(b, False, False, 0)
+        button_box.show()
+        header.pack_start(button_box)
         header.pack_end(hamburger_menu())
         header.pack_end(button(_("Save"), "win.file-save"))
 
