@@ -92,17 +92,6 @@ class ActionManager(Service):
         else:
             logger.warning(f"Unknown action {action_id}")
 
-    def update_actions(self):
-
-        self.ui_manager.ensure_update()
-
-    def get_action(self, action_id):
-
-        for g in self.ui_manager.get_action_groups():
-            a = g.get_action(action_id)
-            if a:
-                return a
-
     def register_action_provider(self, action_provider):
 
         logger.debug(f"Registering action provider {action_provider}")
