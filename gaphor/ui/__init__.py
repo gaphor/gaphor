@@ -11,6 +11,9 @@ from gi.repository import Gio, Gtk, Gdk
 import importlib.resources
 import os.path
 
+from gaphor.ui.actiongroup import apply_application_actions
+
+
 icon_theme = Gtk.IconTheme.get_default()
 with importlib.resources.path("gaphor.ui", "pixmaps") as path:
     icon_theme.append_search_path(str(path))
@@ -34,8 +37,8 @@ def run(application, model):
     def app_startup(app):
         application.init()
 
-        action_manager = application.get_service("action_manager")
-        action_manager.apply_application_actions(app)
+        component_registry = application.get_service("component_registry")
+        apply_application_actions(component_registry, app)
 
     def app_activate(app):
         # Make sure gui is loaded ASAP.

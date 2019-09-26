@@ -8,7 +8,7 @@ import logging
 import os.path
 
 import importlib.resources
-from gi.repository import Gio, Gdk, Gtk
+from gi.repository import Gio, Gdk, Gtk, GLib
 
 from gaphor import UML, Application
 from gaphor.UML.event import ModelFactoryEvent
@@ -24,6 +24,7 @@ from gaphor.abc import Service, ActionProvider
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
+from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import DiagramPageChange, DiagramShow, FilenameChanged, WindowClose
@@ -76,13 +77,15 @@ def create_recent_files_popover(parent):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append_item(Gio.MenuItem.new(_("New"), "win.file-new"))
+    menu_item = Gio.MenuItem.new(_("New"), "win.file-new")
+    menu_item.set_attribute_value("iconic", GLib.Variant.new_boolean(True))
+    part.append_item(menu_item)
     part.append_item(Gio.MenuItem.new(_("New from Template"), "win.file-new-template"))
     model.append_section(None, part)
 
     part = Gio.Menu.new()
     part.append_item(
-        Gio.MenuItem.new("~/gaphor/UML/uml2.gaphor", "win.file-open-recent")
+        Gio.MenuItem.new("~/gaphor/UML/uml2.gaphor", "recent.file-open-recent-1")
     )
     model.append_section(None, part)
 
@@ -233,8 +236,9 @@ class MainWindow(Service, ActionProvider):
 
         vbox.show()
 
-        action_group = self.action_manager.window_action_group()
+        action_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
+
         self.window.add_accel_group(self.action_manager.get_accel_group())
 
         self.window.present()
