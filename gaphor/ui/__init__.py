@@ -14,6 +14,9 @@ import os.path
 from gaphor.ui.actiongroup import apply_application_actions
 
 
+APPLICATION_ID = "org.gaphor.Gaphor"
+
+
 icon_theme = Gtk.IconTheme.get_default()
 with importlib.resources.path("gaphor.ui", "pixmaps") as path:
     icon_theme.append_search_path(str(path))
@@ -31,7 +34,7 @@ css_provider.load_from_data(b"#diagram-tab { background: white }")
 
 def run(application, model):
     gtk_app = Gtk.Application(
-        application_id="org.gaphor.Gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
+        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.FLAGS_NONE
     )
 
     def app_startup(app):

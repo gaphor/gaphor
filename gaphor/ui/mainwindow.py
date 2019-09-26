@@ -6,6 +6,7 @@ from typing import List, Tuple
 
 import logging
 import os.path
+from pathlib import Path
 
 import importlib.resources
 from gi.repository import Gio, Gdk, Gtk, GLib
@@ -23,6 +24,7 @@ from gaphor.core import (
 from gaphor.abc import Service, ActionProvider
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.undomanager import UndoManagerStateChanged
+from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
@@ -43,6 +45,28 @@ ICONS = (
 )
 
 
+class RecentFilesMenu(Gio.Menu):
+    def __init__(self, recent_manager):
+        super().__init__()
+
+        self._on_recent_manager_changed(recent_manager)
+        recent_manager.connect("changed", self._on_recent_manager_changed)
+
+    def _on_recent_manager_changed(self, recent_manager):
+        self.remove_all()
+        home = str(Path.home())
+        for item in recent_manager.get_items():
+            if APPLICATION_ID in item.get_applications():
+                menu_item = Gio.MenuItem.new(
+                    item.get_uri_display().replace(home, "~"), None
+                )
+                self.append_item(menu_item)
+                if self.get_n_items() > 9:
+                    break
+        if self.get_n_items() == 0:
+            self.append_item(Gio.MenuItem.new(_("No recently opened models"), None))
+
+
 def hamburger_menu():
     button = Gtk.MenuButton()
     image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU)
@@ -56,40 +80,30 @@ def create_dummy_popover(parent):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append_item(Gio.MenuItem.new(_("Save As..."), "win.file-save-as"))
+    part.append(_("New"), "win.file-new")
+    part.append(_("New from Template"), "win.file-new-template")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append_item(
-        Gio.MenuItem.new(_("Hand-Drawn Style"), "win.diagram-drawing-style")
-    )
+    part.append(_("Save As..."), "win.file-save-as")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append_item(Gio.MenuItem.new(_("Preferences"), "app.preferences"))
-    part.append_item(Gio.MenuItem.new(_("About Gaphor"), "app.about"))
+    part.append(_("Hand-Drawn Style"), "win.diagram-drawing-style")
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    part.append(_("Preferences"), "app.preferences")
+    part.append(_("About Gaphor"), "app.about")
     model.append_section(None, part)
 
     return Gtk.Popover.new_from_model(parent, model)
 
 
 def create_recent_files_popover(parent):
-    model = Gio.Menu.new()
-
-    part = Gio.Menu.new()
-    menu_item = Gio.MenuItem.new(_("New"), "win.file-new")
-    menu_item.set_attribute_value("iconic", GLib.Variant.new_boolean(True))
-    part.append_item(menu_item)
-    part.append_item(Gio.MenuItem.new(_("New from Template"), "win.file-new-template"))
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
-    part.append_item(
-        Gio.MenuItem.new("~/gaphor/UML/uml2.gaphor", "recent.file-open-recent-1")
+    return Gtk.Popover.new_from_model(
+        parent, RecentFilesMenu(Gtk.RecentManager.get_default())
     )
-    model.append_section(None, part)
-
-    return Gtk.Popover.new_from_model(parent, model)
 
 
 class MainWindow(Service, ActionProvider):

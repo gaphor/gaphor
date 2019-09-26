@@ -15,7 +15,7 @@ from gaphor.misc.gidlethread import GIdleThread, Queue
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
 import gaphor.ui
-from gaphor.ui.event import FilenameChanged, RecentFilesUpdated, WindowClose
+from gaphor.ui.event import FilenameChanged, WindowClose
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -110,6 +110,8 @@ class FileManager(Service, ActionProvider):
 
         if filename != self._filename:
             self._filename = filename
+            if self.event_manager:
+                self.event_manager.handle(FilenameChanged(self, filename))
             self.update_recent_files(filename)
 
     filename = property(get_filename, set_filename)
@@ -136,11 +138,12 @@ class FileManager(Service, ActionProvider):
 
         recent_files = self.recent_files
 
-        if new_filename and new_filename not in recent_files:
+        if new_filename:
+            if new_filename in recent_files:
+                recent_files.remove(new_filename)
             recent_files.insert(0, new_filename)
             recent_files = recent_files[0 : (MAX_RECENT - 1)]
             self.recent_files = recent_files
-            self.event_manager.handle(RecentFilesUpdated(self, recent_files))
 
         # TODO: Old code, remove.
         for i in range(0, (MAX_RECENT - 1)):
@@ -162,7 +165,6 @@ class FileManager(Service, ActionProvider):
         filename = self.recent_files[index]
 
         self.load(filename)
-        self.event_manager.handle(FilenameChanged(self, filename))
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
@@ -358,8 +360,6 @@ class FileManager(Service, ActionProvider):
         # main_window.select_element(diagram)
         # main_window.show_diagram(diagram)
 
-        self.event_manager.handle(FilenameChanged(self))
-
     @action(name="file-new-template", label=_("New from template"))
     def action_new_from_template(self):
         """This menu action opens the new model from template dialog."""
@@ -380,7 +380,6 @@ class FileManager(Service, ActionProvider):
         if filename:
             self.load(filename)
             self.filename = None
-            self.event_manager.handle(FilenameChanged(self))
 
     @action(
         name="file-open",
@@ -406,7 +405,6 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.load(filename)
-            self.event_manager.handle(FilenameChanged(self, filename))
 
     @action(
         name="file-save",
@@ -426,7 +424,6 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.event_manager.handle(FilenameChanged(self, filename))
             return True
         else:
             return self.action_save_as()
@@ -455,7 +452,6 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.event_manager.handle(FilenameChanged(self, filename))
             return True
 
         return False

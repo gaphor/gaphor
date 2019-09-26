@@ -38,13 +38,3 @@ class FilenameChanged:
     def __init__(self, service, filename=None):
         self.service = service
         self.filename = filename
-
-
-class RecentFilesUpdated:
-    """
-    Event class used to send state changes on the Undo Manager.
-    """
-
-    def __init__(self, service, recent_files=[]):
-        self.service = service
-        self.recent_files = recent_files
