@@ -15,7 +15,7 @@ from gaphor.misc.gidlethread import GIdleThread, Queue
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
 import gaphor.ui
-from gaphor.ui.event import FilenameChanged, WindowClose
+from gaphor.ui.event import FilenameChanged, RecentFilesUpdated, WindowClose
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -105,7 +105,7 @@ class FileManager(Service, ActionProvider):
 
     def set_filename(self, filename):
         """Sets the current file name.  This method is used by the filename
-        property.  Setting the current filename will update the recent file
+        property. Setting the current filename will update the recent file
         list."""
 
         if filename != self._filename:
@@ -140,7 +140,9 @@ class FileManager(Service, ActionProvider):
             recent_files.insert(0, new_filename)
             recent_files = recent_files[0 : (MAX_RECENT - 1)]
             self.recent_files = recent_files
+            self.event_manager.handle(RecentFilesUpdated(self, recent_files))
 
+        # TODO: Old code, remove.
         for i in range(0, (MAX_RECENT - 1)):
             action = self.action_group.get_action(f"file-recent-{i:d}")
             action.set_property("visible", False)
