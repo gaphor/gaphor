@@ -10,7 +10,6 @@ import operator
 from gi.repository import GObject, Gio, Gdk, Gtk
 
 from gaphor import UML
-from gaphor.abc import ActionProvider
 from gaphor.UML.event import (
     ElementCreateEvent,
     ElementDeleteEvent,
@@ -19,7 +18,7 @@ from gaphor.UML.event import (
     AttributeChangeEvent,
     DerivedSetEvent,
 )
-from gaphor.core import _, event_handler, action, build_action_group, transactional
+from gaphor.core import _, event_handler, action, transactional
 from gaphor.ui.actiongroup import add_actions_to_group
 from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui.abc import UIComponent
@@ -327,7 +326,7 @@ class Namespace(UIComponent):
         scrolled_window.show()
         view.show()
 
-        view.insert_action_group(
+        scrolled_window.insert_action_group(
             "tree-view",
             add_actions_to_group(Gio.SimpleActionGroup.new(), self, "tree-view"),
         )

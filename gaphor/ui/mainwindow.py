@@ -228,10 +228,18 @@ class MainWindow(Service, ActionProvider):
         button_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
         button_box.get_style_context().add_class("linked")
         button_box.pack_start(button(_("Open"), "win.file-open"), False, False, 0)
-
         button_box.pack_start(create_recent_files_button(), False, False, 0)
         button_box.show()
         header.pack_start(button_box)
+        b = Gtk.Button()
+        image = Gtk.Image.new_from_icon_name(
+            "gaphor-diagram-symbolic", Gtk.IconSize.MENU
+        )
+        b.add(image)
+        b.set_action_name("tree-view.create-diagram")
+        b.show_all()
+        header.pack_start(b)
+
         header.pack_end(hamburger_menu())
         header.pack_end(button(_("Save"), "win.file-save"))
 
@@ -254,8 +262,15 @@ class MainWindow(Service, ActionProvider):
 
         def _factory(name):
             comp = self.get_ui_component(name)
-            log.debug("open component %s" % str(comp))
-            return comp.open()
+            widget = comp.open()
+
+            # Okay, this may be hackish. Action groups on component level are also added
+            # to the main window. This ensures that we can call those items from the
+            # (main) menus as well. Also this makes enabling/disabling work.
+            for prefix in widget.list_action_prefixes():
+                assert prefix not in ("app", "win")
+                self.window.insert_action_group(prefix, widget.get_action_group(prefix))
+            return widget
 
         self.layout = []
 
