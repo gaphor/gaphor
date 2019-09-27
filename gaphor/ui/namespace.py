@@ -7,9 +7,7 @@ a result only classifiers are shown here.
 import logging
 import operator
 
-from gi.repository import GObject
-from gi.repository import Gtk
-from gi.repository import Gdk
+from gi.repository import GObject, Gio, Gdk, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
@@ -22,6 +20,7 @@ from gaphor.UML.event import (
     DerivedSetEvent,
 )
 from gaphor.core import _, event_handler, action, build_action_group, transactional
+from gaphor.ui.actiongroup import add_actions_to_group
 from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name
@@ -263,42 +262,15 @@ class NamespaceView(Gtk.TreeView):
                 # selection.select_path(path)
 
 
-class Namespace(UIComponent, ActionProvider):
+class Namespace(UIComponent):
 
     title = _("Namespace")
-
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="diagram">
-            <separator />
-            <menuitem action="tree-view-create-diagram" />
-            <menuitem action="tree-view-create-package" />
-            <separator />
-            <menuitem action="tree-view-delete-diagram" />
-            <menuitem action="tree-view-delete-package" />
-            <separator />
-          </menu>
-        </menubar>
-        <popup action="namespace-popup">
-          <menuitem action="tree-view-open" />
-          <menuitem action="tree-view-rename" />
-          <separator />
-          <menuitem action="tree-view-create-diagram" />
-          <menuitem action="tree-view-create-package" />
-          <separator />
-          <menuitem action="tree-view-delete-diagram" />
-          <menuitem action="tree-view-delete-package" />
-        </popup>
-      </ui>
-    """
 
     def __init__(self, event_manager, element_factory, action_manager):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.action_manager = action_manager
         self._namespace = None
-        self.action_group = build_action_group(self)
         self.model = Gtk.TreeStore.new([object])
         self.filter = _default_filter_list
 
@@ -355,6 +327,10 @@ class Namespace(UIComponent, ActionProvider):
         scrolled_window.show()
         view.show()
 
+        view.insert_action_group(
+            "tree-view",
+            add_actions_to_group(Gio.SimpleActionGroup.new(), self, "tree-view"),
+        )
         view.connect_after("event-after", self._on_view_event)
         view.connect("row-activated", self._on_view_row_activated)
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
@@ -363,6 +339,25 @@ class Namespace(UIComponent, ActionProvider):
         self._on_model_factory()
 
         return scrolled_window
+
+    def namespace_popup_model(self):
+        model = Gio.Menu.new()
+
+        part = Gio.Menu.new()
+        part.append(_("_Open"), "tree-view.open")
+        part.append(_("_Rename"), "tree-view.rename")
+        model.append_section(None, part)
+
+        part = Gio.Menu.new()
+        part.append(_("New _Diagram"), "tree-view.create-diagram")
+        part.append(_("New _Package"), "tree-view.create-package")
+        model.append_section(None, part)
+
+        part = Gio.Menu.new()
+        part.append(_("De_lete"), "tree-view.delete")
+        model.append_section(None, part)
+
+        return model
 
     def iter_for_element(self, element, old_namespace=0):
         """Get the Gtk.TreeIter for an element in the Namespace.
@@ -487,36 +482,32 @@ class Namespace(UIComponent, ActionProvider):
         """
         # handle mouse button 3:"
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button.button == 3:
-            menu = self.action_manager.get_widget("/namespace-popup")
+            menu = Gtk.Menu.new_from_model(self.namespace_popup_model())
+            menu.attach_to_widget(view, None)
             menu.popup_at_pointer(event)
 
     def _on_view_row_activated(self, view, path, column):
         """
         Double click on an element in the tree view.
         """
-        self.action_manager.execute("tree-view-open")
+        self.action_manager.execute("tree-view.open")
 
     def _on_view_cursor_changed(self, view):
         """
         Another row is selected, toggle action sensitivity.
         """
         element = view.get_selected_element()
-        self.action_group.get_action(
-            "tree-view-create-diagram"
-        ).props.sensitive = isinstance(element, UML.Package)
-        self.action_group.get_action(
-            "tree-view-create-package"
-        ).props.sensitive = isinstance(element, UML.Package)
-
-        self.action_group.get_action(
-            "tree-view-delete-diagram"
-        ).props.visible = isinstance(element, UML.Diagram)
-        self.action_group.get_action("tree-view-delete-package").props.visible = (
-            isinstance(element, UML.Package) and not element.presentation
+        action_group = view.get_action_group("tree-view")
+        action_group.lookup_action("open").set_enabled(isinstance(element, UML.Diagram))
+        action_group.lookup_action("create-diagram").set_enabled(
+            isinstance(element, UML.Package)
         )
-
-        self.action_group.get_action("tree-view-open").props.sensitive = isinstance(
-            element, UML.Diagram
+        action_group.lookup_action("create-package").set_enabled(
+            isinstance(element, UML.Package)
+        )
+        action_group.lookup_action("delete").set_enabled(
+            isinstance(element, UML.Diagram)
+            or (isinstance(element, UML.Package) and not element.presentation)
         )
 
     def _on_view_destroyed(self, widget):
@@ -543,7 +534,7 @@ class Namespace(UIComponent, ActionProvider):
         selection.select_path(path)
         self._on_view_cursor_changed(self._namespace)
 
-    @action(name="tree-view-open", label="_Open")
+    @action(name="tree-view.open")
     def tree_view_open_selected(self):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
@@ -553,7 +544,7 @@ class Namespace(UIComponent, ActionProvider):
         else:
             log.debug(f"No action defined for element {type(element).__name__}")
 
-    @action(name="tree-view-rename", label=_("Rename"), accel="F2")
+    @action(name="tree-view.rename", accel="F2")
     def tree_view_rename_selected(self):
         view = self._namespace
         element = view.get_selected_element()
@@ -568,11 +559,7 @@ class Namespace(UIComponent, ActionProvider):
             view.set_cursor(path, column, True)
             cell.set_property("editable", 0)
 
-    @action(
-        name="tree-view-create-diagram",
-        label=_("_New diagram"),
-        icon_name="gaphor-diagram",
-    )
+    @action(name="tree-view.create-diagram")
     @transactional
     def tree_view_create_diagram(self):
         element = self._namespace.get_selected_element()
@@ -588,37 +575,7 @@ class Namespace(UIComponent, ActionProvider):
         self.event_manager.handle(DiagramShow(diagram))
         self.tree_view_rename_selected()
 
-    @action(
-        name="tree-view-delete-diagram",
-        label=_("_Delete diagram"),
-        icon_name="edit-delete",
-    )
-    @transactional
-    def tree_view_delete_diagram(self):
-        diagram = self._namespace.get_selected_element()
-        m = Gtk.MessageDialog(
-            None,
-            Gtk.DialogFlags.MODAL,
-            Gtk.MessageType.QUESTION,
-            Gtk.ButtonsType.YES_NO,
-            "Do you really want to delete diagram %s?\n\n"
-            "This will possibly delete diagram items\n"
-            "that are not shown in other diagrams." % (diagram.name or "<None>"),
-        )
-        if m.run() == Gtk.ResponseType.YES:
-            for i in reversed(diagram.canvas.get_all_items()):
-                s = i.subject
-                if s and len(s.presentation) == 1:
-                    s.unlink()
-                i.unlink
-            diagram.unlink()
-        m.destroy()
-
-    @action(
-        name="tree-view-create-package",
-        label=_("New _package"),
-        icon_name="gaphor-package",
-    )
+    @action(name="tree-view.create-package")
     @transactional
     def tree_view_create_package(self):
         element = self._namespace.get_selected_element()
@@ -633,13 +590,27 @@ class Namespace(UIComponent, ActionProvider):
         self.select_element(package)
         self.tree_view_rename_selected()
 
-    @action(
-        name="tree-view-delete-package",
-        label=_("Delete pac_kage"),
-        icon_name="edit-delete",
-    )
+    @action(name="tree-view.delete")
     @transactional
-    def tree_view_delete_package(self):
-        package = self._namespace.get_selected_element()
-        assert isinstance(package, UML.Package)
-        package.unlink()
+    def tree_view_delete(self):
+        element = self._namespace.get_selected_element()
+        if isinstance(element, UML.Package):
+            element.unlink()
+        elif isinstance(element, UML.Diagram):
+            m = Gtk.MessageDialog(
+                None,
+                Gtk.DialogFlags.MODAL,
+                Gtk.MessageType.QUESTION,
+                Gtk.ButtonsType.YES_NO,
+                "Do you really want to delete diagram %s?\n\n"
+                "This will possibly delete diagram items\n"
+                "that are not shown in other diagrams." % (element.name or "<None>"),
+            )
+            if m.run() == Gtk.ResponseType.YES:
+                for i in reversed(element.canvas.get_all_items()):
+                    s = i.subject
+                    if s and len(s.presentation) == 1:
+                        s.unlink()
+                    i.unlink
+                element.unlink()
+            m.destroy()

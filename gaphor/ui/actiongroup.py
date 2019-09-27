@@ -4,40 +4,44 @@ from gaphor.action import action, toggle_action, radio_action
 
 
 def apply_application_actions(component_registry, gtk_app):
-    return action_group_for_scope(component_registry, gtk_app, "app")
+    for provider, _name in component_registry.all(ActionProvider):
+        add_actions_to_group(gtk_app, provider, "app")
+    return gtk_app
 
 
 def window_action_group(component_registry):
-    return action_group_for_scope(
-        component_registry, Gio.SimpleActionGroup.new(), "win"
-    )
-
-
-def action_group_for_scope(component_registry, action_group, scope):
+    action_group = Gio.SimpleActionGroup.new()
     for provider, _name in component_registry.all(ActionProvider):
-        provider_class = type(provider)
-        for attrname in dir(provider_class):
-            method = getattr(provider_class, attrname)
-            act = getattr(method, "__action__", None)
-            if not act or act.scope != scope:
-                continue
+        add_actions_to_group(action_group, provider, "win")
+    return action_group
 
-            if isinstance(act, radio_action):
-                a = Gio.SimpleAction.new_stateful(
-                    act.name, None, GLib.Variant.new_int16(act.active)
-                )
-                a.connect("change-state", _radio_action_activate, provider, attrname)
-            elif isinstance(act, toggle_action):
-                a = Gio.SimpleAction.new_stateful(
-                    act.name, None, GLib.Variant.new_boolean(act.active)
-                )
-                a.connect("change-state", _toggle_action_activate, provider, attrname)
-            elif isinstance(act, action):
-                a = Gio.SimpleAction.new(act.name, None)
-                a.connect("activate", _action_activate, provider, attrname)
-            else:
-                raise ValueError(f"Action is not of a known action type ({act})")
-            action_group.add_action(a)
+
+def add_actions_to_group(
+    action_group: Gio.ActionMap, provider, scope: str
+) -> Gio.ActionMap:
+    provider_class = type(provider)
+    for attrname in dir(provider_class):
+        method = getattr(provider_class, attrname)
+        act = getattr(method, "__action__", None)
+        if not act or act.scope != scope:
+            continue
+
+        if isinstance(act, radio_action):
+            a = Gio.SimpleAction.new_stateful(
+                act.name, None, GLib.Variant.new_int16(act.active)
+            )
+            a.connect("change-state", _radio_action_activate, provider, attrname)
+        elif isinstance(act, toggle_action):
+            a = Gio.SimpleAction.new_stateful(
+                act.name, None, GLib.Variant.new_boolean(act.active)
+            )
+            a.connect("change-state", _toggle_action_activate, provider, attrname)
+        elif isinstance(act, action):
+            a = Gio.SimpleAction.new(act.name, None)
+            a.connect("activate", _action_activate, provider, attrname)
+        else:
+            raise ValueError(f"Action is not of a known action type ({act})")
+        action_group.add_action(a)
     return action_group
 
 

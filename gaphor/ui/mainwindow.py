@@ -37,20 +37,16 @@ from gaphor.ui.toolbox import Toolbox
 
 log = logging.getLogger(__name__)
 
-ICONS = (
-    "gaphor-24x24.png",
-    "gaphor-48x48.png",
-    "gaphor-96x96.png",
-    "gaphor-256x256.png",
-)
-
 
 class RecentFilesMenu(Gio.Menu):
     def __init__(self, recent_manager):
         super().__init__()
 
         self._on_recent_manager_changed(recent_manager)
-        recent_manager.connect("changed", self._on_recent_manager_changed)
+        # TODO: should unregister if the window is closed.
+        self._changed_id = recent_manager.connect(
+            "changed", self._on_recent_manager_changed
+        )
 
     def _on_recent_manager_changed(self, recent_manager):
         self.remove_all()
@@ -89,7 +85,19 @@ def create_dummy_popover(parent):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
+    import_menu = Gio.Menu.new()
+    export_menu = Gio.Menu.new()
+    part.append_submenu(_("Import"), import_menu)
+    part.append_submenu(_("Export"), export_menu)
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
     part.append(_("Hand-Drawn Style"), "win.diagram-drawing-style")
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    tools_menu = Gio.Menu.new()
+    part.append_submenu(_("Tools"), tools_menu)
     model.append_section(None, part)
 
     part = Gio.Menu.new()
@@ -100,10 +108,22 @@ def create_dummy_popover(parent):
     return Gtk.Popover.new_from_model(parent, model)
 
 
-def create_recent_files_popover(parent):
-    return Gtk.Popover.new_from_model(
-        parent, RecentFilesMenu(Gtk.RecentManager.get_default())
+def create_recent_files_button(recent_manager=None):
+    button = Gtk.MenuButton()
+    image = Gtk.Image.new_from_icon_name("pan-down-symbolic", Gtk.IconSize.MENU)
+    button.add(image)
+
+    model = Gio.Menu.new()
+    model.append_section(
+        _("Recently opened files"),
+        RecentFilesMenu(recent_manager or Gtk.RecentManager.get_default()),
     )
+
+    popover = Gtk.Popover.new_from_model(button, model)
+    button.set_popover(popover)
+    button.show_all()
+
+    return button
 
 
 class MainWindow(Service, ActionProvider):
@@ -209,13 +229,7 @@ class MainWindow(Service, ActionProvider):
         button_box.get_style_context().add_class("linked")
         button_box.pack_start(button(_("Open"), "win.file-open"), False, False, 0)
 
-        b = Gtk.MenuButton()
-        image = Gtk.Image.new_from_icon_name("pan-down-symbolic", Gtk.IconSize.MENU)
-        b.add(image)
-        b.set_popover(create_recent_files_popover(b))
-        b.show_all()
-
-        button_box.pack_start(b, False, False, 0)
+        button_box.pack_start(create_recent_files_button(), False, False, 0)
         button_box.show()
         header.pack_start(button_box)
         header.pack_end(hamburger_menu())
