@@ -286,6 +286,7 @@ class Diagrams(UIComponent, ActionProvider):
         """
 
         self._notebook = Gtk.Notebook()
+        self._notebook.props.scrollable = True
         self._notebook.show()
         self._notebook.connect("switch-page", self._on_switch_page)
         self.event_manager.subscribe(self._on_show_diagram)
@@ -361,12 +362,12 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook.set_show_tabs(True)
 
     def tab_label(self, title, widget):
-        tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-        label = Gtk.Label(label=title)
+        tab_box = Gtk.Box.new(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        label = Gtk.Label.new(title)
         tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
 
         close_image = Gtk.Image.new_from_icon_name(
-            icon_name="window-close", size=Gtk.IconSize.MENU
+            icon_name="window-close", size=Gtk.IconSize.BUTTON
         )
         button = Gtk.Button()
         button.set_relief(Gtk.ReliefStyle.NONE)
