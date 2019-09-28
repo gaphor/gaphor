@@ -37,9 +37,9 @@ TOOLBOX_ACTIONS = (
     (
         _("Classes"),
         (
-            ("toolbox-class", _("Class"), "gaphor-class", "c"),
+            ("toolbox-class", _("Class"), "gaphor-class-symbolic", "c"),
             ("toolbox-interface", _("Interface"), "gaphor-interface", "i"),
-            ("toolbox-package", _("Package"), "gaphor-package", "p"),
+            ("toolbox-package", _("Package"), "gaphor-package-symbolic", "p"),
             ("toolbox-association", _("Association"), "gaphor-association", "A"),
             ("toolbox-dependency", _("Dependency"), "gaphor-dependency", "D"),
             (
