@@ -69,11 +69,11 @@ TOOLBOX_ACTIONS = (
     (
         _("Components"),
         (
-            ("toolbox-component", _("Component"), "gaphor-component", "o"),
-            ("toolbox-artifact", _("Artifact"), "gaphor-artifact", "h"),
-            ("toolbox-node", _("Node"), "gaphor-node", "n"),
-            ("toolbox-device", _("Device"), "gaphor-device", "d"),
-            ("toolbox-connector", _("Connector"), "gaphor-connector", "C"),
+            ("toolbox-component", _("Component"), "gaphor-component-symbolic", "o"),
+            ("toolbox-artifact", _("Artifact"), "gaphor-artifact-symbolic", "h"),
+            ("toolbox-node", _("Node"), "gaphor-node-symbolic", "n"),
+            ("toolbox-device", _("Device"), "gaphor-device-symbolic", "d"),
+            ("toolbox-connector", _("Connector"), "gaphor-connector-symbolic", "C"),
         ),
     ),
     (

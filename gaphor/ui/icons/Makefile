@@ -14,7 +14,12 @@ ICONS=diagram \
 	association \
 	generalization \
 	dependency \
-	implementation
+	implementation \
+	component \
+	artifact \
+	node \
+	device \
+	connector
 
 ICON_FILES=$(patsubst %,gaphor-%-symbolic.svg,$(ICONS))
 
