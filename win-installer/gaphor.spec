@@ -33,6 +33,7 @@ exe = EXE(pyz,
           strip=False,
           upx=False,
           icon='misc/gaphor.ico',
+          version='file_version_info.txt',
           console=True )
 coll = COLLECT(exe,
                a.binaries,
