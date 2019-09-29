@@ -196,7 +196,7 @@ jobs:
       displayName: Build Wheel
     
     - script: |
-        poetry config repositories.azure https://pkgs.dev.azure.com/gaphor/_packaging/gaphor/pypi/upload
+        poetry config repositories.azure https://pkgs.dev.azure.com/gaphor-dev/_packaging/PyPI-Feed/pypi/upload
         poetry config http-basic.azure $(username) $(password)
         poetry publish -r azure
         exit 0
