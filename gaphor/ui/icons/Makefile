@@ -2,10 +2,14 @@
 STENSIL=stensil.svg
 
 ICONS=diagram \
-      class \
-      package \
-      interface \
-      association
+	comment \
+	class \
+	package \
+	interface \
+	association \
+	generalization \
+	dependency \
+	implementation
 
 ICON_FILES=$(patsubst %,gaphor-%-symbolic.svg,$(ICONS))
 
