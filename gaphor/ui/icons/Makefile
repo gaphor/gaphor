@@ -19,7 +19,21 @@ ICONS=diagram \
 	artifact \
 	node \
 	device \
-	connector
+	connector \
+	action \
+	initial-node \
+	activity-final-node \
+	flow-final-node \
+	decision-node \
+	fork-node \
+	object-node \
+	partition \
+	control-flow \
+	send-signal-action \
+	accept-event-action \
+	lifeline \
+	message \
+	interaction
 
 ICON_FILES=$(patsubst %,gaphor-%-symbolic.svg,$(ICONS))
 
@@ -27,10 +41,15 @@ INKSCAPE=flatpak run org.inkscape.Inkscape
 
 all: $(ICON_FILES)
 
-gaphor-%-symbolic.svg: stensil.svg
+verify: stensil.svg
+	@for icon in $(ICONS); do grep -q "id=\"$$icon\"" $< || { echo "ERROR: No layer named $$icon"; exit 1; }; done
+
+gaphor-%-symbolic.svg: stensil.svg verify
 	$(INKSCAPE) -z --export-id=$* --export-id-only \
 		--export-plain-svg=.$@ $< && \
 	$(INKSCAPE) --verb EditSelectAll --verb SelectionUnGroup \
 		--verb=EditSelectAll --verb StrokeToPath \
 		--verb FileSave --verb FileQuit .$@ && \
 	$(INKSCAPE) --export-plain-svg=$@ .$@ && rm .$@
+
+.PHONY: all verify
