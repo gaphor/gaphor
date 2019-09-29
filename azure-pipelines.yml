@@ -194,3 +194,10 @@ jobs:
         source venv
         poetry build
       displayName: Build Wheel
+    
+    - script: |
+        poetry config repositories.azure https://pkgs.dev.azure.com/gaphor/_packaging/gaphor/pypi/upload
+        poetry config http-basic.azure $(username) $(password)
+        poetry publish -r azure
+        exit 0
+      displayName: Publish software
