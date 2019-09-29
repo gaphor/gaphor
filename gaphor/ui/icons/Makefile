@@ -2,7 +2,12 @@
 STENSIL=stensil.svg
 
 ICONS=diagram \
+	pointer \
+	box \
+	line \
+	ellipse \
 	comment \
+	comment-line \
 	class \
 	package \
 	interface \

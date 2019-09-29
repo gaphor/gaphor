@@ -26,12 +26,17 @@ TOOLBOX_ACTIONS = (
     (
         _("General"),
         (
-            ("toolbox-pointer", _("Pointer"), "gaphor-pointer", "Escape"),
-            ("toolbox-line", _("Line"), "gaphor-line", "l"),
-            ("toolbox-box", _("Box"), "gaphor-box", "b"),
-            ("toolbox-ellipse", _("Ellipse"), "gaphor-ellipse", "e"),
+            ("toolbox-pointer", _("Pointer"), "gaphor-pointer-symbolic", "Escape"),
+            ("toolbox-line", _("Line"), "gaphor-line-symbolic", "l"),
+            ("toolbox-box", _("Box"), "gaphor-box-symbolic", "b"),
+            ("toolbox-ellipse", _("Ellipse"), "gaphor-ellipse-symbolic", "e"),
             ("toolbox-comment", _("Comment"), "gaphor-comment-symbolic", "k"),
-            ("toolbox-comment-line", _("Comment line"), "gaphor-comment-line", "K"),
+            (
+                "toolbox-comment-line",
+                _("Comment line"),
+                "gaphor-comment-line-symbolic",
+                "K",
+            ),
         ),
     ),
     (
