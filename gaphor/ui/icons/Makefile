@@ -46,7 +46,8 @@ ICONS=diagram \
 	profile \
 	metaclass \
 	stereotype \
-	extension
+	extension \
+	property
 
 ICON_FILES=$(patsubst %,gaphor-%-symbolic.svg,$(ICONS))
 

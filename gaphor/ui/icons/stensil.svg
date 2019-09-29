@@ -33,11 +33,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="56.813558"
-     inkscape:cx="24.167523"
-     inkscape:cy="990.73957"
+     inkscape:zoom="40.173252"
+     inkscape:cx="133.69313"
+     inkscape:cy="963.85601"
      inkscape:document-units="px"
-     inkscape:current-layer="action"
+     inkscape:current-layer="svg4268"
      showgrid="true"
      units="px"
      inkscape:window-width="3840"
@@ -870,6 +870,27 @@
        x="1.5875"
        y="34.533325"
        ry="1.0583332" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="property"
+     inkscape:label="property">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1294"
+       width="4.2333331"
+       height="4.2333331"
+       x="35.71875"
+       y="39.031242"
+       ry="1.8860769e-06" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1290"
+       width="1.8520824"
+       height="1.8520852"
+       x="36.777084"
+       y="40.354156"
+       ry="1.886076e-06" />
   </g>
   <g
      inkscape:groupmode="layer"
