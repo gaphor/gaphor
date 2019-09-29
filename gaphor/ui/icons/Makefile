@@ -33,7 +33,20 @@ ICONS=diagram \
 	accept-event-action \
 	lifeline \
 	message \
-	interaction
+	interaction \
+	state \
+	initial-pseudostate \
+	pseudostate \
+	final-state \
+	transition \
+	use-case \
+	actor \
+	include \
+	extend \
+	profile \
+	metaclass \
+	stereotype \
+	extension
 
 ICON_FILES=$(patsubst %,gaphor-%-symbolic.svg,$(ICONS))
 

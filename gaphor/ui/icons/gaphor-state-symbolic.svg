@@ -6,8 +6,8 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    width="16"
-   height="16"
-   viewBox="0 0 4.2333332 4.2333335"
+   height="14"
+   viewBox="0 0 4.2333332 3.7041668"
    version="1.1"
    id="svg4268">
   <defs
@@ -25,11 +25,11 @@
     </rdf:RDF>
   </metadata>
   <path
-     id="rect1031"
-     d="M 0.26367188,0 A 0.26460978,0.26460978 0 0 0 0,0.26367188 V 3.96875 A 0.26460978,0.26460978 0 0 0 0.26367188,4.2324219 H 3.96875 A 0.26460978,0.26460978 0 0 0 4.2324219,3.96875 V 0.26367188 A 0.26460978,0.26460978 0 0 0 3.96875,0 Z m 0.265625,0.52929688 H 3.7050781 V 3.7050781 H 0.52929688 Z"
-     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.52916664;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+     id="rect1037"
+     d="M 1.0583329,-1.7981769e-8 C 0.47201621,-1.7981769e-8 -4.5e-7,0.47201664 -4.5e-7,1.0583333 v 1.5875 c 0,0.5863166 0.47201666,1.0583333 1.05833335,1.0583333 h 2.1166666 c 0.5863167,0 1.0583333,-0.4720167 1.0583333,-1.0583333 v -1.5875 C 4.2333328,0.47201664 3.7613162,-1.7981769e-8 3.1749995,-1.7981769e-8 Z m 0,0.529166657981769 h 2.1166666 c 0.2931583,0 0.5291667,0.23600833 0.5291667,0.52916666 v 1.5875 c 0,0.2931583 -0.2360084,0.5291666 -0.5291667,0.5291666 H 1.0583329 c -0.29315836,0 -0.52916669,-0.2360083 -0.52916669,-0.5291666 v -1.5875 c 0,-0.29315833 0.23600833,-0.52916666 0.52916669,-0.52916666 z"
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.52916664;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   <path
-     id="path1035"
-     d="m 1.9316406,0.52929688 v 0.1875 L 1.5117188,1.1386719 H 0.52929688 V 1.5078125 H 1.6640625 L 2.3027344,0.87109375 V 0.52929688 Z"
+     id="path1046"
+     d="M 0.52929688,1.4023438 V 1.7734375 H 3.7050781 V 1.4023438 Z"
      style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.37041667;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
 </svg>
