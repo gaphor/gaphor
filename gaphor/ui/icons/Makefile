@@ -53,12 +53,12 @@ ICON_FILES=$(patsubst %,gaphor-%-symbolic.svg,$(ICONS))
 
 INKSCAPE=flatpak run org.inkscape.Inkscape
 
-all: $(ICON_FILES)
+all: verify $(ICON_FILES)
 
 verify: stensil.svg
 	@for icon in $(ICONS); do grep -q "id=\"$$icon\"" $< || { echo "ERROR: No layer named $$icon"; exit 1; }; done
 
-gaphor-%-symbolic.svg: stensil.svg verify
+gaphor-%-symbolic.svg: stensil.svg
 	$(INKSCAPE) -z --export-id=$* --export-id-only \
 		--export-plain-svg=.$@ $< && \
 	$(INKSCAPE) --verb EditSelectAll --verb SelectionUnGroup \
