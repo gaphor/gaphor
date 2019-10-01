@@ -107,7 +107,7 @@ setup(
             "properties = gaphor.services.properties:Properties",
             "undo_manager = gaphor.services.undomanager:UndoManager",
             "element_factory = gaphor.UML.elementfactory:ElementFactory",
-            "file_manager = gaphor.services.filemanager:FileManager",
+            "file_manager = gaphor.ui.filemanager:FileManager",
             "recent_files = gaphor.ui.recentfiles:RecentFiles",
             "diagram_export_manager = gaphor.services.diagramexportmanager:DiagramExportManager",
             "action_manager = gaphor.services.actionmanager:ActionManager",
