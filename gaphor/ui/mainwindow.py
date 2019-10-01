@@ -67,12 +67,12 @@ def hamburger_menu():
     button = Gtk.MenuButton()
     image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU)
     button.add(image)
-    button.set_popover(create_dummy_popover(button))
+    button.set_popover(create_hamburger_popover(button))
     button.show_all()
     return button
 
 
-def create_dummy_popover(parent):
+def create_hamburger_popover(parent):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
@@ -133,11 +133,6 @@ class MainWindow(Service, ActionProvider):
     """
 
     size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
-
-    menu_xml = """
-      <ui>
-      </ui>
-    """
 
     def __init__(
         self,
@@ -374,28 +369,12 @@ class Diagrams(UIComponent, ActionProvider):
 
     title = _("Diagrams")
 
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="diagram">
-            <separator/>
-            <menuitem action="diagram-drawing-style" />
-            <separator/>
-          </menu>
-        </menubar>
-      </ui>
-    """
-
     def __init__(self, event_manager, element_factory, action_manager, properties):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.action_manager = action_manager
         self.properties = properties
         self._notebook = None
-        self.action_group = build_action_group(self)
-        self.action_group.get_action("diagram-drawing-style").set_active(
-            self.properties("diagram.sloppiness", 0) != 0
-        )
         self._page_ui_settings = None
 
     def open(self):

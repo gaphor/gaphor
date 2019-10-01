@@ -19,6 +19,6 @@ class ActionProvider(metaclass=abc.ABCMeta):
     (see gaphor/action.py) and the accompanying XML for the UI manager.
     """
 
-    menu_xml = "The menu XML"
+    menu_xml: str  # "The menu XML"
 
-    action_group = "The accompanying ActionGroup"
+    action_group: object  # "The accompanying ActionGroup"

@@ -101,17 +101,17 @@ class ActionManager(Service):
             # Check if the action provider is not already registered
             action_provider.__ui_merge_id
         except AttributeError:
-            assert action_provider.action_group
-            self.ui_manager.insert_action_group(action_provider.action_group, -1)
+            if hasattr(action_provider, "action_group"):
+                self.ui_manager.insert_action_group(action_provider.action_group, -1)
 
-            try:
-                menu_xml = action_provider.menu_xml
-            except AttributeError:
-                pass
-            else:
-                action_provider.__ui_merge_id = self.ui_manager.add_ui_from_string(
-                    menu_xml
-                )
+                try:
+                    menu_xml = action_provider.menu_xml
+                except AttributeError:
+                    pass
+                else:
+                    action_provider.__ui_merge_id = self.ui_manager.add_ui_from_string(
+                        menu_xml
+                    )
 
     def unregister_action_provider(self, action_provider):
 
