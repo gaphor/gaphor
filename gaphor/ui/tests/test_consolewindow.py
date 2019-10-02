@@ -2,6 +2,7 @@ import pytest
 
 from gaphor.ui.consolewindow import ConsoleWindow
 import gaphor.services.componentregistry
+import gaphor.ui.menufragment
 
 
 class MainWindowStub:
@@ -19,12 +20,15 @@ def main_window():
     return MainWindowStub()
 
 
-def test_open_close(component_registry, main_window):
-    window = ConsoleWindow(component_registry, main_window)
+@pytest.fixture
+def tools_menu():
+    return gaphor.ui.menufragment.MenuFragment()
+
+
+def test_open_close(component_registry, main_window, tools_menu):
+    window = ConsoleWindow(component_registry, main_window, tools_menu)
 
     window.open()
     window.close()
 
-    assert (
-        len(window.action_group.list_actions()) == 2
-    ), window.action_group.list_actions()
+    assert tools_menu.menu.get_n_items() == 1
