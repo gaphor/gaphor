@@ -19,13 +19,7 @@ def window_action_group(component_registry):
 def add_actions_to_group(
     action_group: Gio.ActionMap, provider, scope: str
 ) -> Gio.ActionMap:
-    provider_class = type(provider)
-    for attrname in dir(provider_class):
-        method = getattr(provider_class, attrname)
-        act = getattr(method, "__action__", None)
-        if not act or act.scope != scope:
-            continue
-
+    for attrname, act in iter_actions(provider, scope):
         if isinstance(act, radio_action):
             a = Gio.SimpleAction.new_stateful(
                 act.name, None, GLib.Variant.new_int16(act.active)
@@ -43,6 +37,15 @@ def add_actions_to_group(
             raise ValueError(f"Action is not of a known action type ({act})")
         action_group.add_action(a)
     return action_group
+
+
+def iter_actions(provider, scope):
+    provider_class = type(provider)
+    for attrname in dir(provider_class):
+        method = getattr(provider_class, attrname)
+        act = getattr(method, "__action__", None)
+        if act and act.scope == scope:
+            yield (attrname, act)
 
 
 def _action_activate(_action, _param, obj, name):

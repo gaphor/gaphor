@@ -19,6 +19,9 @@ def application():
             "namespace",
             "diagrams",
             "toolbox",
+            "import_menu",
+            "export_menu",
+            "tools_menu",
         ]
     )
     yield Application

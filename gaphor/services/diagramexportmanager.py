@@ -26,36 +26,14 @@ class DiagramExportManager(Service, ActionProvider):
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
 
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="file">
-            <menu action="file-export">
-              <menuitem action="file-export-svg" />
-              <menuitem action="file-export-png" />
-              <menuitem action="file-export-pdf" />
-              <separator />
-            </menu>
-          </menu>
-        </menubar>
-      </ui>
-    """
-
-    def __init__(self, component_registry, properties):
-        self.component_registry = component_registry
+    def __init__(self, diagrams, properties, export_menu):
+        self.diagrams = diagrams
         self.properties = properties
-        self.action_group = build_action_group(self)
+        self.export_menu = export_menu
+        export_menu.add_actions(self)
 
     def shutdown(self):
-        pass
-
-    def update(self):
-        pass
-
-    def get_current_diagram(self):
-        return self.component_registry.get(
-            UIComponent, "diagrams"
-        ).get_current_diagram()
+        self.export_menu.remove_actions(self)
 
     def save_dialog(self, diagram, title, ext):
 
@@ -142,42 +120,39 @@ class DiagramExportManager(Service, ActionProvider):
 
     @action(
         name="file-export-svg",
-        label="Export to SVG",
-        tooltip="Export the diagram to SVG",
+        label=_("Export to SVG"),
+        tooltip=_("Export the diagram to SVG"),
     )
     def save_svg_action(self):
-        title = "Export diagram to SVG"
+        title = _("Export diagram to SVG")
         ext = ".svg"
-        diagram = self.get_current_diagram()
+        diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_svg(filename, diagram.canvas)
 
     @action(
         name="file-export-png",
-        label="Export to PNG",
-        tooltip="Export the diagram to PNG",
+        label=_("Export to PNG"),
+        tooltip=_("Export the diagram to PNG"),
     )
     def save_png_action(self):
-        title = "Export diagram to PNG"
+        title = _("Export diagram to PNG")
         ext = ".png"
-        diagram = self.get_current_diagram()
+        diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_png(filename, diagram.canvas)
 
     @action(
         name="file-export-pdf",
-        label="Export to PDF",
-        tooltip="Export the diagram to PDF",
+        label=_("Export to PDF"),
+        tooltip=_("Export the diagram to PDF"),
     )
     def save_pdf_action(self):
-        title = "Export diagram to PDF"
+        title = _("Export diagram to PDF")
         ext = ".pdf"
-        diagram = self.get_current_diagram()
+        diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_pdf(filename, diagram.canvas)
-
-
-# vim:sw=4:et:

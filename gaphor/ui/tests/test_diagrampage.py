@@ -21,6 +21,9 @@ class DiagramPageTestCase(unittest.TestCase):
                 "namespace",
                 "diagrams",
                 "toolbox",
+                "import_menu",
+                "export_menu",
+                "tools_menu",
             ]
         )
         main_window = Application.get_service("main_window")

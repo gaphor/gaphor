@@ -11,6 +11,9 @@ class DiagramLayoutTestCase(TestCase):
         "properties",
         "action_manager",
         "diagram_layout",
+        "import_menu",
+        "export_menu",
+        "tools_menu",
     ]
 
     def testDiagramLayout(self):

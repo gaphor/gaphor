@@ -33,6 +33,9 @@ def application():
             "namespace",
             "diagrams",
             "toolbox",
+            "import_menu",
+            "export_menu",
+            "tools_menu",
         ]
     )
     main_window = Application.get_service("main_window")
@@ -111,6 +114,9 @@ class HandleToolTestCase(unittest.TestCase):
                 "namespace",
                 "diagrams",
                 "toolbox",
+                "import_menu",
+                "export_menu",
+                "tools_menu",
             ]
         )
         self.component_registry = Application.get_service("component_registry")

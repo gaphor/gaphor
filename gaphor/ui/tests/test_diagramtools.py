@@ -19,6 +19,9 @@ class DiagramItemConnectorTestCase(TestCase):
         "namespace",
         "diagrams",
         "toolbox",
+        "import_menu",
+        "export_menu",
+        "tools_menu",
     ]
 
     def setUp(self):

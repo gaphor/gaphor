@@ -63,16 +63,16 @@ class RecentFilesMenu(Gio.Menu):
             self.append_item(Gio.MenuItem.new(_("No recently opened models"), None))
 
 
-def hamburger_menu():
+def hamburger_menu(hamburger_model):
     button = Gtk.MenuButton()
     image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU)
     button.add(image)
-    button.set_popover(create_hamburger_popover(button))
+    button.set_popover(Gtk.Popover.new_from_model(button, hamburger_model))
     button.show_all()
     return button
 
 
-def create_hamburger_popover(parent):
+def create_hamburger_model(import_menu, export_menu, tools_menu):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
@@ -85,8 +85,6 @@ def create_hamburger_popover(parent):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    import_menu = Gio.Menu.new()
-    export_menu = Gio.Menu.new()
     part.append_submenu(_("Import"), import_menu)
     part.append_submenu(_("Export"), export_menu)
     model.append_section(None, part)
@@ -96,7 +94,6 @@ def create_hamburger_popover(parent):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    tools_menu = Gio.Menu.new()
     part.append_submenu(_("Tools"), tools_menu)
     model.append_section(None, part)
 
@@ -105,7 +102,7 @@ def create_hamburger_popover(parent):
     part.append(_("About Gaphor"), "app.about")
     model.append_section(None, part)
 
-    return Gtk.Popover.new_from_model(parent, model)
+    return model
 
 
 def create_recent_files_button(recent_manager=None):
@@ -141,12 +138,18 @@ class MainWindow(Service, ActionProvider):
         element_factory,
         action_manager,
         properties,
+        import_menu,
+        export_menu,
+        tools_menu,
     ):
         self.event_manager = event_manager
         self.component_registry = component_registry
         self.element_factory = element_factory
         self.action_manager = action_manager
         self.properties = properties
+        self.import_menu = import_menu
+        self.export_menu = export_menu
+        self.tools_menu = tools_menu
 
         self.title = "Gaphor"
         self.window = None
@@ -235,7 +238,13 @@ class MainWindow(Service, ActionProvider):
         b.show_all()
         header.pack_start(b)
 
-        header.pack_end(hamburger_menu())
+        header.pack_end(
+            hamburger_menu(
+                create_hamburger_model(
+                    self.import_menu.menu, self.export_menu.menu, self.tools_menu.menu
+                )
+            )
+        )
         header.pack_end(button(_("Save"), "win.file-save"))
 
         self.set_title()

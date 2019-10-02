@@ -2,13 +2,17 @@ import pytest
 
 import gaphas, gaphas.examples
 from gaphor.services.diagramexportmanager import DiagramExportManager
+import gaphor.ui.menufragment
 
 
 @pytest.fixture
 def diagram_export_manager():
     properties = {}
+    export_menu = gaphor.ui.menufragment.MenuFragment()
 
-    return DiagramExportManager(component_registry=None, properties=properties)
+    return DiagramExportManager(
+        diagrams=None, properties=properties, export_menu=export_menu
+    )
 
 
 @pytest.fixture

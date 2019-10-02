@@ -24,6 +24,9 @@ class DiagramToolboxTestCase(TestCase):
         "properties",
         "action_manager",
         "main_window",
+        "import_menu",
+        "export_menu",
+        "tools_menu",
     ]
 
     def setUp(self):
