@@ -6,7 +6,7 @@ from gi.repository import Gtk
 
 from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationChangeEvent
-from gaphor.core import _, event_handler, action, build_action_group
+from gaphor.core import _, event_handler, action
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.diagram.propertypages import PropertyPages
@@ -22,16 +22,6 @@ class ElementEditor(UIComponent, ActionProvider):
 
     title = _("Element Editor")
     size = (275, -1)
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="edit">
-            <separator />
-            <menuitem action="ElementEditor:open" />
-          </menu>
-        </menubar>
-      </ui>
-    """
 
     def __init__(self, event_manager, element_factory, main_window):
         """Constructor. Build the action group for the element editor window.
@@ -40,37 +30,40 @@ class ElementEditor(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.main_window = main_window
-        self.action_group = build_action_group(self)
-        self.window = None
         self.vbox = None
         self._current_item = None
         self._expanded_pages = {_("Properties"): True}
 
-    @action(
-        name="ElementEditor:open",
-        label=_("_Editor"),
-        icon_name="dialog-information",
-        accel="<Primary>e",
-    )
-    def open_elementeditor(self):
-        """Display the element editor when the toolbar button is toggled.  If
-        active, the element editor is displayed.  Otherwise, it is hidden."""
+    # @action(
+    #     name="ElementEditor:open",
+    #     label=_("_Editor"),
+    #     icon_name="dialog-information",
+    #     accel="<Primary>e",
+    # )
+    # def open_elementeditor(self):
+    #     """Display the element editor when the toolbar button is toggled.  If
+    #     active, the element editor is displayed.  Otherwise, it is hidden."""
 
-        if not self.window:
-            self.open()
+    #     if not self.window:
+    #         self.open()
 
     def open(self):
-        """Display the ElementEditor window."""
-        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-        window.set_transient_for(self.main_window.window)
-        window.set_title(self.title)
-        vbox = Gtk.VBox()
+        """Display the ElementEditor pane."""
 
-        window.add(vbox)
-        vbox.show()
-        window.show()
+        pane = Gtk.VBox.new(False, 0)
+        header = Gtk.Button.new()
+        label = Gtk.Label.new("Element Editor")
+        header.add(label)
+        header.connect("clicked", self._show_hide_editor)
+        header.show()
+        self.header = label
+        pane.pack_start(header, False, False, 0)
 
-        self.window = window
+        vbox = Gtk.VBox.new(False, 0)
+        pane.pack_start(vbox, False, False, 0)
+
+        pane.show_all()
+
         self.vbox = vbox
 
         diagrams = self.main_window.get_ui_component("diagrams")
@@ -84,7 +77,15 @@ class ElementEditor(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._selection_change)
         self.event_manager.subscribe(self._element_changed)
 
-        window.connect("destroy", self.close)
+        return pane
+
+    def _show_hide_editor(self, widget):
+        if self.vbox.get_visible():
+            self.vbox.set_visible(False)
+            self.header.props.angle = 90
+        else:
+            self.vbox.set_visible(True)
+            self.header.props.angle = 0
 
     def close(self, widget=None):
         """Hide the element editor window and deactivate the toolbar button.
@@ -93,7 +94,6 @@ class ElementEditor(UIComponent, ActionProvider):
 
         self.event_manager.unsubscribe(self._selection_change)
         self.event_manager.unsubscribe(self._element_changed)
-        self.window = None
         self.vbox = None
         self._current_item = None
         return True
@@ -186,6 +186,3 @@ class ElementEditor(UIComponent, ActionProvider):
             if element is self._current_item:
                 self.clear_pages()
                 self.create_pages(self._current_item)
-
-
-# vim:sw=4:et:ai

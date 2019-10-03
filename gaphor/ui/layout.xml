@@ -3,8 +3,11 @@
     <paned orientation="horizontal" position="200">
       <paned orientation="vertical" position="200">
         <component name="namespace"/>
-        <component name="toolbox"/>
+        <component name="toolbox" resize="true"/>
       </paned>
-      <component name="diagrams"/>
+      <paned orientation="horizontal">
+        <component name="diagrams" resize="true"/>
+        <component name="elementeditor"/>
+      </paned>
     </paned>
 </layout>

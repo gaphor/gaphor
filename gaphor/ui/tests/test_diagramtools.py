@@ -22,6 +22,7 @@ class DiagramItemConnectorTestCase(TestCase):
         "import_menu",
         "export_menu",
         "tools_menu",
+        "elementeditor",
     ]
 
     def setUp(self):

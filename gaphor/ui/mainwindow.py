@@ -429,7 +429,7 @@ class Diagrams(UIComponent, ActionProvider):
             return
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
-        return child_widget.diagram_page.get_view()
+        return child_widget and child_widget.diagram_page.get_view()
 
     def cb_close_tab(self, button, widget):
         """Callback to close the tab and remove the notebook page.
