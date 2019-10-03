@@ -15,12 +15,13 @@ from gaphor.abc import Service
 
 
 class PropertyChangeEvent:
+    """
+    This event is triggered any time a property is changed.  This event
+    holds the property key, the current value, and the new value.
+    """
 
-    """This event is triggered any time a property is changed.  This event
-    holds the property name, the current value, and the new value."""
-
-    def __init__(self, name, old_value, new_value):
-        self.name = name
+    def __init__(self, key, old_value, new_value):
+        self.key = key
         self.old_value = old_value
         self.new_value = new_value
 

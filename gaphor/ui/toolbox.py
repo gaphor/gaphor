@@ -33,18 +33,6 @@ class Toolbox(UIComponent, ActionProvider):
 
     title = _("Toolbox")
 
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="diagram">
-            <separator/>
-            <menuitem action="reset-tool-after-create" />
-            <separator/>
-          </menu>
-        </menubar>
-      </ui>
-    """
-
     def __init__(
         self, event_manager, main_window, properties, toolbox_actions=TOOLBOX_ACTIONS
     ):
@@ -53,10 +41,6 @@ class Toolbox(UIComponent, ActionProvider):
         self.properties = properties
         self._toolbox = None
         self._toolbox_actions = toolbox_actions
-        self.action_group = build_action_group(self)
-        self.action_group.get_action("reset-tool-after-create").set_active(
-            self.properties.get("reset-tool-after-create", True)
-        )
         self.buttons: List[Gtk.Button] = []
         self.shortcuts: Dict[str, str] = {}
 
@@ -143,10 +127,6 @@ class Toolbox(UIComponent, ActionProvider):
 
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None
-
-    @toggle_action(name="reset-tool-after-create", label=_("_Reset tool"), active=False)
-    def reset_tool_after_create(self, active):
-        self.properties.set("reset-tool-after-create", active)
 
     @event_handler(DiagramPageChange)
     def _on_diagram_page_change(self, event):

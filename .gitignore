@@ -6,6 +6,7 @@ html
 *.pyo
 *.swp
 *.egg
+*~
 .eggs/
 gaphor.egg-info/
 tmp.gaphor
@@ -33,14 +34,6 @@ pip-wheel-metadata
 flatpak/build
 flatpak/gaphor-repo
 flatpak/.flatpak-builder
-
-# Briefcase build directories
-iOS/
-macOS/
-windows/
-android/
-linux/
-django/
 
 # Windows Install
 win-installer/_build_root

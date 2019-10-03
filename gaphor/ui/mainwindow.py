@@ -90,10 +90,6 @@ def create_hamburger_model(import_menu, export_menu, tools_menu):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append(_("Hand-Drawn Style"), "win.diagram-drawing-style")
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
     part.append_submenu(_("Tools"), tools_menu)
     model.append_section(None, part)
 
@@ -574,15 +570,3 @@ class Diagrams(UIComponent, ActionProvider):
                     self._notebook.set_tab_label(
                         widget, self.tab_label(event.new_value, widget)
                     )
-
-    @toggle_action(name="diagram-drawing-style", label="Hand drawn style", active=False)
-    def hand_drawn_style(self, active):
-        """Toggle between straight diagrams and "hand drawn" diagram style."""
-
-        if active:
-            sloppiness = 0.5
-        else:
-            sloppiness = 0.0
-        for page, widget in self.get_widgets_on_pages():
-            widget.diagram_page.set_drawing_style(sloppiness)
-        self.properties.set("diagram.sloppiness", sloppiness)

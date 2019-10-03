@@ -21,6 +21,7 @@ from gaphor.abc import ActionProvider
 from gaphor.UML.event import ElementDeleteEvent
 from gaphor.core import _, event_handler, transactional, action, build_action_group
 from gaphor.diagram.support import get_diagram_item
+from gaphor.services.properties import PropertyChangeEvent
 from gaphor.transaction import Transaction
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from gaphor.ui.event import DiagramSelectionChange
@@ -47,8 +48,6 @@ class DiagramPage(ActionProvider):
               <menuitem action="diagram-zoom-in" />
               <menuitem action="diagram-zoom-out" />
               <menuitem action="diagram-zoom-100" />
-              <separator />
-              <menuitem action="diagram-close" />
             </placeholder>
           </menu>
         </menubar>
@@ -81,6 +80,7 @@ class DiagramPage(ActionProvider):
         self.action_group = build_action_group(self)
         self.toolbox = None
         self.event_manager.subscribe(self._on_element_delete)
+        self.event_manager.subscribe(self._on_sloppy_lines)
 
     title = property(lambda s: s.diagram and s.diagram.name or _("<None>"))
 
@@ -135,6 +135,8 @@ class DiagramPage(ActionProvider):
             self.properties,
         )
 
+        self._on_sloppy_lines()
+
         return self.widget
 
     @event_handler(ElementDeleteEvent)
@@ -142,11 +144,15 @@ class DiagramPage(ActionProvider):
         if event.element is self.diagram:
             self.close()
 
-    @action(name="diagram-close", label=_("_Close"), icon_name="window-close")
+    @event_handler(PropertyChangeEvent)
+    def _on_sloppy_lines(self, event=None):
+        if not event or event.key == "diagram.sloppiness":
+            self.set_drawing_style(self.properties.get("diagram.sloppiness"))
+
     def close(self):
         """
         Tab is destroyed. Do the same thing that would
-        be done if File->Close was pressed.
+        be done if Close was pressed.
         """
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
@@ -217,12 +223,9 @@ class DiagramPage(ActionProvider):
         view = self.view
 
         if sloppiness:
-
             item_painter = FreeHandPainter(ItemPainter(), sloppiness=sloppiness)
             box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness=sloppiness)
-
         else:
-
             item_painter = ItemPainter()
             box_painter = BoundingBoxPainter()
 

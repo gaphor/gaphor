@@ -26,7 +26,7 @@ class TestProperties(TestCase):
         prop.set("test1", 2)
         assert len(self.events) == 1, self.events
         event = self.events[0]
-        assert "test1" == event.name
+        assert "test1" == event.key
         assert None is event.old_value
         assert 2 == event.new_value
         assert 2 == prop("test1")
@@ -37,7 +37,7 @@ class TestProperties(TestCase):
         prop.set("test1", "foo")
         assert len(self.events) == 2
         event = self.events[1]
-        assert "test1" == event.name
+        assert "test1" == event.key
         assert 2 == event.old_value
         assert "foo" == event.new_value
         assert "foo" == prop("test1")
