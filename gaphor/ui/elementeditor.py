@@ -6,7 +6,7 @@ from gi.repository import Gtk
 
 from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationChangeEvent
-from gaphor.core import _, event_handler, action
+from gaphor.core import _, event_handler, action, toggle_action
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.diagram.propertypages import PropertyPages
@@ -50,42 +50,35 @@ class ElementEditor(UIComponent, ActionProvider):
     def open(self):
         """Display the ElementEditor pane."""
 
-        pane = Gtk.VBox.new(False, 0)
-        header = Gtk.Button.new()
         label = Gtk.Label.new("Element Editor")
-        header.add(label)
-        header.connect("clicked", self._show_hide_editor)
-        header.show()
-        self.header = label
-        pane.pack_start(header, False, False, 0)
-
         vbox = Gtk.VBox.new(False, 0)
-        pane.pack_start(vbox, False, False, 0)
+        vbox.pack_start(label, False, False, 0)
 
-        pane.show_all()
-
+        label.show()
+        vbox.show()
         self.vbox = vbox
 
         diagrams = self.main_window.get_ui_component("diagrams")
         current_view = diagrams.get_current_view()
-        if current_view:
-            focused_item = current_view.focused_item
-            if focused_item:
-                self._selection_change(focused_item=focused_item)
+        self._selection_change(focused_item=current_view and current_view.focused_item)
 
         # Make sure we recieve
         self.event_manager.subscribe(self._selection_change)
         self.event_manager.subscribe(self._element_changed)
 
-        return pane
+        # revealer = Gtk.Revealer.new()
+        # revealer.add(vbox)
+        # revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_LEFT)
+        # revealer.show()
+        # self.revealer = revealer
 
-    def _show_hide_editor(self, widget):
-        if self.vbox.get_visible():
-            self.vbox.set_visible(False)
-            self.header.props.angle = 90
-        else:
-            self.vbox.set_visible(True)
-            self.header.props.angle = 0
+        # return revealer
+        return vbox
+
+    @toggle_action(name="win.show-editors", active=True)
+    def toggle_editor_visibility(self, active):
+        self.vbox.set_visible(active)
+        # self.revealer.set_reveal_child(active)
 
     def close(self, widget=None):
         """Hide the element editor window and deactivate the toolbar button.
@@ -151,7 +144,7 @@ class ElementEditor(UIComponent, ActionProvider):
         """
         Remove all tabs from the notebook.
         """
-        for page in self.vbox.get_children():
+        for page in self.vbox.get_children()[1:]:
             page.destroy()
 
     def on_expand(self, widget, name):
@@ -165,7 +158,7 @@ class ElementEditor(UIComponent, ActionProvider):
         This reloads all tabs based on the current selection.
         """
         item = event and event.focused_item or focused_item
-        if item is self._current_item:
+        if item is self._current_item and self.vbox.get_children():
             return
 
         self._current_item = item
@@ -174,6 +167,7 @@ class ElementEditor(UIComponent, ActionProvider):
         if item is None:
             label = Gtk.Label()
             label.set_markup("<b>No item selected</b>")
+            label.set_name("no-item-selected")
             self.vbox.pack_start(child=label, expand=False, fill=True, padding=10)
             label.show()
             return

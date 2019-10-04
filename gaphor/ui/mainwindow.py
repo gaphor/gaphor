@@ -243,6 +243,15 @@ class MainWindow(Service, ActionProvider):
         )
         header.pack_end(button(_("Save"), "win.file-save"))
 
+        b = Gtk.Button()
+        image = Gtk.Image.new_from_icon_name(
+            "document-edit-symbolic", Gtk.IconSize.MENU
+        )
+        b.add(image)
+        b.set_action_name("win.show-editors")
+        b.show_all()
+        header.pack_end(b)
+
         self.set_title()
 
         self.window.set_default_size(*self.size)

@@ -8,3 +8,19 @@ toolitemgroup > button {
     background-image: none;
     box-shadow: none;
 }
+
+#no-item-selected {
+    padding: 12px;
+}
+
+#elementeditor {
+    padding-top: 36px;
+}
+    
+#elementeditor label {
+    padding: 2px;
+}
+
+#elementeditor > label {
+    padding-bottom: 6px;
+}
