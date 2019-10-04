@@ -37,6 +37,8 @@ from gaphor.ui.toolbox import Toolbox
 
 log = logging.getLogger(__name__)
 
+HOME = str(Path.home())
+
 
 class RecentFilesMenu(Gio.Menu):
     def __init__(self, recent_manager):
@@ -50,11 +52,10 @@ class RecentFilesMenu(Gio.Menu):
 
     def _on_recent_manager_changed(self, recent_manager):
         self.remove_all()
-        home = str(Path.home())
         for item in recent_manager.get_items():
             if APPLICATION_ID in item.get_applications():
                 menu_item = Gio.MenuItem.new(
-                    item.get_uri_display().replace(home, "~"), None
+                    item.get_uri_display().replace(HOME, "~"), None
                 )
                 self.append_item(menu_item)
                 if self.get_n_items() > 9:
@@ -283,11 +284,17 @@ class MainWindow(Service, ActionProvider):
         Sets the window title.
         """
         if self.window:
-            title = self.title
+            if self.filename:
+                p = Path(self.filename)
+                title = p.name
+                subtitle = str(p.parent).replace(HOME, "~")
+            else:
+                title = self.title
+                subtitle = ""
             if self.model_changed:
-                title += " [edited]"
+                title += _(" [edited]")
             self.window.set_title(title)
-            self.window.get_titlebar().set_subtitle(self.filename or None)
+            self.window.get_titlebar().set_subtitle(subtitle)
 
     # Signal callbacks:
 
