@@ -1,6 +1,5 @@
 """Support for actions in generic files.
 
-See also gaphor/service/actionmanager.py for the management module.
 """
 
 from typing import Optional, Sequence
