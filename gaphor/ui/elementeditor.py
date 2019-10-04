@@ -34,19 +34,6 @@ class ElementEditor(UIComponent, ActionProvider):
         self._current_item = None
         self._expanded_pages = {_("Properties"): True}
 
-    # @action(
-    #     name="ElementEditor:open",
-    #     label=_("_Editor"),
-    #     icon_name="dialog-information",
-    #     accel="<Primary>e",
-    # )
-    # def open_elementeditor(self):
-    #     """Display the element editor when the toolbar button is toggled.  If
-    #     active, the element editor is displayed.  Otherwise, it is hidden."""
-
-    #     if not self.window:
-    #         self.open()
-
     def open(self):
         """Display the ElementEditor pane."""
 
@@ -66,19 +53,17 @@ class ElementEditor(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._selection_change)
         self.event_manager.subscribe(self._element_changed)
 
-        # revealer = Gtk.Revealer.new()
-        # revealer.add(vbox)
-        # revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_LEFT)
-        # revealer.show()
-        # self.revealer = revealer
+        revealer = Gtk.Revealer.new()
+        revealer.add(vbox)
+        revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_LEFT)
+        revealer.show()
+        self.revealer = revealer
 
-        # return revealer
-        return vbox
+        return revealer
 
-    @toggle_action(name="win.show-editors", active=True)
+    @toggle_action(name="win.show-editors", active=False)
     def toggle_editor_visibility(self, active):
-        self.vbox.set_visible(active)
-        # self.revealer.set_reveal_child(active)
+        self.revealer.set_reveal_child(active)
 
     def close(self, widget=None):
         """Hide the element editor window and deactivate the toolbar button.

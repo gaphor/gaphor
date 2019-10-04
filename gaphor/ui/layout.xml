@@ -5,9 +5,9 @@
         <component name="namespace"/>
         <component name="toolbox" resize="true"/>
       </paned>
-      <paned orientation="horizontal">
+      <box orientation="horizontal">
         <component name="diagrams" resize="true"/>
         <component name="elementeditor"/>
-      </paned>
+      </box>
     </paned>
 </layout>

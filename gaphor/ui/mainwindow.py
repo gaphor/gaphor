@@ -225,7 +225,7 @@ class MainWindow(Service, ActionProvider):
         button_box.pack_start(create_recent_files_button(), False, False, 0)
         button_box.show()
         header.pack_start(button_box)
-        b = Gtk.Button()
+        b = Gtk.MenuButton()
         image = Gtk.Image.new_from_icon_name(
             "gaphor-diagram-symbolic", Gtk.IconSize.MENU
         )
@@ -243,7 +243,7 @@ class MainWindow(Service, ActionProvider):
         )
         header.pack_end(button(_("Save"), "win.file-save"))
 
-        b = Gtk.Button()
+        b = Gtk.MenuButton.new()
         image = Gtk.Image.new_from_icon_name(
             "document-edit-symbolic", Gtk.IconSize.MENU
         )
@@ -255,19 +255,6 @@ class MainWindow(Service, ActionProvider):
         self.set_title()
 
         self.window.set_default_size(*self.size)
-
-        # Create a full featured window.
-        vbox = Gtk.VBox()
-        self.window.add(vbox)
-        vbox.show()
-
-        menubar = self.action_manager.get_widget(self.action_manager.menubar_path)
-        if menubar:
-            vbox.pack_start(menubar, False, True, 0)
-
-        toolbar = self.action_manager.get_widget(self.action_manager.toolbar_path)
-        if toolbar:
-            vbox.pack_start(toolbar, False, True, 0)
 
         def _factory(name):
             comp = self.get_ui_component(name)
@@ -284,14 +271,12 @@ class MainWindow(Service, ActionProvider):
         self.layout = []
 
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
-            deserialize(self.layout, vbox, f.read(), _factory)
-
-        vbox.show()
+            deserialize(self.layout, self.window, f.read(), _factory)
 
         action_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
 
-        self.window.add_accel_group(self.action_manager.get_accel_group())
+        # self.window.add_accel_group(self.action_manager.get_accel_group())
 
         self.window.present()
 
