@@ -28,10 +28,10 @@ TODO:
 from typing import Dict, List, Tuple, Type
 
 import abc
+from gi.repository import GObject, Gdk, Gtk
+
 import gaphas.item
-from gi.repository import GObject
-from gi.repository import Gdk
-from gi.repository import Gtk
+from gaphas.segment import Segment
 
 from gaphor import UML
 from gaphor.core import _, transactional
@@ -466,10 +466,6 @@ class LineStylePage(PropertyPageBase):
 
         page.pack_start(hbox, False, True, 0)
 
-        if len(self.item.handles()) < 3:
-            # Only one segment
-            button.props.sensitive = False
-
         hbox = Gtk.HBox()
         label = Gtk.Label(label="")
         label.set_justify(Gtk.Justification.LEFT)
@@ -487,6 +483,9 @@ class LineStylePage(PropertyPageBase):
 
     @transactional
     def _on_orthogonal_change(self, button):
+        if len(self.item.handles()) < 3:
+            line_segment = Segment(self.item, None)
+            line_segment.split_segment(0)
         self.item.orthogonal = button.get_active()
 
     @transactional
