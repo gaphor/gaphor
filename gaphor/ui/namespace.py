@@ -265,10 +265,9 @@ class Namespace(UIComponent):
 
     title = _("Namespace")
 
-    def __init__(self, event_manager, element_factory, action_manager):
+    def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.action_manager = action_manager
         self._namespace = None
         self.model = Gtk.TreeStore.new([object])
         self.filter = _default_filter_list
@@ -489,7 +488,7 @@ class Namespace(UIComponent):
         """
         Double click on an element in the tree view.
         """
-        self.action_manager.execute("tree-view.open")
+        view.get_action_group("tree-view").lookup_action("open").activate()
 
     def _on_view_cursor_changed(self, view):
         """

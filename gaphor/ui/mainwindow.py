@@ -504,6 +504,7 @@ class Diagrams(UIComponent, ActionProvider):
         action_manager = self.action_manager
         child_widget = self._notebook.get_nth_page(page_num)
         self.action_manager.register_action_provider(child_widget.diagram_page)
+        # TODO: self.window.insert_action_group("tree-view", child_widget.diagram_page.action_group)
         self._page_ui_settings = child_widget.diagram_page
 
     def _clear_ui_settings(self):
