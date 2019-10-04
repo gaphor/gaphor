@@ -22,7 +22,6 @@ class DiagramToolboxTestCase(TestCase):
         "component_registry",
         "element_factory",
         "properties",
-        "action_manager",
         "main_window",
         "import_menu",
         "export_menu",

@@ -26,7 +26,6 @@ def main_window(event_manager, element_factory):
             return Diagrams(
                 event_manager=event_manager,
                 element_factory=element_factory,
-                action_manager=None,
                 properties=lambda a, b: 0,
             )
 

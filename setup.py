@@ -109,7 +109,6 @@ setup(
             "element_factory = gaphor.UML.elementfactory:ElementFactory",
             "file_manager = gaphor.ui.filemanager:FileManager",
             "recent_files = gaphor.ui.recentfiles:RecentFiles",
-            "action_manager = gaphor.services.actionmanager:ActionManager",
             "main_window = gaphor.ui.mainwindow:MainWindow",
             "preferences = gaphor.ui.preferences:Preferences",
             "export_menu = gaphor.ui.menufragment:MenuFragment",

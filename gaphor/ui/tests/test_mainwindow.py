@@ -15,7 +15,6 @@ def application():
             "element_factory",
             "properties",
             "main_window",
-            "action_manager",
             "namespace",
             "diagrams",
             "toolbox",

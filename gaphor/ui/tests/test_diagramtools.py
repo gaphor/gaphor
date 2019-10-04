@@ -14,7 +14,6 @@ logging.basicConfig(level=logging.DEBUG)
 class DiagramItemConnectorTestCase(TestCase):
     services = TestCase.services + [
         "main_window",
-        "action_manager",
         "properties",
         "namespace",
         "diagrams",

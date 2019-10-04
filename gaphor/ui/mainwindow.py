@@ -132,7 +132,6 @@ class MainWindow(Service, ActionProvider):
         event_manager,
         component_registry,
         element_factory,
-        action_manager,
         properties,
         import_menu,
         export_menu,
@@ -141,7 +140,6 @@ class MainWindow(Service, ActionProvider):
         self.event_manager = event_manager
         self.component_registry = component_registry
         self.element_factory = element_factory
-        self.action_manager = action_manager
         self.properties = properties
         self.import_menu = import_menu
         self.export_menu = export_menu
@@ -154,7 +152,6 @@ class MainWindow(Service, ActionProvider):
         self.layout = None
 
         self.init_styling()
-        self.init_action_group()
 
     def init_styling(self):
         with importlib.resources.path("gaphor.ui", "layout.css") as css_file:
@@ -176,23 +173,6 @@ class MainWindow(Service, ActionProvider):
         em.unsubscribe(self._on_file_manager_state_changed)
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._new_model_content)
-
-    def init_action_group(self):
-        self.action_group = build_action_group(self)
-        for name, label in (
-            ("file", "_File"),
-            ("file-export", "_Export"),
-            ("file-import", "_Import"),
-            ("edit", "_Edit"),
-            ("diagram", "_Diagram"),
-            ("tools", "_Tools"),
-            ("help", "_Help"),
-        ):
-            a = Gtk.Action.new(name, label, None, None)
-            a.set_property("hide-if-empty", False)
-            self.action_group.add_action(a)
-
-        self.action_manager.register_action_provider(self)
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
@@ -276,7 +256,7 @@ class MainWindow(Service, ActionProvider):
         action_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
 
-        # self.window.add_accel_group(self.action_manager.get_accel_group())
+        # TODO: self.window.add_accel_group(self.action_manager.get_accel_group())
 
         self.window.present()
 
@@ -368,10 +348,9 @@ class Diagrams(UIComponent, ActionProvider):
 
     title = _("Diagrams")
 
-    def __init__(self, event_manager, element_factory, action_manager, properties):
+    def __init__(self, event_manager, element_factory, properties):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.action_manager = action_manager
         self.properties = properties
         self._notebook = None
         self._page_ui_settings = None
@@ -501,16 +480,13 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.handle(DiagramPageChange(page))
 
     def _add_ui_settings(self, page_num):
-        action_manager = self.action_manager
         child_widget = self._notebook.get_nth_page(page_num)
-        self.action_manager.register_action_provider(child_widget.diagram_page)
-        # TODO: self.window.insert_action_group("tree-view", child_widget.diagram_page.action_group)
+        # TODO: self.window.insert_action_group("diagram", child_widget.diagram_page.action_group)
         self._page_ui_settings = child_widget.diagram_page
 
     def _clear_ui_settings(self):
-        # TODO: notebook.get_current_page()?
         if self._page_ui_settings:
-            self.action_manager.unregister_action_provider(self._page_ui_settings)
+            # TODO: self.action_manager.unregister_action_provider(self._page_ui_settings)
             self._page_ui_settings = None
 
     @event_handler(DiagramShow)

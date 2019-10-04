@@ -9,7 +9,6 @@ class DiagramLayoutTestCase(TestCase):
     services = TestCase.services + [
         "main_window",
         "properties",
-        "action_manager",
         "diagram_layout",
         "import_menu",
         "export_menu",

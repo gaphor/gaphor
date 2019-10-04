@@ -16,7 +16,6 @@ class DiagramPageTestCase(unittest.TestCase):
                 "component_registry",
                 "element_factory",
                 "main_window",
-                "action_manager",
                 "properties",
                 "namespace",
                 "diagrams",
