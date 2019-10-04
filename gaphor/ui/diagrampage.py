@@ -147,7 +147,7 @@ class DiagramPage(ActionProvider):
     @event_handler(PropertyChangeEvent)
     def _on_sloppy_lines(self, event=None):
         if not event or event.key == "diagram.sloppiness":
-            self.set_drawing_style(self.properties.get("diagram.sloppiness"))
+            self.set_drawing_style(self.properties.get("diagram.sloppiness", False))
 
     def close(self):
         """
