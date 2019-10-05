@@ -4,7 +4,13 @@ from gi.repository import GLib, Gio
 from gaphor.abc import ActionProvider
 from gaphor.action import action, toggle_action, radio_action
 from gaphor.services.componentregistry import ComponentRegistry
-from gaphor.ui.actiongroup import apply_application_actions, window_action_group
+from gaphor.ui.actiongroup import (
+    apply_application_actions,
+    window_action_group,
+    as_variant_type,
+    to_variant,
+    from_variant,
+)
 
 
 class DummyActionProvider(ActionProvider):
@@ -74,3 +80,40 @@ def test_activate_toggle_action(component_registry, dummy_action_provider):
     action_group.lookup_action("toggle").change_state(GLib.Variant.new_boolean(True))
 
     assert dummy_action_provider.toggle_state is True
+
+
+def test_variant_type_conversion():
+    assert as_variant_type(None) is None
+    assert as_variant_type(str).equal(GLib.VariantType.new("s"))
+    assert as_variant_type(int).equal(GLib.VariantType.new("i"))
+    assert as_variant_type(bool).equal(GLib.VariantType.new("b"))
+
+
+def test_invalid_type_to_variant_type():
+    with pytest.raises(ValueError):
+        as_variant_type(float)
+
+
+def test_python_to_variant():
+    assert to_variant(None) is None
+    assert to_variant("text") == GLib.Variant.new_string("text")
+    assert to_variant(123) == GLib.Variant.new_int32(123)
+    assert to_variant(True) == GLib.Variant.new_boolean(True)
+    assert to_variant(False) == GLib.Variant.new_boolean(False)
+
+
+def test_invalid_python_to_variant():
+    with pytest.raises(ValueError):
+        to_variant(1.0)
+
+
+def test_from_variant_to_python_value():
+    assert from_variant(None) is None
+    assert from_variant(GLib.Variant.new_string("text")) == "text"
+    assert from_variant(GLib.Variant.new_int32(123)) == 123
+    assert from_variant(GLib.Variant.new_boolean(True)) == True
+
+
+def test_invalid_gvariant_to_python():
+    with pytest.raises(ValueError):
+        from_variant(GLib.Variant.new_double(1.0))

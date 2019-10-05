@@ -2,7 +2,7 @@
 
 """
 
-from typing import Optional, Sequence
+from typing import Optional, Sequence, get_type_hints
 
 from gaphor.application import Application
 
@@ -34,17 +34,19 @@ class action:
     def __init__(
         self, name, label=None, tooltip=None, icon_name=None, accel=None, **kwargs
     ):
-        if "." in name:
-            self.scope, self.name = name.split(".", 2)
-        else:
-            self.scope, self.name = "win", name
+        self.scope, self.name = name.split(".", 2) if "." in name else ("win", name)
         self.label = label
         self.tooltip = tooltip
         self.icon_name = icon_name
         self.accel = accel
+        self.arg_type = None
         self.__dict__.update(kwargs)
 
     def __call__(self, func):
+        type_hints = get_type_hints(func)
+        if len(type_hints) == 1:
+            # assume the first argument (exclusing self) is our parameter
+            self.arg_type = next(iter(type_hints.values()))
         func.__action__ = self
         return func
 
@@ -93,7 +95,7 @@ class radio_action(action):
 
 
 def is_action(func):
-    return bool(getattr(func, "__action__", False))
+    return hasattr(func, "__action__")
 
 
 def build_action_group(obj, name=None):
