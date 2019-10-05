@@ -22,16 +22,12 @@ def add_actions_to_group(
     for attrname, act in iter_actions(provider, scope):
         if isinstance(act, radio_action):
             a = Gio.SimpleAction.new_stateful(
-                act.name,
-                as_variant_type(act.arg_type),
-                GLib.Variant.new_int16(act.active),
+                act.name, None, GLib.Variant.new_int16(act.active)
             )
             a.connect("change-state", _radio_action_activate, provider, attrname)
         elif isinstance(act, toggle_action):
             a = Gio.SimpleAction.new_stateful(
-                act.name,
-                as_variant_type(act.arg_type),
-                GLib.Variant.new_boolean(act.active),
+                act.name, None, GLib.Variant.new_boolean(act.active)
             )
             a.connect("change-state", _toggle_action_activate, provider, attrname)
         elif isinstance(act, action):
@@ -105,11 +101,9 @@ def from_variant(v):
 
 
 def _action_activate(action, param, obj, name):
-    # param = action.get_attribute_value("param", GLib.VariantType.new("s"))
-    print(f"Action {name} with param {param}")
     method = getattr(obj, name)
     if param:
-        method(param)
+        method(from_variant(param))
     else:
         method()
 

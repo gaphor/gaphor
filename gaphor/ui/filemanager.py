@@ -6,7 +6,7 @@ from typing import Optional
 import logging
 
 from gi.repository import Gtk
-
+import urllib.parse
 from gaphor import UML
 from gaphor.core import _, action, event_handler
 from gaphor.abc import Service, ActionProvider
@@ -294,6 +294,13 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.load(filename)
+
+    @action(name="file-open-recent")
+    def action_open_recent(self, file_url: str):
+        print("Opening file", file_url)
+        parsed_url = urllib.parse.urlparse(file_url)
+        path = parsed_url.path
+        self.load(path)
 
     @action(name="file-save", accel="<Primary>s")
     def action_save(self):
