@@ -2,6 +2,7 @@
 STENSIL=stensil.svg
 
 ICONS=diagram \
+	new-diagram \
 	pointer \
 	box \
 	line \
