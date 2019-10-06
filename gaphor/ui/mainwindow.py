@@ -212,7 +212,7 @@ class MainWindow(Service, ActionProvider):
         header.pack_start(button_box)
         b = Gtk.MenuButton()
         image = Gtk.Image.new_from_icon_name(
-            "gaphor-diagram-symbolic", Gtk.IconSize.MENU
+            "gaphor-new-diagram-symbolic", Gtk.IconSize.MENU
         )
         b.add(image)
         b.set_action_name("tree-view.create-diagram")

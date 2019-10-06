@@ -20,8 +20,6 @@ APPLICATION_ID = "org.gaphor.Gaphor"
 icon_theme = Gtk.IconTheme.get_default()
 with importlib.resources.path("gaphor.ui", "icons") as path:
     icon_theme.append_search_path(str(path))
-with importlib.resources.path("gaphor.ui", "pixmaps") as path:
-    icon_theme.append_search_path(str(path))
 
 
 # Set style for model canvas
