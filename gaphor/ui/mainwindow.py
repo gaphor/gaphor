@@ -22,6 +22,7 @@ from gaphor.core import (
     transactional,
 )
 from gaphor.abc import Service, ActionProvider
+from gaphor.event import ActionEnabled
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
@@ -178,6 +179,7 @@ class MainWindow(Service, ActionProvider):
         em.unsubscribe(self._on_file_manager_state_changed)
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._new_model_content)
+        em.unsubscribe(self._on_action_enabled)
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
@@ -219,6 +221,27 @@ class MainWindow(Service, ActionProvider):
         b.show_all()
         header.pack_start(b)
 
+        sep = Gtk.Separator.new(Gtk.Orientation.VERTICAL)
+        sep.show()
+        header.pack_start(sep)
+
+        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        b = Gtk.Button()
+        image = Gtk.Image.new_from_icon_name("edit-undo-symbolic", Gtk.IconSize.MENU)
+        b.add(image)
+        b.set_action_name("win.edit-undo")
+        b.show_all()
+        box.pack_start(b, False, False, 0)
+
+        b = Gtk.Button()
+        image = Gtk.Image.new_from_icon_name("edit-redo-symbolic", Gtk.IconSize.MENU)
+        b.add(image)
+        b.set_action_name("win.edit-redo")
+        b.show_all()
+        box.pack_start(b, False, False, 0)
+        box.show()
+
+        header.pack_start(box)
         header.pack_end(
             hamburger_menu(
                 create_hamburger_model(
@@ -275,6 +298,7 @@ class MainWindow(Service, ActionProvider):
         em.subscribe(self._on_file_manager_state_changed)
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._new_model_content)
+        em.subscribe(self._on_action_enabled)
 
     def open_welcome_page(self):
         """
@@ -328,6 +352,12 @@ class MainWindow(Service, ActionProvider):
         if self.model_changed != undo_manager.can_undo():
             self.model_changed = undo_manager.can_undo()
             self.set_title()
+
+    @event_handler(ActionEnabled)
+    def _on_action_enabled(self, event):
+        ag = self.window.get_action_group(event.scope)
+        a = ag.lookup_action(event.name)
+        a.set_enabled(event.enabled)
 
     def _on_window_delete(self, window=None, event=None):
         self.event_manager.handle(WindowClose(self))
