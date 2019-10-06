@@ -48,8 +48,12 @@ def get_build_args():
         os.path.dirname(sys.executable), python_name + "-config"
     )
 
-    cflags = subprocess.check_output(["sh", python_config, "--cflags"]).strip()
-    libs = subprocess.check_output(["sh", python_config, "--libs"]).strip()
+    cflags = subprocess.check_output(
+        ["sh", python_config, "--cflags"], universal_newlines=True
+    ).strip()
+    libs = subprocess.check_output(
+        ["sh", python_config, "--libs"], universal_newlines=True
+    ).strip()
 
     cflags = os.fsdecode(cflags)
     libs = os.fsdecode(libs)

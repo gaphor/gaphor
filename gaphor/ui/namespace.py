@@ -73,7 +73,6 @@ class NamespaceView(Gtk.TreeView):
                 return not element.name.startswith(key)
 
         self.set_search_equal_func(search_func)
-
         selection = self.get_selection()
         selection.set_mode(Gtk.SelectionMode.BROWSE)
         column = Gtk.TreeViewColumn.new()
@@ -124,10 +123,7 @@ class NamespaceView(Gtk.TreeView):
         icon_name = get_icon_name(element)
 
         if icon_name:
-            icon = Gtk.IconTheme.get_default().load_icon(icon_name, 16, 0)
-        else:
-            icon = None
-        cell.set_property("pixbuf", icon)
+            cell.set_property("icon-name", icon_name)
 
     def _set_text(self, column, cell, model, iter, data):
         """
