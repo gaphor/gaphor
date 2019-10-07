@@ -337,7 +337,8 @@ class MainWindow(Service, ActionProvider):
         """
         Store the window size in a property.
         """
-        self.properties.set("ui.window-size", (allocation.width, allocation.height))
+        width, height = window.get_size()
+        self.properties.set("ui.window-size", (width, height))
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
