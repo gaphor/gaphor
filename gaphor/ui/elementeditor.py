@@ -54,9 +54,7 @@ def zoom_buttons():
     box.get_style_context().add_class("linked")
     box.pack_start(
         icon_button(
-            "zoom-in-symbolic",
-            "win.diagram-zoom-in",
-            _("Zoom in") + f" ({primary()}-+)",
+            "zoom-in-symbolic", "diagram.zoom-in", _("Zoom in") + f" ({primary()}-+)"
         ),
         False,
         False,
@@ -65,7 +63,7 @@ def zoom_buttons():
     box.pack_start(
         icon_button(
             "zoom-original-symbolic",
-            "win.diagram-zoom-100",
+            "diagram.zoom-100",
             _("Zoom 100%") + f" ({primary()}-0)",
         ),
         False,
@@ -74,9 +72,7 @@ def zoom_buttons():
     )
     box.pack_start(
         icon_button(
-            "zoom-out-symbolic",
-            "win.diagram-zoom-out",
-            _("Zoom out") + f" ({primary()}--)",
+            "zoom-out-symbolic", "diagram.zoom-out", _("Zoom out") + f" ({primary()}--)"
         ),
         False,
         False,

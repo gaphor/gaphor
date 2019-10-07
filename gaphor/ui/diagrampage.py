@@ -23,6 +23,7 @@ from gaphor.core import _, event_handler, transactional, action, build_action_gr
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChangeEvent
 from gaphor.transaction import Transaction
+from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.diagramtoolbox import DiagramToolbox
 from gaphor.ui.event import DiagramSelectionChange
 
@@ -122,7 +123,6 @@ class DiagramPage(ActionProvider):
         view.connect("focus-changed", self._on_view_selection_changed)
         view.connect("selection-changed", self._on_view_selection_changed)
         view.connect_after("key-press-event", self._on_key_press_event)
-        # view.connect("drag-drop", self._on_drag_drop)
         view.connect("drag-data-received", self._on_drag_data_received)
 
         self.view = view
@@ -135,6 +135,7 @@ class DiagramPage(ActionProvider):
             self.properties,
         )
 
+        self.widget.insert_action_group("diagram", create_action_group(self, "diagram"))
         self._on_sloppy_lines()
 
         return self.widget
@@ -159,7 +160,7 @@ class DiagramPage(ActionProvider):
         self.view = None
 
     @action(
-        name="diagram-zoom-in",
+        name="diagram.zoom-in",
         label=_("Zoom _In"),
         icon_name="zoom-in",
         shortcut="<Primary>plus",
@@ -168,7 +169,7 @@ class DiagramPage(ActionProvider):
         self.view.zoom(1.2)
 
     @action(
-        name="diagram-zoom-out",
+        name="diagram.zoom-out",
         label=_("Zoom _Out"),
         icon_name="zoom-out",
         shortcut="<Primary>minus",
@@ -177,7 +178,7 @@ class DiagramPage(ActionProvider):
         self.view.zoom(1 / 1.2)
 
     @action(
-        name="diagram-zoom-100",
+        name="diagram.zoom-100",
         label=_("_Normal Size"),
         icon_name="zoom-original",
         shortcut="<Primary>0",
@@ -187,7 +188,7 @@ class DiagramPage(ActionProvider):
         self.view.zoom(1 / zx)
 
     @action(
-        name="diagram-select-all",
+        name="diagram.select-all",
         label="_Select all",
         icon_name="edit-select-all",
         shortcut="<Primary>a",
@@ -196,12 +197,12 @@ class DiagramPage(ActionProvider):
         self.view.select_all()
 
     @action(
-        name="diagram-unselect-all", label="Des_elect all", shortcut="<Primary><Shift>a"
+        name="diagram.unselect-all", label="Des_elect all", shortcut="<Primary><Shift>a"
     )
     def unselect_all(self):
         self.view.unselect_all()
 
-    @action(name="diagram-delete", label=_("_Delete"), icon_name="edit-delete")
+    @action(name="diagram.delete", label=_("_Delete"), icon_name="edit-delete")
     @transactional
     def delete_selected_items(self):
         items = self.view.selected_items

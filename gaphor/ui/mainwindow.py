@@ -364,7 +364,6 @@ class Diagrams(UIComponent, ActionProvider):
         self.element_factory = element_factory
         self.properties = properties
         self._notebook = None
-        self._page_ui_settings = None
 
     def open(self):
         """Open the diagrams component.
@@ -427,7 +426,7 @@ class Diagrams(UIComponent, ActionProvider):
         page_num = self._notebook.page_num(widget)
         # TODO why does Gtk.Notebook give a GTK-CRITICAL if you remove a page
         #   with set_show_tabs(True)?
-        self._clear_ui_settings()
+        self._clear_ui_settings(widget)
         self._notebook.remove_page(page_num)
         widget.diagram_page.close()
         widget.destroy()
@@ -486,20 +485,21 @@ class Diagrams(UIComponent, ActionProvider):
             widgets_on_pages.append((page, widget))
         return widgets_on_pages
 
-    def _on_switch_page(self, notebook, page, page_num):
-        self._clear_ui_settings()
-        self._add_ui_settings(page_num)
+    def _on_switch_page(self, notebook, page, new_page_num):
+        print(f"Switch page {notebook.get_current_page()} -> {new_page_num}")
+        current_page_num = notebook.get_current_page()
+        if current_page_num >= 0:
+            self._clear_ui_settings(notebook.get_nth_page(current_page_num))
+        self._add_ui_settings(page)
         self.event_manager.handle(DiagramPageChange(page))
 
-    def _add_ui_settings(self, page_num):
-        child_widget = self._notebook.get_nth_page(page_num)
-        # TODO: self.window.insert_action_group("diagram", child_widget.diagram_page.action_group)
-        self._page_ui_settings = child_widget.diagram_page
+    def _add_ui_settings(self, page):
+        page.get_toplevel().insert_action_group(
+            "diagram", page.get_action_group("diagram")
+        )
 
-    def _clear_ui_settings(self):
-        if self._page_ui_settings:
-            # TODO: self.action_manager.unregister_action_provider(self._page_ui_settings)
-            self._page_ui_settings = None
+    def _clear_ui_settings(self, page):
+        page.get_toplevel().insert_action_group("diagram", None)
 
     @event_handler(DiagramShow)
     def _on_show_diagram(self, event):
@@ -525,10 +525,6 @@ class Diagrams(UIComponent, ActionProvider):
             diagram, self.event_manager, self.element_factory, self.properties
         )
         widget = page.construct()
-        try:
-            widget.set_css_name("diagram-tab")
-        except AttributeError:
-            pass  # Gtk.Widget.set_css_name() is added in 3.20
         widget.set_name("diagram-tab")
         widget.diagram_page = page
         page.set_drawing_style(self.properties("diagram.sloppiness", 0))
