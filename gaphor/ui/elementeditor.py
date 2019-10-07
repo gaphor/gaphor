@@ -6,13 +6,84 @@ from gi.repository import Gtk
 
 from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationChangeEvent
-from gaphor.core import _, event_handler, action, toggle_action
+from gaphor.core import _, primary, event_handler, action, toggle_action
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.diagram.propertypages import PropertyPages
 from gaphor.ui.event import DiagramSelectionChange
 
 log = logging.getLogger(__name__)
+
+
+def icon_button(icon_name, action_name, tooltip_text=None):
+    b = Gtk.Button()
+    image = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+    b.add(image)
+    b.set_action_name(action_name)
+    if tooltip_text:
+        b.set_tooltip_text(tooltip_text)
+    b.show_all()
+    return b
+
+
+def undo_buttons():
+    box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+    box.get_style_context().add_class("linked")
+    box.pack_start(
+        icon_button(
+            "edit-undo-symbolic", "win.edit-undo", _("Undo") + f" ({primary()}-Z)"
+        ),
+        False,
+        False,
+        0,
+    )
+    box.pack_start(
+        icon_button(
+            "edit-redo-symbolic", "win.edit-redo", _("Redo") + f" ({primary()}-Shift-Z)"
+        ),
+        False,
+        True,
+        0,
+    )
+    box.show()
+    return box
+
+
+def zoom_buttons():
+    box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+    box.get_style_context().add_class("linked")
+    box.pack_start(
+        icon_button(
+            "zoom-in-symbolic",
+            "win.diagram-zoom-in",
+            _("Zoom in") + f" ({primary()}-+)",
+        ),
+        False,
+        False,
+        0,
+    )
+    box.pack_start(
+        icon_button(
+            "zoom-original-symbolic",
+            "win.diagram-zoom-100",
+            _("Zoom 100%") + f" ({primary()}-0)",
+        ),
+        False,
+        False,
+        0,
+    )
+    box.pack_start(
+        icon_button(
+            "zoom-out-symbolic",
+            "win.diagram-zoom-out",
+            _("Zoom out") + f" ({primary()}--)",
+        ),
+        False,
+        False,
+        0,
+    )
+    box.show()
+    return box
 
 
 class ElementEditor(UIComponent, ActionProvider):
@@ -37,11 +108,22 @@ class ElementEditor(UIComponent, ActionProvider):
     def open(self):
         """Display the ElementEditor pane."""
 
-        label = Gtk.Label.new("Element Editor")
-        vbox = Gtk.VBox.new(False, 0)
-        vbox.pack_start(label, False, False, 0)
+        vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 2)
 
+        toolbar = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
+        toolbar.pack_start(undo_buttons(), False, False, 0)
+        toolbar.pack_end(zoom_buttons(), False, False, 0)
+        vbox.pack_start(toolbar, False, False, 0)
+        toolbar.show()
+
+        sep = Gtk.Separator.new(Gtk.Orientation.HORIZONTAL)
+        vbox.pack_start(sep, False, False, 0)
+        sep.show()
+
+        label = Gtk.Label.new(_("Element Editor"))
+        vbox.pack_start(label, False, False, 0)
         label.show()
+
         vbox.show()
         self.vbox = vbox
 
@@ -129,7 +211,7 @@ class ElementEditor(UIComponent, ActionProvider):
         """
         Remove all tabs from the notebook.
         """
-        for page in self.vbox.get_children()[1:]:
+        for page in self.vbox.get_children()[3:]:
             page.destroy()
 
     def on_expand(self, widget, name):

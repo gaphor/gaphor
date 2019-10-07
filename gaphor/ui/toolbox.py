@@ -10,7 +10,7 @@ from gi.repository import GObject
 from gi.repository import Gdk
 from gi.repository import Gtk
 
-from gaphor.core import _, event_handler, toggle_action, build_action_group
+from gaphor.core import _, event_handler
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramPageChange

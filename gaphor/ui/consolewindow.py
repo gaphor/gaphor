@@ -6,7 +6,7 @@ import os
 from gi.repository import Gtk, Gdk
 
 
-from gaphor.action import action, build_action_group
+from gaphor.action import action
 from gaphor.misc import get_config_dir
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent

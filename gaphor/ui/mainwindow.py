@@ -13,14 +13,7 @@ from gi.repository import Gio, Gdk, Gtk, GLib
 
 from gaphor import UML, Application
 from gaphor.UML.event import ModelFactoryEvent
-from gaphor.core import (
-    _,
-    event_handler,
-    action,
-    toggle_action,
-    build_action_group,
-    transactional,
-)
+from gaphor.core import _, event_handler, action, toggle_action, transactional
 from gaphor.abc import Service, ActionProvider
 from gaphor.event import ActionEnabled
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
@@ -212,36 +205,13 @@ class MainWindow(Service, ActionProvider):
         button_box.pack_start(create_recent_files_button(), False, False, 0)
         button_box.show()
         header.pack_start(button_box)
-        b = Gtk.MenuButton()
-        image = Gtk.Image.new_from_icon_name(
+        b = Gtk.Button.new_from_icon_name(
             "gaphor-new-diagram-symbolic", Gtk.IconSize.MENU
         )
-        b.add(image)
         b.set_action_name("tree-view.create-diagram")
-        b.show_all()
+        b.show()
         header.pack_start(b)
 
-        sep = Gtk.Separator.new(Gtk.Orientation.VERTICAL)
-        sep.show()
-        header.pack_start(sep)
-
-        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
-        b = Gtk.Button()
-        image = Gtk.Image.new_from_icon_name("edit-undo-symbolic", Gtk.IconSize.MENU)
-        b.add(image)
-        b.set_action_name("win.edit-undo")
-        b.show_all()
-        box.pack_start(b, False, False, 0)
-
-        b = Gtk.Button()
-        image = Gtk.Image.new_from_icon_name("edit-redo-symbolic", Gtk.IconSize.MENU)
-        b.add(image)
-        b.set_action_name("win.edit-redo")
-        b.show_all()
-        box.pack_start(b, False, False, 0)
-        box.show()
-
-        header.pack_start(box)
         header.pack_end(
             hamburger_menu(
                 create_hamburger_model(

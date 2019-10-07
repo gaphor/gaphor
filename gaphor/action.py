@@ -3,8 +3,21 @@
 """
 
 from typing import Optional, Sequence, get_type_hints
+import platform
 
 from gaphor.application import Application
+
+
+if platform.system() == "Darwin":
+
+    def primary():
+        return "⌘"
+
+
+else:
+
+    def primary():
+        return "Ctrl"
 
 
 class action:
