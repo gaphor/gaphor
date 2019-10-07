@@ -52,7 +52,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
     #     name="console-window-close",
     #     label="_Close",
     #     icon_name="window-close",
-    #     accel="<Primary><Shift>w",
+    #     shortcut="<Primary><Shift>w",
     # )
     def close(self, widget=None):
         if self.window:

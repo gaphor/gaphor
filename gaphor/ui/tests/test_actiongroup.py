@@ -50,7 +50,7 @@ def component_registry(dummy_action_provider):
 
 def test_window_action_group(component_registry):
 
-    action_group = window_action_group(component_registry)
+    action_group, accel_group = window_action_group(component_registry)
 
     assert action_group.lookup_action("new")
     assert not action_group.lookup_action("quit")
@@ -76,7 +76,7 @@ def test_activate_application_action(component_registry, dummy_action_provider):
 
 
 def test_activate_toggle_action(component_registry, dummy_action_provider):
-    action_group = window_action_group(component_registry)
+    action_group, accel_group = window_action_group(component_registry)
     action_group.lookup_action("toggle").change_state(GLib.Variant.new_boolean(True))
 
     assert dummy_action_provider.toggle_state is True

@@ -216,7 +216,7 @@ class FileManager(Service, ActionProvider):
             return
         return filename
 
-    @action(name="file-new", accel="<Primary>n")
+    @action(name="file-new", shortcut="<Primary>n")
     def action_new(self):
         """The new model menu action.  This action will create a new
         UML model.  This will trigger a FileManagerStateChange event."""
@@ -275,7 +275,7 @@ class FileManager(Service, ActionProvider):
             self.load(filename)
             self.filename = None
 
-    @action(name="file-open", accel="<Primary>o")
+    @action(name="file-open", shortcut="<Primary>o")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
 
@@ -302,7 +302,7 @@ class FileManager(Service, ActionProvider):
         path = parsed_url.path
         self.load(path)
 
-    @action(name="file-save", accel="<Primary>s")
+    @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
         """
         Save the file. Depending on if there is a file name, either perform
@@ -319,7 +319,7 @@ class FileManager(Service, ActionProvider):
         else:
             return self.action_save_as()
 
-    @action(name="file-save-as", accel="<Primary><Shift>s")
+    @action(name="file-save-as", shortcut="<Primary><Shift>s")
     def action_save_as(self):
         """
         Save the model in the element_factory by allowing the
@@ -342,7 +342,7 @@ class FileManager(Service, ActionProvider):
 
         return False
 
-    @action(name="app.quit", accel="<Primary>q")
+    @action(name="app.quit", shortcut="<Primary>q")
     def file_quit(self):
         """
         Ask user to close window if the model has changed.

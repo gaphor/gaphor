@@ -138,7 +138,7 @@ class CopyService(Service, ActionProvider):
             item.postload()
 
     @action(
-        name="edit-copy", label=_("Copy"), icon_name="edit-copy", accel="<Primary>c"
+        name="edit-copy", label=_("Copy"), icon_name="edit-copy", shortcut="<Primary>c"
     )
     def copy_action(self):
         view = self.main_window.get_current_diagram_view()
@@ -150,7 +150,7 @@ class CopyService(Service, ActionProvider):
             self.copy(copy_items)
 
     @action(
-        name="edit-paste", label="_Paste", icon_name="edit-paste", accel="<Primary>p"
+        name="edit-paste", label="_Paste", icon_name="edit-paste", shortcut="<Primary>p"
     )
     def paste_action(self):
         view = self.main_window.get_current_diagram_view()

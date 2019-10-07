@@ -1,4 +1,4 @@
-from gi.repository import GLib, Gio
+from gi.repository import GLib, Gio, Gtk
 from gaphor.abc import ActionProvider
 from gaphor.action import action, toggle_action, radio_action
 
@@ -9,20 +9,36 @@ def apply_application_actions(component_registry, gtk_app):
         for attrname, act in iter_actions(provider, scope):
             a = create_gio_action(act, provider, attrname)
             gtk_app.add_action(a)
-            if act.accel:
-                print("Adding accelerator", act.accel, act.name)
-                gtk_app.add_accelerator(act.accel, f"{scope}.{act.name}", None)
+            if act.shortcut:
+                print("Adding accelerator", act.shortcut, act.name)
+                gtk_app.add_accelerator(act.shortcut, f"{scope}.{act.name}", None)
     return gtk_app
 
 
 def window_action_group(component_registry):
     scope = "win"
     action_group = Gio.SimpleActionGroup.new()
+    accel_group = Gtk.AccelGroup.new()
+
     for provider, _name in component_registry.all(ActionProvider):
         for attrname, act in iter_actions(provider, scope):
             a = create_gio_action(act, provider, attrname)
             action_group.add_action(a)
-    return action_group
+            if act.shortcut:
+                key, mod = Gtk.accelerator_parse(act.shortcut)
+                accel_group.connect(
+                    key, mod, Gtk.AccelFlags.VISIBLE, _accel_handler(scope, act.name)
+                )
+
+    return action_group, accel_group
+
+
+def _accel_handler(scope, name):
+    return (
+        lambda agrp, win, key, mod: win.get_action_group(scope)
+        .lookup_action(name)
+        .activate()
+    )
 
 
 def create_action_group(provider, scope, action_group=None):

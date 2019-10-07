@@ -162,7 +162,7 @@ class DiagramPage(ActionProvider):
         name="diagram-zoom-in",
         label=_("Zoom _In"),
         icon_name="zoom-in",
-        accel="<Primary>plus",
+        shortcut="<Primary>plus",
     )
     def zoom_in(self):
         self.view.zoom(1.2)
@@ -171,7 +171,7 @@ class DiagramPage(ActionProvider):
         name="diagram-zoom-out",
         label=_("Zoom _Out"),
         icon_name="zoom-out",
-        accel="<Primary>minus",
+        shortcut="<Primary>minus",
     )
     def zoom_out(self):
         self.view.zoom(1 / 1.2)
@@ -180,7 +180,7 @@ class DiagramPage(ActionProvider):
         name="diagram-zoom-100",
         label=_("_Normal Size"),
         icon_name="zoom-original",
-        accel="<Primary>0",
+        shortcut="<Primary>0",
     )
     def zoom_100(self):
         zx = self.view.matrix[0]
@@ -190,13 +190,13 @@ class DiagramPage(ActionProvider):
         name="diagram-select-all",
         label="_Select all",
         icon_name="edit-select-all",
-        accel="<Primary>a",
+        shortcut="<Primary>a",
     )
     def select_all(self):
         self.view.select_all()
 
     @action(
-        name="diagram-unselect-all", label="Des_elect all", accel="<Primary><Shift>a"
+        name="diagram-unselect-all", label="Des_elect all", shortcut="<Primary><Shift>a"
     )
     def unselect_all(self):
         self.view.unselect_all()

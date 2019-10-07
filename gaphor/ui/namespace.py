@@ -537,7 +537,7 @@ class Namespace(UIComponent):
         else:
             log.debug(f"No action defined for element {type(element).__name__}")
 
-    @action(name="tree-view.rename", accel="F2")
+    @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
         view = self._namespace
         element = view.get_selected_element()

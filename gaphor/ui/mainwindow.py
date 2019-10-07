@@ -251,10 +251,9 @@ class MainWindow(Service, ActionProvider):
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
             deserialize(self.layout, self.window, f.read(), _factory)
 
-        action_group = window_action_group(self.component_registry)
+        action_group, accel_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
-
-        # TODO: self.window.add_accel_group(self.action_manager.get_accel_group())
+        self.window.add_accel_group(accel_group)
 
         self.window.present()
 

@@ -8,16 +8,12 @@ import platform
 from gaphor.application import Application
 
 
-if platform.system() == "Darwin":
-
-    def primary():
-        return "⌘"
+_primary = "⌘" if platform.system() == "Darwin" else "Ctrl"
 
 
-else:
-
-    def primary():
-        return "Ctrl"
+def primary():
+    global _primary
+    return _primary
 
 
 class action:
@@ -45,13 +41,13 @@ class action:
     """
 
     def __init__(
-        self, name, label=None, tooltip=None, icon_name=None, accel=None, **kwargs
+        self, name, label=None, tooltip=None, icon_name=None, shortcut=None, **kwargs
     ):
         self.scope, self.name = name.split(".", 2) if "." in name else ("win", name)
         self.label = label
         self.tooltip = tooltip
         self.icon_name = icon_name
-        self.accel = accel
+        self.shortcut = shortcut
         self.arg_type = None
         self.__dict__.update(kwargs)
 
@@ -73,9 +69,17 @@ class toggle_action(action):
     active: bool
 
     def __init__(
-        self, name, label=None, tooltip=None, icon_name=None, accel=None, active=False
+        self,
+        name,
+        label=None,
+        tooltip=None,
+        icon_name=None,
+        shortcut=None,
+        active=False,
     ):
-        super().__init__(name, label, tooltip, icon_name, accel=accel, active=active)
+        super().__init__(
+            name, label, tooltip, icon_name, shortcut=shortcut, active=active
+        )
 
 
 class radio_action(action):
@@ -90,11 +94,17 @@ class radio_action(action):
     labels: Sequence[Optional[str]]
     tooltips: Sequence[Optional[str]]
     icon_names: Sequence[Optional[str]]
-    accels: Sequence[Optional[str]]
+    shortcuts: Sequence[Optional[str]]
     active: int
 
     def __init__(
-        self, names, labels=None, tooltips=None, icon_names=None, accels=None, active=0
+        self,
+        names,
+        labels=None,
+        tooltips=None,
+        icon_names=None,
+        shortcuts=None,
+        active=0,
     ):
         super().__init__(
             names[0],
@@ -102,7 +112,7 @@ class radio_action(action):
             labels=labels,
             tooltips=tooltips,
             icon_names=icon_names,
-            accels=accels,
+            shortcuts=shortcuts,
             active=active,
         )
 
@@ -161,12 +171,12 @@ def build_action_group(obj, name=None):
                 act.tooltips = [None] * len(act.names)
             if not act.icon_names:
                 act.icon_names = [None] * len(act.names)
-            if not act.accels:
-                act.accels = [None] * len(act.names)
+            if not act.shortcuts:
+                act.shortcuts = [None] * len(act.names)
             assert len(act.names) == len(act.labels)
             assert len(act.names) == len(act.tooltips)
             assert len(act.names) == len(act.icon_names)
-            assert len(act.names) == len(act.accels)
+            assert len(act.names) == len(act.shortcuts)
             for i, n in enumerate(act.names):
                 gtkact = Gtk.RadioAction.new(
                     n, act.labels[i], act.tooltips[i], None, value=i
@@ -178,7 +188,7 @@ def build_action_group(obj, name=None):
                     actgroup = gtkact
                 else:
                     gtkact.props.group = actgroup
-                group.add_action_with_accel(gtkact, act.accels[i])
+                group.add_action_with_accel(gtkact, act.shortcuts[i])
 
             assert actgroup
             actgroup.connect("changed", _radio_action_changed, obj, attrname)
@@ -190,14 +200,14 @@ def build_action_group(obj, name=None):
                 gtkact.set_icon_name(act.icon_name)
             gtkact.set_property("active", act.active)
             gtkact.connect("activate", _toggle_action_activate, obj, attrname)
-            group.add_action_with_accel(gtkact, act.accel)
+            group.add_action_with_accel(gtkact, act.shortcut)
 
         elif isinstance(act, action):
             gtkact = Gtk.Action.new(act.name, act.label, act.tooltip, None)
             if act.icon_name:
                 gtkact.set_icon_name(act.icon_name)
             gtkact.connect("activate", _action_activate, obj, attrname)
-            group.add_action_with_accel(gtkact, act.accel)
+            group.add_action_with_accel(gtkact, act.shortcut)
 
         elif act is not None:
             raise TypeError(f"Invalid action type: {action}")

@@ -8,7 +8,7 @@ class ActionsMock:
     def simplest_action(self):
         pass
 
-    @action(name="tst.complete-action", label="a label", accel="accel-key")
+    @action(name="tst.complete-action", label="a label", shortcut="shortcut-key")
     def complete_action(self):
         pass
 
@@ -31,7 +31,7 @@ def test_complete_action():
     assert action_data.name == "complete-action"
     assert action_data.scope == "tst"
     assert action_data.label == "a label"
-    assert action_data.accel == "accel-key"
+    assert action_data.shortcut == "shortcut-key"
 
 
 def test_param_action():
