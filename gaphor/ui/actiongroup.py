@@ -4,39 +4,53 @@ from gaphor.action import action, toggle_action, radio_action
 
 
 def apply_application_actions(component_registry, gtk_app):
+    scope = "app"
     for provider, _name in component_registry.all(ActionProvider):
-        add_actions_to_group(gtk_app, provider, "app")
+        for attrname, act in iter_actions(provider, scope):
+            a = create_gio_action(act, provider, attrname)
+            gtk_app.add_action(a)
+            if act.accel:
+                print("Adding accelerator", act.accel, act.name)
+                gtk_app.add_accelerator(act.accel, f"{scope}.{act.name}", None)
     return gtk_app
 
 
 def window_action_group(component_registry):
+    scope = "win"
     action_group = Gio.SimpleActionGroup.new()
     for provider, _name in component_registry.all(ActionProvider):
-        add_actions_to_group(action_group, provider, "win")
+        for attrname, act in iter_actions(provider, scope):
+            a = create_gio_action(act, provider, attrname)
+            action_group.add_action(a)
     return action_group
 
 
-def add_actions_to_group(
-    action_group: Gio.ActionMap, provider, scope: str
-) -> Gio.ActionMap:
+def create_action_group(provider, scope, action_group=None):
+    if not action_group:
+        action_group = Gio.SimpleActionGroup.new()
     for attrname, act in iter_actions(provider, scope):
-        if isinstance(act, radio_action):
-            a = Gio.SimpleAction.new_stateful(
-                act.name, None, GLib.Variant.new_int16(act.active)
-            )
-            a.connect("change-state", _radio_action_activate, provider, attrname)
-        elif isinstance(act, toggle_action):
-            a = Gio.SimpleAction.new_stateful(
-                act.name, None, GLib.Variant.new_boolean(act.active)
-            )
-            a.connect("change-state", _toggle_action_activate, provider, attrname)
-        elif isinstance(act, action):
-            a = Gio.SimpleAction.new(act.name, as_variant_type(act.arg_type))
-            a.connect("activate", _action_activate, provider, attrname)
-        else:
-            raise ValueError(f"Action is not of a known action type ({act})")
+        a = create_gio_action(act, provider, attrname)
         action_group.add_action(a)
     return action_group
+
+
+def create_gio_action(act, provider, attrname):
+    if isinstance(act, radio_action):
+        a = Gio.SimpleAction.new_stateful(
+            act.name, None, GLib.Variant.new_int16(act.active)
+        )
+        a.connect("change-state", _radio_action_activate, provider, attrname)
+    elif isinstance(act, toggle_action):
+        a = Gio.SimpleAction.new_stateful(
+            act.name, None, GLib.Variant.new_boolean(act.active)
+        )
+        a.connect("change-state", _toggle_action_activate, provider, attrname)
+    elif isinstance(act, action):
+        a = Gio.SimpleAction.new(act.name, as_variant_type(act.arg_type))
+        a.connect("activate", _action_activate, provider, attrname)
+    else:
+        raise ValueError(f"Action is not of a known action type ({act})")
+    return a
 
 
 def iter_actions(provider, scope):

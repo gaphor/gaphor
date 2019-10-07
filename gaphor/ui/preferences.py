@@ -3,7 +3,7 @@ from gi.repository import GLib, Gio, Gtk
 
 from gaphor.abc import Service, ActionProvider
 from gaphor.core import action, toggle_action
-from gaphor.ui.actiongroup import add_actions_to_group, set_action_state
+from gaphor.ui.actiongroup import create_action_group, set_action_state
 
 
 class Preferences(Service, ActionProvider):
@@ -32,8 +32,7 @@ class Preferences(Service, ActionProvider):
         pass
 
     def create_action_group(self):
-        action_group = Gio.SimpleActionGroup.new()
-        add_actions_to_group(action_group, self, "pref")
+        action_group = create_action_group(self, "pref")
 
         set_action_state(
             action_group,

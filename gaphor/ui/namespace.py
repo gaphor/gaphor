@@ -19,7 +19,7 @@ from gaphor.UML.event import (
     DerivedSetEvent,
 )
 from gaphor.core import _, event_handler, action, transactional
-from gaphor.ui.actiongroup import add_actions_to_group
+from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramPageChange, DiagramShow
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name
@@ -322,8 +322,7 @@ class Namespace(UIComponent):
         view.show()
 
         scrolled_window.insert_action_group(
-            "tree-view",
-            add_actions_to_group(Gio.SimpleActionGroup.new(), self, "tree-view"),
+            "tree-view", create_action_group(self, "tree-view")
         )
         view.connect_after("event-after", self._on_view_event)
         view.connect("row-activated", self._on_view_row_activated)

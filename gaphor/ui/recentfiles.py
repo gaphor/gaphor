@@ -9,7 +9,6 @@ from gaphor.ui.event import FilenameChanged
 
 class RecentFiles(Service):
     def __init__(self, event_manager, recent_manager=None):
-        print("Recent files initated")
         self.event_manager = event_manager
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
 
