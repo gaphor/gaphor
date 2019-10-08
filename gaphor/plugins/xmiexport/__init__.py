@@ -4,7 +4,7 @@ This plugin extends Gaphor with XMI export functionality.
 
 import logging
 
-from gaphor.core import _, action, build_action_group
+from gaphor.core import _, action
 from gaphor.abc import Service, ActionProvider
 from gaphor.plugins.xmiexport import exportmodel
 from gaphor.ui.filedialog import FileDialog
@@ -13,22 +13,10 @@ logger = logging.getLogger(__name__)
 
 
 class XMIExport(Service, ActionProvider):
-
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="file">
-            <menu action="file-export">
-              <menuitem action="file-export-xmi" />
-            </menu>
-          </menu>
-        </menubar>
-      </ui>"""
-
-    def __init__(self, element_factory, file_manager):
+    def __init__(self, element_factory, file_manager, export_menu):
         self.element_factory = element_factory
         self.file_manager = file_manager
-        self.action_group = build_action_group(self)
+        export_menu.add_actions(self)
 
     def shutdown(self):
         pass
@@ -58,6 +46,3 @@ class XMIExport(Service, ActionProvider):
                 export.export(filename)
             except Exception as e:
                 logger.error(f"Error while saving model to file {filename}: {e}")
-
-
-# vim:sw=4:et
