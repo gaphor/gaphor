@@ -21,7 +21,7 @@ def paint(view, cr):
     view.painter.paint(Context(cairo=cr, items=view.canvas.get_all_items(), area=None))
 
 
-class DiagramExportManager(Service, ActionProvider):
+class DiagramExport(Service, ActionProvider):
     """
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
