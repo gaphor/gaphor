@@ -393,7 +393,7 @@ class NamedElementPropertyPage(PropertyPageBase):
             subject
         )
         self.subject = subject
-        self.watcher = subject.watcher()
+        self.watcher = subject and subject.watcher()
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
@@ -418,8 +418,9 @@ class NamedElementPropertyPage(PropertyPageBase):
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
 
-        self.watcher.watch("name", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
+        if self.watcher:
+            self.watcher.watch("name", handler).subscribe_all()
+            entry.connect("destroy", self.watcher.unsubscribe_all)
 
         return page
 
