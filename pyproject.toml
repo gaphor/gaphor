@@ -77,7 +77,6 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 "diagram_layout" = "gaphor.plugins.diagramlayout:DiagramLayout"
 "pynsource" = "gaphor.plugins.pynsource:PyNSource"
-"alignment" = "gaphor.plugins.alignment:Alignment"
 
 [build-system]
 requires = ["poetry==1.0.0b1"]

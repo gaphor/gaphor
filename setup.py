@@ -126,7 +126,6 @@ setup(
             "xmi_export = gaphor.plugins.xmiexport:XMIExport",
             "diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout",
             "pynsource = gaphor.plugins.pynsource:PyNSource",
-            "alignment = gaphor.plugins.alignment:Alignment",
         ],
     },
     cmdclass={
