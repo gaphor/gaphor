@@ -486,7 +486,6 @@ class Diagrams(UIComponent, ActionProvider):
         return widgets_on_pages
 
     def _on_switch_page(self, notebook, page, new_page_num):
-        print(f"Switch page {notebook.get_current_page()} -> {new_page_num}")
         current_page_num = notebook.get_current_page()
         if current_page_num >= 0:
             self._clear_ui_settings(notebook.get_nth_page(current_page_num))
@@ -494,12 +493,14 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.handle(DiagramPageChange(page))
 
     def _add_ui_settings(self, page):
-        page.get_toplevel().insert_action_group(
-            "diagram", page.get_action_group("diagram")
-        )
+        window = page.get_toplevel()
+        window.insert_action_group("diagram", page.action_group.actions)
+        window.add_accel_group(page.action_group.shortcuts)
 
     def _clear_ui_settings(self, page):
-        page.get_toplevel().insert_action_group("diagram", None)
+        window = page.get_toplevel()
+        window.insert_action_group("diagram", None)
+        window.remove_accel_group(page.action_group.shortcuts)
 
     @event_handler(DiagramShow)
     def _on_show_diagram(self, event):

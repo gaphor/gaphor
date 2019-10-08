@@ -19,7 +19,7 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.abc import ActionProvider
 from gaphor.UML.event import ElementDeleteEvent
-from gaphor.core import _, event_handler, transactional, action, build_action_group
+from gaphor.core import _, event_handler, transactional, action
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChangeEvent
 from gaphor.transaction import Transaction
@@ -31,37 +31,6 @@ log = logging.getLogger(__name__)
 
 
 class DiagramPage(ActionProvider):
-
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="edit">
-            <placeholder name="ternary">
-              <menuitem action="diagram-delete" />
-              <separator />
-              <menuitem action="diagram-select-all" />
-              <menuitem action="diagram-unselect-all" />
-              <separator />
-            </placeholder>
-          </menu>
-          <menu action="diagram">
-            <placeholder name="secondary">
-              <menuitem action="diagram-zoom-in" />
-              <menuitem action="diagram-zoom-out" />
-              <menuitem action="diagram-zoom-100" />
-            </placeholder>
-          </menu>
-        </menubar>
-        <toolbar name='mainwindow-toolbar'>
-          <placeholder name="left">
-            <separator />
-            <toolitem action="diagram-zoom-in" />
-            <toolitem action="diagram-zoom-out" />
-            <toolitem action="diagram-zoom-100" />
-          </placeholder>
-        </toolbar>
-      </ui>
-    """
 
     VIEW_TARGET_STRING = 0
     VIEW_TARGET_ELEMENT_ID = 1
@@ -78,7 +47,7 @@ class DiagramPage(ActionProvider):
         self.diagram = diagram
         self.view = None
         self.widget = None
-        self.action_group = build_action_group(self)
+        self.action_group = None
         self.toolbox = None
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_sloppy_lines)
@@ -135,7 +104,7 @@ class DiagramPage(ActionProvider):
             self.properties,
         )
 
-        self.widget.insert_action_group("diagram", create_action_group(self, "diagram"))
+        self.widget.action_group = create_action_group(self, "diagram")
         self._on_sloppy_lines()
 
         return self.widget

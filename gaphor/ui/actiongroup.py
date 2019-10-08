@@ -1,6 +1,13 @@
+from typing import NamedTuple
+
 from gi.repository import GLib, Gio, Gtk
 from gaphor.abc import ActionProvider
 from gaphor.action import action, toggle_action, radio_action
+
+
+class ActionGroup(NamedTuple):
+    actions: Gio.SimpleActionGroup
+    shortcuts: Gtk.AccelGroup
 
 
 def apply_application_actions(component_registry, gtk_app):
@@ -10,7 +17,6 @@ def apply_application_actions(component_registry, gtk_app):
             a = create_gio_action(act, provider, attrname)
             gtk_app.add_action(a)
             if act.shortcut:
-                print("Adding accelerator", act.shortcut, act.name)
                 gtk_app.add_accelerator(act.shortcut, f"{scope}.{act.name}", None)
     return gtk_app
 
@@ -21,16 +27,11 @@ def window_action_group(component_registry):
     accel_group = Gtk.AccelGroup.new()
 
     for provider, _name in component_registry.all(ActionProvider):
-        for attrname, act in iter_actions(provider, scope):
-            a = create_gio_action(act, provider, attrname)
-            action_group.add_action(a)
-            if act.shortcut:
-                key, mod = Gtk.accelerator_parse(act.shortcut)
-                accel_group.connect(
-                    key, mod, Gtk.AccelFlags.VISIBLE, _accel_handler(scope, act.name)
-                )
+        create_action_group(
+            provider, scope, action_group=action_group, accel_group=accel_group
+        )
 
-    return action_group, accel_group
+    return ActionGroup(actions=action_group, shortcuts=accel_group)
 
 
 def _accel_handler(scope, name):
@@ -41,13 +42,21 @@ def _accel_handler(scope, name):
     )
 
 
-def create_action_group(provider, scope, action_group=None):
+def create_action_group(provider, scope, action_group=None, accel_group=None):
     if not action_group:
         action_group = Gio.SimpleActionGroup.new()
+    if not accel_group:
+        accel_group = Gtk.AccelGroup.new()
+
     for attrname, act in iter_actions(provider, scope):
         a = create_gio_action(act, provider, attrname)
         action_group.add_action(a)
-    return action_group
+        if act.shortcut:
+            key, mod = Gtk.accelerator_parse(act.shortcut)
+            accel_group.connect(
+                key, mod, Gtk.AccelFlags.VISIBLE, _accel_handler(scope, act.name)
+            )
+    return ActionGroup(actions=action_group, shortcuts=accel_group)
 
 
 def create_gio_action(act, provider, attrname):

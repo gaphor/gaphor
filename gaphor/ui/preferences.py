@@ -32,7 +32,7 @@ class Preferences(Service, ActionProvider):
         pass
 
     def create_action_group(self):
-        action_group = create_action_group(self, "pref")
+        action_group, accel_group = create_action_group(self, "pref")
 
         set_action_state(
             action_group,

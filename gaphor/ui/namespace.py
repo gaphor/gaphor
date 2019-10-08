@@ -322,7 +322,7 @@ class Namespace(UIComponent):
         view.show()
 
         scrolled_window.insert_action_group(
-            "tree-view", create_action_group(self, "tree-view")
+            "tree-view", create_action_group(self, "tree-view")[0]
         )
         view.connect_after("event-after", self._on_view_event)
         view.connect("row-activated", self._on_view_row_activated)
