@@ -10,7 +10,7 @@ Depends on the Diagram Layout plugin.
 from gi.repository import GObject
 from gi.repository import Gtk
 
-from gaphor.core import action, build_action_group
+from gaphor.core import action
 from gaphor.abc import Service, ActionProvider
 from gaphor.plugins.pynsource.engineer import Engineer
 
@@ -18,24 +18,11 @@ NAME_COLUMN = 0
 
 
 class PyNSource(Service, ActionProvider):
-
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="file">
-            <menu action="file-import">
-              <menuitem action="file-import-pynsource" />
-            </menu>
-          </menu>
-        </menubar>
-      </ui>"""
-
     def __init__(self, element_factory, diagram_layout, main_window):
         self.element_factory = element_factory
         self.diagram_layout = diagram_layout
         self.main_window = main_window
         self.win = None
-        self.action_group = build_action_group(self)
 
     def shutdown(self):
         pass
