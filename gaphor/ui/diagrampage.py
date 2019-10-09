@@ -1,6 +1,8 @@
-#!/usr/bin/env python
+from typing import Optional
 
 import logging
+
+from gi.repository import GLib, Gdk, Gtk
 
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (
@@ -13,18 +15,16 @@ from gaphas.painter import (
 )
 from gaphas.view import GtkView
 import gaphas.segment  # Just register the handlers in this module
-from gi.repository import Gdk
-from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
-from gaphor.UML.event import ElementDeleteEvent
+from gaphor.UML.event import ElementDeleteEvent, DiagramItemCreateEvent
 from gaphor.core import _, event_handler, transactional, action
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChangeEvent
 from gaphor.transaction import Transaction
-from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.diagramtoolbox import DiagramToolbox
+from gaphor.ui.actiongroup import ActionGroup, create_action_group
+from gaphor.ui.diagramtoolbox import DiagramToolbox, TransactionalToolChain
 from gaphor.ui.event import DiagramSelectionChange
 
 log = logging.getLogger(__name__)
@@ -45,12 +45,12 @@ class DiagramPage(ActionProvider):
         self.element_factory = element_factory
         self.properties = properties
         self.diagram = diagram
-        self.view = None
-        self.widget = None
-        self.action_group = None
-        self.toolbox = None
+        self.view: Optional[GtkView] = None
+        self.widget: Optional[Gtk.Widget] = None
+        self.toolbox: Optional[DiagramToolbox] = None
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_sloppy_lines)
+        self.event_manager.subscribe(self._on_diagram_item_created)
 
     title = property(lambda s: s.diagram and s.diagram.name or _("<None>"))
 
@@ -181,6 +181,20 @@ class DiagramPage(ActionProvider):
             else:
                 if i.canvas:
                     i.canvas.remove(i)
+
+    @action(name="diagram.select-tool", state="toolbox-pointer")
+    def select_tool(self, tool_name: str):
+        tool = TransactionalToolChain(self.event_manager)
+        if self.toolbox and self.view:
+            tool.append(self.toolbox.get_tool(tool_name))
+            self.view.tool = tool
+
+    @event_handler(DiagramItemCreateEvent)
+    def _on_diagram_item_created(self, event):
+        if self.properties("reset-tool-after-create", False):
+            self.widget.action_group.actions.lookup_action("select-tool").activate(
+                GLib.Variant.new_string("toolbox-pointer")
+            )
 
     def set_drawing_style(self, sloppiness=0.0):
         """Set the drawing style for the diagram. 0.0 is straight,

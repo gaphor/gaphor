@@ -10,7 +10,7 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.UML.event import DiagramItemCreateEvent
-from gaphor.core import _, radio_action, build_action_group
+from gaphor.core import _
 from gaphor import diagram
 from gaphor.ui.diagramtools import (
     TransactionalToolChain,
@@ -202,7 +202,7 @@ TOOLBOX_ACTIONS = (
 )
 
 
-def itemiter(toolbox_actions):
+def tooliter(toolbox_actions):
     """
     Iterate toolbox items, irregardless section headers
     """
@@ -212,7 +212,9 @@ def itemiter(toolbox_actions):
 
 class DiagramToolbox:
     """
-    Composite class for DiagramPage (diagrampage.py).
+    Composite class for DiagramPage. 
+    
+    See diagrampage.py.
     """
 
     def __init__(self, diagram, view, element_factory, event_manager, properties):
@@ -221,7 +223,6 @@ class DiagramToolbox:
         self.element_factory = element_factory
         self.event_manager = event_manager
         self.properties = properties
-        self.action_group = build_action_group(self)
 
     namespace = property(lambda s: s.diagram.namespace)
 
@@ -231,19 +232,7 @@ class DiagramToolbox:
         """
         return getattr(self, tool_name.replace("-", "_"))()
 
-    action_list = list(zip(*list(itemiter(TOOLBOX_ACTIONS))))
-
-    @radio_action(
-        names=action_list[0], labels=action_list[1], icon_names=action_list[2]
-    )
-    def _set_toolbox_action(self, id):
-        """
-        Activate a tool based on its index in the TOOLBOX_ACTIONS list.
-        """
-        tool_name = list(itemiter(TOOLBOX_ACTIONS))[id][0]
-        tool = TransactionalToolChain(self.event_manager)
-        tool.append(self.get_tool(tool_name))
-        self.view.tool = tool
+    action_list = list(zip(*list(tooliter(TOOLBOX_ACTIONS))))
 
     def _item_factory(self, item_class, subject_class=None, config_func=None):
         """
@@ -283,8 +272,6 @@ class DiagramToolbox:
         return factory_method
 
     def _after_handler(self, new_item):
-        if self.properties("reset-tool-after-create", False):
-            self.action_group.get_action("toolbox-pointer").activate()
         self.event_manager.handle(
             DiagramItemCreateEvent(self.element_factory, new_item)
         )

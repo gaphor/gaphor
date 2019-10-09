@@ -80,7 +80,9 @@ class DiagramToolboxTestCase(TestCase):
         self.diagram.canvas.update()
 
     def test_placement_pointer(self):
-        self.tab.toolbox.action_group.get_action("toolbox-pointer").activate()
+        tool = self.tab.toolbox.get_tool("toolbox-pointer")
+
+        assert tool
 
     def test_placement_comment(self):
         self._test_placement_action("toolbox-comment")

@@ -140,7 +140,7 @@ class ElementEditor(UIComponent, ActionProvider):
         return revealer
 
     @action(name="win.show-editors", state=False)
-    def toggle_editor_visibility(self, active: bool):
+    def toggle_editor_visibility(self, active):
         self.revealer.set_reveal_child(active)
 
     def close(self, widget=None):

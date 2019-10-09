@@ -48,7 +48,7 @@ class Preferences(Service, ActionProvider):
         return action_group
 
     @action(name="pref.hand-drawn-style", state=False)
-    def hand_drawn_style(self, active: bool):
+    def hand_drawn_style(self, active):
         """Toggle between straight diagrams and "hand drawn" diagram style."""
 
         if active:
@@ -58,5 +58,5 @@ class Preferences(Service, ActionProvider):
         self.properties.set("diagram.sloppiness", sloppiness)
 
     @action(name="pref.reset-tool-after-create", state=False)
-    def reset_tool_after_create(self, active: bool):
+    def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)

@@ -2,7 +2,7 @@ from typing import NamedTuple
 
 from gi.repository import GLib, Gio, Gtk
 from gaphor.abc import ActionProvider
-from gaphor.action import action, radio_action
+from gaphor.action import action
 
 
 class ActionGroup(NamedTuple):
@@ -60,20 +60,14 @@ def create_action_group(provider, scope, action_group=None, accel_group=None):
 
 
 def create_gio_action(act, provider, attrname):
-    if isinstance(act, radio_action):
+    if act.state is not None:
         a = Gio.SimpleAction.new_stateful(
-            act.name, None, GLib.Variant.new_int16(act.active)
+            act.name, as_variant_type(act.arg_type), to_variant(act.state)
         )
-        a.connect("change-state", _radio_action_activate, provider, attrname)
-    elif isinstance(act, action):
-        if act.state is not None:
-            a = Gio.SimpleAction.new_stateful(act.name, None, to_variant(act.state))
-            a.connect("change-state", _action_activate, provider, attrname)
-        else:
-            a = Gio.SimpleAction.new(act.name, as_variant_type(act.arg_type))
-            a.connect("activate", _action_activate, provider, attrname)
+        a.connect("change-state", _action_activate, provider, attrname)
     else:
-        raise ValueError(f"Action is not of a known action type ({act})")
+        a = Gio.SimpleAction.new(act.name, as_variant_type(act.arg_type))
+        a.connect("activate", _action_activate, provider, attrname)
     return a
 
 
@@ -140,22 +134,9 @@ def from_variant(v):
 
 def _action_activate(action, param, obj, name):
     method = getattr(obj, name)
-    print("action", name, param)
     if param is not None:
         method(from_variant(param))
         if action.get_state_type():
             action.set_state(param)
     else:
         method()
-
-
-def _toggle_action_activate(action, param, obj, name):
-    method = getattr(obj, name)
-    action.set_state(param)
-    method(param.get_boolean())
-
-
-def _radio_action_activate(action, param, obj, name):
-    method = getattr(obj, name)
-    action.set_state(param)
-    method(param.get_int16())
