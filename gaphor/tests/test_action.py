@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.action import action, radio_action
+from gaphor.action import action
 
 
 class ActionsMock:

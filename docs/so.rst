@@ -89,29 +89,18 @@ Here is a stripped version of the hello world class::
 
 
     from gaphor.abc import Service, ActionProvider
-    from gaphor.core import _, action, build_action_group
+    from gaphor.core import _, action
 
     class HelloWorldPlugin(Service, ActionProvider):     # 1.
 
+        def __init__(self, tools_menu):                  # 2.
+            self.tools_menu = tools_menu
+            tools_menu.add_actions(self)                 # 3.
 
-        menu_xml = """                                   # 2.
-          <ui>
-            <menubar name="mainwindow">
-              <menu action="help">
-                <menuitem action="helloworld" />
-              </menu>
-            </menubar>
-          </ui>
-        """
+        def shutdown(self):                              # 4.
+            self.tools_menu.remove_actions(self)
 
-        def __init__(self, main_window):                 # 3.
-            self.main_window = main_window
-            self.action_group = build_action_group(self) # 4.
-
-        def shutdown(self):                              # 6.
-            pass
-
-        @action(name='helloworld',                       # 7.
+        @action(name='helloworld',                       # 5.
                 label=_('Hello world'),
                 tooltip=_('Every application ...'))
         def helloworld_action(self):
@@ -121,16 +110,12 @@ Here is a stripped version of the hello world class::
 1. As stated before, a plugin should implement the ``Service`` interface.
    It also implements ``ActionProvider``, saying it has some actions to
    be performed by the user.
-2. As part of the ``ActionProvider`` interface an attribute ``menu_xml``
-   should be defined that contains some menu xml
-   (see http://developer.gnome.org/doc/API/2.0/gtk/GtkUIManager.html#XML-UI).
-3. The plugin depends on the ``main_window`` service. The ``main_window`` will
-   be injected when our services is instantiated.
-4. ``ActionProvider`` also requires an ``action_group`` attribute (containing
-   a ``gtk.ActionGroup``). This action group is created on instantiation.
-   The actions itself are defined with an ``action`` decorator (see 7).
-5. Each ``Service`` has an ``init(app)`` method...
-6. ... and a ``shutdown()`` method. Those can be used to create and detach
-   event handlers for example.
-7. The action that can be invoked. The action is defined and will be picked
-   up by ``build_action_group()`` (see 4.)
+2. The menu entry will be part of the "Tools" extension menu. This extension
+   point is created as a service. Other services can also be passed as
+   dependencies. Services can get references to other services by defining them
+   as arguments of the constructor.
+3. All action defined in this service are registered.
+4. Each servoce has a ``shutdown()`` method. This allows the servie to perform
+   some cleanup when it's shut down.
+5. The action that can be invoked. The action is defined and will be picked
+   up by ``add_actions()`` method (see 3.)

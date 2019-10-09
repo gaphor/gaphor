@@ -2,7 +2,7 @@ import pytest
 
 from gi.repository import GLib, Gio
 from gaphor.abc import ActionProvider
-from gaphor.action import action, radio_action
+from gaphor.action import action
 from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.ui.actiongroup import (
     apply_application_actions,
@@ -30,10 +30,6 @@ class DummyActionProvider(ActionProvider):
     def toggle(self, state):
         print("State", state)
         self.toggle_state = state
-
-    # @radio_action(names=["radio1", "radio2"])
-    # def radio(self, state):
-    #     self.radio_state = state
 
 
 @pytest.fixture
