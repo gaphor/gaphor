@@ -2,7 +2,7 @@ import importlib
 from gi.repository import GLib, Gio, Gtk
 
 from gaphor.abc import Service, ActionProvider
-from gaphor.core import action, toggle_action
+from gaphor.core import action
 from gaphor.ui.actiongroup import create_action_group, set_action_state
 
 
@@ -47,8 +47,8 @@ class Preferences(Service, ActionProvider):
         )
         return action_group
 
-    @toggle_action(name="pref.hand-drawn-style", active=False)
-    def hand_drawn_style(self, active):
+    @action(name="pref.hand-drawn-style", state=False)
+    def hand_drawn_style(self, active: bool):
         """Toggle between straight diagrams and "hand drawn" diagram style."""
 
         if active:
@@ -57,6 +57,6 @@ class Preferences(Service, ActionProvider):
             sloppiness = 0.0
         self.properties.set("diagram.sloppiness", sloppiness)
 
-    @toggle_action(name="pref.reset-tool-after-create", active=False)
-    def reset_tool_after_create(self, active):
+    @action(name="pref.reset-tool-after-create", state=False)
+    def reset_tool_after_create(self, active: bool):
         self.properties.set("reset-tool-after-create", active)

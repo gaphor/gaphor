@@ -13,7 +13,7 @@ from gi.repository import Gio, Gdk, Gtk, GLib
 
 from gaphor import UML, Application
 from gaphor.UML.event import ModelFactoryEvent
-from gaphor.core import _, event_handler, action, toggle_action, transactional
+from gaphor.core import _, event_handler, action, transactional
 from gaphor.abc import Service, ActionProvider
 from gaphor.event import ActionEnabled
 from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent

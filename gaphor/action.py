@@ -41,13 +41,21 @@ class action:
     """
 
     def __init__(
-        self, name, label=None, tooltip=None, icon_name=None, shortcut=None, **kwargs
+        self,
+        name,
+        label=None,
+        tooltip=None,
+        icon_name=None,
+        shortcut=None,
+        state=None,
+        **kwargs,
     ):
         self.scope, self.name = name.split(".", 2) if "." in name else ("win", name)
         self.label = label
         self.tooltip = tooltip
         self.icon_name = icon_name
         self.shortcut = shortcut
+        self.state = state
         self.arg_type = None
         self.__dict__.update(kwargs)
 
@@ -58,28 +66,6 @@ class action:
             self.arg_type = next(iter(type_hints.values()))
         func.__action__ = self
         return func
-
-
-class toggle_action(action):
-    """
-    A toggle button can be switched on and off.
-    An extra 'active' attribute is provided than gives the initial status.
-    """
-
-    active: bool
-
-    def __init__(
-        self,
-        name,
-        label=None,
-        tooltip=None,
-        icon_name=None,
-        shortcut=None,
-        active=False,
-    ):
-        super().__init__(
-            name, label, tooltip, icon_name, shortcut=shortcut, active=active
-        )
 
 
 class radio_action(action):
@@ -125,28 +111,6 @@ def build_action_group(obj, name=None):
     """
     Build actions and a Gtk.ActionGroup for each Action instance found in obj()
     (that's why Action is a class ;) ). This function requires GTK+.
-
-    >>> class A:
-    ...     @action(name='bar')
-    ...     def bar(self): print('Say bar')
-    ...     @toggle_action(name='foo')
-    ...     def foo(self, active): print('Say foo', active)
-    ...     @radio_action(names=('baz', 'beer'), labels=('Baz', 'Beer'))
-    ...     def baz(self, value):
-    ...         print('Say', value, (value and "beer" or "baz"))
-    >>> group = build_action_group(A())
-    Say 0 baz
-    >>> len(group.list_actions())
-    4
-    >>> a = group.get_action('bar')
-    >>> a.activate()
-    Say bar
-    >>> group.get_action('foo').activate()
-    Say foo True
-    >>> group.get_action('beer').activate()
-    Say 1 beer
-    >>> group.get_action('baz').activate()
-    Say 0 baz
     """
     from gi.repository import Gtk
 
@@ -193,14 +157,6 @@ def build_action_group(obj, name=None):
             assert actgroup
             actgroup.connect("changed", _radio_action_changed, obj, attrname)
             actgroup.set_current_value(act.active)
-
-        elif isinstance(act, toggle_action):
-            gtkact = Gtk.ToggleAction.new(act.name, act.label, act.tooltip, None)
-            if act.icon_name:
-                gtkact.set_icon_name(act.icon_name)
-            gtkact.set_property("active", act.active)
-            gtkact.connect("activate", _toggle_action_activate, obj, attrname)
-            group.add_action_with_accel(gtkact, act.shortcut)
 
         elif isinstance(act, action):
             gtkact = Gtk.Action.new(act.name, act.label, act.tooltip, None)

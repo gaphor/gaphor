@@ -2,7 +2,7 @@ import pytest
 
 from gi.repository import GLib, Gio
 from gaphor.abc import ActionProvider
-from gaphor.action import action, toggle_action, radio_action
+from gaphor.action import action, radio_action
 from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.ui.actiongroup import (
     apply_application_actions,
@@ -26,7 +26,7 @@ class DummyActionProvider(ActionProvider):
     def new(self):
         pass
 
-    @toggle_action(name="toggle")
+    @action(name="toggle", state=True)
     def toggle(self, state):
         print("State", state)
         self.toggle_state = state

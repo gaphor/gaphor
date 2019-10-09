@@ -6,7 +6,7 @@ from gi.repository import Gtk
 
 from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationChangeEvent
-from gaphor.core import _, primary, event_handler, action, toggle_action
+from gaphor.core import _, primary, event_handler, action
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.diagram.propertypages import PropertyPages
@@ -139,8 +139,8 @@ class ElementEditor(UIComponent, ActionProvider):
 
         return revealer
 
-    @toggle_action(name="win.show-editors", active=False)
-    def toggle_editor_visibility(self, active):
+    @action(name="win.show-editors", state=False)
+    def toggle_editor_visibility(self, active: bool):
         self.revealer.set_reveal_child(active)
 
     def close(self, widget=None):
