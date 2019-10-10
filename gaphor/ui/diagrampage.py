@@ -21,7 +21,7 @@ from gaphor.abc import ActionProvider
 from gaphor.UML.event import ElementDeleteEvent, DiagramItemCreateEvent
 from gaphor.core import _, event_handler, transactional, action
 from gaphor.diagram.support import get_diagram_item
-from gaphor.services.properties import PropertyChangeEvent
+from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import ActionGroup, create_action_group
 from gaphor.ui.diagramtoolbox import DiagramToolbox, TransactionalToolChain
@@ -97,11 +97,7 @@ class DiagramPage(ActionProvider):
         self.view = view
 
         self.toolbox = DiagramToolbox(
-            self.diagram,
-            view,
-            self.element_factory,
-            self.event_manager,
-            self.properties,
+            self.diagram, view, self.element_factory, self.event_manager
         )
 
         self.widget.action_group = create_action_group(self, "diagram")
@@ -114,10 +110,10 @@ class DiagramPage(ActionProvider):
         if event.element is self.diagram:
             self.close()
 
-    @event_handler(PropertyChangeEvent)
+    @event_handler(PropertyChanged)
     def _on_sloppy_lines(self, event=None):
         if not event or event.key == "diagram.sloppiness":
-            self.set_drawing_style(self.properties.get("diagram.sloppiness", False))
+            self.set_drawing_style(event and event.new_value or 0.0)
 
     def close(self):
         """

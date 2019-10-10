@@ -217,12 +217,11 @@ class DiagramToolbox:
     See diagrampage.py.
     """
 
-    def __init__(self, diagram, view, element_factory, event_manager, properties):
+    def __init__(self, diagram, view, element_factory, event_manager):
         self.diagram = diagram
         self.view = view
         self.element_factory = element_factory
         self.event_manager = event_manager
-        self.properties = properties
 
     namespace = property(lambda s: s.diagram.namespace)
 
