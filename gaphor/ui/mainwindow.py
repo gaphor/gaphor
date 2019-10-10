@@ -534,7 +534,7 @@ class Diagrams(UIComponent, ActionProvider):
         widget = page.construct()
         widget.set_name("diagram-tab")
         widget.diagram_page = page
-        page.set_drawing_style(self.properties("diagram.sloppiness", 0))
+        page.set_drawing_style(self.properties.get("diagram.sloppiness", 0))
 
         self.create_tab(diagram.name, widget)
         return page

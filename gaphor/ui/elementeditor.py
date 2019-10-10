@@ -90,13 +90,13 @@ class ElementEditor(UIComponent, ActionProvider):
     title = _("Element Editor")
     size = (275, -1)
 
-    def __init__(self, event_manager, element_factory, main_window):
+    def __init__(self, event_manager, element_factory, diagrams):
         """Constructor. Build the action group for the element editor window.
         This will place a button for opening the window in the toolbar.
         The widget attribute is a PropertyEditor."""
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.main_window = main_window
+        self.diagrams = diagrams
         self.vbox = None
         self._current_item = None
         self._expanded_pages = {_("Properties"): True}
@@ -123,8 +123,7 @@ class ElementEditor(UIComponent, ActionProvider):
         vbox.show()
         self.vbox = vbox
 
-        diagrams = self.main_window.get_ui_component("diagrams")
-        current_view = diagrams.get_current_view()
+        current_view = self.diagrams.get_current_view()
         self._selection_change(focused_item=current_view and current_view.focused_item)
 
         # Make sure we recieve
