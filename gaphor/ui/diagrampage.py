@@ -109,7 +109,10 @@ class DiagramPage(ActionProvider):
         shortcuts = self.get_toolbox_shortcuts()
 
         def shortcut_action(widget, event):
-            action_name = shortcuts.get((event.keyval, event.state))
+            key = event.keyval
+            if ord("A") <= key <= ord("Z"):
+                key += ord("a") - ord("A")
+            action_name = shortcuts.get((key, event.state))
             if action_name:
                 widget.get_toplevel().get_action_group("diagram").lookup_action(
                     "select-tool"
@@ -126,6 +129,7 @@ class DiagramPage(ActionProvider):
             for action_name, label, icon_name, shortcut in items:
                 if shortcut:
                     key, mod = Gtk.accelerator_parse(shortcut)
+                    print(key, mod, action_name)
                     shortcuts[key, mod] = action_name
 
         return shortcuts
