@@ -52,21 +52,14 @@ class DiagramToolboxTestCase(TestCase):
         shortcuts = {}
 
         for category, items in TOOLBOX_ACTIONS:
-
             for action_name, label, icon_name, shortcut in items:
-
                 try:
-
                     shortcuts[shortcut].append(action_name)
-
                 except KeyError:
-
                     shortcuts[shortcut] = [action_name]
 
         for key, val in list(shortcuts.items()):
-
             if key is not None:
-
                 assert len(val) == 1, "Duplicate toolbox shortcut"
 
     def test_standalone_construct_with_diagram(self):
