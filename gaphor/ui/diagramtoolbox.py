@@ -6,6 +6,8 @@ The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
+from typing import Optional, Sequence, Tuple
+
 from gaphas.item import SE
 
 from gaphor import UML
@@ -22,7 +24,7 @@ from gaphor.ui.diagramtools import (
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
-TOOLBOX_ACTIONS = (
+TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[Tuple[str, str, str, Optional[str]]]]] = (
     (
         _("General"),
         (

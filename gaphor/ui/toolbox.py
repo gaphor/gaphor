@@ -36,18 +36,13 @@ class Toolbox(UIComponent, ActionProvider):
         self.properties = properties
         self._toolbox = None
         self._toolbox_actions = toolbox_actions
-        self.buttons: List[Gtk.Button] = []
-        self.accel_group = None
 
     def open(self):
         widget = self.construct()
 
-        self.main_window.window.add_accel_group(self.accel_group)
         return widget
 
     def close(self):
-        if self.main_window.window:
-            self.main_window.window.remove_accel_group(self.accel_group)
         if self._toolbox:
             self._toolbox.destroy()
             self._toolbox = None
@@ -92,15 +87,6 @@ class Toolbox(UIComponent, ActionProvider):
             collapsed[index] = widget.get_property("collapsed")
             self.properties.set("toolbox-collapsed", collapsed)
 
-        def accel_handler(action_name):
-            return (
-                lambda agrp, win, key, mod: win.get_action_group("diagram")
-                .lookup_action("select-tool")
-                .change_state(GLib.Variant.new_string(action_name))
-            )
-
-        self.accel_group = Gtk.AccelGroup.new()
-
         for index, (title, items) in enumerate(self._toolbox_actions):
             tool_item_group = Gtk.ToolItemGroup.new(title)
             tool_item_group.set_property("collapsed", collapsed.get(index, False))
@@ -109,12 +95,6 @@ class Toolbox(UIComponent, ActionProvider):
                 button = toolbox_button(action_name, icon_name, label, shortcut)
                 tool_item_group.insert(button, -1)
                 button.show_all()
-                self.buttons.append(button)
-                if shortcut:
-                    key, mod = Gtk.accelerator_parse(shortcut)
-                    self.accel_group.connect(
-                        key, mod, Gtk.AccelFlags.VISIBLE, accel_handler(action_name)
-                    )
 
             toolbox.add(tool_item_group)
             tool_item_group.show()

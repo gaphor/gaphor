@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Sequence, Tuple
 
 import logging
 
@@ -24,7 +24,11 @@ from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import ActionGroup, create_action_group
-from gaphor.ui.diagramtoolbox import DiagramToolbox, TransactionalToolChain
+from gaphor.ui.diagramtoolbox import (
+    DiagramToolbox,
+    TransactionalToolChain,
+    TOOLBOX_ACTIONS,
+)
 from gaphor.ui.event import DiagramSelectionChange
 
 log = logging.getLogger(__name__)
@@ -101,9 +105,30 @@ class DiagramPage(ActionProvider):
         )
 
         self.widget.action_group = create_action_group(self, "diagram")
+
+        shortcuts = self.get_toolbox_shortcuts()
+
+        def shortcut_action(widget, event):
+            action_name = shortcuts.get((event.keyval, event.state))
+            if action_name:
+                widget.get_toplevel().get_action_group("diagram").lookup_action(
+                    "select-tool"
+                ).change_state(GLib.Variant.new_string(action_name))
+
+        self.widget.connect("key-press-event", shortcut_action)
         self._on_sloppy_lines()
 
         return self.widget
+
+    def get_toolbox_shortcuts(self):
+        shortcuts = {}
+        for title, items in TOOLBOX_ACTIONS:
+            for action_name, label, icon_name, shortcut in items:
+                if shortcut:
+                    key, mod = Gtk.accelerator_parse(shortcut)
+                    shortcuts[key, mod] = action_name
+
+        return shortcuts
 
     @event_handler(ElementDeleteEvent)
     def _on_element_delete(self, event):
