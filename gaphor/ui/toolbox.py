@@ -31,30 +31,26 @@ class Toolbox(UIComponent, ActionProvider):
 
     title = _("Toolbox")
 
-    def __init__(
-        self, event_manager, main_window, properties, toolbox_actions=TOOLBOX_ACTIONS
-    ):
-        # self.event_manager = event_manager
+    def __init__(self, main_window, properties, toolbox_actions=TOOLBOX_ACTIONS):
         self.main_window = main_window
         self.properties = properties
         self._toolbox = None
         self._toolbox_actions = toolbox_actions
         self.buttons: List[Gtk.Button] = []
-        self.shortcuts: Dict[str, str] = {}
+        self.accel_group = None
 
     def open(self):
         widget = self.construct()
-        self.main_window.window.connect_after(
-            "key-press-event", self._on_key_press_event
-        )
-        # self.event_manager.subscribe(self._on_diagram_page_change)
+
+        self.main_window.window.add_accel_group(self.accel_group)
         return widget
 
     def close(self):
+        if self.main_window.window:
+            self.main_window.window.remove_accel_group(self.accel_group)
         if self._toolbox:
             self._toolbox.destroy()
             self._toolbox = None
-        # self.event_manager.unsubscribe(self._on_diagram_page_change)
 
     def construct(self):
         def toolbox_button(action_name, icon_name, label, shortcut):
@@ -64,7 +60,13 @@ class Toolbox(UIComponent, ActionProvider):
             button.set_action_name("diagram.select-tool")
             button.set_action_target_value(GLib.Variant.new_string(action_name))
             if label:
-                button.set_tooltip_text(f"{label} ({shortcut})")
+                if shortcut:
+                    a, m = Gtk.accelerator_parse(shortcut)
+                    button.set_tooltip_text(
+                        f"{label} ({Gtk.accelerator_get_label(a, m)})"
+                    )
+                else:
+                    button.set_tooltip_text(f"{label}")
 
             # Enable Drag and Drop
             if action_name != "toolbox-pointer":
@@ -90,6 +92,15 @@ class Toolbox(UIComponent, ActionProvider):
             collapsed[index] = widget.get_property("collapsed")
             self.properties.set("toolbox-collapsed", collapsed)
 
+        def accel_handler(action_name):
+            return (
+                lambda agrp, win, key, mod: win.get_action_group("diagram")
+                .lookup_action("select-tool")
+                .change_state(GLib.Variant.new_string(action_name))
+            )
+
+        self.accel_group = Gtk.AccelGroup.new()
+
         for index, (title, items) in enumerate(self._toolbox_actions):
             tool_item_group = Gtk.ToolItemGroup.new(title)
             tool_item_group.set_property("collapsed", collapsed.get(index, False))
@@ -99,7 +110,12 @@ class Toolbox(UIComponent, ActionProvider):
                 tool_item_group.insert(button, -1)
                 button.show_all()
                 self.buttons.append(button)
-                self.shortcuts[shortcut] = action_name
+                if shortcut:
+                    key, mod = Gtk.accelerator_parse(shortcut)
+                    self.accel_group.connect(
+                        key, mod, Gtk.AccelFlags.VISIBLE, accel_handler(action_name)
+                    )
+
             toolbox.add(tool_item_group)
             tool_item_group.show()
 
@@ -126,26 +142,6 @@ class Toolbox(UIComponent, ActionProvider):
 
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None
-
-    # @event_handler(DiagramPageChange)
-    # def _on_diagram_page_change(self, event):
-    #     self.update_toolbox(event.diagram_page.toolbox.action_group)
-
-    # # TODO: Remove this function vvv
-    # def update_toolbox(self, action_group):
-    #     """
-    #     Update the buttons in the toolbox. Each button should be connected
-    #     by an action. Each button is assigned a special _action_name_
-    #     attribute that can be used to fetch the action from the ui manager.
-    #     """
-    #     if not self._toolbox:
-    #         return
-
-    #     for button in self.buttons:
-    #         action_name = button.action_name
-    #         action = action_group.get_action(action_name)
-    #         if action:
-    #             button.set_related_action(action)
 
     def set_active_tool(self, action_name=None, shortcut=None):
         """

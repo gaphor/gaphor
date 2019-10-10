@@ -31,7 +31,7 @@ def undo_buttons():
     box.get_style_context().add_class("linked")
     box.pack_start(
         icon_button(
-            "edit-undo-symbolic", "win.edit-undo", _("Undo") + f" ({primary()}-Z)"
+            "edit-undo-symbolic", "win.edit-undo", _("Undo") + f" ({primary()}+Z)"
         ),
         False,
         False,
@@ -39,7 +39,7 @@ def undo_buttons():
     )
     box.pack_start(
         icon_button(
-            "edit-redo-symbolic", "win.edit-redo", _("Redo") + f" ({primary()}-Shift-Z)"
+            "edit-redo-symbolic", "win.edit-redo", _("Redo") + f" ({primary()}+Shift+Z)"
         ),
         False,
         True,
@@ -54,7 +54,7 @@ def zoom_buttons():
     box.get_style_context().add_class("linked")
     box.pack_start(
         icon_button(
-            "zoom-in-symbolic", "diagram.zoom-in", _("Zoom in") + f" ({primary()}-+)"
+            "zoom-in-symbolic", "diagram.zoom-in", _("Zoom in") + f" ({primary()}++)"
         ),
         False,
         False,
@@ -64,7 +64,7 @@ def zoom_buttons():
         icon_button(
             "zoom-original-symbolic",
             "diagram.zoom-100",
-            _("Zoom 100%") + f" ({primary()}-0)",
+            _("Zoom 100%") + f" ({primary()}+0)",
         ),
         False,
         False,
@@ -72,7 +72,7 @@ def zoom_buttons():
     )
     box.pack_start(
         icon_button(
-            "zoom-out-symbolic", "diagram.zoom-out", _("Zoom out") + f" ({primary()}--)"
+            "zoom-out-symbolic", "diagram.zoom-out", _("Zoom out") + f" ({primary()}+-)"
         ),
         False,
         False,
@@ -138,7 +138,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
         return revealer
 
-    @action(name="win.show-editors", state=False)
+    @action(name="win.show-editors", shortcut="<Primary>e", state=False)
     def toggle_editor_visibility(self, active):
         self.revealer.set_reveal_child(active)
 
