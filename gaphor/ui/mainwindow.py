@@ -23,7 +23,13 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.ui.event import DiagramPageChange, DiagramShow, FilenameChanged, WindowClose
+from gaphor.ui.event import (
+    DiagramPageChange,
+    DiagramShow,
+    FileLoaded,
+    FileSaved,
+    WindowClose,
+)
 from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import Namespace
 from gaphor.ui.toolbox import Toolbox
@@ -307,7 +313,7 @@ class MainWindow(Service, ActionProvider):
         ):
             self.event_manager.handle(DiagramShow(diagram))
 
-    @event_handler(FilenameChanged)
+    @event_handler(FileLoaded, FileSaved)
     def _on_file_manager_state_changed(self, event):
         self.model_changed = False
         self.filename = event.filename

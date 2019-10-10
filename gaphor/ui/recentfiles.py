@@ -4,7 +4,7 @@ from gi.repository import GLib, Gtk
 from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.ui import APPLICATION_ID
-from gaphor.ui.event import FilenameChanged
+from gaphor.ui.event import FileLoaded, FileSaved
 
 
 class RecentFiles(Service):
@@ -17,7 +17,7 @@ class RecentFiles(Service):
     def shutdown(self):
         self.event_manager.unsubscribe(self._on_filename_changed)
 
-    @event_handler(FilenameChanged)
+    @event_handler(FileLoaded, FileSaved)
     def _on_filename_changed(self, event):
         filename = event.filename
         if not filename:

@@ -30,11 +30,13 @@ class WindowClose:
         self.service = service
 
 
-class FilenameChanged:
-    """
-    Event class used to send state changes on the Undo Manager.
-    """
+class FileLoaded:
+    def __init__(self, service, filename=None):
+        self.service = service
+        self.filename = filename
 
+
+class FileSaved:
     def __init__(self, service, filename=None):
         self.service = service
         self.filename = filename

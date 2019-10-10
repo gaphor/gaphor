@@ -15,7 +15,7 @@ from gaphor.misc.gidlethread import GIdleThread, Queue
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
 import gaphor.ui
-from gaphor.ui.event import FilenameChanged, WindowClose
+from gaphor.ui.event import FileLoaded, FileSaved, WindowClose
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -57,8 +57,6 @@ class FileManager(Service, ActionProvider):
 
         if filename != self._filename:
             self._filename = filename
-            if self.event_manager:
-                self.event_manager.handle(FilenameChanged(self, filename))
 
     filename = property(get_filename, set_filename)
 
@@ -95,6 +93,7 @@ class FileManager(Service, ActionProvider):
                 worker.reraise()
 
             self.filename = filename
+            self.event_manager.handle(FileLoaded(self, filename))
         except:
             error_handler(
                 message=_("Error while loading model from file %s") % filename
@@ -174,6 +173,7 @@ class FileManager(Service, ActionProvider):
                 worker.reraise()
 
             self.filename = filename
+            self.event_manager.handle(FileSaved(self, filename))
         except:
             error_handler(message=_("Error while saving model to file %s") % filename)
             raise

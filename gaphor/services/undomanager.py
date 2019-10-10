@@ -138,8 +138,6 @@ class UndoManager(Service, ActionProvider):
         """
         if self._current_transaction:
             self._current_transaction.add(action)
-            self.event_manager.handle(UndoManagerStateChanged(self))
-
             # TODO: should this be placed here?
             self._action_executed()
 
@@ -156,7 +154,6 @@ class UndoManager(Service, ActionProvider):
 
         self._current_transaction = None
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @event_handler(TransactionRollback)
@@ -182,14 +179,12 @@ class UndoManager(Service, ActionProvider):
             # Discard all data collected in the rollback "transaction"
             self._undo_stack = undo_stack
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def discard_transaction(self):
 
         self._current_transaction = None
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @action(
@@ -222,7 +217,6 @@ class UndoManager(Service, ActionProvider):
         while len(self._redo_stack) > self._stack_depth:
             del self._redo_stack[0]
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @action(
@@ -244,7 +238,6 @@ class UndoManager(Service, ActionProvider):
         finally:
             self._redo_stack = redo_stack
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def in_transaction(self):
@@ -259,7 +252,7 @@ class UndoManager(Service, ActionProvider):
     def _action_executed(self, event=None):
         self.event_manager.handle(ActionEnabled("win.edit-undo", self.can_undo()))
         self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
-        pass
+        self.event_manager.handle(UndoManagerStateChanged(self))
 
     ##
     ## Undo Handlers
