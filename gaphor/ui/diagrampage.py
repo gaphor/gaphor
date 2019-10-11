@@ -128,7 +128,6 @@ class DiagramPage:
             for action_name, label, icon_name, shortcut in items:
                 if shortcut:
                     key, mod = Gtk.accelerator_parse(shortcut)
-                    print(key, mod, action_name)
                     shortcuts[key, mod] = action_name
                     shortcuts[key + upper_offset, mod] = action_name
 
