@@ -32,11 +32,11 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.5"
-pycairo = "^1.16"
+python = "^3.7"
+pycairo = "^1.18"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
-importlib_metadata = "^0.18"
+importlib_metadata = "^0.23"
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.5"
