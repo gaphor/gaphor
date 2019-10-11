@@ -4,6 +4,7 @@ import gaphor
 from gaphor.storage import storage
 import gaphor.UML as UML
 from gaphor.services.eventmanager import EventManager
+from gaphor.application import Application
 
 from gaphas.painter import Context, ItemPainter
 from gaphas.view import View
@@ -78,10 +79,11 @@ def main(argv=sys.argv[1:]):
 
     if not args:
         parser.print_help()
-        # sys.exit(1)
 
-    event_manager = EventManager()
-    factory = UML.ElementFactory(event_manager)
+    Application.init(
+        services=["event_manager", "component_registry", "element_factory"]
+    )
+    factory = Application.get_service("element_factory")
 
     name_re = None
     if options.regex:
@@ -91,7 +93,7 @@ def main(argv=sys.argv[1:]):
     for model in args:
         message(f"loading model {model}")
         storage.load(model, factory)
-        message("\nready for rendering\n")
+        message("ready for rendering")
 
         for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
             odir = pkg2dir(diagram.package)

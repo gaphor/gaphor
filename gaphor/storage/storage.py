@@ -359,7 +359,7 @@ def load_generator(filename, factory):
             gc.collect()
             yield 100
         except Exception as e:
-            log.warning(f"file {filename} could not be loaded", e)
+            log.warning(f"file {filename} could not be loaded ({e})")
             raise
     factory.notify_model()
 
