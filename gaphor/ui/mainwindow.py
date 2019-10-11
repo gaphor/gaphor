@@ -21,7 +21,6 @@ from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
-from gaphor.ui.accelmap import load_accel_map, save_accel_map
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import (
     DiagramPageChange,
@@ -172,7 +171,6 @@ class MainWindow(Service, ActionProvider):
         if self.window:
             self.window.destroy()
             self.window = None
-        save_accel_map()
 
         em = self.event_manager
         em.unsubscribe(self._on_file_manager_state_changed)
@@ -186,8 +184,6 @@ class MainWindow(Service, ActionProvider):
     def open(self, gtk_app=None):
         """Open the main window.
         """
-        load_accel_map()
-
         self.window = (
             Gtk.ApplicationWindow.new(gtk_app)
             if gtk_app
