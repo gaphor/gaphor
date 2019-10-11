@@ -69,13 +69,6 @@ class MessageLifelineConnect(AbstractConnect):
             del line.subject
             if not message.presentation:
                 message.unlink()
-            for message in list(line._messages):
-                line.remove_message(message, False)
-                message.unlink()
-
-            for message in list(line._inverted_messages):
-                line.remove_message(message, True)
-                message.unlink()
 
     def allow(self, handle, port):
         """

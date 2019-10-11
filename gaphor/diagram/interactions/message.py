@@ -46,7 +46,6 @@ operation information in message's name.
 See also ``lifeline`` module documentation.
 """
 
-from typing import List
 from math import pi, atan2
 
 from gaphor import UML
@@ -67,12 +66,6 @@ class MessageItem(LinePresentation, Named):
 
     Multiple messages can be depicted via this one message item.
 
-    The messages depicted should be handled based on events, not via the
-    add_message, remove_message, set_message_text and swap_message methods.
-
-    Currently one the first message is having a presentation relation with the item the others have none.
-    This is not okay.
-
     Attributes:
 
     - _is_communication: check if message is on communication diagram
@@ -85,8 +78,6 @@ class MessageItem(LinePresentation, Named):
         self._is_communication = False
         self._arrow_pos = 0, 0
         self._arrow_angle = 0
-        self._messages: List[UML.Message] = []
-        self._inverted_messages: List[UML.Message] = []
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
@@ -98,8 +89,6 @@ class MessageItem(LinePresentation, Named):
                 style={"min-width": 0, "min-height": 0},
             ),
             EditableText(text=lambda: self.subject.name or ""),
-            *(Text(text=lambda: message.name) for message in self._messages),
-            *(Text(text=lambda: message.name) for message in self._inverted_messages),
         )
         self.request_update()
 
@@ -122,11 +111,6 @@ class MessageItem(LinePresentation, Named):
             self._arrow_pos = pos
             self._arrow_angle = angle
 
-    def setup_canvas(self):
-        super().setup_canvas()
-        # Invoke here, since we do not receive events, unless we're attached to a canvas
-        self.update_shapes()
-
     def _get_center_pos(self):
         """
         Return position in the centre of middle segment of a line. Angle of
@@ -137,30 +121,13 @@ class MessageItem(LinePresentation, Named):
         angle = atan2(p1.y - p0.y, p1.x - p0.x)
         return pos, angle
 
-    def save(self, save_func):
-        save_func("message", list(self._messages), reference=True)
-        save_func("inverted", list(self._inverted_messages), reference=True)
-
-        super().save(save_func)
-
     def load(self, name, value):
         if name == "message":
-            # print 'message! value =', value
-            self.add_message(value, False)
+            pass
         elif name == "inverted":
-            # print 'inverted! value =', value
-            self.add_message(value, True)
+            pass
         else:
             super().load(name, value)
-
-    def postload(self):
-        for message in self._messages:
-            self.set_message_text(message, message.name, False)
-
-        for message in self._inverted_messages:
-            self.set_message_text(message, message.name, True)
-
-        super().postload()
 
     def _draw_circle(self, cr):
         """
@@ -284,8 +251,6 @@ class MessageItem(LinePresentation, Named):
         if self._is_communication:
             cr = context.cairo
             self._draw_decorating_arrow(cr)
-            if len(self._inverted_messages) > 0:
-                self._draw_decorating_arrow(cr, True)
 
     def is_communication(self):
         """
@@ -301,60 +266,3 @@ class MessageItem(LinePresentation, Named):
             or c2
             and not c2.connected.lifetime.visible
         )
-
-    def add_message(self, message, inverted):
-        """
-        Add message onto communication diagram.
-
-        TODO: Fix this: it's wrong. Messages should be discoved via events
-        """
-        if inverted:
-            messages = self._inverted_messages
-        else:
-            messages = self._messages
-
-        messages.append(message)
-        self.update_shapes()
-
-    def remove_message(self, message, inverted):
-        """
-        Remove message from communication diagram.
-        """
-        if inverted:
-            messages = self._inverted_messages
-        else:
-            messages = self._messages
-        # txt = messages[message]
-        # self.remove_text(txt)
-        messages.remove(message)
-        self.update_shapes()
-
-    def set_message_text(self, message, text, inverted):
-        """
-        Set text of message on communication diagram.
-        """
-        # if inverted:
-        #     messages = self._inverted_messages
-        # else:
-        #     messages = self._messages
-        # messages[message].text = text
-        # self.request_update()
-
-    def swap_messages(self, m1, m2, inverted):
-        """
-        Swap order of two messages on communication diagram.
-        """
-        # if inverted:
-        #     messages = self._inverted_messages = swap(self._inverted_messages, m1, m2)
-        # else:
-        #     messages = self._messages = swap(self._messages, m1, m2)
-        self.update_shapes()
-        return True
-
-
-# def swap(d, k1, k2):
-#     keys = list(d.keys())
-#     i1 = keys.index(k1)
-#     i2 = keys.index(k2)
-#     keys[i1], keys[i2] = keys[i2], keys[i1]
-#     return type(d)((k, d[k]) for k in keys)
