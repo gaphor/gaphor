@@ -109,10 +109,7 @@ class DiagramPage(ActionProvider):
         shortcuts = self.get_toolbox_shortcuts()
 
         def shortcut_action(widget, event):
-            key = event.keyval
-            if ord("A") <= key <= ord("Z"):
-                key += ord("a") - ord("A")
-            action_name = shortcuts.get((key, event.state))
+            action_name = shortcuts.get((event.keyval, event.state))
             if action_name:
                 widget.get_toplevel().get_action_group("diagram").lookup_action(
                     "select-tool"
@@ -125,12 +122,16 @@ class DiagramPage(ActionProvider):
 
     def get_toolbox_shortcuts(self):
         shortcuts = {}
+        # accelerator keys are lower case. Since we handle them in a key-press event
+        # handler, we'll need the upper-case versions as well in case Shift is pressed.
+        upper_offset = ord("A") - ord("a")
         for title, items in TOOLBOX_ACTIONS:
             for action_name, label, icon_name, shortcut in items:
                 if shortcut:
                     key, mod = Gtk.accelerator_parse(shortcut)
                     print(key, mod, action_name)
                     shortcuts[key, mod] = action_name
+                    shortcuts[key + upper_offset, mod] = action_name
 
         return shortcuts
 
