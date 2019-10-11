@@ -17,13 +17,12 @@ from gaphas.view import GtkView
 import gaphas.segment  # Just register the handlers in this module
 
 from gaphor import UML
-from gaphor.abc import ActionProvider
 from gaphor.UML.event import ElementDeleteEvent, DiagramItemCreateEvent
 from gaphor.core import _, event_handler, transactional, action
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
-from gaphor.ui.actiongroup import ActionGroup, create_action_group
+from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.diagramtoolbox import (
     DiagramToolbox,
     TransactionalToolChain,
@@ -34,7 +33,7 @@ from gaphor.ui.event import DiagramSelectionChange
 log = logging.getLogger(__name__)
 
 
-class DiagramPage(ActionProvider):
+class DiagramPage:
 
     VIEW_TARGET_STRING = 0
     VIEW_TARGET_ELEMENT_ID = 1
