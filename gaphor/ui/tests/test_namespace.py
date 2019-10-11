@@ -3,7 +3,6 @@ import gaphor.UML as UML
 from gaphor.ui.namespace import Namespace
 import gaphor.services.eventmanager
 import gaphor.services.componentregistry
-import gaphor.services.actionmanager
 
 
 @pytest.fixture
@@ -22,15 +21,8 @@ def component_registry():
 
 
 @pytest.fixture
-def action_manager(event_manager, component_registry):
-    return gaphor.services.actionmanager.ActionManager(
-        event_manager, component_registry
-    )
-
-
-@pytest.fixture
-def namespace(event_manager, element_factory, action_manager):
-    namespace = Namespace(event_manager, element_factory, action_manager)
+def namespace(event_manager, element_factory):
+    namespace = Namespace(event_manager, element_factory)
     namespace.init()
     yield namespace
     namespace.close()

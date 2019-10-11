@@ -6,11 +6,13 @@ The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
+from typing import Optional, Sequence, Tuple
+
 from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.UML.event import DiagramItemCreateEvent
-from gaphor.core import _, radio_action, build_action_group
+from gaphor.core import _
 from gaphor import diagram
 from gaphor.ui.diagramtools import (
     TransactionalToolChain,
@@ -22,7 +24,7 @@ from gaphor.ui.diagramtools import (
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
-TOOLBOX_ACTIONS = (
+TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[Tuple[str, str, str, Optional[str]]]]] = (
     (
         _("General"),
         (
@@ -35,7 +37,7 @@ TOOLBOX_ACTIONS = (
                 "toolbox-comment-line",
                 _("Comment line"),
                 "gaphor-comment-line-symbolic",
-                "K",
+                "<Shift>K",
             ),
         ),
     ),
@@ -49,20 +51,25 @@ TOOLBOX_ACTIONS = (
                 "toolbox-association",
                 _("Association"),
                 "gaphor-association-symbolic",
-                "A",
+                "<Shift>A",
             ),
-            ("toolbox-dependency", _("Dependency"), "gaphor-dependency-symbolic", "D"),
+            (
+                "toolbox-dependency",
+                _("Dependency"),
+                "gaphor-dependency-symbolic",
+                "<Shift>D",
+            ),
             (
                 "toolbox-generalization",
                 _("Generalization"),
                 "gaphor-generalization-symbolic",
-                "G",
+                "<Shift>G",
             ),
             (
                 "toolbox-implementation",
                 _("Implementation"),
                 "gaphor-implementation-symbolic",
-                "I",
+                "<Shift>I",
             ),
         ),
     ),
@@ -73,7 +80,12 @@ TOOLBOX_ACTIONS = (
             ("toolbox-artifact", _("Artifact"), "gaphor-artifact-symbolic", "h"),
             ("toolbox-node", _("Node"), "gaphor-node-symbolic", "n"),
             ("toolbox-device", _("Device"), "gaphor-device-symbolic", "d"),
-            ("toolbox-connector", _("Connector"), "gaphor-connector-symbolic", "C"),
+            (
+                "toolbox-connector",
+                _("Connector"),
+                "gaphor-connector-symbolic",
+                "<Shift>C",
+            ),
         ),
     ),
     (
@@ -108,20 +120,25 @@ TOOLBOX_ACTIONS = (
                 "toolbox-fork-node",
                 _("Fork/join node"),
                 "gaphor-fork-node-symbolic",
-                "R",
+                "<Shift>R",
             ),
             (
                 "toolbox-object-node",
                 _("Object node"),
                 "gaphor-object-node-symbolic",
-                "O",
+                "<Shift>O",
             ),
-            ("toolbox-partition", _("Partition"), "gaphor-partition-symbolic", "P"),
+            (
+                "toolbox-partition",
+                _("Partition"),
+                "gaphor-partition-symbolic",
+                "<Shift>P",
+            ),
             (
                 "toolbox-flow",
                 _("Control/object flow"),
                 "gaphor-control-flow-symbolic",
-                "F",
+                "<Shift>F",
             ),
             (
                 "toolbox-send-signal-action",
@@ -146,7 +163,7 @@ TOOLBOX_ACTIONS = (
                 "toolbox-interaction",
                 _("Interaction"),
                 "gaphor-interaction-symbolic",
-                "N",
+                "<Shift>N",
             ),
         ),
     ),
@@ -158,7 +175,7 @@ TOOLBOX_ACTIONS = (
                 "toolbox-initial-pseudostate",
                 _("Initial Pseudostate"),
                 "gaphor-initial-pseudostate-symbolic",
-                "S",
+                "<Shift>S",
             ),
             (
                 "toolbox-final-state",
@@ -172,7 +189,12 @@ TOOLBOX_ACTIONS = (
                 "gaphor-pseudostate-symbolic",
                 "q",
             ),
-            ("toolbox-transition", _("Transition"), "gaphor-transition-symbolic", "T"),
+            (
+                "toolbox-transition",
+                _("Transition"),
+                "gaphor-transition-symbolic",
+                "<Shift>T",
+            ),
         ),
     ),
     (
@@ -184,10 +206,10 @@ TOOLBOX_ACTIONS = (
                 "toolbox-use-case-association",
                 _("Association"),
                 "gaphor-association-symbolic",
-                "B",
+                "<Shift>B",
             ),
-            ("toolbox-include", _("Include"), "gaphor-include-symbolic", "U"),
-            ("toolbox-extend", _("Extend"), "gaphor-extend-symbolic", "X"),
+            ("toolbox-include", _("Include"), "gaphor-include-symbolic", "<Shift>U"),
+            ("toolbox-extend", _("Extend"), "gaphor-extend-symbolic", "<Shift>X"),
         ),
     ),
     (
@@ -196,13 +218,18 @@ TOOLBOX_ACTIONS = (
             ("toolbox-profile", _("Profile"), "gaphor-profile-symbolic", "r"),
             ("toolbox-metaclass", _("Metaclass"), "gaphor-metaclass-symbolic", "m"),
             ("toolbox-stereotype", _("Stereotype"), "gaphor-stereotype-symbolic", "z"),
-            ("toolbox-extension", _("Extension"), "gaphor-extension-symbolic", "E"),
+            (
+                "toolbox-extension",
+                _("Extension"),
+                "gaphor-extension-symbolic",
+                "<Shift>E",
+            ),
         ),
     ),
 )
 
 
-def itemiter(toolbox_actions):
+def tooliter(toolbox_actions):
     """
     Iterate toolbox items, irregardless section headers
     """
@@ -212,16 +239,16 @@ def itemiter(toolbox_actions):
 
 class DiagramToolbox:
     """
-    Composite class for DiagramPage (diagrampage.py).
+    Composite class for DiagramPage. 
+    
+    See diagrampage.py.
     """
 
-    def __init__(self, diagram, view, element_factory, event_manager, properties):
+    def __init__(self, diagram, view, element_factory, event_manager):
         self.diagram = diagram
         self.view = view
         self.element_factory = element_factory
         self.event_manager = event_manager
-        self.properties = properties
-        self.action_group = build_action_group(self)
 
     namespace = property(lambda s: s.diagram.namespace)
 
@@ -231,19 +258,7 @@ class DiagramToolbox:
         """
         return getattr(self, tool_name.replace("-", "_"))()
 
-    action_list = list(zip(*list(itemiter(TOOLBOX_ACTIONS))))
-
-    @radio_action(
-        names=action_list[0], labels=action_list[1], icon_names=action_list[2]
-    )
-    def _set_toolbox_action(self, id):
-        """
-        Activate a tool based on its index in the TOOLBOX_ACTIONS list.
-        """
-        tool_name = list(itemiter(TOOLBOX_ACTIONS))[id][0]
-        tool = TransactionalToolChain(self.event_manager)
-        tool.append(self.get_tool(tool_name))
-        self.view.tool = tool
+    action_list = list(zip(*list(tooliter(TOOLBOX_ACTIONS))))
 
     def _item_factory(self, item_class, subject_class=None, config_func=None):
         """
@@ -283,8 +298,6 @@ class DiagramToolbox:
         return factory_method
 
     def _after_handler(self, new_item):
-        if self.properties("reset-tool-after-create", False):
-            self.action_group.get_action("toolbox-pointer").activate()
         self.event_manager.handle(
             DiagramItemCreateEvent(self.element_factory, new_item)
         )

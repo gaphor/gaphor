@@ -11,9 +11,11 @@ class CopyServiceTestCase(TestCase):
 
     services = TestCase.services + [
         "main_window",
-        "action_manager",
         "properties",
         "undo_manager",
+        "import_menu",
+        "export_menu",
+        "tools_menu",
     ]
 
     def setUp(self):

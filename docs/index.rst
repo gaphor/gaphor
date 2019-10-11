@@ -39,7 +39,6 @@ Tech section
    stereotypes
    datamodel
    connect
-   actions
    items
    services
    so

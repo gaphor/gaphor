@@ -28,11 +28,14 @@ def application():
             "element_factory",
             "main_window",
             "properties_manager",
-            "action_manager",
             "properties",
             "namespace",
             "diagrams",
             "toolbox",
+            "elementeditor",
+            "import_menu",
+            "export_menu",
+            "tools_menu",
         ]
     )
     main_window = Application.get_service("main_window")
@@ -106,11 +109,14 @@ class HandleToolTestCase(unittest.TestCase):
                 "element_factory",
                 "main_window",
                 "properties_manager",
-                "action_manager",
                 "properties",
                 "namespace",
                 "diagrams",
                 "toolbox",
+                "elementeditor",
+                "import_menu",
+                "export_menu",
+                "tools_menu",
             ]
         )
         self.component_registry = Application.get_service("component_registry")

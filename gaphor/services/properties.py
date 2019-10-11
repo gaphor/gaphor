@@ -14,13 +14,14 @@ from gaphor.misc import get_config_dir
 from gaphor.abc import Service
 
 
-class PropertyChangeEvent:
+class PropertyChanged:
+    """
+    This event is triggered any time a property is changed.  This event
+    holds the property key, the current value, and the new value.
+    """
 
-    """This event is triggered any time a property is changed.  This event
-    holds the property name, the current value, and the new value."""
-
-    def __init__(self, name, old_value, new_value):
-        self.name = name
+    def __init__(self, key, old_value, new_value):
+        self.key = key
         self.old_value = old_value
         self.new_value = new_value
 
@@ -99,7 +100,7 @@ class Properties(Service):
 
         if value != old_value:
             resources[key] = value
-            self.event_manager.handle(PropertyChangeEvent(key, old_value, value))
+            self.event_manager.handle(PropertyChanged(key, old_value, value))
             self._backend.update(resources, key, value)
 
 

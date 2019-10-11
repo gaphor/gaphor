@@ -8,8 +8,9 @@ import gaphas
 
 from gaphor.UML import Element
 from gaphor.UML.collection import collection
-from gaphor.core import _, event_handler, action, build_action_group, transactional
+from gaphor.core import _, event_handler, action, transactional
 from gaphor.abc import Service, ActionProvider
+from gaphor.ui.actiongroup import set_action_state
 from gaphor.ui.event import DiagramSelectionChange
 
 
@@ -29,28 +30,11 @@ class CopyService(Service, ActionProvider):
       on the canvas and make the uml element visible again.
     """
 
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="edit">
-            <placeholder name="primary">
-              <menuitem action="edit-copy" />
-              <menuitem action="edit-paste" />
-            </placeholder>
-          </menu>
-        </menubar>
-      </ui>
-    """
-
-    def __init__(self, event_manager, element_factory, main_window):
+    def __init__(self, event_manager, element_factory, diagrams):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.main_window = main_window
+        self.diagrams = diagrams
         self.copy_buffer: Set[Element] = set()
-        self.action_group = build_action_group(self)
-
-        self.action_group.get_action("edit-copy").props.sensitive = False
-        self.action_group.get_action("edit-paste").props.sensitive = False
 
         event_manager.subscribe(self._update)
 
@@ -61,14 +45,13 @@ class CopyService(Service, ActionProvider):
     @event_handler(DiagramSelectionChange)
     def _update(self, event):
         diagram_view = event.diagram_view
-        self.action_group.get_action("edit-copy").props.sensitive = bool(
-            diagram_view.selected_items
+        diagram_view.get_action_group("win").lookup_action("edit-copy").set_enabled(
+            bool(diagram_view.selected_items)
         )
 
     def copy(self, items):
         if items:
             self.copy_buffer = set(items)
-            self.action_group.get_action("edit-paste").props.sensitive = True
 
     def copy_func(self, name, value, reference=False):
         """
@@ -138,23 +121,26 @@ class CopyService(Service, ActionProvider):
             item.postload()
 
     @action(
-        name="edit-copy", label=_("Copy"), icon_name="edit-copy", accel="<Primary>c"
+        name="edit-copy", label=_("Copy"), icon_name="edit-copy", shortcut="<Primary>c"
     )
     def copy_action(self):
-        view = self.main_window.get_current_diagram_view()
+        view = self.diagrams.get_current_view()
         if view.is_focus():
             items = view.selected_items
             copy_items = []
             for i in items:
                 copy_items.append(i)
             self.copy(copy_items)
+            view.get_action_group("win").lookup_action("edit-paste").set_enabled(
+                bool(self.copy_buffer)
+            )
 
     @action(
-        name="edit-paste", label="_Paste", icon_name="edit-paste", accel="<Primary>p"
+        name="edit-paste", label="_Paste", icon_name="edit-paste", shortcut="<Primary>v"
     )
     def paste_action(self):
-        view = self.main_window.get_current_diagram_view()
-        diagram = self.main_window.get_current_diagram()
+        view = self.diagrams.get_current_view()
+        diagram = self.diagrams.get_current_diagram()
         if not view:
             return
 

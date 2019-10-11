@@ -6,9 +6,9 @@ import logging
 import cairo
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import ItemPainter, BoundingBoxPainter
-from gaphas.view import View
+from gaphas.view import Context, View
 
-from gaphor.core import _, action, build_action_group
+from gaphor.core import _, action
 from gaphor.abc import Service, ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.filedialog import FileDialog
@@ -17,41 +17,23 @@ from gaphor.ui.questiondialog import QuestionDialog
 logger = logging.getLogger(__name__)
 
 
-class DiagramExportManager(Service, ActionProvider):
+def paint(view, cr):
+    view.painter.paint(Context(cairo=cr, items=view.canvas.get_all_items(), area=None))
+
+
+class DiagramExport(Service, ActionProvider):
     """
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
 
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="file">
-            <menu action="file-export">
-              <menuitem action="file-export-svg" />
-              <menuitem action="file-export-png" />
-              <menuitem action="file-export-pdf" />
-              <separator />
-            </menu>
-          </menu>
-        </menubar>
-      </ui>
-    """
-
-    def __init__(self, component_registry, properties):
-        self.component_registry = component_registry
+    def __init__(self, diagrams, properties, export_menu):
+        self.diagrams = diagrams
         self.properties = properties
-        self.action_group = build_action_group(self)
+        self.export_menu = export_menu
+        export_menu.add_actions(self)
 
     def shutdown(self):
-        pass
-
-    def update(self):
-        pass
-
-    def get_current_diagram(self):
-        return self.component_registry.get(
-            UIComponent, "diagrams"
-        ).get_current_diagram()
+        self.export_menu.remove_actions(self)
 
     def save_dialog(self, diagram, title, ext):
 
@@ -86,13 +68,7 @@ class DiagramExportManager(Service, ActionProvider):
             return filename
 
     def update_painters(self, view):
-
-        logger.info("Updating painters")
-        logger.debug(f"View is {view}")
-
-        sloppiness = self.properties("diagram.sloppiness", 0)
-
-        logger.debug(f"Sloppiness is {sloppiness}")
+        sloppiness = self.properties.get("diagram.sloppiness", 0)
 
         if sloppiness:
             view.painter = FreeHandPainter(ItemPainter(), sloppiness)
@@ -102,11 +78,7 @@ class DiagramExportManager(Service, ActionProvider):
         else:
             view.painter = ItemPainter()
 
-    def save_svg(self, filename, canvas):
-
-        logger.info("Exporting to SVG")
-        logger.debug(f"SVG path is {filename}")
-
+    def render(self, canvas, new_surface):
         view = View(canvas)
 
         self.update_painters(view)
@@ -120,103 +92,67 @@ class DiagramExportManager(Service, ActionProvider):
         tmpsurface.flush()
 
         w, h = view.bounding_box.width, view.bounding_box.height
-        surface = cairo.SVGSurface(filename, w, h)
+        surface = new_surface(w, h)
         cr = cairo.Context(surface)
         view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
-        view.paint(cr)
+        paint(view, cr)
         cr.show_page()
+        return surface
+
+    def save_svg(self, filename, canvas):
+        surface = self.render(canvas, lambda w, h: cairo.SVGSurface(filename, w, h))
         surface.flush()
         surface.finish()
 
     def save_png(self, filename, canvas):
-
-        logger.info("Exporting to PNG")
-        logger.debug(f"PNG path is {filename}")
-
-        view = View(canvas)
-
-        self.update_painters(view)
-
-        # Update bounding boxes with a temporaly CairoContext
-        # (used for stuff like calculating font metrics)
-        tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
-        tmpcr = cairo.Context(tmpsurface)
-        view.update_bounding_box(tmpcr)
-        tmpcr.show_page()
-        tmpsurface.flush()
-
-        w, h = view.bounding_box.width, view.bounding_box.height
-        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w + 1), int(h + 1))
-        cr = cairo.Context(surface)
-        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
-        view.paint(cr)
-        cr.show_page()
+        surface = self.render(
+            canvas,
+            lambda w, h: cairo.ImageSurface(
+                cairo.FORMAT_ARGB32, int(w + 1), int(h + 1)
+            ),
+        )
         surface.write_to_png(filename)
 
     def save_pdf(self, filename, canvas):
-
-        logger.info("Exporting to PDF")
-        logger.debug(f"PDF path is {filename}")
-
-        view = View(canvas)
-
-        self.update_painters(view)
-
-        # Update bounding boxes with a temporaly CairoContext
-        # (used for stuff like calculating font metrics)
-        tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
-        tmpcr = cairo.Context(tmpsurface)
-        view.update_bounding_box(tmpcr)
-        tmpcr.show_page()
-        tmpsurface.flush()
-
-        w, h = view.bounding_box.width, view.bounding_box.height
-        surface = cairo.PDFSurface(filename, w, h)
-        cr = cairo.Context(surface)
-        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
-        view.paint(cr)
-        cr.show_page()
+        surface = self.render(canvas, lambda w, h: cairo.PDFSurface(filename, w, h))
         surface.flush()
         surface.finish()
 
     @action(
         name="file-export-svg",
-        label="Export to SVG",
-        tooltip="Export the diagram to SVG",
+        label=_("Export to SVG"),
+        tooltip=_("Export the diagram to SVG"),
     )
     def save_svg_action(self):
-        title = "Export diagram to SVG"
+        title = _("Export diagram to SVG")
         ext = ".svg"
-        diagram = self.get_current_diagram()
+        diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_svg(filename, diagram.canvas)
 
     @action(
         name="file-export-png",
-        label="Export to PNG",
-        tooltip="Export the diagram to PNG",
+        label=_("Export to PNG"),
+        tooltip=_("Export the diagram to PNG"),
     )
     def save_png_action(self):
-        title = "Export diagram to PNG"
+        title = _("Export diagram to PNG")
         ext = ".png"
-        diagram = self.get_current_diagram()
+        diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_png(filename, diagram.canvas)
 
     @action(
         name="file-export-pdf",
-        label="Export to PDF",
-        tooltip="Export the diagram to PDF",
+        label=_("Export to PDF"),
+        tooltip=_("Export the diagram to PDF"),
     )
     def save_pdf_action(self):
-        title = "Export diagram to PDF"
+        title = _("Export diagram to PDF")
         ext = ".pdf"
-        diagram = self.get_current_diagram()
+        diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
             self.save_pdf(filename, diagram.canvas)
-
-
-# vim:sw=4:et:

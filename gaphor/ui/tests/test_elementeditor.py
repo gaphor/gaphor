@@ -17,24 +17,14 @@ def element_factory(event_manager):
 
 
 @pytest.fixture
-def main_window(event_manager, element_factory):
-    class MockMainWindow:
-        window = None
-
-        def get_ui_component(self, name):
-            assert name == "diagrams"
-            return Diagrams(
-                event_manager=event_manager,
-                element_factory=element_factory,
-                action_manager=None,
-                properties=lambda a, b: 0,
-            )
-
-    return MockMainWindow()
+def diagrams(event_manager, element_factory):
+    return Diagrams(
+        event_manager=event_manager, element_factory=element_factory, properties={}
+    )
 
 
-def test_reopen_of_window(event_manager, element_factory, main_window):
-    editor = ElementEditor(event_manager, element_factory, main_window)
+def test_reopen_of_window(event_manager, element_factory, diagrams):
+    editor = ElementEditor(event_manager, element_factory, diagrams)
 
     editor.open()
     editor.close()

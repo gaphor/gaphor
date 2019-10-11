@@ -15,10 +15,13 @@ def application():
             "element_factory",
             "properties",
             "main_window",
-            "action_manager",
             "namespace",
             "diagrams",
             "toolbox",
+            "elementeditor",
+            "import_menu",
+            "export_menu",
+            "tools_menu",
         ]
     )
     yield Application

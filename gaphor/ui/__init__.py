@@ -11,10 +11,14 @@ from gi.repository import Gio, Gtk, Gdk
 import importlib.resources
 import os.path
 
+from gaphor.ui.actiongroup import apply_application_actions
+
+
+APPLICATION_ID = "org.gaphor.Gaphor"
+
+
 icon_theme = Gtk.IconTheme.get_default()
 with importlib.resources.path("gaphor.ui", "icons") as path:
-    icon_theme.append_search_path(str(path))
-with importlib.resources.path("gaphor.ui", "pixmaps") as path:
     icon_theme.append_search_path(str(path))
 
 
@@ -30,11 +34,14 @@ css_provider.load_from_data(b"#diagram-tab { background: white }")
 
 def run(application, model):
     gtk_app = Gtk.Application(
-        application_id="org.gaphor.Gaphor", flags=Gio.ApplicationFlags.FLAGS_NONE
+        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.FLAGS_NONE
     )
 
     def app_startup(app):
         application.init()
+
+        component_registry = application.get_service("component_registry")
+        apply_application_actions(component_registry, app)
 
     def app_activate(app):
         # Make sure gui is loaded ASAP.
@@ -52,14 +59,6 @@ def run(application, model):
 
     def app_shutdown(app):
         application.shutdown()
-
-    def app_quit(action, param):
-        file_manager = application.get_service("file_manager")
-        return file_manager.file_quit()
-
-    action = Gio.SimpleAction.new("quit", None)
-    action.connect("activate", app_quit)
-    gtk_app.add_action(action)
 
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)

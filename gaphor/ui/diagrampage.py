@@ -1,6 +1,8 @@
-#!/usr/bin/env python
+from typing import Optional, Sequence, Tuple
 
 import logging
+
+from gi.repository import GLib, Gdk, Gtk
 
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (
@@ -13,55 +15,26 @@ from gaphas.painter import (
 )
 from gaphas.view import GtkView
 import gaphas.segment  # Just register the handlers in this module
-from gi.repository import Gdk
-from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
-from gaphor.UML.event import ElementDeleteEvent
-from gaphor.core import _, event_handler, transactional, action, build_action_group
+from gaphor.UML.event import ElementDeleteEvent, DiagramItemCreateEvent
+from gaphor.core import _, event_handler, transactional, action
 from gaphor.diagram.support import get_diagram_item
+from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
-from gaphor.ui.diagramtoolbox import DiagramToolbox
+from gaphor.ui.actiongroup import ActionGroup, create_action_group
+from gaphor.ui.diagramtoolbox import (
+    DiagramToolbox,
+    TransactionalToolChain,
+    TOOLBOX_ACTIONS,
+)
 from gaphor.ui.event import DiagramSelectionChange
 
 log = logging.getLogger(__name__)
 
 
 class DiagramPage(ActionProvider):
-
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="edit">
-            <placeholder name="ternary">
-              <menuitem action="diagram-delete" />
-              <separator />
-              <menuitem action="diagram-select-all" />
-              <menuitem action="diagram-unselect-all" />
-              <separator />
-            </placeholder>
-          </menu>
-          <menu action="diagram">
-            <placeholder name="secondary">
-              <menuitem action="diagram-zoom-in" />
-              <menuitem action="diagram-zoom-out" />
-              <menuitem action="diagram-zoom-100" />
-              <separator />
-              <menuitem action="diagram-close" />
-            </placeholder>
-          </menu>
-        </menubar>
-        <toolbar name='mainwindow-toolbar'>
-          <placeholder name="left">
-            <separator />
-            <toolitem action="diagram-zoom-in" />
-            <toolitem action="diagram-zoom-out" />
-            <toolitem action="diagram-zoom-100" />
-          </placeholder>
-        </toolbar>
-      </ui>
-    """
 
     VIEW_TARGET_STRING = 0
     VIEW_TARGET_ELEMENT_ID = 1
@@ -76,11 +49,12 @@ class DiagramPage(ActionProvider):
         self.element_factory = element_factory
         self.properties = properties
         self.diagram = diagram
-        self.view = None
-        self.widget = None
-        self.action_group = build_action_group(self)
-        self.toolbox = None
+        self.view: Optional[GtkView] = None
+        self.widget: Optional[Gtk.Widget] = None
+        self.toolbox: Optional[DiagramToolbox] = None
         self.event_manager.subscribe(self._on_element_delete)
+        self.event_manager.subscribe(self._on_sloppy_lines)
+        self.event_manager.subscribe(self._on_diagram_item_created)
 
     title = property(lambda s: s.diagram and s.diagram.name or _("<None>"))
 
@@ -122,80 +96,107 @@ class DiagramPage(ActionProvider):
         view.connect("focus-changed", self._on_view_selection_changed)
         view.connect("selection-changed", self._on_view_selection_changed)
         view.connect_after("key-press-event", self._on_key_press_event)
-        # view.connect("drag-drop", self._on_drag_drop)
         view.connect("drag-data-received", self._on_drag_data_received)
 
         self.view = view
 
         self.toolbox = DiagramToolbox(
-            self.diagram,
-            view,
-            self.element_factory,
-            self.event_manager,
-            self.properties,
+            self.diagram, view, self.element_factory, self.event_manager
         )
 
+        self.widget.action_group = create_action_group(self, "diagram")
+
+        shortcuts = self.get_toolbox_shortcuts()
+
+        def shortcut_action(widget, event):
+            key = event.keyval
+            if ord("A") <= key <= ord("Z"):
+                key += ord("a") - ord("A")
+            action_name = shortcuts.get((key, event.state))
+            if action_name:
+                widget.get_toplevel().get_action_group("diagram").lookup_action(
+                    "select-tool"
+                ).change_state(GLib.Variant.new_string(action_name))
+
+        self.widget.connect("key-press-event", shortcut_action)
+        self._on_sloppy_lines()
+
         return self.widget
+
+    def get_toolbox_shortcuts(self):
+        shortcuts = {}
+        for title, items in TOOLBOX_ACTIONS:
+            for action_name, label, icon_name, shortcut in items:
+                if shortcut:
+                    key, mod = Gtk.accelerator_parse(shortcut)
+                    print(key, mod, action_name)
+                    shortcuts[key, mod] = action_name
+
+        return shortcuts
 
     @event_handler(ElementDeleteEvent)
     def _on_element_delete(self, event):
         if event.element is self.diagram:
             self.close()
 
-    @action(name="diagram-close", label=_("_Close"), icon_name="window-close")
+    @event_handler(PropertyChanged)
+    def _on_sloppy_lines(self, event=None):
+        if not event or event.key == "diagram.sloppiness":
+            self.set_drawing_style(event and event.new_value or 0.0)
+
     def close(self):
         """
         Tab is destroyed. Do the same thing that would
-        be done if File->Close was pressed.
+        be done if Close was pressed.
         """
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
         self.view = None
 
     @action(
-        name="diagram-zoom-in",
+        name="diagram.zoom-in",
         label=_("Zoom _In"),
         icon_name="zoom-in",
-        accel="<Primary>plus",
+        shortcut="<Primary>plus",
     )
     def zoom_in(self):
         self.view.zoom(1.2)
 
     @action(
-        name="diagram-zoom-out",
+        name="diagram.zoom-out",
         label=_("Zoom _Out"),
         icon_name="zoom-out",
-        accel="<Primary>minus",
+        shortcut="<Primary>minus",
     )
     def zoom_out(self):
         self.view.zoom(1 / 1.2)
 
     @action(
-        name="diagram-zoom-100",
+        name="diagram.zoom-100",
         label=_("_Normal Size"),
         icon_name="zoom-original",
-        accel="<Primary>0",
+        shortcut="<Primary>0",
     )
     def zoom_100(self):
         zx = self.view.matrix[0]
         self.view.zoom(1 / zx)
 
     @action(
-        name="diagram-select-all",
+        name="diagram.select-all",
         label="_Select all",
         icon_name="edit-select-all",
-        accel="<Primary>a",
+        shortcut="<Primary>a",
     )
     def select_all(self):
         self.view.select_all()
 
     @action(
-        name="diagram-unselect-all", label="Des_elect all", accel="<Primary><Shift>a"
+        name="diagram.unselect-all", label="Des_elect all", shortcut="<Primary><Shift>a"
     )
     def unselect_all(self):
         self.view.unselect_all()
 
-    @action(name="diagram-delete", label=_("_Delete"), icon_name="edit-delete")
+    @action(name="diagram.delete", label=_("_Delete"), icon_name="edit-delete")
     @transactional
     def delete_selected_items(self):
         items = self.view.selected_items
@@ -205,6 +206,20 @@ class DiagramPage(ActionProvider):
             else:
                 if i.canvas:
                     i.canvas.remove(i)
+
+    @action(name="diagram.select-tool", state="toolbox-pointer")
+    def select_tool(self, tool_name: str):
+        tool = TransactionalToolChain(self.event_manager)
+        if self.toolbox and self.view:
+            tool.append(self.toolbox.get_tool(tool_name))
+            self.view.tool = tool
+
+    @event_handler(DiagramItemCreateEvent)
+    def _on_diagram_item_created(self, event):
+        if self.properties("reset-tool-after-create", False):
+            self.widget.action_group.actions.lookup_action("select-tool").activate(
+                GLib.Variant.new_string("toolbox-pointer")
+            )
 
     def set_drawing_style(self, sloppiness=0.0):
         """Set the drawing style for the diagram. 0.0 is straight,
@@ -217,12 +232,9 @@ class DiagramPage(ActionProvider):
         view = self.view
 
         if sloppiness:
-
             item_painter = FreeHandPainter(ItemPainter(), sloppiness=sloppiness)
             box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness=sloppiness)
-
         else:
-
             item_painter = ItemPainter()
             box_painter = BoundingBoxPainter()
 

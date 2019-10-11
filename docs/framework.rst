@@ -26,15 +26,6 @@ The Application will look for services defined as :doc:`gaphor.services
 
 The most notable services are:
 
-gui_manager
-  The GUI manager is one of the major services that have to be loaded. The 
-  GUI manager is responsible for loading the main window and displaying it 
-  on the screen.
-
-  This by itself doesn't do a thing though. The Action manager 
-  (`action_manager`) is required to maintain all actions users can perform.
-  Actions will be shown as menu entries for example.
-
 file_manager
   Loading and saving a model is done through this service. 
 

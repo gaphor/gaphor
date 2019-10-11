@@ -29,9 +29,10 @@ def deserialize(layout, container, layoutstr, itemfactory):
     def _des(element, index, parent_widget=None):
         if element.tag == "component":
             name = element.attrib["name"]
+            resize = element.attrib.get("resize", "false") == "true"
             widget = itemfactory(name)
             widget.set_name(name)
-            add(widget, index, parent_widget)
+            add(widget, index, parent_widget, resize)
         else:
             factory = widget_factory[element.tag]
             widget = factory(parent=parent_widget, index=index, **element.attrib)
@@ -46,12 +47,14 @@ def deserialize(layout, container, layoutstr, itemfactory):
     # return layout
 
 
-def add(widget, index, parent_widget):
+def add(widget, index, parent_widget, resize=False, shrink=False):
     if isinstance(parent_widget, Gtk.Paned):
         if index == 0:
-            parent_widget.pack1(child=widget, resize=False, shrink=False)
+            parent_widget.pack1(child=widget, resize=resize, shrink=shrink)
         elif index == 1:
-            parent_widget.pack2(child=widget, resize=True, shrink=False)
+            parent_widget.pack2(child=widget, resize=resize, shrink=shrink)
+    elif isinstance(parent_widget, Gtk.Box):
+        parent_widget.pack_start(widget, resize, resize, 2)
     else:
         parent_widget.add(widget)
 
@@ -80,3 +83,16 @@ def paned(parent, index, orientation, position=None):
         paned.set_position(int(position))
     paned.show()
     return paned
+
+
+@factory("box")
+def box(parent, index, orientation):
+    box = Gtk.Box.new(
+        Gtk.Orientation.HORIZONTAL
+        if orientation == "horizontal"
+        else Gtk.Orientation.VERTICAL,
+        0,
+    )
+    add(box, index, parent)
+    box.show()
+    return box

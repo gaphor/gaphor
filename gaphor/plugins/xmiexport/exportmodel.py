@@ -268,4 +268,4 @@ class XMIExport:
         return element.__class__.__name__ == "Generalization"
 
     def select_realization(self, element):
-        return element.__class__.name__ == "Implementation"
+        return element.__class__.__name__ == "Implementation"

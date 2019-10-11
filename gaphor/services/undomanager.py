@@ -27,10 +27,10 @@ from gaphor.UML.event import (
     ModelFactoryEvent,
 )
 from gaphor.UML.properties import association as association_property
-from gaphor.action import action, build_action_group
+from gaphor.action import action
 from gaphor.core import _, event_handler
 from gaphor.event import (
-    ActionExecuted,
+    ActionEnabled,
     ServiceEvent,
     TransactionBegin,
     TransactionCommit,
@@ -90,42 +90,17 @@ class UndoManager(Service, ActionProvider):
     to be used to undo or redo the last performed action.
     """
 
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="edit">
-            <placeholder name="primary">
-              <menuitem action="edit-undo" />
-              <menuitem action="edit-redo" />
-              <separator />
-            </placeholder>
-          </menu>
-        </menubar>
-        <toolbar action="mainwindow-toolbar">
-          <placeholder name="left">
-            <toolitem action="edit-undo" />
-            <toolitem action="edit-redo" />
-            <separator />
-          </placeholder>
-        </toolbar>
-      </ui>
-    """
-
     def __init__(self, event_manager):
         self.event_manager = event_manager
         self._undo_stack: List[ActionStack] = []
         self._redo_stack: List[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
-        self.action_group = build_action_group(self)
-
-        logger.info("Starting")
 
         event_manager.subscribe(self.reset)
         event_manager.subscribe(self.begin_transaction)
         event_manager.subscribe(self.commit_transaction)
         event_manager.subscribe(self.rollback_transaction)
-        event_manager.subscribe(self._action_executed)
         self._register_undo_handlers()
         self._action_executed()
 
@@ -134,7 +109,6 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.begin_transaction)
         self.event_manager.unsubscribe(self.commit_transaction)
         self.event_manager.unsubscribe(self.rollback_transaction)
-        self.event_manager.unsubscribe(self._action_executed)
         self._unregister_undo_handlers()
 
     def clear_undo_stack(self):
@@ -164,8 +138,6 @@ class UndoManager(Service, ActionProvider):
         """
         if self._current_transaction:
             self._current_transaction.add(action)
-            self.event_manager.handle(UndoManagerStateChanged(self))
-
             # TODO: should this be placed here?
             self._action_executed()
 
@@ -182,7 +154,6 @@ class UndoManager(Service, ActionProvider):
 
         self._current_transaction = None
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @event_handler(TransactionRollback)
@@ -208,18 +179,16 @@ class UndoManager(Service, ActionProvider):
             # Discard all data collected in the rollback "transaction"
             self._undo_stack = undo_stack
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def discard_transaction(self):
 
         self._current_transaction = None
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @action(
-        name="edit-undo", label=_("_Undo"), icon_name="edit-undo", accel="<Primary>z"
+        name="edit-undo", label=_("_Undo"), icon_name="edit-undo", shortcut="<Primary>z"
     )
     def undo_transaction(self):
         if not self._undo_stack:
@@ -248,14 +217,13 @@ class UndoManager(Service, ActionProvider):
         while len(self._redo_stack) > self._stack_depth:
             del self._redo_stack[0]
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @action(
         name="edit-redo",
         label=_("_Redo"),
         icon_name="edit-redo",
-        accel="<Primary><Shift>z",
+        shortcut="<Primary><Shift>z",
     )
     def redo_transaction(self):
         if not self._redo_stack:
@@ -270,7 +238,6 @@ class UndoManager(Service, ActionProvider):
         finally:
             self._redo_stack = redo_stack
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def in_transaction(self):
@@ -282,10 +249,10 @@ class UndoManager(Service, ActionProvider):
     def can_redo(self):
         return bool(self._redo_stack)
 
-    @event_handler(ActionExecuted)
     def _action_executed(self, event=None):
-        self.action_group.get_action("edit-undo").set_sensitive(self.can_undo())
-        self.action_group.get_action("edit-redo").set_sensitive(self.can_redo())
+        self.event_manager.handle(ActionEnabled("win.edit-undo", self.can_undo()))
+        self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
+        self.event_manager.handle(UndoManagerStateChanged(self))
 
     ##
     ## Undo Handlers

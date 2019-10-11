@@ -28,10 +28,10 @@ TODO:
 from typing import Dict, List, Tuple, Type
 
 import abc
+from gi.repository import GObject, Gdk, Gtk
+
 import gaphas.item
-from gi.repository import GObject
-from gi.repository import Gdk
-from gi.repository import Gtk
+from gaphas.segment import Segment
 
 from gaphor import UML
 from gaphor.core import _, transactional
@@ -393,7 +393,7 @@ class NamedElementPropertyPage(PropertyPageBase):
             subject
         )
         self.subject = subject
-        self.watcher = subject.watcher()
+        self.watcher = subject and subject.watcher()
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
@@ -418,8 +418,9 @@ class NamedElementPropertyPage(PropertyPageBase):
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
 
-        self.watcher.watch("name", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
+        if self.watcher:
+            self.watcher.watch("name", handler).subscribe_all()
+            entry.connect("destroy", self.watcher.unsubscribe_all)
 
         return page
 
@@ -466,10 +467,6 @@ class LineStylePage(PropertyPageBase):
 
         page.pack_start(hbox, False, True, 0)
 
-        if len(self.item.handles()) < 3:
-            # Only one segment
-            button.props.sensitive = False
-
         hbox = Gtk.HBox()
         label = Gtk.Label(label="")
         label.set_justify(Gtk.Justification.LEFT)
@@ -487,8 +484,13 @@ class LineStylePage(PropertyPageBase):
 
     @transactional
     def _on_orthogonal_change(self, button):
+        if len(self.item.handles()) < 3:
+            line_segment = Segment(self.item, None)
+            line_segment.split_segment(0)
         self.item.orthogonal = button.get_active()
+        self.item.canvas.update_now()
 
     @transactional
     def _on_horizontal_change(self, button):
         self.item.horizontal = button.get_active()
+        self.item.canvas.update_now()

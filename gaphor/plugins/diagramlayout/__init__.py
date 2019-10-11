@@ -13,7 +13,7 @@ The layout is done like this:
 import logging
 import random
 
-from gaphor.core import action, build_action_group, transactional
+from gaphor.core import action, transactional
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.classes import GeneralizationItem, ImplementationItem
 from gaphor.abc import Service, ActionProvider
@@ -24,19 +24,8 @@ log = logging.getLogger(__name__)
 
 
 class DiagramLayout(Service, ActionProvider):
-
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="diagram">
-            <menuitem action="diagram-layout" />
-          </menu>
-        </menubar>
-      </ui>"""
-
     def __init__(self, component_registry):
         self.component_registry = component_registry
-        self.action_group = build_action_group(self)
 
     def shutdown(self):
         pass

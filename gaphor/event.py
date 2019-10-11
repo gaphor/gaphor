@@ -62,11 +62,13 @@ class TransactionRollback:
     pass
 
 
-class ActionExecuted:
+class ActionEnabled:
     """
-    Once an operation has successfully been executed this event is raised.
+    Signal if an action can be activated or not.
     """
 
-    def __init__(self, name: str, action: object) -> None:
-        self.name = name
-        self.action = action
+    def __init__(self, action_name, enabled: bool):
+        self.scope, self.name = (
+            action_name.split(".", 2) if "." in action_name else ("win", action_name)
+        )
+        self.enabled = bool(enabled)

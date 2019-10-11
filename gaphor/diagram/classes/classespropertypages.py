@@ -451,7 +451,9 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         button.connect("toggled", self._on_show_direction_change)
         hbox.pack_start(button, True, True, 0)
 
-        button = Gtk.Button(label=_("Invert Direction"))
+        button = Gtk.Button.new_from_icon_name(
+            "object-flip-horizontal-symbolic", Gtk.IconSize.BUTTON
+        )
         button.connect("clicked", self._on_invert_direction_change)
         hbox.pack_start(button, True, True, 0)
 

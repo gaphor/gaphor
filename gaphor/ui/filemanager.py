@@ -6,16 +6,16 @@ from typing import Optional
 import logging
 
 from gi.repository import Gtk
-
+import urllib.parse
 from gaphor import UML
-from gaphor.core import _, action, build_action_group, event_handler
+from gaphor.core import _, action, event_handler
 from gaphor.abc import Service, ActionProvider
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
 import gaphor.ui
-from gaphor.ui.event import FilenameChanged, WindowClose
+from gaphor.ui.event import FileLoaded, FileSaved, WindowClose
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -31,45 +31,6 @@ class FileManager(Service, ActionProvider):
     The file service, responsible for loading and saving Gaphor models.
     """
 
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="file">
-            <placeholder name="primary">
-              <menuitem action="file-new" />
-              <menuitem action="file-new-template" />
-              <menuitem action="file-open" />
-              <menu name="recent" action="file-recent-files">
-                <menuitem action="file-recent-0" />
-                <menuitem action="file-recent-1" />
-                <menuitem action="file-recent-2" />
-                <menuitem action="file-recent-3" />
-                <menuitem action="file-recent-4" />
-                <menuitem action="file-recent-5" />
-                <menuitem action="file-recent-6" />
-                <menuitem action="file-recent-7" />
-                <menuitem action="file-recent-8" />
-              </menu>
-              <separator />
-              <menuitem action="file-save" />
-              <menuitem action="file-save-as" />
-              <separator />
-            </placeholder>
-            <menuitem action="quit" />
-          </menu>
-        </menubar>
-        <toolbar action="mainwindow-toolbar">
-          <placeholder name="left">
-            <toolitem action="file-open" />
-            <separator />
-            <toolitem action="file-save" />
-            <toolitem action="file-save-as" />
-            <separator />
-          </placeholder>
-        </toolbar>
-      </ui>
-    """
-
     def __init__(self, event_manager, element_factory, main_window, properties):
         """File manager constructor.  There is no current filename yet."""
         self.event_manager = event_manager
@@ -77,20 +38,6 @@ class FileManager(Service, ActionProvider):
         self.main_window = main_window
         self.properties = properties
         self._filename = None
-        self.action_group = build_action_group(self)
-
-        for name, label in (("file-recent-files", "_Recent files"),):
-            action = Gtk.Action.new(name, label, None, None)
-            action.set_property("hide-if-empty", False)
-            self.action_group.add_action(action)
-
-        for i in range(0, (MAX_RECENT - 1)):
-            action = Gtk.Action.new(f"file-recent-{i:d}", None, None, None)
-            action.set_property("visible", False)
-            self.action_group.add_action(action)
-            action.connect("activate", self.load_recent, i)
-
-        self.update_recent_files()
 
         event_manager.subscribe(self._on_window_close)
 
@@ -105,62 +52,13 @@ class FileManager(Service, ActionProvider):
 
     def set_filename(self, filename):
         """Sets the current file name.  This method is used by the filename
-        property.  Setting the current filename will update the recent file
+        property. Setting the current filename will update the recent file
         list."""
 
         if filename != self._filename:
             self._filename = filename
-            self.update_recent_files(filename)
 
     filename = property(get_filename, set_filename)
-
-    def get_recent_files(self):
-        """Returns the recent file list from the properties service.  This
-        method is used by the recent_files property."""
-        return self.properties.get("recent-files", [])
-
-    def set_recent_files(self, recent_files):
-        """Updates the properties service with the supplied list of recent
-        files.  This method is used by the recent_files property."""
-
-        self.properties.set("recent-files", recent_files)
-
-    recent_files = property(get_recent_files, set_recent_files)
-
-    def update_recent_files(self, new_filename=None):
-        """Updates the list of recent files.  If the new_filename
-        parameter is supplied, it is added to the list of recent files.
-
-        The default recent file placeholder actions are hidden.  The real
-        actions are then built using the recent file list."""
-
-        recent_files = self.recent_files
-
-        if new_filename and new_filename not in recent_files:
-            recent_files.insert(0, new_filename)
-            recent_files = recent_files[0 : (MAX_RECENT - 1)]
-            self.recent_files = recent_files
-
-        for i in range(0, (MAX_RECENT - 1)):
-            action = self.action_group.get_action(f"file-recent-{i:d}")
-            action.set_property("visible", False)
-
-        for i, filename in enumerate(recent_files):
-            id = f"file-recent{i:d}"
-            action = self.action_group.get_action(f"file-recent-{i:d}")
-            action.props.label = "_%d. %s" % (i + 1, filename.replace("_", "__"))
-            action.props.tooltip = f"Load {filename}."
-            action.props.visible = True
-
-    def load_recent(self, action, index):
-        """Load the recent file at the specified index.  This will trigger
-        a FilenameChanged event.  The recent files are stored in
-        the recent_files property."""
-
-        filename = self.recent_files[index]
-
-        self.load(filename)
-        self.event_manager.handle(FilenameChanged(self, filename))
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
@@ -195,6 +93,7 @@ class FileManager(Service, ActionProvider):
                 worker.reraise()
 
             self.filename = filename
+            self.event_manager.handle(FileLoaded(self, filename))
         except:
             error_handler(
                 message=_("Error while loading model from file %s") % filename
@@ -274,6 +173,7 @@ class FileManager(Service, ActionProvider):
                 worker.reraise()
 
             self.filename = filename
+            self.event_manager.handle(FileSaved(self, filename))
         except:
             error_handler(message=_("Error while saving model to file %s") % filename)
             raise
@@ -316,9 +216,7 @@ class FileManager(Service, ActionProvider):
             return
         return filename
 
-    @action(
-        name="file-new", label=_("_New"), icon_name="document-new", accel="<Primary>n"
-    )
+    @action(name="file-new", shortcut="<Primary>n")
     def action_new(self):
         """The new model menu action.  This action will create a new
         UML model.  This will trigger a FileManagerStateChange event."""
@@ -356,9 +254,7 @@ class FileManager(Service, ActionProvider):
         # main_window.select_element(diagram)
         # main_window.show_diagram(diagram)
 
-        self.event_manager.handle(FilenameChanged(self))
-
-    @action(name="file-new-template", label=_("New from template"))
+    @action(name="file-new-template")
     def action_new_from_template(self):
         """This menu action opens the new model from template dialog."""
 
@@ -378,14 +274,8 @@ class FileManager(Service, ActionProvider):
         if filename:
             self.load(filename)
             self.filename = None
-            self.event_manager.handle(FilenameChanged(self))
 
-    @action(
-        name="file-open",
-        label=_("_Open"),
-        icon_name="document-open",
-        accel="<Primary>o",
-    )
+    @action(name="file-open", shortcut="<Primary>o")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
 
@@ -404,14 +294,15 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.load(filename)
-            self.event_manager.handle(FilenameChanged(self, filename))
 
-    @action(
-        name="file-save",
-        label=_("_Save"),
-        icon_name="document-save",
-        accel="<Primary>s",
-    )
+    @action(name="file-open-recent")
+    def action_open_recent(self, file_url: str):
+        print("Opening file", file_url)
+        parsed_url = urllib.parse.urlparse(file_url)
+        path = parsed_url.path
+        self.load(path)
+
+    @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
         """
         Save the file. Depending on if there is a file name, either perform
@@ -424,17 +315,11 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.event_manager.handle(FilenameChanged(self, filename))
             return True
         else:
             return self.action_save_as()
 
-    @action(
-        name="file-save-as",
-        label=_("Save _As"),
-        icon_name="document-save-as",
-        accel="<Primary><Shift>s",
-    )
+    @action(name="file-save-as", shortcut="<Primary><Shift>s")
     def action_save_as(self):
         """
         Save the model in the element_factory by allowing the
@@ -453,17 +338,11 @@ class FileManager(Service, ActionProvider):
 
         if filename:
             self.save(filename)
-            self.event_manager.handle(FilenameChanged(self, filename))
             return True
 
         return False
 
-    @action(
-        name="app.quit",
-        label=_("_Quit"),
-        icon_name="application-exit",
-        accel="<Primary>q",
-    )
+    @action(name="app.quit", shortcut="<Primary>q")
     def file_quit(self):
         """
         Ask user to close window if the model has changed.
