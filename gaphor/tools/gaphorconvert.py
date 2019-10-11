@@ -3,8 +3,9 @@
 import gaphor
 from gaphor.storage import storage
 import gaphor.UML as UML
+from gaphor.services.eventmanager import EventManager
 
-from gaphas.painter import ItemPainter
+from gaphas.painter import Context, ItemPainter
 from gaphas.view import View
 
 import cairo
@@ -26,12 +27,15 @@ def pkg2dir(package):
     return "/".join(name)
 
 
-def main():
+def paint(view, cr):
+    view.painter.paint(Context(cairo=cr, items=view.canvas.get_all_items(), area=None))
+
+
+def main(argv=sys.argv[1:]):
     def message(msg):
         """
         Print message if user set verbose mode.
         """
-        global options
         if options.verbose:
             print(msg, file=sys.stderr)
 
@@ -70,13 +74,14 @@ def main():
         " name includes package name; regular expressions are case insensitive",
     )
 
-    (options, args) = parser.parse_args()
+    (options, args) = parser.parse_args(argv)
 
     if not args:
         parser.print_help()
         # sys.exit(1)
 
-    model = UML.ElementFactory()
+    event_manager = EventManager()
+    factory = UML.ElementFactory(event_manager)
 
     name_re = None
     if options.regex:
@@ -85,10 +90,10 @@ def main():
     # we should have some gaphor files to be processed at this point
     for model in args:
         message(f"loading model {model}")
-        storage.load(model, model)
+        storage.load(model, factory)
         message("\nready for rendering\n")
 
-        for diagram in model.select(lambda e: e.isKindOf(UML.Diagram)):
+        for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
             odir = pkg2dir(diagram.package)
 
             # just diagram name
@@ -137,7 +142,7 @@ def main():
                 assert False, f"unknown format {options.format}"
             cr = cairo.Context(surface)
             view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
-            view.paint(cr)
+            paint(view, cr)
             cr.show_page()
 
             if options.format == "png":
