@@ -45,7 +45,7 @@ class CopyService(Service, ActionProvider):
     def _update(self, event):
         diagram_view = event.diagram_view
         win_action_group = diagram_view.get_action_group("win")
-        if win_action_group is not None:
+        if win_action_group:
             win_action_group.lookup_action("edit-copy").set_enabled(
                 bool(diagram_view.selected_items)
             )
@@ -133,7 +133,7 @@ class CopyService(Service, ActionProvider):
                 copy_items.append(i)
             self.copy(copy_items)
             win_action_group = view.get_action_group("win")
-            if win_action_group is not None:
+            if win_action_group:
                 win_action_group.lookup_action("edit-paste").set_enabled(
                     bool(self.copy_buffer)
                 )
