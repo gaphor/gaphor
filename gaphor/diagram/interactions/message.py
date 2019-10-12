@@ -121,14 +121,6 @@ class MessageItem(LinePresentation, Named):
         angle = atan2(p1.y - p0.y, p1.x - p0.x)
         return pos, angle
 
-    def load(self, name, value):
-        if name == "message":
-            pass
-        elif name == "inverted":
-            pass
-        else:
-            super().load(name, value)
-
     def _draw_circle(self, cr):
         """
         Draw circle for lost/found messages.
