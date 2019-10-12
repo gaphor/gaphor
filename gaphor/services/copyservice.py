@@ -10,7 +10,6 @@ from gaphor.UML import Element
 from gaphor.UML.collection import collection
 from gaphor.core import _, event_handler, action, transactional
 from gaphor.abc import Service, ActionProvider
-from gaphor.ui.actiongroup import set_action_state
 from gaphor.ui.event import DiagramSelectionChange
 
 
@@ -21,13 +20,13 @@ class CopyService(Service, ActionProvider):
     Store a list of DiagramItems that have to be copied in a global
     'copy-buffer'.
 
-    - in order to make copy/paste work, the load/save functions should be
-      generatlised to allow a subset to be saved/loaded (which is needed
+    - In order to make copy/paste work, the load/save functions should be
+      generalized to allow a subset to be saved/loaded (which is needed
       anyway for exporting/importing stereotype Profiles).
-    - How many data should be saved? (e.g. we copy a diagram item, remove it
+    - How much data should be saved? e.g. we copy a diagram item, remove it
       (the underlying UML element is removed) and the paste the copied item.
       The diagram should act as if we have placed a copy of the removed item
-      on the canvas and make the uml element visible again.
+      on the canvas and make the UML element visible again.
     """
 
     def __init__(self, event_manager, element_factory, diagrams):
@@ -45,9 +44,11 @@ class CopyService(Service, ActionProvider):
     @event_handler(DiagramSelectionChange)
     def _update(self, event):
         diagram_view = event.diagram_view
-        diagram_view.get_action_group("win").lookup_action("edit-copy").set_enabled(
-            bool(diagram_view.selected_items)
-        )
+        win_action_group = diagram_view.get_action_group("win")
+        if win_action_group is not None:
+            win_action_group.lookup_action("edit-copy").set_enabled(
+                bool(diagram_view.selected_items)
+            )
 
     def copy(self, items):
         if items:
@@ -131,9 +132,11 @@ class CopyService(Service, ActionProvider):
             for i in items:
                 copy_items.append(i)
             self.copy(copy_items)
-            view.get_action_group("win").lookup_action("edit-paste").set_enabled(
-                bool(self.copy_buffer)
-            )
+            win_action_group = view.get_action_group("win")
+            if win_action_group is not None:
+                win_action_group.lookup_action("edit-paste").set_enabled(
+                    bool(self.copy_buffer)
+                )
 
     @action(
         name="edit-paste", label="_Paste", icon_name="edit-paste", shortcut="<Primary>v"
