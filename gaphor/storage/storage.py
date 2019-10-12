@@ -219,6 +219,7 @@ def load_elements_generator(elements, factory, gaphor_version):
             # log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
             elem.element = factory.create_as(cls, id)
             if isinstance(elem.element, UML.Diagram):
+                assert elem.canvas
                 elem.element.canvas.block_updates = True
                 create_canvasitems(elem.element, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):
