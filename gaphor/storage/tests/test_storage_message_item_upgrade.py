@@ -38,7 +38,7 @@ def test_message_item_upgrade(element_factory):
     messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
     presentations = [m.presentation for m in messages]
 
-    assert len(messages) == 6
+    assert len(messages) == 10
     assert all(subjects), subjects
-    assert len(message_items) == 6
+    assert len(message_items) == 10
     assert all(presentations), presentations
