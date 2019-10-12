@@ -7,7 +7,7 @@ from logging import getLogger
 
 
 from gaphor import UML
-from gaphor.UML.event import AssociationDeleteEvent, AssociationSetEvent
+from gaphor.UML.event import AssociationDeleted, AssociationSet
 from gaphor.core import event_handler
 from gaphor.abc import Service
 
@@ -32,7 +32,7 @@ class SanitizerService(Service):
         self.event_manager.unsubscribe(self._unlink_on_extension_delete)
         self.event_manager.unsubscribe(self._disconnect_extension_end)
 
-    @event_handler(AssociationDeleteEvent)
+    @event_handler(AssociationDeleted)
     def _unlink_on_presentation_delete(self, event):
         """
         Unlink the model element if no more presentations link to the `item`'s
@@ -52,7 +52,7 @@ class SanitizerService(Service):
                 if not meta or isinstance(e, meta):
                     i.unlink()
 
-    @event_handler(AssociationDeleteEvent)
+    @event_handler(AssociationDeleted)
     def _unlink_on_extension_delete(self, event):
         """
         Remove applied stereotypes when extension is deleted.
@@ -71,7 +71,7 @@ class SanitizerService(Service):
             if st:
                 self.perform_unlink_for_instances(st, meta)
 
-    @event_handler(AssociationSetEvent)
+    @event_handler(AssociationSet)
     def _disconnect_extension_end(self, event):
         if event.property is UML.ExtensionEnd.type and event.old_value:
             ext = event.element
@@ -83,7 +83,7 @@ class SanitizerService(Service):
             if st:
                 self.perform_unlink_for_instances(st, meta)
 
-    @event_handler(AssociationDeleteEvent)
+    @event_handler(AssociationDeleted)
     def _unlink_on_stereotype_delete(self, event):
         """
         Remove applied stereotypes when stereotype is deleted.

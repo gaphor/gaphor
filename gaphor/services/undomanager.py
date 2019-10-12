@@ -20,10 +20,10 @@ from gaphas import state
 from gaphor.UML.event import (
     ElementCreated,
     ElementDeleted,
-    AssociationSetEvent,
-    AssociationAddEvent,
-    AssociationDeleteEvent,
-    AttributeChangeEvent,
+    AssociationSet,
+    AssociationAdded,
+    AssociationDeleted,
+    AttributeUpdated,
     ModelReady,
 )
 from gaphor.UML.properties import association as association_property
@@ -325,7 +325,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(_undo_delete_event)
 
-    @event_handler(AttributeChangeEvent)
+    @event_handler(AttributeUpdated)
     def undo_attribute_change_event(self, event):
         attribute = event.property
         element = event.element
@@ -336,7 +336,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(_undo_attribute_change_event)
 
-    @event_handler(AssociationSetEvent)
+    @event_handler(AssociationSet)
     def undo_association_set_event(self, event):
         association = event.property
         if type(association) is not association_property:
@@ -352,7 +352,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(_undo_association_set_event)
 
-    @event_handler(AssociationAddEvent)
+    @event_handler(AssociationAdded)
     def undo_association_add_event(self, event):
         association = event.property
         if type(association) is not association_property:
@@ -368,7 +368,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(_undo_association_add_event)
 
-    @event_handler(AssociationDeleteEvent)
+    @event_handler(AssociationDeleted)
     def undo_association_delete_event(self, event):
         association = event.property
         if type(association) is not association_property:

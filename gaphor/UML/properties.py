@@ -44,19 +44,19 @@ from typing import (
 
 from gaphor.UML.collection import collection, collectionlist
 from gaphor.UML.event import (
-    AssociationAddEvent,
-    AssociationChangeEvent,
-    AssociationDeleteEvent,
-    AttributeChangeEvent,
-    AssociationSetEvent,
-    DerivedAddEvent,
-    DerivedDeleteEvent,
-    DerivedChangeEvent,
-    DerivedSetEvent,
-    ElementChangeEvent,
-    RedefineSetEvent,
-    RedefineAddEvent,
-    RedefineDeleteEvent,
+    AssociationAdded,
+    AssociationUpdated,
+    AssociationDeleted,
+    AttributeUpdated,
+    AssociationSet,
+    DerivedAdded,
+    DerivedDeleted,
+    DerivedUpdated,
+    DerivedSet,
+    ElementUpdated,
+    RedefinedSet,
+    RedefinedAdded,
+    RedefinedDeleted,
 )
 
 
@@ -203,7 +203,7 @@ class attribute(umlproperty[T, T]):
             delattr(obj, self._name)
         else:
             setattr(obj, self._name, value)
-        self.handle(AttributeChangeEvent(obj, self, old, value))
+        self.handle(AttributeUpdated(obj, self, old, value))
 
     def _del(self, obj, value=None):
         old = self._get(obj)
@@ -212,7 +212,7 @@ class attribute(umlproperty[T, T]):
         except AttributeError:
             pass
         else:
-            self.handle(AttributeChangeEvent(obj, self, old, self.default))
+            self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
 class enumeration(umlproperty[str, str]):
@@ -262,7 +262,7 @@ class enumeration(umlproperty[str, str]):
             delattr(obj, self._name)
         else:
             setattr(obj, self._name, value)
-        self.handle(AttributeChangeEvent(obj, self, old, value))
+        self.handle(AttributeUpdated(obj, self, old, value))
 
     def _del(self, obj, value=None):
         old = self._get(obj)
@@ -271,7 +271,7 @@ class enumeration(umlproperty[str, str]):
         except AttributeError:
             pass
         else:
-            self.handle(AttributeChangeEvent(obj, self, old, self.default))
+            self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
 class association(umlproperty[T, G]):
@@ -379,9 +379,7 @@ class association(umlproperty[T, G]):
                 self._del(obj, old, from_opposite=from_opposite, do_notify=False)
 
             if do_notify:
-                event: AssociationChangeEvent = AssociationSetEvent(
-                    obj, self, old, value
-                )
+                event: AssociationUpdated = AssociationSet(obj, self, old, value)
 
             if value is None:
                 if do_notify:
@@ -401,7 +399,7 @@ class association(umlproperty[T, G]):
 
             c.items.append(value)
             if do_notify:
-                event = AssociationAddEvent(obj, self, value)
+                event = AssociationAdded(obj, self, value)
 
         if not from_opposite and self.opposite:
             opposite = getattr(type(value), self.opposite)
@@ -436,7 +434,7 @@ class association(umlproperty[T, G]):
             if self.stub:
                 self.stub._del(value, obj, from_opposite=True)
 
-        event: Optional[AssociationChangeEvent] = None
+        event: Optional[AssociationUpdated] = None
         if self.upper == 1:
             try:
                 delattr(obj, self._name)
@@ -444,7 +442,7 @@ class association(umlproperty[T, G]):
                 pass
             else:
                 if do_notify:
-                    event = AssociationSetEvent(obj, self, value, None)
+                    event = AssociationSet(obj, self, value, None)
         else:
             c = self._get(obj)
             if c:
@@ -455,7 +453,7 @@ class association(umlproperty[T, G]):
                     pass
                 else:
                     if do_notify:
-                        event = AssociationDeleteEvent(obj, self, value)
+                        event = AssociationDeleted(obj, self, value)
 
                 # Remove items collection if empty
                 if not items:
@@ -551,7 +549,7 @@ class derived(umlproperty[T, G]):
     Base class for derived properties, both derived unions and custom
     properties.
 
-    Note that, although this derived property sends DerivedAddEvent,
+    Note that, although this derived property sends DerivedAdded,
     -Delete- and Set events, this gives just an assumption that something
     may have changed. If something actually changed depends on the filter
     applied to the derived property.
@@ -635,16 +633,16 @@ class derived(umlproperty[T, G]):
         stead of the old and new values of the item that changed.
 
         If multiplicity is [0..1]:
-          send DerivedSetEvent if len(union) < 2
+          send DerivedSet if len(union) < 2
         if multiplicity is [*]:
-          send DerivedAddEvent and DerivedDeleteEvent
+          send DerivedAdded and DerivedDeleted
             if value not in derived union and
         """
         if event.property in self.subsets:
             # Make sure unions are created again
             self.version += 1
 
-            if not isinstance(event, AssociationChangeEvent):
+            if not isinstance(event, AssociationUpdated):
                 return
 
             # mimic the events for Set/Add/Delete
@@ -652,30 +650,24 @@ class derived(umlproperty[T, G]):
                 # This is a [0..1] event
                 # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
                 assert isinstance(
-                    event, AssociationSetEvent
+                    event, AssociationSet
                 ), f"Can only handle [0..1] set-events, not {event} for {event.element}"
                 self.handle(
-                    DerivedSetEvent(
-                        event.element, self, event.old_value, event.new_value
-                    )
+                    DerivedSet(event.element, self, event.old_value, event.new_value)
                 )
             else:
-                if isinstance(event, AssociationSetEvent):
-                    self.handle(
-                        DerivedDeleteEvent(event.element, self, event.old_value)
-                    )
-                    self.handle(DerivedAddEvent(event.element, self, event.new_value))
+                if isinstance(event, AssociationSet):
+                    self.handle(DerivedDeleted(event.element, self, event.old_value))
+                    self.handle(DerivedAdded(event.element, self, event.new_value))
 
-                elif isinstance(event, AssociationAddEvent):
-                    self.handle(DerivedAddEvent(event.element, self, event.new_value))
+                elif isinstance(event, AssociationAdded):
+                    self.handle(DerivedAdded(event.element, self, event.new_value))
 
-                elif isinstance(event, AssociationDeleteEvent):
-                    self.handle(
-                        DerivedDeleteEvent(event.element, self, event.old_value)
-                    )
+                elif isinstance(event, AssociationDeleted):
+                    self.handle(DerivedDeleted(event.element, self, event.old_value))
 
-                elif isinstance(event, AssociationChangeEvent):
-                    self.handle(DerivedChangeEvent(event.element, self))
+                elif isinstance(event, AssociationUpdated):
+                    self.handle(DerivedUpdated(event.element, self))
                 else:
                     log.error(
                         "Don't know how to handle event "
@@ -724,29 +716,27 @@ class derivedunion(derived[T, G]):
         stead of the old and new values of the item that changed.
 
         If multiplicity is [0..1]:
-          send DerivedSetEvent if len(union) < 2
+          send DerivedSet if len(union) < 2
         if multiplicity is [*]:
-          send DerivedAddEvent and DerivedDeleteEvent
+          send DerivedAdded and DerivedDeleted
             if value not in derived union and
         """
         if event.property in self.subsets:
             # Make sure unions are created again
             self.version += 1
 
-            if not isinstance(event, AssociationChangeEvent):
+            if not isinstance(event, AssociationUpdated):
                 return
 
             values = self._union(event.element, exclude=event.property)
 
             if self.upper == 1:
-                assert isinstance(event, AssociationSetEvent)
+                assert isinstance(event, AssociationSet)
                 old_value, new_value = event.old_value, event.new_value
                 # This is a [0..1] event
                 if self.single:
                     # Only one subset element, so pass the values on
-                    self.handle(
-                        DerivedSetEvent(event.element, self, old_value, new_value)
-                    )
+                    self.handle(DerivedSet(event.element, self, old_value, new_value))
                 else:
                     new_values = set(values)
                     if new_value:
@@ -756,29 +746,27 @@ class derivedunion(derived[T, G]):
                         return
                     if values:
                         new_value = next(iter(values))
-                    self.handle(
-                        DerivedSetEvent(event.element, self, old_value, new_value)
-                    )
+                    self.handle(DerivedSet(event.element, self, old_value, new_value))
             else:
-                if isinstance(event, AssociationSetEvent):
+                if isinstance(event, AssociationSet):
                     old_value, new_value = event.old_value, event.new_value
                     if old_value and old_value not in values:
-                        self.handle(DerivedDeleteEvent(event.element, self, old_value))
+                        self.handle(DerivedDeleted(event.element, self, old_value))
                     if new_value and new_value not in values:
-                        self.handle(DerivedAddEvent(event.element, self, new_value))
+                        self.handle(DerivedAdded(event.element, self, new_value))
 
-                elif isinstance(event, AssociationAddEvent):
+                elif isinstance(event, AssociationAdded):
                     new_value = event.new_value
                     if new_value not in values:
-                        self.handle(DerivedAddEvent(event.element, self, new_value))
+                        self.handle(DerivedAdded(event.element, self, new_value))
 
-                elif isinstance(event, AssociationDeleteEvent):
+                elif isinstance(event, AssociationDeleted):
                     old_value = event.old_value
                     if old_value not in values:
-                        self.handle(DerivedDeleteEvent(event.element, self, old_value))
+                        self.handle(DerivedDeleted(event.element, self, old_value))
 
-                elif isinstance(event, AssociationChangeEvent):
-                    self.handle(DerivedChangeEvent(event.element, self))
+                elif isinstance(event, AssociationUpdated):
+                    self.handle(DerivedUpdated(event.element, self))
                 else:
                     log.error(
                         "Don't know how to handle event "
@@ -862,16 +850,14 @@ class redefine(umlproperty[T, G]):
             event.element, self.decl_class
         ):
             # mimic the events for Set/Add/Delete
-            if isinstance(event, AssociationSetEvent):
+            if isinstance(event, AssociationSet):
                 self.handle(
-                    RedefineSetEvent(
-                        event.element, self, event.old_value, event.new_value
-                    )
+                    RedefinedSet(event.element, self, event.old_value, event.new_value)
                 )
-            elif isinstance(event, AssociationAddEvent):
-                self.handle(RedefineAddEvent(event.element, self, event.new_value))
-            elif isinstance(event, AssociationDeleteEvent):
-                self.handle(RedefineDeleteEvent(event.element, self, event.old_value))
+            elif isinstance(event, AssociationAdded):
+                self.handle(RedefinedAdded(event.element, self, event.new_value))
+            elif isinstance(event, AssociationDeleted):
+                self.handle(RedefinedDeleted(event.element, self, event.old_value))
             else:
                 log.error(
                     "Don't know how to handle event "

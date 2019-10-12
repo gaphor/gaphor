@@ -15,8 +15,8 @@ from gaphor.UML.event import (
     ElementDeleted,
     ModelReady,
     ModelFlushed,
-    AttributeChangeEvent,
-    DerivedSetEvent,
+    AttributeUpdated,
+    DerivedSet,
 )
 from gaphor.core import _, event_handler, action, transactional
 from gaphor.ui.actiongroup import create_action_group
@@ -435,7 +435,7 @@ class Namespace(UIComponent):
             if iter:
                 self.model.remove(iter)
 
-    @event_handler(DerivedSetEvent)
+    @event_handler(DerivedSet)
     def _on_association_set(self, event):
 
         element = event.element
@@ -452,7 +452,7 @@ class Namespace(UIComponent):
                 if bool(new_iter) == bool(new_value):
                     self.model.append(new_iter, [element])
 
-    @event_handler(AttributeChangeEvent)
+    @event_handler(AttributeUpdated)
     def _on_attribute_change(self, event):
         """
         Element changed, update appropriate row.

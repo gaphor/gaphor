@@ -5,7 +5,7 @@ import logging
 from gi.repository import Gtk
 
 from gaphor.UML import Presentation
-from gaphor.UML.event import AssociationChangeEvent
+from gaphor.UML.event import AssociationUpdated
 from gaphor.core import _, primary, event_handler, action
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
@@ -235,7 +235,7 @@ class ElementEditor(UIComponent, ActionProvider):
             return
         self.create_pages(item)
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def _element_changed(self, event):
         element = event.element
         if event.property is Presentation.subject:  # type: ignore

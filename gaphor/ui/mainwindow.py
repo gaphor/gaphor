@@ -16,7 +16,7 @@ from gaphor.UML.event import ModelReady
 from gaphor.core import _, event_handler, action, transactional
 from gaphor.abc import Service, ActionProvider
 from gaphor.event import ActionEnabled
-from gaphor.UML.event import AttributeChangeEvent, ModelFlushed
+from gaphor.UML.event import AttributeUpdated, ModelFlushed
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
@@ -543,7 +543,7 @@ class Diagrams(UIComponent, ActionProvider):
         while self._notebook.get_n_pages():
             self._notebook.remove_page(0)
 
-    @event_handler(AttributeChangeEvent)
+    @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
         if event.property is UML.Diagram.name:
             for page in range(0, self._notebook.get_n_pages()):

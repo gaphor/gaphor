@@ -6,15 +6,15 @@ from logging import getLogger
 from gaphor.core import event_handler
 from gaphor.UML import uml2
 from gaphor.UML.event import (
-    ElementChangeEvent,
-    AssociationSetEvent,
-    AssociationAddEvent,
-    AssociationDeleteEvent,
+    ElementUpdated,
+    AssociationSet,
+    AssociationAdded,
+    AssociationDeleted,
     ModelReady,
 )
 
 
-Handler = Callable[[ElementChangeEvent], None]
+Handler = Callable[[ElementUpdated], None]
 
 
 class EventWatcher:
@@ -75,7 +75,7 @@ class ElementDispatcher:
 
     The handlers are registered on their property attribute. This avoids
     subclass lookups and is pretty specific. As a result this dispatcher is
-    tailored for dispatching events from the data model (ElementChangeEvent)
+    tailored for dispatching events from the data model (ElementUpdated)
 
     For example: if you're a TransitionItem (UML.Presentation instance) and
     you're interested in the value of the guard attribute of the model element
@@ -235,7 +235,7 @@ class ElementDispatcher:
                     del self._handlers[key]
         del self._reverse[handler]
 
-    @event_handler(ElementChangeEvent)
+    @event_handler(ElementUpdated)
     def on_element_change_event(self, event):
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
@@ -247,7 +247,7 @@ class ElementDispatcher:
 
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
-            if isinstance(event, AssociationSetEvent):
+            if isinstance(event, AssociationSet):
                 for handler, remainders in handlers.items():
                     if remainders and event.old_value:
                         for remainder in remainders:
@@ -257,11 +257,11 @@ class ElementDispatcher:
                     if remainders and event.new_value:
                         for remainder in remainders:
                             self._add_handlers(event.new_value, remainder, handler)
-            elif isinstance(event, AssociationAddEvent):
+            elif isinstance(event, AssociationAdded):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)
-            elif isinstance(event, AssociationDeleteEvent):
+            elif isinstance(event, AssociationDeleted):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)

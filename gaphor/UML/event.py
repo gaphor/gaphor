@@ -3,15 +3,7 @@
 from gaphor.event import ServiceEvent
 
 
-class ElementEvent:
-    """Generic event fired when element state changes.
-    """
-
-    def __init__(self, element):
-        self.element = element
-
-
-class ElementChangeEvent(ElementEvent):
+class ElementUpdated:
     """
     Generic event fired when element state changes.
     """
@@ -21,7 +13,7 @@ class ElementChangeEvent(ElementEvent):
         self.property = property
 
 
-class AttributeChangeEvent(ElementChangeEvent):
+class AttributeUpdated(ElementUpdated):
     """A UML attribute has changed value."""
 
     def __init__(self, element, attribute, old_value, new_value):
@@ -35,7 +27,7 @@ class AttributeChangeEvent(ElementChangeEvent):
         self.new_value = new_value
 
 
-class AssociationChangeEvent(ElementChangeEvent):
+class AssociationUpdated(ElementUpdated):
     """An association UML element has changed."""
 
     def __init__(self, element, association):
@@ -46,7 +38,7 @@ class AssociationChangeEvent(ElementChangeEvent):
         super().__init__(element, association)
 
 
-class AssociationSetEvent(AssociationChangeEvent):
+class AssociationSet(AssociationUpdated):
     """An association element has been set."""
 
     def __init__(self, element, association, old_value, new_value):
@@ -55,12 +47,12 @@ class AssociationSetEvent(AssociationChangeEvent):
         element being set.  The old_value parameter is the old association
         and the new_value parameter is the new association."""
 
-        AssociationChangeEvent.__init__(self, element, association)
+        AssociationUpdated.__init__(self, element, association)
         self.old_value = old_value
         self.new_value = new_value
 
 
-class AssociationAddEvent(AssociationChangeEvent):
+class AssociationAdded(AssociationUpdated):
     """An association element has been added."""
 
     def __init__(self, element, association, new_value):
@@ -68,11 +60,11 @@ class AssociationAddEvent(AssociationChangeEvent):
         has been added to.  The association parameter is the association
         element being added."""
 
-        AssociationChangeEvent.__init__(self, element, association)
+        AssociationUpdated.__init__(self, element, association)
         self.new_value = new_value
 
 
-class AssociationDeleteEvent(AssociationChangeEvent):
+class AssociationDeleted(AssociationUpdated):
     """An association element has been deleted."""
 
     def __init__(self, element, association, old_value):
@@ -80,17 +72,17 @@ class AssociationDeleteEvent(AssociationChangeEvent):
         has been deleted from.  The association parameter is the deleted
         association element."""
 
-        AssociationChangeEvent.__init__(self, element, association)
+        AssociationUpdated.__init__(self, element, association)
         self.old_value = old_value
 
 
-class DerivedChangeEvent(AssociationChangeEvent):
+class DerivedUpdated(AssociationUpdated):
     """A derived property has changed."""
 
     pass
 
 
-class DerivedSetEvent(AssociationSetEvent, DerivedChangeEvent):
+class DerivedSet(AssociationSet, DerivedUpdated):
     """A generic derived set event."""
 
     def __init__(self, element, association, old_value, new_value):
@@ -101,7 +93,7 @@ class DerivedSetEvent(AssociationSetEvent, DerivedChangeEvent):
         super().__init__(element, association, old_value, new_value)
 
 
-class DerivedAddEvent(AssociationAddEvent, DerivedChangeEvent):
+class DerivedAdded(AssociationAdded, DerivedUpdated):
     """A derived property has been added."""
 
     def __init__(self, element, association, new_value):
@@ -112,7 +104,7 @@ class DerivedAddEvent(AssociationAddEvent, DerivedChangeEvent):
         super().__init__(element, association, new_value)
 
 
-class DerivedDeleteEvent(AssociationDeleteEvent, DerivedChangeEvent):
+class DerivedDeleted(AssociationDeleted, DerivedUpdated):
     """A derived property has been deleted."""
 
     def __init__(self, element, association, old_value):
@@ -123,7 +115,7 @@ class DerivedDeleteEvent(AssociationDeleteEvent, DerivedChangeEvent):
         super().__init__(element, association, old_value)
 
 
-class RedefineSetEvent(AssociationSetEvent):
+class RedefinedSet(AssociationSet):
     """A redefined property has been set."""
 
     def __init__(self, element, association, old_value, new_value):
@@ -134,7 +126,7 @@ class RedefineSetEvent(AssociationSetEvent):
         super().__init__(element, association, old_value, new_value)
 
 
-class RedefineAddEvent(AssociationAddEvent):
+class RedefinedAdded(AssociationAdded):
     """A redefined property has been added."""
 
     def __init__(self, element, association, new_value):
@@ -145,7 +137,7 @@ class RedefineAddEvent(AssociationAddEvent):
         super().__init__(element, association, new_value)
 
 
-class RedefineDeleteEvent(AssociationDeleteEvent):
+class RedefinedDeleted(AssociationDeleted):
     """A redefined property has been deleted."""
 
     def __init__(self, element, association, old_value):

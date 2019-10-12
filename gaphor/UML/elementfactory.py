@@ -8,13 +8,7 @@ from collections import OrderedDict
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element, UnlinkEvent
 from gaphor.UML.elementdispatcher import ElementDispatcher
-from gaphor.UML.event import (
-    ElementChangeEvent,
-    ElementCreated,
-    ElementDeleted,
-    ModelFlushed,
-    ModelReady,
-)
+from gaphor.UML.event import ElementCreated, ElementDeleted, ModelFlushed, ModelReady
 from gaphor.abc import Service
 
 if TYPE_CHECKING:
