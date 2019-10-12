@@ -23,11 +23,11 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import (
-    DiagramPageChange,
-    DiagramShow,
+    DiagramOpened,
+    DiagramSelectionChanged,
     FileLoaded,
     FileSaved,
-    WindowClose,
+    WindowClosed,
 )
 from gaphor.ui.layout import deserialize
 from gaphor.ui.namespace import Namespace
@@ -307,7 +307,7 @@ class MainWindow(Service, ActionProvider):
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
-            self.event_manager.handle(DiagramShow(diagram))
+            self.event_manager.handle(DiagramOpened(diagram))
 
     @event_handler(FileLoaded, FileSaved)
     def _on_file_manager_state_changed(self, event):
@@ -331,7 +331,7 @@ class MainWindow(Service, ActionProvider):
         a.set_enabled(event.enabled)
 
     def _on_window_delete(self, window=None, event=None):
-        self.event_manager.handle(WindowClose(self))
+        self.event_manager.handle(WindowClosed(self))
         return True
 
     def _on_window_size_allocate(self, window, allocation):
@@ -447,8 +447,10 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook.set_current_page(page_num)
         self._notebook.set_tab_reorderable(widget, True)
 
-        self.event_manager.handle(DiagramPageChange(widget))
-        self._notebook.set_show_tabs(True)
+        view = widget.diagram_page.view
+        self.event_manager.handle(
+            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
+        )
 
     def tab_label(self, title, widget):
         tab_box = Gtk.Box.new(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
@@ -492,7 +494,10 @@ class Diagrams(UIComponent, ActionProvider):
         if current_page_num >= 0:
             self._clear_ui_settings(notebook.get_nth_page(current_page_num))
         self._add_ui_settings(page)
-        self.event_manager.handle(DiagramPageChange(page))
+        view = page.diagram_page.view
+        self.event_manager.handle(
+            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
+        )
 
     def _add_ui_settings(self, page):
         window = page.get_toplevel()
@@ -504,7 +509,7 @@ class Diagrams(UIComponent, ActionProvider):
         window.insert_action_group("diagram", None)
         window.remove_accel_group(page.action_group.shortcuts)
 
-    @event_handler(DiagramShow)
+    @event_handler(DiagramOpened)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
 

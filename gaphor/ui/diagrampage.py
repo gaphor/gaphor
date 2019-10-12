@@ -28,7 +28,7 @@ from gaphor.ui.diagramtoolbox import (
     TransactionalToolChain,
     TOOLBOX_ACTIONS,
 )
-from gaphor.ui.event import DiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
 
@@ -305,7 +305,7 @@ class DiagramPage:
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.event_manager.handle(
-            DiagramSelectionChange(view, view.focused_item, view.selected_items)
+            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
         )
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):

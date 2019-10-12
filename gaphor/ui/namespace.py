@@ -20,7 +20,7 @@ from gaphor.UML.event import (
 )
 from gaphor.core import _, event_handler, action, transactional
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramPageChange, DiagramShow
+from gaphor.ui.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name
 
@@ -532,7 +532,7 @@ class Namespace(UIComponent):
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
-            self.event_manager.handle(DiagramShow(element))
+            self.event_manager.handle(DiagramOpened(element))
 
         else:
             log.debug(f"No action defined for element {type(element).__name__}")
@@ -565,7 +565,7 @@ class Namespace(UIComponent):
             diagram.name = "New diagram"
 
         self.select_element(diagram)
-        self.event_manager.handle(DiagramShow(diagram))
+        self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()
 
     @action(name="tree-view.create-package")

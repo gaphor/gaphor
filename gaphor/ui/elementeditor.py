@@ -10,7 +10,7 @@ from gaphor.core import _, primary, event_handler, action
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.diagram.propertypages import PropertyPages
-from gaphor.ui.event import DiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
 
@@ -212,7 +212,7 @@ class ElementEditor(UIComponent, ActionProvider):
     def on_expand(self, widget, name):
         self._expanded_pages[name] = widget.get_expanded()
 
-    @event_handler(DiagramSelectionChange)
+    @event_handler(DiagramSelectionChanged)
     def _selection_change(self, event=None, focused_item=None):
         """
         Called when a diagram item receives focus.
