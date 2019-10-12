@@ -23,10 +23,10 @@ class CopyService(Service, ActionProvider):
     - In order to make copy/paste work, the load/save functions should be
       generalized to allow a subset to be saved/loaded (which is needed
       anyway for exporting/importing stereotype Profiles).
-    - How much data should be saved? e.g. we copy a diagram item, remove it
-      (the underlying UML element is removed) and the paste the copied item.
-      The diagram should act as if we have placed a copy of the removed item
-      on the canvas and make the UML element visible again.
+    - How much data should be saved? An example use case is to copy a diagram
+      item, remove it (the underlying UML element is removed), and then paste
+      the copied item. The diagram should act as if we have placed a copy of
+      the removed item on the canvas and make the UML element visible again.
     """
 
     def __init__(self, event_manager, element_factory, diagrams):
