@@ -12,11 +12,11 @@ import importlib.resources
 from gi.repository import Gio, Gdk, Gtk, GLib
 
 from gaphor import UML, Application
-from gaphor.UML.event import ModelFactoryEvent
+from gaphor.UML.event import ModelReady
 from gaphor.core import _, event_handler, action, transactional
 from gaphor.abc import Service, ActionProvider
 from gaphor.event import ActionEnabled
-from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
+from gaphor.UML.event import AttributeChangeEvent, ModelFlushed
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
@@ -297,12 +297,12 @@ class MainWindow(Service, ActionProvider):
 
     # Signal callbacks:
 
-    @event_handler(ModelFactoryEvent)
+    @event_handler(ModelReady)
     def _new_model_content(self, event):
         """
         Open the toplevel element and load toplevel diagrams.
         """
-        # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
+        # TODO: Make handlers for ModelReady from within the GUI obj
         for diagram in self.element_factory.select(
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
@@ -535,7 +535,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.create_tab(diagram.name, widget)
         return page
 
-    @event_handler(FlushFactoryEvent)
+    @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
         """
         Close all tabs.

@@ -249,7 +249,7 @@ class FileManager(Service, ActionProvider):
             diagram.package = model
             diagram.name = _("main")
         self.filename = None
-        element_factory.notify_model()
+        element_factory.model_ready()
 
         # main_window.select_element(diagram)
         # main_window.show_diagram(diagram)

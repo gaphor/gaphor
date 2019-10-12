@@ -361,7 +361,7 @@ def load_generator(filename, factory):
         except Exception as e:
             log.warning(f"file {filename} could not be loaded ({e})")
             raise
-    factory.notify_model()
+    factory.model_ready()
 
 
 def version_lower_than(gaphor_version, version):

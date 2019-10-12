@@ -156,14 +156,7 @@ class RedefineDeleteEvent(AssociationDeleteEvent):
         super().__init__(element, association, old_value)
 
 
-class ElementFactoryEvent(ServiceEvent):
-    """Events originated from the Elementfactory service."""
-
-    def __init__(self, service):
-        self.service = service
-
-
-class ElementCreateEvent(ElementFactoryEvent):
+class ElementCreated(ServiceEvent):
     """An element has been created."""
 
     def __init__(self, service, element):
@@ -174,7 +167,7 @@ class ElementCreateEvent(ElementFactoryEvent):
         self.element = element
 
 
-class DiagramItemCreateEvent(ElementCreateEvent):
+class DiagramItemCreated(ElementCreated):
     """A diagram item has been created."""
 
     def __init__(self, service, element):
@@ -182,7 +175,7 @@ class DiagramItemCreateEvent(ElementCreateEvent):
         super().__init__(service, element)
 
 
-class ElementDeleteEvent(ElementFactoryEvent):
+class ElementDeleted(ServiceEvent):
     """An element has been deleted."""
 
     def __init__(self, service, element):
@@ -193,7 +186,7 @@ class ElementDeleteEvent(ElementFactoryEvent):
         self.element = element
 
 
-class ModelFactoryEvent(ElementFactoryEvent):
+class ModelReady(ServiceEvent):
     """A generic element factory event."""
 
     def __init__(self, service):
@@ -202,7 +195,7 @@ class ModelFactoryEvent(ElementFactoryEvent):
         super().__init__(service)
 
 
-class FlushFactoryEvent(ElementFactoryEvent):
+class ModelFlushed(ServiceEvent):
     """The element factory has been flushed."""
 
     def __init__(self, service):

@@ -123,7 +123,7 @@ def test_element_model_factory(namespace, element_factory):
         p2 = UML.Package(model=element_factory)
 
         p2.package = p1
-    element_factory.notify_model()
+    element_factory.model_ready()
 
     iter = namespace.iter_for_element(p1)
     assert namespace.model.iter_n_children(None) == 1

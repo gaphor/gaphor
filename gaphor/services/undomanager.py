@@ -18,13 +18,13 @@ from gaphas import state
 
 
 from gaphor.UML.event import (
-    ElementCreateEvent,
-    ElementDeleteEvent,
+    ElementCreated,
+    ElementDeleted,
     AssociationSetEvent,
     AssociationAddEvent,
     AssociationDeleteEvent,
     AttributeChangeEvent,
-    ModelFactoryEvent,
+    ModelReady,
 )
 from gaphor.UML.properties import association as association_property
 from gaphor.action import action
@@ -118,7 +118,7 @@ class UndoManager(Service, ActionProvider):
     def clear_redo_stack(self):
         del self._redo_stack[:]
 
-    @event_handler(ModelFactoryEvent)
+    @event_handler(ModelReady)
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()
@@ -293,7 +293,7 @@ class UndoManager(Service, ActionProvider):
 
         state.subscribers.discard(self._gaphas_undo_handler)
 
-    @event_handler(ElementCreateEvent)
+    @event_handler(ElementCreated)
     def undo_create_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems
@@ -306,11 +306,11 @@ class UndoManager(Service, ActionProvider):
                 del factory._elements[element.id]
             except KeyError:
                 pass  # Key was probably already removed in an unlink call
-            self.event_manager.handle(ElementDeleteEvent(factory, element))
+            self.event_manager.handle(ElementDeleted(factory, element))
 
         self.add_undo_action(_undo_create_event)
 
-    @event_handler(ElementDeleteEvent)
+    @event_handler(ElementDeleted)
     def undo_delete_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems
@@ -321,7 +321,7 @@ class UndoManager(Service, ActionProvider):
 
         def _undo_delete_event():
             factory._elements[element.id] = element
-            self.event_manager.handle(ElementCreateEvent(factory, element))
+            self.event_manager.handle(ElementCreated(factory, element))
 
         self.add_undo_action(_undo_delete_event)
 

@@ -11,10 +11,10 @@ from gi.repository import GObject, Gio, Gdk, Gtk
 
 from gaphor import UML
 from gaphor.UML.event import (
-    ElementCreateEvent,
-    ElementDeleteEvent,
-    ModelFactoryEvent,
-    FlushFactoryEvent,
+    ElementCreated,
+    ElementDeleted,
+    ModelReady,
+    ModelFlushed,
     AttributeChangeEvent,
     DerivedSetEvent,
 )
@@ -383,7 +383,7 @@ class Namespace(UIComponent):
             isinstance(element, UML.Property) and element.namespace is None
         )
 
-    @event_handler(ModelFactoryEvent)
+    @event_handler(ModelReady)
     def _on_model_factory(self, event=None):
         """
         Load a new model completely.
@@ -414,18 +414,18 @@ class Namespace(UIComponent):
             self._namespace.expand_root_nodes()
             self._on_view_cursor_changed(self._namespace)
 
-    @event_handler(FlushFactoryEvent)
+    @event_handler(ModelFlushed)
     def _on_flush_factory(self, event):
         self.model.clear()
 
-    @event_handler(ElementCreateEvent)
+    @event_handler(ElementCreated)
     def _on_element_create(self, event):
         element = event.element
         if self._visible(element) and not self.iter_for_element(element):
             iter = self.iter_for_element(element.namespace)
             self.model.append(iter, [element])
 
-    @event_handler(ElementDeleteEvent)
+    @event_handler(ElementDeleted)
     def _on_element_delete(self, event):
         element = event.element
         if type(element) in self.filter:

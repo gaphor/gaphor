@@ -10,7 +10,7 @@ from gaphor.UML.event import (
     AssociationSetEvent,
     AssociationAddEvent,
     AssociationDeleteEvent,
-    ModelFactoryEvent,
+    ModelReady,
 )
 
 
@@ -266,7 +266,7 @@ class ElementDispatcher:
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
-    @event_handler(ModelFactoryEvent)
+    @event_handler(ModelReady)
     def on_model_loaded(self, event):
         for key, value in list(self._handlers.items()):
             for h, remainders in list(value.items()):
