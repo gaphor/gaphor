@@ -2,7 +2,7 @@
 Stereotype property page.
 """
 
-from gi.repository import GObject, Gtk
+from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional

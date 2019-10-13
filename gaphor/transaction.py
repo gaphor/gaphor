@@ -45,8 +45,6 @@ class TransactionError(Exception):
     Errors related to the transaction module.
     """
 
-    pass
-
 
 class Transaction:
     """

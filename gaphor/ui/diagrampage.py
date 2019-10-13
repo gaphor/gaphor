@@ -1,4 +1,4 @@
-from typing import Optional, Sequence, Tuple
+from typing import Optional
 
 import logging
 
@@ -17,7 +17,7 @@ from gaphas.view import GtkView
 import gaphas.segment  # Just register the handlers in this module
 
 from gaphor import UML
-from gaphor.UML.event import ElementDeleteEvent, DiagramItemCreateEvent
+from gaphor.UML.event import ElementDeleted, DiagramItemCreated
 from gaphor.core import _, event_handler, transactional, action
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChanged
@@ -28,7 +28,7 @@ from gaphor.ui.diagramtoolbox import (
     TransactionalToolChain,
     TOOLBOX_ACTIONS,
 )
-from gaphor.ui.event import DiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
 
@@ -133,7 +133,7 @@ class DiagramPage:
 
         return shortcuts
 
-    @event_handler(ElementDeleteEvent)
+    @event_handler(ElementDeleted)
     def _on_element_delete(self, event):
         if event.element is self.diagram:
             self.close()
@@ -213,7 +213,7 @@ class DiagramPage:
             tool.append(self.toolbox.get_tool(tool_name))
             self.view.tool = tool
 
-    @event_handler(DiagramItemCreateEvent)
+    @event_handler(DiagramItemCreated)
     def _on_diagram_item_created(self, event):
         if self.properties("reset-tool-after-create", False):
             self.widget.action_group.actions.lookup_action("select-tool").activate(
@@ -305,7 +305,7 @@ class DiagramPage:
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.event_manager.handle(
-            DiagramSelectionChange(view, view.focused_item, view.selected_items)
+            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
         )
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):

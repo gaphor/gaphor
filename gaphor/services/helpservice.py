@@ -1,6 +1,5 @@
 """About and help services. (help browser anyone?)"""
 
-import os
 
 import importlib_metadata
 from gi.repository import GdkPixbuf
@@ -8,7 +7,7 @@ from gi.repository import Gtk
 
 
 from gaphor import __version__
-from gaphor.core import _, action
+from gaphor.core import action
 from gaphor.abc import Service, ActionProvider
 
 

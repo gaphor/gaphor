@@ -1,6 +1,6 @@
 import pytest
 from gaphor.UML.element import Element
-from gaphor.UML.event import AssociationChangeEvent
+from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.properties import *
 from gaphor.application import Application
 from gaphor.core import event_handler
@@ -257,7 +257,7 @@ def test_association_swap():
 
     events = []
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def handler(event, events=events):
         events.append(event)
 
@@ -515,7 +515,7 @@ def test_composite():
 
 @pytest.mark.skip
 def test_derivedunion_events():
-    from gaphor.UML.event import DerivedAddEvent, DerivedDeleteEvent
+    from gaphor.UML.event import DerivedAdded, DerivedDeleted
 
     class A(Element):
         is_unlinked = False
@@ -535,7 +535,7 @@ def test_derivedunion_events():
 
     events = []
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def handler(event, events=events):
         events.append(event)
 
@@ -552,7 +552,7 @@ def test_derivedunion_events():
         assert a.derived_a is a.a1
 
         a.a2 = A()
-        # Should not emit DerivedSetEvent
+        # Should not emit DerivedSet
         assert len(events) == 5, len(events)
         assert events[4].property is A.a2
 
@@ -618,15 +618,15 @@ def test_derivedunion_events():
         a.b3 = A()
         assert len(events) == 13, len(events)
         assert events[10].property is A.derived_b
-        assert isinstance(events[10], DerivedDeleteEvent), type(events[10])
+        assert isinstance(events[10], DerivedDeleted), type(events[10])
         assert events[11].property is A.derived_b
-        assert isinstance(events[11], DerivedAddEvent), type(events[11])
+        assert isinstance(events[11], DerivedAdded), type(events[11])
         assert events[12].property is A.b3
 
         del a.b3
         assert len(events) == 15, len(events)
         assert events[13].property is A.derived_b
-        assert isinstance(events[13], DerivedDeleteEvent), type(events[10])
+        assert isinstance(events[13], DerivedDeleted), type(events[10])
         assert events[14].property is A.b3
     finally:
         Application.unregister_handler(handler)
@@ -648,7 +648,7 @@ def test_redefine():
     A.a = redefine(A, "a", A, A.a)
     events = []
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def handler(event, events=events):
         events.append(event)
 
@@ -681,7 +681,7 @@ def test_redefine_subclass():
 
     events = []
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def handler(event, events=events):
         events.append(event)
 

@@ -8,17 +8,11 @@ from collections import OrderedDict
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element, UnlinkEvent
 from gaphor.UML.elementdispatcher import ElementDispatcher
-from gaphor.UML.event import (
-    ElementChangeEvent,
-    ElementCreateEvent,
-    ElementDeleteEvent,
-    FlushFactoryEvent,
-    ModelFactoryEvent,
-)
+from gaphor.UML.event import ElementCreated, ElementDeleted, ModelFlushed, ModelReady
 from gaphor.abc import Service
 
 if TYPE_CHECKING:
-    from gaphor.services.eventmanager import EventManager
+    from gaphor.services.eventmanager import EventManager  # noqa
 
 
 T = TypeVar("T", bound=Element)
@@ -53,14 +47,14 @@ class ElementFactory(Service):
         Create a new model element of type ``type``.
         """
         obj = self.create_as(type, str(uuid.uuid1()))
-        self.handle(ElementCreateEvent(self, obj))
+        self.handle(ElementCreated(self, obj))
         return obj
 
     def create_as(self, type: Type[T], id: str) -> T:
         """
         Create a new model element of type 'type' with 'id' as its ID.
         This method should only be used when loading models, since it does
-        not emit an ElementCreateEvent event.
+        not emit an ElementCreated event.
         """
         assert issubclass(type, Element)
         obj = type(id, self)
@@ -153,7 +147,7 @@ class ElementFactory(Service):
         Diagram elements are flushed first.  This is so that canvas updates
         are blocked.  The remaining elements are then flushed.
         """
-        self.handle(FlushFactoryEvent(self))
+        self.handle(ModelFlushed(self))
 
         with self.block_events():
             for element in self.lselect(lambda e: isinstance(e, Diagram)):
@@ -163,12 +157,12 @@ class ElementFactory(Service):
             for element in self.lselect():
                 element.unlink()
 
-    def notify_model(self):
+    def model_ready(self):
         """
         Send notification that a new model has been loaded by means of the
-        ModelFactoryEvent event from gaphor.UML.event.
+        ModelReady event from gaphor.UML.event.
         """
-        self.handle(ModelFactoryEvent(self))
+        self.handle(ModelReady(self))
 
     @contextmanager
     def block_events(self):
@@ -188,7 +182,7 @@ class ElementFactory(Service):
         """
         if type(event) is UnlinkEvent:
             self._unlink_element(event.element)
-            event = ElementDeleteEvent(self, event.element)
+            event = ElementDeleted(self, event.element)
         if self.event_manager and not self._block_events:
             self.event_manager.handle(event)
 

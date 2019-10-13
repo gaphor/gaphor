@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from math import pi, atan2
+from math import pi
 from gaphas.geometry import Rectangle
 
 from gaphor.diagram.text import (

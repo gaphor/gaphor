@@ -1,8 +1,6 @@
 import pytest
-import cairo
 
 from gaphas.canvas import instant_cairo_context
-import gaphor.diagram.text
 from gaphor.diagram.text import (
     text_size,
     text_point_at_line,

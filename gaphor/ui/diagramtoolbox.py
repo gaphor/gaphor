@@ -11,7 +11,7 @@ from typing import Optional, Sequence, Tuple
 from gaphas.item import SE
 
 from gaphor import UML
-from gaphor.UML.event import DiagramItemCreateEvent
+from gaphor.UML.event import DiagramItemCreated
 from gaphor.core import _
 from gaphor import diagram
 from gaphor.ui.diagramtools import (
@@ -298,9 +298,7 @@ class DiagramToolbox:
         return factory_method
 
     def _after_handler(self, new_item):
-        self.event_manager.handle(
-            DiagramItemCreateEvent(self.element_factory, new_item)
-        )
+        self.event_manager.handle(DiagramItemCreated(self.element_factory, new_item))
 
     ##
     ## Toolbox actions

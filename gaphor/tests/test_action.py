@@ -1,5 +1,3 @@
-import pytest
-
 from gaphor.action import action
 
 

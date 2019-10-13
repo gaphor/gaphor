@@ -10,7 +10,6 @@ from gaphas.util import path_ellipse
 from gaphor.diagram.states.state import VertexItem
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, IconBox, EditableText, Text
-from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.diagram.support import represents
 
 

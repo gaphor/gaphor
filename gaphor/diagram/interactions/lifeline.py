@@ -23,7 +23,7 @@ lifeline.
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
-from gaphas.geometry import distance_line_point, Rectangle
+from gaphas.geometry import distance_line_point
 from gaphas.constraint import (
     LessThanConstraint,
     EqualsConstraint,

@@ -10,7 +10,6 @@ from gaphas.view import Context, View
 
 from gaphor.core import _, action
 from gaphor.abc import Service, ActionProvider
-from gaphor.ui.abc import UIComponent
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 

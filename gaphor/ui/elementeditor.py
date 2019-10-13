@@ -5,12 +5,12 @@ import logging
 from gi.repository import Gtk
 
 from gaphor.UML import Presentation
-from gaphor.UML.event import AssociationChangeEvent
+from gaphor.UML.event import AssociationUpdated
 from gaphor.core import _, primary, event_handler, action
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
 from gaphor.diagram.propertypages import PropertyPages
-from gaphor.ui.event import DiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
 
@@ -212,7 +212,7 @@ class ElementEditor(UIComponent, ActionProvider):
     def on_expand(self, widget, name):
         self._expanded_pages[name] = widget.get_expanded()
 
-    @event_handler(DiagramSelectionChange)
+    @event_handler(DiagramSelectionChanged)
     def _selection_change(self, event=None, focused_item=None):
         """
         Called when a diagram item receives focus.
@@ -235,7 +235,7 @@ class ElementEditor(UIComponent, ActionProvider):
             return
         self.create_pages(item)
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def _element_changed(self, event):
         element = event.element
         if event.property is Presentation.subject:  # type: ignore

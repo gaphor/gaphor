@@ -18,9 +18,8 @@ import io
 import gaphas
 
 from gaphor import UML
-from gaphor import diagram
 from gaphor.UML.collection import collection
-from gaphor.application import Application, NotInitializedError
+from gaphor.application import Application
 from gaphor.i18n import _
 from gaphor.storage import parser, diagramitems
 
@@ -324,7 +323,6 @@ def load_generator(filename, factory):
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
         for percentage in parser.parse_generator(filename, loader):
-            pass
             if percentage:
                 yield percentage / 2
             else:
@@ -361,7 +359,7 @@ def load_generator(filename, factory):
         except Exception as e:
             log.warning(f"file {filename} could not be loaded ({e})")
             raise
-    factory.notify_model()
+    factory.model_ready()
 
 
 def version_lower_than(gaphor_version, version):

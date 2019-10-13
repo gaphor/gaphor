@@ -5,33 +5,30 @@ The main application window.
 from typing import List, Tuple
 
 import logging
-import os.path
 from pathlib import Path
 
 import importlib.resources
 from gi.repository import Gio, Gdk, Gtk, GLib
 
-from gaphor import UML, Application
-from gaphor.UML.event import ModelFactoryEvent
-from gaphor.core import _, event_handler, action, transactional
+from gaphor import UML
+from gaphor.UML.event import ModelReady
+from gaphor.core import _, event_handler
 from gaphor.abc import Service, ActionProvider
 from gaphor.event import ActionEnabled
-from gaphor.UML.event import AttributeChangeEvent, FlushFactoryEvent
+from gaphor.UML.event import AttributeUpdated, ModelFlushed
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import (
-    DiagramPageChange,
-    DiagramShow,
+    DiagramOpened,
+    DiagramSelectionChanged,
     FileLoaded,
     FileSaved,
-    WindowClose,
+    WindowClosed,
 )
 from gaphor.ui.layout import deserialize
-from gaphor.ui.namespace import Namespace
-from gaphor.ui.toolbox import Toolbox
 
 
 log = logging.getLogger(__name__)
@@ -276,7 +273,6 @@ class MainWindow(Service, ActionProvider):
         Create a new tab with a textual welcome page, a sort of 101 for
         Gaphor.
         """
-        pass
 
     def set_title(self):
         """
@@ -297,17 +293,17 @@ class MainWindow(Service, ActionProvider):
 
     # Signal callbacks:
 
-    @event_handler(ModelFactoryEvent)
+    @event_handler(ModelReady)
     def _new_model_content(self, event):
         """
         Open the toplevel element and load toplevel diagrams.
         """
-        # TODO: Make handlers for ModelFactoryEvent from within the GUI obj
+        # TODO: Make handlers for ModelReady from within the GUI obj
         for diagram in self.element_factory.select(
             lambda e: e.isKindOf(UML.Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
-            self.event_manager.handle(DiagramShow(diagram))
+            self.event_manager.handle(DiagramOpened(diagram))
 
     @event_handler(FileLoaded, FileSaved)
     def _on_file_manager_state_changed(self, event):
@@ -331,7 +327,7 @@ class MainWindow(Service, ActionProvider):
         a.set_enabled(event.enabled)
 
     def _on_window_delete(self, window=None, event=None):
-        self.event_manager.handle(WindowClose(self))
+        self.event_manager.handle(WindowClosed(self))
         return True
 
     def _on_window_size_allocate(self, window, allocation):
@@ -447,8 +443,10 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook.set_current_page(page_num)
         self._notebook.set_tab_reorderable(widget, True)
 
-        self.event_manager.handle(DiagramPageChange(widget))
-        self._notebook.set_show_tabs(True)
+        view = widget.diagram_page.view
+        self.event_manager.handle(
+            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
+        )
 
     def tab_label(self, title, widget):
         tab_box = Gtk.Box.new(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
@@ -492,7 +490,10 @@ class Diagrams(UIComponent, ActionProvider):
         if current_page_num >= 0:
             self._clear_ui_settings(notebook.get_nth_page(current_page_num))
         self._add_ui_settings(page)
-        self.event_manager.handle(DiagramPageChange(page))
+        view = page.diagram_page.view
+        self.event_manager.handle(
+            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
+        )
 
     def _add_ui_settings(self, page):
         window = page.get_toplevel()
@@ -504,7 +505,7 @@ class Diagrams(UIComponent, ActionProvider):
         window.insert_action_group("diagram", None)
         window.remove_accel_group(page.action_group.shortcuts)
 
-    @event_handler(DiagramShow)
+    @event_handler(DiagramOpened)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
 
@@ -535,7 +536,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.create_tab(diagram.name, widget)
         return page
 
-    @event_handler(FlushFactoryEvent)
+    @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
         """
         Close all tabs.
@@ -543,7 +544,7 @@ class Diagrams(UIComponent, ActionProvider):
         while self._notebook.get_n_pages():
             self._notebook.remove_page(0)
 
-    @event_handler(AttributeChangeEvent)
+    @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
         if event.property is UML.Diagram.name:
             for page in range(0, self._notebook.get_n_pages()):

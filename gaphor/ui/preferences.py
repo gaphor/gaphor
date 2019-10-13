@@ -1,5 +1,5 @@
 import importlib
-from gi.repository import GLib, Gio, Gtk
+from gi.repository import Gtk
 
 from gaphor.abc import Service, ActionProvider
 from gaphor.core import action

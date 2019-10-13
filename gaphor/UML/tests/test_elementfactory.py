@@ -104,7 +104,7 @@ def element_factory():
 
 def test_create_event(element_factory):
     p = element_factory.create(Parameter)
-    assert isinstance(last_event, ElementCreateEvent)
+    assert isinstance(last_event, ElementCreated)
     assert handled
 
 
@@ -112,12 +112,12 @@ def test_remove_event(element_factory):
     p = element_factory.create(Parameter)
     clear_events()
     p.unlink()
-    assert isinstance(last_event, ElementDeleteEvent)
+    assert isinstance(last_event, ElementDeleted)
 
 
 def test_model_event(element_factory):
-    element_factory.notify_model()
-    assert isinstance(last_event, ModelFactoryEvent)
+    element_factory.model_ready()
+    assert isinstance(last_event, ModelReady)
 
 
 def test_flush_event(element_factory):
@@ -125,7 +125,7 @@ def test_flush_event(element_factory):
     del events[:]
     element_factory.flush()
     assert len(events) == 1, events
-    assert isinstance(last_event, FlushFactoryEvent)
+    assert isinstance(last_event, ModelFlushed)
 
 
 def test_no_create_events_when_blocked(element_factory):

@@ -10,7 +10,7 @@ from gaphor.UML import Element
 from gaphor.UML.collection import collection
 from gaphor.core import _, event_handler, action, transactional
 from gaphor.abc import Service, ActionProvider
-from gaphor.ui.event import DiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChanged
 
 
 class CopyService(Service, ActionProvider):
@@ -41,7 +41,7 @@ class CopyService(Service, ActionProvider):
         self.copy_buffer = set()
         self.event_manager.unsubscribe(self._update)
 
-    @event_handler(DiagramSelectionChange)
+    @event_handler(DiagramSelectionChanged)
     def _update(self, event):
         diagram_view = event.diagram_view
         win_action_group = diagram_view.get_action_group("win")

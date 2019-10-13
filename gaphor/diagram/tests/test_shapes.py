@@ -3,7 +3,6 @@ import pytest
 import cairo
 
 from gaphor.diagram.shapes import Box, IconBox, Text
-from gaphas.canvas import Context
 from gaphas.geometry import Rectangle
 
 

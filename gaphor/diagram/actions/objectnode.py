@@ -2,7 +2,6 @@
 Object node item.
 """
 
-import itertools
 import ast
 
 from gaphas.state import observed, reversible_property

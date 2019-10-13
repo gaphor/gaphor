@@ -2,7 +2,6 @@
 Test messages.
 """
 
-from collections import OrderedDict
 from gaphor import UML
 from gaphor.diagram.interactions.message import MessageItem
 from gaphor.tests.testcase import TestCase

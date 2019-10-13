@@ -2,16 +2,14 @@
 Toolbox.
 """
 
-from typing import Dict, List
 
 import logging
 
-from gi.repository import GLib, GObject, Gdk, Gtk
+from gi.repository import GLib, Gdk, Gtk
 
-from gaphor.core import _, event_handler
+from gaphor.core import _
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.event import DiagramPageChange
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
 log = logging.getLogger(__name__)

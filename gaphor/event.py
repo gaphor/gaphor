@@ -40,16 +40,12 @@ class TransactionBegin:
     Nested (sub-) transactions should not emit this signal.
     """
 
-    pass
-
 
 class TransactionCommit:
     """
     This event is emitted when a transaction (toplevel) is successfully
     committed.
     """
-
-    pass
 
 
 class TransactionRollback:
@@ -58,8 +54,6 @@ class TransactionRollback:
     should be marked for rollback. This event is emitted to tell the operation
     has failed.
     """
-
-    pass
 
 
 class ActionEnabled:

@@ -5,8 +5,6 @@
 from typing import Optional, Sequence, get_type_hints
 import platform
 
-from gaphor.application import Application
-
 
 _primary = "⌘" if platform.system() == "Darwin" else "Ctrl"
 

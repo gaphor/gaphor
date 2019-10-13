@@ -12,15 +12,11 @@ class Named:
     Marker for any NamedElement presentations.
     """
 
-    pass
-
 
 class Classified(Named):
     """
     Marker for Classifier presentations.
     """
-
-    pass
 
 
 def from_package_str(item):
@@ -76,7 +72,6 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         Updating the shape configuration, e.g. when extra elements have to
         be drawn or when styling changes.
         """
-        pass
 
     def pre_update(self, context):
         cr = context.cairo

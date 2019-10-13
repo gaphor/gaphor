@@ -18,7 +18,7 @@ from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.grouping import Group
 
 # For DiagramItemConnector aspect:
-import gaphor.ui.diagramtools
+import gaphor.ui.diagramtools  # noqa
 
 T = TypeVar("T")
 

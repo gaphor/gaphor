@@ -4,7 +4,7 @@
 
 import inspect
 from typing import Generic, List, Type, TypeVar
-from gaphor.UML.event import AssociationChangeEvent
+from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.listmixins import querymixin, recursemixin
 
 T = TypeVar("T")
@@ -239,7 +239,7 @@ class collection(Generic[T]):
             i2 = self.items.index(item2)
             self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
 
-            self.object.handle(AssociationChangeEvent(self.object, self.property))
+            self.object.handle(AssociationUpdated(self.object, self.property))
             return True
         except IndexError as ex:
             return False

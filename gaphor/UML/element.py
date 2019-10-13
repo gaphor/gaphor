@@ -9,13 +9,13 @@ __all__ = ["Element"]
 
 import uuid
 
-from typing import Generator, Optional, Sequence, Union, Type, TYPE_CHECKING
+from typing import Optional, Sequence, TYPE_CHECKING, Type, Union
 from gaphor.UML.properties import umlproperty
 from gaphor.UML.elementdispatcher import EventWatcher
 
 if TYPE_CHECKING:
-    from gaphor.UML.elementfactory import ElementFactory
-    from gaphor.UML.presentation import Presentation
+    from gaphor.UML.elementfactory import ElementFactory  # noqa
+    from gaphor.UML.presentation import Presentation  # noqa
 
 
 class UnlinkEvent:

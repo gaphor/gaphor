@@ -48,8 +48,6 @@ See also ``lifeline`` module documentation.
 
 from typing import List
 from math import pi, atan2
-from collections import OrderedDict
-from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
@@ -341,7 +339,6 @@ class MessageItem(LinePresentation, Named):
         #     messages = self._messages
         # messages[message].text = text
         # self.request_update()
-        pass
 
     def swap_messages(self, m1, m2, inverted):
         """

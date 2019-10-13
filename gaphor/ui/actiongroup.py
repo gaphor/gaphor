@@ -2,7 +2,6 @@ from typing import NamedTuple
 
 from gi.repository import GLib, Gio, Gtk
 from gaphor.abc import ActionProvider
-from gaphor.action import action
 
 
 class ActionGroup(NamedTuple):

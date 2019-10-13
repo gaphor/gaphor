@@ -20,7 +20,6 @@ from __future__ import annotations
 from typing import Type
 import abc
 
-from gaphor import UML
 from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
 
 

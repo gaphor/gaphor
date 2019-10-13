@@ -15,7 +15,7 @@ from gaphor.misc.gidlethread import GIdleThread, Queue
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
 import gaphor.ui
-from gaphor.ui.event import FileLoaded, FileSaved, WindowClose
+from gaphor.ui.event import FileLoaded, FileSaved, WindowClosed
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -249,7 +249,7 @@ class FileManager(Service, ActionProvider):
             diagram.package = model
             diagram.name = _("main")
         self.filename = None
-        element_factory.notify_model()
+        element_factory.model_ready()
 
         # main_window.select_element(diagram)
         # main_window.show_diagram(diagram)
@@ -381,6 +381,6 @@ class FileManager(Service, ActionProvider):
         else:
             gaphor.ui.quit()
 
-    @event_handler(WindowClose)
+    @event_handler(WindowClosed)
     def _on_window_close(self, event):
         self.file_quit()

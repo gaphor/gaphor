@@ -14,7 +14,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import VerticalAlign
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_highlight
+from gaphor.diagram.shapes import Box, Text, draw_highlight
 
 
 @represents(UML.ActivityPartition)
