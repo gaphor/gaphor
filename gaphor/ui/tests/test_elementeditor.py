@@ -2,7 +2,7 @@ import pytest
 
 from gaphor.services.eventmanager import EventManager
 from gaphor.UML.elementfactory import ElementFactory
-from gaphor.ui.mainwindow import MainWindow, Diagrams
+from gaphor.ui.mainwindow import Diagrams
 from gaphor.ui.elementeditor import ElementEditor
 
 

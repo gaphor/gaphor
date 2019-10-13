@@ -1,9 +1,7 @@
 #!/usr/bin/python
 
-import gaphor
 from gaphor.storage import storage
 import gaphor.UML as UML
-from gaphor.services.eventmanager import EventManager
 from gaphor.application import Application
 
 from gaphas.painter import Context, ItemPainter

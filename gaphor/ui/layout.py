@@ -7,8 +7,6 @@ from xml.etree.ElementTree import fromstring
 
 from gi.repository import Gtk
 
-from gaphor.core import _
-
 
 widget_factory: Dict[str, Callable] = {}
 

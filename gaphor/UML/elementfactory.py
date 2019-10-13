@@ -12,7 +12,7 @@ from gaphor.UML.event import ElementCreated, ElementDeleted, ModelFlushed, Model
 from gaphor.abc import Service
 
 if TYPE_CHECKING:
-    from gaphor.services.eventmanager import EventManager
+    from gaphor.services.eventmanager import EventManager  # noqa
 
 
 T = TypeVar("T", bound=Element)

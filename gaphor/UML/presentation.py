@@ -7,7 +7,7 @@ from gaphor.UML.properties import umlproperty, association
 from gaphor.UML.element import Element
 
 if TYPE_CHECKING:
-    from gaphas.canvas import Canvas
+    from gaphas.canvas import Canvas  # noqa
 
 S = TypeVar("S", bound=Element)
 

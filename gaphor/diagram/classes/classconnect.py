@@ -10,7 +10,6 @@ from gaphor.diagram.presentation import Named, Classified
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.generalization import GeneralizationItem
-from gaphor.diagram.classes.interface import InterfaceItem
 from gaphor.diagram.classes.association import AssociationItem
 
 

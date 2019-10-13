@@ -6,7 +6,6 @@ to folded interface, see `gaphor.diagram.classes.interface` documentation
 for details.
 """
 
-from gaphor import UML
 
 from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.classes.classconnect import DependencyConnect, ImplementationConnect

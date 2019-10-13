@@ -1,8 +1,7 @@
 """Unit tests for simple items."""
 
 from gaphor.tests import TestCase
-from gaphor import UML
-from gaphor.diagram.general.simpleitem import Line, Box, Ellipse
+from gaphor.diagram.general.simpleitem import Ellipse, Line
 from gaphas import View
 
 

@@ -337,7 +337,6 @@ def getFilesForName(name):
     """ Get a list of module files for a filename, a module or package name,
         or a directory.
     """
-    import imp
 
     if not os.path.exists(name):
         # check for glob chars

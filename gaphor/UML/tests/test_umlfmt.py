@@ -4,7 +4,6 @@ Formatting of UML model elements into text tests.
 
 import pytest
 
-from gaphor.application import Application
 from gaphor.services.eventmanager import EventManager
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML.umlfmt import format

@@ -1,5 +1,3 @@
-import pytest
-
 from gaphor.core import action
 from gaphor.ui.menufragment import MenuFragment
 

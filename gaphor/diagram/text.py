@@ -8,7 +8,6 @@ from enum import Enum
 import cairo
 from gi.repository import GLib, Pango, PangoCairo
 
-from gaphas.geometry import Rectangle
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.painter import CairoBoundingBoxContext
 

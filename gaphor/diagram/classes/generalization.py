@@ -2,7 +2,6 @@
 Generalization --
 """
 
-from gi.repository import GObject
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str

@@ -18,9 +18,8 @@ import io
 import gaphas
 
 from gaphor import UML
-from gaphor import diagram
 from gaphor.UML.collection import collection
-from gaphor.application import Application, NotInitializedError
+from gaphor.application import Application
 from gaphor.i18n import _
 from gaphor.storage import parser, diagramitems
 

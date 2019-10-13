@@ -6,7 +6,6 @@ from functools import singledispatch
 
 from gaphor import UML
 from gaphor.diagram.presentation import Named, Classified
-from gaphor.misc.rattr import rgetattr, rsetattr
 
 
 @singledispatch

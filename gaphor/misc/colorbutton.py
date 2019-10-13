@@ -5,7 +5,7 @@ Gaphor is using color values from 0 to 1 (cairo standard), so that required some
 on the color widget. The standard format is `(red, green, blue, alpha)`.
 """
 
-from gi.repository import GObject, Gdk, Gtk
+from gi.repository import Gdk, Gtk
 
 
 class ColorButton(Gtk.ColorButton):

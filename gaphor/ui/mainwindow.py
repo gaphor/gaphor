@@ -10,9 +10,9 @@ from pathlib import Path
 import importlib.resources
 from gi.repository import Gio, Gdk, Gtk, GLib
 
-from gaphor import UML, Application
+from gaphor import UML
 from gaphor.UML.event import ModelReady
-from gaphor.core import _, event_handler, action, transactional
+from gaphor.core import _, event_handler
 from gaphor.abc import Service, ActionProvider
 from gaphor.event import ActionEnabled
 from gaphor.UML.event import AttributeUpdated, ModelFlushed
@@ -29,8 +29,6 @@ from gaphor.ui.event import (
     WindowClosed,
 )
 from gaphor.ui.layout import deserialize
-from gaphor.ui.namespace import Namespace
-from gaphor.ui.toolbox import Toolbox
 
 
 log = logging.getLogger(__name__)

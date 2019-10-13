@@ -2,13 +2,12 @@
 CommentItem diagram item
 """
 
-from gaphas.item import NW
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation
 
 from gaphor.diagram.shapes import Box, Text
-from gaphor.diagram.text import TextAlign, VerticalAlign, text_size
+from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.diagram.support import represents
 
 

@@ -5,7 +5,7 @@ Implementation of interface.
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation
-from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.shapes import Text
 from gaphor.diagram.support import represents
 from gaphor.diagram.classes.interface import InterfacePort
 

@@ -1,7 +1,6 @@
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.classes import AssociationItem, ClassItem
-from gaphas.aspect import ConnectionSink
 
 
 class GaphasTest(TestCase):

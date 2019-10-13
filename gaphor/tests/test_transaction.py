@@ -2,8 +2,8 @@
 
 from unittest import TestCase
 
-from gaphor.core import Application, event_handler
-from gaphor.transaction import Transaction, transactional, TransactionError
+from gaphor.core import event_handler
+from gaphor.transaction import Transaction, TransactionError
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 from gaphor.services.eventmanager import EventManager
 

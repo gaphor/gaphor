@@ -48,7 +48,6 @@ See also ``lifeline`` module documentation.
 
 from typing import List
 from math import pi, atan2
-from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
