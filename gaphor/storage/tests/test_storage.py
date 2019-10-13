@@ -2,9 +2,6 @@
 Unittest the storage and parser modules
 """
 
-import io
-import os
-import os.path
 import re
 from io import StringIO
 

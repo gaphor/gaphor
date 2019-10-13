@@ -102,7 +102,6 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_undo_attribute(self):
-        import types
         from gaphor.UML.properties import attribute
         from gaphor.UML.element import Element
 

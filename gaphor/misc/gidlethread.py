@@ -138,15 +138,11 @@ class QueueEmpty(Exception):
     a value.
     """
 
-    pass
-
 
 class QueueFull(Exception):
     """Exception raised when the queue is full and the oldest item may not be
     disposed.
     """
-
-    pass
 
 
 class Queue:

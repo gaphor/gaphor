@@ -79,8 +79,6 @@ class AssociationDeleted(AssociationUpdated):
 class DerivedUpdated(AssociationUpdated):
     """A derived property has changed."""
 
-    pass
-
 
 class DerivedSet(AssociationSet, DerivedUpdated):
     """A generic derived set event."""

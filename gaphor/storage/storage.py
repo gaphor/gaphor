@@ -324,7 +324,6 @@ def load_generator(filename, factory):
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
         for percentage in parser.parse_generator(filename, loader):
-            pass
             if percentage:
                 yield percentage / 2
             else:

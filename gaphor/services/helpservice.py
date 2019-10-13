@@ -1,6 +1,5 @@
 """About and help services. (help browser anyone?)"""
 
-import os
 
 import importlib_metadata
 from gi.repository import GdkPixbuf

@@ -31,8 +31,6 @@ class ActivityNodeItem(Named):
     Simple activity node is not resizable.
     """
 
-    pass
-
 
 @represents(UML.InitialNode)
 class InitialNodeItem(ElementPresentation, ActivityNodeItem):

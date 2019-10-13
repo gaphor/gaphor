@@ -5,7 +5,7 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-from typing import Any, List, Optional, Type, Union
+from typing import List, Optional, Type, Union
 
 from gaphas.canvas import Connection
 from gaphas.connector import Handle, Port
@@ -155,7 +155,6 @@ class AbstractConnect(ConnectBase):
 
     def disconnect(self, handle: Handle) -> None:
         """Disconnect UML model level connections."""
-        pass
 
 
 class UnaryRelationshipConnect(AbstractConnect):

@@ -11,7 +11,6 @@ Plan:
 #   are connected to the same Class, the head_end property is connected to the
 #   tail end and visa versa.
 
-from typing import Tuple
 
 import ast
 from math import pi, atan2

@@ -219,8 +219,6 @@ class ConnectorConnectBase(AbstractConnect):
 class ComponentConnectorConnect(ConnectorConnectBase):
     """Connection of connector item to a component."""
 
-    pass
-
 
 @IConnect.register(InterfaceItem, ConnectorItem)
 class InterfaceConnectorConnect(ConnectorConnectBase):

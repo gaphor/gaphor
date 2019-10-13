@@ -119,7 +119,6 @@ class umlproperty(Generic[T, G]):
         """
         This is called from the Element to denote the element is unlinking.
         """
-        pass
 
     def _get(self, obj) -> Optional[G]:
         raise NotImplementedError()

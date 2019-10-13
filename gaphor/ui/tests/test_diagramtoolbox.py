@@ -12,8 +12,6 @@ class WindowOwner:
     methods to make the tests work.
     """
 
-    pass
-
 
 class DiagramToolboxTestCase(TestCase):
 

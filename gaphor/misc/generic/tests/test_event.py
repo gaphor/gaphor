@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Callable, List, TypeVar
+from typing import Callable, List
 from gaphor.misc.generic.event import Manager
 
 

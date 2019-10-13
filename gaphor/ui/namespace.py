@@ -5,7 +5,6 @@ a result only classifiers are shown here.
 """
 
 import logging
-import operator
 
 from gi.repository import GObject, Gio, Gdk, Gtk
 

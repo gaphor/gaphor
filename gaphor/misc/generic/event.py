@@ -12,7 +12,7 @@ to have different configurations for them -- you should use local API
 and have one instance of Manager object per application instance.
 """
 
-from typing import Callable, Set, Type, TypeVar
+from typing import Callable, Set, Type
 
 from gaphor.misc.generic.registry import Registry, TypeAxis
 

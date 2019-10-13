@@ -3,8 +3,6 @@ The Sanitize module is dedicated to adapters (stuff) that keeps
 the model clean and in sync with diagrams.
 """
 
-from logging import getLogger
-
 
 from gaphor import UML
 from gaphor.UML.event import AssociationDeleted, AssociationSet

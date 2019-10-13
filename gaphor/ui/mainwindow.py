@@ -5,7 +5,6 @@ The main application window.
 from typing import List, Tuple
 
 import logging
-import os.path
 from pathlib import Path
 
 import importlib.resources
@@ -276,7 +275,6 @@ class MainWindow(Service, ActionProvider):
         Create a new tab with a textual welcome page, a sort of 101 for
         Gaphor.
         """
-        pass
 
     def set_title(self):
         """

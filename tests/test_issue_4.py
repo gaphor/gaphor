@@ -2,7 +2,6 @@
 Test GitHub issue #4. Diagram could not be loaded due to JuggleError
 (presumed cyclic resolving of diagram items).
 """
-import os
 
 import importlib_metadata
 from gi.repository import GLib

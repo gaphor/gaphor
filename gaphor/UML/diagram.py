@@ -55,7 +55,6 @@ class DiagramCanvas(gaphas.Canvas):
     def postload(self):
         """Called after the diagram canvas has loaded.  Currently does nothing.
         """
-        pass
 
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression."""

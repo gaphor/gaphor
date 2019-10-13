@@ -4,7 +4,6 @@ Control flow and object flow implementation.
 Contains also implementation to split flows using activity edge connectors.
 """
 
-from math import atan, atan2, pi, sin, cos
 
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
