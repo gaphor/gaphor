@@ -16,7 +16,7 @@ def loader(element_factory):
     def _loader(*parsed_items):
         parsed_data = {
             "1": element(
-                id="1", type="Diagram", canvas=canvas(canvasitems=parsed_items)
+                id="1", type="Diagram", canvas=canvas(canvasitems=list(parsed_items))
             ),
             **{p.id: p for p in parsed_items},
         }

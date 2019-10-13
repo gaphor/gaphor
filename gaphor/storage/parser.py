@@ -30,13 +30,16 @@ The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
 """
 
-__all__ = ["parse", "ParserException"]
+from __future__ import annotations
 
-from typing import Dict, List, Union, Tuple, IO
+from typing import Dict, List, Optional, Union, Tuple, IO
 import os
 import io
 from xml.sax import handler
 from collections import OrderedDict
+
+
+__all__ = ["parse", "ParserException"]
 
 
 class base:
@@ -45,7 +48,7 @@ class base:
 
     def __init__(self):
         self.values: Dict[str, str] = {}
-        self.references: Dict[str, str] = {}
+        self.references: Dict[str, Union[str, List[str]]] = {}
 
     def __getattr__(self, key):
         try:
@@ -67,7 +70,7 @@ class base:
 
 
 class element(base):
-    def __init__(self, id, type, canvas=None):
+    def __init__(self, id: str, type: str, canvas: Optional[canvas] = None):
         base.__init__(self)
         self.id = id
         self.type = type
@@ -76,17 +79,19 @@ class element(base):
 
 
 class canvas(base):
-    def __init__(self, canvasitems=None):
+    def __init__(self, canvasitems: Optional[List[canvasitem]] = None):
         base.__init__(self)
-        self.canvasitems = canvasitems or []
+        self.canvasitems: List[canvasitem] = canvasitems or []
 
 
 class canvasitem(base):
-    def __init__(self, id, type, canvasitems=None):
+    def __init__(
+        self, id: str, type: str, canvasitems: Optional[List[canvasitem]] = None
+    ):
         base.__init__(self)
         self.id = id
         self.type = type
-        self.canvasitems = canvasitems or []
+        self.canvasitems: List[canvasitem] = canvasitems or []
 
 
 XMLNS = "http://gaphor.sourceforge.net/model"
