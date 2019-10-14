@@ -51,7 +51,7 @@ through all parameters related to class' operations, one can write::
       for p in o.ownedParameter:
           do_something(p)
 
-Using the ``[:]`` operator items can be traversed more easily [1]_::
+Using the ``[:]`` operator items can be traversed more easily:
 
   for o in classes.ownedOperation[:].ownedParameter:
       do_something(p)
@@ -66,5 +66,3 @@ It's also possible to provide a query as part of the selection::
 The variable ``it`` in the query refers to the evaluated object (in this case
 all operations with a return parameter are taken into account).
 
-
-.. [1] See http://github.com/amolenaar/gaphor/blob/master/gaphor/misc/listmixins.py

@@ -139,10 +139,10 @@ References
 ----------
 
 A Framework for Undoing Actions in Collaborative Systems
-  http://www.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf
+  http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf
 Undoing Actions in Collaborative Work: Framework and Experience
   https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf
 Implementing a Selective Undo Framework in Python
-  http://www.python.org/workshops/1997-10/proceedings/zukowski.html
+  https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html
 
 

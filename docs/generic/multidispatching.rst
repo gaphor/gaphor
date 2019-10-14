@@ -91,8 +91,8 @@ used for dispatch.
 API reference
 -------------
 
-.. autofunction:: generic.multidispatch.multidispatch
+.. autofunction:: gaphor.misc.generic.multidispatch.multidispatch
 
-.. autoclass:: generic.multidispatch.FunctionDispatcher
+.. autoclass:: gaphor.misc.generic.multidispatch.FunctionDispatcher
    :members: register
 

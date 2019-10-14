@@ -70,9 +70,9 @@ Example plugin
 ~~~~~~~~~~~~~~
 
 A small example is provided by means of the `Hello world plugin`.
-Take a look at the files at `Github <https://github.com/amolenaar/gaphor.plugins.helloworld>`_.
+Take a look at the files at `Github <https://github.com/gaphor/gaphor.plugins.helloworld>`_.
 
-The `setup.py <https://github.com/amolenaar/gaphor.plugins.helloworld/blob/master/setup.py>`_
+The `setup.py <https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/setup.py>`_
 file contains an entry point::
 
     entry_points = {
@@ -82,7 +82,7 @@ file contains an entry point::
     }
 
 This refers to the class ``HelloWorldPlugin`` in package/module
-`gaphor.plugins.helloworld <https://github.com/amolenaar/gaphor.plugins.helloworld/blob/master/gaphor/plugins/helloworld/__init__.py>`_.
+`gaphor.plugins.helloworld <https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/gaphor/plugins/helloworld/__init__.py>`_.
 
 Here is a stripped version of the hello world class::
 

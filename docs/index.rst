@@ -7,7 +7,7 @@ Some highlights of the documentation:
 * The :ref:`tech-section` contains some interesting articles about the technology that drives Gaphor and Gaphas, Gaphor's canvas widget.
 
 If you're into writing plug-ins for Gaphor you should have a look at our
-fabulous `Hello world <http://github.com/amolenaar/gaphor.plugins.helloworld>`_
+fabulous `Hello world <https://github.com/gaphor/gaphor.plugins.helloworld>`_
 plug-in.
 
 .. toctree::
@@ -56,6 +56,5 @@ External links
 
   * The `UML diagrams <http://www.agilemodeling.com/essays/umlDiagrams.htm>`_ (although Gaphor does not see it that black-and-white).
   * http://www.agilemodeling.com/essays/
-* The `official UML metamodel specification <http://www.omg.org/technology/documents/modeling_spec_catalog.htm#UML>`_. This ''is'' our data model.
-
+* The `official UML specification <https://www.omg.org/spec/UML>`_. This ''is'' our data model.
 
