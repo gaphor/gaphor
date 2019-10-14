@@ -358,7 +358,7 @@ class Namespace(UIComponent):
             element: The element contained in the in the Namespace.
             old_namespace: The old namespace containing the element, optional.
 
-        Returns: Gtk.TreeIter object
+        Returns: Gtk.TreeIter object of the model (not the sorted one!)
         """
 
         # Using `0` as sentinel
@@ -517,8 +517,11 @@ class Namespace(UIComponent):
         a Diagram).
         """
 
-        tree_iter = self.iter_for_element(element)
-        path = self.model.get_path(tree_iter)
+        model = self._namespace.get_model()
+        child_iter = self.iter_for_element(element)
+        ok, tree_iter = model.convert_child_iter_to_iter(child_iter)
+        assert ok, "Could not convert model iterator to view"
+        path = model.get_path(tree_iter)
         path_indices = path.get_indices()
 
         # Expand the parent row
