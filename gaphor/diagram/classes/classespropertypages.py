@@ -539,11 +539,10 @@ class AssociationEndPropertyPage(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.watcher = subject.watcher()
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
         vbox = Gtk.VBox()
-
         entry = Gtk.Entry()
         # entry.set_text(UML.format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
 

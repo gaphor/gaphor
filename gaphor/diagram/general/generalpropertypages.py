@@ -13,7 +13,7 @@ class CommentItemPropertyPage(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.watcher = subject.watcher()
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
         subject = self.subject
