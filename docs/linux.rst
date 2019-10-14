@@ -16,7 +16,7 @@ Development Environment
 To setup a development environment with Linux, you first need the latest
 stable version of Python. In order to get the latest stable version, we
 recommend that you install `pyenv <https://github.com/pyenv/pyenv>`_.
-Install the pyenv `prerequisites <https://github.com/pyenv/pyenv/wiki/Common-build-problems#prerequisites>`_
+Install the pyenv `prerequisites <https://github.com/pyenv/pyenv/wiki/Common-build-problems>`_
 first, and then install pyenv:
 
 
