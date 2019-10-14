@@ -29,7 +29,7 @@ author = "Arjan J. Molenaar"
 version = ""
 project_dir = Path(__file__).resolve().parent.parent
 f = project_dir.joinpath("pyproject.toml")
-release = parse(f.read_text())["tool"]["poetry"]["version"]
+release = str(parse(f.read_text())["tool"]["poetry"]["version"])
 
 # -- General configuration ---------------------------------------------------
 
