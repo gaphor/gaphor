@@ -201,7 +201,7 @@ class AttributesPage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.watcher = item.subject.watcher()
+        self.watcher = item.subject and item.subject.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -274,7 +274,7 @@ class OperationsPage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.watcher = item.subject.watcher()
+        self.watcher = item.subject and item.subject.watcher()
 
     def construct(self):
         page = Gtk.VBox()

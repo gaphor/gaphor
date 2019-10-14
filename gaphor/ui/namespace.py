@@ -612,6 +612,6 @@ class Namespace(UIComponent):
                     s = i.subject
                     if s and len(s.presentation) == 1:
                         s.unlink()
-                    i.unlink
+                    i.unlink()
                 element.unlink()
             m.destroy()
