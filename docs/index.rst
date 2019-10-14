@@ -45,6 +45,8 @@ Tech section
    storage
    undo
    xml-format
+   event_system
+   multidispatching
 
 .. toctree::
    :maxdepth: 2
