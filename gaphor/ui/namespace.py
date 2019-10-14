@@ -493,6 +493,10 @@ class Namespace(UIComponent):
         action_group.lookup_action("open").set_enabled(isinstance(element, UML.Diagram))
         action_group.lookup_action("create-diagram").set_enabled(
             isinstance(element, UML.Package)
+            or (
+                isinstance(element, UML.Namespace)
+                and isinstance(element.namespace, UML.Package)
+            )
         )
         action_group.lookup_action("create-package").set_enabled(
             isinstance(element, UML.Package)
@@ -555,6 +559,8 @@ class Namespace(UIComponent):
     @transactional
     def tree_view_create_diagram(self):
         element = self._namespace.get_selected_element()
+        while not isinstance(element, UML.Package):
+            element = element.namespace
         diagram = self.element_factory.create(UML.Diagram)
         diagram.package = element
 
