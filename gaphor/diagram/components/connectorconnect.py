@@ -267,7 +267,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
             pport.provided = True
             rport.required = True
 
-            iface.angle = rport.angle
+            iface.side = rport.side
 
             ports[(index + 1) % 4].connectable = False
             ports[(index + 3) % 4].connectable = False
@@ -279,7 +279,7 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         if len(list(self.get_connecting(iface))) == 1:
             ports = iface.ports()
             iface.folded = Folded.PROVIDED
-            iface.angle = ports[0].angle
+            iface.side = ports[0].side
             for p in ports:
                 p.connectable = True
                 p.provided = False

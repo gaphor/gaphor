@@ -101,6 +101,13 @@ class Folded(Enum):
     ASSEMBLY = 3
 
 
+class Side(Enum):
+    N = 0
+    E = pi * 0.5
+    S = pi
+    W = pi * 1.5
+
+
 class InterfacePort(LinePort):
     """
     Interface connection port.
@@ -117,11 +124,11 @@ class InterfacePort(LinePort):
     angle).
     """
 
-    def __init__(self, start, end, is_folded, angle):
+    def __init__(self, start, end, is_folded, side):
         super().__init__(start, end)
         self.is_folded = is_folded
         # Used by connection logic:
-        self.angle = angle
+        self.side = side
         self.required = False
         self.provided = False
 
@@ -156,7 +163,7 @@ class InterfaceItem(ElementPresentation, Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         self._folded = Folded.NONE
-        self.angle = 0
+        self.side = Side.N
 
         handles = self.handles()
         h_nw = handles[NW]
@@ -166,10 +173,10 @@ class InterfaceItem(ElementPresentation, Classified):
 
         # edge of element define default element ports
         self._ports = [
-            InterfacePort(h_nw.pos, h_ne.pos, self._is_folded, 0),
-            InterfacePort(h_ne.pos, h_se.pos, self._is_folded, pi / 2),
-            InterfacePort(h_se.pos, h_sw.pos, self._is_folded, pi),
-            InterfacePort(h_sw.pos, h_nw.pos, self._is_folded, pi * 1.5),
+            InterfacePort(h_nw.pos, h_ne.pos, self._is_folded, Side.N),
+            InterfacePort(h_ne.pos, h_se.pos, self._is_folded, Side.E),
+            InterfacePort(h_se.pos, h_sw.pos, self._is_folded, Side.S),
+            InterfacePort(h_sw.pos, h_nw.pos, self._is_folded, Side.W),
         ]
 
         self.watch("show_stereotypes", self.update_shapes).watch(
@@ -244,13 +251,13 @@ class InterfaceItem(ElementPresentation, Classified):
 
     def load(self, name, value):
         if name == "folded":
-            self.folded = Folded(ast.literal_eval(value))
+            self._folded = Folded(ast.literal_eval(value))
         else:
             super().load(name, value)
 
     def save(self, save_func):
         super().save(save_func)
-        save_func("folded", self.folded.value)
+        save_func("folded", self._folded.value)
 
     def _is_folded(self):
         """
@@ -364,7 +371,9 @@ class InterfaceItem(ElementPresentation, Classified):
 
         if self._folded in (Folded.REQUIRED, Folded.ASSEMBLY):
             cr.move_to(cx + self.RADIUS_REQUIRED, cy)
-            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self.angle, pi + self.angle)
+            cr.arc_negative(
+                cx, cy, self.RADIUS_REQUIRED, self.side.value, pi + self.side.value
+            )
 
         if self._folded in (Folded.PROVIDED, Folded.ASSEMBLY):
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)

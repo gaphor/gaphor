@@ -6,7 +6,7 @@ from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.components import ComponentItem
 from gaphor.diagram.components import ConnectorItem
-from gaphor.diagram.classes.interface import InterfaceItem, Folded
+from gaphor.diagram.classes.interface import InterfaceItem, Folded, Side
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.components.connectorconnect import ConnectorConnectBase
@@ -143,9 +143,7 @@ class InterfaceConnectTestCase(TestCase):
         assert not p1.required and not p1.provided and not p1.connectable
         assert not p2.required and not p2.provided and not p2.connectable
 
-    def test_connection_angle_change(self):
-        """Test angle after connection to an interface
-        """
+    def test_connection_side_adter_connecting_to_interface(self):
         iface = self.create(InterfaceItem, UML.Component)
         line = self.create(ConnectorItem)
 
@@ -156,10 +154,10 @@ class InterfaceConnectTestCase(TestCase):
         # test preconditions
         assert not pport.provided and not pport.required
         assert not rport.provided and not rport.required
-        assert iface.angle == 0.0
+        assert iface.side == Side.N
 
         self.connect(line, line.head, iface, pport)
-        assert rport.angle == iface.angle
+        assert rport.side == iface.side
 
     def test_connection_of_two_connectors_one_side(self):
         """Test connection of two connectors to required port of an interface
@@ -234,7 +232,7 @@ class InterfaceConnectTestCase(TestCase):
 
         self.disconnect(line, line.head)
         assert Folded.PROVIDED == iface.folded
-        assert iface.angle == 0
+        assert iface.side == Side.N
 
         assert not any(p.provided for p in iface.ports())
         assert not any(p.required for p in iface.ports())

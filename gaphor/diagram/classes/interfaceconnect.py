@@ -55,10 +55,10 @@ class DependencyInterfaceConnect(DependencyConnect):
         if handle is line.head:
             if self.element.folded != Folded.NONE:
                 self.element.folded = Folded.REQUIRED
-            # change interface angle even when it is unfolded, this way
+            # change interface side even when it is unfolded, this way
             # required interface will be rotated properly when folded by
             # user
-            self.element.angle = port.angle
+            self.element.side = port.side
             self.line.request_update()
 
     def disconnect(self, handle):
