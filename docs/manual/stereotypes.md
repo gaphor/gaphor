@@ -2,13 +2,13 @@
 
 The UML method to extend UML (basic) components with a special meaning
 is by using stereotypes. A stereotype defines a special usage of a model
-element. For example: a class that\'s used as a controller can be
+element. For example: a class that's used as a controller can be
 assigned a stereotype:
 
     «controller»
 
 Creating a stereotype starts by the creation of a Profile normally.
-Although stereotypes can be created in every package, it\'s a good habit
+Although stereotypes can be created in every package, it's a good habit
 to use Profiles for that. Next a Metaclass has to be created. The
 metaclass will tell the stereotype on which kind of elements it is
 applicable. A Stereotype can be connected to the Metaclass by means of
@@ -16,7 +16,7 @@ an Extension relationship.
 
 ![image](simplestereotype.png)
 
-Stereotypes can be applied to basically all elements in a model[^1].
+Stereotypes can be applied to basically all elements in a model.
 
 ![image](stereotypedclass.png)
 
@@ -28,5 +28,3 @@ behaviours to classes and other elements by means of stereotypes.
 
 ![image](stereotypeedit.png)
 
-[^1]: If for some reason the stereotype doesn\'t show in the diagram,
-    raise a ticket ;)

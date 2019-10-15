@@ -1,20 +1,16 @@
 # Multi-Dispatching
 
 Multidispatching allows you to define methods and functions which should
-behave differently based on arguments\' types without cluttering
+behave differently based on arguments' types without cluttering
 `if-elif-else` chains and `isinstance` calls.
 
 All you need is inside `generic.multidispatch` module. See examples
 below to learn how to use it to define multifunctions and multimethods.
 
-::: {.contents}
-:::
-
-Multifunctions
-==============
+## Multifunctions
 
 Suppose we want to define a function which behaves differently based on
-arguments\' types. The naive solution is to inspect argument types with
+arguments' types. The naive solution is to inspect argument types with
 `isinstance` function calls but generic provides us with
 `@multidispatch` decorator which can easily reduce the amount of
 boilerplate and provide desired level of extensibility:
@@ -56,8 +52,7 @@ for other types even in separate module:
 When behaviour of multidispatch depends on some argument we will say
 that this multidispatch *dispatches* on this argument.
 
-Multifunctions of several arguments
------------------------------------
+## Multifunctions of Several Arguments
 
 You can also define multifunctions of several arguments and even decide
 on which of first arguments you want to dispatch. For example the
@@ -86,15 +81,14 @@ argument, then you just have to provide several arguments to
 
 You can have any number of arguments to dispatch on but they should be
 all positional, keyword arguments are allowed for multifunctions only if
-they\'re not used for dispatch.
+they're not used for dispatch.
 
-API reference
-=============
+## API reference
 
-::: {.autofunction}
-gaphor.misc.generic.multidispatch.multidispatch
-:::
+```eval_rst
+.. autoclass:: gaphor.misc.generic.multidispatch.multidispatch
+```
 
-::: {.autoclass}
-gaphor.misc.generic.multidispatch.FunctionDispatcher
-:::
+```eval_rst
+.. autoclass:: gaphor.misc.generic.multidispatch.FunctionDispatcher
+```

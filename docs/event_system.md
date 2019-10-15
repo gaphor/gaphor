@@ -5,15 +5,11 @@ implement event systems in your application. By event system I mean an
 API for *subscribing* for some types of events and to *handle* those
 events so previously subscribed *handlers* are being executed.
 
-::: {.contents}
-:::
-
-Basic usage
-===========
+## Basic usage
 
 First you need to describe event types you want to use in your
 application, `generic.event` dispatches events to corresponding handlers
-by inspecting events\' types, so it\'s natural to model those as
+by inspecting events' types, so it's natural to model those as
 classes:
 
     class CommentAdded:
@@ -38,15 +34,12 @@ instance as its argument:
 
 This is how it works.
 
-Event inheritance
-=================
+## Event inheritance
 
-Using per-application event API
-===============================
+## Using per-application event API
 
-API reference
-=============
+## API reference
 
-::: {.autoclass}
-gaphor.misc.generic.event.Manager
-:::
+```eval_rst
+.. autoclass:: gaphor.misc.generic.event.Manager
+```

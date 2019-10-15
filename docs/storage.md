@@ -13,7 +13,7 @@ inside, it may become pretty big (with lots of nested elements). This is
 handled by the load and save function of the Diagram class. All elements
 inside a canvas have a tag `Item`.
 
-``` {.sourceCode .xml}
+```xml 
 <?xml version="1.0" ?>
 <Gaphor version="1.0" gaphor_version="0.3">
   <Package id="1">

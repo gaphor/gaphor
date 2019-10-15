@@ -2,13 +2,13 @@
 
 Fine grained undo: undo specific properties.
 
-Add undo-operation, e.g. Item.request\_update() should be executed as
+Add undo-operation, e.g. Item.request_update() should be executed as
 part of an undo action. Such actions are normally called after the
 properties have been set right though. This is not a problem for idle
 tasks, but for directly executed tasks it is.
 
 Should only need to save the originals, values calculated, e.g. during
-an update shouldn\'t have to be calculated -\> use undo-operations to
+an update shouldn't have to be calculated -> use undo-operations to
 trigger updates.
 
 To update:
@@ -24,11 +24,11 @@ To update:
 >
 >     Element:
 >
->     :   handles width, height min\_width, min\_height (solvable?)
+>     :   handles width, height min_width, min_height (solvable?)
 >
 >     Line:
 >
->     :   handles line\_width fuzzyness (attr) orthogonal (boolean)
+>     :   handles line_width fuzzyness (attr) orthogonal (boolean)
 >         horizontal (boolean)
 >
 > Canvas:
@@ -39,18 +39,18 @@ To update:
 >
 >     :   add() remove()
 >
->     request\_update() (should be performed as part of undo action when
+>     request_update() (should be performed as part of undo action when
 >     called)
 >
 > Solver (?):
 >
-> :   add\_constraint() remove\_constraint() Variable state
+> :   add_constraint() remove_constraint() Variable state
 >
 In Gaphor, connecting two diagram items is considered an atomic task,
 performed by a IConnect adapter. This operation results in a set of
 primitive tasks (properties set and a constraint created).
 
-For methods, it should be possible to create a decorator (\@reversible)
+For methods, it should be possible to create a decorator (@reversible)
 that schedules a method with the same signature as the calling
 operation, but with the inverse effect (e.g. the gaphas.tree module):
 
@@ -64,20 +64,19 @@ operation, but with the inverse effect (e.g. the gaphas.tree module):
       def remove(self, node):
           ... remove
 
-Okay, so the second case is tougher\...
+Okay, so the second case is tougher...
 
 So what we did: Add a StateManager to gaphas. All changes are sent to
 the statemanager. Gaphor should implement its own state manager.
 
-> -   all state changes can easily be recorded
-> -   fix it in one place
-> -   reusable throughout Gaphas and subtypes.
+-   all state changes can easily be recorded
+-   fix it in one place
+-   reusable throughout Gaphas and subtypes.
 
-Transactions
-============
+## Transactions
 
-Gaphor\'s Undo manager works transactionally. Typically, methods can be
-decorated with \@transactional and undo data is stored in the current
+Gaphor's Undo manager works transactionally. Typically, methods can be
+decorated with @transactional and undo data is stored in the current
 transaction. A new tx is created when none exists.
 
 Although undo functionality is at the core of Gaphor (diagram items and
@@ -129,17 +128,8 @@ When a transaction is rolled back:
 3.  This triggers the UndoManager to play back all recorded actions and
     stop listening.
 
-References
-==========
+## References
 
-A Framework for Undoing Actions in Collaborative Systems
-
-:   <http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf>
-
-Undoing Actions in Collaborative Work: Framework and Experience
-
-:   <https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf>
-
-Implementing a Selective Undo Framework in Python
-
-:   <https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html>
+- [A Framework for Undoing Actions in Collaborative Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)
+- [Undoing Actions in Collaborative Work: Framework and Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)
+- [Implementing a Selective Undo Framework in Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)

@@ -10,7 +10,7 @@ Service are defined as [Egg entry points](http://peak.telecommunity.com/
 DevCenter/setuptools\#dynamic-discovery-of-services-and-plugins).
 With entry points applications can register functionality for specific
 purposes. Entry points are grouped in so called *entry point groups*.
-For example the console\_scripts entry point group is used to start an
+For example the console_scripts entry point group is used to start an
 application from the command line.
 
 Entry points, as well as all major components in Gaphor, are defined
@@ -23,8 +23,8 @@ Entry point groups
 
 Gaphor defines two entry point groups:
 
-> -   gaphor.services
-> -   gaphor.uicomponents
+1. gaphor.services
+1. gaphor.uicomponents
 
 Services are used to add functionality to the application. Plug-ins
 should also be defined as services. E.g.:
@@ -41,35 +41,33 @@ element factory or the undo mechanism). A plug-in is more of an add-on.
 For example a plug-in can depend on external libraries or provide a
 cross-over function between two applications.
 
-Interfaces
-==========
+## Interfaces
 
 Each service (and plug-in) should implement the gaphor.abc.Service
 interface:
 
-::: {.autoclass}
-gaphor.abc.Service
-:::
+```eval_rst
+.. autoclass:: gaphor.abc.Service
+```
 
 UI components is another piece of cake. The `gaphor.uicomponents` entry
 point group is used to define windows and user interface functionality.
 A UI component should implement the gaphor.ui.abc.UIComponent interface:
 
-::: {.autoclass}
-gaphor.ui.abc.UIComponent
-:::
+```eval_rst
+.. autoclass:: gaphor.ui.abc.UIComponent
+```
 
 Typically a service and UI component would like to present some actions
 to the user, by means of menu entries. Every service and UI component
 can advertise actions by implementing the `gaphor.abc.ActionProvider`
 interface:
 
-::: {.autoclass}
-gaphor.abc.ActionProvider
-:::
+```eval_rst
+.. autoclass:: gaphor.abc.ActionProvider 
+```
 
-Example plugin
---------------
+## Example plugin
 
 A small example is provided by means of the Hello world plugin. Take a
 look at the files at
@@ -118,6 +116,6 @@ Here is a stripped version of the hello world class:
     services by defining them as arguments of the constructor.
 3.  All action defined in this service are registered.
 4.  Each servoce has a `shutdown()` method. This allows the servie to
-    perform some cleanup when it\'s shut down.
+    perform some cleanup when it's shut down.
 5.  The action that can be invoked. The action is defined and will be
     picked up by `add_actions()` method (see 3.)

@@ -18,17 +18,16 @@ service itself and therefore implements Service too.
 Each service is allowed to define its own interface, as long as Service
 is implemented too.
 
-Services should be defined as entry\_points in the Egg info file.
+Services should be defined as entry_points in the Egg info file.
 
 Typically a service does some work in the background.
 
-Example: ElementFactory
------------------------
+## Example: ElementFactory
 
 A nice example is the ElementFactory. Currently it is tightly bound to
-the gaphor.UML module. A default factory is created in \_\_init\_\_.py.
+the gaphor.UML module. A default factory is created in __init__.py.
 
-It depends on the undo\_manager. However, on important events, events
+It depends on the undo_manager. However, on important events, events
 are emitted. (That is when an element is created/destroyed).
 
 What you want to do is create an event handler for ElementFactory that
@@ -39,17 +38,14 @@ properties) send notifications every time their state changes.
 
 But.. where to put such information?
 
-::: {.autoclass}
-gaphor.UML.elementfactory.ElementFactory
-:::
+```eval_rst
+.. autoclass:: gaphor.UML.elementfactory.ElementFactory
+```
 
-Plugins
-=======
+## Plugins
 
 Currently a plugin is defined by an XML file. This will change as
 plugins should be distributable as Eggs too. A plugin will contain user
 interface information along with its service definition.
 
-::: {.seealso}
-[Writing plugins \<manual/plugins\>]{role="doc"}
-:::
+See also: [Writing plugins](manual/plugins.md)

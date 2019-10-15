@@ -10,16 +10,13 @@ of a system as well as create complete, highly complex models.
 
 Gaphor is designed around the following principles:
 
--   Simplicity The application should be easy to use. Only some basic
-    knowledge of UML is required.
--   Consistency UML is a graphical modeling language, so all modeling is
-    done in a diagram[^1] .
--   Workability The application should not bother the user every time
-    they do something non-UML-ish.
+-   Simplicity The application should be easy to use. Only some basic knowledge
+of UML is required.
+-   Consistency UML is a graphical modeling language, so all modeling is done
+in a diagram. For example, even stereotypes are modeled in diagrams.
+-   Workability The application should not bother the user every time they do
+something non-UML-ish.
 
 This manual serves as a reference for all Gaphor has to offer. So, you
 may read it from start to finish, or jump to a section that interests
 you.
-
-[^1]: We take this quite literally: even stereotypes are modeled in
-    diagrams.

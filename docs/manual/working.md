@@ -13,8 +13,7 @@ namely:
 
 Each section has its own specific function.
 
-Navigation
-==========
+## Navigation
 
 The navigation section of the interface displays a hierarchical view of
 your model. Every model element you create will be inserted into the
@@ -41,8 +40,7 @@ Double clicking on a diagram element will open it in the Diagram
 section. Elements such as classes and packages can be dragged from the
 tree view on the diagrams.
 
-Diagram section
-===============
+## Diagram Section
 
 The diagram section takes up the most space. Multiple diagrams can be
 opened at once: they are shown in tabs. Tabs can be closed from the file
@@ -53,8 +51,7 @@ visible when the item is selected. Double clicking on those rectangles
 allows you to directly edit the item. E.g. change its name or change the
 name of an association end.
 
-Toolbox
-=======
+## Toolbox
 
 The toolbox is mainly used to add new diagram items to a diagram. Select
 the element you want to add by clicking on it. When you click on the
@@ -63,15 +60,14 @@ so the element can be manipulated.
 
 Tools can be selected by simply clicking on them. By default the pointer
 tool is selected after every item placement. This can be changed by
-disabling the Diagram \> Reset tool option. Tools can also be selected
+disabling the Diagram > Reset tool option. Tools can also be selected
 by a keyboard shortcut. The actual character is displayed as part of the
 tooltip. Finally it is also possible to drag elements on the canvas from
 the toolbox.
 
-Element Editor
-==============
+## Element Editor
 
-The Element editor is not really part of the main screen, it\'s a
+The Element editor is not really part of the main screen, it's a
 utility window that shows all characteristics of the selected element.
 Things like name, attributes and stereotypes. It can be opened with
 Ctrl+e.
