@@ -1,8 +1,7 @@
 # Custom Python Installation Location
 
-This page is based on
-custom installation locations <http://peak.telecommunity.com/DevCenter/EasyInstall\#custom-installation-locations>,
-from the PEAK site.
+This page is based on custom installation locations
+<http://peak.telecommunity.com/DevCenter/EasyInstall>, from the PEAK site.
 
 ## Unix/Linux
 
