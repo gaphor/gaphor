@@ -80,7 +80,7 @@ class DependencyItem(LinePresentation):
         return (
             connection
             and isinstance(connection.port, InterfacePort)
-            and connection.connected.folded
+            and connection.connected.folded != Folded.NONE
         )
 
     def post_update(self, context):
