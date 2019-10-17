@@ -161,29 +161,12 @@ class InterfacePropertyPage(NamedItemPropertyPage):
     def _on_fold_change(self, button):
         item = self.item
 
-        # connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
-        # assert len(connected_items) <= 1
-
-        # line = None
-        # if len(connected_items) == 1:
-        #     line = connected_items[0]
-
         fold = button.get_active()
 
         if fold:
             item.folded = Folded.PROVIDED
         else:
             item.folded = Folded.NONE
-
-        # if line:
-        #     if fold and isinstance(line, DependencyItem):
-        #         item.folded = Folded.REQUIRED
-
-        #     assert line.canvas
-        #     constraint = line.canvas.get_connection(line.head).constraint
-        #     constraint.ratio_x = 0.5
-        #     constraint.ratio_y = 0.5
-        #     line.request_update()
 
 
 @PropertyPages.register(ClassItem)
