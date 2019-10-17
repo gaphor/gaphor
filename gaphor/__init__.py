@@ -64,10 +64,11 @@ def main():
     else:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
+    model = None
     try:
         model = args[0]
     except IndexError:
-        model = None
+        pass
 
     if options.profiler:
 

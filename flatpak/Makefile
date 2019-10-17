@@ -13,7 +13,7 @@ install: $(BUILD)/$(ID).flatpak
 	flatpak install --reinstall --assumeyes $(BUILD)/$(ID).flatpak
 
 $(REPO): *.yaml
-	flatpak-builder --force-clean --repo=$@ $(BUILD)/build --state-dir=$(BUILD)/.flatpak-builder $(ID).yaml
+	flatpak-builder --force-clean --repo=$@ $(BUILD)/build $(ID).yaml
 	flatpak build-update-repo $(REPO)
 
 $(BUILD)/$(ID).flatpak: $(REPO)

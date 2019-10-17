@@ -3,47 +3,44 @@ Final state diagram item.
 """
 
 from gaphor import UML
-from gaphor.diagram.style import ALIGN_RIGHT, ALIGN_BOTTOM
+from gaphor.UML.modelfactory import stereotypes_str
 from gaphas.util import path_ellipse
-
 from gaphor.diagram.states.state import VertexItem
+from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.shapes import Box, IconBox, EditableText, Text
+from gaphor.diagram.support import represents
 
 
-class FinalStateItem(VertexItem):
-    __uml__ = UML.FinalState
-    __style__ = {
-        "min-size": (30, 30),
-        "name-align": (ALIGN_RIGHT, ALIGN_BOTTOM),
-        "name-padding": (2, 2, 2, 2),
-        "name-outside": True,
-    }
-
-    RADIUS_1 = 10
-    RADIUS_2 = 15
-
+@represents(UML.FinalState)
+class FinalStateItem(ElementPresentation, VertexItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         for h in self.handles():
             h.movable = False
 
-    def draw(self, context):
-        """
-        Draw final state symbol.
-        """
-        cr = context.cairo
-        r = self.RADIUS_2 + 1
-        d = self.RADIUS_1 * 2
-        path_ellipse(cr, r, r, d, d)
-        cr.set_line_width(0.01)
-        cr.fill()
+        self.shape = IconBox(
+            Box(draw=draw_final_state),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
+        )
 
-        d = r * 2
-        path_ellipse(cr, r, r, d, d)
-        cr.set_line_width(0.01)
-        cr.set_line_width(2)
-        cr.stroke()
-
-        super(FinalStateItem, self).draw(context)
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
-# vim:sw=4:et
+def draw_final_state(box, context, bounding_box):
+    cr = context.cairo
+    r = 16
+    d = 20
+    path_ellipse(cr, r, r, d, d)
+    cr.set_line_width(0.01)
+    cr.fill()
+
+    d = r * 2
+    path_ellipse(cr, r, r, d, d)
+    cr.set_line_width(0.01)
+    cr.set_line_width(2)
+    cr.stroke()

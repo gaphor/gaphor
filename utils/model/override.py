@@ -6,14 +6,23 @@ do its job correctly.
 This is a simple rip-off of the override script used in PyGTK.
 """
 
+import re
+
+
+OVERRIDE_RE = re.compile(
+    r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],\"]+))?$"
+)
+
 
 class Overrides:
     def __init__(self, filename=None):
         self.overrides = {}
+        self.header = ""
         if filename:
-            self.read_overrides(filename)
+            with open(filename) as fp:
+                self.read_overrides(fp)
 
-    def read_overrides(self, filename):
+    def read_overrides(self, fp):
         """Read a file and return a dictionary of overriden properties
         and their implementation.
 
@@ -22,66 +31,72 @@ class Overrides:
         <implementation>
         %%
         """
-        fp = open(filename, "r")
         # read all the components of the file ...
-        # bufs contains a list of (lines, startline) pairs.
+        # bufs contains a list of (lines, line_number) pairs.
         bufs = []
-        startline = 1
+        line_number = 1
         lines = []
         line = fp.readline()
         linenum = 1
         while line:
             if line == "%%\n" or line == "%%":
                 if lines:
-                    bufs.append((list(lines), startline))
-                startline = linenum + 1
+                    bufs.append((list(lines), line_number))
+                line_number = linenum + 1
                 lines = []
             else:
                 lines.append(line)
             line = fp.readline()
             linenum = linenum + 1
         if lines:
-            bufs.append((list(lines), startline))
+            bufs.append((list(lines), line_number))
 
         if not bufs:
             return
 
         # Parse the parts of the file
-        for lines, startline in bufs:
+        for lines, line_number in bufs:
             line = lines[0]
             rest = lines[1:]
             words = line.split()
 
             # TODO: Create a mech to define dependencies
             if words[0] == "override":
-                func = words[1]
-                deps = ()
-                if len(words) > 3 and words[2] == "derives":
-                    deps = tuple(words[3:])
+                m = OVERRIDE_RE.match(line.strip())
+                if not m:
+                    raise Exception(f"Could not parse override line '{line.strip()}'")
+                func = m.group("name")
+                derived = m.group("derived")
+                deps = tuple(map(str.strip, derived.split(","))) if derived else ()
+                type_hint = m.group("type_hint") or "Any"
                 self.overrides[func] = (
                     deps,
+                    type_hint,
                     "".join(rest),
-                    "%d: %s" % (startline, line),
+                    f"{line_number:d}: {line}",
                 )
+            elif words[0] == "header":
+                assert not self.header
+                self.header = "".join(rest)
             elif words[0] == "comment":
                 pass  # ignore comments
             else:
-                print("Unknown word: '%s', line %d"(words[0], startline))
+                print(f"Unknown word: '{words[0]}', line {line_number:d}")
                 raise SystemExit
 
     def has_override(self, key):
         return bool(self.overrides.get(key))
 
-    def derives(self, key):
-        return self.overrides.get(key, ((), None))[0]
-
-    def write_override(self, fp, key):
+    def get_override(self, key):
         """Write override data for 'key' to a file refered to by 'fp'."""
-        deps, data, line = self.overrides.get(key, ((), None, None))
+        _deps, _type_hint, data, line = self.overrides.get(key, ((), None, None, None))
         if not data:
-            return False
+            return None
 
-        fp.write("# ")
-        fp.write(line)
-        fp.write(data)
-        return True
+        return f"# {line}{data}"
+
+    def get_type(self, key):
+        return self.overrides.get(key, (None, "Any"))[1]
+
+    def derives(self, key):
+        return self.overrides.get(key, ((),))[0]

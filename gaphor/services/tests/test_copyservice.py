@@ -2,7 +2,6 @@ from gaphor import UML
 from gaphor.diagram.general import CommentItem
 from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.services.copyservice import CopyService
-from gaphor.application import Application
 from gaphor.tests.testcase import TestCase
 from gaphor.storage.verify import orphan_references
 
@@ -11,9 +10,11 @@ class CopyServiceTestCase(TestCase):
 
     services = TestCase.services + [
         "main_window",
-        "action_manager",
         "properties",
         "undo_manager",
+        "import_menu",
+        "export_menu",
+        "tools_menu",
     ]
 
     def setUp(self):
@@ -37,34 +38,6 @@ class CopyServiceTestCase(TestCase):
         service.paste(diagram)
 
         assert len(diagram.canvas.get_all_items()) == 2, diagram.canvas.get_all_items()
-
-    def test_copy_named_item(self):
-        service = self.service
-
-        ef = self.element_factory
-        diagram = ef.create(UML.Diagram)
-        c = diagram.create(ClassItem, subject=ef.create(UML.Class))
-
-        c.subject.name = "Name"
-
-        diagram.canvas.update_now()
-        i = list(diagram.canvas.get_all_items())
-        assert 1 == len(i), i
-        assert "Name" == i[0]._name.text
-
-        service.copy([c])
-        assert diagram.canvas.get_all_items() == [c]
-
-        service.paste(diagram)
-
-        i = diagram.canvas.get_all_items()
-
-        assert 2 == len(i), i
-
-        diagram.canvas.update_now()
-
-        assert "Name" == i[0]._name.text
-        assert "Name" == i[1]._name.text
 
     def _skip_test_copy_paste_undo(self):
         """

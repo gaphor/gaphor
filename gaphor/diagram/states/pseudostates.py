@@ -5,77 +5,75 @@ See also gaphor.diagram.states package description.
 """
 
 from gaphor import UML
-from gaphor.diagram.style import ALIGN_LEFT, ALIGN_TOP
+from gaphor.UML.modelfactory import stereotypes_str
 from gaphas.util import path_ellipse
-from gaphor.diagram.textelement import text_center
 from gaphor.diagram.states.state import VertexItem
+from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.shapes import Box, IconBox, EditableText, Text
+from gaphor.diagram.support import represents
 
 
-class InitialPseudostateItem(VertexItem):
-    """
-    Initial pseudostate diagram item.
-    """
-
-    __uml__ = UML.Pseudostate
-    __style__ = {
-        "min-size": (20, 20),
-        "name-align": (ALIGN_LEFT, ALIGN_TOP),
-        "name-padding": (2, 2, 2, 2),
-        "name-outside": True,
-    }
-
-    RADIUS = 10
-
+@represents(UML.Pseudostate)
+class InitialPseudostateItem(ElementPresentation, VertexItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         for h in self.handles():
             h.movable = False
 
-    def draw(self, context):
-        """
-        Draw intial pseudostate symbol.
-        """
-        super(InitialPseudostateItem, self).draw(context)
-        cr = context.cairo
-        r = self.RADIUS
-        d = r * 2
-        path_ellipse(cr, r, r, d, d)
-        cr.set_line_width(0.01)
-        cr.fill()
+        self.shape = IconBox(
+            Box(draw=draw_initial_pseudostate),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
+        )
+
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
-class HistoryPseudostateItem(VertexItem):
+def draw_initial_pseudostate(box, context, bounding_box):
     """
-    History pseudostate diagram item.
+    Draw intial pseudostate symbol.
     """
+    cr = context.cairo
+    r = 10
+    d = r * 2
+    path_ellipse(cr, r, r, d, d)
+    cr.set_line_width(0.01)
+    cr.fill()
 
-    __uml__ = UML.Pseudostate
-    __style__ = {
-        "min-size": (30, 30),
-        "name-align": (ALIGN_LEFT, ALIGN_TOP),
-        "name-padding": (2, 2, 2, 2),
-        "name-outside": True,
-    }
 
-    RADIUS = 15
-
+@represents(UML.Pseudostate)
+class HistoryPseudostateItem(ElementPresentation, VertexItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         for h in self.handles():
             h.movable = False
+        self.shape = IconBox(
+            Box(draw=draw_history_pseudostate),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject and self.subject.name or ""),
+        )
 
-    def draw(self, context):
-        """
-        Draw intial pseudostate symbol.
-        """
-        super(HistoryPseudostateItem, self).draw(context)
-        cr = context.cairo
-        r = self.RADIUS
-        d = r * 2
-        path_ellipse(cr, r, r, d, d)
-        # cr.set_line_width(1)
-        cr.stroke()
-        text_center(cr, r, r, "H", self.style.name_font)
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
-# vim:sw=4:et
+def draw_history_pseudostate(box, context, bounding_box):
+    cr = context.cairo
+    r = 15
+    d = r * 2
+    path_ellipse(cr, r, r, d, d)
+    # cr.set_line_width(1)
+    cr.move_to(12, 10)
+    cr.line_to(12, 20)
+    cr.move_to(18, 10)
+    cr.line_to(18, 20)
+    cr.move_to(12, 15)
+    cr.line_to(18, 15)
+    cr.stroke()

@@ -2,7 +2,7 @@ import os
 from gi.repository import GLib
 
 
-def get_config_dir():
+def get_config_dir() -> str:
     """Return the directory where the user's config is stored. This varies
     depending on platform."""
 

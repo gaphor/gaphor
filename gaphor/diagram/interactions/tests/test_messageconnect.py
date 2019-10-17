@@ -102,8 +102,8 @@ class BasicMessageConnectionsTestCase(TestCase):
         assert 1 == len(messages)
         assert 2 == len(occurences)
         assert messages[0] is msg.subject
-        assert msg.subject.sendEvent in occurences, "%s" % occurences
-        assert msg.subject.receiveEvent in occurences, "%s" % occurences
+        assert msg.subject.sendEvent in occurences, f"{occurences}"
+        assert msg.subject.receiveEvent in occurences, f"{occurences}"
 
     def test_lifetime_connection(self):
         """Test messages' lifetimes connection
@@ -136,11 +136,11 @@ class BasicMessageConnectionsTestCase(TestCase):
 
         # one side disconnection
         self.disconnect(msg, msg.head)
-        assert msg.subject is not None, "%s" % msg.subject
+        assert msg.subject is not None, f"{msg.subject}"
 
         # 2nd side disconnection
         self.disconnect(msg, msg.tail)
-        assert msg.subject is None, "%s" % msg.subject
+        assert msg.subject is None, f"{msg.subject}"
 
     def test_lifetime_connectivity_on_head(self):
         """Test lifeline's lifetime connectivity change on head connection
@@ -234,38 +234,9 @@ class DiagramModeMessageConnectionTestCase(TestCase):
 
         assert subject.sendEvent and subject.receiveEvent
 
-        # add some more messages
-        m1 = UML.model.create_message(subject)
-        m2 = UML.model.create_message(subject)
-        msg.add_message(m1, False)
-        msg.add_message(m2, False)
-
-        # add some inverted messages
-        m3 = UML.model.create_message(subject, True)
-        m4 = UML.model.create_message(subject, True)
-        msg.add_message(m3, True)
-        msg.add_message(m4, True)
-
         messages = list(self.kindof(UML.Message))
         occurrences = set(self.kindof(UML.MessageOccurrenceSpecification))
 
         # verify integrity of messages
-        self.assertEqual(5, len(messages))
-        assert 10 == len(occurrences)
-        for m in messages:
-            assert m.sendEvent in occurrences
-            assert m.receiveEvent in occurrences
-
-        # lost/received messages
-        self.disconnect(msg, msg.head)
-        assert 5 == len(messages)
-
-        # verify integrity of messages
-        self.assertEqual(10, len(occurrences))
-        for m in messages:
-            assert m.sendEvent is None or m.sendEvent in occurrences
-            assert m.receiveEvent is None or m.receiveEvent in occurrences
-
-        # no message after full disconnection
-        self.disconnect(msg, msg.tail)
-        assert 0 == len(self.kindof(UML.Message))
+        self.assertEqual(1, len(messages))
+        assert 2 == len(occurrences)

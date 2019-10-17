@@ -2,19 +2,26 @@
 Generalization --
 """
 
-from gi.repository import GObject
 
 from gaphor import UML
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.support import represents
 
 
-class GeneralizationItem(DiagramLine):
-
-    __uml__ = UML.Generalization
-    __relationship__ = "general", None, "specific", "generalization"
-
+@represents(UML.Generalization)
+class GeneralizationItem(LinePresentation):
     def __init__(self, id=None, model=None):
-        DiagramLine.__init__(self, id, model)
+        super().__init__(id, model)
+
+        self.shape_middle = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            )
+        )
+        self.watch("subject.appliedStereotype.classifier.name")
 
     def draw_head(self, context):
         cr = context.cairo

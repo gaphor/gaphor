@@ -49,12 +49,12 @@ def generate_uml2(force=False):
         or newer(overrides, outfile)
         or newer(gen, outfile)
     ):
-        print("generating %s from %s..." % (py_model, model))
+        print(f"generating {py_model} from {model}...")
         print("  (warnings can be ignored)")
 
         gen_uml.generate(model, outfile, overrides)
     else:
-        print("not generating %s (up-to-date)" % py_model)
+        print(f"not generating {py_model} (up-to-date)")
     byte_compile([outfile])
 
 

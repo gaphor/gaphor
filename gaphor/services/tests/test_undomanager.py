@@ -102,7 +102,6 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_undo_attribute(self):
-        import types
         from gaphor.UML.properties import attribute
         from gaphor.UML.element import Element
 
@@ -292,7 +291,7 @@ class TestUndoManager(TestCase):
 
     def test_uml_associations(self):
 
-        from gaphor.UML.event import AssociationChangeEvent
+        from gaphor.UML.event import AssociationUpdated
         from gaphor.UML.properties import association, derivedunion
         from gaphor.UML import Element
 
@@ -318,7 +317,7 @@ class TestUndoManager(TestCase):
 
         events = []
 
-        @event_handler(AssociationChangeEvent)
+        @event_handler(AssociationUpdated)
         def handler(event, events=events):
             events.append(event)
 

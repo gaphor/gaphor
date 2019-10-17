@@ -5,11 +5,12 @@ Implemented using interface item in assembly connector mode, see
 `gaphor.diagram.connector` module for details.
 """
 
+import operator
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect, AbstractConnect
 from gaphor.diagram.components.component import ComponentItem
 from gaphor.diagram.components.connector import ConnectorItem
-from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.interface import InterfaceItem, Folded
 
 
 class ConnectorConnectBase(AbstractConnect):
@@ -103,7 +104,7 @@ class ConnectorConnectBase(AbstractConnect):
         connector.subject = None
 
     def allow(self, handle, port):
-        glue_ok = super(ConnectorConnectBase, self).allow(handle, port)
+        glue_ok = super().allow(handle, port)
 
         iface = self.element
         component = self.get_connected(self.line.opposite(handle))
@@ -143,7 +144,7 @@ class ConnectorConnectBase(AbstractConnect):
         return glue_ok
 
     def connect(self, handle, port):
-        super(ConnectorConnectBase, self).connect(handle, port)
+        super().connect(handle, port)
 
         line = self.line
         canvas = line.canvas
@@ -159,7 +160,7 @@ class ConnectorConnectBase(AbstractConnect):
                 component, iface = iface, component
 
             connections = self.get_connecting(iface, both=True)
-            ports = set(c.port for c in connections)
+            ports = {c.port for c in connections}
 
             # to make an assembly at least two connector ends need to exist
             # also, two different ports of interface need to be connected
@@ -187,7 +188,7 @@ class ConnectorConnectBase(AbstractConnect):
                     self.create_uml(line, component, assembly, iface.subject)
 
     def disconnect(self, handle):
-        super(ConnectorConnectBase, self).disconnect(handle)
+        super().disconnect(handle)
         line = self.line
         if line.subject is None:
             return
@@ -198,7 +199,7 @@ class ConnectorConnectBase(AbstractConnect):
 
         connections = list(self.get_connecting(iface, both=True))
         # find ports, which will stay connected after disconnection
-        ports = set(c.port for c in connections if c.item is not self.line)
+        ports = {c.port for c in connections if c.item is not self.line}
 
         # destroy whole assembly if one connected item stays
         # or only one port will stay connected
@@ -218,8 +219,6 @@ class ConnectorConnectBase(AbstractConnect):
 class ComponentConnectorConnect(ConnectorConnectBase):
     """Connection of connector item to a component."""
 
-    pass
-
 
 @IConnect.register(InterfaceItem, ConnectorItem)
 class InterfaceConnectorConnect(ConnectorConnectBase):
@@ -235,9 +234,9 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         Only allow gluing when connectors are connected.
         """
 
-        glue_ok = super(InterfaceConnectorConnect, self).allow(handle, port)
+        glue_ok = super().allow(handle, port)
         iface = self.element
-        glue_ok = glue_ok and iface.folded != iface.FOLDED_NONE
+        glue_ok = glue_ok and iface.folded != Folded.NONE
         if glue_ok:
             # find connected items, which are not connectors
             canvas = self.element.canvas
@@ -250,10 +249,10 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
         return glue_ok
 
     def connect(self, handle, port):
-        super(InterfaceConnectorConnect, self).connect(handle, port)
+        super().connect(handle, port)
 
         iface = self.element
-        iface.folded = iface.FOLDED_ASSEMBLY
+        iface.folded = Folded.ASSEMBLY
 
         # determine required and provided ports
         pport = port
@@ -268,19 +267,19 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
             pport.provided = True
             rport.required = True
 
-            iface._angle = rport.angle
+            iface.angle = rport.angle
 
             ports[(index + 1) % 4].connectable = False
             ports[(index + 3) % 4].connectable = False
 
     def disconnect(self, handle):
-        super(InterfaceConnectorConnect, self).disconnect(handle)
+        super().disconnect(handle)
         iface = self.element
         # about to disconnect last connector
         if len(list(self.get_connecting(iface))) == 1:
             ports = iface.ports()
-            iface.folded = iface.FOLDED_PROVIDED
-            iface._angle = ports[0].angle
+            iface.folded = Folded.PROVIDED
+            iface.angle = ports[0].angle
             for p in ports:
                 p.connectable = True
                 p.provided = False

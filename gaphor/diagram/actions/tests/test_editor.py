@@ -6,13 +6,14 @@ from gaphor.diagram.editors import Editor
 
 class EditorTestCase(TestCase):
     def setUp(self):
-        super(EditorTestCase, self).setUp()
+        super().setUp()
 
     def test_objectnode_editor(self):
         node = self.create(ObjectNodeItem, UML.ObjectNode)
         self.diagram.canvas.update_now()
 
         adapter = Editor(node)
+        print(node, adapter)
         assert adapter.is_editable(10, 10)
         # assert not adapter.edit_tag
 

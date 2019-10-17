@@ -16,44 +16,70 @@ module.
 """
 
 from gaphor import UML
-from gaphor.diagram.classifier import ClassifierItem
+from gaphor.diagram.classes.stereotype import stereotype_compartments
+from gaphor.diagram.presentation import ElementPresentation, Classified
+from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.text import FontWeight
+from gaphor.diagram.support import represents
 
 
-class NodeItem(ClassifierItem):
+@represents(UML.Node)
+@represents(UML.Device)
+class NodeItem(ElementPresentation, Classified):
     """
     Representation of node or device from UML Deployment package.
     """
 
-    __uml__ = UML.Node, UML.Device
-    __stereotype__ = {"device": UML.Device}
-
-    DEPTH = 10
-
     def __init__(self, id=None, model=None):
-        ClassifierItem.__init__(self, id, model)
-        self.drawing_style = self.DRAW_COMPARTMENT
-        self.height = 50
-        self.width = 120
+        super().__init__(id, model)
 
-    def draw_compartment(self, context):
-        cr = context.cairo
-        cr.save()
-        super(NodeItem, self).draw_compartment(context)
-        cr.restore()
+        self.watch("show_stereotypes", self.update_shapes)
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype", self.update_shapes)
+        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject.appliedStereotype.slot", self.update_shapes)
+        self.watch("subject.appliedStereotype.slot.definingFeature.name")
+        self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
 
-        d = self.DEPTH
-        w = self.width
-        h = self.height
+    show_stereotypes = UML.properties.attribute("show_stereotypes", int)
 
-        cr.move_to(0, 0)
-        cr.line_to(d, -d)
-        cr.line_to(w + d, -d)
-        cr.line_to(w + d, h - d)
-        cr.line_to(w, h)
-        cr.move_to(w, 0)
-        cr.line_to(w + d, -d)
+    def update_shapes(self, event=None):
+        self.shape = Box(
+            Box(
+                Text(
+                    text=lambda: UML.model.stereotypes_str(
+                        self.subject,
+                        isinstance(self.subject, UML.Device) and ("device",) or (),
+                    ),
+                    style={"min-width": 0, "min-height": 0},
+                ),
+                EditableText(
+                    text=lambda: self.subject.name or "",
+                    style={"font-weight": FontWeight.BOLD},
+                ),
+                style={"padding": (4, 4, 4, 4)},
+            ),
+            *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
+            style={"min-width": 100, "min-height": 50},
+            draw=draw_node
+        )
 
-        cr.stroke()
 
+def draw_node(box, context, bounding_box):
+    cr = context.cairo
 
-# vim:sw=4:et
+    d = 10
+    w = bounding_box.width
+    h = bounding_box.height
+
+    cr.rectangle(0, 0, w, h)
+
+    cr.move_to(0, 0)
+    cr.line_to(d, -d)
+    cr.line_to(w + d, -d)
+    cr.line_to(w + d, h - d)
+    cr.line_to(w, h)
+    cr.move_to(w, 0)
+    cr.line_to(w + d, -d)
+
+    cr.stroke()

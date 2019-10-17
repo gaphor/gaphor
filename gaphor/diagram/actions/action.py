@@ -2,85 +2,105 @@
 Action diagram item.
 """
 
-from math import pi
-
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.support import represents
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
 
 
-class ActionItem(NamedItem):
-    __uml__ = UML.Action
-    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
-
-    def draw(self, context):
+@represents(UML.Action)
+class ActionItem(ElementPresentation, Named):
+    def __init__(self, id=None, model=None):
         """
-        Draw action symbol.
+        Create action item.
         """
-        super(ActionItem, self).draw(context)
+        super().__init__(id, model)
 
-        c = context.cairo
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject.name or ""),
+            style={
+                "min-width": 50,
+                "min-height": 30,
+                "padding": (5, 10, 5, 10),
+                "border-radius": 15,
+            },
+            draw=draw_border,
+        )
 
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+
+
+@represents(UML.SendSignalAction)
+class SendSignalActionItem(ElementPresentation, Named):
+    def __init__(self, id=None, model=None):
+        """
+        Create action item.
+        """
+        super().__init__(id, model)
+
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject.name or ""),
+            style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
+            draw=self.draw_border,
+        )
+
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+
+    def draw_border(self, box, context, bounding_box):
+        cr = context.cairo
         d = 15
+        x, y, width, height = bounding_box
+        cr.move_to(0, 0)
+        cr.line_to(width - d, 0)
+        cr.line_to(width, height / 2)
+        cr.line_to(width - d, height)
+        cr.line_to(0, height)
+        cr.close_path()
 
-        c.move_to(0, d)
-        c.arc(d, d, d, pi, 1.5 * pi)
-        c.line_to(self.width - d, 0)
-        c.arc(self.width - d, d, d, 1.5 * pi, 0)
-        c.line_to(self.width, self.height - d)
-        c.arc(self.width - d, self.height - d, d, 0, 0.5 * pi)
-        c.line_to(d, self.height)
-        c.arc(d, self.height - d, d, 0.5 * pi, pi)
-        c.close_path()
-
-        c.stroke()
+        cr.stroke()
 
 
-class SendSignalActionItem(NamedItem):
-    __uml__ = UML.SendSignalAction
-    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
-
-    def draw(self, context):
+@represents(UML.AcceptEventAction)
+class AcceptEventActionItem(ElementPresentation, Named):
+    def __init__(self, id=None, model=None):
         """
-        Draw action symbol.
+        Create action item.
         """
-        super(SendSignalActionItem, self).draw(context)
+        super().__init__(id, model)
 
-        c = context.cairo
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject.name or ""),
+            style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
+            draw=self.draw_border,
+        )
 
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+
+    def draw_border(self, box, context, bounding_box):
+        cr = context.cairo
         d = 15
-        w = self.width
-        h = self.height
-        c.move_to(0, 0)
-        c.line_to(w - d, 0)
-        c.line_to(w, h / 2)
-        c.line_to(w - d, h)
-        c.line_to(0, h)
-        c.close_path()
+        x, y, width, height = bounding_box
+        cr.move_to(0, 0)
+        cr.line_to(width, 0)
+        cr.line_to(width, height)
+        cr.line_to(0, height)
+        cr.line_to(d, height / 2)
+        cr.close_path()
 
-        c.stroke()
-
-
-class AcceptEventActionItem(NamedItem):
-    __uml__ = UML.SendSignalAction
-    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
-
-    def draw(self, context):
-        """
-        Draw action symbol.
-        """
-        super(AcceptEventActionItem, self).draw(context)
-
-        c = context.cairo
-
-        d = 15
-        w = self.width
-        h = self.height
-        c.move_to(0, 0)
-        c.line_to(w, 0)
-        c.line_to(w, h)
-        c.line_to(0, h)
-        c.line_to(d, h / 2)
-        c.close_path()
-
-        c.stroke()
+        cr.stroke()

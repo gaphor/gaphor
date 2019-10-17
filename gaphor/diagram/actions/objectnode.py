@@ -2,20 +2,21 @@
 Object node item.
 """
 
-import itertools
 import ast
 
 from gaphas.state import observed, reversible_property
 from gaphor import UML
-
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_border
+from gaphor.diagram.support import represents
 
 
 DEFAULT_UPPER_BOUND = "*"
 
 
-class ObjectNodeItem(NamedItem):
+@represents(UML.ObjectNode)
+class ObjectNodeItem(ElementPresentation, Named):
     """
     Representation of object node. Object node is ordered and has upper bound
     specification.
@@ -23,108 +24,52 @@ class ObjectNodeItem(NamedItem):
     Ordering information can be hidden by user.
     """
 
-    __uml__ = UML.ObjectNode
-
-    STYLE_BOTTOM = {
-        "text-align": (ALIGN_CENTER, ALIGN_BOTTOM),
-        "text-outside": True,
-        "text-align-group": "bottom",
-    }
-
     def __init__(self, id=None, model=None):
-        NamedItem.__init__(self, id, model)
+        super().__init__(id, model)
 
         self._show_ordering = False
 
-        self._upper_bound = self.add_text(
-            "upperBound",
-            pattern="{ upperBound = %s }",
-            style=self.STYLE_BOTTOM,
-            visible=self.is_upper_bound_visible,
+        self.shape = IconBox(
+            Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                    style={"min-width": 0, "min-height": 0},
+                ),
+                EditableText(text=lambda: self.subject.name or ""),
+                style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
+                draw=draw_border,
+            ),
+            Text(
+                text=lambda: self.subject.upperBound not in (None, DEFAULT_UPPER_BOUND)
+                and f"{{ upperBound = {self.subject.upperBound} }}",
+                style={"min-width": 0, "min-height": 0},
+            ),
+            Text(
+                text=lambda: self._show_ordering
+                and self.subject.ordering
+                and f"{{ ordering = {self.subject.ordering} }}",
+                style={"min-width": 0, "min-height": 0},
+            ),
         )
 
-        self._ordering = self.add_text(
-            "ordering",
-            pattern="{ ordering = %s }",
-            style=self.STYLE_BOTTOM,
-            visible=self._get_show_ordering,
-        )
-
-        self.watch(
-            "subject<ObjectNode>.upperBound", self.on_object_node_upper_bound
-        ).watch("subject<ObjectNode>.ordering", self.on_object_node_ordering)
-
-    def on_object_node_ordering(self, event):
-        if self.subject:
-            self._ordering.text = self.subject.ordering
-        self.request_update()
-
-    def on_object_node_upper_bound(self, event):
-        subject = self.subject
-        if subject and subject.upperBound:
-            self._upper_bound.text = subject.upperBound
-            self.request_update()
-
-    def is_upper_bound_visible(self):
-        """
-        Do not show upper bound, when it's set to default value.
-        """
-        subject = self.subject
-        return subject and subject.upperBound != DEFAULT_UPPER_BOUND
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[ObjectNode].upperBound")
+        self.watch("subject[ObjectNode].ordering")
 
     @observed
     def _set_show_ordering(self, value):
         self._show_ordering = value
         self.request_update()
 
-    def _get_show_ordering(self):
-        return self._show_ordering
-
-    show_ordering = reversible_property(_get_show_ordering, _set_show_ordering)
+    show_ordering = reversible_property(lambda s: s._show_ordering, _set_show_ordering)
 
     def save(self, save_func):
         save_func("show-ordering", self._show_ordering)
-        super(ObjectNodeItem, self).save(save_func)
+        super().save(save_func)
 
     def load(self, name, value):
         if name == "show-ordering":
             self._show_ordering = ast.literal_eval(value)
         else:
-            super(ObjectNodeItem, self).load(name, value)
-
-    def postload(self):
-        if self.subject and self.subject.upperBound:
-            self._upper_bound.text = self.subject.upperBound
-        if self.subject and self._show_ordering:
-            self.set_ordering(self.subject.ordering)
-        super(ObjectNodeItem, self).postload()
-
-    def draw(self, context):
-        cr = context.cairo
-        cr.rectangle(0, 0, self.width, self.height)
-        cr.stroke()
-
-        super(ObjectNodeItem, self).draw(context)
-
-    def set_upper_bound(self, value):
-        """
-        Set upper bound value of object node.
-        """
-        subject = self.subject
-        if subject:
-            if not value:
-                value = DEFAULT_UPPER_BOUND
-
-            subject.upperBound = value
-            # self._upper_bound.text = value
-
-    def set_ordering(self, value):
-        """
-        Set object node ordering value.
-        """
-        subject = self.subject
-        subject.ordering = value
-        self._ordering.text = value
-
-
-# vim:sw=4:et:ai
+            super().load(name, value)

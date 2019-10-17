@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-import gaphor
 from gaphor.storage import storage
 import gaphor.UML as UML
+from gaphor.application import Application
 
-from gaphas.painter import ItemPainter
+from gaphas.painter import Context, ItemPainter
 from gaphas.view import View
 
 import cairo
@@ -26,125 +26,127 @@ def pkg2dir(package):
     return "/".join(name)
 
 
-def message(msg):
-    """
-    Print message if user set verbose mode.
-    """
-    global options
-    if options.verbose:
-        print(msg, file=sys.stderr)
+def paint(view, cr):
+    view.painter.paint(Context(cairo=cr, items=view.canvas.get_all_items(), area=None))
 
 
-usage = "usage: %prog [options] file1 file2..."
+def main(argv=sys.argv[1:]):
+    def message(msg):
+        """
+        Print message if user set verbose mode.
+        """
+        if options.verbose:
+            print(msg, file=sys.stderr)
 
-parser = optparse.OptionParser(usage=usage)
+    usage = "usage: %prog [options] file1 file2..."
 
-parser.add_option(
-    "-v", "--verbose", dest="verbose", action="store_true", help="verbose output"
-)
-parser.add_option(
-    "-u",
-    "--use-underscores",
-    dest="underscores",
-    action="store_true",
-    help="use underscores instead of spaces for output filenames",
-)
-parser.add_option(
-    "-d", "--dir", dest="dir", metavar="directory", help="output to directory"
-)
-parser.add_option(
-    "-f",
-    "--format",
-    dest="format",
-    metavar="format",
-    help="output file format, default pdf",
-    default="pdf",
-    choices=["pdf", "svg", "png"],
-)
-parser.add_option(
-    "-r",
-    "--regex",
-    dest="regex",
-    metavar="regex",
-    help="process diagrams which name matches given regular expresion;"
-    " name includes package name; regular expressions are case insensitive",
-)
+    parser = optparse.OptionParser(usage=usage)
 
-(options, args) = parser.parse_args()
+    parser.add_option(
+        "-v", "--verbose", dest="verbose", action="store_true", help="verbose output"
+    )
+    parser.add_option(
+        "-u",
+        "--use-underscores",
+        dest="underscores",
+        action="store_true",
+        help="use underscores instead of spaces for output filenames",
+    )
+    parser.add_option(
+        "-d", "--dir", dest="dir", metavar="directory", help="output to directory"
+    )
+    parser.add_option(
+        "-f",
+        "--format",
+        dest="format",
+        metavar="format",
+        help="output file format, default pdf",
+        default="pdf",
+        choices=["pdf", "svg", "png"],
+    )
+    parser.add_option(
+        "-r",
+        "--regex",
+        dest="regex",
+        metavar="regex",
+        help="process diagrams which name matches given regular expresion;"
+        " name includes package name; regular expressions are case insensitive",
+    )
 
-if not args:
-    parser.print_help()
-    # sys.exit(1)
+    (options, args) = parser.parse_args(argv)
 
-model = UML.ElementFactory()
+    if not args:
+        parser.print_help()
 
+    Application.init(
+        services=["event_manager", "component_registry", "element_factory"]
+    )
+    factory = Application.get_service("element_factory")
 
-name_re = None
-if options.regex:
-    name_re = re.compile(options.regex, re.I)
+    name_re = None
+    if options.regex:
+        name_re = re.compile(options.regex, re.I)
 
-# we should have some gaphor files to be processed at this point
-for model in args:
-    message("loading model %s" % model)
-    storage.load(model, model)
-    message("\nready for rendering\n")
+    # we should have some gaphor files to be processed at this point
+    for model in args:
+        message(f"loading model {model}")
+        storage.load(model, factory)
+        message("ready for rendering")
 
-    for diagram in model.select(lambda e: e.isKindOf(UML.Diagram)):
-        odir = pkg2dir(diagram.package)
+        for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
+            odir = pkg2dir(diagram.package)
 
-        # just diagram name
-        dname = diagram.name
-        # full diagram name including package path
-        pname = "%s/%s" % (odir, dname)
+            # just diagram name
+            dname = diagram.name
+            # full diagram name including package path
+            pname = f"{odir}/{dname}"
 
-        if options.underscores:
-            odir = odir.replace(" ", "_")
-            dname = dname.replace(" ", "_")
+            if options.underscores:
+                odir = odir.replace(" ", "_")
+                dname = dname.replace(" ", "_")
 
-        if name_re and not name_re.search(pname):
-            message("skipping %s" % pname)
-            continue
+            if name_re and not name_re.search(pname):
+                message(f"skipping {pname}")
+                continue
 
-        if options.dir:
-            odir = "%s/%s" % (options.dir, odir)
+            if options.dir:
+                odir = f"{options.dir}/{odir}"
 
-        outfilename = "%s/%s.%s" % (odir, dname, options.format)
+            outfilename = f"{odir}/{dname}.{options.format}"
 
-        if not os.path.exists(odir):
-            message("creating dir %s" % odir)
-            os.makedirs(odir)
+            if not os.path.exists(odir):
+                message(f"creating dir {odir}")
+                os.makedirs(odir)
 
-        message("rendering: %s -> %s..." % (pname, outfilename))
+            message(f"rendering: {pname} -> {outfilename}...")
 
-        view = View(diagram.canvas)
-        view.painter = ItemPainter()
+            view = View(diagram.canvas)
+            view.painter = ItemPainter()
 
-        tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
-        tmpcr = cairo.Context(tmpsurface)
-        view.update_bounding_box(tmpcr)
-        tmpcr.show_page()
-        tmpsurface.flush()
+            tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
+            tmpcr = cairo.Context(tmpsurface)
+            view.update_bounding_box(tmpcr)
+            tmpcr.show_page()
+            tmpsurface.flush()
 
-        w, h = view.bounding_box.width, view.bounding_box.height
-        if options.format == "pdf":
-            surface = cairo.PDFSurface(outfilename, w, h)
-        elif options.format == "svg":
-            surface = cairo.SVGSurface(outfilename, w, h)
-        elif options.format == "png":
-            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w + 1), int(h + 1))
-        else:
-            assert False, "unknown format %s" % options.format
-        cr = cairo.Context(surface)
-        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
-        view.paint(cr)
-        cr.show_page()
+            w, h = view.bounding_box.width, view.bounding_box.height
+            if options.format == "pdf":
+                surface = cairo.PDFSurface(outfilename, w, h)
+            elif options.format == "svg":
+                surface = cairo.SVGSurface(outfilename, w, h)
+            elif options.format == "png":
+                surface = cairo.ImageSurface(
+                    cairo.FORMAT_ARGB32, int(w + 1), int(h + 1)
+                )
+            else:
+                assert False, f"unknown format {options.format}"
+            cr = cairo.Context(surface)
+            view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
+            paint(view, cr)
+            cr.show_page()
 
-        if options.format == "png":
-            surface.write_to_png(outfilename)
+            if options.format == "png":
+                surface.write_to_png(outfilename)
 
-        surface.flush()
-        surface.finish()
-
-
-def main():
-    pass
+            surface.flush()
+            surface.finish()

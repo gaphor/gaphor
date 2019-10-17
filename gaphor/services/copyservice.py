@@ -2,13 +2,15 @@
 Copy / Paste functionality
 """
 
+from typing import Dict, Set
+
 import gaphas
 
 from gaphor.UML import Element
 from gaphor.UML.collection import collection
-from gaphor.core import event_handler, action, build_action_group, transactional
+from gaphor.core import _, event_handler, action, transactional
 from gaphor.abc import Service, ActionProvider
-from gaphor.ui.event import DiagramSelectionChange
+from gaphor.ui.event import DiagramSelectionChanged
 
 
 class CopyService(Service, ActionProvider):
@@ -18,37 +20,20 @@ class CopyService(Service, ActionProvider):
     Store a list of DiagramItems that have to be copied in a global
     'copy-buffer'.
 
-    - in order to make copy/paste work, the load/save functions should be
-      generatlised to allow a subset to be saved/loaded (which is needed
+    - In order to make copy/paste work, the load/save functions should be
+      generalized to allow a subset to be saved/loaded (which is needed
       anyway for exporting/importing stereotype Profiles).
-    - How many data should be saved? (e.g. we copy a diagram item, remove it
-      (the underlying UML element is removed) and the paste the copied item.
-      The diagram should act as if we have placed a copy of the removed item
-      on the canvas and make the uml element visible again.
+    - How much data should be saved? An example use case is to copy a diagram
+      item, remove it (the underlying UML element is removed), and then paste
+      the copied item. The diagram should act as if we have placed a copy of
+      the removed item on the canvas and make the UML element visible again.
     """
 
-    menu_xml = """
-      <ui>
-        <menubar action="mainwindow">
-          <menu action="edit">
-            <placeholder name="primary">
-              <menuitem action="edit-copy" />
-              <menuitem action="edit-paste" />
-            </placeholder>
-          </menu>
-        </menubar>
-      </ui>
-    """
-
-    def __init__(self, event_manager, element_factory, main_window):
+    def __init__(self, event_manager, element_factory, diagrams):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.main_window = main_window
-        self.copy_buffer = set()
-        self.action_group = build_action_group(self)
-
-        self.action_group.get_action("edit-copy").props.sensitive = False
-        self.action_group.get_action("edit-paste").props.sensitive = False
+        self.diagrams = diagrams
+        self.copy_buffer: Set[Element] = set()
 
         event_manager.subscribe(self._update)
 
@@ -56,17 +41,18 @@ class CopyService(Service, ActionProvider):
         self.copy_buffer = set()
         self.event_manager.unsubscribe(self._update)
 
-    @event_handler(DiagramSelectionChange)
+    @event_handler(DiagramSelectionChanged)
     def _update(self, event):
         diagram_view = event.diagram_view
-        self.action_group.get_action("edit-copy").props.sensitive = bool(
-            diagram_view.selected_items
-        )
+        win_action_group = diagram_view.get_action_group("win")
+        if win_action_group:
+            win_action_group.lookup_action("edit-copy").set_enabled(
+                bool(diagram_view.selected_items)
+            )
 
     def copy(self, items):
         if items:
             self.copy_buffer = set(items)
-            self.action_group.get_action("edit-paste").props.sensitive = True
 
     def copy_func(self, name, value, reference=False):
         """
@@ -108,7 +94,7 @@ class CopyService(Service, ActionProvider):
         copy_items = [c for c in self.copy_buffer if c.canvas]
 
         # Mapping original id -> new item
-        self._new_items = {}
+        self._new_items: Dict[str, Element] = {}
 
         # Create new id's that have to be used to create the items:
         for ci in copy_items:
@@ -135,20 +121,29 @@ class CopyService(Service, ActionProvider):
         for item in list(self._new_items.values()):
             item.postload()
 
-    @action(name="edit-copy", stock_id="gtk-copy")
+    @action(
+        name="edit-copy", label=_("Copy"), icon_name="edit-copy", shortcut="<Primary>c"
+    )
     def copy_action(self):
-        view = self.main_window.get_current_diagram_view()
+        view = self.diagrams.get_current_view()
         if view.is_focus():
             items = view.selected_items
             copy_items = []
             for i in items:
                 copy_items.append(i)
             self.copy(copy_items)
+            win_action_group = view.get_action_group("win")
+            if win_action_group:
+                win_action_group.lookup_action("edit-paste").set_enabled(
+                    bool(self.copy_buffer)
+                )
 
-    @action(name="edit-paste", stock_id="gtk-paste")
+    @action(
+        name="edit-paste", label="_Paste", icon_name="edit-paste", shortcut="<Primary>v"
+    )
     def paste_action(self):
-        view = self.main_window.get_current_diagram_view()
-        diagram = self.main_window.get_current_diagram()
+        view = self.diagrams.get_current_view()
+        diagram = self.diagrams.get_current_diagram()
         if not view:
             return
 

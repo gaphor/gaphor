@@ -25,11 +25,13 @@ TODO:
      key focuses its associated control.
 """
 
+from typing import Dict, List, Tuple, Type
+
 import abc
+from gi.repository import GObject, Gdk, Gtk
+
 import gaphas.item
-from gi.repository import GObject
-from gi.repository import Gdk
-from gi.repository import Gtk
+from gaphas.segment import Segment
 
 from gaphor import UML
 from gaphor.core import _, transactional
@@ -42,8 +44,8 @@ class _PropertyPages:
     Property pages are collected on type.
     """
 
-    def __init__(self):
-        self.pages = []
+    def __init__(self) -> None:
+        self.pages: List[Tuple[Type[UML.Element], object]] = []
 
     def register(self, subject_type):
         def reg(func):
@@ -105,7 +107,7 @@ class EditableTreeModel(Gtk.ListStore):
 
         if cols is None:
             cols = (str, object)
-        super(EditableTreeModel, self).__init__(*cols)
+        super().__init__(*cols)
         self._item = item
 
         for data in self._get_rows():
@@ -165,7 +167,7 @@ class EditableTreeModel(Gtk.ListStore):
         o2 = self[b][-1]
         if o1 and o2 and self._swap_objects(o1, o2):
             # self._item.request_update(matrix=False)
-            super(EditableTreeModel, self).swap(a, b)
+            super().swap(a, b)
 
     def _add_empty(self):
         """
@@ -203,7 +205,7 @@ class EditableTreeModel(Gtk.ListStore):
         if obj:
             obj.unlink()
             # self._item.request_update(matrix=False)
-            return super(EditableTreeModel, self).remove(iter)
+            return super().remove(iter)
         else:
             return iter
 
@@ -270,9 +272,9 @@ class UMLComboModel(Gtk.ListStore):
     """
 
     def __init__(self, data):
-        super(UMLComboModel, self).__init__(str)
+        super().__init__(str)
 
-        self._indices = {}
+        self._indices: Dict[Tuple[str, str], int] = {}
         self._data = data
 
         # add labels to underlying model and store index information
@@ -386,12 +388,12 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     NAME_LABEL = _("Name")
 
-    def __init__(self, subject):
+    def __init__(self, subject: UML.NamedElement):
         assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
             subject
         )
         self.subject = subject
-        self.watcher = subject.watcher()
+        self.watcher = subject and subject.watcher()
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
@@ -416,8 +418,9 @@ class NamedElementPropertyPage(PropertyPageBase):
                 entry.set_text(event.new_value)
                 entry.handler_unblock(changed_id)
 
-        self.watcher.watch("name", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
+        if self.watcher:
+            self.watcher.watch("name", handler).subscribe_all()
+            entry.connect("destroy", self.watcher.unsubscribe_all)
 
         return page
 
@@ -444,7 +447,7 @@ class LineStylePage(PropertyPageBase):
     name = "Style"
 
     def __init__(self, item):
-        super(LineStylePage, self).__init__()
+        super().__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
@@ -464,10 +467,6 @@ class LineStylePage(PropertyPageBase):
 
         page.pack_start(hbox, False, True, 0)
 
-        if len(self.item.handles()) < 3:
-            # Only one segment
-            button.props.sensitive = False
-
         hbox = Gtk.HBox()
         label = Gtk.Label(label="")
         label.set_justify(Gtk.Justification.LEFT)
@@ -485,8 +484,13 @@ class LineStylePage(PropertyPageBase):
 
     @transactional
     def _on_orthogonal_change(self, button):
+        if len(self.item.handles()) < 3:
+            line_segment = Segment(self.item, None)
+            line_segment.split_segment(0)
         self.item.orthogonal = button.get_active()
+        self.item.canvas.update_now()
 
     @transactional
     def _on_horizontal_change(self, button):
         self.item.horizontal = button.get_active()
+        self.item.canvas.update_now()

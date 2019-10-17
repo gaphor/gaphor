@@ -19,7 +19,7 @@ try:
     catalog = gettext.Catalog("gaphor", localedir=localedir)
     _ = catalog.gettext
 
-except IOError as e:
+except OSError as e:
 
     def _(s):
         return s

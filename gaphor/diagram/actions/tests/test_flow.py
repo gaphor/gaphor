@@ -1,3 +1,4 @@
+from gaphas.canvas import Context, instant_cairo_context
 import gaphor.UML as UML
 from gaphor.tests.testcase import TestCase
 from gaphor.diagram.actions.flow import FlowItem
@@ -12,24 +13,32 @@ class FlowTestCase(TestCase):
         Test updating of flow name text.
         """
         flow = self.create(FlowItem, UML.ControlFlow)
+        name = flow.shape_tail.children[1]
+
         flow.subject.name = "Blah"
 
-        assert "Blah" == flow._name.text
+        assert "Blah" == name.text()
 
         flow.subject = None
 
-        assert "" == flow._name.text
+        assert "" == name.text()
 
-    def test_guard(self):
-        """
-        Test updating of flow guard text.
-        """
+    def test_guard_text_update(self):
         flow = self.create(FlowItem, UML.ControlFlow)
+        guard = flow.shape_middle
 
-        assert "" == flow._guard.text
+        assert "" == guard.text()
 
         flow.subject.guard = "GuardMe"
-        assert "GuardMe" == flow._guard.text
+        assert "GuardMe" == guard.text()
 
         flow.subject = None
-        assert "" == flow._guard.text
+        assert "" == guard.text()
+
+    def test_draw(self):
+        flow = self.create(FlowItem, UML.ControlFlow)
+        context = Context(
+            cairo=instant_cairo_context(), hovered=True, focused=True, selected=True
+        )
+
+        flow.draw(context)

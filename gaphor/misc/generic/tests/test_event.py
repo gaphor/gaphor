@@ -1,10 +1,12 @@
 """ Tests for :module:`gaphor.misc.generic.event`."""
 
+from __future__ import annotations
 
+from typing import Callable, List
 from gaphor.misc.generic.event import Manager
 
 
-def make_handler(effect):
+def make_handler(effect: object) -> Callable[[Event], None]:
     return lambda e: e.effects.append(effect)
 
 
@@ -155,8 +157,8 @@ def test_unsubscribe_event_inheritance():
 
 
 class Event:
-    def __init__(self):
-        self.effects = []
+    def __init__(self) -> None:
+        self.effects: List[object] = []
 
 
 class EventA(Event):

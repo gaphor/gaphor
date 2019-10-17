@@ -7,21 +7,33 @@ ExtensionItem -- Graphical representation of an association.
 # tail end and visa versa.
 
 from gaphor import UML
-from gaphor.diagram.diagramline import NamedLine
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.support import represents
 
 
-class ExtensionItem(NamedLine):
+@represents(UML.Extension)
+class ExtensionItem(LinePresentation, Named):
     """
     ExtensionItem represents associations.
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
     represents a Property (with Property.association == my association).
     """
 
-    __uml__ = UML.Extension
-
     def __init__(self, id=None, model=None):
-        NamedLine.__init__(self, id, model)
-        self.watch("subject<Extension>.ownedEnd")
+        super().__init__(id, model)
+
+        self.shape_middle = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject.name or ""),
+        )
+
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
     def draw_head(self, context):
         cr = context.cairo

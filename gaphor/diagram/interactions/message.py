@@ -46,23 +46,25 @@ operation information in message's name.
 See also ``lifeline`` module documentation.
 """
 
-from math import pi
-from collections import OrderedDict
-from gaphas.util import path_ellipse
+from math import pi, atan2
 
 from gaphor import UML
-from gaphor.diagram.diagramline import NamedLine
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.text import middle_segment
 
 PI_2 = pi / 2
 
 
-class MessageItem(NamedLine):
+class MessageItem(LinePresentation, Named):
     """
     Message item is drawn on sequence and communication diagrams.
 
     On communication diagram, message item is decorated with an arrow in
     the middle of a line.
+
+    Multiple messages can be depicted via this one message item.
 
     Attributes:
 
@@ -71,69 +73,54 @@ class MessageItem(NamedLine):
     - _arrow_angle: decorating arrow angle
     """
 
-    __style__ = {"name-align-str": ":"}
-
-    # name padding on sequence diagram
-    SD_PADDING = NamedLine.style.name_padding
-
-    # name padding on communication diagram
-    CD_PADDING = (10, 10, 10, 10)
-
     def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+        super().__init__(
+            id,
+            model,
+            shape_middle=Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                    style={"min-width": 0, "min-height": 0},
+                ),
+                EditableText(text=lambda: self.subject.name or ""),
+            ),
+        )
+
         self._is_communication = False
         self._arrow_pos = 0, 0
         self._arrow_angle = 0
-        self._messages = OrderedDict()
-        self._inverted_messages = OrderedDict()
+
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
     def pre_update(self, context):
         """
         Update communication diagram information.
         """
         self._is_communication = self.is_communication()
-        if self._is_communication:
-            self._name.style.text_padding = self.CD_PADDING
-        else:
-            self._name.style.text_padding = self.SD_PADDING
 
-        super(MessageItem, self).pre_update(context)
+        super().pre_update(context)
 
     def post_update(self, context):
         """
         Update communication diagram information.
         """
-        super(MessageItem, self).post_update(context)
+        super().post_update(context)
 
         if self._is_communication:
             pos, angle = self._get_center_pos()
             self._arrow_pos = pos
             self._arrow_angle = angle
 
-    def save(self, save_func):
-        save_func("message", list(self._messages), reference=True)
-        save_func("inverted", list(self._inverted_messages), reference=True)
-
-        super(MessageItem, self).save(save_func)
-
-    def load(self, name, value):
-        if name == "message":
-            # print 'message! value =', value
-            self.add_message(value, False)
-        elif name == "inverted":
-            # print 'inverted! value =', value
-            self.add_message(value, True)
-        else:
-            super(MessageItem, self).load(name, value)
-
-    def postload(self):
-        for message in self._messages:
-            self.set_message_text(message, message.name, False)
-
-        for message in self._inverted_messages:
-            self.set_message_text(message, message.name, True)
-
-        super(MessageItem, self).postload()
+    def _get_center_pos(self):
+        """
+        Return position in the centre of middle segment of a line. Angle of
+        the middle segment is also returned.
+        """
+        p0, p1 = middle_segment([h.pos for h in self.handles()])
+        pos = (p0.x + p1.x) / 2, (p0.y + p1.y) / 2
+        angle = atan2(p1.y - p0.y, p1.x - p0.x)
+        return pos, angle
 
     def _draw_circle(self, cr):
         """
@@ -250,15 +237,13 @@ class MessageItem(NamedLine):
             cr.restore()
 
     def draw(self, context):
-        super(MessageItem, self).draw(context)
+        super().draw(context)
 
         # on communication diagram draw decorating arrows for messages and
         # inverted messages
         if self._is_communication:
             cr = context.cairo
             self._draw_decorating_arrow(cr)
-            if len(self._inverted_messages) > 0:
-                self._draw_decorating_arrow(cr, True)
 
     def is_communication(self):
         """
@@ -274,71 +259,3 @@ class MessageItem(NamedLine):
             or c2
             and not c2.connected.lifetime.visible
         )
-
-    def add_message(self, message, inverted):
-        """
-        Add message onto communication diagram.
-        """
-        if inverted:
-            messages = self._inverted_messages
-            style = {
-                "text-align-group": "inverted",
-                "text-align": (ALIGN_CENTER, ALIGN_BOTTOM),
-            }
-        else:
-            messages = self._messages
-            group = "stereotype"
-            style = {"text-align-group": "stereotype"}
-
-        style["text-align-str"] = ":"
-        style["text-padding"] = self.CD_PADDING
-        txt = self.add_text("name", style=style)
-        txt.text = message.name
-        messages[message] = txt
-        self.request_update()
-
-    def remove_message(self, message, inverted):
-        """
-        Remove message from communication diagram.
-        """
-        if inverted:
-            messages = self._inverted_messages
-        else:
-            messages = self._messages
-        txt = messages[message]
-        self.remove_text(txt)
-        del messages[message]
-        self.request_update()
-
-    def set_message_text(self, message, text, inverted):
-        """
-        Set text of message on communication diagram.
-        """
-        if inverted:
-            messages = self._inverted_messages
-        else:
-            messages = self._messages
-        messages[message].text = text
-        self.request_update()
-
-    def swap_messages(self, m1, m2, inverted):
-        """
-        Swap order of two messages on communication diagram.
-        """
-        if inverted:
-            messages = self._inverted_messages = swap(self._inverted_messages, m1, m2)
-        else:
-            messages = self._messages = swap(self._messages, m1, m2)
-        t1 = messages[m1]
-        t2 = messages[m2]
-        self.swap_texts(t1, t2)
-        self.request_update()
-        return True
-
-
-def swap(d, k1, k2):
-    keys = list(d.keys())
-    i1 = keys.index(k1)
-    i2 = keys.index(k2)
-    keys[i1], keys[i2] = keys[i2], keys[i1]
-    return type(d)((k, d[k]) for k in keys)

@@ -3,41 +3,56 @@ Package diagram item.
 """
 
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import ElementPresentation, Named, from_package_str
+from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.text import FontWeight
+from gaphor.diagram.support import represents
 
 
-class PackageItem(NamedItem):
-
-    __uml__ = UML.Package, UML.Profile
-    __stereotype__ = {"profile": UML.Profile}
-    __style__ = {
-        "min-size": (NamedItem.style.min_size[0], 70),
-        "name-font": "sans bold 10",
-        "name-padding": (25, 10, 5, 10),
-        "tab-x": 50,
-        "tab-y": 20,
-    }
-
+@represents(UML.Package)
+@represents(UML.Profile)
+class PackageItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
-        super(PackageItem, self).__init__(id, model)
+        super().__init__(id, model)
 
-    def draw(self, context):
-        super(PackageItem, self).draw(context)
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(
+                    self.subject,
+                    isinstance(self.subject, UML.Profile) and ("profile",) or (),
+                ),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(
+                text=lambda: self.subject and self.subject.name or "",
+                style={"font-weight": FontWeight.BOLD},
+            ),
+            Text(
+                text=lambda: from_package_str(self),
+                style={"font": "sans 8", "min-width": 0, "min-height": 0},
+            ),
+            style={"min-width": 50, "min-height": 70, "padding": (25, 10, 5, 10)},
+            draw=draw_package,
+        )
 
-        cr = context.cairo
-        o = 0.0
-        h = self.height
-        w = self.width
-        x = self.style.tab_x
-        y = self.style.tab_y
-        cr.move_to(x, y)
-        cr.line_to(x, o)
-        cr.line_to(o, o)
-        cr.line_to(o, h)
-        cr.line_to(w, h)
-        cr.line_to(w, y)
-        cr.line_to(o, y)
-        cr.stroke()
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].namespace")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
-# vim:sw=4:et
+def draw_package(box, context, bounding_box):
+    cr = context.cairo
+    o = 0.0
+    h = bounding_box.height
+    w = bounding_box.width
+    x = 50
+    y = 20
+    cr.move_to(x, y)
+    cr.line_to(x, o)
+    cr.line_to(o, o)
+    cr.line_to(o, h)
+    cr.line_to(w, h)
+    cr.line_to(w, y)
+    cr.line_to(o, y)
+    cr.stroke()

@@ -19,6 +19,7 @@ from gaphor.diagram.classes import (
     AssociationItem,
     DependencyItem,
     ImplementationItem,
+    Folded,
 )
 
 
@@ -174,15 +175,15 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         fold = button.get_active()
 
         if fold:
-            item.folded = item.FOLDED_PROVIDED
+            item.folded = Folded.PROVIDED
         else:
-            item.folded = item.FOLDED_NONE
+            item.folded = Folded.NONE
 
         if line:
             if fold and isinstance(line, DependencyItem):
-                item.folded = item.FOLDED_REQUIRED
+                item.folded = Folded.REQUIRED
 
-            line._solid = fold
+            assert line.canvas
             constraint = line.canvas.get_connection(line.head).constraint
             constraint.ratio_x = 0.5
             constraint.ratio_y = 0.5
@@ -190,6 +191,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
 
 
 @PropertyPages.register(ClassItem)
+@PropertyPages.register(InterfaceItem)
 class AttributesPage(PropertyPageBase):
     """An editor for attributes associated with classes and interfaces."""
 
@@ -197,7 +199,7 @@ class AttributesPage(PropertyPageBase):
     name = "Attributes"
 
     def __init__(self, item):
-        super(AttributesPage, self).__init__()
+        super().__init__()
         self.item = item
         self.watcher = item.subject.watcher()
 
@@ -262,6 +264,7 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 
 
 @PropertyPages.register(ClassItem)
+@PropertyPages.register(InterfaceItem)
 class OperationsPage(PropertyPageBase):
     """An editor for operations associated with classes and interfaces."""
 
@@ -269,7 +272,7 @@ class OperationsPage(PropertyPageBase):
     name = "Operations"
 
     def __init__(self, item):
-        super(OperationsPage, self).__init__()
+        super().__init__()
         self.item = item
         self.watcher = item.subject.watcher()
 
@@ -350,7 +353,7 @@ class DependencyPropertyPage(PropertyPageBase):
     )
 
     def __init__(self, item):
-        super(DependencyPropertyPage, self).__init__()
+        super().__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = self.item.watcher()
@@ -421,7 +424,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
             return None
 
         # TODO: use Gtk.Frame here
-        frame = Gtk.Frame.new("%s (: %s)" % (title, end.subject.type.name))
+        frame = Gtk.Frame.new(f"{title} (: {end.subject.type.name})")
         vbox = Gtk.VBox()
         vbox.set_border_width(6)
         vbox.set_spacing(6)
@@ -432,7 +435,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         return frame
 
     def construct(self):
-        page = super(AssociationPropertyPage, self).construct()
+        page = super().construct()
 
         if not self.subject:
             return page
@@ -448,7 +451,9 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         button.connect("toggled", self._on_show_direction_change)
         hbox.pack_start(button, True, True, 0)
 
-        button = Gtk.Button(label=_("Invert Direction"))
+        button = Gtk.Button.new_from_icon_name(
+            "object-flip-horizontal-symbolic", Gtk.IconSize.BUTTON
+        )
         button.connect("clicked", self._on_invert_direction_change)
         hbox.pack_start(button, True, True, 0)
 
@@ -514,7 +519,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                 else:
                     expander = Gtk.Expander()
                     expander.set_use_markup(True)
-                    expander.set_label("<b>%s</b>" % name)
+                    expander.set_label(f"<b>{name}</b>")
                     expander.add(page)
                     expander.show_all()
                     vbox.pack_start(expander, False, True, 0)

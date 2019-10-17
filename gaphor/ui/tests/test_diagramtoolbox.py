@@ -12,8 +12,6 @@ class WindowOwner:
     methods to make the tests work.
     """
 
-    pass
-
 
 class DiagramToolboxTestCase(TestCase):
 
@@ -22,8 +20,10 @@ class DiagramToolboxTestCase(TestCase):
         "component_registry",
         "element_factory",
         "properties",
-        "action_manager",
         "main_window",
+        "import_menu",
+        "export_menu",
+        "tools_menu",
     ]
 
     def setUp(self):
@@ -50,21 +50,14 @@ class DiagramToolboxTestCase(TestCase):
         shortcuts = {}
 
         for category, items in TOOLBOX_ACTIONS:
-
-            for action_name, label, stock_id, shortcut in items:
-
+            for action_name, label, icon_name, shortcut in items:
                 try:
-
                     shortcuts[shortcut].append(action_name)
-
                 except KeyError:
-
                     shortcuts[shortcut] = [action_name]
 
         for key, val in list(shortcuts.items()):
-
             if key is not None:
-
                 assert len(val) == 1, "Duplicate toolbox shortcut"
 
     def test_standalone_construct_with_diagram(self):
@@ -78,7 +71,9 @@ class DiagramToolboxTestCase(TestCase):
         self.diagram.canvas.update()
 
     def test_placement_pointer(self):
-        self.tab.toolbox.action_group.get_action("toolbox-pointer").activate()
+        tool = self.tab.toolbox.get_tool("toolbox-pointer")
+
+        assert tool
 
     def test_placement_comment(self):
         self._test_placement_action("toolbox-comment")

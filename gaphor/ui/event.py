@@ -3,25 +3,19 @@ UI related events.
 """
 
 
-class DiagramShow:
+class DiagramOpened:
     def __init__(self, diagram):
         self.diagram = diagram
 
 
-class DiagramPageChange:
-    def __init__(self, item):
-        self.item = item
-        self.diagram_page = item.diagram_page
-
-
-class DiagramSelectionChange:
+class DiagramSelectionChanged:
     def __init__(self, diagram_view, focused_item, selected_items):
         self.diagram_view = diagram_view
         self.focused_item = focused_item
         self.selected_items = selected_items
 
 
-class WindowClose:
+class WindowClosed:
     """
     The user requested the window to be closed.
     """
@@ -30,11 +24,13 @@ class WindowClose:
         self.service = service
 
 
-class FilenameChanged:
-    """
-    Event class used to send state changes on the Undo Manager.
-    """
+class FileLoaded:
+    def __init__(self, service, filename=None):
+        self.service = service
+        self.filename = filename
 
+
+class FileSaved:
     def __init__(self, service, filename=None):
         self.service = service
         self.filename = filename

@@ -100,17 +100,15 @@ Therefore, code of connector items is written with assumption, that
 interfaces are connectable elements.
 """
 
-import logging
 from gaphor import UML
-from gaphor.diagram.diagramline import NamedLine
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_BOTTOM
-
-from operator import attrgetter
-
-logger = logging.getLogger(__name__)
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.support import represents
 
 
-class ConnectorItem(NamedLine):
+@represents(UML.Connector)
+class ConnectorItem(LinePresentation, Named):
     """
     Connector item line.
 
@@ -123,36 +121,29 @@ class ConnectorItem(NamedLine):
         Connector UML metaclass instance.
      end
         ConnectorEnd UML metaclass instance.
-     _interface
-        Interface name, when connector is assembly connector.
     """
 
-    __uml__ = UML.Connector
-    __style__ = {"name-align": (ALIGN_CENTER, ALIGN_BOTTOM), "name-outside": True}
-
     def __init__(self, id=None, model=None):
-        super(ConnectorItem, self).__init__(id, model)
-        self._interface = self.add_text(
-            "end.role.name", style={"text-align-group": "stereotype"}
+        super().__init__(id, model)
+
+        def role_name():
+            try:
+                return self.subject.end["it.role", 0].role.name or ""
+            except (IndexError, AttributeError) as e:
+                return ""
+
+        self.shape_middle = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject.name or ""),
+            Text(text=role_name, style={"min-width": 0, "min-height": 0}),
         )
-        self.watch("subject<Connector>.end.role.name", self.on_interface_name)
 
-    def postload(self):
-        super(ConnectorItem, self).postload()
-        self.on_interface_name(None)
-
-    def on_interface_name(self, event):
-        """
-        Callback used, when interface name changes (interface is referenced
-        by `ConnectorItem.subject.end.role`).
-        """
-        try:
-            self._interface.text = self.subject.end["it.role", 0].role.name
-        except (IndexError, AttributeError) as e:
-            logger.error(e)
-            self._interface.text = ""
-        else:
-            self.request_update(matrix=False)
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Connector].end.role.name")
 
     def draw_tail(self, context):
         cr = context.cairo
@@ -161,20 +152,3 @@ class ConnectorItem(NamedLine):
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
-
-    def save(self, save_func):
-        super(ConnectorItem, self).save(save_func)
-        # save_func('end', self.end)
-
-    def load(self, name, value):
-        if name == "end":
-            pass  # self.end = value
-        else:
-            super(ConnectorItem, self).load(name, value)
-
-    # def on_named_element_name(self, event):
-    #    if isinstance(self.subject, UML.Connector):
-    #        super(ConnectorItem, self).on_named_element_name(event)
-
-
-# vim:sw=4:et:ai

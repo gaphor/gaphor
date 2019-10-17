@@ -85,7 +85,7 @@ class querymixin:
     def __getitem__(self, key):
         try:
             # See if the list can deal with it (don't change default behaviour)
-            return super(querymixin, self).__getitem__(key)
+            return super().__getitem__(key)  # type: ignore
         except TypeError:
             # Nope, try our matcher trick
             if isinstance(key, tuple):
@@ -156,8 +156,7 @@ class recurseproxy:
                 try:
                     obj = getattr(e, key)
                     if issafeiterable(obj):
-                        for i in obj:
-                            yield i
+                        yield from obj
                     else:
                         yield obj
                 except AttributeError:
@@ -251,4 +250,4 @@ class recursemixin:
         if key == self._recursemixin_trigger:
             return self.proxy_class()(self)
         else:
-            return super(recursemixin, self).__getitem__(key)
+            return super().__getitem__(key)  # type: ignore

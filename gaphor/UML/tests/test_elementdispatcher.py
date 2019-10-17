@@ -241,6 +241,9 @@ def test_notification_with_incompatible_elements(
 
 
 class A(Element):
+    one: association["A", "A"]
+    two: association["A", "A"]
+
     def __init__(self, id=None, event_handler=None):
         super().__init__(id, event_handler)
 
@@ -254,12 +257,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         return self.element_factory.create(A)
 
     def setUp(self):
-        super(ElementDispatcherAsServiceTestCase, self).setUp()
+        super().setUp()
         self.events = []
         self.dispatcher = self.element_factory.element_dispatcher
 
     def tearDown(self):
-        super(ElementDispatcherAsServiceTestCase, self).tearDown()
+        super().tearDown()
 
     def _handler(self, event):
         self.events.append(event)
@@ -332,7 +335,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         assert len(element.memberEnd) == 2
 
-        base = "memberEnd<Property>."
+        base = "memberEnd[Property]."
         dispatcher.subscribe(self._handler, element, base + "name")
         dispatcher.subscribe(self._handler, element, base + "aggregation")
         dispatcher.subscribe(self._handler, element, base + "classifier")

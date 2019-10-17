@@ -1,6 +1,7 @@
 """The properties module allows Gaphor properties to be saved to the local
 file system.  These are things like preferences."""
 
+from typing import Dict
 import os
 import pprint
 import sys
@@ -13,13 +14,14 @@ from gaphor.misc import get_config_dir
 from gaphor.abc import Service
 
 
-class PropertyChangeEvent:
+class PropertyChanged:
+    """
+    This event is triggered any time a property is changed.  This event
+    holds the property key, the current value, and the new value.
+    """
 
-    """This event is triggered any time a property is changed.  This event
-    holds the property name, the current value, and the new value."""
-
-    def __init__(self, name, old_value, new_value):
-        self.name = name
+    def __init__(self, key, old_value, new_value):
+        self.key = key
         self.old_value = old_value
         self.new_value = new_value
 
@@ -37,7 +39,7 @@ class Properties(Service):
         dictionary for storing properties in memory, and the storage backend.
         This defaults to FileBackend"""
         self.event_manager = event_manager
-        self._resources = {}
+        self._resources: Dict[str, object] = {}
         self._backend = backend or FileBackend()
         self._backend.load(self._resources)
 
@@ -71,7 +73,7 @@ class Properties(Service):
         """
         pprint.pprint(list(self._resources.items()), stream)
 
-    def get(self, key, default=_no_default):
+    def get(self, key: str, default=_no_default):
         """Locate a property.
 
         Resource should be the class of the resource to look for or a string. In
@@ -82,7 +84,7 @@ class Properties(Service):
             return self._resources[key]
         except KeyError:
             if default is _no_default:
-                raise KeyError('No resource with name "%s"' % key)
+                raise KeyError(f'No resource with name "{key}"')
 
             self.set(key, default)
             return default
@@ -98,7 +100,7 @@ class Properties(Service):
 
         if value != old_value:
             resources[key] = value
-            self.event_manager.handle(PropertyChangeEvent(key, old_value, value))
+            self.event_manager.handle(PropertyChanged(key, old_value, value))
             self._backend.update(resources, key, value)
 
 

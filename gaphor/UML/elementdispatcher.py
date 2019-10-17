@@ -1,17 +1,20 @@
 """
 """
 
-
+from typing import Callable, Dict, Optional, Tuple
 from logging import getLogger
 from gaphor.core import event_handler
 from gaphor.UML import uml2
 from gaphor.UML.event import (
-    ElementChangeEvent,
-    AssociationSetEvent,
-    AssociationAddEvent,
-    AssociationDeleteEvent,
-    ModelFactoryEvent,
+    ElementUpdated,
+    AssociationSet,
+    AssociationAdded,
+    AssociationDeleted,
+    ModelReady,
 )
+
+
+Handler = Callable[[ElementUpdated], None]
 
 
 class EventWatcher:
@@ -19,13 +22,15 @@ class EventWatcher:
     A helper for easy registering and unregistering event handlers.
     """
 
-    def __init__(self, element, element_dispatcher, default_handler=None):
+    def __init__(
+        self, element, element_dispatcher, default_handler: Optional[Handler] = None
+    ):
         self.element = element
         self.element_dispatcher = element_dispatcher
         self.default_handler = default_handler
-        self._watched_paths = dict()
+        self._watched_paths: Dict[str, Handler] = dict()
 
-    def watch(self, path, handler=None):
+    def watch(self, path: str, handler: Optional[Handler] = None):
         """
         Watch a certain path of elements starting with the DiagramItem.
         The handler is optional and will default the default provided at
@@ -70,7 +75,7 @@ class ElementDispatcher:
 
     The handlers are registered on their property attribute. This avoids
     subclass lookups and is pretty specific. As a result this dispatcher is
-    tailored for dispatching events from the data model (ElementChangeEvent)
+    tailored for dispatching events from the data model (ElementUpdated)
 
     For example: if you're a TransitionItem (UML.Presentation instance) and
     you're interested in the value of the guard attribute of the model element
@@ -78,7 +83,7 @@ class ElementDispatcher:
     a handler like this::
 
       dispatcher.subscribe(element,
-              'guard.specification<LiteralSpecification>.value', self._handler)
+              'guard.specification[LiteralSpecification].value', self._handler)
 
     Note the '<' and '>'. This is because guard references ValueSpecification,
     which does not have a value attribute. Therefore the default reference type
@@ -95,11 +100,11 @@ class ElementDispatcher:
         self.event_manager = event_manager
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers = dict()
+        self._handlers: Dict[Tuple[uml2.Element, uml2.umlproperty], Handler] = dict()
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse = dict()
+        self._reverse: Dict[Tuple[uml2.Element, uml2.umlproperty], Handler] = dict()
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
@@ -117,16 +122,15 @@ class ElementDispatcher:
         tpath = []
         for attr in path.split("."):
             cname = ""
-            if "<" in attr:
-                assert attr.endswith(">"), '"%s" should end with ">"' % attr
-                attr, cname = attr[:-1].split("<")
+            if "[" in attr:
+                assert attr.endswith("]"), f'"{attr}" should end with ">"'
+                attr, cname = attr[:-1].split("[")
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
                 c = getattr(uml2, cname)
-                assert issubclass(c, prop.type), "%s should be a subclass of %s" % (
-                    c,
-                    prop.type,
+                assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
+                    c, prop.type
                 )
             else:
                 c = prop.type
@@ -166,7 +170,7 @@ class ElementDispatcher:
 
         # Apply remaining path
         if remainder:
-            if property.upper is "*" or property.upper > 1:
+            if property.upper == "*" or property.upper > 1:
                 for e in property._get(element):
                     self._add_handlers(e, remainder, handler)
             else:
@@ -183,7 +187,7 @@ class ElementDispatcher:
         if not handlers:
             return
 
-        if property.upper is "*" or property.upper > 1:
+        if property.upper == "*" or property.upper > 1:
             for remainder in handlers.get(handler, ()):
                 for e in property._get(element):
                     # log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
@@ -198,7 +202,7 @@ class ElementDispatcher:
             del handlers[handler]
         except KeyError:
             self.logger.warning(
-                "Handler %s is not registered for %s.%s" % (handler, element, property)
+                f"Handler {handler} is not registered for {element}.{property}"
             )
 
         if not handlers:
@@ -231,7 +235,7 @@ class ElementDispatcher:
                     del self._handlers[key]
         del self._reverse[handler]
 
-    @event_handler(ElementChangeEvent)
+    @event_handler(ElementUpdated)
     def on_element_change_event(self, event):
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
@@ -239,11 +243,11 @@ class ElementDispatcher:
                 try:
                     handler(event)
                 except Exception as e:
-                    self.logger.error("Problem executing handler %s" % handler, e)
+                    self.logger.error(f"Problem executing handler {handler}", e)
 
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
-            if isinstance(event, AssociationSetEvent):
+            if isinstance(event, AssociationSet):
                 for handler, remainders in handlers.items():
                     if remainders and event.old_value:
                         for remainder in remainders:
@@ -253,16 +257,16 @@ class ElementDispatcher:
                     if remainders and event.new_value:
                         for remainder in remainders:
                             self._add_handlers(event.new_value, remainder, handler)
-            elif isinstance(event, AssociationAddEvent):
+            elif isinstance(event, AssociationAdded):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._add_handlers(event.new_value, remainder, handler)
-            elif isinstance(event, AssociationDeleteEvent):
+            elif isinstance(event, AssociationDeleted):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
 
-    @event_handler(ModelFactoryEvent)
+    @event_handler(ModelReady)
     def on_model_loaded(self, event):
         for key, value in list(self._handlers.items()):
             for h, remainders in list(value.items()):

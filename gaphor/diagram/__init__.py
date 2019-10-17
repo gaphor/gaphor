@@ -4,6 +4,10 @@ The diagram package contains items (to be drawn on the diagram), tools
 diagram).
 """
 
+import gi
+
+gi.require_version("PangoCairo", "1.0")
+
 import gaphor.diagram.actions
 import gaphor.diagram.classes
 import gaphor.diagram.components

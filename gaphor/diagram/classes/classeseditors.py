@@ -7,7 +7,7 @@ from gaphor.diagram.classes.association import AssociationItem
 class AssociationItemEditor(AbstractEditor):
     def __init__(self, item):
         self._item = item
-        self._edit = None
+        self._edit: AssociationItem = None
 
     def is_editable(self, x, y):
         """Find out what's located at point (x, y), is it in the
@@ -35,9 +35,6 @@ class AssociationItemEditor(AbstractEditor):
             multiplicity=True,
             default=True,
         )
-
-    def get_bounds(self):
-        return None
 
     def update_text(self, text):
         UML.parse(self._edit.subject, text)

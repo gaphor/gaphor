@@ -2,13 +2,15 @@
 Application wide events are managed here.
 """
 
+from gaphor.abc import Service
+
 
 class ServiceEvent:
     """
     An event emitted by a service.
     """
 
-    def __init__(self, service):
+    def __init__(self, service: Service):
         self.service = service
 
 
@@ -17,7 +19,7 @@ class ServiceInitializedEvent(ServiceEvent):
     This event is emitted every time a new service has been initialized.
     """
 
-    def __init__(self, name, service):
+    def __init__(self, name: str, service: Service):
         self.name = name
         self.service = service
 
@@ -27,7 +29,7 @@ class ServiceShutdownEvent(ServiceEvent):
     This event is emitted every time a service has been shut down.
     """
 
-    def __init__(self, name, service):
+    def __init__(self, name: str, service: Service):
         self.name = name
         self.service = service
 
@@ -38,16 +40,12 @@ class TransactionBegin:
     Nested (sub-) transactions should not emit this signal.
     """
 
-    pass
-
 
 class TransactionCommit:
     """
     This event is emitted when a transaction (toplevel) is successfully
     committed.
     """
-
-    pass
 
 
 class TransactionRollback:
@@ -57,14 +55,14 @@ class TransactionRollback:
     has failed.
     """
 
-    pass
 
-
-class ActionExecuted:
+class ActionEnabled:
     """
-    Once an operation has successfully been executed this event is raised.
+    Signal if an action can be activated or not.
     """
 
-    def __init__(self, name, action):
-        self.name = name
-        self.action = action
+    def __init__(self, action_name, enabled: bool):
+        self.scope, self.name = (
+            action_name.split(".", 2) if "." in action_name else ("win", action_name)
+        )
+        self.enabled = bool(enabled)

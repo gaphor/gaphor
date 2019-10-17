@@ -1,6 +1,5 @@
 from gaphor.tests import TestCase
 from gaphor.diagram.profiles.metaclasspropertypage import MetaclassNamePropertyPage
-from gaphor.diagram.classes import ClassItem
 from gaphor import UML
 from gi.repository import Gtk
 

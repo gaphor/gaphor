@@ -1,6 +1,6 @@
 import pytest
 from gaphor.UML.element import Element
-from gaphor.UML.event import AssociationChangeEvent
+from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.properties import *
 from gaphor.application import Application
 from gaphor.core import event_handler
@@ -83,14 +83,10 @@ def test_association_1_1():
 
     assert a.one is b
     assert b.two is a
-    # assert len(a._observers.get('__unlink__')) == 0
-    # assert len(b._observers.get('__unlink__')) == 0
 
     a.one = B()
     assert a.one is not b
     assert b.two is None
-    # assert len(a._observers.get('__unlink__')) == 0
-    # assert len(b._observers.get('__unlink__')) == 0
 
     c = C()
     try:
@@ -103,8 +99,6 @@ def test_association_1_1():
     del a.one
     assert a.one is None
     assert b.two is None
-    # assert len(a._observers.get('__unlink__')) == 0
-    # assert len(b._observers.get('__unlink__')) == 0
 
 
 def test_association_1_n():
@@ -131,14 +125,12 @@ def test_association_1_n():
     b1.two = a1
     assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
     assert a1 in b1.two
-    assert a1.one is b1, "%s/%s" % (a1.one, b1)
+    assert a1.one is b1, f"{a1.one}/{b1}"
     b1.two = a1
     b1.two = a1
     assert len(b1.two) == 1, "len(b1.two) == %d" % len(b1.two)
     assert a1 in b1.two
-    assert a1.one is b1, "%s/%s" % (a1.one, b1)
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
+    assert a1.one is b1, f"{a1.one}/{b1}"
 
     b1.two = a2
     assert a1 in b1.two
@@ -165,8 +157,6 @@ def test_association_1_n():
     assert a2 in b1.two
     assert a1.one is None
     assert a2.one is b1
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     a2.one = b2
 
@@ -217,8 +207,6 @@ def test_association_n_n():
     assert a1 in b1.two
     assert a1 in b2.two
     assert not a2.one
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     a2.one = b1
     assert len(a1.one) == 2
@@ -243,8 +231,6 @@ def test_association_n_n():
     assert a1 in b2.two
     assert b1 in a2.one
     assert a2 in b1.two
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
 
 def test_association_swap():
@@ -271,7 +257,7 @@ def test_association_swap():
 
     events = []
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def handler(event, events=events):
         events.append(event)
 
@@ -315,15 +301,10 @@ def test_association_unlink_1():
     assert b2 in a1.one
 
     a2.one = b1
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     # remove b1 from all elements connected to b1
     # also the signal should be removed
     b1.unlink()
-
-    # assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
-    # assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
 
     assert b1 not in a1.one
     assert b2 in a1.one
@@ -358,15 +339,10 @@ def test_association_unlink_2():
     assert a1 in b2.two
 
     a2.one = b1
-    # assert len(a1._observers.get('__unlink__')) == 0
-    # assert len(b1._observers.get('__unlink__')) == 0
 
     # remove b1 from all elements connected to b1
     # also the signal should be removed
     b1.unlink()
-
-    # assert len(a1._observers.get('__unlink__')) == 1, a1._observers.get('__unlink__')
-    # assert len(b1._observers.get('__unlink__')) == 0, b1._observers.get('__unlink__')
 
     assert b1 not in a1.one
     assert b2 in a1.one
@@ -449,30 +425,30 @@ def test_derivedunion():
     A.u = derivedunion("u", object, 0, "*", A.a, A.b)
 
     a = A()
-    assert len(a.a) == 0, "a.a = %s" % a.a
-    assert len(a.u) == 0, "a.u = %s" % a.u
+    assert len(a.a) == 0, f"a.a = {a.a}"
+    assert len(a.u) == 0, f"a.u = {a.u}"
     a.a = b = A()
     a.a = c = A()
-    assert len(a.a) == 2, "a.a = %s" % a.a
+    assert len(a.a) == 2, f"a.a = {a.a}"
     assert b in a.a
     assert c in a.a
-    assert len(a.u) == 2, "a.u = %s" % a.u
+    assert len(a.u) == 2, f"a.u = {a.u}"
     assert b in a.u
     assert c in a.u
 
     a.b = d = A()
-    assert len(a.a) == 2, "a.a = %s" % a.a
+    assert len(a.a) == 2, f"a.a = {a.a}"
     assert b in a.a
     assert c in a.a
     assert d == a.b
-    assert len(a.u) == 3, "a.u = %s" % a.u
+    assert len(a.u) == 3, f"a.u = {a.u}"
     assert b in a.u
     assert c in a.u
     assert d in a.u
 
 
 @pytest.mark.skip
-def test_deriveduntion_notify():
+def test_derivedunion_notify():
     class A(Element):
         pass
 
@@ -538,39 +514,8 @@ def test_composite():
 
 
 @pytest.mark.skip
-def test_derivedunion():
-    class A(Element):
-        is_unlinked = False
-
-        def unlink(self):
-            self.is_unlinked = True
-            Element.unlink(self)
-
-    A.a = association("a", A, upper=1)
-    A.b = association("b", A)
-
-    A.derived_a = derivedunion("derived_a", A, 0, 1, A.a)
-    A.derived_b = derivedunion("derived_b", A, 0, "*", A.b)
-    events = []
-
-    @event_handler(AssociationChangeEvent)
-    def handler(event, events=events):
-        events.append(event)
-
-    Application.register_handler(handler)
-    try:
-        a = A()
-        a.a = A()
-        assert len(events) == 2, events
-        assert events[0].property is A.derived_a
-        assert events[1].property is A.a
-    finally:
-        Application.unregister_handler(handler)
-
-
-@pytest.mark.skip
 def test_derivedunion_events():
-    from gaphor.UML.event import DerivedAddEvent, DerivedDeleteEvent
+    from gaphor.UML.event import DerivedAdded, DerivedDeleted
 
     class A(Element):
         is_unlinked = False
@@ -590,7 +535,7 @@ def test_derivedunion_events():
 
     events = []
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def handler(event, events=events):
         events.append(event)
 
@@ -607,7 +552,7 @@ def test_derivedunion_events():
         assert a.derived_a is a.a1
 
         a.a2 = A()
-        # Should not emit DerivedSetEvent
+        # Should not emit DerivedSet
         assert len(events) == 5, len(events)
         assert events[4].property is A.a2
 
@@ -616,15 +561,11 @@ def test_derivedunion_events():
         del a.a1
         assert len(events) == 2, len(events)
         assert events[0].property is A.derived_a
-        assert events[0].new_value is a.a2, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[3].new_value,
+        assert events[0].new_value is a.a2, "{} {} {}".format(
+            a.a1, a.a2, events[3].new_value
         )
-        assert events[0].old_value is old_a1, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[3].old_value,
+        assert events[0].old_value is old_a1, "{} {} {}".format(
+            a.a1, a.a2, events[3].old_value
         )
         assert events[1].property is A.a1
 
@@ -633,15 +574,11 @@ def test_derivedunion_events():
         del a.a2
         assert len(events) == 2, len(events)
         assert events[0].property is A.derived_a
-        assert events[0].new_value is None, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[5].new_value,
+        assert events[0].new_value is None, "{} {} {}".format(
+            a.a1, a.a2, events[5].new_value
         )
-        assert events[0].old_value is old_a2, "%s %s %s" % (
-            a.a1,
-            a.a2,
-            events[5].old_value,
+        assert events[0].old_value is old_a2, "{} {} {}".format(
+            a.a1, a.a2, events[5].old_value
         )
         assert events[1].property is A.a2
 
@@ -681,15 +618,15 @@ def test_derivedunion_events():
         a.b3 = A()
         assert len(events) == 13, len(events)
         assert events[10].property is A.derived_b
-        assert isinstance(events[10], DerivedDeleteEvent), type(events[10])
+        assert isinstance(events[10], DerivedDeleted), type(events[10])
         assert events[11].property is A.derived_b
-        assert isinstance(events[11], DerivedAddEvent), type(events[11])
+        assert isinstance(events[11], DerivedAdded), type(events[11])
         assert events[12].property is A.b3
 
         del a.b3
         assert len(events) == 15, len(events)
         assert events[13].property is A.derived_b
-        assert isinstance(events[13], DerivedDeleteEvent), type(events[10])
+        assert isinstance(events[13], DerivedDeleted), type(events[10])
         assert events[14].property is A.b3
     finally:
         Application.unregister_handler(handler)
@@ -702,16 +639,16 @@ def test_redefine():
     class A(Element):
         is_unlinked = False
 
-        def unlink():
+        def unlink(self):
             self.is_unlinked = True
-            Element.unlink()
+            super().unlink()
 
     A.a = association("a", A, upper=1)
 
     A.a = redefine(A, "a", A, A.a)
     events = []
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def handler(event, events=events):
         events.append(event)
 
@@ -744,7 +681,7 @@ def test_redefine_subclass():
 
     events = []
 
-    @event_handler(AssociationChangeEvent)
+    @event_handler(AssociationUpdated)
     def handler(event, events=events):
         events.append(event)
 

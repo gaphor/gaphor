@@ -1,5 +1,7 @@
 # Flatpak Packaging for Gaphor
 
+## Create and Install a Flatpak
+
 1. [Install Flatpak](https://flatpak.org/setup)
  
 1. Install flatpak-builder
@@ -14,10 +16,16 @@
 
        $ make setup
 	
-1. Build Gaphor
+1. Build Gaphor Flatpak
 
-       $ flatpak-builder --gpg-sign=E4089A143589D73655DF66774E9C27AE08850F1E --gpg-homedir=../.gpg --force-clean --repo=gaphor-repo build org.gaphor.Gaphor.yaml
+       $ make
         
-1. Create a Single-file Bundle
+1. Install the Flatpak
 
-       $ flatpak build-bundle gaphor-repo gaphor-MAJOR.MINOR.PATCH.flatpak org.gaphor.Gaphor
+       $ make install
+       
+## Update Gaphor Dependencies
+In order to update the Gaphor dependencies in the yaml manifest files:
+
+    $ make python-modules 
+

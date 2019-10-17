@@ -5,8 +5,7 @@ Connect comments.
 import logging
 
 from gaphor import UML
-from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.diagramline import DiagramLine
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.connectors import IConnect, AbstractConnect
@@ -15,7 +14,8 @@ from gaphor.diagram.connectors import IConnect, AbstractConnect
 logger = logging.getLogger(__name__)
 
 
-@IConnect.register(ElementItem, CommentLineItem)
+@IConnect.register(CommentItem, CommentLineItem)
+@IConnect.register(ElementPresentation, CommentLineItem)
 class CommentLineElementConnect(AbstractConnect):
     """Connect a comment line to any element item."""
 
@@ -63,10 +63,10 @@ class CommentLineElementConnect(AbstractConnect):
         ):
             return None
 
-        return super(CommentLineElementConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def connect(self, handle, port):
-        if super(CommentLineElementConnect, self).connect(handle, port):
+        if super().connect(handle, port):
             opposite = self.line.opposite(handle)
             connected_to = self.get_connected(opposite)
             if connected_to:
@@ -81,7 +81,7 @@ class CommentLineElementConnect(AbstractConnect):
         hct = self.get_connected(handle)
 
         if hct and oct:
-            logger.debug("Disconnecting %s and %s" % (hct, oct))
+            logger.debug(f"Disconnecting {hct} and {oct}")
             try:
                 if hct.subject and isinstance(oct.subject, UML.Comment):
                     del oct.subject.annotatedElement[hct.subject]
@@ -92,10 +92,10 @@ class CommentLineElementConnect(AbstractConnect):
                     "Invoked CommentLineElementConnect.disconnect() for nonexistent relationship"
                 )
 
-        super(CommentLineElementConnect, self).disconnect(handle)
+        super().disconnect(handle)
 
 
-@IConnect.register(DiagramLine, CommentLineItem)
+@IConnect.register(LinePresentation, CommentLineItem)
 class CommentLineLineConnect(AbstractConnect):
     """Connect a comment line to any diagram line."""
 
@@ -131,10 +131,10 @@ class CommentLineLineConnect(AbstractConnect):
         if connected_to and not glue_ok:
             return None
 
-        return super(CommentLineLineConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def connect(self, handle, port):
-        if super(CommentLineLineConnect, self).connect(handle, port):
+        if super().connect(handle, port):
             opposite = self.line.opposite(handle)
             c = self.get_connected(opposite)
             if c and self.element.subject:
@@ -155,10 +155,10 @@ class CommentLineLineConnect(AbstractConnect):
                 del c1.subject.annotatedElement[c2.subject]
             elif c2.subject and c1.subject in c2.subject.annotatedElement:
                 del c2.subject.annotatedElement[c1.subject]
-        super(CommentLineLineConnect, self).disconnect(handle)
+        super().disconnect(handle)
 
 
-@IConnect.register(CommentLineItem, DiagramLine)
+@IConnect.register(CommentLineItem, LinePresentation)
 class InverseCommentLineLineConnect(CommentLineLineConnect):
     """
     In case a line is disconnected that contains a comment-line,

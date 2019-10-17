@@ -12,24 +12,25 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
+from typing import Callable, List
 import logging
 from gaphas import state
 
 
 from gaphor.UML.event import (
-    ElementCreateEvent,
-    ElementDeleteEvent,
-    AssociationSetEvent,
-    AssociationAddEvent,
-    AssociationDeleteEvent,
-    AttributeChangeEvent,
-    ModelFactoryEvent,
+    ElementCreated,
+    ElementDeleted,
+    AssociationSet,
+    AssociationAdded,
+    AssociationDeleted,
+    AttributeUpdated,
+    ModelReady,
 )
 from gaphor.UML.properties import association as association_property
-from gaphor.action import action, build_action_group
-from gaphor.core import event_handler
+from gaphor.action import action
+from gaphor.core import _, event_handler
 from gaphor.event import (
-    ActionExecuted,
+    ActionEnabled,
     ServiceEvent,
     TransactionBegin,
     TransactionCommit,
@@ -51,7 +52,7 @@ class ActionStack:
     """
 
     def __init__(self):
-        self._actions = []
+        self._actions: List[Callable[[], None]] = []
 
     def add(self, action):
         self._actions.append(action)
@@ -66,7 +67,7 @@ class ActionStack:
             try:
                 action()
             except Exception as e:
-                logger.error("Error while undoing action %s" % action, exc_info=True)
+                logger.error(f"Error while undoing action {action}", exc_info=True)
 
 
 class UndoManagerStateChanged(ServiceEvent):
@@ -89,42 +90,17 @@ class UndoManager(Service, ActionProvider):
     to be used to undo or redo the last performed action.
     """
 
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="edit">
-            <placeholder name="primary">
-              <menuitem action="edit-undo" />
-              <menuitem action="edit-redo" />
-              <separator />
-            </placeholder>
-          </menu>
-        </menubar>
-        <toolbar action="mainwindow-toolbar">
-          <placeholder name="left">
-            <toolitem action="edit-undo" />
-            <toolitem action="edit-redo" />
-            <separator />
-          </placeholder>
-        </toolbar>
-      </ui>
-    """
-
     def __init__(self, event_manager):
         self.event_manager = event_manager
-        self._undo_stack = []
-        self._redo_stack = []
+        self._undo_stack: List[ActionStack] = []
+        self._redo_stack: List[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
-        self.action_group = build_action_group(self)
-
-        logger.info("Starting")
 
         event_manager.subscribe(self.reset)
         event_manager.subscribe(self.begin_transaction)
         event_manager.subscribe(self.commit_transaction)
         event_manager.subscribe(self.rollback_transaction)
-        event_manager.subscribe(self._action_executed)
         self._register_undo_handlers()
         self._action_executed()
 
@@ -133,7 +109,6 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.begin_transaction)
         self.event_manager.unsubscribe(self.commit_transaction)
         self.event_manager.unsubscribe(self.rollback_transaction)
-        self.event_manager.unsubscribe(self._action_executed)
         self._unregister_undo_handlers()
 
     def clear_undo_stack(self):
@@ -143,7 +118,7 @@ class UndoManager(Service, ActionProvider):
     def clear_redo_stack(self):
         del self._redo_stack[:]
 
-    @event_handler(ModelFactoryEvent)
+    @event_handler(ModelReady)
     def reset(self, event=None):
         self.clear_redo_stack()
         self.clear_undo_stack()
@@ -163,8 +138,6 @@ class UndoManager(Service, ActionProvider):
         """
         if self._current_transaction:
             self._current_transaction.add(action)
-            self.event_manager.handle(UndoManagerStateChanged(self))
-
             # TODO: should this be placed here?
             self._action_executed()
 
@@ -181,7 +154,6 @@ class UndoManager(Service, ActionProvider):
 
         self._current_transaction = None
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     @event_handler(TransactionRollback)
@@ -207,23 +179,23 @@ class UndoManager(Service, ActionProvider):
             # Discard all data collected in the rollback "transaction"
             self._undo_stack = undo_stack
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def discard_transaction(self):
 
         self._current_transaction = None
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
-    @action(name="edit-undo", stock_id="gtk-undo", accel="<Primary>z")
+    @action(
+        name="edit-undo", label=_("_Undo"), icon_name="edit-undo", shortcut="<Primary>z"
+    )
     def undo_transaction(self):
         if not self._undo_stack:
             return
 
         if self._current_transaction:
-            log.warning("Trying to undo a transaction, while in a transaction")
+            logger.warning("Trying to undo a transaction, while in a transaction")
             self.commit_transaction()
         transaction = self._undo_stack.pop()
 
@@ -245,10 +217,14 @@ class UndoManager(Service, ActionProvider):
         while len(self._redo_stack) > self._stack_depth:
             del self._redo_stack[0]
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
-    @action(name="edit-redo", stock_id="gtk-redo", accel="<Primary>y")
+    @action(
+        name="edit-redo",
+        label=_("_Redo"),
+        icon_name="edit-redo",
+        shortcut="<Primary><Shift>z",
+    )
     def redo_transaction(self):
         if not self._redo_stack:
             return
@@ -262,7 +238,6 @@ class UndoManager(Service, ActionProvider):
         finally:
             self._redo_stack = redo_stack
 
-        self.event_manager.handle(UndoManagerStateChanged(self))
         self._action_executed()
 
     def in_transaction(self):
@@ -274,10 +249,10 @@ class UndoManager(Service, ActionProvider):
     def can_redo(self):
         return bool(self._redo_stack)
 
-    @event_handler(ActionExecuted)
     def _action_executed(self, event=None):
-        self.action_group.get_action("edit-undo").set_sensitive(self.can_undo())
-        self.action_group.get_action("edit-redo").set_sensitive(self.can_redo())
+        self.event_manager.handle(ActionEnabled("win.edit-undo", self.can_undo()))
+        self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
+        self.event_manager.handle(UndoManagerStateChanged(self))
 
     ##
     ## Undo Handlers
@@ -318,7 +293,7 @@ class UndoManager(Service, ActionProvider):
 
         state.subscribers.discard(self._gaphas_undo_handler)
 
-    @event_handler(ElementCreateEvent)
+    @event_handler(ElementCreated)
     def undo_create_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems
@@ -331,26 +306,26 @@ class UndoManager(Service, ActionProvider):
                 del factory._elements[element.id]
             except KeyError:
                 pass  # Key was probably already removed in an unlink call
-            self.event_manager.handle(ElementDeleteEvent(factory, element))
+            self.event_manager.handle(ElementDeleted(factory, element))
 
         self.add_undo_action(_undo_create_event)
 
-    @event_handler(ElementDeleteEvent)
+    @event_handler(ElementDeleted)
     def undo_delete_event(self, event):
         factory = event.service
         # A factory is not always present, e.g. for DiagramItems
         if not factory:
             return
         element = event.element
-        assert factory, "No factory defined for %s (%s)" % (element, factory)
+        assert factory, f"No factory defined for {element} ({factory})"
 
         def _undo_delete_event():
             factory._elements[element.id] = element
-            self.event_manager.handle(ElementCreateEvent(factory, element))
+            self.event_manager.handle(ElementCreated(factory, element))
 
         self.add_undo_action(_undo_delete_event)
 
-    @event_handler(AttributeChangeEvent)
+    @event_handler(AttributeUpdated)
     def undo_attribute_change_event(self, event):
         attribute = event.property
         element = event.element
@@ -361,7 +336,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(_undo_attribute_change_event)
 
-    @event_handler(AssociationSetEvent)
+    @event_handler(AssociationSet)
     def undo_association_set_event(self, event):
         association = event.property
         if type(association) is not association_property:
@@ -377,7 +352,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(_undo_association_set_event)
 
-    @event_handler(AssociationAddEvent)
+    @event_handler(AssociationAdded)
     def undo_association_add_event(self, event):
         association = event.property
         if type(association) is not association_property:
@@ -393,7 +368,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(_undo_association_add_event)
 
-    @event_handler(AssociationDeleteEvent)
+    @event_handler(AssociationDeleted)
     def undo_association_delete_event(self, event):
         association = event.property
         if type(association) is not association_property:

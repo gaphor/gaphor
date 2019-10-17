@@ -1,3 +1,5 @@
+from typing import Dict, List, Tuple
+
 import sys
 import xml.sax.handler
 from xml.sax.saxutils import escape, quoteattr
@@ -19,9 +21,9 @@ class XMLWriter(xml.sax.handler.ContentHandler):
             out = sys.stdout
         xml.sax.handler.ContentHandler.__init__(self)
         self._out = out
-        self._ns_contexts = [{}]  # contains uri -> prefix dicts
+        self._ns_contexts: List[Dict[str, str]] = [{}]  # contains uri -> prefix dicts
         self._current_context = self._ns_contexts[-1]
-        self._undeclared_ns_maps = []
+        self._undeclared_ns_maps: List[Tuple[str, str]] = []
         self._encoding = encoding or sys.getdefaultencoding()
 
         self._in_cdata = False
@@ -39,28 +41,28 @@ class XMLWriter(xml.sax.handler.ContentHandler):
             text = text.decode(self._encoding, _error_handling)
 
         if self._next_newline:
-            self._out.write(u"\n")
+            self._out.write("\n")
             self._next_newline = False
 
         if start_tag and not self._in_start_tag:
             self._in_start_tag = True
-            self._out.write(u"<")
+            self._out.write("<")
         elif start_tag and self._in_start_tag:
-            self._out.write(u">")
-            self._out.write(u"\n")
-            self._out.write(u"<")
+            self._out.write(">")
+            self._out.write("\n")
+            self._out.write("<")
         elif end_tag and self._in_start_tag:
-            self._out.write(u"/>")
+            self._out.write("/>")
             self._in_start_tag = False
             self._next_newline = True
             return
         elif not start_tag and self._in_start_tag:
-            self._out.write(u">")
+            self._out.write(">")
             self._in_start_tag = False
         elif end_tag:
-            self._out.write(u"</")
+            self._out.write("</")
             self._out.write(text)
-            self._out.write(u">")
+            self._out.write(">")
             self._in_start_tag = False
             self._next_newline = True
             return
@@ -81,7 +83,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
     # ContentHandler methods
 
     def startDocument(self):
-        self._write(u'<?xml version="1.0" encoding="%s"?>\n' % self._encoding)
+        self._write(f'<?xml version="1.0" encoding="{self._encoding}"?>\n')
 
     def startPrefixMapping(self, prefix, uri):
         self._ns_contexts.append(self._current_context.copy())
@@ -95,7 +97,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
     def startElement(self, name, attrs):
         self._write(name, start_tag=True)
         for (name, value) in list(attrs.items()):
-            self._out.write(u" %s=%s" % (name, quoteattr(value)))
+            self._out.write(f" {name}={quoteattr(value)}")
 
     def endElement(self, name):
         self._write(name, end_tag=True)
@@ -105,20 +107,20 @@ class XMLWriter(xml.sax.handler.ContentHandler):
 
         for prefix, uri in self._undeclared_ns_maps:
             if prefix:
-                self._out.write(u' xmlns:%s="%s"' % (prefix, uri))
+                self._out.write(f' xmlns:{prefix}="{uri}"')
             else:
-                self._out.write(u' xmlns="%s"' % uri)
+                self._out.write(f' xmlns="{uri}"')
         self._undeclared_ns_maps = []
 
         for (name, value) in list(attrs.items()):
-            self._out.write(u" %s=%s" % (self._qname(name), quoteattr(value)))
+            self._out.write(f" {self._qname(name)}={quoteattr(value)}")
 
     def endElementNS(self, name, qname):
-        self._write(u"%s" % self._qname(name), end_tag=True)
+        self._write("%s" % self._qname(name), end_tag=True)
 
     def characters(self, content):
         if self._in_cdata:
-            self._write(content.replace(u"]]>", u"] ]>"))
+            self._write(content.replace("]]>", "] ]>"))
         else:
             self._write(escape(content))
 
@@ -126,17 +128,17 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         self._write(content)
 
     def processingInstruction(self, target, data):
-        self._write(u"<?%s %s?>" % (target, data))
+        self._write(f"<?{target} {data}?>")
 
     def comment(self, comment):
-        self._write(u"<!-- ")
-        self._write(comment.replace(u"-->", u"- ->"))
-        self._write(u" -->")
+        self._write("<!-- ")
+        self._write(comment.replace("-->", "- ->"))
+        self._write(" -->")
 
     def startCDATA(self):
-        self._write(u"<![CDATA[")
+        self._write("<![CDATA[")
         self._in_cdata = True
 
     def endCDATA(self):
-        self._write(u"]]>")
+        self._write("]]>")
         self._in_cdata = False

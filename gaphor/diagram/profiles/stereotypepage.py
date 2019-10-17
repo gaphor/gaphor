@@ -2,11 +2,10 @@
 Stereotype property page.
 """
 
-from gi.repository import GObject, Gtk
+from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.diagram.diagramitem import StereotypeSupport
 from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
 
 
@@ -22,7 +21,7 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
 
     # Stereotype/Attributes
     col = Gtk.TreeViewColumn.new()
-    col.set_title("%s / %s" % (_("Stereotype"), _("Attribute")))
+    col.set_title("{} / {}".format(_("Stereotype"), _("Attribute")))
     col.set_expand(True)
     renderer = Gtk.CellRendererToggle()
     renderer.set_property("active", True)
@@ -88,13 +87,13 @@ class StereotypePage(PropertyPageBase):
             return None
 
         # show stereotypes attributes toggle
-        if isinstance(self.item, StereotypeSupport):
+        if hasattr(self.item, "show_stereotypes"):
             hbox = Gtk.HBox()
             label = Gtk.Label(label="")
             hbox.pack_start(label, False, True, 0)
             button = Gtk.CheckButton(label=_("Show stereotypes attributes"))
-            button.set_active(self.item.show_stereotypes_attrs)
-            button.connect("toggled", self._on_show_stereotypes_attrs_change)
+            button.set_active(self.item.show_stereotypes)
+            button.connect("toggled", self._on_show_stereotypes_change)
             hbox.pack_start(button, True, True, 0)
             page.pack_start(hbox, False, True, 0)
 
@@ -112,9 +111,8 @@ class StereotypePage(PropertyPageBase):
         return page
 
     @transactional
-    def _on_show_stereotypes_attrs_change(self, button):
-        self.item.show_stereotypes_attrs = button.get_active()
-        self.item.request_update()
+    def _on_show_stereotypes_change(self, button):
+        self.item.show_stereotypes = button.get_active()
 
     def refresh(self):
         self.model.clear()

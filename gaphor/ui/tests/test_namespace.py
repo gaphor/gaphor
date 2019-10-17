@@ -3,7 +3,6 @@ import gaphor.UML as UML
 from gaphor.ui.namespace import Namespace
 import gaphor.services.eventmanager
 import gaphor.services.componentregistry
-import gaphor.services.actionmanager
 
 
 @pytest.fixture
@@ -22,15 +21,8 @@ def component_registry():
 
 
 @pytest.fixture
-def action_manager(event_manager, component_registry):
-    return gaphor.services.actionmanager.ActionManager(
-        event_manager, component_registry
-    )
-
-
-@pytest.fixture
-def namespace(event_manager, element_factory, action_manager):
-    namespace = Namespace(event_manager, element_factory, action_manager)
+def namespace(event_manager, element_factory):
+    namespace = Namespace(event_manager, element_factory)
     namespace.init()
     yield namespace
     namespace.close()
@@ -131,7 +123,7 @@ def test_element_model_factory(namespace, element_factory):
         p2 = UML.Package(model=element_factory)
 
         p2.package = p1
-    element_factory.notify_model()
+    element_factory.model_ready()
 
     iter = namespace.iter_for_element(p1)
     assert namespace.model.iter_n_children(None) == 1

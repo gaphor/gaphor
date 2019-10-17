@@ -12,6 +12,7 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
 
+from typing import List
 import types
 import sys
 from gi.repository import GLib
@@ -137,15 +138,11 @@ class QueueEmpty(Exception):
     a value.
     """
 
-    pass
-
 
 class QueueFull(Exception):
     """Exception raised when the queue is full and the oldest item may not be
     disposed.
     """
-
-    pass
 
 
 class Queue:
@@ -154,7 +151,7 @@ class Queue:
     """
 
     def __init__(self, size=0, dispose_oldest=True):
-        self._queue = []
+        self._queue: List[object] = []
         self._size = size
         self._dispose_oldest = dispose_oldest
 
@@ -182,8 +179,7 @@ class Queue:
 if __name__ == "__main__":
 
     def counter(max):
-        for i in range(max):
-            yield i
+        yield from range(max)
 
     def shower(queue):
         # Never stop reading the queue:

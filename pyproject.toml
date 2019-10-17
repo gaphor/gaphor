@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "1.0.2"
+version = "1.1.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -32,19 +32,20 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.5"
-pycairo = "^1.16"
+python = "^3.7"
+pycairo = "^1.18"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
-importlib_metadata = "^0.18"
-tomlkit = "^0.5"
+importlib_metadata = "^0.23"
 
 [tool.poetry.dev-dependencies]
+tomlkit = "^0.5"
 pytest = "^4.0"
 pytest-sugar = "^0.9.2"
 pytest-cov = "^2.5"
 pytest-runner = "^4.2"
 black = { version = "^19.3b0", python = "^3.6" }
+mypy = "^0.720.0"
 pre-commit = "^1.12"
 
 [tool.poetry.scripts]
@@ -57,23 +58,26 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "properties" = "gaphor.services.properties:Properties"
 "undo_manager" = "gaphor.services.undomanager:UndoManager"
 "element_factory" = "gaphor.UML.elementfactory:ElementFactory"
-"file_manager" = "gaphor.services.filemanager:FileManager"
-"diagram_export_manager" = "gaphor.services.diagramexportmanager:DiagramExportManager"
-"action_manager" = "gaphor.services.actionmanager:ActionManager"
+"file_manager" = "gaphor.ui.filemanager:FileManager"
+"recent_files" = "gaphor.ui.recentfiles:RecentFiles"
 "main_window" = "gaphor.ui.mainwindow:MainWindow"
+"preferences" = "gaphor.ui.preferences:Preferences"
+"export_menu" = "gaphor.ui.menufragment:MenuFragment"
+"import_menu" = "gaphor.ui.menufragment:MenuFragment"
+"tools_menu" = "gaphor.ui.menufragment:MenuFragment"
 "copy" = "gaphor.services.copyservice:CopyService"
 "sanitizer" = "gaphor.services.sanitizerservice:SanitizerService"
-"xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
-"diagram_layout" = "gaphor.plugins.diagramlayout:DiagramLayout"
-"pynsource" = "gaphor.plugins.pynsource:PyNSource"
-"alignment" = "gaphor.plugins.alignment:Alignment"
 "help" = "gaphor.services.helpservice:HelpService"
-"namespace" = "gaphor.ui.mainwindow:Namespace"
-"toolbox" = "gaphor.ui.mainwindow:Toolbox"
+"namespace" = "gaphor.ui.namespace:Namespace"
+"toolbox" = "gaphor.ui.toolbox:Toolbox"
 "diagrams" = "gaphor.ui.mainwindow:Diagrams"
 "consolewindow" = "gaphor.ui.consolewindow:ConsoleWindow"
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
+"diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
+"xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
+"diagram_layout" = "gaphor.plugins.diagramlayout:DiagramLayout"
+"pynsource" = "gaphor.plugins.pynsource:PyNSource"
 
 [build-system]
-requires = ["poetry==0.12.17"]
+requires = ["poetry==1.0.0b1"]
 build-backend = "poetry.masonry.api"

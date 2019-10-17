@@ -9,6 +9,10 @@ The interface has been made in line with `functools.singledispatch`.
 Note that this module does not support annotated functions.
 """
 
+from __future__ import annotations
+
+from typing import cast, Any, Callable, Generic, TypeVar, Union
+
 import functools
 import inspect
 
@@ -16,8 +20,11 @@ from gaphor.misc.generic.registry import Registry, TypeAxis
 
 __all__ = "multidispatch"
 
+T = TypeVar("T", bound=Union[Callable[..., Any], type])
+KeyType = Union[type, None]
 
-def multidispatch(*argtypes):
+
+def multidispatch(*argtypes: KeyType) -> Callable[[T], FunctionDispatcher[T]]:
     """ Declare function as multidispatch
 
     This decorator takes ``argtypes`` argument types and replace decorated
@@ -25,7 +32,7 @@ def multidispatch(*argtypes):
     multiple dispatch feature.
     """
 
-    def _replace_with_dispatcher(func):
+    def _replace_with_dispatcher(func: T) -> FunctionDispatcher[T]:
         nonlocal argtypes
         argspec = inspect.getfullargspec(func)
         if not argtypes:
@@ -33,10 +40,11 @@ def multidispatch(*argtypes):
             if isinstance(func, type):
                 # It's a class we deal with:
                 arity -= 1
-            argtypes = [object] * arity
+            argtypes = (object,) * arity
 
-        dispatcher = functools.update_wrapper(
-            FunctionDispatcher(argspec, len(argtypes)), func
+        dispatcher = cast(
+            FunctionDispatcher[T],
+            functools.update_wrapper(FunctionDispatcher(argspec, len(argtypes)), func),
         )
         dispatcher.register_rule(func, *argtypes)
         return dispatcher
@@ -44,7 +52,7 @@ def multidispatch(*argtypes):
     return _replace_with_dispatcher
 
 
-class FunctionDispatcher:
+class FunctionDispatcher(Generic[T]):
     """ Multidispatcher for functions
 
     This object dispatch calls to function by its argument types. Usually it is
@@ -53,7 +61,9 @@ class FunctionDispatcher:
     You should not manually create objects of this type.
     """
 
-    def __init__(self, argspec, params_arity):
+    registry: Registry[T]
+
+    def __init__(self, argspec: inspect.FullArgSpec, params_arity: int) -> None:
         """ Initialize dispatcher with ``argspec`` of type
         :class:`inspect.ArgSpec` and ``params_arity`` that represent number
         params."""
@@ -67,10 +77,10 @@ class FunctionDispatcher:
         self.argspec = argspec
         self.params_arity = params_arity
 
-        axis = [("arg_%d" % n, TypeAxis()) for n in range(params_arity)]
+        axis = [(f"arg_{n:d}", TypeAxis()) for n in range(params_arity)]
         self.registry = Registry(*axis)
 
-    def check_rule(self, rule, *argtypes):
+    def check_rule(self, rule: T, *argtypes: KeyType) -> None:
         # Check if we have the right number of parametrized types
         if len(argtypes) != self.params_arity:
             raise TypeError(
@@ -82,14 +92,16 @@ class FunctionDispatcher:
         left_spec = tuple(x and len(x) or 0 for x in rule_argspec[:4])
         right_spec = tuple(x and len(x) or 0 for x in self.argspec[:4])
         if left_spec != right_spec:
-            raise TypeError("Rule does not conform to previous implementations.")
+            raise TypeError(
+                f"Rule does not conform to previous implementations: {left_spec} != {right_spec}."
+            )
 
-    def register_rule(self, rule, *argtypes):
+    def register_rule(self, rule: T, *argtypes: KeyType) -> None:
         """ Register new ``rule`` for ``argtypes``."""
         self.check_rule(rule, *argtypes)
         self.registry.register(rule, *argtypes)
 
-    def register(self, *argtypes):
+    def register(self, *argtypes: KeyType) -> Callable[[T], T]:
         """ Decorator for registering new case for multidispatch
 
         New case will be registered for types identified by ``argtypes``. The
@@ -98,22 +110,22 @@ class FunctionDispatcher:
         also indicated the number of arguments multidispatch dispatches on.
         """
 
-        def register_rule(func):
+        def register_rule(func: T) -> T:
             self.register_rule(func, *argtypes)
             return func
 
         return register_rule
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
         """ Dispatch call to appropriate rule."""
         trimmed_args = args[: self.params_arity]
         rule = self.registry.lookup(*trimmed_args)
         if not rule:
-            raise TypeError("No available rule found for %r" % (trimmed_args,))
+            raise TypeError(f"No available rule found for {trimmed_args!r}")
         return rule(*args, **kwargs)
 
 
-def _arity(argspec):
+def _arity(argspec: inspect.FullArgSpec) -> int:
     """ Determinal positional arity of argspec."""
     args = argspec.args if argspec.args else []
     defaults = argspec.defaults if argspec.defaults else []

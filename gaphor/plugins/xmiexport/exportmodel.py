@@ -18,49 +18,47 @@ class XMIExport:
         self.handled_ids = list()
 
     def handle(self, xmi, element):
-        logger.debug("Handling %s" % element.__class__.__name__)
+        logger.debug(f"Handling {element.__class__.__name__}")
         try:
-            handler_name = "handle%s" % element.__class__.__name__
+            handler_name = f"handle{element.__class__.__name__}"
             handler = getattr(self, handler_name)
             idref = element.id in self.handled_ids
             handler(xmi, element, idref=idref)
             if not idref:
                 self.handled_ids.append(element.id)
         except AttributeError as e:
-            logger.warning(
-                "Missing handler for %s:%s" % (element.__class__.__name__, e)
-            )
+            logger.warning(f"Missing handler for {element.__class__.__name__}:{e}")
         except Exception as e:
-            logger.error("Failed to handle %s:%s" % (element.__class__.__name__, e))
+            logger.error(f"Failed to handle {element.__class__.__name__}:{e}")
 
     def handlePackage(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
         attributes["name"] = element.name
         attributes["visibility"] = element.visibility
 
-        xmi.startElement("%s:Package" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:Package", attrs=attributes)
 
         for ownedMember in element.ownedMember:
             xmi.startElement("ownedMember", attrs=dict())
             self.handle(xmi, ownedMember)
             xmi.endElement("ownedMember")
 
-        xmi.endElement("%s:Package" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:Package")
 
     def handleClass(self, xmi, element, idref=False):
 
         attributes = dict()
 
         if idref:
-            attributes["%s:idref" % self.XMI_PREFIX] = element.id
+            attributes[f"{self.XMI_PREFIX}:idref"] = element.id
         else:
-            attributes["%s:id" % self.XMI_PREFIX] = element.id
+            attributes[f"{self.XMI_PREFIX}:id"] = element.id
             attributes["name"] = element.name
             attributes["isAbstract"] = str(element.isAbstract)
 
-        xmi.startElement("%s:Class" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:Class", attrs=attributes)
 
         if not idref:
 
@@ -74,12 +72,12 @@ class XMIExport:
                 self.handle(xmi, ownedOperation)
                 xmi.endElement("ownedOperation")
 
-        xmi.endElement("%s:Class" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:Class")
 
     def handleProperty(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
         attributes["isStatic"] = str(element.isStatic)
         attributes["isOrdered"] = str(element.isOrdered)
         attributes["isUnique"] = str(element.isUnique)
@@ -90,7 +88,7 @@ class XMIExport:
         if element.name is not None:
             attributes["name"] = element.name
 
-        xmi.startElement("%s:Property" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:Property", attrs=attributes)
 
         # TODO: This should be type, not typeValue.
         if element.typeValue is not None:
@@ -98,56 +96,56 @@ class XMIExport:
             self.handle(xmi, element.typeValue)
             xmi.endElement("type")
 
-        xmi.endElement("%s:Property" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:Property")
 
     def handleOperation(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
         attributes["isStatic"] = str(element.isStatic)
         attributes["isQuery"] = str(element.isQuery)
         attributes["name"] = element.name
 
-        xmi.startElement("%s:Operation" % self.XMI_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.XMI_PREFIX}:Operation", attrs=attributes)
 
         for ownedParameter in element.parameter:
             xmi.startElement("ownedElement", attrs=dict())
             self.handle(xmi, ownedParameter)
             xmi.endElement("ownedElement")
 
-        xmi.endElement("%s:Operation" % self.XMI_PREFIX)
+        xmi.endElement(f"{self.XMI_PREFIX}:Operation")
 
     def handleParameter(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
         attributes["isOrdered"] = str(element.isOrdered)
         attributes["isUnique"] = str(element.isUnique)
 
         attributes["direction"] = element.direction
         attributes["name"] = element.name
 
-        xmi.startElement("%s:Parameter" % self.XMI_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.XMI_PREFIX}:Parameter", attrs=attributes)
 
-        xmi.endElement("%s:Parameter" % self.XMI_PREFIX)
+        xmi.endElement(f"{self.XMI_PREFIX}:Parameter")
 
     def handleLiteralSpecification(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
         attributes["value"] = element.value
 
-        xmi.startElement("%s:LiteralSpecification" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:LiteralSpecification", attrs=attributes)
 
-        xmi.endElement("%s:LiteralSpecification" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:LiteralSpecification")
 
     def handleAssociation(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
         attributes["isDerived"] = str(element.isDerived)
 
-        xmi.startElement("%s:Association" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:Association", attrs=attributes)
 
         for memberEnd in element.memberEnd:
             xmi.startElement("memberEnd", attrs=dict())
@@ -159,14 +157,14 @@ class XMIExport:
             self.handle(xmi, ownedEnd)
             xmi.endElement("ownedEnd")
 
-        xmi.endElement("%s:Association" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:Association")
 
     def handleDependency(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
 
-        xmi.startElement("%s:Dependency" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:Dependency", attrs=attributes)
 
         for client in element.client:
             xmi.startElement("client", attrs=dict())
@@ -178,15 +176,15 @@ class XMIExport:
             self.handle(xmi, supplier)
             xmi.endElement("supplier")
 
-        xmi.endElement("%s:Dependency" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:Dependency")
 
     def handleGeneralization(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
         attributes["isSubstitutable"] = str(element.isSubstitutable)
 
-        xmi.startElement("%s:Generalization" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:Generalization", attrs=attributes)
 
         if element.general:
             xmi.startElement("general", attrs=dict())
@@ -198,14 +196,14 @@ class XMIExport:
             self.handle(xmi, element.specific)
             xmi.endElement("specific")
 
-        xmi.endElement("%s:Generalization" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:Generalization")
 
     def handleRealization(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
 
-        xmi.startElement("%s:Realization" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:Realization", attrs=attributes)
 
         for client in element.client:
             xmi.startElement("client", attrs=dict())
@@ -217,14 +215,14 @@ class XMIExport:
             self.handle(xmi, supplier)
             xmi.endElement("supplier")
 
-        xmi.endElement("%s:Realization" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:Realization")
 
     def handleInterface(self, xmi, element, idref=False):
 
         attributes = dict()
-        attributes["%s:id" % self.XMI_PREFIX] = element.id
+        attributes[f"{self.XMI_PREFIX}:id"] = element.id
 
-        xmi.startElement("%s:Interface" % self.UML_PREFIX, attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:Interface", attrs=attributes)
 
         for ownedAttribute in element.ownedAttribute:
             xmi.startElement("ownedAttribute", attrs=dict())
@@ -236,7 +234,7 @@ class XMIExport:
             self.handle(ownedOperation)
             xmi.endElement("ownedOperation")
 
-        xmi.endElement("%s:Interface" % self.UML_PREFIX)
+        xmi.endElement(f"{self.UML_PREFIX}:Interface")
 
     def export(self, filename):
         out = open(filename, "w")
@@ -270,4 +268,4 @@ class XMIExport:
         return element.__class__.__name__ == "Generalization"
 
     def select_realization(self, element):
-        return element.__class__.name__ == "Implementation"
+        return element.__class__.__name__ == "Implementation"

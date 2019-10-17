@@ -16,11 +16,14 @@ class DiagramPageTestCase(unittest.TestCase):
                 "component_registry",
                 "element_factory",
                 "main_window",
-                "action_manager",
                 "properties",
                 "namespace",
                 "diagrams",
                 "toolbox",
+                "elementeditor",
+                "import_menu",
+                "export_menu",
+                "tools_menu",
             ]
         )
         main_window = Application.get_service("main_window")

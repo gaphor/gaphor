@@ -2,7 +2,6 @@
 
 from gi.repository import Gtk
 
-from gaphor import UML
 
 from gaphor.core import _, transactional
 from gaphor.diagram.propertypages import PropertyPages, NamedItemPropertyPage
@@ -16,7 +15,7 @@ class PartitionPropertyPage(NamedItemPropertyPage):
     def construct(self):
         item = self.item
 
-        page = super(PartitionPropertyPage, self).construct()
+        page = super().construct()
 
         if item.subject:
             if not item._toplevel:

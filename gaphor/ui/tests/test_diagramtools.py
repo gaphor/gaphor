@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.tests import TestCase
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.event import DiagramShow
+from gaphor.ui.event import DiagramOpened
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -14,21 +14,24 @@ logging.basicConfig(level=logging.DEBUG)
 class DiagramItemConnectorTestCase(TestCase):
     services = TestCase.services + [
         "main_window",
-        "action_manager",
         "properties",
         "namespace",
         "diagrams",
         "toolbox",
+        "import_menu",
+        "export_menu",
+        "tools_menu",
+        "elementeditor",
     ]
 
     def setUp(self):
-        super(DiagramItemConnectorTestCase, self).setUp()
+        super().setUp()
         self.component_registry = self.get_service("component_registry")
         self.event_manager = self.get_service("event_manager")
         mw = self.get_service("main_window")
         mw.open()
         self.main_window = mw
-        self.event_manager.handle(DiagramShow(self.diagram))
+        self.event_manager.handle(DiagramOpened(self.diagram))
 
     def test_item_reconnect(self):
         # Setting the stage:

@@ -2,6 +2,7 @@
 Flow item connection adapters tests.
 """
 
+from typing import Type
 from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.actions.action import ActionItem
@@ -67,17 +68,13 @@ class FlowItemObjectNodeTestCase(TestCase):
     Flow item connecting to object node item tests.
     """
 
-    def test_glue(self):
-        """Test gluing to object node."""
-
+    def test_glue_to_object_node(self):
         flow = self.create(FlowItem)
         onode = self.create(ObjectNodeItem, UML.ObjectNode)
         glued = self.allow(flow, flow.head, onode)
         assert glued
 
-    def test_connection(self):
-        """Test connection to object node
-        """
+    def test_connect_to_object_node(self):
         flow = self.create(FlowItem)
         anode = self.create(ActionItem, UML.Action)
         onode = self.create(ObjectNodeItem, UML.ObjectNode)
@@ -96,9 +93,7 @@ class FlowItemObjectNodeTestCase(TestCase):
         assert flow.subject
         assert isinstance(flow.subject, UML.ObjectFlow)
 
-    def test_reconnection(self):
-        """Test object flow reconnection
-        """
+    def test_object_flow_reconnect(self):
         flow = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         o1 = self.create(ObjectNodeItem, UML.ObjectNode)
@@ -184,9 +179,7 @@ class FlowItemActionTestCase(TestCase):
         glued = self.allow(flow, flow.tail, a2)
         assert glued
 
-    def test_connect(self):
-        """Test flow item connecting to action items
-        """
+    def test_connect_to_action_item(self):
         flow = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
@@ -206,7 +199,7 @@ class FlowItemActionTestCase(TestCase):
         assert flow.subject in a2.subject.incoming
         assert flow.subject.target is a2.subject
 
-    def test_disconnect(self):
+    def test_disconnect_from_action_item(self):
         """Test flow item disconnection from action items
         """
         flow = self.create(FlowItem)
@@ -305,9 +298,9 @@ class FlowItemDesisionAndForkNodes:
       object flows or all control flows.
     """
 
-    item_cls = None
-    fork_node_cls = None
-    join_node_cls = None
+    item_cls: Type[UML.Presentation]
+    fork_node_cls: Type[UML.ControlNode]
+    join_node_cls: Type[UML.ControlNode]
 
     def test_glue(self):
         """Test decision/fork nodes glue
@@ -397,7 +390,7 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow3, flow3.head, jn)
         assert 2 == len(jn.subject.outgoing)
 
-        assert isinstance(jn.subject, self.fork_node_cls), "%s" % jn.subject
+        assert isinstance(jn.subject, self.fork_node_cls), f"{jn.subject}"
 
     def test_combined_nodes_connection(self):
         """Test combined nodes connection
@@ -488,8 +481,8 @@ class FlowItemDesisionAndForkNodes:
 
         flows = self.kindof(UML.ControlFlow)
         nodes = self.kindof(self.fork_node_cls)
-        assert cnode not in nodes, "%s in %s" % (cnode, nodes)
-        assert cflow not in flows, "%s in %s" % (cflow, flows)
+        assert cnode not in nodes, f"{cnode} in {nodes}"
+        assert cflow not in flows, f"{cflow} in {flows}"
 
 
 class FlowItemForkNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):

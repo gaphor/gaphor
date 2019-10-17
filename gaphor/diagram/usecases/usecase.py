@@ -5,43 +5,44 @@ Use case diagram item.
 from gaphas.util import path_ellipse
 
 from gaphor import UML
-from gaphor.diagram.classifier import ClassifierItem
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
-from gaphor.diagram.textelement import text_extents
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import ElementPresentation, Classified
+from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.text import FontWeight
+from gaphor.diagram.support import represents
 
 
-# Note: this is a ClassifierItem, so associations can attach to it :/
-class UseCaseItem(ClassifierItem):
+@represents(UML.UseCase)
+class UseCaseItem(ElementPresentation, Classified):
     """
     Presentation of gaphor.UML.UseCase.
     """
 
-    __uml__ = UML.UseCase
-    __style__ = {"min-size": (50, 30), "name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
-
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self.drawing_style = -1
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(
+                text=lambda: self.subject.name or "",
+                style={"font-weight": FontWeight.BOLD},
+            ),
+            style={"min-width": 50, "min-height": 30},
+            draw=draw_usecase,
+        )
 
-    def pre_update(self, context):
-        cr = context.cairo
-        text = self.subject.name
-        if text:
-            width, height = text_extents(cr, text)
-            self.min_width, self.min_height = width + 10, height + 20
-        super(UseCaseItem, self).pre_update(context)
-
-    def draw(self, context):
-        cr = context.cairo
-
-        rx = self.width / 2.0
-        ry = self.height / 2.0
-
-        cr.move_to(self.width, ry)
-        path_ellipse(cr, rx, ry, self.width, self.height)
-        cr.stroke()
-
-        super(UseCaseItem, self).draw(context)
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
 
 
-# vim:sw=4:et
+def draw_usecase(box, context, bounding_box):
+    cr = context.cairo
+
+    rx = bounding_box.width / 2.0
+    ry = bounding_box.height / 2.0
+
+    cr.move_to(bounding_box.width, ry)
+    path_ellipse(cr, rx, ry, bounding_box.width, bounding_box.height)
+    cr.stroke()

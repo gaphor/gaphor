@@ -11,7 +11,7 @@ from gaphor.UML import uml2 as UML
 
 
 @singledispatch
-def format(el, pattern=None):
+def format(el):
     """
     Format an UML element.
     """
@@ -21,7 +21,7 @@ def format(el, pattern=None):
 
 
 @format.register(UML.Property)
-def format_property(el, pattern=None, *args, **kwargs):
+def format_property(el, *args, **kwargs):
     """
     Format property or an association end.
     """
@@ -84,22 +84,22 @@ def format_attribute(
     s.write(name)
 
     if type and el.typeValue:
-        s.write(": %s" % el.typeValue)
+        s.write(f": {el.typeValue}")
 
     if multiplicity and el.upperValue:
         if el.lowerValue:
-            s.write("[%s..%s]" % (el.lowerValue, el.upperValue))
+            s.write(f"[{el.lowerValue}..{el.upperValue}]")
         else:
-            s.write("[%s]" % el.upperValue)
+            s.write(f"[{el.upperValue}]")
 
     if default and el.defaultValue:
-        s.write(" = %s" % el.defaultValue)
+        s.write(f" = {el.defaultValue}")
 
     if tags:
         slots = []
         for slot in el.appliedStereotype[:].slot:
             if slot:
-                slots.append("%s=%s" % (slot.definingFeature.name, slot.value))
+                slots.append(f"{slot.definingFeature.name}={slot.value}")
         if slots:
             s.write(" { %s }" % ", ".join(slots))
     s.seek(0)
@@ -125,14 +125,14 @@ def format_association_end(el):
     m = io.StringIO()
     if el.upperValue:
         if el.lowerValue:
-            m.write("%s..%s" % (el.lowerValue, el.upperValue))
+            m.write(f"{el.lowerValue}..{el.upperValue}")
         else:
-            m.write("%s" % el.upperValue)
+            m.write(f"{el.upperValue}")
 
     slots = []
     for slot in el.appliedStereotype[:].slot:
         if slot:
-            slots.append("%s=%s" % (slot.definingFeature.name, slot.value))
+            slots.append(f"{slot.definingFeature.name}={slot.value}")
     if slots:
         m.write(" { %s }" % ",\n".join(slots))
     m.seek(0)
@@ -180,14 +180,14 @@ def format_operation(
             s.write(" ")
         s.write(p.name)
         if type and p.typeValue:
-            s.write(": %s" % p.typeValue)
+            s.write(f": {p.typeValue}")
         if multiplicity and p.upperValue:
             if p.lowerValue:
-                s.write("[%s..%s]" % (p.lowerValue, p.upperValue))
+                s.write(f"[{p.lowerValue}..{p.upperValue}]")
             else:
-                s.write("[%s]" % p.upperValue)
+                s.write(f"[{p.upperValue}]")
         if default and p.defaultValue:
-            s.write(" = %s" % p.defaultValue)
+            s.write(f" = {p.defaultValue}")
         # if p.taggedValue:
         #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
         #                                      ['value'] * len(p.taggedValue))))
@@ -200,12 +200,12 @@ def format_operation(
     rr = el.returnResult and el.returnResult[0]
     if rr:
         if type and rr.typeValue:
-            s.write(": %s" % rr.typeValue)
+            s.write(f": {rr.typeValue}")
         if multiplicity and rr.upperValue:
             if rr.lowerValue:
-                s.write("[%s..%s]" % (rr.lowerValue, rr.upperValue))
+                s.write(f"[{rr.lowerValue}..{rr.upperValue}]")
             else:
-                s.write("[%s]" % rr.upperValue)
+                s.write(f"[{rr.upperValue}]")
         # if rr.taggedValue:
         #    tvs = ', '.join(filter(None, map(getattr, rr.taggedValue,
         #                                     ['value'] * len(rr.taggedValue))))
@@ -216,13 +216,13 @@ def format_operation(
 
 
 @format.register(UML.Slot)
-def format_slot(el, pattern=None):
-    return '%s = "%s"' % (el.definingFeature.name, el.value)
+def format_slot(el):
+    return f'{el.definingFeature.name} = "{el.value}"'
 
 
 @format.register(UML.NamedElement)
-def format_namedelement(el, pattern="%s"):
+def format_namedelement(el):
     """
     Format named element.
     """
-    return pattern % el.name
+    return el.name

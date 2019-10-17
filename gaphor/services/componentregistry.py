@@ -2,6 +2,7 @@
 A registry for components (e.g. services) and event handling.
 """
 
+from typing import Set, Tuple
 from gaphor.abc import Service
 from gaphor.application import ComponentLookupError
 
@@ -12,7 +13,7 @@ class ComponentRegistry(Service):
     """
 
     def __init__(self):
-        self._comp = set()
+        self._comp: Set[Tuple[object, str]] = set()
 
     def shutdown(self):
         pass

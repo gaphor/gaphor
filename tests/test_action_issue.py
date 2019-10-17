@@ -1,4 +1,3 @@
-import os
 import importlib_metadata
 
 from gaphor import UML

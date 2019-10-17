@@ -16,7 +16,7 @@ from utils.i18n.build_pot import build_pot
 from utils.model.build_uml import build_uml
 from utils.install_lib import install_lib
 
-VERSION = "1.0.2"
+VERSION = "1.1.0"
 LINGUAS = ["ca", "es", "fr", "nl", "sv"]
 
 sys.path.insert(0, ".")
@@ -36,7 +36,7 @@ class BuildPyWithSubCommands(build_py):
 
 
 version_file = os.path.join(os.path.dirname(__file__), "gaphor", "__init__.py")
-with io.open(version_file, encoding="utf8") as version_file:
+with open(version_file, encoding="utf8") as version_file:
     version_match = re.search(
         r"^__version__ = ['\"]([^'\"]*)['\"]", version_file.read(), re.M
     )
@@ -48,7 +48,7 @@ with io.open(version_file, encoding="utf8") as version_file:
 BuildPyWithSubCommands.sub_commands.append(("build_uml", None))
 
 readme = os.path.join(os.path.dirname(__file__), "README.md")
-with io.open(readme, encoding="utf8") as readme:
+with open(readme, encoding="utf8") as readme:
     long_description = readme.read()
 
 setup(
@@ -95,22 +95,25 @@ setup(
             "properties = gaphor.services.properties:Properties",
             "undo_manager = gaphor.services.undomanager:UndoManager",
             "element_factory = gaphor.UML.elementfactory:ElementFactory",
-            "file_manager = gaphor.services.filemanager:FileManager",
-            "diagram_export_manager = gaphor.services.diagramexportmanager:DiagramExportManager",
-            "action_manager = gaphor.services.actionmanager:ActionManager",
+            "file_manager = gaphor.ui.filemanager:FileManager",
+            "recent_files = gaphor.ui.recentfiles:RecentFiles",
             "main_window = gaphor.ui.mainwindow:MainWindow",
+            "preferences = gaphor.ui.preferences:Preferences",
+            "export_menu = gaphor.ui.menufragment:MenuFragment",
+            "import_menu = gaphor.ui.menufragment:MenuFragment",
+            "tools_menu = gaphor.ui.menufragment:MenuFragment",
             "copy = gaphor.services.copyservice:CopyService",
             "sanitizer = gaphor.services.sanitizerservice:SanitizerService",
-            "xmi_export = gaphor.plugins.xmiexport:XMIExport",
-            "diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout",
-            "pynsource = gaphor.plugins.pynsource:PyNSource",
-            "alignment = gaphor.plugins.alignment:Alignment",
             "help = gaphor.services.helpservice:HelpService",
-            "namespace = gaphor.ui.mainwindow:Namespace",
-            "toolbox = gaphor.ui.mainwindow:Toolbox",
+            "namespace = gaphor.ui.namespace:Namespace",
+            "toolbox = gaphor.ui.toolbox:Toolbox",
             "diagrams = gaphor.ui.mainwindow:Diagrams",
             "consolewindow = gaphor.ui.consolewindow:ConsoleWindow",
             "elementeditor = gaphor.ui.elementeditor:ElementEditor",
+            "diagram_export = gaphor.plugins.diagramexport:DiagramExport",
+            "xmi_export = gaphor.plugins.xmiexport:XMIExport",
+            "diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout",
+            "pynsource = gaphor.plugins.pynsource:PyNSource",
         ],
     },
     cmdclass={

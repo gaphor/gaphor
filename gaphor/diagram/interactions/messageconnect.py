@@ -69,13 +69,6 @@ class MessageLifelineConnect(AbstractConnect):
             del line.subject
             if not message.presentation:
                 message.unlink()
-            for message in list(line._messages):
-                line.remove_message(message, False)
-                message.unlink()
-
-            for message in list(line._inverted_messages):
-                line.remove_message(message, True)
-                message.unlink()
 
     def allow(self, handle, port):
         """
@@ -96,7 +89,7 @@ class MessageLifelineConnect(AbstractConnect):
         return not (lifetime.visible ^ (port is element.lifetime.port))
 
     def connect(self, handle, port):
-        super(MessageLifelineConnect, self).connect(handle, port)
+        super().connect(handle, port)
 
         line = self.line
         send = self.get_connected(line.head)
@@ -112,7 +105,7 @@ class MessageLifelineConnect(AbstractConnect):
             lifetime.connectable = False
 
     def disconnect(self, handle):
-        super(MessageLifelineConnect, self).disconnect(handle)
+        super().disconnect(handle)
 
         line = self.line
         send = self.get_connected(line.head)

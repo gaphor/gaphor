@@ -8,14 +8,12 @@ Functions collected in this module allow to
 
 """
 
+from typing import Sequence, Iterable
 import itertools
 from gaphor.UML.uml2 import *
 
-# '<<%s>>'
-STEREOTYPE_FMT = "<<%s>>"
 
-
-def stereotypes_str(element, stereotypes=()):
+def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
     """
     Identify stereotypes of an UML metamodel instance and return coma
     separated stereotypes as string.
@@ -28,12 +26,14 @@ def stereotypes_str(element, stereotypes=()):
     """
     # generate string with stereotype names separated by coma
     if element:
-        applied = (stereotype_name(st) for st in get_applied_stereotypes(element))
+        applied: Iterable[str] = (
+            stereotype_name(st) for st in get_applied_stereotypes(element)
+        )
     else:
         applied = ()
     s = ", ".join(itertools.chain(stereotypes, applied))
     if s:
-        return STEREOTYPE_FMT % s
+        return f"«{s}»"
     else:
         return ""
 
@@ -117,12 +117,12 @@ def get_stereotypes(element):
     cls = type(element)
 
     # find out names of classes, which are superclasses of element class
-    names = set(c.__name__ for c in cls.__mro__ if issubclass(c, Element))
+    names = {c.__name__ for c in cls.__mro__ if issubclass(c, Element)}
 
     # find stereotypes that extend element class
     classes = model.select(lambda e: e.isKindOf(Class) and e.name in names)
 
-    stereotypes = set(ext.ownedEnd.type for cls in classes for ext in cls.extension)
+    stereotypes = {ext.ownedEnd.type for cls in classes for ext in cls.extension}
     return sorted(stereotypes, key=lambda st: st.name)
 
 
@@ -133,7 +133,7 @@ def get_applied_stereotypes(element):
     return element.appliedStereotype[:].classifier
 
 
-def create_extension(metaclass, stereotype):
+def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
     """
     Create an Extension association between an metaclass and a stereotype.
     """
@@ -194,7 +194,7 @@ def create_dependency(supplier, client):
 
 def create_realization(realizingClassifier, abstraction):
     assert (
-        realizingClassifier.model is stereoabstractiontype.model
+        realizingClassifier.model is abstraction.model
     ), "Realizing classifier and Abstraction are from different models"
     model = realizingClassifier.model
     dep = model.create(Realization)
@@ -337,7 +337,7 @@ def dependency_type(client, supplier):
     return dt
 
 
-def create_message(msg, inverted=False):
+def clone_message(msg, inverted=False):
     """
     Create new message based on speciied message.
 
@@ -350,12 +350,10 @@ def create_message(msg, inverted=False):
 
     if msg.sendEvent:
         send = model.create(MessageOccurrenceSpecification)
-        sl = msg.sendEvent.covered
-        send.covered = sl
+        send.covered = msg.sendEvent.covered
     if msg.receiveEvent:
         receive = model.create(MessageOccurrenceSpecification)
-        rl = msg.receiveEvent.covered
-        receive.covered = rl
+        receive.covered = msg.receiveEvent.covered
 
     if inverted:
         # inverted message goes in different direction, than original

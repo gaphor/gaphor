@@ -30,12 +30,16 @@ The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
 """
 
-__all__ = ["parse", "ParserException"]
+from __future__ import annotations
 
-import io
+from typing import Dict, List, Optional, Union, Tuple, IO
 import os
+import io
 from xml.sax import handler
 from collections import OrderedDict
+
+
+__all__ = ["parse", "ParserException"]
 
 
 class base:
@@ -43,8 +47,8 @@ class base:
     """
 
     def __init__(self):
-        self.values = {}
-        self.references = {}
+        self.values: Dict[str, str] = {}
+        self.references: Dict[str, Union[str, List[str]]] = {}
 
     def __getattr__(self, key):
         try:
@@ -66,25 +70,28 @@ class base:
 
 
 class element(base):
-    def __init__(self, id, type, canvas=None):
+    def __init__(self, id: str, type: str, canvas: Optional[canvas] = None):
         base.__init__(self)
         self.id = id
         self.type = type
         self.canvas = canvas
+        self.element: object = None
 
 
 class canvas(base):
-    def __init__(self, canvasitems=None):
+    def __init__(self, canvasitems: Optional[List[canvasitem]] = None):
         base.__init__(self)
-        self.canvasitems = canvasitems or []
+        self.canvasitems: List[canvasitem] = canvasitems or []
 
 
 class canvasitem(base):
-    def __init__(self, id, type, canvasitems=None):
+    def __init__(
+        self, id: str, type: str, canvasitems: Optional[List[canvasitem]] = None
+    ):
         base.__init__(self)
         self.id = id
         self.type = type
-        self.canvasitems = canvasitems or []
+        self.canvasitems: List[canvasitem] = canvasitems or []
 
 
 XMLNS = "http://gaphor.sourceforge.net/model"
@@ -107,6 +114,8 @@ class ParserException(Exception):
     REFLIST,  # In a <reflist>
     REF,  # Reading contents of a <ref> tag
 ] = range(10)
+
+State = int
 
 
 class GaphorLoader(handler.ContentHandler):
@@ -152,8 +161,8 @@ class GaphorLoader(handler.ContentHandler):
         """
         self.version = None
         self.gaphor_version = None
-        self.elements = OrderedDict()  # map id: element/canvasitem
-        self.__stack = []
+        self.elements: Dict[str, Union[element, canvasitem]] = OrderedDict()
+        self.__stack: List[Tuple[Union[element, canvas, canvasitem], State]] = []
         self.text = ""
 
     def endDocument(self):
@@ -184,11 +193,11 @@ class GaphorLoader(handler.ContentHandler):
         # Items in a canvas are referenced by the <item> tag:
         elif state in (CANVAS, ITEM) and name == "item":
             id = attrs["id"]
-            c = canvasitem(id, attrs["type"])
-            assert id not in list(self.elements.keys()), "%s already defined" % id
-            self.elements[id] = c
-            self.peek().canvasitems.append(c)
-            self.push(c, ITEM)
+            ci = canvasitem(id, attrs["type"])
+            assert id not in list(self.elements.keys()), f"{id} already defined"
+            self.elements[id] = ci
+            self.peek().canvasitems.append(ci)
+            self.push(ci, ITEM)
 
         # Store the attribute name on the stack, so we can use it later
         # to store the <ref>, <reflist> or <val> content:
@@ -234,7 +243,7 @@ class GaphorLoader(handler.ContentHandler):
 
         else:
             raise ParserException(
-                "Invalid XML: tag <%s> not known (state = %s)" % (name, state)
+                f"Invalid XML: tag <{name}> not known (state = {state})"
             )
 
     def endElement(self, name):
@@ -284,8 +293,7 @@ def parse_generator(filename, loader):
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    for percentage in parse_file(filename, parser):
-        yield percentage
+    yield from parse_file(filename, parser)
 
 
 class ProgressGenerator:
@@ -335,13 +343,12 @@ def parse_file(filename, parser):
     is_fd = True
 
     if isinstance(filename, io.IOBase):
-        file_obj = filename
+        file_obj: Union[IO, io.IOBase] = filename
     else:
         is_fd = False
-        file_obj = io.open(filename, "r")
+        file_obj = open(filename, "r")
 
-    for progress in ProgressGenerator(file_obj, parser):
-        yield progress
+    yield from ProgressGenerator(file_obj, parser)
 
     parser.close()
 

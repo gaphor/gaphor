@@ -222,7 +222,7 @@ def make_escapes(pass_iso8859):
         if 32 <= (i % mod) <= 126:
             escapes.append(chr(i))
         else:
-            escapes.append("\\%03o" % i)
+            escapes.append(f"\\{i:03o}")
     escapes[ord("\\")] = "\\\\"
     escapes[ord("\t")] = "\\t"
     escapes[ord("\r")] = "\\r"
@@ -337,7 +337,6 @@ def getFilesForName(name):
     """ Get a list of module files for a filename, a module or package name,
         or a directory.
     """
-    import imp
 
     if not os.path.exists(name):
         # check for glob chars
@@ -626,7 +625,7 @@ def main():
             fp = open(options.excludefilename)
             options.toexclude = fp.readlines()
             fp.close()
-        except IOError:
+        except OSError:
             print(
                 _("Can't read --exclude-file: %s") % options.excludefilename,
                 file=sys.stderr,
@@ -663,7 +662,7 @@ def main():
                 tokenize.tokenize(fp.readline, eater)
             except tokenize.TokenError as e:
                 print(
-                    "%s: %s, line %d, column %d" % (e[0], filename, e[1][0], e[1][1]),
+                    f"{e[0]}: {filename}, line {e[1][0]:d}, column {e[1][1]:d}",
                     file=sys.stderr,
                 )
         finally:
@@ -689,8 +688,8 @@ def main():
 if __name__ == "__main__":
     main()
     # some more test strings
-    _(u"a unicode string")
+    _("a unicode string")
     _(
-        '*** Seen unexpected token "%(token)s"' % {"token": "test"}
+        '*** Seen unexpected token "{token}"'.format(token="test")
     )  # this one creates a warning
     _("more" "than" "one" "string")

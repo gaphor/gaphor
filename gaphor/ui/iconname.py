@@ -20,22 +20,22 @@ def get_icon_name(element):
     """
     Get an icon name for a UML model element.
     """
-    return "gaphor-" + to_kebab_case(element.__class__.__name__)
+    return f"gaphor-{to_kebab_case(element.__class__.__name__)}-symbolic"
 
 
 @get_icon_name.register(UML.Class)
 def get_name_for_class(element):
     if isinstance(element, UML.Stereotype):
-        return "gaphor-stereotype"
+        return "gaphor-stereotype-symbolic"
     elif element.extension:
-        return "gaphor-metaclass"
+        return "gaphor-metaclass-symbolic"
     else:
-        return "gaphor-class"
+        return "gaphor-class-symbolic"
 
 
 @get_icon_name.register(UML.Property)
 def get_name_for_property(element):
     if element.association:
-        return "gaphor-association-end"
+        return "gaphor-association-symbolic"
     else:
-        return "gaphor-property"
+        return "gaphor-property-symbolic"

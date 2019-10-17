@@ -5,44 +5,37 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-import abc
+from typing import List, Optional, Type, Union
+
+from gaphas.canvas import Connection
+from gaphas.connector import Handle, Port
 
 from gaphor import UML
-from gaphor.misc.generic.multidispatch import multidispatch
+from gaphor.UML.properties import association
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
 
 
-@multidispatch(object, object)
-class IConnect:
-    """
-    This function is used by the HandleTool to allow connecting
-    lines to element items. For each specific case (Element, Line) an
-    adapter could be written.
-    """
-
-    def __init__(self, item, line_item):
-        pass
-
-    def allow(self, handle, port):
-        return False
-
-
-class ConnectBase(metaclass=abc.ABCMeta):
+class ConnectBase:
     """
     This interface is used by the HandleTool to allow connecting
     lines to element items. For each specific case (Element, Line) an
     adapter could be written.
     """
 
-    @abc.abstractmethod
-    def allow(self, handle, port):
+    def __init__(self, item: ElementPresentation, line_item: LinePresentation):
+        self.item = item
+        self.line_item = line_item
+
+    def allow(self, handle: Handle, port: Port) -> bool:
         """
         Determine if a connection is allowed.
 
         Do some extra checks to see if the items actually can be connected.
         """
+        return False
 
-    @abc.abstractmethod
-    def connect(self, handle, port):
+    def connect(self, handle: Handle, port: Port) -> bool:
         """
         Connect a line's handle to element.
 
@@ -50,14 +43,22 @@ class ConnectBase(metaclass=abc.ABCMeta):
         to some other item. The implementor should do the disconnect of
         the other element themselves.
         """
+        raise NotImplementedError(f"No connector for {self.item} and {self.line_item}")
 
-    @abc.abstractmethod
-    def disconnect(self, handle):
+    def disconnect(self, handle: Handle) -> None:
         """
         The true disconnect. Disconnect a handle.connected_to from an
         element. This requires that the relationship is also removed at
         model level.
         """
+        raise NotImplementedError(f"No connector for {self.item} and {self.line_item}")
+
+
+# Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
+# This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
+IConnect: FunctionDispatcher[Type[ConnectBase]] = multidispatch(object, object)(
+    ConnectBase
+)
 
 
 class AbstractConnect(ConnectBase):
@@ -84,35 +85,42 @@ class AbstractConnect(ConnectBase):
 
     """
 
-    def __init__(self, element, line):
+    def __init__(
+        self,
+        element: ElementPresentation[UML.Element],
+        line: LinePresentation[UML.Element],
+    ) -> None:
+        assert element.canvas
+        assert element.canvas == line.canvas
         self.element = element
         self.line = line
-        self.canvas = self.element.canvas
-        assert self.canvas == self.element.canvas == self.line.canvas
+        self.canvas = element.canvas
 
-    def get_connection(self, handle):
+    def get_connection(self, handle: Handle) -> Optional[Connection]:
         """
         Get connection information
         """
         return self.canvas.get_connection(handle)
 
-    def get_connected(self, handle):
+    def get_connected(self, handle: Handle) -> Optional[UML.Presentation]:
         """
         Get item connected to a handle.
         """
         cinfo = self.canvas.get_connection(handle)
-        if cinfo is not None:
-            return cinfo.connected
+        if cinfo:
+            return cinfo.connected  # type: ignore
+        return None
 
-    def get_connected_port(self, handle):
+    def get_connected_port(self, handle: Handle) -> Optional[Port]:
         """
         Get port of item connected to connecting item via specified handle.
         """
         cinfo = self.canvas.get_connection(handle)
-        if cinfo is not None:
+        if cinfo:
             return cinfo.port
+        return None
 
-    def allow(self, handle, port):
+    def allow(self, handle: Handle, port: Port) -> bool:
         """
         Determine if items can be connected.
 
@@ -120,7 +128,7 @@ class AbstractConnect(ConnectBase):
         `gaphor.diagram.classes.interface` module documentation for
         connection to folded interface rules.
 
-        Returns `True` by default.
+        Returns `True` if connection is allowed.
         """
         from gaphor.diagram.classes.interface import InterfaceItem
         from gaphor.diagram.classes.implementation import ImplementationItem
@@ -135,7 +143,7 @@ class AbstractConnect(ConnectBase):
             )
         return True
 
-    def connect(self, handle, port):
+    def connect(self, handle: Handle, port: Port) -> bool:
         """
         Connect to an element. Note that at this point the line may
         be connected to some other, or the same element.
@@ -145,9 +153,8 @@ class AbstractConnect(ConnectBase):
         """
         return True
 
-    def disconnect(self, handle):
+    def disconnect(self, handle: Handle) -> None:
         """Disconnect UML model level connections."""
-        pass
 
 
 class UnaryRelationshipConnect(AbstractConnect):
@@ -162,7 +169,9 @@ class UnaryRelationshipConnect(AbstractConnect):
     on the canvas.
     """
 
-    def relationship(self, required_type, head, tail):
+    def relationship(
+        self, required_type: Type[UML.Element], head: association, tail: association
+    ) -> Optional[UML.Element]:
         """
         Find an existing relationship in the model that meets the
         required type and is connected to the same model element the head
@@ -174,8 +183,12 @@ class UnaryRelationshipConnect(AbstractConnect):
         """
         line = self.line
 
-        head_subject = self.get_connected(line.head).subject
-        tail_subject = self.get_connected(line.tail).subject
+        line_head = self.get_connected(line.head)
+        line_tail = self.get_connected(line.tail)
+        assert line_head
+        assert line_tail
+        head_subject = line_head.subject
+        tail_subject = line_tail.subject
 
         # First check if the right subject is already connected:
         if (
@@ -187,7 +200,7 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram.
-        for gen in getattr(tail_subject, tail.opposite):
+        for gen in getattr(tail_subject, tail.opposite):  # type: UML.Element
             if not isinstance(gen, required_type):
                 continue
 
@@ -200,7 +213,8 @@ class UnaryRelationshipConnect(AbstractConnect):
                     continue
 
             # Check for this entry on line.canvas
-            for item in gen.presentation:
+            item: Union[ElementPresentation, LinePresentation]
+            for item in gen.presentation:  # type: ignore
                 # Allow line to be returned. Avoids strange
                 # behaviour during loading
                 if item.canvas is line.canvas and item is not line:
@@ -209,7 +223,9 @@ class UnaryRelationshipConnect(AbstractConnect):
                 return gen
         return None
 
-    def relationship_or_new(self, type, head, tail):
+    def relationship_or_new(
+        self, type: Type[UML.Element], head: association, tail: association
+    ) -> Optional[UML.Element]:
         """
         Like relation(), but create a new instance if none was found.
         """
@@ -217,11 +233,17 @@ class UnaryRelationshipConnect(AbstractConnect):
         if not relation:
             line = self.line
             relation = line.model.create(type)
-            setattr(relation, head.name, self.get_connected(line.head).subject)
-            setattr(relation, tail.name, self.get_connected(line.tail).subject)
+            line_head = self.get_connected(line.head)
+            line_tail = self.get_connected(line.tail)
+            assert line_head
+            assert line_tail
+            setattr(relation, head.name, line_head.subject)
+            setattr(relation, tail.name, line_tail.subject)
         return relation
 
-    def reconnect_relationship(self, handle, head, tail):
+    def reconnect_relationship(
+        self, handle: Handle, head: association, tail: association
+    ) -> None:
         """
         Reconnect relationship for given handle.
 
@@ -236,6 +258,8 @@ class UnaryRelationshipConnect(AbstractConnect):
         line = self.line
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
+        assert c1
+        assert c2
         if line.head is handle:
             setattr(line.subject, head.name, c1.subject)
         elif line.tail is handle:
@@ -243,7 +267,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         else:
             raise ValueError("Incorrect handle passed to adapter")
 
-    def connect_connected_items(self, connections=None):
+    def connect_connected_items(self, connections: None = None) -> None:
         """
         Cause items connected to ``line`` to reconnect, allowing them to
         establish or destroy relationships at model level.
@@ -263,7 +287,7 @@ class UnaryRelationshipConnect(AbstractConnect):
             )
             adapter.connect(cinfo.handle, cinfo.port)
 
-    def disconnect_connected_items(self):
+    def disconnect_connected_items(self) -> List[Connection]:
         """
         Cause items connected to @line to be disconnected.
         This is necessary if the subject of the @line is to be removed.
@@ -280,18 +304,16 @@ class UnaryRelationshipConnect(AbstractConnect):
         connections = list(canvas.get_connections(connected=line))
         for cinfo in connections:
             adapter = IConnect(cinfo.item, cinfo.connected)
-            assert adapter
-            print(adapter)
             adapter.disconnect(cinfo.handle)
         return connections
 
-    def connect_subject(self, handle):
+    def connect_subject(self, handle: Handle) -> bool:
         """
         Establish the relationship at model level.
         """
         raise NotImplementedError("Implement connect_subject() in a subclass")
 
-    def disconnect_subject(self, handle):
+    def disconnect_subject(self, handle: Handle) -> None:
         """
         Disconnect the diagram item from its model element. If there are
         no more presentations(diagram items) connected to the model element,
@@ -303,12 +325,12 @@ class UnaryRelationshipConnect(AbstractConnect):
         if old and len(old.presentation) == 0:
             old.unlink()
 
-    def connect(self, handle, port):
+    def connect(self, handle: Handle, port: Port) -> bool:
         """
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super(UnaryRelationshipConnect, self).connect(handle, port):
+        if super().connect(handle, port):
             opposite = self.line.opposite(handle)
             oct = self.get_connected(opposite)
             if oct:
@@ -317,8 +339,9 @@ class UnaryRelationshipConnect(AbstractConnect):
                 if line.subject:
                     self.connect_connected_items()
             return True
+        return False
 
-    def disconnect(self, handle):
+    def disconnect(self, handle: Handle) -> None:
         """
         Disconnect model element.
         """
@@ -332,14 +355,14 @@ class UnaryRelationshipConnect(AbstractConnect):
             connections = self.disconnect_connected_items()
             self.disconnect_subject(handle)
 
-        super(UnaryRelationshipConnect, self).disconnect(handle)
+        super().disconnect(handle)
 
 
 class RelationshipConnect(UnaryRelationshipConnect):
     """
     """
 
-    def allow(self, handle, port):
+    def allow(self, handle: Handle, port: Port) -> bool:
         """
         In addition to the normal check, both relationship ends may not be
         connected to the same element. Same goes for subjects.
@@ -351,7 +374,7 @@ class RelationshipConnect(UnaryRelationshipConnect):
 
         # Element can not be a parent of itself.
         if connected_to is element:
-            return None
+            return False
 
         # Same goes for subjects:
         if (
@@ -359,6 +382,6 @@ class RelationshipConnect(UnaryRelationshipConnect):
             and (not (connected_to.subject or element.subject))
             and connected_to.subject is element.subject
         ):
-            return None
+            return False
 
-        return super(RelationshipConnect, self).allow(handle, port)
+        return super().allow(handle, port)

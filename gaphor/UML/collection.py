@@ -3,12 +3,14 @@
 """
 
 import inspect
-
-from gaphor.UML.event import AssociationChangeEvent
+from typing import Generic, List, Type, TypeVar
+from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.listmixins import querymixin, recursemixin
 
+T = TypeVar("T")
 
-class collectionlist(recursemixin, querymixin, list):
+
+class collectionlist(recursemixin, querymixin, List[T]):
     """
     >>> c = collectionlist()
     >>> c.append('a')
@@ -46,16 +48,16 @@ class collectionlist(recursemixin, querymixin, list):
     """
 
 
-class collection:
+class collection(Generic[T]):
     """
     Collection (set-like) for model elements' 1:n and n:m relationships.
     """
 
-    def __init__(self, property, object, type):
+    def __init__(self, property, object, type: Type[T]):
         self.property = property
         self.object = object
         self.type = type
-        self.items = collectionlist()
+        self.items: collectionlist[T] = collectionlist()
 
     def __len__(self):
         return len(self.items)
@@ -63,10 +65,10 @@ class collection:
     def __setitem__(self, key, value):
         raise RuntimeError("items should not be overwritten.")
 
-    def __delitem__(self, key):
+    def __delitem__(self, key: T):
         self.remove(key)
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: int):
         return self.items.__getitem__(key)
 
     def __contains__(self, obj):
@@ -86,19 +88,19 @@ class collection:
     # Maintains Python2 Compatibility
     __nonzero__ = __bool__
 
-    def append(self, value):
+    def append(self, value: T) -> None:
         if isinstance(value, self.type):
             self.property._set(self.object, value)
         else:
-            raise TypeError("Object is not of type %s" % self.type.__name__)
+            raise TypeError(f"Object is not of type {self.type.__name__}")
 
-    def remove(self, value):
+    def remove(self, value: T) -> None:
         if value in self.items:
             self.property.__delete__(self.object, value)
         else:
-            raise ValueError("%s not in collection" % value)
+            raise ValueError(f"{value} not in collection")
 
-    def index(self, key):
+    def index(self, key: T) -> int:
         """
         Given an object, return the position of that object in the
         collection.
@@ -162,7 +164,7 @@ class collection:
         return not self.isEmpty()
 
     def sum(self):
-        r = 0
+        o = r = 0
         for o in self.items:
             r = r + o
         return o
@@ -237,7 +239,7 @@ class collection:
             i2 = self.items.index(item2)
             self.items[i1], self.items[i2] = self.items[i2], self.items[i1]
 
-            self.object.handle(AssociationChangeEvent(self.object, self.property))
+            self.object.handle(AssociationUpdated(self.object, self.property))
             return True
         except IndexError as ex:
             return False

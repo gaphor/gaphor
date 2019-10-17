@@ -20,7 +20,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
     def construct(self):
-        page = super(ObjectNodePropertyPage, self).construct()
+        page = super().construct()
 
         subject = self.subject
 
@@ -55,7 +55,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
-        self.item.set_upper_bound(value)
+        self.subject.upperBound = value
 
     @transactional
     def _on_ordering_change(self, combo):
@@ -65,7 +65,6 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     @transactional
     def _on_ordering_show_change(self, button):
         self.item.show_ordering = button.get_active()
-        self.item.set_ordering(self.subject.ordering)
 
 
 @PropertyPages.register(ForkNodeItem)
@@ -74,7 +73,7 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     """
 
     def construct(self):
-        page = super(JoinNodePropertyPage, self).construct()
+        page = super().construct()
 
         subject = self.subject
 
@@ -118,7 +117,7 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
     """Flow item element editor."""
 
     def construct(self):
-        page = super(FlowPropertyPageAbstract, self).construct()
+        page = super().construct()
 
         subject = self.subject
 

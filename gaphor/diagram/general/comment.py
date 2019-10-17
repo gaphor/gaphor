@@ -2,75 +2,49 @@
 CommentItem diagram item
 """
 
-from gaphas.item import NW
 
 from gaphor import UML
-from gaphor.diagram.elementitem import ElementItem
-from gaphor.diagram.textelement import text_multiline, text_extents
+from gaphor.diagram.presentation import ElementPresentation
+
+from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.text import TextAlign, VerticalAlign
+from gaphor.diagram.support import represents
 
 
-class CommentItem(ElementItem):
-    __uml__ = UML.Comment
-
-    __style__ = {"font": "sans 10"}
-
-    EAR = 15
-    OFFSET = 5
-
+@represents(UML.Comment)
+class CommentItem(ElementPresentation):
     def __init__(self, id=None, model=None):
-        ElementItem.__init__(self, id, model)
-        self.min_width = CommentItem.EAR + 2 * CommentItem.OFFSET
+        super().__init__(id, model)
+        EAR = 15
+        OFFSET = 5
+        self.min_width = EAR + 2 * OFFSET
         self.height = 50
         self.width = 100
-        self.watch("subject<Comment>.body")
 
-    def edit(self):
-        # self.start_editing(self._body)
-        pass
-
-    def pre_update(self, context):
-        if not self.subject:
-            return
-        cr = context.cairo
-        e = self.EAR
-        o = self.OFFSET
-        w, h = text_extents(
-            cr, self.subject.body, self.style.font, width=self.width - e
+        self.body = Text(
+            text=lambda: self.subject.body or "",
+            width=lambda: self.width - EAR - 2 * OFFSET,
+            style={"text-align": TextAlign.LEFT, "vertical-align": VerticalAlign.TOP},
         )
-        self.min_width = w + e + o * 2
-        self.min_height = h + o * 2
-        ElementItem.pre_update(self, context)
 
-    def draw(self, context):
-        if not self.subject:
-            return
-        c = context.cairo
-        # Width and height, adjusted for line width...
-        ox = float(self._handles[NW].pos.x)
-        oy = float(self._handles[NW].pos.y)
-        w = self.width + ox
-        h = self.height + oy
-        ear = CommentItem.EAR
-        c.move_to(w - ear, oy)
-        line_to = c.line_to
-        line_to(w - ear, oy + ear)
-        line_to(w, oy + ear)
-        line_to(w - ear, oy)
-        line_to(ox, oy)
-        line_to(ox, h)
+        self.shape = Box(
+            self.body,
+            style={"ear": EAR, "padding": (OFFSET, EAR + OFFSET, OFFSET, OFFSET)},
+            draw=self.draw_border,
+        )
+        self.watch("subject[Comment].body")
+
+    def draw_border(self, box, context, bounding_box):
+        cr = context.cairo
+        ear = box.style("ear")
+        x, y, w, h = bounding_box
+        line_to = cr.line_to
+        cr.move_to(w - ear, y)
+        line_to(w - ear, y + ear)
+        line_to(w, y + ear)
+        line_to(w - ear, y)
+        line_to(x, y)
+        line_to(x, h)
         line_to(w, h)
-        line_to(w, oy + ear)
-        c.stroke()
-
-        if self.subject.body:
-            off = self.OFFSET
-            # Do not print empty string, since cairo-win32 can't handle it.
-            text_multiline(
-                c,
-                off,
-                off,
-                self.subject.body,
-                self.style.font,
-                self.width - ear,
-                self.height,
-            )
+        line_to(w, y + ear)
+        cr.stroke()

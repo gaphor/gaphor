@@ -2,16 +2,14 @@
 Toolbox.
 """
 
+
 import logging
 
-from gi.repository import GObject
-from gi.repository import Gdk
-from gi.repository import Gtk
+from gi.repository import GLib, Gdk, Gtk
 
-from gaphor.core import _, event_handler, toggle_action, build_action_group
+from gaphor.core import _
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.event import DiagramPageChange
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
 log = logging.getLogger(__name__)
@@ -30,57 +28,38 @@ class Toolbox(UIComponent, ActionProvider):
     ]
 
     title = _("Toolbox")
-    placement = ("left", "diagrams")
 
-    menu_xml = """
-      <ui>
-        <menubar name="mainwindow">
-          <menu action="diagram">
-            <separator/>
-            <menuitem action="reset-tool-after-create" />
-            <separator/>
-          </menu>
-        </menubar>
-      </ui>
-    """
-
-    def __init__(
-        self, event_manager, main_window, properties, toolbox_actions=TOOLBOX_ACTIONS
-    ):
-        self.event_manager = event_manager
+    def __init__(self, main_window, properties, toolbox_actions=TOOLBOX_ACTIONS):
         self.main_window = main_window
         self.properties = properties
         self._toolbox = None
         self._toolbox_actions = toolbox_actions
-        self.action_group = build_action_group(self)
-        self.action_group.get_action("reset-tool-after-create").set_active(
-            self.properties.get("reset-tool-after-create", True)
-        )
-        self.buttons = []
-        self.shortcuts = {}
 
     def open(self):
         widget = self.construct()
-        self.main_window.window.connect_after(
-            "key-press-event", self._on_key_press_event
-        )
-        self.event_manager.subscribe(self._on_diagram_page_change)
+
         return widget
 
     def close(self):
         if self._toolbox:
             self._toolbox.destroy()
             self._toolbox = None
-        self.event_manager.unsubscribe(self._on_diagram_page_change)
 
     def construct(self):
         def toolbox_button(action_name, icon_name, label, shortcut):
             button = Gtk.ToggleToolButton.new()
-            icon = Gtk.Image.new_from_icon_name(icon_name, 48)
+            icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
             button.set_icon_widget(icon)
-            button.action_name = action_name
+            button.set_action_name("diagram.select-tool")
+            button.set_action_target_value(GLib.Variant.new_string(action_name))
             if label:
-                button.set_tooltip_text("%s (%s)" % (label, shortcut))
+                if shortcut:
+                    a, m = Gtk.accelerator_parse(shortcut)
+                    button.set_tooltip_text(
+                        f"{label} ({Gtk.accelerator_get_label(a, m)})"
+                    )
+                else:
+                    button.set_tooltip_text(f"{label}")
 
             # Enable Drag and Drop
             if action_name != "toolbox-pointer":
@@ -100,14 +79,21 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox = Gtk.ToolPalette.new()
         toolbox.connect("destroy", self._on_toolbox_destroyed)
 
-        for title, items in self._toolbox_actions:
+        collapsed = self.properties.get("toolbox-collapsed", {})
+
+        def on_collapsed(widget, prop, index):
+            collapsed[index] = widget.get_property("collapsed")
+            self.properties.set("toolbox-collapsed", collapsed)
+
+        for index, (title, items) in enumerate(self._toolbox_actions):
             tool_item_group = Gtk.ToolItemGroup.new(title)
-            for action_name, label, stock_id, shortcut in items:
-                button = toolbox_button(action_name, stock_id, label, shortcut)
+            tool_item_group.set_property("collapsed", collapsed.get(index, False))
+            tool_item_group.connect("notify::collapsed", on_collapsed, index)
+            for action_name, label, icon_name, shortcut in items:
+                button = toolbox_button(action_name, icon_name, label, shortcut)
                 tool_item_group.insert(button, -1)
                 button.show_all()
-                self.buttons.append(button)
-                self.shortcuts[shortcut] = action_name
+
             toolbox.add(tool_item_group)
             tool_item_group.show()
 
@@ -135,29 +121,6 @@ class Toolbox(UIComponent, ActionProvider):
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None
 
-    @toggle_action(name="reset-tool-after-create", label=_("_Reset tool"), active=False)
-    def reset_tool_after_create(self, active):
-        self.properties.set("reset-tool-after-create", active)
-
-    @event_handler(DiagramPageChange)
-    def _on_diagram_page_change(self, event):
-        self.update_toolbox(event.diagram_page.toolbox.action_group)
-
-    def update_toolbox(self, action_group):
-        """
-        Update the buttons in the toolbox. Each button should be connected
-        by an action. Each button is assigned a special _action_name_
-        attribute that can be used to fetch the action from the ui manager.
-        """
-        if not self._toolbox:
-            return
-
-        for button in self.buttons:
-            action_name = button.action_name
-            action = action_group.get_action(action_name)
-            if action:
-                button.set_related_action(action)
-
     def set_active_tool(self, action_name=None, shortcut=None):
         """
         Set the tool based on the name of the action
@@ -166,7 +129,7 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox = self._toolbox
         if shortcut and toolbox:
             action_name = self.shortcuts.get(shortcut)
-            log.debug("Action for shortcut %s: %s" % (shortcut, action_name))
+            log.debug(f"Action for shortcut {shortcut}: {action_name}")
             if not action_name:
                 return
 

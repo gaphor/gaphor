@@ -2,7 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.ui.event import DiagramShow
+from gaphor.ui.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
 
 
@@ -15,10 +15,13 @@ def application():
             "element_factory",
             "properties",
             "main_window",
-            "action_manager",
             "namespace",
             "diagrams",
             "toolbox",
+            "elementeditor",
+            "import_menu",
+            "export_menu",
+            "tools_menu",
         ]
     )
     yield Application
@@ -42,5 +45,5 @@ def test_show_diagram(application):
     main_w = application.get_service("main_window")
     main_w.open()
     event_manager = application.get_service("event_manager")
-    event_manager.handle(DiagramShow(diagram))
+    event_manager.handle(DiagramOpened(diagram))
     assert get_current_diagram(application) == diagram

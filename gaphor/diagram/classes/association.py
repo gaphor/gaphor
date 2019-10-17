@@ -11,26 +11,43 @@ Plan:
 #   are connected to the same Class, the head_end property is connected to the
 #   tail end and visa versa.
 
+
+import ast
+from math import pi, atan2
+
 from gaphas.geometry import Rectangle, distance_point_point_fast
 from gaphas.geometry import distance_rectangle_point
 from gaphas.state import reversible_property
 
 from gaphor import UML
-from gaphor.diagram.diagramline import NamedLine
-from gaphor.diagram.textelement import text_extents, text_multiline
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.diagram.shapes import (
+    Box,
+    EditableText,
+    Text,
+    draw_default_head,
+    draw_default_tail,
+)
+from gaphor.diagram.text import (
+    text_size,
+    text_draw,
+    text_draw_focus_box,
+    middle_segment,
+)
+from gaphor.diagram.support import represents
 
 
-class AssociationItem(NamedLine):
+@represents(UML.Association)
+class AssociationItem(LinePresentation, Named):
     """
     AssociationItem represents associations.
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item
     represents a Property (with Property.association == my association).
     """
 
-    __uml__ = UML.Association
-
     def __init__(self, id=None, model=None):
-        NamedLine.__init__(self, id, model)
+        super().__init__(id, model)
 
         # AssociationEnds are really inseperable from the AssociationItem.
         # We give them the same id as the association item.
@@ -42,38 +59,40 @@ class AssociationItem(NamedLine):
         self._dir_angle = 0
         self._dir_pos = 0, 0
 
-        # self.watch('subject<Association>.ownedEnd')\
-        # .watch('subject<Association>.memberEnd')
+        self.shape_middle = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(text=lambda: self.subject.name or ""),
+        )
 
         # For the association ends:
-        base = "subject<Association>.memberEnd<Property>."
-        self.watch(base + "name", self.on_association_end_value).watch(
-            base + "aggregation", self.on_association_end_value
-        ).watch(base + "classifier", self.on_association_end_value).watch(
-            base + "visibility", self.on_association_end_value
+        base = "subject[Association].memberEnd[Property]"
+        self.watch("subject[NamedElement].name").watch(
+            "subject.appliedStereotype.classifier.name"
+        ).watch(f"{base}.name", self.on_association_end_value).watch(
+            f"{base}.aggregation", self.on_association_end_value
         ).watch(
-            base + "lowerValue", self.on_association_end_value
+            f"{base}.classifier", self.on_association_end_value
         ).watch(
-            base + "upperValue", self.on_association_end_value
+            f"{base}.visibility", self.on_association_end_value
         ).watch(
-            base + "owningAssociation", self.on_association_end_value
+            f"{base}.lowerValue", self.on_association_end_value
         ).watch(
-            base + "type<Class>.ownedAttribute", self.on_association_end_value
+            f"{base}.upperValue", self.on_association_end_value
         ).watch(
-            base + "type<Interface>.ownedAttribute", self.on_association_end_value
+            f"{base}.owningAssociation", self.on_association_end_value
         ).watch(
-            base + "appliedStereotype", self.on_association_end_value
+            f"{base}.type[Class].ownedAttribute", self.on_association_end_value
         ).watch(
-            base + "appliedStereotype.slot", self.on_association_end_value
+            f"{base}.type[Interface].ownedAttribute", self.on_association_end_value
         ).watch(
-            base + "appliedStereotype.slot.definingFeature.name",
-            self.on_association_end_value,
+            f"{base}.appliedStereotype.classifier", self.on_association_end_value
         ).watch(
-            base + "appliedStereotype.slot.value", self.on_association_end_value
+            "subject[Association].ownedEnd"
         ).watch(
-            "subject<Association>.ownedEnd"
-        ).watch(
-            "subject<Association>.navigableOwnedEnd"
+            "subject[Association].navigableOwnedEnd"
         )
 
     def set_show_direction(self, dir):
@@ -84,14 +103,8 @@ class AssociationItem(NamedLine):
         lambda s: s._show_direction, set_show_direction
     )
 
-    def setup_canvas(self):
-        super(AssociationItem, self).setup_canvas()
-
-    def teardown_canvas(self):
-        super(AssociationItem, self).teardown_canvas()
-
     def save(self, save_func):
-        NamedLine.save(self, save_func)
+        super().save(save_func)
         save_func("show-direction", self._show_direction)
         if self._head_end.subject:
             save_func("head-subject", self._head_end.subject)
@@ -101,18 +114,16 @@ class AssociationItem(NamedLine):
     def load(self, name, value):
         # end_head and end_tail were used in an older Gaphor version
         if name in ("head_end", "head_subject", "head-subject"):
-            # type(self._head_end).subject.load(self._head_end, value)
-            # self._head_end.load('subject', value)
             self._head_end.subject = value
         elif name in ("tail_end", "tail_subject", "tail-subject"):
-            # type(self._tail_end).subject.load(self._tail_end, value)
-            # self._tail_end.load('subject', value)
             self._tail_end.subject = value
+        elif name == "show-direction":
+            self._show_direction = ast.literal_eval(value)
         else:
-            NamedLine.load(self, name, value)
+            super().load(name, value)
 
     def postload(self):
-        NamedLine.postload(self)
+        super().postload()
         self._head_end.set_text()
         self._tail_end.set_text()
 
@@ -123,7 +134,7 @@ class AssociationItem(NamedLine):
     def unlink(self):
         self._head_end.unlink()
         self._tail_end.unlink()
-        super(AssociationItem, self).unlink()
+        super().unlink()
 
     def invert_direction(self):
         """
@@ -141,14 +152,12 @@ class AssociationItem(NamedLine):
     def on_named_element_name(self, event):
         """
         Update names of the association as well as its ends.
-
-        Override NamedLine.on_named_element_name.
         """
         if event is None:
-            super(AssociationItem, self).on_named_element_name(event)
+            super().on_named_element_name(event)
             self.on_association_end_value(event)
         elif event.element is self.subject:
-            super(AssociationItem, self).on_named_element_name(event)
+            super().on_named_element_name(event)
         else:
             self.on_association_end_value(event)
 
@@ -156,16 +165,6 @@ class AssociationItem(NamedLine):
         """
         Handle events and update text on association end.
         """
-        # if event:
-        #    element = event.element
-        #    for end in (self._head_end, self._tail_end):
-        #        subject = end.subject
-        #        if subject and element in (subject, subject.lowerValue, \
-        #                subject.upperValue, subject.taggedValue):
-        #            end.set_text()
-        #            self.request_update()
-        ##            break;
-        # else:
         for end in (self._head_end, self._tail_end):
             end.set_text()
         self.request_update()
@@ -184,38 +183,38 @@ class AssociationItem(NamedLine):
         # Update line ends using the aggregation and isNavigable values:
         if head_subject and tail_subject:
             if tail_subject.aggregation == "composite":
-                self.draw_head = self.draw_head_composite
+                self.draw_head = draw_head_composite
             elif tail_subject.aggregation == "shared":
-                self.draw_head = self.draw_head_shared
+                self.draw_head = draw_head_shared
             elif self._head_end.subject.navigability is True:
-                self.draw_head = self.draw_head_navigable
+                self.draw_head = draw_head_navigable
             elif self._head_end.subject.navigability is False:
-                self.draw_head = self.draw_head_none
+                self.draw_head = draw_head_none
             else:
-                self.draw_head = self.draw_head_undefined
+                self.draw_head = draw_default_head
 
             if head_subject.aggregation == "composite":
-                self.draw_tail = self.draw_tail_composite
+                self.draw_tail = draw_tail_composite
             elif head_subject.aggregation == "shared":
-                self.draw_tail = self.draw_tail_shared
+                self.draw_tail = draw_tail_shared
             elif self._tail_end.subject.navigability is True:
-                self.draw_tail = self.draw_tail_navigable
+                self.draw_tail = draw_tail_navigable
             elif self._tail_end.subject.navigability is False:
-                self.draw_tail = self.draw_tail_none
+                self.draw_tail = draw_tail_none
             else:
-                self.draw_tail = self.draw_tail_undefined
+                self.draw_tail = draw_default_tail
 
             if self._show_direction:
                 inverted = self.tail_end.subject is self.subject.memberEnd[0]
-                pos, angle = self._get_center_pos(inverted)
+                pos, angle = get_center_pos(self.handles(), inverted)
                 self._dir_pos = pos
                 self._dir_angle = angle
         else:
-            self.draw_head = self.draw_head_undefined
-            self.draw_tail = self.draw_tail_undefined
+            self.draw_head = draw_default_head
+            self.draw_tail = draw_default_tail
 
         # update relationship after self.set calls to avoid circural updates
-        super(AssociationItem, self).post_update(context)
+        super().post_update(context)
 
         # Calculate alignment of the head name and multiplicity
         self._head_end.post_update(context, handles[0].pos, handles[1].pos)
@@ -228,132 +227,11 @@ class AssociationItem(NamedLine):
         Returns the distance from the Association to the (mouse) cursor.
         """
         return min(
-            super(AssociationItem, self).point(pos),
-            self._head_end.point(pos),
-            self._tail_end.point(pos),
+            super().point(pos), self._head_end.point(pos), self._tail_end.point(pos)
         )
 
-    def draw_head_none(self, context):
-        """
-        Draw an 'x' on the line end to indicate no navigability at
-        association head.
-        """
-        cr = context.cairo
-        cr.move_to(6, -4)
-        cr.rel_line_to(8, 8)
-        cr.rel_move_to(0, -8)
-        cr.rel_line_to(-8, 8)
-        cr.stroke()
-        cr.move_to(0, 0)
-
-    def draw_tail_none(self, context):
-        """
-        Draw an 'x' on the line end to indicate no navigability at
-        association tail.
-        """
-        cr = context.cairo
-        cr.line_to(0, 0)
-        cr.move_to(6, -4)
-        cr.rel_line_to(8, 8)
-        cr.rel_move_to(0, -8)
-        cr.rel_line_to(-8, 8)
-        cr.stroke()
-
-    def _draw_diamond(self, cr):
-        """
-        Helper function to draw diamond shape for shared and composite
-        aggregations.
-        """
-        cr.move_to(20, 0)
-        cr.line_to(10, -6)
-        cr.line_to(0, 0)
-        cr.line_to(10, 6)
-        # cr.line_to(20, 0)
-        cr.close_path()
-
-    def draw_head_composite(self, context):
-        """
-        Draw a closed diamond on the line end to indicate composite
-        aggregation at association head.
-        """
-        cr = context.cairo
-        self._draw_diamond(cr)
-        context.cairo.fill_preserve()
-        cr.stroke()
-        cr.move_to(20, 0)
-
-    def draw_tail_composite(self, context):
-        """
-        Draw a closed diamond on the line end to indicate composite
-        aggregation at association tail.
-        """
-        cr = context.cairo
-        cr.line_to(20, 0)
-        cr.stroke()
-        self._draw_diamond(cr)
-        cr.fill_preserve()
-        cr.stroke()
-
-    def draw_head_shared(self, context):
-        """
-        Draw an open diamond on the line end to indicate shared aggregation
-        at association head.
-        """
-        cr = context.cairo
-        self._draw_diamond(cr)
-        cr.move_to(20, 0)
-
-    def draw_tail_shared(self, context):
-        """
-        Draw an open diamond on the line end to indicate shared aggregation
-        at association tail.
-        """
-        cr = context.cairo
-        cr.line_to(20, 0)
-        cr.stroke()
-        self._draw_diamond(cr)
-        cr.stroke()
-
-    def draw_head_navigable(self, context):
-        """
-        Draw a normal arrow to indicate association end navigability at
-        association head.
-        """
-        cr = context.cairo
-        cr.move_to(15, -6)
-        cr.line_to(0, 0)
-        cr.line_to(15, 6)
-        cr.stroke()
-        cr.move_to(0, 0)
-
-    def draw_tail_navigable(self, context):
-        """
-        Draw a normal arrow to indicate association end navigability at
-        association tail.
-        """
-        cr = context.cairo
-        cr.line_to(0, 0)
-        cr.stroke()
-        cr.move_to(15, -6)
-        cr.line_to(0, 0)
-        cr.line_to(15, 6)
-
-    def draw_head_undefined(self, context):
-        """
-        Draw nothing to indicate undefined association end at association
-        head.
-        """
-        context.cairo.move_to(0, 0)
-
-    def draw_tail_undefined(self, context):
-        """
-        Draw nothing to indicate undefined association end at association
-        tail.
-        """
-        context.cairo.line_to(0, 0)
-
     def draw(self, context):
-        super(AssociationItem, self).draw(context)
+        super().draw(context)
         cr = context.cairo
         self._head_end.draw(context)
         self._tail_end.draw(context)
@@ -377,6 +255,132 @@ class AssociationItem(NamedLine):
         return self
 
 
+def get_center_pos(points, inverted=False):
+    """
+    Return position in the centre of middle segment of a line. Angle of
+    the middle segment is also returned.
+    """
+    h0, h1 = middle_segment(points)
+    pos = (h0.pos.x + h1.pos.x) / 2, (h0.pos.y + h1.pos.y) / 2
+    angle = atan2(h1.pos.y - h0.pos.y, h1.pos.x - h0.pos.x)
+    if inverted:
+        angle += pi
+    return pos, angle
+
+
+def draw_head_none(context):
+    """
+    Draw an 'x' on the line end to indicate no navigability at
+    association head.
+    """
+    cr = context.cairo
+    cr.move_to(6, -4)
+    cr.rel_line_to(8, 8)
+    cr.rel_move_to(0, -8)
+    cr.rel_line_to(-8, 8)
+    cr.stroke()
+    cr.move_to(0, 0)
+
+
+def draw_tail_none(context):
+    """
+    Draw an 'x' on the line end to indicate no navigability at
+    association tail.
+    """
+    cr = context.cairo
+    cr.line_to(0, 0)
+    cr.move_to(6, -4)
+    cr.rel_line_to(8, 8)
+    cr.rel_move_to(0, -8)
+    cr.rel_line_to(-8, 8)
+    cr.stroke()
+
+
+def _draw_diamond(cr):
+    """
+    Helper function to draw diamond shape for shared and composite
+    aggregations.
+    """
+    cr.move_to(20, 0)
+    cr.line_to(10, -6)
+    cr.line_to(0, 0)
+    cr.line_to(10, 6)
+    cr.close_path()
+
+
+def draw_head_composite(context):
+    """
+    Draw a closed diamond on the line end to indicate composite
+    aggregation at association head.
+    """
+    cr = context.cairo
+    _draw_diamond(cr)
+    context.cairo.fill_preserve()
+    cr.stroke()
+    cr.move_to(20, 0)
+
+
+def draw_tail_composite(context):
+    """
+    Draw a closed diamond on the line end to indicate composite
+    aggregation at association tail.
+    """
+    cr = context.cairo
+    cr.line_to(20, 0)
+    cr.stroke()
+    _draw_diamond(cr)
+    cr.fill_preserve()
+    cr.stroke()
+
+
+def draw_head_shared(context):
+    """
+    Draw an open diamond on the line end to indicate shared aggregation
+    at association head.
+    """
+    cr = context.cairo
+    _draw_diamond(cr)
+    cr.move_to(20, 0)
+
+
+def draw_tail_shared(context):
+    """
+    Draw an open diamond on the line end to indicate shared aggregation
+    at association tail.
+    """
+    cr = context.cairo
+    cr.line_to(20, 0)
+    cr.stroke()
+    _draw_diamond(cr)
+    cr.stroke()
+
+
+def draw_head_navigable(context):
+    """
+    Draw a normal arrow to indicate association end navigability at
+    association head.
+    """
+    cr = context.cairo
+    cr.move_to(15, -6)
+    cr.line_to(0, 0)
+    cr.line_to(15, 6)
+    cr.stroke()
+    cr.move_to(0, 0)
+
+
+def draw_tail_navigable(context):
+    """
+    Draw a normal arrow to indicate association end navigability at
+    association tail.
+    """
+    cr = context.cairo
+    cr.line_to(0, 0)
+    cr.stroke()
+    cr.move_to(15, -6)
+    cr.line_to(0, 0)
+    cr.line_to(15, 6)
+
+
 class AssociationEnd(UML.Presentation):
     """
     An association end represents one end of an association. An association
@@ -385,14 +389,11 @@ class AssociationEnd(UML.Presentation):
 
     An AsociationEnd has no ID, hence it will not be stored, but it will be
     recreated by the owning Association.
-
-    TODO:
-    - add on_point() and let it return min(distance(_name), distance(_mult)) or
-      the first 20-30 units of the line, for association end popup menu.
     """
 
-    def __init__(self, owner, id=None, end=None):
-        UML.Presentation.__init__(self, id=False)  # Transient object
+    def __init__(self, owner, end=None):
+        super().__init__(id=False)  # Transient object
+        self.canvas = None
         self._owner = owner
         self._end = end
 
@@ -423,17 +424,6 @@ class AssociationEnd(UML.Presentation):
                 self._mult = m
                 self.request_update()
 
-    def point_name(self, pos):
-        drp = distance_rectangle_point
-        return drp(self._name_bounds, pos)
-
-    def point_mult(self, pos):
-        drp = distance_rectangle_point
-        return drp(self._mult_bounds, pos)
-
-    def point(self, pos):
-        return min(self.point_name(pos), self.point_mult(pos))
-
     def get_name(self):
         return self._name
 
@@ -457,12 +447,13 @@ class AssociationEnd(UML.Presentation):
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
 
-        name_w, name_h = list(
-            map(max, text_extents(cr, self._name, self.font), (10, 10))
-        )
-        mult_w, mult_h = list(
-            map(max, text_extents(cr, self._mult, self.font), (10, 10))
-        )
+        def max_text_size(size1, size2):
+            w1, h1 = size1
+            w2, h2 = size2
+            return (max(w1, w2), max(h1, h2))
+
+        name_w, name_h = max_text_size(text_size(cr, self._name, self.font), (10, 10))
+        mult_w, mult_h = max_text_size(text_size(cr, self._mult, self.font), (10, 10))
 
         if dy == 0:
             rc = 1000.0  # quite a lot...
@@ -501,8 +492,8 @@ class AssociationEnd(UML.Presentation):
             r = abs_rc < 1.0
 
             # Find out alignment of text (depends on the direction of the line)
-            align_left = (h and not r) or (r and not h)
-            align_bottom = (v and not r) or (r and not v)
+            align_left = h ^ r
+            align_bottom = v ^ r
             if align_left:
                 name_dx = ofs
                 mult_dx = ofs
@@ -530,13 +521,6 @@ class AssociationEnd(UML.Presentation):
         drp = distance_rectangle_point
         d1 = drp(self._name_bounds, pos)
         d2 = drp(self._mult_bounds, pos)
-        #        try:
-        #            d3 = geometry.distance_point_point(self._point1, pos)
-        #            d4, dummy = distance_line_point(self._point1, self._point2, pos, 1.0, 0) #diacanvas.shape.CAP_ROUND)
-        #            if d3 < 15 and d4 < 5:
-        #                d3 = 0.0
-        #        except Exception, e:
-        #            log.error("Could not determine distance", exc_info=True)
         d3 = 1000.0
         return min(d1, d2, d3)
 
@@ -547,22 +531,19 @@ class AssociationEnd(UML.Presentation):
             return
 
         cr = context.cairo
-        text_multiline(
-            cr, self._name_bounds[0], self._name_bounds[1], self._name, self.font
+
+        text_draw(
+            cr,
+            self._name,
+            self.font,
+            lambda w, h: (self._name_bounds.x, self._name_bounds.y),
         )
-        text_multiline(
-            cr, self._mult_bounds[0], self._mult_bounds[1], self._mult, self.font
+        text_draw(
+            cr,
+            self._mult,
+            self.font,
+            lambda w, h: (self._mult_bounds.x, self._mult_bounds.y),
         )
-        cr.stroke()
 
-        if context.hovered or context.focused or context.draw_all:
-            cr.set_line_width(0.5)
-            b = self._name_bounds
-            cr.rectangle(b.x, b.y, b.width, b.height)
-            cr.stroke()
-            b = self._mult_bounds
-            cr.rectangle(b.x, b.y, b.width, b.height)
-            cr.stroke()
-
-
-# vim:sw=4:et
+        for b in (self._name_bounds, self._mult_bounds):
+            text_draw_focus_box(context, b.x, b.y, b.width, b.height)

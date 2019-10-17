@@ -2,110 +2,95 @@
 State diagram item.
 """
 
-import operator
 
 from gaphor import UML
-from gaphor.diagram.style import ALIGN_LEFT, ALIGN_CENTER, ALIGN_TOP
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.classifier import CompartmentItem
-from gaphor.diagram.compartment import FeatureItem
-
-DX = 15
-DY = 8
-DDX = 0.4 * DX
-DDY = 0.4 * DY
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_top_separator
+from gaphor.diagram.text import TextAlign, VerticalAlign
+from gaphor.diagram.support import represents
 
 
-class VertexItem(NamedItem):
+class VertexItem(Named):
     """
     Abstract class for all vertices. All state, pseudostate items derive
     from VertexItem, which simplifies transition connection adapters.
     """
 
-    pass
 
-
-class StateItem(CompartmentItem, VertexItem):
-    __uml__ = UML.State
-    __style__ = {
-        "min-size": (50, 30),
-        "name-align": (ALIGN_CENTER, ALIGN_TOP),
-        "extra-space": "compartment",
-    }
-
+@represents(UML.State)
+class StateItem(ElementPresentation, VertexItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self.drawing_style = self.DRAW_COMPARTMENT
-        self._activities = self.create_compartment("activities")
-        self._activities.use_extra_space = True
-        # non-visible by default, show when at least one item is visible
-        self._activities.visible = False
 
-        self._entry = FeatureItem(pattern="entry / %s", order=1)
-        self._exit = FeatureItem(pattern="exit / %s", order=2)
-        self._do_activity = FeatureItem(pattern="do / %s", order=3)
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[State].entry.name", self.update_shapes)
+        self.watch("subject[State].exit.name", self.update_shapes)
+        self.watch("subject[State].doActivity.name", self.update_shapes)
 
-    def _set_activity(self, act, attr, text):
-        if text and act not in self._activities:
-            self._activities.append(act)
-            act.subject = self.model.create(UML.Activity)
-            act.subject.name = text
-            setattr(self.subject, attr, act.subject)
-
-            # sort the activities according to defined order
-            self._activities.sort(key=operator.attrgetter("order"))
-
-        elif text and act in self._activities:
-            act.subject.name = text
-        elif not text and act in self._activities:
-            self._activities.remove(act)
-            act.subject.unlink()
-
-        self._activities.visible = len(self._activities) > 0
-        self.request_update()
-
-    def set_entry(self, text):
-        self._set_activity(self._entry, "entry", text)
-
-    def set_exit(self, text):
-        self._set_activity(self._exit, "exit", text)
-
-    def set_do_activity(self, text):
-        self._set_activity(self._do_activity, "doActivity", text)
-
-    def postload(self):
-        super(StateItem, self).postload()
-        if self.subject.entry:
-            self.set_entry(self.subject.entry.name)
-        if self.subject.exit:
-            self.set_exit(self.subject.exit.name)
-        if self.subject.doActivity:
-            self.set_do_activity(self.subject.doActivity.name)
-
-    def draw_compartment_border(self, context):
-        """
-        Draw state item.
-        """
-        c = context.cairo
-
-        c.move_to(0, DY)
-        c.curve_to(0, DDY, DDX, 0, DX, 0)
-        c.line_to(self.width - DX, 0)
-        c.curve_to(self.width - DDX, 0, self.width, DDY, self.width, DY)
-        c.line_to(self.width, self.height - DY)
-        c.curve_to(
-            self.width,
-            self.height - DDY,
-            self.width - DDX,
-            self.height,
-            self.width - DX,
-            self.height,
+    def update_shapes(self, event=None):
+        compartment = Box(
+            Text(
+                text=lambda: self.subject.entry.name
+                and f"entry / {self.subject.entry.name}"
+                or "",
+                style={"text-align": TextAlign.LEFT, "min-height": 0},
+            ),
+            Text(
+                text=lambda: self.subject.exit.name
+                and f"exit / {self.subject.exit.name}"
+                or "",
+                style={"text-align": TextAlign.LEFT, "min-height": 0},
+            ),
+            Text(
+                text=lambda: self.subject.doActivity.name
+                and f"do / {self.subject.doActivity.name}"
+                or "",
+                style={"text-align": TextAlign.LEFT, "min-height": 0},
+            ),
+            style={"padding": (4, 4, 4, 4), "vertical-align": VerticalAlign.TOP},
+            draw=draw_top_separator,
         )
-        c.line_to(DX, self.height)
-        c.curve_to(DDX, self.height, 0, self.height - DDY, 0, self.height - DY)
-        c.close_path()
+        if not any(t.text() for t in compartment.children):
+            compartment = Box()
 
-        c.stroke()
+        self.shape = Box(
+            Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                    style={"min-width": 0, "min-height": 0},
+                ),
+                EditableText(text=lambda: self.subject.name or ""),
+                style={"padding": (4, 4, 4, 4)},
+            ),
+            compartment,
+            style={
+                "min-width": 50,
+                "min-height": 30,
+                "vertical-align": VerticalAlign.TOP,
+            },
+            draw=draw_state,
+        )
 
 
-# vim:sw=4:et
+def draw_state(box, context, bounding_box):
+    cr = context.cairo
+    dx = 15
+    dy = 8
+    ddx = 0.4 * dx
+    ddy = 0.4 * dy
+    width = bounding_box.width
+    height = bounding_box.height
+
+    cr.move_to(0, dy)
+    cr.curve_to(0, ddy, ddx, 0, dx, 0)
+    cr.line_to(width - dx, 0)
+    cr.curve_to(width - ddx, 0, width, ddy, width, dy)
+    cr.line_to(width, height - dy)
+    cr.curve_to(width, height - ddy, width - ddx, height, width - dx, height)
+    cr.line_to(dx, height)
+    cr.curve_to(ddx, height, 0, height - ddy, 0, height - dy)
+    cr.close_path()
+
+    cr.stroke()

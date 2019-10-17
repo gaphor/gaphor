@@ -14,19 +14,13 @@ instance of an item to be grouped is created. This happens when item
 is about to be created. Therefore `AbstractGroup.can_contain` has
 to be aware that `AbstractGroup.item` can be null.
 """
+
+from __future__ import annotations
+
+from typing import Type
 import abc
 
-from gaphor import UML
-from gaphor.misc.generic.multidispatch import multidispatch
-
-
-@multidispatch(object, object)
-class Group:
-    def __init__(self, parent, item):
-        pass
-
-    def can_contain(self):
-        return False
+from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
 
 
 # TODO: I think this should have been called Namespacing or something similar,
@@ -45,34 +39,47 @@ class AbstractGroup(metaclass=abc.ABCMeta):
         Item to be grouped.
     """
 
-    def __init__(self, parent, item):
+    def __init__(self, parent: object, item: object) -> None:
         self.parent = parent
         self.item = item
 
-    def can_contain(self):
+    def can_contain(self) -> bool:
         """
         Determine if parent can contain item.
         """
         return True
 
     @abc.abstractmethod
-    def group(self):
+    def group(self) -> None:
         """
         Perform grouping of items.
         """
 
     @abc.abstractmethod
-    def ungroup(self):
+    def ungroup(self) -> None:
         """
         Perform ungrouping of items.
         """
 
 
-# Until we can deal with types (esp. typing.Any) we use this as a workaround:
-@Group.register(None, object)
-class NoParentGroup(AbstractGroup):
-    def group(self):
+# Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
+# This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
+
+# @multidispatch(object, object)
+class NoGrouping(AbstractGroup):
+    def can_contain(self) -> bool:
+        return False
+
+    def group(self) -> None:
         pass
 
-    def ungroup(self):
+    def ungroup(self) -> None:
         pass
+
+
+Group: FunctionDispatcher[Type[AbstractGroup]] = multidispatch(object, object)(
+    NoGrouping
+)
+
+# Until we can deal with types (esp. typing.Any) we use this as a workaround:
+Group.register(None, object)(NoGrouping)

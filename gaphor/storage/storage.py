@@ -18,9 +18,8 @@ import io
 import gaphas
 
 from gaphor import UML
-from gaphor import diagram
 from gaphor.UML.collection import collection
-from gaphor.application import Application, NotInitializedError
+from gaphor.application import Application
 from gaphor.i18n import _
 from gaphor.storage import parser, diagramitems
 
@@ -168,13 +167,13 @@ def save_generator(writer, factory):
     writer.endDocument()
 
 
-def load_elements(elements, factory, status_queue=None):
-    for status in load_elements_generator(elements, factory):
+def load_elements(elements, factory, gaphor_version="1.0.0", status_queue=None):
+    for status in load_elements_generator(elements, factory, gaphor_version):
         if status_queue:
             status_queue(status)
 
 
-def load_elements_generator(elements, factory, gaphor_version=None):
+def load_elements_generator(elements, factory, gaphor_version):
     """
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
@@ -197,8 +196,16 @@ def load_elements_generator(elements, factory, gaphor_version=None):
         """
         Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
         """
+        if version_lower_than(gaphor_version, (1, 1, 0)):
+            new_canvasitems = upgrade_message_item_to_1_1_0(canvasitems)
+            canvasitems.extend(new_canvasitems)
+            for item in new_canvasitems:
+                elements[item.id] = item
+
         for item in canvasitems:
-            item = upgrade_canvas_item_to_1_1_0(item)
+            item = upgrade_canvas_item_to_1_0_2(item)
+            if version_lower_than(gaphor_version, (1, 1, 0)):
+                item = upgrade_presentation_item_to_1_1_0(item)
             cls = getattr(diagramitems, item.type)
             item.element = diagram.create_as(cls, item.id, parent=parent)
             create_canvasitems(diagram, item.canvasitems, parent=item.element)
@@ -211,7 +218,8 @@ def load_elements_generator(elements, factory, gaphor_version=None):
             cls = getattr(UML, elem.type)
             # log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
             elem.element = factory.create_as(cls, id)
-            if elem.canvas is not None:
+            if isinstance(elem.element, UML.Diagram):
+                assert elem.canvas
                 elem.element.canvas.block_updates = True
                 create_canvasitems(elem.element, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):
@@ -262,7 +270,7 @@ def load_elements_generator(elements, factory, gaphor_version=None):
                 try:
                     ref = elements[refids]
                 except:
-                    raise ValueError("Invalid ID for reference (%s)" % refids)
+                    raise ValueError(f"Invalid ID for reference ({refids})")
                 else:
                     try:
                         elem.element.load(name, ref.element)
@@ -322,7 +330,6 @@ def load_generator(filename, factory):
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
         for percentage in parser.parse_generator(filename, loader):
-            pass
             if percentage:
                 yield percentage / 2
             else:
@@ -357,9 +364,9 @@ def load_generator(filename, factory):
             gc.collect()
             yield 100
         except Exception as e:
-            log.warning("file %s could not be loaded" % filename, e)
+            log.warning(f"file {filename} could not be loaded ({e})")
             raise
-    factory.notify_model()
+    factory.model_ready()
 
 
 def version_lower_than(gaphor_version, version):
@@ -376,9 +383,80 @@ def version_lower_than(gaphor_version, version):
         return tuple(map(int, parts)) <= version
 
 
-def upgrade_canvas_item_to_1_1_0(item):
+def upgrade_canvas_item_to_1_0_2(item):
     if item.type == "MetaclassItem":
         item.type = "ClassItem"
     elif item.type == "SubsystemItem":
         item.type = "ComponentItem"
     return item
+
+
+def upgrade_presentation_item_to_1_1_0(item):
+    if "show_stereotypes_attrs" in item.values:
+        if item.type in (
+            "ClassItem",
+            "InterfaceItem",
+            "ArtifactItem",
+            "ComponentItem",
+            "NodeItem",
+        ):
+            item.values["show_stereotypes"] = item.values["show_stereotypes_attrs"]
+        del item.values["show_stereotypes_attrs"]
+
+    if "drawing-style" in item.values:
+        if item.type == "InterfaceItem":
+            item.values["folded"] = "1" if item.values["drawing-style"] == "3" else "0"
+        del item.values["drawing-style"]
+
+    if "show-attributes" in item.values and item.type in ("ClassItem", "InterfaceItem"):
+        item.values["show_attributes"] = item.values["show-attributes"]
+        del item.values["show-attributes"]
+
+    if "show-operations" in item.values and item.type in ("ClassItem", "InterfaceItem"):
+        item.values["show_operations"] = item.values["show-operations"]
+        del item.values["show-operations"]
+
+    return item
+
+
+import uuid
+
+
+def clone_canvasitem(item, subject_id):
+    assert not item.canvasitems, "Can not clone a canvas item with children"
+    assert isinstance(item.references["subject"], str)
+    new_item = parser.canvasitem(str(uuid.uuid1()), item.type)
+    new_item.values = dict(item.values)
+    new_item.references = dict(item.references)
+    new_item.references["subject"] = subject_id
+    return new_item
+
+
+def upgrade_message_item_to_1_1_0(canvasitems):
+    """
+    Create new MessageItem's for each `message` and `inverted` message.
+    """
+    new_canvasitems = []
+    for item in canvasitems:
+        # new_canvasitems.append(item)
+        if item.type == "MessageItem" and item.references.get("subject"):
+            messages = item.references.get("message", [])
+            inverted = item.references.get("inverted", [])
+            if messages:
+                del item.references["message"]
+            if inverted:
+                del item.references["inverted"]
+            for m_id in messages:
+                new_item = clone_canvasitem(item, m_id)
+                new_canvasitems.append(new_item)
+            for m_id in inverted:
+                new_item = clone_canvasitem(item, m_id)
+                new_canvasitems.append(new_item)
+                # todo: invert handles, points will follow on connect
+                new_item.references["head-connection"], new_item.references[
+                    "tail-connection"
+                ] = (
+                    new_item.references["tail-connection"],
+                    new_item.references["head-connection"],
+                )
+    return new_canvasitems

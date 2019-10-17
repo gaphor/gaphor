@@ -1,3 +1,11 @@
+1.1.0
+-----
+- New menu structure, accoring to GNOME HIG
+- Dark theme support
+- Fixes for Flatpak on Wayland
+- Macos package
+- Dropped Zope package dependencies
+
 1.0.2
 -----
 - Remove dependency on zope.component and zope.interface libraries

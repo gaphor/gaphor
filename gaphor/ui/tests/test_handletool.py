@@ -15,7 +15,7 @@ from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.connectors import IConnect
 from gaphor.ui.diagramtools import ConnectHandleTool, DiagramItemConnector
-from gaphor.ui.event import DiagramShow
+from gaphor.ui.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
 
 
@@ -28,11 +28,14 @@ def application():
             "element_factory",
             "main_window",
             "properties_manager",
-            "action_manager",
             "properties",
             "namespace",
             "diagrams",
             "toolbox",
+            "elementeditor",
+            "import_menu",
+            "export_menu",
+            "tools_menu",
         ]
     )
     main_window = Application.get_service("main_window")
@@ -106,11 +109,14 @@ class HandleToolTestCase(unittest.TestCase):
                 "element_factory",
                 "main_window",
                 "properties_manager",
-                "action_manager",
                 "properties",
                 "namespace",
                 "diagrams",
                 "toolbox",
+                "elementeditor",
+                "import_menu",
+                "export_menu",
+                "tools_menu",
             ]
         )
         self.component_registry = Application.get_service("component_registry")
@@ -141,7 +147,7 @@ class HandleToolTestCase(unittest.TestCase):
         """
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
-        self.event_manager.handle(DiagramShow(diagram))
+        self.event_manager.handle(DiagramOpened(diagram))
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )
@@ -176,16 +182,16 @@ class HandleToolTestCase(unittest.TestCase):
 
         assert cinfo is None
 
-    def test_iconnect_2(self):
+    def test_connect_comment_and_actor(self):
         """Test connect/disconnect on comment and actor using comment-line.
         """
         element_factory = Application.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
-        self.event_manager.handle(DiagramShow(diagram))
+        self.event_manager.handle(DiagramOpened(diagram))
         comment = diagram.create(
             CommentItem, subject=element_factory.create(UML.Comment)
         )
-        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
+
         line = diagram.create(CommentLineItem)
 
         view = self.get_diagram_view(diagram)
@@ -197,8 +203,7 @@ class HandleToolTestCase(unittest.TestCase):
         handle = line.handles()[0]
         tool.grab_handle(line, handle)
 
-        comment_bb = view.get_item_bounding_box(comment)
-        handle.pos = (comment_bb.x1, comment_bb.y1)
+        handle.pos = (0, 0)
         sink = tool.glue(line, handle, handle.pos)
         assert sink is not None
         assert sink.item is comment
@@ -210,12 +215,14 @@ class HandleToolTestCase(unittest.TestCase):
         assert cinfo.connected is comment
 
         # Connect the other end to the Actor:
+        actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
+
         handle = line.handles()[-1]
         tool.grab_handle(line, handle)
-        actor_bb = view.get_item_bounding_box(actor)
 
-        handle.pos = actor_bb.x1, actor_bb.y1
+        handle.pos = (0, 0)
         sink = tool.glue(line, handle, handle.pos)
+        assert sink, f"No sink at {handle.pos}"
         assert sink.item is actor
         tool.connect(line, handle, handle.pos)
 

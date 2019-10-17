@@ -31,7 +31,7 @@ class ExtendItemTestCase(TestCase):
         self.connect(extend, extend.tail, uc2)
         assert self.get_connected(extend.tail), uc2
 
-    def test_use_case_connect(self):
+    def test_use_case_reconnect(self):
         """Test reconnecting use cases with "extend"
         """
         uc1 = self.create(UseCaseItem, UML.UseCase)

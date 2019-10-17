@@ -9,6 +9,7 @@ import uuid
 
 import gaphas
 
+from gaphor.UML.properties import umlproperty
 from gaphor.UML.uml2 import Namespace, PackageableElement
 
 
@@ -22,7 +23,7 @@ class DiagramCanvas(gaphas.Canvas):
         """Initialize the diagram canvas with the supplied diagram.  By default,
         updates are not blocked."""
 
-        super(DiagramCanvas, self).__init__()
+        super().__init__()
         self._diagram = diagram
         self._block_updates = False
 
@@ -43,7 +44,7 @@ class DiagramCanvas(gaphas.Canvas):
 
         if self._block_updates:
             return
-        super(DiagramCanvas, self).update_now()
+        super().update_now()
 
     def save(self, save_func):
         """Apply the supplied save function to all root diagram items."""
@@ -54,7 +55,6 @@ class DiagramCanvas(gaphas.Canvas):
     def postload(self):
         """Called after the diagram canvas has loaded.  Currently does nothing.
         """
-        pass
 
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression."""
@@ -64,24 +64,26 @@ class DiagramCanvas(gaphas.Canvas):
 
 class Diagram(Namespace, PackageableElement):
     """Diagrams may contain model elements and can be owned by a Package.
-    A diagram is a Namespace and a PackageableElement."""
+    """
 
     def __init__(self, id=None, model=None):
         """Initialize the diagram with an optional id and element model.
         The diagram also has a canvas."""
 
-        super(Diagram, self).__init__(id, model)
+        super().__init__(id, model)
         self.canvas = DiagramCanvas(self)
+
+    package: umlproperty[Namespace, Namespace]
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
 
-        super(Diagram, self).save(save_func)
+        super().save(save_func)
         save_func("canvas", self.canvas)
 
     def postload(self):
         """Handle post-load functionality for the diagram canvas."""
-        super(Diagram, self).postload()
+        super().postload()
         self.canvas.postload()
 
     def create(self, type, parent=None, subject=None):
@@ -109,4 +111,4 @@ class Diagram(Namespace, PackageableElement):
             except:
                 pass
 
-        super(Diagram, self).unlink()
+        super().unlink()

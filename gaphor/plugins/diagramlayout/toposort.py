@@ -160,7 +160,7 @@ def toposort(nodes, routes, noRecursion=1):
 
 if __name__ == "__main__":
 
-    import pprint, traceback
+    pass
 
     nodes = [0, 1, 2, 3, 4, 5]
     testingValues = [

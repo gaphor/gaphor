@@ -6,18 +6,16 @@ from gaphor.diagram.connectors import (
     UnaryRelationshipConnect,
     RelationshipConnect,
 )
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.classifier import ClassifierItem
+from gaphor.diagram.presentation import Named, Classified
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.generalization import GeneralizationItem
-from gaphor.diagram.classes.interface import InterfaceItem
 from gaphor.diagram.classes.association import AssociationItem
 
 
-@IConnect.register(NamedItem, DependencyItem)
+@IConnect.register(Named, DependencyItem)
 class DependencyConnect(RelationshipConnect):
-    """Connect two NamedItem elements using a Dependency."""
+    """Connect two Named elements using a Dependency."""
 
     def allow(self, handle, port):
         line = self.line
@@ -69,7 +67,7 @@ class DependencyConnect(RelationshipConnect):
         line.subject = relation
 
 
-@IConnect.register(ClassifierItem, GeneralizationItem)
+@IConnect.register(Classified, GeneralizationItem)
 class GeneralizationConnect(RelationshipConnect):
     """Connect Classifiers with a Generalization relationship."""
 
@@ -85,7 +83,7 @@ class GeneralizationConnect(RelationshipConnect):
         self.line.subject = relation
 
 
-@IConnect.register(ClassifierItem, AssociationItem)
+@IConnect.register(Classified, AssociationItem)
 class AssociationConnect(UnaryRelationshipConnect):
     """Connect association to classifier."""
 
@@ -166,7 +164,7 @@ class AssociationConnect(UnaryRelationshipConnect):
                 old.unlink()
 
 
-@IConnect.register(NamedItem, ImplementationItem)
+@IConnect.register(Named, ImplementationItem)
 class ImplementationConnect(RelationshipConnect):
     """Connect Interface and a BehavioredClassifier using an Implementation."""
 
@@ -184,7 +182,7 @@ class ImplementationConnect(RelationshipConnect):
         ):
             return None
 
-        return super(ImplementationConnect, self).allow(handle, port)
+        return super().allow(handle, port)
 
     def reconnect(self, handle, port):
         line = self.line

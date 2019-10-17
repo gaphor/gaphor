@@ -23,7 +23,7 @@ lifeline.
 from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
 from gaphas.solver import STRONG
-from gaphas.geometry import distance_line_point, Rectangle
+from gaphas.geometry import distance_line_point
 from gaphas.constraint import (
     LessThanConstraint,
     EqualsConstraint,
@@ -32,8 +32,11 @@ from gaphas.constraint import (
 )
 
 from gaphor import UML
-from gaphor.diagram.nameditem import NamedItem
-from gaphor.diagram.style import ALIGN_CENTER, ALIGN_MIDDLE
+from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.text import FontWeight
+from gaphor.diagram.support import represents
 
 
 class LifetimePort(LinePort):
@@ -85,7 +88,7 @@ class LifetimeItem:
     MIN_LENGTH_VISIBLE = 3 * MIN_LENGTH
 
     def __init__(self):
-        super(LifetimeItem, self).__init__()
+        super().__init__()
 
         self.top = Handle(strength=STRONG - 1)
         self.bottom = Handle(strength=STRONG)
@@ -133,7 +136,8 @@ class LifetimeItem:
     visible = property(_is_visible, _set_visible)
 
 
-class LifelineItem(NamedItem):
+@represents(UML.Lifeline)
+class LifelineItem(ElementPresentation, Named):
     """
     Lifeline item.
 
@@ -147,11 +151,8 @@ class LifelineItem(NamedItem):
         Check if delete message is connected.
     """
 
-    __uml__ = UML.Lifeline
-    __style__ = {"name-align": (ALIGN_CENTER, ALIGN_MIDDLE)}
-
     def __init__(self, id=None, model=None):
-        NamedItem.__init__(self, id, model)
+        super().__init__(id, model)
 
         self.is_destroyed = False
 
@@ -164,8 +165,24 @@ class LifelineItem(NamedItem):
         self._handles.append(bottom)
         self._ports.append(self.lifetime.port)
 
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(
+                text=lambda: self.subject.name or "",
+                style={"font-weight": FontWeight.BOLD},
+            ),
+            style={"min-width": 100, "min-height": 50},
+            draw=self.draw_lifeline,
+        )
+
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+
     def setup_canvas(self):
-        super(LifelineItem, self).setup_canvas()
+        super().setup_canvas()
 
         top = self.lifetime.top
         bottom = self.lifetime.bottom
@@ -188,20 +205,20 @@ class LifelineItem(NamedItem):
         list(map(self.canvas.solver.add_constraint, self.__constraints))
 
     def teardown_canvas(self):
-        super(LifelineItem, self).teardown_canvas()
+        super().teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
 
     def save(self, save_func):
-        super(LifelineItem, self).save(save_func)
+        super().save(save_func)
         save_func("lifetime-length", self.lifetime.length)
 
     def load(self, name, value):
         if name == "lifetime-length":
             self.lifetime.bottom.pos.y = self.height + float(value)
         else:
-            super(LifelineItem, self).load(name, value)
+            super().load(name, value)
 
-    def draw(self, context):
+    def draw_lifeline(self, box, context, bounding_box):
         """
         Draw lifeline.
 
@@ -209,7 +226,6 @@ class LifelineItem(NamedItem):
 
         Lifeline's lifetime is drawn when lifetime is visible.
         """
-        super(LifelineItem, self).draw(context)
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
         cr.stroke()
@@ -242,11 +258,8 @@ class LifelineItem(NamedItem):
         Distance to lifeline's head and lifeline's lifetime is calculated
         and minimum is returned.
         """
-        d1 = super(LifelineItem, self).point(pos)
+        d1 = super().point(pos)
         top = self.lifetime.top
         bottom = self.lifetime.bottom
         d2 = distance_line_point(top.pos, bottom.pos, pos)[0]
         return min(d1, d2)
-
-
-# vim:sw=4:et

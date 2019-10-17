@@ -12,34 +12,20 @@ class ObjectNodeTestCase(TestCase):
         Test updating of object node name
         """
         node = self.create(ObjectNodeItem, UML.ObjectNode)
+        name = node.shape.icon.children[1]
+
         node.subject.name = "Blah"
 
-        assert "Blah" == node._name.text
-
-        node.subject = None
-        # Undefined
-
-    def test_upper_bound(self):
-        """
-        TODO: Test upper bound
-        """
-        pass
+        assert "Blah" == name.text()
 
     def test_ordering(self):
         """
         Test updating of ObjectNodeItem.ordering.
         """
         node = self.create(ObjectNodeItem, UML.ObjectNode)
+        ordering = node.shape.children[1]
+
         node.subject.ordering = "unordered"
-
-        assert "{ ordering = unordered }" == node._ordering.text
-
         node.show_ordering = True
 
-        assert "{ ordering = unordered }" == node._ordering.text
-
-    def test_persistence(self):
-        """
-        TODO: Test connector item saving/loading
-        """
-        pass
+        assert "{ ordering = unordered }" == ordering.text()

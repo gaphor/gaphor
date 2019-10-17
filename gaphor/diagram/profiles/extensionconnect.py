@@ -1,10 +1,10 @@
 from gaphor import UML
-from gaphor.diagram.classifier import ClassifierItem
+from gaphor.diagram.presentation import Classified
 from gaphor.diagram.profiles.extension import ExtensionItem
 from gaphor.diagram.connectors import IConnect, RelationshipConnect
 
 
-@IConnect.register(ClassifierItem, ExtensionItem)
+@IConnect.register(Classified, ExtensionItem)
 class ExtensionConnect(RelationshipConnect):
     """Connect class and stereotype items using an extension item."""
 
@@ -20,7 +20,7 @@ class ExtensionConnect(RelationshipConnect):
             # Element at the tail should be a stereotype
             allow = isinstance(subject, UML.Stereotype)
 
-        return allow and super(ExtensionConnect, self).allow(handle, port)
+        return allow and super().allow(handle, port)
 
     def connect_subject(self, handle):
         element = self.element

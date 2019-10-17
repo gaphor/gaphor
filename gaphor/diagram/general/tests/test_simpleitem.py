@@ -1,14 +1,13 @@
 """Unit tests for simple items."""
 
 from gaphor.tests import TestCase
-from gaphor import UML
-from gaphor.diagram.general.simpleitem import Line, Box, Ellipse
+from gaphor.diagram.general.simpleitem import Ellipse, Line
 from gaphas import View
 
 
 class SimpleItemTestCase(TestCase):
     def setUp(self):
-        super(SimpleItemTestCase, self).setUp()
+        super().setUp()
         self.view = View(self.diagram.canvas)
 
     def test_line(self):
