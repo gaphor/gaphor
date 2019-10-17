@@ -118,6 +118,7 @@ class ClassItem(ElementPresentation, Classified):
             else:
                 return ()
 
+        print(self, "update shape")
         self.shape = Box(
             Box(
                 Text(
