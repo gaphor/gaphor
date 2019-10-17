@@ -181,6 +181,7 @@ class ConnectorConnectBase(AbstractConnect):
         else:
             c = self.get_component(line)
             self.drop_uml(line, c)
+        iface.request_update()
 
 
 @IConnect.register(ComponentItem, ConnectorItem)

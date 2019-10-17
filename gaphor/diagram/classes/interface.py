@@ -304,11 +304,11 @@ class InterfaceItem(ElementPresentation, Classified):
 
     def pre_update(self, context):
         connected_items = [c.item for c in self.canvas.get_connections(connected=self)]
-        connector = any(
+        connectors = any(
             map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
         )
-        if connector or self._folded != Folded.NONE:
-            provided = connector or any(
+        if connectors or self._folded != Folded.NONE:
+            provided = connectors or any(
                 map(
                     lambda i: isinstance(i.subject, UML.Implementation), connected_items
                 )
@@ -322,10 +322,10 @@ class InterfaceItem(ElementPresentation, Classified):
                 self.folded = Folded.REQUIRED
             else:
                 self.folded = Folded.PROVIDED
-            self.update_shapes()
+            self.update_shapes(connectors=connectors)
         super().pre_update(context)
 
-    def update_shapes(self, event=None):
+    def update_shapes(self, event=None, connectors=None):
         if self._folded == Folded.NONE:
             self.shape = Box(
                 Box(
@@ -370,6 +370,14 @@ class InterfaceItem(ElementPresentation, Classified):
                 draw=draw_border,
             )
         else:
+            if connectors is None:
+                # distinguish between None and []
+                connected_items = [
+                    c.item for c in self.canvas.get_connections(connected=self)
+                ]
+                connectors = any(
+                    map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
+                )
             self.shape = IconBox(
                 Box(
                     style={"min-width": self.min_width, "min-height": self.min_height},
@@ -381,7 +389,11 @@ class InterfaceItem(ElementPresentation, Classified):
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
+                    style={
+                        "font-weight": FontWeight.NORMAL
+                        if connectors
+                        else FontWeight.BOLD
+                    },
                 ),
             )
 
