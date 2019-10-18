@@ -89,11 +89,11 @@ class CopyService(Service, ActionProvider):
                             copy.load(name, item)
 
                 if reference or isinstance(value, Element):
-                    load_element()
+                    setattr(copy, name, value)
                 elif isinstance(value, collection):
                     values = value
                     for value in values:
-                        load_element()
+                        setattr(copy, name, value)
                 elif isinstance(value, gaphas.Item):
                     load_element()
                 else:
@@ -107,19 +107,18 @@ class CopyService(Service, ActionProvider):
         #  2. referred to in new_items
         #  3. canvas property is overridden
         for ci in copy_items:
-            # ci.save(copy_func(new_items[ci.id]))
-            new_items[ci.id].subject = ci.subject
+            ci.save(copy_func(new_items[ci.id]))
+            # new_items[ci.id].subject = ci.subject
 
         # move pasted items a bit, so user can see result of his action :)
         # update items' matrix immediately
-        # TODO: if it is new canvas, then let's not move, how to do it?
-        # for item in new_items.values():
-        #     item.matrix.translate(10, 10)
-        #     canvas.update_matrix(item)
+        for item in new_items.values():
+            item.matrix.translate(10, 10)
+            canvas.update_matrix(item)
 
         # solve internal constraints of items immediately as item.postload
         # reconnects items and all handles have to be in place
-        # canvas.solver.solve()
+        canvas.solver.solve()
         for item in new_items.values():
             item.postload()
 
