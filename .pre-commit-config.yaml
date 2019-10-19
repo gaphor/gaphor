@@ -8,4 +8,5 @@ repos:
   rev: master
   hooks:
   - id: mypy
+    rev: 0.730
     args: [ --warn-unused-configs ]
