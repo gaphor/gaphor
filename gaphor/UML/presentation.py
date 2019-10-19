@@ -4,7 +4,7 @@ Base code for presentation elements
 
 from __future__ import annotations
 
-from typing import Generic, Optional, TypeVar, TYPE_CHECKING
+from typing import Any, Callable, Generic, Optional, TypeVar, TYPE_CHECKING
 from gaphor.UML.properties import umlproperty, association
 from gaphor.UML.element import Element
 
@@ -33,6 +33,8 @@ class Presentation(Element, Generic[S]):
     subject: umlproperty[S, S] = association(
         "subject", Element, upper=1, opposite="presentation"
     )
+
+    request_update: Callable[[Presentation], None]
 
     canvas: Optional[Canvas]
 
