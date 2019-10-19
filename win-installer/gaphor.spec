@@ -8,11 +8,12 @@ a = Analysis(['gaphor-script.py'],
              pathex=['../'],
              binaries=[],
              datas=[
-	     	('../gaphor/ui/layout.xml', 'gaphor/ui'),
-		('../gaphor/ui/layout.css', 'gaphor/ui'),
-		('../gaphor/ui/pixmaps/*.png', 'gaphor/ui/pixmaps'),
-		('../LICENSE.txt', 'gaphor')
-		]+copy_metadata('gaphor'),
+	     	    ('../gaphor/ui/layout.xml', 'gaphor/ui'),
+		        ('../gaphor/ui/layout.css', 'gaphor/ui'),
+		        ('../gaphor/ui/pixmaps/*.png', 'gaphor/ui/pixmaps'),
+		        ('../gaphor/ui/icons/*.svg', 'gaphor/ui/icons'),
+		        ('../LICENSE.txt', 'gaphor')
+		     ]+copy_metadata('gaphor'),
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
