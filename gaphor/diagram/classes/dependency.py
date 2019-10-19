@@ -22,7 +22,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import Text
 from gaphor.diagram.support import represents
-from gaphor.diagram.classes.interface import InterfacePort
+from gaphor.diagram.classes.interface import Folded, InterfacePort
 
 
 @represents(UML.Dependency)
@@ -80,7 +80,7 @@ class DependencyItem(LinePresentation):
         return (
             connection
             and isinstance(connection.port, InterfacePort)
-            and connection.connected.folded
+            and connection.connected.folded != Folded.NONE
         )
 
     def post_update(self, context):

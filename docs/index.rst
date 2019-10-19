@@ -45,6 +45,8 @@ Tech section
    storage
    undo
    xml-format
+   event_system
+   multidispatching
 
 .. toctree::
    :maxdepth: 2
@@ -56,6 +58,6 @@ External links
 
   * The `UML diagrams <http://www.agilemodeling.com/essays/umlDiagrams.htm>`_ (although Gaphor does not see it that black-and-white).
   * http://www.agilemodeling.com/essays/
-* The `official UML metamodel specification <http://www.omg.org/technology/documents/modeling_spec_catalog.htm#UML>`_. This ''is'' our data model.
+* The `official UML specification <https://www.omg.org/spec/UML>`_. This ''is'' our data model.
 
 

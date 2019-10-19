@@ -21,7 +21,7 @@ from gaphor.diagram.classes import (
     ImplementationItem,
     Folded,
 )
-
+from gaphor.diagram.components.connector import ConnectorItem
 
 log = logging.getLogger(__name__)
 
@@ -144,16 +144,12 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         hbox.pack_start(label, False, True, 0)
 
         button = Gtk.CheckButton(_("Folded"))
-        button.set_active(item.folded)
+        button.set_active(item.folded != Folded.NONE)
         button.connect("toggled", self._on_fold_change)
 
         connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
-        allowed = (DependencyItem, ImplementationItem)
-        can_fold = (
-            len(connected_items) == 0
-            or len(connected_items) == 1
-            and isinstance(connected_items[0], allowed)
-        )
+        disallowed = (ConnectorItem,)
+        can_fold = not any(map(lambda i: isinstance(i, disallowed), connected_items))
 
         button.set_sensitive(can_fold)
         hbox.pack_start(button, True, True, 0)
@@ -165,29 +161,12 @@ class InterfacePropertyPage(NamedItemPropertyPage):
     def _on_fold_change(self, button):
         item = self.item
 
-        connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
-        assert len(connected_items) <= 1
-
-        line = None
-        if len(connected_items) == 1:
-            line = connected_items[0]
-
         fold = button.get_active()
 
         if fold:
             item.folded = Folded.PROVIDED
         else:
             item.folded = Folded.NONE
-
-        if line:
-            if fold and isinstance(line, DependencyItem):
-                item.folded = Folded.REQUIRED
-
-            assert line.canvas
-            constraint = line.canvas.get_connection(line.head).constraint
-            constraint.ratio_x = 0.5
-            constraint.ratio_y = 0.5
-            line.request_update()
 
 
 @PropertyPages.register(ClassItem)
@@ -201,7 +180,7 @@ class AttributesPage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.watcher = item.subject.watcher()
+        self.watcher = item.subject and item.subject.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -274,7 +253,7 @@ class OperationsPage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.watcher = item.subject.watcher()
+        self.watcher = item.subject and item.subject.watcher()
 
     def construct(self):
         page = Gtk.VBox()
@@ -539,11 +518,10 @@ class AssociationEndPropertyPage(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.watcher = subject.watcher()
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
         vbox = Gtk.VBox()
-
         entry = Gtk.Entry()
         # entry.set_text(UML.format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
 

@@ -6,7 +6,7 @@ from typing import Dict, Set
 
 import gaphas
 
-from gaphor.UML import Element
+from gaphor.UML import Element, Presentation
 from gaphor.UML.collection import collection
 from gaphor.core import _, event_handler, action, transactional
 from gaphor.abc import Service, ActionProvider
@@ -54,34 +54,6 @@ class CopyService(Service, ActionProvider):
         if items:
             self.copy_buffer = set(items)
 
-    def copy_func(self, name, value, reference=False):
-        """
-        Copy an element, preferably from the list of new items,
-        otherwise from the element factory.
-        If it does not exist there, do not copy it!
-        """
-
-        def load_element():
-            item = self._new_items.get(value.id)
-            if item:
-                self._item.load(name, item)
-            else:
-                item = self.element_factory.lookup(value.id)
-                if item:
-                    self._item.load(name, item)
-
-        if reference or isinstance(value, Element):
-            load_element()
-        elif isinstance(value, collection):
-            values = value
-            for value in values:
-                load_element()
-        elif isinstance(value, gaphas.Item):
-            load_element()
-        else:
-            # Plain attribute
-            self._item.load(name, str(value))
-
     @transactional
     def paste(self, diagram):
         """
@@ -93,33 +65,64 @@ class CopyService(Service, ActionProvider):
 
         copy_items = [c for c in self.copy_buffer if c.canvas]
 
-        # Mapping original id -> new item
-        self._new_items: Dict[str, Element] = {}
-
         # Create new id's that have to be used to create the items:
-        for ci in copy_items:
-            self._new_items[ci.id] = diagram.create(type(ci))
+        new_items: Dict[str, Presentation] = {
+            ci.id: diagram.create(type(ci)) for ci in copy_items
+        }
+
+        def copy_func(copy):
+            def _copy_func(name, value, reference=False):
+                """
+                Copy an element, preferably from the list of new items,
+                otherwise from the element factory.
+                If it does not exist there, do not copy it!
+                """
+                print("Copy", copy, name, value, reference)
+
+                def load_element():
+                    item = new_items.get(value.id)
+                    if item:
+                        copy.load(name, item)
+                    else:
+                        item = self.element_factory.lookup(value.id)
+                        if item:
+                            copy.load(name, item)
+
+                if reference or isinstance(value, Element):
+                    setattr(copy, name, value)
+                elif isinstance(value, collection):
+                    values = value
+                    for value in values:
+                        setattr(copy, name, value)
+                elif isinstance(value, gaphas.Item):
+                    load_element()
+                else:
+                    # Plain attribute
+                    copy.load(name, str(value))
+
+            return _copy_func
 
         # Copy attributes and references. References should be
         #  1. in the ElementFactory (hence they are model elements)
         #  2. referred to in new_items
         #  3. canvas property is overridden
         for ci in copy_items:
-            self._item = self._new_items[ci.id]
-            ci.save(self.copy_func)
+            ci.save(copy_func(new_items[ci.id]))
+            # new_items[ci.id].subject = ci.subject
 
         # move pasted items a bit, so user can see result of his action :)
         # update items' matrix immediately
-        # TODO: if it is new canvas, then let's not move, how to do it?
-        for item in list(self._new_items.values()):
+        for item in new_items.values():
             item.matrix.translate(10, 10)
             canvas.update_matrix(item)
 
         # solve internal constraints of items immediately as item.postload
-        # reconnects items and all handles has to be in place
+        # reconnects items and all handles have to be in place
         canvas.solver.solve()
-        for item in list(self._new_items.values()):
+        for item in new_items.values():
             item.postload()
+
+        return new_items
 
     @action(
         name="edit-copy", label=_("Copy"), icon_name="edit-copy", shortcut="<Primary>c"
@@ -128,10 +131,7 @@ class CopyService(Service, ActionProvider):
         view = self.diagrams.get_current_view()
         if view.is_focus():
             items = view.selected_items
-            copy_items = []
-            for i in items:
-                copy_items.append(i)
-            self.copy(copy_items)
+            self.copy(items)
             win_action_group = view.get_action_group("win")
             if win_action_group:
                 win_action_group.lookup_action("edit-paste").set_enabled(
@@ -147,9 +147,18 @@ class CopyService(Service, ActionProvider):
         if not view:
             return
 
-        self.paste(diagram)
+        new_items = self.paste(diagram)
 
+        focused_item = view.focused_item
         view.unselect_all()
 
-        for item in list(self._new_items.values()):
+        for item in new_items.values():
             view.select_item(item)
+
+        new_focused_item = (
+            new_items[focused_item.id] if focused_item else new_items.pop()
+        )
+
+        self.event_manager.handle(
+            DiagramSelectionChanged(view, new_focused_item, new_items)
+        )

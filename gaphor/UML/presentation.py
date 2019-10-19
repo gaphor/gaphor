@@ -8,6 +8,7 @@ from gaphor.UML.element import Element
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
+    from cairo import Matrix  # noqa
 
 S = TypeVar("S", bound=Element)
 
@@ -32,6 +33,8 @@ class Presentation(Element, Generic[S]):
     )
 
     canvas: Optional["Canvas"]
+
+    matrix: "Matrix"
 
     def watch(self, path, handler=None):
         """

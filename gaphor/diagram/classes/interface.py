@@ -101,6 +101,13 @@ class Folded(Enum):
     ASSEMBLY = 3
 
 
+class Side(Enum):
+    N = 0
+    E = pi * 0.5
+    S = pi
+    W = pi * 1.5
+
+
 class InterfacePort(LinePort):
     """
     Interface connection port.
@@ -117,13 +124,11 @@ class InterfacePort(LinePort):
     angle).
     """
 
-    def __init__(self, start, end, is_folded, angle):
+    def __init__(self, start, end, is_folded, side):
         super().__init__(start, end)
         self.is_folded = is_folded
         # Used by connection logic:
-        self.angle = angle
-        self.required = False
-        self.provided = False
+        self.side = side
 
     def glue(self, pos):
         """
@@ -156,7 +161,7 @@ class InterfaceItem(ElementPresentation, Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         self._folded = Folded.NONE
-        self.angle = 0
+        self.side = Side.N
 
         handles = self.handles()
         h_nw = handles[NW]
@@ -164,12 +169,15 @@ class InterfaceItem(ElementPresentation, Classified):
         h_sw = handles[SW]
         h_se = handles[SE]
 
+        def is_folded():
+            return self._folded != Folded.NONE
+
         # edge of element define default element ports
         self._ports = [
-            InterfacePort(h_nw.pos, h_ne.pos, self._is_folded, 0),
-            InterfacePort(h_ne.pos, h_se.pos, self._is_folded, pi / 2),
-            InterfacePort(h_se.pos, h_sw.pos, self._is_folded, pi),
-            InterfacePort(h_sw.pos, h_nw.pos, self._is_folded, pi * 1.5),
+            InterfacePort(h_nw.pos, h_ne.pos, is_folded, Side.N),
+            InterfacePort(h_ne.pos, h_se.pos, is_folded, Side.E),
+            InterfacePort(h_se.pos, h_sw.pos, is_folded, Side.S),
+            InterfacePort(h_sw.pos, h_nw.pos, is_folded, Side.W),
         ]
 
         self.watch("show_stereotypes", self.update_shapes).watch(
@@ -244,19 +252,13 @@ class InterfaceItem(ElementPresentation, Classified):
 
     def load(self, name, value):
         if name == "folded":
-            self.folded = Folded(ast.literal_eval(value))
+            self._folded = Folded(ast.literal_eval(value))
         else:
             super().load(name, value)
 
     def save(self, save_func):
         super().save(save_func)
-        save_func("folded", self.folded.value)
-
-    def _is_folded(self):
-        """
-        Check if interface item is folded interface item.
-        """
-        return self._folded
+        save_func("folded", self._folded.value)
 
     def _set_folded(self, folded):
         """
@@ -264,6 +266,8 @@ class InterfaceItem(ElementPresentation, Classified):
 
         :param folded: Folded state, see Folded.* enum.
         """
+        if self._folded == folded:
+            return
 
         self._folded = folded
 
@@ -293,10 +297,35 @@ class InterfaceItem(ElementPresentation, Classified):
         self.update_shapes()
 
     folded = property(
-        _is_folded, _set_folded, doc="Check or set folded notation, see Folded.* enum."
+        lambda s: s._folded,
+        _set_folded,
+        doc="Check or set folded notation, see Folded.* enum.",
     )
 
-    def update_shapes(self, event=None):
+    def pre_update(self, context):
+        connected_items = [c.item for c in self.canvas.get_connections(connected=self)]
+        connectors = any(
+            map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
+        )
+        if connectors or self._folded != Folded.NONE:
+            provided = connectors or any(
+                map(
+                    lambda i: isinstance(i.subject, UML.Implementation), connected_items
+                )
+            )
+            required = any(
+                map(lambda i: isinstance(i.subject, UML.Usage), connected_items)
+            )
+            if required and provided:
+                self.folded = Folded.ASSEMBLY
+            elif required:
+                self.folded = Folded.REQUIRED
+            else:
+                self.folded = Folded.PROVIDED
+            self.update_shapes(connectors=connectors)
+        super().pre_update(context)
+
+    def update_shapes(self, event=None, connectors=None):
         if self._folded == Folded.NONE:
             self.shape = Box(
                 Box(
@@ -341,6 +370,14 @@ class InterfaceItem(ElementPresentation, Classified):
                 draw=draw_border,
             )
         else:
+            if connectors is None:
+                # distinguish between None and []
+                connected_items = [
+                    c.item for c in self.canvas.get_connections(connected=self)
+                ]
+                connectors = any(
+                    map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
+                )
             self.shape = IconBox(
                 Box(
                     style={"min-width": self.min_width, "min-height": self.min_height},
@@ -352,7 +389,11 @@ class InterfaceItem(ElementPresentation, Classified):
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
+                    style={
+                        "font-weight": FontWeight.NORMAL
+                        if connectors
+                        else FontWeight.BOLD
+                    },
                 ),
             )
 
@@ -363,8 +404,20 @@ class InterfaceItem(ElementPresentation, Classified):
         cx, cy = (h_nw.pos.x + self.width / 2, h_nw.pos.y + self.height / 2)
 
         if self._folded in (Folded.REQUIRED, Folded.ASSEMBLY):
-            cr.move_to(cx + self.RADIUS_REQUIRED, cy)
-            cr.arc_negative(cx, cy, self.RADIUS_REQUIRED, self.angle, pi + self.angle)
+            r = self.RADIUS_REQUIRED
+            if self.side == Side.N:
+                x, y = r * 2, r
+            elif self.side == Side.E:
+                x, y = r, r * 2
+            elif self.side == Side.S:
+                x, y = 0, r
+            elif self.side == Side.W:
+                x, y = r, 0
+
+            cr.move_to(x, y)
+            cr.arc_negative(
+                cx, cy, self.RADIUS_REQUIRED, self.side.value, pi + self.side.value
+            )
 
         if self._folded in (Folded.PROVIDED, Folded.ASSEMBLY):
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)

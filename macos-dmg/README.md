@@ -10,6 +10,6 @@ references.
 As said, the binary parts have to be present on the system. The rest is done
 with [pip][2] in a [venv][3].
 
-[1]: http://github.com/amolenaar/homebrew
+[1]: https://github.com/amolenaar/homebrew
 [2]: https://pypi.org/project/pip/
 [3]: https://docs.python.org/3/library/venv.html

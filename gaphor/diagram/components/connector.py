@@ -126,24 +126,16 @@ class ConnectorItem(LinePresentation, Named):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        def role_name():
-            try:
-                return self.subject.end["it.role", 0].role.name or ""
-            except (IndexError, AttributeError) as e:
-                return ""
-
         self.shape_middle = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),
                 style={"min-width": 0, "min-height": 0},
             ),
             EditableText(text=lambda: self.subject.name or ""),
-            Text(text=role_name, style={"min-width": 0, "min-height": 0}),
         )
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[Connector].end.role.name")
 
     def draw_tail(self, context):
         cr = context.cairo

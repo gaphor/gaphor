@@ -5,6 +5,7 @@ Test connections to folded interface.
 from gaphor import UML
 from gaphor.tests import TestCase
 from gaphor.diagram.classes.implementation import ImplementationItem
+from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.classes.interface import InterfaceItem, Folded
 from gaphor.diagram.classes.association import AssociationItem
 from gaphor.diagram.classes.dependency import DependencyItem
@@ -52,12 +53,17 @@ class DependencyTestCase(TestCase):
     def test_folded_interface_connection(self):
         """Test connecting dependency to folded interface
         """
+        clazz = self.create(ClassItem, UML.Class)
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.PROVIDED
         dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, iface, iface.ports()[0])
+        self.connect(dep, dep.tail, clazz, clazz.ports()[0])
+        iface.request_update()
+        iface.canvas.update_now()
 
+        assert dep.subject
         assert not dep.style("dash-style")
         assert iface.folded == Folded.REQUIRED
 
@@ -82,68 +88,4 @@ class DependencyTestCase(TestCase):
         dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, iface, iface.ports()[0])
-        assert () == dep.style("dash-style")
-
-
-LINES = (
-    ImplementationItem,
-    DependencyItem,
-    GeneralizationItem,
-    AssociationItem,
-    CommentLineItem,
-)
-
-
-class FoldedInterfaceMultipleLinesTestCase(TestCase):
-    """
-    Test connection of additional diagram lines to folded interface,
-    which has already usage dependency or implementation connected.
-    """
-
-    def setUp(self):
-        super().setUp()
-
-        self.iface = self.create(InterfaceItem, UML.Interface)
-        self.iface.folded = Folded.PROVIDED
-
-    def test_interface_with_implementation(self):
-        """Test gluing different lines to folded interface with implementation."""
-
-        impl = self.create(ImplementationItem)
-        self.connect(impl, impl.head, self.iface, self.iface.ports()[0])
-
-        for cls in LINES:
-            line = self.create(cls)
-            glued = self.allow(line, line.head, self.iface)
-            # no additional lines (specified above) can be glued
-            assert not glued, f"gluing of {cls} should not be allowed"
-
-    def test_interface_with_dependency(self):
-        """Test gluing different lines to folded interface with dependency."""
-        dep = self.create(DependencyItem)
-        self.connect(dep, dep.head, self.iface, self.iface.ports()[0])
-
-        for cls in LINES:
-            line = self.create(cls)
-            glued = self.allow(line, line.head, self.iface)
-            # no additional lines (specified above) can be glued
-            assert not glued, f"gluing of {cls} should not be allowed"
-
-
-class FoldedInterfaceSingleLineTestCase(TestCase):
-    """
-    Test connection of diagram lines to folded interface. Any lines beside
-    implementation and dependency should be forbidden to connect.
-    """
-
-    def test_interface_with_forbidden_lines(self):
-        """Test gluing forbidden lines to folded interface."""
-
-        iface = self.create(InterfaceItem, UML.Interface)
-        iface.folded = Folded.PROVIDED
-
-        for cls in LINES[2:]:
-            line = self.create(cls)
-            glued = self.allow(line, line.head, iface)
-            # no additional lines (specified above) can be glued
-            assert not glued, f"gluing of {cls} should not be allowed"
+        assert (7.0, 5.0) == dep.style("dash-style")

@@ -30,10 +30,10 @@ class DependencyConnect(RelationshipConnect):
     def reconnect(self, handle, port):
         line = self.line
         dep = line.subject
-        if handle is line.head:
+        if dep and handle is line.head:
             for s in dep.supplier:
                 del dep.supplier[s]
-        elif handle is line.tail:
+        elif dep and handle is line.tail:
             for c in dep.client:
                 del dep.client[c]
         self.reconnect_relationship(

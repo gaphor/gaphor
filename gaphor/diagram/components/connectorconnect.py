@@ -104,42 +104,16 @@ class ConnectorConnectBase(AbstractConnect):
         connector.subject = None
 
     def allow(self, handle, port):
-        glue_ok = super().allow(handle, port)
-
         iface = self.element
         component = self.get_connected(self.line.opposite(handle))
 
-        if isinstance(component, InterfaceItem):
+        if isinstance(component, InterfaceItem) or isinstance(iface, ComponentItem):
             component, iface = iface, component
-            port = self.get_connected_port(self.line.opposite(handle))
-
         # connect only components and interfaces but not two interfaces nor
         # two components
-        glue_ok = not (
-            isinstance(component, ComponentItem)
-            and isinstance(iface, ComponentItem)
-            or isinstance(component, InterfaceItem)
-            and isinstance(iface, InterfaceItem)
+        glue_ok = (not component or isinstance(component, ComponentItem)) and (
+            not iface or isinstance(iface, InterfaceItem)
         )
-
-        # if port type is known, then allow connection to proper port only
-        if (
-            glue_ok
-            and component is not None
-            and iface is not None
-            and (port.required or port.provided)
-        ):
-
-            assert isinstance(component, ComponentItem)
-            assert isinstance(iface, InterfaceItem)
-
-            glue_ok = (
-                port.provided
-                and iface.subject in component.subject.provided
-                or port.required
-                and iface.subject in component.subject.required
-            )
-            return glue_ok
 
         return glue_ok
 
@@ -160,32 +134,28 @@ class ConnectorConnectBase(AbstractConnect):
                 component, iface = iface, component
 
             connections = self.get_connecting(iface, both=True)
-            ports = {c.port for c in connections}
 
-            # to make an assembly at least two connector ends need to exist
-            # also, two different ports of interface need to be connected
-            if len(connections) > 1 and len(ports) == 2:
-                # find assembly connector
-                assembly = None
+            assembly = None
+            for c in connections:
+                if c.item.subject:
+                    assembly = c.item.subject
+                    assert assembly.kind == "assembly"
+                    break
+
+            if assembly is None:
+                assembly = self.element.model.create(UML.Connector)
+                assembly.kind = "assembly"
                 for c in connections:
-                    if c.item.subject:
-                        assembly = c.item.subject
-                        assert assembly.kind == "assembly"
-                        break
-
-                if assembly is None:
-                    assembly = self.element.model.create(UML.Connector)
-                    assembly.kind = "assembly"
-                    for c in connections:
-                        connector = c.item
-                        self.create_uml(
-                            connector,
-                            self.get_component(connector),
-                            assembly,
-                            iface.subject,
-                        )
-                else:
-                    self.create_uml(line, component, assembly, iface.subject)
+                    connector = c.item
+                    self.create_uml(
+                        connector,
+                        self.get_component(connector),
+                        assembly,
+                        iface.subject,
+                    )
+            else:
+                self.create_uml(line, component, assembly, iface.subject)
+            iface.request_update()
 
     def disconnect(self, handle):
         super().disconnect(handle)
@@ -198,12 +168,10 @@ class ConnectorConnectBase(AbstractConnect):
             iface = self.get_connected(line.tail)
 
         connections = list(self.get_connecting(iface, both=True))
-        # find ports, which will stay connected after disconnection
-        ports = {c.port for c in connections if c.item is not self.line}
 
         # destroy whole assembly if one connected item stays
         # or only one port will stay connected
-        if len(connections) == 2 or len(ports) == 1:
+        if len(connections) == 2:
             connector = line.subject
             for ci in connections:
                 c = self.get_component(ci.item)
@@ -213,6 +181,7 @@ class ConnectorConnectBase(AbstractConnect):
         else:
             c = self.get_component(line)
             self.drop_uml(line, c)
+        iface.request_update()
 
 
 @IConnect.register(ComponentItem, ConnectorItem)
@@ -227,60 +196,3 @@ class InterfaceConnectorConnect(ConnectorConnectBase):
     See also `AbstractConnect` class for exception of interface item
     connections.
     """
-
-    def allow(self, handle, port):
-        """Allow gluing to folded interface.
-
-        Only allow gluing when connectors are connected.
-        """
-
-        glue_ok = super().allow(handle, port)
-        iface = self.element
-        glue_ok = glue_ok and iface.folded != Folded.NONE
-        if glue_ok:
-            # find connected items, which are not connectors
-            canvas = self.element.canvas
-            connections = self.get_connecting(self.element)
-            lines = [
-                c.item for c in connections if not isinstance(c.item, ConnectorItem)
-            ]
-            glue_ok = len(lines) == 0
-
-        return glue_ok
-
-    def connect(self, handle, port):
-        super().connect(handle, port)
-
-        iface = self.element
-        iface.folded = Folded.ASSEMBLY
-
-        # determine required and provided ports
-        pport = port
-        ports = iface.ports()
-        index = ports.index(port)
-        rport = ports[(index + 2) % 4]
-        if not port.provided and not port.required:
-            component = self.get_connected(self.line.opposite(handle))
-            if component is not None and iface.subject in component.subject.required:
-                pport, rport = rport, pport
-
-            pport.provided = True
-            rport.required = True
-
-            iface.angle = rport.angle
-
-            ports[(index + 1) % 4].connectable = False
-            ports[(index + 3) % 4].connectable = False
-
-    def disconnect(self, handle):
-        super().disconnect(handle)
-        iface = self.element
-        # about to disconnect last connector
-        if len(list(self.get_connecting(iface))) == 1:
-            ports = iface.ports()
-            iface.folded = Folded.PROVIDED
-            iface.angle = ports[0].angle
-            for p in ports:
-                p.connectable = True
-                p.provided = False
-                p.required = False

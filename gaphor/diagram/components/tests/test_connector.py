@@ -19,42 +19,6 @@ class ConnectorItemTestCase(TestCase):
         assert not conn.subject is None
         # self.assertTrue(conn.end is None)
 
-    def test_name(self):
-        """Test connected interface name
-        """
-        conn = self.create(ConnectorItem, UML.Connector)
-        end = self.element_factory.create(UML.ConnectorEnd)
-        iface = self.element_factory.create(UML.Interface)
-        interface_text = conn.shape_middle.children[-1]
-        end.role = iface
-        conn.subject.end = end
-        # conn.end = end
-        # self.assertTrue(conn._end is end)
-
-        self.assertEqual("", interface_text.text())
-
-        iface.name = "RedSea"
-        assert "RedSea" == interface_text.text()
-
-    def test_setting_end(self):
-        """Test creation of connector item
-        """
-        conn = self.create(ConnectorItem, UML.Connector)
-        end = self.element_factory.create(UML.ConnectorEnd)
-        iface = self.element_factory.create(UML.Interface)
-        interface_text = conn.shape_middle.children[-1]
-        end.role = iface
-        iface.name = "RedSea"
-        conn.subject.end = end
-        # conn.end = end
-        # self.assertTrue(conn._end is end)
-
-        self.assertEqual("RedSea", interface_text.text())
-
-        del conn.subject.end[end]
-        conn.end = None
-        assert "" == interface_text.text()
-
     def test_persistence(self):
         """Test connector item saving/loading
         """
@@ -70,5 +34,3 @@ class ConnectorItemTestCase(TestCase):
 
         connectors = self.diagram.canvas.select(lambda e: isinstance(e, ConnectorItem))
         ends = self.kindof(UML.ConnectorEnd)
-        # self.assertTrue(connectors[0].end is not None)
-        # self.assertTrue(connectors[0].end is ends[0])

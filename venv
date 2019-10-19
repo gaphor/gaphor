@@ -63,7 +63,7 @@ brew --version >/dev/null 2>&1 && {
 		pip install -U pip
 		pip install --upgrade poetry
 
-		poetry install
+		poetry install -E docs
 	}
 
 	test_module() {

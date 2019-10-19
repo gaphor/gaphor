@@ -130,17 +130,6 @@ class AbstractConnect(ConnectBase):
 
         Returns `True` if connection is allowed.
         """
-        from gaphor.diagram.classes.interface import InterfaceItem
-        from gaphor.diagram.classes.implementation import ImplementationItem
-        from gaphor.diagram.classes.dependency import DependencyItem
-
-        iface = self.element
-        if isinstance(iface, InterfaceItem) and iface.folded:
-            canvas = self.canvas
-            count = any(canvas.get_connections(connected=iface))
-            return not count and isinstance(
-                self.line, (DependencyItem, ImplementationItem)
-            )
         return True
 
     def connect(self, handle: Handle, port: Port) -> bool:

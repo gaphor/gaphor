@@ -358,7 +358,7 @@ class Namespace(UIComponent):
             element: The element contained in the in the Namespace.
             old_namespace: The old namespace containing the element, optional.
 
-        Returns: Gtk.TreeIter object
+        Returns: Gtk.TreeIter object of the model (not the sorted one!)
         """
 
         # Using `0` as sentinel
@@ -493,6 +493,10 @@ class Namespace(UIComponent):
         action_group.lookup_action("open").set_enabled(isinstance(element, UML.Diagram))
         action_group.lookup_action("create-diagram").set_enabled(
             isinstance(element, UML.Package)
+            or (
+                isinstance(element, UML.Namespace)
+                and isinstance(element.namespace, UML.Package)
+            )
         )
         action_group.lookup_action("create-package").set_enabled(
             isinstance(element, UML.Package)
@@ -513,8 +517,11 @@ class Namespace(UIComponent):
         a Diagram).
         """
 
-        tree_iter = self.iter_for_element(element)
-        path = self.model.get_path(tree_iter)
+        model = self._namespace.get_model()
+        child_iter = self.iter_for_element(element)
+        ok, tree_iter = model.convert_child_iter_to_iter(child_iter)
+        assert ok, "Could not convert model iterator to view"
+        path = model.get_path(tree_iter)
         path_indices = path.get_indices()
 
         # Expand the parent row
@@ -555,6 +562,8 @@ class Namespace(UIComponent):
     @transactional
     def tree_view_create_diagram(self):
         element = self._namespace.get_selected_element()
+        while not isinstance(element, UML.Package):
+            element = element.namespace
         diagram = self.element_factory.create(UML.Diagram)
         diagram.package = element
 
@@ -603,6 +612,6 @@ class Namespace(UIComponent):
                     s = i.subject
                     if s and len(s.presentation) == 1:
                         s.unlink()
-                    i.unlink
+                    i.unlink()
                 element.unlink()
             m.destroy()

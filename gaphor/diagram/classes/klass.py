@@ -27,8 +27,8 @@ from gaphor.diagram.support import represents
 class ClassItem(ElementPresentation, Classified):
     """This item visualizes a Class instance.
 
-	A ClassItem contains two compartments: one for
-	attributes and one for operations.
+    A ClassItem contains two compartments: one for attributes and one for
+    operations.
     """
 
     __style__ = {
@@ -118,6 +118,7 @@ class ClassItem(ElementPresentation, Classified):
             else:
                 return ()
 
+        print(self, "update shape")
         self.shape = Box(
             Box(
                 Text(

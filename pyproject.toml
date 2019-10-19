@@ -37,6 +37,12 @@ pycairo = "^1.18"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
 importlib_metadata = "^0.23"
+sphinx = {version = "^2.2",optional = true}
+recommonmark = {version = "^0.6.0", optional = true}
+sphinx-rtd-theme = {version = "^0.4.3", optional = true}
+
+[tool.poetry.extras]
+docs = ["sphinx", "recommonmark", "sphinx-rtd-theme"]
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.5"
@@ -45,7 +51,7 @@ pytest-sugar = "^0.9.2"
 pytest-cov = "^2.5"
 pytest-runner = "^4.2"
 black = { version = "^19.3b0", python = "^3.6" }
-mypy = "^0.720.0"
+mypy = "0.730"
 pre-commit = "^1.12"
 
 [tool.poetry.scripts]
