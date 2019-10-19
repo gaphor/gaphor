@@ -87,13 +87,17 @@ class _Application:
         return self.component_registry.get_service(name)
 
     def shutdown(self):
-        for srv, name in self.component_registry.all(Service):
-            self.shutdown_service(name)
+        if self.component_registry:
+            for srv, name in self.component_registry.all(Service):
+                self.shutdown_service(name)
 
         self.component_registry = None
 
     def shutdown_service(self, name):
         logger.info(f"Shutting down service {name}")
+        assert self.component_registry
+        assert self.event_manager
+
         srv = self.component_registry.get_service(name)
         self.event_manager.handle(ServiceShutdownEvent(name, srv))
         self.component_registry.unregister(srv)

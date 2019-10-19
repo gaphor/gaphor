@@ -40,7 +40,9 @@ from typing import (
     Optional,
     Callable,
     Set,
+    Union,
 )
+from typing_extensions import Literal
 
 from gaphor.UML.collection import collection, collectionlist
 from gaphor.UML.event import (
@@ -65,7 +67,7 @@ log = logging.getLogger(__name__)
 T = TypeVar("T", covariant=True)
 G = TypeVar("G", covariant=True)
 
-Upper = Union[str, int]
+Upper = Union[Literal["*"], int]
 
 
 class umlproperty(Generic[T, G]):
@@ -82,7 +84,7 @@ class umlproperty(Generic[T, G]):
     """
 
     def __init__(self):
-        self._dependent_properties: Sequence[umlproperty] = set()
+        self._dependent_properties: Set[Union[derived, redefine]] = set()
         self.name: str
         self._name: str
 
@@ -304,7 +306,7 @@ class association(umlproperty[T, G]):
         self.upper = upper
         self.composite = composite
         self.opposite = opposite and opposite
-        self.stub = None
+        self.stub: Optional[associationstub] = None
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
@@ -421,7 +423,7 @@ class association(umlproperty[T, G]):
 
         """
         if not value:
-            if self.upper != "*" and self.upper > 1:
+            if isinstance(self.upper, int) and self.upper > 1:  # upper != "*"
                 raise Exception("Can not delete collections")
             old = value = self._get(obj)
             if value is None:
