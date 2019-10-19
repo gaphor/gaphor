@@ -141,7 +141,7 @@ class MainWindow(Service, ActionProvider):
         self.tools_menu = tools_menu
 
         self.title = "Gaphor"
-        self.window = None
+        self.window: Gtk.Window = None
         self.filename = None
         self.model_changed = False
         self.layout = None
@@ -353,7 +353,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.properties = properties
-        self._notebook = None
+        self._notebook: Gtk.Notebook = None
 
     def open(self):
         """Open the diagrams component.

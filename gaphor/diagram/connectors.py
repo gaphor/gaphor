@@ -5,15 +5,19 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-from typing import List, Optional, Type, Union
+from __future__ import annotations
+
+from typing import List, Optional, Type, Union, TYPE_CHECKING
 
 from gaphas.canvas import Connection
 from gaphas.connector import Handle, Port
 
 from gaphor import UML
-from gaphor.UML.properties import association
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
+
+if TYPE_CHECKING:
+    from gaphor.UML.properties import association, umlproperty
 
 
 class ConnectBase:

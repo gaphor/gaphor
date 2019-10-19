@@ -30,6 +30,7 @@ class DependencyConnect(RelationshipConnect):
     def reconnect(self, handle, port):
         line = self.line
         dep = line.subject
+        assert isinstance(dep, UML.Dependency)
         if dep and handle is line.head:
             for s in dep.supplier:
                 del dep.supplier[s]
@@ -51,12 +52,14 @@ class DependencyConnect(RelationshipConnect):
             canvas = line.canvas
             opposite = line.opposite(handle)
 
+            other = self.get_connected(opposite)
+            assert other
             if handle is line.head:
-                client = self.get_connected(opposite).subject
+                client = other.subject
                 supplier = self.element.subject
             else:
                 client = self.element.subject
-                supplier = self.get_connected(opposite).subject
+                supplier = other.subject
             line.dependency_type = UML.model.dependency_type(client, supplier)
 
         relation = self.relationship_or_new(
@@ -108,6 +111,7 @@ class AssociationConnect(UnaryRelationshipConnect):
 
             # First check if we do not already contain the right subject:
             if line.subject:
+                assert isinstance(line.subject, UML.Association)
                 end1 = line.subject.memberEnd[0]
                 end2 = line.subject.memberEnd[1]
                 if (end1.type is head_type and end2.type is tail_type) or (
@@ -187,12 +191,13 @@ class ImplementationConnect(RelationshipConnect):
     def reconnect(self, handle, port):
         line = self.line
         impl = line.subject
+        assert isinstance(impl, UML.Implementation)
         if handle is line.head:
-            for s in impl.contract:
-                del impl.contract[s]
+            for s in impl.contract:  # type: ignore
+                del impl.contract[s]  # type: ignore
         elif handle is line.tail:
-            for c in impl.implementatingClassifier:
-                del impl.implementatingClassifier[c]
+            for c in impl.implementatingClassifier:  # type: ignore
+                del impl.implementatingClassifier[c]  # type: ignore
         self.reconnect_relationship(
             handle,
             UML.Implementation.contract,

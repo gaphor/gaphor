@@ -6,7 +6,7 @@
 #  license details.
 #
 
-from typing import List
+from typing import Dict, List
 
 import code
 import sys
@@ -81,8 +81,11 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     __gtype_name__ = "GTKInterpreterConsole"
 
-    def __init__(self, locals=None, banner=banner):
+    def __init__(self, locals: Dict[str, object], banner=banner):
         Gtk.ScrolledWindow.__init__(self)
+        self.locals = locals
+        locals["help"] = Help()
+
         self.set_min_content_width(640)
         self.set_min_content_height(480)
         self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
@@ -94,8 +97,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.interpreter = code.InteractiveInterpreter(locals)
 
-        self.interpreter.locals["help"] = Help()
-        self.completer = Completer(self.interpreter.locals)
+        self.completer = Completer(locals)
         self.buffer: List[str] = []
         self.history: List[str] = []
         self.banner = banner
@@ -140,7 +142,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.stdout = TextViewWriter("stdout", self.text, self.style_out)
         self.stderr = TextViewWriter("stderr", self.text, self.style_err)
 
-        self.current_prompt = None
+        self.current_prompt = lambda: ""
 
         self.add(self.text)
         self.text.show()
@@ -271,11 +273,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
             token = tokens[-1]
             completions: List[str] = []
             p = self.completer.complete(token, len(completions))
-            while p != None:
+            while p:
+                assert p
                 completions.append(p)
                 p = self.completer.complete(token, len(completions))
         else:
-            completions = list(self.interpreter.locals.keys())
+            completions = list(self.locals.keys())
 
         if len(completions) > 1:
             max_len = max(map(len, completions)) + 2
@@ -298,7 +301,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
 def main(main_loop=True):
     w = Gtk.Window()
-    console = GTKInterpreterConsole()
+    console = GTKInterpreterConsole(locals())
     w.add(console)
 
     def destroy(arg=None):

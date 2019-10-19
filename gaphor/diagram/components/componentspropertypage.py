@@ -1,5 +1,6 @@
 from gi.repository import Gtk
 
+from gaphor import UML
 from gaphor.core import _, transactional
 from gaphor.diagram.propertypages import PropertyPages, NamedItemPropertyPage
 from gaphor.diagram.components import ComponentItem
@@ -9,6 +10,8 @@ from gaphor.diagram.components import ComponentItem
 class ComponentPropertyPage(NamedItemPropertyPage):
     """
     """
+
+    subject: UML.Component
 
     def construct(self):
         page = super().construct()

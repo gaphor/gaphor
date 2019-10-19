@@ -2,6 +2,8 @@
 Base code for presentation elements
 """
 
+from __future__ import annotations
+
 from typing import Generic, Optional, TypeVar, TYPE_CHECKING
 from gaphor.UML.properties import umlproperty, association
 from gaphor.UML.element import Element
@@ -32,9 +34,9 @@ class Presentation(Element, Generic[S]):
         "subject", Element, upper=1, opposite="presentation"
     )
 
-    canvas: Optional["Canvas"]
+    canvas: Optional[Canvas]
 
-    matrix: "Matrix"
+    matrix: Matrix
 
     def watch(self, path, handler=None):
         """

@@ -12,8 +12,13 @@ See the documentation on the mixins.
 
 __all__ = ["querymixin", "recursemixin"]
 
+from typing import Callable, List, TypeVar
 
-class Matcher:
+
+T = TypeVar("T")
+
+
+def matcher(expr) -> Callable[[T], bool]:
     """
     Returns True if the expression returns True.
     The context for the expression is the element.
@@ -32,29 +37,30 @@ class Matcher:
 
     If we want to match, ``it`` is used to refer to the subjected object:
 
-    >>> Matcher('it.name=="root"')(a)
+    >>> matcher('it.name=="root"')(a)
     True
-    >>> Matcher('it.b.name=="b"')(a)
+    >>> matcher('it.b.name=="b"')(a)
     True
-    >>> Matcher('it.name=="blah"')(a)
+    >>> matcher('it.name=="blah"')(a)
     False
-    >>> Matcher('it.nonexistent=="root"')(a)
+    >>> matcher('it.nonexistent=="root"')(a)
     False
 
     NOTE: the object ``it`` was introduced since properties (descriptors) can
     not be executed from within a dictionary context.
     """
 
-    def __init__(self, expr):
-        self.expr = compile(expr, "<matcher>", "eval")
+    compiled = compile(expr, "<matcher>", "eval")
 
-    def __call__(self, element):
+    def real_matcher(element: T):
         try:
-            return eval(self.expr, {}, {"it": element})
+            return eval(compiled, {}, {"it": element})
         except (AttributeError, NameError):
             # attribute does not (yet) exist
             # print 'No attribute', expr, d
             return False
+
+    return real_matcher
 
 
 class querymixin:
@@ -82,7 +88,7 @@ class querymixin:
     'two'
     """
 
-    def __getitem__(self, key):
+    def __getitem__(self: List, key):  # type: ignore
         try:
             # See if the list can deal with it (don't change default behaviour)
             return super().__getitem__(key)  # type: ignore
@@ -93,7 +99,7 @@ class querymixin:
             else:
                 remainder = None
 
-            matcher = Matcher(key)
+            matcher = matcher(key)
             matched = list(filter(matcher, self))
             if remainder:
                 return type(self)(matched).__getitem__(*remainder)
