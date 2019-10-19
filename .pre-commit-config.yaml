@@ -5,8 +5,7 @@ repos:
   - id: black
     language_version: python3
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: master
+  rev: "v0.730"
   hooks:
   - id: mypy
-    rev: 0.730
     args: [ --warn-unused-configs ]
