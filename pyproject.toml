@@ -51,7 +51,7 @@ pytest-sugar = "^0.9.2"
 pytest-cov = "^2.5"
 pytest-runner = "^4.2"
 black = { version = "^19.3b0", python = "^3.6" }
-mypy = "^0.720.0"
+mypy = "^0.740"
 pre-commit = "^1.12"
 
 [tool.poetry.scripts]
