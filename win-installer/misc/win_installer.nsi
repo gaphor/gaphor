@@ -32,9 +32,9 @@ Var INST_BIN
 Var UNINST_BIN
 
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\gaphor.ico"
+!define MUI_ICON "gaphor.ico"
 
-!insertmacro MUI_PAGE_LICENSE "..\gaphor\LICENSE.txt"
+!insertmacro MUI_PAGE_LICENSE "gaphor\LICENSE.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 
@@ -61,7 +61,7 @@ Section "Install"
     SetOutPath "$INSTDIR"
     File /r "*.*"
 
-    StrCpy $INST_BIN "$INSTDIR\bin\gaphor.exe"
+    StrCpy $INST_BIN "$INSTDIR\launch-gaphor.exe"
     StrCpy $UNINST_BIN "$INSTDIR\uninstall.exe"
 
     ; Store installation folder
@@ -101,7 +101,7 @@ Section "Install"
     WriteRegStr HKLM "Software\RegisteredApplications" "${NAME}" "Software\${NAME}\${ID}\Capabilities"
 
     ; Register app paths
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\gaphor.exe" "" "$INST_BIN"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\launch-gaphor.exe" "" "$INST_BIN"
 
     ; Create uninstaller
     WriteUninstaller "$UNINST_BIN"
@@ -174,7 +174,7 @@ Section "Uninstall"
     DeleteRegValue HKLM "Software\RegisteredApplications" "${NAME}"
 
     ; Remove app paths
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\gaphor.exe"
+    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\launch-gaphor.exe"
 
     ; Delete installation related keys
     DeleteRegKey HKLM "${UNINST_KEY}"
