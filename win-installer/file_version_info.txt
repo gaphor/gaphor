@@ -34,7 +34,7 @@ VSVersionInfo(
         StringStruct(u'FileVersion', u'1.0.2'),
         StringStruct(u'InternalName', u'Gaphor'),
         StringStruct(u'LegalCopyright', u'Copyright © 2019 Arjan J. Molenaar.'),
-        StringStruct(u'OriginalFilename', u'gaphor.exe'),
+        StringStruct(u'OriginalFilename', u'launch-gaphor.exe'),
         StringStruct(u'ProductName', u'Gaphor'),
         StringStruct(u'ProductVersion', u'1.0.2')])
       ]), 
