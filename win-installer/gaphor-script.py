@@ -3,8 +3,6 @@ if __name__ == "__main__":
     from gaphor import core
     from gaphor.UML.elementfactory import ElementFactory
     from gaphor.plugins.diagramexport import DiagramExport
-    from gaphor.plugins.diagramlayout import DiagramLayout
-    from gaphor.plugins.pynsource import PyNSource
     from gaphor.plugins.xmiexport import XMIExport
     from gaphor.services.componentregistry import ComponentRegistry
     from gaphor.services.copyservice import CopyService
