@@ -100,7 +100,6 @@ setup(
             "main_window = gaphor.ui.mainwindow:MainWindow",
             "preferences = gaphor.ui.preferences:Preferences",
             "export_menu = gaphor.ui.menufragment:MenuFragment",
-            "import_menu = gaphor.ui.menufragment:MenuFragment",
             "tools_menu = gaphor.ui.menufragment:MenuFragment",
             "copy = gaphor.services.copyservice:CopyService",
             "sanitizer = gaphor.services.sanitizerservice:SanitizerService",

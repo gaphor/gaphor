@@ -12,7 +12,6 @@ class CopyServiceTestCase(TestCase):
         "main_window",
         "properties",
         "undo_manager",
-        "import_menu",
         "export_menu",
         "tools_menu",
     ]
