@@ -81,7 +81,6 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
-"diagram_layout" = "gaphor.plugins.diagramlayout:DiagramLayout"
 
 [build-system]
 requires = ["poetry==1.0.0b1"]

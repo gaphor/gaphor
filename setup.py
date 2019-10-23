@@ -112,7 +112,6 @@ setup(
             "elementeditor = gaphor.ui.elementeditor:ElementEditor",
             "diagram_export = gaphor.plugins.diagramexport:DiagramExport",
             "xmi_export = gaphor.plugins.xmiexport:XMIExport",
-            "diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout",
         ],
     },
     cmdclass={
