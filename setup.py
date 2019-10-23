@@ -113,7 +113,6 @@ setup(
             "diagram_export = gaphor.plugins.diagramexport:DiagramExport",
             "xmi_export = gaphor.plugins.xmiexport:XMIExport",
             "diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout",
-            "pynsource = gaphor.plugins.pynsource:PyNSource",
         ],
     },
     cmdclass={

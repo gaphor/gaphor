@@ -82,7 +82,6 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 "diagram_layout" = "gaphor.plugins.diagramlayout:DiagramLayout"
-"pynsource" = "gaphor.plugins.pynsource:PyNSource"
 
 [build-system]
 requires = ["poetry==1.0.0b1"]
