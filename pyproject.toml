@@ -85,5 +85,5 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "pynsource" = "gaphor.plugins.pynsource:PyNSource"
 
 [build-system]
-requires = ["poetry==1.0.0b1"]
+requires = ["poetry==1.0.0b2"]
 build-backend = "poetry.masonry.api"
