@@ -21,7 +21,6 @@ class DiagramToolboxTestCase(TestCase):
         "element_factory",
         "properties",
         "main_window",
-        "import_menu",
         "export_menu",
         "tools_menu",
     ]

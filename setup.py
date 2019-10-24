@@ -100,7 +100,6 @@ setup(
             "main_window = gaphor.ui.mainwindow:MainWindow",
             "preferences = gaphor.ui.preferences:Preferences",
             "export_menu = gaphor.ui.menufragment:MenuFragment",
-            "import_menu = gaphor.ui.menufragment:MenuFragment",
             "tools_menu = gaphor.ui.menufragment:MenuFragment",
             "copy = gaphor.services.copyservice:CopyService",
             "sanitizer = gaphor.services.sanitizerservice:SanitizerService",
@@ -112,8 +111,6 @@ setup(
             "elementeditor = gaphor.ui.elementeditor:ElementEditor",
             "diagram_export = gaphor.plugins.diagramexport:DiagramExport",
             "xmi_export = gaphor.plugins.xmiexport:XMIExport",
-            "diagram_layout = gaphor.plugins.diagramlayout:DiagramLayout",
-            "pynsource = gaphor.plugins.pynsource:PyNSource",
         ],
     },
     cmdclass={
