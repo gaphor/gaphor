@@ -113,6 +113,8 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         self.item.request_update()
 
 
+@PropertyPages.register(UML.ControlFlow)
+@PropertyPages.register(UML.ObjectFlow)
 class FlowPropertyPageAbstract(NamedElementPropertyPage):
     """Flow item element editor."""
 
@@ -145,15 +147,3 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
         self.subject.guard = value
-
-
-# TODO: unify ObjectFlowPropertyPage and ControlFlowPropertyPage
-#   after introducing common class for element editors
-@PropertyPages.register(UML.ControlFlow)
-class ControlFlowPropertyPage(FlowPropertyPageAbstract):
-    pass
-
-
-@PropertyPages.register(UML.ObjectFlow)
-class ObjectFlowPropertyPage(FlowPropertyPageAbstract):
-    pass

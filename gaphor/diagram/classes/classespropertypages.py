@@ -402,7 +402,6 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         if not end.subject:
             return None
 
-        # TODO: use Gtk.Frame here
         frame = Gtk.Frame.new(f"{title} (: {end.subject.type.name})")
         vbox = Gtk.VBox()
         vbox.set_border_width(6)
