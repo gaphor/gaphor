@@ -55,7 +55,6 @@ def test_multiple_root_elements(namespace, element_factory):
 def dump_model(model):
     def dump(i):
         while i:
-            print(("  " * model.iter_depth(i)) + str(model.get_value(i, 0).name))
             dump(model.iter_children(i))
             i = model.iter_next(i)
 

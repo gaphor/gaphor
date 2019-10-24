@@ -28,7 +28,6 @@ class DummyActionProvider(ActionProvider):
 
     @action(name="toggle", state=True)
     def toggle(self, state):
-        print("State", state)
         self.toggle_state = state
 
 

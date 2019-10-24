@@ -297,7 +297,6 @@ class FileManager(Service, ActionProvider):
 
     @action(name="file-open-recent")
     def action_open_recent(self, file_url: str):
-        print("Opening file", file_url)
         parsed_url = urllib.parse.urlparse(file_url)
         path = parsed_url.path
         self.load(path)
