@@ -1,0 +1,8 @@
+component_depth: 3
+languages:
+- python
+exclude:
+- /gaphor/UML/uml2\.py
+- /utils/.*
+- .*\.gaphor
+- .*\.svg
