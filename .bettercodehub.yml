@@ -4,5 +4,6 @@ languages:
 exclude:
 - /gaphor/UML/uml2\.py
 - /utils/.*
+- /win-installer/.*
 - .*\.gaphor
 - .*\.svg
