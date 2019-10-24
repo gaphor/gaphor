@@ -73,7 +73,7 @@ def hamburger_menu(hamburger_model):
     return button
 
 
-def create_hamburger_model(import_menu, export_menu, tools_menu):
+def create_hamburger_model(export_menu, tools_menu):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
@@ -83,10 +83,6 @@ def create_hamburger_model(import_menu, export_menu, tools_menu):
 
     part = Gio.Menu.new()
     part.append(_("Save As..."), "win.file-save-as")
-    model.append_section(None, part)
-
-    part = Gio.Menu.new()
-    part.append_submenu(_("Import"), import_menu)
     part.append_submenu(_("Export"), export_menu)
     model.append_section(None, part)
 
@@ -134,7 +130,6 @@ class MainWindow(Service, ActionProvider):
         component_registry,
         element_factory,
         properties,
-        import_menu,
         export_menu,
         tools_menu,
     ):
@@ -142,7 +137,6 @@ class MainWindow(Service, ActionProvider):
         self.component_registry = component_registry
         self.element_factory = element_factory
         self.properties = properties
-        self.import_menu = import_menu
         self.export_menu = export_menu
         self.tools_menu = tools_menu
 
@@ -213,9 +207,7 @@ class MainWindow(Service, ActionProvider):
 
         header.pack_end(
             hamburger_menu(
-                create_hamburger_model(
-                    self.import_menu.menu, self.export_menu.menu, self.tools_menu.menu
-                )
+                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
             )
         )
         header.pack_end(button(_("Save"), "win.file-save"))

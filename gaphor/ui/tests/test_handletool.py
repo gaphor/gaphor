@@ -33,7 +33,6 @@ def application():
             "diagrams",
             "toolbox",
             "elementeditor",
-            "import_menu",
             "export_menu",
             "tools_menu",
         ]
@@ -114,7 +113,6 @@ class HandleToolTestCase(unittest.TestCase):
                 "diagrams",
                 "toolbox",
                 "elementeditor",
-                "import_menu",
                 "export_menu",
                 "tools_menu",
             ]

@@ -21,7 +21,6 @@ class DiagramPageTestCase(unittest.TestCase):
                 "diagrams",
                 "toolbox",
                 "elementeditor",
-                "import_menu",
                 "export_menu",
                 "tools_menu",
             ]
