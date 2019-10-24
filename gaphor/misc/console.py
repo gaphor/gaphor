@@ -38,7 +38,7 @@ class Help:
         if obj:
             pydoc.help(obj)
         else:
-            str(self)
+            return str(self)
 
     def __str__(self):
         return "Usage: help(object)"
@@ -146,8 +146,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.text.show()
 
         self.write_line(self.banner, self.style_banner)
-
-        GLib.idle_add(self.prompt_ps1)
+        self.prompt_ps1()
 
     def reset_history(self):
         self.history = []
@@ -297,7 +296,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         return True
 
 
-def main():
+def main(main_loop=True):
     w = Gtk.Window()
     console = GTKInterpreterConsole()
     w.add(console)
@@ -319,7 +318,8 @@ def main():
     w.connect("key_press_event", key_event)
     w.show_all()
 
-    Gtk.main()
+    if main_loop:
+        Gtk.main()
 
 
 if __name__ == "__main__":
