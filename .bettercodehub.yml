@@ -3,6 +3,7 @@ languages:
 - python
 exclude:
 - /gaphor/UML/uml2\.py
+- /docs/.*
 - /utils/.*
 - /win-installer/.*
 - .*\.gaphor
