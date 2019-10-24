@@ -190,7 +190,7 @@ class InterfaceItem(ElementPresentation, Classified):
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
         ).watch(
-            "subject[NamedElement].namespace"
+            "subject[NamedElement].namespace.name"
         ).watch(
             "subject.appliedStereotype", self.update_shapes
         ).watch(
