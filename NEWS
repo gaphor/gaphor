@@ -5,12 +5,9 @@
 - Convert docs to Markdown
 - Convert strings in to f-string format
 - Change Windows packaging to use PyInstaller
-- Fixes for Flatpak on Wayland
-- Macos package
 - The Element Editor is now part of the main window
 - New render mechanism for diagram items
 - Code is (partly) statically checked by Mypy
-- Dropped Zope package dependencies
 - Many, many bug fixes
 
 1.0.2
