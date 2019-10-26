@@ -10,7 +10,7 @@ pacman --noconfirm -S --needed \
     git \
     mingw-w64-$MSYS2_ARCH-gcc \
     mingw-w64-$MSYS2_ARCH-gtk3 \
-    mingw-w64-$MSYS2_ARCH-pkgconfig \
+    mingw-w64-$MSYS2_ARCH-pkg-config \
     mingw-w64-$MSYS2_ARCH-cairo \
     mingw-w64-$MSYS2_ARCH-python3 \
     mingw-w64-$MSYS2_ARCH-python3-gobject \
