@@ -169,7 +169,7 @@ jobs:
         xvfb-run pytest
       displayName: 'PyTest'
       env:
-        PYTEST_ADDOPTS: "--doctest-modules --junitxml/test-results.xml"
+        PYTEST_ADDOPTS: "--doctest-modules --junitxml=junit/test-results.xml"
 
 
     - task: PublishTestResults@2
