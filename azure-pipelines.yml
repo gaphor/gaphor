@@ -127,7 +127,7 @@ jobs:
         pytest
       displayName: 'PyTest'
       env:
-        PYTEST_ADDOPTS: "--doctest-modules"
+        PYTEST_ADDOPTS: "--doctest-modules --junitxml/test-results.xml"
 
     - script: |
         cd macos-dmg
@@ -181,7 +181,7 @@ jobs:
         xvfb-run pytest
       displayName: 'PyTest'
       env:
-        PYTEST_ADDOPTS: "--doctest-modules"
+        PYTEST_ADDOPTS: "--doctest-modules --junitxml/test-results.xml"
 
 
     - task: PublishTestResults@2
