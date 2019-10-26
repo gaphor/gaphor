@@ -15,7 +15,7 @@
     <screenshot type="default">
       <caption>The Gaphor main window</caption>
       <image type="source" width="799" height="599">
-        http://screenshots.debian.net/screenshots/000/016/772/large.png</image>
+        http://screenshots.debian.net/screenshots/000/018/537/large.png</image>
     </screenshot>
   </screenshots>
   <url type="homepage">https://github.com/gaphor/gaphor</url>
@@ -26,6 +26,7 @@
     </p>
   </description>
   <releases>
+    <release version="1.1.0" date="2019-10-26"/>
     <release version="1.0.2" date="2019-07-26"/>
     <release version="1.0.1" date="2019-04-19"/>
     <release version="1.0.0" date="2019-04-04"/>

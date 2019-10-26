@@ -1,6 +1,6 @@
 app-id: org.gaphor.Gaphor
 runtime: org.gnome.Platform
-runtime-version: '3.30'
+runtime-version: '3.34'
 sdk: org.gnome.Sdk
 rename-icon: gaphor
 command: gaphor
@@ -9,10 +9,6 @@ finish-args:
   - --socket=fallback-x11
   - --share=ipc
   - --socket=wayland
-  - --filesystem=xdg-run/dconf
-  - --filesystem=~/.config/dconfig:ro
-  - --talk-name=ca.desrt.dconf
-  - --env=DCONF_USER_CONFIG_DIR=.config/dconf
 cleanup:
   - /include
   - /lib/debug
@@ -30,7 +26,7 @@ modules:
         url: https://github.com/gaphor/gaphor
         commit: 4f202f69bdfe15c6f0860d27c1426792f36f2edc
     post-install:
-      - install -Dm644 flatpak/org.gaphor.Gaphor.appdata.xml /app/share/appdata/org.gaphor.Gaphor.appdata.xml
+      - install -Dm644 flatpak/org.gaphor.Gaphor.appdata.xml /app/share/metainfo/org.gaphor.Gaphor.appdata.xml
       - install -Dm644 flatpak/org.gaphor.Gaphor.desktop /app/share/applications/org.gaphor.Gaphor.desktop
       - install -Dm644 gaphor/ui/pixmaps/gaphor-24x24.png /app/share/icons/hicolor/24x24/apps/gaphor.png
       - install -Dm644 gaphor/ui/pixmaps/gaphor-48x48.png /app/share/icons/hicolor/48x48/apps/gaphor.png
