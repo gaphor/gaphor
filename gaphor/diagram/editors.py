@@ -87,7 +87,6 @@ class NamedItemEditor(AbstractEditor):
         pass
 
 
-# TODO: Needs implementing
 @Editor.register(Classified)
 class ClassifiedItemEditor(AbstractEditor):
     """Text editor support for compartment items."""

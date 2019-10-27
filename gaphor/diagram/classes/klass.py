@@ -31,11 +31,6 @@ class ClassItem(ElementPresentation, Classified):
     operations.
     """
 
-    __style__ = {
-        "extra-space": "compartment",
-        "abstract-feature-font": "sans italic 10",
-    }
-
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
@@ -44,7 +39,7 @@ class ClassItem(ElementPresentation, Classified):
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
         ).watch(
-            "subject[NamedElement].namespace"
+            "subject[NamedElement].namespace.name"
         ).watch(
             "subject.appliedStereotype", self.update_shapes
         ).watch(
@@ -57,51 +52,9 @@ class ClassItem(ElementPresentation, Classified):
             "subject.appliedStereotype.slot.value", self.update_shapes
         ).watch(
             "subject[Classifier].isAbstract", self.update_shapes
-        ).watch(
-            "subject[Class].ownedAttribute", self.update_shapes
-        ).watch(
-            "subject[Class].ownedOperation", self.update_shapes
-        ).watch(
-            "subject[Class].ownedAttribute.association", self.update_shapes
-        ).watch(
-            "subject[Class].ownedAttribute.name"
-        ).watch(
-            "subject[Class].ownedAttribute.isStatic", self.update_shapes
-        ).watch(
-            "subject[Class].ownedAttribute.isDerived"
-        ).watch(
-            "subject[Class].ownedAttribute.visibility"
-        ).watch(
-            "subject[Class].ownedAttribute.lowerValue"
-        ).watch(
-            "subject[Class].ownedAttribute.upperValue"
-        ).watch(
-            "subject[Class].ownedAttribute.defaultValue"
-        ).watch(
-            "subject[Class].ownedAttribute.typeValue"
-        ).watch(
-            "subject[Class].ownedOperation.name"
-        ).watch(
-            "subject[Class].ownedOperation.isAbstract", self.update_shapes
-        ).watch(
-            "subject[Class].ownedOperation.isStatic", self.update_shapes
-        ).watch(
-            "subject[Class].ownedOperation.visibility"
-        ).watch(
-            "subject[Class].ownedOperation.returnResult.lowerValue"
-        ).watch(
-            "subject[Class].ownedOperation.returnResult.upperValue"
-        ).watch(
-            "subject[Class].ownedOperation.returnResult.typeValue"
-        ).watch(
-            "subject[Class].ownedOperation.formalParameter.lowerValue"
-        ).watch(
-            "subject[Class].ownedOperation.formalParameter.upperValue"
-        ).watch(
-            "subject[Class].ownedOperation.formalParameter.typeValue"
-        ).watch(
-            "subject[Class].ownedOperation.formalParameter.defaultValue"
         )
+        attribute_watches(self, "Class")
+        operation_watches(self, "Class")
 
     show_stereotypes = UML.properties.attribute("show_stereotypes", int)
 
@@ -118,7 +71,6 @@ class ClassItem(ElementPresentation, Classified):
             else:
                 return ()
 
-        print(self, "update shape")
         self.shape = Box(
             Box(
                 Text(
@@ -174,6 +126,56 @@ class ClassItem(ElementPresentation, Classified):
             print("in attr comp")
 
         return self
+
+
+def attribute_watches(presentation, cast):
+    presentation.watch(
+        f"subject[{cast}].ownedAttribute", presentation.update_shapes
+    ).watch(
+        f"subject[{cast}].ownedAttribute.association", presentation.update_shapes
+    ).watch(
+        f"subject[{cast}].ownedAttribute.name"
+    ).watch(
+        f"subject[{cast}].ownedAttribute.isStatic", presentation.update_shapes
+    ).watch(
+        f"subject[{cast}].ownedAttribute.isDerived"
+    ).watch(
+        f"subject[{cast}].ownedAttribute.visibility"
+    ).watch(
+        f"subject[{cast}].ownedAttribute.lowerValue"
+    ).watch(
+        f"subject[{cast}].ownedAttribute.upperValue"
+    ).watch(
+        f"subject[{cast}].ownedAttribute.defaultValue"
+    ).watch(
+        f"subject[{cast}].ownedAttribute.typeValue"
+    )
+
+
+def operation_watches(presentation, cast):
+    presentation.watch(
+        f"subject[{cast}].ownedOperation", presentation.update_shapes
+    ).watch(f"subject[{cast}].ownedOperation.name").watch(
+        f"subject[{cast}].ownedOperation.isAbstract", presentation.update_shapes
+    ).watch(
+        f"subject[{cast}].ownedOperation.isStatic", presentation.update_shapes
+    ).watch(
+        f"subject[{cast}].ownedOperation.visibility"
+    ).watch(
+        f"subject[{cast}].ownedOperation.returnResult.lowerValue"
+    ).watch(
+        f"subject[{cast}].ownedOperation.returnResult.upperValue"
+    ).watch(
+        f"subject[{cast}].ownedOperation.returnResult.typeValue"
+    ).watch(
+        f"subject[{cast}].ownedOperation.formalParameter.lowerValue"
+    ).watch(
+        f"subject[{cast}].ownedOperation.formalParameter.upperValue"
+    ).watch(
+        f"subject[{cast}].ownedOperation.formalParameter.typeValue"
+    ).watch(
+        f"subject[{cast}].ownedOperation.formalParameter.defaultValue"
+    )
 
 
 def attributes_compartment(subject):

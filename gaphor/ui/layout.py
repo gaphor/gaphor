@@ -18,12 +18,6 @@ def deserialize(layout, container, layoutstr, itemfactory):
     and such should be done by the invoking application.
     """
 
-    def counter():
-        i = 0
-        while True:
-            yield i
-            i += 1
-
     def _des(element, index, parent_widget=None):
         if element.tag == "component":
             name = element.attrib["name"]
@@ -35,14 +29,13 @@ def deserialize(layout, container, layoutstr, itemfactory):
             factory = widget_factory[element.tag]
             widget = factory(parent=parent_widget, index=index, **element.attrib)
             assert widget, f"No widget ({widget})"
-            if len(element):
-                list(map(_des, element, counter(), [widget] * len(element)))
+            for i, e in enumerate(element):
+                _des(e, i, widget)
         return widget
 
     tree = fromstring(layoutstr)
-    list(map(layout.append, list(map(_des, tree, counter(), [container] * len(tree)))))
-
-    # return layout
+    for index, element in enumerate(tree):
+        layout.append(_des(element, index, container))
 
 
 def add(widget, index, parent_widget, resize=False, shrink=False):

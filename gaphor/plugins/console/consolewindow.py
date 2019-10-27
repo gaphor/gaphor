@@ -10,7 +10,7 @@ from gaphor.action import action
 from gaphor.misc import get_config_dir
 from gaphor.abc import ActionProvider
 from gaphor.ui.abc import UIComponent
-from gaphor.misc.console import GTKInterpreterConsole
+from gaphor.plugins.console.console import GTKInterpreterConsole
 
 log = logging.getLogger(__name__)
 
@@ -48,12 +48,6 @@ class ConsoleWindow(UIComponent, ActionProvider):
         console = self.construct()
         self.load_console_py(console)
 
-    # @action(
-    #     name="console-window-close",
-    #     label="_Close",
-    #     icon_name="window-close",
-    #     shortcut="<Primary><Shift>w",
-    # )
     def close(self, widget=None):
         if self.window:
             self.window.destroy()

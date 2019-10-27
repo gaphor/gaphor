@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.ui.consolewindow import ConsoleWindow
+from gaphor.plugins.console.consolewindow import ConsoleWindow
 import gaphor.services.componentregistry
 import gaphor.ui.menufragment
 

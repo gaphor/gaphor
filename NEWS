@@ -1,10 +1,14 @@
 1.1.0
 -----
-- New menu structure, accoring to GNOME HIG
+- New menu structure, according to the GNOME HIG
 - Dark theme support
-- Fixes for Flatpak on Wayland
-- Macos package
-- Dropped Zope package dependencies
+- Convert docs to Markdown
+- Convert strings in to f-string format
+- Change Windows packaging to use PyInstaller
+- The Element Editor is now part of the main window
+- New render mechanism for diagram items
+- Code is (partly) statically checked by Mypy
+- Many, many bug fixes
 
 1.0.2
 -----

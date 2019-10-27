@@ -34,27 +34,18 @@ jobs:
 
     steps:
       - script: |
-          set MSYS2_ROOT=%CD:~0,2%\msys64
-          choco install msys2 --params="/InstallDir:%MSYS2_ROOT% /NoUpdate /NoPath"
+          choco install msys2 --params="/InstallDir:%CD:~0,2%\msys64 /NoUpdate /NoPath"
         displayName: Install MSYS2
 
       - script: |
-          set MSYS2_ROOT=%CD:~0,2%\msys64
-          git clone https://github.com/userzimmermann/MSYS2-cmd.git %MSYS2_ROOT%\cmd
-          %MSYS2_ROOT%\cmd\msystem MSYS
-        displayName: Install and Activate MSYS2-cmd
-
-      - script: |
-          set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MSYS
-          pacman --noconfirm -Syyuu
-          pacman --noconfirm -Syuu
+          set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+          %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syyuu
+          %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
         displayName: Update MSYS2
 
       - script: |
-          set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MSYS
-          bash -c ".azure/msys2-install.sh"
+          set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+          %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-install.sh"
         displayName: Install Dependencies
         env:
           MSYS2_ARCH: $(MSYS2_ARCH)
@@ -62,25 +53,22 @@ jobs:
           CHERE_INVOKING: yes
 
       - script: |
-          set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MSYS
-          bash -c ".azure/msys2-test.sh"
+          set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+          %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-test.sh"
         displayName: Run Tests
         env:
-          MSYS2_ARCH: $(MSYS2_ARCH)
           MSYSTEM: $(MSYSTEM)
           CHERE_INVOKING: yes
 
       - task: PublishTestResults@2
         condition: not(canceled())
         inputs:
-          testResultsFiles: junit/test-results.xml
+          testResultsFiles: '**/test-*.xml'
           testRunTitle: Publish Test Results
 
       - script: |
-          set MSYS2_ROOT=%CD:~0,2%\msys64
-          %MSYS2_ROOT%\cmd\msystem MSYS
-          bash -c "win-installer/build.sh"
+          set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
+          %CD:~0,2%\msys64\usr\bin\bash -lc "win-installer/build-installer.sh"
         displayName: Create Windows Binaries
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         env:
@@ -91,7 +79,7 @@ jobs:
         displayName: Copy Windows Binaries
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         inputs:
-          sourceFolder: .
+          sourceFolder: 'win-installer'
           contents: '*.exe'
           targetFolder: $(Build.ArtifactStagingDirectory)
 
@@ -127,7 +115,7 @@ jobs:
         pytest
       displayName: 'PyTest'
       env:
-        PYTEST_ADDOPTS: "--doctest-modules"
+        PYTEST_ADDOPTS: "--doctest-modules --junitxml=junit/test-results.xml"
 
     - script: |
         cd macos-dmg
@@ -181,7 +169,7 @@ jobs:
         xvfb-run pytest
       displayName: 'PyTest'
       env:
-        PYTEST_ADDOPTS: "--doctest-modules"
+        PYTEST_ADDOPTS: "--doctest-modules --junitxml=junit/test-results.xml"
 
 
     - task: PublishTestResults@2

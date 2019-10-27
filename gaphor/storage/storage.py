@@ -96,7 +96,6 @@ def save_generator(writer, factory):
         (which contains a list of references to other UML elements) or a
         gaphas.Canvas (which contains canvas items).
         """
-        # log.debug('saving element: %s|%s %s' % (name, value, type(value)))
         if isinstance(value, (UML.Element, gaphas.Item)):
             save_reference(name, value)
         elif isinstance(value, collection):
@@ -113,7 +112,6 @@ def save_generator(writer, factory):
         Save attributes and references in a gaphor.diagram.* object.
         The extra attribute reference can be used to force UML
         """
-        # log.debug('saving canvasitem: %s|%s %s' % (name, value, type(value)))
         if isinstance(value, collection) or (
             isinstance(value, (list, tuple)) and reference == True
         ):
@@ -178,7 +176,6 @@ def load_elements_generator(elements, factory, gaphor_version):
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
-    # TODO: restructure loading code, first load model, then add canvas items
     log.debug(_("Loading %d elements...") % len(elements))
 
     # The elements are iterated three times:
@@ -216,7 +213,6 @@ def load_elements_generator(elements, factory, gaphor_version):
             yield st
         if isinstance(elem, parser.element):
             cls = getattr(UML, elem.type)
-            # log.debug('Creating UML element for %s (%s)' % (elem, elem.id))
             elem.element = factory.create_as(cls, id)
             if isinstance(elem.element, UML.Diagram):
                 assert elem.canvas

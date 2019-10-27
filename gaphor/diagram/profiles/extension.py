@@ -2,10 +2,6 @@
 ExtensionItem -- Graphical representation of an association.
 """
 
-# TODO: for Extension.postload(): in some cases where the association ends
-# are connected to the same Class, the head_end property is connected to the
-# tail end and visa versa.
-
 from gaphor import UML
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation, Named

@@ -188,7 +188,6 @@ class TextEditTool(Tool):
                 widget.get_toplevel().destroy()
 
         def on_focus_out_event(widget, event):
-            print("Focus out event emitted")
             self.submit_text(widget, buffer, editor)
 
         window.add_events(Gdk.EventMask.FOCUS_CHANGE_MASK)

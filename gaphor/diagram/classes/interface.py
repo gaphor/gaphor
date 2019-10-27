@@ -86,7 +86,12 @@ from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_border
 from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.diagram.support import represents
 
-from gaphor.diagram.classes.klass import attributes_compartment, operations_compartment
+from gaphor.diagram.classes.klass import (
+    attribute_watches,
+    operation_watches,
+    attributes_compartment,
+    operations_compartment,
+)
 from gaphor.diagram.classes.stereotype import stereotype_compartments
 
 
@@ -185,7 +190,7 @@ class InterfaceItem(ElementPresentation, Classified):
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
         ).watch(
-            "subject[NamedElement].namespace"
+            "subject[NamedElement].namespace.name"
         ).watch(
             "subject.appliedStereotype", self.update_shapes
         ).watch(
@@ -197,52 +202,10 @@ class InterfaceItem(ElementPresentation, Classified):
         ).watch(
             "subject.appliedStereotype.slot.value", self.update_shapes
         ).watch(
-            "subject[Interface].ownedAttribute", self.update_shapes
-        ).watch(
-            "subject[Interface].ownedOperation", self.update_shapes
-        ).watch(
-            "subject[Interface].ownedAttribute.association", self.update_shapes
-        ).watch(
-            "subject[Interface].ownedAttribute.name"
-        ).watch(
-            "subject[Interface].ownedAttribute.isStatic", self.update_shapes
-        ).watch(
-            "subject[Interface].ownedAttribute.isDerived"
-        ).watch(
-            "subject[Interface].ownedAttribute.visibility"
-        ).watch(
-            "subject[Interface].ownedAttribute.lowerValue"
-        ).watch(
-            "subject[Interface].ownedAttribute.upperValue"
-        ).watch(
-            "subject[Interface].ownedAttribute.defaultValue"
-        ).watch(
-            "subject[Interface].ownedAttribute.typeValue"
-        ).watch(
-            "subject[Interface].ownedOperation.name"
-        ).watch(
-            "subject[Interface].ownedOperation.isAbstract", self.update_shapes
-        ).watch(
-            "subject[Interface].ownedOperation.isStatic", self.update_shapes
-        ).watch(
-            "subject[Interface].ownedOperation.visibility"
-        ).watch(
-            "subject[Interface].ownedOperation.returnResult.lowerValue"
-        ).watch(
-            "subject[Interface].ownedOperation.returnResult.upperValue"
-        ).watch(
-            "subject[Interface].ownedOperation.returnResult.typeValue"
-        ).watch(
-            "subject[Interface].ownedOperation.formalParameter.lowerValue"
-        ).watch(
-            "subject[Interface].ownedOperation.formalParameter.upperValue"
-        ).watch(
-            "subject[Interface].ownedOperation.formalParameter.typeValue"
-        ).watch(
-            "subject[Interface].ownedOperation.formalParameter.defaultValue"
-        ).watch(
             "subject[Interface].supplierDependency", self.update_shapes
         )
+        attribute_watches(self, "Interface")
+        operation_watches(self, "Interface")
 
     show_stereotypes = UML.properties.attribute("show_stereotypes", int)
 
@@ -327,75 +290,75 @@ class InterfaceItem(ElementPresentation, Classified):
 
     def update_shapes(self, event=None, connectors=None):
         if self._folded == Folded.NONE:
-            self.shape = Box(
-                Box(
-                    Text(
-                        text=lambda: UML.model.stereotypes_str(
-                            self.subject, ("interface",)
-                        ),
-                        style={"min-width": 0, "min-height": 0},
-                    ),
-                    EditableText(
-                        text=lambda: self.subject.name or "",
-                        style={"font-weight": FontWeight.BOLD},
-                    ),
-                    Text(
-                        text=lambda: from_package_str(self),
-                        style={"font": "sans 8", "min-width": 0, "min-height": 0},
-                    ),
-                    style={"padding": (12, 4, 12, 4)},
-                ),
-                *(
-                    self.show_attributes
-                    and self.subject
-                    and [attributes_compartment(self.subject)]
-                    or []
-                ),
-                *(
-                    self.show_operations
-                    and self.subject
-                    and [operations_compartment(self.subject)]
-                    or []
-                ),
-                *(
-                    self.show_stereotypes
-                    and stereotype_compartments(self.subject)
-                    or []
-                ),
-                style={
-                    "min-width": 100,
-                    "min-height": 50,
-                    "vertical-align": VerticalAlign.TOP,
-                },
-                draw=draw_border,
-            )
+            self.shape = self.class_shape()
         else:
-            if connectors is None:
-                # distinguish between None and []
-                connected_items = [
-                    c.item for c in self.canvas.get_connections(connected=self)
-                ]
-                connectors = any(
-                    map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
-                )
-            self.shape = IconBox(
-                Box(
-                    style={"min-width": self.min_width, "min-height": self.min_height},
-                    draw=self.draw_interface_ball_and_socket,
-                ),
+            self.shape = self.ball_and_socket_shape(connectors)
+
+    def class_shape(self):
+        return Box(
+            Box(
                 Text(
-                    text=lambda: UML.model.stereotypes_str(self.subject),
+                    text=lambda: UML.model.stereotypes_str(
+                        self.subject, ("interface",)
+                    ),
                     style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",
-                    style={
-                        "font-weight": FontWeight.NORMAL
-                        if connectors
-                        else FontWeight.BOLD
-                    },
+                    style={"font-weight": FontWeight.BOLD},
                 ),
+                Text(
+                    text=lambda: from_package_str(self),
+                    style={"font": "sans 8", "min-width": 0, "min-height": 0},
+                ),
+                style={"padding": (12, 4, 12, 4)},
+            ),
+            *(
+                self.show_attributes
+                and self.subject
+                and [attributes_compartment(self.subject)]
+                or []
+            ),
+            *(
+                self.show_operations
+                and self.subject
+                and [operations_compartment(self.subject)]
+                or []
+            ),
+            *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
+            style={
+                "min-width": 100,
+                "min-height": 50,
+                "vertical-align": VerticalAlign.TOP,
+            },
+            draw=draw_border,
+        )
+
+    def ball_and_socket_shape(self, connectors=None):
+        if connectors is None:
+            # distinguish between None and []
+            connected_items = [
+                c.item for c in self.canvas.get_connections(connected=self)
+            ]
+            connectors = any(
+                map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
             )
+        return IconBox(
+            Box(
+                style={"min-width": self.min_width, "min-height": self.min_height},
+                draw=self.draw_interface_ball_and_socket,
+            ),
+            Text(
+                text=lambda: UML.model.stereotypes_str(self.subject),
+                style={"min-width": 0, "min-height": 0},
+            ),
+            EditableText(
+                text=lambda: self.subject.name or "",
+                style={
+                    "font-weight": FontWeight.NORMAL if connectors else FontWeight.BOLD
+                },
+            ),
+        )
 
     def draw_interface_ball_and_socket(self, _box, context, _bounding_box):
         cr = context.cairo

@@ -77,7 +77,6 @@ class CopyService(Service, ActionProvider):
                 otherwise from the element factory.
                 If it does not exist there, do not copy it!
                 """
-                print("Copy", copy, name, value, reference)
 
                 def load_element():
                     item = new_items.get(value.id)

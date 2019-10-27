@@ -37,7 +37,7 @@ class PackageItem(ElementPresentation, Named):
         )
 
         self.watch("subject[NamedElement].name")
-        self.watch("subject[NamedElement].namespace")
+        self.watch("subject[NamedElement].namespace.name")
         self.watch("subject.appliedStereotype.classifier.name")
 
 
