@@ -2,7 +2,7 @@
 
 set -e
 
-export PYTEST_ADDOPTS="-v --junitxml=junit/test-results.xml"
+export PYTEST_ADDOPTS="--doctest-modules --junitxml=junit/test-results.xml"
+export PY_IGNORE_IMPORTMISMATCH=1
 
-# Pytest is currently failing in MSYS2
-# python3 -m pytest
+python3 -m pytest

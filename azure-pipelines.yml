@@ -59,6 +59,7 @@ jobs:
         env:
           MSYSTEM: $(MSYSTEM)
           CHERE_INVOKING: yes
+          PY_IGNORE_IMPORTMISMATCH: yes
 
       - task: PublishTestResults@2
         condition: not(canceled())
