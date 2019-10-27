@@ -46,8 +46,7 @@ docs = ["sphinx", "recommonmark", "sphinx-rtd-theme"]
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.5"
-pytest = "^4.0"
-pytest-sugar = "^0.9.2"
+pytest = "^5.0"
 pytest-cov = "^2.5"
 pytest-runner = "^4.2"
 black = { version = "^19.3b0", python = "^3.6" }
