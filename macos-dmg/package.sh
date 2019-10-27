@@ -32,7 +32,7 @@ source "${APPHOME}/bin/activate"
 
 pip install "importlib_metadata >= 0.17"
 
-VERSION="$(python3 ../setup.py --version)"
+VERSION="$(cat ../pyproject.toml | grep '^version' | sed 's/.*\"\([0-9.]*\)\"/\1/')"
 PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
 
 
