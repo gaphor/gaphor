@@ -476,6 +476,3 @@ def DefaultTool(event_manager):
     chain.append(TextEditTool())
     chain.append(RubberbandTool())
     return chain
-
-
-# vim:sw=4:et:ai

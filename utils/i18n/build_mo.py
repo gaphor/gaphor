@@ -1,4 +1,3 @@
-# vim:sw=4:et
 """build_mo
 
 Generate .mo files from po files.

@@ -1,4 +1,3 @@
-# vim:sw=4:et:
 """
 Undo management for Gaphor.
 

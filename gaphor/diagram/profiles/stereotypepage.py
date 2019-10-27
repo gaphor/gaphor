@@ -210,6 +210,3 @@ class StereotypePage(PropertyPageBase):
 
         row[1] = value
         row[5] = slot
-
-
-# vim:sw=4:et:ai

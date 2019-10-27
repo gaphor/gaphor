@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# vim:sw=4:et:
 """Report differences in two Gaphor models.
 
 This can be called as:

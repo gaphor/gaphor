@@ -1,4 +1,3 @@
-# vim:sw=4:et:
 """This module contains some helpers that can be used to execute generator
 functions in the GLib main loop.
 
