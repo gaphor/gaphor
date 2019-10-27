@@ -100,4 +100,4 @@ class ClassTestCase(TestCase):
         diagram.canvas.update()
 
         width = klass.width
-        assert width > 170.0
+        assert width >= 170.0
