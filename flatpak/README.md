@@ -10,7 +10,7 @@
 
 1. Install the GNOME SDK
 
-       $ flatpak install flathub org.gnome.Sdk 3.30
+       $ flatpak install flathub org.gnome.Sdk 3.34
 
 1. Add the Flathub repository and install the necessary SDK:
 
