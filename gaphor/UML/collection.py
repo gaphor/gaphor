@@ -138,97 +138,19 @@ class collection(Generic[T]):
         return 1
 
     def select(self, f):
-        result = list()
-        for v in self.items:
-            if f(v):
-                result.append(v)
-        return result
+        return [v for v in self.items if f(v)]
 
     def reject(self, f):
-        result = list()
-        for v in self.items:
-            if not f(v):
-                result.append(v)
-        return result
+        return [v for v in self.items if not f(v)]
 
     def collect(self, f):
-        result = list()
-        for v in self.items:
-            result.append(f(v))
-        return result
+        return [f(v) for v in self.items]
 
     def isEmpty(self):
         return len(self.items) == 0
 
     def nonEmpty(self):
         return not self.isEmpty()
-
-    def sum(self):
-        o = r = 0
-        for o in self.items:
-            r = r + o
-        return o
-
-    def forAll(self, f):
-        if not self.items or not inspect.getargspec(f)[0]:
-            return True
-
-        nargs = len(inspect.getargspec(f)[0])
-        if inspect.getargspec(f)[3]:
-            nargs = nargs - len(inspect.getargspec(f)[3])
-
-        assert nargs > 0
-        nitems = len(self.items)
-        index = [0] * nargs
-
-        while True:
-            args = []
-            for x in index:
-                args.append(self.items[x])
-            if not f(*args):
-                return False
-            c = len(index) - 1
-            index[c] = index[c] + 1
-            while index[c] == nitems:
-                index[c] = 0
-                c = c - 1
-                if c < 0:
-                    return True
-                else:
-                    index[c] = index[c] + 1
-                if index[c] == nitems - 1:
-                    c = c - 1
-        return False
-
-    def exist(self, f):
-        if not self.items or not inspect.getargspec(f)[0]:
-            return False
-
-        nargs = len(inspect.getargspec(f)[0])
-        if inspect.getargspec(f)[3]:
-            nargs = nargs - len(inspect.getargspec(f)[3])
-
-        assert nargs > 0
-        nitems = len(self.items)
-        index = [0] * nargs
-        while True:
-            args = []
-            for x in index:
-                args.append(self.items[x])
-            if f(*args):
-                return True
-            c = len(index) - 1
-            index[c] = index[c] + 1
-            while index[c] == nitems:
-                index[c] = 0
-                c = c - 1
-                if c < 0:
-                    return False
-                else:
-                    index[c] = index[c] + 1
-                if index[c] == nitems - 1:
-                    c = c - 1
-        return False
 
     def swap(self, item1, item2):
         """
