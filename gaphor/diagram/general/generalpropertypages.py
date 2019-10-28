@@ -17,7 +17,7 @@ class CommentItemPropertyPage(PropertyPageBase):
 
     def construct(self):
         subject = self.subject
-        page = Gtk.VBox()
+        page = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
 
         if not subject:
             return page
@@ -34,7 +34,6 @@ class CommentItemPropertyPage(PropertyPageBase):
         text_view.show()
         text_view.set_size_request(-1, 100)
         page.pack_start(text_view, True, True, 0)
-        page.default = text_view
 
         changed_id = buffer.connect("changed", self._on_body_change)
 
