@@ -165,7 +165,6 @@ jobs:
       displayName: Install Python Dependencies
 
     - script: |
-        mkdir -p /home/vsts/.local/share # This can be removed once we merge back to master (config dir)
         source venv
         xvfb-run pytest
       displayName: 'PyTest'
