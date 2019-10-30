@@ -57,6 +57,6 @@ class Preferences(Service, ActionProvider):
             sloppiness = 0.0
         self.properties.set("diagram.sloppiness", sloppiness)
 
-    @action(name="pref.reset-tool-after-create", state=False)
+    @action(name="pref.reset-tool-after-create", state=True)
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)

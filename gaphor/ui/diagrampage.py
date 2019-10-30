@@ -215,7 +215,7 @@ class DiagramPage:
 
     @event_handler(DiagramItemCreated)
     def _on_diagram_item_created(self, event):
-        if self.properties("reset-tool-after-create", False):
+        if self.properties("reset-tool-after-create", True):
             self.widget.action_group.actions.lookup_action("select-tool").activate(
                 GLib.Variant.new_string("toolbox-pointer")
             )
