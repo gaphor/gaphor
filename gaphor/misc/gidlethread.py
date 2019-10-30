@@ -12,7 +12,8 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
 
-from typing import List
+from typing import Any, List, Tuple
+
 import types
 import sys
 from gi.repository import GLib
@@ -59,7 +60,7 @@ class GIdleThread:
         self._generator = generator
         self._queue = queue
         self._idle_id = 0
-        self._exc_info = (None, None, None)
+        self._exc_info: Tuple[Any, Any, Any] = (None, None, None)
 
     def start(self, priority=GLib.PRIORITY_LOW):
         """Start the generator. Default priority is low, so screen updates
