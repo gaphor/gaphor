@@ -33,7 +33,7 @@ class CopyService(Service, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.diagrams = diagrams
-        self.copy_buffer: Set[Element] = set()
+        self.copy_buffer: Set[gaphas.Item] = set()
 
         event_manager.subscribe(self._update)
 
