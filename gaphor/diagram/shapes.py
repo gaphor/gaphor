@@ -104,7 +104,6 @@ class Box:
         min_width = style("min-width")
         min_height = style("min-height")
         padding = style("padding")
-        assert isinstance(padding, dict)
         self.sizes = sizes = [c.size(cr) for c in self.children]
         if sizes:
             widths, heights = list(zip(*sizes))
@@ -123,7 +122,6 @@ class Box:
 
     def draw(self, context, bounding_box):
         padding = self.style("padding")
-        assert isinstance(padding, dict)
         valign = self.style("vertical-align")
         height = sum(h for _w, h in self.sizes)
         if self._draw_border:
@@ -174,7 +172,6 @@ class IconBox:
         min_width = style("min-width")
         min_height = style("min-height")
         padding = style("padding")
-        assert isinstance(padding, dict)
         self.sizes = [c.size(cr) for c in self.children]
         width, height = self.icon.size(cr)
         return (
@@ -184,7 +181,6 @@ class IconBox:
 
     def draw(self, context, bounding_box):
         padding = self.style("padding")
-        assert isinstance(padding, dict)
         vertical_spacing = self.style("vertical-spacing")
         x = bounding_box.x + padding[Padding.LEFT]
         y = bounding_box.y + padding[Padding.TOP]
@@ -235,7 +231,6 @@ class Text:
         min_w = self.style("min-width")
         min_h = self.style("min-height")
         padding = self.style("padding")
-        assert isinstance(padding, dict)
 
         width, height = text_size(cr, self.text(), self.font(), self.width())
         return (
@@ -250,7 +245,6 @@ class Text:
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
         padding = self.style("padding")
-        assert isinstance(padding, dict)
 
         text_box = Rectangle(
             bounding_box.x + padding[Padding.LEFT],
