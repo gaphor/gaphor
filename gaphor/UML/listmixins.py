@@ -99,8 +99,7 @@ class querymixin:
             else:
                 remainder = None
 
-            matcher = matcher(key)
-            matched = list(filter(matcher, self))
+            matched = list(filter(matcher(key), self))
             if remainder:
                 return type(self)(matched).__getitem__(*remainder)
             else:
