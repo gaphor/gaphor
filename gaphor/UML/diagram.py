@@ -73,7 +73,7 @@ class Diagram(Namespace, PackageableElement):
         super().__init__(id, model)
         self.canvas = DiagramCanvas(self)
 
-    package: umlproperty[Namespace, Namespace]
+    package: umlproperty[Namespace]
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""

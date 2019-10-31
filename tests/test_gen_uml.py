@@ -47,22 +47,22 @@ class Element:
 
 
 class SubClass(Element):
-    name2: umlproperty[C, collection[C]]
-    concrete: umlproperty[D, collection[D]]
-    value: umlproperty[str, str]
-    abstract: umlproperty[C, collection[C]]
-    name4: umlproperty[D, collection[D]]
+    name2: umlproperty[C]
+    concrete: umlproperty[D]
+    value: umlproperty[str]
+    abstract: umlproperty[C]
+    name4: umlproperty[D]
 
 
 class C:
-    attr: umlproperty[str, str]
-    name1: umlproperty[SubClass, collection[SubClass]]
-    base: umlproperty[SubClass, collection[SubClass]]
+    attr: umlproperty[str]
+    name1: umlproperty[SubClass]
+    base: umlproperty[SubClass]
 
 
 class D(C):
-    subbase: umlproperty[SubClass, collection[SubClass]]
-    name3: umlproperty[SubClass, collection[SubClass]]
+    subbase: umlproperty[SubClass]
+    name3: umlproperty[SubClass]
 
 
 # class 'ValSpec' has been stereotyped as 'SimpleAttribute'

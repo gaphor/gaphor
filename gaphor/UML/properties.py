@@ -65,12 +65,11 @@ from gaphor.UML.event import (
 log = logging.getLogger(__name__)
 
 T = TypeVar("T", covariant=True)
-G = TypeVar("G", covariant=True)
 
 Upper = Union[Literal["*"], int]
 
 
-class umlproperty(Generic[T, G]):
+class umlproperty(Generic[T]):
     """
     Superclass for attribute, enumeration and association.
 
@@ -93,7 +92,7 @@ class umlproperty(Generic[T, G]):
         ...
 
     @overload
-    def __get__(self, obj, class_=None) -> G:
+    def __get__(self, obj, class_=None) -> Union[None, T, collection[T]]:
         ...
 
     def __get__(self, obj, class_=None):
@@ -122,7 +121,7 @@ class umlproperty(Generic[T, G]):
         This is called from the Element to denote the element is unlinking.
         """
 
-    def _get(self, obj) -> Optional[G]:
+    def _get(self, obj) -> Union[None, T, collection[T]]:
         raise NotImplementedError()
 
     def _set(self, obj, value: Optional[T]) -> None:
@@ -137,29 +136,23 @@ class umlproperty(Generic[T, G]):
             d.propagate(event)
 
 
-class attribute(umlproperty[T, T]):
+class attribute(umlproperty[T]):
     """
     Attribute.
 
     Element.attr = attribute('attr', types.StringType, '')
     """
 
+    lower = 0
+    upper = 1
+
     # TODO: check if lower and upper are actually needed for attributes
-    def __init__(
-        self,
-        name: str,
-        type: Type[T],
-        default: Optional[T] = None,
-        lower: int = 0,
-        upper: int = 1,
-    ):
+    def __init__(self, name: str, type: Type[T], default: Optional[T] = None):
         super().__init__()
         self.name = name
         self._name = "_" + name
         self.type = type
         self.default = default
-        self.lower = lower
-        self.upper = upper
 
     def load(self, obj, value: str):
         """Load the attribute value."""
@@ -172,18 +165,12 @@ class attribute(umlproperty[T, T]):
             raise TypeError(error_msg)
 
     def __str__(self):
-        if self.lower == self.upper:
-            return "<attribute {}: {}[{}] = {}>".format(
-                self.name, self.type, self.lower, self.default
-            )
-        else:
-            return "<attribute {}: {}[{}..{}] = {}>".format(
-                self.name, self.type, self.lower, self.upper, self.default
-            )
+        return f"<attribute {self.name}: {self.type} = {self.default}>"
 
-    def _get(self, obj):
+    def _get(self, obj) -> Optional[T]:
         try:
-            return getattr(obj, self._name)
+            v: Optional[T] = getattr(obj, self._name)
+            return v
         except AttributeError:
             return self.default
 
@@ -216,7 +203,7 @@ class attribute(umlproperty[T, T]):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class enumeration(umlproperty[str, str]):
+class enumeration(umlproperty[str]):
     """
     Enumeration
 
@@ -227,7 +214,9 @@ class enumeration(umlproperty[str, str]):
     """
 
     # All enumerations have a type 'str'
-    type = property(lambda s: str)
+    type = str
+    lower = 0
+    upper = 1
 
     def __init__(self, name: str, values: Sequence[str], default: str):
         super().__init__()
@@ -235,8 +224,6 @@ class enumeration(umlproperty[str, str]):
         self._name = "_" + name
         self.values = values
         self.default = default
-        self.lower = 0
-        self.upper = 1
 
     def __str__(self):
         return f"<enumeration {self.name}: {self.values} = {self.default}>"
@@ -275,7 +262,7 @@ class enumeration(umlproperty[str, str]):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class association(umlproperty[T, G]):
+class association(umlproperty[T]):
     """
     Association, both uni- and bi-directional.
 
@@ -325,8 +312,8 @@ class association(umlproperty[T, G]):
         if not values:
             return
         if self.upper == 1:
-            values = [values]
-        for value in values:
+            values = [values]  # type: ignore[assignment]
+        for value in values:  # type: ignore[union-attr]
             if not isinstance(value, self.type):
                 raise AttributeError(
                     "Error in postload validation for %s: Value %s should be of type %s"
@@ -344,10 +331,11 @@ class association(umlproperty[T, G]):
             s += " {}-> {}".format(self.composite and "<>" or "", self.opposite)
         return s + ">"
 
-    def _get(self, obj):
+    def _get(self, obj) -> Union[Optional[T], collection[T]]:
         # TODO: Handle lower and add items if lower > 0
         try:
-            return getattr(obj, self._name)
+            v: Union[Optional[T], collection[T]] = getattr(obj, self._name)
+            return v
         except AttributeError:
             if self.upper == 1:
                 return None
@@ -358,7 +346,7 @@ class association(umlproperty[T, G]):
                 setattr(obj, self._name, c)
                 return c
 
-    def _set(self, obj, value, from_opposite=False, do_notify=True):
+    def _set(self, obj, value: Optional[T], from_opposite=False, do_notify=True):
         """
         Set a new value for our attribute. If this is a collection, append
         to the existing collection.
@@ -391,14 +379,14 @@ class association(umlproperty[T, G]):
 
         else:
             # Set the actual value
-            c = self._get(obj)
+            c: collection[T] = self._get(obj)  # type: ignore[assignment]
             if not c:
                 c = collection(self, obj, self.type)
                 setattr(obj, self._name, c)
             elif value in c:
                 return
 
-            c.items.append(value)
+            c.items.append(value)  # type: ignore[arg-type]
             if do_notify:
                 event = AssociationAdded(obj, self, value)
 
@@ -445,7 +433,7 @@ class association(umlproperty[T, G]):
                 if do_notify:
                     event = AssociationSet(obj, self, value, None)
         else:
-            c = self._get(obj)
+            c: collection[T] = self._get(obj)  # type: ignore[assignment]
             if c:
                 items = c.items
                 try:
@@ -468,9 +456,9 @@ class association(umlproperty[T, G]):
         composite = self.composite
         if values:
             if self.upper == 1:
-                values = [values]
+                values = [values]  # type: ignore[assignment]
 
-            for value in list(values):
+            for value in list(values):  # type: ignore[arg-type]
                 # TODO: make normal unlinking work through this method.
                 self.__delete__(obj, value)
                 if composite:
@@ -481,7 +469,7 @@ class AssociationStubError(Exception):
     pass
 
 
-class associationstub(umlproperty[T, G]):
+class associationstub(umlproperty[T]):
     """
     An association stub is an internal thingy that ensures all associations
     are always bi-directional. This helps the application when one end of
@@ -545,7 +533,7 @@ class unioncache:
         self.version = version
 
 
-class derived(umlproperty[T, G]):
+class derived(umlproperty[T]):
     """
     Base class for derived properties, both derived unions and custom
     properties.
@@ -677,7 +665,7 @@ class derived(umlproperty[T, G]):
                     )
 
 
-class derivedunion(derived[T, G]):
+class derivedunion(derived[T]):
     """
     Derived union
 
@@ -776,7 +764,7 @@ class derivedunion(derived[T, G]):
                     )
 
 
-class redefine(umlproperty[T, G]):
+class redefine(umlproperty[T]):
     """
     Redefined association
 

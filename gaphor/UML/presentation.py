@@ -30,7 +30,7 @@ class Presentation(Element, Generic[S]):
 
         self.watch("subject")
 
-    subject: umlproperty[S, S] = association(
+    subject: umlproperty[S] = association(
         "subject", Element, upper=1, opposite="presentation"
     )
 

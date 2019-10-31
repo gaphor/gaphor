@@ -30,19 +30,19 @@ override Presentation.subject
 override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
-    kind: umlproperty[str, str]
-    container: umlproperty[Region, Region]
-    source: umlproperty[Vertex, Vertex]
-    target: umlproperty[Vertex, Vertex]
-    effect: umlproperty[Behavior, Behavior]
-    guard: umlproperty[Constraint, Constraint]
-    redefintionContext: umlproperty[Classifier, Classifier]
-    redefinedTransition: umlproperty[Transition, Transition]
+    kind: umlproperty[str]
+    container: umlproperty[Region]
+    source: umlproperty[Vertex]
+    target: umlproperty[Vertex]
+    effect: umlproperty[Behavior]
+    guard: umlproperty[Constraint]
+    redefintionContext: umlproperty[Classifier]
+    redefinedTransition: umlproperty[Transition]
 %%
-override MultiplicityElement.lower(MultiplicityElement.lowerValue): umlproperty[str, str]
+override MultiplicityElement.lower(MultiplicityElement.lowerValue): umlproperty[str]
 MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
 %%
-override MultiplicityElement.upper(MultiplicityElement.upperValue): umlproperty[str, str]
+override MultiplicityElement.upper(MultiplicityElement.upperValue): umlproperty[str]
 MultiplicityElement.upper = derived('upper', object, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
 %%
 override NamedElement.qualifiedName: property
@@ -50,7 +50,7 @@ override NamedElement.qualifiedName: property
 NamedElement.qualifiedName = property(overrides.namedelement_qualifiedname, doc=overrides.namedelement_qualifiedname.__doc__)
 
 %%
-override Association.endType(Association.memberEnd, Property.type): umlproperty[Type, collection[Type]]
+override Association.endType(Association.memberEnd, Property.type): umlproperty[Type]
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -76,7 +76,7 @@ override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): propert
 #Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__)
 %%
-override Classifier.inheritedMember: umlproperty[NamedElement, collection[NamedElement]]
+override Classifier.inheritedMember: umlproperty[NamedElement]
 Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 %%
 override Classifier.general: property
@@ -87,22 +87,22 @@ Classifier.general = property(lambda self: [g.general for g in self.generalizati
 override Class.superClass: property
 Class.superClass = Classifier.general
 %%
-override Namespace.importedMember: umlproperty[PackageableElement, collection[PackageableElement]]
+override Namespace.importedMember: umlproperty[PackageableElement]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 %%
 override Property.opposite: property
 Property.opposite = property(overrides.property_opposite, doc=overrides.property_opposite.__doc__)
 %%
-override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
+override Property.isComposite(Property.aggregation): umlproperty[Namespace]
 Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'], Property.aggregation)
 %%
-override Constraint.context: umlproperty[Namespace, Namespace]
+override Constraint.context: umlproperty[Namespace]
 Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
 override Property.navigability: property
 Property.navigability = property(overrides.property_navigability, doc=overrides.property_navigability.__doc__)
 %%
-override Operation.type: umlproperty[DataType, DataType]
+override Operation.type: umlproperty[DataType]
 Operation.type = derivedunion('type', DataType, 0, 1)
 %%
 override Lifeline.parse: Callable[[Lifeline, str], None]
