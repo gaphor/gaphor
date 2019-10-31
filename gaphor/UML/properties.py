@@ -92,7 +92,7 @@ class umlproperty(Generic[T]):
         ...
 
     @overload
-    def __get__(self, obj, class_=None) -> Union[None, T, collection[T]]:
+    def __get__(self, obj, class_=None) -> Optional[T]:
         ...
 
     def __get__(self, obj, class_=None):
@@ -121,7 +121,7 @@ class umlproperty(Generic[T]):
         This is called from the Element to denote the element is unlinking.
         """
 
-    def _get(self, obj) -> Union[None, T, collection[T]]:
+    def _get(self, obj) -> Optional[T]:
         raise NotImplementedError()
 
     def _set(self, obj, value: Optional[T]) -> None:
@@ -303,50 +303,37 @@ class association(umlproperty[T]):
             )
         self._set(obj, value, do_notify=False)
 
-    def postload(self, obj):
-        """
-        In the postload step, ensure that bi-directional associations
-        are bi-directional.
-        """
-        values = self._get(obj)
-        if not values:
-            return
-        if self.upper == 1:
-            values = [values]  # type: ignore[assignment]
-        for value in values:  # type: ignore[union-attr]
-            if not isinstance(value, self.type):
-                raise AttributeError(
-                    "Error in postload validation for %s: Value %s should be of type %s"
-                    % (self.name, value, self.type.__name__)
-                )
-
     def __str__(self):
         if self.lower == self.upper:
             s = f"<association {self.name}: {self.type.__name__}[{self.lower}]"
         else:
-            s = "<association {}: {}[{}..{}]".format(
-                self.name, self.type.__name__, self.lower, self.upper
-            )
+            s = f"<association {self.name}: {self.type.__name__}[{self.lower}..{self.upper}]"
         if self.opposite:
-            s += " {}-> {}".format(self.composite and "<>" or "", self.opposite)
+            s += f" {self.composite and '<>' or ''}-> {self.opposite}"
         return s + ">"
 
     def _get(self, obj) -> Union[Optional[T], collection[T]]:
-        # TODO: Handle lower and add items if lower > 0
-        try:
-            v: Union[Optional[T], collection[T]] = getattr(obj, self._name)
-            return v
-        except AttributeError:
-            if self.upper == 1:
-                return None
-            else:
-                # Create the empty collection here since it might be used to
-                # add
-                c = collection(self, obj, self.type)
-                setattr(obj, self._name, c)
-                return c
+        if self.upper == 1:
+            return self._get_one(obj)
+        else:
+            return self._get_many(obj)
 
-    def _set(self, obj, value: Optional[T], from_opposite=False, do_notify=True):
+    def _get_one(self, obj) -> Optional[T]:
+        v: Optional[T] = getattr(obj, self._name, None)
+        return v
+
+    def _get_many(self, obj) -> collection[T]:
+        v: Optional[collection[T]] = getattr(obj, self._name, None)
+        if v is None:
+            # Create the empty collection here since it might
+            # be used to add.
+            v = collection(self, obj, self.type)
+            setattr(obj, self._name, v)
+        return v
+
+    def _set(
+        self, obj, value: Optional[T], from_opposite=False, do_notify=True
+    ) -> None:
         """
         Set a new value for our attribute. If this is a collection, append
         to the existing collection.
@@ -357,39 +344,52 @@ class association(umlproperty[T]):
             raise AttributeError(f"Value should be of type {self.type.__name__}")
         # Remove old value only for uni-directional associations
         if self.upper == 1:
-            old = self._get(obj)
-
-            # do nothing if we are assigned our current value:
-            # Still do your thing, since undo handlers expect that.
-            if value is old:
-                return
-
-            if old:
-                self._del(obj, old, from_opposite=from_opposite, do_notify=False)
-
-            if do_notify:
-                event: AssociationUpdated = AssociationSet(obj, self, old, value)
-
-            if value is None:
-                if do_notify:
-                    self.handle(event)
-                return
-
-            setattr(obj, self._name, value)
-
+            self._set_one(obj, value, from_opposite, do_notify)
         else:
-            # Set the actual value
-            c: collection[T] = self._get(obj)  # type: ignore[assignment]
-            if not c:
-                c = collection(self, obj, self.type)
-                setattr(obj, self._name, c)
-            elif value in c:
-                return
+            self._set_many(obj, value, from_opposite, do_notify)
 
-            c.items.append(value)  # type: ignore[arg-type]
-            if do_notify:
-                event = AssociationAdded(obj, self, value)
+    def _set_one(self, obj, value, from_opposite, do_notify) -> None:
+        if not (isinstance(value, self.type) or (value is None)):
+            raise AttributeError(f"Value should be of type {self.type.__name__}")
 
+        old = self._get(obj)
+
+        # do nothing if we are assigned our current value:
+        # Still do your thing, since undo handlers expect that.
+        if value is old:
+            return
+
+        if old:
+            self._del(obj, old, from_opposite=from_opposite, do_notify=False)
+
+        if value is not None:
+            setattr(obj, self._name, value)
+            self._set_opposite(obj, value, from_opposite, do_notify)
+
+        if do_notify:
+            self.handle(AssociationSet(obj, self, old, value))
+
+    def _set_many(self, obj, value, from_opposite, do_notify) -> None:
+        if not isinstance(value, self.type):
+            raise AttributeError(f"Value should be of type {self.type.__name__}")
+
+        # Set the actual value
+        c: collection[T] = self._get(obj)  # type: ignore[assignment]
+        if not c:
+            c = collection(self, obj, self.type)
+            setattr(obj, self._name, c)
+        elif value in c:
+            return
+
+        c.items.append(value)  # type: ignore[arg-type]
+        self._set_opposite(obj, value, from_opposite, do_notify)
+
+        if do_notify:
+            self.handle(AssociationAdded(obj, self, value))
+
+    def _set_opposite(
+        self, obj, value: Optional[T], from_opposite=False, do_notify=True
+    ) -> None:
         if not from_opposite and self.opposite:
             opposite = getattr(type(value), self.opposite)
             if not opposite.opposite:
@@ -401,9 +401,6 @@ class association(umlproperty[T]):
                 setattr(self.type, "UML_associationstub_%x" % id(self), self.stub)
             self.stub._set(value, obj)
 
-        if do_notify:
-            self.handle(event)
-
     def _del(self, obj, value, from_opposite=False, do_notify=True):
         """
         Delete is used for element deletion and for removal of
@@ -413,7 +410,7 @@ class association(umlproperty[T]):
         if not value:
             if isinstance(self.upper, int) and self.upper > 1:  # upper != "*"
                 raise Exception("Can not delete collections")
-            old = value = self._get(obj)
+            value = self._get(obj)
             if value is None:
                 return
 
@@ -423,7 +420,6 @@ class association(umlproperty[T]):
             if self.stub:
                 self.stub._del(value, obj, from_opposite=True)
 
-        event: Optional[AssociationUpdated] = None
         if self.upper == 1:
             try:
                 delattr(obj, self._name)
@@ -431,7 +427,7 @@ class association(umlproperty[T]):
                 pass
             else:
                 if do_notify:
-                    event = AssociationSet(obj, self, value, None)
+                    self.handle(AssociationSet(obj, self, value, None))
         else:
             c: collection[T] = self._get(obj)  # type: ignore[assignment]
             if c:
@@ -442,14 +438,11 @@ class association(umlproperty[T]):
                     pass
                 else:
                     if do_notify:
-                        event = AssociationDeleted(obj, self, value)
+                        self.handle(AssociationDeleted(obj, self, value))
 
                 # Remove items collection if empty
                 if not items:
                     delattr(obj, self._name)
-
-        if do_notify and event:
-            self.handle(event)
 
     def unlink(self, obj):
         values = self._get(obj)
@@ -463,6 +456,10 @@ class association(umlproperty[T]):
                 self.__delete__(obj, value)
                 if composite:
                     value.unlink()
+
+
+class association_one(association):
+    pass
 
 
 class AssociationStubError(Exception):
