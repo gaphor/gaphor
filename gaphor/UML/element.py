@@ -67,11 +67,11 @@ class Element:
         ), "You can not retrieve the model since it's not set on construction"
         return self._model
 
-    appliedStereotype: umlproperty[Element, Sequence[Element]]
-    owner: umlproperty[Element, Sequence[Element]]
-    ownedComment: umlproperty[Element, Sequence[Element]]
-    ownedElement: umlproperty[Element, Sequence[Element]]
-    presentation: umlproperty["Presentation", Sequence["Presentation"]]
+    appliedStereotype: umlproperty[Element]
+    owner: umlproperty[Element]
+    ownedComment: umlproperty[Element]
+    ownedElement: umlproperty[Element]
+    presentation: umlproperty["Presentation"]
 
     def umlproperties(self):
         """

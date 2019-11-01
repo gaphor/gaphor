@@ -66,7 +66,7 @@ log = logging.getLogger(__name__)
 
 T = TypeVar("T", covariant=True)
 
-Upper = Union[Literal["*"], int]
+Upper = Union[Literal[1], Literal["*"]]
 
 
 class umlproperty(Generic[T]):
@@ -82,6 +82,9 @@ class umlproperty(Generic[T]):
     for example in the case of event handling.
     """
 
+    lower: int = 0
+    upper: Upper = 1
+
     def __init__(self):
         self._dependent_properties: Set[Union[derived, redefine]] = set()
         self.name: str
@@ -91,24 +94,25 @@ class umlproperty(Generic[T]):
     def __get__(self, obj: None, class_=None) -> umlproperty:
         ...
 
+    # TODO: should be either Optional[T] or collection[T] based on value of self.upper
     @overload
-    def __get__(self, obj, class_=None) -> Optional[T]:
+    def __get__(self, obj, class_=None):
         ...
 
     def __get__(self, obj, class_=None):
         if obj:
-            return self._get(obj)
+            return self._get(obj, self.upper)
         return self
 
     def __set__(self, obj, value) -> None:
         self._set(obj, value)
 
-    def __delete__(self, obj, value=None):
+    def __delete__(self, obj, value=None) -> None:
         self._del(obj, value)
 
     def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
-            save_func(self.name, self._get(obj))
+            save_func(self.name, self._get(obj, self.upper))
 
     def load(self, obj, value):
         self._set(obj, value)
@@ -121,7 +125,15 @@ class umlproperty(Generic[T]):
         This is called from the Element to denote the element is unlinking.
         """
 
-    def _get(self, obj) -> Optional[T]:
+    @overload
+    def _get(self, obj, upper: Literal[1]) -> Optional[T]:
+        ...
+
+    @overload
+    def _get(self, obj, upper: Literal["*"]) -> collection[T]:
+        ...
+
+    def _get(self, obj, upper):
         raise NotImplementedError()
 
     def _set(self, obj, value: Optional[T]) -> None:
@@ -142,9 +154,6 @@ class attribute(umlproperty[T]):
 
     Element.attr = attribute('attr', types.StringType, '')
     """
-
-    lower = 0
-    upper = 1
 
     # TODO: check if lower and upper are actually needed for attributes
     def __init__(self, name: str, type: Type[T], default: Optional[T] = None):
@@ -167,7 +176,7 @@ class attribute(umlproperty[T]):
     def __str__(self):
         return f"<attribute {self.name}: {self.type} = {self.default}>"
 
-    def _get(self, obj) -> Optional[T]:
+    def _get(self, obj, upper):
         try:
             v: Optional[T] = getattr(obj, self._name)
             return v
@@ -183,10 +192,10 @@ class attribute(umlproperty[T]):
                     or self.type
                 )
 
-        if value == self._get(obj):
+        if value == self._get(obj, self.upper):
             return
 
-        old = self._get(obj)
+        old = self._get(obj, self.upper)
         if value == self.default and hasattr(obj, self._name):
             delattr(obj, self._name)
         else:
@@ -194,7 +203,7 @@ class attribute(umlproperty[T]):
         self.handle(AttributeUpdated(obj, self, old, value))
 
     def _del(self, obj, value=None):
-        old = self._get(obj)
+        old = self._get(obj, self.upper)
         try:
             delattr(obj, self._name)
         except AttributeError:
@@ -215,8 +224,6 @@ class enumeration(umlproperty[str]):
 
     # All enumerations have a type 'str'
     type = str
-    lower = 0
-    upper = 1
 
     def __init__(self, name: str, values: Sequence[str], default: str):
         super().__init__()
@@ -228,7 +235,7 @@ class enumeration(umlproperty[str]):
     def __str__(self):
         return f"<enumeration {self.name}: {self.values} = {self.default}>"
 
-    def _get(self, obj):
+    def _get(self, obj, upper):
         try:
             return getattr(obj, self._name)
         except AttributeError:
@@ -242,7 +249,7 @@ class enumeration(umlproperty[str]):
     def _set(self, obj, value):
         if not value in self.values:
             raise AttributeError("Value should be one of %s" % str(self.values))
-        old = self._get(obj)
+        old = self._get(obj, self.upper)
         if value == old:
             return
 
@@ -253,7 +260,7 @@ class enumeration(umlproperty[str]):
         self.handle(AttributeUpdated(obj, self, old, value))
 
     def _del(self, obj, value=None):
-        old = self._get(obj)
+        old = self._get(obj, self.upper)
         try:
             delattr(obj, self._name)
         except AttributeError:
@@ -312,7 +319,7 @@ class association(umlproperty[T]):
             s += f" {self.composite and '<>' or ''}-> {self.opposite}"
         return s + ">"
 
-    def _get(self, obj) -> Union[Optional[T], collection[T]]:
+    def _get(self, obj, upper):
         if self.upper == 1:
             return self._get_one(obj)
         else:
@@ -340,9 +347,6 @@ class association(umlproperty[T]):
 
         This method is called from the opposite association property.
         """
-        if not (isinstance(value, self.type) or (value is None and self.upper == 1)):
-            raise AttributeError(f"Value should be of type {self.type.__name__}")
-        # Remove old value only for uni-directional associations
         if self.upper == 1:
             self._set_one(obj, value, from_opposite, do_notify)
         else:
@@ -352,7 +356,7 @@ class association(umlproperty[T]):
         if not (isinstance(value, self.type) or (value is None)):
             raise AttributeError(f"Value should be of type {self.type.__name__}")
 
-        old = self._get(obj)
+        old = self._get(obj, self.upper)
 
         # do nothing if we are assigned our current value:
         # Still do your thing, since undo handlers expect that.
@@ -374,7 +378,7 @@ class association(umlproperty[T]):
             raise AttributeError(f"Value should be of type {self.type.__name__}")
 
         # Set the actual value
-        c: collection[T] = self._get(obj)  # type: ignore[assignment]
+        c = self._get_many(obj)
         if not c:
             c = collection(self, obj, self.type)
             setattr(obj, self._name, c)
@@ -407,45 +411,56 @@ class association(umlproperty[T]):
         elements from a list.
 
         """
-        if not value:
-            if isinstance(self.upper, int) and self.upper > 1:  # upper != "*"
-                raise Exception("Can not delete collections")
-            value = self._get(obj)
-            if value is None:
-                return
+        if self.upper == 1:
+            self._del_one(obj, value, from_opposite, do_notify)
+        else:
+            self._del_many(obj, value, from_opposite, do_notify)
 
+    def _del_one(self, obj, value, from_opposite=False, do_notify=True):
+        value = self._get_one(obj)
+        if value is None:
+            return
+
+        self._del_opposite(obj, value, from_opposite)
+
+        try:
+            delattr(obj, self._name)
+        except:
+            pass
+        else:
+            if do_notify:
+                self.handle(AssociationSet(obj, self, value, None))
+
+    def _del_many(self, obj, value, from_opposite=False, do_notify=True):
+        if not value:
+            raise Exception("Can not delete collections")
+
+        self._del_opposite(obj, value, from_opposite)
+
+        c = self._get_many(obj)
+        if c:
+            items = c.items
+            try:
+                items.remove(value)
+            except:
+                pass
+            else:
+                if do_notify:
+                    self.handle(AssociationDeleted(obj, self, value))
+
+            # Remove items collection if empty
+            if not items:
+                delattr(obj, self._name)
+
+    def _del_opposite(self, obj, value, from_opposite):
         if not from_opposite and self.opposite:
             getattr(type(value), self.opposite)._del(value, obj, from_opposite=True)
         elif not self.opposite:
             if self.stub:
                 self.stub._del(value, obj, from_opposite=True)
 
-        if self.upper == 1:
-            try:
-                delattr(obj, self._name)
-            except:
-                pass
-            else:
-                if do_notify:
-                    self.handle(AssociationSet(obj, self, value, None))
-        else:
-            c: collection[T] = self._get(obj)  # type: ignore[assignment]
-            if c:
-                items = c.items
-                try:
-                    items.remove(value)
-                except:
-                    pass
-                else:
-                    if do_notify:
-                        self.handle(AssociationDeleted(obj, self, value))
-
-                # Remove items collection if empty
-                if not items:
-                    delattr(obj, self._name)
-
     def unlink(self, obj):
-        values = self._get(obj)
+        values = self._get(obj, self.upper)
         composite = self.composite
         if values:
             if self.upper == 1:
@@ -578,7 +593,7 @@ class derived(umlproperty[T]):
         Update the list of items. Returns a unioncache instance.
         """
         u = self.filter(obj)
-        if self.upper != "*" and self.upper <= 1:
+        if self.upper == 1:
             assert len(u) <= 1, (
                 "Derived union %s of item %s should have length 1 %s"
                 % (self.name, obj.id, tuple(u))
@@ -595,7 +610,7 @@ class derived(umlproperty[T]):
         setattr(obj, self._name, uc)
         return uc
 
-    def _get(self, obj):
+    def _get(self, obj, upper):
         try:
             uc = getattr(obj, self._name)
             if uc.version != self.version:
@@ -778,12 +793,11 @@ class redefine(umlproperty[T]):
         self._name = "_" + name
         self.type = type
         self.original = original
+        self.upper = original.upper
+        self.lower = original.lower
+        # self.opposite = original.opposite
 
         original._dependent_properties.add(self)
-
-    upper = property(lambda s: s.original.upper)
-    lower = property(lambda s: s.original.lower)
-    opposite = property(lambda s: s.original.opposite)
 
     def load(self, obj, value):
         if self.original.name == self.name:
@@ -822,7 +836,7 @@ class redefine(umlproperty[T]):
         # No longer needed
         self.original.__delete__(obj, value)
 
-    def _get(self, obj):
+    def _get(self, obj, upper):
         return self.original._get(obj)
 
     def _set(self, obj, value, from_opposite=False):
