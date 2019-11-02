@@ -79,5 +79,5 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 
 [build-system]
-requires = ["poetry==1.0.0b2"]
+requires = ["poetry==1.0.0b3"]
 build-backend = "poetry.masonry.api"
