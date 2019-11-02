@@ -11,7 +11,7 @@ from gi.repository import GLib, Pango, PangoCairo
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.painter import CairoBoundingBoxContext
 
-Font = TypeVar("Font", Dict[str, Any], str)
+Font = TypeVar("Font", Dict[str, object], str)
 
 
 class TextAlign(Enum):

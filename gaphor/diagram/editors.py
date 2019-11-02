@@ -104,9 +104,11 @@ class ClassifiedItemEditor(AbstractEditor):
         return bool(self._edit)
 
     def get_text(self):
+        assert self._edit
         return UML.format(editable(self._edit.subject))
 
     def update_text(self, text):
+        assert self._edit
         UML.parse(editable(self._edit.subject), text)
 
     def key_pressed(self, pos, key):

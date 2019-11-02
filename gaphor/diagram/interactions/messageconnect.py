@@ -1,5 +1,7 @@
 """Message item connection adapters."""
 
+from typing import Optional
+
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect, AbstractConnect
 from gaphor.diagram.interactions.lifeline import LifelineItem
@@ -15,6 +17,8 @@ class MessageLifelineConnect(AbstractConnect):
     is considered to be part of a communication diagram. If the message is
     added to a lifetime line, it's considered a sequence diagram.
     """
+
+    line: MessageItem
 
     def connect_lifelines(self, line, send, received):
         """
@@ -82,6 +86,7 @@ class MessageLifelineConnect(AbstractConnect):
 
         ol = self.get_connected(opposite)
         if ol:
+            assert isinstance(ol, LifelineItem)
             opposite_is_visible = ol.lifetime.visible
             # connect lifetimes if both are visible or both invisible
             return not (lifetime.visible ^ opposite_is_visible)
@@ -105,6 +110,8 @@ class MessageLifelineConnect(AbstractConnect):
             lifetime.connectable = False
 
     def disconnect(self, handle):
+        assert self.canvas
+
         super().disconnect(handle)
 
         line = self.line
@@ -117,6 +124,7 @@ class MessageLifelineConnect(AbstractConnect):
         # lifeline to be no longer destroyed (note that there can be
         # only one delete message connected to lifeline)
         if received and line.subject.messageSort == "deleteMessage":
+            assert isinstance(received, LifelineItem)
             received.is_destroyed = False
             received.request_update()
 

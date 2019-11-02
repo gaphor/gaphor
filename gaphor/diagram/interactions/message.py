@@ -201,7 +201,7 @@ class MessageItem(LinePresentation, Named):
     def _draw_decorating_arrow(self, cr, inverted=False):
         cr.save()
         try:
-            angle = self._arrow_angle
+            angle: float = self._arrow_angle
 
             hint = -1
 
@@ -250,6 +250,8 @@ class MessageItem(LinePresentation, Named):
         Check if message is connecting to lifelines on communication
         diagram.
         """
+        assert self.canvas
+
         canvas = self.canvas
         c1 = canvas.get_connection(self.head)
         c2 = canvas.get_connection(self.tail)

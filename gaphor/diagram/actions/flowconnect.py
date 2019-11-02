@@ -67,7 +67,7 @@ class FlowConnect(UnaryRelationshipConnect):
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         if isinstance(c1, ObjectNodeItem) or isinstance(c2, ObjectNodeItem):
-            relation = self.relationship_or_new(
+            relation: UML.ActivityEdge = self.relationship_or_new(
                 UML.ObjectFlow, UML.ObjectFlow.source, UML.ObjectFlow.target
             )
         else:

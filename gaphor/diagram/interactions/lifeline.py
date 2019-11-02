@@ -137,7 +137,7 @@ class LifetimeItem:
 
 
 @represents(UML.Lifeline)
-class LifelineItem(ElementPresentation, Named):
+class LifelineItem(ElementPresentation[UML.Lifeline], Named):
     """
     Lifeline item.
 
@@ -182,6 +182,8 @@ class LifelineItem(ElementPresentation, Named):
         self.watch("subject.appliedStereotype.classifier.name")
 
     def setup_canvas(self):
+        assert self.canvas
+
         super().setup_canvas()
 
         top = self.lifetime.top
@@ -205,6 +207,7 @@ class LifelineItem(ElementPresentation, Named):
         list(map(self.canvas.solver.add_constraint, self.__constraints))
 
     def teardown_canvas(self):
+        assert self.canvas
         super().teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
 

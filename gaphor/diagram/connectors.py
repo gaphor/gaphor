@@ -7,7 +7,7 @@ gaphor.adapter package.
 
 from __future__ import annotations
 
-from typing import List, Optional, Type, Union, TYPE_CHECKING
+from typing import List, Optional, Type, TypeVar, Union, TYPE_CHECKING
 
 from gaphas.canvas import Connection
 from gaphas.connector import Handle, Port
@@ -18,6 +18,9 @@ from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
 
 if TYPE_CHECKING:
     from gaphor.UML.properties import association, umlproperty, relation_one
+
+
+T = TypeVar("T", bound=UML.Element)
 
 
 class ConnectBase:
@@ -220,8 +223,8 @@ class UnaryRelationshipConnect(AbstractConnect):
         return None
 
     def relationship_or_new(
-        self, type: Type[UML.Element], head: relation_one, tail: relation_one
-    ) -> UML.Element:
+        self, type: Type[T], head: relation_one, tail: relation_one
+    ) -> T:
         """
         Like relation(), but create a new instance if none was found.
         """
@@ -235,6 +238,7 @@ class UnaryRelationshipConnect(AbstractConnect):
             assert line_tail
             setattr(relation, head.name, line_head.subject)
             setattr(relation, tail.name, line_tail.subject)
+        assert isinstance(relation, type)
         return relation
 
     def reconnect_relationship(
