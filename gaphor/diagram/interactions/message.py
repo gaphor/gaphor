@@ -57,7 +57,7 @@ from gaphor.diagram.text import middle_segment
 PI_2 = pi / 2
 
 
-class MessageItem(LinePresentation, Named):
+class MessageItem(LinePresentation[UML.Message], Named):
     """
     Message item is drawn on sequence and communication diagrams.
 
