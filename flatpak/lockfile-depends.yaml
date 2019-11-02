@@ -2,12 +2,8 @@ name: poetry-deps
 buildsystem: simple
 build-commands:
   - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST}
-    colorama future gaphas importlib-metadata more-itertools packaging pycairo pygobject
-    pyparsing six zipp
+    future gaphas importlib-metadata more-itertools pycairo pygobject zipp
 sources:
-  - type: file
-    url: https://files.pythonhosted.org/packages/76/53/e785891dce0e2f2b9f4b4ff5bc6062a53332ed28833c7afede841f46a5db/colorama-0.4.1.tar.gz
-    sha256: 05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d
   - type: file
     url: https://files.pythonhosted.org/packages/90/52/e20466b85000a181e1e144fd8305caf2cf475e2f9674e797b222f8105f5f/future-0.17.1.tar.gz
     sha256: 67045236dcfd6816dc439556d009594abf643e5eb48992e36beac09c2ca659b8
@@ -21,20 +17,11 @@ sources:
     url: https://files.pythonhosted.org/packages/45/dc/3241eef99eb45f1def35cf93af35d1cf9ef4c0991792583b8f33ea41b092/more_itertools-7.2.0-py3-none-any.whl
     sha256: 92b8c4b06dac4f0611c0729b2f2ede52b2e1bac1ab48f089c7ddc12e26bb60c4
   - type: file
-    url: https://files.pythonhosted.org/packages/cf/94/9672c2d4b126e74c4496c6b3c58a8b51d6419267be9e70660ba23374c875/packaging-19.2-py2.py3-none-any.whl
-    sha256: d9551545c6d761f3def1677baf08ab2a3ca17c56879e70fecba2fc4dde4ed108
-  - type: file
-    url: https://files.pythonhosted.org/packages/48/20/5e83af98eb897935bf7dc39455e892ba866feebb9b7c3b392982866f9958/pycairo-1.18.1.tar.gz
-    sha256: 70172e58b6bad7572a3518c26729b074acdde15e6fee6cbab6d3528ad552b786
+    url: https://files.pythonhosted.org/packages/3c/1a/c0478ecab31baae50fda9956547788afbd0ca563adc52c9b03cab30f17eb/pycairo-1.18.2.tar.gz
+    sha256: dcb853fd020729516e8828ad364084e752327d4cff8505d20b13504b32b16531
   - type: file
     url: https://files.pythonhosted.org/packages/46/8a/b183f3edc812d4d28c8b671a922b5bc2863be5d38c56b3ad9155815e78dd/PyGObject-3.34.0.tar.gz
     sha256: 2acb0daf2b3a23a90f52066cc23d1053339fee2f5f7f4275f8baa3704ae0c543
-  - type: file
-    url: https://files.pythonhosted.org/packages/11/fa/0160cd525c62d7abd076a070ff02b2b94de589f1a9789774f17d7c54058e/pyparsing-2.4.2-py2.py3-none-any.whl
-    sha256: d9338df12903bbf5d65a0e4e87c2161968b10d2e489652bb47001d82a9b028b4
-  - type: file
-    url: https://files.pythonhosted.org/packages/73/fb/00a976f728d0d1fecfe898238ce23f502a721c0ac0ecfedb80e0d88c64e9/six-1.12.0-py2.py3-none-any.whl
-    sha256: 3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c
   - type: file
     url: https://files.pythonhosted.org/packages/74/3d/1ee25a26411ba0401b43c6376d2316a71addcc72ef8690b101b4ea56d76a/zipp-0.6.0-py2.py3-none-any.whl
     sha256: f06903e9f1f43b12d371004b4ac7b06ab39a44adc747266928ae6debfa7b3335
