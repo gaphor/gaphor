@@ -9,6 +9,8 @@ from gaphor.UML.properties import (
     enumeration,
     derived,
     derivedunion,
+    relation_one,
+    relation_many,
     redefine,
 )
 from gaphor.UML.collection import collection
@@ -18,98 +20,98 @@ from gaphor.UML.element import Element
 
 
 class NamedElement(Element):
-    visibility: enumeration[str]
+    visibility: enumeration
     name: attribute[str]
-    clientDependency: association[Dependency]
-    supplierDependency: association[Dependency]
+    clientDependency: relation_many[Dependency]
+    supplierDependency: relation_many[Dependency]
     qualifiedName: derived[List[str]]
-    namespace: derivedunion[Namespace]
+    namespace: relation_one[Namespace]
 
 
 class PackageableElement(NamedElement):
-    visibility: enumeration[str]
+    visibility: enumeration
 
 
 class InstanceSpecification(PackageableElement):
     specification: attribute[str]
-    slot: association[Slot]
-    classifier: association[Classifier]
-    extended: association[Element]
+    slot: relation_many[Slot]
+    classifier: relation_many[Classifier]
+    extended: relation_many[Element]
 
 
 class EnumerationLiteral(InstanceSpecification):
-    enumeration: association[Enumeration]
+    enumeration: relation_one[Enumeration]
 
 
 class Relationship(Element):
-    relatedElement: derivedunion[Element]
+    relatedElement: relation_many[Element]
 
 
 class DirectedRelationship(Relationship):
-    target: derivedunion[Element]
-    source: derivedunion[Element]
+    target: relation_many[Element]
+    source: relation_many[Element]
 
 
 class PackageMerge(DirectedRelationship):
-    mergingPackage: association[Package]
-    mergedPackage: association[Package]
+    mergingPackage: relation_one[Package]
+    mergedPackage: relation_one[Package]
 
 
 class Namespace(NamedElement):
-    ownedRule: association[Constraint]
-    elementImport: association[ElementImport]
-    packageImport: association[PackageImport]
-    ownedMember: derivedunion[NamedElement]
-    member: derivedunion[NamedElement]
+    ownedRule: relation_many[Constraint]
+    elementImport: relation_many[ElementImport]
+    packageImport: relation_many[PackageImport]
+    ownedMember: relation_many[NamedElement]
+    member: relation_many[NamedElement]
     importedMember: derivedunion[PackageableElement]
 
 
 class Type(PackageableElement):
-    package: association[Package]
+    package: relation_one[Package]
 
 
 class RedefinableElement(NamedElement):
     isLeaf: attribute[int]
-    redefinedElement: derivedunion[RedefinableElement]
-    redefinitionContext: derivedunion[Classifier]
+    redefinedElement: relation_many[RedefinableElement]
+    redefinitionContext: relation_many[Classifier]
 
 
 class Classifier(Namespace, Type, RedefinableElement):
     isAbstract: attribute[int]
-    ownedUseCase: association[UseCase]
-    generalization: association[Generalization]
-    redefinedClassifier: association[Classifier]
-    substitution: association[Substitution]
-    attribute: derivedunion[Property]
-    feature: derivedunion[Feature]
+    ownedUseCase: relation_many[UseCase]
+    generalization: relation_many[Generalization]
+    redefinedClassifier: relation_many[Classifier]
+    substitution: relation_many[Substitution]
+    attribute: relation_many[Property]
+    feature: relation_many[Feature]
     general: derived[Classifier]
     inheritedMember: derivedunion[NamedElement]
 
 
 class Association(Classifier, Relationship):
     isDerived: attribute[int]
-    memberEnd: association[Property]
-    ownedEnd: association[Property]
-    navigableOwnedEnd: association[Property]
+    memberEnd: relation_many[Property]
+    ownedEnd: relation_many[Property]
+    navigableOwnedEnd: relation_many[Property]
     endType: derived[Type]
 
 
 class Extension(Association):
     isRequired: attribute[int]
-    ownedEnd: association[ExtensionEnd]  # type: ignore[assignment]
+    ownedEnd: relation_one[ExtensionEnd]  # type: ignore[assignment]
     metaclass: property
 
 
 class Actor(Classifier):
-    ownedAttribute: association[Property]
+    ownedAttribute: relation_many[Property]
 
 
 class ActivityNode(RedefinableElement):
-    outgoing: association[ActivityEdge]
-    incoming: association[ActivityEdge]
-    inGroup: association[ActivityGroup]
-    inPartition: association[ActivityPartition]
-    redefinedElement: redefine[ActivityNode]
+    outgoing: relation_many[ActivityEdge]
+    incoming: relation_many[ActivityEdge]
+    inGroup: relation_many[ActivityGroup]
+    inPartition: relation_many[ActivityPartition]
+    redefinedElement: relation_many[ActivityNode]  # type: ignore[assignment]
 
 
 class ControlNode(ActivityNode):
@@ -122,16 +124,16 @@ class MergeNode(ControlNode):
 
 class Feature(RedefinableElement):
     isStatic: attribute[int]
-    featuringClassifier: derivedunion[Classifier]
+    featuringClassifier: relation_many[Classifier]
 
 
 class ActivityEdge(RedefinableElement):
-    activity: association[Activity]
+    activity: relation_one[Activity]
     guard: attribute[str]
-    source: association[ActivityNode]
-    target: association[ActivityNode]
-    inGroup: association[ActivityGroup]
-    redefinedElement: redefine[ActivityEdge]
+    source: relation_one[ActivityNode]
+    target: relation_one[ActivityNode]
+    inGroup: relation_many[ActivityGroup]
+    redefinedElement: relation_many[ActivityEdge]  # type: ignore[assignment]
 
 
 class ObjectFlow(ActivityEdge):
@@ -151,8 +153,8 @@ class CommunicationPath(Association):
 
 
 class Dependency(DirectedRelationship, PackageableElement):
-    client: association[NamedElement]
-    supplier: association[NamedElement]
+    client: relation_many[NamedElement]
+    supplier: relation_many[NamedElement]
 
 
 class Permission(Dependency):
@@ -164,20 +166,20 @@ class Abstraction(Dependency):
 
 
 class Realization(Abstraction):
-    realizingClassifier: association[Classifier]
-    abstraction: association[Component]
+    realizingClassifier: relation_one[Classifier]
+    abstraction: relation_one[Component]
 
 
 class TypedElement(NamedElement):
-    type: association[Type]
+    type: relation_one[Type]
     typeValue: attribute[str]
 
 
 class ObjectNode(TypedElement, ActivityNode):
-    ordering: enumeration[str]
+    ordering: enumeration
     isControlType: attribute[int]
     upperBound: attribute[str]
-    selection: association[Behavior]
+    selection: relation_one[Behavior]
 
 
 class Pin(ObjectNode):
@@ -186,42 +188,42 @@ class Pin(ObjectNode):
 
 class Generalization(DirectedRelationship):
     isSubstitutable: attribute[int]
-    general: association[Classifier]
-    specific: association[Classifier]
+    general: relation_one[Classifier]
+    specific: relation_one[Classifier]
 
 
 class BehavioredClassifier(Classifier):
-    ownedBehavior: association[Behavior]
-    ownedTrigger: association[Trigger]
-    implementation: redefine[Implementation]
+    ownedBehavior: relation_many[Behavior]
+    ownedTrigger: relation_many[Trigger]
+    implementation: relation_many[Implementation]  # type: ignore[assignment]
 
 
 class StructuredClassifier(Classifier):
-    ownedConnector: association[Connector]
-    ownedAttribute: association[Property]
-    role: derivedunion[ConnectableElement]
+    ownedConnector: relation_many[Connector]
+    ownedAttribute: relation_many[Property]
+    role: relation_many[ConnectableElement]
     part: property
 
 
 class EncapsulatedClassifer(StructuredClassifier):
-    ownedPort: association[Port]
+    ownedPort: relation_many[Port]
 
 
 class Class(BehavioredClassifier, EncapsulatedClassifer):
-    ownedOperation: association[Operation]
-    nestedClassifier: association[Classifier]
-    ownedAttribute: association[Property]
-    ownedReception: association[Reception]
+    ownedOperation: relation_many[Operation]
+    nestedClassifier: relation_many[Classifier]
+    ownedAttribute: relation_many[Property]
+    ownedReception: relation_many[Reception]
     extension: property
     superClass: derived[Classifier]
 
 
 class DeploymentTarget(NamedElement):
-    deployment: association[Deployment]
+    deployment: relation_many[Deployment]
 
 
 class Node(Class, DeploymentTarget):
-    nestedNode: association[Node]
+    nestedNode: relation_many[Node]
 
 
 class Device(Node):
@@ -239,15 +241,15 @@ class MultiplicityElement(Element):
 
 class StructuralFeature(MultiplicityElement, TypedElement, Feature):
     isReadOnly: attribute[int]
-    slot: association[Slot]
+    slot: relation_many[Slot]
 
 
 class UseCase(BehavioredClassifier):
-    subject: association[Classifier]
-    extensionPoint: association[ExtensionPoint]
-    include: association[Include]
-    extend: association[Extend]
-    ownedAttribute: association[Property]
+    subject: relation_many[Classifier]
+    extensionPoint: relation_many[ExtensionPoint]
+    include: relation_many[Include]
+    extend: relation_many[Extend]
+    ownedAttribute: relation_many[Property]
 
 
 class InputPin(Pin):
@@ -260,41 +262,41 @@ class Manifestation(Abstraction):
 
 class Component(Class):
     isIndirectlyInstantiated: attribute[int]
-    realization: association[Realization]
+    realization: relation_many[Realization]
     required: property
     provided: property
-    ownedMember: redefine[PackageableElement]
+    ownedMember: relation_many[PackageableElement]  # type: ignore[assignment]
 
 
 class ConnectableElement(TypedElement):
-    end: association[ConnectorEnd]
+    end: relation_many[ConnectorEnd]
 
 
 class Interface(Classifier, ConnectableElement):
-    ownedAttribute: association[Property]
-    redefinedInterface: association[Interface]
-    nestedInterface: association[Interface]
-    ownedOperation: association[Operation]
-    ownedReception: association[Reception]
+    ownedAttribute: relation_many[Property]
+    redefinedInterface: relation_many[Interface]
+    nestedInterface: relation_many[Interface]
+    ownedOperation: relation_many[Operation]
+    ownedReception: relation_many[Reception]
 
 
 class Include(DirectedRelationship):
-    addition: association[UseCase]
-    includingCase: association[UseCase]
+    addition: relation_one[UseCase]
+    includingCase: relation_one[UseCase]
 
 
 class PackageImport(DirectedRelationship):
-    visibility: enumeration[str]
-    importedPackage: association[Package]
-    importingNamespace: association[Namespace]
+    visibility: enumeration
+    importedPackage: relation_one[Package]
+    importingNamespace: relation_one[Namespace]
 
 
 class ProfileApplication(PackageImport):
-    importedProfile: association[Profile]
+    importedProfile: relation_one[Profile]
 
 
 class ExtensionPoint(RedefinableElement):
-    useCase: association[UseCase]
+    useCase: relation_one[UseCase]
 
 
 class Usage(Dependency):
@@ -302,50 +304,50 @@ class Usage(Dependency):
 
 
 class ElementImport(DirectedRelationship):
-    visibility: enumeration[str]
+    visibility: enumeration
     alias: attribute[str]
-    importingNamespace: association[Namespace]
-    importedElement: association[PackageableElement]
+    importingNamespace: relation_one[Namespace]
+    importedElement: relation_one[PackageableElement]
 
 
 class Property(StructuralFeature, ConnectableElement):
-    aggregation: enumeration[str]
+    aggregation: enumeration
     isDerivedUnion: attribute[int]
     isDerived: attribute[int]
     isReadOnly: attribute[int]
-    datatype: association[DataType]
-    subsettedProperty: association[Property]
-    classifier: association[Classifier]
-    redefinedProperty: association[Property]
-    class_: association[Class]
+    datatype: relation_one[DataType]
+    subsettedProperty: relation_many[Property]
+    classifier: relation_one[Classifier]
+    redefinedProperty: relation_many[Property]
+    class_: relation_one[Class]
     defaultValue: attribute[str]
-    association: association[Association]
-    interface_: association[Interface]
-    owningAssociation: association[Association]
-    useCase: association[UseCase]
-    actor: association[Actor]
+    association: relation_one[Association]
+    interface_: relation_one[Interface]
+    owningAssociation: relation_one[Association]
+    useCase: relation_one[UseCase]
+    actor: relation_one[Actor]
     isComposite: derived[bool]
     navigability: derived[bool]
-    opposite: derived[Property]
+    opposite: relation_one[Property]
 
 
 class ExtensionEnd(Property):
-    type: redefine[Stereotype]
+    type: relation_one[Stereotype]  # type: ignore[assignment]
 
 
 class DataType(Classifier):
-    ownedAttribute: association[Property]
-    ownedOperation: association[Operation]
+    ownedAttribute: relation_many[Property]
+    ownedOperation: relation_many[Operation]
 
 
 class Enumeration(DataType):
-    literal: association[EnumerationLiteral]
+    literal: relation_many[EnumerationLiteral]
 
 
 class Slot(Element):
     value: attribute[str]
-    owningInstance: association[InstanceSpecification]
-    definingFeature: association[StructuralFeature]
+    owningInstance: relation_one[InstanceSpecification]
+    definingFeature: relation_one[StructuralFeature]
 
 
 class ExecutableNode(ActivityNode):
@@ -369,11 +371,11 @@ class DeployedArtifact(NamedElement):
 
 
 class Artifact(Classifier, DeployedArtifact):
-    manifestation: association[Manifestation]
+    manifestation: relation_many[Manifestation]
 
 
 class ActivityParameterNode(ObjectNode):
-    parameter: association[Parameter]
+    parameter: relation_one[Parameter]
 
 
 class PrimitiveType(DataType):
@@ -381,51 +383,53 @@ class PrimitiveType(DataType):
 
 
 class DecisionNode(ControlNode):
-    decisionInput: association[Behavior]
+    decisionInput: relation_one[Behavior]
 
 
 class Package(Namespace, PackageableElement):
-    ownedDiagram: association[Diagram]
-    nestedPackage: association[Package]
-    package: association[Package]
-    ownedClassifier: association[Type]
-    packageExtension: association[PackageMerge]
-    appliedProfile: association[ProfileApplication]
-    ownedMember: redefine[PackageableElement]
+    ownedDiagram: relation_many[Diagram]
+    nestedPackage: relation_many[Package]
+    package: relation_one[Package]
+    ownedClassifier: relation_many[Type]
+    packageExtension: relation_many[PackageMerge]
+    appliedProfile: relation_many[ProfileApplication]
+    ownedMember: relation_many[PackageableElement]  # type: ignore[assignment]
 
 
 class Profile(Package):
-    metamodelReference: association[PackageImport]
-    ownedStereotype: association[Stereotype]
-    metaclassReference: association[ElementImport]
+    metamodelReference: relation_many[PackageImport]
+    ownedStereotype: relation_many[Stereotype]
+    metaclassReference: relation_many[ElementImport]
 
 
 class Behavior(Class):
     isReentrant: attribute[int]
-    redefinedBehavior: association[Behavior]
-    context: association[BehavioredClassifier]
+    redefinedBehavior: relation_many[Behavior]
+    context: relation_one[BehavioredClassifier]
 
 
 class Activity(Behavior):
     body: attribute[str]
     language: attribute[str]
-    edge: association[ActivityEdge]
-    group: association[ActivityGroup]
-    node: association[ActivityNode]
-    action: association[Action]
+    edge: relation_many[ActivityEdge]
+    group: relation_many[ActivityGroup]
+    node: relation_many[ActivityNode]
+    action: relation_many[Action]
 
 
 class Implementation(Realization):
-    contract: redefine[Interface]
-    implementatingClassifier: redefine[BehavioredClassifier]
+    contract: relation_one[Interface]  # type: ignore[assignment]
+    implementatingClassifier: relation_one[
+        BehavioredClassifier
+    ]  # type: ignore[assignment]
 
 
 class Parameter(TypedElement, MultiplicityElement):
-    direction: enumeration[str]
+    direction: enumeration
     defaultValue: attribute[str]
-    ownerFormalParam: association[BehavioralFeature]
-    ownerReturnParam: association[BehavioralFeature]
-    operation: redefine[Operation]
+    ownerFormalParam: relation_one[BehavioralFeature]
+    ownerReturnParam: relation_one[BehavioralFeature]
+    operation: relation_one[Operation]  # type: ignore[assignment]
 
 
 # 24: override Presentation
@@ -434,25 +438,25 @@ from gaphor.UML.presentation import Presentation
 
 class BehavioralFeature(Feature, Namespace):
     isAbstract: attribute[int]
-    method: association[Behavior]
-    formalParameter: association[Parameter]
-    raisedException: association[Type]
-    returnResult: association[Parameter]
-    parameter: derivedunion[Parameter]
+    method: relation_many[Behavior]
+    formalParameter: relation_many[Parameter]
+    raisedException: relation_many[Type]
+    returnResult: relation_many[Parameter]
+    parameter: relation_many[Parameter]
 
 
 class Operation(BehavioralFeature):
     isQuery: attribute[int]
-    precondition: association[Constraint]
-    bodyCondition: association[Constraint]
-    redefinedOperation: association[Operation]
-    class_: association[Class]
-    datatype: association[DataType]
-    postcondition: association[Constraint]
-    interface_: association[Interface]
-    raisedException: association[Type]
+    precondition: relation_many[Constraint]
+    bodyCondition: relation_one[Constraint]
+    redefinedOperation: relation_many[Operation]
+    class_: relation_one[Class]
+    datatype: relation_one[DataType]
+    postcondition: relation_many[Constraint]
+    interface_: relation_one[Interface]
+    raisedException: relation_many[Type]
     type: derivedunion[DataType]
-    formalParameter: redefine[Parameter]
+    formalParameter: relation_many[Parameter]  # type: ignore[assignment]
 
 
 class ControlFlow(ActivityEdge):
@@ -460,8 +464,8 @@ class ControlFlow(ActivityEdge):
 
 
 class Substitution(Realization):
-    contract: association[Classifier]
-    substitutingClassifier: association[Classifier]
+    contract: relation_one[Classifier]
+    substitutingClassifier: relation_one[Classifier]
 
 
 class OutputPin(Pin):
@@ -474,14 +478,14 @@ class ValuePin(InputPin):
 
 class Action(ExecutableNode):
     effect: attribute[str]
-    output: derivedunion[OutputPin]
-    context_: derivedunion[Classifier]
-    input: derivedunion[InputPin]
+    output: relation_many[OutputPin]
+    context_: relation_one[Classifier]
+    input: relation_many[InputPin]
 
 
 class Comment(Element):
     body: attribute[str]
-    annotatedElement: association[Element]
+    annotatedElement: relation_many[Element]
 
 
 class ExecutionEnvironment(Node):
@@ -489,52 +493,52 @@ class ExecutionEnvironment(Node):
 
 
 class Extend(DirectedRelationship):
-    extendedCase: association[UseCase]
-    extensionLocation: association[ExtensionPoint]
-    extension: association[UseCase]
-    constraint: association[Constraint]
+    extendedCase: relation_one[UseCase]
+    extensionLocation: relation_many[ExtensionPoint]
+    extension: relation_one[UseCase]
+    constraint: relation_one[Constraint]
 
 
 class ActivityGroup(Element):
-    activity: association[Activity]
-    edgeContents: association[ActivityEdge]
-    nodeContents: association[ActivityNode]
-    superGroup: derivedunion[ActivityGroup]
-    subgroup: derivedunion[ActivityGroup]
+    activity: relation_one[Activity]
+    edgeContents: relation_many[ActivityEdge]
+    nodeContents: relation_many[ActivityNode]
+    superGroup: relation_one[ActivityGroup]
+    subgroup: relation_many[ActivityGroup]
 
 
 class Constraint(PackageableElement):
-    constrainedElement: association[Element]
+    constrainedElement: relation_many[Element]
     specification: attribute[str]
-    owningState: association[State]
+    owningState: relation_one[State]
     context: derivedunion[Namespace]
 
 
 class InteractionFragment(NamedElement):
-    enclosingInteraction: association[Interaction]
-    covered: association[Lifeline]
-    generalOrdering: association[GeneralOrdering]
+    enclosingInteraction: relation_one[Interaction]
+    covered: relation_one[Lifeline]
+    generalOrdering: relation_many[GeneralOrdering]
 
 
 class Interaction(Behavior, InteractionFragment):
-    fragment: association[InteractionFragment]
-    lifeline: association[Lifeline]
-    message: association[Message]
+    fragment: relation_many[InteractionFragment]
+    lifeline: relation_many[Lifeline]
+    message: relation_many[Message]
 
 
 class ExecutionOccurence(InteractionFragment):
-    finish: association[OccurrenceSpecification]
-    start: association[OccurrenceSpecification]
-    behavior: association[Behavior]
+    finish: relation_one[OccurrenceSpecification]
+    start: relation_one[OccurrenceSpecification]
+    behavior: relation_many[Behavior]
 
 
 class StateInvariant(InteractionFragment):
-    invariant: association[Constraint]
+    invariant: relation_one[Constraint]
 
 
 class Lifeline(NamedElement):
-    coveredBy: association[InteractionFragment]
-    interaction: association[Interaction]
+    coveredBy: relation_many[InteractionFragment]
+    interaction: relation_one[Interaction]
     discriminator: attribute[str]
     parse: Callable[[Lifeline, str], None]
     render: Callable[[Lifeline], str]
@@ -542,43 +546,43 @@ class Lifeline(NamedElement):
 
 class Message(NamedElement):
     messageKind: property
-    messageSort: enumeration[str]
+    messageSort: enumeration
     argument: attribute[str]
-    signature: association[NamedElement]
-    sendEvent: association[MessageEnd]
-    receiveEvent: association[MessageEnd]
-    interaction: association[Interaction]
+    signature: relation_one[NamedElement]
+    sendEvent: relation_one[MessageEnd]
+    receiveEvent: relation_one[MessageEnd]
+    interaction: relation_one[Interaction]
 
 
 class MessageEnd(NamedElement):
-    sendMessage: association[Message]
-    receiveMessage: association[Message]
+    sendMessage: relation_one[Message]
+    receiveMessage: relation_one[Message]
 
 
 class OccurrenceSpecification(InteractionFragment):
-    toAfter: association[GeneralOrdering]
-    toBefore: association[GeneralOrdering]
-    finishExec: association[ExecutionOccurence]
-    startExec: association[ExecutionOccurence]
+    toAfter: relation_many[GeneralOrdering]
+    toBefore: relation_many[GeneralOrdering]
+    finishExec: relation_many[ExecutionOccurence]
+    startExec: relation_many[ExecutionOccurence]
 
 
 class GeneralOrdering(NamedElement):
-    before: association[OccurrenceSpecification]
-    after: association[OccurrenceSpecification]
+    before: relation_one[OccurrenceSpecification]
+    after: relation_one[OccurrenceSpecification]
 
 
 class Connector(Feature):
-    kind: enumeration[str]
-    redefinedConnector: association[Connector]
-    type: association[Association]
-    end: association[ConnectorEnd]
-    contract: association[Behavior]
+    kind: enumeration
+    redefinedConnector: relation_many[Connector]
+    type: relation_one[Association]
+    end: relation_many[ConnectorEnd]
+    contract: relation_many[Behavior]
 
 
 class ConnectorEnd(MultiplicityElement):
-    role: association[ConnectableElement]
-    partWithPort: association[Property]
-    definingEnd: derivedunion[Property]
+    role: relation_one[ConnectableElement]
+    partWithPort: relation_one[Property]
+    definingEnd: relation_one[Property]
 
 
 class FlowFinalNode(FinalNode):
@@ -595,55 +599,55 @@ class ForkNode(ControlNode):
 
 
 class StateMachine(Behavior):
-    region: association[Region]
-    extendedStateMachine: association[StateMachine]
+    region: relation_many[Region]
+    extendedStateMachine: relation_one[StateMachine]
 
 
 class Region(Namespace, RedefinableElement):
-    stateMachine: association[StateMachine]
-    subvertex: association[Vertex]
-    state: association[State]
-    extendedRegion: redefine[Region]
+    stateMachine: relation_one[StateMachine]
+    subvertex: relation_many[Vertex]
+    state: relation_one[State]
+    extendedRegion: relation_many[Region]  # type: ignore[assignment]
 
 
 # 30: override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
-    kind: att[str]
-    container: association[Region]
-    source: association[Vertex]
-    target: association[Vertex]
-    effect: association[Behavior]
-    guard: association[Constraint]
-    redefintionContext: association[Classifier]
-    redefinedTransition: association[Transition]
+    kind: enumeration
+    container: relation_one[Region]
+    source: relation_one[Vertex]
+    target: relation_one[Vertex]
+    effect: relation_one[Behavior]
+    guard: relation_one[Constraint]
+    redefinitionContext: relation_many[Classifier]
+    redefinedTransition: relation_many[Transition]
 
 
 class Vertex(NamedElement):
-    container: association[Region]
-    outgoing: association[Transition]
-    incoming: association[Transition]
+    container: relation_one[Region]
+    outgoing: relation_many[Transition]
+    incoming: relation_many[Transition]
 
 
 class Pseudostate(Vertex):
-    kind: enumeration[str]
-    stateMachine: association[StateMachine]
-    state: association[State]
+    kind: enumeration
+    stateMachine: relation_one[StateMachine]
+    state: relation_one[State]
 
 
 class ConnectionPointReference(Vertex):
-    entry: association[Pseudostate]
-    exit: association[Pseudostate]
-    state: association[State]
+    entry: relation_many[Pseudostate]
+    exit: relation_many[Pseudostate]
+    state: relation_one[State]
 
 
 class State(Vertex, Namespace, RedefinableElement):
-    entry: association[Behavior]
-    exit: association[Behavior]
-    doActivity: association[Behavior]
-    statevariant: association[Constraint]
-    submachine: association[StateMachine]
-    redefinedState: redefine[State]
+    entry: relation_one[Behavior]
+    exit: relation_one[Behavior]
+    doActivity: relation_one[Behavior]
+    statevariant: relation_one[Constraint]
+    submachine: relation_one[StateMachine]
+    redefinedState: relation_one[State]  # type: ignore[assignment]
 
 
 class FinalState(State):
@@ -656,15 +660,15 @@ class Port(Property):
 
 
 class Deployment(Dependency):
-    deployedArtifact: association[DeployedArtifact]
+    deployedArtifact: relation_many[DeployedArtifact]
 
 
 class ActivityPartition(ActivityGroup, NamedElement):
     isDimension: attribute[int]
     isExternal: attribute[int]
-    node: association[ActivityNode]
-    represents: association[Element]
-    subpartition: association[ActivityPartition]
+    node: relation_many[ActivityNode]
+    represents: relation_one[Element]
+    subpartition: relation_many[ActivityPartition]
 
 
 class MessageOccurrenceSpecification(MessageEnd, OccurrenceSpecification):
@@ -673,22 +677,22 @@ class MessageOccurrenceSpecification(MessageEnd, OccurrenceSpecification):
 
 class AcceptEventAction(Action):
     isUnmarshall: attribute[int]
-    result: association[OutputPin]
+    result: relation_many[OutputPin]
 
 
 class ReplyAction(Action):
-    replyValue: association[InputPin]
-    returnInformation: association[InputPin]
+    replyValue: relation_one[InputPin]
+    returnInformation: relation_one[InputPin]
 
 
 class UnmarshallAction(Action):
-    result: association[OutputPin]
-    unmarshallType: association[Classifier]
-    object: association[InputPin]
+    result: relation_many[OutputPin]
+    unmarshallType: relation_one[Classifier]
+    object: relation_one[InputPin]
 
 
 class AcceptCallAction(AcceptEventAction):
-    returnInformation: association[OutputPin]
+    returnInformation: relation_one[OutputPin]
 
 
 class InvocationAction(Action):
@@ -696,15 +700,15 @@ class InvocationAction(Action):
 
 
 class SendSignalAction(InvocationAction):
-    target: association[InputPin]
+    target: relation_many[InputPin]
 
 
 class Collaboration(StructuredClassifier, BehavioredClassifier):
-    collaborationRole: association[ConnectableElement]
+    collaborationRole: relation_many[ConnectableElement]
 
 
 class Trigger(NamedElement):
-    event: association[Event]
+    event: relation_one[Event]
 
 
 class Event(PackageableElement):
@@ -728,27 +732,27 @@ class DestructionEvent(Event):
 
 
 class SendOperationEvent(MessageEvent):
-    operation: association[Operation]
+    operation: relation_one[Operation]
 
 
 class SendSignalEvent(MessageEvent):
-    signal: association[Signal]
+    signal: relation_one[Signal]
 
 
 class ReceiveOperationEvent(MessageEvent):
-    operation: association[Operation]
+    operation: relation_one[Operation]
 
 
 class ReceiveSignalEvent(MessageEvent):
-    signal: association[Signal]
+    signal: relation_one[Signal]
 
 
 class Signal(Classifier):
-    ownedAttribute: association[Property]
+    ownedAttribute: relation_many[Property]
 
 
 class Reception(BehavioralFeature):
-    signal: association[Signal]
+    signal: relation_one[Signal]
 
 
 import gaphor.UML.uml2overrides as overrides
@@ -1379,7 +1383,7 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 91: override Property.opposite(Property.association, Association.memberEnd): derived[Property]
+# 91: override Property.opposite(Property.association, Association.memberEnd): relation_one[Property]
 Property.opposite = derived(
     "opposite", Property, 0, 1, lambda obj: [overrides.property_opposite(obj)]
 )

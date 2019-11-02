@@ -332,7 +332,7 @@ def parse_lifeline(el: uml2.Lifeline, s: str) -> None:
 def render_lifeline(el: uml2.Lifeline) -> str:
     """
     """
-    return el.name or ""  # type: ignore[return-value]
+    return el.name or ""
 
 
 @parse.register(uml2.NamedElement)

@@ -30,14 +30,14 @@ override Presentation.subject
 override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
-    kind: att[str]
-    container: association[Region]
-    source: association[Vertex]
-    target: association[Vertex]
-    effect: association[Behavior]
-    guard: association[Constraint]
-    redefintionContext: association[Classifier]
-    redefinedTransition: association[Transition]
+    kind: enumeration
+    container: relation_one[Region]
+    source: relation_one[Vertex]
+    target: relation_one[Vertex]
+    effect: relation_one[Behavior]
+    guard: relation_one[Constraint]
+    redefinitionContext: relation_many[Classifier]
+    redefinedTransition: relation_many[Transition]
 %%
 override MultiplicityElement.lower(MultiplicityElement.lowerValue): derived[str]
 MultiplicityElement.lower = derived('lower', str, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
@@ -88,7 +88,7 @@ Class.superClass = Classifier.general
 override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 %%
-override Property.opposite(Property.association, Association.memberEnd): derived[Property]
+override Property.opposite(Property.association, Association.memberEnd): relation_one[Property]
 Property.opposite = derived('opposite', Property, 0, 1, lambda obj: [overrides.property_opposite(obj)])
 %%
 override Property.isComposite(Property.aggregation): derived[bool]

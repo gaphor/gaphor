@@ -5,7 +5,7 @@ Base code for presentation elements
 from __future__ import annotations
 
 from typing import Any, Callable, Generic, Optional, TypeVar, TYPE_CHECKING
-from gaphor.UML.properties import umlproperty, association
+from gaphor.UML.properties import relation_one, association
 from gaphor.UML.element import Element
 
 if TYPE_CHECKING:
@@ -30,7 +30,7 @@ class Presentation(Element, Generic[S]):
 
         self.watch("subject")
 
-    subject: umlproperty[S] = association(
+    subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
     )
 

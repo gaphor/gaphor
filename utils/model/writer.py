@@ -131,7 +131,7 @@ class Writer:
                 a.class_name,
                 a.name,
                 f"enumeration('{a.name}', {e.enumerates}, '{default or e.enumerates[0]}')",
-                type="enumeration[str]",
+                type="enumeration",
             )
         else:
             if params:
@@ -204,9 +204,9 @@ class Writer:
             head.class_name,
             head.name,
             a + ")",
-            type=f"association[{head.opposite_class_name}]{extension_association_hack}"
+            type=f"relation_one[{head.opposite_class_name}]{extension_association_hack}"
             if head.upper == "1"
-            else f"association[{head.opposite_class_name}]",
+            else f"relation_many[{head.opposite_class_name}]",
         )
 
     def add_derivedunion(self, d):
@@ -236,7 +236,9 @@ class Writer:
                     d.upper == "*" and "'*'" or d.upper,
                     subs,
                 ),
-                type=f"derivedunion[{d.opposite_class_name}]",
+                type=f"relation_one[{d.opposite_class_name}]"
+                if d.upper == "1"
+                else f"relation_many[{d.opposite_class_name}]",
             )
         else:
             if not self.overrides.has_override(f"{d.class_name}.{d.name}"):
@@ -254,7 +256,9 @@ class Writer:
                     d.lower,
                     d.upper == "*" and "'*'" or d.upper,
                 ),
-                type=f"derivedunion[{d.opposite_class_name}]",
+                type=f"relation_one[{d.opposite_class_name}]"
+                if d.upper == "1"
+                else f"relation_many[{d.opposite_class_name}]",
             )
         d.written = True
 
@@ -268,5 +272,7 @@ class Writer:
             r.name,
             "redefine(%s, '%s', %s, %s)"
             % (r.class_name, r.name, r.opposite_class_name, r.redefines),
-            type=f"redefine[{r.opposite_class_name}]",
+            type=f"relation_one[{r.opposite_class_name}]  # type: ignore[assignment]"
+            if r.upper == "1"
+            else f"relation_many[{r.opposite_class_name}]  # type: ignore[assignment]",
         )

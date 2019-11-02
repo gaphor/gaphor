@@ -28,6 +28,8 @@ from gaphor.UML.properties import (
     enumeration,
     derived,
     derivedunion,
+    relation_one,
+    relation_many,
     redefine,
 )
 from gaphor.UML.collection import collection

@@ -173,10 +173,10 @@ class ElementDispatcher:
         # Apply remaining path
         if remainder:
             if property.upper == "*" or property.upper > 1:
-                for e in property._get(element, property.upper):
+                for e in property._get(element):
                     self._add_handlers(e, remainder, handler)
             else:
-                e = property._get(element, property.upper)
+                e = property._get(element)
                 if e and remainder:
                     self._add_handlers(e, remainder, handler)
 
@@ -191,12 +191,12 @@ class ElementDispatcher:
 
         if property.upper == "*" or property.upper > 1:
             for remainder in handlers.get(handler, ()):
-                for e in property._get(element, property.upper):
+                for e in property._get(element):
                     # log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         else:
             for remainder in handlers.get(handler, ()):
-                e = property._get(element, property.upper)
+                e = property._get(element)
                 if e:
                     self._remove_handlers(e, remainder[0], handler)
         try:

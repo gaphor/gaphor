@@ -21,7 +21,7 @@ def extension_metaclass(self):
         return metaend[0].type
 
 
-def property_opposite(self) -> Optional[Property]:
+def property_opposite(self: Property) -> Optional[Property]:
     """
     In the case where the property is one navigable end of a binary
     association with both ends navigable, this gives the other end.
@@ -30,10 +30,10 @@ def property_opposite(self) -> Optional[Property]:
     navigability.
     """
     if self.association is not None and len(self.association.memberEnd) == 2:
-        return (  # type: ignore[no-any-return]
-            self.association.memberEnd[0] is self
-            and self.association.memberEnd[1]
-            or self.association.memberEnd[0]
+        return (
+            self.association.memberEnd[1]
+            if self.association.memberEnd[0] is self
+            else self.association.memberEnd[0]
         )
     return None
 
@@ -50,8 +50,10 @@ def property_navigability(self: Property) -> Optional[bool]:
     if not assoc or not self.opposite:
         return None  # assume unknown
     owner = self.opposite.type
-    if owner and (
-        (type(self.type) in (Class, Interface) and self in owner.ownedAttribute)
+    if (
+        isinstance(owner, (Class, Interface))
+        and isinstance(self.type, (Class, Interface))
+        and (self in owner.ownedAttribute)
         or self in assoc.navigableOwnedEnd
     ):
         return True

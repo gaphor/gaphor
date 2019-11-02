@@ -52,9 +52,9 @@ def matcher(expr) -> Callable[[T], bool]:
 
     compiled = compile(expr, "<matcher>", "eval")
 
-    def real_matcher(element: T):
+    def real_matcher(element: T) -> bool:
         try:
-            return eval(compiled, {}, {"it": element})
+            return bool(eval(compiled, {}, {"it": element}))
         except (AttributeError, NameError):
             # attribute does not (yet) exist
             # print 'No attribute', expr, d
@@ -88,10 +88,10 @@ class querymixin:
     'two'
     """
 
-    def __getitem__(self: List, key):  # type: ignore
+    def __getitem__(self, key):
         try:
             # See if the list can deal with it (don't change default behaviour)
-            return super().__getitem__(key)  # type: ignore
+            return super().__getitem__(key)  # type: ignore[misc]
         except TypeError:
             # Nope, try our matcher trick
             if isinstance(key, tuple):
@@ -99,11 +99,9 @@ class querymixin:
             else:
                 remainder = None
 
-            matched = list(filter(matcher(key), self))
-            if remainder:
-                return type(self)(matched).__getitem__(*remainder)
-            else:
-                return type(self)(matched)
+            matched = list(filter(matcher(key), self))  # type: ignore[call-overload]
+            new_list = type(self)(matched)  # type: ignore[call-arg]
+            return new_list.__getitem__(*remainder) if remainder else new_list
 
 
 def issafeiterable(obj):
@@ -255,4 +253,4 @@ class recursemixin:
         if key == self._recursemixin_trigger:
             return self.proxy_class()(self)
         else:
-            return super().__getitem__(key)  # type: ignore
+            return super().__getitem__(key)  # type: ignore[misc]
