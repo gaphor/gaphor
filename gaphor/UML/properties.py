@@ -611,11 +611,14 @@ class derived(umlproperty[T]):
         return uc
 
     def _get(self, obj, upper):
-        try:
-            uc = getattr(obj, self._name)
-            if uc.version != self.version:
+        if self.subsets:
+            try:
+                uc = getattr(obj, self._name)
+                if uc.version != self.version:
+                    uc = self._update(obj)
+            except AttributeError:
                 uc = self._update(obj)
-        except AttributeError:
+        else:
             uc = self._update(obj)
 
         return uc.data
@@ -640,8 +643,6 @@ class derived(umlproperty[T]):
             if value not in derived union and
         """
         if event.property in self.subsets:
-            # Make sure unions are created again
-            self.version += 1
 
             if not isinstance(event, AssociationUpdated):
                 return
@@ -650,13 +651,19 @@ class derived(umlproperty[T]):
             if self.upper == 1:
                 # This is a [0..1] event
                 # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
-                assert isinstance(
-                    event, AssociationSet
-                ), f"Can only handle [0..1] set-events, not {event} for {event.element}"
-                self.handle(
-                    DerivedSet(event.element, self, event.old_value, event.new_value)
-                )
+                # assert isinstance(
+                #     event, AssociationSet
+                # ), f"Can only handle [0..1] set-events, not {event} for {event.element}"
+                old_value = self._get(event.element, self.upper)
+                # Make sure unions are created again
+                self.version += 1
+                new_value = self._get(event.element, self.upper)
+                if old_value != new_value:
+                    self.handle(DerivedSet(event.element, self, old_value, new_value))
             else:
+                # Make sure unions are created again
+                self.version += 1
+
                 if isinstance(event, AssociationSet):
                     self.handle(DerivedDeleted(event.element, self, event.old_value))
                     self.handle(DerivedAdded(event.element, self, event.new_value))

@@ -49,27 +49,6 @@ def base__getitem__(self, key):
 base.__getitem__ = base__getitem__
 
 
-import re
-
-pattern = r"([A-Z])"
-sub = r"_\1"
-
-
-# def camelCase_to_underscore(str):
-#     """
-#     >>> camelCase_to_underscore('camelcase')
-#     'camelcase'
-#     >>> camelCase_to_underscore('camelCase')
-#     'camel_case'
-#     >>> camelCase_to_underscore('camelCamelCase')
-#     'camel_camel_case'
-#     """
-#     return re.sub(pattern, sub, str).lower()
-
-
-# _ = camelCase_to_underscore
-
-
 def parse_association_name(name):
     # First remove spaces
     name = name.replace(" ", "")
@@ -164,9 +143,78 @@ def parse_association_end(head, tail):
     # redefines.upper = upper
 
 
+def filter_out_metaclasses(classes, extensions, all_elements):
+    """
+    Remove metaclasses from classes dict
+    should check for Extension.memberEnd[Property].type
+    """
+    for e in extensions.values():
+        ends = []
+        for end in e.memberEnd:
+            end = all_elements[end]
+            if not end["type"]:
+                continue
+            end.type = all_elements[end["type"]]
+            ends.append(end)
+        e.memberEnd = ends
+        if ends:
+            del classes[e.memberEnd[0].type.id]
+    return classes
+
+
+def filter_out_simple_attributes(classes):
+    return {k: c for k, c in classes.items() if c.stereotypeName != "SimpleAttribute"}
+
+
+def enrich_classes_with_generalizations(classes, generalizations):
+    for g in generalizations.values():
+        # assert g.specific and g.general
+        specific = g["specific"]
+        general = g["general"]
+        classes[specific].generalization.append(classes[general])
+        classes[general].specialization.append(classes[specific])
+    return classes
+
+
+def enrich_classes_with_stereotypes(classes, all_elements, writer):
+    # Tag classes with appliedStereotype
+    for c in classes.values():
+        if c.get("appliedStereotype"):
+            # Figure out stereotype name through
+            # Class.appliedStereotype.classifier.name
+            instSpec = all_elements[c.appliedStereotype[0]]
+            sType = all_elements[instSpec.classifier[0]]
+            c.stereotypeName = sType.name
+            writer.add_comment(
+                f"class '{c.name}' has been stereotyped as '{c.stereotypeName}'"
+            )
+
+            def tag_children(me):
+                for child in me.specialization:
+                    child.stereotypeName = sType.name
+                    writer.add_comment(
+                        f"class '{child.name}' has been stereotyped as '{child.stereotypeName}' too"
+                    )
+                    tag_children(child)
+
+            tag_children(c)
+    return classes
+
+
+def enrich_enumerations_with_values(enumerations, properties):
+    for e in list(enumerations.values()):
+        values = []
+        for key in e["ownedAttribute"]:
+            values.append(str(properties[key]["name"]))
+        e.enumerates = tuple(values)
+    return enumerations
+
+
 def generate(filename, outfile=None, overridesfile=None):
     # parse the file
     all_elements = parse(filename)
+    overrides = override.Overrides(overridesfile)
+    writer = Writer(overrides)
 
     def resolve(val, attr):
         """Resolve references.
@@ -185,9 +233,6 @@ def generate(filename, outfile=None, overridesfile=None):
         else:
             val.references[attr] = all_elements[refs]
 
-    overrides = override.Overrides(overridesfile)
-    writer = Writer(overrides)
-
     # extract usable elements from all_elements. Some elements are given
     # some extra attributes.
     classes = {}
@@ -197,8 +242,8 @@ def generate(filename, outfile=None, overridesfile=None):
     properties = {}
     operations = {}
     extensions = {}  # for identifying metaclasses
-    for key, val in list(all_elements.items()):
-        # Find classes, *Kind (enumerations) are given special treatment
+    for key, val in all_elements.items():
+        # Find classes, *Kind (enumerations) are enumerations
         if isinstance(val, element):
             if val.type == "Class" and val.get("name"):
                 if val["name"].endswith("Kind") or val["name"].endswith("Sort"):
@@ -231,69 +276,20 @@ def generate(filename, outfile=None, overridesfile=None):
             elif val.type == "Extension":
                 extensions[key] = val
 
-    # find inheritance relationships
-    for g in list(generalizations.values()):
-        # assert g.specific and g.general
-        specific = g["specific"]
-        general = g["general"]
-        classes[specific].generalization.append(classes[general])
-        classes[general].specialization.append(classes[specific])
+    enumerations = enrich_enumerations_with_values(enumerations, properties)
 
-    # add values to enumerations:
-    for e in list(enumerations.values()):
-        values = []
-        for key in e["ownedAttribute"]:
-            values.append(str(properties[key]["name"]))
-        e.enumerates = tuple(values)
+    classes = enrich_classes_with_generalizations(classes, generalizations)
+    classes = enrich_classes_with_stereotypes(classes, all_elements, writer)
+    classes = filter_out_metaclasses(classes, extensions, all_elements)
+    all_classes = classes
+    classes = filter_out_simple_attributes(classes)
 
-    # Remove metaclasses from classes dict
-    # should check for Extension.memberEnd[Property].type
-    for e in list(extensions.values()):
-        ends = []
-        for end in e.memberEnd:
-            end = all_elements[end]
-            if not end["type"]:
-                continue
-            end.type = all_elements[end["type"]]
-            ends.append(end)
-        e.memberEnd = ends
-        if ends:
-            del classes[e.memberEnd[0].type.id]
-
-    # Tag classes with appliedStereotype
-    for c in list(classes.values()):
-        if c.get("appliedStereotype"):
-            # Figure out stereotype name through
-            # Class.appliedStereotype.classifier.name
-            instSpec = all_elements[c.appliedStereotype[0]]
-            sType = all_elements[instSpec.classifier[0]]
-            c.stereotypeName = sType.name
-            writer.add_comment(
-                f"class '{c.name}' has been stereotyped as '{c.stereotypeName}'"
-            )
-
-            def tag_children(me):
-                for child in me.specialization:
-                    child.stereotypeName = sType.name
-                    writer.add_comment(
-                        f"class '{child.name}' has been stereotyped as '{child.stereotypeName}' too"
-                    )
-                    tag_children(child)
-
-            tag_children(c)
-
-    ignored_classes = set()
-
-    # create class definitions, not for SimpleAttribute
-    for c in list(classes.values()):
-        if c.stereotypeName == "SimpleAttribute":
-            ignored_classes.add(c)
-        else:
-            writer.add_classdef(c)
+    for c in classes.values():
+        writer.add_classdef(c)
 
     # create attributes and enumerations
     derivedattributes = {}
-    for c in [c for c in list(classes.values()) if c not in ignored_classes]:
+    for c in classes.values():
         for p in c.get("ownedAttribute") or []:
             a = properties.get(p)
             # set class_name, since add_attribute depends on it
@@ -308,7 +304,7 @@ def generate(filename, outfile=None, overridesfile=None):
     derivedunions = {}  # indexed by name in stead of id
     redefines = []
     for a in list(associations.values()):
-        ends = get_association_ends(a, properties, classes)
+        ends = get_association_ends(a, properties, all_classes)
 
         for e1, e2 in ((ends[0], ends[1]), (ends[1], ends[0])):
             parse_association_end(e1, e2)
@@ -341,10 +337,10 @@ def generate(filename, outfile=None, overridesfile=None):
                 writer.add_association(e1, e2)
 
     # create derived unions, first link the association ends to the d
-    for a in (v for v in list(properties.values()) if v.subsets):
+    for a in properties.values():
         for s in a.subsets or ():
             try:
-                if a.type not in ignored_classes:
+                if a["type"] in classes:
                     derivedunions[s].union.append(a)
             except KeyError:
                 msg(f"not a derived union: {a.class_name}.{s}")
@@ -363,7 +359,7 @@ def generate(filename, outfile=None, overridesfile=None):
         writer.add_redefine(r)
 
     # create operations
-    for c in [c for c in list(classes.values()) if c not in ignored_classes]:
+    for c in classes.values():
         for p in c.get("ownedOperation") or ():
             o = operations.get(p)
             o.class_name = c["name"]
