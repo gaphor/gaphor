@@ -45,9 +45,9 @@ MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.low
 override MultiplicityElement.upper(MultiplicityElement.upperValue): derived[str]
 MultiplicityElement.upper = derived('upper', object, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
 %%
-override NamedElement.qualifiedName(NamedElement.namespace): derived[str]
+override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
-NamedElement.qualifiedName = derived('qualifiedName', str, 0, 1, lambda obj: [overrides.namedelement_qualifiedname(obj)])
+NamedElement.qualifiedName = derived('qualifiedName', List[str], 0, 1, lambda obj: [overrides.namedelement_qualifiedname(obj)])
 
 %%
 override Association.endType(Association.memberEnd, Property.type): derived[Type]

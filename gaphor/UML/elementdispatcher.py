@@ -12,7 +12,7 @@ from gaphor.UML.event import (
     AssociationDeleted,
     ModelReady,
 )
-
+from gaphor.UML.properties import umlproperty
 
 Handler = Callable[[ElementUpdated], None]
 
@@ -101,14 +101,12 @@ class ElementDispatcher:
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
         self._handlers: Dict[
-            Tuple[uml2.Element, uml2.umlproperty], Dict[Handler, Set]
+            Tuple[uml2.Element, umlproperty], Dict[Handler, Set]
         ] = dict()
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: Dict[
-            Handler, List[Tuple[uml2.Element, uml2.umlproperty]]
-        ] = dict()
+        self._reverse: Dict[Handler, List[Tuple[uml2.Element, umlproperty]]] = dict()
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)

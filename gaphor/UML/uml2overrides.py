@@ -30,7 +30,7 @@ def property_opposite(self) -> Optional[Property]:
     navigability.
     """
     if self.association is not None and len(self.association.memberEnd) == 2:
-        return ( # type: ignore[no-any-return]
+        return (  # type: ignore[no-any-return]
             self.association.memberEnd[0] is self
             and self.association.memberEnd[1]
             or self.association.memberEnd[0]
@@ -138,11 +138,11 @@ def message_messageKind(self) -> str:
     return kind
 
 
-def namedelement_qualifiedname(self) -> Tuple[str, ...]:
+def namedelement_qualifiedname(self) -> List[str]:
     """
     Returns the qualified name of the element as a tuple
     """
     if self.namespace:
-        return self.namespace.qualifiedName + (self.name,)  # type: ignore[no-any-return]
+        return namedelement_qualifiedname(self.namespace) + [self.name]
     else:
-        return (self.name,)
+        return [self.name]

@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Callable
+from typing import List, Callable
 from gaphor.UML.properties import (
-    umlproperty,
     association,
     attribute,
     enumeration,
@@ -23,7 +22,7 @@ class NamedElement(Element):
     name: attribute[str]
     clientDependency: association[Dependency]
     supplierDependency: association[Dependency]
-    qualifiedName: derived[str]
+    qualifiedName: derived[List[str]]
     namespace: derivedunion[Namespace]
 
 
@@ -1298,10 +1297,14 @@ SendOperationEvent.operation = association("operation", Operation, lower=1, uppe
 SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
 ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-# 48: override NamedElement.qualifiedName(NamedElement.namespace): derived[str]
+# 48: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 NamedElement.qualifiedName = derived(
-    "qualifiedName", str, 0, 1, lambda obj: [overrides.namedelement_qualifiedname(obj)]
+    "qualifiedName",
+    List[str],
+    0,
+    1,
+    lambda obj: [overrides.namedelement_qualifiedname(obj)],
 )
 
 

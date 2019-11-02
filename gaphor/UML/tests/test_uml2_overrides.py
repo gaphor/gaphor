@@ -12,4 +12,4 @@ def test_qualified_name():
     p3.package = p2
     p2.package = p1
 
-    assert p3.qualifiedName == ("package1", "package2", "package3")
+    assert p3.qualifiedName == ["package1", "package2", "package3"]
