@@ -1,3 +1,8 @@
+1.1.1
+-----
+- Reset tool after creation by default
+- Remove setup.py and MANIFEST.in
+
 1.1.0
 -----
 - New menu structure, according to the GNOME HIG
