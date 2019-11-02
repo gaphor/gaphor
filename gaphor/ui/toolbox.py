@@ -108,30 +108,8 @@ class Toolbox(UIComponent, ActionProvider):
         scrolled_window.show()
         return scrolled_window
 
-    def _on_key_press_event(self, view, event):
-        """
-        Grab top level window events and select the appropriate tool based on the event.
-        """
-        if event.get_state() & Gdk.ModifierType.SHIFT_MASK or (
-            event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
-        ):
-            keyval = Gdk.keyval_name(event.keyval)
-            self.set_active_tool(shortcut=keyval)
-
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None
-
-    def set_active_tool(self, action_name=None, shortcut=None):
-        """
-        Set the tool based on the name of the action
-        """
-        # HACK:
-        toolbox = self._toolbox
-        if shortcut and toolbox:
-            action_name = self.shortcuts.get(shortcut)
-            log.debug(f"Action for shortcut {shortcut}: {action_name}")
-            if not action_name:
-                return
 
     def _button_drag_data_get(self, button, context, data, info, time, action_name):
         """The drag-data-get event signal handler.
