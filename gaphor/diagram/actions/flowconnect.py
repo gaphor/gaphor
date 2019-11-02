@@ -2,7 +2,7 @@
 Flow item adapter connections.
 """
 
-from typing import Type
+from typing import Type, Union
 
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect, UnaryRelationshipConnect
@@ -27,6 +27,8 @@ class FlowConnect(UnaryRelationshipConnect):
     """
     Connect FlowItem and Action/ObjectNode, initial/final nodes.
     """
+
+    line: FlowItem
 
     def allow(self, handle, port):
         line = self.line
@@ -102,6 +104,10 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Decision/Merge node.
     """
 
+    element: Union[ForkNodeItem, DecisionNodeItem]
+    fork_node_cls: Type[UML.ControlNode]
+    join_node_cls: Type[UML.ControlNode]
+
     def allow(self, handle, port):
         # No cyclic connect is possible on a Flow/Decision node:
         head, tail = self.line.head, self.line.tail
@@ -150,7 +156,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
                 flow_class = UML.ControlFlow
 
             UML.model.swap_element(join_node, join_node_cls)
-            fork_node = element.model.create(fork_node_cls)
+            fork_node: UML.ControlNode = element.model.create(fork_node_cls)
             for flow in list(join_node.outgoing):
                 flow.source = fork_node
             flow = element.model.create(flow_class)

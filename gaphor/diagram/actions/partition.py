@@ -51,7 +51,7 @@ class PartitionItem(ElementPresentation, Named):
         self.min_height = 300
 
     def pre_update(self, context):
-        # super().pre_update(context)
+        assert self.canvas
 
         self._header_size = self.shape.size(context.cairo)
 
@@ -106,6 +106,8 @@ class PartitionItem(ElementPresentation, Named):
         """
         By default vertical partition is drawn. It is open on the bottom.
         """
+        assert self.canvas
+
         cr = context.cairo
         cr.set_line_width(box.style("line-width"))
 

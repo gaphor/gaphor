@@ -393,7 +393,7 @@ class NamedElementPropertyPage(PropertyPageBase):
             subject
         )
         self.subject = subject
-        self.watcher = subject and subject.watcher()
+        self.watcher = subject.watcher() if subject else None
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):

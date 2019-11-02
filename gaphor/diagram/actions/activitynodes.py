@@ -246,7 +246,7 @@ class ForkNodeItem(UML.Presentation, Item):
         self.watch("subject[JoinNode].joinSpec")
 
     def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))
+        save_func("matrix", tuple(self.matrix))  # type: ignore[arg-type]
         save_func("height", float(self._handles[1].pos.y))
         if self._combined:
             save_func("combined", self._combined, reference=True)
@@ -271,6 +271,7 @@ class ForkNodeItem(UML.Presentation, Item):
     combined = reversible_property(lambda s: s._combined, _set_combined)
 
     def setup_canvas(self):
+        assert self.canvas
         super().setup_canvas()
 
         h1, h2 = self._handles
@@ -281,6 +282,7 @@ class ForkNodeItem(UML.Presentation, Item):
         list(map(self.canvas.solver.add_constraint, self.__constraints))
 
     def teardown_canvas(self):
+        assert self.canvas
         super().teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
 

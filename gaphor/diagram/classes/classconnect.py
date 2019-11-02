@@ -6,7 +6,7 @@ from gaphor.diagram.connectors import (
     UnaryRelationshipConnect,
     RelationshipConnect,
 )
-from gaphor.diagram.presentation import Named, Classified
+from gaphor.diagram.presentation import Named, Classified, ElementPresentation
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.generalization import GeneralizationItem
@@ -90,6 +90,8 @@ class GeneralizationConnect(RelationshipConnect):
 class AssociationConnect(UnaryRelationshipConnect):
     """Connect association to classifier."""
 
+    line: AssociationItem
+
     def allow(self, handle, port):
         element = self.element
 
@@ -102,6 +104,8 @@ class AssociationConnect(UnaryRelationshipConnect):
     def connect_subject(self, handle):
         element = self.element
         line = self.line
+
+        assert element.canvas
 
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
@@ -132,6 +136,7 @@ class AssociationConnect(UnaryRelationshipConnect):
     def reconnect(self, handle, port):
         line = self.line
         c = self.get_connected(handle)
+        assert c
         if handle is line.head:
             end = line.tail_end
             oend = line.head_end
@@ -158,7 +163,7 @@ class AssociationConnect(UnaryRelationshipConnect):
         c1 = self.get_connected(handle)
         c2 = self.get_connected(opposite)
         if c1 and c2:
-            old = self.line.subject
+            old: UML.Association = self.line.subject
             del self.line.subject
             del self.line.head_end.subject
             del self.line.tail_end.subject

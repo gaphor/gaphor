@@ -31,10 +31,8 @@ __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"
 import logging
 from typing import (
     overload,
-    Any,
     Sequence,
     Type,
-    Union,
     Generic,
     TypeVar,
     Optional,
@@ -68,8 +66,12 @@ E = TypeVar("E")
 
 
 class relation_one(Protocol[E]):
+
+    name: str
+    opposite: Optional[str]
+
     @overload
-    def __get__(self, obj: None, class_=None) -> umlproperty:
+    def __get__(self, obj: None, class_=None) -> relation_one[E]:
         ...
 
     @overload
@@ -84,8 +86,12 @@ class relation_one(Protocol[E]):
 
 
 class relation_many(Protocol[E]):
+
+    name: str
+    opposite: Optional[str]
+
     @overload
-    def __get__(self, obj: None, class_=None) -> umlproperty:
+    def __get__(self, obj: None, class_=None) -> relation_many[E]:
         ...
 
     @overload
@@ -323,12 +329,12 @@ class association(umlproperty[T]):
 
     def __init__(
         self,
-        name,
+        name: str,
         type: Type,
         lower: int = 0,
         upper: Upper = "*",
-        composite=False,
-        opposite=None,
+        composite: bool = False,
+        opposite: Optional[str] = None,
     ):
         super().__init__()
         self.name = name
@@ -337,7 +343,7 @@ class association(umlproperty[T]):
         self.lower = lower
         self.upper = upper
         self.composite = composite
-        self.opposite = opposite and opposite
+        self.opposite = opposite
         self.stub: Optional[associationstub] = None
 
     def load(self, obj, value):
@@ -592,6 +598,8 @@ class derived(umlproperty[T]):
     NB. filter returns a *list* of filtered items, even when upper bound is 1.
     """
 
+    opposite = None
+
     def __init__(self, name, type, lower, upper, filter, *subsets):
         super().__init__()
         self.name = name
@@ -836,7 +844,6 @@ class redefine(umlproperty[T]):
         self.original = original
         self.upper = original.upper
         self.lower = original.lower
-        # self.opposite = original.opposite
 
         original._dependent_properties.add(self)
 
