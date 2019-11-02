@@ -37,6 +37,7 @@ from typing import (
     TypeVar,
     Optional,
     Callable,
+    List,
     Set,
     Union,
 )
@@ -108,6 +109,7 @@ class relation_many(Protocol[E]):
 T = TypeVar("T", covariant=True)
 A = TypeVar("A", int, str)
 
+Lower = Union[Literal[0], Literal[1]]
 Upper = Union[Literal[1], Literal["*"]]
 
 
@@ -124,7 +126,7 @@ class umlproperty(Generic[T]):
     for example in the case of event handling.
     """
 
-    lower: int = 0
+    lower: Lower = 0
     upper: Upper = 1
 
     def __init__(self):
@@ -331,7 +333,7 @@ class association(umlproperty[T]):
         self,
         name: str,
         type: Type,
-        lower: int = 0,
+        lower: Lower = 0,
         upper: Upper = "*",
         composite: bool = False,
         opposite: Optional[str] = None,
@@ -529,7 +531,7 @@ class associationstub(umlproperty[T]):
     are iterated and called by their unlink() method.
     """
 
-    def __init__(self, association):
+    def __init__(self, association: association):
         super().__init__()
         self.association = association
         self._name = "_stub_%x" % id(self)
@@ -580,7 +582,7 @@ class unioncache:
     Small cache helper object for derivedunions.
     """
 
-    def __init__(self, data, version):
+    def __init__(self, data: object, version: int) -> None:
         self.data = data
         self.version = version
 
@@ -600,7 +602,15 @@ class derived(umlproperty[T]):
 
     opposite = None
 
-    def __init__(self, name, type, lower, upper, filter, *subsets):
+    def __init__(
+        self,
+        name: str,
+        type: Type[E],
+        lower: Lower,
+        upper: Upper,
+        filter: Callable[[T], List[E]],
+        *subsets: association,
+    ) -> None:
         super().__init__()
         self.name = name
         self._name = "_" + name
@@ -640,15 +650,9 @@ class derived(umlproperty[T]):
                 "Derived union %s of item %s should have length 1 %s"
                 % (self.name, obj.id, tuple(u))
             )
-            # maybe code below is better instead the assertion above?
-            # if len(u) > 1:
-            #    log.warning('Derived union %s of item %s should have length 1 %s' % (self.name, obj.id, tuple(u)))
-            if u:
-                u = next(iter(u))
-            else:
-                u = None
-
-        uc = unioncache(u, self.version)
+            uc = unioncache(u[0] if u else None, self.version)
+        else:
+            uc = unioncache(u, self.version)
         setattr(obj, self._name, uc)
         return uc
 
@@ -735,7 +739,14 @@ class derivedunion(derived[T]):
     The subsets are the properties that participate in the union (Element.name).
     """
 
-    def __init__(self, name, type, lower, upper, *subsets):
+    def __init__(
+        self,
+        name: str,
+        type: Type[E],
+        lower: Lower,
+        upper: Upper,
+        *subsets: association,
+    ):
         super().__init__(name, type, lower, upper, self._union, *subsets)
 
     def _union(self, obj, exclude=None):
@@ -835,7 +846,9 @@ class redefine(umlproperty[T]):
     it ensures that the original values are saved and restored.
     """
 
-    def __init__(self, decl_class, name, type, original):
+    def __init__(
+        self, decl_class: Type[E], name: str, type: Type[T], original: association
+    ):
         super().__init__()
         self.decl_class = decl_class
         self.name = name
