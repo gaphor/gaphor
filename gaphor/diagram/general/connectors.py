@@ -19,6 +19,8 @@ logger = logging.getLogger(__name__)
 class CommentLineElementConnect(AbstractConnect):
     """Connect a comment line to any element item."""
 
+    line: CommentLineItem
+
     def allow(self, handle, port):
         """
         In addition to the normal check, both line ends may not be connected
@@ -73,6 +75,7 @@ class CommentLineElementConnect(AbstractConnect):
                 if isinstance(connected_to.subject, UML.Comment):
                     connected_to.subject.annotatedElement = self.element.subject
                 else:
+                    assert isinstance(self.element.subject, UML.Comment)
                     self.element.subject.annotatedElement = connected_to.subject
 
     def disconnect(self, handle):
@@ -141,6 +144,7 @@ class CommentLineLineConnect(AbstractConnect):
                 if isinstance(c.subject, UML.Comment):
                     c.subject.annotatedElement = self.element.subject
                 else:
+                    assert isinstance(self.element.subject, UML.Comment)
                     self.element.subject.annotatedElement = c.subject
 
     def disconnect(self, handle):
