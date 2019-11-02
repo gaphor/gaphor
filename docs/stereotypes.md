@@ -4,8 +4,8 @@ Stereotypes are quite another story. In order to create a stereotype one
 should create a Profile. Within this profile a Diagram can be created.
 This diagram should accept only items that are useful within a profile:
 
--   Classes, which will function as <<metaclass>>.
--   Stereotype, which will be the defined <<stereotypes>>.
+-   Classes, which will function as `<<metaclass>>`.
+-   Stereotype, which will be the defined `<<stereotypes>>`.
 -   Extensions, connecting metaclasses and stereotypes.
 
 and of course the usual: Comment, Association, Generalization and

@@ -7,7 +7,7 @@ Some highlights of the documentation:
 * The :ref:`tech-section` contains some interesting articles about the technology that drives Gaphor and Gaphas, Gaphor's canvas widget.
 
 If you're into writing plug-ins for Gaphor you should have a look at our
-fabulous `Hello world <http://github.com/amolenaar/gaphor.plugins.helloworld>`_
+fabulous `Hello world <http://github.com/gaphor/gaphor.plugins.helloworld>`_
 plug-in.
 
 .. toctree::
@@ -15,7 +15,8 @@ plug-in.
 
    manual/index
 
-Running Gaphor on different platforms:
+Setting up a development environment, and packaging Gaphor on different
+platforms:
 
 .. toctree::
    :maxdepth: 1
@@ -23,8 +24,6 @@ Running Gaphor on different platforms:
    windows
    linux
    macos
-   custominstall
-
 
 .. _tech-section:
 

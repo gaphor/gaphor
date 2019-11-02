@@ -1,10 +1,12 @@
 # Description of Gaphors data model
 
 Gaphor is an UML tool. In order to keep as close as possible to the UML
-specification the data model is based on the UML Metamodel. Since the
-OMG has an XMI (XML) specification of the metamodel, the easiest way to
-do that is to generate the code directly from the model. Doing this
-raises two issues:
+specification the Gaphor data model is based on the UML Metamodel. The Object
+Management Group (OMG), the not-for-profit technology standards consortium
+that governs UML, has a XML Metadata Interchange (XMI) file describing the
+metamodel. Therefore, the easiest way to keep Gaphor consistent with UML is
+that is to generate Gaphor's data model code directly from the Gaphor model
+describing the UML Metamodel. Doing this raises two issues:
 
 1.  There are more attributes defined in the data model than we will
     use.
@@ -13,53 +15,59 @@ raises two issues:
 The first point is not such a problem: attributes we don't use don't
 consume memory.
 
-There are no consistency rules in the XML definition, we have to get
-them from the UML syntax description. It is probably best to create a
-special consistency module that checks the model and reports errors.
+There are no consistency rules in the [UML XMI
+definition](https://www.omg.org/spec/UML/20131001/UML.xmi), we have to get
+them from the [UML Specification](https://www.omg.org/spec/UML/2.5/PDF). It
+is probably best to create a special consistency module that checks the model
+and reports errors.
 
-In the UML metamodel all classes are derived from Element <uml_element>. So all
-we have to do is create a substitute for Element <uml_element> that gives some
+In the UML metamodel all classes are derived from `Element`. So all
+we have to do is create a substitute for `Element` that gives some
 behaviour to the data objects.
 
-The data model is described in Python. Since the Python language
-doesn't make a difference between classes and objects, we can define
-the possible attributes that an object of a particular kind can have in
-a dictionary (name-value map) at class level. If a value is set, the
-object checks if an attribute exists in the class' dictionary (and the
-parents dictionary). If it does, the value is assigned, if it doesn't
-an exception is raised.
+Gaphor's data model is implemented in Python like the rest of the
+application. Since the Python language doesn't make a difference between
+classes and objects, we can define the possible attributes that an object of
+a particular kind can have in a dictionary (name-value map) at class level.
+If a value is set, the object checks if an attribute exists in the class'
+dictionary (and the parent's dictionary). If the attribute exists, the value
+is assigned, if it doesn't exist then an exception is raised.
 
 ## Bidirectional References
 
-But how, you might wonder, do you handle bidirectional references
-(object one references object two and vice versa)? Well, this is
-basically the same as the uni-directional reference. Only now we need to
-add some extra information to the dictionary at class level. We just
-define an extra field that gives us the name of the opposite reference
-and voila, we can create bi-directional references. You should check out
-the code in `gaphor/UML/element.py` for more details.
+If two objects need to reference each other, a bidirectional reference
+is needed to be supported in Gaphor. This works very similar to the
+uni-directional reference that is stored in a dictionary at the class level.
+We add some extra information to the dictionary at class
+level to make relationship bidirectional. The information is stored in an
+extra field that gives us the name of the opposite reference. and voila, we
+can create bi-directional references. Please reference
+`gaphor/UML/element.py` for more details.
 
 ## Implementation
 
-This will allow the user to assign a value to an instance of `Element`
-with name `name`. If no value is assigned before the value is requested,
-it returns and empty string '':
+Below is an example of the implementation that allows the user to assign a
+value to an instance of `Element` with name `name`. If no value is assigned
+before the value is requested, it returns and empty string '':
 
-    m = Class()
-    print(m.name)              # Returns ''
-    m.name = 'MyName'
-    print(m.name)              # Returns 'MyName'
+```python
+m = Class()
+print(m.name)              # Returns ''
+m.name = 'MyName'
+print(m.name)              # Returns 'MyName'
 
-    m = Element()
-    c = Comment()
-    print(m.comment)             # Returns an empty list '[]'
-    print(c.annotatedElement)    # Returns an empty list '[]'
-    m.comment = c                # Add 'c' to 'm.comment' and add 'm' to 'c.annotatedElement'
-    print(m.comment)             # Returns a list '[c]'
-    print(c.annotatedElement)    # Returns a list '[m]'
+m = Element()
+c = Comment()
+print(m.comment)             # Returns an empty list '[]'
+print(c.annotatedElement)    # Returns an empty list '[]'
+m.comment = c                # Add 'c' to 'm.comment' and add 'm' to 'c.annotatedElement'
+print(m.comment)             # Returns a list '[c]'
+print(c.annotatedElement)    # Returns a list '[m]'
+```
 
-All this wisdom is defined in the data-models base class: `Element`. The
-datamodel itself code is generated.
+This behavior is defined in the data model's base class: `Element`. The code
+for the data model is stored in uml2.py and is generated from the
+`uml2.gaphor` Gaphor model file.
 
 ## Extensions to the Data Model
 
