@@ -96,7 +96,7 @@ class Association(Classifier, Relationship):
 
 class Extension(Association):
     isRequired: attribute[int]
-    ownedEnd: association[ExtensionEnd]
+    ownedEnd: association[ExtensionEnd]  # type: ignore[assignment]
     metaclass: property
 
 
@@ -1310,12 +1310,12 @@ NamedElement.qualifiedName = derived(
 
 # 42: override MultiplicityElement.lower(MultiplicityElement.lowerValue): derived[str]
 MultiplicityElement.lower = derived(
-    "lower", object, 0, 1, lambda obj: [obj.lowerValue], MultiplicityElement.lowerValue
+    "lower", str, 0, 1, lambda obj: [obj.lowerValue], MultiplicityElement.lowerValue
 )
 
 # 45: override MultiplicityElement.upper(MultiplicityElement.upperValue): derived[str]
 MultiplicityElement.upper = derived(
-    "upper", object, 0, 1, lambda obj: [obj.upperValue], MultiplicityElement.upperValue
+    "upper", str, 0, 1, lambda obj: [obj.upperValue], MultiplicityElement.upperValue
 )
 
 # 94: override Property.isComposite(Property.aggregation): derived[bool]

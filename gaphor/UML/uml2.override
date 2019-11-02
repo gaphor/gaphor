@@ -40,10 +40,10 @@ class Transition(RedefinableElement, NamedElement):
     redefinedTransition: association[Transition]
 %%
 override MultiplicityElement.lower(MultiplicityElement.lowerValue): derived[str]
-MultiplicityElement.lower = derived('lower', object, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
+MultiplicityElement.lower = derived('lower', str, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
 %%
 override MultiplicityElement.upper(MultiplicityElement.upperValue): derived[str]
-MultiplicityElement.upper = derived('upper', object, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
+MultiplicityElement.upper = derived('upper', str, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
 %%
 override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 

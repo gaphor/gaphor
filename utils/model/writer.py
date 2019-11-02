@@ -194,11 +194,17 @@ class Writer:
                 ), "One end is derived, the other end not ???"
                 a += f", opposite='{o_name}'"
 
+        extension_association_hack = (
+            (head.class_name == "Extension" and head.name == "ownedEnd")
+            and "  # type: ignore[assignment]"
+            or ""
+        )
+
         self.add_property(
             head.class_name,
             head.name,
             a + ")",
-            type=f"association[{head.opposite_class_name}]"
+            type=f"association[{head.opposite_class_name}]{extension_association_hack}"
             if head.upper == "1"
             else f"association[{head.opposite_class_name}]",
         )
