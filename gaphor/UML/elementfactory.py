@@ -1,6 +1,15 @@
 """Factory for and registration of model elements."""
 
-from typing import Dict, Optional, Type, TypeVar, TYPE_CHECKING
+from typing import (
+    Callable,
+    Dict,
+    Iterator,
+    List,
+    Optional,
+    Type,
+    TypeVar,
+    TYPE_CHECKING,
+)
 import uuid
 from contextlib import contextmanager
 from collections import OrderedDict
@@ -61,7 +70,7 @@ class ElementFactory(Service):
         self._elements[id] = obj
         return obj
 
-    def bind(self, element: Element):
+    def bind(self, element: Element) -> None:
         """
         Bind an already created element to the element factory.
         The element may not be bound to another factory already.
@@ -77,13 +86,13 @@ class ElementFactory(Service):
         element._model = self
         self._elements[element.id] = element
 
-    def size(self):
+    def size(self) -> int:
         """
         Return the amount of elements currently in the factory.
         """
         return len(self._elements)
 
-    def lookup(self, id: str):
+    def lookup(self, id: str) -> Optional[Element]:
         """
         Find element with a specific id.
         """
@@ -91,10 +100,13 @@ class ElementFactory(Service):
 
     __getitem__ = lookup
 
-    def __contains__(self, element):
+    def __contains__(self, element: Element) -> bool:
+        assert isinstance(element.id, str)
         return self.lookup(element.id) is element
 
-    def select(self, expression=None):
+    def select(
+        self, expression: Optional[Callable[[Element], bool]] = None
+    ) -> Iterator[Element]:
         """
         Iterate elements that comply with expression.
         """
@@ -105,43 +117,45 @@ class ElementFactory(Service):
                 if expression(e):
                     yield e
 
-    def lselect(self, expression=None):
+    def lselect(
+        self, expression: Optional[Callable[[Element], bool]] = None
+    ) -> List[Element]:
         """
         Like select(), but returns a list.
         """
         return list(self.select(expression))
 
-    def keys(self):
+    def keys(self) -> List[str]:
         """
         Return a list with all id's in the factory.
         """
         return list(self._elements.keys())
 
-    def iterkeys(self):
+    def iterkeys(self) -> Iterator[str]:
         """
         Return a iterator with all id's in the factory.
         """
         return iter(self._elements.keys())
 
-    def values(self):
+    def values(self) -> List[Element]:
         """
         Return a list with all elements in the factory.
         """
         return list(self._elements.values())
 
-    def itervalues(self):
+    def itervalues(self) -> Iterator[Element]:
         """
         Return a iterator with all elements in the factory.
         """
         return iter(self._elements.values())
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         """
         Returns True if the factory holds no elements.
         """
         return bool(self._elements)
 
-    def flush(self):
+    def flush(self) -> None:
         """Flush all elements (remove them from the factory).
 
         Diagram elements are flushed first.  This is so that canvas updates
@@ -151,13 +165,14 @@ class ElementFactory(Service):
 
         with self.block_events():
             for element in self.lselect(lambda e: isinstance(e, Diagram)):
+                assert isinstance(element, Diagram)
                 element.canvas.block_updates = True
                 element.unlink()
 
             for element in self.lselect():
                 element.unlink()
 
-    def model_ready(self):
+    def model_ready(self) -> None:
         """
         Send notification that a new model has been loaded by means of the
         ModelReady event from gaphor.UML.event.
@@ -176,21 +191,22 @@ class ElementFactory(Service):
         finally:
             self._block_events -= 1
 
-    def handle(self, event):
+    def handle(self, event: object) -> None:
         """
         Handle events coming from elements.
         """
-        if type(event) is UnlinkEvent:
+        if isinstance(event, UnlinkEvent):
             self._unlink_element(event.element)
             event = ElementDeleted(self, event.element)
         if self.event_manager and not self._block_events:
             self.event_manager.handle(event)
 
-    def _unlink_element(self, element):
+    def _unlink_element(self, element: Element) -> None:
         """
         NOTE: Invoked from Element.unlink() to perform an element unlink.
         """
         try:
+            assert isinstance(element.id, str)
             del self._elements[element.id]
         except KeyError:
             pass
