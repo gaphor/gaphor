@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "1.1.0"
+version = "1.1.1"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -79,5 +79,5 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 
 [build-system]
-requires = ["poetry==1.0.0b2"]
+requires = ["poetry==1.0.0b3"]
 build-backend = "poetry.masonry.api"
