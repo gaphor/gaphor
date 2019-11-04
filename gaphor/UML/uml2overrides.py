@@ -1,3 +1,11 @@
+"""
+Special methods (overrides) that add behavior to the model
+that can not simply be generated.
+
+Derived methods always return a list. Note this is not the case
+for normal properties.
+"""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -21,7 +29,7 @@ def extension_metaclass(self):
         return metaend[0].type
 
 
-def property_opposite(self: Property) -> Optional[Property]:
+def property_opposite(self: Property) -> List[Optional[Property]]:
     """
     In the case where the property is one navigable end of a binary
     association with both ends navigable, this gives the other end.
@@ -30,15 +38,15 @@ def property_opposite(self: Property) -> Optional[Property]:
     navigability.
     """
     if self.association is not None and len(self.association.memberEnd) == 2:
-        return (
+        return [
             self.association.memberEnd[1]
             if self.association.memberEnd[0] is self
             else self.association.memberEnd[0]
-        )
-    return None
+        ]
+    return [None]
 
 
-def property_navigability(self: Property) -> Optional[bool]:
+def property_navigability(self: Property) -> List[Optional[bool]]:
     """
     Get navigability of an association end.
     If no association is related to the property, then unknown navigability
@@ -48,7 +56,7 @@ def property_navigability(self: Property) -> Optional[bool]:
 
     assoc = self.association
     if not assoc or not self.opposite:
-        return None  # assume unknown
+        return [None]  # assume unknown
     owner = self.opposite.type
     if (
         isinstance(owner, (Class, Interface))
@@ -56,11 +64,11 @@ def property_navigability(self: Property) -> Optional[bool]:
         and (self in owner.ownedAttribute)
         or self in assoc.navigableOwnedEnd
     ):
-        return True
+        return [True]
     elif self in assoc.ownedEnd:
-        return None
+        return [None]
     else:
-        return False
+        return [False]
 
 
 def _pr_interface_deps(classifier, dep_type):

@@ -40,6 +40,7 @@ from typing import (
     List,
     Set,
     Union,
+    TYPE_CHECKING,
 )
 from typing_extensions import Literal, Protocol
 
@@ -61,7 +62,12 @@ from gaphor.UML.event import (
 )
 
 
+if TYPE_CHECKING:
+    from gaphor.UML.element import Element
+
+
 log = logging.getLogger(__name__)
+
 
 E = TypeVar("E")
 
@@ -69,7 +75,6 @@ E = TypeVar("E")
 class relation_one(Protocol[E]):
 
     name: str
-    opposite: Optional[str]
 
     @overload
     def __get__(self, obj: None, class_=None) -> relation_one[E]:
@@ -89,7 +94,6 @@ class relation_one(Protocol[E]):
 class relation_many(Protocol[E]):
 
     name: str
-    opposite: Optional[str]
 
     @overload
     def __get__(self, obj: None, class_=None) -> relation_many[E]:
@@ -108,10 +112,10 @@ class relation_many(Protocol[E]):
 
 relation = Union[relation_one, relation_many]
 
-T = TypeVar("T", covariant=True)
+T = TypeVar("T")
 A = TypeVar("A", int, str)
 
-Lower = Union[Literal[0], Literal[1]]
+Lower = Union[Literal[0], Literal[1], Literal[2]]
 Upper = Union[Literal[1], Literal["*"]]
 
 
@@ -135,15 +139,6 @@ class umlproperty(Generic[T]):
         self._dependent_properties: Set[Union[derived, redefine]] = set()
         self.name: str
         self._name: str
-
-    # @overload
-    # def __get__(self, obj: None, class_=None) -> umlproperty:
-    #     ...
-
-    # # TODO: should be either Optional[T] or collection[T] based on value of self.upper
-    # @overload
-    # def __get__(self, obj, class_=None) -> Union[Optional[T], collection[T]]:
-    #     ...
 
     def __get__(self, obj, class_=None):
         if obj:
@@ -606,12 +601,13 @@ class derived(umlproperty[T]):
 
     def __init__(
         self,
+        decl_class: Type[E],
         name: str,
-        type: Type[E],
+        type: Type[T],
         lower: Lower,
         upper: Upper,
-        filter: Callable[[T], List[E]],
-        *subsets: association,
+        filter: Callable[[E], List[T]],
+        *subsets: relation,
     ) -> None:
         super().__init__()
         self.name = name
@@ -625,6 +621,9 @@ class derived(umlproperty[T]):
         self.single = len(subsets) == 1
 
         for s in subsets:
+            assert isinstance(
+                s, (association, derived)
+            ), f"have element {s}, expected association"
             s._dependent_properties.add(self)
 
     def load(self, obj, value):
@@ -743,13 +742,14 @@ class derivedunion(derived[T]):
 
     def __init__(
         self,
+        decl_class: Type[E],
         name: str,
-        type: Type[E],
+        type: Type[T],
         lower: Lower,
         upper: Upper,
-        *subsets: association,
+        *subsets: relation,
     ):
-        super().__init__(name, type, lower, upper, self._union, *subsets)
+        super().__init__(decl_class, name, type, lower, upper, self._union, *subsets)
 
     def _union(self, obj, exclude=None):
         """
@@ -854,9 +854,12 @@ class redefine(umlproperty[T]):
         name: str,
         type: Type[T],
         upper: Upper,
-        original: association,
+        original: relation,
     ):
         super().__init__()
+        assert isinstance(
+            original, (association, derived)
+        ), f"expected association or derived, got {original}"
         assert (
             upper == original.upper
         ), f"Multiplicity of {decl_class}.{name} and {original} differ: {upper} != {original.upper}"
@@ -870,7 +873,11 @@ class redefine(umlproperty[T]):
 
         original._dependent_properties.add(self)
 
-    opposite = property(lambda s: s.original.opposite)
+    @property
+    def opposite(self) -> Optional[str]:
+        return (
+            self.original.opposite if isinstance(self.original, association) else None
+        )
 
     def load(self, obj, value):
         if self.original.name == self.name:
@@ -888,7 +895,7 @@ class redefine(umlproperty[T]):
         if self.original.name == self.name:
             self.original.unlink(obj)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"<redefine {self.name}[{self.lower}..{self.upper}]: {self.type.__name__} = {str(self.original)}>"
 
     def __get__(self, obj, class_=None):
@@ -897,7 +904,7 @@ class redefine(umlproperty[T]):
             return self
         return self.original.__get__(obj, class_)
 
-    def __set__(self, obj, value):
+    def __set__(self, obj, value: T) -> None:
         # No longer needed
         if not isinstance(value, self.type):
             raise AttributeError(f"Value should be of type {self.type.__name__}")
@@ -911,9 +918,11 @@ class redefine(umlproperty[T]):
         return self.original._get(obj)
 
     def _set(self, obj, value, from_opposite=False):
+        assert isinstance(self.original, association)
         return self.original._set(obj, value, from_opposite)
 
     def _del(self, obj, value, from_opposite=False):
+        assert isinstance(self.original, association)
         return self.original._del(obj, value, from_opposite)
 
     def propagate(self, event):

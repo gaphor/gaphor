@@ -8,6 +8,7 @@ gaphor.adapter package.
 from __future__ import annotations
 
 from typing import List, Optional, Type, TypeVar, Union, TYPE_CHECKING
+from gaphor.UML.properties import association, redefine, relation
 
 from gaphas.canvas import Connection
 from gaphas.connector import Handle, Port
@@ -15,9 +16,6 @@ from gaphas.connector import Handle, Port
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
-
-if TYPE_CHECKING:
-    from gaphor.UML.properties import association, umlproperty, relation
 
 
 T = TypeVar("T", bound=UML.Element)
@@ -198,6 +196,8 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram.
+        assert isinstance(head, (association, redefine)), f"head is {head}"
+        assert isinstance(tail, (association, redefine)), f"tail is {tail}"
         assert tail.opposite, f"Tail end of {line} has no opposite definition"
         gen: UML.Element
         for gen in getattr(tail_subject, tail.opposite):

@@ -422,7 +422,7 @@ def test_derivedunion():
 
     A.a = association("a", A)
     A.b = association("b", A, 0, 1)
-    A.u = derivedunion("u", object, 0, "*", A.a, A.b)
+    A.u = derivedunion(A, "u", object, 0, "*", A.a, A.b)
 
     a = A()
     assert len(a.a) == 0, f"a.a = {a.a}"
@@ -460,7 +460,7 @@ def test_derivedunion_notify():
                 self.notified = True
 
     E.a = association("a", A)
-    E.u = derivedunion("u", A, 0, "*", E.a)
+    E.u = derivedunion(E, "u", A, 0, "*", E.a)
 
     e = E()
     assert e.notified == False
@@ -474,7 +474,7 @@ def test_derivedunion_listmixins():
 
     A.a = association("a", A)
     A.b = association("b", A)
-    A.u = derivedunion("u", A, 0, "*", A.a, A.b)
+    A.u = derivedunion(A, "u", A, 0, "*", A.a, A.b)
     A.name = attribute("name", str, "default")
 
     a = A()
@@ -530,8 +530,8 @@ def test_derivedunion_events():
     A.b2 = association("b2", A, upper="*")
     A.b3 = association("b3", A, upper=1)
 
-    A.derived_a = derivedunion("derived_a", object, 0, 1, A.a1, A.a2)
-    A.derived_b = derivedunion("derived_b", object, 0, "*", A.b1, A.b2, A.b3)
+    A.derived_a = derivedunion(A, "derived_a", object, 0, 1, A.a1, A.a2)
+    A.derived_b = derivedunion(A, "derived_b", object, 0, "*", A.b1, A.b2, A.b3)
 
     events = []
 

@@ -39,15 +39,15 @@ class Transition(RedefinableElement, NamedElement):
     redefinitionContext: relation_many[Classifier]
     redefinedTransition: relation_many[Transition]
 %%
-override MultiplicityElement.lower(MultiplicityElement.lowerValue): derived[str]
-MultiplicityElement.lower = derived('lower', str, 0, 1, lambda obj: [ obj.lowerValue ], MultiplicityElement.lowerValue)
+override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
+MultiplicityElement.lower = MultiplicityElement.lowerValue
 %%
-override MultiplicityElement.upper(MultiplicityElement.upperValue): derived[str]
-MultiplicityElement.upper = derived('upper', str, 0, 1, lambda obj: [ obj.upperValue ], MultiplicityElement.upperValue)
+override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
+MultiplicityElement.upper = MultiplicityElement.upperValue
 %%
 override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
-NamedElement.qualifiedName = derived('qualifiedName', List[str], 0, 1, lambda obj: [overrides.namedelement_qualifiedname(obj)])
+NamedElement.qualifiedName = derived(NamedElement, 'qualifiedName', List[str], 0, 1, lambda obj: [overrides.namedelement_qualifiedname(obj)])
 
 %%
 override Association.endType(Association.memberEnd, Property.type): derived[Type]
@@ -55,7 +55,7 @@ override Association.endType(Association.memberEnd, Property.type): derived[Type
 # References the classifiers that are used as types of the ends of the
 # association.
 
-Association.endType = derived('endType', Type, 0, '*', lambda self: [end.type for end in self.memberEnd if end])
+Association.endType = derived(Association, 'endType', Type, 0, '*', lambda self: [end.type for end in self.memberEnd if end])
 
 %%
 override Class.extension(Extension.metaclass): property
@@ -63,7 +63,7 @@ override Class.extension(Extension.metaclass): property
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
 # TODO: use those as soon as Extension.metaclass can be used.
-#Class.extension = derived('extension', Extension, 0, '*', class_extension, Extension.metaclass)
+#Class.extension = derived(Class, 'extension', Extension, 0, '*', class_extension, Extension.metaclass)
 
 Class.extension = property(lambda self: self.model.lselect(lambda e: e.isKindOf(Extension) and self is e.metaclass), doc=\
 """References the Extensions that specify additional properties of the
@@ -72,36 +72,36 @@ are typed by the Class.""")
 %%
 override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
-#Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
+#Extension.metaclass = derived(Extension, 'metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 #Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__)
 %%
 override Classifier.inheritedMember: derivedunion[NamedElement]
-Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
+Classifier.inheritedMember = derivedunion(Classifier, 'inheritedMember', NamedElement, 0, '*')
 %%
 override Classifier.general(Generalization.general): derived[Classifier]
-Classifier.general = derived('general', Classifier, 0, '*', lambda self: [g.general for g in self.generalization])
+Classifier.general = derived(Classifier, 'general', Classifier, 0, '*', lambda self: [g.general for g in self.generalization])
 %%
 override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 %%
 override Namespace.importedMember: derivedunion[PackageableElement]
-Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
+Namespace.importedMember = derivedunion(Namespace, 'importedMember', PackageableElement, 0, '*')
 %%
-override Property.opposite(Property.association, Association.memberEnd): relation_one[Property]
-Property.opposite = derived('opposite', Property, 0, 1, lambda obj: [overrides.property_opposite(obj)])
+override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
+Property.opposite = derived(Property, 'opposite', Property, 0, 1, overrides.property_opposite)
 %%
 override Property.isComposite(Property.aggregation): derived[bool]
-Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'])
+Property.isComposite = derived(Property, 'isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'])
 %%
 override Constraint.context: derivedunion[Namespace]
-Constraint.context = derivedunion('context', Namespace, 0, 1)
+Constraint.context = derivedunion(Constraint, 'context', Namespace, 0, 1)
 %%
-override Property.navigability(Property.opposite, Property.association): derived[bool]
-Property.navigability = derived('navigability', bool, 0, 1, lambda obj: [overrides.property_navigability(obj)])
+override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
+Property.navigability = derived(Property, 'navigability', bool, 0, 1, overrides.property_navigability)
 %%
 override Operation.type: derivedunion[DataType]
-Operation.type = derivedunion('type', DataType, 0, 1)
+Operation.type = derivedunion(Operation, 'type', DataType, 0, 1)
 %%
 override Lifeline.parse: Callable[[Lifeline, str], None]
 Lifeline.parse = umllex.parse_lifeline

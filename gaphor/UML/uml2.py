@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Callable
+from typing import List, Callable, Optional
 from gaphor.UML.properties import (
     association,
     attribute,
@@ -235,8 +235,8 @@ class MultiplicityElement(Element):
     isOrdered: attribute[int]
     upperValue: attribute[str]
     lowerValue: attribute[str]
-    lower: derived[str]
-    upper: derived[str]
+    lower: attribute[str]
+    upper: attribute[str]
 
 
 class StructuralFeature(MultiplicityElement, TypedElement, Feature):
@@ -327,8 +327,8 @@ class Property(StructuralFeature, ConnectableElement):
     useCase: relation_one[UseCase]
     actor: relation_one[Actor]
     isComposite: derived[bool]
-    navigability: derived[bool]
-    opposite: relation_one[Property]
+    navigability: derived[Optional[bool]]
+    opposite: relation_one[Optional[Property]]
 
 
 class ExtensionEnd(Property):
@@ -1302,6 +1302,7 @@ ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 # 48: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 NamedElement.qualifiedName = derived(
+    NamedElement,
     "qualifiedName",
     List[str],
     0,
@@ -1310,27 +1311,24 @@ NamedElement.qualifiedName = derived(
 )
 
 
-# 42: override MultiplicityElement.lower(MultiplicityElement.lowerValue): derived[str]
-MultiplicityElement.lower = derived(
-    "lower", str, 0, 1, lambda obj: [obj.lowerValue], MultiplicityElement.lowerValue
-)
+# 42: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
+MultiplicityElement.lower = MultiplicityElement.lowerValue
 
-# 45: override MultiplicityElement.upper(MultiplicityElement.upperValue): derived[str]
-MultiplicityElement.upper = derived(
-    "upper", str, 0, 1, lambda obj: [obj.upperValue], MultiplicityElement.upperValue
-)
+# 45: override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
+MultiplicityElement.upper = MultiplicityElement.upperValue
 
 # 94: override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived(
-    "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
+    Property, "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
 )
 
-# 100: override Property.navigability(Property.opposite, Property.association): derived[bool]
+# 100: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
 Property.navigability = derived(
-    "navigability", bool, 0, 1, lambda obj: [overrides.property_navigability(obj)]
+    Property, "navigability", bool, 0, 1, overrides.property_navigability
 )
 
 RedefinableElement.redefinedElement = derivedunion(
+    RedefinableElement,
     "redefinedElement",
     RedefinableElement,
     0,
@@ -1343,6 +1341,7 @@ RedefinableElement.redefinedElement = derivedunion(
     Connector.redefinedConnector,
 )
 Classifier.attribute = derivedunion(
+    Classifier,
     "attribute",
     Property,
     0,
@@ -1355,6 +1354,7 @@ Classifier.attribute = derivedunion(
     Signal.ownedAttribute,
 )
 Classifier.feature = derivedunion(
+    Classifier,
     "feature",
     Feature,
     0,
@@ -1370,6 +1370,7 @@ Classifier.feature = derivedunion(
     Interface.ownedReception,
 )
 Feature.featuringClassifier = derivedunion(
+    Feature,
     "featuringClassifier",
     Classifier,
     1,
@@ -1381,12 +1382,13 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 91: override Property.opposite(Property.association, Association.memberEnd): relation_one[Property]
+# 91: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
 Property.opposite = derived(
-    "opposite", Property, 0, 1, lambda obj: [overrides.property_opposite(obj)]
+    Property, "opposite", Optional[Property], 0, 1, overrides.property_opposite
 )
 
 BehavioralFeature.parameter = derivedunion(
+    BehavioralFeature,
     "parameter",
     Parameter,
     0,
@@ -1394,8 +1396,9 @@ BehavioralFeature.parameter = derivedunion(
     BehavioralFeature.returnResult,
     BehavioralFeature.formalParameter,
 )
-Action.output = derivedunion("output", OutputPin, 0, "*")
+Action.output = derivedunion(Action, "output", OutputPin, 0, "*")
 RedefinableElement.redefinitionContext = derivedunion(
+    RedefinableElement,
     "redefinitionContext",
     Classifier,
     0,
@@ -1405,6 +1408,7 @@ RedefinableElement.redefinitionContext = derivedunion(
     Operation.datatype,
 )
 NamedElement.namespace = derivedunion(
+    NamedElement,
     "namespace",
     Namespace,
     0,
@@ -1434,6 +1438,7 @@ NamedElement.namespace = derivedunion(
     ConnectionPointReference.state,
 )
 Namespace.ownedMember = derivedunion(
+    Namespace,
     "ownedMember",
     NamedElement,
     0,
@@ -1476,7 +1481,12 @@ Namespace.ownedMember = derivedunion(
 )
 # 82: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived(
-    "general", Classifier, 0, "*", lambda self: [g.general for g in self.generalization]
+    Classifier,
+    "general",
+    Classifier,
+    0,
+    "*",
+    lambda self: [g.general for g in self.generalization],
 )
 
 # 53: override Association.endType(Association.memberEnd, Property.type): derived[Type]
@@ -1485,19 +1495,24 @@ Classifier.general = derived(
 # association.
 
 Association.endType = derived(
-    "endType", Type, 0, "*", lambda self: [end.type for end in self.memberEnd if end]
+    Association,
+    "endType",
+    Type,
+    0,
+    "*",
+    lambda self: [end.type for end in self.memberEnd if end],
 )
 
 
 # 97: override Constraint.context: derivedunion[Namespace]
-Constraint.context = derivedunion("context", Namespace, 0, 1)
+Constraint.context = derivedunion(Constraint, "context", Namespace, 0, 1)
 
 # 103: override Operation.type: derivedunion[DataType]
-Operation.type = derivedunion("type", DataType, 0, 1)
+Operation.type = derivedunion(Operation, "type", DataType, 0, 1)
 
 # 73: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
-# Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
+# Extension.metaclass = derived(Extension, 'metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 # Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(
     overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__
@@ -1508,7 +1523,7 @@ Extension.metaclass = property(
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
 # TODO: use those as soon as Extension.metaclass can be used.
-# Class.extension = derived('extension', Extension, 0, '*', class_extension, Extension.metaclass)
+# Class.extension = derived(Class, 'extension', Extension, 0, '*', class_extension, Extension.metaclass)
 
 Class.extension = property(
     lambda self: self.model.lselect(
@@ -1520,6 +1535,7 @@ are typed by the Class.""",
 )
 
 DirectedRelationship.target = derivedunion(
+    DirectedRelationship,
     "target",
     Element,
     1,
@@ -1534,6 +1550,7 @@ DirectedRelationship.target = derivedunion(
     Substitution.contract,
 )
 DirectedRelationship.source = derivedunion(
+    DirectedRelationship,
     "source",
     Element,
     1,
@@ -1547,8 +1564,9 @@ DirectedRelationship.source = derivedunion(
     PackageImport.importingNamespace,
     PackageMerge.mergingPackage,
 )
-Action.context_ = derivedunion("context_", Classifier, 0, 1)
+Action.context_ = derivedunion(Action, "context_", Classifier, 0, 1)
 Relationship.relatedElement = derivedunion(
+    Relationship,
     "relatedElement",
     Element,
     1,
@@ -1556,14 +1574,19 @@ Relationship.relatedElement = derivedunion(
     DirectedRelationship.target,
     DirectedRelationship.source,
 )
-ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, 0, 1)
+ActivityGroup.superGroup = derivedunion(
+    ActivityGroup, "superGroup", ActivityGroup, 0, 1
+)
 ActivityGroup.subgroup = derivedunion(
-    "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
+    ActivityGroup, "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
 )
 # 79: override Classifier.inheritedMember: derivedunion[NamedElement]
-Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
+Classifier.inheritedMember = derivedunion(
+    Classifier, "inheritedMember", NamedElement, 0, "*"
+)
 
 StructuredClassifier.role = derivedunion(
+    StructuredClassifier,
     "role",
     ConnectableElement,
     0,
@@ -1572,6 +1595,7 @@ StructuredClassifier.role = derivedunion(
     Collaboration.collaborationRole,
 )
 Namespace.member = derivedunion(
+    Namespace,
     "member",
     NamedElement,
     0,
@@ -1588,15 +1612,18 @@ Component.required = property(
 )
 
 # 88: override Namespace.importedMember: derivedunion[PackageableElement]
-Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
+Namespace.importedMember = derivedunion(
+    Namespace, "importedMember", PackageableElement, 0, "*"
+)
 
-Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
+Action.input = derivedunion(Action, "input", InputPin, 0, "*", SendSignalAction.target)
 # 112: override Component.provided: property
 Component.provided = property(
     overrides.component_provided, doc=overrides.component_provided.__doc__
 )
 
 Element.owner = derivedunion(
+    Element,
     "owner",
     Element,
     0,
@@ -1614,6 +1641,7 @@ Element.owner = derivedunion(
     Pseudostate.state,
 )
 Element.ownedElement = derivedunion(
+    Element,
     "ownedElement",
     Element,
     0,
@@ -1644,7 +1672,7 @@ Element.ownedElement = derivedunion(
     Transition.guard,
     DeploymentTarget.deployment,
 )
-ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
+ConnectorEnd.definingEnd = derivedunion(ConnectorEnd, "definingEnd", Property, 0, 1)
 # 121: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
     lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
