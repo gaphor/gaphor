@@ -198,11 +198,11 @@ class ImplementationConnect(RelationshipConnect):
         impl = line.subject
         assert isinstance(impl, UML.Implementation)
         if handle is line.head:
-            for s in impl.contract:  # type: ignore
-                del impl.contract[s]  # type: ignore
+            for s in impl.contract:
+                del impl.contract[s]
         elif handle is line.tail:
-            for c in impl.implementatingClassifier:  # type: ignore
-                del impl.implementatingClassifier[c]  # type: ignore
+            for c in impl.implementatingClassifier:
+                del impl.implementatingClassifier[c]
         self.reconnect_relationship(
             handle,
             UML.Implementation.contract,

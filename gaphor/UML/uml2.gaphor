@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.0.2">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.1.0">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -4509,11 +4509,8 @@ BehavioredClassifier.</val>
 <ref refid="DCE:3B6508EE-A35C-11D8-9D85-00C00C03A405"/>
 </type>
 <upperValue>
-<val>1</val>
+<val>*</val>
 </upperValue>
-<visibility>
-<val>public</val>
-</visibility>
 </Property>
 <Association id="DCE:8A3CEA88-4B53-11D7-A5E6-6257AF3C5118">
 <memberEnd>
@@ -18756,9 +18753,6 @@ BehavioredClassifier.</val>
 <class_>
 <ref refid="DCE:882D4230-A35C-11D8-9D85-00C00C03A405"/>
 </class_>
-<isDerived>
-<val>0</val>
-</isDerived>
 <name>
 <val>implementatingClassifier</val>
 </name>
@@ -18769,11 +18763,8 @@ BehavioredClassifier.</val>
 <ref refid="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4"/>
 </type>
 <upperValue>
-<val>1</val>
+<val>*</val>
 </upperValue>
-<visibility>
-<val>public</val>
-</visibility>
 </Property>
 <Class id="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880">
 <appliedStereotype>

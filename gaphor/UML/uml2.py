@@ -418,8 +418,8 @@ class Activity(Behavior):
 
 
 class Implementation(Realization):
-    contract: relation_one[Interface]  # type: ignore[assignment]
-    implementatingClassifier: relation_one[
+    contract: relation_many[Interface]  # type: ignore[assignment]
+    implementatingClassifier: relation_many[
         BehavioredClassifier
     ]  # type: ignore[assignment]
 
