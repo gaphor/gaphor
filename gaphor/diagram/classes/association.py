@@ -149,18 +149,6 @@ class AssociationItem(LinePresentation, Named):
         )
         self.request_update()
 
-    def on_named_element_name(self, event):
-        """
-        Update names of the association as well as its ends.
-        """
-        if event is None:
-            super().on_named_element_name(event)
-            self.on_association_end_value(event)
-        elif event.element is self.subject:
-            super().on_named_element_name(event)
-        else:
-            self.on_association_end_value(event)
-
     def on_association_end_value(self, event):
         """
         Handle events and update text on association end.

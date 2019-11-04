@@ -33,7 +33,6 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         entry = Gtk.Entry()
         v = subject.guard.specification
         entry.set_text(v if v else "")
-        entry.connect("changed", self._on_guard_change)
         changed_id = entry.connect("changed", self._on_guard_change)
         hbox.pack_start(entry, True, True, 0)
 
