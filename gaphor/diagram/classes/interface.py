@@ -337,6 +337,7 @@ class InterfaceItem(ElementPresentation, Classified):
         )
 
     def ball_and_socket_shape(self, connectors=None):
+        assert self.canvas
         if connectors is None:
             # distinguish between None and []
             connected_items = [
