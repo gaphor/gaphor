@@ -419,9 +419,7 @@ class Activity(Behavior):
 
 class Implementation(Realization):
     contract: relation_many[Interface]  # type: ignore[assignment]
-    implementatingClassifier: relation_many[
-        BehavioredClassifier
-    ]  # type: ignore[assignment]
+    implementatingClassifier: relation_many[BehavioredClassifier]  # type: ignore[assignment]
 
 
 class Parameter(TypedElement, MultiplicityElement):
@@ -647,7 +645,7 @@ class State(Vertex, Namespace, RedefinableElement):
     doActivity: relation_one[Behavior]
     statevariant: relation_one[Constraint]
     submachine: relation_one[StateMachine]
-    redefinedState: relation_one[State]  # type: ignore[assignment]
+    redefinedState: relation_many[State]  # type: ignore[assignment]
 
 
 class FinalState(State):
@@ -1658,51 +1656,69 @@ StructuredClassifier.part = property(
 # 85: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
-ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
+ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, 1, Property.type)
 ActivityNode.redefinedElement = redefine(
-    ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
+    ActivityNode,
+    "redefinedElement",
+    ActivityNode,
+    "*",
+    RedefinableElement.redefinedElement,
 )
 Implementation.contract = redefine(
-    Implementation, "contract", Interface, Dependency.supplier
+    Implementation, "contract", Interface, "*", Dependency.supplier
 )
 BehavioredClassifier.implementation = redefine(
     BehavioredClassifier,
     "implementation",
     Implementation,
+    "*",
     NamedElement.clientDependency,
 )
 Implementation.implementatingClassifier = redefine(
-    Implementation, "implementatingClassifier", BehavioredClassifier, Dependency.client
+    Implementation,
+    "implementatingClassifier",
+    BehavioredClassifier,
+    "*",
+    Dependency.client,
 )
 Parameter.operation = redefine(
-    Parameter, "operation", Operation, Parameter.ownerFormalParam
+    Parameter, "operation", Operation, 1, Parameter.ownerFormalParam
 )
 Operation.formalParameter = redefine(
-    Operation, "formalParameter", Parameter, BehavioralFeature.formalParameter
+    Operation, "formalParameter", Parameter, "*", BehavioralFeature.formalParameter
 )
 ActivityEdge.redefinedElement = redefine(
-    ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement
+    ActivityEdge,
+    "redefinedElement",
+    ActivityEdge,
+    "*",
+    RedefinableElement.redefinedElement,
 )
 Package.ownedMember = redefine(
-    Package, "ownedMember", PackageableElement, Namespace.ownedMember
+    Package, "ownedMember", PackageableElement, "*", Namespace.ownedMember
 )
 Component.ownedMember = redefine(
-    Component, "ownedMember", PackageableElement, Namespace.ownedMember
+    Component, "ownedMember", PackageableElement, "*", Namespace.ownedMember
 )
 Transition.redefinitionContext = redefine(
     Transition,
     "redefinitionContext",
     Classifier,
+    "*",
     RedefinableElement.redefinitionContext,
 )
 Region.extendedRegion = redefine(
-    Region, "extendedRegion", Region, RedefinableElement.redefinedElement
+    Region, "extendedRegion", Region, "*", RedefinableElement.redefinedElement
 )
 State.redefinedState = redefine(
-    State, "redefinedState", State, RedefinableElement.redefinedElement
+    State, "redefinedState", State, "*", RedefinableElement.redefinedElement
 )
 Transition.redefinedTransition = redefine(
-    Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
+    Transition,
+    "redefinedTransition",
+    Transition,
+    "*",
+    RedefinableElement.redefinedElement,
 )
 # 106: override Lifeline.parse: Callable[[Lifeline, str], None]
 Lifeline.parse = umllex.parse_lifeline

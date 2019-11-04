@@ -270,8 +270,14 @@ class Writer:
         self.add_property(
             r.class_name,
             r.name,
-            "redefine(%s, '%s', %s, %s)"
-            % (r.class_name, r.name, r.opposite_class_name, r.redefines),
+            "redefine(%s, '%s', %s, %s, %s)"
+            % (
+                r.class_name,
+                r.name,
+                r.opposite_class_name,
+                r.upper == "*" and "'*'" or r.upper,
+                r.redefines,
+            ),
             type=f"relation_one[{r.opposite_class_name}]  # type: ignore[assignment]"
             if r.upper == "1"
             else f"relation_many[{r.opposite_class_name}]  # type: ignore[assignment]",

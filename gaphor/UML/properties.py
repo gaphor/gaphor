@@ -847,9 +847,17 @@ class redefine(umlproperty[T]):
     """
 
     def __init__(
-        self, decl_class: Type[E], name: str, type: Type[T], original: association
+        self,
+        decl_class: Type[E],
+        name: str,
+        type: Type[T],
+        upper: Upper,
+        original: association,
     ):
         super().__init__()
+        assert (
+            upper == original.upper
+        ), f"Multiplicity of {decl_class}.{name} and {original} differ: {upper} != {original.upper}"
         self.decl_class = decl_class
         self.name = name
         self._name = "_" + name
