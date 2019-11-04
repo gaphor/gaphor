@@ -49,9 +49,6 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 
         return page
 
-    def update(self):
-        pass
-
     @transactional
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
@@ -96,9 +93,6 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         page.pack_start(button, False, True, 0)
 
         return page
-
-    def update(self):
-        pass
 
     @transactional
     def _on_join_spec_change(self, entry):

@@ -445,12 +445,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         if box:
             page.pack_start(box, False, True, 0)
 
-        self.update()
-
         return page
-
-    def update(self):
-        pass
 
     @transactional
     def _on_show_direction_change(self, button):

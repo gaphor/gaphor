@@ -60,9 +60,3 @@ class action:
 
 def is_action(func):
     return hasattr(func, "__action__")
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

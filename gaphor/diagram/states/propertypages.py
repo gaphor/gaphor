@@ -48,9 +48,6 @@ class TransitionPropertyPage(NamedItemPropertyPage):
 
         return page
 
-    def update(self):
-        pass
-
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()

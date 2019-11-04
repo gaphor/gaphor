@@ -28,9 +28,6 @@ class ComponentPropertyPage(NamedItemPropertyPage):
 
         return page
 
-    def update(self):
-        pass
-
     @transactional
     def _on_ii_change(self, button):
         """
