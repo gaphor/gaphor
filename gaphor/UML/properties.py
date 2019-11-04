@@ -135,10 +135,10 @@ class umlproperty(Generic[T]):
     lower: Lower = 0
     upper: Upper = 1
 
-    def __init__(self):
+    def __init__(self, name: str):
         self._dependent_properties: Set[Union[derived, redefine]] = set()
-        self.name: str
-        self._name: str
+        self.name = name
+        self._name = "_" + name
 
     def __get__(self, obj, class_=None):
         if obj:
@@ -200,9 +200,7 @@ class attribute(umlproperty[A]):
     def __init__(
         self, name: str, type: Type[Union[str, int]], default: Optional[A] = None
     ):
-        super().__init__()
-        self.name = name
-        self._name = "_" + name
+        super().__init__(name)
         self.type = type
         self.default: Optional[A] = default
 
@@ -269,9 +267,7 @@ class enumeration(umlproperty[str]):
     type = str
 
     def __init__(self, name: str, values: Sequence[str], default: str):
-        super().__init__()
-        self.name = name
-        self._name = "_" + name
+        super().__init__(name)
         self.values = values
         self.default = default
 
@@ -335,9 +331,7 @@ class association(umlproperty[T]):
         composite: bool = False,
         opposite: Optional[str] = None,
     ):
-        super().__init__()
-        self.name = name
-        self._name = "_" + name
+        super().__init__(name)
         self.type = type
         self.lower = lower
         self.upper = upper
@@ -529,9 +523,8 @@ class associationstub(umlproperty[T]):
     """
 
     def __init__(self, association: association):
-        super().__init__()
+        super().__init__("stub_%x" % id(self))
         self.association = association
-        self._name = "_stub_%x" % id(self)
 
     def __get__(self, obj, class_=None):
         if obj:
@@ -609,9 +602,7 @@ class derived(umlproperty[T]):
         filter: Callable[[E], List[T]],
         *subsets: relation,
     ) -> None:
-        super().__init__()
-        self.name = name
-        self._name = "_" + name
+        super().__init__(name)
         self.version = 1
         self.type = type
         self.lower = lower
@@ -856,7 +847,7 @@ class redefine(umlproperty[T]):
         upper: Upper,
         original: relation,
     ):
-        super().__init__()
+        super().__init__(name)
         assert isinstance(
             original, (association, derived)
         ), f"expected association or derived, got {original}"
