@@ -17,7 +17,7 @@ from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
 
 if TYPE_CHECKING:
-    from gaphor.UML.properties import association, umlproperty, relation_one
+    from gaphor.UML.properties import association, umlproperty, relation
 
 
 T = TypeVar("T", bound=UML.Element)
@@ -168,7 +168,7 @@ class UnaryRelationshipConnect(AbstractConnect):
     """
 
     def relationship(
-        self, required_type: Type[UML.Element], head: relation_one, tail: relation_one
+        self, required_type: Type[UML.Element], head: relation, tail: relation
     ) -> Optional[UML.Element]:
         """
         Find an existing relationship in the model that meets the
@@ -223,9 +223,7 @@ class UnaryRelationshipConnect(AbstractConnect):
                 return gen
         return None
 
-    def relationship_or_new(
-        self, type: Type[T], head: relation_one, tail: relation_one
-    ) -> T:
+    def relationship_or_new(self, type: Type[T], head: relation, tail: relation) -> T:
         """
         Like relation(), but create a new instance if none was found.
         """
@@ -243,7 +241,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         return relation
 
     def reconnect_relationship(
-        self, handle: Handle, head: relation_one, tail: relation_one
+        self, handle: Handle, head: relation, tail: relation
     ) -> None:
         """
         Reconnect relationship for given handle.

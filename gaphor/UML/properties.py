@@ -106,6 +106,8 @@ class relation_many(Protocol[E]):
         ...
 
 
+relation = Union[relation_one, relation_many]
+
 T = TypeVar("T", covariant=True)
 A = TypeVar("A", int, str)
 
