@@ -243,7 +243,7 @@ class ElementEditor(UIComponent, ActionProvider):
     @event_handler(AssociationUpdated)
     def _element_changed(self, event):
         element = event.element
-        if event.property is Presentation.subject:  # type: ignore
+        if event.property is Presentation.subject:  # type: ignore[misc]
             if element is self._current_item:
                 self.clear_pages()
                 self.create_pages(self._current_item)

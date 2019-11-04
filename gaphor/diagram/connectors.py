@@ -116,7 +116,7 @@ class AbstractConnect(ConnectBase):
         assert self.canvas
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
-            return cinfo.connected  # type: ignore
+            return cinfo.connected  # type: ignore[no-any-return]
         return None
 
     def get_connected_port(self, handle: Handle) -> Optional[Port]:
@@ -199,7 +199,8 @@ class UnaryRelationshipConnect(AbstractConnect):
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram.
         assert tail.opposite, f"Tail end of {line} has no opposite definition"
-        for gen in getattr(tail_subject, tail.opposite):  # type: UML.Element
+        gen: UML.Element
+        for gen in getattr(tail_subject, tail.opposite):
             if not isinstance(gen, required_type):
                 continue
 
@@ -213,7 +214,7 @@ class UnaryRelationshipConnect(AbstractConnect):
 
             # Check for this entry on line.canvas
             item: Union[ElementPresentation, LinePresentation]
-            for item in gen.presentation:  # type: ignore
+            for item in gen.presentation:
                 # Allow line to be returned. Avoids strange
                 # behaviour during loading
                 if item.canvas is line.canvas and item is not line:

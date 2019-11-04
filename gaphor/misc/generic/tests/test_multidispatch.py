@@ -215,7 +215,7 @@ def test_on_classes():
         def __init__(self, a, b):
             self.v = a + b
 
-    @A.register(str, str)  # type: ignore
+    @A.register(str, str)
     class B:
         def __init__(self, a, b):
             self.v = b + a

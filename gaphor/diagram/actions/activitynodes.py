@@ -246,7 +246,7 @@ class ForkNodeItem(UML.Presentation, Item):
         self.watch("subject[JoinNode].joinSpec")
 
     def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))  # type: ignore[arg-type]
+        save_func("matrix", tuple(self.matrix))
         save_func("height", float(self._handles[1].pos.y))
         if self._combined:
             save_func("combined", self._combined, reference=True)

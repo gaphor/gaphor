@@ -879,9 +879,7 @@ class redefine(umlproperty[T]):
             self.original.unlink(obj)
 
     def __str__(self):
-        return "<redefine {}: {} = {}>".format(
-            self.name, self.type.__name__, str(self.original)
-        )
+        return f"<redefine {self.name}[{self.lower}..{self.upper}]: {self.type.__name__} = {str(self.original)}>"
 
     def __get__(self, obj, class_=None):
         # No longer needed

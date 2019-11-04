@@ -4,13 +4,22 @@ Base code for presentation elements
 
 from __future__ import annotations
 
-from typing import Any, Callable, Generic, Optional, TypeVar, TYPE_CHECKING
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    Iterable,
+    Optional,
+    TypeVar,
+    Union,
+    TYPE_CHECKING,
+)
 from gaphor.UML.properties import relation_one, association
 from gaphor.UML.element import Element
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
-    from cairo import Matrix  # noqa
+    from gaphas.matrix import Matrix  # noqa
 
 S = TypeVar("S", bound=Element)
 

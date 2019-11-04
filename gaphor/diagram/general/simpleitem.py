@@ -21,7 +21,7 @@ class Line(_Line):
     id = property(lambda self: self._id, doc="Id")
 
     def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))  # type: ignore[arg-type]
+        save_func("matrix", tuple(self.matrix))
         for prop in ("orthogonal", "horizontal"):
             save_func(prop, getattr(self, prop))
         points = [tuple(map(float, h.pos)) for h in self.handles()]
@@ -72,7 +72,7 @@ class Box(Element):
     id = property(lambda self: self._id, doc="Id")
 
     def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))  # type: ignore[arg-type]
+        save_func("matrix", tuple(self.matrix))
         save_func("width", self.width)
         save_func("height", self.height)
 
@@ -111,7 +111,7 @@ class Ellipse(Element):
     id = property(lambda self: self._id, doc="Id")
 
     def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))  # type: ignore[arg-type]
+        save_func("matrix", tuple(self.matrix))
         save_func("width", self.width)
         save_func("height", self.height)
 

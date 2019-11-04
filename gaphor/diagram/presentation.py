@@ -93,7 +93,7 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         super().teardown_canvas()
 
     def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))  # type: ignore[arg-type]
+        save_func("matrix", tuple(self.matrix))
         for prop in ("width", "height"):
             save_func(prop, getattr(self, prop))
         super().save(save_func)
@@ -209,7 +209,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
                 save_func(name, c.connected, reference=True)
 
         super().save(save_func)
-        save_func("matrix", tuple(self.matrix))  # type: ignore[arg-type]
+        save_func("matrix", tuple(self.matrix))
         for prop in ("orthogonal", "horizontal"):
             save_func(prop, getattr(self, prop))
         points = [tuple(map(float, h.pos)) for h in self.handles()]
