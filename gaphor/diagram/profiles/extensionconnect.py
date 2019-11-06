@@ -8,6 +8,8 @@ from gaphor.diagram.connectors import IConnect, RelationshipConnect
 class ExtensionConnect(RelationshipConnect):
     """Connect class and stereotype items using an extension item."""
 
+    line: ExtensionItem
+
     def allow(self, handle, port):
         line = self.line
         subject = self.element.subject

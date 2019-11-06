@@ -23,14 +23,14 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
     NAME_LABEL = _("Message")
 
-    MESSAGE_SORT = (
+    MESSAGE_SORT = [
         ("Call", "synchCall"),
         ("Asynchronous", "asynchCall"),
         ("Signal", "asynchSignal"),
         ("Create", "createMessage"),
         ("Delete", "deleteMessage"),
         ("Reply", "reply"),
-    )
+    ]
 
     def construct(self):
         page = super().construct()

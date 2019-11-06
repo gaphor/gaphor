@@ -148,6 +148,7 @@ class DiagramPage:
         Tab is destroyed. Do the same thing that would
         be done if Close was pressed.
         """
+        assert self.widget
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
         self.view = None
@@ -159,6 +160,7 @@ class DiagramPage:
         shortcut="<Primary>plus",
     )
     def zoom_in(self):
+        assert self.view
         self.view.zoom(1.2)
 
     @action(
@@ -168,6 +170,7 @@ class DiagramPage:
         shortcut="<Primary>minus",
     )
     def zoom_out(self):
+        assert self.view
         self.view.zoom(1 / 1.2)
 
     @action(
@@ -177,6 +180,7 @@ class DiagramPage:
         shortcut="<Primary>0",
     )
     def zoom_100(self):
+        assert self.view
         zx = self.view.matrix[0]
         self.view.zoom(1 / zx)
 
@@ -187,17 +191,20 @@ class DiagramPage:
         shortcut="<Primary>a",
     )
     def select_all(self):
+        assert self.view
         self.view.select_all()
 
     @action(
         name="diagram.unselect-all", label="Des_elect all", shortcut="<Primary><Shift>a"
     )
     def unselect_all(self):
+        assert self.view
         self.view.unselect_all()
 
     @action(name="diagram.delete", label=_("_Delete"), icon_name="edit-delete")
     @transactional
     def delete_selected_items(self):
+        assert self.view
         items = self.view.selected_items
         for i in list(items):
             if isinstance(i, UML.Presentation):
@@ -215,19 +222,22 @@ class DiagramPage:
 
     @event_handler(DiagramItemCreated)
     def _on_diagram_item_created(self, event):
+        assert self.widget
         if self.properties("reset-tool-after-create", True):
             self.widget.action_group.actions.lookup_action("select-tool").activate(
                 GLib.Variant.new_string("toolbox-pointer")
             )
 
     def set_drawing_style(self, sloppiness=0.0):
-        """Set the drawing style for the diagram. 0.0 is straight,
+        """
+        Set the drawing style for the diagram. 0.0 is straight,
         2.0 is very sloppy.  If the sloppiness is set to be anything
         greater than 0.0, the FreeHandPainter instances will be used
         for both the item painter and the box painter.  Otherwise, by
         default, the ItemPainter is used for the item and
-        BoundingBoxPainter for the box."""
-
+        BoundingBoxPainter for the box.
+        """
+        assert self.view
         view = self.view
 
         if sloppiness:
@@ -255,6 +265,7 @@ class DiagramPage:
         (when their last views are deleted). If so request user
         confirmation before deletion.
         """
+        assert self.view
         items = self.view.selected_items
         last_in_model = [
             i for i in items if i.subject and len(i.subject.presentation) == 1
@@ -268,6 +279,7 @@ class DiagramPage:
         """
         Request user confirmation on deleting the item from the model.
         """
+        assert self.widget
         s = ""
         for item in last_in_model:
             s += "%s\n" % str(item)
@@ -280,7 +292,7 @@ class DiagramPage:
             "This will remove the following selected items from the model:\n%s\nAre you sure?"
             % s,
         )
-        dialog.set_transient_for(self.get_toplevel())
+        dialog.set_transient_for(self.widget.get_toplevel())
         value = dialog.run()
         dialog.destroy()
         if value == Gtk.ResponseType.YES:
@@ -312,6 +324,7 @@ class DiagramPage:
         """
         Handle data dropped on the canvas.
         """
+        assert self.toolbox
         if (
             data
             and data.get_format() == 8

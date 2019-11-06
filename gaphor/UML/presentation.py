@@ -2,13 +2,24 @@
 Base code for presentation elements
 """
 
-from typing import Generic, Optional, TypeVar, TYPE_CHECKING
-from gaphor.UML.properties import umlproperty, association
+from __future__ import annotations
+
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    Iterable,
+    Optional,
+    TypeVar,
+    Union,
+    TYPE_CHECKING,
+)
+from gaphor.UML.properties import relation_one, association
 from gaphor.UML.element import Element
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
-    from cairo import Matrix  # noqa
+    from gaphas.matrix import Matrix  # noqa
 
 S = TypeVar("S", bound=Element)
 
@@ -28,13 +39,15 @@ class Presentation(Element, Generic[S]):
 
         self.watch("subject")
 
-    subject: umlproperty[S, S] = association(
+    subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
     )
 
-    canvas: Optional["Canvas"]
+    request_update: Callable[[Presentation], None]
 
-    matrix: "Matrix"
+    canvas: Optional[Canvas]
+
+    matrix: Matrix
 
     def watch(self, path, handler=None):
         """

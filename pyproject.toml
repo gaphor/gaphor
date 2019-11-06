@@ -37,14 +37,15 @@ pycairo = "^1.18"
 PyGObject = "^3.30"
 gaphas = "^1.0.0"
 importlib_metadata = "^0.23"
+typing_extensions = "^3.7.4"
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.5"
 pytest = "^5.0"
 pytest-cov = "^2.5"
 pytest-runner = "^4.2"
-black = { version = "^19.3b0", python = "^3.6" }
-mypy = "0.730"
+black = { version = "^19.10b0", python = "^3.6" }
+mypy = "0.740"
 pre-commit = "^1.12"
 pyinstaller = "^3.5"
 sphinx = "^2.2"

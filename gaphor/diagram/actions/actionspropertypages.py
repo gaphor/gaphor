@@ -19,6 +19,8 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
+    subject: UML.ObjectNode
+
     def construct(self):
         page = super().construct()
 
@@ -69,6 +71,8 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     """
     """
 
+    subject: UML.JoinNode
+
     def construct(self):
         page = super().construct()
 
@@ -112,7 +116,11 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
 class FlowPropertyPageAbstract(NamedElementPropertyPage):
     """Flow item element editor."""
 
+    subject: UML.ActivityEdge
+
     def construct(self):
+        assert self.watcher
+
         page = super().construct()
 
         subject = self.subject

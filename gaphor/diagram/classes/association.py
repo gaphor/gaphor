@@ -386,8 +386,8 @@ class AssociationEnd(UML.Presentation):
         self._end = end
 
         # Rendered text for name and multiplicity
-        self._name = None
-        self._mult = None
+        self._name = ""
+        self._mult = ""
 
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()

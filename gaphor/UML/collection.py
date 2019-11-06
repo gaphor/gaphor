@@ -3,7 +3,7 @@
 """
 
 import inspect
-from typing import Generic, List, Type, TypeVar
+from typing import overload, Generic, List, Type, TypeVar, Union
 from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.listmixins import querymixin, recursemixin
 
@@ -59,19 +59,27 @@ class collection(Generic[T]):
         self.type = type
         self.items: collectionlist[T] = collectionlist()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.items)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value) -> None:
         raise RuntimeError("items should not be overwritten.")
 
-    def __delitem__(self, key: T):
+    def __delitem__(self, key: T) -> None:
         self.remove(key)
 
-    def __getitem__(self, key: int):
+    @overload
+    def __getitem__(self, key: int) -> T:
+        ...
+
+    @overload
+    def __getitem__(self, key: slice) -> List[T]:
+        ...
+
+    def __getitem__(self, key: Union[int, slice]):
         return self.items.__getitem__(key)
 
-    def __contains__(self, obj):
+    def __contains__(self, obj) -> bool:
         return self.items.__contains__(obj)
 
     def __iter__(self):

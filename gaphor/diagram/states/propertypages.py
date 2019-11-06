@@ -21,6 +21,8 @@ from gaphor.diagram.propertypages import (
 class TransitionPropertyPage(NamedItemPropertyPage):
     """Transition property page allows to edit guard specification."""
 
+    subject: UML.Transition
+
     def construct(self):
         page = super().construct()
 
@@ -56,6 +58,8 @@ class TransitionPropertyPage(NamedItemPropertyPage):
 @PropertyPages.register(StateItem)
 class StatePropertyPage(NamedItemPropertyPage):
     """State property page."""
+
+    subject: UML.State
 
     def construct(self):
         page = super().construct()

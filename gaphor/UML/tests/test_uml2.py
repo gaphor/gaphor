@@ -272,11 +272,11 @@ def test_namedelement_qualifiedname(factory):
     c = factory.create(UML.Class)
     c.name = "Class"
 
-    assert ("Class",) == c.qualifiedName
+    assert ["Class"] == c.qualifiedName
 
     p.ownedClassifier = c
 
-    assert ("Package", "Class") == c.qualifiedName
+    assert ["Package", "Class"] == c.qualifiedName
 
 
 def test_extension_metaclass(factory):

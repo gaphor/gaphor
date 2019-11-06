@@ -1,4 +1,19 @@
+"""
+Special methods (overrides) that add behavior to the model
+that can not simply be generated.
+
+Derived methods always return a list. Note this is not the case
+for normal properties.
+"""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 import itertools
+
+if TYPE_CHECKING:
+    from typing import List, Optional, Tuple, Union
+    from gaphor.UML.uml2 import Implementation, Property, Realization, Usage
 
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
@@ -14,7 +29,7 @@ def extension_metaclass(self):
         return metaend[0].type
 
 
-def property_opposite(self):
+def property_opposite(self: Property) -> List[Optional[Property]]:
     """
     In the case where the property is one navigable end of a binary
     association with both ends navigable, this gives the other end.
@@ -23,15 +38,15 @@ def property_opposite(self):
     navigability.
     """
     if self.association is not None and len(self.association.memberEnd) == 2:
-        return (
-            self.association.memberEnd[0] is self
-            and self.association.memberEnd[1]
-            or self.association.memberEnd[0]
-        )
-    return None
+        return [
+            self.association.memberEnd[1]
+            if self.association.memberEnd[0] is self
+            else self.association.memberEnd[0]
+        ]
+    return [None]
 
 
-def property_navigability(self):
+def property_navigability(self: Property) -> List[Optional[bool]]:
     """
     Get navigability of an association end.
     If no association is related to the property, then unknown navigability
@@ -41,17 +56,19 @@ def property_navigability(self):
 
     assoc = self.association
     if not assoc or not self.opposite:
-        return None  # assume unknown
+        return [None]  # assume unknown
     owner = self.opposite.type
-    if owner and (
-        (type(self.type) in (Class, Interface) and self in owner.ownedAttribute)
+    if (
+        isinstance(owner, (Class, Interface))
+        and isinstance(self.type, (Class, Interface))
+        and (self in owner.ownedAttribute)
         or self in assoc.navigableOwnedEnd
     ):
-        return True
+        return [True]
     elif self in assoc.ownedEnd:
-        return None
+        return [None]
     else:
-        return False
+        return [False]
 
 
 def _pr_interface_deps(classifier, dep_type):
@@ -82,7 +99,7 @@ def _pr_rc_interface_deps(component, dep_type):
     )
 
 
-def component_provided(self):
+def component_provided(self) -> List[Union[Implementation, Realization]]:
     """
     Interfaces provided to component environment.
     """
@@ -99,10 +116,10 @@ def component_provided(self):
     # this generator of generators, so flatten it later
     rc_realizations = _pr_rc_interface_deps(self, Realization)
 
-    return tuple(set(itertools.chain(implementations, realizations, *rc_realizations)))
+    return list(itertools.chain(implementations, realizations, *rc_realizations))
 
 
-def component_required(self):
+def component_required(self) -> List[Usage]:
     """
     Interfaces required by component.
     """
@@ -114,10 +131,10 @@ def component_required(self):
     # this generator of generators, so flatten it later
     rc_usages = _pr_rc_interface_deps(self, Usage)
 
-    return tuple(set(itertools.chain(usages, *rc_usages)))
+    return list(itertools.chain(usages, *rc_usages))
 
 
-def message_messageKind(self):
+def message_messageKind(self) -> str:
     """
     MessageKind
     """
@@ -131,11 +148,11 @@ def message_messageKind(self):
     return kind
 
 
-def namedelement_qualifiedname(self):
+def namedelement_qualifiedname(self) -> List[str]:
     """
     Returns the qualified name of the element as a tuple
     """
     if self.namespace:
-        return self.namespace.qualifiedName + (self.name,)
+        return namedelement_qualifiedname(self.namespace) + [self.name]
     else:
-        return (self.name,)
+        return [self.name]

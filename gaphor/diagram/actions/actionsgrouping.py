@@ -18,6 +18,8 @@ class ActivityPartitionsGroup(AbstractGroup):
         )
 
     def group(self):
+        assert self.item.canvas
+
         p = self.parent.subject
         model = self.item.model
         sp = model.create(UML.ActivityPartition)
@@ -29,6 +31,8 @@ class ActivityPartitionsGroup(AbstractGroup):
             sp.subpartition = k.subject
 
     def ungroup(self):
+        assert self.item.canvas
+
         p = self.parent.subject
         sp = self.item.subject
         if p:

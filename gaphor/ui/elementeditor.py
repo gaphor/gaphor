@@ -2,6 +2,8 @@
 
 import logging
 
+from typing import Optional
+
 from gi.repository import Gtk
 
 from gaphor.UML import Presentation
@@ -97,7 +99,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.diagrams = diagrams
-        self.vbox = None
+        self.vbox: Optional[Gtk.Box] = None
         self._current_item = None
         self._expanded_pages = {_("Properties"): True}
 
@@ -174,6 +176,7 @@ class ElementEditor(UIComponent, ActionProvider):
         """
         Load all tabs that can operate on the given item.
         """
+        assert self.vbox
         adapters = self._get_adapters(item)
 
         first = True
@@ -206,6 +209,7 @@ class ElementEditor(UIComponent, ActionProvider):
         """
         Remove all tabs from the notebook.
         """
+        assert self.vbox
         for page in self.vbox.get_children()[3:]:
             page.destroy()
 
@@ -219,6 +223,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
         This reloads all tabs based on the current selection.
         """
+        assert self.vbox
         item = event and event.focused_item or focused_item
         if item is self._current_item and self.vbox.get_children():
             return
@@ -238,7 +243,7 @@ class ElementEditor(UIComponent, ActionProvider):
     @event_handler(AssociationUpdated)
     def _element_changed(self, event):
         element = event.element
-        if event.property is Presentation.subject:  # type: ignore
+        if event.property is Presentation.subject:  # type: ignore[misc]
             if element is self._current_item:
                 self.clear_pages()
                 self.create_pages(self._current_item)

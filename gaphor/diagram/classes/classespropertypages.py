@@ -99,6 +99,8 @@ class ClassOperations(EditableTreeModel):
 class ClassPropertyPage(NamedElementPropertyPage):
     """Adapter which shows a property page for a class view."""
 
+    subject: UML.Class
+
     def __init__(self, subject):
         super().__init__(subject)
 

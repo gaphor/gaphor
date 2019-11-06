@@ -167,6 +167,8 @@ class ConnectorConnectBase(AbstractConnect):
         if not isinstance(iface, InterfaceItem):
             iface = self.get_connected(line.tail)
 
+        assert iface, "No interface found on {line}"
+
         connections = list(self.get_connecting(iface, both=True))
 
         # destroy whole assembly if one connected item stays
@@ -176,7 +178,7 @@ class ConnectorConnectBase(AbstractConnect):
             for ci in connections:
                 c = self.get_component(ci.item)
                 self.drop_uml(ci.item, c)
-                line.request_update(matrix=False)
+                line.request_update(matrix=False)  # type: ignore[call-arg]
             connector.unlink()
         else:
             c = self.get_component(line)

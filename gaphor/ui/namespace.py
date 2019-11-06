@@ -6,6 +6,8 @@ a result only classifiers are shown here.
 
 import logging
 
+from typing import Optional
+
 from gi.repository import GObject, Gio, Gdk, Gtk
 
 from gaphor import UML
@@ -263,7 +265,7 @@ class Namespace(UIComponent):
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self._namespace = None
+        self._namespace: Optional[NamespaceView] = None
         self.model = Gtk.TreeStore.new([object])
         self.filter = _default_filter_list
 
@@ -516,6 +518,7 @@ class Namespace(UIComponent):
         such as OpenModelElement, which will try to open the element (if it's
         a Diagram).
         """
+        assert self._namespace
 
         model = self._namespace.get_model()
         child_iter = self.iter_for_element(element)
@@ -535,6 +538,7 @@ class Namespace(UIComponent):
 
     @action(name="tree-view.open")
     def tree_view_open_selected(self):
+        assert self._namespace
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
@@ -545,6 +549,7 @@ class Namespace(UIComponent):
 
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
+        assert self._namespace
         view = self._namespace
         element = view.get_selected_element()
         if element is not None:
@@ -561,6 +566,7 @@ class Namespace(UIComponent):
     @action(name="tree-view.create-diagram")
     @transactional
     def tree_view_create_diagram(self):
+        assert self._namespace
         element = self._namespace.get_selected_element()
         while not isinstance(element, UML.Package):
             element = element.namespace
@@ -579,6 +585,7 @@ class Namespace(UIComponent):
     @action(name="tree-view.create-package")
     @transactional
     def tree_view_create_package(self):
+        assert self._namespace
         element = self._namespace.get_selected_element()
         package = self.element_factory.create(UML.Package)
         package.package = element
@@ -594,6 +601,7 @@ class Namespace(UIComponent):
     @action(name="tree-view.delete")
     @transactional
     def tree_view_delete(self):
+        assert self._namespace
         element = self._namespace.get_selected_element()
         if isinstance(element, UML.Package):
             element.unlink()

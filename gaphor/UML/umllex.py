@@ -123,7 +123,7 @@ parameter_pat = compile(
 lifeline_pat = compile("^" + name_subpat + type_subpat + garbage_subpat)
 
 
-def _set_visibility(el, vis):
+def _set_visibility(el: uml2.Feature, vis: str):
     if vis == "+":
         el.visibility = "public"
     elif vis == "#":
@@ -139,7 +139,7 @@ def _set_visibility(el, vis):
             pass
 
 
-def parse_attribute(el, s):
+def parse_attribute(el: uml2.Property, s: str) -> None:
     """
     Parse string s in the property. Tagged values, multiplicity and stuff
     like that is altered to reflect the data in the property string.
@@ -176,7 +176,7 @@ def parse_attribute(el, s):
         #        el.taggedValue = tv
 
 
-def parse_association_end(el, s):
+def parse_association_end(el: uml2.Property, s: str) -> None:
     """
     Parse the text at one end of an association. The association end holds
     two strings. It is automatically figured out which string is fed to the
@@ -237,7 +237,7 @@ def parse_association_end(el, s):
 
 
 @parse.register(uml2.Property)
-def parse_property(el, s):
+def parse_property(el: uml2.Property, s: str) -> None:
     if el.association:
         parse_association_end(el, s)
     else:
@@ -245,7 +245,7 @@ def parse_property(el, s):
 
 
 @parse.register(uml2.Operation)
-def parse_operation(el, s):
+def parse_operation(el: uml2.Operation, s: str) -> None:
     """
     Parse string s in the operation. Tagged values, parameters and
     visibility is altered to reflect the data in the operation string.
@@ -332,11 +332,11 @@ def parse_lifeline(el: uml2.Lifeline, s: str) -> None:
 def render_lifeline(el: uml2.Lifeline) -> str:
     """
     """
-    return el.name
+    return el.name or ""
 
 
 @parse.register(uml2.NamedElement)
-def parse_namedelement(el, text):
+def parse_namedelement(el: uml2.NamedElement, text: str) -> None:
     """
     Parse named element by simply assigning text to its name.
     """

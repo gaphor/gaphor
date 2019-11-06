@@ -85,7 +85,7 @@ class Overrides:
                 raise SystemExit
 
     def has_override(self, key):
-        return bool(self.overrides.get(key))
+        return key in self.overrides
 
     def get_override(self, key):
         """Write override data for 'key' to a file refered to by 'fp'."""

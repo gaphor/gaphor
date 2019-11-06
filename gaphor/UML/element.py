@@ -10,7 +10,7 @@ __all__ = ["Element"]
 import uuid
 
 from typing import Optional, Sequence, TYPE_CHECKING, Type, Union
-from gaphor.UML.properties import umlproperty
+from gaphor.UML.properties import relation_one, relation_many, umlproperty
 from gaphor.UML.elementdispatcher import EventWatcher
 
 if TYPE_CHECKING:
@@ -67,11 +67,11 @@ class Element:
         ), "You can not retrieve the model since it's not set on construction"
         return self._model
 
-    appliedStereotype: umlproperty[Element, Sequence[Element]]
-    owner: umlproperty[Element, Sequence[Element]]
-    ownedComment: umlproperty[Element, Sequence[Element]]
-    ownedElement: umlproperty[Element, Sequence[Element]]
-    presentation: umlproperty["Presentation", Sequence["Presentation"]]
+    appliedStereotype: relation_many[Element]
+    owner: relation_one[Element]
+    ownedComment: relation_many[Element]
+    ownedElement: relation_many[Element]
+    presentation: relation_many[Presentation]
 
     def umlproperties(self):
         """

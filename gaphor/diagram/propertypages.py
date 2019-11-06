@@ -25,7 +25,7 @@ TODO:
      key focuses its associated control.
 """
 
-from typing import Dict, List, Tuple, Type
+from typing import Callable, Dict, List, Tuple, Type
 
 import abc
 from gi.repository import GObject, Gdk, Gtk
@@ -45,7 +45,9 @@ class _PropertyPages:
     """
 
     def __init__(self) -> None:
-        self.pages: List[Tuple[Type[UML.Element], object]] = []
+        self.pages: List[
+            Tuple[Type[UML.Element], Callable[[UML.Element], PropertyPageBase]]
+        ] = []
 
     def register(self, subject_type):
         def reg(func):
@@ -393,7 +395,7 @@ class NamedElementPropertyPage(PropertyPageBase):
             subject
         )
         self.subject = subject
-        self.watcher = subject and subject.watcher()
+        self.watcher = subject.watcher() if subject else None
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):

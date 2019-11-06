@@ -312,8 +312,8 @@ class TestUndoManager(TestCase):
         A.b2 = association("b2", A, upper="*")
         A.b3 = association("b3", A, upper=1)
 
-        A.derived_a = derivedunion("derived_a", 0, 1, A.a1, A.a2)
-        A.derived_b = derivedunion("derived_b", 0, "*", A.b1, A.b2, A.b3)
+        A.derived_a = derivedunion(A, "derived_a", 0, 1, A.a1, A.a2)
+        A.derived_b = derivedunion(A, "derived_b", 0, "*", A.b1, A.b2, A.b3)
 
         events = []
 

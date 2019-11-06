@@ -271,6 +271,7 @@ class ForkNodeItem(UML.Presentation, Item):
     combined = reversible_property(lambda s: s._combined, _set_combined)
 
     def setup_canvas(self):
+        assert self.canvas
         super().setup_canvas()
 
         h1, h2 = self._handles
@@ -281,6 +282,7 @@ class ForkNodeItem(UML.Presentation, Item):
         list(map(self.canvas.solver.add_constraint, self.__constraints))
 
     def teardown_canvas(self):
+        assert self.canvas
         super().teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
 

@@ -265,17 +265,21 @@ class DiagramToolbox:
         ``config_func`` may be a function accepting the newly created item.
         """
 
-        def factory_method(parent=None):
+        def factory_method(
+            parent: Optional[UML.Presentation] = None,
+        ) -> UML.Presentation:
             if subject_class:
                 subject = self.element_factory.create(subject_class)
             else:
                 subject = None
-            item = self.diagram.create(item_class, subject=subject, parent=parent)
+            item: UML.Presentation = self.diagram.create(
+                item_class, subject=subject, parent=parent
+            )
             if config_func:
                 config_func(item)
             return item
 
-        factory_method.item_class = item_class  # type: ignore
+        factory_method.item_class = item_class  # type: ignore[attr-defined]
         return factory_method
 
     def _namespace_item_factory(self, item_class, subject_class, name=None):
@@ -294,7 +298,7 @@ class DiagramToolbox:
                 subject.name = f"New{subject_class.__name__}"
             return item
 
-        factory_method.item_class = item_class  # type: ignore
+        factory_method.item_class = item_class  # type: ignore[attr-defined]
         return factory_method
 
     def _after_handler(self, new_item):

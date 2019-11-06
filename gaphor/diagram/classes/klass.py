@@ -24,7 +24,7 @@ from gaphor.diagram.support import represents
 
 @represents(UML.Class)
 @represents(UML.Stereotype)
-class ClassItem(ElementPresentation, Classified):
+class ClassItem(ElementPresentation[UML.Class], Classified):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments: one for attributes and one for

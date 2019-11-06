@@ -6,7 +6,7 @@ from gaphor.diagram.connectors import (
     UnaryRelationshipConnect,
     RelationshipConnect,
 )
-from gaphor.diagram.presentation import Named, Classified
+from gaphor.diagram.presentation import Named, Classified, ElementPresentation
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.generalization import GeneralizationItem
@@ -30,6 +30,7 @@ class DependencyConnect(RelationshipConnect):
     def reconnect(self, handle, port):
         line = self.line
         dep = line.subject
+        assert isinstance(dep, UML.Dependency)
         if dep and handle is line.head:
             for s in dep.supplier:
                 del dep.supplier[s]
@@ -51,12 +52,14 @@ class DependencyConnect(RelationshipConnect):
             canvas = line.canvas
             opposite = line.opposite(handle)
 
+            other = self.get_connected(opposite)
+            assert other
             if handle is line.head:
-                client = self.get_connected(opposite).subject
+                client = other.subject
                 supplier = self.element.subject
             else:
                 client = self.element.subject
-                supplier = self.get_connected(opposite).subject
+                supplier = other.subject
             line.dependency_type = UML.model.dependency_type(client, supplier)
 
         relation = self.relationship_or_new(
@@ -87,6 +90,8 @@ class GeneralizationConnect(RelationshipConnect):
 class AssociationConnect(UnaryRelationshipConnect):
     """Connect association to classifier."""
 
+    line: AssociationItem
+
     def allow(self, handle, port):
         element = self.element
 
@@ -100,6 +105,8 @@ class AssociationConnect(UnaryRelationshipConnect):
         element = self.element
         line = self.line
 
+        assert element.canvas
+
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         if c1 and c2:
@@ -108,6 +115,7 @@ class AssociationConnect(UnaryRelationshipConnect):
 
             # First check if we do not already contain the right subject:
             if line.subject:
+                assert isinstance(line.subject, UML.Association)
                 end1 = line.subject.memberEnd[0]
                 end2 = line.subject.memberEnd[1]
                 if (end1.type is head_type and end2.type is tail_type) or (
@@ -128,6 +136,7 @@ class AssociationConnect(UnaryRelationshipConnect):
     def reconnect(self, handle, port):
         line = self.line
         c = self.get_connected(handle)
+        assert c
         if handle is line.head:
             end = line.tail_end
             oend = line.head_end
@@ -154,7 +163,7 @@ class AssociationConnect(UnaryRelationshipConnect):
         c1 = self.get_connected(handle)
         c2 = self.get_connected(opposite)
         if c1 and c2:
-            old = self.line.subject
+            old: UML.Association = self.line.subject
             del self.line.subject
             del self.line.head_end.subject
             del self.line.tail_end.subject
@@ -187,6 +196,7 @@ class ImplementationConnect(RelationshipConnect):
     def reconnect(self, handle, port):
         line = self.line
         impl = line.subject
+        assert isinstance(impl, UML.Implementation)
         if handle is line.head:
             for s in impl.contract:
                 del impl.contract[s]

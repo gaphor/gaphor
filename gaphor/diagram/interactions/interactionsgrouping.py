@@ -10,6 +10,7 @@ class InteractionLifelineGroup(AbstractGroup):
     """
 
     def group(self):
+        assert self.parent.canvas
         self.parent.subject.lifeline = self.item.subject
         self.parent.canvas.reparent(self.item, self.parent)
 
