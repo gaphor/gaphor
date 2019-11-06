@@ -344,6 +344,7 @@ def create_tree_view(model, names, tip="", ro_cols=None):
         ro_cols = set()
 
     tree_view = Gtk.TreeView(model=model)
+    tree_view.set_search_column(-1)
 
     n = model.get_n_columns() - 1
     for name, i in zip(names, list(range(n))):

@@ -18,6 +18,7 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
         Model, for which tree view is created.
     """
     tree_view = Gtk.TreeView.new_with_model(model)
+    tree_view.set_search_column(-1)
 
     # Stereotype/Attributes
     col = Gtk.TreeViewColumn.new()
