@@ -67,13 +67,6 @@ class NamespaceView(Gtk.TreeView):
         self.set_property("headers-visible", False)
         self.set_property("search-column", 0)
 
-        def search_func(model, column, key, iter, data=None):
-            assert column == 0
-            element = model.get_value(iter, column)
-            if element.name:
-                return not element.name.startswith(key)
-
-        self.set_search_equal_func(search_func)
         selection = self.get_selection()
         selection.set_mode(Gtk.SelectionMode.BROWSE)
         column = Gtk.TreeViewColumn.new()
@@ -310,10 +303,34 @@ class Namespace(UIComponent):
                 return 1
             return -1
 
+        def search_func(model, column, key, rowiter):
+            # Note that this function returns `False` for a match!
+            assert column == 0
+            row = model[rowiter]
+            matched = False
+
+            # Search in child rows.  If any element in the underlaying
+            # tree matches, it will expand.
+            for inner in row.iterchildren():
+                child = list(inner)[column]
+                if not search_func(model, column, key, inner.iter):
+                    view.expand_to_path(row.path)
+                    matched = True
+
+            element = list(row)[column]
+            if element.name and key.lower() in element.name.lower():
+                matched = True
+            elif not matched:
+                view.collapse_row(row.path)
+
+            return not matched  # False means match found!
+
         sorted_model.set_sort_func(0, sort_func, None)
         sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
 
         view = NamespaceView(sorted_model, self.element_factory)
+        view.set_search_equal_func(search_func)
+
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
