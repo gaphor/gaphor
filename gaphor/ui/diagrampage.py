@@ -305,15 +305,14 @@ class DiagramPage:
         GTK's accelerators) since otherwise this key will confuse the text
         edit stuff.
         """
-        if view.is_focus():
-            if event.keyval == Gdk.KEY_Delete and (
+        if (
+            view.is_focus()
+            and event.keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace)
+            and (
                 event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
-            ):
-                self.delete_selected_items()
-            elif event.keyval == Gdk.KEY_BackSpace and (
-                event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
-            ):
-                self.delete_selected_items()
+            )
+        ):
+            self.delete_selected_items()
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.event_manager.handle(
