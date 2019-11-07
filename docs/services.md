@@ -15,25 +15,22 @@ service itself and therefore implements Service too.
 Each service is allowed to define its own interface, as long as Service
 is implemented too.
 
-Services should be defined as entry_points in the Egg info file.
+Services should be defined as entry_points in the `pyproject.toml` file.
 
 Typically a service does some work in the background.
 
 ## Example: ElementFactory
 
-A nice example is the ElementFactory. Currently it is tightly bound to
-the gaphor.UML module. A default factory is created in __init__.py.
+A nice example of a service in use is the ElementFactory. Currently it is
+tightly bound to the `gaphor.UML` module. A default factory is created in
+`__init__.py`.
 
-It depends on the undo_manager. However, on important events, events
-are emitted. (That is when an element is created/destroyed).
-
-What you want to do is create an event handler for ElementFactory that
-stores the add/remove signals in the undo system.
-
-The same goes for UML.Elements. Those classes (or more specific the
-properties) send notifications every time their state changes.
-
-But.. where to put such information?
+The ElementFactory depends on the undo_manager. When an important events
+occurs, like an element is created or destroyed, that event is emitted.
+We then use an event handler for ElementFactory that stores the add/remove
+signals in the undo system. Another example of events that are emitted are with
+`UML.Elements`. Those classes, or more specifically, the properties, send
+notifications every time their state changes.
 
 ```eval_rst
 .. autoclass:: gaphor.UML.elementfactory.ElementFactory

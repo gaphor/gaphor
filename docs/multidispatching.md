@@ -4,26 +4,26 @@ Multidispatching allows Gaphor to define methods and functions which should
 behave differently based on the argument types without cluttering
 `if-elif-else` chains and `isinstance` calls.
 
-All you need is inside `generic.multidispatch` module. See examples
+All you need is inside `gaphor.utils.generic.multidispatch` module. See examples
 below to learn how to use it to define multifunctions and multimethods.
 
 ## Multifunctions
 
 Suppose we want to define a function which behaves differently based on
-arguments' types. The naive solution is to inspect argument types with
+arguments' types. One solution may be to inspect argument types with
 `isinstance` function calls but generic provides us with
 `@multidispatch` decorator which can easily reduce the amount of
 boilerplate and provide desired level of extensibility:
 
-    from generic.multidispatching import multidispatch
+    from gaphor.utils.generic.multidispatching import multidispatch
 
     @multidispatch(Dog)
     def sound(o):
-      print "Woof!"
+      print("Woof!")
 
     @sound.when(Cat)
     def sound(o):
-      print "Meow!"
+      print("Meow!")
 
 Each separate definition of `sound` function works for different
 argument types, we will call each such definition *a multidispatch case*
@@ -47,7 +47,7 @@ for other types even in separate module:
 
     @sound.when
     def sound(o)
-      print "Quack!"
+      print("Quack!")
 
 When behaviour of multidispatch depends on some argument we will say
 that this multidispatch *dispatches* on this argument.
@@ -61,7 +61,7 @@ requiring both of them:
 
     @multidispatch(Dog)
     def walk(dog, meters):
-      print "Dog walks for %d meters" % meters
+      print(f"Dog walks for {meters} meters")
 
 But sometimes you want multifunctions to dispatch on more than one
 argument, then you just have to provide several arguments to
