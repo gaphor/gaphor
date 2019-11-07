@@ -20,8 +20,8 @@ the latest version of Python by executing:
 Where 3.x.x is replaced by the latest stable version of Python.
 
 Next install the Gaphor prerequisites by installing the gobject
-introspection and cairo build dependencies, for example in Ubuntu
-execute:eEE
+introspection and cairo build dependencies, for example, in Ubuntu
+execute:
 
 ```bash
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo

@@ -78,7 +78,7 @@ class umlproperty(Generic[T, G]):
     `propagate(self, event)`.
 
     In some cases properties call out and delegate actions to the ElementFactory,
-    for example in the case of event handling.
+    for example, in the case of event handling.
     """
 
     def __init__(self):

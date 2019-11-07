@@ -4,9 +4,6 @@ Gaphor is modeled around the concept of Services. Each service can be
 registered with the application and then be used by other services or
 other objects living within the application.
 
-Since Gaphor already uses the zope.component adapters, it seems like a
-good choice to use zope.interface too as starting point for services.
-
 Each service should implement the Service interface. This interface
 defines one method:
 

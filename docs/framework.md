@@ -6,12 +6,12 @@ Gaphor is built in a light, service oriented fashion. The application is
 split in a series of services, such as a file manager, undo manager and GUI
 manager. Those services are loaded based on entry points defined in the
 `pyproject.toml` file. To learn more about the architecture, please see the
-description about the [Service Oriented Architecture](so.md)).
+description about the [Service Oriented Architecture](so.md).
 
 ## Events
 
 Parts of Gaphor communicate with each other through events. Whenever
-something import happens, for example an attribute of a model element
+something important happens, for example, an attribute of a model element
 changes, an event is sent. When other parts of the application are interested
 in a change, they register an event handler for that event type. Events are
 emitted though a central broker so you do not have to register on every
@@ -60,14 +60,13 @@ directly.
 
 ### element_dispatcher
 
-Although Gaphor makes use of a central dispatch engine, this
-solution is not efficient when it comes to dispatching events of UML
-model elements. For this purpose the `element_dispatcher` can help
-out. It maintains a path of elements from the root item, for example a
-diagram item to the element of interest. A signal will only be sent
-in case the root item changes. This makes complex dispatching very
-efficient. The dispatcher functionality is available through
-Element.watcher().
+Although Gaphor makes use of a central dispatch engine, this solution is not
+efficient when it comes to dispatching events of UML model elements. In this
+case, the `element_dispatcher` is used. It maintains a path of elements
+starting from the root item, for example, a diagram item to the element of
+interest. A signal will only be sent in case the root item changes. This makes
+complex dispatching very efficient. The dispatcher functionality is available
+through Element.watcher().
 
 ```eval_rst
 .. autoclass:: gaphor.UML.elementdispatcher.ElementDispatcher

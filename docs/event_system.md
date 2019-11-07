@@ -1,16 +1,15 @@
 # Event system
 
-Generic library provides `generic.event` module which helps you
-implement event systems in your application. By event system I mean an
-API for *subscribing* for some types of events and to *handle* those
-events so previously subscribed *handlers* are being executed.
+The Generic library provides the `generic.event` module which is used to
+implement the event system in Gaphor. This event system in Gaphor provides an
+API to *subscribe* to events and to then *handle* those events so previously
+subscribed *handlers* are being executed.
 
 ## Basic usage
 
-First you need to describe event types you want to use in your
-application, `generic.event` dispatches events to corresponding handlers
-by inspecting events' types, so it's natural to model those as
-classes:
+In order to specify the event types we want to use in Gaphor, `generic.event`
+dispatches events to corresponding handlers by inspecting the events' types. We
+represent the even types as a class:
 
 ```Python
 class CommentAdded:
@@ -19,26 +18,20 @@ class CommentAdded:
       self.comment = comment
 ```
 
-Now you want to register handler for your event type:
+Next we register a handler for your event type:
 
-    from generic.event import subscriber
+    from gaphor.misc.generic.event import subscriber
 
     @subscriber(CommentAdded)
     def print_comment(ev):
-      print "Got new comment: %s" % ev.comment
+        print(f"Got new comment: {ev.comment}")
 
-Then you just call `generic.event.handle` function with `CommentAdded`
-instance as its argument:
+Finally call `generic.event.handle` function with `CommentAdded` instance as
+its argument, in order to execute the subscribed handler to print the comment:
 
-    from generic.event import handle
+    from gaphor.misc.generic.event import handle
 
-    handle(CommentAdded(167, "Hello!")) # prints `Got new comment: Hello!`
-
-This is how it works.
-
-## Event inheritance
-
-## Using per-application event API
+    handle(CommentAdded(167, "Hello!"))  # prints `Got new comment: Hello!`
 
 ## API reference
 

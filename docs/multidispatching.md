@@ -1,7 +1,7 @@
 # Multi-Dispatching
 
-Multidispatching allows you to define methods and functions which should
-behave differently based on arguments' types without cluttering
+Multidispatching allows Gaphor to define methods and functions which should
+behave differently based on the argument types without cluttering
 `if-elif-else` chains and `isinstance` calls.
 
 All you need is inside `generic.multidispatch` module. See examples
