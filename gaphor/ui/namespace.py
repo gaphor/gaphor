@@ -8,7 +8,7 @@ import logging
 
 from typing import Optional
 
-from gi.repository import GObject, Gio, Gdk, Gtk
+from gi.repository import GLib, Gio, GObject, Gdk, Gtk
 
 from gaphor import UML
 from gaphor.UML.event import (
@@ -276,7 +276,7 @@ class Namespace(UIComponent):
         em = self.event_manager
         em.subscribe(self._on_element_create)
         em.subscribe(self._on_element_delete)
-        em.subscribe(self._on_model_factory)
+        em.subscribe(self._on_model_ready)
         em.subscribe(self._on_flush_factory)
         em.subscribe(self._on_association_set)
         em.subscribe(self._on_attribute_change)
@@ -293,7 +293,7 @@ class Namespace(UIComponent):
         em = self.event_manager
         em.unsubscribe(self._on_element_create)
         em.unsubscribe(self._on_element_delete)
-        em.unsubscribe(self._on_model_factory)
+        em.unsubscribe(self._on_model_ready)
         em.unsubscribe(self._on_flush_factory)
         em.unsubscribe(self._on_association_set)
         em.unsubscribe(self._on_attribute_change)
@@ -330,11 +330,12 @@ class Namespace(UIComponent):
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
         self._namespace = view
-        self._on_model_factory()
+        self._on_model_ready()
 
         return scrolled_window
 
     def namespace_popup_model(self):
+        assert self._namespace
         model = Gio.Menu.new()
 
         part = Gio.Menu.new()
@@ -351,6 +352,23 @@ class Namespace(UIComponent):
         part.append(_("De_lete"), "tree-view.delete")
         model.append_section(None, part)
 
+        element = self._namespace.get_selected_element()
+
+        part = Gio.Menu.new()
+        for presentation in element.presentation:
+            diagram = presentation.canvas.diagram
+            menu_item = Gio.MenuItem.new(
+                _(f'Show in "{diagram.name}"'), "tree-view.show-in-diagram"
+            )
+            menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))
+            part.append_item(menu_item)
+
+            # Play it safe with an (arbitrary) upper bound
+            if part.get_n_items() > 29:
+                break
+
+        if part.get_n_items() > 0:
+            model.append_section(None, part)
         return model
 
     def iter_for_element(self, element, old_namespace=0):
@@ -385,7 +403,7 @@ class Namespace(UIComponent):
         )
 
     @event_handler(ModelReady)
-    def _on_model_factory(self, event=None):
+    def _on_model_ready(self, event=None):
         """
         Load a new model completely.
         """
@@ -543,9 +561,13 @@ class Namespace(UIComponent):
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
             self.event_manager.handle(DiagramOpened(element))
-
         else:
             log.debug(f"No action defined for element {type(element).__name__}")
+
+    @action(name="tree-view.show-in-diagram")
+    def tree_view_show_in_diagram(self, diagam_id: str):
+        element = self.element_factory.lookup(diagam_id)
+        self.event_manager.handle(DiagramOpened(element))
 
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
