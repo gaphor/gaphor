@@ -508,6 +508,8 @@ class Namespace(UIComponent):
             menu = Gtk.Menu.new_from_model(self.namespace_popup_model())
             menu.attach_to_widget(view, None)
             menu.popup_at_pointer(event)
+        elif event.type == Gdk.EventType.KEY_PRESS and event.key.keyval == Gdk.KEY_F2:
+            self.tree_view_rename_selected()
 
     def _on_view_row_activated(self, view, path, column):
         """
