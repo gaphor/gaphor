@@ -4,9 +4,11 @@ in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
 
+from __future__ import annotations
+
 import logging
 
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from gi.repository import GLib, Gio, GObject, Gdk, Gtk
 
@@ -24,6 +26,10 @@ from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name
+
+if TYPE_CHECKING:
+    from gaphor.UML.elementfactory import ElementFactory
+    from gaphor.services.eventmanager import EventManager
 
 # The following items will be shown in the treeview, although they
 # are UML.Namespace elements.
@@ -59,10 +65,10 @@ class NamespaceView(Gtk.TreeView):
         Gtk.TargetEntry.new("gaphor/element-id", 0, TARGET_ELEMENT_ID),
     ]
 
-    def __init__(self, model, factory):
+    def __init__(self, model: Gtk.TreeModel, element_factory: ElementFactory):
         GObject.GObject.__init__(self)
         self.set_model(model)
-        self.factory = factory
+        self.element_factory = element_factory
 
         self.set_property("headers-visible", False)
         self.set_property("search-column", 0)
@@ -211,7 +217,10 @@ class NamespaceView(Gtk.TreeView):
 
         if drop_info:
             model = self.get_model()
-            element = self.factory.lookup(element_id)
+            element = self.element_factory.lookup(element_id)
+            assert isinstance(
+                element, (UML.Diagram, UML.Package, UML.Type)
+            ), f"Element with id {element_id} is not part of the model"
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)
@@ -262,12 +271,12 @@ class Namespace(UIComponent):
 
     title = _("Namespace")
 
-    def __init__(self, event_manager, element_factory):
+    def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self._namespace: Optional[NamespaceView] = None
         self.model = Gtk.TreeStore.new([object])
-        self.filter = _default_filter_list
+        self.toplevel_types = _default_filter_list
 
     def init(self):
         # Event handler registration is in a separate function,
@@ -398,7 +407,7 @@ class Namespace(UIComponent):
 
     def _visible(self, element):
         # Spacial case: Non-navigable properties
-        return type(element) in self.filter and not (
+        return type(element) in self.toplevel_types and not (
             isinstance(element, UML.Property) and element.namespace is None
         )
 
@@ -422,7 +431,9 @@ class Namespace(UIComponent):
         self.model.clear()
 
         toplevel = self.element_factory.select(
-            lambda e: type(e) in self.filter and not e.namespace
+            lambda e: isinstance(e, UML.NamedElement)
+            and type(e) in self.toplevel_types
+            and not e.namespace
         )
 
         for element in toplevel:
@@ -438,16 +449,16 @@ class Namespace(UIComponent):
         self.model.clear()
 
     @event_handler(ElementCreated)
-    def _on_element_create(self, event):
+    def _on_element_create(self, event: ElementCreated):
         element = event.element
         if self._visible(element) and not self.iter_for_element(element):
             iter = self.iter_for_element(element.namespace)
             self.model.append(iter, [element])
 
     @event_handler(ElementDeleted)
-    def _on_element_delete(self, event):
+    def _on_element_delete(self, event: ElementDeleted):
         element = event.element
-        if type(element) in self.filter:
+        if type(element) in self.toplevel_types:
             iter = self.iter_for_element(element)
             # iter should be here, unless we try to delete an element who's
             # parent element is already deleted, so let's be lenient.
@@ -455,7 +466,7 @@ class Namespace(UIComponent):
                 self.model.remove(iter)
 
     @event_handler(DerivedSet)
-    def _on_association_set(self, event):
+    def _on_association_set(self, event: DerivedSet):
 
         element = event.element
         if event.property is UML.NamedElement.namespace:
@@ -472,7 +483,7 @@ class Namespace(UIComponent):
                     self.model.append(new_iter, [element])
 
     @event_handler(AttributeUpdated)
-    def _on_attribute_change(self, event):
+    def _on_attribute_change(self, event: AttributeUpdated):
         """
         Element changed, update appropriate row.
         """

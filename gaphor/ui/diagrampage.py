@@ -134,12 +134,12 @@ class DiagramPage:
         return shortcuts
 
     @event_handler(ElementDeleted)
-    def _on_element_delete(self, event):
+    def _on_element_delete(self, event: ElementDeleted):
         if event.element is self.diagram:
             self.close()
 
     @event_handler(PropertyChanged)
-    def _on_sloppy_lines(self, event=None):
+    def _on_sloppy_lines(self, event: PropertyChanged = None):
         if not event or event.key == "diagram.sloppiness":
             self.set_drawing_style(event and event.new_value or 0.0)
 
