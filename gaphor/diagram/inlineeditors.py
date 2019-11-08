@@ -39,7 +39,7 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
         return False
 
     box = view.get_item_bounding_box(view.hovered_item)
-    entry = popup_entry(subject.name if subject else "", update_text)
+    entry = popup_entry(subject.name or "", update_text)
     popover = show_popover(entry, view, box)
     return True
 

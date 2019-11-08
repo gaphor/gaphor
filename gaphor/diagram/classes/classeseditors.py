@@ -5,7 +5,6 @@ from gaphas.geometry import distance_point_point_fast
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.diagram.editors import Editor, AbstractEditor
 from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
 from gaphor.diagram.classes.association import AssociationItem
 
