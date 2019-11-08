@@ -28,23 +28,19 @@ def InlineEditor(item: Item, view, pos: Optional[Tuple[int, int]] = None) -> boo
 def named_item_inline_editor(item, view, pos=None) -> bool:
     """Text edit support for Named items."""
 
-    def get_text():
-        s = item.subject
-        return s.name if s else ""
-
     @transactional
     def update_text(entry):
         text = buffer.get_text()
         item.subject.name = text
-        item.request_update()
         popover.popdown()
         return True
 
-    if not item.subject:
+    subject = item.subject
+    if not subject:
         return False
 
     buffer = Gtk.EntryBuffer()
-    buffer.set_text(get_text(), -1)
+    buffer.set_text(subject.name if subject else "", -1)
     entry = Gtk.Entry.new_with_buffer(buffer)
     entry.set_activates_default(True)
     entry.connect("activate", update_text)
