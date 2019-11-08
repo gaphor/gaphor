@@ -5,7 +5,12 @@ from gaphas.geometry import Rectangle, distance_point_point_fast
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
+from gaphor.diagram.inlineeditors import (
+    InlineEditor,
+    popup_entry,
+    show_popover,
+    editable_text_box,
+)
 from gaphor.diagram.classes.association import AssociationItem
 
 
@@ -54,7 +59,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
     else:
         text = item.subject.name or ""
         entry = popup_entry(text, update_text)
-        box = view.get_item_bounding_box(view.hovered_item)
+        box = editable_text_box(view, view.hovered_item)
 
     popover = show_popover(entry, view, box)
     return True
