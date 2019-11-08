@@ -1,7 +1,7 @@
 from typing import Optional
 
 from gi.repository import Gtk
-from gaphas.geometry import distance_point_point_fast
+from gaphas.geometry import Rectangle, distance_point_point_fast
 
 from gaphor import UML
 from gaphor.core import transactional
@@ -33,9 +33,9 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
         return False
 
     end_item = None
-    if distance_point_point_fast(item.handles()[0].pos, pos) < 50:
+    if pos and distance_point_point_fast(item.handles()[0].pos, pos) < 50:
         end_item = item.head_end
-    elif distance_point_point_fast(item.handles()[-1].pos, pos) < 50:
+    elif pos and distance_point_point_fast(item.handles()[-1].pos, pos) < 50:
         end_item = item.tail_end
 
     if end_item:
@@ -48,10 +48,13 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
             default=True,
         )
         entry = popup_entry(text, update_end_text)
+        bb = end_item.name_bounds
+        x, y = view.get_matrix_i2v(item).transform_point(bb.x, bb.y)
+        box = Rectangle(x, y, 10, 10)
     else:
         text = item.subject.name or ""
         entry = popup_entry(text, update_text)
+        box = view.get_item_bounding_box(view.hovered_item)
 
-    box = view.get_item_bounding_box(view.hovered_item)
     popover = show_popover(entry, view, box)
     return True

@@ -386,6 +386,8 @@ class AssociationEnd(UML.Presentation):
         self._mult_bounds = Rectangle()
         self.font = "sans 10"
 
+    name_bounds = property(lambda s: s._name_bounds)
+
     def request_update(self):
         self._owner.request_update()
 
