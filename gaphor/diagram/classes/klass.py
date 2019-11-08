@@ -120,18 +120,6 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
             draw=draw_border,
         )
 
-    # TODO: Needs implementing, see also gaphor/diagram/editors.py
-    def item_at(self, x, y):
-        if 0 > x > self.width:
-            return None
-
-        if y < self.shape.sizes[0][1]:
-            log.debug("in header")
-        elif y < self.shape.sizes[1][1]:
-            log.debug("in attr comp")
-
-        return self
-
 
 def attribute_watches(presentation, cast):
     presentation.watch(

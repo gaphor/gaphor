@@ -15,7 +15,7 @@ Plan:
 import ast
 from math import pi, atan2
 
-from gaphas.geometry import Rectangle, distance_point_point_fast
+from gaphas.geometry import Rectangle
 from gaphas.geometry import distance_rectangle_point
 from gaphas.state import reversible_property
 
@@ -234,13 +234,6 @@ class AssociationItem(LinePresentation, Named):
                 cr.fill()
             finally:
                 cr.restore()
-
-    def item_at(self, x, y):
-        if distance_point_point_fast(self._handles[0].pos, (x, y)) < 10:
-            return self._head_end
-        elif distance_point_point_fast(self._handles[-1].pos, (x, y)) < 10:
-            return self._tail_end
-        return self
 
 
 def get_center_pos(points, inverted=False):

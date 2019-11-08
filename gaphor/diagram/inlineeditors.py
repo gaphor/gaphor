@@ -29,8 +29,7 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     """Text edit support for Named items."""
 
     @transactional
-    def update_text(entry):
-        text = buffer.get_text()
+    def update_text(text):
         item.subject.name = text
         popover.popdown()
         return True
@@ -39,15 +38,20 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     if not subject:
         return False
 
-    buffer = Gtk.EntryBuffer()
-    buffer.set_text(subject.name if subject else "", -1)
-    entry = Gtk.Entry.new_with_buffer(buffer)
-    entry.set_activates_default(True)
-    entry.connect("activate", update_text)
     box = view.get_item_bounding_box(view.hovered_item)
-    entry.show()
+    entry = popup_entry(subject.name if subject else "", update_text)
     popover = show_popover(entry, view, box)
     return True
+
+
+def popup_entry(text, update_text):
+    buffer = Gtk.EntryBuffer()
+    buffer.set_text(text, -1)
+    entry = Gtk.Entry.new_with_buffer(buffer)
+    entry.set_activates_default(True)
+    entry.connect("activate", lambda entry: update_text(entry.get_buffer().get_text()))
+    entry.show()
+    return entry
 
 
 def show_popover(widget, view, box):
