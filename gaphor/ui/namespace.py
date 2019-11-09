@@ -4,11 +4,13 @@ in Rational Rose). This is a tree based on namespace relationships. As
 a result only classifiers are shown here.
 """
 
+from __future__ import annotations
+
 import logging
 
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
-from gi.repository import GObject, Gio, Gdk, Gtk
+from gi.repository import GLib, Gio, GObject, Gdk, Gtk
 
 from gaphor import UML
 from gaphor.UML.event import (
@@ -24,6 +26,10 @@ from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name
+
+if TYPE_CHECKING:
+    from gaphor.UML.elementfactory import ElementFactory
+    from gaphor.services.eventmanager import EventManager
 
 # The following items will be shown in the treeview, although they
 # are UML.Namespace elements.
@@ -59,10 +65,10 @@ class NamespaceView(Gtk.TreeView):
         Gtk.TargetEntry.new("gaphor/element-id", 0, TARGET_ELEMENT_ID),
     ]
 
-    def __init__(self, model, factory):
+    def __init__(self, model: Gtk.TreeModel, element_factory: ElementFactory):
         GObject.GObject.__init__(self)
         self.set_model(model)
-        self.factory = factory
+        self.element_factory = element_factory
 
         self.set_property("headers-visible", False)
         self.set_property("search-column", 0)
@@ -204,7 +210,10 @@ class NamespaceView(Gtk.TreeView):
 
         if drop_info:
             model = self.get_model()
-            element = self.factory.lookup(element_id)
+            element = self.element_factory.lookup(element_id)
+            assert isinstance(
+                element, (UML.Diagram, UML.Package, UML.Type)
+            ), f"Element with id {element_id} is not part of the model"
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)
@@ -255,12 +264,12 @@ class Namespace(UIComponent):
 
     title = _("Namespace")
 
-    def __init__(self, event_manager, element_factory):
+    def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self._namespace: Optional[NamespaceView] = None
         self.model = Gtk.TreeStore.new([object])
-        self.filter = _default_filter_list
+        self.toplevel_types = _default_filter_list
 
     def init(self):
         # Event handler registration is in a separate function,
@@ -269,7 +278,7 @@ class Namespace(UIComponent):
         em = self.event_manager
         em.subscribe(self._on_element_create)
         em.subscribe(self._on_element_delete)
-        em.subscribe(self._on_model_factory)
+        em.subscribe(self._on_model_ready)
         em.subscribe(self._on_flush_factory)
         em.subscribe(self._on_association_set)
         em.subscribe(self._on_attribute_change)
@@ -286,7 +295,7 @@ class Namespace(UIComponent):
         em = self.event_manager
         em.unsubscribe(self._on_element_create)
         em.unsubscribe(self._on_element_delete)
-        em.unsubscribe(self._on_model_factory)
+        em.unsubscribe(self._on_model_ready)
         em.unsubscribe(self._on_flush_factory)
         em.unsubscribe(self._on_association_set)
         em.unsubscribe(self._on_attribute_change)
@@ -347,11 +356,12 @@ class Namespace(UIComponent):
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
         self._namespace = view
-        self._on_model_factory()
+        self._on_model_ready()
 
         return scrolled_window
 
     def namespace_popup_model(self):
+        assert self._namespace
         model = Gio.Menu.new()
 
         part = Gio.Menu.new()
@@ -368,6 +378,23 @@ class Namespace(UIComponent):
         part.append(_("De_lete"), "tree-view.delete")
         model.append_section(None, part)
 
+        element = self._namespace.get_selected_element()
+
+        part = Gio.Menu.new()
+        for presentation in element.presentation:
+            diagram = presentation.canvas.diagram
+            menu_item = Gio.MenuItem.new(
+                _(f'Show in "{diagram.name}"'), "tree-view.show-in-diagram"
+            )
+            menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))
+            part.append_item(menu_item)
+
+            # Play it safe with an (arbitrary) upper bound
+            if part.get_n_items() > 29:
+                break
+
+        if part.get_n_items() > 0:
+            model.append_section(None, part)
         return model
 
     def iter_for_element(self, element, old_namespace=0):
@@ -397,12 +424,12 @@ class Namespace(UIComponent):
 
     def _visible(self, element):
         # Spacial case: Non-navigable properties
-        return type(element) in self.filter and not (
+        return type(element) in self.toplevel_types and not (
             isinstance(element, UML.Property) and element.namespace is None
         )
 
     @event_handler(ModelReady)
-    def _on_model_factory(self, event=None):
+    def _on_model_ready(self, event=None):
         """
         Load a new model completely.
         """
@@ -421,7 +448,9 @@ class Namespace(UIComponent):
         self.model.clear()
 
         toplevel = self.element_factory.select(
-            lambda e: type(e) in self.filter and not e.namespace
+            lambda e: isinstance(e, UML.NamedElement)
+            and type(e) in self.toplevel_types
+            and not e.namespace
         )
 
         for element in toplevel:
@@ -437,16 +466,16 @@ class Namespace(UIComponent):
         self.model.clear()
 
     @event_handler(ElementCreated)
-    def _on_element_create(self, event):
+    def _on_element_create(self, event: ElementCreated):
         element = event.element
         if self._visible(element) and not self.iter_for_element(element):
             iter = self.iter_for_element(element.namespace)
             self.model.append(iter, [element])
 
     @event_handler(ElementDeleted)
-    def _on_element_delete(self, event):
+    def _on_element_delete(self, event: ElementDeleted):
         element = event.element
-        if type(element) in self.filter:
+        if type(element) in self.toplevel_types:
             iter = self.iter_for_element(element)
             # iter should be here, unless we try to delete an element who's
             # parent element is already deleted, so let's be lenient.
@@ -454,7 +483,7 @@ class Namespace(UIComponent):
                 self.model.remove(iter)
 
     @event_handler(DerivedSet)
-    def _on_association_set(self, event):
+    def _on_association_set(self, event: DerivedSet):
 
         element = event.element
         if event.property is UML.NamedElement.namespace:
@@ -471,7 +500,7 @@ class Namespace(UIComponent):
                     self.model.append(new_iter, [element])
 
     @event_handler(AttributeUpdated)
-    def _on_attribute_change(self, event):
+    def _on_attribute_change(self, event: AttributeUpdated):
         """
         Element changed, update appropriate row.
         """
@@ -496,6 +525,8 @@ class Namespace(UIComponent):
             menu = Gtk.Menu.new_from_model(self.namespace_popup_model())
             menu.attach_to_widget(view, None)
             menu.popup_at_pointer(event)
+        elif event.type == Gdk.EventType.KEY_PRESS and event.key.keyval == Gdk.KEY_F2:
+            self.tree_view_rename_selected()
 
     def _on_view_row_activated(self, view, path, column):
         """
@@ -560,9 +591,13 @@ class Namespace(UIComponent):
         # TODO: Candidate for adapter?
         if isinstance(element, UML.Diagram):
             self.event_manager.handle(DiagramOpened(element))
-
         else:
             log.debug(f"No action defined for element {type(element).__name__}")
+
+    @action(name="tree-view.show-in-diagram")
+    def tree_view_show_in_diagram(self, diagam_id: str):
+        element = self.element_factory.lookup(diagam_id)
+        self.event_manager.handle(DiagramOpened(element))
 
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
