@@ -1,22 +1,19 @@
 from __future__ import annotations
 
+from functools import singledispatch
 from typing import Optional, Tuple
 
-from functools import singledispatch
-
-from gi.repository import Gdk, Gtk
 from gaphas import Item
 from gaphas.geometry import Rectangle
+from gi.repository import Gdk, Gtk
 
-from gaphor import UML
 from gaphor.core import transactional
+from gaphor.diagram import shapes as _shapes
 from gaphor.diagram.presentation import (
     Named,
-    Classified,
     LinePresentation,
     ElementPresentation,
 )
-from gaphor.diagram import shapes as _shapes
 
 
 @singledispatch
