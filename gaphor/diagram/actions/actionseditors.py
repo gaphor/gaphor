@@ -1,37 +1,23 @@
-from gaphor.diagram.editors import Editor, AbstractEditor, NamedItemEditor
-from gaphor.diagram.actions.action import ActionItem
+from gaphor.core import transactional
+from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
 from gaphor.diagram.actions.activitynodes import ForkNodeItem
 
 
-Editor.register(ActionItem, NamedItemEditor)
+@InlineEditor.register(ForkNodeItem)
+def fork_node_item_inline_editor(item, view, pos=None) -> bool:
+    """Text edit support for Named items."""
 
-
-@Editor.register(ForkNodeItem)
-class ForkNodeItemEditor(AbstractEditor):
-    """Text edit support for fork node join specification."""
-
-    def __init__(self, item):
-        self._item = item
-
-    def is_editable(self, x, y):
+    @transactional
+    def update_text(text):
+        item.subject.joinSpec = text
+        popover.popdown()
         return True
 
-    def get_text(self):
-        """
-        Get join specification text.
-        """
-        if self._item.subject.joinSpec:
-            return self._item.subject.joinSpec
-        else:
-            return ""
+    subject = item.subject
+    if not subject:
+        return False
 
-    def update_text(self, text):
-        """
-        Set join specification text.
-        """
-        spec = self._item.subject.joinSpec
-        if not spec:
-            spec = text
-
-    def key_pressed(self, pos, key):
-        pass
+    box = view.get_item_bounding_box(view.hovered_item)
+    entry = popup_entry(subject.joinSpec or "", update_text)
+    popover = show_popover(entry, view, box)
+    return True

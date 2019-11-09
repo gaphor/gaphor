@@ -1,3 +1,5 @@
+import logging
+
 from gaphor import UML
 from gaphor.diagram.classes.stereotype import stereotype_compartments
 from gaphor.diagram.presentation import (
@@ -20,6 +22,9 @@ from gaphor.diagram.text import (
     TextDecoration,
 )
 from gaphor.diagram.support import represents
+
+
+log = logging.getLogger(__name__)
 
 
 @represents(UML.Class)
@@ -114,18 +119,6 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
             },
             draw=draw_border,
         )
-
-    # TODO: Needs implementing, see also gaphor/diagram/editors.py
-    def item_at(self, x, y):
-        if 0 > x > self.width:
-            return None
-
-        if y < self.shape.sizes[0][1]:
-            print("in header")
-        elif y < self.shape.sizes[1][1]:
-            print("in attr comp")
-
-        return self
 
 
 def attribute_watches(presentation, cast):

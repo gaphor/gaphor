@@ -31,9 +31,16 @@ class CommentItemPropertyPage(PropertyPageBase):
             buffer.set_text(subject.body)
         text_view = Gtk.TextView()
         text_view.set_buffer(buffer)
-        text_view.show()
         text_view.set_size_request(-1, 100)
-        page.pack_start(text_view, True, True, 0)
+
+        frame = Gtk.Frame()
+        frame.set_shadow_type(Gtk.ShadowType.IN)
+        frame.add(text_view)
+
+        text_view.show()
+        frame.show()
+
+        page.pack_start(frame, True, True, 0)
 
         changed_id = buffer.connect("changed", self._on_body_change)
 

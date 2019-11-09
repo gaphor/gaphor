@@ -304,9 +304,14 @@ class Text:
 
 
 class EditableText(Text):
+    def __init__(self, text=lambda: "", width=lambda: -1, style: Style = {}):
+        super().__init__(text, width, style)
+        self.bounding_box = Rectangle()
+
     def draw(self, context, bounding_box):
         x, y, w, h = super().draw(context, bounding_box)
         text_draw_focus_box(context, x, y, w, h)
+        self.bounding_box = Rectangle(x, y, width=w, height=h)
 
 
 def draw_default_head(context):
