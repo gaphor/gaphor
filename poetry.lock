@@ -182,6 +182,14 @@ future = ">=0.17.0,<0.18.0"
 pycairo = ">=1.13.0,<2.0.0"
 
 [[package]]
+category = "main"
+description = "Generic programming library for Python"
+name = "generic"
+optional = false
+python-versions = ">=3.6,<4.0"
+version = "1.0.0b1"
+
+[[package]]
 category = "dev"
 description = "File identification library for Python"
 name = "identify"
@@ -712,7 +720,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "contextlib2", "unittest2"]
 
 [metadata]
-content-hash = "8c396e55551077f59a19af99ce2d424bc8b377d88a1906c1d7ca3162830ee4a1"
+content-hash = "a09f15ea3ab25d85b7a4babb6a0f51efa0edb607326b7476bdba13a4ce32ce1b"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -817,6 +825,10 @@ future = [
 gaphas = [
     {file = "gaphas-1.1.2-py2.py3-none-any.whl", hash = "sha256:11d248941b3bd9890323a61c438f1945839bb3cd91bffa3583d4179091cfc8bd"},
     {file = "gaphas-1.1.2.tar.gz", hash = "sha256:f1254f64b709da5722878e1b43a435bb199d12e836f255d517b42fe94ac45b26"},
+]
+generic = [
+    {file = "generic-1.0.0b1-py3-none-any.whl", hash = "sha256:c7c8778e6ede6aeb7b2525626584faea98aa141b11ea891d03061cf79313146e"},
+    {file = "generic-1.0.0b1.tar.gz", hash = "sha256:f883a065a02dc64b9584e8f9d7738a39159e138e90ef84755213eb5b4a235f02"},
 ]
 identify = [
     {file = "identify-1.4.7-py2.py3-none-any.whl", hash = "sha256:4f1fe9a59df4e80fcb0213086fcf502bc1765a01ea4fe8be48da3b65afd2a017"},

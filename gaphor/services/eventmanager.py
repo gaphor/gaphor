@@ -5,9 +5,9 @@ Event Manager.
 
 from typing import Optional, Sequence, Type
 
+from generic.event import Manager as _Manager
+from generic.event import Handler, Event
 from gaphor.abc import Service
-from gaphor.misc.generic.event import Manager as _Manager
-from gaphor.misc.generic.event import Handler, Event
 
 
 def event_handler(*event_types):

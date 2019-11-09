@@ -20,7 +20,7 @@ from __future__ import annotations
 from typing import Type, TYPE_CHECKING
 import abc
 
-from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
+from generic.multidispatch import multidispatch, FunctionDispatcher
 
 if TYPE_CHECKING:
     from gaphor import UML
