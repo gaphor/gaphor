@@ -64,11 +64,11 @@ class ActionStack:
     def execute(self):
         self._actions.reverse()
 
-        for action in self._actions:
+        for act in self._actions:
             try:
-                action()
+                act()
             except Exception:
-                logger.error(f"Error while undoing action {action}", exc_info=True)
+                logger.error(f"Error while undoing action {act}", exc_info=True)
 
 
 class UndoManagerStateChanged(ServiceEvent):
