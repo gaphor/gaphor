@@ -205,7 +205,7 @@ class UnaryRelationshipConnect(AbstractConnect):
 
             gen_head = getattr(gen, head.name)
             try:
-                if not head_subject in gen_head:
+                if head_subject not in gen_head:
                     continue
             except TypeError:
                 if gen_head is not head_subject:

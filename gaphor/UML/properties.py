@@ -282,12 +282,12 @@ class enumeration(umlproperty[str]):
             return self.default
 
     def load(self, obj, value):
-        if not value in self.values:
+        if value not in self.values:
             raise AttributeError("Value should be one of %s" % str(self.values))
         setattr(obj, self._name, value)
 
     def _set(self, obj, value):
-        if not value in self.values:
+        if value not in self.values:
             raise AttributeError("Value should be one of %s" % str(self.values))
         old = self._get(obj)
         if value == old:
