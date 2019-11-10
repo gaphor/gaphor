@@ -128,25 +128,25 @@ class EditableTreeModel(Gtk.ListStore):
         Last column has to contain object being edited.
         """
 
-        raise NotImplemented
+        raise NotImplementedError
 
     def _create_object(self):
         """
         Create new object.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _set_object_value(self, row, col, value):
         """
         Update row's column with a value.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _swap_objects(self, o1, o2):
         """
         Swap two objects. If objects are swapped, then return ``True``.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _get_object(self, iter):
         """
