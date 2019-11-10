@@ -238,8 +238,8 @@ def tooliter(toolbox_actions):
 
 class DiagramToolbox:
     """
-    Composite class for DiagramPage. 
-    
+    Composite class for DiagramPage.
+
     See diagrampage.py.
     """
 

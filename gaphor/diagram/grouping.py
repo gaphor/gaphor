@@ -25,8 +25,9 @@ from generic.multidispatch import FunctionDispatcher, multidispatch
 if TYPE_CHECKING:
     from gaphor import UML
 
+
 # TODO: I think this should have been called Namespacing or something similar,
-# since that's the modeling concept.
+#   since that's the modeling concept.
 class AbstractGroup(metaclass=abc.ABCMeta):
     """
     Base class for grouping UML objects, i.e.

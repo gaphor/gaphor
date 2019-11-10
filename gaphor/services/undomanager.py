@@ -63,6 +63,7 @@ class ActionStack:
     @transactional
     def execute(self):
         self._actions.reverse()
+
         for action in self._actions:
             try:
                 action()
@@ -343,9 +344,8 @@ class UndoManager(Service, ActionProvider):
             return
         element = event.element
         value = event.old_value
-        # print 'got new set event', association, element, value
+
         def _undo_association_set_event():
-            # print 'undoing action', element, value
             # Tell the association it should not need to let the opposite
             # side connect (it has it's own signal)
             association._set(element, value, from_opposite=True)

@@ -193,6 +193,7 @@ epub_exclude_files = ["search.html"]
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {"https://docs.python.org/": None}
 
+
 # AutoStructify for Recommonmark
 def setup(app):
     app.add_config_value(
