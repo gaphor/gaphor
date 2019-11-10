@@ -244,7 +244,7 @@ class StorageTestCase(TestCase):
         assert cinfo_head.connected is not None
         cinfo_tail = a.canvas.get_connection(a.tail)
         assert cinfo_tail.connected is not None
-        assert not cinfo_head.connected is cinfo_tail.connected
+        assert cinfo_head.connected is not cinfo_tail.connected
 
     def test_load_save(self):
 

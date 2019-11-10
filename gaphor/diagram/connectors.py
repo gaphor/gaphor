@@ -208,7 +208,7 @@ class UnaryRelationshipConnect(AbstractConnect):
                 if not head_subject in gen_head:
                     continue
             except TypeError:
-                if not gen_head is head_subject:
+                if gen_head is not head_subject:
                     continue
 
             # Check for this entry on line.canvas

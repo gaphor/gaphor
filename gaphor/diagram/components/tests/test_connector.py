@@ -16,8 +16,7 @@ class ConnectorItemTestCase(TestCase):
         """Test creation of connector item
         """
         conn = self.create(ConnectorItem, UML.Connector)
-        assert not conn.subject is None
-        # self.assertTrue(conn.end is None)
+        assert conn.subject is not None
 
     def test_persistence(self):
         """Test connector item saving/loading

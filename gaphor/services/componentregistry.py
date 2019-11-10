@@ -31,7 +31,7 @@ class ComponentRegistry(Service):
         self._comp.add((component, name))
 
     def unregister(self, component: object):
-        self._comp = {(c, n) for c, n in self._comp if not c is component}
+        self._comp = {(c, n) for c, n in self._comp if c is not component}
 
     def get(self, base: Type[T], name: str) -> T:
         found = {(c, n) for c, n in self._comp if isinstance(c, base) and n == name}
