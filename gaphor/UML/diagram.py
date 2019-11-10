@@ -111,7 +111,7 @@ class Diagram(Namespace, PackageableElement):
         for item in self.canvas.get_all_items():
             try:
                 item.unlink()
-            except AttributeError:
-                log.exception(f"Failed to unlink {item}")
+            except (AttributeError, KeyError):
+                pass
 
         super().unlink()
