@@ -1,9 +1,9 @@
 from gaphor import UML
-from gaphor.diagram.grouping import Group, AbstractGroup
-from gaphor.diagram.actions.partition import PartitionItem
+from gaphor.diagram.actions.action import ActionItem
 from gaphor.diagram.actions.activitynodes import ActivityNodeItem, ForkNodeItem
 from gaphor.diagram.actions.objectnode import ObjectNodeItem
-from gaphor.diagram.actions.action import ActionItem
+from gaphor.diagram.actions.partition import PartitionItem
+from gaphor.diagram.grouping import AbstractGroup, Group
 
 
 @Group.register(PartitionItem, PartitionItem)

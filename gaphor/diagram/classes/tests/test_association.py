@@ -2,10 +2,10 @@
 Unnit tests for AssociationItem.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.klass import ClassItem
+from gaphor.tests import TestCase
 
 
 class AssociationItemTestCase(TestCase):

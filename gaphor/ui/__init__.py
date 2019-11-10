@@ -3,14 +3,14 @@ This module contains user interface related code, such as the
 main screen and diagram windows.
 """
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-
-from gi.repository import Gio, Gtk, Gdk
 import importlib.resources
 
+import gi
+from gi.repository import Gdk, Gio, Gtk
+
 from gaphor.ui.actiongroup import apply_application_actions
+
+gi.require_version("Gtk", "3.0")
 
 
 APPLICATION_ID = "org.gaphor.Gaphor"

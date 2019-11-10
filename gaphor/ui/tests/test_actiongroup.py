@@ -1,15 +1,15 @@
 import pytest
+from gi.repository import Gio, GLib
 
-from gi.repository import GLib, Gio
 from gaphor.abc import ActionProvider
 from gaphor.action import action
 from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.ui.actiongroup import (
     apply_application_actions,
-    window_action_group,
     as_variant_type,
-    to_variant,
     from_variant,
+    to_variant,
+    window_action_group,
 )
 
 

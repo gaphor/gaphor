@@ -12,21 +12,12 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
-from typing import Callable, List
 import logging
+from typing import Callable, List
+
 from gaphas import state
 
-
-from gaphor.UML.event import (
-    ElementCreated,
-    ElementDeleted,
-    AssociationSet,
-    AssociationAdded,
-    AssociationDeleted,
-    AttributeUpdated,
-    ModelReady,
-)
-from gaphor.UML.properties import association as association_property
+from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import _, event_handler
 from gaphor.event import (
@@ -36,8 +27,17 @@ from gaphor.event import (
     TransactionCommit,
     TransactionRollback,
 )
-from gaphor.abc import Service, ActionProvider
 from gaphor.transaction import Transaction, transactional
+from gaphor.UML.event import (
+    AssociationAdded,
+    AssociationDeleted,
+    AssociationSet,
+    AttributeUpdated,
+    ElementCreated,
+    ElementDeleted,
+    ModelReady,
+)
+from gaphor.UML.properties import association as association_property
 
 logger = logging.getLogger(__name__)
 

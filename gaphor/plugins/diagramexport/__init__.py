@@ -1,15 +1,15 @@
 """Service dedicated to exporting diagrams to a variety of file formats."""
 
-import os
 import logging
+import os
 
 import cairo
 from gaphas.freehand import FreeHandPainter
-from gaphas.painter import ItemPainter, BoundingBoxPainter
+from gaphas.painter import BoundingBoxPainter, ItemPainter
 from gaphas.view import Context, View
 
+from gaphor.abc import ActionProvider, Service
 from gaphor.core import _, action
-from gaphor.abc import Service, ActionProvider
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 

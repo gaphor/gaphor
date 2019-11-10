@@ -3,7 +3,8 @@
 """
 
 import inspect
-from typing import overload, Generic, List, Type, TypeVar, Union
+from typing import Generic, List, Type, TypeVar, Union, overload
+
 from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.listmixins import querymixin, recursemixin
 

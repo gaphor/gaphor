@@ -4,9 +4,10 @@ Verify the content of an element factory before it is saved.
 
 """
 
+import gaphas
+
 from gaphor import UML
 from gaphor.UML.collection import collection
-import gaphas
 
 
 def orphan_references(factory):

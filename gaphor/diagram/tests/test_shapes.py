@@ -1,9 +1,8 @@
-import pytest
-
 import cairo
+import pytest
+from gaphas.geometry import Rectangle
 
 from gaphor.diagram.shapes import Box, IconBox, Text
-from gaphas.geometry import Rectangle
 
 
 @pytest.fixture

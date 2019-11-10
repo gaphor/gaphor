@@ -2,14 +2,13 @@
 Test connector item connectors.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.components import ComponentItem
-from gaphor.diagram.components import ConnectorItem
-from gaphor.diagram.classes.interface import InterfaceItem, Folded, Side
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
+from gaphor.diagram.classes.interface import Folded, InterfaceItem, Side
+from gaphor.diagram.components import ComponentItem, ConnectorItem
 from gaphor.diagram.components.connectorconnect import ConnectorConnectBase
+from gaphor.tests import TestCase
 
 
 class ComponentConnectTestCase(TestCase):

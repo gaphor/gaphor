@@ -1,7 +1,7 @@
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.core import transactional
+from gaphor.diagram.classes import AssociationItem, ClassItem
+from gaphor.tests import TestCase
 
 
 class UndoTest(TestCase):

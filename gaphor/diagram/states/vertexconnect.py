@@ -8,12 +8,12 @@ gaphor.adapter package.
 
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect, RelationshipConnect
-from gaphor.diagram.states.transition import TransitionItem
-from gaphor.diagram.states.state import VertexItem
 from gaphor.diagram.states.pseudostates import (
-    InitialPseudostateItem,
     HistoryPseudostateItem,
+    InitialPseudostateItem,
 )
+from gaphor.diagram.states.state import VertexItem
+from gaphor.diagram.states.transition import TransitionItem
 
 
 class VertexConnect(RelationshipConnect):

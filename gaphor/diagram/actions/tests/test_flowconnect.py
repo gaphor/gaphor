@@ -3,19 +3,20 @@ Flow item connection adapters tests.
 """
 
 from typing import Type
-from gaphor.tests import TestCase
+
 from gaphor import UML
 from gaphor.diagram.actions.action import ActionItem
-from gaphor.diagram.actions.flow import FlowItem
 from gaphor.diagram.actions.activitynodes import (
-    InitialNodeItem,
-    ForkNodeItem,
-    FlowFinalNodeItem,
     ActivityFinalNodeItem,
     ActivityNodeItem,
     DecisionNodeItem,
+    FlowFinalNodeItem,
+    ForkNodeItem,
+    InitialNodeItem,
 )
+from gaphor.diagram.actions.flow import FlowItem
 from gaphor.diagram.actions.objectnode import ObjectNodeItem
+from gaphor.tests import TestCase
 
 
 class FlowItemBasicNodesConnectionTestCase(TestCase):

@@ -1,4 +1,5 @@
 import pytest
+
 from gaphor.services.eventmanager import EventManager
 from gaphor.ui.event import FileLoaded
 from gaphor.ui.recentfiles import RecentFiles

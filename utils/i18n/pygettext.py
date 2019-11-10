@@ -158,13 +158,13 @@ If `inputfile' is -, standard input is read.
 """
 )
 
+import getopt
+import operator
 import os
 import sys
 import time
-import getopt
 import token
 import tokenize
-import operator
 from functools import reduce
 
 __version__ = "1.5"

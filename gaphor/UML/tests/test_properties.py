@@ -1,9 +1,10 @@
 import pytest
+
+from gaphor.application import Application
+from gaphor.core import event_handler
 from gaphor.UML.element import Element
 from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.properties import *
-from gaphor.application import Application
-from gaphor.core import event_handler
 
 
 def test_association_1_x():

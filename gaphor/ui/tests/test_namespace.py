@@ -1,8 +1,9 @@
 import pytest
+
+import gaphor.services.componentregistry
+import gaphor.services.eventmanager
 import gaphor.UML as UML
 from gaphor.ui.namespace import Namespace
-import gaphor.services.eventmanager
-import gaphor.services.componentregistry
 
 
 @pytest.fixture

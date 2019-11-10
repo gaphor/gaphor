@@ -1,7 +1,7 @@
 from gaphor import UML
+from gaphor.diagram.connectors import IConnect, RelationshipConnect
 from gaphor.diagram.presentation import Classified
 from gaphor.diagram.profiles.extension import ExtensionItem
-from gaphor.diagram.connectors import IConnect, RelationshipConnect
 
 
 @IConnect.register(Classified, ExtensionItem)

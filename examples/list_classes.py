@@ -4,11 +4,11 @@
 with Gaphor.
 """
 
-import sys
 import optparse
+import sys
 
-from gaphor import Application
 import gaphor.UML as UML
+from gaphor import Application
 
 # Setup command line options.
 usage = "usage: %prog [options] file.gaphor"

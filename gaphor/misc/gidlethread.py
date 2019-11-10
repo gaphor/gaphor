@@ -12,12 +12,12 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
 
+import sys
+import time
+import types
 from typing import Any, List, Tuple
 
-import types
-import sys
 from gi.repository import GLib
-import time
 
 
 class GIdleThread:

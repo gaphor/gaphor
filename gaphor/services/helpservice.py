@@ -2,13 +2,11 @@
 
 
 import importlib_metadata
-from gi.repository import GdkPixbuf
-from gi.repository import Gtk
-
+from gi.repository import GdkPixbuf, Gtk
 
 from gaphor import __version__
+from gaphor.abc import ActionProvider, Service
 from gaphor.core import action
-from gaphor.abc import Service, ActionProvider
 
 
 class HelpService(Service, ActionProvider):

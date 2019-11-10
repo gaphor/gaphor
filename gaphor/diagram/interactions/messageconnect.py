@@ -3,7 +3,7 @@
 from typing import Optional
 
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect, AbstractConnect
+from gaphor.diagram.connectors import AbstractConnect, IConnect
 from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.interactions.message import MessageItem
 

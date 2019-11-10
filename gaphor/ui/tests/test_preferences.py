@@ -1,4 +1,5 @@
 from gi.repository import Gtk
+
 from gaphor.ui.preferences import Preferences
 
 

@@ -1,18 +1,17 @@
 """The element editor is a utility window used for editing elements."""
 
 import logging
-
 from typing import Optional
 
 from gi.repository import Gtk
 
+from gaphor.abc import ActionProvider
+from gaphor.core import _, action, event_handler, primary
+from gaphor.diagram.propertypages import PropertyPages
+from gaphor.ui.abc import UIComponent
+from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationUpdated
-from gaphor.core import _, primary, event_handler, action
-from gaphor.abc import ActionProvider
-from gaphor.ui.abc import UIComponent
-from gaphor.diagram.propertypages import PropertyPages
-from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
 

@@ -3,10 +3,11 @@ Parsing of UML model elements from string tests.
 """
 
 import pytest
+
+from gaphor import UML
 from gaphor.services.eventmanager import EventManager
 from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML.umllex import attribute_pat, operation_pat, parameter_pat
-from gaphor import UML
 
 
 def dump_prop(prop):

@@ -7,25 +7,24 @@ a result only classifiers are shown here.
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING, Optional
 
-from typing import Optional, TYPE_CHECKING
-
-from gi.repository import GLib, Gio, GObject, Gdk, Gtk
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
-from gaphor.UML.event import (
-    ElementCreated,
-    ElementDeleted,
-    ModelReady,
-    ModelFlushed,
-    AttributeUpdated,
-    DerivedSet,
-)
-from gaphor.core import _, event_handler, action, transactional
+from gaphor.core import _, action, event_handler, transactional
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
-from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name
+from gaphor.UML.event import (
+    AttributeUpdated,
+    DerivedSet,
+    ElementCreated,
+    ElementDeleted,
+    ModelFlushed,
+    ModelReady,
+)
 
 if TYPE_CHECKING:
     from gaphor.UML.elementfactory import ElementFactory

@@ -9,13 +9,14 @@ All important services are present in the application object:
  - action sets
 """
 
-from typing import Dict, Type
-import logging
 import inspect
+import logging
+from typing import Dict, Type
+
 import importlib_metadata
 
-from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 from gaphor.abc import Service
+from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
 
 logger = logging.getLogger(__name__)
 

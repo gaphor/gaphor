@@ -10,11 +10,11 @@ TODO: partition can be resized only horizontally or vertically, therefore
 from typing import List
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.shapes import Box, Text, draw_highlight
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import VerticalAlign
-from gaphor.diagram.shapes import Box, Text, draw_highlight
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.ActivityPartition)

@@ -4,10 +4,10 @@ Component item.
 
 from gaphor import UML
 from gaphor.diagram.classes.stereotype import stereotype_compartments
-from gaphor.diagram.presentation import ElementPresentation, Classified
+from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
-from gaphor.diagram.text import VerticalAlign, FontWeight
 from gaphor.diagram.support import represents
+from gaphor.diagram.text import FontWeight, VerticalAlign
 
 
 @represents(UML.Component)

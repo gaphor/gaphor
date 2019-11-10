@@ -18,8 +18,8 @@ passes them to the main Application instance.
 __version__ = "1.1.1"
 __all__ = ["main"]
 
-from optparse import OptionParser
 import logging
+from optparse import OptionParser
 
 from gaphor.application import Application
 

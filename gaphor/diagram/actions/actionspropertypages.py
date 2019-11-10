@@ -1,15 +1,16 @@
 import math
+
 from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
+from gaphor.diagram.actions import ForkNodeItem, ObjectNodeItem
 from gaphor.diagram.propertypages import (
-    PropertyPages,
     NamedElementPropertyPage,
     NamedItemPropertyPage,
+    PropertyPages,
     create_hbox_label,
 )
-from gaphor.diagram.actions import ObjectNodeItem, ForkNodeItem
 
 
 @PropertyPages.register(ObjectNodeItem)

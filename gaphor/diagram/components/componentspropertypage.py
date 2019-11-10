@@ -2,8 +2,8 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, NamedItemPropertyPage
 from gaphor.diagram.components import ComponentItem
+from gaphor.diagram.propertypages import NamedItemPropertyPage, PropertyPages
 
 
 @PropertyPages.register(ComponentItem)

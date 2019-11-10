@@ -1,14 +1,14 @@
 from gaphor.diagram.actions.action import (
+    AcceptEventActionItem,
     ActionItem,
     SendSignalActionItem,
-    AcceptEventActionItem,
 )
 from gaphor.diagram.actions.activitynodes import (
-    ActivityNodeItem,
     ActivityFinalNodeItem,
+    ActivityNodeItem,
+    DecisionNodeItem,
     FlowFinalNodeItem,
     ForkNodeItem,
-    DecisionNodeItem,
     InitialNodeItem,
 )
 from gaphor.diagram.actions.flow import FlowItem

@@ -2,14 +2,13 @@
 Support classes for dealing with text.
 """
 
-from typing import Any, Tuple, Dict, TypeVar
-
 from enum import Enum
-import cairo
-from gi.repository import GLib, Pango, PangoCairo
+from typing import Any, Dict, Tuple, TypeVar
 
+import cairo
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.painter import CairoBoundingBoxContext
+from gi.repository import GLib, Pango, PangoCairo
 
 Font = TypeVar("Font", Dict[str, object], str)
 

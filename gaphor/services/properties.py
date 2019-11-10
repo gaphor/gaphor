@@ -1,17 +1,16 @@
 """The properties module allows Gaphor properties to be saved to the local
 file system.  These are things like preferences."""
 
-from typing import Dict
+import ast
 import os
 import pprint
 import sys
-import ast
+from typing import Dict
 
 from gaphas.decorators import AsyncIO
-from gaphor.misc import get_config_dir
-
 
 from gaphor.abc import Service
+from gaphor.misc import get_config_dir
 
 
 class PropertyChanged:

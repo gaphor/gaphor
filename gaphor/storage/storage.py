@@ -11,18 +11,18 @@ save(filename)
 __all__ = ["load", "save"]
 
 import gc
+import io
 import logging
 import os.path
-import io
+import uuid
 
 import gaphas
 
 from gaphor import UML
-from gaphor.UML.collection import collection
 from gaphor.application import Application
 from gaphor.i18n import _
-from gaphor.storage import parser, diagramitems
-
+from gaphor.storage import diagramitems, parser
+from gaphor.UML.collection import collection
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
@@ -413,9 +413,6 @@ def upgrade_presentation_item_to_1_1_0(item):
         del item.values["show-operations"]
 
     return item
-
-
-import uuid
 
 
 def clone_canvasitem(item, subject_id):

@@ -1,27 +1,29 @@
 import logging
-from gi.repository import Gtk
 
 from gaphas.decorators import AsyncIO
+from gi.repository import Gtk
+
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
-from gaphor.diagram.propertypages import (
-    NamedElementPropertyPage,
-    NamedItemPropertyPage,
-    EditableTreeModel,
-    create_tree_view,
-    create_hbox_label,
-    create_uml_combo,
-)
 from gaphor.diagram.classes import (
-    ClassItem,
-    InterfaceItem,
     AssociationItem,
+    ClassItem,
     DependencyItem,
-    ImplementationItem,
     Folded,
+    ImplementationItem,
+    InterfaceItem,
 )
 from gaphor.diagram.components.connector import ConnectorItem
+from gaphor.diagram.propertypages import (
+    EditableTreeModel,
+    NamedElementPropertyPage,
+    NamedItemPropertyPage,
+    PropertyPageBase,
+    PropertyPages,
+    create_hbox_label,
+    create_tree_view,
+    create_uml_combo,
+)
 
 log = logging.getLogger(__name__)
 

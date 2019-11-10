@@ -7,16 +7,15 @@ gaphor.adapter package.
 
 from __future__ import annotations
 
-from typing import List, Optional, Type, TypeVar, Union, TYPE_CHECKING
-from gaphor.UML.properties import association, redefine, relation
+from typing import TYPE_CHECKING, List, Optional, Type, TypeVar, Union
 
 from gaphas.canvas import Connection
 from gaphas.connector import Handle, Port
-from generic.multidispatch import multidispatch, FunctionDispatcher
+from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
-
+from gaphor.UML.properties import association, redefine, relation
 
 T = TypeVar("T", bound=UML.Element)
 

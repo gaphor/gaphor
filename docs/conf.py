@@ -17,8 +17,8 @@
 # sys.path.insert(0, os.path.abspath('.'))
 from pathlib import Path
 
-from tomlkit import parse
 from recommonmark.transform import AutoStructify
+from tomlkit import parse
 
 # -- Project information -----------------------------------------------------
 

@@ -14,7 +14,6 @@ __all__ = ["querymixin", "recursemixin"]
 
 from typing import Callable, List, TypeVar
 
-
 T = TypeVar("T")
 
 

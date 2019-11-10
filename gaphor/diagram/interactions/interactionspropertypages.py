@@ -2,15 +2,15 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
+from gaphor.diagram.interactions import MessageItem
 from gaphor.diagram.propertypages import (
-    PropertyPages,
-    NamedItemPropertyPage,
     EditableTreeModel,
+    NamedItemPropertyPage,
+    PropertyPages,
     create_hbox_label,
     create_tree_view,
     create_uml_combo,
 )
-from gaphor.diagram.interactions import MessageItem
 
 
 @PropertyPages.register(MessageItem)

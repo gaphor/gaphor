@@ -1,14 +1,14 @@
 import pytest
-
 from gaphas.canvas import instant_cairo_context
+
 from gaphor.diagram.text import (
-    text_size,
-    text_point_at_line,
-    TextAlign,
-    VerticalAlign,
     FontStyle,
     FontWeight,
+    TextAlign,
     TextDecoration,
+    VerticalAlign,
+    text_point_at_line,
+    text_size,
 )
 
 

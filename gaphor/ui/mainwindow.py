@@ -2,20 +2,17 @@
 The main application window.
 """
 
-from typing import List, Tuple
-
+import importlib.resources
 import logging
 from pathlib import Path
+from typing import List, Tuple
 
-import importlib.resources
-from gi.repository import Gio, Gdk, Gtk, GLib
+from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
-from gaphor.UML.event import ModelReady
+from gaphor.abc import ActionProvider, Service
 from gaphor.core import _, event_handler
-from gaphor.abc import Service, ActionProvider
 from gaphor.event import ActionEnabled
-from gaphor.UML.event import AttributeUpdated, ModelFlushed
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
@@ -29,7 +26,7 @@ from gaphor.ui.event import (
     WindowClosed,
 )
 from gaphor.ui.layout import deserialize
-
+from gaphor.UML.event import AttributeUpdated, ModelFlushed, ModelReady
 
 log = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 from gaphor import UML
-from gaphor.tests import TestCase
-from gaphor.diagram.components import NodeItem, ComponentItem, ArtifactItem
+from gaphor.diagram.components import ArtifactItem, ComponentItem, NodeItem
 from gaphor.diagram.usecases import UseCaseItem
+from gaphor.tests import TestCase
 
 
 class NodesGroupTestCase(TestCase):

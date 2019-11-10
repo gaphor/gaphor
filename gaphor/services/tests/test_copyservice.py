@@ -1,9 +1,9 @@
 from gaphor import UML
-from gaphor.diagram.general import CommentItem
 from gaphor.diagram.classes import AssociationItem, ClassItem
+from gaphor.diagram.general import CommentItem
 from gaphor.services.copyservice import CopyService
-from gaphor.tests.testcase import TestCase
 from gaphor.storage.verify import orphan_references
+from gaphor.tests.testcase import TestCase
 
 
 class CopyServiceTestCase(TestCase):

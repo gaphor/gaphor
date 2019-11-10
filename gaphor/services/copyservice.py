@@ -6,11 +6,11 @@ from typing import Dict, Set
 
 import gaphas
 
+from gaphor.abc import ActionProvider, Service
+from gaphor.core import _, action, event_handler, transactional
+from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Element, Presentation
 from gaphor.UML.collection import collection
-from gaphor.core import _, event_handler, action, transactional
-from gaphor.abc import Service, ActionProvider
-from gaphor.ui.event import DiagramSelectionChanged
 
 
 class CopyService(Service, ActionProvider):

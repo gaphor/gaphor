@@ -8,8 +8,9 @@ Functions collected in this module allow to
 
 """
 
-from typing import Sequence, Iterable
 import itertools
+from typing import Iterable, Sequence
+
 from gaphor.UML.uml2 import *
 
 

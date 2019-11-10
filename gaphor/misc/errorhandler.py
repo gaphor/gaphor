@@ -5,9 +5,10 @@ to a class' method and will raise the error dialog when the method exits with
 an exception.
 """
 
-from gi.repository import Gtk
-import sys
 import pdb
+import sys
+
+from gi.repository import Gtk
 
 from gaphor.i18n import _
 

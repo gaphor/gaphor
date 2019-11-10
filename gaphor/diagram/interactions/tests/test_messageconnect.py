@@ -2,10 +2,10 @@
 Message connection adapter tests.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.interactions.message import MessageItem
+from gaphor.tests import TestCase
 
 
 class BasicMessageConnectionsTestCase(TestCase):

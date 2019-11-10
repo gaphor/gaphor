@@ -11,6 +11,7 @@ __all__ = ["parse_property", "parse_operation"]
 
 import re
 from functools import singledispatch
+
 import gaphor.UML.uml2 as uml2
 
 

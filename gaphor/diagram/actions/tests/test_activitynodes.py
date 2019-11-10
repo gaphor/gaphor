@@ -1,6 +1,6 @@
 import gaphor.UML as UML
+from gaphor.diagram.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 from gaphor.tests.testcase import TestCase
-from gaphor.diagram.actions.activitynodes import ForkNodeItem, DecisionNodeItem
 
 
 class ActivityNodesTestCase(TestCase):

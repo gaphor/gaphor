@@ -5,13 +5,14 @@ Base class for UML model elements.
 
 from __future__ import annotations
 
+import uuid
+from typing import TYPE_CHECKING, Optional, Sequence, Type, Union
+
+from gaphor.UML.elementdispatcher import EventWatcher
+from gaphor.UML.properties import relation_many, relation_one, umlproperty
+
 __all__ = ["Element"]
 
-import uuid
-
-from typing import Optional, Sequence, TYPE_CHECKING, Type, Union
-from gaphor.UML.properties import relation_one, relation_many, umlproperty
-from gaphor.UML.elementdispatcher import EventWatcher
 
 if TYPE_CHECKING:
     from gaphor.UML.elementfactory import ElementFactory  # noqa

@@ -1,7 +1,6 @@
 """Application service test cases."""
 
-from gaphor.application import Application
-from gaphor.application import init_services
+from gaphor.application import Application, init_services
 
 
 class ServiceA:

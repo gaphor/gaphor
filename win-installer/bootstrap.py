@@ -1,6 +1,5 @@
 import subprocess
 
-
 # Update pacman packages
 subprocess.run("pacman -Suy")
 

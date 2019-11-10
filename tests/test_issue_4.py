@@ -4,8 +4,7 @@ Test GitHub issue #4. Diagram could not be loaded due to JuggleError
 """
 
 import importlib_metadata
-from gi.repository import GLib
-from gi.repository import Gtk
+from gi.repository import GLib, Gtk
 
 from gaphor.storage.storage import load
 from gaphor.tests import TestCase

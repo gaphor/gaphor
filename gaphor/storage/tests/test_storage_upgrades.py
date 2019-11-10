@@ -1,9 +1,10 @@
 import pytest
-from gaphor.UML.elementfactory import ElementFactory
+
 from gaphor.services.eventmanager import EventManager
-from gaphor.storage.storage import load_elements
-from gaphor.storage.parser import element, canvas, canvasitem
 from gaphor.storage import diagramitems
+from gaphor.storage.parser import canvas, canvasitem, element
+from gaphor.storage.storage import load_elements
+from gaphor.UML.elementfactory import ElementFactory
 
 
 @pytest.fixture

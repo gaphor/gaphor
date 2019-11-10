@@ -9,8 +9,7 @@ from distutils.core import Command
 from distutils.dep_util import newer
 from distutils.dir_util import mkpath
 
-from utils.i18n import msgfmt
-from utils.i18n import LINGUAS
+from utils.i18n import LINGUAS, msgfmt
 
 
 class build_mo(Command):

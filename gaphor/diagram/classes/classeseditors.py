@@ -1,17 +1,17 @@
 from typing import Optional
 
-from gi.repository import Gtk
 from gaphas.geometry import Rectangle, distance_point_point_fast
+from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
+from gaphor.diagram.classes.association import AssociationItem
 from gaphor.diagram.inlineeditors import (
     InlineEditor,
+    editable_text_box,
     popup_entry,
     show_popover,
-    editable_text_box,
 )
-from gaphor.diagram.classes.association import AssociationItem
 
 
 @InlineEditor.register(AssociationItem)

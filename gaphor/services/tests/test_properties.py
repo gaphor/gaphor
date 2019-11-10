@@ -1,6 +1,7 @@
-from unittest import TestCase
-from gaphor.services.properties import Properties, FileBackend
 import tempfile
+from unittest import TestCase
+
+from gaphor.services.properties import FileBackend, Properties
 
 
 class MockEventManager(list):

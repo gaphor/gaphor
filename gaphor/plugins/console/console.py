@@ -6,22 +6,18 @@
 #  license details.
 #
 
+import code
+import pydoc
+import sys
+from rlcompleter import Completer
 from typing import Dict, List
 
-import code
-import sys
-import pydoc
-from rlcompleter import Completer
+from gi.repository import Gdk, GLib, Gtk, Pango
 
 if __name__ == "__main__":
     import gi
 
     gi.require_version("Gtk", "3.0")
-
-from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import Pango
-from gi.repository import GLib
 
 
 banner = (

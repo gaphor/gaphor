@@ -6,7 +6,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 
 
 def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):

@@ -2,11 +2,11 @@ import gc
 
 import pytest
 
-from gaphor.UML import *
-from gaphor.UML.event import *
 from gaphor.application import Application
 from gaphor.core import event_handler
 from gaphor.services.eventmanager import EventManager
+from gaphor.UML import *
+from gaphor.UML.event import *
 
 
 @pytest.fixture

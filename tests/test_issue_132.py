@@ -1,7 +1,6 @@
-from gaphor.tests import TestCase
-
 from gaphor import UML
 from gaphor.core import transactional
+from gaphor.tests import TestCase
 
 
 class UndoRedoBugTestCase(TestCase):

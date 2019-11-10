@@ -10,16 +10,15 @@ from typing import Optional, Sequence, Tuple
 
 from gaphas.item import SE
 
-from gaphor import UML
-from gaphor.UML.event import DiagramItemCreated
+from gaphor import UML, diagram
 from gaphor.core import _
-from gaphor import diagram
 from gaphor.ui.diagramtools import (
-    TransactionalToolChain,
-    PlacementTool,
-    GroupPlacementTool,
     DefaultTool,
+    GroupPlacementTool,
+    PlacementTool,
+    TransactionalToolChain,
 )
+from gaphor.UML.event import DiagramItemCreated
 
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
 

@@ -8,8 +8,8 @@ from io import StringIO
 import importlib_metadata
 
 from gaphor import UML
-from gaphor.diagram.general import CommentItem
 from gaphor.diagram.classes import AssociationItem, ClassItem, InterfaceItem
+from gaphor.diagram.general import CommentItem
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage
 from gaphor.tests.testcase import TestCase

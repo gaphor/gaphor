@@ -1,7 +1,7 @@
 import pytest
 
-from gaphor.services.eventmanager import EventManager
 import gaphor.UML as UML
+from gaphor.services.eventmanager import EventManager
 
 
 @pytest.fixture

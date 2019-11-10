@@ -7,12 +7,13 @@
 #
 # Arjan Molenaar.
 
-import sys
 import ast
+import sys
+
+from gaphor.UML import *
 
 sys.path.append("..")
 
-from gaphor.UML import *
 
 done = [object]
 

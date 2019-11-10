@@ -1,21 +1,20 @@
+from math import pi
 from typing import List, Optional, Tuple
+
+from gaphas.geometry import Rectangle
 from typing_extensions import TypedDict
 
-from math import pi
-from gaphas.geometry import Rectangle
-
 from gaphor.diagram.text import (
-    text_point_in_box,
-    text_size,
-    text_draw,
-    text_draw_focus_box,
-    TextAlign,
-    VerticalAlign,
     FontStyle,
     FontWeight,
+    TextAlign,
     TextDecoration,
+    VerticalAlign,
+    text_draw,
+    text_draw_focus_box,
+    text_point_in_box,
+    text_size,
 )
-
 
 Style = TypedDict(
     "Style",

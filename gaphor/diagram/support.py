@@ -3,6 +3,7 @@ For ease of creation, maintain a mapping from UML Element to Diagram Item.
 """
 
 from typing import Dict
+
 from gaphor import UML
 
 

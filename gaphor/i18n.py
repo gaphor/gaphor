@@ -5,9 +5,9 @@ your native language."""
 
 __all__ = ["_"]
 
+import gettext
 import os
 
-import gettext
 import importlib_metadata
 
 localedir = os.path.join(

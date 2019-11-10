@@ -1,6 +1,6 @@
-from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.classes import ClassItem
+from gaphor.tests import TestCase
 
 
 class SanitizerServiceTest(TestCase):

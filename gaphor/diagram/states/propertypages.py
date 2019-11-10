@@ -6,15 +6,15 @@ gaphor.adapter package.
 
 from gi.repository import Gtk
 
-from gaphor.core import _, transactional
 from gaphor import UML
-from gaphor.diagram.states.transition import TransitionItem
-from gaphor.diagram.states.state import StateItem
+from gaphor.core import _, transactional
 from gaphor.diagram.propertypages import (
-    PropertyPages,
     NamedItemPropertyPage,
+    PropertyPages,
     create_hbox_label,
 )
+from gaphor.diagram.states.state import StateItem
+from gaphor.diagram.states.transition import TransitionItem
 
 
 @PropertyPages.register(TransitionItem)

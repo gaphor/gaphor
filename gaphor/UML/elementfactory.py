@@ -1,6 +1,10 @@
 """Factory for and registration of model elements."""
 
+import uuid
+from collections import OrderedDict
+from contextlib import contextmanager
 from typing import (
+    TYPE_CHECKING,
     Callable,
     Dict,
     Iterator,
@@ -8,17 +12,13 @@ from typing import (
     Optional,
     Type,
     TypeVar,
-    TYPE_CHECKING,
 )
-import uuid
-from contextlib import contextmanager
-from collections import OrderedDict
 
+from gaphor.abc import Service
 from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element, UnlinkEvent
 from gaphor.UML.elementdispatcher import ElementDispatcher
 from gaphor.UML.event import ElementCreated, ElementDeleted, ModelFlushed, ModelReady
-from gaphor.abc import Service
 
 if TYPE_CHECKING:
     from gaphor.services.eventmanager import EventManager  # noqa

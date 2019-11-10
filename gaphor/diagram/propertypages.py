@@ -25,13 +25,12 @@ TODO:
      key focuses its associated control.
 """
 
-from typing import Callable, Dict, List, Tuple, Type
-
 import abc
-from gi.repository import GObject, Gdk, Gtk
+from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
+from gi.repository import Gdk, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import _, transactional

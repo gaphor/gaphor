@@ -6,10 +6,10 @@ Contains also implementation to split flows using activity edge connectors.
 
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_arrow_tail
 from gaphor.diagram.support import represents
-from gaphor.diagram.shapes import Box, Text, EditableText, draw_arrow_tail
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.ControlFlow)

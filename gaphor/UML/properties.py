@@ -26,40 +26,41 @@ methods:
 
 from __future__ import annotations
 
-__all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
-
 import logging
 from typing import (
-    overload,
-    Sequence,
-    Type,
-    Generic,
-    TypeVar,
-    Optional,
-    Callable,
-    List,
-    Set,
-    Union,
     TYPE_CHECKING,
+    Callable,
+    Generic,
+    List,
+    Optional,
+    Sequence,
+    Set,
+    Type,
+    TypeVar,
+    Union,
+    overload,
 )
+
 from typing_extensions import Literal, Protocol
 
 from gaphor.UML.collection import collection, collectionlist
 from gaphor.UML.event import (
     AssociationAdded,
-    AssociationUpdated,
     AssociationDeleted,
-    AttributeUpdated,
     AssociationSet,
+    AssociationUpdated,
+    AttributeUpdated,
     DerivedAdded,
     DerivedDeleted,
-    DerivedUpdated,
     DerivedSet,
+    DerivedUpdated,
     ElementUpdated,
-    RedefinedSet,
     RedefinedAdded,
     RedefinedDeleted,
+    RedefinedSet,
 )
+
+__all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
 
 
 if TYPE_CHECKING:

@@ -1,8 +1,9 @@
 import pytest
+
 from gaphor import UML
-from gaphor.UML.elementfactory import ElementFactory
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.services.eventmanager import EventManager
+from gaphor.UML.elementfactory import ElementFactory
 
 
 class DummyVisualComponent:

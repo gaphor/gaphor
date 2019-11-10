@@ -4,7 +4,6 @@ Formatting of UML elements like attributes, operations, stereotypes, etc.
 
 import io
 import re
-
 from functools import singledispatch
 
 from gaphor.UML import uml2 as UML
