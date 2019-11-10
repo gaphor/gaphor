@@ -106,7 +106,7 @@ def test_from_variant_to_python_value():
     assert from_variant(None) is None
     assert from_variant(GLib.Variant.new_string("text")) == "text"
     assert from_variant(GLib.Variant.new_int32(123)) == 123
-    assert from_variant(GLib.Variant.new_boolean(True)) == True
+    assert from_variant(GLib.Variant.new_boolean(True)) is True
 
 
 def test_invalid_gvariant_to_python():

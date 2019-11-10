@@ -205,35 +205,13 @@ def testOwnedMember_Unlink(factory):
     assert [p] == factory.lselect()
 
 
-#    def test_lower_upper(self):
-#        """
-#        Test MultiplicityElement.{lower|upper}
-#        """
-#        assert UML.MultiplicityElement.lowerValue in UML.MultiplicityElement.lower.subsets
-#
-#        e = UML.MultiplicityElement()
-#        e.lowerValue = '2'
-#        assert e.lower == '2', e.lower
-#
-#        assert UML.MultiplicityElement.upperValue in UML.MultiplicityElement.upper.subsets
-#
-#        e.upperValue = 'up'
-#        assert UML.MultiplicityElement.upper.version == 4, UML.MultiplicityElement.upper.version
-#        assert e.upper == 'up'
-#        e.upperValue = 'down'
-#        assert UML.MultiplicityElement.upper.version == 5, UML.MultiplicityElement.upper.version
-#        assert e.upper == 'down', e.upper
-#
-#        # TODO: test signal handling
-
-
 def test_property_is_composite(factory):
     p = UML.Property()
-    assert p.isComposite == False, p.isComposite
+    assert p.isComposite is False, p.isComposite
     p.aggregation = "shared"
-    assert p.isComposite == False, p.isComposite
+    assert p.isComposite is False, p.isComposite
     p.aggregation = "composite"
-    assert p.isComposite == True, p.isComposite
+    assert p.isComposite is True, p.isComposite
 
 
 def test_association_endType(factory):

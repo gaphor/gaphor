@@ -16,7 +16,7 @@ def test_preferences_window():
 
     assert (
         action_group.lookup_action("hand-drawn-style").get_state().get_boolean()
-        == False
+        is False
     )
 
 
@@ -27,5 +27,5 @@ def test_with_hand_drawn_style_enabled():
     action_group = dialog.get_action_group("pref")
 
     assert (
-        action_group.lookup_action("hand-drawn-style").get_state().get_boolean() == True
+        action_group.lookup_action("hand-drawn-style").get_state().get_boolean() is True
     )

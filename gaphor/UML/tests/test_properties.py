@@ -411,7 +411,7 @@ def test_notify():
     A.enum = enumeration("enum", ("one", "two"), "one")
 
     a = A()
-    assert a.notified == None
+    assert a.notified is None
     a.assoc = A()
     assert a.notified == "assoc", a.notified
     a.attr = "newval"
@@ -420,7 +420,7 @@ def test_notify():
     assert a.notified == "enum", a.notified
     a.notified = None
     a.enum = "two"  # should not notify since value hasn't changed.
-    assert a.notified == None
+    assert a.notified is None
 
 
 def test_derivedunion():
@@ -470,9 +470,9 @@ def test_derivedunion_notify():
     E.u = derivedunion(E, "u", A, 0, "*", E.a)
 
     e = E()
-    assert e.notified == False
+    assert e.notified is False
     e.a = A()
-    assert e.notified == True
+    assert e.notified is True
 
 
 def test_derivedunion_listmixins():

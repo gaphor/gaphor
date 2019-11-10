@@ -58,7 +58,7 @@ def orphan_references(factory):
         The extra attribute reference can be used to force UML 
         """
         if isinstance(value, collection) or (
-            isinstance(value, (list, tuple)) and reference == True
+            isinstance(value, (list, tuple)) and reference is True
         ):
             verify_collection(name, value)
         elif reference:
