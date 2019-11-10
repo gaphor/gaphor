@@ -211,7 +211,7 @@ def enrich_enumerations_with_values(enumerations, properties):
     return enumerations
 
 
-def generate(filename, outfile=None, overridesfile=None):
+def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
     # parse the file
     all_elements = parse(filename)
     overrides = override.Overrides(overridesfile)

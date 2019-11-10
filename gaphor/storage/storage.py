@@ -36,7 +36,7 @@ def save(writer=None, factory=None, status_queue=None):
             status_queue(status)
 
 
-def save_generator(writer, factory):
+def save_generator(writer, factory):  # noqa: C901
     """
     Save the current model using @writer, which is a
     gaphor.misc.xmlwriter.XMLWriter instance.
@@ -171,7 +171,7 @@ def load_elements(elements, factory, gaphor_version="1.0.0", status_queue=None):
             status_queue(status)
 
 
-def load_elements_generator(elements, factory, gaphor_version):
+def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
     """
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
