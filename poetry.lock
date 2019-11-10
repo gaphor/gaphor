@@ -465,7 +465,7 @@ description = "Python parsing module"
 name = "pyparsing"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "2.4.4"
+version = "2.4.5"
 
 [[package]]
 category = "dev"
@@ -1024,8 +1024,8 @@ pyinstaller = [
     {file = "PyInstaller-3.5.tar.gz", hash = "sha256:ee7504022d1332a3324250faf2135ea56ac71fdb6309cff8cd235de26b1d0a96"},
 ]
 pyparsing = [
-    {file = "pyparsing-2.4.4-py2.py3-none-any.whl", hash = "sha256:61b5ed888beab19ddccab3478910e2076a6b5a0295dffc43021890e136edf764"},
-    {file = "pyparsing-2.4.4.tar.gz", hash = "sha256:4acadc9a2b96c19fe00932a38ca63e601180c39a189a696abce1eaab641447e1"},
+    {file = "pyparsing-2.4.5-py2.py3-none-any.whl", hash = "sha256:20f995ecd72f2a1f4bf6b072b63b22e2eb457836601e76d6e5dfcd75436acc1f"},
+    {file = "pyparsing-2.4.5.tar.gz", hash = "sha256:4ca62001be367f01bd3e92ecbb79070272a9d4964dce6a48a82ff0b8bc7e683a"},
 ]
 pytest = [
     {file = "pytest-5.2.2-py3-none-any.whl", hash = "sha256:58cee9e09242937e136dbb3dab466116ba20d6b7828c7620f23947f37eb4dae4"},
