@@ -8,7 +8,7 @@ class MockService:
         pass
 
     @action(name="action-two", label="Action Two")
-    def action_one(self):
+    def action_two(self):
         pass
 
 
