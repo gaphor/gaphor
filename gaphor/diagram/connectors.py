@@ -113,7 +113,7 @@ class AbstractConnect(ConnectBase):
         assert self.canvas
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
-            return cinfo.connected  # type: ignore[no-any-return]
+            return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
         return None
 
     def get_connected_port(self, handle: Handle) -> Optional[Port]:

@@ -110,7 +110,7 @@ class Box:
             "padding": (0, 0, 0, 0),
             "vertical-align": VerticalAlign.MIDDLE,
             "border-radius": 0,
-            **style,  # type: ignore[misc]
+            **style,  # type: ignore[misc] # noqa: F821
         }
         self._draw_border = draw
 
@@ -192,7 +192,7 @@ class IconBox:
             "min-height": 0,
             "vertical-spacing": 4,
             "padding": (0, 0, 0, 0),
-            **style,  # type: ignore[misc]
+            **style,  # type: ignore[misc] # noqa: F821
         }
 
     @property
@@ -241,7 +241,7 @@ class Text:
             "text-align": TextAlign.CENTER,
             "vertical-align": VerticalAlign.MIDDLE,
             "padding": (0, 0, 0, 0),
-            **style,  # type: ignore[misc]
+            **style,  # type: ignore[misc] # noqa: F821
         }
 
     @property

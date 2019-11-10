@@ -25,7 +25,7 @@ class ComponentRegistry(Service):
         """Obtain a service used by Gaphor by name.
         E.g. service("element_factory")
         """
-        return self.get(Service, name)  # type: ignore[misc]
+        return self.get(Service, name)  # type: ignore[misc] # noqa: F821
 
     def register(self, component: object, name: str):
         self._comp.add((component, name))
