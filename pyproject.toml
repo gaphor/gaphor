@@ -53,6 +53,7 @@ sphinx = "^2.2"
 recommonmark = "^0.6.0"
 sphinx-rtd-theme = "^0.4.3"
 babel = "^2.7.0"
+BabelGladeExtractor = "^0.5.1"
 
 [tool.poetry.scripts]
 gaphor = 'gaphor:main'
