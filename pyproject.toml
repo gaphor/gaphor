@@ -89,7 +89,6 @@ force_grid_wrap = 0
 use_parentheses = true
 line_length = 88
 known_third_party = ["cairo", "gaphas", "generic", "gi", "importlib_metadata", "pytest", "recommonmark", "setuptools", "tomlkit", "typing_extensions"]
-known_first_party = "gaphor"
 skip = "flatpak,.venv,build,dist"
 skip_glob = "*/uml2.py"
 filter_files = true
