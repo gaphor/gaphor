@@ -19,7 +19,10 @@ try:
 
     _ = fintl.gettext
 except ImportError:
-    _ = lambda s: s
+
+    def _(s):
+        return s
+
 
 __doc__ = _(
     """pygettext -- Python equivalent of xgettext(1)
