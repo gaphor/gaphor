@@ -5,8 +5,15 @@ import pytest
 from gaphor.application import Application
 from gaphor.core import event_handler
 from gaphor.services.eventmanager import EventManager
-from gaphor.UML import *
-from gaphor.UML.event import *
+from gaphor.UML import Parameter
+from gaphor.UML.elementfactory import ElementFactory
+from gaphor.UML.event import (
+    ElementCreated,
+    ElementDeleted,
+    ModelFlushed,
+    ModelReady,
+    ServiceEvent,
+)
 
 
 @pytest.fixture

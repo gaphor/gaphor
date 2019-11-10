@@ -4,7 +4,13 @@ from gaphor.application import Application
 from gaphor.core import event_handler
 from gaphor.UML.element import Element
 from gaphor.UML.event import AssociationUpdated
-from gaphor.UML.properties import *
+from gaphor.UML.properties import (
+    association,
+    attribute,
+    derivedunion,
+    enumeration,
+    redefine,
+)
 
 
 def test_association_1_x():
@@ -669,7 +675,7 @@ def test_redefine_subclass():
     class A(Element):
         is_unlinked = False
 
-        def unlink():
+        def unlink(self):
             self.is_unlinked = True
             Element.unlink()
 

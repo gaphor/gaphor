@@ -11,7 +11,27 @@ Functions collected in this module allow to
 import itertools
 from typing import Iterable, Sequence
 
-from gaphor.UML.uml2 import *
+from gaphor.UML.uml2 import (
+    Association,
+    Class,
+    Classifier,
+    Component,
+    Dependency,
+    Element,
+    Extension,
+    ExtensionEnd,
+    Generalization,
+    Implementation,
+    InstanceSpecification,
+    Interface,
+    Message,
+    MessageOccurrenceSpecification,
+    Property,
+    Realization,
+    Slot,
+    Stereotype,
+    Usage,
+)
 
 
 def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
