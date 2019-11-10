@@ -10,7 +10,7 @@ import sys
 
 from gi.repository import Gtk
 
-from gaphor.i18n import _
+from gaphor.i18n import translate
 
 
 def error_handler(message=None, exc_info=None):
@@ -20,14 +20,14 @@ def error_handler(message=None, exc_info=None):
         return
 
     if not message:
-        message = _("An error occurred.")
+        message = translate("An error occurred.")
 
     buttons = Gtk.ButtonsType.OK
     message = f"{message}\n\nTechnical details:\n\t{exc_type}\n\t{exc_value}"
 
     if __debug__ and sys.stdin.isatty():
         buttons = Gtk.ButtonsType.YES_NO
-        message += _(
+        message += translate(
             "\n\nDo you want to debug?\n(Gaphor should have been started from the command line)"
         )
 

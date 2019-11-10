@@ -9,7 +9,7 @@ from gaphas.painter import BoundingBoxPainter, ItemPainter
 from gaphas.view import Context, View
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import _, action
+from gaphor.core import action, translate
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 
@@ -44,7 +44,7 @@ class DiagramExport(Service, ActionProvider):
             filename = file_dialog.selection
             if os.path.exists(filename):
                 question = (
-                    _(
+                    translate(
                         "The file %s already exists. Do you want to "
                         "replace it with the file you are exporting "
                         "to?"
@@ -119,11 +119,11 @@ class DiagramExport(Service, ActionProvider):
 
     @action(
         name="file-export-svg",
-        label=_("Export to SVG"),
-        tooltip=_("Export the diagram to SVG"),
+        label=translate("Export to SVG"),
+        tooltip=translate("Export the diagram to SVG"),
     )
     def save_svg_action(self):
-        title = _("Export diagram to SVG")
+        title = translate("Export diagram to SVG")
         ext = ".svg"
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
@@ -132,11 +132,11 @@ class DiagramExport(Service, ActionProvider):
 
     @action(
         name="file-export-png",
-        label=_("Export to PNG"),
-        tooltip=_("Export the diagram to PNG"),
+        label=translate("Export to PNG"),
+        tooltip=translate("Export the diagram to PNG"),
     )
     def save_png_action(self):
-        title = _("Export diagram to PNG")
+        title = translate("Export diagram to PNG")
         ext = ".png"
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
@@ -145,11 +145,11 @@ class DiagramExport(Service, ActionProvider):
 
     @action(
         name="file-export-pdf",
-        label=_("Export to PDF"),
-        tooltip=_("Export the diagram to PDF"),
+        label=translate("Export to PDF"),
+        tooltip=translate("Export the diagram to PDF"),
     )
     def save_pdf_action(self):
-        title = _("Export diagram to PDF")
+        title = translate("Export diagram to PDF")
         ext = ".pdf"
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)

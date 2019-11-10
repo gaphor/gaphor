@@ -8,7 +8,7 @@ import logging
 from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider
-from gaphor.core import _
+from gaphor.core import translate
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
@@ -27,7 +27,7 @@ class Toolbox(UIComponent, ActionProvider):
         ),
     ]
 
-    title = _("Toolbox")
+    title = translate("Toolbox")
 
     def __init__(self, main_window, properties, toolbox_actions=TOOLBOX_ACTIONS):
         self.main_window = main_window

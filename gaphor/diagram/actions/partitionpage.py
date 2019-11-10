@@ -2,7 +2,7 @@
 
 from gi.repository import Gtk
 
-from gaphor.core import _, transactional
+from gaphor.core import transactional, translate
 from gaphor.diagram.actions.partition import PartitionItem
 from gaphor.diagram.propertypages import NamedItemPropertyPage, PropertyPages
 
@@ -19,7 +19,7 @@ class PartitionPropertyPage(NamedItemPropertyPage):
         if item.subject:
             if not item._toplevel:
                 hbox = Gtk.HBox(spacing=12)
-                button = Gtk.CheckButton(_("External"))
+                button = Gtk.CheckButton(translate("External"))
                 button.set_active(item.subject.isExternal)
                 button.connect("toggled", self._on_external_change)
                 hbox.pack_start(button, True, True, 0)

@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, Optional
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import _, action, event_handler, transactional
+from gaphor.core import action, event_handler, transactional, translate
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
@@ -261,7 +261,7 @@ class NamespaceView(Gtk.TreeView):
 
 class Namespace(UIComponent):
 
-    title = _("Namespace")
+    title = translate("Namespace")
 
     def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         self.event_manager = event_manager
@@ -363,17 +363,17 @@ class Namespace(UIComponent):
         model = Gio.Menu.new()
 
         part = Gio.Menu.new()
-        part.append(_("_Open"), "tree-view.open")
-        part.append(_("_Rename"), "tree-view.rename")
+        part.append(translate("_Open"), "tree-view.open")
+        part.append(translate("_Rename"), "tree-view.rename")
         model.append_section(None, part)
 
         part = Gio.Menu.new()
-        part.append(_("New _Diagram"), "tree-view.create-diagram")
-        part.append(_("New _Package"), "tree-view.create-package")
+        part.append(translate("New _Diagram"), "tree-view.create-diagram")
+        part.append(translate("New _Package"), "tree-view.create-package")
         model.append_section(None, part)
 
         part = Gio.Menu.new()
-        part.append(_("De_lete"), "tree-view.delete")
+        part.append(translate("De_lete"), "tree-view.delete")
         model.append_section(None, part)
 
         element = self._namespace.get_selected_element()
@@ -382,7 +382,7 @@ class Namespace(UIComponent):
         for presentation in element.presentation:
             diagram = presentation.canvas.diagram
             menu_item = Gio.MenuItem.new(
-                _(f'Show in "{diagram.name}"'), "tree-view.show-in-diagram"
+                translate(f'Show in "{diagram.name}"'), "tree-view.show-in-diagram"
             )
             menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))
             part.append_item(menu_item)

@@ -7,7 +7,7 @@ from typing import Dict, Set
 import gaphas
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import _, action, event_handler, transactional
+from gaphor.core import action, event_handler, transactional, translate
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Element, Presentation
 from gaphor.UML.collection import collection
@@ -124,7 +124,10 @@ class CopyService(Service, ActionProvider):
         return new_items
 
     @action(
-        name="edit-copy", label=_("Copy"), icon_name="edit-copy", shortcut="<Primary>c"
+        name="edit-copy",
+        label=translate("Copy"),
+        icon_name="edit-copy",
+        shortcut="<Primary>c",
     )
     def copy_action(self):
         view = self.diagrams.get_current_view()

@@ -1,9 +1,9 @@
 """Internationalization (i18n) support for Gaphor.
 
-Here the _() function is defined that is used to translate text into
-your native language."""
+Translate text in to your native language using the translate() function.
 
-__all__ = ["_"]
+"""
+__all__ = ["translate"]
 
 import gettext
 import os
@@ -17,9 +17,9 @@ localedir = os.path.join(
 try:
 
     catalog = gettext.Catalog("gaphor", localedir=localedir)
-    _ = catalog.gettext
+    translate = catalog.gettext
 
 except OSError:
 
-    def _(s):
+    def translate(s):
         return s

@@ -20,7 +20,7 @@ import gaphas
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.i18n import _
+from gaphor.i18n import translate
 from gaphor.storage import diagramitems, parser
 from gaphor.UML.collection import collection
 
@@ -176,7 +176,7 @@ def load_elements_generator(elements, factory, gaphor_version):
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
-    log.debug(_("Loading %d elements...") % len(elements))
+    log.debug(translate("Loading %d elements...") % len(elements))
 
     # The elements are iterated three times:
     size = len(elements) * 3
