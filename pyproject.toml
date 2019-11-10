@@ -52,6 +52,8 @@ pyinstaller = "^3.5"
 sphinx = "^2.2"
 recommonmark = "^0.6.0"
 sphinx-rtd-theme = "^0.4.3"
+flake8 = "^3.7.9"
+isort = "^4.3.21"
 
 [tool.poetry.scripts]
 gaphor = 'gaphor:main'
@@ -79,6 +81,18 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+known_third_party = ["cairo", "gaphas", "generic", "gi", "importlib_metadata", "pytest", "recommonmark", "setuptools", "tomlkit", "typing_extensions"]
+known_first_party = "gaphor"
+skip = "flatpak,.venv,build,dist"
+skip_glob = "*/uml2.py"
+filter_files = true
 
 [build-system]
 requires = ["poetry==1.0.0b3"]
