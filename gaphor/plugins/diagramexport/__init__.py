@@ -120,7 +120,7 @@ class DiagramExport(Service, ActionProvider):
     @action(
         name="file-export-svg",
         label=_("Export to SVG"),
-        tooltip=_("Export the diagram to SVG"),
+        tooltip=_("Export diagram to SVG"),
     )
     def save_svg_action(self):
         title = _("Export diagram to SVG")
@@ -133,7 +133,7 @@ class DiagramExport(Service, ActionProvider):
     @action(
         name="file-export-png",
         label=_("Export to PNG"),
-        tooltip=_("Export the diagram to PNG"),
+        tooltip=_("Export diagram to PNG"),
     )
     def save_png_action(self):
         title = _("Export diagram to PNG")
@@ -146,7 +146,7 @@ class DiagramExport(Service, ActionProvider):
     @action(
         name="file-export-pdf",
         label=_("Export to PDF"),
-        tooltip=_("Export the diagram to PDF"),
+        tooltip=_("Export diagram to PDF"),
     )
     def save_pdf_action(self):
         title = _("Export diagram to PDF")

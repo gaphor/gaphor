@@ -7,19 +7,21 @@ __all__ = ["_"]
 
 import os
 
+import logging
 import gettext
 import importlib_metadata
+import importlib.resources
 
-localedir = os.path.join(
-    importlib_metadata.distribution("gaphor").locate_file("gaphor/data/locale")
-)
+log = logging.getLogger(__name__)
 
 try:
 
-    catalog = gettext.Catalog("gaphor", localedir=localedir)
-    _ = catalog.gettext
+    with importlib.resources.path("gaphor", "locale") as path:
+        translate = gettext.translation("gaphor", localedir=str(path), fallback=True)
+        _ = translate.gettext
 
 except OSError as e:
+    log.info(f"No translations were found: {e}")
 
     def _(s):
         return s
