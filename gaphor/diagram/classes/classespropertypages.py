@@ -500,7 +500,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                     expander.add(page)
                     expander.show_all()
                     vbox.pack_start(expander, False, True, 0)
-            except Exception as e:
+            except Exception:
                 log.error(
                     "Could not construct property page for " + name, exc_info=True
                 )

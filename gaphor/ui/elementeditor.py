@@ -199,7 +199,7 @@ class ElementEditor(UIComponent, ActionProvider):
                     expander.connect_after("activate", self.on_expand, name)
                     self.vbox.pack_start(expander, False, True, 0)
                 page.show_all()
-            except Exception as e:
+            except Exception:
                 log.error(
                     "Could not construct property page for " + name, exc_info=True
                 )

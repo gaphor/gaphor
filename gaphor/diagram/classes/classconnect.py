@@ -18,7 +18,6 @@ class DependencyConnect(RelationshipConnect):
     """Connect two Named elements using a Dependency."""
 
     def allow(self, handle, port):
-        line = self.line
         element = self.element
 
         # Element should be a NamedElement
@@ -49,7 +48,6 @@ class DependencyConnect(RelationshipConnect):
         line = self.line
 
         if line.auto_dependency:
-            canvas = line.canvas
             opposite = line.opposite(handle)
 
             other = self.get_connected(opposite)

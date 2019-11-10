@@ -229,7 +229,6 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         self.connect(msg, msg.head, ll1)
         self.connect(msg, msg.tail, ll2)
 
-        factory = self.element_factory
         subject = msg.subject
 
         assert subject.sendEvent and subject.receiveEvent

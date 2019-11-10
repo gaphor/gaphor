@@ -335,7 +335,6 @@ class FlowItemDesisionAndForkNodes:
         flow3 = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.fork_node_cls)
 
         assert isinstance(jn.subject, self.fork_node_cls)
@@ -368,7 +367,6 @@ class FlowItemDesisionAndForkNodes:
         flow3 = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
@@ -410,7 +408,6 @@ class FlowItemDesisionAndForkNodes:
         flow4 = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
         a4 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 
@@ -445,15 +442,12 @@ class FlowItemDesisionAndForkNodes:
 
         Flow `flow4` will force the node to become a combined node.
         """
-        canvas = self.diagram.canvas
-
         flow1 = self.create(FlowItem)
         flow2 = self.create(FlowItem)
         flow3 = self.create(FlowItem)
         flow4 = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
         a4 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 

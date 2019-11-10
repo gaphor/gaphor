@@ -354,7 +354,7 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         if hct and oct:
             # Both sides of line are connected => disconnect
-            connections = self.disconnect_connected_items()
+            self.disconnect_connected_items()
             self.disconnect_subject(handle)
 
         super().disconnect(handle)
@@ -370,7 +370,6 @@ class RelationshipConnect(UnaryRelationshipConnect):
         connected to the same element. Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
-        line = self.line
         element = self.element
         connected_to = self.get_connected(opposite)
 

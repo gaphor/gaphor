@@ -25,12 +25,12 @@ class ConnectorItemTestCase(TestCase):
         conn = self.create(ConnectorItem, UML.Connector)
 
         end = self.element_factory.create(UML.ConnectorEnd)
-        # conn.end = end
+        conn.end = end
 
         data = self.save()
         assert end.id in data
 
         self.load(data)
 
-        connectors = self.diagram.canvas.select(lambda e: isinstance(e, ConnectorItem))
-        ends = self.kindof(UML.ConnectorEnd)
+        assert self.diagram.canvas.select(lambda e: isinstance(e, ConnectorItem))
+        assert self.kindof(UML.ConnectorEnd)

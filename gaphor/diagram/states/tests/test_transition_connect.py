@@ -126,7 +126,7 @@ class TransitionConnectorTestCase(TestCase):
         """Test transition and initial pseudostate disconnection
         """
         v1 = self.create(InitialPseudostateItem, UML.Pseudostate)
-        v2 = self.create(StateItem, UML.State)
+        self.create(StateItem, UML.State)
 
         t = self.create(TransitionItem)
         assert t.subject is None

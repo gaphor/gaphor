@@ -92,8 +92,8 @@ def test_association_1_1():
     c = C()
     try:
         a.one = c
-    except Exception as e:
-        pass  # ok
+    except Exception:
+        pass
     else:
         assert a.one is not c
 

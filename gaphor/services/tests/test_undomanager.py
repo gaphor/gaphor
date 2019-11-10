@@ -201,7 +201,7 @@ class TestUndoManager(TestCase):
         a1 = element_factory.create(A)
         a2 = element_factory.create(A)
         b1 = element_factory.create(B)
-        b2 = element_factory.create(B)
+        element_factory.create(B)
 
         undo_manager.begin_transaction()
         b1.two = a1
@@ -277,7 +277,7 @@ class TestUndoManager(TestCase):
         element_factory = ElementFactory(event_manager)
 
         undo_manager.begin_transaction()
-        p = element_factory.create(Element)
+        element_factory.create(Element)
 
         assert undo_manager._current_transaction
         assert undo_manager._current_transaction._actions
@@ -364,7 +364,7 @@ class TestUndoManager(TestCase):
         assert element_factory.size() == 1, element_factory.size()
 
         with Transaction(event_manager):
-            q = element_factory.create(Element)
+            element_factory.create(Element)
 
         assert undo_manager.can_undo()
         assert not undo_manager.can_redo()

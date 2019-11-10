@@ -16,7 +16,7 @@ def factory():
 
 
 def test_create(factory):
-    p = factory.create(Parameter)
+    factory.create(Parameter)
     assert len(list(factory.values())) == 1
 
 
@@ -32,7 +32,7 @@ def test_flush(factory):
 
 
 def test_without_application(factory):
-    p = factory.create(Parameter)
+    factory.create(Parameter)
     assert factory.size() == 1, factory.size()
 
     factory.flush()
@@ -103,7 +103,7 @@ def element_factory():
 
 
 def test_create_event(element_factory):
-    p = element_factory.create(Parameter)
+    element_factory.create(Parameter)
     assert isinstance(last_event, ElementCreated)
     assert handled
 

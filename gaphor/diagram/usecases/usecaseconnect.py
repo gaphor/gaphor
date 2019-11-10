@@ -14,7 +14,6 @@ class IncludeConnect(RelationshipConnect):
     """Connect use cases with an include item relationship."""
 
     def allow(self, handle, port):
-        line = self.line
         element = self.element
 
         if not (element.subject and isinstance(element.subject, UML.UseCase)):
@@ -39,7 +38,6 @@ class ExtendConnect(RelationshipConnect):
     """Connect use cases with an extend item relationship."""
 
     def allow(self, handle, port):
-        line = self.line
         element = self.element
 
         if not (element.subject and isinstance(element.subject, UML.UseCase)):

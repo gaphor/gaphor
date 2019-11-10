@@ -146,7 +146,6 @@ class InterfacePort(LinePort):
             d = distance_point_point((px, py), pos)
             return (px, py), d
         else:
-            p2 = self.end
             d, pl = distance_line_point(self.start, self.end, pos)
             return pl, d
 

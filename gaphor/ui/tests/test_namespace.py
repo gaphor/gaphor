@@ -131,7 +131,7 @@ def test_element_model_factory(namespace, element_factory):
 
 
 def test_element_factory_flush(namespace, element_factory):
-    p1 = element_factory.create(UML.Package)
+    element_factory.create(UML.Package)
     assert namespace.model.get_iter_first() is not None
 
     element_factory.flush()

@@ -300,7 +300,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         dispatcher = self.dispatcher
         element = self.element_factory.create(UML.Association)
         p1 = element.memberEnd = self.element_factory.create(UML.Property)
-        p2 = element.memberEnd = self.element_factory.create(UML.Property)
+        element.memberEnd = self.element_factory.create(UML.Property)
 
         assert len(element.memberEnd) == 2
         dispatcher.subscribe(self._handler, element, "memberEnd.name")

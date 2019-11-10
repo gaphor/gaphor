@@ -76,7 +76,6 @@ class InitialPseudostateTransitionConnect(VertexConnect):
 
         line = self.line
         element = self.element
-        subject = element.subject
 
         # Check if no other items are connected
         connections = self.canvas.get_connections(connected=element)

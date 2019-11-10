@@ -115,7 +115,6 @@ class MessageLifelineConnect(AbstractConnect):
         super().disconnect(handle)
 
         line = self.line
-        send = self.get_connected(line.head)
         received = self.get_connected(line.tail)
         lifeline = self.element
         lifetime = lifeline.lifetime

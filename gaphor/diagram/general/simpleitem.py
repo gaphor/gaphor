@@ -128,7 +128,6 @@ class Ellipse(Element):
 
     def draw(self, context):
         cr = context.cairo
-        nw = self._handles[NW]
         style = self.style
 
         rx = self.width / 2.0
@@ -136,8 +135,6 @@ class Ellipse(Element):
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)
-        # cr.set_source_rgba(*style.fill_color)
-        # cr.fill_preserve()
         cr.set_source_rgba(*style("color"))
         cr.set_line_width(style("line-width"))
         cr.stroke()

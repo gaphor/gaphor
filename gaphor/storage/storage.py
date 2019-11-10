@@ -333,7 +333,7 @@ def load_generator(filename, factory):
         elements = loader.elements
         gaphor_version = loader.gaphor_version
 
-    except Exception as e:
+    except Exception:
         log.error("File could no be parsed", exc_info=True)
         raise
 

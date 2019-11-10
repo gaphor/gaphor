@@ -131,42 +131,52 @@ def test_dependency(factory):
 
 def test_element_import(factory):
     element = factory.create(UML.ElementImport)
+    assert element
 
 
 def test_enumeration(factory):
     element = factory.create(UML.Enumeration)
+    assert element
 
 
 def test_generalization(factory):
     element = factory.create(UML.Generalization)
+    assert element
 
 
 def test_interface(factory):
     element = factory.create(UML.Interface)
+    assert element
 
 
 def test_namespace(factory):
     element = factory.create(UML.Namespace)
+    assert element
 
 
 def test_operation(factory):
     element = factory.create(UML.Operation)
+    assert element
 
 
 def test_package(factory):
     element = factory.create(UML.Package)
+    assert element
 
 
 def test_parameter(factory):
     element = factory.create(UML.Parameter)
+    assert element
 
 
 def test_property(factory):
     element = factory.create(UML.Property)
+    assert element
 
 
 def test_realization(factory):
     element = factory.create(UML.Realization)
+    assert element
 
 
 def test_ids(factory):

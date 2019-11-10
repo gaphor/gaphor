@@ -356,8 +356,6 @@ def generate(filename, outfile=None, overridesfile=None):
         writer.add_derivedunion(d)
 
     for r in redefines or ():
-        rcls, rprop = r.redefines.split(".")
-        r_class = next(filter(lambda c: c["name"] == rcls, classes.values()))
         msg(f"redefining {r.redefines} -> {r.class_name}.{r.name}[{r.upper}]")
         writer.add_redefine(r)
 

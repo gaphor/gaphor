@@ -152,7 +152,7 @@ class NamespaceView(Gtk.TreeView):
             iter = model.get_iter_from_string(path_str)
             element = model.get_value(iter, 0)
             element.name = new_text
-        except Exception as e:
+        except Exception:
             log.error(f'Could not create path from string "{path_str}"')
 
     def on_drag_begin(self, context):
@@ -320,7 +320,6 @@ class Namespace(UIComponent):
             # Search in child rows.  If any element in the underlaying
             # tree matches, it will expand.
             for inner in row.iterchildren():
-                child = list(inner)[column]
                 if not search_func(model, column, key, inner.iter):
                     view.expand_to_path(row.path)
                     matched = True

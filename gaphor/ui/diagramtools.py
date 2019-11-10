@@ -83,7 +83,7 @@ class DiagramItemConnector(ItemConnector):
                 adapter = IConnect(sink.item, item)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
-        except Exception as e:
+        except Exception:
             log.error("Error during connect", exc_info=True)
 
     @transactional
@@ -271,7 +271,6 @@ class GroupPlacementTool(PlacementTool):
             if parent and item and adapter:
                 adapter.group()
 
-                canvas = view.canvas
                 parent.request_update(matrix=False)
         finally:
             self._parent = None

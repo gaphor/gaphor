@@ -11,8 +11,6 @@ class SanitizerServiceTest(TestCase):
         """
         Remove element if the last instance of an item is deleted.
         """
-        ef = self.element_factory
-
         klassitem = self.create(ClassItem, UML.Class)
         klass = klassitem.subject
 
@@ -71,7 +69,7 @@ class SanitizerServiceTest(TestCase):
 
         # Apply stereotype to class and create slot
         instspec = UML.model.apply_stereotype(klass, stereotype)
-        slot = UML.model.add_slot(instspec, st_attr)
+        UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 
@@ -95,7 +93,7 @@ class SanitizerServiceTest(TestCase):
 
         # Apply stereotype to class and create slot
         instspec = UML.model.apply_stereotype(klass, stereotype)
-        slot = UML.model.add_slot(instspec, st_attr)
+        UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 
@@ -118,12 +116,12 @@ class SanitizerServiceTest(TestCase):
         st_attr = self.element_factory.create(UML.Property)
         stereotype.ownedAttribute = st_attr
         ext1 = UML.model.create_extension(metaklass, stereotype)
-        ext2 = UML.model.create_extension(metaiface, stereotype)
+        UML.model.create_extension(metaiface, stereotype)
 
         # Apply stereotype to class and create slot
         instspec1 = UML.model.apply_stereotype(klass, stereotype)
         instspec2 = UML.model.apply_stereotype(iface, stereotype)
-        slot = UML.model.add_slot(instspec1, st_attr)
+        UML.model.add_slot(instspec1, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
         assert klass in self.element_factory
@@ -145,11 +143,11 @@ class SanitizerServiceTest(TestCase):
         stereotype = create(UML.Stereotype)
         st_attr = self.element_factory.create(UML.Property)
         stereotype.ownedAttribute = st_attr
-        ext = UML.model.create_extension(metaklass, stereotype)
+        UML.model.create_extension(metaklass, stereotype)
 
         # Apply stereotype to class and create slot
         instspec = UML.model.apply_stereotype(klass, stereotype)
-        slot = UML.model.add_slot(instspec, st_attr)
+        UML.model.add_slot(instspec, st_attr)
 
         assert stereotype in klass.appliedStereotype[:].classifier
 

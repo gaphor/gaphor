@@ -11,8 +11,7 @@ from gaphor.UML.umllex import attribute_pat, operation_pat, parameter_pat
 
 
 def dump_prop(prop):
-    m = attribute_pat.match(prop)
-    # print m.groupdict()
+    attribute_pat.match(prop)
 
 
 def dump_oper(oper):
@@ -22,13 +21,11 @@ def dump_oper(oper):
     else:
         # set name to oper
         return
-    # print g('vis'), g('name'), g('type'), g('mult_l'), g('mult_u'), g('tags')
     if g("params"):
         params = g("params")
         while params:
             m = parameter_pat.match(params)
             g = m.group
-            # print ' ', g('dir') or 'in', g('name'), g('type'), g('mult_l'), g('mult_u'), g('default'), g('tags')
             params = g("rest")
 
 

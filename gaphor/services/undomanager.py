@@ -66,7 +66,7 @@ class ActionStack:
         for action in self._actions:
             try:
                 action()
-            except Exception as e:
+            except Exception:
                 logger.error(f"Error while undoing action {action}", exc_info=True)
 
 

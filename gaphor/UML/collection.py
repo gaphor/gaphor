@@ -172,7 +172,7 @@ class collection(Generic[T]):
 
             self.object.handle(AssociationUpdated(self.object, self.property))
             return True
-        except IndexError as ex:
+        except IndexError:
             return False
-        except ValueError as ex:
+        except ValueError:
             return False

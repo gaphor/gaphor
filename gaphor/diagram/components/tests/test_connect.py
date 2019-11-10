@@ -295,7 +295,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         iface = self.create(InterfaceItem, UML.Interface)
         pport = iface.ports()[0]
-        rport = iface.ports()[2]
 
         # both components provide interface only
         self.provide(c1.subject, iface.subject)

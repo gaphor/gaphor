@@ -122,7 +122,6 @@ class ConnectorConnectBase(AbstractConnect):
         super().connect(handle, port)
 
         line = self.line
-        canvas = line.canvas
 
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
