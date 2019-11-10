@@ -5,18 +5,21 @@ Base class for UML model elements.
 
 from __future__ import annotations
 
+import logging
 import uuid
 from typing import TYPE_CHECKING, Optional, Sequence, Type, Union
 
 from gaphor.UML.elementdispatcher import EventWatcher
 from gaphor.UML.properties import relation_many, relation_one, umlproperty
 
-__all__ = ["Element"]
-
-
 if TYPE_CHECKING:
     from gaphor.UML.elementfactory import ElementFactory  # noqa
     from gaphor.UML.presentation import Presentation  # noqa
+
+
+__all__ = ["Element"]
+
+log = logging.getLogger(__name__)
 
 
 class UnlinkEvent:
@@ -101,7 +104,7 @@ class Element:
         try:
             prop = getattr(type(self), name)
         except AttributeError:
-            raise AttributeError(f"'{type(self).__name__}' has no property '{name}'")
+            log.exception(f"'{type(self).__name__}' has no property '{name}'")
         else:
             prop.load(self, value)
 

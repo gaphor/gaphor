@@ -128,7 +128,7 @@ class GIdleThread:
         except StopIteration:
             self._idle_id = 0
             return False
-        except:
+        except QueueEmpty:
             self._exc_info = sys.exc_info()
             self._idle_id = 0
             return False

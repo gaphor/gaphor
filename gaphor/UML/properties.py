@@ -463,8 +463,8 @@ class association(umlproperty[T]):
 
         try:
             delattr(obj, self._name)
-        except:
-            pass
+        except AttributeError:
+            log.exception(f"Delete attribute failed for {obj} with {self._name}")
         else:
             if do_notify:
                 self.handle(AssociationSet(obj, self, value, None))
@@ -480,8 +480,8 @@ class association(umlproperty[T]):
             items = c.items
             try:
                 items.remove(value)
-            except:
-                pass
+            except ValueError:
+                log.exception(f"Removing {value} from list {items} failed")
             else:
                 if do_notify:
                     self.handle(AssociationDeleted(obj, self, value))
@@ -548,7 +548,7 @@ class associationstub(umlproperty[T]):
         try:
             values = getattr(obj, self._name)
         except AttributeError:
-            pass
+            log.exception(f"Failed to unlink {self._name} from {obj}")
         else:
             for value in set(values):
                 self.association.__delete__(value, obj)

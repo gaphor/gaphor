@@ -58,13 +58,13 @@ class base:
     def __getitem__(self, key):
         try:
             return self.values[key]
-        except:
+        except KeyError:
             return self.references[key]
 
     def get(self, key):
         try:
             return self.__getitem__(key)
-        except:
+        except KeyError:
             return None
 
 

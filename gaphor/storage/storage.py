@@ -234,48 +234,26 @@ def load_elements_generator(elements, factory, gaphor_version):
 
         # load attributes and references:
         for name, value in list(elem.values.items()):
-            try:
-                elem.element.load(name, value)
-            except:
-                log.error(
-                    "Loading value %s (%s) for element %s failed."
-                    % (name, value, elem.element)
-                )
-                raise
+            elem.element.load(name, value)
 
         for name, refids in list(elem.references.items()):
             if isinstance(refids, list):
                 for refid in refids:
                     try:
                         ref = elements[refid]
-                    except:
-                        raise ValueError(
-                            "Invalid ID for reference (%s) for element %s.%s"
-                            % (refid, elem.type, name)
+                    except ValueError:
+                        log.exception(
+                            f"Invalid ID for reference ({refid}) for element {elem.type}.{name}"
                         )
                     else:
-                        try:
-                            elem.element.load(name, ref.element)
-                        except:
-                            log.error(
-                                "Loading %s.%s with value %s failed"
-                                % (type(elem.element).__name__, name, ref.element.id)
-                            )
-                            raise
+                        elem.element.load(name, ref.element)
             else:
                 try:
                     ref = elements[refids]
-                except:
-                    raise ValueError(f"Invalid ID for reference ({refids})")
+                except ValueError:
+                    log.exception(f"Invalid ID for reference ({refids})")
                 else:
-                    try:
-                        elem.element.load(name, ref.element)
-                    except:
-                        log.error(
-                            "Loading %s.%s with value %s failed"
-                            % (type(elem.element).__name__, name, ref.element.id)
-                        )
-                        raise
+                    elem.element.load(name, ref.element)
 
     # Before version 0.7.2 there was only decision node (no merge nodes).
     # This node could have many incoming and outgoing flows (edges).
@@ -333,8 +311,8 @@ def load_generator(filename, factory):
         elements = loader.elements
         gaphor_version = loader.gaphor_version
 
-    except Exception:
-        log.error("File could no be parsed", exc_info=True)
+    except OSError:
+        log.exception("File could no be parsed")
         raise
 
     if version_lower_than(gaphor_version, (0, 17, 0)):

@@ -13,7 +13,7 @@ from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, translate
 from gaphor.misc.errorhandler import error_handler
-from gaphor.misc.gidlethread import GIdleThread, Queue
+from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty, QueueFull
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
 from gaphor.ui.event import FileLoaded, FileSaved, WindowClosed
@@ -69,17 +69,13 @@ class FileManager(Service, ActionProvider):
 
         queue = Queue()
         status_window: Optional[StatusWindow]
-        try:
-            main_window = self.main_window
-            status_window = StatusWindow(
-                translate("Loading..."),
-                translate("Loading model from %s") % filename,
-                parent=main_window.window,
-                queue=queue,
-            )
-        except:
-            log.warning("Could not create status window, proceding without.")
-            status_window = None
+        main_window = self.main_window
+        status_window = StatusWindow(
+            translate("Loading..."),
+            translate(f"Loading model from {filename}"),
+            parent=main_window.window,
+            queue=queue,
+        )
 
         try:
             loader = storage.load_generator(
@@ -95,7 +91,7 @@ class FileManager(Service, ActionProvider):
 
             self.filename = filename
             self.event_manager.handle(FileLoaded(self, filename))
-        except:
+        except (QueueEmpty, QueueFull):
             error_handler(
                 message=translate("Error while loading model from file %s") % filename
             )
@@ -175,7 +171,7 @@ class FileManager(Service, ActionProvider):
 
             self.filename = filename
             self.event_manager.handle(FileSaved(self, filename))
-        except:
+        except (OSError, QueueEmpty, QueueFull):
             error_handler(
                 message=translate("Error while saving model to file %s") % filename
             )
