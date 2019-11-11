@@ -38,7 +38,7 @@ Each service (and plugin) should implement the `gaphor.abc.Service` interface:
 ```
 
 Another more specialized service that also inherits from `gaphor.abc.Service`,
-is the UI Components service. Services that use this interface are used to
+is the UI Component service. Services that use this interface are used to
 define windows and user interface functionality. A UI component should
 implement the `gaphor.ui.abc.UIComponent` interface:
 

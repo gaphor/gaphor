@@ -5,7 +5,7 @@ The Python data model is generated from a Gaphor model file that describes
 the relationships between the supported UML elements.
 
 The model is built using smart properties (descriptors). These properties
-handle events when they're changed. This allows the rest of the application,
+emit events when they're changed. This allows the rest of the application,
 for example, the visuals and undo system, to update their state accordingly.
 The events are sent using a signaling mechanism, called handlers.
 

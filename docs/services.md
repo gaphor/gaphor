@@ -25,12 +25,12 @@ A nice example of a service in use is the ElementFactory. Currently it is
 tightly bound to the `gaphor.UML` module. A default factory is created in
 `__init__.py`.
 
-The ElementFactory depends on the undo_manager. When an important events
-occurs, like an element is created or destroyed, that event is emitted.
-We then use an event handler for ElementFactory that stores the add/remove
-signals in the undo system. Another example of events that are emitted are with
-`UML.Elements`. Those classes, or more specifically, the properties, send
-notifications every time their state changes.
+The undo_manager depends on the events emitted by the ElementFactory. When an
+important events occurs, like an element is created or destroyed, that event is
+emitted. We then use an event handler for ElementFactory that stores the
+add/remove signals in the undo system. Another example of events that are
+emitted are with `UML.Elements`. Those classes, or more specifically, the
+properties, send notifications every time their state changes.
 
 ```eval_rst
 .. autoclass:: gaphor.UML.elementfactory.ElementFactory

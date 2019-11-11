@@ -2,28 +2,27 @@
 
 Gaphor is an UML tool. In order to keep as close as possible to the UML
 specification the Gaphor data model is based on the UML Metamodel. The Object
-Management Group (OMG), the not-for-profit technology standards consortium
-that governs UML, has a XML Metadata Interchange (XMI) file describing the
-metamodel. Therefore, the easiest way to keep Gaphor consistent with UML is
-that is to generate Gaphor's data model code directly from the Gaphor model
-describing the UML Metamodel. Doing this raises two issues:
+Management Group (OMG), the not-for-profit technology standards consortium that
+governs UML, has a XML Metadata Interchange (XMI) file describing the
+metamodel. Therefore, the easiest way to keep Gaphor consistent with UML would
+be to to generate Gaphor's data model code directly from this UML metamodel in
+XMI. There are two challenges with this approach:
 
-1.  There are more attributes defined in the data model than we will
-    use.
-2.  How do we check if the model is consistent?
+1.  There are more attributes defined in the data model than we will use,
+    unless Gaphor got to the point where it 100% implemented the UML specification.
+2.  There are no consistency rules in the [UML XMI
+definition](https://www.omg.org/spec/UML/20131001/UML.xmi).
 
-The first point is not such a problem: attributes we don't use don't
-consume memory.
+The first point ends up not being much of a problem: attributes we don't use
+don't consume memory.
 
-There are no consistency rules in the [UML XMI
-definition](https://www.omg.org/spec/UML/20131001/UML.xmi), we have to get
-them from the [UML Specification](https://www.omg.org/spec/UML/2.5/PDF). It
-is probably best to create a special consistency module that checks the model
-and reports errors.
+For the second point, we have to get the model consistency rules directly from
+the [UML Specification](https://www.omg.org/spec/UML/2.5/PDF). Our approach is
+to create a special consistency module that checks the model and reports
+errors.
 
-In the UML metamodel all classes are derived from `Element`. So all
-we have to do is create a substitute for `Element` that gives some
-behaviour to the data objects.
+In the UML metamodel all classes are derived from `Element`. So we have created
+a substitute for `Element` that gives some behaviour to the data objects.
 
 Gaphor's data model is implemented in Python like the rest of the
 application. Since the Python language doesn't make a difference between
