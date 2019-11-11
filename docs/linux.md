@@ -29,7 +29,7 @@ gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
 ```
 
 [Clone the
-repository](https://help.github.com/en/articles/cloning-a-repository).
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 ```bash
 $ cd gaphor

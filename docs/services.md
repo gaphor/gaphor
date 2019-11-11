@@ -42,4 +42,5 @@ Currently a plugin is defined by an XML file. This will change as
 plugins should be distributable as Eggs too. A plugin will contain user
 interface information along with its service definition.
 
-See also: [Writing plugins](manual/plugins.md)
+For more information, please also see our how-to on [writing a
+plugin](https://gaphor.org/pages/writing-a-plugin.html)

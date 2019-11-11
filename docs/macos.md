@@ -8,7 +8,8 @@ To setup a development environment with macOS:
 ```bash
 $ brew install python3 gobject-introspection gtk+3
 ```
-[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+[Clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```
 $ cd gaphor
 $ source ./venv

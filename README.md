@@ -113,7 +113,8 @@ mingw-w64-x86-64-python3-setuptools mingw-w64-x86-64-python3-zope.interface \
 mingw-w64-x86-64-python3-coverage mingw-w64-x86-64-python3-pytest
 ```
 
-[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+[Clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```bash
 $ cd gaphor
 $ source ./venv
@@ -148,7 +149,8 @@ and cairo build dependencies, for example, in Ubuntu execute:
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
     gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
 ```
-[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+[Clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 ```
 $ cd gaphor
@@ -163,7 +165,8 @@ To setup a development environment with macOS:
 ```bash
 $ brew install python3 gobject-introspection gtk+3
 ```
-[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+[Clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```
 $ cd gaphor
 $ source ./venv

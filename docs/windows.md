@@ -17,7 +17,8 @@ mingw-w64-x86-64-python3-setuptools mingw-w64-x86-64-python3-zope.interface \
 mingw-w64-x86-64-python3-coverage mingw-w64-x86-64-python3-pytest
 ```
 
-[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+[Clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```bash
 $ cd gaphor
 $ source venv
@@ -30,7 +31,7 @@ In order to create an exe installation package for Windows, we utilize
 [PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the
 dependencies and bundle them in to a single folder. We then use a custom bash
 script that creates a Windows installer using
-[NSIS](https://nsis.sourceforge.io) and a portable installer using
+[NSIS](https://nsis.sourceforge.io/Main_Page) and a portable installer using
 [7-Zip](https://www.7-zip.org).
 
 1. Follow the instructions for settings up a development environment above

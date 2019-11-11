@@ -1,19 +1,20 @@
-Welcome to Gaphor's documentation!
+The Gaphor Technical Documentation
 ==================================
 
-Some highlights of the documentation:
+This documentation is aimed at those who would be interested in making
+contributions to Gaphor. For tutorials and how-to information, please visit the
+`Gaphor Website <https://gaphor.org>`_.
 
-* A :doc:`manual <manual/index>`. It outlines some of the ideas in and behind Gaphor.
-* The :ref:`tech-section` contains some interesting articles about the technology that drives Gaphor and Gaphas, Gaphor's canvas widget.
+In the future, we would like to split the documentation in to sections that
+focus on *explanation** (understanding-oriented) and **reference**
+(information-oriented). For now, this information is all together.
 
 If you're into writing plug-ins for Gaphor you should have a look at our
-fabulous `Hello world <http://github.com/gaphor/gaphor.plugins.helloworld>`_
+fabulous `Hello world <https://github.com/gaphor/gaphor.plugins.helloworld>`_
 plug-in.
 
-.. toctree::
-   :maxdepth: 2
-
-   manual/index
+Platforms
+---------
 
 Setting up a development environment, and packaging Gaphor on different
 platforms:
