@@ -1,18 +1,21 @@
 # Dutch Gaphor Translation
+# Arjan Molenaar <gaphor@gmail.com>, 2019.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2019-11-10 23:22+0100\n"
-"PO-Revision-Date: 2004-06-10 08:00+0000\n"
+"PO-Revision-Date: 2019-11-11 08:45+0100\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
-"Language: nl\n"
-"Language-Team: nl\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: nl_NL\n"
+"Language-Team: Dutch - The Netherlands <gaphor@gmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+"X-Generator: Gtranslator 3.34.0\n"
 
 #: ../gaphor/diagram/profiles/metaclasspropertypage.py:29
 #: ../gaphor/diagram/propertypages.py:392
@@ -157,7 +160,7 @@ msgstr "Toon stereotype attributen"
 
 #: ../gaphor/diagram/states/propertypages.py:72
 msgid "Entry"
-msgstr ""
+msgstr "Entry"
 
 #: ../gaphor/diagram/states/propertypages.py:79
 msgid "Exit"
@@ -185,8 +188,8 @@ msgstr ""
 #: ../gaphor/plugins/diagramexport/__init__.py:47
 #, python-format
 msgid ""
-"The file %s already exists. Do you want to replace it with the file you "
-"are exporting to?"
+"The file %s already exists. Do you want to replace it with the file you are "
+"exporting to?"
 msgstr "Het bestand %s bestaat reeds. Wilt u het vervangen?"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:122
@@ -351,49 +354,47 @@ msgstr "Initiële node"
 
 #: ../gaphor/ui/diagramtoolbox.py:103
 msgid "Activity final node"
-msgstr ""
+msgstr "Activity final node"
 
 #: ../gaphor/ui/diagramtoolbox.py:109
 msgid "Flow final node"
-msgstr ""
+msgstr "Flow final node"
 
 #: ../gaphor/ui/diagramtoolbox.py:115
 msgid "Decision/merge node"
-msgstr ""
+msgstr "Decision/merge node"
 
 #: ../gaphor/ui/diagramtoolbox.py:121
 msgid "Fork/join node"
-msgstr ""
+msgstr "Fork/join node"
 
 #: ../gaphor/ui/diagramtoolbox.py:127
 msgid "Object node"
-msgstr ""
+msgstr "Object node"
 
 #: ../gaphor/ui/diagramtoolbox.py:133
 msgid "Partition"
-msgstr ""
+msgstr "Partition"
 
 #: ../gaphor/ui/diagramtoolbox.py:139
 msgid "Control/object flow"
-msgstr ""
+msgstr "Control/object flow"
 
 #: ../gaphor/ui/diagramtoolbox.py:145
 msgid "Send signal action"
-msgstr ""
+msgstr "Send signal action"
 
 #: ../gaphor/ui/diagramtoolbox.py:151
-#, fuzzy
 msgid "Accept event action"
-msgstr "Interacties"
+msgstr "Accept event action"
 
 #: ../gaphor/ui/diagramtoolbox.py:158
-#, fuzzy
 msgid "Interactions"
 msgstr "Interacties"
 
 #: ../gaphor/ui/diagramtoolbox.py:160
 msgid "Lifeline"
-msgstr ""
+msgstr "Lifeline"
 
 #: ../gaphor/ui/diagramtoolbox.py:164
 msgid "Interaction"
@@ -405,43 +406,43 @@ msgstr "Statussen"
 
 #: ../gaphor/ui/diagramtoolbox.py:173
 msgid "State"
-msgstr ""
+msgstr "State"
 
 #: ../gaphor/ui/diagramtoolbox.py:176
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "Initial Pseudostate"
 
 #: ../gaphor/ui/diagramtoolbox.py:182
 msgid "Final State"
-msgstr ""
+msgstr "Final State"
 
 #: ../gaphor/ui/diagramtoolbox.py:188
 msgid "History Pseudostate"
-msgstr ""
+msgstr "History Pseudostate"
 
 #: ../gaphor/ui/diagramtoolbox.py:194
 msgid "Transition"
-msgstr ""
+msgstr "Transition"
 
 #: ../gaphor/ui/diagramtoolbox.py:201
 msgid "Use Cases"
-msgstr ""
+msgstr "Use Cases"
 
 #: ../gaphor/ui/diagramtoolbox.py:203
 msgid "Use case"
-msgstr ""
+msgstr "Use case"
 
 #: ../gaphor/ui/diagramtoolbox.py:204
 msgid "Actor"
-msgstr ""
+msgstr "Actor"
 
 #: ../gaphor/ui/diagramtoolbox.py:211
 msgid "Include"
-msgstr ""
+msgstr "Include"
 
 #: ../gaphor/ui/diagramtoolbox.py:212
 msgid "Extend"
-msgstr ""
+msgstr "Extend"
 
 #: ../gaphor/ui/diagramtoolbox.py:216
 msgid "Profiles"
@@ -449,15 +450,15 @@ msgstr "Profielen"
 
 #: ../gaphor/ui/diagramtoolbox.py:218
 msgid "Profile"
-msgstr ""
+msgstr "Profile"
 
 #: ../gaphor/ui/diagramtoolbox.py:219
 msgid "Metaclass"
-msgstr ""
+msgstr "Metaclass"
 
 #: ../gaphor/ui/diagramtoolbox.py:223
 msgid "Extension"
-msgstr ""
+msgstr "Extension"
 
 #: ../gaphor/ui/elementeditor.py:36
 msgid "Undo"
@@ -503,9 +504,11 @@ msgstr "Fout tijdens laden van model %s"
 
 #: ../gaphor/ui/filemanager.py:118
 msgid ""
-"The model contains some references to items that are not maintained. Do "
-"you want to clean this before saving the model?"
+"The model contains some references to items that are not maintained. Do you "
+"want to clean this before saving the model?"
 msgstr ""
+"Het model bevat referenties naar items die niet langer bestaan. Wil je dit "
+"laten opschonen voor het model op te slaan?"
 
 #: ../gaphor/ui/filemanager.py:160
 msgid "Saving..."
@@ -531,7 +534,7 @@ msgstr ""
 
 #: ../gaphor/ui/filemanager.py:247
 msgid "New model"
-msgstr ""
+msgstr "New model"
 
 #: ../gaphor/ui/filemanager.py:250
 msgid "main"
@@ -623,11 +626,11 @@ msgstr "Diagrammen"
 
 #: ../gaphor/ui/mockups.glade:30
 msgid "Sloppy lines"
-msgstr ""
+msgstr "Handgetekende lijnen"
 
 #: ../gaphor/ui/mockups.glade:42
 msgid "Reset to pointer tool after placing an item on a diagram"
-msgstr ""
+msgstr "Selecteer muis aanwijzer na het plaatsen van een item op een diagram"
 
 #: ../gaphor/ui/namespace.py:265
 msgid "Namespace"
@@ -643,7 +646,7 @@ msgstr "_Hernoem"
 
 #: ../gaphor/ui/namespace.py:373
 msgid "New _Diagram"
-msgstr ""
+msgstr "Nieuw _Diagram"
 
 #: ../gaphor/ui/namespace.py:374
 msgid "New _Package"
@@ -663,10 +666,3 @@ msgstr "Hulpmiddelen"
 
 #~ msgid "Export the diagram to SVG"
 #~ msgstr "Exporteer het diagram naar SVG"
-
-#~ msgid "Export the diagram to PNG"
-#~ msgstr ""
-
-#~ msgid "Export the diagram to PDF"
-#~ msgstr ""
-
