@@ -81,8 +81,8 @@ class relation_one(Protocol[E]):
     def __get__(self, obj: None, class_=None) -> relation_one[E]:
         ...
 
-    @overload
-    def __get__(self, obj, class_=None) -> E:  # noqa: F811
+    @overload  # noqa: F811
+    def __get__(self, obj, class_=None) -> E:
         ...
 
     def __set__(self, obj, value: E) -> None:
@@ -100,8 +100,8 @@ class relation_many(Protocol[E]):
     def __get__(self, obj: None, class_=None) -> relation_many[E]:
         ...
 
-    @overload
-    def __get__(self, obj, class_=None) -> collection[E]:  # noqa: F811
+    @overload  # noqa: F811
+    def __get__(self, obj, class_=None) -> collection[E]:
         ...
 
     def __set__(self, obj, value: E) -> None:
@@ -171,8 +171,8 @@ class umlproperty(Generic[T]):
     def _get(self, obj: Literal[1]) -> Optional[T]:
         ...
 
-    @overload
-    def _get(self, obj: Literal["*"]) -> collection[T]:  # noqa: F811
+    @overload  # noqa: F811
+    def _get(self, obj: Literal["*"]) -> collection[T]:
         ...
 
     def _get(self, obj):  # noqa: F811

@@ -73,8 +73,8 @@ class collection(Generic[T]):
     def __getitem__(self, key: int) -> T:
         ...
 
-    @overload
-    def __getitem__(self, key: slice) -> List[T]:  # noqa: F811
+    @overload  # noqa: F811
+    def __getitem__(self, key: slice) -> List[T]:
         ...
 
     def __getitem__(self, key: Union[int, slice]):  # noqa: F811
