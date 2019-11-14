@@ -1,4 +1,4 @@
-# Gaphor's Framework
+# Framework
 
 ## Overview
 

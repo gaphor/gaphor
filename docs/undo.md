@@ -13,39 +13,39 @@ trigger updates.
 
 To update:
 
-> Handle:
->
-> :   x, y (solvable) connectable (attr) visible (attr) movable (attr)
->     connection status (solver?)
->
-> Item:
->
-> :   matrix canvas is managed from Canvas
->
->     Element:
->
->     :   handles width, height min_width, min_height (solvable?)
->
->     Line:
->
->     :   handles line_width fuzzyness (attr) orthogonal (boolean)
->         horizontal (boolean)
->
-> Canvas:
->
-> :   
->
->     tree:
->
->     :   add() remove()
->
->     request_update() (should be performed as part of undo action when
->     called)
->
-> Solver (?):
->
-> :   add_constraint() remove_constraint() Variable state
->
+Handle:
+
+    x, y (solvable) connectable (attr) visible (attr) movable (attr)
+    connection status (solver?)
+
+Item:
+
+    matrix canvas is managed from Canvas
+
+Element:
+
+    handles width, height min_width, min_height (solvable?)
+
+Line:
+
+    handles line_width fuzzyness (attr) orthogonal (boolean) horizontal
+    (boolean)
+
+Canvas:
+
+:   
+
+Tree:
+
+    add() remove()
+
+    request_update() (should be performed as part of undo action when
+    called)
+
+Solver (?):
+
+    add_constraint() remove_constraint() Variable state
+
 In Gaphor, connecting two diagram items is considered an atomic task,
 performed by a IConnect adapter. This operation results in a set of
 primitive tasks (properties set and a constraint created).
@@ -106,9 +106,9 @@ To start a transaction:
 Now, that should be done when a model element or diagram item sends a
 state change:
 
-1.  The event is handled by the \"reverse-handler\"
-2.  Reverse handler generates a IUndoEvent signal
-3.  The signal is received and stored as part of the undo-transaction.
+1. The event is handled by the "reverse-handler"
+2. Reverse handler generates a IUndoEvent signal
+3. The signal is received and stored as part of the undo-transaction.
 
 (Maybe step 2 and 3 can be merged, since only one function is not of any
 interest to the rest of the application - creates nasty dependencies)

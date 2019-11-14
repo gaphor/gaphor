@@ -1,4 +1,4 @@
-# Description of Gaphors data model
+# Data Model
 
 Gaphor is an UML tool. In order to keep as close as possible to the UML
 specification the Gaphor data model is based on the UML Metamodel. The Object

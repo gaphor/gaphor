@@ -76,24 +76,26 @@ This refers to the class `HelloWorldPlugin` in package/module
 
 Here is a stripped version of the hello world plugin:
 
-    from gaphor.abc import Service, ActionProvider
-    from gaphor.core import _, action
+```python
+from gaphor.abc import Service, ActionProvider
+from gaphor.core import _, action
 
-    class HelloWorldPlugin(Service, ActionProvider):     # 1.
+class HelloWorldPlugin(Service, ActionProvider):     # 1.
 
-        def __init__(self, tools_menu):                  # 2.
-            self.tools_menu = tools_menu
-            tools_menu.add_actions(self)                 # 3.
+    def __init__(self, tools_menu):                  # 2.
+        self.tools_menu = tools_menu
+        tools_menu.add_actions(self)                 # 3.
 
-        def shutdown(self):                              # 4.
-            self.tools_menu.remove_actions(self)
+    def shutdown(self):                              # 4.
+        self.tools_menu.remove_actions(self)
 
-        @action(name='helloworld',                       # 5.
-                label=_('Hello world'),
-                tooltip=_('Every application ...'))
-        def helloworld_action(self):
-            main_window = self.main_window
-            pass # gtk code left out
+    @action(name='helloworld',                       # 5.
+            label=_('Hello world'),
+            tooltip=_('Every application ...'))
+    def helloworld_action(self):
+        main_window = self.main_window
+        pass # gtk code left out
+```
 
 1.  As stated before, a plugin should implement the `Service` interface.
     It also implements `ActionProvider`, saying it has some actions to
