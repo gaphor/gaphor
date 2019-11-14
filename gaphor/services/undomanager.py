@@ -342,9 +342,8 @@ class UndoManager(Service, ActionProvider):
             return
         element = event.element
         value = event.old_value
-        # print 'got new set event', association, element, value
+
         def _undo_association_set_event():
-            # print 'undoing action', element, value
             # Tell the association it should not need to let the opposite
             # side connect (it has it's own signal)
             association._set(element, value, from_opposite=True)
@@ -360,7 +359,6 @@ class UndoManager(Service, ActionProvider):
         value = event.new_value
 
         def _undo_association_add_event():
-            # print 'undoing action', element, value
             # Tell the association it should not need to let the opposite
             # side connect (it has it's own signal)
             association._del(element, value, from_opposite=True)
@@ -376,7 +374,6 @@ class UndoManager(Service, ActionProvider):
         value = event.old_value
 
         def _undo_association_delete_event():
-            # print 'undoing action', element, value
             # Tell the assoctaion it should not need to let the opposite
             # side connect (it has it's own signal)
             association._set(element, value, from_opposite=True)

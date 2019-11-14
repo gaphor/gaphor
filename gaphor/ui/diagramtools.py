@@ -448,7 +448,6 @@ class TransactionalToolChain(ToolChain):
 
     def handle(self, event):
         # For double click: button_press, double_click, button_release
-        # print 'event', self.EVENT_HANDLERS.get(event.type)
         if self.EVENT_HANDLERS.get(event.type) in ("on_button_press",):
             assert not self._tx
             self._tx = Transaction(self.event_manager)

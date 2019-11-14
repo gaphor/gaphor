@@ -53,7 +53,6 @@ class Matcher:
             return eval(self.expr, {}, {"it": element})
         except (AttributeError, NameError):
             # attribute does not (yet) exist
-            # print 'No attribute', expr, d
             return False
 
 

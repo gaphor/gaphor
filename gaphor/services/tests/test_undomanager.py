@@ -64,12 +64,10 @@ class TestUndoManager(TestCase):
         undone = [0]
 
         def undo_action(undone=undone):
-            # print 'undo_action called'
             undone[0] = 1
             undo_manager.add_undo_action(redo_action)
 
         def redo_action(undone=undone):
-            # print 'redo_action called'
             undone[0] = -1
             undo_manager.add_undo_action(undo_action)
 

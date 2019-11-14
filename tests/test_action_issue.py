@@ -50,32 +50,32 @@ class ActionIssueTestCase(TestCase):
         assert actions[0].outgoing[1] is flows[1]
         assert not actions[0].incoming
 
-        cinfo, = canvas.get_connections(handle=flows[0].presentation[0].head)
+        (cinfo,) = canvas.get_connections(handle=flows[0].presentation[0].head)
         assert cinfo.connected is actions[0].presentation[0]
-        cinfo, = canvas.get_connections(handle=flows[1].presentation[0].head)
+        (cinfo,) = canvas.get_connections(handle=flows[1].presentation[0].head)
         assert cinfo.connected is actions[0].presentation[0]
 
         # Intermediate element:
         assert actions[1].incoming[0] is flows[1]
         assert actions[1].outgoing[0] is flows[2]
 
-        cinfo, = canvas.get_connections(handle=flows[1].presentation[0].tail)
+        (cinfo,) = canvas.get_connections(handle=flows[1].presentation[0].tail)
         assert cinfo.connected is actions[1].presentation[0]
-        cinfo, = canvas.get_connections(handle=flows[2].presentation[0].head)
+        (cinfo,) = canvas.get_connections(handle=flows[2].presentation[0].head)
         assert cinfo.connected is actions[1].presentation[0]
 
         # Final element:
         assert actions[2].incoming[0] is flows[0]
         assert actions[2].incoming[1] is flows[2]
 
-        cinfo, = canvas.get_connections(handle=flows[0].presentation[0].tail)
+        (cinfo,) = canvas.get_connections(handle=flows[0].presentation[0].tail)
         assert cinfo.connected is actions[2].presentation[0]
-        cinfo, = canvas.get_connections(handle=flows[2].presentation[0].tail)
+        (cinfo,) = canvas.get_connections(handle=flows[2].presentation[0].tail)
         assert cinfo.connected is actions[2].presentation[0]
 
         # Test the parent-child connectivity
         for a in actions:
-            p, = a.inPartition
+            (p,) = a.inPartition
             assert p
             assert canvas.get_parent(a.presentation[0])
             assert canvas.get_parent(a.presentation[0]) is p.presentation[0]
