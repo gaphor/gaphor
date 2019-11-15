@@ -1,18 +1,17 @@
 """The element editor is a utility window used for editing elements."""
 
 import logging
-
 from typing import Optional
 
 from gi.repository import Gtk
 
+from gaphor.abc import ActionProvider
+from gaphor.core import action, event_handler, primary, translate
+from gaphor.diagram.propertypages import PropertyPages
+from gaphor.ui.abc import UIComponent
+from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Presentation
 from gaphor.UML.event import AssociationUpdated
-from gaphor.core import _, primary, event_handler, action
-from gaphor.abc import ActionProvider
-from gaphor.ui.abc import UIComponent
-from gaphor.diagram.propertypages import PropertyPages
-from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
 
@@ -33,7 +32,9 @@ def undo_buttons():
     box.get_style_context().add_class("linked")
     box.pack_start(
         icon_button(
-            "edit-undo-symbolic", "win.edit-undo", _("Undo") + f" ({primary()}+Z)"
+            "edit-undo-symbolic",
+            "win.edit-undo",
+            translate("Undo") + f" ({primary()}+Z)",
         ),
         False,
         False,
@@ -41,7 +42,9 @@ def undo_buttons():
     )
     box.pack_start(
         icon_button(
-            "edit-redo-symbolic", "win.edit-redo", _("Redo") + f" ({primary()}+Shift+Z)"
+            "edit-redo-symbolic",
+            "win.edit-redo",
+            translate("Redo") + f" ({primary()}+Shift+Z)",
         ),
         False,
         True,
@@ -56,7 +59,9 @@ def zoom_buttons():
     box.get_style_context().add_class("linked")
     box.pack_start(
         icon_button(
-            "zoom-in-symbolic", "diagram.zoom-in", _("Zoom in") + f" ({primary()}++)"
+            "zoom-in-symbolic",
+            "diagram.zoom-in",
+            translate("Zoom in") + f" ({primary()}++)",
         ),
         False,
         False,
@@ -66,7 +71,7 @@ def zoom_buttons():
         icon_button(
             "zoom-original-symbolic",
             "diagram.zoom-100",
-            _("Zoom 100%") + f" ({primary()}+0)",
+            translate("Zoom 100%") + f" ({primary()}+0)",
         ),
         False,
         False,
@@ -74,7 +79,9 @@ def zoom_buttons():
     )
     box.pack_start(
         icon_button(
-            "zoom-out-symbolic", "diagram.zoom-out", _("Zoom out") + f" ({primary()}+-)"
+            "zoom-out-symbolic",
+            "diagram.zoom-out",
+            translate("Zoom out") + f" ({primary()}+-)",
         ),
         False,
         False,
@@ -89,7 +96,7 @@ class ElementEditor(UIComponent, ActionProvider):
     It will display the properties of the currently selected element in the
     diagram."""
 
-    title = _("Element Editor")
+    title = translate("Element Editor")
     size = (275, -1)
 
     def __init__(self, event_manager, element_factory, diagrams):
@@ -101,7 +108,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self.diagrams = diagrams
         self.vbox: Optional[Gtk.Box] = None
         self._current_item = None
-        self._expanded_pages = {_("Properties"): True}
+        self._expanded_pages = {translate("Properties"): True}
 
     def open(self):
         """Display the ElementEditor pane."""
@@ -118,7 +125,7 @@ class ElementEditor(UIComponent, ActionProvider):
         vbox.pack_start(sep, False, False, 0)
         sep.show()
 
-        label = Gtk.Label.new(_("Element Editor"))
+        label = Gtk.Label.new(translate("Element Editor"))
         vbox.pack_start(label, False, False, 0)
         label.show()
 
@@ -200,7 +207,7 @@ class ElementEditor(UIComponent, ActionProvider):
                     expander.connect_after("activate", self.on_expand, name)
                     self.vbox.pack_start(expander, False, True, 0)
                 page.show_all()
-            except Exception as e:
+            except Exception:
                 log.error(
                     "Could not construct property page for " + name, exc_info=True
                 )
@@ -243,7 +250,7 @@ class ElementEditor(UIComponent, ActionProvider):
     @event_handler(AssociationUpdated)
     def _element_changed(self, event):
         element = event.element
-        if event.property is Presentation.subject:  # type: ignore[misc]
+        if event.property is Presentation.subject:  # type: ignore[misc] # noqa: F821
             if element is self._current_item:
                 self.clear_pages()
                 self.create_pages(self._current_item)

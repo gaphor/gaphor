@@ -18,12 +18,13 @@ type of a dependency in automatic way.
 import ast
 
 import gaphas
+
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.classes.interface import Folded, InterfacePort
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import Text
 from gaphor.diagram.support import represents
-from gaphor.diagram.classes.interface import Folded, InterfacePort
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Dependency)

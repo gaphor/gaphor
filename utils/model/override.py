@@ -8,7 +8,6 @@ This is a simple rip-off of the override script used in PyGTK.
 
 import re
 
-
 OVERRIDE_RE = re.compile(
     r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],\"]+))?$"
 )

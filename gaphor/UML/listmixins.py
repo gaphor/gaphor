@@ -14,7 +14,6 @@ __all__ = ["querymixin", "recursemixin"]
 
 from typing import Callable, List, TypeVar
 
-
 T = TypeVar("T")
 
 
@@ -91,7 +90,7 @@ class querymixin:
     def __getitem__(self, key):
         try:
             # See if the list can deal with it (don't change default behaviour)
-            return super().__getitem__(key)  # type: ignore[misc]
+            return super().__getitem__(key)  # type: ignore[misc] # noqa: F821
         except TypeError:
             # Nope, try our matcher trick
             if isinstance(key, tuple):
@@ -99,8 +98,8 @@ class querymixin:
             else:
                 remainder = None
 
-            matched = list(filter(matcher(key), self))  # type: ignore[call-overload]
-            new_list = type(self)(matched)  # type: ignore[call-arg]
+            matched = list(filter(matcher(key), self))  # type: ignore[call-overload] # noqa: F821
+            new_list = type(self)(matched)  # type: ignore[call-arg] # noqa: F821
             return new_list.__getitem__(*remainder) if remainder else new_list
 
 
@@ -253,4 +252,4 @@ class recursemixin:
         if key == self._recursemixin_trigger:
             return self.proxy_class()(self)
         else:
-            return super().__getitem__(key)  # type: ignore[misc]
+            return super().__getitem__(key)  # type: ignore[misc] # noqa: F821

@@ -1,6 +1,6 @@
 from gaphor.core import transactional
-from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
 from gaphor.diagram.actions.activitynodes import ForkNodeItem
+from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
 
 
 @InlineEditor.register(ForkNodeItem)

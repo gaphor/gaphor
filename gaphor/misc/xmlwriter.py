@@ -1,7 +1,6 @@
-from typing import Dict, List, Tuple
-
 import sys
 import xml.sax.handler
+from typing import Dict, List, Tuple
 from xml.sax.saxutils import escape, quoteattr
 
 # See whether the xmlcharrefreplace error handler is

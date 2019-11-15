@@ -2,12 +2,12 @@
 Test transition item and state vertices connections.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.states.state import StateItem
 from gaphor.diagram.states.finalstate import FinalStateItem
-from gaphor.diagram.states.transition import TransitionItem
 from gaphor.diagram.states.pseudostates import InitialPseudostateItem
+from gaphor.diagram.states.state import StateItem
+from gaphor.diagram.states.transition import TransitionItem
+from gaphor.tests import TestCase
 
 
 class TransitionConnectorTestCase(TestCase):
@@ -126,7 +126,7 @@ class TransitionConnectorTestCase(TestCase):
         """Test transition and initial pseudostate disconnection
         """
         v1 = self.create(InitialPseudostateItem, UML.Pseudostate)
-        v2 = self.create(StateItem, UML.State)
+        self.create(StateItem, UML.State)
 
         t = self.create(TransitionItem)
         assert t.subject is None

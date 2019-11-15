@@ -2,21 +2,20 @@
 Activity control nodes.
 """
 
-import math
 import ast
+import math
 
-from gaphas.util import path_ellipse
-from gaphas.state import observed, reversible_property
-from gaphas.item import Handle, Item, LinePort
 from gaphas.constraint import EqualsConstraint, LessThanConstraint
 from gaphas.geometry import Rectangle, distance_line_point
+from gaphas.item import Handle, Item, LinePort
+from gaphas.state import observed, reversible_property
+from gaphas.util import path_ellipse
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.support import represents
 from gaphor.diagram.shapes import Box, EditableText, IconBox, Text
-
+from gaphor.diagram.support import represents
+from gaphor.UML.modelfactory import stereotypes_str
 
 DEFAULT_JOIN_SPEC = "and"
 

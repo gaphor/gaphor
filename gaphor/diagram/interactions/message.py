@@ -46,13 +46,13 @@ operation information in message's name.
 See also ``lifeline`` module documentation.
 """
 
-from math import pi, atan2
+from math import atan2, pi
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.text import middle_segment
+from gaphor.UML.modelfactory import stereotypes_str
 
 PI_2 = pi / 2
 

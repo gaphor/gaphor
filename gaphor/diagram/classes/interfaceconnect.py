@@ -7,11 +7,11 @@ for details.
 """
 
 
-from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.classes.classconnect import DependencyConnect, ImplementationConnect
-from gaphor.diagram.classes.interface import InterfaceItem, Folded
-from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.implementation import ImplementationItem
+from gaphor.diagram.classes.interface import Folded, InterfaceItem
+from gaphor.diagram.connectors import IConnect
 
 
 @IConnect.register(InterfaceItem, ImplementationItem)

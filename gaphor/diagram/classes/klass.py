@@ -3,8 +3,8 @@ import logging
 from gaphor import UML
 from gaphor.diagram.classes.stereotype import stereotype_compartments
 from gaphor.diagram.presentation import (
-    ElementPresentation,
     Classified,
+    ElementPresentation,
     from_package_str,
 )
 from gaphor.diagram.shapes import (
@@ -14,15 +14,14 @@ from gaphor.diagram.shapes import (
     draw_border,
     draw_top_separator,
 )
+from gaphor.diagram.support import represents
 from gaphor.diagram.text import (
-    TextAlign,
-    VerticalAlign,
     FontStyle,
     FontWeight,
+    TextAlign,
     TextDecoration,
+    VerticalAlign,
 )
-from gaphor.diagram.support import represents
-
 
 log = logging.getLogger(__name__)
 

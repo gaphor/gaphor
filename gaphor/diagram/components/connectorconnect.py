@@ -6,11 +6,12 @@ Implemented using interface item in assembly connector mode, see
 """
 
 import operator
+
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect, AbstractConnect
+from gaphor.diagram.classes.interface import Folded, InterfaceItem
 from gaphor.diagram.components.component import ComponentItem
 from gaphor.diagram.components.connector import ConnectorItem
-from gaphor.diagram.classes.interface import InterfaceItem, Folded
+from gaphor.diagram.connectors import AbstractConnect, IConnect
 
 
 class ConnectorConnectBase(AbstractConnect):
@@ -121,7 +122,6 @@ class ConnectorConnectBase(AbstractConnect):
         super().connect(handle, port)
 
         line = self.line
-        canvas = line.canvas
 
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
@@ -178,7 +178,7 @@ class ConnectorConnectBase(AbstractConnect):
             for ci in connections:
                 c = self.get_component(ci.item)
                 self.drop_uml(ci.item, c)
-                line.request_update(matrix=False)  # type: ignore[call-arg]
+                line.request_update(matrix=False)  # type: ignore[call-arg] # noqa: F821
             connector.unlink()
         else:
             c = self.get_component(line)

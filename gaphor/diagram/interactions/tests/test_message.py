@@ -11,8 +11,7 @@ class MessageTestCase(TestCase):
     def test_message_persistence(self):
         """Test message saving/loading
         """
-        factory = self.element_factory
-        item = self.create(MessageItem, UML.Message)
+        self.create(MessageItem, UML.Message)
 
         data = self.save()
         self.load(data)

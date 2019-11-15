@@ -3,9 +3,9 @@ A registry for components (e.g. services) and event handling.
 """
 
 from typing import Iterator, Set, Tuple, Type, TypeVar
+
 from gaphor.abc import Service
 from gaphor.application import ComponentLookupError
-
 
 T = TypeVar("T", bound=Service)
 
@@ -25,13 +25,13 @@ class ComponentRegistry(Service):
         """Obtain a service used by Gaphor by name.
         E.g. service("element_factory")
         """
-        return self.get(Service, name)  # type: ignore[misc]
+        return self.get(Service, name)  # type: ignore[misc] # noqa: F821
 
     def register(self, component: object, name: str):
         self._comp.add((component, name))
 
     def unregister(self, component: object):
-        self._comp = {(c, n) for c, n in self._comp if not c is component}
+        self._comp = {(c, n) for c, n in self._comp if c is not component}
 
     def get(self, base: Type[T], name: str) -> T:
         found = {(c, n) for c, n in self._comp if isinstance(c, base) and n == name}

@@ -3,20 +3,20 @@ Test handle tool functionality.
 """
 
 import unittest
-import pytest
 
-from gaphas.aspect import Connector, ConnectionSink
+import pytest
+from gaphas.aspect import ConnectionSink, Connector
 from gi.repository import Gdk, Gtk
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.diagram.usecases.actor import ActorItem
+from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
-from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.usecases.actor import ActorItem
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.ui.event import DiagramOpened
-from gaphor.ui.abc import UIComponent
 
 
 @pytest.fixture

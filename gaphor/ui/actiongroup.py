@@ -1,6 +1,7 @@
 from typing import NamedTuple
 
-from gi.repository import GLib, Gio, Gtk
+from gi.repository import Gio, GLib, Gtk
+
 from gaphor.abc import ActionProvider
 
 

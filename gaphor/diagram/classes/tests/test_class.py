@@ -3,9 +3,10 @@ Test classes.
 """
 
 from gaphas.canvas import instant_cairo_context
+
 from gaphor import UML
-from gaphor.tests.testcase import TestCase
 from gaphor.diagram.classes.klass import ClassItem
+from gaphor.tests.testcase import TestCase
 
 
 def compartments(item):

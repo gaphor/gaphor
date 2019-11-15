@@ -7,16 +7,15 @@ gaphor.adapter package.
 
 from __future__ import annotations
 
-from typing import List, Optional, Type, TypeVar, Union, TYPE_CHECKING
-from gaphor.UML.properties import association, redefine, relation
+from typing import TYPE_CHECKING, List, Optional, Type, TypeVar, Union
 
 from gaphas.canvas import Connection
 from gaphas.connector import Handle, Port
-from generic.multidispatch import multidispatch, FunctionDispatcher
+from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
-
+from gaphor.UML.properties import association, redefine, relation
 
 T = TypeVar("T", bound=UML.Element)
 
@@ -114,7 +113,7 @@ class AbstractConnect(ConnectBase):
         assert self.canvas
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
-            return cinfo.connected  # type: ignore[no-any-return]
+            return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
         return None
 
     def get_connected_port(self, handle: Handle) -> Optional[Port]:
@@ -206,10 +205,10 @@ class UnaryRelationshipConnect(AbstractConnect):
 
             gen_head = getattr(gen, head.name)
             try:
-                if not head_subject in gen_head:
+                if head_subject not in gen_head:
                     continue
             except TypeError:
-                if not gen_head is head_subject:
+                if gen_head is not head_subject:
                     continue
 
             # Check for this entry on line.canvas
@@ -355,7 +354,7 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         if hct and oct:
             # Both sides of line are connected => disconnect
-            connections = self.disconnect_connected_items()
+            self.disconnect_connected_items()
             self.disconnect_subject(handle)
 
         super().disconnect(handle)
@@ -371,7 +370,6 @@ class RelationshipConnect(UnaryRelationshipConnect):
         connected to the same element. Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
-        line = self.line
         element = self.element
         connected_to = self.get_connected(opposite)
 

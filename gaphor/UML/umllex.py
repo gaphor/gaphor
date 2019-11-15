@@ -11,6 +11,7 @@ __all__ = ["parse_property", "parse_operation"]
 
 import re
 from functools import singledispatch
+
 import gaphor.UML.uml2 as uml2
 
 
@@ -159,7 +160,7 @@ def parse_attribute(el: uml2.Property, s: str) -> None:
             el.defaultValue = None
     else:
         g = m.group
-        create = el.model.create
+        el.model.create
         _set_visibility(el, g("vis"))
         el.isDerived = g("derived") and True or False
         el.name = g("name")
@@ -167,13 +168,6 @@ def parse_attribute(el: uml2.Property, s: str) -> None:
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
         el.defaultValue = g("default")
-        # Skip tags: should do something with stereotypes?
-        # tags = g('tags')
-        # if tags:
-        #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(UML.LiteralSpecification)
-        #        tv.value = t
-        #        el.taggedValue = tv
 
 
 def parse_association_end(el: uml2.Property, s: str) -> None:
@@ -182,7 +176,7 @@ def parse_association_end(el: uml2.Property, s: str) -> None:
     two strings. It is automatically figured out which string is fed to the
     parser.
     """
-    create = el.model.create
+    el.model.create
 
     # if no name, then clear as there could be some garbage
     # due to previous parsing (i.e. '[1'
@@ -200,12 +194,6 @@ def parse_association_end(el: uml2.Property, s: str) -> None:
         g = m.group
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
-        # tags = g('tags')
-        # if tags:
-        #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(UML.LiteralSpecification)
-        #        tv.value = t
-        #        el.taggedValue = tv
     else:
         m = association_end_name_pat.match(s)
         g = m.group
@@ -225,15 +213,6 @@ def parse_association_end(el: uml2.Property, s: str) -> None:
                 if not g("mult_l"):
                     el.lowerValue = None
                 el.upperValue = g("mult_u")
-
-            # tags = g('tags')
-            # if tags:
-            #    while el.taggedValue:
-            #        el.taggedValue[0].unlink()
-            #    for t in map(str.strip, tags.split(',')):
-            #        tv = create(UML.LiteralSpecification)
-            #        tv.value = t
-            #        el.taggedValue = tv
 
 
 @parse.register(uml2.Property)
@@ -268,13 +247,6 @@ def parse_operation(el: uml2.Operation, s: str) -> None:
         p.typeValue = g("type")
         p.lowerValue = g("mult_l")
         p.upperValue = g("mult_u")
-        # FIXME: Maybe add to Operation.ownedRule?
-        # tags = g('tags')
-        # if tags:
-        #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(UML.LiteralSpecification)
-        #        tv.value = t
-        #        p.taggedValue = tv
 
         pindex = 0
         params = g("params")
@@ -293,12 +265,6 @@ def parse_operation(el: uml2.Operation, s: str) -> None:
             p.lowerValue = g("mult_l")
             p.upperValue = g("mult_u")
             p.defaultValue = g("default")
-            # tags = g('tags')
-            # if tags:
-            #    for t in map(str.strip, tags.split(',')):
-            #        tv = create(UML.LiteralSpecification)
-            #        tv.value = t
-            #        p.taggedValue = tv
             el.formalParameter = p
 
             # Do the next parameter:

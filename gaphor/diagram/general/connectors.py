@@ -5,11 +5,10 @@ Connect comments.
 import logging
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.diagram.connectors import AbstractConnect, IConnect
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
-from gaphor.diagram.connectors import IConnect, AbstractConnect
-
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 logger = logging.getLogger(__name__)
 

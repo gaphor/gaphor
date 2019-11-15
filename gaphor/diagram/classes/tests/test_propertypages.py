@@ -1,9 +1,9 @@
 from gi.repository import Gtk
 
-from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.classes import ClassItem
 from gaphor.diagram.classes.classespropertypages import ClassAttributes
+from gaphor.tests import TestCase
 
 
 class ClassPropertyPagesTestCase(TestCase):

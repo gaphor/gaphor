@@ -10,217 +10,266 @@ from typing import Optional, Sequence, Tuple
 
 from gaphas.item import SE
 
-from gaphor import UML
-from gaphor.UML.event import DiagramItemCreated
-from gaphor.core import _
-from gaphor import diagram
+from gaphor import UML, diagram
+from gaphor.core import translate
 from gaphor.ui.diagramtools import (
-    TransactionalToolChain,
-    PlacementTool,
-    GroupPlacementTool,
     DefaultTool,
+    GroupPlacementTool,
+    PlacementTool,
+    TransactionalToolChain,
 )
+from gaphor.UML.event import DiagramItemCreated
 
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
 TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[Tuple[str, str, str, Optional[str]]]]] = (
     (
-        _("General"),
+        translate("General"),
         (
-            ("toolbox-pointer", _("Pointer"), "gaphor-pointer-symbolic", "Escape"),
-            ("toolbox-line", _("Line"), "gaphor-line-symbolic", "l"),
-            ("toolbox-box", _("Box"), "gaphor-box-symbolic", "b"),
-            ("toolbox-ellipse", _("Ellipse"), "gaphor-ellipse-symbolic", "e"),
-            ("toolbox-comment", _("Comment"), "gaphor-comment-symbolic", "k"),
+            (
+                "toolbox-pointer",
+                translate("Pointer"),
+                "gaphor-pointer-symbolic",
+                "Escape",
+            ),
+            ("toolbox-line", translate("Line"), "gaphor-line-symbolic", "l"),
+            ("toolbox-box", translate("Box"), "gaphor-box-symbolic", "b"),
+            ("toolbox-ellipse", translate("Ellipse"), "gaphor-ellipse-symbolic", "e"),
+            ("toolbox-comment", translate("Comment"), "gaphor-comment-symbolic", "k"),
             (
                 "toolbox-comment-line",
-                _("Comment line"),
+                translate("Comment line"),
                 "gaphor-comment-line-symbolic",
                 "<Shift>K",
             ),
         ),
     ),
     (
-        _("Classes"),
+        translate("Classes"),
         (
-            ("toolbox-class", _("Class"), "gaphor-class-symbolic", "c"),
-            ("toolbox-interface", _("Interface"), "gaphor-interface-symbolic", "i"),
-            ("toolbox-package", _("Package"), "gaphor-package-symbolic", "p"),
+            ("toolbox-class", translate("Class"), "gaphor-class-symbolic", "c"),
+            (
+                "toolbox-interface",
+                translate("Interface"),
+                "gaphor-interface-symbolic",
+                "i",
+            ),
+            ("toolbox-package", translate("Package"), "gaphor-package-symbolic", "p"),
             (
                 "toolbox-association",
-                _("Association"),
+                translate("Association"),
                 "gaphor-association-symbolic",
                 "<Shift>A",
             ),
             (
                 "toolbox-dependency",
-                _("Dependency"),
+                translate("Dependency"),
                 "gaphor-dependency-symbolic",
                 "<Shift>D",
             ),
             (
                 "toolbox-generalization",
-                _("Generalization"),
+                translate("Generalization"),
                 "gaphor-generalization-symbolic",
                 "<Shift>G",
             ),
             (
                 "toolbox-implementation",
-                _("Implementation"),
+                translate("Implementation"),
                 "gaphor-implementation-symbolic",
                 "<Shift>I",
             ),
         ),
     ),
     (
-        _("Components"),
+        translate("Components"),
         (
-            ("toolbox-component", _("Component"), "gaphor-component-symbolic", "o"),
-            ("toolbox-artifact", _("Artifact"), "gaphor-artifact-symbolic", "h"),
-            ("toolbox-node", _("Node"), "gaphor-node-symbolic", "n"),
-            ("toolbox-device", _("Device"), "gaphor-device-symbolic", "d"),
+            (
+                "toolbox-component",
+                translate("Component"),
+                "gaphor-component-symbolic",
+                "o",
+            ),
+            (
+                "toolbox-artifact",
+                translate("Artifact"),
+                "gaphor-artifact-symbolic",
+                "h",
+            ),
+            ("toolbox-node", translate("Node"), "gaphor-node-symbolic", "n"),
+            ("toolbox-device", translate("Device"), "gaphor-device-symbolic", "d"),
             (
                 "toolbox-connector",
-                _("Connector"),
+                translate("Connector"),
                 "gaphor-connector-symbolic",
                 "<Shift>C",
             ),
         ),
     ),
     (
-        _("Actions"),
+        translate("Actions"),
         (
-            ("toolbox-action", _("Action"), "gaphor-action-symbolic", "a"),
+            ("toolbox-action", translate("Action"), "gaphor-action-symbolic", "a"),
             (
                 "toolbox-initial-node",
-                _("Initial node"),
+                translate("Initial node"),
                 "gaphor-initial-node-symbolic",
                 "j",
             ),
             (
                 "toolbox-activity-final-node",
-                _("Activity final node"),
+                translate("Activity final node"),
                 "gaphor-activity-final-node-symbolic",
                 "f",
             ),
             (
                 "toolbox-flow-final-node",
-                _("Flow final node"),
+                translate("Flow final node"),
                 "gaphor-flow-final-node-symbolic",
                 "w",
             ),
             (
                 "toolbox-decision-node",
-                _("Decision/merge node"),
+                translate("Decision/merge node"),
                 "gaphor-decision-node-symbolic",
                 "g",
             ),
             (
                 "toolbox-fork-node",
-                _("Fork/join node"),
+                translate("Fork/join node"),
                 "gaphor-fork-node-symbolic",
                 "<Shift>R",
             ),
             (
                 "toolbox-object-node",
-                _("Object node"),
+                translate("Object node"),
                 "gaphor-object-node-symbolic",
                 "<Shift>O",
             ),
             (
                 "toolbox-partition",
-                _("Partition"),
+                translate("Partition"),
                 "gaphor-partition-symbolic",
                 "<Shift>P",
             ),
             (
                 "toolbox-flow",
-                _("Control/object flow"),
+                translate("Control/object flow"),
                 "gaphor-control-flow-symbolic",
                 "<Shift>F",
             ),
             (
                 "toolbox-send-signal-action",
-                _("Send signal action"),
+                translate("Send signal action"),
                 "gaphor-send-signal-action-symbolic",
                 None,
             ),
             (
                 "toolbox-accept-event-action",
-                _("Accept event action"),
+                translate("Accept event action"),
                 "gaphor-accept-event-action-symbolic",
                 None,
             ),
         ),
     ),
     (
-        _("Interactions"),
+        translate("Interactions"),
         (
-            ("toolbox-lifeline", _("Lifeline"), "gaphor-lifeline-symbolic", "v"),
-            ("toolbox-message", _("Message"), "gaphor-message-symbolic", "M"),
+            (
+                "toolbox-lifeline",
+                translate("Lifeline"),
+                "gaphor-lifeline-symbolic",
+                "v",
+            ),
+            ("toolbox-message", translate("Message"), "gaphor-message-symbolic", "M"),
             (
                 "toolbox-interaction",
-                _("Interaction"),
+                translate("Interaction"),
                 "gaphor-interaction-symbolic",
                 "<Shift>N",
             ),
         ),
     ),
     (
-        _("States"),
+        translate("States"),
         (
-            ("toolbox-state", _("State"), "gaphor-state-symbolic", "s"),
+            ("toolbox-state", translate("State"), "gaphor-state-symbolic", "s"),
             (
                 "toolbox-initial-pseudostate",
-                _("Initial Pseudostate"),
+                translate("Initial Pseudostate"),
                 "gaphor-initial-pseudostate-symbolic",
                 "<Shift>S",
             ),
             (
                 "toolbox-final-state",
-                _("Final State"),
+                translate("Final State"),
                 "gaphor-final-state-symbolic",
                 "x",
             ),
             (
                 "toolbox-history-pseudostate",
-                _("History Pseudostate"),
+                translate("History Pseudostate"),
                 "gaphor-pseudostate-symbolic",
                 "q",
             ),
             (
                 "toolbox-transition",
-                _("Transition"),
+                translate("Transition"),
                 "gaphor-transition-symbolic",
                 "<Shift>T",
             ),
         ),
     ),
     (
-        _("Use Cases"),
+        translate("Use Cases"),
         (
-            ("toolbox-use-case", _("Use case"), "gaphor-use-case-symbolic", "u"),
-            ("toolbox-actor", _("Actor"), "gaphor-actor-symbolic", "t"),
+            (
+                "toolbox-use-case",
+                translate("Use case"),
+                "gaphor-use-case-symbolic",
+                "u",
+            ),
+            ("toolbox-actor", translate("Actor"), "gaphor-actor-symbolic", "t"),
             (
                 "toolbox-use-case-association",
-                _("Association"),
+                translate("Association"),
                 "gaphor-association-symbolic",
                 "<Shift>B",
             ),
-            ("toolbox-include", _("Include"), "gaphor-include-symbolic", "<Shift>U"),
-            ("toolbox-extend", _("Extend"), "gaphor-extend-symbolic", "<Shift>X"),
+            (
+                "toolbox-include",
+                translate("Include"),
+                "gaphor-include-symbolic",
+                "<Shift>U",
+            ),
+            (
+                "toolbox-extend",
+                translate("Extend"),
+                "gaphor-extend-symbolic",
+                "<Shift>X",
+            ),
         ),
     ),
     (
-        _("Profiles"),
+        translate("Profiles"),
         (
-            ("toolbox-profile", _("Profile"), "gaphor-profile-symbolic", "r"),
-            ("toolbox-metaclass", _("Metaclass"), "gaphor-metaclass-symbolic", "m"),
-            ("toolbox-stereotype", _("Stereotype"), "gaphor-stereotype-symbolic", "z"),
+            ("toolbox-profile", translate("Profile"), "gaphor-profile-symbolic", "r"),
+            (
+                "toolbox-metaclass",
+                translate("Metaclass"),
+                "gaphor-metaclass-symbolic",
+                "m",
+            ),
+            (
+                "toolbox-stereotype",
+                translate("Stereotype"),
+                "gaphor-stereotype-symbolic",
+                "z",
+            ),
             (
                 "toolbox-extension",
-                _("Extension"),
+                translate("Extension"),
                 "gaphor-extension-symbolic",
                 "<Shift>E",
             ),
@@ -239,8 +288,8 @@ def tooliter(toolbox_actions):
 
 class DiagramToolbox:
     """
-    Composite class for DiagramPage. 
-    
+    Composite class for DiagramPage.
+
     See diagrampage.py.
     """
 
@@ -279,7 +328,7 @@ class DiagramToolbox:
                 config_func(item)
             return item
 
-        factory_method.item_class = item_class  # type: ignore[attr-defined]
+        factory_method.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
         return factory_method
 
     def _namespace_item_factory(self, item_class, subject_class, name=None):
@@ -298,7 +347,7 @@ class DiagramToolbox:
                 subject.name = f"New{subject_class.__name__}"
             return item
 
-        factory_method.item_class = item_class  # type: ignore[attr-defined]
+        factory_method.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
         return factory_method
 
     def _after_handler(self, new_item):

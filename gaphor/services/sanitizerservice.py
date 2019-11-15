@@ -5,9 +5,9 @@ the model clean and in sync with diagrams.
 
 
 from gaphor import UML
-from gaphor.UML.event import AssociationDeleted, AssociationSet
-from gaphor.core import event_handler
 from gaphor.abc import Service
+from gaphor.core import event_handler
+from gaphor.UML.event import AssociationDeleted, AssociationSet
 
 
 class SanitizerService(Service):

@@ -3,8 +3,8 @@ Tests for grouping functionality in Gaphor.
 """
 
 from gaphor import UML
+from gaphor.diagram.actions import ActionItem, PartitionItem
 from gaphor.tests import TestCase
-from gaphor.diagram.actions import PartitionItem, ActionItem
 
 
 class PartitionGroupTestCase(TestCase):

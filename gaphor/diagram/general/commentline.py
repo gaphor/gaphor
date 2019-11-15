@@ -3,8 +3,8 @@ CommentLine -- A line that connects a comment to another model element.
 
 """
 
-from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.presentation import LinePresentation
 
 
 class CommentLineItem(LinePresentation):

@@ -1,7 +1,8 @@
-from gaphor.tests import TestCase
-from gaphor.diagram.profiles.metaclasspropertypage import MetaclassNamePropertyPage
-from gaphor import UML
 from gi.repository import Gtk
+
+from gaphor import UML
+from gaphor.diagram.profiles.metaclasspropertypage import MetaclassNamePropertyPage
+from gaphor.tests import TestCase
 
 
 class MetaclassPropertyPageTest(TestCase):

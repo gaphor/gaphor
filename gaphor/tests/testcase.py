@@ -5,20 +5,19 @@ Everything is about services so the TestCase can define it's required
 services and start off.
 """
 
-from typing import Type, TypeVar
 import logging
 import unittest
 from io import StringIO
+from typing import Type, TypeVar
 
 from gaphas.aspect import ConnectionSink, Connector
 
+# For DiagramItemConnector aspect:
+import gaphor.ui.diagramtools  # noqa
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.grouping import Group
-
-# For DiagramItemConnector aspect:
-import gaphor.ui.diagramtools  # noqa
 
 T = TypeVar("T")
 

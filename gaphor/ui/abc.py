@@ -1,5 +1,6 @@
 import abc
 from typing import Tuple
+
 from gaphor.abc import Service
 
 

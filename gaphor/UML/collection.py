@@ -3,7 +3,8 @@
 """
 
 import inspect
-from typing import overload, Generic, List, Type, TypeVar, Union
+from typing import Generic, List, Type, TypeVar, Union, overload
+
 from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.listmixins import querymixin, recursemixin
 
@@ -72,11 +73,11 @@ class collection(Generic[T]):
     def __getitem__(self, key: int) -> T:
         ...
 
-    @overload
+    @overload  # noqa: F811
     def __getitem__(self, key: slice) -> List[T]:
         ...
 
-    def __getitem__(self, key: Union[int, slice]):
+    def __getitem__(self, key: Union[int, slice]):  # noqa: F811
         return self.items.__getitem__(key)
 
     def __contains__(self, obj) -> bool:
@@ -92,9 +93,6 @@ class collection(Generic[T]):
 
     def __bool__(self):
         return self.items != []
-
-    # Maintains Python2 Compatibility
-    __nonzero__ = __bool__
 
     def append(self, value: T) -> None:
         if isinstance(value, self.type):
@@ -171,7 +169,7 @@ class collection(Generic[T]):
 
             self.object.handle(AssociationUpdated(self.object, self.property))
             return True
-        except IndexError as ex:
+        except IndexError:
             return False
-        except ValueError as ex:
+        except ValueError:
             return False

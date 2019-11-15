@@ -1,18 +1,17 @@
 #!/usr/bin/python
 
-from gaphor.storage import storage
-import gaphor.UML as UML
-from gaphor.application import Application
-
-from gaphas.painter import Context, ItemPainter
-from gaphas.view import View
-
-import cairo
-
 import optparse
 import os
 import re
 import sys
+
+import cairo
+from gaphas.painter import Context, ItemPainter
+from gaphas.view import View
+
+import gaphor.UML as UML
+from gaphor.application import Application
+from gaphor.storage import storage
 
 
 def pkg2dir(package):

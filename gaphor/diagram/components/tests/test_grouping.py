@@ -1,7 +1,7 @@
 from gaphor import UML
-from gaphor.tests import TestCase
-from gaphor.diagram.components import NodeItem, ComponentItem, ArtifactItem
+from gaphor.diagram.components import ArtifactItem, ComponentItem, NodeItem
 from gaphor.diagram.usecases import UseCaseItem
+from gaphor.tests import TestCase
 
 
 class NodesGroupTestCase(TestCase):
@@ -63,8 +63,8 @@ class NodeComponentGroupTestCase(TestCase):
         n = self.create(NodeItem, UML.Node)
         c = self.create(ComponentItem, UML.Component)
 
-        query = self.group(n, c)
-        query = self.ungroup(n, c)
+        self.group(n, c)
+        self.ungroup(n, c)
 
         assert 0 == len(n.subject.ownedAttribute)
         assert 0 == len(c.subject.ownedAttribute)
@@ -91,8 +91,8 @@ class NodeArtifactGroupTestCase(TestCase):
         n = self.create(NodeItem, UML.Node)
         a = self.create(ArtifactItem, UML.Artifact)
 
-        query = self.group(n, a)
-        query = self.ungroup(n, a)
+        self.group(n, a)
+        self.ungroup(n, a)
 
         assert 0 == len(n.subject.deployment)
         assert 0 == len(self.kindof(UML.Deployment))

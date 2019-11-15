@@ -1,13 +1,14 @@
 import pytest
+
 from gaphor import UML
-from gaphor.UML.elementfactory import ElementFactory
 from gaphor.plugins.xmiexport.exportmodel import XMIExport
+from gaphor.UML.elementfactory import ElementFactory
 
 
 @pytest.fixture
 def element_factory():
     ef = ElementFactory()
-    p = ef.create(UML.Package).name = "package"
+    ef.create(UML.Package).name = "package"
     c1 = ef.create(UML.Class)
     c1.name = "class"
     c2 = ef.create(UML.Class)

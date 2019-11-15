@@ -1,6 +1,6 @@
 import gaphor.UML as UML
-from gaphor.tests.testcase import TestCase
 from gaphor.diagram.actions.objectnode import ObjectNodeItem
+from gaphor.tests.testcase import TestCase
 
 
 class ObjectNodeTestCase(TestCase):

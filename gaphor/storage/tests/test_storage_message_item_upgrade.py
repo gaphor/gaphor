@@ -1,11 +1,11 @@
-import pytest
 import importlib_metadata
+import pytest
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.storage.storage import load_elements
-from gaphor.storage.parser import parse
 from gaphor.storage import diagramitems
+from gaphor.storage.parser import parse
+from gaphor.storage.storage import load_elements
 
 
 @pytest.fixture

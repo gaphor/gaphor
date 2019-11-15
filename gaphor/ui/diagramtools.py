@@ -11,24 +11,16 @@ import logging
 
 from gaphas.aspect import Connector, InMotion, ItemConnector
 from gaphas.guide import GuidedItemInMotion
-from gaphas.tool import (
-    Tool,
-    PlacementTool as _PlacementTool,
-    ToolChain,
-    HoverTool,
-    ItemTool,
-    RubberbandTool,
-    ConnectHandleTool,
-)
-from gi.repository import Gdk
-from gi.repository import Gtk
+from gaphas.tool import ConnectHandleTool, HoverTool, ItemTool
+from gaphas.tool import PlacementTool as _PlacementTool
+from gaphas.tool import RubberbandTool, Tool, ToolChain
+from gi.repository import Gdk, Gtk
 
-from gaphor.diagram.presentation import LinePresentation
 from gaphor.core import Transaction, transactional
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
-from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 # cursor to indicate grouping
 IN_CURSOR_TYPE = Gdk.CursorType.DIAMOND_CROSS
@@ -91,7 +83,7 @@ class DiagramItemConnector(ItemConnector):
                 adapter = IConnect(sink.item, item)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
-        except Exception as e:
+        except Exception:
             log.error("Error during connect", exc_info=True)
 
     @transactional
@@ -279,7 +271,6 @@ class GroupPlacementTool(PlacementTool):
             if parent and item and adapter:
                 adapter.group()
 
-                canvas = view.canvas
                 parent.request_update(matrix=False)
         finally:
             self._parent = None

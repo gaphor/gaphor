@@ -8,8 +8,8 @@ from io import StringIO
 import importlib_metadata
 
 from gaphor import UML
-from gaphor.diagram.general import CommentItem
 from gaphor.diagram.classes import AssociationItem, ClassItem, InterfaceItem
+from gaphor.diagram.general import CommentItem
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage
 from gaphor.tests.testcase import TestCase
@@ -164,7 +164,7 @@ class StorageTestCase(TestCase):
         """
         self.element_factory.create(UML.Package)
         self.create(CommentItem, UML.Comment)
-        c1 = self.create(ClassItem, UML.Class)
+        self.create(ClassItem, UML.Class)
 
         a = self.diagram.create(AssociationItem)
         a.handles()[0].pos = (10, 20)
@@ -212,16 +212,13 @@ class StorageTestCase(TestCase):
         a = self.create(AssociationItem)
 
         self.connect(a, a.head, c1)
-        head_pos = a.head.pos
-
         self.connect(a, a.tail, c2)
-        tail_pos = a.tail.pos
 
         self.diagram.canvas.update_now()
 
         assert a.head.pos.y == 0, a.head.pos
         assert a.tail.pos.x == 10, a.tail.pos
-        # assert a.tail.y == 200, a.tail.pos
+        assert a.tail.pos.y == 200, a.tail.pos
         assert a.subject
 
         fd = StringIO()
@@ -247,8 +244,7 @@ class StorageTestCase(TestCase):
         assert cinfo_head.connected is not None
         cinfo_tail = a.canvas.get_connection(a.tail)
         assert cinfo_tail.connected is not None
-        assert not cinfo_head.connected is cinfo_tail.connected
-        # assert a.head_end._name
+        assert cinfo_head.connected is not cinfo_tail.connected
 
     def test_load_save(self):
 

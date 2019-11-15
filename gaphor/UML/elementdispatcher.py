@@ -1,15 +1,16 @@
 """
 """
 
-from typing import Callable, Dict, List, Optional, Set, Tuple
 from logging import getLogger
+from typing import Callable, Dict, List, Optional, Set, Tuple
+
 from gaphor.core import event_handler
 from gaphor.UML import uml2
 from gaphor.UML.event import (
-    ElementUpdated,
-    AssociationSet,
     AssociationAdded,
     AssociationDeleted,
+    AssociationSet,
+    ElementUpdated,
     ModelReady,
 )
 from gaphor.UML.properties import umlproperty

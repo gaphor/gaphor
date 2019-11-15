@@ -17,8 +17,8 @@
 # sys.path.insert(0, os.path.abspath('.'))
 from pathlib import Path
 
-from tomlkit import parse
 from recommonmark.transform import AutoStructify
+from tomlkit import parse
 
 # -- Project information -----------------------------------------------------
 
@@ -192,6 +192,7 @@ epub_exclude_files = ["search.html"]
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {"https://docs.python.org/": None}
+
 
 # AutoStructify for Recommonmark
 def setup(app):

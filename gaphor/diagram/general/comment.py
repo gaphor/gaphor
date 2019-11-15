@@ -5,10 +5,9 @@ CommentItem diagram item
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation
-
 from gaphor.diagram.shapes import Box, Text
-from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.diagram.support import represents
+from gaphor.diagram.text import TextAlign, VerticalAlign
 
 
 @represents(UML.Comment)

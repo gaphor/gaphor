@@ -1,4 +1,5 @@
 from gi.repository import Gio
+
 from gaphor.abc import Service
 from gaphor.ui.actiongroup import iter_actions
 

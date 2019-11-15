@@ -9,8 +9,7 @@ from distutils.core import Command
 from distutils.dep_util import newer
 from distutils.dir_util import mkpath
 
-from utils.i18n import msgfmt
-from utils.i18n import LINGUAS
+from utils.i18n import LINGUAS, msgfmt
 
 
 class build_mo(Command):
@@ -61,8 +60,6 @@ def po_to_mo(all_linguas, output_dir, force=False):
 
 
 if __name__ == "__main__":
-    from utils.i18n import LINGUAS
-
     output_dir = os.path.join("gaphor", "data", "locale")
     po_to_mo(LINGUAS, output_dir)
 

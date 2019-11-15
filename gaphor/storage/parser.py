@@ -32,12 +32,11 @@ takes a long time. The yielded values are the percentage of the file read.
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Union, Tuple, IO
-import os
 import io
-from xml.sax import handler
+import os
 from collections import OrderedDict
-
+from typing import IO, Dict, List, Optional, Tuple, Union
+from xml.sax import handler
 
 __all__ = ["parse", "ParserException"]
 
@@ -59,13 +58,13 @@ class base:
     def __getitem__(self, key):
         try:
             return self.values[key]
-        except:
+        except KeyError:
             return self.references[key]
 
     def get(self, key):
         try:
             return self.__getitem__(key)
-        except:
+        except KeyError:
             return None
 
 
