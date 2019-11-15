@@ -35,13 +35,10 @@ jobs:
     steps:
       - script: |
           choco install msys2 --params="/InstallDir:%CD:~0,2%\msys64 /NoUpdate /NoPath"
-        displayName: Install MSYS2
-
-      - script: |
           set PATH=%CD:~0,2%\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
           %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syyuu
           %CD:~0,2%\msys64\usr\bin\pacman --noconfirm -Syuu
-        displayName: Update MSYS2
+        displayName: Install MSYS2
 
       - script: |
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
