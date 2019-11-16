@@ -1,135 +1,65 @@
 # Undo Manager
 
-Fine grained undo: undo specific properties.
+Undo is implemented in order to erase the last change done, reverting it to an
+older state or reversing the command that was done to the model being edited.
+With the possibility of undo, users can explore and work without fear of making
+mistakes, because they can easily be undone.
 
-Add undo-operation, e.g. Item.request_update() should be executed as
-part of an undo action. Such actions are normally called after the
-properties have been set right though. This is not a problem for idle
-tasks, but for directly executed tasks it is.
+Gaphor makes use of the [undo
+system](https://gaphas.readthedocs.io/en/latest/undo.html) in Gaphas, which is
+Gaphor's Canvas widget. Gaphas implements this undo system by storing the
+reverse operations to an undo list. For example, if you add a new item to the
+screen, it will save the remove operation to the undo list. If undo is then
+called, Gaphas will then remove the item from the screen that was added.
 
-Should only need to save the originals, values calculated, e.g. during
-an update shouldn't have to be calculated -> use undo-operations to
-trigger updates.
+## Overview of Transactions
 
-To update:
+Gaphor adds on to what Gaphas provides with an undo service, called the Undo
+Manager. The Undo Manager works transactionally. This means that if something is
+being updated by the user in a model, each change is divided into operations
+called transactions. Each operation must succeed or fail as a complete unit. If
+the transaction fails in the middle, it is rolled back. In Gaphor this is
+achieved by the `transaction` module, which provides a decorator called
+`@transactional`. Methods then make use of this decorator, and the undo data is
+stored in a transaction once the method is called. For example, pasting data in
+the model using the `copyservice` module and setting a value on an object's
+property page both create new transactions.
 
-Handle:
+When transactions take place, they also emit event notifications on the key
+transaction milestones so that other services can make use of the events. The
+event notifications are for the begin of the transaction, and the commit of the
+transaction if it is successful or the rollback of the transaction if it fails.
+Please see the next sections for more detail on how these event notifications
+work during a transaction.
 
-    x, y (solvable) connectable (attr) visible (attr) movable (attr)
-    connection status (solver?)
+## Start of a Transaction
 
-Item:
+1. A `Transaction` object is created.
+2. `TransactionBegin` event is emitted.
+3. The `UndoManager` instantiates a new `ActionStack` which is the transaction
+   object, and adds the undo action to the stack. 
 
-    matrix canvas is managed from Canvas
+Nested transactions are supported to allow a transaction to be added
+inside of another transaction that is already in progress.
 
-Element:
+## Successful Transaction
 
-    handles width, height min_width, min_height (solvable?)
+1.  A `TransactionCommit` event is emitted
+2.  The `UndoManager` closes and stores the transaction.
 
-Line:
+## Failed Transaction
 
-    handles line_width fuzzyness (attr) orthogonal (boolean) horizontal
-    (boolean)
-
-Canvas:
-
-:   
-
-Tree:
-
-    add() remove()
-
-    request_update() (should be performed as part of undo action when
-    called)
-
-Solver (?):
-
-    add_constraint() remove_constraint() Variable state
-
-In Gaphor, connecting two diagram items is considered an atomic task,
-performed by a IConnect adapter. This operation results in a set of
-primitive tasks (properties set and a constraint created).
-
-For methods, it should be possible to create a decorator (@reversible)
-that schedules a method with the same signature as the calling
-operation, but with the inverse effect (e.g. the gaphas.tree module):
-
-    class Tree:
-
-      @reversable(lambda s, n, p: s.remove(n))
-      def add(self, node, parent=None):
-          ... add
-
-      @reversable(add, self='self', node='node', parent='self.get_parent(node)')
-      def remove(self, node):
-          ... remove
-
-Okay, so the second case is tougher...
-
-So what we did: Add a StateManager to gaphas. All changes are sent to
-the statemanager. Gaphor should implement its own state manager.
-
--   all state changes can easily be recorded
--   fix it in one place
--   reusable throughout Gaphas and subtypes.
-
-## Transactions
-
-Gaphor's Undo manager works transactionally. Typically, methods can be
-decorated with @transactional and undo data is stored in the current
-transaction. A new tx is created when none exists.
-
-Although undo functionality is at the core of Gaphor (diagram items and
-model elements have been adapted to provide proper undo information),
-the UndoManager itself is just a service.
-
-Transaction support though is a real core functionality. By letting
-elements and items emit event notifications on important changed other
-(yet to be defined) services can take benefit of those events. The UML
-module already works this way. Gaphas (the Gaphor canvas) also emits
-state changes.
-
-When state changes happen in model elements and diagram items an event
-is emitted. Those events are handled by special handlers that produce
-\"reverse-events\". Reverse events are functions that perform exactly
-the opposite operation. Those functions are stored in a list (which
-technically is the Transaction). When an undo request is done the list
-is executed in LIFO order.
-
-To start a transaction:
-
-1.  A Transaction object has been created.
-2.  This results in the emission of a TransactionBegin event.
-3.  The TransactionBegin event is a trigger for the UndoManager to start
-    listening for IUndoEvent actions.
-
-Now, that should be done when a model element or diagram item sends a
-state change:
-
-1. The event is handled by the "reverse-handler"
-2. Reverse handler generates a IUndoEvent signal
-3. The signal is received and stored as part of the undo-transaction.
-
-(Maybe step 2 and 3 can be merged, since only one function is not of any
-interest to the rest of the application - creates nasty dependencies)
-
-If nested transaction are created a simple counter is incremented.
-
-When the topmost Transaction is committed:
-
-1.  A TransactionCommit event is emitted
-2.  This triggers the UndoManager to close and store the transaction.
-
-When a transaction is rolled back:
-
-1.  The main transaction is marked for rollback
-2.  When the toplevel tx is rolled back or committed a
+1.  A `TransactionRollback` event is emitted.
     TransactionRollback event is emitted
-3.  This triggers the UndoManager to play back all recorded actions and
-    stop listening.
+2.  The `UndoManager` plays back all the recorded actions and
+    then stops listening.
+
 
 ## References
 
-- [A Framework for Undoing Actions in Collaborative Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)
-- [Undoing Actions in Collaborative Work: Framework and Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)
-- [Implementing a Selective Undo Framework in Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)
+- [A Framework for Undoing Actions in Collaborative
+Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)
+- [Undoing Actions in Collaborative Work: Framework and
+Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)
+- [Implementing a Selective Undo Framework in
+Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)

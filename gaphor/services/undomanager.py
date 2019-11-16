@@ -71,7 +71,7 @@ class ActionStack:
 
 class UndoManagerStateChanged(ServiceEvent):
     """
-    Event class used to send state changes on the ndo Manager.
+    Event class used to send state changes on the Undo Manager.
     """
 
     def __init__(self, service):
@@ -133,7 +133,7 @@ class UndoManager(Service, ActionProvider):
 
     def add_undo_action(self, action):
         """
-        Add an action to undo. An action
+        Add an action to undo.
         """
         if self._current_transaction:
             self._current_transaction.add(action)
