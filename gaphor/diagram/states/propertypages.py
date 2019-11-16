@@ -6,20 +6,22 @@ gaphor.adapter package.
 
 from gi.repository import Gtk
 
-from gaphor.core import _, transactional
 from gaphor import UML
-from gaphor.diagram.states.transition import TransitionItem
-from gaphor.diagram.states.state import StateItem
+from gaphor.core import transactional, translate
 from gaphor.diagram.propertypages import (
-    PropertyPages,
     NamedItemPropertyPage,
+    PropertyPages,
     create_hbox_label,
 )
+from gaphor.diagram.states.state import StateItem
+from gaphor.diagram.states.transition import TransitionItem
 
 
 @PropertyPages.register(TransitionItem)
 class TransitionPropertyPage(NamedItemPropertyPage):
     """Transition property page allows to edit guard specification."""
+
+    subject: UML.Transition
 
     def construct(self):
         page = super().construct()
@@ -29,11 +31,10 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, _("Guard"))
+        hbox = create_hbox_label(self, page, translate("Guard"))
         entry = Gtk.Entry()
         v = subject.guard.specification
         entry.set_text(v if v else "")
-        entry.connect("changed", self._on_guard_change)
         changed_id = entry.connect("changed", self._on_guard_change)
         hbox.pack_start(entry, True, True, 0)
 
@@ -48,9 +49,6 @@ class TransitionPropertyPage(NamedItemPropertyPage):
 
         return page
 
-    def update(self):
-        pass
-
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
@@ -61,6 +59,8 @@ class TransitionPropertyPage(NamedItemPropertyPage):
 class StatePropertyPage(NamedItemPropertyPage):
     """State property page."""
 
+    subject: UML.State
+
     def construct(self):
         page = super().construct()
 
@@ -69,21 +69,21 @@ class StatePropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, _("Entry"))
+        hbox = create_hbox_label(self, page, translate("Entry"))
         entry = Gtk.Entry()
         if subject.entry:
             entry.set_text(subject.entry.name or "")
         entry.connect("changed", self.on_text_change, self.set_entry)
         hbox.pack_start(entry, True, True, 0)
 
-        hbox = create_hbox_label(self, page, _("Exit"))
+        hbox = create_hbox_label(self, page, translate("Exit"))
         entry = Gtk.Entry()
         if subject.exit:
             entry.set_text(subject.exit.name or "")
         entry.connect("changed", self.on_text_change, self.set_exit)
         hbox.pack_start(entry, True, True, 0)
 
-        hbox = create_hbox_label(self, page, _("Do Activity"))
+        hbox = create_hbox_label(self, page, translate("Do Activity"))
         entry = Gtk.Entry()
         if subject.doActivity:
             entry.set_text(self.subject.doActivity.name or "")

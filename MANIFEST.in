@@ -1,3 +1,0 @@
-include LICENSE.txt
-include README.md
-recursive-include gaphor *.py *.png *.xml *.css

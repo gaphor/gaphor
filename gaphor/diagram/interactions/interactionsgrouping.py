@@ -1,4 +1,4 @@
-from gaphor.diagram.grouping import Group, AbstractGroup
+from gaphor.diagram.grouping import AbstractGroup, Group
 from gaphor.diagram.interactions.interaction import InteractionItem
 from gaphor.diagram.interactions.lifeline import LifelineItem
 
@@ -10,6 +10,7 @@ class InteractionLifelineGroup(AbstractGroup):
     """
 
     def group(self):
+        assert self.parent.canvas
         self.parent.subject.lifeline = self.item.subject
         self.parent.canvas.reparent(self.item, self.parent)
 

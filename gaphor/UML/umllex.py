@@ -11,6 +11,7 @@ __all__ = ["parse_property", "parse_operation"]
 
 import re
 from functools import singledispatch
+
 import gaphor.UML.uml2 as uml2
 
 
@@ -123,7 +124,7 @@ parameter_pat = compile(
 lifeline_pat = compile("^" + name_subpat + type_subpat + garbage_subpat)
 
 
-def _set_visibility(el, vis):
+def _set_visibility(el: uml2.Feature, vis: str):
     if vis == "+":
         el.visibility = "public"
     elif vis == "#":
@@ -139,7 +140,7 @@ def _set_visibility(el, vis):
             pass
 
 
-def parse_attribute(el, s):
+def parse_attribute(el: uml2.Property, s: str) -> None:
     """
     Parse string s in the property. Tagged values, multiplicity and stuff
     like that is altered to reflect the data in the property string.
@@ -159,7 +160,7 @@ def parse_attribute(el, s):
             el.defaultValue = None
     else:
         g = m.group
-        create = el.model.create
+        el.model.create
         _set_visibility(el, g("vis"))
         el.isDerived = g("derived") and True or False
         el.name = g("name")
@@ -167,22 +168,15 @@ def parse_attribute(el, s):
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
         el.defaultValue = g("default")
-        # Skip tags: should do something with stereotypes?
-        # tags = g('tags')
-        # if tags:
-        #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(UML.LiteralSpecification)
-        #        tv.value = t
-        #        el.taggedValue = tv
 
 
-def parse_association_end(el, s):
+def parse_association_end(el: uml2.Property, s: str) -> None:
     """
     Parse the text at one end of an association. The association end holds
     two strings. It is automatically figured out which string is fed to the
     parser.
     """
-    create = el.model.create
+    el.model.create
 
     # if no name, then clear as there could be some garbage
     # due to previous parsing (i.e. '[1'
@@ -200,12 +194,6 @@ def parse_association_end(el, s):
         g = m.group
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
-        # tags = g('tags')
-        # if tags:
-        #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(UML.LiteralSpecification)
-        #        tv.value = t
-        #        el.taggedValue = tv
     else:
         m = association_end_name_pat.match(s)
         g = m.group
@@ -226,18 +214,9 @@ def parse_association_end(el, s):
                     el.lowerValue = None
                 el.upperValue = g("mult_u")
 
-            # tags = g('tags')
-            # if tags:
-            #    while el.taggedValue:
-            #        el.taggedValue[0].unlink()
-            #    for t in map(str.strip, tags.split(',')):
-            #        tv = create(UML.LiteralSpecification)
-            #        tv.value = t
-            #        el.taggedValue = tv
-
 
 @parse.register(uml2.Property)
-def parse_property(el, s):
+def parse_property(el: uml2.Property, s: str) -> None:
     if el.association:
         parse_association_end(el, s)
     else:
@@ -245,7 +224,7 @@ def parse_property(el, s):
 
 
 @parse.register(uml2.Operation)
-def parse_operation(el, s):
+def parse_operation(el: uml2.Operation, s: str) -> None:
     """
     Parse string s in the operation. Tagged values, parameters and
     visibility is altered to reflect the data in the operation string.
@@ -268,13 +247,6 @@ def parse_operation(el, s):
         p.typeValue = g("type")
         p.lowerValue = g("mult_l")
         p.upperValue = g("mult_u")
-        # FIXME: Maybe add to Operation.ownedRule?
-        # tags = g('tags')
-        # if tags:
-        #    for t in map(str.strip, tags.split(',')):
-        #        tv = create(UML.LiteralSpecification)
-        #        tv.value = t
-        #        p.taggedValue = tv
 
         pindex = 0
         params = g("params")
@@ -293,12 +265,6 @@ def parse_operation(el, s):
             p.lowerValue = g("mult_l")
             p.upperValue = g("mult_u")
             p.defaultValue = g("default")
-            # tags = g('tags')
-            # if tags:
-            #    for t in map(str.strip, tags.split(',')):
-            #        tv = create(UML.LiteralSpecification)
-            #        tv.value = t
-            #        p.taggedValue = tv
             el.formalParameter = p
 
             # Do the next parameter:
@@ -332,11 +298,11 @@ def parse_lifeline(el: uml2.Lifeline, s: str) -> None:
 def render_lifeline(el: uml2.Lifeline) -> str:
     """
     """
-    return el.name
+    return el.name or ""
 
 
 @parse.register(uml2.NamedElement)
-def parse_namedelement(el, text):
+def parse_namedelement(el: uml2.NamedElement, text: str) -> None:
     """
     Parse named element by simply assigning text to its name.
     """

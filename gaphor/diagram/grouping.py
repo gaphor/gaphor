@@ -17,14 +17,17 @@ to be aware that `AbstractGroup.item` can be null.
 
 from __future__ import annotations
 
-from typing import Type
 import abc
+from typing import TYPE_CHECKING, Type
 
-from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
+from generic.multidispatch import FunctionDispatcher, multidispatch
+
+if TYPE_CHECKING:
+    from gaphor import UML
 
 
 # TODO: I think this should have been called Namespacing or something similar,
-# since that's the modeling concept.
+#   since that's the modeling concept.
 class AbstractGroup(metaclass=abc.ABCMeta):
     """
     Base class for grouping UML objects, i.e.
@@ -39,7 +42,7 @@ class AbstractGroup(metaclass=abc.ABCMeta):
         Item to be grouped.
     """
 
-    def __init__(self, parent: object, item: object) -> None:
+    def __init__(self, parent: UML.Presentation, item: UML.Presentation) -> None:
         self.parent = parent
         self.item = item
 

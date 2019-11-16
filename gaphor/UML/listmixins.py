@@ -12,8 +12,12 @@ See the documentation on the mixins.
 
 __all__ = ["querymixin", "recursemixin"]
 
+from typing import Callable, List, TypeVar
 
-class Matcher:
+T = TypeVar("T")
+
+
+def matcher(expr) -> Callable[[T], bool]:
     """
     Returns True if the expression returns True.
     The context for the expression is the element.
@@ -32,28 +36,29 @@ class Matcher:
 
     If we want to match, ``it`` is used to refer to the subjected object:
 
-    >>> Matcher('it.name=="root"')(a)
+    >>> matcher('it.name=="root"')(a)
     True
-    >>> Matcher('it.b.name=="b"')(a)
+    >>> matcher('it.b.name=="b"')(a)
     True
-    >>> Matcher('it.name=="blah"')(a)
+    >>> matcher('it.name=="blah"')(a)
     False
-    >>> Matcher('it.nonexistent=="root"')(a)
+    >>> matcher('it.nonexistent=="root"')(a)
     False
 
     NOTE: the object ``it`` was introduced since properties (descriptors) can
     not be executed from within a dictionary context.
     """
 
-    def __init__(self, expr):
-        self.expr = compile(expr, "<matcher>", "eval")
+    compiled = compile(expr, "<matcher>", "eval")
 
-    def __call__(self, element):
+    def real_matcher(element: T) -> bool:
         try:
-            return eval(self.expr, {}, {"it": element})
+            return bool(eval(compiled, {}, {"it": element}))
         except (AttributeError, NameError):
             # attribute does not (yet) exist
             return False
+
+    return real_matcher
 
 
 class querymixin:
@@ -84,7 +89,7 @@ class querymixin:
     def __getitem__(self, key):
         try:
             # See if the list can deal with it (don't change default behaviour)
-            return super().__getitem__(key)  # type: ignore
+            return super().__getitem__(key)  # type: ignore[misc] # noqa: F821
         except TypeError:
             # Nope, try our matcher trick
             if isinstance(key, tuple):
@@ -92,12 +97,9 @@ class querymixin:
             else:
                 remainder = None
 
-            matcher = Matcher(key)
-            matched = list(filter(matcher, self))
-            if remainder:
-                return type(self)(matched).__getitem__(*remainder)
-            else:
-                return type(self)(matched)
+            matched = list(filter(matcher(key), self))  # type: ignore[call-overload] # noqa: F821
+            new_list = type(self)(matched)  # type: ignore[call-arg] # noqa: F821
+            return new_list.__getitem__(*remainder) if remainder else new_list
 
 
 def issafeiterable(obj):
@@ -249,4 +251,4 @@ class recursemixin:
         if key == self._recursemixin_trigger:
             return self.proxy_class()(self)
         else:
-            return super().__getitem__(key)  # type: ignore
+            return super().__getitem__(key)  # type: ignore[misc] # noqa: F821

@@ -8,12 +8,12 @@ gaphor.adapter package.
 
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect, RelationshipConnect
-from gaphor.diagram.states.transition import TransitionItem
-from gaphor.diagram.states.state import VertexItem
 from gaphor.diagram.states.pseudostates import (
-    InitialPseudostateItem,
     HistoryPseudostateItem,
+    InitialPseudostateItem,
 )
+from gaphor.diagram.states.state import VertexItem
+from gaphor.diagram.states.transition import TransitionItem
 
 
 class VertexConnect(RelationshipConnect):
@@ -72,9 +72,10 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         Glue to initial pseudostate with transition's head and when there are
         no transitions connected.
         """
+        assert self.canvas
+
         line = self.line
         element = self.element
-        subject = element.subject
 
         # Check if no other items are connected
         connections = self.canvas.get_connections(connected=element)

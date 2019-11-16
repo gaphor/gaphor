@@ -4,8 +4,8 @@ Test pseudostates.
 
 from gaphor import UML
 from gaphor.diagram.states.pseudostates import (
-    InitialPseudostateItem,
     HistoryPseudostateItem,
+    InitialPseudostateItem,
 )
 from gaphor.tests.testcase import TestCase
 

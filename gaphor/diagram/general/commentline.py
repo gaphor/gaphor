@@ -3,8 +3,8 @@ CommentLine -- A line that connects a comment to another model element.
 
 """
 
-from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.presentation import LinePresentation
 
 
 class CommentLineItem(LinePresentation):
@@ -12,6 +12,8 @@ class CommentLineItem(LinePresentation):
         super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
 
     def unlink(self):
+        assert self.canvas
+
         canvas = self.canvas
         c1 = canvas.get_connection(self.head)
         c2 = canvas.get_connection(self.tail)

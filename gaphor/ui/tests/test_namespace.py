@@ -1,8 +1,9 @@
 import pytest
+
+import gaphor.services.componentregistry
+import gaphor.services.eventmanager
 import gaphor.UML as UML
 from gaphor.ui.namespace import Namespace
-import gaphor.services.eventmanager
-import gaphor.services.componentregistry
 
 
 @pytest.fixture
@@ -130,7 +131,7 @@ def test_element_model_factory(namespace, element_factory):
 
 
 def test_element_factory_flush(namespace, element_factory):
-    p1 = element_factory.create(UML.Package)
+    element_factory.create(UML.Package)
     assert namespace.model.get_iter_first() is not None
 
     element_factory.flush()

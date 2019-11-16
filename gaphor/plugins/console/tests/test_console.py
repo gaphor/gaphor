@@ -1,5 +1,6 @@
 from gi.repository import Gdk, Gtk
-from gaphor.plugins.console.console import main, GTKInterpreterConsole, Help
+
+from gaphor.plugins.console.console import GTKInterpreterConsole, Help, main
 
 
 class KeyEvent:
@@ -34,7 +35,7 @@ def console_text(console):
 
 
 def test_history():
-    console = GTKInterpreterConsole()
+    console = GTKInterpreterConsole(locals={})
     console.history.append("my_history()")
 
     console.key_pressed(console, KeyEvent(Gdk.keyval_from_name("Up")))
@@ -44,7 +45,7 @@ def test_history():
 
 
 def test_deep_history():
-    console = GTKInterpreterConsole()
+    console = GTKInterpreterConsole(locals={})
     console.history.append("deepest()")
     console.history.append("deeper()")
     console.history.append("deep()")
@@ -59,7 +60,7 @@ def test_deep_history():
 
 
 def test_run_line():
-    console = GTKInterpreterConsole()
+    console = GTKInterpreterConsole(locals={})
 
     console.buffer.append("help")
     console.key_pressed(console, KeyEvent(Gdk.keyval_from_name("Return")))

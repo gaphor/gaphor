@@ -2,10 +2,10 @@
 Test include item connections.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.usecases.usecase import UseCaseItem
 from gaphor.diagram.usecases.include import IncludeItem
+from gaphor.diagram.usecases.usecase import UseCaseItem
+from gaphor.tests import TestCase
 
 
 class IncludeItemTestCase(TestCase):

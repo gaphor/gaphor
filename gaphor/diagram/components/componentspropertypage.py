@@ -1,14 +1,17 @@
 from gi.repository import Gtk
 
-from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, NamedItemPropertyPage
+from gaphor import UML
+from gaphor.core import transactional, translate
 from gaphor.diagram.components import ComponentItem
+from gaphor.diagram.propertypages import NamedItemPropertyPage, PropertyPages
 
 
 @PropertyPages.register(ComponentItem)
 class ComponentPropertyPage(NamedItemPropertyPage):
     """
     """
+
+    subject: UML.Component
 
     def construct(self):
         page = super().construct()
@@ -21,15 +24,12 @@ class ComponentPropertyPage(NamedItemPropertyPage):
         hbox = Gtk.HBox()
         page.pack_start(hbox, False, True, 0)
 
-        button = Gtk.CheckButton(_("Indirectly instantiated"))
+        button = Gtk.CheckButton(translate("Indirectly instantiated"))
         button.set_active(subject.isIndirectlyInstantiated)
         button.connect("toggled", self._on_ii_change)
         hbox.pack_start(button, False, True, 0)
 
         return page
-
-    def update(self):
-        pass
 
     @transactional
     def _on_ii_change(self, button):

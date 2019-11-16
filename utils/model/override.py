@@ -8,7 +8,6 @@ This is a simple rip-off of the override script used in PyGTK.
 
 import re
 
-
 OVERRIDE_RE = re.compile(
     r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],\"]+))?$"
 )
@@ -85,7 +84,7 @@ class Overrides:
                 raise SystemExit
 
     def has_override(self, key):
-        return bool(self.overrides.get(key))
+        return key in self.overrides
 
     def get_override(self, key):
         """Write override data for 'key' to a file refered to by 'fp'."""

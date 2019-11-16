@@ -2,14 +2,14 @@
 Classes related adapter connection tests.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.usecases.actor import ActorItem
-from gaphor.diagram.classes.dependency import DependencyItem
-from gaphor.diagram.classes.klass import ClassItem
-from gaphor.diagram.classes.interface import InterfaceItem
 from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.generalization import GeneralizationItem
+from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.usecases.actor import ActorItem
+from gaphor.tests import TestCase
 
 
 class DependencyTestCase(TestCase):

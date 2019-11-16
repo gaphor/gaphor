@@ -11,18 +11,18 @@ save(filename)
 __all__ = ["load", "save"]
 
 import gc
+import io
 import logging
 import os.path
-import io
+import uuid
 
 import gaphas
 
 from gaphor import UML
-from gaphor.UML.collection import collection
 from gaphor.application import Application
-from gaphor.i18n import _
-from gaphor.storage import parser, diagramitems
-
+from gaphor.i18n import translate
+from gaphor.storage import diagramitems, parser
+from gaphor.UML.collection import collection
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
@@ -36,7 +36,7 @@ def save(writer=None, factory=None, status_queue=None):
             status_queue(status)
 
 
-def save_generator(writer, factory):
+def save_generator(writer, factory):  # noqa: C901
     """
     Save the current model using @writer, which is a
     gaphor.misc.xmlwriter.XMLWriter instance.
@@ -113,7 +113,7 @@ def save_generator(writer, factory):
         The extra attribute reference can be used to force UML
         """
         if isinstance(value, collection) or (
-            isinstance(value, (list, tuple)) and reference == True
+            isinstance(value, (list, tuple)) and reference is True
         ):
             save_collection(name, value)
         elif reference:
@@ -171,12 +171,12 @@ def load_elements(elements, factory, gaphor_version="1.0.0", status_queue=None):
             status_queue(status)
 
 
-def load_elements_generator(elements, factory, gaphor_version):
+def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
     """
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
-    log.debug(_("Loading %d elements...") % len(elements))
+    log.debug(translate("Loading %d elements...") % len(elements))
 
     # The elements are iterated three times:
     size = len(elements) * 3
@@ -234,48 +234,26 @@ def load_elements_generator(elements, factory, gaphor_version):
 
         # load attributes and references:
         for name, value in list(elem.values.items()):
-            try:
-                elem.element.load(name, value)
-            except:
-                log.error(
-                    "Loading value %s (%s) for element %s failed."
-                    % (name, value, elem.element)
-                )
-                raise
+            elem.element.load(name, value)
 
         for name, refids in list(elem.references.items()):
             if isinstance(refids, list):
                 for refid in refids:
                     try:
                         ref = elements[refid]
-                    except:
-                        raise ValueError(
-                            "Invalid ID for reference (%s) for element %s.%s"
-                            % (refid, elem.type, name)
+                    except ValueError:
+                        log.exception(
+                            f"Invalid ID for reference ({refid}) for element {elem.type}.{name}"
                         )
                     else:
-                        try:
-                            elem.element.load(name, ref.element)
-                        except:
-                            log.error(
-                                "Loading %s.%s with value %s failed"
-                                % (type(elem.element).__name__, name, ref.element.id)
-                            )
-                            raise
+                        elem.element.load(name, ref.element)
             else:
                 try:
                     ref = elements[refids]
-                except:
-                    raise ValueError(f"Invalid ID for reference ({refids})")
+                except ValueError:
+                    log.exception(f"Invalid ID for reference ({refids})")
                 else:
-                    try:
-                        elem.element.load(name, ref.element)
-                    except:
-                        log.error(
-                            "Loading %s.%s with value %s failed"
-                            % (type(elem.element).__name__, name, ref.element.id)
-                        )
-                        raise
+                    elem.element.load(name, ref.element)
 
     # Before version 0.7.2 there was only decision node (no merge nodes).
     # This node could have many incoming and outgoing flows (edges).
@@ -333,8 +311,8 @@ def load_generator(filename, factory):
         elements = loader.elements
         gaphor_version = loader.gaphor_version
 
-    except Exception as e:
-        log.error("File could no be parsed", exc_info=True)
+    except OSError:
+        log.exception("File could no be parsed")
         raise
 
     if version_lower_than(gaphor_version, (0, 17, 0)):
@@ -413,9 +391,6 @@ def upgrade_presentation_item_to_1_1_0(item):
         del item.values["show-operations"]
 
     return item
-
-
-import uuid
 
 
 def clone_canvasitem(item, subject_id):

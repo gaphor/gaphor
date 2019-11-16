@@ -2,16 +2,15 @@
 Support classes for dealing with text.
 """
 
-from typing import Any, Tuple, Dict, TypeVar
-
 from enum import Enum
-import cairo
-from gi.repository import GLib, Pango, PangoCairo
+from typing import Any, Dict, Tuple, TypeVar
 
+import cairo
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.painter import CairoBoundingBoxContext
+from gi.repository import GLib, Pango, PangoCairo
 
-Font = TypeVar("Font", Dict[str, Any], str)
+Font = TypeVar("Font", Dict[str, object], str)
 
 
 class TextAlign(Enum):
@@ -61,7 +60,7 @@ def text_size(
         return default_size
 
     layout = _text_layout(cr, text, font, width)
-    return layout.get_pixel_size()  # type: ignore
+    return layout.get_pixel_size()  # type: ignore[no-any-return] # noqa: F723
 
 
 def text_draw(cr, text, font, calculate_pos, width=-1, default_size=(0, 0)):

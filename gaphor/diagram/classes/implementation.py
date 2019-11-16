@@ -2,12 +2,14 @@
 Implementation of interface.
 """
 
+import gaphas
+
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.diagram.classes.interface import Folded, InterfacePort
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import Text
 from gaphor.diagram.support import represents
-from gaphor.diagram.classes.interface import Folded, InterfacePort
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Implementation)
@@ -22,6 +24,7 @@ class ImplementationItem(LinePresentation):
         self.watch("subject.appliedStereotype.classifier.name")
 
     def connected_to_folded_interface(self):
+        assert isinstance(self.canvas, gaphas.Canvas)
         connection = self.canvas.get_connection(self.head)
         return (
             connection

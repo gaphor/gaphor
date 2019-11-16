@@ -2,31 +2,33 @@
 Flow item adapter connections.
 """
 
-from typing import Type
+from typing import Type, Union
 
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect, UnaryRelationshipConnect
 from gaphor.diagram.actions.action import (
+    AcceptEventActionItem,
     ActionItem,
     SendSignalActionItem,
-    AcceptEventActionItem,
 )
 from gaphor.diagram.actions.activitynodes import (
-    ForkNodeItem,
-    ActivityNodeItem,
-    InitialNodeItem,
     ActivityFinalNodeItem,
-    FlowFinalNodeItem,
+    ActivityNodeItem,
     DecisionNodeItem,
+    FlowFinalNodeItem,
+    ForkNodeItem,
+    InitialNodeItem,
 )
 from gaphor.diagram.actions.flow import FlowItem
 from gaphor.diagram.actions.objectnode import ObjectNodeItem
+from gaphor.diagram.connectors import IConnect, UnaryRelationshipConnect
 
 
 class FlowConnect(UnaryRelationshipConnect):
     """
     Connect FlowItem and Action/ObjectNode, initial/final nodes.
     """
+
+    line: FlowItem
 
     def allow(self, handle, port):
         line = self.line
@@ -58,14 +60,13 @@ class FlowConnect(UnaryRelationshipConnect):
 
     def connect_subject(self, handle):
         line = self.line
-        element = self.element
 
         # TODO: connect opposite side again (in case it's a join/fork or
         #       decision/merge node)
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         if isinstance(c1, ObjectNodeItem) or isinstance(c2, ObjectNodeItem):
-            relation = self.relationship_or_new(
+            relation: UML.ActivityEdge = self.relationship_or_new(
                 UML.ObjectFlow, UML.ObjectFlow.source, UML.ObjectFlow.target
             )
         else:
@@ -102,6 +103,10 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     Decision/Merge node.
     """
 
+    element: Union[ForkNodeItem, DecisionNodeItem]
+    fork_node_cls: Type[UML.ControlNode]
+    join_node_cls: Type[UML.ControlNode]
+
     def allow(self, handle, port):
         # No cyclic connect is possible on a Flow/Decision node:
         head, tail = self.line.head, self.line.tail
@@ -127,7 +132,6 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         fork_node_cls = self.fork_node_cls
         join_node_cls = self.join_node_cls
-        line = self.line
         element = self.element
         subject = element.subject
         if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
@@ -150,7 +154,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
                 flow_class = UML.ControlFlow
 
             UML.model.swap_element(join_node, join_node_cls)
-            fork_node = element.model.create(fork_node_cls)
+            fork_node: UML.ControlNode = element.model.create(fork_node_cls)
             for flow in list(join_node.outgoing):
                 flow.source = fork_node
             flow = element.model.create(flow_class)
@@ -165,7 +169,6 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         fork_node_cls = self.fork_node_cls
         join_node_cls = self.join_node_cls
-        line = self.line
         element = self.element
         if element.combined:
             join_node = element.subject

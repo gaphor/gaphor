@@ -2,9 +2,12 @@
 A registry for components (e.g. services) and event handling.
 """
 
-from typing import Set, Tuple
+from typing import Iterator, Set, Tuple, Type, TypeVar
+
 from gaphor.abc import Service
 from gaphor.application import ComponentLookupError
+
+T = TypeVar("T", bound=Service)
 
 
 class ComponentRegistry(Service):
@@ -12,25 +15,25 @@ class ComponentRegistry(Service):
     The ComponentRegistry provides a home for application wide components.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._comp: Set[Tuple[object, str]] = set()
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         pass
 
-    def get_service(self, name):
+    def get_service(self, name: str) -> Service:
         """Obtain a service used by Gaphor by name.
         E.g. service("element_factory")
         """
-        return self.get(Service, name)
+        return self.get(Service, name)  # type: ignore[misc] # noqa: F821
 
-    def register(self, component, name):
+    def register(self, component: object, name: str):
         self._comp.add((component, name))
 
-    def unregister(self, component):
-        self._comp = {(c, n) for c, n in self._comp if not c is component}
+    def unregister(self, component: object):
+        self._comp = {(c, n) for c, n in self._comp if c is not component}
 
-    def get(self, base, name):
+    def get(self, base: Type[T], name: str) -> T:
         found = {(c, n) for c, n in self._comp if isinstance(c, base) and n == name}
         if len(found) > 1:
             raise ComponentLookupError(
@@ -42,5 +45,5 @@ class ComponentRegistry(Service):
             )
         return next(iter(found))[0]
 
-    def all(self, base):
+    def all(self, base: Type[T]) -> Iterator[Tuple[T, str]]:
         return ((c, n) for c, n in self._comp if isinstance(c, base))

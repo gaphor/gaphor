@@ -5,15 +5,19 @@ To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
-from typing import List, Optional, Type, Union
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, List, Optional, Type, TypeVar, Union
 
 from gaphas.canvas import Connection
 from gaphas.connector import Handle, Port
+from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor import UML
-from gaphor.UML.properties import association
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
-from gaphor.misc.generic.multidispatch import multidispatch, FunctionDispatcher
+from gaphor.UML.properties import association, redefine, relation
+
+T = TypeVar("T", bound=UML.Element)
 
 
 class ConnectBase:
@@ -90,7 +94,6 @@ class AbstractConnect(ConnectBase):
         element: ElementPresentation[UML.Element],
         line: LinePresentation[UML.Element],
     ) -> None:
-        assert element.canvas
         assert element.canvas == line.canvas
         self.element = element
         self.line = line
@@ -100,21 +103,24 @@ class AbstractConnect(ConnectBase):
         """
         Get connection information
         """
+        assert self.canvas
         return self.canvas.get_connection(handle)
 
     def get_connected(self, handle: Handle) -> Optional[UML.Presentation]:
         """
         Get item connected to a handle.
         """
+        assert self.canvas
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
-            return cinfo.connected  # type: ignore
+            return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
         return None
 
     def get_connected_port(self, handle: Handle) -> Optional[Port]:
         """
         Get port of item connected to connecting item via specified handle.
         """
+        assert self.canvas
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
             return cinfo.port
@@ -159,7 +165,7 @@ class UnaryRelationshipConnect(AbstractConnect):
     """
 
     def relationship(
-        self, required_type: Type[UML.Element], head: association, tail: association
+        self, required_type: Type[UML.Element], head: relation, tail: relation
     ) -> Optional[UML.Element]:
         """
         Find an existing relationship in the model that meets the
@@ -189,21 +195,25 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram.
-        for gen in getattr(tail_subject, tail.opposite):  # type: UML.Element
+        assert isinstance(head, (association, redefine)), f"head is {head}"
+        assert isinstance(tail, (association, redefine)), f"tail is {tail}"
+        assert tail.opposite, f"Tail end of {line} has no opposite definition"
+        gen: UML.Element
+        for gen in getattr(tail_subject, tail.opposite):
             if not isinstance(gen, required_type):
                 continue
 
             gen_head = getattr(gen, head.name)
             try:
-                if not head_subject in gen_head:
+                if head_subject not in gen_head:
                     continue
             except TypeError:
-                if not gen_head is head_subject:
+                if gen_head is not head_subject:
                     continue
 
             # Check for this entry on line.canvas
             item: Union[ElementPresentation, LinePresentation]
-            for item in gen.presentation:  # type: ignore
+            for item in gen.presentation:
                 # Allow line to be returned. Avoids strange
                 # behaviour during loading
                 if item.canvas is line.canvas and item is not line:
@@ -212,9 +222,7 @@ class UnaryRelationshipConnect(AbstractConnect):
                 return gen
         return None
 
-    def relationship_or_new(
-        self, type: Type[UML.Element], head: association, tail: association
-    ) -> Optional[UML.Element]:
+    def relationship_or_new(self, type: Type[T], head: relation, tail: relation) -> T:
         """
         Like relation(), but create a new instance if none was found.
         """
@@ -228,10 +236,11 @@ class UnaryRelationshipConnect(AbstractConnect):
             assert line_tail
             setattr(relation, head.name, line_head.subject)
             setattr(relation, tail.name, line_tail.subject)
+        assert isinstance(relation, type)
         return relation
 
     def reconnect_relationship(
-        self, handle: Handle, head: association, tail: association
+        self, handle: Handle, head: relation, tail: relation
     ) -> None:
         """
         Reconnect relationship for given handle.
@@ -261,6 +270,8 @@ class UnaryRelationshipConnect(AbstractConnect):
         Cause items connected to ``line`` to reconnect, allowing them to
         establish or destroy relationships at model level.
         """
+        assert self.canvas
+
         line = self.line
         canvas = self.canvas
         solver = canvas.solver
@@ -284,6 +295,8 @@ class UnaryRelationshipConnect(AbstractConnect):
         Returns a list of (item, handle) pairs that were connected (this
         list can be used to connect items again with connect_connected_items()).
         """
+        assert self.canvas
+
         line = self.line
         canvas = self.canvas
         solver = canvas.solver
@@ -341,7 +354,7 @@ class UnaryRelationshipConnect(AbstractConnect):
 
         if hct and oct:
             # Both sides of line are connected => disconnect
-            connections = self.disconnect_connected_items()
+            self.disconnect_connected_items()
             self.disconnect_subject(handle)
 
         super().disconnect(handle)
@@ -357,7 +370,6 @@ class RelationshipConnect(UnaryRelationshipConnect):
         connected to the same element. Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
-        line = self.line
         element = self.element
         connected_to = self.get_connected(opposite)
 

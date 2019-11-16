@@ -2,9 +2,9 @@
 Test classes.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.classes.interface import InterfaceItem, Folded
+from gaphor.diagram.classes.interface import Folded, InterfaceItem
+from gaphor.tests import TestCase
 
 
 class InterfaceTestCase(TestCase):

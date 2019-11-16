@@ -3,7 +3,8 @@
 """
 
 import inspect
-from typing import Generic, List, Type, TypeVar
+from typing import Generic, List, Type, TypeVar, Union, overload
+
 from gaphor.UML.event import AssociationUpdated
 from gaphor.UML.listmixins import querymixin, recursemixin
 
@@ -59,19 +60,27 @@ class collection(Generic[T]):
         self.type = type
         self.items: collectionlist[T] = collectionlist()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.items)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value) -> None:
         raise RuntimeError("items should not be overwritten.")
 
-    def __delitem__(self, key: T):
+    def __delitem__(self, key: T) -> None:
         self.remove(key)
 
-    def __getitem__(self, key: int):
+    @overload
+    def __getitem__(self, key: int) -> T:
+        ...
+
+    @overload  # noqa: F811
+    def __getitem__(self, key: slice) -> List[T]:
+        ...
+
+    def __getitem__(self, key: Union[int, slice]):  # noqa: F811
         return self.items.__getitem__(key)
 
-    def __contains__(self, obj):
+    def __contains__(self, obj) -> bool:
         return self.items.__contains__(obj)
 
     def __iter__(self):
@@ -84,9 +93,6 @@ class collection(Generic[T]):
 
     def __bool__(self):
         return self.items != []
-
-    # Maintains Python2 Compatibility
-    __nonzero__ = __bool__
 
     def append(self, value: T) -> None:
         if isinstance(value, self.type):
@@ -138,97 +144,19 @@ class collection(Generic[T]):
         return 1
 
     def select(self, f):
-        result = list()
-        for v in self.items:
-            if f(v):
-                result.append(v)
-        return result
+        return [v for v in self.items if f(v)]
 
     def reject(self, f):
-        result = list()
-        for v in self.items:
-            if not f(v):
-                result.append(v)
-        return result
+        return [v for v in self.items if not f(v)]
 
     def collect(self, f):
-        result = list()
-        for v in self.items:
-            result.append(f(v))
-        return result
+        return [f(v) for v in self.items]
 
     def isEmpty(self):
         return len(self.items) == 0
 
     def nonEmpty(self):
         return not self.isEmpty()
-
-    def sum(self):
-        o = r = 0
-        for o in self.items:
-            r = r + o
-        return o
-
-    def forAll(self, f):
-        if not self.items or not inspect.getargspec(f)[0]:
-            return True
-
-        nargs = len(inspect.getargspec(f)[0])
-        if inspect.getargspec(f)[3]:
-            nargs = nargs - len(inspect.getargspec(f)[3])
-
-        assert nargs > 0
-        nitems = len(self.items)
-        index = [0] * nargs
-
-        while True:
-            args = []
-            for x in index:
-                args.append(self.items[x])
-            if not f(*args):
-                return False
-            c = len(index) - 1
-            index[c] = index[c] + 1
-            while index[c] == nitems:
-                index[c] = 0
-                c = c - 1
-                if c < 0:
-                    return True
-                else:
-                    index[c] = index[c] + 1
-                if index[c] == nitems - 1:
-                    c = c - 1
-        return False
-
-    def exist(self, f):
-        if not self.items or not inspect.getargspec(f)[0]:
-            return False
-
-        nargs = len(inspect.getargspec(f)[0])
-        if inspect.getargspec(f)[3]:
-            nargs = nargs - len(inspect.getargspec(f)[3])
-
-        assert nargs > 0
-        nitems = len(self.items)
-        index = [0] * nargs
-        while True:
-            args = []
-            for x in index:
-                args.append(self.items[x])
-            if f(*args):
-                return True
-            c = len(index) - 1
-            index[c] = index[c] + 1
-            while index[c] == nitems:
-                index[c] = 0
-                c = c - 1
-                if c < 0:
-                    return False
-                else:
-                    index[c] = index[c] + 1
-                if index[c] == nitems - 1:
-                    c = c - 1
-        return False
 
     def swap(self, item1, item2):
         """
@@ -241,7 +169,7 @@ class collection(Generic[T]):
 
             self.object.handle(AssociationUpdated(self.object, self.property))
             return True
-        except IndexError as ex:
+        except IndexError:
             return False
-        except ValueError as ex:
+        except ValueError:
             return False

@@ -5,12 +5,12 @@ Object node item.
 import ast
 
 from gaphas.state import observed, reversible_property
-from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
-from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_border
-from gaphor.diagram.support import represents
 
+from gaphor import UML
+from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, draw_border
+from gaphor.diagram.support import represents
+from gaphor.UML.modelfactory import stereotypes_str
 
 DEFAULT_UPPER_BOUND = "*"
 

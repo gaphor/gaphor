@@ -4,12 +4,15 @@ representation of a UML diagram. Diagrams can be visualized and edited.
 The DiagramCanvas class extends the gaphas.Canvas class.
 """
 
+import logging
 import uuid
 
 import gaphas
 
 from gaphor.UML.properties import umlproperty
 from gaphor.UML.uml2 import Namespace, PackageableElement
+
+log = logging.getLogger(__name__)
 
 
 class DiagramCanvas(gaphas.Canvas):
@@ -72,7 +75,7 @@ class Diagram(Namespace, PackageableElement):
         super().__init__(id, model)
         self.canvas = DiagramCanvas(self)
 
-    package: umlproperty[Namespace, Namespace]
+    package: umlproperty[Namespace]
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
@@ -107,7 +110,7 @@ class Diagram(Namespace, PackageableElement):
         for item in self.canvas.get_all_items():
             try:
                 item.unlink()
-            except:
+            except (AttributeError, KeyError):
                 pass
 
         super().unlink()

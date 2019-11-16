@@ -1,12 +1,14 @@
 from gaphor import UML
+from gaphor.diagram.connectors import IConnect, RelationshipConnect
 from gaphor.diagram.presentation import Classified
 from gaphor.diagram.profiles.extension import ExtensionItem
-from gaphor.diagram.connectors import IConnect, RelationshipConnect
 
 
 @IConnect.register(Classified, ExtensionItem)
 class ExtensionConnect(RelationshipConnect):
     """Connect class and stereotype items using an extension item."""
+
+    line: ExtensionItem
 
     def allow(self, handle, port):
         line = self.line
@@ -46,21 +48,21 @@ class ExtensionConnect(RelationshipConnect):
 
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.
-            for assoc in line.model.select():
-                if isinstance(assoc, UML.Extension):
-                    end1 = assoc.memberEnd[0]
-                    end2 = assoc.memberEnd[1]
-                    if (end1.type is head_type and end2.type is tail_type) or (
-                        end2.type is head_type and end1.type is tail_type
-                    ):
-                        # check if this entry is not yet in the diagram
-                        # Return if the association is not (yet) on the canvas
-                        for item in assoc.presentation:
-                            if item.canvas is element.canvas:
-                                break
-                        else:
-                            line.subject = assoc
-                            return
+            ext: UML.Extension
+            for ext in line.model.select(lambda e: isinstance(e, UML.Extension)):  # type: ignore[assignment]
+                end1 = ext.memberEnd[0]
+                end2 = ext.memberEnd[1]
+                if (end1.type is head_type and end2.type is tail_type) or (
+                    end2.type is head_type and end1.type is tail_type
+                ):
+                    # check if this entry is not yet in the diagram
+                    # Return if the association is not (yet) on the canvas
+                    for item in ext.presentation:
+                        if item.canvas is element.canvas:
+                            break
+                    else:
+                        line.subject = ext
+                        return
             else:
                 # Create a new Extension relationship
                 relation = UML.model.create_extension(head_type, tail_type)

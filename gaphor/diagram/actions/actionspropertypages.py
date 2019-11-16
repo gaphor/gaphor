@@ -1,15 +1,16 @@
 import math
+
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _, transactional
+from gaphor.core import transactional, translate
+from gaphor.diagram.actions import ForkNodeItem, ObjectNodeItem
 from gaphor.diagram.propertypages import (
-    PropertyPages,
     NamedElementPropertyPage,
     NamedItemPropertyPage,
+    PropertyPages,
     create_hbox_label,
 )
-from gaphor.diagram.actions import ObjectNodeItem, ForkNodeItem
 
 
 @PropertyPages.register(ObjectNodeItem)
@@ -19,6 +20,8 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
+    subject: UML.ObjectNode
+
     def construct(self):
         page = super().construct()
 
@@ -27,7 +30,7 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, _("Upper bound"))
+        hbox = create_hbox_label(self, page, translate("Upper bound"))
         entry = Gtk.Entry()
         entry.set_text(subject.upperBound or "")
         entry.connect("changed", self._on_upper_bound_change)
@@ -42,15 +45,12 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
         hbox.pack_start(combo, False, True, 0)
 
         hbox = create_hbox_label(self, page, "")
-        button = Gtk.CheckButton(_("Ordering"))
+        button = Gtk.CheckButton(translate("Ordering"))
         button.set_active(self.item.show_ordering)
         button.connect("toggled", self._on_ordering_show_change)
         hbox.pack_start(button, False, True, 0)
 
         return page
-
-    def update(self):
-        pass
 
     @transactional
     def _on_upper_bound_change(self, entry):
@@ -72,6 +72,8 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
     """
     """
 
+    subject: UML.JoinNode
+
     def construct(self):
         page = super().construct()
 
@@ -84,21 +86,18 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         page.pack_start(hbox, False, True, 0)
 
         if isinstance(subject, UML.JoinNode):
-            hbox = create_hbox_label(self, page, _("Join specification"))
+            hbox = create_hbox_label(self, page, translate("Join specification"))
             entry = Gtk.Entry()
             entry.set_text(subject.joinSpec or "")
             entry.connect("changed", self._on_join_spec_change)
             hbox.pack_start(entry, True, True, 0)
 
-        button = Gtk.CheckButton(_("Horizontal"))
+        button = Gtk.CheckButton(translate("Horizontal"))
         button.set_active(self.item.matrix[2] != 0)
         button.connect("toggled", self._on_horizontal_change)
         page.pack_start(button, False, True, 0)
 
         return page
-
-    def update(self):
-        pass
 
     @transactional
     def _on_join_spec_change(self, entry):
@@ -118,7 +117,11 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
 class FlowPropertyPageAbstract(NamedElementPropertyPage):
     """Flow item element editor."""
 
+    subject: UML.ActivityEdge
+
     def construct(self):
+        assert self.watcher
+
         page = super().construct()
 
         subject = self.subject
@@ -126,7 +129,7 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, _("Guard"))
+        hbox = create_hbox_label(self, page, translate("Guard"))
         entry = Gtk.Entry()
         entry.set_text(subject.guard or "")
         changed_id = entry.connect("changed", self._on_guard_change)

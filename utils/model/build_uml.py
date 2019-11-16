@@ -8,8 +8,8 @@ Also a distutils tool, build_uml, is provided.
 import os.path
 from distutils.core import Command
 from distutils.dep_util import newer
-from distutils.util import byte_compile
 from distutils.dir_util import mkpath
+from distutils.util import byte_compile
 
 from utils.model import gen_uml
 

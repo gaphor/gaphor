@@ -10,11 +10,11 @@ TODO: partition can be resized only horizontally or vertically, therefore
 from typing import List
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.shapes import Box, Text, draw_highlight
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import VerticalAlign
-from gaphor.diagram.shapes import Box, Text, draw_highlight
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.ActivityPartition)
@@ -51,7 +51,7 @@ class PartitionItem(ElementPresentation, Named):
         self.min_height = 300
 
     def pre_update(self, context):
-        # super().pre_update(context)
+        assert self.canvas
 
         self._header_size = self.shape.size(context.cairo)
 
@@ -106,6 +106,8 @@ class PartitionItem(ElementPresentation, Named):
         """
         By default vertical partition is drawn. It is open on the bottom.
         """
+        assert self.canvas
+
         cr = context.cairo
         cr.set_line_width(box.style("line-width"))
 

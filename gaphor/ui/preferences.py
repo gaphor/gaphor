@@ -1,7 +1,8 @@
 import importlib
+
 from gi.repository import Gtk
 
-from gaphor.abc import Service, ActionProvider
+from gaphor.abc import ActionProvider, Service
 from gaphor.core import action
 from gaphor.ui.actiongroup import create_action_group, set_action_state
 
@@ -57,6 +58,6 @@ class Preferences(Service, ActionProvider):
             sloppiness = 0.0
         self.properties.set("diagram.sloppiness", sloppiness)
 
-    @action(name="pref.reset-tool-after-create", state=False)
+    @action(name="pref.reset-tool-after-create", state=True)
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)

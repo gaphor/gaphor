@@ -2,9 +2,8 @@
 
 """
 
-from typing import Optional, Sequence, get_type_hints
 import platform
-
+from typing import Optional, Sequence, get_type_hints
 
 _primary = "⌘" if platform.system() == "Darwin" else "Ctrl"
 
@@ -60,9 +59,3 @@ class action:
 
 def is_action(func):
     return hasattr(func, "__action__")
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

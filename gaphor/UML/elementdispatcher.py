@@ -1,18 +1,19 @@
 """
 """
 
-from typing import Callable, Dict, Optional, Tuple
 from logging import getLogger
+from typing import Callable, Dict, List, Optional, Set, Tuple
+
 from gaphor.core import event_handler
 from gaphor.UML import uml2
 from gaphor.UML.event import (
-    ElementUpdated,
-    AssociationSet,
     AssociationAdded,
     AssociationDeleted,
+    AssociationSet,
+    ElementUpdated,
     ModelReady,
 )
-
+from gaphor.UML.properties import umlproperty
 
 Handler = Callable[[ElementUpdated], None]
 
@@ -100,11 +101,13 @@ class ElementDispatcher:
         self.event_manager = event_manager
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers: Dict[Tuple[uml2.Element, uml2.umlproperty], Handler] = dict()
+        self._handlers: Dict[
+            Tuple[uml2.Element, umlproperty], Dict[Handler, Set]
+        ] = dict()
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: Dict[Tuple[uml2.Element, uml2.umlproperty], Handler] = dict()
+        self._reverse: Dict[Handler, List[Tuple[uml2.Element, umlproperty]]] = dict()
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
@@ -190,6 +193,7 @@ class ElementDispatcher:
         if property.upper == "*" or property.upper > 1:
             for remainder in handlers.get(handler, ()):
                 for e in property._get(element):
+                    # log.debug(' Remove handler %s for key %s, element %s' % (handler, str(remainder[0].name), e))
                     self._remove_handlers(e, remainder[0], handler)
         else:
             for remainder in handlers.get(handler, ()):

@@ -1,13 +1,12 @@
 import pytest
 
 from gaphor import UML
-from gaphor.UML import Element
-from gaphor.UML.elementdispatcher import ElementDispatcher
-from gaphor.UML.elementdispatcher import EventWatcher
-from gaphor.UML.elementfactory import ElementFactory
-from gaphor.UML.properties import association
 from gaphor.services.eventmanager import EventManager
 from gaphor.tests import TestCase
+from gaphor.UML import Element
+from gaphor.UML.elementdispatcher import ElementDispatcher, EventWatcher
+from gaphor.UML.elementfactory import ElementFactory
+from gaphor.UML.properties import association
 
 
 class Event:
@@ -241,8 +240,8 @@ def test_notification_with_incompatible_elements(
 
 
 class A(Element):
-    one: association["A", "A"]
-    two: association["A", "A"]
+    one: association["A"]
+    two: association["A"]
 
     def __init__(self, id=None, event_handler=None):
         super().__init__(id, event_handler)
@@ -301,7 +300,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         dispatcher = self.dispatcher
         element = self.element_factory.create(UML.Association)
         p1 = element.memberEnd = self.element_factory.create(UML.Property)
-        p2 = element.memberEnd = self.element_factory.create(UML.Property)
+        element.memberEnd = self.element_factory.create(UML.Property)
 
         assert len(element.memberEnd) == 2
         dispatcher.subscribe(self._handler, element, "memberEnd.name")

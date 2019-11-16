@@ -1,10 +1,11 @@
 import ast
+from typing import Optional
 
 import gaphas
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
+from gaphor.diagram.text import TextAlign, text_point_at_line
 from gaphor.UML.presentation import Presentation, S
-from gaphor.diagram.text import text_point_at_line, TextAlign
 
 
 class Named:
@@ -132,6 +133,8 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self._shape_middle_rect = None
         self._shape_tail_rect = None
 
+    canvas: Optional[gaphas.Canvas]
+
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
@@ -199,6 +202,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
 
     def save(self, save_func):
         def save_connection(name, handle):
+            assert self.canvas
             c = self.canvas.get_connection(handle)
             if c:
                 save_func(name, c.connected, reference=True)
@@ -241,7 +245,10 @@ class LinePresentation(Presentation[S], gaphas.Line):
             super().load(name, value)
 
     def postload(self):
+        assert self.canvas
+
         def get_sink(handle, item):
+            assert self.canvas
 
             hpos = self.canvas.get_matrix_i2i(self, item).transform_point(*handle.pos)
             port = None

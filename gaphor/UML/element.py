@@ -5,17 +5,21 @@ Base class for UML model elements.
 
 from __future__ import annotations
 
-__all__ = ["Element"]
-
+import logging
 import uuid
+from typing import TYPE_CHECKING, Optional, Sequence, Type, Union
 
-from typing import Optional, Sequence, TYPE_CHECKING, Type, Union
-from gaphor.UML.properties import umlproperty
 from gaphor.UML.elementdispatcher import EventWatcher
+from gaphor.UML.properties import relation_many, relation_one, umlproperty
 
 if TYPE_CHECKING:
     from gaphor.UML.elementfactory import ElementFactory  # noqa
     from gaphor.UML.presentation import Presentation  # noqa
+
+
+__all__ = ["Element"]
+
+log = logging.getLogger(__name__)
 
 
 class UnlinkEvent:
@@ -67,11 +71,11 @@ class Element:
         ), "You can not retrieve the model since it's not set on construction"
         return self._model
 
-    appliedStereotype: umlproperty[Element, Sequence[Element]]
-    owner: umlproperty[Element, Sequence[Element]]
-    ownedComment: umlproperty[Element, Sequence[Element]]
-    ownedElement: umlproperty[Element, Sequence[Element]]
-    presentation: umlproperty["Presentation", Sequence["Presentation"]]
+    appliedStereotype: relation_many[Element]
+    owner: relation_one[Element]
+    ownedComment: relation_many[Element]
+    ownedElement: relation_many[Element]
+    presentation: relation_many[Presentation]
 
     def umlproperties(self):
         """
@@ -99,8 +103,8 @@ class Element:
         """
         try:
             prop = getattr(type(self), name)
-        except AttributeError as e:
-            raise AttributeError(f"'{type(self).__name__}' has no property '{name}'")
+        except AttributeError:
+            log.exception(f"'{type(self).__name__}' has no property '{name}'")
         else:
             prop.load(self, value)
 

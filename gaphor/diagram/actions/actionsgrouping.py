@@ -1,9 +1,9 @@
 from gaphor import UML
-from gaphor.diagram.grouping import Group, AbstractGroup
-from gaphor.diagram.actions.partition import PartitionItem
+from gaphor.diagram.actions.action import ActionItem
 from gaphor.diagram.actions.activitynodes import ActivityNodeItem, ForkNodeItem
 from gaphor.diagram.actions.objectnode import ObjectNodeItem
-from gaphor.diagram.actions.action import ActionItem
+from gaphor.diagram.actions.partition import PartitionItem
+from gaphor.diagram.grouping import AbstractGroup, Group
 
 
 @Group.register(PartitionItem, PartitionItem)
@@ -18,6 +18,8 @@ class ActivityPartitionsGroup(AbstractGroup):
         )
 
     def group(self):
+        assert self.item.canvas
+
         p = self.parent.subject
         model = self.item.model
         sp = model.create(UML.ActivityPartition)
@@ -29,6 +31,8 @@ class ActivityPartitionsGroup(AbstractGroup):
             sp.subpartition = k.subject
 
     def ungroup(self):
+        assert self.item.canvas
+
         p = self.parent.subject
         sp = self.item.subject
         if p:

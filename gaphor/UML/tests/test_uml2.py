@@ -1,7 +1,7 @@
 import pytest
 
-from gaphor.services.eventmanager import EventManager
 import gaphor.UML as UML
+from gaphor.services.eventmanager import EventManager
 
 
 @pytest.fixture
@@ -131,42 +131,52 @@ def test_dependency(factory):
 
 def test_element_import(factory):
     element = factory.create(UML.ElementImport)
+    assert element
 
 
 def test_enumeration(factory):
     element = factory.create(UML.Enumeration)
+    assert element
 
 
 def test_generalization(factory):
     element = factory.create(UML.Generalization)
+    assert element
 
 
 def test_interface(factory):
     element = factory.create(UML.Interface)
+    assert element
 
 
 def test_namespace(factory):
     element = factory.create(UML.Namespace)
+    assert element
 
 
 def test_operation(factory):
     element = factory.create(UML.Operation)
+    assert element
 
 
 def test_package(factory):
     element = factory.create(UML.Package)
+    assert element
 
 
 def test_parameter(factory):
     element = factory.create(UML.Parameter)
+    assert element
 
 
 def test_property(factory):
     element = factory.create(UML.Property)
+    assert element
 
 
 def test_realization(factory):
     element = factory.create(UML.Realization)
+    assert element
 
 
 def test_ids(factory):
@@ -195,35 +205,13 @@ def testOwnedMember_Unlink(factory):
     assert [p] == factory.lselect()
 
 
-#    def test_lower_upper(self):
-#        """
-#        Test MultiplicityElement.{lower|upper}
-#        """
-#        assert UML.MultiplicityElement.lowerValue in UML.MultiplicityElement.lower.subsets
-#
-#        e = UML.MultiplicityElement()
-#        e.lowerValue = '2'
-#        assert e.lower == '2', e.lower
-#
-#        assert UML.MultiplicityElement.upperValue in UML.MultiplicityElement.upper.subsets
-#
-#        e.upperValue = 'up'
-#        assert UML.MultiplicityElement.upper.version == 4, UML.MultiplicityElement.upper.version
-#        assert e.upper == 'up'
-#        e.upperValue = 'down'
-#        assert UML.MultiplicityElement.upper.version == 5, UML.MultiplicityElement.upper.version
-#        assert e.upper == 'down', e.upper
-#
-#        # TODO: test signal handling
-
-
 def test_property_is_composite(factory):
     p = UML.Property()
-    assert p.isComposite == False, p.isComposite
+    assert p.isComposite is False, p.isComposite
     p.aggregation = "shared"
-    assert p.isComposite == False, p.isComposite
+    assert p.isComposite is False, p.isComposite
     p.aggregation = "composite"
-    assert p.isComposite == True, p.isComposite
+    assert p.isComposite is True, p.isComposite
 
 
 def test_association_endType(factory):
@@ -272,11 +260,11 @@ def test_namedelement_qualifiedname(factory):
     c = factory.create(UML.Class)
     c.name = "Class"
 
-    assert ("Class",) == c.qualifiedName
+    assert ["Class"] == c.qualifiedName
 
     p.ownedClassifier = c
 
-    assert ("Package", "Class") == c.qualifiedName
+    assert ["Package", "Class"] == c.qualifiedName
 
 
 def test_extension_metaclass(factory):

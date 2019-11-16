@@ -25,16 +25,15 @@ TODO:
      key focuses its associated control.
 """
 
-from typing import Dict, List, Tuple, Type
-
 import abc
-from gi.repository import GObject, Gdk, Gtk
+from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
+from gi.repository import Gdk, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import _, transactional
+from gaphor.core import transactional, translate
 
 
 class _PropertyPages:
@@ -45,7 +44,9 @@ class _PropertyPages:
     """
 
     def __init__(self) -> None:
-        self.pages: List[Tuple[Type[UML.Element], object]] = []
+        self.pages: List[
+            Tuple[Type[UML.Element], Callable[[UML.Element], PropertyPageBase]]
+        ] = []
 
     def register(self, subject_type):
         def reg(func):
@@ -127,25 +128,25 @@ class EditableTreeModel(Gtk.ListStore):
         Last column has to contain object being edited.
         """
 
-        raise NotImplemented
+        raise NotImplementedError
 
     def _create_object(self):
         """
         Create new object.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _set_object_value(self, row, col, value):
         """
         Update row's column with a value.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _swap_objects(self, o1, o2):
         """
         Swap two objects. If objects are swapped, then return ``True``.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _get_object(self, iter):
         """
@@ -342,6 +343,7 @@ def create_tree_view(model, names, tip="", ro_cols=None):
         ro_cols = set()
 
     tree_view = Gtk.TreeView(model=model)
+    tree_view.set_search_column(-1)
 
     n = model.get_n_columns() - 1
     for name, i in zip(names, list(range(n))):
@@ -386,14 +388,14 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     order = 10
 
-    NAME_LABEL = _("Name")
+    NAME_LABEL = translate("Name")
 
     def __init__(self, subject: UML.NamedElement):
         assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
             subject
         )
         self.subject = subject
-        self.watcher = subject and subject.watcher()
+        self.watcher = subject.watcher() if subject else None
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
@@ -460,7 +462,7 @@ class LineStylePage(PropertyPageBase):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=_("Orthogonal"))
+        button = Gtk.CheckButton(label=translate("Orthogonal"))
         button.set_active(self.item.orthogonal)
         button.connect("toggled", self._on_orthogonal_change)
         hbox.pack_start(button, True, True, 0)
@@ -473,7 +475,7 @@ class LineStylePage(PropertyPageBase):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=_("Horizontal"))
+        button = Gtk.CheckButton(label=translate("Horizontal"))
         button.set_active(self.item.horizontal)
         button.connect("toggled", self._on_horizontal_change)
         hbox.pack_start(button, True, True, 0)

@@ -1,27 +1,28 @@
 import logging
-from gi.repository import Gtk
 
 from gaphas.decorators import AsyncIO
+from gi.repository import Gtk
+
 from gaphor import UML
-from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
-from gaphor.diagram.propertypages import (
-    NamedElementPropertyPage,
-    NamedItemPropertyPage,
-    EditableTreeModel,
-    create_tree_view,
-    create_hbox_label,
-    create_uml_combo,
-)
+from gaphor.core import transactional, translate
 from gaphor.diagram.classes import (
-    ClassItem,
-    InterfaceItem,
     AssociationItem,
+    ClassItem,
     DependencyItem,
-    ImplementationItem,
     Folded,
+    InterfaceItem,
 )
 from gaphor.diagram.components.connector import ConnectorItem
+from gaphor.diagram.propertypages import (
+    EditableTreeModel,
+    NamedElementPropertyPage,
+    NamedItemPropertyPage,
+    PropertyPageBase,
+    PropertyPages,
+    create_hbox_label,
+    create_tree_view,
+    create_uml_combo,
+)
 
 log = logging.getLogger(__name__)
 
@@ -99,6 +100,8 @@ class ClassOperations(EditableTreeModel):
 class ClassPropertyPage(NamedElementPropertyPage):
     """Adapter which shows a property page for a class view."""
 
+    subject: UML.Class
+
     def __init__(self, subject):
         super().__init__(subject)
 
@@ -114,7 +117,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
         label.set_justify(Gtk.Justification.LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=_("Abstract"))
+        button = Gtk.CheckButton(label=translate("Abstract"))
         button.set_active(self.subject.isAbstract)
 
         button.connect("toggled", self._on_abstract_change)
@@ -143,7 +146,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(_("Folded"))
+        button = Gtk.CheckButton(translate("Folded"))
         button.set_active(item.folded != Folded.NONE)
         button.connect("toggled", self._on_fold_change)
 
@@ -193,7 +196,7 @@ class AttributesPage(PropertyPageBase):
         label = Gtk.Label(label="")
         label.set_justify(Gtk.Justification.LEFT)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=_("Show attributes"))
+        button = Gtk.CheckButton(label=translate("Show attributes"))
         button.set_active(self.item.show_attributes)
         button.connect("toggled", self._on_show_attributes_change)
         hbox.pack_start(button, True, True, 0)
@@ -210,7 +213,9 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 - + attr: int
 - # /attr: int
 """
-        tree_view = create_tree_view(self.model, (_("Attributes"), _("S")), tip)
+        tree_view = create_tree_view(
+            self.model, (translate("Attributes"), translate("S")), tip
+        )
         page.pack_start(tree_view, True, True, 0)
 
         @AsyncIO(single=True)
@@ -266,7 +271,7 @@ class OperationsPage(PropertyPageBase):
         label = Gtk.Label(label="")
         label.set_justify(Gtk.Justification.LEFT)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=_("Show operations"))
+        button = Gtk.CheckButton(label=translate("Show operations"))
         button.set_active(self.item.show_operations)
         button.connect("toggled", self._on_show_operations_change)
         hbox.pack_start(button, True, True, 0)
@@ -282,7 +287,9 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 - + call(a: int, b: str)
 - # call(a: int: b: str): bool
 """
-        tree_view = create_tree_view(self.model, (_("Operation"), _("A"), _("S")), tip)
+        tree_view = create_tree_view(
+            self.model, (translate("Operation"), translate("A"), translate("S")), tip
+        )
         page.pack_start(tree_view, True, True, 0)
 
         @AsyncIO(single=True)
@@ -325,10 +332,10 @@ class DependencyPropertyPage(PropertyPageBase):
     order = 0
 
     DEPENDENCY_TYPES = (
-        (_("Dependency"), UML.Dependency),
-        (_("Usage"), UML.Usage),
-        (_("Realization"), UML.Realization),
-        (_("Implementation"), UML.Implementation),
+        (translate("Dependency"), UML.Dependency),
+        (translate("Usage"), UML.Usage),
+        (translate("Realization"), UML.Realization),
+        (translate("Implementation"), UML.Implementation),
     )
 
     def __init__(self, item):
@@ -340,7 +347,7 @@ class DependencyPropertyPage(PropertyPageBase):
     def construct(self):
         page = Gtk.VBox()
 
-        hbox = create_hbox_label(self, page, _("Dependency type"))
+        hbox = create_hbox_label(self, page, translate("Dependency type"))
 
         self.combo = create_uml_combo(
             self.DEPENDENCY_TYPES, self._on_dependency_type_change
@@ -349,7 +356,7 @@ class DependencyPropertyPage(PropertyPageBase):
 
         hbox = create_hbox_label(self, page, "")
 
-        button = Gtk.CheckButton(_("Automatic"))
+        button = Gtk.CheckButton(translate("Automatic"))
         button.set_active(self.item.auto_dependency)
         button.connect("toggled", self._on_auto_dependency_change)
         hbox.pack_start(button, True, True, 0)
@@ -424,7 +431,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=_("Show direction"))
+        button = Gtk.CheckButton(label=translate("Show direction"))
         button.set_active(self.item.show_direction)
         button.connect("toggled", self._on_show_direction_change)
         hbox.pack_start(button, True, True, 0)
@@ -437,20 +444,15 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
         page.pack_start(hbox, False, True, 0)
 
-        box = self.construct_end(_("Head"), self.item.head_end)
+        box = self.construct_end(translate("Head"), self.item.head_end)
         if box:
             page.pack_start(box, False, True, 0)
 
-        box = self.construct_end(_("Tail"), self.item.tail_end)
+        box = self.construct_end(translate("Tail"), self.item.tail_end)
         if box:
             page.pack_start(box, False, True, 0)
-
-        self.update()
 
         return page
-
-    def update(self):
-        pass
 
     @transactional
     def _on_show_direction_change(self, button):
@@ -501,7 +503,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
                     expander.add(page)
                     expander.show_all()
                     vbox.pack_start(expander, False, True, 0)
-            except Exception as e:
+            except Exception:
                 log.error(
                     "Could not construct property page for " + name, exc_info=True
                 )

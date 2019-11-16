@@ -1,8 +1,8 @@
 import pytest
 
-from gaphor.plugins.console.consolewindow import ConsoleWindow
 import gaphor.services.componentregistry
 import gaphor.ui.menufragment
+from gaphor.plugins.console.consolewindow import ConsoleWindow
 
 
 class MainWindowStub:

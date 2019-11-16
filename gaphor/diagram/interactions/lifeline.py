@@ -20,23 +20,23 @@ bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
 
-from gaphas.item import SW, SE
 from gaphas.connector import Handle, LinePort
-from gaphas.solver import STRONG
-from gaphas.geometry import distance_line_point
 from gaphas.constraint import (
-    LessThanConstraint,
-    EqualsConstraint,
     CenterConstraint,
+    EqualsConstraint,
+    LessThanConstraint,
     LineAlignConstraint,
 )
+from gaphas.geometry import distance_line_point
+from gaphas.item import SE, SW
+from gaphas.solver import STRONG
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text
-from gaphor.diagram.text import FontWeight
 from gaphor.diagram.support import represents
+from gaphor.diagram.text import FontWeight
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 class LifetimePort(LinePort):
@@ -137,7 +137,7 @@ class LifetimeItem:
 
 
 @represents(UML.Lifeline)
-class LifelineItem(ElementPresentation, Named):
+class LifelineItem(ElementPresentation[UML.Lifeline], Named):
     """
     Lifeline item.
 
@@ -182,6 +182,8 @@ class LifelineItem(ElementPresentation, Named):
         self.watch("subject.appliedStereotype.classifier.name")
 
     def setup_canvas(self):
+        assert self.canvas
+
         super().setup_canvas()
 
         top = self.lifetime.top
@@ -205,6 +207,7 @@ class LifelineItem(ElementPresentation, Named):
         list(map(self.canvas.solver.add_constraint, self.__constraints))
 
     def teardown_canvas(self):
+        assert self.canvas
         super().teardown_canvas()
         list(map(self.canvas.solver.remove_constraint, self.__constraints))
 

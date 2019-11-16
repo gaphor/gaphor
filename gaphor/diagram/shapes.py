@@ -1,17 +1,41 @@
-from typing import List, Tuple
 from math import pi
+from typing import List, Optional, Tuple
+
 from gaphas.geometry import Rectangle
+from typing_extensions import TypedDict
 
 from gaphor.diagram.text import (
-    text_point_in_box,
-    text_size,
-    text_draw,
-    text_draw_focus_box,
-    TextAlign,
-    VerticalAlign,
     FontStyle,
     FontWeight,
+    TextAlign,
     TextDecoration,
+    VerticalAlign,
+    text_draw,
+    text_draw_focus_box,
+    text_point_in_box,
+    text_size,
+)
+
+Style = TypedDict(
+    "Style",
+    {
+        "width": float,
+        "padding": Tuple[float, float, float, float],
+        "min-width": float,
+        "min-height": float,
+        "line-width": float,
+        "vertical-spacing": float,
+        "border-radius": float,
+        "font": str,
+        "font-style": FontStyle,
+        "font-weight": Optional[FontWeight],
+        "text-decoration": Optional[TextDecoration],
+        "text-align": TextAlign,
+        "vertical-align": VerticalAlign,
+        # CommentItem:
+        "ear": int,
+    },
+    total=False,
 )
 
 
@@ -77,18 +101,22 @@ class Box:
 
     """
 
-    def __init__(self, *children, style={}, draw=None):
+    def __init__(self, *children, style: Style = {}, draw=None):
         self.children = children
         self.sizes: List[Tuple[int, int]] = []
-        self.style = {
+        self._style: Style = {
             "min-width": 0,
             "min-height": 0,
             "padding": (0, 0, 0, 0),
             "vertical-align": VerticalAlign.MIDDLE,
             "border-radius": 0,
-            **style,
-        }.__getitem__
+            **style,  # type: ignore[misc] # noqa: F821
+        }
         self._draw_border = draw
+
+    @property
+    def style(self):
+        return self._style.__getitem__
 
     def __len__(self):
         return len(self.children)
@@ -155,17 +183,21 @@ class IconBox:
     - padding: a tuple (top, right, bottom, left)
     """
 
-    def __init__(self, icon, *children, style={}):
+    def __init__(self, icon, *children, style: Style = {}):
         self.icon = icon
         self.children = children
         self.sizes: List[Tuple[int, int]] = []
-        self.style = {
+        self._style: Style = {
             "min-width": 0,
             "min-height": 0,
             "vertical-spacing": 4,
             "padding": (0, 0, 0, 0),
-            **style,
-        }.__getitem__
+            **style,  # type: ignore[misc] # noqa: F821
+        }
+
+    @property
+    def style(self):
+        return self._style.__getitem__
 
     def size(self, cr):
         style = self.style
@@ -195,10 +227,10 @@ class IconBox:
 
 
 class Text:
-    def __init__(self, text=lambda: "", width=lambda: -1, style={}):
+    def __init__(self, text=lambda: "", width=lambda: -1, style: Style = {}):
         self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
-        self.style = {
+        self._style: Style = {
             "width": -1,
             "min-width": 30,
             "min-height": 14,
@@ -209,8 +241,12 @@ class Text:
             "text-align": TextAlign.CENTER,
             "vertical-align": VerticalAlign.MIDDLE,
             "padding": (0, 0, 0, 0),
-            **style,
-        }.__getitem__
+            **style,  # type: ignore[misc] # noqa: F821
+        }
+
+    @property
+    def style(self):
+        return self._style.__getitem__
 
     def text(self):
         try:
@@ -267,9 +303,14 @@ class Text:
 
 
 class EditableText(Text):
+    def __init__(self, text=lambda: "", width=lambda: -1, style: Style = {}):
+        super().__init__(text, width, style)
+        self.bounding_box = Rectangle()
+
     def draw(self, context, bounding_box):
         x, y, w, h = super().draw(context, bounding_box)
         text_draw_focus_box(context, x, y, w, h)
+        self.bounding_box = Rectangle(x, y, width=w, height=h)
 
 
 def draw_default_head(context):

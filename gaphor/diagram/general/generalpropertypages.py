@@ -1,8 +1,8 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
+from gaphor.core import transactional, translate
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 
 
 @PropertyPages.register(UML.Comment)
@@ -17,12 +17,12 @@ class CommentItemPropertyPage(PropertyPageBase):
 
     def construct(self):
         subject = self.subject
-        page = Gtk.VBox()
+        page = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
 
         if not subject:
             return page
 
-        label = Gtk.Label(label=_("Comment"))
+        label = Gtk.Label(label=translate("Comment"))
         label.set_justify(Gtk.Justification.LEFT)
         page.pack_start(label, False, True, 0)
 
@@ -31,10 +31,16 @@ class CommentItemPropertyPage(PropertyPageBase):
             buffer.set_text(subject.body)
         text_view = Gtk.TextView()
         text_view.set_buffer(buffer)
-        text_view.show()
         text_view.set_size_request(-1, 100)
-        page.pack_start(text_view, True, True, 0)
-        page.default = text_view
+
+        frame = Gtk.Frame()
+        frame.set_shadow_type(Gtk.ShadowType.IN)
+        frame.add(text_view)
+
+        text_view.show()
+        frame.show()
+
+        page.pack_start(frame, True, True, 0)
 
         changed_id = buffer.connect("changed", self._on_body_change)
 

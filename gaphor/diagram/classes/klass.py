@@ -1,8 +1,10 @@
+import logging
+
 from gaphor import UML
 from gaphor.diagram.classes.stereotype import stereotype_compartments
 from gaphor.diagram.presentation import (
-    ElementPresentation,
     Classified,
+    ElementPresentation,
     from_package_str,
 )
 from gaphor.diagram.shapes import (
@@ -12,19 +14,21 @@ from gaphor.diagram.shapes import (
     draw_border,
     draw_top_separator,
 )
+from gaphor.diagram.support import represents
 from gaphor.diagram.text import (
-    TextAlign,
-    VerticalAlign,
     FontStyle,
     FontWeight,
+    TextAlign,
     TextDecoration,
+    VerticalAlign,
 )
-from gaphor.diagram.support import represents
+
+log = logging.getLogger(__name__)
 
 
 @represents(UML.Class)
 @represents(UML.Stereotype)
-class ClassItem(ElementPresentation, Classified):
+class ClassItem(ElementPresentation[UML.Class], Classified):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments: one for attributes and one for
@@ -114,18 +118,6 @@ class ClassItem(ElementPresentation, Classified):
             },
             draw=draw_border,
         )
-
-    # TODO: Needs implementing, see also gaphor/diagram/editors.py
-    def item_at(self, x, y):
-        if 0 > x > self.width:
-            return None
-
-        if y < self.shape.sizes[0][1]:
-            print("in header")
-        elif y < self.shape.sizes[1][1]:
-            print("in attr comp")
-
-        return self
 
 
 def attribute_watches(presentation, cast):

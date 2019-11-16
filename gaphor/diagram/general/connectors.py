@@ -5,11 +5,10 @@ Connect comments.
 import logging
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.diagram.connectors import AbstractConnect, IConnect
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
-from gaphor.diagram.connectors import IConnect, AbstractConnect
-
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +17,8 @@ logger = logging.getLogger(__name__)
 @IConnect.register(ElementPresentation, CommentLineItem)
 class CommentLineElementConnect(AbstractConnect):
     """Connect a comment line to any element item."""
+
+    line: CommentLineItem
 
     def allow(self, handle, port):
         """
@@ -73,6 +74,7 @@ class CommentLineElementConnect(AbstractConnect):
                 if isinstance(connected_to.subject, UML.Comment):
                     connected_to.subject.annotatedElement = self.element.subject
                 else:
+                    assert isinstance(self.element.subject, UML.Comment)
                     self.element.subject.annotatedElement = connected_to.subject
 
     def disconnect(self, handle):
@@ -141,6 +143,7 @@ class CommentLineLineConnect(AbstractConnect):
                 if isinstance(c.subject, UML.Comment):
                     c.subject.annotatedElement = self.element.subject
                 else:
+                    assert isinstance(self.element.subject, UML.Comment)
                     self.element.subject.annotatedElement = c.subject
 
     def disconnect(self, handle):

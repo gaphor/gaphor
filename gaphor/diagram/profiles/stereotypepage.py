@@ -5,8 +5,8 @@ Stereotype property page.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
+from gaphor.core import transactional, translate
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 
 
 def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
@@ -18,10 +18,11 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
         Model, for which tree view is created.
     """
     tree_view = Gtk.TreeView.new_with_model(model)
+    tree_view.set_search_column(-1)
 
     # Stereotype/Attributes
     col = Gtk.TreeViewColumn.new()
-    col.set_title("{} / {}".format(_("Stereotype"), _("Attribute")))
+    col.set_title("{} / {}".format(translate("Stereotype"), translate("Attribute")))
     col.set_expand(True)
     renderer = Gtk.CellRendererToggle()
     renderer.set_property("active", True)
@@ -50,7 +51,7 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
     renderer = Gtk.CellRendererText()
     renderer.set_property("is-expanded", True)
     renderer.connect("edited", set_slot_value, model, 1)
-    col = Gtk.TreeViewColumn(_("Value"), renderer, text=1)
+    col = Gtk.TreeViewColumn(translate("Value"), renderer, text=1)
     col.set_expand(True)
 
     def set_editable(column, cell, model, iter, data):
@@ -91,7 +92,7 @@ class StereotypePage(PropertyPageBase):
             hbox = Gtk.HBox()
             label = Gtk.Label(label="")
             hbox.pack_start(label, False, True, 0)
-            button = Gtk.CheckButton(label=_("Show stereotypes attributes"))
+            button = Gtk.CheckButton(label=translate("Show stereotypes attributes"))
             button.set_active(self.item.show_stereotypes)
             button.connect("toggled", self._on_show_stereotypes_change)
             hbox.pack_start(button, True, True, 0)

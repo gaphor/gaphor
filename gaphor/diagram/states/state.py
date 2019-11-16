@@ -4,11 +4,11 @@ State diagram item.
 
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text, draw_top_separator
-from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.diagram.support import represents
+from gaphor.diagram.text import TextAlign, VerticalAlign
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 class VertexItem(Named):
@@ -19,7 +19,7 @@ class VertexItem(Named):
 
 
 @represents(UML.State)
-class StateItem(ElementPresentation, VertexItem):
+class StateItem(ElementPresentation[UML.State], VertexItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 

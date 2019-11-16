@@ -32,12 +32,11 @@ takes a long time. The yielded values are the percentage of the file read.
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Union, Tuple, IO
-import os
 import io
-from xml.sax import handler
+import os
 from collections import OrderedDict
-
+from typing import IO, Dict, List, Optional, Tuple, Union
+from xml.sax import handler
 
 __all__ = ["parse", "ParserException"]
 
@@ -59,13 +58,13 @@ class base:
     def __getitem__(self, key):
         try:
             return self.values[key]
-        except:
+        except KeyError:
             return self.references[key]
 
     def get(self, key):
         try:
             return self.__getitem__(key)
-        except:
+        except KeyError:
             return None
 
 
@@ -178,9 +177,7 @@ class GaphorLoader(handler.ContentHandler):
         if state == GAPHOR:
             id = attrs["id"]
             e = element(id, name)
-            assert id not in list(self.elements.keys()), "%s already defined" % (
-                id
-            )  # , self.elements[id])
+            assert id not in self.elements.keys(), f"{id} already defined"
             self.elements[id] = e
             self.push(e, name == "Diagram" and DIAGRAM or ELEMENT)
 
@@ -194,7 +191,7 @@ class GaphorLoader(handler.ContentHandler):
         elif state in (CANVAS, ITEM) and name == "item":
             id = attrs["id"]
             ci = canvasitem(id, attrs["type"])
-            assert id not in list(self.elements.keys()), f"{id} already defined"
+            assert id not in self.elements.keys(), f"{id} already defined"
             self.elements[id] = ci
             self.peek().canvasitems.append(ci)
             self.push(ci, ITEM)

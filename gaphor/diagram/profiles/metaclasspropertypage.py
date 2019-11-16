@@ -5,9 +5,12 @@ Metaclass item editors.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _
-from gaphor.diagram.propertypages import create_hbox_label
-from gaphor.diagram.propertypages import PropertyPages, NamedElementPropertyPage
+from gaphor.core import translate
+from gaphor.diagram.propertypages import (
+    NamedElementPropertyPage,
+    PropertyPages,
+    create_hbox_label,
+)
 
 
 def _issubclass(c, b):
@@ -26,7 +29,7 @@ class MetaclassNamePropertyPage(NamedElementPropertyPage):
 
     order = 10
 
-    NAME_LABEL = _("Name")
+    NAME_LABEL = translate("Name")
 
     CLASSES = list(
         sorted(

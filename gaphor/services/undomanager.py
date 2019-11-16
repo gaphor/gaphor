@@ -11,23 +11,14 @@ If None is returned the undo action is considered to be the redo action as well.
 NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
-from typing import Callable, List
 import logging
+from typing import Callable, List
+
 from gaphas import state
 
-
-from gaphor.UML.event import (
-    ElementCreated,
-    ElementDeleted,
-    AssociationSet,
-    AssociationAdded,
-    AssociationDeleted,
-    AttributeUpdated,
-    ModelReady,
-)
-from gaphor.UML.properties import association as association_property
+from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
-from gaphor.core import _, event_handler
+from gaphor.core import event_handler, translate
 from gaphor.event import (
     ActionEnabled,
     ServiceEvent,
@@ -35,8 +26,17 @@ from gaphor.event import (
     TransactionCommit,
     TransactionRollback,
 )
-from gaphor.abc import Service, ActionProvider
 from gaphor.transaction import Transaction, transactional
+from gaphor.UML.event import (
+    AssociationAdded,
+    AssociationDeleted,
+    AssociationSet,
+    AttributeUpdated,
+    ElementCreated,
+    ElementDeleted,
+    ModelReady,
+)
+from gaphor.UML.properties import association as association_property
 
 logger = logging.getLogger(__name__)
 
@@ -62,11 +62,12 @@ class ActionStack:
     @transactional
     def execute(self):
         self._actions.reverse()
-        for action in self._actions:
+
+        for act in self._actions:
             try:
-                action()
-            except Exception as e:
-                logger.error(f"Error while undoing action {action}", exc_info=True)
+                act()
+            except Exception:
+                logger.error(f"Error while undoing action {act}", exc_info=True)
 
 
 class UndoManagerStateChanged(ServiceEvent):
@@ -187,7 +188,10 @@ class UndoManager(Service, ActionProvider):
         self._action_executed()
 
     @action(
-        name="edit-undo", label=_("_Undo"), icon_name="edit-undo", shortcut="<Primary>z"
+        name="edit-undo",
+        label=translate("_Undo"),
+        icon_name="edit-undo",
+        shortcut="<Primary>z",
     )
     def undo_transaction(self):
         if not self._undo_stack:
@@ -220,7 +224,7 @@ class UndoManager(Service, ActionProvider):
 
     @action(
         name="edit-redo",
-        label=_("_Redo"),
+        label=translate("_Redo"),
         icon_name="edit-redo",
         shortcut="<Primary><Shift>z",
     )

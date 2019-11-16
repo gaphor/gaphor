@@ -5,11 +5,10 @@ Build a PO template (for i18n) and update the .po files to reflect
 the last changes.
 """
 
+import glob
 import os.path
 import sys
-import glob
 import tokenize
-
 from distutils.core import Command
 
 from utils.i18n import pygettext

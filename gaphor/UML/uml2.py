@@ -2,14 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Callable
+from typing import List, Callable, Optional
 from gaphor.UML.properties import (
-    umlproperty,
     association,
     attribute,
     enumeration,
     derived,
     derivedunion,
+    relation_one,
+    relation_many,
     redefine,
 )
 from gaphor.UML.collection import collection
@@ -19,98 +20,98 @@ from gaphor.UML.element import Element
 
 
 class NamedElement(Element):
-    visibility: umlproperty[str, str]
-    name: umlproperty[str, str]
-    qualifiedName: property
-    clientDependency: umlproperty[Dependency, collection[Dependency]]
-    supplierDependency: umlproperty[Dependency, collection[Dependency]]
-    namespace: umlproperty[Namespace, Namespace]
+    visibility: enumeration
+    name: attribute[str]
+    clientDependency: relation_many[Dependency]
+    supplierDependency: relation_many[Dependency]
+    qualifiedName: derived[List[str]]
+    namespace: relation_one[Namespace]
 
 
 class PackageableElement(NamedElement):
-    visibility: umlproperty[str, str]
+    visibility: enumeration
 
 
 class InstanceSpecification(PackageableElement):
-    specification: umlproperty[str, str]
-    slot: umlproperty[Slot, collection[Slot]]
-    classifier: umlproperty[Classifier, collection[Classifier]]
-    extended: umlproperty[Element, collection[Element]]
+    specification: attribute[str]
+    slot: relation_many[Slot]
+    classifier: relation_many[Classifier]
+    extended: relation_many[Element]
 
 
 class EnumerationLiteral(InstanceSpecification):
-    enumeration: umlproperty[Enumeration, Enumeration]
+    enumeration: relation_one[Enumeration]
 
 
 class Relationship(Element):
-    relatedElement: umlproperty[Element, collection[Element]]
+    relatedElement: relation_many[Element]
 
 
 class DirectedRelationship(Relationship):
-    target: umlproperty[Element, collection[Element]]
-    source: umlproperty[Element, collection[Element]]
+    target: relation_many[Element]
+    source: relation_many[Element]
 
 
 class PackageMerge(DirectedRelationship):
-    mergingPackage: umlproperty[Package, Package]
-    mergedPackage: umlproperty[Package, Package]
+    mergingPackage: relation_one[Package]
+    mergedPackage: relation_one[Package]
 
 
 class Namespace(NamedElement):
-    ownedRule: umlproperty[Constraint, collection[Constraint]]
-    elementImport: umlproperty[ElementImport, collection[ElementImport]]
-    packageImport: umlproperty[PackageImport, collection[PackageImport]]
-    ownedMember: umlproperty[NamedElement, collection[NamedElement]]
-    member: umlproperty[NamedElement, collection[NamedElement]]
-    importedMember: umlproperty[PackageableElement, collection[PackageableElement]]
+    ownedRule: relation_many[Constraint]
+    elementImport: relation_many[ElementImport]
+    packageImport: relation_many[PackageImport]
+    ownedMember: relation_many[NamedElement]
+    member: relation_many[NamedElement]
+    importedMember: derivedunion[PackageableElement]
 
 
 class Type(PackageableElement):
-    package: umlproperty[Package, Package]
+    package: relation_one[Package]
 
 
 class RedefinableElement(NamedElement):
-    isLeaf: umlproperty[int, int]
-    redefinedElement: umlproperty[RedefinableElement, collection[RedefinableElement]]
-    redefinitionContext: umlproperty[Classifier, collection[Classifier]]
+    isLeaf: attribute[int]
+    redefinedElement: relation_many[RedefinableElement]
+    redefinitionContext: relation_many[Classifier]
 
 
 class Classifier(Namespace, Type, RedefinableElement):
-    isAbstract: umlproperty[int, int]
-    ownedUseCase: umlproperty[UseCase, collection[UseCase]]
-    generalization: umlproperty[Generalization, collection[Generalization]]
-    redefinedClassifier: umlproperty[Classifier, collection[Classifier]]
-    substitution: umlproperty[Substitution, collection[Substitution]]
-    attribute: umlproperty[Property, collection[Property]]
-    feature: umlproperty[Feature, collection[Feature]]
-    general: property
-    inheritedMember: umlproperty[NamedElement, collection[NamedElement]]
+    isAbstract: attribute[int]
+    ownedUseCase: relation_many[UseCase]
+    generalization: relation_many[Generalization]
+    redefinedClassifier: relation_many[Classifier]
+    substitution: relation_many[Substitution]
+    attribute: relation_many[Property]
+    feature: relation_many[Feature]
+    general: derived[Classifier]
+    inheritedMember: derivedunion[NamedElement]
 
 
 class Association(Classifier, Relationship):
-    isDerived: umlproperty[int, int]
-    memberEnd: umlproperty[Property, collection[Property]]
-    ownedEnd: umlproperty[Property, collection[Property]]
-    navigableOwnedEnd: umlproperty[Property, collection[Property]]
-    endType: umlproperty[Type, collection[Type]]
+    isDerived: attribute[int]
+    memberEnd: relation_many[Property]
+    ownedEnd: relation_many[Property]
+    navigableOwnedEnd: relation_many[Property]
+    endType: derived[Type]
 
 
 class Extension(Association):
-    isRequired: umlproperty[int, int]
-    ownedEnd: umlproperty[ExtensionEnd, ExtensionEnd]
+    isRequired: attribute[int]
+    ownedEnd: relation_one[ExtensionEnd]  # type: ignore[assignment]
     metaclass: property
 
 
 class Actor(Classifier):
-    ownedAttribute: umlproperty[Property, collection[Property]]
+    ownedAttribute: relation_many[Property]
 
 
 class ActivityNode(RedefinableElement):
-    outgoing: umlproperty[ActivityEdge, collection[ActivityEdge]]
-    incoming: umlproperty[ActivityEdge, collection[ActivityEdge]]
-    inGroup: umlproperty[ActivityGroup, collection[ActivityGroup]]
-    inPartition: umlproperty[ActivityPartition, collection[ActivityPartition]]
-    redefinedElement: umlproperty[ActivityNode, collection[ActivityNode]]
+    outgoing: relation_many[ActivityEdge]
+    incoming: relation_many[ActivityEdge]
+    inGroup: relation_many[ActivityGroup]
+    inPartition: relation_many[ActivityPartition]
+    redefinedElement: relation_many[ActivityNode]  # type: ignore[assignment]
 
 
 class ControlNode(ActivityNode):
@@ -122,17 +123,17 @@ class MergeNode(ControlNode):
 
 
 class Feature(RedefinableElement):
-    isStatic: umlproperty[int, int]
-    featuringClassifier: umlproperty[Classifier, collection[Classifier]]
+    isStatic: attribute[int]
+    featuringClassifier: relation_many[Classifier]
 
 
 class ActivityEdge(RedefinableElement):
-    activity: umlproperty[Activity, Activity]
-    guard: umlproperty[str, str]
-    source: umlproperty[ActivityNode, ActivityNode]
-    target: umlproperty[ActivityNode, ActivityNode]
-    inGroup: umlproperty[ActivityGroup, collection[ActivityGroup]]
-    redefinedElement: umlproperty[ActivityEdge, collection[ActivityEdge]]
+    activity: relation_one[Activity]
+    guard: attribute[str]
+    source: relation_one[ActivityNode]
+    target: relation_one[ActivityNode]
+    inGroup: relation_many[ActivityGroup]
+    redefinedElement: relation_many[ActivityEdge]  # type: ignore[assignment]
 
 
 class ObjectFlow(ActivityEdge):
@@ -152,8 +153,8 @@ class CommunicationPath(Association):
 
 
 class Dependency(DirectedRelationship, PackageableElement):
-    client: umlproperty[NamedElement, collection[NamedElement]]
-    supplier: umlproperty[NamedElement, collection[NamedElement]]
+    client: relation_many[NamedElement]
+    supplier: relation_many[NamedElement]
 
 
 class Permission(Dependency):
@@ -161,24 +162,24 @@ class Permission(Dependency):
 
 
 class Abstraction(Dependency):
-    mapping: umlproperty[str, str]
+    mapping: attribute[str]
 
 
 class Realization(Abstraction):
-    realizingClassifier: umlproperty[Classifier, Classifier]
-    abstraction: umlproperty[Component, Component]
+    realizingClassifier: relation_one[Classifier]
+    abstraction: relation_one[Component]
 
 
 class TypedElement(NamedElement):
-    type: umlproperty[Type, Type]
-    typeValue: umlproperty[str, str]
+    type: relation_one[Type]
+    typeValue: attribute[str]
 
 
 class ObjectNode(TypedElement, ActivityNode):
-    ordering: umlproperty[str, str]
-    isControlType: umlproperty[int, int]
-    upperBound: umlproperty[str, str]
-    selection: umlproperty[Behavior, Behavior]
+    ordering: enumeration
+    isControlType: attribute[int]
+    upperBound: attribute[str]
+    selection: relation_one[Behavior]
 
 
 class Pin(ObjectNode):
@@ -186,43 +187,43 @@ class Pin(ObjectNode):
 
 
 class Generalization(DirectedRelationship):
-    isSubstitutable: umlproperty[int, int]
-    general: umlproperty[Classifier, Classifier]
-    specific: umlproperty[Classifier, Classifier]
+    isSubstitutable: attribute[int]
+    general: relation_one[Classifier]
+    specific: relation_one[Classifier]
 
 
 class BehavioredClassifier(Classifier):
-    ownedBehavior: umlproperty[Behavior, collection[Behavior]]
-    ownedTrigger: umlproperty[Trigger, collection[Trigger]]
-    implementation: umlproperty[Implementation, collection[Implementation]]
+    ownedBehavior: relation_many[Behavior]
+    ownedTrigger: relation_many[Trigger]
+    implementation: relation_many[Implementation]  # type: ignore[assignment]
 
 
 class StructuredClassifier(Classifier):
-    ownedConnector: umlproperty[Connector, collection[Connector]]
-    ownedAttribute: umlproperty[Property, collection[Property]]
-    role: umlproperty[ConnectableElement, collection[ConnectableElement]]
+    ownedConnector: relation_many[Connector]
+    ownedAttribute: relation_many[Property]
+    role: relation_many[ConnectableElement]
     part: property
 
 
 class EncapsulatedClassifer(StructuredClassifier):
-    ownedPort: umlproperty[Port, collection[Port]]
+    ownedPort: relation_many[Port]
 
 
 class Class(BehavioredClassifier, EncapsulatedClassifer):
-    ownedOperation: umlproperty[Operation, collection[Operation]]
-    nestedClassifier: umlproperty[Classifier, collection[Classifier]]
-    ownedAttribute: umlproperty[Property, collection[Property]]
-    ownedReception: umlproperty[Reception, collection[Reception]]
+    ownedOperation: relation_many[Operation]
+    nestedClassifier: relation_many[Classifier]
+    ownedAttribute: relation_many[Property]
+    ownedReception: relation_many[Reception]
     extension: property
-    superClass: property
+    superClass: derived[Classifier]
 
 
 class DeploymentTarget(NamedElement):
-    deployment: umlproperty[Deployment, collection[Deployment]]
+    deployment: relation_many[Deployment]
 
 
 class Node(Class, DeploymentTarget):
-    nestedNode: umlproperty[Node, collection[Node]]
+    nestedNode: relation_many[Node]
 
 
 class Device(Node):
@@ -230,25 +231,25 @@ class Device(Node):
 
 
 class MultiplicityElement(Element):
-    isUnique: umlproperty[int, int]
-    isOrdered: umlproperty[int, int]
-    upperValue: umlproperty[str, str]
-    lowerValue: umlproperty[str, str]
-    lower: umlproperty[str, str]
-    upper: umlproperty[str, str]
+    isUnique: attribute[int]
+    isOrdered: attribute[int]
+    upperValue: attribute[str]
+    lowerValue: attribute[str]
+    lower: attribute[str]
+    upper: attribute[str]
 
 
 class StructuralFeature(MultiplicityElement, TypedElement, Feature):
-    isReadOnly: umlproperty[int, int]
-    slot: umlproperty[Slot, collection[Slot]]
+    isReadOnly: attribute[int]
+    slot: relation_many[Slot]
 
 
 class UseCase(BehavioredClassifier):
-    subject: umlproperty[Classifier, collection[Classifier]]
-    extensionPoint: umlproperty[ExtensionPoint, collection[ExtensionPoint]]
-    include: umlproperty[Include, collection[Include]]
-    extend: umlproperty[Extend, collection[Extend]]
-    ownedAttribute: umlproperty[Property, collection[Property]]
+    subject: relation_many[Classifier]
+    extensionPoint: relation_many[ExtensionPoint]
+    include: relation_many[Include]
+    extend: relation_many[Extend]
+    ownedAttribute: relation_many[Property]
 
 
 class InputPin(Pin):
@@ -260,42 +261,42 @@ class Manifestation(Abstraction):
 
 
 class Component(Class):
-    isIndirectlyInstantiated: umlproperty[int, int]
-    realization: umlproperty[Realization, collection[Realization]]
+    isIndirectlyInstantiated: attribute[int]
+    realization: relation_many[Realization]
     required: property
     provided: property
-    ownedMember: umlproperty[PackageableElement, collection[PackageableElement]]
+    ownedMember: relation_many[PackageableElement]  # type: ignore[assignment]
 
 
 class ConnectableElement(TypedElement):
-    end: umlproperty[ConnectorEnd, collection[ConnectorEnd]]
+    end: relation_many[ConnectorEnd]
 
 
 class Interface(Classifier, ConnectableElement):
-    ownedAttribute: umlproperty[Property, collection[Property]]
-    redefinedInterface: umlproperty[Interface, collection[Interface]]
-    nestedInterface: umlproperty[Interface, collection[Interface]]
-    ownedOperation: umlproperty[Operation, collection[Operation]]
-    ownedReception: umlproperty[Reception, collection[Reception]]
+    ownedAttribute: relation_many[Property]
+    redefinedInterface: relation_many[Interface]
+    nestedInterface: relation_many[Interface]
+    ownedOperation: relation_many[Operation]
+    ownedReception: relation_many[Reception]
 
 
 class Include(DirectedRelationship):
-    addition: umlproperty[UseCase, UseCase]
-    includingCase: umlproperty[UseCase, UseCase]
+    addition: relation_one[UseCase]
+    includingCase: relation_one[UseCase]
 
 
 class PackageImport(DirectedRelationship):
-    visibility: umlproperty[str, str]
-    importedPackage: umlproperty[Package, Package]
-    importingNamespace: umlproperty[Namespace, Namespace]
+    visibility: enumeration
+    importedPackage: relation_one[Package]
+    importingNamespace: relation_one[Namespace]
 
 
 class ProfileApplication(PackageImport):
-    importedProfile: umlproperty[Profile, Profile]
+    importedProfile: relation_one[Profile]
 
 
 class ExtensionPoint(RedefinableElement):
-    useCase: umlproperty[UseCase, UseCase]
+    useCase: relation_one[UseCase]
 
 
 class Usage(Dependency):
@@ -303,50 +304,50 @@ class Usage(Dependency):
 
 
 class ElementImport(DirectedRelationship):
-    visibility: umlproperty[str, str]
-    alias: umlproperty[str, str]
-    importingNamespace: umlproperty[Namespace, Namespace]
-    importedElement: umlproperty[PackageableElement, PackageableElement]
+    visibility: enumeration
+    alias: attribute[str]
+    importingNamespace: relation_one[Namespace]
+    importedElement: relation_one[PackageableElement]
 
 
 class Property(StructuralFeature, ConnectableElement):
-    aggregation: umlproperty[str, str]
-    isDerivedUnion: umlproperty[int, int]
-    isDerived: umlproperty[int, int]
-    isReadOnly: umlproperty[int, int]
-    navigability: property
-    datatype: umlproperty[DataType, DataType]
-    subsettedProperty: umlproperty[Property, collection[Property]]
-    classifier: umlproperty[Classifier, Classifier]
-    redefinedProperty: umlproperty[Property, collection[Property]]
-    class_: umlproperty[Class, Class]
-    defaultValue: umlproperty[str, str]
-    association: umlproperty[Association, Association]
-    interface_: umlproperty[Interface, Interface]
-    owningAssociation: umlproperty[Association, Association]
-    useCase: umlproperty[UseCase, UseCase]
-    actor: umlproperty[Actor, Actor]
-    isComposite: umlproperty[Namespace, Namespace]
-    opposite: property
+    aggregation: enumeration
+    isDerivedUnion: attribute[int]
+    isDerived: attribute[int]
+    isReadOnly: attribute[int]
+    datatype: relation_one[DataType]
+    subsettedProperty: relation_many[Property]
+    classifier: relation_one[Classifier]
+    redefinedProperty: relation_many[Property]
+    class_: relation_one[Class]
+    defaultValue: attribute[str]
+    association: relation_one[Association]
+    interface_: relation_one[Interface]
+    owningAssociation: relation_one[Association]
+    useCase: relation_one[UseCase]
+    actor: relation_one[Actor]
+    isComposite: derived[bool]
+    navigability: derived[Optional[bool]]
+    opposite: relation_one[Optional[Property]]
 
 
 class ExtensionEnd(Property):
-    type: umlproperty[Stereotype, Stereotype]
+    type: relation_one[Stereotype]  # type: ignore[assignment]
 
 
 class DataType(Classifier):
-    ownedAttribute: umlproperty[Property, collection[Property]]
-    ownedOperation: umlproperty[Operation, collection[Operation]]
+    ownedAttribute: relation_many[Property]
+    ownedOperation: relation_many[Operation]
 
 
 class Enumeration(DataType):
-    literal: umlproperty[EnumerationLiteral, collection[EnumerationLiteral]]
+    literal: relation_many[EnumerationLiteral]
 
 
 class Slot(Element):
-    value: umlproperty[str, str]
-    owningInstance: umlproperty[InstanceSpecification, InstanceSpecification]
-    definingFeature: umlproperty[StructuralFeature, StructuralFeature]
+    value: attribute[str]
+    owningInstance: relation_one[InstanceSpecification]
+    definingFeature: relation_one[StructuralFeature]
 
 
 class ExecutableNode(ActivityNode):
@@ -370,11 +371,11 @@ class DeployedArtifact(NamedElement):
 
 
 class Artifact(Classifier, DeployedArtifact):
-    manifestation: umlproperty[Manifestation, collection[Manifestation]]
+    manifestation: relation_many[Manifestation]
 
 
 class ActivityParameterNode(ObjectNode):
-    parameter: umlproperty[Parameter, Parameter]
+    parameter: relation_one[Parameter]
 
 
 class PrimitiveType(DataType):
@@ -382,51 +383,51 @@ class PrimitiveType(DataType):
 
 
 class DecisionNode(ControlNode):
-    decisionInput: umlproperty[Behavior, Behavior]
+    decisionInput: relation_one[Behavior]
 
 
 class Package(Namespace, PackageableElement):
-    ownedDiagram: umlproperty[Diagram, collection[Diagram]]
-    nestedPackage: umlproperty[Package, collection[Package]]
-    package: umlproperty[Package, Package]
-    ownedClassifier: umlproperty[Type, collection[Type]]
-    packageExtension: umlproperty[PackageMerge, collection[PackageMerge]]
-    appliedProfile: umlproperty[ProfileApplication, collection[ProfileApplication]]
-    ownedMember: umlproperty[PackageableElement, collection[PackageableElement]]
+    ownedDiagram: relation_many[Diagram]
+    nestedPackage: relation_many[Package]
+    package: relation_one[Package]
+    ownedClassifier: relation_many[Type]
+    packageExtension: relation_many[PackageMerge]
+    appliedProfile: relation_many[ProfileApplication]
+    ownedMember: relation_many[PackageableElement]  # type: ignore[assignment]
 
 
 class Profile(Package):
-    metamodelReference: umlproperty[PackageImport, collection[PackageImport]]
-    ownedStereotype: umlproperty[Stereotype, collection[Stereotype]]
-    metaclassReference: umlproperty[ElementImport, collection[ElementImport]]
+    metamodelReference: relation_many[PackageImport]
+    ownedStereotype: relation_many[Stereotype]
+    metaclassReference: relation_many[ElementImport]
 
 
 class Behavior(Class):
-    isReentrant: umlproperty[int, int]
-    redefinedBehavior: umlproperty[Behavior, collection[Behavior]]
-    context: umlproperty[BehavioredClassifier, BehavioredClassifier]
+    isReentrant: attribute[int]
+    redefinedBehavior: relation_many[Behavior]
+    context: relation_one[BehavioredClassifier]
 
 
 class Activity(Behavior):
-    body: umlproperty[str, str]
-    language: umlproperty[str, str]
-    edge: umlproperty[ActivityEdge, collection[ActivityEdge]]
-    group: umlproperty[ActivityGroup, collection[ActivityGroup]]
-    node: umlproperty[ActivityNode, collection[ActivityNode]]
-    action: umlproperty[Action, collection[Action]]
+    body: attribute[str]
+    language: attribute[str]
+    edge: relation_many[ActivityEdge]
+    group: relation_many[ActivityGroup]
+    node: relation_many[ActivityNode]
+    action: relation_many[Action]
 
 
 class Implementation(Realization):
-    contract: umlproperty[Interface, Interface]
-    implementatingClassifier: umlproperty[BehavioredClassifier, BehavioredClassifier]
+    contract: relation_many[Interface]  # type: ignore[assignment]
+    implementatingClassifier: relation_many[BehavioredClassifier]  # type: ignore[assignment]
 
 
 class Parameter(TypedElement, MultiplicityElement):
-    direction: umlproperty[str, str]
-    defaultValue: umlproperty[str, str]
-    ownerFormalParam: umlproperty[BehavioralFeature, BehavioralFeature]
-    ownerReturnParam: umlproperty[BehavioralFeature, BehavioralFeature]
-    operation: umlproperty[Operation, Operation]
+    direction: enumeration
+    defaultValue: attribute[str]
+    ownerFormalParam: relation_one[BehavioralFeature]
+    ownerReturnParam: relation_one[BehavioralFeature]
+    operation: relation_one[Operation]  # type: ignore[assignment]
 
 
 # 24: override Presentation
@@ -434,26 +435,26 @@ from gaphor.UML.presentation import Presentation
 
 
 class BehavioralFeature(Feature, Namespace):
-    isAbstract: umlproperty[int, int]
-    method: umlproperty[Behavior, collection[Behavior]]
-    formalParameter: umlproperty[Parameter, collection[Parameter]]
-    raisedException: umlproperty[Type, collection[Type]]
-    returnResult: umlproperty[Parameter, collection[Parameter]]
-    parameter: umlproperty[Parameter, collection[Parameter]]
+    isAbstract: attribute[int]
+    method: relation_many[Behavior]
+    formalParameter: relation_many[Parameter]
+    raisedException: relation_many[Type]
+    returnResult: relation_many[Parameter]
+    parameter: relation_many[Parameter]
 
 
 class Operation(BehavioralFeature):
-    isQuery: umlproperty[int, int]
-    precondition: umlproperty[Constraint, collection[Constraint]]
-    bodyCondition: umlproperty[Constraint, Constraint]
-    redefinedOperation: umlproperty[Operation, collection[Operation]]
-    class_: umlproperty[Class, Class]
-    datatype: umlproperty[DataType, DataType]
-    postcondition: umlproperty[Constraint, collection[Constraint]]
-    interface_: umlproperty[Interface, Interface]
-    raisedException: umlproperty[Type, collection[Type]]
-    type: umlproperty[DataType, DataType]
-    formalParameter: umlproperty[Parameter, collection[Parameter]]
+    isQuery: attribute[int]
+    precondition: relation_many[Constraint]
+    bodyCondition: relation_one[Constraint]
+    redefinedOperation: relation_many[Operation]
+    class_: relation_one[Class]
+    datatype: relation_one[DataType]
+    postcondition: relation_many[Constraint]
+    interface_: relation_one[Interface]
+    raisedException: relation_many[Type]
+    type: derivedunion[DataType]
+    formalParameter: relation_many[Parameter]  # type: ignore[assignment]
 
 
 class ControlFlow(ActivityEdge):
@@ -461,8 +462,8 @@ class ControlFlow(ActivityEdge):
 
 
 class Substitution(Realization):
-    contract: umlproperty[Classifier, Classifier]
-    substitutingClassifier: umlproperty[Classifier, Classifier]
+    contract: relation_one[Classifier]
+    substitutingClassifier: relation_one[Classifier]
 
 
 class OutputPin(Pin):
@@ -470,19 +471,19 @@ class OutputPin(Pin):
 
 
 class ValuePin(InputPin):
-    value_: umlproperty[str, str]
+    value_: attribute[str]
 
 
 class Action(ExecutableNode):
-    effect: umlproperty[str, str]
-    output: umlproperty[OutputPin, collection[OutputPin]]
-    context_: umlproperty[Classifier, Classifier]
-    input: umlproperty[InputPin, collection[InputPin]]
+    effect: attribute[str]
+    output: relation_many[OutputPin]
+    context_: relation_one[Classifier]
+    input: relation_many[InputPin]
 
 
 class Comment(Element):
-    body: umlproperty[str, str]
-    annotatedElement: umlproperty[Element, collection[Element]]
+    body: attribute[str]
+    annotatedElement: relation_many[Element]
 
 
 class ExecutionEnvironment(Node):
@@ -490,96 +491,96 @@ class ExecutionEnvironment(Node):
 
 
 class Extend(DirectedRelationship):
-    extendedCase: umlproperty[UseCase, UseCase]
-    extensionLocation: umlproperty[ExtensionPoint, collection[ExtensionPoint]]
-    extension: umlproperty[UseCase, UseCase]
-    constraint: umlproperty[Constraint, Constraint]
+    extendedCase: relation_one[UseCase]
+    extensionLocation: relation_many[ExtensionPoint]
+    extension: relation_one[UseCase]
+    constraint: relation_one[Constraint]
 
 
 class ActivityGroup(Element):
-    activity: umlproperty[Activity, Activity]
-    edgeContents: umlproperty[ActivityEdge, collection[ActivityEdge]]
-    nodeContents: umlproperty[ActivityNode, collection[ActivityNode]]
-    superGroup: umlproperty[ActivityGroup, ActivityGroup]
-    subgroup: umlproperty[ActivityGroup, collection[ActivityGroup]]
+    activity: relation_one[Activity]
+    edgeContents: relation_many[ActivityEdge]
+    nodeContents: relation_many[ActivityNode]
+    superGroup: relation_one[ActivityGroup]
+    subgroup: relation_many[ActivityGroup]
 
 
 class Constraint(PackageableElement):
-    constrainedElement: umlproperty[Element, collection[Element]]
-    specification: umlproperty[str, str]
-    owningState: umlproperty[State, State]
-    context: umlproperty[Namespace, Namespace]
+    constrainedElement: relation_many[Element]
+    specification: attribute[str]
+    owningState: relation_one[State]
+    context: derivedunion[Namespace]
 
 
 class InteractionFragment(NamedElement):
-    enclosingInteraction: umlproperty[Interaction, Interaction]
-    covered: umlproperty[Lifeline, Lifeline]
-    generalOrdering: umlproperty[GeneralOrdering, collection[GeneralOrdering]]
+    enclosingInteraction: relation_one[Interaction]
+    covered: relation_one[Lifeline]
+    generalOrdering: relation_many[GeneralOrdering]
 
 
 class Interaction(Behavior, InteractionFragment):
-    fragment: umlproperty[InteractionFragment, collection[InteractionFragment]]
-    lifeline: umlproperty[Lifeline, collection[Lifeline]]
-    message: umlproperty[Message, collection[Message]]
+    fragment: relation_many[InteractionFragment]
+    lifeline: relation_many[Lifeline]
+    message: relation_many[Message]
 
 
 class ExecutionOccurence(InteractionFragment):
-    finish: umlproperty[OccurrenceSpecification, OccurrenceSpecification]
-    start: umlproperty[OccurrenceSpecification, OccurrenceSpecification]
-    behavior: umlproperty[Behavior, collection[Behavior]]
+    finish: relation_one[OccurrenceSpecification]
+    start: relation_one[OccurrenceSpecification]
+    behavior: relation_many[Behavior]
 
 
 class StateInvariant(InteractionFragment):
-    invariant: umlproperty[Constraint, Constraint]
+    invariant: relation_one[Constraint]
 
 
 class Lifeline(NamedElement):
-    coveredBy: umlproperty[InteractionFragment, collection[InteractionFragment]]
-    interaction: umlproperty[Interaction, Interaction]
-    discriminator: umlproperty[str, str]
+    coveredBy: relation_many[InteractionFragment]
+    interaction: relation_one[Interaction]
+    discriminator: attribute[str]
     parse: Callable[[Lifeline, str], None]
     render: Callable[[Lifeline], str]
 
 
 class Message(NamedElement):
     messageKind: property
-    messageSort: umlproperty[str, str]
-    argument: umlproperty[str, str]
-    signature: umlproperty[NamedElement, NamedElement]
-    sendEvent: umlproperty[MessageEnd, MessageEnd]
-    receiveEvent: umlproperty[MessageEnd, MessageEnd]
-    interaction: umlproperty[Interaction, Interaction]
+    messageSort: enumeration
+    argument: attribute[str]
+    signature: relation_one[NamedElement]
+    sendEvent: relation_one[MessageEnd]
+    receiveEvent: relation_one[MessageEnd]
+    interaction: relation_one[Interaction]
 
 
 class MessageEnd(NamedElement):
-    sendMessage: umlproperty[Message, Message]
-    receiveMessage: umlproperty[Message, Message]
+    sendMessage: relation_one[Message]
+    receiveMessage: relation_one[Message]
 
 
 class OccurrenceSpecification(InteractionFragment):
-    toAfter: umlproperty[GeneralOrdering, collection[GeneralOrdering]]
-    toBefore: umlproperty[GeneralOrdering, collection[GeneralOrdering]]
-    finishExec: umlproperty[ExecutionOccurence, collection[ExecutionOccurence]]
-    startExec: umlproperty[ExecutionOccurence, collection[ExecutionOccurence]]
+    toAfter: relation_many[GeneralOrdering]
+    toBefore: relation_many[GeneralOrdering]
+    finishExec: relation_many[ExecutionOccurence]
+    startExec: relation_many[ExecutionOccurence]
 
 
 class GeneralOrdering(NamedElement):
-    before: umlproperty[OccurrenceSpecification, OccurrenceSpecification]
-    after: umlproperty[OccurrenceSpecification, OccurrenceSpecification]
+    before: relation_one[OccurrenceSpecification]
+    after: relation_one[OccurrenceSpecification]
 
 
 class Connector(Feature):
-    kind: umlproperty[str, str]
-    redefinedConnector: umlproperty[Connector, collection[Connector]]
-    type: umlproperty[Association, Association]
-    end: umlproperty[ConnectorEnd, collection[ConnectorEnd]]
-    contract: umlproperty[Behavior, collection[Behavior]]
+    kind: enumeration
+    redefinedConnector: relation_many[Connector]
+    type: relation_one[Association]
+    end: relation_many[ConnectorEnd]
+    contract: relation_many[Behavior]
 
 
 class ConnectorEnd(MultiplicityElement):
-    role: umlproperty[ConnectableElement, ConnectableElement]
-    partWithPort: umlproperty[Property, Property]
-    definingEnd: umlproperty[Property, Property]
+    role: relation_one[ConnectableElement]
+    partWithPort: relation_one[Property]
+    definingEnd: relation_one[Property]
 
 
 class FlowFinalNode(FinalNode):
@@ -587,8 +588,8 @@ class FlowFinalNode(FinalNode):
 
 
 class JoinNode(ControlNode):
-    isCombineDuplicate: umlproperty[int, int]
-    joinSpec: umlproperty[str, str]
+    isCombineDuplicate: attribute[int]
+    joinSpec: attribute[str]
 
 
 class ForkNode(ControlNode):
@@ -596,55 +597,55 @@ class ForkNode(ControlNode):
 
 
 class StateMachine(Behavior):
-    region: umlproperty[Region, collection[Region]]
-    extendedStateMachine: umlproperty[StateMachine, StateMachine]
+    region: relation_many[Region]
+    extendedStateMachine: relation_one[StateMachine]
 
 
 class Region(Namespace, RedefinableElement):
-    stateMachine: umlproperty[StateMachine, StateMachine]
-    subvertex: umlproperty[Vertex, collection[Vertex]]
-    state: umlproperty[State, State]
-    extendedRegion: umlproperty[Region, collection[Region]]
+    stateMachine: relation_one[StateMachine]
+    subvertex: relation_many[Vertex]
+    state: relation_one[State]
+    extendedRegion: relation_many[Region]  # type: ignore[assignment]
 
 
 # 30: override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
-    kind: umlproperty[str, str]
-    container: umlproperty[Region, Region]
-    source: umlproperty[Vertex, Vertex]
-    target: umlproperty[Vertex, Vertex]
-    effect: umlproperty[Behavior, Behavior]
-    guard: umlproperty[Constraint, Constraint]
-    redefintionContext: umlproperty[Classifier, Classifier]
-    redefinedTransition: umlproperty[Transition, Transition]
+    kind: enumeration
+    container: relation_one[Region]
+    source: relation_one[Vertex]
+    target: relation_one[Vertex]
+    effect: relation_one[Behavior]
+    guard: relation_one[Constraint]
+    redefinitionContext: relation_many[Classifier]
+    redefinedTransition: relation_many[Transition]
 
 
 class Vertex(NamedElement):
-    container: umlproperty[Region, Region]
-    outgoing: umlproperty[Transition, collection[Transition]]
-    incoming: umlproperty[Transition, collection[Transition]]
+    container: relation_one[Region]
+    outgoing: relation_many[Transition]
+    incoming: relation_many[Transition]
 
 
 class Pseudostate(Vertex):
-    kind: umlproperty[str, str]
-    stateMachine: umlproperty[StateMachine, StateMachine]
-    state: umlproperty[State, State]
+    kind: enumeration
+    stateMachine: relation_one[StateMachine]
+    state: relation_one[State]
 
 
 class ConnectionPointReference(Vertex):
-    entry: umlproperty[Pseudostate, collection[Pseudostate]]
-    exit: umlproperty[Pseudostate, collection[Pseudostate]]
-    state: umlproperty[State, State]
+    entry: relation_many[Pseudostate]
+    exit: relation_many[Pseudostate]
+    state: relation_one[State]
 
 
 class State(Vertex, Namespace, RedefinableElement):
-    entry: umlproperty[Behavior, Behavior]
-    exit: umlproperty[Behavior, Behavior]
-    doActivity: umlproperty[Behavior, Behavior]
-    statevariant: umlproperty[Constraint, Constraint]
-    submachine: umlproperty[StateMachine, StateMachine]
-    redefinedState: umlproperty[State, State]
+    entry: relation_one[Behavior]
+    exit: relation_one[Behavior]
+    doActivity: relation_one[Behavior]
+    statevariant: relation_one[Constraint]
+    submachine: relation_one[StateMachine]
+    redefinedState: relation_many[State]  # type: ignore[assignment]
 
 
 class FinalState(State):
@@ -652,20 +653,20 @@ class FinalState(State):
 
 
 class Port(Property):
-    isBehavior: umlproperty[int, int]
-    isService: umlproperty[int, int]
+    isBehavior: attribute[int]
+    isService: attribute[int]
 
 
 class Deployment(Dependency):
-    deployedArtifact: umlproperty[DeployedArtifact, collection[DeployedArtifact]]
+    deployedArtifact: relation_many[DeployedArtifact]
 
 
 class ActivityPartition(ActivityGroup, NamedElement):
-    isDimension: umlproperty[int, int]
-    isExternal: umlproperty[int, int]
-    node: umlproperty[ActivityNode, collection[ActivityNode]]
-    represents: umlproperty[Element, Element]
-    subpartition: umlproperty[ActivityPartition, collection[ActivityPartition]]
+    isDimension: attribute[int]
+    isExternal: attribute[int]
+    node: relation_many[ActivityNode]
+    represents: relation_one[Element]
+    subpartition: relation_many[ActivityPartition]
 
 
 class MessageOccurrenceSpecification(MessageEnd, OccurrenceSpecification):
@@ -673,23 +674,23 @@ class MessageOccurrenceSpecification(MessageEnd, OccurrenceSpecification):
 
 
 class AcceptEventAction(Action):
-    isUnmarshall: umlproperty[int, int]
-    result: umlproperty[OutputPin, collection[OutputPin]]
+    isUnmarshall: attribute[int]
+    result: relation_many[OutputPin]
 
 
 class ReplyAction(Action):
-    replyValue: umlproperty[InputPin, InputPin]
-    returnInformation: umlproperty[InputPin, InputPin]
+    replyValue: relation_one[InputPin]
+    returnInformation: relation_one[InputPin]
 
 
 class UnmarshallAction(Action):
-    result: umlproperty[OutputPin, collection[OutputPin]]
-    unmarshallType: umlproperty[Classifier, Classifier]
-    object: umlproperty[InputPin, InputPin]
+    result: relation_many[OutputPin]
+    unmarshallType: relation_one[Classifier]
+    object: relation_one[InputPin]
 
 
 class AcceptCallAction(AcceptEventAction):
-    returnInformation: umlproperty[OutputPin, OutputPin]
+    returnInformation: relation_one[OutputPin]
 
 
 class InvocationAction(Action):
@@ -697,15 +698,15 @@ class InvocationAction(Action):
 
 
 class SendSignalAction(InvocationAction):
-    target: umlproperty[InputPin, collection[InputPin]]
+    target: relation_many[InputPin]
 
 
 class Collaboration(StructuredClassifier, BehavioredClassifier):
-    collaborationRole: umlproperty[ConnectableElement, collection[ConnectableElement]]
+    collaborationRole: relation_many[ConnectableElement]
 
 
 class Trigger(NamedElement):
-    event: umlproperty[Event, Event]
+    event: relation_one[Event]
 
 
 class Event(PackageableElement):
@@ -729,27 +730,27 @@ class DestructionEvent(Event):
 
 
 class SendOperationEvent(MessageEvent):
-    operation: umlproperty[Operation, Operation]
+    operation: relation_one[Operation]
 
 
 class SendSignalEvent(MessageEvent):
-    signal: umlproperty[Signal, Signal]
+    signal: relation_one[Signal]
 
 
 class ReceiveOperationEvent(MessageEvent):
-    operation: umlproperty[Operation, Operation]
+    operation: relation_one[Operation]
 
 
 class ReceiveSignalEvent(MessageEvent):
-    signal: umlproperty[Signal, Signal]
+    signal: relation_one[Signal]
 
 
 class Signal(Classifier):
-    ownedAttribute: umlproperty[Property, collection[Property]]
+    ownedAttribute: relation_many[Property]
 
 
 class Reception(BehavioralFeature):
-    signal: umlproperty[Signal, Signal]
+    signal: relation_one[Signal]
 
 
 import gaphor.UML.uml2overrides as overrides
@@ -778,14 +779,6 @@ NamedElement.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
 NamedElement.name = attribute("name", str)
-# 48: override NamedElement.qualifiedName: property
-
-NamedElement.qualifiedName = property(
-    overrides.namedelement_qualifiedname,
-    doc=overrides.namedelement_qualifiedname.__doc__,
-)
-
-
 Component.isIndirectlyInstantiated = attribute(
     "isIndirectlyInstantiated", int, default=True
 )
@@ -810,11 +803,6 @@ Property.aggregation = enumeration(
 Property.isDerivedUnion = attribute("isDerivedUnion", int, default=False)
 Property.isDerived = attribute("isDerived", int, default=False)
 Property.isReadOnly = attribute("isReadOnly", int, default=False)
-# 102: override Property.navigability: property
-Property.navigability = property(
-    overrides.property_navigability, doc=overrides.property_navigability.__doc__
-)
-
 Behavior.isReentrant = attribute("isReentrant", int)
 BehavioralFeature.isAbstract = attribute("isAbstract", int)
 Action.effect = attribute("effect", str)
@@ -822,7 +810,7 @@ Comment.body = attribute("body", str)
 PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
-# 120: override Message.messageKind: property
+# 118: override Message.messageKind: property
 Message.messageKind = property(
     overrides.message_messageKind, doc=overrides.message_messageKind.__doc__
 )
@@ -1311,27 +1299,36 @@ SendOperationEvent.operation = association("operation", Operation, lower=1, uppe
 SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
 ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-# 42: override MultiplicityElement.lower(MultiplicityElement.lowerValue): umlproperty[str, str]
-MultiplicityElement.lower = derived(
-    "lower", object, 0, 1, lambda obj: [obj.lowerValue], MultiplicityElement.lowerValue
-)
+# 48: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
-# 45: override MultiplicityElement.upper(MultiplicityElement.upperValue): umlproperty[str, str]
-MultiplicityElement.upper = derived(
-    "upper", object, 0, 1, lambda obj: [obj.upperValue], MultiplicityElement.upperValue
-)
-
-# 96: override Property.isComposite(Property.aggregation): umlproperty[Namespace, Namespace]
-Property.isComposite = derived(
-    "isComposite",
-    bool,
+NamedElement.qualifiedName = derived(
+    NamedElement,
+    "qualifiedName",
+    List[str],
     0,
     1,
-    lambda obj: [obj.aggregation == "composite"],
-    Property.aggregation,
+    lambda obj: [overrides.namedelement_qualifiedname(obj)],
+)
+
+
+# 42: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
+MultiplicityElement.lower = MultiplicityElement.lowerValue
+
+# 45: override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
+MultiplicityElement.upper = MultiplicityElement.upperValue
+
+# 94: override Property.isComposite(Property.aggregation): derived[bool]
+Property.isComposite = derived(
+    Property, "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
+)
+
+# 100: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
+Property.navigability = derived(
+    Property, "navigability", bool, 0, 1, overrides.property_navigability
 )
 
 RedefinableElement.redefinedElement = derivedunion(
+    RedefinableElement,
     "redefinedElement",
     RedefinableElement,
     0,
@@ -1344,6 +1341,7 @@ RedefinableElement.redefinedElement = derivedunion(
     Connector.redefinedConnector,
 )
 Classifier.attribute = derivedunion(
+    Classifier,
     "attribute",
     Property,
     0,
@@ -1356,6 +1354,7 @@ Classifier.attribute = derivedunion(
     Signal.ownedAttribute,
 )
 Classifier.feature = derivedunion(
+    Classifier,
     "feature",
     Feature,
     0,
@@ -1371,6 +1370,7 @@ Classifier.feature = derivedunion(
     Interface.ownedReception,
 )
 Feature.featuringClassifier = derivedunion(
+    Feature,
     "featuringClassifier",
     Classifier,
     1,
@@ -1382,12 +1382,13 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 93: override Property.opposite: property
-Property.opposite = property(
-    overrides.property_opposite, doc=overrides.property_opposite.__doc__
+# 91: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
+Property.opposite = derived(
+    Property, "opposite", Optional[Property], 0, 1, overrides.property_opposite
 )
 
 BehavioralFeature.parameter = derivedunion(
+    BehavioralFeature,
     "parameter",
     Parameter,
     0,
@@ -1395,8 +1396,9 @@ BehavioralFeature.parameter = derivedunion(
     BehavioralFeature.returnResult,
     BehavioralFeature.formalParameter,
 )
-Action.output = derivedunion("output", OutputPin, 0, "*")
+Action.output = derivedunion(Action, "output", OutputPin, 0, "*")
 RedefinableElement.redefinitionContext = derivedunion(
+    RedefinableElement,
     "redefinitionContext",
     Classifier,
     0,
@@ -1406,6 +1408,7 @@ RedefinableElement.redefinitionContext = derivedunion(
     Operation.datatype,
 )
 NamedElement.namespace = derivedunion(
+    NamedElement,
     "namespace",
     Namespace,
     0,
@@ -1435,6 +1438,7 @@ NamedElement.namespace = derivedunion(
     ConnectionPointReference.state,
 )
 Namespace.ownedMember = derivedunion(
+    Namespace,
     "ownedMember",
     NamedElement,
     0,
@@ -1475,39 +1479,40 @@ Namespace.ownedMember = derivedunion(
     Class.ownedReception,
     Interface.ownedReception,
 )
-# 82: override Classifier.general: property
-Classifier.general = property(
+# 82: override Classifier.general(Generalization.general): derived[Classifier]
+Classifier.general = derived(
+    Classifier,
+    "general",
+    Classifier,
+    0,
+    "*",
     lambda self: [g.general for g in self.generalization],
-    doc="""
-    Return a list of all superclasses for class (iterating the Generalizations.
-    """,
 )
 
-# 53: override Association.endType(Association.memberEnd, Property.type): umlproperty[Type, collection[Type]]
+# 53: override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
 # References the classifiers that are used as types of the ends of the
 # association.
 
 Association.endType = derived(
+    Association,
     "endType",
     Type,
     0,
     "*",
     lambda self: [end.type for end in self.memberEnd if end],
-    Association.memberEnd,
-    Property.type,
 )
 
 
-# 99: override Constraint.context: umlproperty[Namespace, Namespace]
-Constraint.context = derivedunion("context", Namespace, 0, 1)
+# 97: override Constraint.context: derivedunion[Namespace]
+Constraint.context = derivedunion(Constraint, "context", Namespace, 0, 1)
 
-# 105: override Operation.type: umlproperty[DataType, DataType]
-Operation.type = derivedunion("type", DataType, 0, 1)
+# 103: override Operation.type: derivedunion[DataType]
+Operation.type = derivedunion(Operation, "type", DataType, 0, 1)
 
 # 73: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
-# Extension.metaclass = derived('metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
+# Extension.metaclass = derived(Extension, 'metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 # Extension.metaclass.filter = extension_metaclass
 Extension.metaclass = property(
     overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__
@@ -1518,7 +1523,7 @@ Extension.metaclass = property(
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
 # TODO: use those as soon as Extension.metaclass can be used.
-# Class.extension = derived('extension', Extension, 0, '*', class_extension, Extension.metaclass)
+# Class.extension = derived(Class, 'extension', Extension, 0, '*', class_extension, Extension.metaclass)
 
 Class.extension = property(
     lambda self: self.model.lselect(
@@ -1530,6 +1535,7 @@ are typed by the Class.""",
 )
 
 DirectedRelationship.target = derivedunion(
+    DirectedRelationship,
     "target",
     Element,
     1,
@@ -1544,6 +1550,7 @@ DirectedRelationship.target = derivedunion(
     Substitution.contract,
 )
 DirectedRelationship.source = derivedunion(
+    DirectedRelationship,
     "source",
     Element,
     1,
@@ -1557,8 +1564,9 @@ DirectedRelationship.source = derivedunion(
     PackageImport.importingNamespace,
     PackageMerge.mergingPackage,
 )
-Action.context_ = derivedunion("context_", Classifier, 0, 1)
+Action.context_ = derivedunion(Action, "context_", Classifier, 0, 1)
 Relationship.relatedElement = derivedunion(
+    Relationship,
     "relatedElement",
     Element,
     1,
@@ -1566,14 +1574,19 @@ Relationship.relatedElement = derivedunion(
     DirectedRelationship.target,
     DirectedRelationship.source,
 )
-ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, 0, 1)
-ActivityGroup.subgroup = derivedunion(
-    "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
+ActivityGroup.superGroup = derivedunion(
+    ActivityGroup, "superGroup", ActivityGroup, 0, 1
 )
-# 79: override Classifier.inheritedMember: umlproperty[NamedElement, collection[NamedElement]]
-Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
+ActivityGroup.subgroup = derivedunion(
+    ActivityGroup, "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
+)
+# 79: override Classifier.inheritedMember: derivedunion[NamedElement]
+Classifier.inheritedMember = derivedunion(
+    Classifier, "inheritedMember", NamedElement, 0, "*"
+)
 
 StructuredClassifier.role = derivedunion(
+    StructuredClassifier,
     "role",
     ConnectableElement,
     0,
@@ -1582,6 +1595,7 @@ StructuredClassifier.role = derivedunion(
     Collaboration.collaborationRole,
 )
 Namespace.member = derivedunion(
+    Namespace,
     "member",
     NamedElement,
     0,
@@ -1592,21 +1606,24 @@ Namespace.member = derivedunion(
     Classifier.inheritedMember,
     StructuredClassifier.role,
 )
-# 117: override Component.required: property
+# 115: override Component.required: property
 Component.required = property(
     overrides.component_required, doc=overrides.component_required.__doc__
 )
 
-# 90: override Namespace.importedMember: umlproperty[PackageableElement, collection[PackageableElement]]
-Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
+# 88: override Namespace.importedMember: derivedunion[PackageableElement]
+Namespace.importedMember = derivedunion(
+    Namespace, "importedMember", PackageableElement, 0, "*"
+)
 
-Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
-# 114: override Component.provided: property
+Action.input = derivedunion(Action, "input", InputPin, 0, "*", SendSignalAction.target)
+# 112: override Component.provided: property
 Component.provided = property(
     overrides.component_provided, doc=overrides.component_provided.__doc__
 )
 
 Element.owner = derivedunion(
+    Element,
     "owner",
     Element,
     0,
@@ -1624,6 +1641,7 @@ Element.owner = derivedunion(
     Pseudostate.state,
 )
 Element.ownedElement = derivedunion(
+    Element,
     "ownedElement",
     Element,
     0,
@@ -1654,8 +1672,8 @@ Element.ownedElement = derivedunion(
     Transition.guard,
     DeploymentTarget.deployment,
 )
-ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
-# 123: override StructuredClassifier.part: property
+ConnectorEnd.definingEnd = derivedunion(ConnectorEnd, "definingEnd", Property, 0, 1)
+# 121: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
     lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
     doc="""
@@ -1663,57 +1681,75 @@ StructuredClassifier.part = property(
 """,
 )
 
-# 87: override Class.superClass: property
+# 85: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
-ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
+ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, 1, Property.type)
 ActivityNode.redefinedElement = redefine(
-    ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
+    ActivityNode,
+    "redefinedElement",
+    ActivityNode,
+    "*",
+    RedefinableElement.redefinedElement,
 )
 Implementation.contract = redefine(
-    Implementation, "contract", Interface, Dependency.supplier
+    Implementation, "contract", Interface, "*", Dependency.supplier
 )
 BehavioredClassifier.implementation = redefine(
     BehavioredClassifier,
     "implementation",
     Implementation,
+    "*",
     NamedElement.clientDependency,
 )
 Implementation.implementatingClassifier = redefine(
-    Implementation, "implementatingClassifier", BehavioredClassifier, Dependency.client
+    Implementation,
+    "implementatingClassifier",
+    BehavioredClassifier,
+    "*",
+    Dependency.client,
 )
 Parameter.operation = redefine(
-    Parameter, "operation", Operation, Parameter.ownerFormalParam
+    Parameter, "operation", Operation, 1, Parameter.ownerFormalParam
 )
 Operation.formalParameter = redefine(
-    Operation, "formalParameter", Parameter, BehavioralFeature.formalParameter
+    Operation, "formalParameter", Parameter, "*", BehavioralFeature.formalParameter
 )
 ActivityEdge.redefinedElement = redefine(
-    ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement
+    ActivityEdge,
+    "redefinedElement",
+    ActivityEdge,
+    "*",
+    RedefinableElement.redefinedElement,
 )
 Package.ownedMember = redefine(
-    Package, "ownedMember", PackageableElement, Namespace.ownedMember
+    Package, "ownedMember", PackageableElement, "*", Namespace.ownedMember
 )
 Component.ownedMember = redefine(
-    Component, "ownedMember", PackageableElement, Namespace.ownedMember
+    Component, "ownedMember", PackageableElement, "*", Namespace.ownedMember
 )
 Transition.redefinitionContext = redefine(
     Transition,
     "redefinitionContext",
     Classifier,
+    "*",
     RedefinableElement.redefinitionContext,
 )
 Region.extendedRegion = redefine(
-    Region, "extendedRegion", Region, RedefinableElement.redefinedElement
+    Region, "extendedRegion", Region, "*", RedefinableElement.redefinedElement
 )
 State.redefinedState = redefine(
-    State, "redefinedState", State, RedefinableElement.redefinedElement
+    State, "redefinedState", State, "*", RedefinableElement.redefinedElement
 )
 Transition.redefinedTransition = redefine(
-    Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
+    Transition,
+    "redefinedTransition",
+    Transition,
+    "*",
+    RedefinableElement.redefinedElement,
 )
-# 108: override Lifeline.parse: Callable[[Lifeline, str], None]
+# 106: override Lifeline.parse: Callable[[Lifeline, str], None]
 Lifeline.parse = umllex.parse_lifeline
 
-# 111: override Lifeline.render: Callable[[Lifeline], str]
+# 109: override Lifeline.render: Callable[[Lifeline], str]
 Lifeline.render = umllex.render_lifeline

@@ -1,9 +1,9 @@
 import importlib_metadata
 
 from gaphor import UML
-from gaphor.tests import TestCase
+from gaphor.diagram.actions import ActionItem, FlowItem
 from gaphor.storage import storage
-from gaphor.diagram.actions import FlowItem, ActionItem
+from gaphor.tests import TestCase
 
 
 class ActionIssueTestCase(TestCase):

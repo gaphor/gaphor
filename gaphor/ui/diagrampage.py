@@ -1,34 +1,32 @@
+import logging
 from typing import Optional
 
-import logging
-
-from gi.repository import GLib, Gdk, Gtk
-
+import gaphas.segment  # Just register the handlers in this module
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (
-    PainterChain,
-    ItemPainter,
-    HandlePainter,
-    FocusedItemPainter,
-    ToolPainter,
     BoundingBoxPainter,
+    FocusedItemPainter,
+    HandlePainter,
+    ItemPainter,
+    PainterChain,
+    ToolPainter,
 )
 from gaphas.view import GtkView
-import gaphas.segment  # Just register the handlers in this module
+from gi.repository import Gdk, GLib, Gtk
 
 from gaphor import UML
-from gaphor.UML.event import ElementDeleted, DiagramItemCreated
-from gaphor.core import _, event_handler, transactional, action
+from gaphor.core import action, event_handler, transactional, translate
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.diagramtoolbox import (
+    TOOLBOX_ACTIONS,
     DiagramToolbox,
     TransactionalToolChain,
-    TOOLBOX_ACTIONS,
 )
 from gaphor.ui.event import DiagramSelectionChanged
+from gaphor.UML.event import DiagramItemCreated, ElementDeleted
 
 log = logging.getLogger(__name__)
 
@@ -55,7 +53,7 @@ class DiagramPage:
         self.event_manager.subscribe(self._on_sloppy_lines)
         self.event_manager.subscribe(self._on_diagram_item_created)
 
-    title = property(lambda s: s.diagram and s.diagram.name or _("<None>"))
+    title = property(lambda s: s.diagram and s.diagram.name or translate("<None>"))
 
     def get_diagram(self):
         return self.diagram
@@ -134,12 +132,12 @@ class DiagramPage:
         return shortcuts
 
     @event_handler(ElementDeleted)
-    def _on_element_delete(self, event):
+    def _on_element_delete(self, event: ElementDeleted):
         if event.element is self.diagram:
             self.close()
 
     @event_handler(PropertyChanged)
-    def _on_sloppy_lines(self, event=None):
+    def _on_sloppy_lines(self, event: PropertyChanged = None):
         if not event or event.key == "diagram.sloppiness":
             self.set_drawing_style(event and event.new_value or 0.0)
 
@@ -148,35 +146,39 @@ class DiagramPage:
         Tab is destroyed. Do the same thing that would
         be done if Close was pressed.
         """
+        assert self.widget
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
         self.view = None
 
     @action(
         name="diagram.zoom-in",
-        label=_("Zoom _In"),
+        label=translate("Zoom _In"),
         icon_name="zoom-in",
         shortcut="<Primary>plus",
     )
     def zoom_in(self):
+        assert self.view
         self.view.zoom(1.2)
 
     @action(
         name="diagram.zoom-out",
-        label=_("Zoom _Out"),
+        label=translate("Zoom _Out"),
         icon_name="zoom-out",
         shortcut="<Primary>minus",
     )
     def zoom_out(self):
+        assert self.view
         self.view.zoom(1 / 1.2)
 
     @action(
         name="diagram.zoom-100",
-        label=_("_Normal Size"),
+        label=translate("_Normal Size"),
         icon_name="zoom-original",
         shortcut="<Primary>0",
     )
     def zoom_100(self):
+        assert self.view
         zx = self.view.matrix[0]
         self.view.zoom(1 / zx)
 
@@ -187,17 +189,20 @@ class DiagramPage:
         shortcut="<Primary>a",
     )
     def select_all(self):
+        assert self.view
         self.view.select_all()
 
     @action(
         name="diagram.unselect-all", label="Des_elect all", shortcut="<Primary><Shift>a"
     )
     def unselect_all(self):
+        assert self.view
         self.view.unselect_all()
 
-    @action(name="diagram.delete", label=_("_Delete"), icon_name="edit-delete")
+    @action(name="diagram.delete", label=translate("_Delete"), icon_name="edit-delete")
     @transactional
     def delete_selected_items(self):
+        assert self.view
         items = self.view.selected_items
         for i in list(items):
             if isinstance(i, UML.Presentation):
@@ -215,19 +220,22 @@ class DiagramPage:
 
     @event_handler(DiagramItemCreated)
     def _on_diagram_item_created(self, event):
-        if self.properties("reset-tool-after-create", False):
+        assert self.widget
+        if self.properties("reset-tool-after-create", True):
             self.widget.action_group.actions.lookup_action("select-tool").activate(
                 GLib.Variant.new_string("toolbox-pointer")
             )
 
     def set_drawing_style(self, sloppiness=0.0):
-        """Set the drawing style for the diagram. 0.0 is straight,
+        """
+        Set the drawing style for the diagram. 0.0 is straight,
         2.0 is very sloppy.  If the sloppiness is set to be anything
         greater than 0.0, the FreeHandPainter instances will be used
         for both the item painter and the box painter.  Otherwise, by
         default, the ItemPainter is used for the item and
-        BoundingBoxPainter for the box."""
-
+        BoundingBoxPainter for the box.
+        """
+        assert self.view
         view = self.view
 
         if sloppiness:
@@ -255,6 +263,7 @@ class DiagramPage:
         (when their last views are deleted). If so request user
         confirmation before deletion.
         """
+        assert self.view
         items = self.view.selected_items
         last_in_model = [
             i for i in items if i.subject and len(i.subject.presentation) == 1
@@ -268,6 +277,7 @@ class DiagramPage:
         """
         Request user confirmation on deleting the item from the model.
         """
+        assert self.widget
         s = ""
         for item in last_in_model:
             s += "%s\n" % str(item)
@@ -280,7 +290,7 @@ class DiagramPage:
             "This will remove the following selected items from the model:\n%s\nAre you sure?"
             % s,
         )
-        dialog.set_transient_for(self.get_toplevel())
+        dialog.set_transient_for(self.widget.get_toplevel())
         value = dialog.run()
         dialog.destroy()
         if value == Gtk.ResponseType.YES:
@@ -293,15 +303,14 @@ class DiagramPage:
         GTK's accelerators) since otherwise this key will confuse the text
         edit stuff.
         """
-        if view.is_focus():
-            if event.keyval == Gdk.KEY_Delete and (
+        if (
+            view.is_focus()
+            and event.keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace)
+            and (
                 event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
-            ):
-                self.delete_selected_items()
-            elif event.keyval == Gdk.KEY_BackSpace and (
-                event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
-            ):
-                self.delete_selected_items()
+            )
+        ):
+            self.delete_selected_items()
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.event_manager.handle(
@@ -312,6 +321,7 @@ class DiagramPage:
         """
         Handle data dropped on the canvas.
         """
+        assert self.toolbox
         if (
             data
             and data.get_format() == 8

@@ -47,7 +47,6 @@ class StereotypesAttributesTestCase(TestCase):
     def test_adding_slot(self):
         """Test if stereotype attribute information is added when slot is added
         """
-        factory = self.element_factory
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -64,7 +63,6 @@ class StereotypesAttributesTestCase(TestCase):
     def test_removing_last_slot(self):
         """Test removing last slot
         """
-        factory = self.element_factory
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -82,7 +80,6 @@ class StereotypesAttributesTestCase(TestCase):
     def test_deleting_extension(self):
         """Test if stereotype is removed when extension is deleteded
         """
-        factory = self.element_factory
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -102,7 +99,6 @@ class StereotypesAttributesTestCase(TestCase):
     def test_deleting_stereotype(self):
         """Test if stereotype is removed when stereotype is deleteded
         """
-        factory = self.element_factory
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -123,7 +119,6 @@ class StereotypesAttributesTestCase(TestCase):
     def test_removing_stereotype_attribute(self):
         """Test if stereotype instance specification is destroyed when stereotype attribute is removed
         """
-        factory = self.element_factory
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -153,7 +148,6 @@ class StereotypesAttributesTestCase(TestCase):
     def test_stereotype_attributes_status_saving(self):
         """Test stereotype attributes status saving
         """
-        factory = self.element_factory
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True

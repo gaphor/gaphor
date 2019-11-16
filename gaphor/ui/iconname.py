@@ -3,10 +3,10 @@ With `get_icon_name` you can retrieve an icon name
 for a UML model element.
 """
 
-from gaphor import UML
 import re
 from functools import singledispatch
 
+from gaphor import UML
 
 TO_KEBAB = re.compile(r"([a-z])([A-Z]+)")
 

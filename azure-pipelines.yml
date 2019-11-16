@@ -22,6 +22,12 @@ jobs:
           pre-commit install-hooks
           pre-commit run --all-files
 
+          # flake8 pre-commit hook is causing errors
+          # try again once new version of pyflakes is released (> 2.1.1)
+          pip install git+https://github.com/PyCQA/pyflakes.git@1911c203a13826d2eb03d582d60874b91e36f4fc --upgrade
+          pip install flake8==3.7.9
+          flake8 gaphor
+
   - job: Windows
     dependsOn: Lint
     condition: succeeded()
@@ -59,6 +65,7 @@ jobs:
         env:
           MSYSTEM: $(MSYSTEM)
           CHERE_INVOKING: yes
+          PY_IGNORE_IMPORTMISMATCH: yes
 
       - task: PublishTestResults@2
         condition: not(canceled())
@@ -164,7 +171,6 @@ jobs:
       displayName: Install Python Dependencies
 
     - script: |
-        mkdir -p /home/vsts/.local/share # This can be removed once we merge back to master (config dir)
         source venv
         xvfb-run pytest
       displayName: 'PyTest'

@@ -1,4 +1,5 @@
 import sys
+
 from gaphor.misc.xmlwriter import XMLWriter
 
 

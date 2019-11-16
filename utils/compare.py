@@ -91,7 +91,6 @@ class Compare:
         """Generator function that returns tuples (element1, element2) of
         elements that exist in both files (they have the same id).
         """
-        vals = []
         for key1, val1 in list(self.elements1.items()):
             val2 = self.elements2.get(key1)
             if val2:

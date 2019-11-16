@@ -2,11 +2,10 @@
 Layout code from a simple XML description.
 """
 
-from typing import Dict, Callable
+from typing import Callable, Dict
 from xml.etree.ElementTree import fromstring
 
 from gi.repository import Gtk
-
 
 widget_factory: Dict[str, Callable] = {}
 

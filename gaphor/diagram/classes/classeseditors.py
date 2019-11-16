@@ -1,43 +1,65 @@
+from typing import Optional
+
+from gaphas.geometry import Rectangle, distance_point_point_fast
+from gi.repository import Gtk
+
 from gaphor import UML
-from gaphor.diagram.editors import Editor, AbstractEditor
+from gaphor.core import transactional
 from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.inlineeditors import (
+    InlineEditor,
+    editable_text_box,
+    popup_entry,
+    show_popover,
+)
 
 
-@Editor.register(AssociationItem)
-class AssociationItemEditor(AbstractEditor):
-    def __init__(self, item):
-        self._item = item
-        self._edit: AssociationItem = None
+@InlineEditor.register(AssociationItem)
+def association_item_inline_editor(item, view, pos=None) -> bool:
+    """Text edit support for Named items."""
 
-    def is_editable(self, x, y):
-        """Find out what's located at point (x, y), is it in the
-        name part or is it text in some compartment
-        """
-        item = self._item
-        if not item.subject:
-            return False
-        if item.head_end.point((x, y)) <= 0:
-            self._edit = item.head_end
-        elif item.tail_end.point((x, y)) <= 0:
-            self._edit = item.tail_end
-        else:
-            self._edit = item
+    @transactional
+    def update_text(text):
+        print("update text", text)
+        item.subject.name = text
+        popover.popdown()
         return True
 
-    def get_text(self):
-        if self._edit is self._item:
-            return self._edit.subject.name
-        return UML.format(
-            self._edit.subject,
+    @transactional
+    def update_end_text(text):
+        print("update text", text)
+        assert end_item
+        UML.parse(end_item.subject, text)
+        popover.popdown()
+        return True
+
+    subject = item.subject
+    if not subject:
+        return False
+
+    end_item = None
+    if pos and distance_point_point_fast(item.handles()[0].pos, pos) < 50:
+        end_item = item.head_end
+    elif pos and distance_point_point_fast(item.handles()[-1].pos, pos) < 50:
+        end_item = item.tail_end
+
+    if end_item:
+        text = UML.format(
+            end_item.subject,
             visibility=True,
             is_derived=True,
             type=True,
             multiplicity=True,
             default=True,
         )
+        entry = popup_entry(text, update_end_text)
+        bb = end_item.name_bounds
+        x, y = view.get_matrix_i2v(item).transform_point(bb.x, bb.y)
+        box = Rectangle(x, y, 10, 10)
+    else:
+        text = item.subject.name or ""
+        entry = popup_entry(text, update_text)
+        box = editable_text_box(view, view.hovered_item)
 
-    def update_text(self, text):
-        UML.parse(self._edit.subject, text)
-
-    def key_pressed(self, pos, key):
-        pass
+    popover = show_popover(entry, view, box)
+    return True

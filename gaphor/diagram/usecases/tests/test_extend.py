@@ -2,10 +2,10 @@
 Test extend item connections.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.usecases.usecase import UseCaseItem
 from gaphor.diagram.usecases.extend import ExtendItem
+from gaphor.diagram.usecases.usecase import UseCaseItem
+from gaphor.tests import TestCase
 
 
 class ExtendItemTestCase(TestCase):

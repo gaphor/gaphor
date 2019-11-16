@@ -1,4 +1,5 @@
 import pytest
+
 from gaphor.services.eventmanager import EventManager
 from gaphor.ui.event import FileLoaded
 from gaphor.ui.recentfiles import RecentFiles
@@ -19,7 +20,7 @@ def event_manager():
 
 def test_add_new_recent_file(event_manager):
     recent_manager = RecentManagerStub()
-    recent_files = RecentFiles(event_manager, recent_manager)
+    RecentFiles(event_manager, recent_manager)
 
     event_manager.handle(FileLoaded(None, "testfile.gaphor"))
 

@@ -11,24 +11,16 @@ import logging
 
 from gaphas.aspect import Connector, InMotion, ItemConnector
 from gaphas.guide import GuidedItemInMotion
-from gaphas.tool import (
-    Tool,
-    PlacementTool as _PlacementTool,
-    ToolChain,
-    HoverTool,
-    ItemTool,
-    RubberbandTool,
-    ConnectHandleTool,
-)
-from gi.repository import Gdk
-from gi.repository import Gtk
+from gaphas.tool import ConnectHandleTool, HoverTool, ItemTool
+from gaphas.tool import PlacementTool as _PlacementTool
+from gaphas.tool import RubberbandTool, Tool, ToolChain
+from gi.repository import Gdk, Gtk
 
-from gaphor.diagram.presentation import LinePresentation
 from gaphor.core import Transaction, transactional
-from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.grouping import Group
-from gaphor.diagram.editors import Editor
 from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.grouping import Group
+from gaphor.diagram.inlineeditors import InlineEditor
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 # cursor to indicate grouping
 IN_CURSOR_TYPE = Gdk.CursorType.DIAMOND_CROSS
@@ -91,7 +83,7 @@ class DiagramItemConnector(ItemConnector):
                 adapter = IConnect(sink.item, item)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
-        except Exception as e:
+        except Exception:
             log.error("Error during connect", exc_info=True)
 
     @transactional
@@ -141,89 +133,24 @@ class TextEditTool(Tool):
     IEditable interface to be edited.
     """
 
-    def create_edit_window(self, x, y, text, editor):
-        """
-        Create a popup window with some editable text.
-        """
+    def on_key_press(self, event):
         view = self.view
-        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-        window.set_property("decorated", False)
-        window.set_property("skip-taskbar-hint", True)
-        window.set_modal(True)
-        window.set_transient_for(view.get_toplevel())
-        buffer = Gtk.TextBuffer()
-        if text:
-            buffer.set_text(text)
-            startiter, enditer = buffer.get_bounds()
-            buffer.move_mark_by_name("selection_bound", startiter)
-            buffer.move_mark_by_name("insert", enditer)
-        text_view = Gtk.TextView()
-        text_view.set_buffer(buffer)
-        text_view.set_left_margin(2)
-        text_view.set_right_margin(2)
-
-        frame = Gtk.Frame()
-        frame.set_shadow_type(Gtk.ShadowType.IN)
-        frame.add(text_view)
-
-        window.add(frame)
-        r = Gdk.Rectangle()
-        r.x = 0
-        r.y = 0
-        r.width = 70
-        r.height = 50
-        window.size_allocate(r)
-        window.move(int(x), int(y))
-
-        def on_button_press(widget, event):
-            if event.window == view.get_window():
-                self.submit_text(widget, buffer, editor)
-
-        def on_key_press_event(widget, event):
-            if event.keyval == Gdk.KEY_Return and not event.get_state() & (
-                Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
-            ):
-                self.submit_text(widget, buffer, editor)
-            elif event.keyval == Gdk.KEY_Escape:
-                widget.get_toplevel().destroy()
-
-        def on_focus_out_event(widget, event):
-            self.submit_text(widget, buffer, editor)
-
-        window.add_events(Gdk.EventMask.FOCUS_CHANGE_MASK)
-        window.connect("focus-out-event", on_focus_out_event)
-        window.connect("button-press-event", on_button_press)
-        text_view.connect("key-press-event", on_key_press_event)
-        window.show_all()
-
-    @transactional
-    def submit_text(self, widget, buffer, editor):
-        """
-        Submit the final text to the edited item.
-        """
-        text = buffer.get_text(
-            buffer.get_start_iter(), buffer.get_end_iter(), include_hidden_chars=True
-        )
-        editor.update_text(text)
-        widget.get_toplevel().destroy()
+        item = view.hovered_item
+        if (
+            item
+            and event.type == Gdk.EventType.KEY_PRESS
+            and event.key.keyval == Gdk.KEY_F2
+        ):
+            return InlineEditor(item, view)
+        return False
 
     def on_double_click(self, event):
         view = self.view
         item = view.hovered_item
         if item:
-            editor = Editor(item)
-            if not editor:
-                return False
-
-            log.debug(f"Found editor {editor!r}")
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
-            if editor.is_editable(x, y):
-                text = editor.get_text()
-                root_coords = event.get_root_coords()
-                self.create_edit_window(
-                    root_coords.x_root, root_coords.y_root, text, editor
-                )
-                return True
+            return InlineEditor(item, view, (x, y))
+        return False
 
 
 class PlacementTool(_PlacementTool):
@@ -344,7 +271,6 @@ class GroupPlacementTool(PlacementTool):
             if parent and item and adapter:
                 adapter.group()
 
-                canvas = view.canvas
                 parent.request_update(matrix=False)
         finally:
             self._parent = None

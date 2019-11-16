@@ -13,14 +13,12 @@ Plan:
 
 
 import ast
-from math import pi, atan2
+from math import atan2, pi
 
-from gaphas.geometry import Rectangle, distance_point_point_fast
-from gaphas.geometry import distance_rectangle_point
+from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.state import reversible_property
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
@@ -29,13 +27,14 @@ from gaphor.diagram.shapes import (
     draw_default_head,
     draw_default_tail,
 )
+from gaphor.diagram.support import represents
 from gaphor.diagram.text import (
-    text_size,
+    middle_segment,
     text_draw,
     text_draw_focus_box,
-    middle_segment,
+    text_size,
 )
-from gaphor.diagram.support import represents
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Association)
@@ -149,18 +148,6 @@ class AssociationItem(LinePresentation, Named):
         )
         self.request_update()
 
-    def on_named_element_name(self, event):
-        """
-        Update names of the association as well as its ends.
-        """
-        if event is None:
-            super().on_named_element_name(event)
-            self.on_association_end_value(event)
-        elif event.element is self.subject:
-            super().on_named_element_name(event)
-        else:
-            self.on_association_end_value(event)
-
     def on_association_end_value(self, event):
         """
         Handle events and update text on association end.
@@ -246,13 +233,6 @@ class AssociationItem(LinePresentation, Named):
                 cr.fill()
             finally:
                 cr.restore()
-
-    def item_at(self, x, y):
-        if distance_point_point_fast(self._handles[0].pos, (x, y)) < 10:
-            return self._head_end
-        elif distance_point_point_fast(self._handles[-1].pos, (x, y)) < 10:
-            return self._tail_end
-        return self
 
 
 def get_center_pos(points, inverted=False):
@@ -398,12 +378,14 @@ class AssociationEnd(UML.Presentation):
         self._end = end
 
         # Rendered text for name and multiplicity
-        self._name = None
-        self._mult = None
+        self._name = ""
+        self._mult = ""
 
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
         self.font = "sans 10"
+
+    name_bounds = property(lambda s: s._name_bounds)
 
     def request_update(self):
         self._owner.request_update()

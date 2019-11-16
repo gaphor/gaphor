@@ -2,8 +2,13 @@
 Event Manager.
 """
 
+
+from typing import Optional, Sequence, Type
+
+from generic.event import Event, Handler
+from generic.event import Manager as _Manager
+
 from gaphor.abc import Service
-from gaphor.misc.generic.event import Manager as _Manager
 
 
 def event_handler(*event_types):
@@ -23,13 +28,13 @@ class EventManager(Service):
     The Event Manager.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._events = _Manager()
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         pass
 
-    def subscribe(self, handler):
+    def subscribe(self, handler: Handler) -> None:
         """
         Register a handler. Handlers are triggered (executed) when specific
         events are emitted through the handle() method.
@@ -41,7 +46,9 @@ class EventManager(Service):
         for et in event_types:
             self._events.subscribe(handler, et)
 
-    def unsubscribe(self, handler, event_types=None):
+    def unsubscribe(
+        self, handler: Handler, event_types: Optional[Sequence[Type[Event]]] = None
+    ) -> None:
         """
         Unregister a previously registered handler.
         """
@@ -52,7 +59,7 @@ class EventManager(Service):
         for et in event_types:
             self._events.unsubscribe(handler, et)
 
-    def handle(self, *events):
+    def handle(self, *events: Event) -> None:
         """
         Send event notifications to registered handlers.
         """

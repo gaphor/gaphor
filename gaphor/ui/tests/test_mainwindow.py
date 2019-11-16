@@ -2,8 +2,8 @@ import pytest
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.ui.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
+from gaphor.ui.event import DiagramOpened
 
 
 @pytest.fixture

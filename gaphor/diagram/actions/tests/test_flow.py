@@ -1,7 +1,8 @@
 from gaphas.canvas import Context, instant_cairo_context
+
 import gaphor.UML as UML
-from gaphor.tests.testcase import TestCase
 from gaphor.diagram.actions.flow import FlowItem
+from gaphor.tests.testcase import TestCase
 
 
 class FlowTestCase(TestCase):

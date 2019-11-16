@@ -4,13 +4,14 @@ Pseudostate diagram items.
 See also gaphor.diagram.states package description.
 """
 
-from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphas.util import path_ellipse
-from gaphor.diagram.states.state import VertexItem
+
+from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.shapes import Box, IconBox, EditableText, Text
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text
+from gaphor.diagram.states.state import VertexItem
 from gaphor.diagram.support import represents
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Pseudostate)
