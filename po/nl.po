@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-16 16:40+0100\n"
+"POT-Creation-Date: 2019-11-16 17:50+0100\n"
 "PO-Revision-Date: 2019-11-11 08:45+0100\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl_NL\n"
@@ -173,11 +173,11 @@ msgstr "Do Activity"
 msgid "An error occurred."
 msgstr "Er is een fout opgetreden"
 
-#: ../gaphor/misc/errorhandler.py:25
+#: ../gaphor/misc/errorhandler.py:26
 msgid "Technical details:"
 msgstr "Technische details:"
 
-#: ../gaphor/misc/errorhandler.py:29
+#: ../gaphor/misc/errorhandler.py:31
 msgid ""
 "Do you want to debug?\n"
 "(Gaphor should have been started from the command line)"
@@ -473,8 +473,8 @@ msgid ""
 "The model contains some references to items that are not maintained. Do "
 "you want to clean the model before saving?"
 msgstr ""
-"Het model bevat referenties naar items die niet langer bestaan. Wilt "
-"u het model opschonen voor het op te slaan?"
+"Het model bevat referenties naar items die niet langer bestaan. Wilt u "
+"het model opschonen voor het op te slaan?"
 
 #: ../gaphor/ui/filemanager.py:159
 msgid "Saving..."
@@ -627,3 +627,4 @@ msgstr "Toon in \"{diagram}\""
 #: ../gaphor/ui/toolbox.py:30
 msgid "Toolbox"
 msgstr "Hulpmiddelen"
+

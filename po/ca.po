@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.15\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-10 23:22+0100\n"
+"POT-Creation-Date: 2019-11-16 17:50+0100\n"
 "PO-Revision-Date: 2011-03-05 20:26+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language: ca\n"
@@ -172,51 +172,48 @@ msgstr "Realitza l'activitat"
 msgid "An error occurred."
 msgstr "S'ha produït un error."
 
-#: ../gaphor/misc/errorhandler.py:29
+#: ../gaphor/misc/errorhandler.py:26
+msgid "Technical details:"
+msgstr ""
+
+#: ../gaphor/misc/errorhandler.py:31
 msgid ""
-"\n"
-"\n"
 "Do you want to debug?\n"
 "(Gaphor should have been started from the command line)"
 msgstr ""
-"\n"
-"\n"
 "Voleu depurar?\n"
 "(S'hauria d'haver inicial el Gaphor des de la línia d'ordres)"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:47
-#, python-format
-msgid ""
-"The file %s already exists. Do you want to replace it with the file you "
-"are exporting to?"
+#: ../gaphor/plugins/diagramexport/__init__.py:46
+msgid "The file {filename} already exists. Do you want to replace it?"
 msgstr ""
-"El fitxer %s ja existeix. Voleu reemplaçar-lo amb el fitxer al qual esteu"
-" exportant?"
+"El fitxer {filename} ja existeix. Voleu reemplaçar-lo amb el fitxer al "
+"qual esteu exportant?"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:122
+#: ../gaphor/plugins/diagramexport/__init__.py:117
 msgid "Export to SVG"
 msgstr ""
 
-#: ../gaphor/plugins/diagramexport/__init__.py:123
-#: ../gaphor/plugins/diagramexport/__init__.py:126
+#: ../gaphor/plugins/diagramexport/__init__.py:118
+#: ../gaphor/plugins/diagramexport/__init__.py:121
 msgid "Export diagram to SVG"
 msgstr ""
 
-#: ../gaphor/plugins/diagramexport/__init__.py:135
+#: ../gaphor/plugins/diagramexport/__init__.py:130
 msgid "Export to PNG"
 msgstr ""
 
-#: ../gaphor/plugins/diagramexport/__init__.py:136
-#: ../gaphor/plugins/diagramexport/__init__.py:139
+#: ../gaphor/plugins/diagramexport/__init__.py:131
+#: ../gaphor/plugins/diagramexport/__init__.py:134
 msgid "Export diagram to PNG"
 msgstr ""
 
-#: ../gaphor/plugins/diagramexport/__init__.py:148
+#: ../gaphor/plugins/diagramexport/__init__.py:143
 msgid "Export to PDF"
 msgstr ""
 
-#: ../gaphor/plugins/diagramexport/__init__.py:149
-#: ../gaphor/plugins/diagramexport/__init__.py:152
+#: ../gaphor/plugins/diagramexport/__init__.py:144
+#: ../gaphor/plugins/diagramexport/__init__.py:147
 msgid "Export diagram to PDF"
 msgstr ""
 
@@ -237,38 +234,9 @@ msgstr "Exporta a XMI"
 msgid "Copy"
 msgstr ""
 
-#: ../gaphor/services/undomanager.py:191
-msgid "_Undo"
-msgstr ""
-
-#: ../gaphor/services/undomanager.py:224
-msgid "_Redo"
-msgstr ""
-
-#: ../gaphor/storage/storage.py:179
-#, python-format
-msgid "Loading %d elements..."
-msgstr "S'estan carregant %d elements…"
-
 #: ../gaphor/ui/diagrampage.py:58
 msgid "<None>"
 msgstr "<Cap>"
-
-#: ../gaphor/ui/diagrampage.py:158
-msgid "Zoom _In"
-msgstr ""
-
-#: ../gaphor/ui/diagrampage.py:168
-msgid "Zoom _Out"
-msgstr ""
-
-#: ../gaphor/ui/diagrampage.py:178
-msgid "_Normal Size"
-msgstr ""
-
-#: ../gaphor/ui/diagrampage.py:204
-msgid "_Delete"
-msgstr ""
 
 #: ../gaphor/ui/diagramtoolbox.py:29
 #, fuzzy
@@ -497,39 +465,35 @@ msgid "Loading..."
 msgstr "S'està carregant…"
 
 #: ../gaphor/ui/filemanager.py:75
-#, python-format
-msgid "Loading model from %s"
-msgstr "S'està carregant el model des de %s"
+msgid "Loading model from {filename}"
+msgstr "S'està carregant el model des de {filename}"
 
 #: ../gaphor/ui/filemanager.py:99
-#, fuzzy, python-format
-msgid "Error while loading model from file %s"
-msgstr "S'està carregant el model des de %s"
+msgid "Error while loading model from file {filename}"
+msgstr "S'està carregant el model des de {filename}"
 
-#: ../gaphor/ui/filemanager.py:118
+#: ../gaphor/ui/filemanager.py:120
 msgid ""
 "The model contains some references to items that are not maintained. Do "
-"you want to clean this before saving the model?"
+"you want to clean the model before saving?"
 msgstr ""
 "El model conté algunes referències a elements que no estan mantinguts. "
 "Voleu netejar això abans de desar el model?"
 
-#: ../gaphor/ui/filemanager.py:160
+#: ../gaphor/ui/filemanager.py:159
 #, fuzzy
 msgid "Saving..."
 msgstr "S'està carregant…"
 
-#: ../gaphor/ui/filemanager.py:161
-#, fuzzy, python-format
-msgid "Saving model to %s"
-msgstr "S'està carregant el model des de %s"
+#: ../gaphor/ui/filemanager.py:160
+msgid "Saving model to {filename}"
+msgstr "S'està carregant el model des de {filename}"
 
 #: ../gaphor/ui/filemanager.py:178
-#, python-format
-msgid "Error while saving model to file %s"
+msgid "Error while saving model to file {filename}"
 msgstr ""
 
-#: ../gaphor/ui/filemanager.py:229
+#: ../gaphor/ui/filemanager.py:232
 msgid ""
 "Opening a new model will flush the currently loaded model.\n"
 "Any changes made will not be saved. Do you want to continue?"
@@ -537,47 +501,47 @@ msgstr ""
 "L'obertura d'un nou model descartarà el model actualment carregat.\n"
 "Els darrers canvis no es desaran. Voleu continuar?"
 
-#: ../gaphor/ui/filemanager.py:247
+#: ../gaphor/ui/filemanager.py:250
 msgid "New model"
 msgstr "Model nou"
 
-#: ../gaphor/ui/filemanager.py:250
+#: ../gaphor/ui/filemanager.py:253
 msgid "main"
 msgstr "principal"
 
-#: ../gaphor/ui/filemanager.py:262 ../gaphor/ui/filemanager.py:283
+#: ../gaphor/ui/filemanager.py:265 ../gaphor/ui/filemanager.py:286
 #, fuzzy
 msgid "Gaphor Models"
 msgstr "Anomena i desa el model de Gaphor"
 
-#: ../gaphor/ui/filemanager.py:263 ../gaphor/ui/filemanager.py:284
+#: ../gaphor/ui/filemanager.py:266 ../gaphor/ui/filemanager.py:287
 msgid "All Files"
 msgstr ""
 
-#: ../gaphor/ui/filemanager.py:266
+#: ../gaphor/ui/filemanager.py:269
 #, fuzzy
 msgid "New Gaphor Model From Template"
 msgstr "Nou des d'una plantilla"
 
-#: ../gaphor/ui/filemanager.py:287
+#: ../gaphor/ui/filemanager.py:290
 #, fuzzy
 msgid "Open Gaphor Model"
 msgstr "Anomena i desa el model de Gaphor"
 
-#: ../gaphor/ui/filemanager.py:331
+#: ../gaphor/ui/filemanager.py:334
 #, fuzzy
 msgid "Save Gaphor Model As"
 msgstr "Anomena i desa el model de Gaphor"
 
-#: ../gaphor/ui/filemanager.py:357
+#: ../gaphor/ui/filemanager.py:360
 msgid "Save changed to your model before closing?"
 msgstr "Voleu desar els canvis al model abans de tancar?"
 
-#: ../gaphor/ui/filemanager.py:360
+#: ../gaphor/ui/filemanager.py:363
 msgid "If you close without saving, your changes will be discarded."
 msgstr "Si tanqueu sense desar, es descartaran els vostres canvis."
 
-#: ../gaphor/ui/filemanager.py:363
+#: ../gaphor/ui/filemanager.py:366
 msgid "Close _without saving"
 msgstr ""
 
@@ -626,7 +590,7 @@ msgid "Save"
 msgstr ""
 
 #: ../gaphor/ui/mainwindow.py:282
-msgid " [edited]"
+msgid "edited"
 msgstr ""
 
 #: ../gaphor/ui/mainwindow.py:350
@@ -668,89 +632,11 @@ msgid "De_lete"
 msgstr ""
 
 #: ../gaphor/ui/namespace.py:387
-msgid "Show in \"{}\""
+msgid "Show in \"{diagram}\""
 msgstr ""
 
 #: ../gaphor/ui/toolbox.py:30
 #, fuzzy
 msgid "Toolbox"
 msgstr "Eines"
-
-#~ msgid "_Refresh"
-#~ msgstr "_Refresca"
-
-#~ msgid "Created a new model"
-#~ msgstr "S'ha creat un nou model"
-
-#~ msgid "Could not load model file."
-#~ msgstr "No s'ha pogut carregar el fitxer del model."
-
-#~ msgid "_Open..."
-#~ msgstr "_Obre..."
-
-#~ msgid "Save the model to a new file"
-#~ msgstr "Desa el model a un nou fitxer"
-
-#~ msgid "(from %s)"
-#~ msgstr "(des de %s)"
-
-#~ msgid "_File"
-#~ msgstr "_Fitxer"
-
-#~ msgid "Recent files"
-#~ msgstr "Fitxers recents"
-
-#~ msgid "_Import"
-#~ msgstr "_Importa"
-
-#~ msgid "_Window"
-#~ msgstr "_Finestra"
-
-#~ msgid "_Help"
-#~ msgstr "_Ajuda"
-
-#~ msgid "Invert Direction"
-#~ msgstr "Inverteix la direcció"
-
-#~ msgid "Additional Messages"
-#~ msgstr "Missatges addicionals"
-
-#~ msgid "Inverted Messages"
-#~ msgstr "Missatges invertits"
-
-#~ msgid "New from template"
-#~ msgstr "Nou des d'una plantilla"
-
-#~ msgid "About"
-#~ msgstr ""
-
-#~ msgid "License"
-#~ msgstr ""
-
-#~ msgid "Contributors"
-#~ msgstr "Atributs"
-
-#~ msgid "Subsystem"
-#~ msgstr "Subsistema"
-
-#~ msgid "_Editor"
-#~ msgstr "Editor"
-
-#~ msgid "Rename"
-#~ msgstr "Canvia el nom"
-
-#~ msgid "_New diagram"
-#~ msgstr "Diagrama _nou"
-
-#~ msgid "_Delete diagram"
-#~ msgstr "Suprimeix el _diagrama"
-
-#~ msgid "New _package"
-#~ msgstr "_Paquet nou"
-
-#~ msgid "Delete pac_kage"
-#~ msgstr "Suprimeix el pa_quet"
-
-#~ msgid "_Reset tool"
-#~ msgstr "_Reinicia l'eina"
 
