@@ -5,17 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-10 23:22+0100\n"
+"POT-Creation-Date: 2019-11-16 16:40+0100\n"
 "PO-Revision-Date: 2019-11-11 08:45+0100\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl_NL\n"
 "Language-Team: Dutch - The Netherlands <gaphor@gmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
-"X-Generator: Gtranslator 3.34.0\n"
 
 #: ../gaphor/diagram/profiles/metaclasspropertypage.py:29
 #: ../gaphor/diagram/propertypages.py:392
@@ -174,48 +173,46 @@ msgstr "Do Activity"
 msgid "An error occurred."
 msgstr "Er is een fout opgetreden"
 
+#: ../gaphor/misc/errorhandler.py:25
+msgid "Technical details:"
+msgstr "Technische details:"
+
 #: ../gaphor/misc/errorhandler.py:29
 msgid ""
-"\n"
-"\n"
 "Do you want to debug?\n"
 "(Gaphor should have been started from the command line)"
 msgstr ""
-"\n"
-"\n"
-"Wilt u debuggen?(Gaphor moet gestart zijn vanaf de commando regel)"
+"Wilt u debuggen?\n"
+"(Gaphor moet gestart zijn vanaf de commando regel)"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:47
-#, python-format
-msgid ""
-"The file %s already exists. Do you want to replace it with the file you are "
-"exporting to?"
-msgstr "Het bestand %s bestaat reeds. Wilt u het vervangen?"
+#: ../gaphor/plugins/diagramexport/__init__.py:46
+msgid "The file {filename} already exists. Do you want to replace it?"
+msgstr "Het bestand {filename} bestaat reeds. Wilt u het vervangen?"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:122
+#: ../gaphor/plugins/diagramexport/__init__.py:117
 msgid "Export to SVG"
 msgstr "Exporteer naar SVG"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:123
-#: ../gaphor/plugins/diagramexport/__init__.py:126
+#: ../gaphor/plugins/diagramexport/__init__.py:118
+#: ../gaphor/plugins/diagramexport/__init__.py:121
 msgid "Export diagram to SVG"
 msgstr "Exporteer diagram naar SVG"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:135
+#: ../gaphor/plugins/diagramexport/__init__.py:130
 msgid "Export to PNG"
 msgstr "Exprteer naar PNG"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:136
-#: ../gaphor/plugins/diagramexport/__init__.py:139
+#: ../gaphor/plugins/diagramexport/__init__.py:131
+#: ../gaphor/plugins/diagramexport/__init__.py:134
 msgid "Export diagram to PNG"
 msgstr "Exporteer diagram naar PNG"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:148
+#: ../gaphor/plugins/diagramexport/__init__.py:143
 msgid "Export to PDF"
 msgstr "Exporteer naar PDF"
 
-#: ../gaphor/plugins/diagramexport/__init__.py:149
-#: ../gaphor/plugins/diagramexport/__init__.py:152
+#: ../gaphor/plugins/diagramexport/__init__.py:144
+#: ../gaphor/plugins/diagramexport/__init__.py:147
 msgid "Export diagram to PDF"
 msgstr "Exporteer diagram naar PDF"
 
@@ -235,38 +232,9 @@ msgstr "Exporteer model naar XMI bestand"
 msgid "Copy"
 msgstr "Kopiëer"
 
-#: ../gaphor/services/undomanager.py:191
-msgid "_Undo"
-msgstr "Ongedaan maken"
-
-#: ../gaphor/services/undomanager.py:224
-msgid "_Redo"
-msgstr "Her.. maken"
-
-#: ../gaphor/storage/storage.py:179
-#, python-format
-msgid "Loading %d elements..."
-msgstr "Laden van %d elementen..."
-
 #: ../gaphor/ui/diagrampage.py:58
 msgid "<None>"
 msgstr "<None>"
-
-#: ../gaphor/ui/diagrampage.py:158
-msgid "Zoom _In"
-msgstr "Inzoomen"
-
-#: ../gaphor/ui/diagrampage.py:168
-msgid "Zoom _Out"
-msgstr "uitzoomen"
-
-#: ../gaphor/ui/diagrampage.py:178
-msgid "_Normal Size"
-msgstr "Nomale grootte"
-
-#: ../gaphor/ui/diagrampage.py:204
-msgid "_Delete"
-msgstr "Verwijderen"
 
 #: ../gaphor/ui/diagramtoolbox.py:29
 msgid "General"
@@ -493,38 +461,34 @@ msgid "Loading..."
 msgstr "Bezig met laden..."
 
 #: ../gaphor/ui/filemanager.py:75
-#, python-format
-msgid "Loading model from %s"
-msgstr "Laden van model %s"
+msgid "Loading model from {filename}"
+msgstr "Laden van model {filename}"
 
 #: ../gaphor/ui/filemanager.py:99
-#, python-format
-msgid "Error while loading model from file %s"
-msgstr "Fout tijdens laden van model %s"
+msgid "Error while loading model from file {filename}"
+msgstr "Fout tijdens laden van model {filename}"
 
-#: ../gaphor/ui/filemanager.py:118
+#: ../gaphor/ui/filemanager.py:120
 msgid ""
-"The model contains some references to items that are not maintained. Do you "
-"want to clean this before saving the model?"
+"The model contains some references to items that are not maintained. Do "
+"you want to clean the model before saving?"
 msgstr ""
-"Het model bevat referenties naar items die niet langer bestaan. Wil je dit "
-"laten opschonen voor het model op te slaan?"
+"Het model bevat referenties naar items die niet langer bestaan. Wilt "
+"u het model opschonen voor het op te slaan?"
 
-#: ../gaphor/ui/filemanager.py:160
+#: ../gaphor/ui/filemanager.py:159
 msgid "Saving..."
 msgstr "Bezig met opslaan..."
 
-#: ../gaphor/ui/filemanager.py:161
-#, python-format
-msgid "Saving model to %s"
-msgstr "Opslaan van model %s"
+#: ../gaphor/ui/filemanager.py:160
+msgid "Saving model to {filename}"
+msgstr "Opslaan van model {filename}"
 
 #: ../gaphor/ui/filemanager.py:178
-#, python-format
-msgid "Error while saving model to file %s"
-msgstr "Fout tijdens het opslaan van model %s"
+msgid "Error while saving model to file {filename}"
+msgstr "Fout tijdens het opslaan van model {filename}"
 
-#: ../gaphor/ui/filemanager.py:229
+#: ../gaphor/ui/filemanager.py:232
 msgid ""
 "Opening a new model will flush the currently loaded model.\n"
 "Any changes made will not be saved. Do you want to continue?"
@@ -532,43 +496,43 @@ msgstr ""
 "Het openen van een nieuw model zal het huidige model vervangen.\n"
 "Veranderingen zullen niet eerst opgeslagen worden. Wilt u doorgaan?"
 
-#: ../gaphor/ui/filemanager.py:247
+#: ../gaphor/ui/filemanager.py:250
 msgid "New model"
 msgstr "New model"
 
-#: ../gaphor/ui/filemanager.py:250
+#: ../gaphor/ui/filemanager.py:253
 msgid "main"
 msgstr "main"
 
-#: ../gaphor/ui/filemanager.py:262 ../gaphor/ui/filemanager.py:283
+#: ../gaphor/ui/filemanager.py:265 ../gaphor/ui/filemanager.py:286
 msgid "Gaphor Models"
 msgstr "Sla Gaphor model op als"
 
-#: ../gaphor/ui/filemanager.py:263 ../gaphor/ui/filemanager.py:284
+#: ../gaphor/ui/filemanager.py:266 ../gaphor/ui/filemanager.py:287
 msgid "All Files"
 msgstr "Alle bestanden"
 
-#: ../gaphor/ui/filemanager.py:266
+#: ../gaphor/ui/filemanager.py:269
 msgid "New Gaphor Model From Template"
 msgstr "Nieuw Gaphor Model van Template"
 
-#: ../gaphor/ui/filemanager.py:287
+#: ../gaphor/ui/filemanager.py:290
 msgid "Open Gaphor Model"
 msgstr "Sla Gaphor model op"
 
-#: ../gaphor/ui/filemanager.py:331
+#: ../gaphor/ui/filemanager.py:334
 msgid "Save Gaphor Model As"
 msgstr "Sla Gaphor model op als"
 
-#: ../gaphor/ui/filemanager.py:357
+#: ../gaphor/ui/filemanager.py:360
 msgid "Save changed to your model before closing?"
 msgstr "Wijzigingen opslaan voor afsluiten?"
 
-#: ../gaphor/ui/filemanager.py:360
+#: ../gaphor/ui/filemanager.py:363
 msgid "If you close without saving, your changes will be discarded."
 msgstr "Als je afsluit zonder opslaan, verdwijnen uw wijzigingen "
 
-#: ../gaphor/ui/filemanager.py:363
+#: ../gaphor/ui/filemanager.py:366
 msgid "Close _without saving"
 msgstr "Afsluiten zonder opslaan"
 
@@ -617,8 +581,8 @@ msgid "Save"
 msgstr "Opslaan"
 
 #: ../gaphor/ui/mainwindow.py:282
-msgid " [edited]"
-msgstr " [gewijzigd]"
+msgid "edited"
+msgstr "gewijzigd"
 
 #: ../gaphor/ui/mainwindow.py:350
 msgid "Diagrams"
@@ -657,12 +621,9 @@ msgid "De_lete"
 msgstr "_Verwijder"
 
 #: ../gaphor/ui/namespace.py:387
-msgid "Show in \"{}\""
-msgstr "Toon in \"{}\""
+msgid "Show in \"{diagram}\""
+msgstr "Toon in \"{diagram}\""
 
 #: ../gaphor/ui/toolbox.py:30
 msgid "Toolbox"
 msgstr "Hulpmiddelen"
-
-#~ msgid "Export the diagram to SVG"
-#~ msgstr "Exporteer het diagram naar SVG"
