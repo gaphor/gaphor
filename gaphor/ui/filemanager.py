@@ -118,10 +118,7 @@ class FileManager(Service, ActionProvider):
 
             dialog = QuestionDialog(
                 _(
-                    "The model contains some references"
-                    " to items that are not maintained."
-                    " Do you want to clean this before"
-                    " saving the model?"
+                    "The model contains some references to items that are not maintained. Do you want to clean the model before saving?"
                 ),
                 parent=main_window.window,
             )

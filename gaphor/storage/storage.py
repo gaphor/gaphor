@@ -176,7 +176,7 @@ def load_elements_generator(elements, factory, gaphor_version):
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
-    log.debug(_("Loading %d elements...") % len(elements))
+    log.debug("Loading %d elements..." % len(elements))
 
     # The elements are iterated three times:
     size = len(elements) * 3

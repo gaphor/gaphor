@@ -187,9 +187,7 @@ class UndoManager(Service, ActionProvider):
 
         self._action_executed()
 
-    @action(
-        name="edit-undo", label=_("_Undo"), icon_name="edit-undo", shortcut="<Primary>z"
-    )
+    @action(name="edit-undo", shortcut="<Primary>z")
     def undo_transaction(self):
         if not self._undo_stack:
             return
@@ -220,10 +218,7 @@ class UndoManager(Service, ActionProvider):
         self._action_executed()
 
     @action(
-        name="edit-redo",
-        label=_("_Redo"),
-        icon_name="edit-redo",
-        shortcut="<Primary><Shift>z",
+        name="edit-redo", shortcut="<Primary><Shift>z",
     )
     def redo_transaction(self):
         if not self._redo_stack:

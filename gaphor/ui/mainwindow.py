@@ -279,7 +279,7 @@ class MainWindow(Service, ActionProvider):
                 title = self.title
                 subtitle = ""
             if self.model_changed:
-                title += _(" [edited]")
+                title += " [" + _("edited") + "]"
             self.window.set_title(title)
             self.window.get_titlebar().set_subtitle(subtitle)
 
