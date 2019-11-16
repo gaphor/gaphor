@@ -1,12 +1,13 @@
 # Saving and Loading Gaphor Diagrams
 
-Everything interesting is an ancestor of the Gaphor root tag.
+The root element of Gaphor models is the `Gaphor` tag, all other elements are
+contained in this. The Gaphor element delimits the beginning and the end of an
+Gaphor model.
 
 The idea is to keep the file format as simple and extensible as
-possible: UML elements (including Diagram) are at top level, no nesting.
-A UML element can have two tags: `Reference` and `Value`. Reference is
-used to point to other UML elements, Value has a value inside (an
-integer or a string).
+possible: UML elements (including Diagram) are at the top level with no nesting.
+A UML element can have two tags: `Reference` and `Value`. Reference is used to
+point to other UML elements, Value has a value inside (an integer or a string).
 
 Diagram is a special case. Since this element contains a diagram canvas
 inside, it may become pretty big (with lots of nested elements). This is

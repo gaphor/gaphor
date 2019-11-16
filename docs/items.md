@@ -1,9 +1,8 @@
-# Gaphor Diagram Items
+# Items and Elements
 
-The diagram items (or in short items) represent UML metamodel on a
-diagram. The following sections present the basic items.
+Diagram items, or just items for short, represent the UML metamodel on a
+diagram. In other words, they are the graphical objects in a diagram.
+`DiagramItem` supports item style, text elements, and stereotypes.
 
-DiagramItem
-===========
-
-Basic diagram item supporting item style, text elements and stereotypes.
+Elements refer to the semantic model objects. `Element` is the base class
+for the UML data classes.  
