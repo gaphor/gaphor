@@ -43,14 +43,9 @@ class DiagramExport(Service, ActionProvider):
         while True:
             filename = file_dialog.selection
             if os.path.exists(filename):
-                question = (
-                    _(
-                        "The file %s already exists. Do you want to "
-                        "replace it with the file you are exporting "
-                        "to?"
-                    )
-                    % filename
-                )
+                question = _(
+                    "The file {filename} already exists. Do you want to replace it?"
+                ).format(filename=filename)
                 question_dialog = QuestionDialog(question)
                 answer = question_dialog.answer
                 question_dialog.destroy()

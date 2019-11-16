@@ -72,7 +72,7 @@ class FileManager(Service, ActionProvider):
             main_window = self.main_window
             status_window = StatusWindow(
                 _("Loading..."),
-                _("Loading model from %s") % filename,
+                _("Loading model from {filename}").format(filename=filename),
                 parent=main_window.window,
                 queue=queue,
             )
@@ -96,7 +96,9 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(FileLoaded(self, filename))
         except:
             error_handler(
-                message=_("Error while loading model from file %s") % filename
+                message=_("Error while loading model from file {filename}").format(
+                    filename=filename
+                )
             )
             raise
         finally:
@@ -158,7 +160,7 @@ class FileManager(Service, ActionProvider):
         queue = Queue()
         status_window = StatusWindow(
             _("Saving..."),
-            _("Saving model to %s") % filename,
+            _("Saving model to {filename}").format(filename=filename),
             parent=main_window.window,
             queue=queue,
         )
@@ -175,7 +177,11 @@ class FileManager(Service, ActionProvider):
             self.filename = filename
             self.event_manager.handle(FileSaved(self, filename))
         except:
-            error_handler(message=_("Error while saving model to file %s") % filename)
+            error_handler(
+                message=_("Error while saving model to file {filename}").format(
+                    filename=filename
+                )
+            )
             raise
         finally:
             status_window.destroy()
