@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-16 17:50+0100\n"
+"POT-Creation-Date: 2019-11-16 21:42+0100\n"
 "PO-Revision-Date: 2019-11-11 08:45+0100\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl_NL\n"
@@ -560,7 +560,7 @@ msgstr "Exporteer"
 msgid "Tools"
 msgstr "Gereedschap"
 
-#: ../gaphor/ui/mainwindow.py:94 ../gaphor/ui/mockups.glade:7
+#: ../gaphor/ui/mainwindow.py:94 ../gaphor/ui/mockups.glade
 msgid "Preferences"
 msgstr "Instellingen"
 
@@ -588,11 +588,11 @@ msgstr "gewijzigd"
 msgid "Diagrams"
 msgstr "Diagrammen"
 
-#: ../gaphor/ui/mockups.glade:30
+#: ../gaphor/ui/mockups.glade
 msgid "Sloppy lines"
 msgstr "Handgetekende lijnen"
 
-#: ../gaphor/ui/mockups.glade:42
+#: ../gaphor/ui/mockups.glade
 msgid "Reset to pointer tool after placing an item on a diagram"
 msgstr "Selecteer muis aanwijzer na het plaatsen van een item op een diagram"
 

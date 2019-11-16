@@ -14,7 +14,6 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-cairo \
     mingw-w64-$MSYS2_ARCH-gobject-introspection \
     mingw-w64-$MSYS2_ARCH-python3 \
-    mingw-w64-$MSYS2_ARCH-python3-lxml \
     mingw-w64-$MSYS2_ARCH-python3-gobject \
     mingw-w64-$MSYS2_ARCH-python3-cairo \
     mingw-w64-$MSYS2_ARCH-python3-pip

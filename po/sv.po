@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-11-16 17:50+0100\n"
+"POT-Creation-Date: 2019-11-16 21:42+0100\n"
 "PO-Revision-Date: 2006-05-11 16:34+0000\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language: sv\n"
@@ -582,7 +582,7 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: ../gaphor/ui/mainwindow.py:94 ../gaphor/ui/mockups.glade:7
+#: ../gaphor/ui/mainwindow.py:94 ../gaphor/ui/mockups.glade
 msgid "Preferences"
 msgstr ""
 
@@ -611,11 +611,11 @@ msgstr ""
 msgid "Diagrams"
 msgstr "_Diagram"
 
-#: ../gaphor/ui/mockups.glade:30
+#: ../gaphor/ui/mockups.glade
 msgid "Sloppy lines"
 msgstr ""
 
-#: ../gaphor/ui/mockups.glade:42
+#: ../gaphor/ui/mockups.glade
 msgid "Reset to pointer tool after placing an item on a diagram"
 msgstr ""
 
