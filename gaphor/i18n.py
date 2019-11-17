@@ -1,27 +1,27 @@
 """Internationalization (i18n) support for Gaphor.
 
-Here the _() function is defined that is used to translate text into
-your native language."""
+Translate text in to your native language using the gettext() function.
 
-__all__ = ["_"]
+"""
+__all__ = ["gettext"]
 
+import gettext as _gettext
+import importlib.resources
+import logging
 import os
 
-import logging
-import gettext
 import importlib_metadata
-import importlib.resources
 
 log = logging.getLogger(__name__)
 
 try:
 
     with importlib.resources.path("gaphor", "locale") as path:
-        translate = gettext.translation("gaphor", localedir=str(path), fallback=True)
-        _ = translate.gettext
+        translate = _gettext.translation("gaphor", localedir=str(path), fallback=True)
+        gettext = translate.gettext
 
 except OSError as e:
     log.info(f"No translations were found: {e}")
 
-    def _(s):
+    def gettext(s):
         return s

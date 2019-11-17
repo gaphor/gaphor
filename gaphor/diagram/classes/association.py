@@ -13,14 +13,12 @@ Plan:
 
 
 import ast
-from math import pi, atan2
+from math import atan2, pi
 
-from gaphas.geometry import Rectangle
-from gaphas.geometry import distance_rectangle_point
+from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.state import reversible_property
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
@@ -29,13 +27,14 @@ from gaphor.diagram.shapes import (
     draw_default_head,
     draw_default_tail,
 )
+from gaphor.diagram.support import represents
 from gaphor.diagram.text import (
-    text_size,
+    middle_segment,
     text_draw,
     text_draw_focus_box,
-    middle_segment,
+    text_size,
 )
-from gaphor.diagram.support import represents
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Association)

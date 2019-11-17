@@ -26,40 +26,41 @@ methods:
 
 from __future__ import annotations
 
-__all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
-
 import logging
 from typing import (
-    overload,
-    Sequence,
-    Type,
-    Generic,
-    TypeVar,
-    Optional,
-    Callable,
-    List,
-    Set,
-    Union,
     TYPE_CHECKING,
+    Callable,
+    Generic,
+    List,
+    Optional,
+    Sequence,
+    Set,
+    Type,
+    TypeVar,
+    Union,
+    overload,
 )
+
 from typing_extensions import Literal, Protocol
 
 from gaphor.UML.collection import collection, collectionlist
 from gaphor.UML.event import (
     AssociationAdded,
-    AssociationUpdated,
     AssociationDeleted,
-    AttributeUpdated,
     AssociationSet,
+    AssociationUpdated,
+    AttributeUpdated,
     DerivedAdded,
     DerivedDeleted,
-    DerivedUpdated,
     DerivedSet,
+    DerivedUpdated,
     ElementUpdated,
-    RedefinedSet,
     RedefinedAdded,
     RedefinedDeleted,
+    RedefinedSet,
 )
+
+__all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
 
 
 if TYPE_CHECKING:
@@ -80,7 +81,7 @@ class relation_one(Protocol[E]):
     def __get__(self, obj: None, class_=None) -> relation_one[E]:
         ...
 
-    @overload
+    @overload  # noqa: F811
     def __get__(self, obj, class_=None) -> E:
         ...
 
@@ -99,7 +100,7 @@ class relation_many(Protocol[E]):
     def __get__(self, obj: None, class_=None) -> relation_many[E]:
         ...
 
-    @overload
+    @overload  # noqa: F811
     def __get__(self, obj, class_=None) -> collection[E]:
         ...
 
@@ -129,7 +130,7 @@ class umlproperty(Generic[T]):
     `propagate(self, event)`.
 
     In some cases properties call out and delegate actions to the ElementFactory,
-    for example in the case of event handling.
+    for example, in the case of event handling.
     """
 
     lower: Lower = 0
@@ -170,11 +171,11 @@ class umlproperty(Generic[T]):
     def _get(self, obj: Literal[1]) -> Optional[T]:
         ...
 
-    @overload
+    @overload  # noqa: F811
     def _get(self, obj: Literal["*"]) -> collection[T]:
         ...
 
-    def _get(self, obj):
+    def _get(self, obj):  # noqa: F811
         raise NotImplementedError()
 
     def _set(self, obj, value: Optional[T]) -> None:
@@ -281,12 +282,12 @@ class enumeration(umlproperty[str]):
             return self.default
 
     def load(self, obj, value):
-        if not value in self.values:
+        if value not in self.values:
             raise AttributeError("Value should be one of %s" % str(self.values))
         setattr(obj, self._name, value)
 
     def _set(self, obj, value):
-        if not value in self.values:
+        if value not in self.values:
             raise AttributeError("Value should be one of %s" % str(self.values))
         old = self._get(obj)
         if value == old:
@@ -462,8 +463,8 @@ class association(umlproperty[T]):
 
         try:
             delattr(obj, self._name)
-        except:
-            pass
+        except AttributeError:
+            log.exception(f"Delete attribute failed for {obj} with {self._name}")
         else:
             if do_notify:
                 self.handle(AssociationSet(obj, self, value, None))
@@ -479,8 +480,8 @@ class association(umlproperty[T]):
             items = c.items
             try:
                 items.remove(value)
-            except:
-                pass
+            except ValueError:
+                log.exception(f"Removing {value} from list {items} failed")
             else:
                 if do_notify:
                     self.handle(AssociationDeleted(obj, self, value))
@@ -547,7 +548,7 @@ class associationstub(umlproperty[T]):
         try:
             values = getattr(obj, self._name)
         except AttributeError:
-            pass
+            log.exception(f"Failed to unlink {self._name} from {obj}")
         else:
             for value in set(values):
                 self.association.__delete__(value, obj)

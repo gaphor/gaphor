@@ -69,31 +69,30 @@ Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
 import ast
-from math import pi
 from enum import Enum
+from math import pi
 
+from gaphas.canvas import Canvas
 from gaphas.connector import LinePort
 from gaphas.geometry import distance_line_point, distance_point_point
-from gaphas.item import NW, NE, SE, SW
-from gaphas.canvas import Canvas
+from gaphas.item import NE, NW, SE, SW
 
 from gaphor import UML
-from gaphor.diagram.presentation import (
-    ElementPresentation,
-    Classified,
-    from_package_str,
-)
-from gaphor.diagram.shapes import Box, IconBox, EditableText, Text, draw_border
-from gaphor.diagram.text import FontWeight, VerticalAlign
-from gaphor.diagram.support import represents
-
 from gaphor.diagram.classes.klass import (
     attribute_watches,
-    operation_watches,
     attributes_compartment,
+    operation_watches,
     operations_compartment,
 )
 from gaphor.diagram.classes.stereotype import stereotype_compartments
+from gaphor.diagram.presentation import (
+    Classified,
+    ElementPresentation,
+    from_package_str,
+)
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, draw_border
+from gaphor.diagram.support import represents
+from gaphor.diagram.text import FontWeight, VerticalAlign
 
 
 class Folded(Enum):
@@ -147,7 +146,6 @@ class InterfacePort(LinePort):
             d = distance_point_point((px, py), pos)
             return (px, py), d
         else:
-            p2 = self.end
             d, pl = distance_line_point(self.start, self.end, pos)
             return pl, d
 

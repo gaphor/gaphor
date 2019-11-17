@@ -2,10 +2,10 @@
 Message connection adapter tests.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
 from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.interactions.message import MessageItem
+from gaphor.tests import TestCase
 
 
 class BasicMessageConnectionsTestCase(TestCase):
@@ -229,7 +229,6 @@ class DiagramModeMessageConnectionTestCase(TestCase):
         self.connect(msg, msg.head, ll1)
         self.connect(msg, msg.tail, ll2)
 
-        factory = self.element_factory
         subject = msg.subject
 
         assert subject.sendEvent and subject.receiveEvent

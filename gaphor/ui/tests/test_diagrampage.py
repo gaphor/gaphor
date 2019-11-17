@@ -57,7 +57,7 @@ class DiagramPageTestCase(unittest.TestCase):
         self.diagram.canvas.update_now()
         self.page.view.request_update([box])
 
-        comment = self.diagram.create(
+        self.diagram.create(
             CommentItem, subject=self.element_factory.create(UML.Comment)
         )
         assert len(self.element_factory.lselect()) == 2

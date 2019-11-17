@@ -14,12 +14,12 @@
 
 import os
 import re
-import sys
-import subprocess
 import shlex
-import tempfile
 import shutil
 import struct
+import subprocess
+import sys
+import tempfile
 
 
 def build_resource(rc_path, out_path):

@@ -3,12 +3,12 @@ Comment and comment line items connection adapters tests.
 """
 
 from gaphor import UML
-from gaphor.tests import TestCase
+from gaphor.diagram.classes.generalization import GeneralizationItem
+from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.usecases.actor import ActorItem
-from gaphor.diagram.classes.klass import ClassItem
-from gaphor.diagram.classes.generalization import GeneralizationItem
+from gaphor.tests import TestCase
 
 
 class CommentLineTestCase(TestCase):
@@ -191,6 +191,3 @@ class CommentLineTestCase(TestCase):
         self.connect(line2, line2.head, comment)
 
         assert not self.allow(line2, line2.tail, clazz)
-
-
-# vim: sw=4:et:ai

@@ -1,5 +1,6 @@
 from gi.repository import Gdk, Gtk
-from gaphor.plugins.console.console import main, GTKInterpreterConsole, Help
+
+from gaphor.plugins.console.console import GTKInterpreterConsole, Help, main
 
 
 class KeyEvent:

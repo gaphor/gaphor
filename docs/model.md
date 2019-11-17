@@ -1,24 +1,24 @@
-# UML Datamodel
+# UML Data Model
 
-Gaphor uses the UML metamodel specs as guidelines for its data storage.
-In fact, the datamodel is generated for a model file.
+Gaphor uses the UML Specification as a guideline for its own data storage.
+The Python data model is generated from a Gaphor model file that describes
+the relationships between the supported UML elements.
 
-The model is built using smart properties (descriptors). Those
-descriptors handle events when they're changed. This allows the rest of
-the application (visuals, undo system) to update their state
-accordingly. The events are send using Zope (3)'s signalling mechanism,
-called Handlers.
+The model is built using smart properties (descriptors). These properties
+emit events when they're changed. This allows the rest of the application,
+for example, the visuals and undo system, to update their state accordingly.
+The events are sent using a signaling mechanism, called handlers.
 
 ## Model details
 
 Pay attention to the following changes/additions with respect to the
-official model:
+official Gaphor model, in the `uml2.gaphor` file:
 
 -   Additions to the model have been put in the package
     AuxilaryConstructs.Presentations and .Stereotypes.
 -   A Diagram element is added in order to model the diagrams.
 -   A special construct has been put into place in order to apply
-    stereotypes to model elements. The current specs (2.2) are not
+    stereotypes to model elements. The current UML Specification is not
     clear on that subject.
 -   The Slot.value reference is singular.
 

@@ -1,76 +1,75 @@
-# Gaphor XML format
+# File Format (XML)
 
-This format is meant to be a shorter and more obvious version of
-Gaphor's file format. The current format makes it pretty hard to do
-some decent XSLT parsing. In the current file format one has to compare
-the @name attribute with the model element name one wishes.
+Since Gaphor generates the Python data model from a Gaphor model file, it
+would be possible to also generate a Document Type Definition (DTD) as well.
 
-Since the data model is generated from a Gaphor (0.2) model it would be
-a piece of cake to generate a DTD too.
+These are the things that should be distinguished:
+- Model elements
+- Associations with other model elements (referenced by ID):
+  - Relations with multiplicty of zero to one (0..1)
+  - Relations with multiplicty of zero or more (0..*)
+- Attributes, which always have a multiplicity of zero to one (0..1)
+- Diagrams
+  - One canvas
+  - Several canvas items
+- Derived attributes and associations are not saved
+- Model elements should have their class name as tag name:
 
-These are the things that should be distinguished: - model elements -
-associations with other model elements (referenced by ID):
+```xml
+<Class id="DCE:xxx.xxx...">
+  ...
+</Class>
+<Package id="DCE:xxx...">
+  ...
+</Package>
+```
 
--   0..1 relations
--   0..\* relations
+- Support for the two types of Associations, single and multiple:
 
--   attributes (always have a multiplicity of 0..1)
--   diagrams
-    -   one canvas
-    -   several canvas items
--   derived attributes and associations are not saved of course.
+```xml
+<Class id="DCE:xxx.xxx...">
+  <package>
+    <ref refid="DCE:xxx.../>
+  </package>
+</Class>
+<Package id="DCE:xxx...">
+  <ownedClassifier>
+     <reflist>
+       <ref refid="DCE:xxx.xxx..."/>
+   ...
+     </reflist>
+  </ownedClassifier>
+</Package>
+```
 
-Model elements should have their class name as tag name, e.g.:
-
-    <Class id="DCE:xxx.xxx...">
-      ...
-    </Class>
-    <Package id="DCE:xxx...">
-      ...
-    </Package>
-
-Associations are in two flavors: single and multiple:
-
-    <Class id="DCE:xxx.xxx...">
-      <package>
-        <ref refid="DCE:xxx.../>
-      </package>
-    </Class>
-    <Package id="DCE:xxx...">
-      <ownedClassifier>
-         <reflist>
-           <ref refid="DCE:xxx.xxx..."/>
-       ...
-         </reflist>
-      </ownedClassifier>
-    </Package>
-
-Associations contain primitive data, this can always be displayed as
+- Associations contain primitive data, this can always be displayed as
 strings:
 
-    <Class id="DCE:xxx.xxx...">
-      <name>
-        <![CDATA[My name]]>
-      </name>
-      <intvar>4</intvar>
-    </Class>
+```xml
+<Class id="DCE:xxx.xxx...">
+  <name>
+    <![CDATA[My name]]>
+  </name>
+  <intvar>4</intvar>
+</Class>
+```
 
-Canvas is the tag in which all canvas related stuff is placed. This is
+- Canvas is the tag in which all canvas related stuff is placed. This is
 the same way it is done now:
 
-    <Diagram id="...">
-      <canvas>
-        <item type="AssociationItem">
-          <subject>
-        <ref refid="DCE:..."/>
-      </subject>
-      <width><val>100.0</val></width>
+```xml
+<Diagram id="...">
+  <canvas>
+   <item type="AssociationItem">
+     <subject> <ref refid="DCE:..."/> </subject> <width><val>100.0</val></width>
         </item>
-      </canvas>
-    </Diagram>
+  </canvas>
+</Diagram>
+```
 
-Most of the time you do not want to have anything to do with the canvas.
-The data stored there is specific to Gaphor. The model elements however,
-are interesting for other things such as code generators and conversion
-tools. Gaphor has export filters for SVG graphics, so diagrams can be
-exported in a independant way.
+Most of the time you do not want to have anything to do with the canvas. The
+data stored there is specific to Gaphor. The model elements however, are
+interesting for other things such as code generators and conversion tools.
+Gaphor is also able to export diagrams into a SVG image, so that they can be
+used outside of the tool.
+

@@ -25,16 +25,15 @@ TODO:
      key focuses its associated control.
 """
 
-from typing import Callable, Dict, List, Tuple, Type
-
 import abc
-from gi.repository import GObject, Gdk, Gtk
+from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
+from gi.repository import Gdk, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import _, transactional
+from gaphor.core import gettext, transactional
 
 
 class _PropertyPages:
@@ -129,25 +128,25 @@ class EditableTreeModel(Gtk.ListStore):
         Last column has to contain object being edited.
         """
 
-        raise NotImplemented
+        raise NotImplementedError
 
     def _create_object(self):
         """
         Create new object.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _set_object_value(self, row, col, value):
         """
         Update row's column with a value.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _swap_objects(self, o1, o2):
         """
         Swap two objects. If objects are swapped, then return ``True``.
         """
-        raise NotImplemented
+        raise NotImplementedError
 
     def _get_object(self, iter):
         """
@@ -389,7 +388,7 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     order = 10
 
-    NAME_LABEL = _("Name")
+    NAME_LABEL = gettext("Name")
 
     def __init__(self, subject: UML.NamedElement):
         assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
@@ -463,7 +462,7 @@ class LineStylePage(PropertyPageBase):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=_("Orthogonal"))
+        button = Gtk.CheckButton(label=gettext("Orthogonal"))
         button.set_active(self.item.orthogonal)
         button.connect("toggled", self._on_orthogonal_change)
         hbox.pack_start(button, True, True, 0)
@@ -476,7 +475,7 @@ class LineStylePage(PropertyPageBase):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=_("Horizontal"))
+        button = Gtk.CheckButton(label=gettext("Horizontal"))
         button.set_active(self.item.horizontal)
         button.connect("toggled", self._on_horizontal_change)
         hbox.pack_start(button, True, True, 0)

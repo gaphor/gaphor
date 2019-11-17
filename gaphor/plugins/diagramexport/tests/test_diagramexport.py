@@ -1,9 +1,11 @@
-import pytest
 from typing import Dict
 
-import gaphas, gaphas.examples
-from gaphor.plugins.diagramexport import DiagramExport
+import gaphas
+import gaphas.examples
+import pytest
+
 import gaphor.ui.menufragment
+from gaphor.plugins.diagramexport import DiagramExport
 
 
 @pytest.fixture

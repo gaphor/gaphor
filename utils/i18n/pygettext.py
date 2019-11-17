@@ -19,7 +19,10 @@ try:
 
     _ = fintl.gettext
 except ImportError:
-    _ = lambda s: s
+
+    def _(s):
+        return s
+
 
 __doc__ = _(
     """pygettext -- Python equivalent of xgettext(1)
@@ -158,13 +161,13 @@ If `inputfile' is -, standard input is read.
 """
 )
 
+import getopt
+import operator
 import os
 import sys
 import time
-import getopt
 import token
 import tokenize
-import operator
 from functools import reduce
 
 __version__ = "1.5"
@@ -450,7 +453,7 @@ class TokenEater:
     def __addentry(self, msg, lineno=None, isdocstring=0):
         if lineno is None:
             lineno = self.__lineno
-        if not msg in self.__options.toexclude:
+        if msg not in self.__options.toexclude:
             entry = (self.__curfile, lineno)
             self.__messages.setdefault(msg, {})[entry] = isdocstring
 

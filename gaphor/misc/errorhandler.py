@@ -5,11 +5,12 @@ to a class' method and will raise the error dialog when the method exits with
 an exception.
 """
 
-from gi.repository import Gtk
-import sys
 import pdb
+import sys
 
-from gaphor.i18n import _
+from gi.repository import Gtk
+
+from gaphor.i18n import gettext
 
 
 def error_handler(message=None, exc_info=None):
@@ -19,16 +20,18 @@ def error_handler(message=None, exc_info=None):
         return
 
     if not message:
-        message = _("An error occurred.")
+        message = gettext("An error occurred.")
 
     buttons = Gtk.ButtonsType.OK
     message = (
-        f"{message}\n\n" + _("Technical details:") + f"\n\t{exc_type}\n\t{exc_value}"
+        f"{message}\n\n"
+        + gettext("Technical details:")
+        + f"\n\t{exc_type}\n\t{exc_value}"
     )
 
     if __debug__ and sys.stdin.isatty():
         buttons = Gtk.ButtonsType.YES_NO
-        message += "\n\n" + _(
+        message += "\n\n" + gettext(
             "Do you want to debug?\n(Gaphor should have been started from the command line)"
         )
 

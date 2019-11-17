@@ -2,10 +2,10 @@
 Extension item connection adapter tests.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.profiles.extension import ExtensionItem
 from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.profiles.extension import ExtensionItem
+from gaphor.tests import TestCase
 
 
 class ExtensionConnectorTestCase(TestCase):

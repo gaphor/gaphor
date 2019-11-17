@@ -5,6 +5,7 @@ Base code for presentation elements
 from __future__ import annotations
 
 from typing import (
+    TYPE_CHECKING,
     Any,
     Callable,
     Generic,
@@ -12,10 +13,10 @@ from typing import (
     Optional,
     TypeVar,
     Union,
-    TYPE_CHECKING,
 )
-from gaphor.UML.properties import relation_one, association
+
 from gaphor.UML.element import Element
+from gaphor.UML.properties import association, relation_one
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa

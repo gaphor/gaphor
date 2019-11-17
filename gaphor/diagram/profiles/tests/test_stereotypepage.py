@@ -1,7 +1,7 @@
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.profiles.stereotypepage import StereotypePage
 from gaphor.diagram.classes.klass import ClassItem
+from gaphor.diagram.profiles.stereotypepage import StereotypePage
+from gaphor.tests import TestCase
 
 
 class MetaclassEditorTest(TestCase):

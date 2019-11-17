@@ -17,16 +17,17 @@ to be aware that `AbstractGroup.item` can be null.
 
 from __future__ import annotations
 
-from typing import Type, TYPE_CHECKING
 import abc
+from typing import TYPE_CHECKING, Type
 
-from generic.multidispatch import multidispatch, FunctionDispatcher
+from generic.multidispatch import FunctionDispatcher, multidispatch
 
 if TYPE_CHECKING:
     from gaphor import UML
 
+
 # TODO: I think this should have been called Namespacing or something similar,
-# since that's the modeling concept.
+#   since that's the modeling concept.
 class AbstractGroup(metaclass=abc.ABCMeta):
     """
     Base class for grouping UML objects, i.e.

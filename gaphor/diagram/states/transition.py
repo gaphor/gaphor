@@ -3,10 +3,10 @@ State transition implementation.
 """
 
 from gaphor import UML
-from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text, draw_arrow_tail
 from gaphor.diagram.support import represents
+from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Transition)

@@ -5,22 +5,22 @@ Flow item adapter connections.
 from typing import Type, Union
 
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect, UnaryRelationshipConnect
 from gaphor.diagram.actions.action import (
+    AcceptEventActionItem,
     ActionItem,
     SendSignalActionItem,
-    AcceptEventActionItem,
 )
 from gaphor.diagram.actions.activitynodes import (
-    ForkNodeItem,
-    ActivityNodeItem,
-    InitialNodeItem,
     ActivityFinalNodeItem,
-    FlowFinalNodeItem,
+    ActivityNodeItem,
     DecisionNodeItem,
+    FlowFinalNodeItem,
+    ForkNodeItem,
+    InitialNodeItem,
 )
 from gaphor.diagram.actions.flow import FlowItem
 from gaphor.diagram.actions.objectnode import ObjectNodeItem
+from gaphor.diagram.connectors import IConnect, UnaryRelationshipConnect
 
 
 class FlowConnect(UnaryRelationshipConnect):
@@ -60,7 +60,6 @@ class FlowConnect(UnaryRelationshipConnect):
 
     def connect_subject(self, handle):
         line = self.line
-        element = self.element
 
         # TODO: connect opposite side again (in case it's a join/fork or
         #       decision/merge node)
@@ -133,7 +132,6 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         fork_node_cls = self.fork_node_cls
         join_node_cls = self.join_node_cls
-        line = self.line
         element = self.element
         subject = element.subject
         if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
@@ -171,7 +169,6 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         fork_node_cls = self.fork_node_cls
         join_node_cls = self.join_node_cls
-        line = self.line
         element = self.element
         if element.combined:
             join_node = element.subject

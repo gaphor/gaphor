@@ -1,34 +1,32 @@
+import logging
 from typing import Optional
 
-import logging
-
-from gi.repository import GLib, Gdk, Gtk
-
+import gaphas.segment  # Just register the handlers in this module
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (
-    PainterChain,
-    ItemPainter,
-    HandlePainter,
-    FocusedItemPainter,
-    ToolPainter,
     BoundingBoxPainter,
+    FocusedItemPainter,
+    HandlePainter,
+    ItemPainter,
+    PainterChain,
+    ToolPainter,
 )
 from gaphas.view import GtkView
-import gaphas.segment  # Just register the handlers in this module
+from gi.repository import Gdk, GLib, Gtk
 
 from gaphor import UML
-from gaphor.UML.event import ElementDeleted, DiagramItemCreated
-from gaphor.core import _, event_handler, transactional, action
+from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.diagramtoolbox import (
+    TOOLBOX_ACTIONS,
     DiagramToolbox,
     TransactionalToolChain,
-    TOOLBOX_ACTIONS,
 )
 from gaphor.ui.event import DiagramSelectionChanged
+from gaphor.UML.event import DiagramItemCreated, ElementDeleted
 
 log = logging.getLogger(__name__)
 
@@ -55,7 +53,7 @@ class DiagramPage:
         self.event_manager.subscribe(self._on_sloppy_lines)
         self.event_manager.subscribe(self._on_diagram_item_created)
 
-    title = property(lambda s: s.diagram and s.diagram.name or _("<None>"))
+    title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
 
     def get_diagram(self):
         return self.diagram

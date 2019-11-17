@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Written by Martin v. Lo"wis <loewis@informatik.hu-berlin.de>
+# Written by Martin v. Loewis <loewis@informatik.hu-berlin.de>
 
 """Generate binary message catalog from textual translation description.
 
@@ -25,11 +25,11 @@ Options:
         Display version information and exit.
 """
 
-import sys
-import os
-import getopt
-import struct
 import array
+import getopt
+import os
+import struct
+import sys
 
 __version__ = "1.1"
 
@@ -117,43 +117,43 @@ def make(filename, outfile):
 
     # Parse the catalog
     lno = 0
-    for l in lines:
+    for line in lines:
         lno += 1
         # If we get a comment line after a msgstr, this is a new entry
-        if l[0] == "#" and section == STR:
+        if line[0] == "#" and section == STR:
             add(msgid, msgstr, fuzzy)
             section = None
             fuzzy = 0
         # Record a fuzzy mark
-        if l[:2] == "#," and l.find("fuzzy"):
+        if line[:2] == "#," and line.find("fuzzy"):
             fuzzy = 1
         # Skip comments
-        if l[0] == "#":
+        if line[0] == "#":
             continue
         # Now we are in a msgid section, output previous section
-        if l.startswith("msgid"):
+        if line.startswith("msgid"):
             if section == STR:
                 add(msgid, msgstr, fuzzy)
             section = ID
-            l = l[5:]
+            line = line[5:]
             msgid = msgstr = ""
         # Now we are in a msgstr section
-        elif l.startswith("msgstr"):
+        elif line.startswith("msgstr"):
             section = STR
-            l = l[6:]
+            line = line[6:]
         # Skip empty lines
-        l = l.strip()
-        if not l:
+        line = line.strip()
+        if not line:
             continue
         # XXX: Does this always follow Python escape semantics?
-        l = eval(l)
+        line = eval(line)
         if section == ID:
-            msgid += l
+            msgid += line
         elif section == STR:
-            msgstr += l
+            msgstr += line
         else:
             print(f"Syntax error on {infile}:{lno:d}", "before:", file=sys.stderr)
-            print(l, file=sys.stderr)
+            print(line, file=sys.stderr)
             sys.exit(1)
     # Add last entry
     if section == STR:

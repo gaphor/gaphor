@@ -10,217 +10,251 @@ from typing import Optional, Sequence, Tuple
 
 from gaphas.item import SE
 
-from gaphor import UML
-from gaphor.UML.event import DiagramItemCreated
-from gaphor.core import _
-from gaphor import diagram
+from gaphor import UML, diagram
+from gaphor.core import gettext
 from gaphor.ui.diagramtools import (
-    TransactionalToolChain,
-    PlacementTool,
-    GroupPlacementTool,
     DefaultTool,
+    GroupPlacementTool,
+    PlacementTool,
+    TransactionalToolChain,
 )
+from gaphor.UML.event import DiagramItemCreated
 
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
 TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[Tuple[str, str, str, Optional[str]]]]] = (
     (
-        _("General"),
+        gettext("General"),
         (
-            ("toolbox-pointer", _("Pointer"), "gaphor-pointer-symbolic", "Escape"),
-            ("toolbox-line", _("Line"), "gaphor-line-symbolic", "l"),
-            ("toolbox-box", _("Box"), "gaphor-box-symbolic", "b"),
-            ("toolbox-ellipse", _("Ellipse"), "gaphor-ellipse-symbolic", "e"),
-            ("toolbox-comment", _("Comment"), "gaphor-comment-symbolic", "k"),
+            (
+                "toolbox-pointer",
+                gettext("Pointer"),
+                "gaphor-pointer-symbolic",
+                "Escape",
+            ),
+            ("toolbox-line", gettext("Line"), "gaphor-line-symbolic", "l"),
+            ("toolbox-box", gettext("Box"), "gaphor-box-symbolic", "b"),
+            ("toolbox-ellipse", gettext("Ellipse"), "gaphor-ellipse-symbolic", "e"),
+            ("toolbox-comment", gettext("Comment"), "gaphor-comment-symbolic", "k"),
             (
                 "toolbox-comment-line",
-                _("Comment line"),
+                gettext("Comment line"),
                 "gaphor-comment-line-symbolic",
                 "<Shift>K",
             ),
         ),
     ),
     (
-        _("Classes"),
+        gettext("Classes"),
         (
-            ("toolbox-class", _("Class"), "gaphor-class-symbolic", "c"),
-            ("toolbox-interface", _("Interface"), "gaphor-interface-symbolic", "i"),
-            ("toolbox-package", _("Package"), "gaphor-package-symbolic", "p"),
+            ("toolbox-class", gettext("Class"), "gaphor-class-symbolic", "c"),
+            (
+                "toolbox-interface",
+                gettext("Interface"),
+                "gaphor-interface-symbolic",
+                "i",
+            ),
+            ("toolbox-package", gettext("Package"), "gaphor-package-symbolic", "p"),
             (
                 "toolbox-association",
-                _("Association"),
+                gettext("Association"),
                 "gaphor-association-symbolic",
                 "<Shift>A",
             ),
             (
                 "toolbox-dependency",
-                _("Dependency"),
+                gettext("Dependency"),
                 "gaphor-dependency-symbolic",
                 "<Shift>D",
             ),
             (
                 "toolbox-generalization",
-                _("Generalization"),
+                gettext("Generalization"),
                 "gaphor-generalization-symbolic",
                 "<Shift>G",
             ),
             (
                 "toolbox-implementation",
-                _("Implementation"),
+                gettext("Implementation"),
                 "gaphor-implementation-symbolic",
                 "<Shift>I",
             ),
         ),
     ),
     (
-        _("Components"),
+        gettext("Components"),
         (
-            ("toolbox-component", _("Component"), "gaphor-component-symbolic", "o"),
-            ("toolbox-artifact", _("Artifact"), "gaphor-artifact-symbolic", "h"),
-            ("toolbox-node", _("Node"), "gaphor-node-symbolic", "n"),
-            ("toolbox-device", _("Device"), "gaphor-device-symbolic", "d"),
+            (
+                "toolbox-component",
+                gettext("Component"),
+                "gaphor-component-symbolic",
+                "o",
+            ),
+            ("toolbox-artifact", gettext("Artifact"), "gaphor-artifact-symbolic", "h",),
+            ("toolbox-node", gettext("Node"), "gaphor-node-symbolic", "n"),
+            ("toolbox-device", gettext("Device"), "gaphor-device-symbolic", "d"),
             (
                 "toolbox-connector",
-                _("Connector"),
+                gettext("Connector"),
                 "gaphor-connector-symbolic",
                 "<Shift>C",
             ),
         ),
     ),
     (
-        _("Actions"),
+        gettext("Actions"),
         (
-            ("toolbox-action", _("Action"), "gaphor-action-symbolic", "a"),
+            ("toolbox-action", gettext("Action"), "gaphor-action-symbolic", "a"),
             (
                 "toolbox-initial-node",
-                _("Initial node"),
+                gettext("Initial node"),
                 "gaphor-initial-node-symbolic",
                 "j",
             ),
             (
                 "toolbox-activity-final-node",
-                _("Activity final node"),
+                gettext("Activity final node"),
                 "gaphor-activity-final-node-symbolic",
                 "f",
             ),
             (
                 "toolbox-flow-final-node",
-                _("Flow final node"),
+                gettext("Flow final node"),
                 "gaphor-flow-final-node-symbolic",
                 "w",
             ),
             (
                 "toolbox-decision-node",
-                _("Decision/merge node"),
+                gettext("Decision/merge node"),
                 "gaphor-decision-node-symbolic",
                 "g",
             ),
             (
                 "toolbox-fork-node",
-                _("Fork/join node"),
+                gettext("Fork/join node"),
                 "gaphor-fork-node-symbolic",
                 "<Shift>R",
             ),
             (
                 "toolbox-object-node",
-                _("Object node"),
+                gettext("Object node"),
                 "gaphor-object-node-symbolic",
                 "<Shift>O",
             ),
             (
                 "toolbox-partition",
-                _("Partition"),
+                gettext("Partition"),
                 "gaphor-partition-symbolic",
                 "<Shift>P",
             ),
             (
                 "toolbox-flow",
-                _("Control/object flow"),
+                gettext("Control/object flow"),
                 "gaphor-control-flow-symbolic",
                 "<Shift>F",
             ),
             (
                 "toolbox-send-signal-action",
-                _("Send signal action"),
+                gettext("Send signal action"),
                 "gaphor-send-signal-action-symbolic",
                 None,
             ),
             (
                 "toolbox-accept-event-action",
-                _("Accept event action"),
+                gettext("Accept event action"),
                 "gaphor-accept-event-action-symbolic",
                 None,
             ),
         ),
     ),
     (
-        _("Interactions"),
+        gettext("Interactions"),
         (
-            ("toolbox-lifeline", _("Lifeline"), "gaphor-lifeline-symbolic", "v"),
-            ("toolbox-message", _("Message"), "gaphor-message-symbolic", "M"),
+            ("toolbox-lifeline", gettext("Lifeline"), "gaphor-lifeline-symbolic", "v",),
+            ("toolbox-message", gettext("Message"), "gaphor-message-symbolic", "M"),
             (
                 "toolbox-interaction",
-                _("Interaction"),
+                gettext("Interaction"),
                 "gaphor-interaction-symbolic",
                 "<Shift>N",
             ),
         ),
     ),
     (
-        _("States"),
+        gettext("States"),
         (
-            ("toolbox-state", _("State"), "gaphor-state-symbolic", "s"),
+            ("toolbox-state", gettext("State"), "gaphor-state-symbolic", "s"),
             (
                 "toolbox-initial-pseudostate",
-                _("Initial Pseudostate"),
+                gettext("Initial Pseudostate"),
                 "gaphor-initial-pseudostate-symbolic",
                 "<Shift>S",
             ),
             (
                 "toolbox-final-state",
-                _("Final State"),
+                gettext("Final State"),
                 "gaphor-final-state-symbolic",
                 "x",
             ),
             (
                 "toolbox-history-pseudostate",
-                _("History Pseudostate"),
+                gettext("History Pseudostate"),
                 "gaphor-pseudostate-symbolic",
                 "q",
             ),
             (
                 "toolbox-transition",
-                _("Transition"),
+                gettext("Transition"),
                 "gaphor-transition-symbolic",
                 "<Shift>T",
             ),
         ),
     ),
     (
-        _("Use Cases"),
+        gettext("Use Cases"),
         (
-            ("toolbox-use-case", _("Use case"), "gaphor-use-case-symbolic", "u"),
-            ("toolbox-actor", _("Actor"), "gaphor-actor-symbolic", "t"),
+            ("toolbox-use-case", gettext("Use case"), "gaphor-use-case-symbolic", "u",),
+            ("toolbox-actor", gettext("Actor"), "gaphor-actor-symbolic", "t"),
             (
                 "toolbox-use-case-association",
-                _("Association"),
+                gettext("Association"),
                 "gaphor-association-symbolic",
                 "<Shift>B",
             ),
-            ("toolbox-include", _("Include"), "gaphor-include-symbolic", "<Shift>U"),
-            ("toolbox-extend", _("Extend"), "gaphor-extend-symbolic", "<Shift>X"),
+            (
+                "toolbox-include",
+                gettext("Include"),
+                "gaphor-include-symbolic",
+                "<Shift>U",
+            ),
+            (
+                "toolbox-extend",
+                gettext("Extend"),
+                "gaphor-extend-symbolic",
+                "<Shift>X",
+            ),
         ),
     ),
     (
-        _("Profiles"),
+        gettext("Profiles"),
         (
-            ("toolbox-profile", _("Profile"), "gaphor-profile-symbolic", "r"),
-            ("toolbox-metaclass", _("Metaclass"), "gaphor-metaclass-symbolic", "m"),
-            ("toolbox-stereotype", _("Stereotype"), "gaphor-stereotype-symbolic", "z"),
+            ("toolbox-profile", gettext("Profile"), "gaphor-profile-symbolic", "r"),
+            (
+                "toolbox-metaclass",
+                gettext("Metaclass"),
+                "gaphor-metaclass-symbolic",
+                "m",
+            ),
+            (
+                "toolbox-stereotype",
+                gettext("Stereotype"),
+                "gaphor-stereotype-symbolic",
+                "z",
+            ),
             (
                 "toolbox-extension",
-                _("Extension"),
+                gettext("Extension"),
                 "gaphor-extension-symbolic",
                 "<Shift>E",
             ),
@@ -239,8 +273,8 @@ def tooliter(toolbox_actions):
 
 class DiagramToolbox:
     """
-    Composite class for DiagramPage. 
-    
+    Composite class for DiagramPage.
+
     See diagrampage.py.
     """
 
@@ -279,7 +313,7 @@ class DiagramToolbox:
                 config_func(item)
             return item
 
-        factory_method.item_class = item_class  # type: ignore[attr-defined]
+        factory_method.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
         return factory_method
 
     def _namespace_item_factory(self, item_class, subject_class, name=None):
@@ -298,7 +332,7 @@ class DiagramToolbox:
                 subject.name = f"New{subject_class.__name__}"
             return item
 
-        factory_method.item_class = item_class  # type: ignore[attr-defined]
+        factory_method.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
         return factory_method
 
     def _after_handler(self, new_item):

@@ -2,10 +2,10 @@
 Unnit tests for AssociationItem.
 """
 
-from gaphor.tests import TestCase
 from gaphor import UML
-from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.klass import ClassItem
+from gaphor.tests import TestCase
 
 
 class AssociationItemTestCase(TestCase):
@@ -46,9 +46,6 @@ class AssociationItemTestCase(TestCase):
 
     def test_association_end_updates(self):
         """Test association end navigability connected to a class"""
-        from gaphas.canvas import Canvas
-
-        canvas = Canvas()
         c1 = self.create(ClassItem, UML.Class)
         c2 = self.create(ClassItem, UML.Class)
         a = self.create(AssociationItem)

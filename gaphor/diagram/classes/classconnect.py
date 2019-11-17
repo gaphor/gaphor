@@ -1,16 +1,16 @@
 """Classes related (dependency, implementation) adapter connections."""
 
 from gaphor import UML
+from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.generalization import GeneralizationItem
+from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.connectors import (
     IConnect,
-    UnaryRelationshipConnect,
     RelationshipConnect,
+    UnaryRelationshipConnect,
 )
-from gaphor.diagram.presentation import Named, Classified, ElementPresentation
-from gaphor.diagram.classes.dependency import DependencyItem
-from gaphor.diagram.classes.implementation import ImplementationItem
-from gaphor.diagram.classes.generalization import GeneralizationItem
-from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.presentation import Classified, ElementPresentation, Named
 
 
 @IConnect.register(Named, DependencyItem)
@@ -18,7 +18,6 @@ class DependencyConnect(RelationshipConnect):
     """Connect two Named elements using a Dependency."""
 
     def allow(self, handle, port):
-        line = self.line
         element = self.element
 
         # Element should be a NamedElement
@@ -49,7 +48,6 @@ class DependencyConnect(RelationshipConnect):
         line = self.line
 
         if line.auto_dependency:
-            canvas = line.canvas
             opposite = line.opposite(handle)
 
             other = self.get_connected(opposite)

@@ -1,8 +1,9 @@
 """Test case that checks the working of the utils/command/gen_uml.py module."""
 
+import importlib_metadata
+
 from utils.model.gen_uml import generate
 from utils.model.override import Overrides
-import importlib_metadata
 
 
 class PseudoFile:

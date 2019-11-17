@@ -3,19 +3,20 @@ Flow item connection adapters tests.
 """
 
 from typing import Type
-from gaphor.tests import TestCase
+
 from gaphor import UML
 from gaphor.diagram.actions.action import ActionItem
-from gaphor.diagram.actions.flow import FlowItem
 from gaphor.diagram.actions.activitynodes import (
-    InitialNodeItem,
-    ForkNodeItem,
-    FlowFinalNodeItem,
     ActivityFinalNodeItem,
     ActivityNodeItem,
     DecisionNodeItem,
+    FlowFinalNodeItem,
+    ForkNodeItem,
+    InitialNodeItem,
 )
+from gaphor.diagram.actions.flow import FlowItem
 from gaphor.diagram.actions.objectnode import ObjectNodeItem
+from gaphor.tests import TestCase
 
 
 class FlowItemBasicNodesConnectionTestCase(TestCase):
@@ -334,7 +335,6 @@ class FlowItemDesisionAndForkNodes:
         flow3 = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.fork_node_cls)
 
         assert isinstance(jn.subject, self.fork_node_cls)
@@ -367,7 +367,6 @@ class FlowItemDesisionAndForkNodes:
         flow3 = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
@@ -409,7 +408,6 @@ class FlowItemDesisionAndForkNodes:
         flow4 = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
         a4 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 
@@ -444,15 +442,12 @@ class FlowItemDesisionAndForkNodes:
 
         Flow `flow4` will force the node to become a combined node.
         """
-        canvas = self.diagram.canvas
-
         flow1 = self.create(FlowItem)
         flow2 = self.create(FlowItem)
         flow3 = self.create(FlowItem)
         flow4 = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
         a4 = self.create(ActionItem, UML.Action)
         jn = self.create(self.item_cls, self.join_node_cls)
 

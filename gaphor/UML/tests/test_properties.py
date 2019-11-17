@@ -1,9 +1,16 @@
 import pytest
-from gaphor.UML.element import Element
-from gaphor.UML.event import AssociationUpdated
-from gaphor.UML.properties import *
+
 from gaphor.application import Application
 from gaphor.core import event_handler
+from gaphor.UML.element import Element
+from gaphor.UML.event import AssociationUpdated
+from gaphor.UML.properties import (
+    association,
+    attribute,
+    derivedunion,
+    enumeration,
+    redefine,
+)
 
 
 def test_association_1_x():
@@ -91,8 +98,8 @@ def test_association_1_1():
     c = C()
     try:
         a.one = c
-    except Exception as e:
-        pass  # ok
+    except Exception:
+        pass
     else:
         assert a.one is not c
 
@@ -404,7 +411,7 @@ def test_notify():
     A.enum = enumeration("enum", ("one", "two"), "one")
 
     a = A()
-    assert a.notified == None
+    assert a.notified is None
     a.assoc = A()
     assert a.notified == "assoc", a.notified
     a.attr = "newval"
@@ -413,7 +420,7 @@ def test_notify():
     assert a.notified == "enum", a.notified
     a.notified = None
     a.enum = "two"  # should not notify since value hasn't changed.
-    assert a.notified == None
+    assert a.notified is None
 
 
 def test_derivedunion():
@@ -463,9 +470,9 @@ def test_derivedunion_notify():
     E.u = derivedunion(E, "u", A, 0, "*", E.a)
 
     e = E()
-    assert e.notified == False
+    assert e.notified is False
     e.a = A()
-    assert e.notified == True
+    assert e.notified is True
 
 
 def test_derivedunion_listmixins():
@@ -668,7 +675,7 @@ def test_redefine_subclass():
     class A(Element):
         is_unlinked = False
 
-        def unlink():
+        def unlink(self):
             self.is_unlinked = True
             Element.unlink()
 

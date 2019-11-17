@@ -3,6 +3,7 @@ Test if the collection's list supports all trickery.
 """
 
 import pytest
+
 from gaphor.UML.collection import collection, collectionlist
 
 

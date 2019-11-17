@@ -5,8 +5,8 @@ Stereotype property page.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import _, transactional
-from gaphor.diagram.propertypages import PropertyPages, PropertyPageBase
+from gaphor.core import gettext, transactional
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 
 
 def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
@@ -22,7 +22,7 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
 
     # Stereotype/Attributes
     col = Gtk.TreeViewColumn.new()
-    col.set_title("{} / {}".format(_("Stereotype"), _("Attribute")))
+    col.set_title("{} / {}".format(gettext("Stereotype"), gettext("Attribute")))
     col.set_expand(True)
     renderer = Gtk.CellRendererToggle()
     renderer.set_property("active", True)
@@ -51,7 +51,7 @@ def create_stereotype_tree_view(model, toggle_stereotype, set_slot_value):
     renderer = Gtk.CellRendererText()
     renderer.set_property("is-expanded", True)
     renderer.connect("edited", set_slot_value, model, 1)
-    col = Gtk.TreeViewColumn(_("Value"), renderer, text=1)
+    col = Gtk.TreeViewColumn(gettext("Value"), renderer, text=1)
     col.set_expand(True)
 
     def set_editable(column, cell, model, iter, data):
@@ -92,7 +92,7 @@ class StereotypePage(PropertyPageBase):
             hbox = Gtk.HBox()
             label = Gtk.Label(label="")
             hbox.pack_start(label, False, True, 0)
-            button = Gtk.CheckButton(label=_("Show stereotypes attributes"))
+            button = Gtk.CheckButton(label=gettext("Show stereotypes attributes"))
             button.set_active(self.item.show_stereotypes)
             button.connect("toggled", self._on_show_stereotypes_change)
             hbox.pack_start(button, True, True, 0)
@@ -142,13 +142,11 @@ class StereotypePage(PropertyPageBase):
                         slot = slots.get(attr)
                         value = slot.value if slot else ""
                         data = (attr.name, value, True, attr, obj, slot)
-                        # print 'data', data
                         self.model.append(parent, data)
             else:
                 for attr in st.ownedAttribute:
                     if not attr.association:
                         data = (attr.name, "", False, attr, None, None)
-                        # print 'no data', data
                         self.model.append(parent, data)
 
     @transactional
@@ -211,6 +209,3 @@ class StereotypePage(PropertyPageBase):
 
         row[1] = value
         row[5] = slot
-
-
-# vim:sw=4:et:ai

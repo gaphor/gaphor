@@ -1,6 +1,6 @@
-from gaphor.storage.verify import orphan_references
 from gaphor import UML
 from gaphor.services.eventmanager import EventManager
+from gaphor.storage.verify import orphan_references
 
 
 def test_verifier():

@@ -3,14 +3,13 @@
 import logging
 import os
 
-from gi.repository import Gtk, Gdk
+from gi.repository import Gdk, Gtk
 
-
+from gaphor.abc import ActionProvider
 from gaphor.action import action
 from gaphor.misc import get_config_dir
-from gaphor.abc import ActionProvider
-from gaphor.ui.abc import UIComponent
 from gaphor.plugins.console.console import GTKInterpreterConsole
+from gaphor.ui.abc import UIComponent
 
 log = logging.getLogger(__name__)
 

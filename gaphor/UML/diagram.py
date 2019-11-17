@@ -1,16 +1,18 @@
-# vim: sw=4
 """This module contains a model element Diagram which is the abstract
 representation of a UML diagram. Diagrams can be visualized and edited.
 
 The DiagramCanvas class extends the gaphas.Canvas class.
 """
 
+import logging
 import uuid
 
 import gaphas
 
 from gaphor.UML.properties import umlproperty
 from gaphor.UML.uml2 import Namespace, PackageableElement
+
+log = logging.getLogger(__name__)
 
 
 class DiagramCanvas(gaphas.Canvas):
@@ -108,7 +110,7 @@ class Diagram(Namespace, PackageableElement):
         for item in self.canvas.get_all_items():
             try:
                 item.unlink()
-            except:
+            except (AttributeError, KeyError):
                 pass
 
         super().unlink()

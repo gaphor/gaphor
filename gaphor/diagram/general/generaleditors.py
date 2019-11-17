@@ -1,8 +1,8 @@
 from gi.repository import Gdk, Gtk
 
 from gaphor.core import transactional
-from gaphor.diagram.inlineeditors import InlineEditor, show_popover
 from gaphor.diagram.general.comment import CommentItem
+from gaphor.diagram.inlineeditors import InlineEditor, show_popover
 
 
 @InlineEditor.register(CommentItem)

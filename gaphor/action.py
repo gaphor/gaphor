@@ -2,9 +2,8 @@
 
 """
 
-from typing import Optional, Sequence, get_type_hints
 import platform
-
+from typing import Optional, Sequence, get_type_hints
 
 _primary = "⌘" if platform.system() == "Darwin" else "Ctrl"
 

@@ -1,8 +1,9 @@
 import pytest
+
 from gaphor import UML
-from gaphor.UML.elementfactory import ElementFactory
-from gaphor.services.eventmanager import EventManager
 from gaphor.diagram.general.generalpropertypages import CommentItemPropertyPage
+from gaphor.services.eventmanager import EventManager
+from gaphor.UML.elementfactory import ElementFactory
 
 
 @pytest.fixture

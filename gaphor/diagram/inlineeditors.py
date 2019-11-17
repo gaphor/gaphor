@@ -9,11 +9,7 @@ from gi.repository import Gdk, Gtk
 
 from gaphor.core import transactional
 from gaphor.diagram import shapes as _shapes
-from gaphor.diagram.presentation import (
-    Named,
-    LinePresentation,
-    ElementPresentation,
-)
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation, Named
 
 
 @singledispatch

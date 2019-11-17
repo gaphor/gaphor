@@ -1,12 +1,11 @@
-from typing import Optional
-
 import ast
+from typing import Optional
 
 import gaphas
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
+from gaphor.diagram.text import TextAlign, text_point_at_line
 from gaphor.UML.presentation import Presentation, S
-from gaphor.diagram.text import text_point_at_line, TextAlign
 
 
 class Named:
@@ -51,8 +50,8 @@ class ElementPresentation(Presentation[S], gaphas.Element):
     """
     Presentation for Gaphas Element (box-like) items.
 
-    To create a shape (boxes, text), assign a shape to `self.shape`.
-    If the shape can change, for example because styling needs to change, implement
+    To create a shape (boxes, text), assign a shape to `self.shape`. If the
+    shape can change, for example, because styling needs to change, implement
     the method `update_shapes()` and set self.shape there.
     """
 

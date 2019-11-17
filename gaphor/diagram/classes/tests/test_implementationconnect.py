@@ -3,10 +3,10 @@ Test implementation (interface realization) item connectors.
 """
 
 from gaphor import UML
-from gaphor.tests import TestCase
-from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.interface import InterfaceItem
+from gaphor.diagram.classes.klass import ClassItem
+from gaphor.tests import TestCase
 
 
 class ImplementationTestCase(TestCase):

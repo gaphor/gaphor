@@ -7,25 +7,24 @@ a result only classifiers are shown here.
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING, Optional
 
-from typing import Optional, TYPE_CHECKING
-
-from gi.repository import GLib, Gio, GObject, Gdk, Gtk
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
-from gaphor.UML.event import (
-    ElementCreated,
-    ElementDeleted,
-    ModelReady,
-    ModelFlushed,
-    AttributeUpdated,
-    DerivedSet,
-)
-from gaphor.core import _, event_handler, action, transactional
+from gaphor.core import action, event_handler, gettext, transactional
+from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
-from gaphor.ui.abc import UIComponent
 from gaphor.ui.iconname import get_icon_name
+from gaphor.UML.event import (
+    AttributeUpdated,
+    DerivedSet,
+    ElementCreated,
+    ElementDeleted,
+    ModelFlushed,
+    ModelReady,
+)
 
 if TYPE_CHECKING:
     from gaphor.UML.elementfactory import ElementFactory
@@ -153,7 +152,7 @@ class NamespaceView(Gtk.TreeView):
             iter = model.get_iter_from_string(path_str)
             element = model.get_value(iter, 0)
             element.name = new_text
-        except Exception as e:
+        except Exception:
             log.error(f'Could not create path from string "{path_str}"')
 
     def on_drag_begin(self, context):
@@ -262,7 +261,7 @@ class NamespaceView(Gtk.TreeView):
 
 class Namespace(UIComponent):
 
-    title = _("Namespace")
+    title = gettext("Namespace")
 
     def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         self.event_manager = event_manager
@@ -321,7 +320,6 @@ class Namespace(UIComponent):
             # Search in child rows.  If any element in the underlaying
             # tree matches, it will expand.
             for inner in row.iterchildren():
-                child = list(inner)[column]
                 if not search_func(model, column, key, inner.iter):
                     view.expand_to_path(row.path)
                     matched = True
@@ -365,17 +363,17 @@ class Namespace(UIComponent):
         model = Gio.Menu.new()
 
         part = Gio.Menu.new()
-        part.append(_("_Open"), "tree-view.open")
-        part.append(_("_Rename"), "tree-view.rename")
+        part.append(gettext("_Open"), "tree-view.open")
+        part.append(gettext("_Rename"), "tree-view.rename")
         model.append_section(None, part)
 
         part = Gio.Menu.new()
-        part.append(_("New _Diagram"), "tree-view.create-diagram")
-        part.append(_("New _Package"), "tree-view.create-package")
+        part.append(gettext("New _Diagram"), "tree-view.create-diagram")
+        part.append(gettext("New _Package"), "tree-view.create-package")
         model.append_section(None, part)
 
         part = Gio.Menu.new()
-        part.append(_("De_lete"), "tree-view.delete")
+        part.append(gettext("De_lete"), "tree-view.delete")
         model.append_section(None, part)
 
         element = self._namespace.get_selected_element()
@@ -384,7 +382,7 @@ class Namespace(UIComponent):
         for presentation in element.presentation:
             diagram = presentation.canvas.diagram
             menu_item = Gio.MenuItem.new(
-                _('Show in "{diagram}"').format(diagram=diagram.name),
+                gettext('Show in "{diagram}"').format(diagram=diagram.name),
                 "tree-view.show-in-diagram",
             )
             menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))

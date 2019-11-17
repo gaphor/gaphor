@@ -1,4 +1,3 @@
-# vim:sw=4:et:
 """This module contains some helpers that can be used to execute generator
 functions in the GLib main loop.
 
@@ -12,12 +11,12 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
             may not be disposed.
 """
 
+import sys
+import time
+import types
 from typing import Any, List, Tuple
 
-import types
-import sys
 from gi.repository import GLib
-import time
 
 
 class GIdleThread:
@@ -128,7 +127,7 @@ class GIdleThread:
         except StopIteration:
             self._idle_id = 0
             return False
-        except:
+        except QueueEmpty:
             self._exc_info = sys.exc_info()
             self._idle_id = 0
             return False
