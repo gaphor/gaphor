@@ -1,4 +1,3 @@
-# vim:sw=4:et:
 """
 Undo management for Gaphor.
 
@@ -73,7 +72,7 @@ class ActionStack:
 
 class UndoManagerStateChanged(ServiceEvent):
     """
-    Event class used to send state changes on the ndo Manager.
+    Event class used to send state changes on the Undo Manager.
     """
 
     def __init__(self, service):
@@ -135,7 +134,7 @@ class UndoManager(Service, ActionProvider):
 
     def add_undo_action(self, action):
         """
-        Add an action to undo. An action
+        Add an action to undo.
         """
         if self._current_transaction:
             self._current_transaction.add(action)
@@ -364,7 +363,6 @@ class UndoManager(Service, ActionProvider):
         value = event.new_value
 
         def _undo_association_add_event():
-            # print 'undoing action', element, value
             # Tell the association it should not need to let the opposite
             # side connect (it has it's own signal)
             association._del(element, value, from_opposite=True)
@@ -380,7 +378,6 @@ class UndoManager(Service, ActionProvider):
         value = event.old_value
 
         def _undo_association_delete_event():
-            # print 'undoing action', element, value
             # Tell the assoctaion it should not need to let the opposite
             # side connect (it has it's own signal)
             association._set(element, value, from_opposite=True)

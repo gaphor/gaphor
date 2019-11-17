@@ -50,8 +50,8 @@ class ElementPresentation(Presentation[S], gaphas.Element):
     """
     Presentation for Gaphas Element (box-like) items.
 
-    To create a shape (boxes, text), assign a shape to `self.shape`.
-    If the shape can change, for example because styling needs to change, implement
+    To create a shape (boxes, text), assign a shape to `self.shape`. If the
+    shape can change, for example, because styling needs to change, implement
     the method `update_shapes()` and set self.shape there.
     """
 

@@ -1,4 +1,3 @@
-# vim: sw=4
 """This module contains a model element Diagram which is the abstract
 representation of a UML diagram. Diagrams can be visualized and edited.
 

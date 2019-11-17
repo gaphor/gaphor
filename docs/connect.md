@@ -1,11 +1,10 @@
 # Connection Protocol
 
 In Gaphor, if a connection is made on a diagram between an element and a
-relationship, the connection is also made at semantic level (the model).
-From a GUI point of view it all starts with a button release event.
-
-With "item" I refer to objects in a diagram (graphical), with
-"element" I refer to semantic (model) objects.
+relationship, the connection is also made at semantic level (the model). From a
+GUI point of view, a button release event is what kicks of the decision whether
+the connection is allowed. Please reference the page on [Items and
+Elements](item.md) if you need a reminder on the difference between the two.
 
 ```eval_rst
 Is relation with this element allowed?

@@ -191,6 +191,3 @@ class CommentLineTestCase(TestCase):
         self.connect(line2, line2.head, comment)
 
         assert not self.allow(line2, line2.tail, clazz)
-
-
-# vim: sw=4:et:ai

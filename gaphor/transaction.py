@@ -144,6 +144,3 @@ class Transaction:
             self.rollback()
         else:
             self.commit()
-
-
-# vim: sw=4:et:ai

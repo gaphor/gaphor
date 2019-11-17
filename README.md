@@ -104,12 +104,17 @@ To setup a development environment in Windows:
 1) Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
 ```bash
 $ pacman -Suy
-$ pacman -S mingw-w64-x86_64-gtk3 mingw-w64-x86_64-python3-gobject mingw-w64-x86_64-python3-cairo
-$ pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-python3-setuptools
+$ pacman -S git mingw-w64-x86-64-gcc mingw-w64-x86-64-gtk3 \
+mingw-w64-x86-64-pkg-config mingw-w64-x86-64-cairo \
+mingw-w64-x86-64-gobject-introspection mingw-w64-x86-64-python3 \
+mingw-w64-x86-64-python3-importlib-metadata mingw-w64-x86-64-python3-gobject \
+mingw-w64-x86-64-python3-cairo mingw-w64-x86-64-python3-pip \
+mingw-w64-x86-64-python3-setuptools mingw-w64-x86-64-python3-zope.interface \
+mingw-w64-x86-64-python3-coverage mingw-w64-x86-64-python3-pytest
 ```
-Install git if it isn't already installed in msys2 with `pacman -S git`
 
-[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+[Clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```bash
 $ cd gaphor
 $ source ./venv
@@ -138,13 +143,14 @@ $ pyenv install 3.x.x
 Where 3.x.x is replaced by the latest stable version of Python.
 
 Next install the Gaphor prerequisites by installing the gobject introspection
-and cairo build dependencies, for example in Ubuntu execute:
+and cairo build dependencies, for example, in Ubuntu execute:
 
 ```bash
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
     gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
 ```
-[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+[Clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 ```
 $ cd gaphor
@@ -159,7 +165,8 @@ To setup a development environment with macOS:
 ```bash
 $ brew install python3 gobject-introspection gtk+3
 ```
-[Clone the repository](https://help.github.com/en/articles/cloning-a-repository).
+[Clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```
 $ cd gaphor
 $ source ./venv

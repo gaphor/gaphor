@@ -15,6 +15,7 @@ tmp.gaphor
 pip-wheel-metadata
 
 # Virtual env stuff
+.env/
 .venv/
 .vscode/
 .python-version

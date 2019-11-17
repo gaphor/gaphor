@@ -56,7 +56,6 @@ def matcher(expr) -> Callable[[T], bool]:
             return bool(eval(compiled, {}, {"it": element}))
         except (AttributeError, NameError):
             # attribute does not (yet) exist
-            # print 'No attribute', expr, d
             return False
 
     return real_matcher

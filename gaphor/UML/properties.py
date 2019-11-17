@@ -130,7 +130,7 @@ class umlproperty(Generic[T]):
     `propagate(self, event)`.
 
     In some cases properties call out and delegate actions to the ElementFactory,
-    for example in the case of event handling.
+    for example, in the case of event handling.
     """
 
     lower: Lower = 0
