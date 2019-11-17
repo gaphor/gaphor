@@ -69,17 +69,13 @@ class FileManager(Service, ActionProvider):
 
         queue = Queue()
         status_window: Optional[StatusWindow]
-        try:
-            main_window = self.main_window
-            status_window = StatusWindow(
-                gettext("Loading..."),
-                gettext("Loading model from {filename}").format(filename=filename),
-                parent=main_window.window,
-                queue=queue,
-            )
-        except:
-            log.warning("Could not create status window, proceding without.")
-            status_window = None
+        main_window = self.main_window
+        status_window = StatusWindow(
+            gettext("Loading..."),
+            gettext("Loading model from {filename}").format(filename=filename),
+            parent=main_window.window,
+            queue=queue,
+        )
 
         try:
             loader = storage.load_generator(
