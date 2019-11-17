@@ -4,7 +4,7 @@ from gaphas.decorators import AsyncIO
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import transactional, translate
+from gaphor.core import gettext, transactional
 from gaphor.diagram.classes import (
     AssociationItem,
     ClassItem,
@@ -117,7 +117,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
         label.set_justify(Gtk.Justification.LEFT)
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=translate("Abstract"))
+        button = Gtk.CheckButton(label=gettext("Abstract"))
         button.set_active(self.subject.isAbstract)
 
         button.connect("toggled", self._on_abstract_change)
@@ -146,7 +146,7 @@ class InterfacePropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(translate("Folded"))
+        button = Gtk.CheckButton(gettext("Folded"))
         button.set_active(item.folded != Folded.NONE)
         button.connect("toggled", self._on_fold_change)
 
@@ -196,7 +196,7 @@ class AttributesPage(PropertyPageBase):
         label = Gtk.Label(label="")
         label.set_justify(Gtk.Justification.LEFT)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=translate("Show attributes"))
+        button = Gtk.CheckButton(label=gettext("Show attributes"))
         button.set_active(self.item.show_attributes)
         button.connect("toggled", self._on_show_attributes_change)
         hbox.pack_start(button, True, True, 0)
@@ -214,7 +214,7 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
 - # /attr: int
 """
         tree_view = create_tree_view(
-            self.model, (translate("Attributes"), translate("S")), tip
+            self.model, (gettext("Attributes"), gettext("S")), tip
         )
         page.pack_start(tree_view, True, True, 0)
 
@@ -271,7 +271,7 @@ class OperationsPage(PropertyPageBase):
         label = Gtk.Label(label="")
         label.set_justify(Gtk.Justification.LEFT)
         hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=translate("Show operations"))
+        button = Gtk.CheckButton(label=gettext("Show operations"))
         button.set_active(self.item.show_operations)
         button.connect("toggled", self._on_show_operations_change)
         hbox.pack_start(button, True, True, 0)
@@ -288,7 +288,7 @@ Add and edit class operations according to UML syntax. Operation syntax examples
 - # call(a: int: b: str): bool
 """
         tree_view = create_tree_view(
-            self.model, (translate("Operation"), translate("A"), translate("S")), tip
+            self.model, (gettext("Operation"), gettext("A"), gettext("S")), tip
         )
         page.pack_start(tree_view, True, True, 0)
 
@@ -332,10 +332,10 @@ class DependencyPropertyPage(PropertyPageBase):
     order = 0
 
     DEPENDENCY_TYPES = (
-        (translate("Dependency"), UML.Dependency),
-        (translate("Usage"), UML.Usage),
-        (translate("Realization"), UML.Realization),
-        (translate("Implementation"), UML.Implementation),
+        (gettext("Dependency"), UML.Dependency),
+        (gettext("Usage"), UML.Usage),
+        (gettext("Realization"), UML.Realization),
+        (gettext("Implementation"), UML.Implementation),
     )
 
     def __init__(self, item):
@@ -347,7 +347,7 @@ class DependencyPropertyPage(PropertyPageBase):
     def construct(self):
         page = Gtk.VBox()
 
-        hbox = create_hbox_label(self, page, translate("Dependency type"))
+        hbox = create_hbox_label(self, page, gettext("Dependency type"))
 
         self.combo = create_uml_combo(
             self.DEPENDENCY_TYPES, self._on_dependency_type_change
@@ -356,7 +356,7 @@ class DependencyPropertyPage(PropertyPageBase):
 
         hbox = create_hbox_label(self, page, "")
 
-        button = Gtk.CheckButton(translate("Automatic"))
+        button = Gtk.CheckButton(gettext("Automatic"))
         button.set_active(self.item.auto_dependency)
         button.connect("toggled", self._on_auto_dependency_change)
         hbox.pack_start(button, True, True, 0)
@@ -431,7 +431,7 @@ class AssociationPropertyPage(NamedItemPropertyPage):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=translate("Show direction"))
+        button = Gtk.CheckButton(label=gettext("Show direction"))
         button.set_active(self.item.show_direction)
         button.connect("toggled", self._on_show_direction_change)
         hbox.pack_start(button, True, True, 0)
@@ -444,11 +444,11 @@ class AssociationPropertyPage(NamedItemPropertyPage):
 
         page.pack_start(hbox, False, True, 0)
 
-        box = self.construct_end(translate("Head"), self.item.head_end)
+        box = self.construct_end(gettext("Head"), self.item.head_end)
         if box:
             page.pack_start(box, False, True, 0)
 
-        box = self.construct_end(translate("Tail"), self.item.tail_end)
+        box = self.construct_end(gettext("Tail"), self.item.tail_end)
         if box:
             page.pack_start(box, False, True, 0)
 

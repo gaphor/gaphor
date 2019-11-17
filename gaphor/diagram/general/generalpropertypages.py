@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import transactional, translate
+from gaphor.core import gettext, transactional
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 
 
@@ -22,7 +22,7 @@ class CommentItemPropertyPage(PropertyPageBase):
         if not subject:
             return page
 
-        label = Gtk.Label(label=translate("Comment"))
+        label = Gtk.Label(label=gettext("Comment"))
         label.set_justify(Gtk.Justification.LEFT)
         page.pack_start(label, False, True, 0)
 

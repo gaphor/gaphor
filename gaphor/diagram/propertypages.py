@@ -33,7 +33,7 @@ from gaphas.segment import Segment
 from gi.repository import Gdk, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import transactional, translate
+from gaphor.core import gettext, transactional
 
 
 class _PropertyPages:
@@ -388,7 +388,7 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     order = 10
 
-    NAME_LABEL = translate("Name")
+    NAME_LABEL = gettext("Name")
 
     def __init__(self, subject: UML.NamedElement):
         assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
@@ -462,7 +462,7 @@ class LineStylePage(PropertyPageBase):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=translate("Orthogonal"))
+        button = Gtk.CheckButton(label=gettext("Orthogonal"))
         button.set_active(self.item.orthogonal)
         button.connect("toggled", self._on_orthogonal_change)
         hbox.pack_start(button, True, True, 0)
@@ -475,7 +475,7 @@ class LineStylePage(PropertyPageBase):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=translate("Horizontal"))
+        button = Gtk.CheckButton(label=gettext("Horizontal"))
         button.set_active(self.item.horizontal)
         button.connect("toggled", self._on_horizontal_change)
         hbox.pack_start(button, True, True, 0)

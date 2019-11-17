@@ -7,7 +7,7 @@ gaphor.adapter package.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import transactional, translate
+from gaphor.core import gettext, transactional
 from gaphor.diagram.propertypages import (
     NamedItemPropertyPage,
     PropertyPages,
@@ -31,7 +31,7 @@ class TransitionPropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, translate("Guard"))
+        hbox = create_hbox_label(self, page, gettext("Guard"))
         entry = Gtk.Entry()
         v = subject.guard.specification
         entry.set_text(v if v else "")
@@ -69,21 +69,21 @@ class StatePropertyPage(NamedItemPropertyPage):
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, translate("Entry"))
+        hbox = create_hbox_label(self, page, gettext("Entry"))
         entry = Gtk.Entry()
         if subject.entry:
             entry.set_text(subject.entry.name or "")
         entry.connect("changed", self.on_text_change, self.set_entry)
         hbox.pack_start(entry, True, True, 0)
 
-        hbox = create_hbox_label(self, page, translate("Exit"))
+        hbox = create_hbox_label(self, page, gettext("Exit"))
         entry = Gtk.Entry()
         if subject.exit:
             entry.set_text(subject.exit.name or "")
         entry.connect("changed", self.on_text_change, self.set_exit)
         hbox.pack_start(entry, True, True, 0)
 
-        hbox = create_hbox_label(self, page, translate("Do Activity"))
+        hbox = create_hbox_label(self, page, gettext("Do Activity"))
         entry = Gtk.Entry()
         if subject.doActivity:
             entry.set_text(self.subject.doActivity.name or "")

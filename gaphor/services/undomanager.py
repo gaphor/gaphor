@@ -18,7 +18,7 @@ from gaphas import state
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
-from gaphor.core import event_handler, translate
+from gaphor.core import event_handler, gettext
 from gaphor.event import (
     ActionEnabled,
     ServiceEvent,
@@ -189,7 +189,7 @@ class UndoManager(Service, ActionProvider):
 
     @action(
         name="edit-undo",
-        label=translate("_Undo"),
+        label=gettext("_Undo"),
         icon_name="edit-undo",
         shortcut="<Primary>z",
     )
@@ -224,7 +224,7 @@ class UndoManager(Service, ActionProvider):
 
     @action(
         name="edit-redo",
-        label=translate("_Redo"),
+        label=gettext("_Redo"),
         icon_name="edit-redo",
         shortcut="<Primary><Shift>z",
     )

@@ -5,7 +5,7 @@ Metaclass item editors.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import translate
+from gaphor.core import gettext
 from gaphor.diagram.propertypages import (
     NamedElementPropertyPage,
     PropertyPages,
@@ -29,7 +29,7 @@ class MetaclassNamePropertyPage(NamedElementPropertyPage):
 
     order = 10
 
-    NAME_LABEL = translate("Name")
+    NAME_LABEL = gettext("Name")
 
     CLASSES = list(
         sorted(

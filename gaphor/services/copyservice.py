@@ -7,7 +7,7 @@ from typing import Dict, Set
 import gaphas
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import action, event_handler, transactional, translate
+from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Element, Presentation
 from gaphor.UML.collection import collection
@@ -125,7 +125,7 @@ class CopyService(Service, ActionProvider):
 
     @action(
         name="edit-copy",
-        label=translate("Copy"),
+        label=gettext("Copy"),
         icon_name="edit-copy",
         shortcut="<Primary>c",
     )

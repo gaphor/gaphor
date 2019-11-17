@@ -11,7 +11,7 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import event_handler, translate
+from gaphor.core import event_handler, gettext
 from gaphor.event import ActionEnabled
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
@@ -59,7 +59,7 @@ class RecentFilesMenu(Gio.Menu):
                     break
         if self.get_n_items() == 0:
             self.append_item(
-                Gio.MenuItem.new(translate("No recently opened models"), None)
+                Gio.MenuItem.new(gettext("No recently opened models"), None)
             )
 
 
@@ -76,22 +76,22 @@ def create_hamburger_model(export_menu, tools_menu):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append(translate("New"), "win.file-new")
-    part.append(translate("New from Template"), "win.file-new-template")
+    part.append(gettext("New"), "win.file-new")
+    part.append(gettext("New from Template"), "win.file-new-template")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append(translate("Save As..."), "win.file-save-as")
-    part.append_submenu(translate("Export"), export_menu)
+    part.append(gettext("Save As..."), "win.file-save-as")
+    part.append_submenu(gettext("Export"), export_menu)
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append_submenu(translate("Tools"), tools_menu)
+    part.append_submenu(gettext("Tools"), tools_menu)
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append(translate("Preferences"), "app.preferences")
-    part.append(translate("About Gaphor"), "app.about")
+    part.append(gettext("Preferences"), "app.preferences")
+    part.append(gettext("About Gaphor"), "app.about")
     model.append_section(None, part)
 
     return model
@@ -104,7 +104,7 @@ def create_recent_files_button(recent_manager=None):
 
     model = Gio.Menu.new()
     model.append_section(
-        translate("Recently opened files"),
+        gettext("Recently opened files"),
         RecentFilesMenu(recent_manager or Gtk.RecentManager.get_default()),
     )
 
@@ -193,9 +193,7 @@ class MainWindow(Service, ActionProvider):
 
         button_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
         button_box.get_style_context().add_class("linked")
-        button_box.pack_start(
-            button(translate("Open"), "win.file-open"), False, False, 0
-        )
+        button_box.pack_start(button(gettext("Open"), "win.file-open"), False, False, 0)
         button_box.pack_start(create_recent_files_button(), False, False, 0)
         button_box.show()
         header.pack_start(button_box)
@@ -211,7 +209,7 @@ class MainWindow(Service, ActionProvider):
                 create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
             )
         )
-        header.pack_end(button(translate("Save"), "win.file-save"))
+        header.pack_end(button(gettext("Save"), "win.file-save"))
 
         b = Gtk.MenuButton.new()
         image = Gtk.Image.new_from_icon_name(
@@ -280,7 +278,7 @@ class MainWindow(Service, ActionProvider):
                 title = self.title
                 subtitle = ""
             if self.model_changed:
-                title += translate(" [edited]")
+                title += gettext(" [edited]")
             self.window.set_title(title)
             self.window.get_titlebar().set_subtitle(subtitle)
 
@@ -348,7 +346,7 @@ Gtk.AccelMap.add_filter("gaphor")
 
 class Diagrams(UIComponent, ActionProvider):
 
-    title = translate("Diagrams")
+    title = gettext("Diagrams")
 
     def __init__(self, event_manager, element_factory, properties):
         self.event_manager = event_manager

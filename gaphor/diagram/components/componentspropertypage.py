@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import transactional, translate
+from gaphor.core import gettext, transactional
 from gaphor.diagram.components import ComponentItem
 from gaphor.diagram.propertypages import NamedItemPropertyPage, PropertyPages
 
@@ -24,7 +24,7 @@ class ComponentPropertyPage(NamedItemPropertyPage):
         hbox = Gtk.HBox()
         page.pack_start(hbox, False, True, 0)
 
-        button = Gtk.CheckButton(translate("Indirectly instantiated"))
+        button = Gtk.CheckButton(gettext("Indirectly instantiated"))
         button.set_active(subject.isIndirectlyInstantiated)
         button.connect("toggled", self._on_ii_change)
         hbox.pack_start(button, False, True, 0)

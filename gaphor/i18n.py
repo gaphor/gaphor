@@ -1,11 +1,11 @@
 """Internationalization (i18n) support for Gaphor.
 
-Translate text in to your native language using the translate() function.
+Translate text in to your native language using the gettext() function.
 
 """
-__all__ = ["translate"]
+__all__ = ["gettext"]
 
-import gettext
+import gettext as _gettext
 import os
 
 import importlib_metadata
@@ -16,10 +16,10 @@ localedir = os.path.join(
 
 try:
 
-    catalog = gettext.Catalog("gaphor", localedir=localedir)
-    translate = catalog.gettext
+    catalog = _gettext.Catalog("gaphor", localedir=localedir)
+    gettext = catalog.gettext
 
 except OSError:
 
-    def translate(s):
+    def gettext(s):
         return s

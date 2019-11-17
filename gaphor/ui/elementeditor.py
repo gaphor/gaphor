@@ -6,7 +6,7 @@ from typing import Optional
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
-from gaphor.core import action, event_handler, primary, translate
+from gaphor.core import action, event_handler, gettext, primary
 from gaphor.diagram.propertypages import PropertyPages
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
@@ -34,7 +34,7 @@ def undo_buttons():
         icon_button(
             "edit-undo-symbolic",
             "win.edit-undo",
-            translate("Undo") + f" ({primary()}+Z)",
+            gettext("Undo") + f" ({primary()}+Z)",
         ),
         False,
         False,
@@ -44,7 +44,7 @@ def undo_buttons():
         icon_button(
             "edit-redo-symbolic",
             "win.edit-redo",
-            translate("Redo") + f" ({primary()}+Shift+Z)",
+            gettext("Redo") + f" ({primary()}+Shift+Z)",
         ),
         False,
         True,
@@ -61,7 +61,7 @@ def zoom_buttons():
         icon_button(
             "zoom-in-symbolic",
             "diagram.zoom-in",
-            translate("Zoom in") + f" ({primary()}++)",
+            gettext("Zoom in") + f" ({primary()}++)",
         ),
         False,
         False,
@@ -71,7 +71,7 @@ def zoom_buttons():
         icon_button(
             "zoom-original-symbolic",
             "diagram.zoom-100",
-            translate("Zoom 100%") + f" ({primary()}+0)",
+            gettext("Zoom 100%") + f" ({primary()}+0)",
         ),
         False,
         False,
@@ -81,7 +81,7 @@ def zoom_buttons():
         icon_button(
             "zoom-out-symbolic",
             "diagram.zoom-out",
-            translate("Zoom out") + f" ({primary()}+-)",
+            gettext("Zoom out") + f" ({primary()}+-)",
         ),
         False,
         False,
@@ -96,7 +96,7 @@ class ElementEditor(UIComponent, ActionProvider):
     It will display the properties of the currently selected element in the
     diagram."""
 
-    title = translate("Element Editor")
+    title = gettext("Element Editor")
     size = (275, -1)
 
     def __init__(self, event_manager, element_factory, diagrams):
@@ -108,7 +108,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self.diagrams = diagrams
         self.vbox: Optional[Gtk.Box] = None
         self._current_item = None
-        self._expanded_pages = {translate("Properties"): True}
+        self._expanded_pages = {gettext("Properties"): True}
 
     def open(self):
         """Display the ElementEditor pane."""
@@ -125,7 +125,7 @@ class ElementEditor(UIComponent, ActionProvider):
         vbox.pack_start(sep, False, False, 0)
         sep.show()
 
-        label = Gtk.Label.new(translate("Element Editor"))
+        label = Gtk.Label.new(gettext("Element Editor"))
         vbox.pack_start(label, False, False, 0)
         label.show()
 

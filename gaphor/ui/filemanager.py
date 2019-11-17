@@ -11,7 +11,7 @@ from gi.repository import Gtk
 import gaphor.ui
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import action, event_handler, translate
+from gaphor.core import action, event_handler, gettext
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty, QueueFull
 from gaphor.misc.xmlwriter import XMLWriter
@@ -71,8 +71,8 @@ class FileManager(Service, ActionProvider):
         status_window: Optional[StatusWindow]
         main_window = self.main_window
         status_window = StatusWindow(
-            translate("Loading..."),
-            translate(f"Loading model from {filename}"),
+            gettext("Loading..."),
+            gettext(f"Loading model from {filename}"),
             parent=main_window.window,
             queue=queue,
         )
@@ -93,7 +93,7 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(FileLoaded(self, filename))
         except (QueueEmpty, QueueFull):
             error_handler(
-                message=translate("Error while loading model from file %s") % filename
+                message=gettext("Error while loading model from file %s") % filename
             )
             raise
         finally:
@@ -112,7 +112,7 @@ class FileManager(Service, ActionProvider):
             main_window = self.main_window
 
             dialog = QuestionDialog(
-                translate(
+                gettext(
                     "The model contains some references"
                     " to items that are not maintained."
                     " Do you want to clean this before"
@@ -154,8 +154,8 @@ class FileManager(Service, ActionProvider):
         main_window = self.main_window
         queue = Queue()
         status_window = StatusWindow(
-            translate("Saving..."),
-            translate("Saving model to %s") % filename,
+            gettext("Saving..."),
+            gettext("Saving model to %s") % filename,
             parent=main_window.window,
             queue=queue,
         )
@@ -173,7 +173,7 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(FileSaved(self, filename))
         except (OSError, QueueEmpty, QueueFull):
             error_handler(
-                message=translate("Error while saving model to file %s") % filename
+                message=gettext("Error while saving model to file %s") % filename
             )
             raise
         finally:
@@ -225,7 +225,7 @@ class FileManager(Service, ActionProvider):
 
         if element_factory.size():
             dialog = QuestionDialog(
-                translate(
+                gettext(
                     "Opening a new model will flush the"
                     " currently loaded model.\nAny changes"
                     " made will not be saved. Do you want to"
@@ -243,10 +243,10 @@ class FileManager(Service, ActionProvider):
         element_factory.flush()
         with element_factory.block_events():
             model = element_factory.create(UML.Package)
-            model.name = translate("New model")
+            model.name = gettext("New model")
             diagram = element_factory.create(UML.Diagram)
             diagram.package = model
-            diagram.name = translate("main")
+            diagram.name = gettext("main")
         self.filename = None
         element_factory.model_ready()
 
@@ -258,12 +258,12 @@ class FileManager(Service, ActionProvider):
         """This menu action opens the new model from template dialog."""
 
         filters = [
-            {"name": translate("Gaphor Models"), "pattern": "*.gaphor"},
-            {"name": translate("All Files"), "pattern": "*"},
+            {"name": gettext("Gaphor Models"), "pattern": "*.gaphor"},
+            {"name": gettext("All Files"), "pattern": "*"},
         ]
 
         file_dialog = FileDialog(
-            translate("New Gaphor Model From Template"), filters=filters
+            gettext("New Gaphor Model From Template"), filters=filters
         )
 
         filename = file_dialog.selection
@@ -281,11 +281,11 @@ class FileManager(Service, ActionProvider):
         """This menu action opens the standard model open dialog."""
 
         filters = [
-            {"name": translate("Gaphor Models"), "pattern": "*.gaphor"},
-            {"name": translate("All Files"), "pattern": "*"},
+            {"name": gettext("Gaphor Models"), "pattern": "*.gaphor"},
+            {"name": gettext("All Files"), "pattern": "*"},
         ]
 
-        file_dialog = FileDialog(translate("Open Gaphor Model"), filters=filters)
+        file_dialog = FileDialog(gettext("Open Gaphor Model"), filters=filters)
 
         filename = file_dialog.selection
 
@@ -329,7 +329,7 @@ class FileManager(Service, ActionProvider):
         """
 
         file_dialog = FileDialog(
-            translate("Save Gaphor Model As"), action="save", filename=self.filename
+            gettext("Save Gaphor Model As"), action="save", filename=self.filename
         )
 
         filename = file_dialog.selection
@@ -355,15 +355,13 @@ class FileManager(Service, ActionProvider):
                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                 Gtk.MessageType.WARNING,
                 Gtk.ButtonsType.NONE,
-                translate("Save changed to your model before closing?"),
+                gettext("Save changed to your model before closing?"),
             )
             dialog.format_secondary_text(
-                translate(
-                    "If you close without saving, your changes will be discarded."
-                )
+                gettext("If you close without saving, your changes will be discarded.")
             )
             dialog.add_buttons(
-                translate("Close _without saving"),
+                gettext("Close _without saving"),
                 Gtk.ResponseType.REJECT,
                 Gtk.STOCK_CANCEL,
                 Gtk.ResponseType.CANCEL,

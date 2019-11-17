@@ -5,7 +5,7 @@ This plugin extends Gaphor with XMI export functionality.
 import logging
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import action, translate
+from gaphor.core import action, gettext
 from gaphor.plugins.xmiexport import exportmodel
 from gaphor.ui.filedialog import FileDialog
 
@@ -23,8 +23,8 @@ class XMIExport(Service, ActionProvider):
 
     @action(
         name="file-export-xmi",
-        label=translate("Export to XMI"),
-        tooltip=translate("Export model to XMI (XML Model Interchange) format"),
+        label=gettext("Export to XMI"),
+        tooltip=gettext("Export model to XMI (XML Model Interchange) format"),
     )
     def execute(self):
         filename = self.file_manager.filename
@@ -34,7 +34,7 @@ class XMIExport(Service, ActionProvider):
             filename = "model.xmi"
 
         file_dialog = FileDialog(
-            translate("Export model to XMI file"), action="save", filename=filename
+            gettext("Export model to XMI file"), action="save", filename=filename
         )
 
         filename = file_dialog.selection

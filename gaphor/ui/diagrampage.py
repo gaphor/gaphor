@@ -15,7 +15,7 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, GLib, Gtk
 
 from gaphor import UML
-from gaphor.core import action, event_handler, transactional, translate
+from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
@@ -53,7 +53,7 @@ class DiagramPage:
         self.event_manager.subscribe(self._on_sloppy_lines)
         self.event_manager.subscribe(self._on_diagram_item_created)
 
-    title = property(lambda s: s.diagram and s.diagram.name or translate("<None>"))
+    title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
 
     def get_diagram(self):
         return self.diagram
@@ -153,7 +153,7 @@ class DiagramPage:
 
     @action(
         name="diagram.zoom-in",
-        label=translate("Zoom _In"),
+        label=gettext("Zoom _In"),
         icon_name="zoom-in",
         shortcut="<Primary>plus",
     )
@@ -163,7 +163,7 @@ class DiagramPage:
 
     @action(
         name="diagram.zoom-out",
-        label=translate("Zoom _Out"),
+        label=gettext("Zoom _Out"),
         icon_name="zoom-out",
         shortcut="<Primary>minus",
     )
@@ -173,7 +173,7 @@ class DiagramPage:
 
     @action(
         name="diagram.zoom-100",
-        label=translate("_Normal Size"),
+        label=gettext("_Normal Size"),
         icon_name="zoom-original",
         shortcut="<Primary>0",
     )
@@ -199,7 +199,7 @@ class DiagramPage:
         assert self.view
         self.view.unselect_all()
 
-    @action(name="diagram.delete", label=translate("_Delete"), icon_name="edit-delete")
+    @action(name="diagram.delete", label=gettext("_Delete"), icon_name="edit-delete")
     @transactional
     def delete_selected_items(self):
         assert self.view
