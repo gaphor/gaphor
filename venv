@@ -66,6 +66,9 @@ brew --version >/dev/null 2>&1 && {
 		poetry install
 	}
 
+	# Remove once a new version of pyinstaller is released
+	pip install -U git+https://github.com/pyinstaller/pyinstaller.git@1eadfa55f2ad21539d7773dfb23f27ebd9db26d8
+
 	test_module() {
 		python3 -c "$1" 2>&- || {
 			echo "$2"
