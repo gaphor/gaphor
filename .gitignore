@@ -1,6 +1,5 @@
 build
 dist
-po/gaphor.pot
 gaphor/locale/*/LC_MESSAGES
 html
 *.pyc
