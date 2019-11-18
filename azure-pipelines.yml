@@ -75,8 +75,7 @@ jobs:
 
       - script: |
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-          %CD:~0,2%\msys64\usr\bin\bash -lc "source venv"
-          %CD:~0,2%\msys64\usr\bin\bash -lc "win-installer/build-installer.sh"
+          %CD:~0,2%\msys64\usr\bin\bash -lc ".azure/msys2-build.sh"
         displayName: Create Windows Binaries
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         env:
