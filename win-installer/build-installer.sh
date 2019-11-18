@@ -8,7 +8,7 @@
 # (at your option) any later version.
 
 set -e
-DIR="$( cd "$( dirname "$0" )" && pwd )"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${DIR}"
 
 # CONFIG START
@@ -92,8 +92,6 @@ function build_portable_installer {
     cat 7zout/7z.sfx payload.7z > "$PORTABLE".exe
     rm -Rf 7zout 7z1900-x64.exe payload.7z "$PORTABLE"
 }
-
-DIR="$( cd "$( dirname "$0" )" && pwd )"
 
 function main {
     local GIT_TAG=${1:-"master"}
