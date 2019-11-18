@@ -31,7 +31,6 @@ jobs:
   - job: Windows
     dependsOn: Lint
     condition: succeeded()
-    timeoutInMinutes: 60
     pool:
       vmImage: vs2017-win2016
     variables:
@@ -70,7 +69,7 @@ jobs:
       - task: PublishTestResults@2
         condition: not(canceled())
         inputs:
-          testResultsFiles: '**/test-*.xml'
+          testResultsFiles: junit\test-results.xml
           testRunTitle: Publish Test Results
 
       - script: |
@@ -83,31 +82,25 @@ jobs:
           CHERE_INVOKING: yes
 
       - task: CopyFiles@2
-        displayName: Copy Windows Binaries
+        displayName: Copy Windows Packages to Staging
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
         inputs:
-          sourceFolder: 'win-installer'
+          sourceFolder: $(Build.SourcesDirectory)/win-installer
           contents: '*.exe'
           targetFolder: $(Build.ArtifactStagingDirectory)
-
-      - task: GitHubRelease@0
+ 
+      - task: PublishPipelineArtifact@1
+        displayName: Add Windows Package to Pipeline
         condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
-        displayName: Create GitHub Release
         inputs:
-          gitHubConnection: GaphorConnection
-          repositoryName: gaphor/gaphor
-          action: create
-          tagSource: auto
-          target: $(Build.SourceVersion)
-          assets: $(Build.ArtifactStagingDirectory)/*.exe
-          isDraft: true
+          targetPath: $(Build.ArtifactStagingDirectory)
+          artifactName: WindowsExe
 
   - job: macOS
     dependsOn: Lint
     condition: succeeded()
     pool:
       vmImage: 'macOS-10.13'
-    timeoutInMinutes: 60
     variables:
         PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
@@ -128,32 +121,28 @@ jobs:
         cd macos-dmg
         ./package.sh
       displayName: Create macOS Package
+      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
 
     - task: CopyFiles@2
-      displayName: Copy macOS Package
-      inputs:
-        sourceFolder: macos-dmg
-        contents: '*.dmg'
-        targetFolder: $(Build.ArtifactStagingDirectory)
-
-    - task: GitHubRelease@0
+      displayName: Copy macOS Package to Staging
       condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
-      displayName: Create GitHub Release
       inputs:
-        gitHubConnection: GaphorConnection
-        repositoryName: gaphor/gaphor
-        action: create
-        tagSource: auto
-        target: $(Build.SourceVersion)
-        assets: $(Build.ArtifactStagingDirectory)/*.dmg
-        isDraft: true
+        sourceFolder: $(Build.SourcesDirectory)/macos-dmg
+        contents: '*.dmg'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishPipelineArtifact@1
+      displayName: Add macOS Package to Pipeline
+      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)
+        artifactName: MacDmg
 
   - job: Linux
     dependsOn: Lint
     condition: succeeded()
     pool:
       vmImage: 'ubuntu-16.04'
-    timeoutInMinutes: 60
 
     steps:
     - task: UsePythonVersion@0
@@ -188,6 +177,21 @@ jobs:
         source venv
         poetry build
       displayName: Build Wheel
+
+    - task: CopyFiles@2
+      displayName: Copy sdist and Wheel Package to Staging
+      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+      inputs:
+        sourceFolder: $(Build.SourcesDirectory)/dist
+        contents: '*'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishPipelineArtifact@1
+      displayName: Add sdist and Wheel to Pipeline
+      condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)
+        artifactName: Wheel
     
     - script: |
         poetry config repositories.azure https://pkgs.dev.azure.com/gaphor-dev/_packaging/PyPI-Feed/pypi/upload
@@ -195,3 +199,40 @@ jobs:
         poetry publish -r azure
         exit 0
       displayName: Publish software
+  
+  - job: Release
+    dependsOn:
+    - macOS
+    - Windows
+    - Linux
+    condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - task: DownloadPipelineArtifact@2
+
+      - task: CopyFiles@2
+        displayName: Copy Pipeline Artifacts to Staging
+        inputs:
+          sourceFolder: $(Pipeline.Workspace)
+          contents: |
+            WindowsExe/*.exe
+            MacDmg/*.dmg
+            Wheel/*.*
+          TargetFolder: $(Build.ArtifactStagingDirectory)
+
+      - task: GitHubRelease@0
+        displayName: Create GitHub Release
+        inputs:
+          gitHubConnection: GaphorConnection
+          repositoryName: gaphor/gaphor
+          action: create
+          tagSource: auto
+          target: $(Build.SourceVersion)
+          addChangeLog: false
+          assets: |
+            $(Build.ArtifactStagingDirectory)/WindowsExe/*.exe
+            $(Build.ArtifactStagingDirectory)/MacDmg/*.dmg
+            $(Build.ArtifactStagingDirectory)/Wheel/*.whl
+            $(Build.ArtifactStagingDirectory)/Wheel/*.tar.gz
+          isDraft: true
