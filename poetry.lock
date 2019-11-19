@@ -69,6 +69,17 @@ pytz = ">=2015.7"
 
 [[package]]
 category = "dev"
+description = "Babel Glade XML files translatable strings extractor"
+name = "babelgladeextractor"
+optional = false
+python-versions = "*"
+version = "0.6.0"
+
+[package.dependencies]
+Babel = "*"
+
+[[package]]
+category = "dev"
 description = "The uncompromising code formatter."
 marker = "python_version >= \"3.6\" and python_version < \"4.0\""
 name = "black"
@@ -208,8 +219,8 @@ category = "main"
 description = "Generic programming library for Python"
 name = "generic"
 optional = false
-python-versions = ">=3.6,<4.0"
-version = "1.0.0b1"
+python-versions = ">=3.7,<4.0"
+version = "1.0.0"
 
 [[package]]
 category = "dev"
@@ -473,7 +484,7 @@ description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
 python-versions = ">=3.5"
-version = "5.2.2"
+version = "5.2.4"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
@@ -737,7 +748,7 @@ description = "HTTP library with thread-safe connection pooling, file post, and 
 name = "urllib3"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, <4"
-version = "1.25.6"
+version = "1.25.7"
 
 [package.extras]
 brotli = ["brotlipy (>=0.6.0)"]
@@ -780,7 +791,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "contextlib2", "unittest2"]
 
 [metadata]
-content-hash = "478870b53b53fe9d0bb4476b0c4a5346b1f51aad9b26d5b7e1507ce46b74360e"
+content-hash = "6aa6b236150c7e1f496449f5012d2f113296fe18b83927b3d05282bf977ee819"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -811,6 +822,9 @@ attrs = [
 babel = [
     {file = "Babel-2.7.0-py2.py3-none-any.whl", hash = "sha256:af92e6106cb7c55286b25b38ad7695f8b4efb36a90ba483d7f7a6628c46158ab"},
     {file = "Babel-2.7.0.tar.gz", hash = "sha256:e86135ae101e31e2c8ec20a4e0c5220f4eed12487d5cf3f78be7e98d3a57fc28"},
+]
+babelgladeextractor = [
+    {file = "BabelGladeExtractor-0.6.0.tar.bz2", hash = "sha256:464acfdb4b4ec160e7932bcc1d4f398f692ab474df99555734020aa947dca5a2"},
 ]
 black = [
     {file = "black-19.10b0-py36-none-any.whl", hash = "sha256:1b30e59be925fafc1ee4565e5e08abef6b03fe455102883820fe5ee2e4734e0b"},
@@ -895,8 +909,8 @@ gaphas = [
     {file = "gaphas-1.1.2.tar.gz", hash = "sha256:f1254f64b709da5722878e1b43a435bb199d12e836f255d517b42fe94ac45b26"},
 ]
 generic = [
-    {file = "generic-1.0.0b1-py3-none-any.whl", hash = "sha256:c7c8778e6ede6aeb7b2525626584faea98aa141b11ea891d03061cf79313146e"},
-    {file = "generic-1.0.0b1.tar.gz", hash = "sha256:f883a065a02dc64b9584e8f9d7738a39159e138e90ef84755213eb5b4a235f02"},
+    {file = "generic-1.0.0-py3-none-any.whl", hash = "sha256:a8dbb3133929223149272fcc70a95967cf3b24e3fa12601f91c67fb61efe29d4"},
+    {file = "generic-1.0.0.tar.gz", hash = "sha256:c7651fb460feae762065b4a29afbfe2a346b2b18dccd4a8495a7e978498f66bc"},
 ]
 identify = [
     {file = "identify-1.4.7-py2.py3-none-any.whl", hash = "sha256:4f1fe9a59df4e80fcb0213086fcf502bc1765a01ea4fe8be48da3b65afd2a017"},
@@ -1028,8 +1042,8 @@ pyparsing = [
     {file = "pyparsing-2.4.5.tar.gz", hash = "sha256:4ca62001be367f01bd3e92ecbb79070272a9d4964dce6a48a82ff0b8bc7e683a"},
 ]
 pytest = [
-    {file = "pytest-5.2.2-py3-none-any.whl", hash = "sha256:58cee9e09242937e136dbb3dab466116ba20d6b7828c7620f23947f37eb4dae4"},
-    {file = "pytest-5.2.2.tar.gz", hash = "sha256:27abc3fef618a01bebb1f0d6d303d2816a99aa87a5968ebc32fe971be91eb1e6"},
+    {file = "pytest-5.2.4-py3-none-any.whl", hash = "sha256:8e256fe71eb74e14a4d20a5987bb5e1488f0511ee800680aaedc62b9358714e8"},
+    {file = "pytest-5.2.4.tar.gz", hash = "sha256:ff0090819f669aaa0284d0f4aad1a6d9d67a6efdc6dd4eb4ac56b704f890a0d6"},
 ]
 pytest-cov = [
     {file = "pytest-cov-2.8.1.tar.gz", hash = "sha256:cc6742d8bac45070217169f5f72ceee1e0e55b0221f54bcf24845972d3a47f2b"},
@@ -1158,8 +1172,8 @@ typing-extensions = [
     {file = "typing_extensions-3.7.4.1.tar.gz", hash = "sha256:091ecc894d5e908ac75209f10d5b4f118fbdb2eb1ede6a63544054bb1edb41f2"},
 ]
 urllib3 = [
-    {file = "urllib3-1.25.6-py2.py3-none-any.whl", hash = "sha256:3de946ffbed6e6746608990594d08faac602528ac7015ac28d33cee6a45b7398"},
-    {file = "urllib3-1.25.6.tar.gz", hash = "sha256:9a107b99a5393caf59c7aa3c1249c16e6879447533d0887f4336dde834c7be86"},
+    {file = "urllib3-1.25.7-py2.py3-none-any.whl", hash = "sha256:a8a318824cc77d1fd4b2bec2ded92646630d7fe8619497b142c84a9e6f5a7293"},
+    {file = "urllib3-1.25.7.tar.gz", hash = "sha256:f3c5fd51747d450d4dcf6f923c81f78f811aab8205fda64b0aba34a4e48b0745"},
 ]
 virtualenv = [
     {file = "virtualenv-16.7.7-py2.py3-none-any.whl", hash = "sha256:11cb4608930d5fd3afb545ecf8db83fa50e1f96fc4fca80c94b07d2c83146589"},

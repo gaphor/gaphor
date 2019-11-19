@@ -72,7 +72,7 @@ class FileManager(Service, ActionProvider):
         main_window = self.main_window
         status_window = StatusWindow(
             gettext("Loading..."),
-            gettext(f"Loading model from {filename}"),
+            gettext("Loading model from {filename}").format(filename=filename),
             parent=main_window.window,
             queue=queue,
         )
@@ -93,7 +93,9 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(FileLoaded(self, filename))
         except (QueueEmpty, QueueFull):
             error_handler(
-                message=gettext("Error while loading model from file %s") % filename
+                message=gettext(
+                    "Error while loading model from file {filename}"
+                ).format(filename=filename)
             )
             raise
         finally:
@@ -113,10 +115,7 @@ class FileManager(Service, ActionProvider):
 
             dialog = QuestionDialog(
                 gettext(
-                    "The model contains some references"
-                    " to items that are not maintained."
-                    " Do you want to clean this before"
-                    " saving the model?"
+                    "The model contains some references to items that are not maintained. Do you want to clean the model before saving?"
                 ),
                 parent=main_window.window,
             )
@@ -155,7 +154,7 @@ class FileManager(Service, ActionProvider):
         queue = Queue()
         status_window = StatusWindow(
             gettext("Saving..."),
-            gettext("Saving model to %s") % filename,
+            gettext("Saving model to {filename}").format(filename=filename),
             parent=main_window.window,
             queue=queue,
         )
@@ -173,7 +172,9 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(FileSaved(self, filename))
         except (OSError, QueueEmpty, QueueFull):
             error_handler(
-                message=gettext("Error while saving model to file %s") % filename
+                message=gettext("Error while saving model to file {filename}").format(
+                    filename=filename
+                )
             )
             raise
         finally:

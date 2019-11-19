@@ -6,20 +6,22 @@ Translate text in to your native language using the gettext() function.
 __all__ = ["gettext"]
 
 import gettext as _gettext
+import importlib.resources
+import logging
 import os
 
 import importlib_metadata
 
-localedir = os.path.join(
-    importlib_metadata.distribution("gaphor").locate_file("gaphor/data/locale")
-)
+log = logging.getLogger(__name__)
 
 try:
 
-    catalog = _gettext.Catalog("gaphor", localedir=localedir)
-    gettext = catalog.gettext
+    with importlib.resources.path("gaphor", "locale") as path:
+        translate = _gettext.translation("gaphor", localedir=str(path), fallback=True)
+        gettext = translate.gettext
 
-except OSError:
+except OSError as e:
+    log.info(f"No translations were found: {e}")
 
     def gettext(s):
         return s

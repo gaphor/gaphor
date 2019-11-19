@@ -14,13 +14,8 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-cairo \
     mingw-w64-$MSYS2_ARCH-gobject-introspection \
     mingw-w64-$MSYS2_ARCH-python3 \
-    mingw-w64-$MSYS2_ARCH-python3-importlib-metadata \
     mingw-w64-$MSYS2_ARCH-python3-gobject \
     mingw-w64-$MSYS2_ARCH-python3-cairo \
-    mingw-w64-$MSYS2_ARCH-python3-pip \
-    mingw-w64-$MSYS2_ARCH-python3-setuptools \
-    mingw-w64-$MSYS2_ARCH-python3-zope.interface \
-    mingw-w64-$MSYS2_ARCH-python3-coverage \
-    mingw-w64-$MSYS2_ARCH-python3-pytest
+    mingw-w64-$MSYS2_ARCH-python3-pip
 
-source venv
+./venv -S

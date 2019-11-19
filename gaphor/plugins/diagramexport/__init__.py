@@ -43,14 +43,9 @@ class DiagramExport(Service, ActionProvider):
         while True:
             filename = file_dialog.selection
             if os.path.exists(filename):
-                question = (
-                    gettext(
-                        "The file %s already exists. Do you want to "
-                        "replace it with the file you are exporting "
-                        "to?"
-                    )
-                    % filename
-                )
+                question = gettext(
+                    "The file {filename} already exists. Do you want to replace it?"
+                ).format(filename=filename)
                 question_dialog = QuestionDialog(question)
                 answer = question_dialog.answer
                 question_dialog.destroy()
@@ -120,7 +115,7 @@ class DiagramExport(Service, ActionProvider):
     @action(
         name="file-export-svg",
         label=gettext("Export to SVG"),
-        tooltip=gettext("Export the diagram to SVG"),
+        tooltip=gettext("Export diagram to SVG"),
     )
     def save_svg_action(self):
         title = gettext("Export diagram to SVG")
@@ -133,7 +128,7 @@ class DiagramExport(Service, ActionProvider):
     @action(
         name="file-export-png",
         label=gettext("Export to PNG"),
-        tooltip=gettext("Export the diagram to PNG"),
+        tooltip=gettext("Export diagram to PNG"),
     )
     def save_png_action(self):
         title = gettext("Export diagram to PNG")
@@ -146,7 +141,7 @@ class DiagramExport(Service, ActionProvider):
     @action(
         name="file-export-pdf",
         label=gettext("Export to PDF"),
-        tooltip=gettext("Export the diagram to PDF"),
+        tooltip=gettext("Export diagram to PDF"),
     )
     def save_pdf_action(self):
         title = gettext("Export diagram to PDF")

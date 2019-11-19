@@ -152,30 +152,21 @@ class DiagramPage:
         self.view = None
 
     @action(
-        name="diagram.zoom-in",
-        label=gettext("Zoom _In"),
-        icon_name="zoom-in",
-        shortcut="<Primary>plus",
+        name="diagram.zoom-in", shortcut="<Primary>plus",
     )
     def zoom_in(self):
         assert self.view
         self.view.zoom(1.2)
 
     @action(
-        name="diagram.zoom-out",
-        label=gettext("Zoom _Out"),
-        icon_name="zoom-out",
-        shortcut="<Primary>minus",
+        name="diagram.zoom-out", shortcut="<Primary>minus",
     )
     def zoom_out(self):
         assert self.view
         self.view.zoom(1 / 1.2)
 
     @action(
-        name="diagram.zoom-100",
-        label=gettext("_Normal Size"),
-        icon_name="zoom-original",
-        shortcut="<Primary>0",
+        name="diagram.zoom-100", shortcut="<Primary>0",
     )
     def zoom_100(self):
         assert self.view
@@ -183,23 +174,18 @@ class DiagramPage:
         self.view.zoom(1 / zx)
 
     @action(
-        name="diagram.select-all",
-        label="_Select all",
-        icon_name="edit-select-all",
-        shortcut="<Primary>a",
+        name="diagram.select-all", shortcut="<Primary>a",
     )
     def select_all(self):
         assert self.view
         self.view.select_all()
 
-    @action(
-        name="diagram.unselect-all", label="Des_elect all", shortcut="<Primary><Shift>a"
-    )
+    @action(name="diagram.unselect-all", shortcut="<Primary><Shift>a")
     def unselect_all(self):
         assert self.view
         self.view.unselect_all()
 
-    @action(name="diagram.delete", label=gettext("_Delete"), icon_name="edit-delete")
+    @action(name="diagram.delete")
     @transactional
     def delete_selected_items(self):
         assert self.view

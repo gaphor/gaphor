@@ -23,12 +23,16 @@ def error_handler(message=None, exc_info=None):
         message = gettext("An error occurred.")
 
     buttons = Gtk.ButtonsType.OK
-    message = f"{message}\n\nTechnical details:\n\t{exc_type}\n\t{exc_value}"
+    message = (
+        f"{message}\n\n"
+        + gettext("Technical details:")
+        + f"\n\t{exc_type}\n\t{exc_value}"
+    )
 
     if __debug__ and sys.stdin.isatty():
         buttons = Gtk.ButtonsType.YES_NO
-        message += gettext(
-            "\n\nDo you want to debug?\n(Gaphor should have been started from the command line)"
+        message += "\n\n" + gettext(
+            "Do you want to debug?\n(Gaphor should have been started from the command line)"
         )
 
     dialog = Gtk.MessageDialog(

@@ -113,11 +113,17 @@ mingw-w64-x86-64-python3-setuptools mingw-w64-x86-64-python3-zope.interface \
 mingw-w64-x86-64-python3-coverage mingw-w64-x86-64-python3-pytest
 ```
 
+Ensure `/mingw64/bin` is added to your `PATH`:
+```bash
+$ export PATH=/mingw64/bin:$PATH
+```
+
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+
 ```bash
 $ cd gaphor
-$ source ./venv
+$ source ./venv -S
 $ poetry run gaphor
 ```
 
