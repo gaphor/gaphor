@@ -91,6 +91,7 @@ def create_hamburger_model(export_menu, tools_menu):
 
     part = Gio.Menu.new()
     part.append(gettext("Preferences"), "app.preferences")
+    part.append(gettext("Keyboard Shortcuts"), "app.shortcuts")
     part.append(gettext("About Gaphor"), "app.about")
     model.append_section(None, part)
 

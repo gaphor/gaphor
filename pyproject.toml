@@ -69,6 +69,7 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "recent_files" = "gaphor.ui.recentfiles:RecentFiles"
 "main_window" = "gaphor.ui.mainwindow:MainWindow"
 "preferences" = "gaphor.ui.preferences:Preferences"
+"shortcuts" = "gaphor.ui.shortcuts:Shortcuts"
 "export_menu" = "gaphor.ui.menufragment:MenuFragment"
 "tools_menu" = "gaphor.ui.menufragment:MenuFragment"
 "copy" = "gaphor.services.copyservice:CopyService"
