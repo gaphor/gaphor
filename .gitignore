@@ -2,6 +2,7 @@ build
 dist
 gaphor/locale/*/LC_MESSAGES
 html
+htmlcov
 *.pyc
 *.pyo
 *.swp
