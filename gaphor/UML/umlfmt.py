@@ -61,10 +61,10 @@ def format_attribute(
     """
     name = el.name
     if not name:
-        name = ""
+        return name
 
     if no_render_pat.match(name):
-        name = ""
+        return name
 
     # Render all fields if they all are set to False
     if not (visibility or is_derived or type or multiplicity or default):
