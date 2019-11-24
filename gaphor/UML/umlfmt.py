@@ -131,7 +131,7 @@ def format_association_end(el):
     slots = []
     for slot in el.appliedStereotype[:].slot:
         if slot:
-            slots.append(f"{slot.definingFeature.name}={slot.value}")
+            slots.append(format(slot))
     if slots:
         m.write(" { %s }" % ",\n".join(slots))
     m.seek(0)
@@ -174,23 +174,7 @@ def format_operation(
     s.write("(")
 
     for p in el.formalParameter:
-        if direction:
-            s.write(p.direction)
-            s.write(" ")
-        s.write(p.name)
-        if type and p.typeValue:
-            s.write(f": {p.typeValue}")
-        if multiplicity and p.upperValue:
-            if p.lowerValue:
-                s.write(f"[{p.lowerValue}..{p.upperValue}]")
-            else:
-                s.write(f"[{p.upperValue}]")
-        if default and p.defaultValue:
-            s.write(f" = {p.defaultValue}")
-        # if p.taggedValue:
-        #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
-        #                                      ['value'] * len(p.taggedValue))))
-        #     s.write(' { %s }' % tvs)
+        s.write(format(p, direction=True, type=True, multiplicity=True, default=True))
         if p is not el.formalParameter[-1]:
             s.write(", ")
 
@@ -212,6 +196,31 @@ def format_operation(
         #        s.write(' { %s }' % tvs)
     s.seek(0)
     return s.read()
+
+
+@format.register(UML.Parameter)
+def format_parameter(
+    el, direction=False, type=False, multiplicity=False, default=False
+):
+    s = []
+    if direction:
+        s.append(el.direction)
+        s.append(" ")
+    s.append(el.name)
+    if type and el.typeValue:
+        s.append(f": {el.typeValue}")
+    if multiplicity and el.upperValue:
+        if el.lowerValue:
+            s.append(f"[{el.lowerValue}..{el.upperValue}]")
+        else:
+            s.append(f"[{el.upperValue}]")
+    if default and el.defaultValue:
+        s.append(f" = {el.defaultValue}")
+    # if p.taggedValue:
+    #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
+    #                                      ['value'] * len(p.taggedValue))))
+    #     s.append(' { %s }' % tvs)
+    return "".join(s)
 
 
 @format.register(UML.Slot)

@@ -85,7 +85,7 @@ def test_association_end_with_applied_stereotype(factory):
     parse(a, "myattr[1]")
     add_tag_is_foo_metadata_field(a, factory)
 
-    assert ("+ myattr", "1 { tag=foo }") == format(a)
+    assert ("+ myattr", '1 { tag = "foo" }') == format(a)
 
 
 @pytest.mark.parametrize(
