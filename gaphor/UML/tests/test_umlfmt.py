@@ -56,7 +56,7 @@ def test_attribute_with_applied_stereotype(factory):
     parse(a, "myattr: int")
     add_tag_is_foo_metadata_field(a, factory)
 
-    assert "+ myattr: int { tag=foo }" == format(a, tags=True)
+    assert '+ myattr: int { tag = "foo" }' == format(a, tags=True)
 
 
 @pytest.mark.parametrize(
@@ -102,6 +102,7 @@ def test_association_end_with_applied_stereotype(factory):
             "- myoper(p1: str[2], p2:int[1..*])",
             "- myoper(in p1: str[2], in p2: int[1..*])",
         ),
+        ("+ (param: str): int", "+ (param: str): int"),
     ],
 )
 def test_operation(factory, text, formatted_text):
