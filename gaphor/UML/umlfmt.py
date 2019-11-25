@@ -2,7 +2,6 @@
 Formatting of UML elements like attributes, operations, stereotypes, etc.
 """
 
-import io
 import re
 from functools import singledispatch
 
@@ -61,48 +60,40 @@ def format_attribute(
     """
     name = el.name
     if not name:
-        name = ""
+        return name
 
     if no_render_pat.match(name):
-        name = ""
+        return name
 
     # Render all fields if they all are set to False
     if not (visibility or is_derived or type or multiplicity or default):
         visibility = is_derived = type = multiplicity = default = True
 
-    s = io.StringIO()
+    s = []
 
     if visibility:
-        s.write(vis_map[el.visibility])
-        s.write(" ")
+        s.append(vis_map[el.visibility])
+        s.append(" ")
 
-    if is_derived:
-        if el.isDerived:
-            s.write("/")
+    if is_derived and el.isDerived:
+        s.append("/")
 
-    s.write(name)
+    s.append(name)
 
     if type and el.typeValue:
-        s.write(f": {el.typeValue}")
+        s.append(f": {el.typeValue}")
 
-    if multiplicity and el.upperValue:
-        if el.lowerValue:
-            s.write(f"[{el.lowerValue}..{el.upperValue}]")
-        else:
-            s.write(f"[{el.upperValue}]")
+    if multiplicity:
+        s.append(format_multiplicity(el))
 
     if default and el.defaultValue:
-        s.write(f" = {el.defaultValue}")
+        s.append(f" = {el.defaultValue}")
 
     if tags:
-        slots = []
-        for slot in el.appliedStereotype[:].slot:
-            if slot:
-                slots.append(f"{slot.definingFeature.name}={slot.value}")
+        slots = [format(slot) for slot in el.appliedStereotype[:].slot if slot]
         if slots:
-            s.write(" { %s }" % ", ".join(slots))
-    s.seek(0)
-    return s.read()
+            s.append(" { %s }" % ", ".join(slots))
+    return "".join(s)
 
 
 def format_association_end(el):
@@ -110,32 +101,24 @@ def format_association_end(el):
     Format association end.
     """
     name = ""
-    n = io.StringIO()
+    n = []
     if el.name:
-        n.write(vis_map[el.visibility])
-        n.write(" ")
+        n.append(vis_map[el.visibility])
+        n.append(" ")
         if el.isDerived:
-            n.write("/")
+            n.append("/")
         if el.name:
-            n.write(el.name)
-        n.seek(0)
-        name = n.read()
+            n.append(el.name)
 
-    m = io.StringIO()
-    if el.upperValue:
-        if el.lowerValue:
-            m.write(f"{el.lowerValue}..{el.upperValue}")
-        else:
-            m.write(f"{el.upperValue}")
+        name = "".join(n)
 
-    slots = []
-    for slot in el.appliedStereotype[:].slot:
-        if slot:
-            slots.append(f"{slot.definingFeature.name}={slot.value}")
+    m = []
+    m.append(format_multiplicity(el, bare=True))
+
+    slots = [format(slot) for slot in el.appliedStereotype[:].slot if slot]
     if slots:
-        m.write(" { %s }" % ",\n".join(slots))
-    m.seek(0)
-    mult = m.read()
+        m.append(" { %s }" % ",\n".join(slots))
+    mult = "".join(m)
 
     return name, mult
 
@@ -165,53 +148,57 @@ def format_operation(
     if not (visibility or type or multiplicity or default or tags or direction):
         visibility = type = multiplicity = default = tags = direction = True
 
-    s = io.StringIO()
+    s = []
     if visibility:
-        s.write(vis_map[el.visibility])
-        s.write(" ")
+        s.append(f"{vis_map[el.visibility]} ")
 
-    s.write(name)
-    s.write("(")
+    s.append(name)
+    s.append("(")
 
     for p in el.formalParameter:
-        if direction:
-            s.write(p.direction)
-            s.write(" ")
-        s.write(p.name)
-        if type and p.typeValue:
-            s.write(f": {p.typeValue}")
-        if multiplicity and p.upperValue:
-            if p.lowerValue:
-                s.write(f"[{p.lowerValue}..{p.upperValue}]")
-            else:
-                s.write(f"[{p.upperValue}]")
-        if default and p.defaultValue:
-            s.write(f" = {p.defaultValue}")
-        # if p.taggedValue:
-        #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
-        #                                      ['value'] * len(p.taggedValue))))
-        #     s.write(' { %s }' % tvs)
+        s.append(
+            format(
+                p,
+                direction=direction,
+                type=type,
+                multiplicity=multiplicity,
+                default=default,
+            )
+        )
         if p is not el.formalParameter[-1]:
-            s.write(", ")
+            s.append(", ")
 
-    s.write(")")
+    s.append(")")
 
     rr = el.returnResult and el.returnResult[0]
     if rr:
-        if type and rr.typeValue:
-            s.write(f": {rr.typeValue}")
-        if multiplicity and rr.upperValue:
-            if rr.lowerValue:
-                s.write(f"[{rr.lowerValue}..{rr.upperValue}]")
-            else:
-                s.write(f"[{rr.upperValue}]")
-        # if rr.taggedValue:
-        #    tvs = ', '.join(filter(None, map(getattr, rr.taggedValue,
-        #                                     ['value'] * len(rr.taggedValue))))
-        #    if tvs:
-        #        s.write(' { %s }' % tvs)
-    s.seek(0)
-    return s.read()
+        s.append(format(rr, type=type, multiplicity=multiplicity, default=default))
+    return "".join(s)
+
+
+@format.register(UML.Parameter)
+def format_parameter(
+    el, direction=False, type=False, multiplicity=False, default=False
+):
+    s = []
+    if direction:
+        s.append(f"{el.direction} ")
+
+    s.append(el.name or "")
+
+    if type and el.typeValue:
+        s.append(f": {el.typeValue}")
+
+    if multiplicity:
+        s.append(format_multiplicity(el))
+
+    if default and el.defaultValue:
+        s.append(f" = {el.defaultValue}")
+    # if p.taggedValue:
+    #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
+    #                                      ['value'] * len(p.taggedValue))))
+    #     s.append(' { %s }' % tvs)
+    return "".join(s)
 
 
 @format.register(UML.Slot)
@@ -224,4 +211,11 @@ def format_namedelement(el):
     """
     Format named element.
     """
-    return el.name
+    return el.name or ""
+
+
+def format_multiplicity(el, bare=False):
+    m = ""
+    if el.upperValue:
+        m = f"{el.lowerValue}..{el.upperValue}" if el.lowerValue else f"{el.upperValue}"
+    return f"[{m}]" if m and not bare else m
