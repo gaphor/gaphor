@@ -249,24 +249,21 @@ class ElementDispatcher:
 
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
-            if isinstance(event, AssociationSet):
-                for handler, remainders in handlers.items():
-                    if remainders and event.old_value:
-                        for remainder in remainders:
-                            self._remove_handlers(
-                                event.old_value, remainder[0], handler
-                            )
-                    if remainders and event.new_value:
-                        for remainder in remainders:
-                            self._add_handlers(event.new_value, remainder, handler)
-            elif isinstance(event, AssociationAdded):
-                for handler, remainders in handlers.items():
-                    for remainder in remainders:
-                        self._add_handlers(event.new_value, remainder, handler)
-            elif isinstance(event, AssociationDeleted):
+            if (
+                isinstance(event, (AssociationSet, AssociationDeleted))
+                and event.old_value
+            ):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
                         self._remove_handlers(event.old_value, remainder[0], handler)
+
+            if (
+                isinstance(event, (AssociationSet, AssociationAdded))
+                and event.new_value
+            ):
+                for handler, remainders in handlers.items():
+                    for remainder in remainders:
+                        self._add_handlers(event.new_value, remainder, handler)
 
     @event_handler(ModelReady)
     def on_model_loaded(self, event):
