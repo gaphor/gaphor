@@ -1,9 +1,7 @@
 name: Upload Python Package
-
 on:
   release:
     types: published
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,14 +11,11 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install poetry
+    - name: Install Poetry
+      uses: dschep/install-poetry-action@v1.2
+    - name: Install Dependencies
+      run: poetry install
     - name: Build and publish
-      env:
-        POETRY_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        POETRY_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         poetry build
-        poetry publish -u POETRY_USERNAME -p POETRY_PASSWORD
+        poetry publish -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
