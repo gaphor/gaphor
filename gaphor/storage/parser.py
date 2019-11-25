@@ -131,24 +131,24 @@ class GaphorLoader(handler.ContentHandler):
     def push(self, element, state):
         """Add an element to the item stack.
         """
-        self.__stack.append((element, state))
+        self._stack.append((element, state))
 
     def pop(self):
         """Return the last item on the stack. The item is removed from
         the stack.
         """
-        return self.__stack.pop()[0]
+        return self._stack.pop()[0]
 
     def peek(self, depth=1):
         """Return the last item on the stack. The item is not removed.
         """
-        return self.__stack[-1 * depth][0]
+        return self._stack[-1 * depth][0]
 
     def state(self):
         """Return the current state of the parser.
         """
         try:
-            return self.__stack[-1][1]
+            return self._stack[-1][1]
         except IndexError:
             return ROOT
 
@@ -161,17 +161,9 @@ class GaphorLoader(handler.ContentHandler):
         self.version = None
         self.gaphor_version = None
         self.elements: Dict[str, Union[element, canvasitem]] = OrderedDict()
-        self.__stack: List[Tuple[Union[element, canvas, canvasitem], State]] = []
+        self._stack: List[Tuple[Union[element, canvas, canvasitem], State]] = []
         self.text = ""
-
-    def endDocument(self):
-        if len(self.__stack) != 0:
-            raise ParserException("Invalid XML document.")
-
-    def startElement(self, name, attrs):
-        self.text = ""
-
-        handlers = (
+        self._start_element_handlers = (
             self.start_element,
             self.start_canvas,
             self.start_canvas_item,
@@ -182,9 +174,16 @@ class GaphorLoader(handler.ContentHandler):
             self.invalid_tag,
         )
 
+    def endDocument(self):
+        if len(self._stack) != 0:
+            raise ParserException("Invalid XML document.")
+
+    def startElement(self, name, attrs):
+        self.text = ""
+
         state = self.state()
 
-        for handler in handlers:
+        for handler in self._start_element_handlers:
             if handler(state, name, attrs):
                 break
 
