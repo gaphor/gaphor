@@ -1,4 +1,4 @@
-# Gaphor <img src="iconsrc/gaphor.svg" width="48">
+# Gaphor <img src="logos/gaphor.svg" width="48">
 
 [![Build Status](https://dev.azure.com/gaphor-dev/gaphor/_apis/build/status/gaphor.gaphor?branchName=master)](https://dev.azure.com/gaphor-dev/gaphor/_build/latest?definitionId=2&branchName=master)
 ![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)
