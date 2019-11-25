@@ -284,8 +284,6 @@ class DiagramToolbox:
         self.element_factory = element_factory
         self.event_manager = event_manager
 
-    namespace = property(lambda s: s.diagram.namespace)
-
     def get_tool(self, tool_name):
         """
         Return a tool associated with an id (action name).
@@ -325,7 +323,7 @@ class DiagramToolbox:
         def factory_method(parent=None):
             subject = self.element_factory.create(subject_class)
             item = self.diagram.create(item_class, subject=subject, parent=parent)
-            subject.package = self.namespace
+            subject.package = self.diagram.namespace
             if name is not None:
                 subject.name = name
             else:
@@ -633,19 +631,6 @@ class DiagramToolbox:
             self.view,
             item_factory=self._namespace_item_factory(
                 diagram.states.StateItem, UML.State
-            ),
-            handle_index=SE,
-            after_handler=self._after_handler,
-        )
-
-    def _toolbox_pseudostate(self, kind):
-        def set_state(item):
-            item.subject.kind = kind
-
-        return PlacementTool(
-            self.view,
-            item_factory=self._item_factory(
-                diagram.states.InitialPseudostateItem, UML.Pseudostate, set_state
             ),
             handle_index=SE,
             after_handler=self._after_handler,
