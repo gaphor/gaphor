@@ -28,8 +28,8 @@ modules:
     post-install:
       - install -Dm644 flatpak/org.gaphor.Gaphor.appdata.xml /app/share/metainfo/org.gaphor.Gaphor.appdata.xml
       - install -Dm644 flatpak/org.gaphor.Gaphor.desktop /app/share/applications/org.gaphor.Gaphor.desktop
-      - install -Dm644 gaphor/ui/pixmaps/gaphor-24x24.png /app/share/icons/hicolor/24x24/apps/gaphor.png
-      - install -Dm644 gaphor/ui/pixmaps/gaphor-48x48.png /app/share/icons/hicolor/48x48/apps/gaphor.png
-      - install -Dm644 gaphor/ui/pixmaps/gaphor-96x96.png /app/share/icons/hicolor/96x96/apps/gaphor.png
-      - install -Dm644 gaphor/ui/pixmaps/gaphor-256x256.png /app/share/icons/hicolor/256x256/apps/gaphor.png
-      - install -Dm644 iconsrc/gaphor.svg /app/share/icons/hicolor/scalable/apps/gaphor.svg
+      - install -Dm644 logos/gaphor-24x24.png /app/share/icons/hicolor/24x24/apps/gaphor.png
+      - install -Dm644 logos/gaphor-48x48.png /app/share/icons/hicolor/48x48/apps/gaphor.png
+      - install -Dm644 logos/gaphor-96x96.png /app/share/icons/hicolor/96x96/apps/gaphor.png
+      - install -Dm644 logos/gaphor-256x256.png /app/share/icons/hicolor/256x256/apps/gaphor.png
+      - install -Dm644 logos/gaphor.svg /app/share/icons/hicolor/scalable/apps/gaphor.svg

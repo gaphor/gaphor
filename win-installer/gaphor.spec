@@ -9,10 +9,12 @@ a = Analysis(['gaphor-script.py'],
              binaries=[],
              datas=[
 	     	    ('../gaphor/ui/layout.xml', 'gaphor/ui'),
-		        ('../gaphor/ui/layout.css', 'gaphor/ui'),
-		        ('../gaphor/ui/pixmaps/*.png', 'gaphor/ui/pixmaps'),
-		        ('../gaphor/ui/icons/*.svg', 'gaphor/ui/icons'),
-		        ('../LICENSE.txt', 'gaphor')
+		       ('../gaphor/ui/layout.css', 'gaphor/ui'),
+		       ('../gaphor/ui/*.glade', 'gaphor/ui'),
+		       ('../gaphor/services/helpservice/*.png', 'gaphor/services/helpservice'),
+		       ('../gaphor/services/helpservice/*.glade', 'gaphor/services/helpservice'),
+		       ('../gaphor/ui/icons/*.svg', 'gaphor/ui/icons'),
+		       ('../LICENSE.txt', 'gaphor')
 		     ]+copy_metadata('gaphor'),
              hiddenimports=[],
              hookspath=[],
