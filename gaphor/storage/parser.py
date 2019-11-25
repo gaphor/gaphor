@@ -171,8 +171,24 @@ class GaphorLoader(handler.ContentHandler):
     def startElement(self, name, attrs):
         self.text = ""
 
+        handlers = (
+            self.start_element,
+            self.start_canvas,
+            self.start_canvas_item,
+            self.start_attribute,
+            self.start_reference,
+            self.start_attribute_value,
+            self.start_root,
+            self.invalid_tag,
+        )
+
         state = self.state()
 
+        for handler in handlers:
+            if handler(state, name, attrs):
+                break
+
+    def start_element(self, state, name, attrs):
         # Read a element class. The name of the tag is the class name:
         if state == GAPHOR:
             id = attrs["id"]
@@ -180,31 +196,40 @@ class GaphorLoader(handler.ContentHandler):
             assert id not in self.elements.keys(), f"{id} already defined"
             self.elements[id] = e
             self.push(e, name == "Diagram" and DIAGRAM or ELEMENT)
+            return True
 
+    def start_canvas(self, state, name, attrs):
         # Special treatment for the <canvas> tag in a Diagram:
-        elif state == DIAGRAM and name == "canvas":
+        if state == DIAGRAM and name == "canvas":
             c = canvas()
             self.peek().canvas = c
             self.push(c, CANVAS)
+            return True
 
+    def start_canvas_item(self, state, name, attrs):
         # Items in a canvas are referenced by the <item> tag:
-        elif state in (CANVAS, ITEM) and name == "item":
+        if state in (CANVAS, ITEM) and name == "item":
             id = attrs["id"]
             ci = canvasitem(id, attrs["type"])
             assert id not in self.elements.keys(), f"{id} already defined"
             self.elements[id] = ci
             self.peek().canvasitems.append(ci)
             self.push(ci, ITEM)
+            return True
 
+    def start_attribute(self, state, name, attrs):
         # Store the attribute name on the stack, so we can use it later
         # to store the <ref>, <reflist> or <val> content:
-        elif state in (ELEMENT, DIAGRAM, CANVAS, ITEM):
+        if state in (ELEMENT, DIAGRAM, CANVAS, ITEM):
             # handle 'normal' attributes
             self.push(name, ATTR)
+            return True
 
+    def start_reference(self, state, name, attrs):
         # Reference list:
-        elif state == ATTR and name == "reflist":
+        if state == ATTR and name == "reflist":
             self.push(self.peek(), REFLIST)
+            return True
 
         # Reference with multiplicity 1:
         elif state == ATTR and name == "ref":
@@ -212,6 +237,7 @@ class GaphorLoader(handler.ContentHandler):
             # Fetch the element instance from the stack
             r = self.peek(2).references[n] = attrs["refid"]
             self.push(None, REF)
+            return True
 
         # Reference with multiplicity *:
         elif state == REFLIST and name == "ref":
@@ -224,24 +250,27 @@ class GaphorLoader(handler.ContentHandler):
             except KeyError:
                 r[n] = [refid]
             self.push(None, REF)
+            return True
 
+    def start_attribute_value(self, state, name, attrs):
         # We need to get the text within the <val> tag:
-        elif state == ATTR and name == "val":
+        if state == ATTR and name == "val":
             self.push(None, VAL)
+            return True
 
+    def start_root(self, state, name, attrs):
         # The <gaphor> tag is the toplevel tag:
-        elif state == ROOT and name == "gaphor":
+        if state == ROOT and name == "gaphor":
             assert attrs["version"] in ("3.0",)
             self.version = attrs["version"]
             self.gaphor_version = attrs.get("gaphor-version")
             if not self.gaphor_version:
                 self.gaphor_version = attrs.get("gaphor_version")
             self.push(None, GAPHOR)
+            return True
 
-        else:
-            raise ParserException(
-                f"Invalid XML: tag <{name}> not known (state = {state})"
-            )
+    def invalid_tag(self, state, name, attrs):
+        raise ParserException(f"Invalid XML: tag <{name}> not known (state = {state})")
 
     def endElement(self, name):
         # Put the text on the value
