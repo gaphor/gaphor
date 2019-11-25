@@ -180,8 +180,8 @@ class GaphorLoader(handler.ContentHandler):
 
         state = self.state()
 
-        for handler in self._start_element_handlers:
-            if handler(state, name, attrs):
+        for h in self._start_element_handlers:
+            if h(state, name, attrs):
                 break
 
     def start_element(self, state, name, attrs):
