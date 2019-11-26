@@ -71,13 +71,13 @@ jobs:
       - name: Install Dependencies
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
-          C:\tools\msys64\usr\bin\bash -lc ".azure/msys2-install.sh"
+          C:\tools\msys64\usr\bin\bash -lc "win-installer/msys2-install.sh"
         env:
           CHERE_INVOKING: yes
       - name: Run Tests
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
-          C:\tools\msys64\usr\bin\bash -lc ".azure/msys2-test.sh"
+          C:\tools\msys64\usr\bin\bash -lc "win-installer/msys2-test.sh"
         env:
           CHERE_INVOKING: yes
           PY_IGNORE_IMPORTMISMATCH: yes

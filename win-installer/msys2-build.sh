@@ -2,6 +2,6 @@
 
 set -e
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source venv
-cd 'win-installer'
 source build-installer.sh
