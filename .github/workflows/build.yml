@@ -1,4 +1,4 @@
-name: build
+name: Build
 
 on:
   pull_request:
@@ -83,7 +83,7 @@ jobs:
           PY_IGNORE_IMPORTMISMATCH: yes
   test-macos:
     needs: lint
-    runs-on: [macOS-latest]
+    runs-on: macOS-latest
     env:
       PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
