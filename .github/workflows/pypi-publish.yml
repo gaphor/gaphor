@@ -1,7 +1,9 @@
-name: Upload Python Package
 on:
   release:
     types: published
+
+name: Publish to PyPI
+
 jobs:
   deploy:
     runs-on: ubuntu-latest

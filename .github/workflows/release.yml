@@ -1,0 +1,88 @@
+name: Release Artifacts
+
+on:
+  push:
+    tags: '*'
+
+jobs:
+  upload-windows:
+    name: Upload Windows Release Assets
+    runs-on: windows-latest
+    env:
+      MSYSTEM: MINGW64
+      MSYS2_ARCH: x86_64
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install MSYS2
+        run: |
+          choco install msys2 --params="/NoUpdate /NoPath"
+          $env:PATH = "C:\tools\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
+          C:\tools\msys64\usr\bin\pacman --noconfirm -Syyuu
+          C:\tools\msys64\usr\bin\pacman --noconfirm -Syuu
+      - name: Install Dependencies
+        run: |
+          $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
+          C:\tools\msys64\usr\bin\bash -lc "win-installer/msys2-install.sh"
+        env:
+          CHERE_INVOKING: yes
+      - name: Create Windows Binaries
+        run: |
+          $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
+          C:\tools\msys64\usr\bin\bash -lc "win-installer/msys2-build.sh"
+      - name: Upload Windows Installer
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./gaphor-${{ github.ref }}-installer.exe
+          asset_name: gaphor-${{ github.ref }}-installer.exe
+          tag: ${{ github.ref }}
+      - name: Upload Windows Portable
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./gaphor-${{ github.ref }}-portable.exe
+          asset_name: gaphor-${{ github.ref }}-portable.exe
+          tag: ${{ github.ref }}
+  upload-macos:
+    runs-on: macOS-latest
+    env:
+      PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          brew install gobject-introspection gtk+3 adwaita-icon-theme
+          source venv
+      - name: Build Wheel and sdist
+        run: |
+          source venv
+          poetry build
+      - name: Upload Wheel
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/gaphor-${{ github.ref }}-py3-none-any.whl
+          asset_name: gaphor-${{ github.ref }}-py3-none-any.whl
+          tag: ${{ github.ref }}
+      - name: Upload sdist
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/gaphor-${{ github.ref }}.tar.gz
+          asset_name: gaphor-${{ github.ref }}.tar.gz
+          tag: ${{ github.ref }}
+      - name: Create macOS Binary
+        run: |
+          cd macos-dmg
+          ./package.sh
+      - name: Upload macOS Installer
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./Gaphor-${{ github.ref }}.dmg
+          asset_name: Gaphor-${{ github.ref }}.dmg
+          tag: ${{ github.ref }}
