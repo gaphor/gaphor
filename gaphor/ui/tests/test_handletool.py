@@ -11,11 +11,11 @@ from gi.repository import Gdk, Gtk
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.usecases.actor import ActorItem
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.ui.event import DiagramOpened
 
 

@@ -16,15 +16,15 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.diagram.support import get_diagram_item
-from gaphor.services.properties import PropertyChanged
-from gaphor.transaction import Transaction
-from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.diagramtoolbox import (
+from gaphor.diagram.diagramtoolbox import (
     TOOLBOX_ACTIONS,
     DiagramToolbox,
     TransactionalToolChain,
 )
+from gaphor.diagram.support import get_diagram_item
+from gaphor.services.properties import PropertyChanged
+from gaphor.transaction import Transaction
+from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML.event import DiagramItemCreated, ElementDeleted
 

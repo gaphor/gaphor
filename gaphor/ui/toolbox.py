@@ -9,8 +9,8 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import gettext
+from gaphor.diagram.diagramtoolbox import TOOLBOX_ACTIONS
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
 log = logging.getLogger(__name__)
 

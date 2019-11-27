@@ -179,7 +179,7 @@ class PlacementTool(_PlacementTool):
     def on_button_press(self, event):
         view = self.view
         view.unselect_all()
-        if _PlacementTool.on_button_press(self, event):
+        if super().on_button_press(event):
             try:
                 opposite = self.new_item.opposite(
                     self.new_item.handles()[self._handle_index]
@@ -205,7 +205,7 @@ class PlacementTool(_PlacementTool):
     def on_button_release(self, event):
         if self.after_handler:
             self.after_handler(self.new_item)
-        return _PlacementTool.on_button_release(self, event)
+        return super().on_button_release(event)
 
 
 class GroupPlacementTool(PlacementTool):

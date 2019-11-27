@@ -12,7 +12,7 @@ from gaphas.item import SE
 
 from gaphor import UML, diagram
 from gaphor.core import gettext
-from gaphor.ui.diagramtools import (
+from gaphor.diagram.diagramtools import (
     DefaultTool,
     GroupPlacementTool,
     PlacementTool,
@@ -333,6 +333,7 @@ class DiagramToolbox:
         factory_method.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
         return factory_method
 
+    # TODO: Move the event handling in placement tool. Let it depend on event_manager.
     def _after_handler(self, new_item):
         self.event_manager.handle(DiagramItemCreated(self.element_factory, new_item))
 
@@ -344,6 +345,7 @@ class DiagramToolbox:
         if self.view:
             return DefaultTool(self.event_manager)
 
+    # @tool("toolbox-line", gettext("Line"), "gaphor-line-symbolic", "l")
     def toolbox_line(self):
         return PlacementTool(
             self.view,
