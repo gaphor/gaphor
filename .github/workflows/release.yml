@@ -31,7 +31,7 @@ jobs:
         env:
           CHERE_INVOKING: yes
       - name: Upload Assets
-        uses: AButler/upload-release-assets@v1.0
+        uses: AButler/upload-release-assets@v2.0
         with:
           files: 'win-installer/*.exe'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.7
       - name: Install Dependencies
         run: |
           brew install gobject-introspection gtk+3 adwaita-icon-theme
@@ -58,7 +58,7 @@ jobs:
           cd macos-dmg
           ./package.sh
       - name: Upload Assets
-        uses: AButler/upload-release-assets@v1.0
+        uses: AButler/upload-release-assets@v2.0
         with:
-          files: 'macos-dmg/*dmg,dist/*'
+          files: 'macos-dmg/*dmg;dist/*'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
