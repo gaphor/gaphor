@@ -46,16 +46,18 @@ jobs:
         uses: dschep/install-poetry-action@v1.2
         with:
           version: 1.0.0b3
+      - name: Turn off Virtualenvs
+        run: poetry config virtualenvs.create false
       - name: Install Python Dependencies
         run: poetry install
       - name: Test with Pytest
-        run: poetry run xvfb-run pytest -- --cov=gaphor/
+        run: xvfb-run pytest --cov=gaphor/
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v2.3.0
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
-          coverageCommand: poetry run coverage xml
+          coverageCommand: coverage xml
   test-windows:
     needs: lint
     runs-on: windows-latest
@@ -94,12 +96,17 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
-      - name: Install dependencies
+      - name: Install macOS Dependencies
+        run: brew install gobject-introspection gtk+3 adwaita-icon-theme
+      - name: Install Poetry
+        uses: dschep/install-poetry-action@v1.2
+        with:
+          version: 1.0.0b3
+      - name: Turn off Virtualenvs
+        run: poetry config virtualenvs.create false
+      - name: Install Python Dependencies
         run: |
-          brew install gobject-introspection gtk+3 adwaita-icon-theme
-          source venv
+          poetry install
           pip install pytest-xvfb
-      - name: Run Tests
-        run: |
-          source venv
-          pytest
+      - name: Test with Pytest
+        run: pytest

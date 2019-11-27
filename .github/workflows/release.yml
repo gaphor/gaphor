@@ -46,13 +46,17 @@ jobs:
         with:
           python-version: 3.7
       - name: Install Dependencies
-        run: |
-          brew install gobject-introspection gtk+3 adwaita-icon-theme
-          source venv
+        run: brew install gobject-introspection gtk+3 adwaita-icon-theme
+      - name: Install Poetry
+        uses: dschep/install-poetry-action@v1.2
+        with:
+          version: 1.0.0b3
+      - name: Turn off Virtualenvs
+        run: poetry config virtualenvs.create false
+      - name: Install Python Dependencies
+        run: poetry install
       - name: Build Wheel and sdist
-        run: |
-          source venv
-          poetry build
+        run: poetry build
       - name: Create macOS Binary
         run: |
           cd macos-dmg
