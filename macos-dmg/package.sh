@@ -44,7 +44,7 @@ mkdir -p "${RESOURCESDIR}"
 cp PkgInfo "${INSTALLDIR}"
 cp gaphor.icns "${RESOURCESDIR}"
 cat Info.plist | sed 's#VERSION#'${VERSION}'#g' > "${INSTALLDIR}/Info.plist"
-cat gaphor | sed 's#3.8#'${PYVER}'#' > "${MACOSDIR}/gaphor"
+cat gaphor | sed 's#3.7#'${PYVER}'#' > "${MACOSDIR}/gaphor"
 chmod +x "${MACOSDIR}/gaphor"
 
 function rel_path {

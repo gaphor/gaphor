@@ -8,7 +8,7 @@
 # Inkscape Modifications: Michael Wybrow <mjwybrow@users.sourceforge.net>
 # K-3D Modifications: Timothy M. Shead <tshead@k-3d.com>
 
-PYVER="3.8"
+PYVER="3.7"
 MACOS="$(dirname $0)"
 CONTENTS="$(dirname $MACOS)"
 BIN="$CONTENTS/bin"

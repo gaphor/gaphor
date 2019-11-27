@@ -1,8 +1,8 @@
-name: Release Artifacts
+name: Release
 
 on:
-  push:
-    tags: '*'
+  release:
+    types: created
 
 jobs:
   upload-windows:
@@ -35,7 +35,6 @@ jobs:
         with:
           files: 'win-installer/*.exe'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          release-tag: ${{ github.ref }}
   upload-macos:
     runs-on: macOS-latest
     env:
@@ -63,4 +62,3 @@ jobs:
         with:
           files: 'macos-dmg/*dmg,dist/*'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          release-tag: ${{ github.ref }}
