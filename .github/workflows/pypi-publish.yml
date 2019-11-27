@@ -15,6 +15,8 @@ jobs:
         python-version: '3.x'
     - name: Install Poetry
       uses: dschep/install-poetry-action@v1.2
+      with:
+        version: 1.0.0b3
     - name: Install Dependencies
       run: poetry install
     - name: Build and publish
