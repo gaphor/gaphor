@@ -18,7 +18,7 @@ modules:
   - name: gaphor
     buildsystem: simple
     build-commands:
-      - 'poetry config settings.virtualenvs.create false && poetry build'
+      - 'poetry config virtualenvs.create false && poetry build'
       - 'pip3 install --no-index --prefix=${FLATPAK_DEST} ./dist/gaphor*.whl'
     sources:
       - type: git

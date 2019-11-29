@@ -1,8 +1,9 @@
 # Gaphor <img src="logos/gaphor.svg" width="48">
 
-[![Build Status](https://dev.azure.com/gaphor-dev/gaphor/_apis/build/status/gaphor.gaphor?branchName=master)](https://dev.azure.com/gaphor-dev/gaphor/_build/latest?definitionId=2&branchName=master)
-![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)
-[![Coverage Status](https://coveralls.io/repos/github/gaphor/gaphor/badge.svg?branch=master)](https://coveralls.io/github/gaphor/gaphor?branch=master)
+[![Build state](https://github.com/gaphor/gaphor/workflows/build/badge.svg)](https://github.com/gaphor/gaphor/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/maintainability)](https://codeclimate.com/github/gaphor/gaphor/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/test_coverage)](https://codeclimate.com/github/gaphor/gaphor/test_coverage)
+[![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://gaphor.readthedocs.io)
 [![PyPI](https://img.shields.io/pypi/v/gaphor.svg)](https://pypi.org/project/gaphor)
 [![Downloads](https://pepy.tech/badge/gaphor)](https://pepy.tech/project/gaphor)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)

@@ -79,7 +79,8 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "namespace" = "gaphor.ui.namespace:Namespace"
 "toolbox" = "gaphor.ui.toolbox:Toolbox"
 "diagrams" = "gaphor.ui.mainwindow:Diagrams"
-"consolewindow" = "gaphor.plugins.console:ConsoleWindow"
+# Console Window is causing Test Seg Faults with GitHub Actions
+# "consolewindow" = "gaphor.plugins.console:ConsoleWindow"
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
