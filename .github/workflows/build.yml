@@ -15,7 +15,13 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
-      - name: Install dependencies
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v1.0.3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-pip-
+      - name: Install Dependencies
         run: |
           pip install pre-commit
           pre-commit install-hooks
@@ -37,6 +43,12 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v1.0.3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-pip-
       - name: Install Ubuntu dependencies
         run: >
           sudo apt-get update -q && sudo apt-get install
@@ -104,6 +116,12 @@ jobs:
           version: 1.0.0b3
       - name: Turn off Virtualenvs
         run: poetry config virtualenvs.create false
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v1.0.3
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-pip-
       - name: Install Python Dependencies
         run: |
           poetry install
