@@ -12,21 +12,9 @@ jobs:
       MSYS2_ARCH: x86_64
     steps:
       - uses: actions/checkout@v1
-      - name: Use Choco Cache
-        uses: actions/cache@v1.0.3
-        with:
-          path: ~\AppData\local\choco\cache
-          key: ${{ runner.os }}-choco-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: ${{ runner.os }}-choco-
       - name: Install MSYS2
         run: |
-          choco install --cache ~\AppData\local\choco\cache msys2 --params="/NoUpdate /NoPath"
-      - name: Use MSYS2 Pacman Cache
-        uses: actions/cache@v1.0.3
-        with:
-          path: C:\tools\msys64\var\cache\pacman\pkg
-          key: ${{ runner.os }}-pacman-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: ${{ runner.os }}-pacman-
+          choco install --no-progress msys2 --params="/NoUpdate /NoPath"
       - name: Update MSYS2
         run: |
           $env:PATH = "C:\tools\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
@@ -65,12 +53,6 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.7
-      - name: Use Homebrew Dependency Cache
-        uses: actions/cache@v1.0.3
-        with:
-          path: ~/Library/Caches/Homebrew
-          key: ${{ runner.os }}-brew-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: ${{ runner.os }}-brew-
       - name: Install Dependencies
         run: brew install gobject-introspection gtk+3 adwaita-icon-theme
       - name: Install Poetry
