@@ -18,15 +18,17 @@ jobs:
           path: ~\AppData\local\choco\cache
           key: ${{ runner.os }}-choco-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-choco-
+      - name: Install MSYS2
+        run: |
+          choco install --cache ~\AppData\local\choco\cache msys2 --params="/NoUpdate /NoPath"
       - name: Use MSYS2 Pacman Cache
         uses: actions/cache@v1.0.3
         with:
           path: C:\tools\msys64\var\cache\pacman\pkg
           key: ${{ runner.os }}-pacman-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-pacman-
-      - name: Install MSYS2
+      - name: Update MSYS2
         run: |
-          choco install --cache ~\AppData\local\choco\cache msys2 --params="/NoUpdate /NoPath"
           $env:PATH = "C:\tools\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
           C:\tools\msys64\usr\bin\pacman --noconfirm -Syyuu
           C:\tools\msys64\usr\bin\pacman --noconfirm -Syuu
