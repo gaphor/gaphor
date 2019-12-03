@@ -298,30 +298,6 @@ class DiagramToolbox:
 
     action_list = list(zip(*list(tooliter(TOOLBOX_ACTIONS))))
 
-    # TODO: belongs with placement tool (class method?)
-    def new_item_factory(self, item_class, subject_class=None, config_func=None):
-        """
-        ``config_func`` may be a function accepting the newly created item.
-        """
-
-        def item_factory(
-            diagram, parent: Optional[UML.Presentation] = None,
-        ) -> UML.Presentation:
-            if subject_class:
-                element_factory = diagram.model
-                subject = element_factory.create(subject_class)
-            else:
-                subject = None
-            item: UML.Presentation = diagram.create(
-                item_class, subject=subject, parent=parent
-            )
-            if config_func:
-                config_func(item)
-            return item
-
-        item_factory.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
-        return item_factory
-
     ##
     ## Toolbox actions
     ##
@@ -334,14 +310,14 @@ class DiagramToolbox:
     def toolbox_line(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.general.Line),
+            item_factory=PlacementTool.new_item_factory(diagram.general.Line),
             event_manager=self.event_manager,
         )
 
     def toolbox_box(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.general.Box),
+            item_factory=PlacementTool.new_item_factory(diagram.general.Box),
             handle_index=SE,
             event_manager=self.event_manager,
         )
@@ -349,7 +325,7 @@ class DiagramToolbox:
     def toolbox_ellipse(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.general.Ellipse),
+            item_factory=PlacementTool.new_item_factory(diagram.general.Ellipse),
             handle_index=SE,
             event_manager=self.event_manager,
         )
@@ -357,7 +333,7 @@ class DiagramToolbox:
     def toolbox_comment(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.general.CommentItem, UML.Comment
             ),
             handle_index=SE,
@@ -367,7 +343,9 @@ class DiagramToolbox:
     def toolbox_comment_line(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.general.CommentLineItem),
+            item_factory=PlacementTool.new_item_factory(
+                diagram.general.CommentLineItem
+            ),
             event_manager=self.event_manager,
         )
 
@@ -376,7 +354,7 @@ class DiagramToolbox:
     def toolbox_class(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.classes.ClassItem, UML.Class, config_func=namespace_config
             ),
             handle_index=SE,
@@ -386,7 +364,7 @@ class DiagramToolbox:
     def toolbox_interface(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.classes.InterfaceItem,
                 UML.Interface,
                 config_func=namespace_config,
@@ -398,7 +376,7 @@ class DiagramToolbox:
     def toolbox_package(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.classes.PackageItem, UML.Package, config_func=namespace_config,
             ),
             handle_index=SE,
@@ -408,28 +386,34 @@ class DiagramToolbox:
     def toolbox_association(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.classes.AssociationItem),
+            item_factory=PlacementTool.new_item_factory(
+                diagram.classes.AssociationItem
+            ),
             event_manager=self.event_manager,
         )
 
     def toolbox_dependency(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.classes.DependencyItem),
+            item_factory=PlacementTool.new_item_factory(diagram.classes.DependencyItem),
             event_manager=self.event_manager,
         )
 
     def toolbox_generalization(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.classes.GeneralizationItem),
+            item_factory=PlacementTool.new_item_factory(
+                diagram.classes.GeneralizationItem
+            ),
             event_manager=self.event_manager,
         )
 
     def toolbox_implementation(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.classes.ImplementationItem),
+            item_factory=PlacementTool.new_item_factory(
+                diagram.classes.ImplementationItem
+            ),
             event_manager=self.event_manager,
         )
 
@@ -438,7 +422,7 @@ class DiagramToolbox:
     def toolbox_component(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.components.ComponentItem,
                 UML.Component,
                 config_func=namespace_config,
@@ -450,7 +434,7 @@ class DiagramToolbox:
     def toolbox_artifact(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.components.ArtifactItem,
                 UML.Artifact,
                 config_func=namespace_config,
@@ -462,7 +446,7 @@ class DiagramToolbox:
     def toolbox_node(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.components.NodeItem, UML.Node, config_func=namespace_config,
             ),
             handle_index=SE,
@@ -472,7 +456,7 @@ class DiagramToolbox:
     def toolbox_device(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.components.NodeItem, UML.Device, config_func=namespace_config,
             ),
             handle_index=SE,
@@ -482,7 +466,9 @@ class DiagramToolbox:
     def toolbox_connector(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.components.ConnectorItem),
+            item_factory=PlacementTool.new_item_factory(
+                diagram.components.ConnectorItem
+            ),
             event_manager=self.event_manager,
         )
 
@@ -491,7 +477,7 @@ class DiagramToolbox:
     def toolbox_action(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.ActionItem, UML.Action, config_func=namespace_config,
             ),
             handle_index=SE,
@@ -501,7 +487,7 @@ class DiagramToolbox:
     def toolbox_send_signal_action(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.SendSignalActionItem,
                 UML.SendSignalAction,
                 config_func=namespace_config,
@@ -513,7 +499,7 @@ class DiagramToolbox:
     def toolbox_accept_event_action(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.AcceptEventActionItem,
                 UML.AcceptEventAction,
                 config_func=namespace_config,
@@ -525,7 +511,7 @@ class DiagramToolbox:
     def toolbox_initial_node(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.InitialNodeItem, UML.InitialNode
             ),
             handle_index=SE,
@@ -535,7 +521,7 @@ class DiagramToolbox:
     def toolbox_activity_final_node(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.ActivityFinalNodeItem, UML.ActivityFinalNode
             ),
             handle_index=SE,
@@ -545,7 +531,7 @@ class DiagramToolbox:
     def toolbox_flow_final_node(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.FlowFinalNodeItem, UML.FlowFinalNode
             ),
             handle_index=SE,
@@ -555,7 +541,7 @@ class DiagramToolbox:
     def toolbox_decision_node(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.DecisionNodeItem, UML.DecisionNode
             ),
             handle_index=SE,
@@ -565,7 +551,7 @@ class DiagramToolbox:
     def toolbox_fork_node(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.ForkNodeItem, UML.JoinNode
             ),
             handle_index=1,
@@ -575,7 +561,7 @@ class DiagramToolbox:
     def toolbox_object_node(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.actions.ObjectNodeItem,
                 UML.ObjectNode,
                 config_func=namespace_config,
@@ -588,7 +574,7 @@ class DiagramToolbox:
         # note no subject, which is created by grouping adapter
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.actions.PartitionItem),
+            item_factory=PlacementTool.new_item_factory(diagram.actions.PartitionItem),
             handle_index=SE,
             event_manager=self.event_manager,
         )
@@ -596,7 +582,7 @@ class DiagramToolbox:
     def toolbox_flow(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.actions.FlowItem),
+            item_factory=PlacementTool.new_item_factory(diagram.actions.FlowItem),
             event_manager=self.event_manager,
         )
 
@@ -604,7 +590,7 @@ class DiagramToolbox:
     def toolbox_interaction(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.interactions.InteractionItem,
                 UML.Interaction,
                 config_func=namespace_config,
@@ -616,7 +602,7 @@ class DiagramToolbox:
     def toolbox_lifeline(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.interactions.LifelineItem,
                 UML.Lifeline,
                 config_func=namespace_config,
@@ -628,7 +614,9 @@ class DiagramToolbox:
     def toolbox_message(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.interactions.MessageItem),
+            item_factory=PlacementTool.new_item_factory(
+                diagram.interactions.MessageItem
+            ),
             event_manager=self.event_manager,
         )
 
@@ -636,7 +624,7 @@ class DiagramToolbox:
     def toolbox_state(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.states.StateItem, UML.State, config_func=namespace_config
             ),
             handle_index=SE,
@@ -649,7 +637,7 @@ class DiagramToolbox:
 
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.states.InitialPseudostateItem, UML.Pseudostate, set_state
             ),
             handle_index=SE,
@@ -662,7 +650,7 @@ class DiagramToolbox:
 
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.states.HistoryPseudostateItem, UML.Pseudostate, set_state
             ),
             handle_index=SE,
@@ -672,7 +660,7 @@ class DiagramToolbox:
     def toolbox_final_state(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.states.FinalStateItem, UML.FinalState
             ),
             handle_index=SE,
@@ -682,7 +670,7 @@ class DiagramToolbox:
     def toolbox_transition(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.states.TransitionItem),
+            item_factory=PlacementTool.new_item_factory(diagram.states.TransitionItem),
             event_manager=self.event_manager,
         )
 
@@ -691,7 +679,7 @@ class DiagramToolbox:
     def toolbox_use_case(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.usecases.UseCaseItem, UML.UseCase, config_func=namespace_config,
             ),
             handle_index=SE,
@@ -701,7 +689,7 @@ class DiagramToolbox:
     def toolbox_actor(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.usecases.ActorItem, UML.Actor, config_func=namespace_config,
             ),
             handle_index=SE,
@@ -711,21 +699,23 @@ class DiagramToolbox:
     def toolbox_use_case_association(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.classes.AssociationItem),
+            item_factory=PlacementTool.new_item_factory(
+                diagram.classes.AssociationItem
+            ),
             event_manager=self.event_manager,
         )
 
     def toolbox_include(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.usecases.IncludeItem),
+            item_factory=PlacementTool.new_item_factory(diagram.usecases.IncludeItem),
             event_manager=self.event_manager,
         )
 
     def toolbox_extend(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.usecases.ExtendItem),
+            item_factory=PlacementTool.new_item_factory(diagram.usecases.ExtendItem),
             event_manager=self.event_manager,
         )
 
@@ -734,7 +724,7 @@ class DiagramToolbox:
     def toolbox_profile(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.classes.PackageItem, UML.Profile, config_func=namespace_config,
             ),
             handle_index=SE,
@@ -748,7 +738,7 @@ class DiagramToolbox:
 
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.classes.ClassItem, UML.Class, config_func=metaclass_config
             ),
             handle_index=SE,
@@ -758,7 +748,7 @@ class DiagramToolbox:
     def toolbox_stereotype(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(
+            item_factory=PlacementTool.new_item_factory(
                 diagram.classes.ClassItem, UML.Stereotype, config_func=namespace_config,
             ),
             handle_index=SE,
@@ -768,6 +758,6 @@ class DiagramToolbox:
     def toolbox_extension(self):
         return PlacementTool(
             self.view,
-            item_factory=self.new_item_factory(diagram.profiles.ExtensionItem),
+            item_factory=PlacementTool.new_item_factory(diagram.profiles.ExtensionItem),
             event_manager=self.event_manager,
         )

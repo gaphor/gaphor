@@ -174,6 +174,26 @@ class PlacementTool(_PlacementTool):
         self.event_manager = event_manager
         self._parent = None
 
+    @classmethod
+    def new_item_factory(_class, item_class, subject_class=None, config_func=None):
+        """
+        ``config_func`` may be a function accepting the newly created item.
+        """
+
+        def item_factory(diagram, parent=None):
+            if subject_class:
+                element_factory = diagram.model
+                subject = element_factory.create(subject_class)
+            else:
+                subject = None
+            item = diagram.create(item_class, subject=subject, parent=parent)
+            if config_func:
+                config_func(item)
+            return item
+
+        item_factory.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
+        return item_factory
+
     @transactional
     def create_item(self, pos):
         """
