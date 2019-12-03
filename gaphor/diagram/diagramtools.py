@@ -172,9 +172,13 @@ class PlacementTool(_PlacementTool):
             handle_index=handle_index,
         )
         self.event_manager = event_manager
+        self._parent = None
 
     @transactional
     def create_item(self, pos):
+        """
+        Create an item directly.
+        """
         return self._create_item(pos)
 
     def on_button_press(self, event):
@@ -207,26 +211,15 @@ class PlacementTool(_PlacementTool):
         self.event_manager.handle(DiagramItemPlaced(self.new_item))
         return super().on_button_release(event)
 
-
-class GroupPlacementTool(PlacementTool):
-    """
-    Try to group items when placing them on diagram.
-    """
-
-    def __init__(self, view, item_factory, event_manager, handle_index=-1):
-        super().__init__(view, item_factory, event_manager, handle_index)
-        self._parent = None
-
     def on_motion_notify(self, event):
         """
         Change parent item to dropzone state if it can accept diagram item
         object to be created.
         """
-        view = self.view
+        if self.grabbed_handle:
+            return self.handle_tool.on_motion_notify(event)
 
-        if view.focused_item:
-            view.unselect_item(view.focused_item)
-            view.focused_item = None
+        view = self.view
 
         try:
             parent = view.get_item_at_point((event.x, event.y))
@@ -254,7 +247,7 @@ class GroupPlacementTool(PlacementTool):
             view.dropzone_item = None
             view.get_window().set_cursor(None)
 
-    def _create_item(self, pos, **kw):
+    def _create_item(self, pos):
         """
         Create diagram item and place it within parent's boundaries.
         """
@@ -263,9 +256,9 @@ class GroupPlacementTool(PlacementTool):
         try:
             adapter = Group(parent, self._factory.item_class())
             if parent and adapter and adapter.can_contain():
-                kw["parent"] = parent
-
-            item = super()._create_item(pos, **kw)
+                item = super()._create_item(pos, parent=parent)
+            else:
+                item = super()._create_item(pos)
 
             adapter = Group(parent, item)
             if parent and item and adapter:

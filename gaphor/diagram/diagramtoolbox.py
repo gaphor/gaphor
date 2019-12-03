@@ -14,7 +14,6 @@ from gaphor import UML, diagram
 from gaphor.core import gettext
 from gaphor.diagram.diagramtools import (
     DefaultTool,
-    GroupPlacementTool,
     PlacementTool,
     TransactionalToolChain,
 )
@@ -433,7 +432,7 @@ class DiagramToolbox:
     # Components:
 
     def toolbox_component(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.components.ComponentItem,
@@ -445,7 +444,7 @@ class DiagramToolbox:
         )
 
     def toolbox_artifact(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.components.ArtifactItem,
@@ -457,7 +456,7 @@ class DiagramToolbox:
         )
 
     def toolbox_node(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.components.NodeItem,
@@ -469,7 +468,7 @@ class DiagramToolbox:
         )
 
     def toolbox_device(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.components.NodeItem,
@@ -490,7 +489,7 @@ class DiagramToolbox:
     # Actions:
 
     def toolbox_action(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.actions.ActionItem,
@@ -502,7 +501,7 @@ class DiagramToolbox:
         )
 
     def toolbox_send_signal_action(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.actions.SendSignalActionItem,
@@ -514,7 +513,7 @@ class DiagramToolbox:
         )
 
     def toolbox_accept_event_action(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.actions.AcceptEventActionItem,
@@ -526,7 +525,7 @@ class DiagramToolbox:
         )
 
     def toolbox_initial_node(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.actions.InitialNodeItem, UML.InitialNode
@@ -536,7 +535,7 @@ class DiagramToolbox:
         )
 
     def toolbox_activity_final_node(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.actions.ActivityFinalNodeItem, UML.ActivityFinalNode
@@ -546,7 +545,7 @@ class DiagramToolbox:
         )
 
     def toolbox_flow_final_node(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.actions.FlowFinalNodeItem, UML.FlowFinalNode
@@ -556,7 +555,7 @@ class DiagramToolbox:
         )
 
     def toolbox_decision_node(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.actions.DecisionNodeItem, UML.DecisionNode
@@ -566,7 +565,7 @@ class DiagramToolbox:
         )
 
     def toolbox_fork_node(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.actions.ForkNodeItem, UML.JoinNode),
             handle_index=1,
@@ -574,7 +573,7 @@ class DiagramToolbox:
         )
 
     def toolbox_object_node(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.actions.ObjectNodeItem,
@@ -587,7 +586,7 @@ class DiagramToolbox:
 
     def toolbox_partition(self):
         # note no subject, which is created by grouping adapter
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.actions.PartitionItem),
             handle_index=SE,
@@ -615,7 +614,7 @@ class DiagramToolbox:
         )
 
     def toolbox_lifeline(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.interactions.LifelineItem,
@@ -690,7 +689,7 @@ class DiagramToolbox:
     # Use cases:
 
     def toolbox_use_case(self):
-        return GroupPlacementTool(
+        return PlacementTool(
             self.view,
             item_factory=self._item_factory(
                 diagram.usecases.UseCaseItem,
