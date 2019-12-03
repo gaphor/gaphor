@@ -270,6 +270,13 @@ def tooliter(toolbox_actions):
         yield from section
 
 
+def namespace_config(new_item):
+    subject = new_item.subject
+    diagram = new_item.canvas.diagram
+    subject.package = diagram.namespace
+    subject.name = f"New{type(subject).__name__}"
+
+
 class DiagramToolbox:
     """
     Composite class for DiagramPage.
@@ -312,11 +319,6 @@ class DiagramToolbox:
 
         factory_method.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
         return factory_method
-
-    def _namespace_config(self, new_item):
-        subject = new_item.subject
-        subject.package = self.diagram.namespace
-        subject.name = f"New{type(subject).__name__}"
 
     ##
     ## Toolbox actions
@@ -371,7 +373,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.classes.ClassItem, UML.Class, config_func=self._namespace_config
+                diagram.classes.ClassItem, UML.Class, config_func=namespace_config
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -383,7 +385,7 @@ class DiagramToolbox:
             item_factory=self._item_factory(
                 diagram.classes.InterfaceItem,
                 UML.Interface,
-                config_func=self._namespace_config,
+                config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -393,9 +395,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.classes.PackageItem,
-                UML.Package,
-                config_func=self._namespace_config,
+                diagram.classes.PackageItem, UML.Package, config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -437,7 +437,7 @@ class DiagramToolbox:
             item_factory=self._item_factory(
                 diagram.components.ComponentItem,
                 UML.Component,
-                config_func=self._namespace_config,
+                config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -449,7 +449,7 @@ class DiagramToolbox:
             item_factory=self._item_factory(
                 diagram.components.ArtifactItem,
                 UML.Artifact,
-                config_func=self._namespace_config,
+                config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -459,9 +459,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.components.NodeItem,
-                UML.Node,
-                config_func=self._namespace_config,
+                diagram.components.NodeItem, UML.Node, config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -471,9 +469,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.components.NodeItem,
-                UML.Device,
-                config_func=self._namespace_config,
+                diagram.components.NodeItem, UML.Device, config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -492,9 +488,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.actions.ActionItem,
-                UML.Action,
-                config_func=self._namespace_config,
+                diagram.actions.ActionItem, UML.Action, config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -506,7 +500,7 @@ class DiagramToolbox:
             item_factory=self._item_factory(
                 diagram.actions.SendSignalActionItem,
                 UML.SendSignalAction,
-                config_func=self._namespace_config,
+                config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -518,7 +512,7 @@ class DiagramToolbox:
             item_factory=self._item_factory(
                 diagram.actions.AcceptEventActionItem,
                 UML.AcceptEventAction,
-                config_func=self._namespace_config,
+                config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -578,7 +572,7 @@ class DiagramToolbox:
             item_factory=self._item_factory(
                 diagram.actions.ObjectNodeItem,
                 UML.ObjectNode,
-                config_func=self._namespace_config,
+                config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -607,7 +601,7 @@ class DiagramToolbox:
             item_factory=self._item_factory(
                 diagram.interactions.InteractionItem,
                 UML.Interaction,
-                config_func=self._namespace_config,
+                config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -619,7 +613,7 @@ class DiagramToolbox:
             item_factory=self._item_factory(
                 diagram.interactions.LifelineItem,
                 UML.Lifeline,
-                config_func=self._namespace_config,
+                config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -637,7 +631,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.states.StateItem, UML.State, config_func=self._namespace_config
+                diagram.states.StateItem, UML.State, config_func=namespace_config
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -692,9 +686,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.usecases.UseCaseItem,
-                UML.UseCase,
-                config_func=self._namespace_config,
+                diagram.usecases.UseCaseItem, UML.UseCase, config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -704,9 +696,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.usecases.ActorItem,
-                UML.Actor,
-                config_func=self._namespace_config,
+                diagram.usecases.ActorItem, UML.Actor, config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -739,9 +729,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.classes.PackageItem,
-                UML.Profile,
-                config_func=self._namespace_config,
+                diagram.classes.PackageItem, UML.Profile, config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
@@ -749,7 +737,7 @@ class DiagramToolbox:
 
     def toolbox_metaclass(self):
         def metaclass_config(new_item):
-            self._namespace_config(new_item)
+            namespace_config(new_item)
             new_item.subject.name = "Class"
 
         return PlacementTool(
@@ -765,9 +753,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(
-                diagram.classes.ClassItem,
-                UML.Stereotype,
-                config_func=self._namespace_config,
+                diagram.classes.ClassItem, UML.Stereotype, config_func=namespace_config,
             ),
             handle_index=SE,
             event_manager=self.event_manager,
