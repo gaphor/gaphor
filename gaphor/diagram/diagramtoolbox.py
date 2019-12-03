@@ -319,10 +319,6 @@ class DiagramToolbox:
         subject.package = self.diagram.namespace
         subject.name = f"New{type(subject).__name__}"
 
-    # TODO: Move the event handling in placement tool. Let it depend on event_manager.
-    def _after_handler(self, new_item):
-        self.event_manager.handle(DiagramItemCreated(self.element_factory, new_item))
-
     ##
     ## Toolbox actions
     ##
@@ -336,7 +332,7 @@ class DiagramToolbox:
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.general.Line),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_box(self):
@@ -344,7 +340,7 @@ class DiagramToolbox:
             self.view,
             item_factory=self._item_factory(diagram.general.Box),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_ellipse(self):
@@ -352,7 +348,7 @@ class DiagramToolbox:
             self.view,
             item_factory=self._item_factory(diagram.general.Ellipse),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_comment(self):
@@ -360,14 +356,14 @@ class DiagramToolbox:
             self.view,
             item_factory=self._item_factory(diagram.general.CommentItem, UML.Comment),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_comment_line(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.general.CommentLineItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     # Classes:
@@ -379,7 +375,7 @@ class DiagramToolbox:
                 diagram.classes.ClassItem, UML.Class, config_func=self._namespace_config
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_interface(self):
@@ -391,7 +387,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_package(self):
@@ -403,35 +399,35 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_association(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.classes.AssociationItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_dependency(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.classes.DependencyItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_generalization(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.classes.GeneralizationItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_implementation(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.classes.ImplementationItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     # Components:
@@ -445,7 +441,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_artifact(self):
@@ -457,7 +453,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_node(self):
@@ -469,7 +465,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_device(self):
@@ -481,14 +477,14 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_connector(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.components.ConnectorItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     # Actions:
@@ -502,7 +498,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_send_signal_action(self):
@@ -514,7 +510,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_accept_event_action(self):
@@ -526,7 +522,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_initial_node(self):
@@ -536,7 +532,7 @@ class DiagramToolbox:
                 diagram.actions.InitialNodeItem, UML.InitialNode
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_activity_final_node(self):
@@ -546,7 +542,7 @@ class DiagramToolbox:
                 diagram.actions.ActivityFinalNodeItem, UML.ActivityFinalNode
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_flow_final_node(self):
@@ -556,7 +552,7 @@ class DiagramToolbox:
                 diagram.actions.FlowFinalNodeItem, UML.FlowFinalNode
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_decision_node(self):
@@ -566,7 +562,7 @@ class DiagramToolbox:
                 diagram.actions.DecisionNodeItem, UML.DecisionNode
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_fork_node(self):
@@ -574,7 +570,7 @@ class DiagramToolbox:
             self.view,
             item_factory=self._item_factory(diagram.actions.ForkNodeItem, UML.JoinNode),
             handle_index=1,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_object_node(self):
@@ -586,7 +582,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_partition(self):
@@ -595,14 +591,14 @@ class DiagramToolbox:
             self.view,
             item_factory=self._item_factory(diagram.actions.PartitionItem),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_flow(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.actions.FlowItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     # Interactions:
@@ -615,7 +611,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_lifeline(self):
@@ -627,14 +623,14 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_message(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.interactions.MessageItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     # States:
@@ -645,7 +641,7 @@ class DiagramToolbox:
                 diagram.states.StateItem, UML.State, config_func=self._namespace_config
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_initial_pseudostate(self):
@@ -658,7 +654,7 @@ class DiagramToolbox:
                 diagram.states.InitialPseudostateItem, UML.Pseudostate, set_state
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_history_pseudostate(self):
@@ -671,7 +667,7 @@ class DiagramToolbox:
                 diagram.states.HistoryPseudostateItem, UML.Pseudostate, set_state
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_final_state(self):
@@ -681,14 +677,14 @@ class DiagramToolbox:
                 diagram.states.FinalStateItem, UML.FinalState
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_transition(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.states.TransitionItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     # Use cases:
@@ -702,7 +698,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_actor(self):
@@ -714,28 +710,28 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_use_case_association(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.classes.AssociationItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_include(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.usecases.IncludeItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_extend(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.usecases.ExtendItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     # Profiles:
@@ -749,7 +745,7 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_metaclass(self):
@@ -763,7 +759,7 @@ class DiagramToolbox:
                 diagram.classes.ClassItem, UML.Class, config_func=metaclass_config
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_stereotype(self):
@@ -775,12 +771,12 @@ class DiagramToolbox:
                 config_func=self._namespace_config,
             ),
             handle_index=SE,
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )
 
     def toolbox_extension(self):
         return PlacementTool(
             self.view,
             item_factory=self._item_factory(diagram.profiles.ExtensionItem),
-            after_handler=self._after_handler,
+            event_manager=self.event_manager,
         )

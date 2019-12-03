@@ -18,6 +18,7 @@ from gi.repository import Gdk, Gtk
 
 from gaphor.core import Transaction, transactional
 from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
@@ -158,7 +159,7 @@ class PlacementTool(_PlacementTool):
     PlacementTool is used to place items on the canvas.
     """
 
-    def __init__(self, view, item_factory, after_handler=None, handle_index=-1):
+    def __init__(self, view, item_factory, event_manager, handle_index=-1):
         """
         item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
@@ -170,7 +171,7 @@ class PlacementTool(_PlacementTool):
             handle_tool=ConnectHandleTool(),
             handle_index=handle_index,
         )
-        self.after_handler = after_handler
+        self.event_manager = event_manager
 
     @transactional
     def create_item(self, pos):
@@ -203,8 +204,7 @@ class PlacementTool(_PlacementTool):
         return False
 
     def on_button_release(self, event):
-        if self.after_handler:
-            self.after_handler(self.new_item)
+        self.event_manager.handle(DiagramItemPlaced(self.new_item))
         return super().on_button_release(event)
 
 
@@ -213,8 +213,8 @@ class GroupPlacementTool(PlacementTool):
     Try to group items when placing them on diagram.
     """
 
-    def __init__(self, view, item_factory, after_handler=None, handle_index=-1):
-        super().__init__(view, item_factory, after_handler, handle_index)
+    def __init__(self, view, item_factory, event_manager, handle_index=-1):
+        super().__init__(view, item_factory, event_manager, handle_index)
         self._parent = None
 
     def on_motion_notify(self, event):

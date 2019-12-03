@@ -9,6 +9,7 @@ import uuid
 
 import gaphas
 
+from gaphor.UML.event import DiagramItemCreated
 from gaphor.UML.properties import umlproperty
 from gaphor.UML.uml2 import Namespace, PackageableElement
 
@@ -102,6 +103,7 @@ class Diagram(Namespace, PackageableElement):
         if subject:
             item.subject = subject
         self.canvas.add(item, parent)
+        self.model.handle(DiagramItemCreated(self.model, item))
         return item
 
     def unlink(self):

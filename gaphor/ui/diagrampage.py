@@ -11,6 +11,7 @@ from gaphas.painter import (
     PainterChain,
     ToolPainter,
 )
+from gaphas.tool import Tool
 from gaphas.view import GtkView
 from gi.repository import Gdk, GLib, Gtk
 
@@ -21,12 +22,13 @@ from gaphor.diagram.diagramtoolbox import (
     DiagramToolbox,
     TransactionalToolChain,
 )
+from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramSelectionChanged
-from gaphor.UML.event import DiagramItemCreated, ElementDeleted
+from gaphor.UML.event import ElementDeleted
 
 log = logging.getLogger(__name__)
 
@@ -51,7 +53,7 @@ class DiagramPage:
         self.toolbox: Optional[DiagramToolbox] = None
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_sloppy_lines)
-        self.event_manager.subscribe(self._on_diagram_item_created)
+        self.event_manager.subscribe(self._on_diagram_item_placed)
 
     title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
 
@@ -149,6 +151,8 @@ class DiagramPage:
         assert self.widget
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
+        self.event_manager.unsubscribe(self._on_sloppy_lines)
+        self.event_manager.unsubscribe(self._on_diagram_item_placed)
         self.view = None
 
     @action(
@@ -204,8 +208,8 @@ class DiagramPage:
             tool.append(self.toolbox.get_tool(tool_name))
             self.view.tool = tool
 
-    @event_handler(DiagramItemCreated)
-    def _on_diagram_item_created(self, event):
+    @event_handler(DiagramItemPlaced)
+    def _on_diagram_item_placed(self, event):
         assert self.widget
         if self.properties("reset-tool-after-create", True):
             self.widget.action_group.actions.lookup_action("select-tool").activate(
