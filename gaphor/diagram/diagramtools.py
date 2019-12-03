@@ -253,12 +253,13 @@ class PlacementTool(_PlacementTool):
         """
         parent = self._parent
         view = self.view
+        diagram = view.canvas.diagram
         try:
             adapter = Group(parent, self._factory.item_class())
             if parent and adapter and adapter.can_contain():
-                item = super()._create_item(pos, parent=parent)
+                item = super()._create_item(pos, diagram=diagram, parent=parent)
             else:
-                item = super()._create_item(pos)
+                item = super()._create_item(pos, diagram=diagram)
 
             adapter = Group(parent, item)
             if parent and item and adapter:
