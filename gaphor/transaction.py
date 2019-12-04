@@ -18,27 +18,13 @@ def transactional(func):
     is rolled-back.  Otherwise, it is committed."""
 
     def _transactional(*args, **kwargs):
-        r = None
         try:
             event_manager = args[0].event_manager
         except (AttributeError, IndexError):
             event_manager = application.Application.get_service("event_manager")
-        tx = Transaction(event_manager)
-        try:
-            r = func(*args, **kwargs)
-        except Exception:
-            log.error(
-                "Transaction terminated due to an exception, performing a rollback",
-                exc_info=True,
-            )
-            try:
-                tx.rollback()
-            except Exception:
-                log.error("Rollback failed", exc_info=True)
-            raise
-        else:
-            tx.commit()
-        return r
+
+        with Transaction(event_manager):
+            return func(*args, **kwargs)
 
     return _transactional
 
@@ -144,6 +130,13 @@ class Transaction:
         the transaction is rolled back.  Otherwise, it is committed."""
 
         if exc_type:
-            self.rollback()
+            log.error(
+                "Transaction terminated due to an exception, performing a rollback",
+                exc_info=True,
+            )
+            try:
+                self.rollback()
+            except Exception:
+                log.error("Rollback failed", exc_info=True)
         else:
             self.commit()
