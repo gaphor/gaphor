@@ -331,14 +331,14 @@ class DiagramPage:
 
             item_class = get_diagram_item(type(element))
             if item_class:
-                tx = Transaction(self.event_manager)
-                item = self.diagram.create(item_class)
-                assert item
+                with Transaction(self.event_manager):
+                    item = self.diagram.create(item_class)
+                    assert item
 
-                x, y = view.get_matrix_v2i(item).transform_point(x, y)
-                item.matrix.translate(x, y)
-                item.subject = element
-                tx.commit()
+                    x, y = view.get_matrix_v2i(item).transform_point(x, y)
+                    item.matrix.translate(x, y)
+                    item.subject = element
+
                 view.unselect_all()
                 view.focused_item = item
 
