@@ -49,7 +49,7 @@ class DiagramToolboxTestCase(TestCase):
         shortcuts = {}
 
         for category, items in TOOLBOX_ACTIONS:
-            for action_name, label, icon_name, shortcut in items:
+            for action_name, label, icon_name, shortcut, *rest in items:
                 try:
                     shortcuts[shortcut].append(action_name)
                 except KeyError:

@@ -159,6 +159,7 @@ class PlacementTool(_PlacementTool):
     PlacementTool is used to place items on the canvas.
     """
 
+    # TODO: I would expect ElementFactory to be provided as well.
     def __init__(self, view, item_factory, event_manager, handle_index=-1):
         """
         item_factory is a callable. It is used to create a CanvasItem

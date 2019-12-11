@@ -125,7 +125,7 @@ class DiagramPage:
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         upper_offset = ord("A") - ord("a")
         for title, items in TOOLBOX_ACTIONS:
-            for action_name, label, icon_name, shortcut in items:
+            for action_name, label, icon_name, shortcut, *rest in items:
                 if shortcut:
                     key, mod = Gtk.accelerator_parse(shortcut)
                     shortcuts[key, mod] = action_name
