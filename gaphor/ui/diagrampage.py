@@ -17,9 +17,10 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.diagram.diagramtoolbox import (
-    TOOLBOX_ACTIONS,
-    DiagramToolbox,
+from gaphor.diagram.diagramtoolbox import TOOLBOX_ACTIONS
+from gaphor.diagram.diagramtools import (
+    DefaultTool,
+    PlacementTool,
     TransactionalToolChain,
 )
 from gaphor.diagram.event import DiagramItemPlaced
@@ -31,6 +32,14 @@ from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML.event import ElementDeleted
 
 log = logging.getLogger(__name__)
+
+
+def tooliter(toolbox_actions):
+    """
+    Iterate toolbox items, irregardless section headers
+    """
+    for name, section in toolbox_actions:
+        yield from section
 
 
 class DiagramPage:
@@ -50,7 +59,6 @@ class DiagramPage:
         self.diagram = diagram
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
-        self.toolbox: Optional[DiagramToolbox] = None
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_sloppy_lines)
         self.event_manager.subscribe(self._on_diagram_item_placed)
@@ -99,10 +107,6 @@ class DiagramPage:
 
         self.view = view
 
-        self.toolbox = DiagramToolbox(
-            self.diagram, view, self.element_factory, self.event_manager
-        )
-
         self.widget.action_group = create_action_group(self, "diagram")
 
         shortcuts = self.get_toolbox_shortcuts()
@@ -118,6 +122,23 @@ class DiagramPage:
         self._on_sloppy_lines()
 
         return self.widget
+
+    def get_tool(self, tool_name):
+        """
+        Return a tool associated with an id (action name).
+        """
+        if tool_name == "toolbox-pointer":
+            return DefaultTool(self.event_manager)
+
+        tool = next(t for t in tooliter(TOOLBOX_ACTIONS) if t.id == tool_name)
+        item_factory = tool.item_factory
+        handle_index = tool.handle_index
+        return PlacementTool(
+            self.view,
+            item_factory=item_factory,
+            event_manager=self.event_manager,
+            handle_index=handle_index,
+        )
 
     def get_toolbox_shortcuts(self):
         shortcuts = {}
@@ -204,8 +225,8 @@ class DiagramPage:
     @action(name="diagram.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
         tool = TransactionalToolChain(self.event_manager)
-        if self.toolbox and self.view:
-            tool.append(self.toolbox.get_tool(tool_name))
+        if self.view:
+            tool.append(self.get_tool(tool_name))
             self.view.tool = tool
 
     @event_handler(DiagramItemPlaced)
@@ -311,13 +332,12 @@ class DiagramPage:
         """
         Handle data dropped on the canvas.
         """
-        assert self.toolbox
         if (
             data
             and data.get_format() == 8
             and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
-            tool = self.toolbox.get_tool(data.get_data().decode())
+            tool = self.get_tool(data.get_data().decode())
             tool.create_item((x, y))
             context.finish(True, False, time)
         elif (

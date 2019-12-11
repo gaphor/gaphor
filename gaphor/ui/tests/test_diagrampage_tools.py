@@ -63,14 +63,14 @@ class DiagramToolboxTestCase(TestCase):
         pass  # is setUp()
 
     def _test_placement_action(self, action):
-        tool = self.tab.toolbox.get_tool(action)
+        tool = self.tab.get_tool(action)
 
         # Ensure the factory is working
         tool.create_item((0, 0))
         self.diagram.canvas.update()
 
-    def test_placement_pointer(self):
-        tool = self.tab.toolbox.get_tool("toolbox-pointer")
+    def test_pointer(self):
+        tool = self.tab.get_tool("toolbox-pointer")
 
         assert tool
 

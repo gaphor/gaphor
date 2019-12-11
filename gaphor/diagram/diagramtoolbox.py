@@ -12,11 +12,7 @@ from gaphas.item import SE
 
 from gaphor import UML, diagram
 from gaphor.core import gettext
-from gaphor.diagram.diagramtools import (
-    DefaultTool,
-    PlacementTool,
-    TransactionalToolChain,
-)
+from gaphor.diagram.diagramtools import DefaultTool, PlacementTool
 from gaphor.UML.event import DiagramItemCreated
 
 __all__ = ["DiagramToolbox", "TOOLBOX_ACTIONS"]
@@ -551,52 +547,3 @@ TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[ToolDef]]] = (
         ),
     ),
 )
-
-
-def tooliter(toolbox_actions):
-    """
-    Iterate toolbox items, irregardless section headers
-    """
-    for name, section in toolbox_actions:
-        yield from section
-
-
-class DiagramToolbox:
-    """
-    Composite class for DiagramPage.
-
-    See diagrampage.py.
-    """
-
-    def __init__(self, diagram, view, element_factory, event_manager):
-        self.diagram = diagram
-        self.view = view
-        self.element_factory = element_factory
-        self.event_manager = event_manager
-
-    def get_tool(self, tool_name):
-        """
-        Return a tool associated with an id (action name).
-        """
-        if tool_name == "toolbox-pointer":
-            return self.toolbox_pointer()
-
-        tool = next(t for t in tooliter(TOOLBOX_ACTIONS) if t.id == tool_name)
-        item_factory = tool.item_factory
-        handle_index = tool.handle_index
-        return PlacementTool(
-            self.view,
-            item_factory=item_factory,
-            event_manager=self.event_manager,
-            handle_index=handle_index,
-        )
-
-    action_list = list(zip(*list(tooliter(TOOLBOX_ACTIONS))))
-
-    ##
-    ## Toolbox actions
-    ##
-
-    def toolbox_pointer(self):
-        if self.view:
-            return DefaultTool(self.event_manager)
