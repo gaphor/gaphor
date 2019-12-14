@@ -6,9 +6,14 @@ from enum import Enum
 from typing import Any, Dict, Tuple, TypeVar
 
 import cairo
+import gi
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.painter import CairoBoundingBoxContext
-from gi.repository import GLib, Pango, PangoCairo
+
+# fmt: off
+gi.require_version('PangoCairo', '1.0')  # noqa: isort:skip
+from gi.repository import GLib, Pango, PangoCairo  # noqa: isort:skip
+# fmt: on
 
 Font = TypeVar("Font", Dict[str, object], str)
 

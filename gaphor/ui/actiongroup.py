@@ -1,8 +1,13 @@
 from typing import NamedTuple
 
-from gi.repository import Gio, GLib, Gtk
+import gi
 
 from gaphor.abc import ActionProvider
+
+# fmt: off
+gi.require_version("Gtk", "3.0")  # noqa: isort:skip
+from gi.repository import Gio, GLib, Gtk  # noqa: isort:skip
+# fmt: on
 
 
 class ActionGroup(NamedTuple):

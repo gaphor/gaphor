@@ -6,11 +6,14 @@ main screen and diagram windows.
 import importlib.resources
 
 import gi
-from gi.repository import Gdk, Gio, Gtk
 
 from gaphor.ui.actiongroup import apply_application_actions
 
-gi.require_version("Gtk", "3.0")
+# fmt: off
+gi.require_version("Gtk", "3.0")  # noqa: isort:skip
+gi.require_version("Gdk", "3.0")  # noqa: isort:skip
+from gi.repository import Gdk, Gio, Gtk  # noqa: isort:skip
+# fmt: on
 
 
 APPLICATION_ID = "org.gaphor.Gaphor"
