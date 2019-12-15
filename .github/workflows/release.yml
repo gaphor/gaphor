@@ -56,11 +56,9 @@ jobs:
       - name: Install Dependencies
         run: brew install gobject-introspection gtk+3 adwaita-icon-theme
       - name: Install Poetry
-        uses: dschep/install-poetry-action@v1.2
+        uses: danyeaw/install-poetry-action
         with:
           version: 1.0.0b3
-      - name: Turn off Virtualenvs
-        run: poetry config virtualenvs.create false
       - name: Use Python Dependency Cache
         uses: actions/cache@v1.0.3
         with:

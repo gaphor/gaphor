@@ -14,7 +14,7 @@ jobs:
       with:
         python-version: '3.x'
     - name: Install Poetry
-      uses: dschep/install-poetry-action@v1.2
+      uses: danyeaw/install-poetry-action
       with:
         version: 1.0.0b3
     - name: Install Dependencies
