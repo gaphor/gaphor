@@ -450,7 +450,11 @@ class Diagrams(UIComponent, ActionProvider):
         )
         button = Gtk.Button()
         button.set_relief(Gtk.ReliefStyle.NONE)
-        button.set_focus_on_click(False)
+
+        # TODO: Call button.set_focus_on_click directly once PyGObject issue
+        #  #371 is fixed
+        Gtk.Widget.set_focus_on_click(button, False)
+
         button.add(close_image)
         button.connect("clicked", self.cb_close_tab, widget)
         tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
