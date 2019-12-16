@@ -70,15 +70,25 @@ class GIdleThread:
         return idle_id
 
     def wait(self, timeout=0):
-        """Wait until the coroutine is finished or return after timeout seconds.
+        """Waits until finished or timeout.
+
+        Waits until the coroutine is finished or return after timeout seconds.
         This is achieved by running the GTK+ main loop.
+
+        Args:
+            timeout: A float timeout in seconds, default is no timeout.
+
+        Returns:
+            A bool, True for timeout, False for coroutine ending.
         """
+
         start_time = time.perf_counter()
-        main = GLib.main_context_default()
+        main_ctx = GLib.main_context_default()
         while self.is_alive():
-            main.iteration(False)
+            main_ctx.iteration(False)
             if timeout and (time.perf_counter() - start_time >= timeout):
-                return
+                return True
+        return False
 
     def interrupt(self):
         """Force the generator to stop running.
