@@ -70,15 +70,14 @@ class GIdleThread:
         return idle_id
 
     def wait(self, timeout=0):
-        """Wait until the corouine is finished or return after timeout seconds.
+        """Wait until the coroutine is finished or return after timeout seconds.
         This is achieved by running the GTK+ main loop.
         """
-        clock = time.clock
-        start_time = clock()
+        start_time = time.perf_counter()
         main = GLib.main_context_default()
         while self.is_alive():
             main.iteration(False)
-            if timeout and (clock() - start_time >= timeout):
+            if timeout and (time.perf_counter() - start_time >= timeout):
                 return
 
     def interrupt(self):
