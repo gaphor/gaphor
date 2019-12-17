@@ -82,11 +82,11 @@ class GIdleThread:
             A bool, True for timeout, False for coroutine ending.
         """
 
-        start_time = time.perf_counter()
+        start_time = time.monotonic()
         main_ctx = GLib.main_context_default()
         while self.is_alive():
             main_ctx.iteration(False)
-            if timeout and (time.perf_counter() - start_time >= timeout):
+            if timeout and (time.monotonic() - start_time >= timeout):
                 return True
         return False
 
