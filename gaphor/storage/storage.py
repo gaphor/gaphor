@@ -176,7 +176,7 @@ def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
     """
-    log.debug("Loading %d elements..." % len(elements))
+    log.debug(f"Loading {len(elements)} elements")
 
     # The elements are iterated three times:
     size = len(elements) * 3
@@ -220,8 +220,7 @@ def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
                 create_canvasitems(elem.element, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):
             raise ValueError(
-                'Item with id "%s" and type %s can not be instantiated'
-                % (id, type(elem))
+                f"Item with id {id} and type {type(elem)} can not be instantiated"
             )
 
     # load attributes and create references:
@@ -299,7 +298,7 @@ def load_generator(filename, factory):
     if isinstance(filename, io.IOBase):
         log.info("Loading file from file descriptor")
     else:
-        log.info("Loading file %s" % os.path.basename(filename))
+        log.info(f"Loading file {os.path.basename(filename).decode()}")
     try:
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
@@ -317,12 +316,10 @@ def load_generator(filename, factory):
 
     if version_lower_than(gaphor_version, (0, 17, 0)):
         raise ValueError(
-            "Gaphor model version should be at least 0.17.0 (found {})".format(
-                gaphor_version
-            )
+            f"Gaphor model version should be at least 0.17.0 (found {gaphor_version})"
         )
 
-    log.info("Read %d elements from file" % len(elements))
+    log.info(f"Read {len(elements)} elements from file")
 
     factory.flush()
     gc.collect()
