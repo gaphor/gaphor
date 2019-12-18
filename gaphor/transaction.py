@@ -19,7 +19,10 @@ def transactional(func):
 
     def _transactional(*args, **kwargs):
         r = None
-        event_manager = application.Application.get_service("event_manager")
+        try:
+            event_manager = args[0].event_manager
+        except (AttributeError, IndexError):
+            event_manager = application.Application.get_service("event_manager")
         tx = Transaction(event_manager)
         try:
             r = func(*args, **kwargs)

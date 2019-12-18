@@ -18,6 +18,7 @@ from gi.repository import Gdk, Gtk
 
 from gaphor.core import Transaction, transactional
 from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
@@ -158,7 +159,7 @@ class PlacementTool(_PlacementTool):
     PlacementTool is used to place items on the canvas.
     """
 
-    def __init__(self, view, item_factory, after_handler=None, handle_index=-1):
+    def __init__(self, view, item_factory, event_manager, handle_index=-1):
         """
         item_factory is a callable. It is used to create a CanvasItem
         that is displayed on the diagram.
@@ -170,16 +171,47 @@ class PlacementTool(_PlacementTool):
             handle_tool=ConnectHandleTool(),
             handle_index=handle_index,
         )
-        self.after_handler = after_handler
+        self.event_manager = event_manager
+        self._parent = None
+
+    @classmethod
+    def new_item_factory(_class, item_class, subject_class=None, config_func=None):
+        """
+        ``config_func`` may be a function accepting the newly created item.
+        """
+
+        def item_factory(diagram, parent=None):
+            if subject_class:
+                element_factory = diagram.model
+                subject = element_factory.create(subject_class)
+            else:
+                subject = None
+
+            item = diagram.create(item_class, subject=subject)
+            if config_func:
+                config_func(item)
+
+            adapter = Group(parent, item)
+            if parent and adapter.can_contain():
+                adapter.group()
+                diagram.canvas.reparent(item, parent=parent)
+
+            return item
+
+        item_factory.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
+        return item_factory
 
     @transactional
     def create_item(self, pos):
+        """
+        Create an item directly.
+        """
         return self._create_item(pos)
 
     def on_button_press(self, event):
         view = self.view
         view.unselect_all()
-        if _PlacementTool.on_button_press(self, event):
+        if super().on_button_press(event):
             try:
                 opposite = self.new_item.opposite(
                     self.new_item.handles()[self._handle_index]
@@ -203,30 +235,18 @@ class PlacementTool(_PlacementTool):
         return False
 
     def on_button_release(self, event):
-        if self.after_handler:
-            self.after_handler(self.new_item)
-        return _PlacementTool.on_button_release(self, event)
-
-
-class GroupPlacementTool(PlacementTool):
-    """
-    Try to group items when placing them on diagram.
-    """
-
-    def __init__(self, view, item_factory, after_handler=None, handle_index=-1):
-        super().__init__(view, item_factory, after_handler, handle_index)
-        self._parent = None
+        self.event_manager.handle(DiagramItemPlaced(self.new_item))
+        return super().on_button_release(event)
 
     def on_motion_notify(self, event):
         """
         Change parent item to dropzone state if it can accept diagram item
         object to be created.
         """
-        view = self.view
+        if self.grabbed_handle:
+            return self.handle_tool.on_motion_notify(event)
 
-        if view.focused_item:
-            view.unselect_item(view.focused_item)
-            view.focused_item = None
+        view = self.view
 
         try:
             parent = view.get_item_at_point((event.x, event.y))
@@ -254,24 +274,15 @@ class GroupPlacementTool(PlacementTool):
             view.dropzone_item = None
             view.get_window().set_cursor(None)
 
-    def _create_item(self, pos, **kw):
+    def _create_item(self, pos):
         """
         Create diagram item and place it within parent's boundaries.
         """
         parent = self._parent
         view = self.view
+        diagram = view.canvas.diagram
         try:
-            adapter = Group(parent, self._factory.item_class())
-            if parent and adapter and adapter.can_contain():
-                kw["parent"] = parent
-
-            item = super()._create_item(pos, **kw)
-
-            adapter = Group(parent, item)
-            if parent and item and adapter:
-                adapter.group()
-
-                parent.request_update(matrix=False)
+            item = super()._create_item(pos, diagram=diagram, parent=parent)
         finally:
             self._parent = None
             view.dropzone_item = None
