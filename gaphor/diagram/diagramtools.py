@@ -159,7 +159,6 @@ class PlacementTool(_PlacementTool):
     PlacementTool is used to place items on the canvas.
     """
 
-    # TODO: I would expect ElementFactory to be provided as well.
     def __init__(self, view, item_factory, event_manager, handle_index=-1):
         """
         item_factory is a callable. It is used to create a CanvasItem
@@ -187,9 +186,16 @@ class PlacementTool(_PlacementTool):
                 subject = element_factory.create(subject_class)
             else:
                 subject = None
-            item = diagram.create(item_class, subject=subject, parent=parent)
+
+            item = diagram.create(item_class, subject=subject)
             if config_func:
                 config_func(item)
+
+            adapter = Group(parent, item)
+            if parent and adapter.can_contain():
+                adapter.group()
+                diagram.canvas.reparent(item, parent=parent)
+
             return item
 
         item_factory.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
@@ -276,17 +282,7 @@ class PlacementTool(_PlacementTool):
         view = self.view
         diagram = view.canvas.diagram
         try:
-            adapter = Group(parent, self._factory.item_class())
-            if parent and adapter and adapter.can_contain():
-                item = super()._create_item(pos, diagram=diagram, parent=parent)
-            else:
-                item = super()._create_item(pos, diagram=diagram)
-
-            adapter = Group(parent, item)
-            if parent and item and adapter:
-                adapter.group()
-
-                parent.request_update(matrix=False)
+            item = super()._create_item(pos, diagram=diagram, parent=parent)
         finally:
             self._parent = None
             view.dropzone_item = None
