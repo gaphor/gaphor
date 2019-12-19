@@ -298,7 +298,7 @@ def load_generator(filename, factory):
     if isinstance(filename, io.IOBase):
         log.info("Loading file from file descriptor")
     else:
-        log.info(f"Loading file {os.path.basename(filename).decode()}")
+        log.info(f"Loading file {os.fsdecode(os.path.basename(filename))}")
     try:
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
