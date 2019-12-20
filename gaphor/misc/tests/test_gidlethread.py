@@ -1,31 +1,36 @@
+import pytest
+
 from gaphor.misc.gidlethread import GIdleThread
 
 
-def test_wait_with_timeout():
-    # GIVEN a running gidlethread
-    def counter(max):
-        for x in range(max):
-            yield x
+def counter(count):
+    for x in range(count):
+        yield x
 
-    t = GIdleThread(counter(20000))
+
+@pytest.fixture
+def gidle_counter(request):
+    # Setup GIdle Thread with 0.01 sec timeout
+    t = GIdleThread(counter(request.param))
     t.start()
     assert t.is_alive()
-    # WHEN waiting for 0.01 sec timeout
     wait_result = t.wait(0.01)
-    # THEN timeout
-    assert wait_result
+    yield wait_result
+    # Teardown GIdle Thread
+    t.interrupt()
 
 
-def test_wait_until_finished():
+@pytest.mark.parametrize(argnames="gidle_counter", argvalues=[20000], indirect=True)
+def test_wait_with_timeout(gidle_counter):
+    # GIVEN a long coroutine thread
+    # WHEN waiting short timeout
+    # THEN timeout is True
+    assert gidle_counter
+
+
+@pytest.mark.parametrize(argnames="gidle_counter", argvalues=[2], indirect=True)
+def test_wait_until_finished(gidle_counter):
     # GIVEN a short coroutine thread
-    def counter(max):
-        for x in range(max):
-            yield x
-
-    t = GIdleThread(counter(2))
-    t.start()
-    assert t.is_alive()
     # WHEN wait for coroutine to finish
-    wait_result = t.wait(0.01)
     # THEN coroutine finished
-    assert not wait_result
+    assert not gidle_counter
