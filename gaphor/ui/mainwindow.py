@@ -50,9 +50,9 @@ class RecentFilesMenu(Gio.Menu):
                 menu_item = Gio.MenuItem.new(
                     item.get_uri_display().replace(HOME, "~"), "win.file-open-recent"
                 )
-                # menu_item.set_action_and_target_value("win.file-open-recent", GLib.Variant.new_string(item.get_uri()))
+                filename, _host = GLib.filename_from_uri(item.get_uri())
                 menu_item.set_attribute_value(
-                    "target", GLib.Variant.new_string(item.get_uri())
+                    "target", GLib.Variant.new_string(filename)
                 )
                 self.append_item(menu_item)
                 if self.get_n_items() > 9:
