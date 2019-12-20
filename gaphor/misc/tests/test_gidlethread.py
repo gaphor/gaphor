@@ -10,11 +10,11 @@ def counter(count):
 
 @pytest.fixture
 def gidle_counter(request):
-    # Setup GIdle Thread with 0.02 sec timeout
+    # Setup GIdle Thread with 0.05 sec timeout
     t = GIdleThread(counter(request.param))
     t.start()
     assert t.is_alive()
-    wait_result = t.wait(0.02)
+    wait_result = t.wait(0.05)
     yield wait_result
     # Teardown GIdle Thread
     t.interrupt()
