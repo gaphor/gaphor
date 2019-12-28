@@ -29,7 +29,7 @@ pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
-          [('v', None, 'OPTION')],
+          options=[],
           exclude_binaries=True,
           name='launch-gaphor',
           debug=False,
@@ -38,7 +38,7 @@ exe = EXE(pyz,
           upx=True,
           icon='misc/gaphor.ico',
           version='file_version_info.txt',
-          console=True )
+          console=False )
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
