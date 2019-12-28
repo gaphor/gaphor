@@ -210,7 +210,7 @@ def main():
     misc = os.path.dirname(os.path.realpath(__file__))
 
     build_launcher(
-        os.path.join(target, "launch-gaphor.exe"),
+        os.path.join(target, "gaphor.exe"),
         os.path.join(misc, "gaphor.ico"),
         "Gaphor",
         "Gaphor",
