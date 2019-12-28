@@ -14,7 +14,8 @@ a = Analysis(['gaphor-script.py'],
 		       ('../gaphor/services/helpservice/*.png', 'gaphor/services/helpservice'),
 		       ('../gaphor/services/helpservice/*.glade', 'gaphor/services/helpservice'),
 		       ('../gaphor/ui/icons/*.svg', 'gaphor/ui/icons'),
-		       ('../LICENSE.txt', 'gaphor')
+		       ('../LICENSE.txt', 'gaphor'),
+		       ('../gaphor/locale/*', 'gaphor/locale')
 		     ]+copy_metadata('gaphor'),
              hiddenimports=[],
              hookspath=[],
