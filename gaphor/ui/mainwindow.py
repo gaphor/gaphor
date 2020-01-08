@@ -26,41 +26,10 @@ from gaphor.ui.event import (
     WindowClosed,
 )
 from gaphor.ui.layout import deserialize
+from gaphor.ui.recentfiles import HOME, RecentFilesMenu
 from gaphor.UML.event import AttributeUpdated, ModelFlushed, ModelReady
 
 log = logging.getLogger(__name__)
-
-HOME = str(Path.home())
-
-
-class RecentFilesMenu(Gio.Menu):
-    def __init__(self, recent_manager):
-        super().__init__()
-
-        self._on_recent_manager_changed(recent_manager)
-        # TODO: should unregister if the window is closed.
-        self._changed_id = recent_manager.connect(
-            "changed", self._on_recent_manager_changed
-        )
-
-    def _on_recent_manager_changed(self, recent_manager):
-        self.remove_all()
-        for item in recent_manager.get_items():
-            if APPLICATION_ID in item.get_applications():
-                menu_item = Gio.MenuItem.new(
-                    item.get_uri_display().replace(HOME, "~"), "win.file-open-recent"
-                )
-                # menu_item.set_action_and_target_value("win.file-open-recent", GLib.Variant.new_string(item.get_uri()))
-                menu_item.set_attribute_value(
-                    "target", GLib.Variant.new_string(item.get_uri())
-                )
-                self.append_item(menu_item)
-                if self.get_n_items() > 9:
-                    break
-        if self.get_n_items() == 0:
-            self.append_item(
-                Gio.MenuItem.new(gettext("No recently opened models"), None)
-            )
 
 
 def hamburger_menu(hamburger_model):
@@ -450,7 +419,11 @@ class Diagrams(UIComponent, ActionProvider):
         )
         button = Gtk.Button()
         button.set_relief(Gtk.ReliefStyle.NONE)
-        button.set_focus_on_click(False)
+
+        # TODO: Call button.set_focus_on_click directly once PyGObject issue
+        #  #371 is fixed
+        Gtk.Widget.set_focus_on_click(button, False)
+
         button.add(close_image)
         button.connect("clicked", self.cb_close_tab, widget)
         tab_box.pack_start(child=button, expand=False, fill=False, padding=0)

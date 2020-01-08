@@ -20,14 +20,12 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
 
     @transactional
     def update_text(text):
-        print("update text", text)
         item.subject.name = text
         popover.popdown()
         return True
 
     @transactional
     def update_end_text(text):
-        print("update text", text)
         assert end_item
         UML.parse(end_item.subject, text)
         popover.popdown()

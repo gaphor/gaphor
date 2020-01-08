@@ -3,7 +3,6 @@ The file service is responsible for loading and saving the user data.
 """
 
 import logging
-import urllib.parse
 from typing import Optional
 
 from gi.repository import Gtk
@@ -298,10 +297,8 @@ class FileManager(Service, ActionProvider):
             self.load(filename)
 
     @action(name="file-open-recent")
-    def action_open_recent(self, file_url: str):
-        parsed_url = urllib.parse.urlparse(file_url)
-        path = parsed_url.path
-        self.load(path)
+    def action_open_recent(self, filename: str):
+        self.load(filename)
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):

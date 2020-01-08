@@ -15,19 +15,16 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
-      - name: Use Python Dependency Cache
-        uses: actions/cache@v1.0.3
+      - name: set PY
+        run: echo "::set-env name=PY::$(python --version --version | sha256sum | cut -d' ' -f1)"
+      - uses: actions/cache@v1
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: ${{ runner.os }}-pip-
-      - name: Install Dependencies
+          path: ~/.cache/pre-commit
+          key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      - name: Lint with Pre-commit
+        uses: pre-commit/action@v1.0.0
+      - name: Lint with Flake8
         run: |
-          pip install pre-commit
-          pre-commit install-hooks
-      - name: Lint with pre-commit
-        run: |
-          pre-commit run --all-files
           # flake8 pre-commit hook is causing errors
           # try again once new version of pyflakes is released (> 2.1.1)
           pip install git+https://github.com/PyCQA/pyflakes.git@1911c203a13826d2eb03d582d60874b91e36f4fc --upgrade

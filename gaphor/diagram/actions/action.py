@@ -12,9 +12,6 @@ from gaphor.UML.modelfactory import stereotypes_str
 @represents(UML.Action)
 class ActionItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
-        """
-        Create action item.
-        """
         super().__init__(id, model)
 
         self.shape = Box(
@@ -39,9 +36,6 @@ class ActionItem(ElementPresentation, Named):
 @represents(UML.SendSignalAction)
 class SendSignalActionItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
-        """
-        Create action item.
-        """
         super().__init__(id, model)
 
         self.shape = Box(
@@ -74,9 +68,6 @@ class SendSignalActionItem(ElementPresentation, Named):
 @represents(UML.AcceptEventAction)
 class AcceptEventActionItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
-        """
-        Create action item.
-        """
         super().__init__(id, model)
 
         self.shape = Box(

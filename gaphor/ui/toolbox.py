@@ -9,8 +9,8 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import gettext
+from gaphor.diagram.diagramtoolbox import TOOLBOX_ACTIONS
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.diagramtoolbox import TOOLBOX_ACTIONS
 
 log = logging.getLogger(__name__)
 
@@ -89,7 +89,7 @@ class Toolbox(UIComponent, ActionProvider):
             tool_item_group = Gtk.ToolItemGroup.new(title)
             tool_item_group.set_property("collapsed", collapsed.get(index, False))
             tool_item_group.connect("notify::collapsed", on_collapsed, index)
-            for action_name, label, icon_name, shortcut in items:
+            for action_name, label, icon_name, shortcut, *rest in items:
                 button = toolbox_button(action_name, icon_name, label, shortcut)
                 tool_item_group.insert(button, -1)
                 button.show_all()

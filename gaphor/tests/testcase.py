@@ -13,7 +13,7 @@ from typing import Type, TypeVar
 from gaphas.aspect import ConnectionSink, Connector
 
 # For DiagramItemConnector aspect:
-import gaphor.ui.diagramtools  # noqa
+import gaphor.diagram.diagramtools  # noqa
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.diagram.connectors import IConnect

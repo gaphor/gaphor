@@ -33,12 +33,15 @@ takes a long time. The yielded values are the percentage of the file read.
 from __future__ import annotations
 
 import io
+import logging
 import os
 from collections import OrderedDict
 from typing import IO, Dict, List, Optional, Tuple, Union
 from xml.sax import handler
 
 __all__ = ["parse", "ParserException"]
+
+log = logging.getLogger(__name__)
 
 
 class base:
@@ -185,11 +188,12 @@ class GaphorLoader(handler.ContentHandler):
                 break
 
     def start_element(self, state, name, attrs):
-        # Read a element class. The name of the tag is the class name:
+        # Read an element class. The name of the tag is the class name:
         if state == GAPHOR:
             id = attrs["id"]
             e = element(id, name)
-            assert id not in self.elements.keys(), f"{id} already defined"
+            if id in self.elements.keys():
+                log.exception(f"File corrupted, remove element {id} and try again")
             self.elements[id] = e
             self.push(e, name == "Diagram" and DIAGRAM or ELEMENT)
             return True
