@@ -52,11 +52,9 @@ jobs:
           --no-install-recommends -y xvfb python3-dev python3-gi
           python3-gi-cairo gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
       - name: Install Poetry
-        uses: dschep/install-poetry-action@v1.2
+        uses: dschep/install-poetry-action@v1.3
         with:
           version: 1.0.0b3
-      - name: Turn off Virtualenvs
-        run: poetry config virtualenvs.create false
       - name: Install Python Dependencies
         run: poetry install
       - name: Test with Pytest
@@ -116,11 +114,9 @@ jobs:
       - name: Install macOS Dependencies
         run: brew install gobject-introspection gtk+3 adwaita-icon-theme
       - name: Install Poetry
-        uses: dschep/install-poetry-action@v1.2
+        uses: dschep/install-poetry-action@v1.3
         with:
           version: 1.0.0b3
-      - name: Turn off Virtualenvs
-        run: poetry config virtualenvs.create false
       - name: Use Python Dependency Cache
         uses: actions/cache@v1.0.3
         with:
