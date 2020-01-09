@@ -24,7 +24,8 @@ def component_registry():
 @pytest.fixture
 def namespace(event_manager, element_factory):
     namespace = Namespace(event_manager, element_factory)
-    namespace.init()
+    widget = namespace.open()
+    assert widget
     yield namespace
     namespace.close()
 

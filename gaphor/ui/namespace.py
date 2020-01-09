@@ -262,10 +262,7 @@ class Namespace(UIComponent):
         self.model = Gtk.TreeStore.new([object])
         self.toplevel_types = _default_filter_list
 
-    def init(self):
-        # Event handler registration is in a separate function,
-        # since putting it in with widget construction will cause
-        # unit tests to fail, on macOS at least.
+    def open(self):
         em = self.event_manager
         em.subscribe(self._on_element_create)
         em.subscribe(self._on_element_delete)
@@ -274,8 +271,6 @@ class Namespace(UIComponent):
         em.subscribe(self._on_association_set)
         em.subscribe(self._on_attribute_change)
 
-    def open(self):
-        self.init()
         return self.construct()
 
     def close(self):
