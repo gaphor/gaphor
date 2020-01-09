@@ -24,3 +24,7 @@ toolitemgroup > button {
 #elementeditor > label {
     padding-bottom: 6px;
 }
+
+#diagram-tab {
+    background: white;
+}

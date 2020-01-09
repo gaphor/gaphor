@@ -24,16 +24,6 @@ with importlib.resources.path("gaphor.ui", "icons") as path:
     icon_theme.append_search_path(str(path))
 
 
-# Set style for model canvas
-css_provider = Gtk.CssProvider.new()
-screen = Gdk.Display.get_default().get_default_screen()
-
-Gtk.StyleContext.add_provider_for_screen(
-    screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-)
-css_provider.load_from_data(b"#diagram-tab { background: white }")
-
-
 def run(application, model):
     gtk_app = Gtk.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.FLAGS_NONE
