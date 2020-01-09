@@ -28,7 +28,11 @@ def application():
 
 
 def get_current_diagram(app):
-    return app.component_registry.get(UIComponent, "diagrams").get_current_diagram()
+    return (
+        app.get_service("component_registry")
+        .get(UIComponent, "diagrams")
+        .get_current_diagram()
+    )
 
 
 def test_creation(application):
