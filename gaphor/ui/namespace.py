@@ -249,14 +249,6 @@ class NamespaceView(Gtk.TreeView):
                 context.finish(False, False, time)
             else:
                 context.finish(True, True, time)
-                # Finally let's try to select the element again.
-                # iter = self.iter_for_element(element)
-                # if iter:
-                #     self.expand_row(
-                #         path=Gtk.TreePath.new_from_indices(path[:-1]), open_all=False
-                #     )
-                # selection = self.get_selection()
-                # selection.select_path(path)
 
 
 class Namespace(UIComponent):
