@@ -409,10 +409,20 @@ class Namespace(UIComponent):
         return None
 
     def _visible(self, element):
-        # Spacial case: Non-navigable properties
+        # Special case: Non-navigable properties
         return type(element) in self.toplevel_types and not (
             isinstance(element, UML.Property) and element.namespace is None
         )
+
+    def _add(self, element, iter=None):
+        if self._visible(element):
+            child_iter = self.model.append(iter, [element])
+            if isinstance(element, UML.Namespace):
+                for e in element.ownedMember:
+                    # check if owned member is indeed within parent's namespace
+                    # the check is important in case on Node classes
+                    if element is e.namespace:
+                        self._add(e, child_iter)
 
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
@@ -420,16 +430,6 @@ class Namespace(UIComponent):
         Load a new model completely.
         """
         log.info("Rebuilding namespace model")
-
-        def add(element, iter=None):
-            if self._visible(element):
-                child_iter = self.model.append(iter, [element])
-                if isinstance(element, UML.Namespace):
-                    for e in element.ownedMember:
-                        # check if owned member is indeed within parent's namespace
-                        # the check is important in case on Node classes
-                        if element is e.namespace:
-                            add(e, child_iter)
 
         self.model.clear()
 
@@ -440,7 +440,7 @@ class Namespace(UIComponent):
         )
 
         for element in toplevel:
-            add(element)
+            self._add(element)
 
         # Expand all root elements:
         if self._namespace:  # None for testing
@@ -483,7 +483,7 @@ class Namespace(UIComponent):
                 new_iter = self.iter_for_element(new_value)
                 # Should be either set (sub node) or unset (root node)
                 if bool(new_iter) == bool(new_value):
-                    self.model.append(new_iter, [element])
+                    self._add(element, new_iter)
 
     @event_handler(AttributeUpdated)
     def _on_attribute_change(self, event: AttributeUpdated):

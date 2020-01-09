@@ -117,7 +117,23 @@ def test_change_element_name(namespace, element_factory):
     assert len(events) == 1
 
 
-def test_element_model_factory(namespace, element_factory):
+def test_move_element_with_children(namespace, element_factory):
+    pkg = element_factory.create(UML.Package)
+    cls = element_factory.create(UML.Class)
+    prp = element_factory.create(UML.Property)
+
+    cls.ownedAttribute = prp
+    cls.package = pkg
+
+    pkg_iter = namespace.iter_for_element(pkg)
+    cls_iter = namespace.iter_for_element(cls)
+
+    assert namespace.model.iter_n_children(None) == 1
+    assert namespace.model.iter_n_children(pkg_iter) == 1
+    assert namespace.model.iter_n_children(cls_iter) == 1
+
+
+def test_element_model_ready(namespace, element_factory):
 
     with element_factory.block_events():
         p1 = element_factory.create(UML.Package)
