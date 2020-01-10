@@ -35,52 +35,33 @@ def main():
     provides plugins and services with access to the command line options
     and may add their own."""
 
-    parser = OptionParser()
+    import sys
+    import gaphor.ui
 
-    parser.add_option("-p", "--profiler", action="store_true", help="Run in profiler")
-    parser.add_option(
-        "-q",
-        "--quiet",
-        dest="quiet",
-        help="Quiet output",
-        default=False,
-        action="store_true",
-    )
-    parser.add_option(
-        "-v",
-        "--verbose",
-        dest="verbose",
-        help="Verbose output",
-        default=False,
-        action="store_true",
-    )
+    def has_option(*options):
+        return any(o in sys.argv for o in options)
 
-    options, args = parser.parse_args()
-
-    if options.verbose:
+    if has_option("-v", "--verbose"):
         logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
-    elif options.quiet:
+    elif has_option("-q", "--quiet"):
         logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
     else:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
-    model = None
-    try:
-        model = args[0]
-    except IndexError:
-        pass
-
-    if options.profiler:
+    if has_option("-p", "--profiler"):
 
         import cProfile
         import pstats
 
         cProfile.runctx(
-            "Application.run(model)", globals(), locals(), filename="gaphor.prof"
+            "gaphor.ui.run(Application, sys.argv)",
+            globals(),
+            locals(),
+            filename="gaphor.prof",
         )
 
         profile_stats = pstats.Stats("gaphor.prof")
         profile_stats.strip_dirs().sort_stats("time").print_stats(50)
 
     else:
-        Application.run(model)
+        gaphor.ui.run(Application, sys.argv)
