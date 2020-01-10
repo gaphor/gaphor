@@ -31,24 +31,29 @@ class ComponentLookupError(LookupError):
 
 class _Application:
     """
-    The Gaphor application is started from the Application instance. It behaves
-    like a singleton in many ways.
+    The Gaphor application is started from the gaphor.ui module.
+    
+    This application instance is used to maintain application wide references
+    to services and sessions (opened models). It behaves like a singleton in many ways.
 
     The Application is responsible for loading services and plugins. Services
     are registered in the "component_registry" service.
     """
 
     def __init__(self):
-        self._app = None
-        self.current_user_context = None
-        self.component_registry = None
-        self.event_manager = None
+        self.active_session = None
+        self.sessions = set()
 
     def init(self, services=None):
         """
-        Initialize the application.
+        Initialize an application session.
         """
-        self.current_user_context = UserContext(services)
+        self.active_session = Session()
+        self.sessions.add(self.active_session)
+        return self.active_session
+
+    def has_sessions(self):
+        return bool(self.active_session)
 
     distribution = property(
         lambda s: importlib_metadata.distribution("gaphor"),
@@ -56,32 +61,24 @@ class _Application:
     )
 
     def get_service(self, name):
-        if not self.current_user_context:
+        if not self.active_session:
             raise NotInitializedError("First call Application.init() to load services")
 
-        return self.current_user_context.get_service(name)
+        return self.active_session.get_service(name)
 
     def shutdown(self):
-        if self.current_user_context:
-            self.current_user_context.shutdown()
-        self.current_user_context = None
-
-    def run(self, model=None):
-        """Start the GUI application.
-
-        The file_manager service is used here to load a Gaphor model if one was
-        specified on the command line."""
-
-        from gaphor.ui import run
-
-        run(self, model)
+        for session in self.sessions:
+            self.active_session = None
+            # TODO: gently quit via file manager
+            session.shutdown()
+        self.sessions.clear()
 
 
 # Make sure there is only one!
 Application = _Application()
 
 
-class UserContext:
+class Session:
     """
     A user context is a set of services (including UI services)
     that define a window with loaded model.
@@ -91,7 +88,7 @@ class UserContext:
         """
         Initialize the application.
         """
-        uninitialized_services = load_services(services)
+        uninitialized_services = load_services("gaphor.services", services)
         services_by_name = init_services(uninitialized_services)
 
         self.event_manager = services_by_name["event_manager"]
@@ -127,14 +124,14 @@ class UserContext:
         srv.shutdown()
 
 
-def load_services(services=None) -> Dict[str, Type[Service]]:
+def load_services(scope, services=None) -> Dict[str, Type[Service]]:
     """
     Load services from resources.
 
     Service should provide an interface `gaphor.abc.Service`.
     """
     uninitialized_services = {}
-    for ep in importlib_metadata.entry_points()["gaphor.services"]:
+    for ep in importlib_metadata.entry_points()[scope]:
         cls = ep.load()
         if isinstance(cls, Service):
             raise NameError(f"Entry point {ep.name} doesnt provide Service")

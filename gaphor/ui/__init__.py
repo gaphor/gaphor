@@ -9,7 +9,7 @@ import sys
 
 import gi
 
-from gaphor.application import Application
+from gaphor.application import Application, Session
 from gaphor.ui.actiongroup import apply_application_actions
 
 # fmt: off
@@ -71,14 +71,7 @@ def run(args):
     add_main_options(gtk_app)
 
     def app_startup(app):
-        Application.init()
-
-        component_registry = Application.get_service("component_registry")
-        apply_application_actions(component_registry, app)
-
-        main_window = Application.get_service("main_window")
-        main_window.open(app)
-        app.add_window(main_window.window)
+        pass  # Application.init()
 
     def app_activate(app):
         # Make sure gui is loaded ASAP.
@@ -87,16 +80,31 @@ def run(args):
         # main_window.open(app)
         # app.add_window(main_window.window)
 
-        file_manager = Application.get_service("file_manager")
-        file_manager.action_new()
+        if not Application.has_sessions():
+            session = Application.init()
+
+            # Only at application level (startup())?
+            component_registry = session.get_service("component_registry")
+            apply_application_actions(component_registry, app)
+
+            main_window = session.get_service("main_window")
+            main_window.open(app)
+            app.add_window(main_window.window)
+
+            file_manager = session.get_service("file_manager")
+            file_manager.action_new()
 
     def app_open(app, files, n_files, hint):
         print(f"Open files {files} with '{hint}'.")
         assert n_files == 1
         for file in files:
-            # main_window = application.get_service("main_window")
-            # main_window.open(app)
-            # app.add_window(main_window.window)
+            session = Application.init()
+            component_registry = session.get_service("component_registry")
+            apply_application_actions(component_registry, app)
+
+            main_window = session.get_service("main_window")
+            main_window.open(app)
+            app.add_window(main_window.window)
 
             file_manager = Application.get_service("file_manager")
             file_manager.load(file.get_path())
