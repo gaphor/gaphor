@@ -12,7 +12,7 @@ from gaphor.ui.actiongroup import apply_application_actions
 # fmt: off
 gi.require_version("Gtk", "3.0")  # noqa: isort:skip
 gi.require_version("Gdk", "3.0")  # noqa: isort:skip
-from gi.repository import Gdk, Gio, Gtk  # noqa: isort:skip
+from gi.repository import GLib, Gdk, Gio, Gtk  # noqa: isort:skip
 # fmt: on
 
 
@@ -28,6 +28,7 @@ def run(application, args):
     gtk_app = Gtk.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
     )
+    add_main_options(gtk_app)
 
     def app_startup(app):
         application.init()
@@ -72,3 +73,34 @@ def run(application, args):
 
 def quit():
     Gtk.Application.get_default().quit()
+
+
+def add_main_options(gtk_app):
+    """
+    These parameters are handled in `gaphor.main()` (`gaphor/__init__.py`).
+    Define them here, so they show up on `gaphor --help`.
+    """
+    gtk_app.add_main_option(
+        "verbose",
+        ord("v"),
+        GLib.OptionFlags.NONE,
+        GLib.OptionArg.NONE,
+        "Verbose output",
+        None,
+    )
+    gtk_app.add_main_option(
+        "quiet",
+        ord("q"),
+        GLib.OptionFlags.NONE,
+        GLib.OptionArg.NONE,
+        "Quiet output",
+        None,
+    )
+    gtk_app.add_main_option(
+        "profiler",
+        ord("p"),
+        GLib.OptionFlags.NONE,
+        GLib.OptionArg.NONE,
+        "Run in profiler",
+        None,
+    )
