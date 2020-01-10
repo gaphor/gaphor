@@ -58,7 +58,7 @@ flake8 = "^3.7.9"
 isort = "^4.3.21"
 
 [tool.poetry.scripts]
-gaphor = 'gaphor:main'
+gaphor = 'gaphor.ui:main'
 gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 
 [tool.poetry.plugins."gaphor.services"]

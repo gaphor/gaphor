@@ -4,9 +4,12 @@ main screen and diagram windows.
 """
 
 import importlib.resources
+import logging
+import sys
 
 import gi
 
+from gaphor.application import Application
 from gaphor.ui.actiongroup import apply_application_actions
 
 # fmt: off
@@ -23,20 +26,57 @@ icon_theme = Gtk.IconTheme.get_default()
 with importlib.resources.path("gaphor.ui", "icons") as path:
     icon_theme.append_search_path(str(path))
 
+LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
-def run(application, args):
+
+def main(argv=sys.argv):
+    """Start Gaphor from the command line.  This function creates an option
+    parser for retrieving arguments and options from the command line.  This
+    includes a Gaphor model to load.
+
+    The application is then initialized, passing along the option parser.  This
+    provides plugins and services with access to the command line options
+    and may add their own."""
+
+    def has_option(*options):
+        return any(o in argv for o in options)
+
+    if has_option("-v", "--verbose"):
+        logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
+    elif has_option("-q", "--quiet"):
+        logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
+    else:
+        logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+
+    if has_option("-p", "--profiler"):
+
+        import cProfile
+        import pstats
+
+        cProfile.runctx(
+            "run(argv)", globals(), locals(), filename="gaphor.prof",
+        )
+
+        profile_stats = pstats.Stats("gaphor.prof")
+        profile_stats.strip_dirs().sort_stats("time").print_stats(50)
+
+    else:
+        run(argv)
+
+
+def run(args):
     gtk_app = Gtk.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
     )
     add_main_options(gtk_app)
 
     def app_startup(app):
-        application.init()
+        Application.init()
 
-        component_registry = application.get_service("component_registry")
+        component_registry = Application.get_service("component_registry")
         apply_application_actions(component_registry, app)
 
-        main_window = application.get_service("main_window")
+        main_window = Application.get_service("main_window")
         main_window.open(app)
         app.add_window(main_window.window)
 
@@ -47,7 +87,7 @@ def run(application, args):
         # main_window.open(app)
         # app.add_window(main_window.window)
 
-        file_manager = application.get_service("file_manager")
+        file_manager = Application.get_service("file_manager")
         file_manager.action_new()
 
     def app_open(app, files, n_files, hint):
@@ -58,11 +98,11 @@ def run(application, args):
             # main_window.open(app)
             # app.add_window(main_window.window)
 
-            file_manager = application.get_service("file_manager")
+            file_manager = Application.get_service("file_manager")
             file_manager.load(file.get_path())
 
     def app_shutdown(app):
-        application.shutdown()
+        Application.shutdown()
 
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)
@@ -77,7 +117,7 @@ def quit():
 
 def add_main_options(gtk_app):
     """
-    These parameters are handled in `gaphor.main()` (`gaphor/__init__.py`).
+    These parameters are handled in `gaphor.ui.main()`.
     Define them here, so they show up on `gaphor --help`.
     """
     gtk_app.add_main_option(

@@ -11,6 +11,7 @@ if __name__ == "__main__":
     from gaphor.services.helpservice import HelpService
     from gaphor.services.properties import Properties
     from gaphor.services.sanitizerservice import SanitizerService
+    from gaphor.services.session import Session
     from gaphor.services.undomanager import UndoManager
     from gaphor.ui.elementeditor import ElementEditor
     from gaphor.ui.filemanager import FileManager
@@ -21,5 +22,7 @@ if __name__ == "__main__":
     from gaphor.ui.preferences import Preferences
     from gaphor.ui.recentfiles import RecentFiles
     from gaphor.ui.toolbox import Toolbox
+    from gaphor.ui import main
+    import sys
 
-    gaphor.main()
+    main(sys.argv)
