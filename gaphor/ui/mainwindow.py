@@ -76,6 +76,16 @@ def create_recent_files_model(recent_manager=None):
     return model
 
 
+def create_profile_combo():
+    profiles = ["UML", "SysML", "Safety"]
+    profile_combo = Gtk.ComboBoxText.new()
+    for profile in profiles:
+        profile_combo.append_text(profile)
+    profile_combo.set_active(0)
+    profile_combo.show()
+    return profile_combo
+
+
 class MainWindow(Service, ActionProvider):
     """
     The main window for the application.
