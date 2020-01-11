@@ -24,6 +24,7 @@ from gaphor.ui.event import (
     DiagramSelectionChanged,
     FileLoaded,
     FileSaved,
+    ProfileSelectionChanged,
 )
 from gaphor.ui.layout import deserialize
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
@@ -74,16 +75,6 @@ def create_recent_files_model(recent_manager=None):
         RecentFilesMenu(recent_manager or Gtk.RecentManager.get_default()),
     )
     return model
-
-
-def create_profile_combo():
-    profiles = ["UML", "SysML", "Safety"]
-    profile_combo = Gtk.ComboBoxText.new()
-    for profile in profiles:
-        profile_combo.append_text(profile)
-    profile_combo.set_active(0)
-    profile_combo.show()
-    return profile_combo
 
 
 class MainWindow(Service, ActionProvider):
@@ -141,6 +132,17 @@ class MainWindow(Service, ActionProvider):
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
+
+    def create_profile_combo(self):
+        profiles = ["UML", "SysML", "Safety"]
+        profile_combo = Gtk.ComboBoxText.new()
+        profile_combo.connect("changed", self._on_profile_selected)
+        for profile in profiles:
+            profile_combo.append_text(profile)
+        selected_profile = self.properties.get("profile", default="UML")
+        profile_combo.set_active(profiles.index(selected_profile))
+        profile_combo.show()
+        return profile_combo
 
     def open(self, gtk_app=None):
         """Open the main window.
@@ -276,7 +278,7 @@ class MainWindow(Service, ActionProvider):
     def _on_profile_selected(self, combo):
         """Store the selected profile in a property."""
         profile = combo.get_active_text()
-        # self.event_manager.handle(ProfileSelectionChanged(profile))
+        self.event_manager.handle(ProfileSelectionChanged(profile))
         self.properties.set("profile", profile)
 
     # TODO: Does not belong here
