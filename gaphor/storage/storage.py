@@ -42,15 +42,11 @@ def save_generator(writer, factory):  # noqa: C901
     gaphor.misc.xmlwriter.XMLWriter instance.
     """
 
-    # Maintain a set of id's, one for elements, one for references.
-    # Write only to file if references is a subset of elements
-
     def save_reference(name, value):
         """
         Save a value as a reference to another element in the model.
         This applies to both UML as well as canvas items.
         """
-        # Save a reference to the object:
         if value.id:
             writer.startElement(name, {})
             writer.startElement("ref", {"refid": value.id})
@@ -65,7 +61,6 @@ def save_generator(writer, factory):  # noqa: C901
             writer.startElement(name, {})
             writer.startElement("reflist", {})
             for v in value:
-                # save_reference(name, v)
                 if v.id:
                     writer.startElement("ref", {"refid": v.id})
                     writer.endElement("ref")
@@ -124,7 +119,6 @@ def save_generator(writer, factory):  # noqa: C901
             )
             value.save(save_canvasitem)
 
-            # save subitems
             for child in value.canvas.get_children(value):
                 save_canvasitem(None, child)
 
@@ -159,7 +153,6 @@ def save_generator(writer, factory):  # noqa: C901
         if n % 25 == 0:
             yield (n * 100) / size
 
-    # writer.endElement('gaphor')
     writer.endElementNS((NAMESPACE_MODEL, "gaphor"), None)
     writer.endPrefixMapping("")
     writer.endDocument()
