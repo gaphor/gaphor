@@ -15,6 +15,11 @@ class DiagramSelectionChanged:
         self.selected_items = selected_items
 
 
+class ProfileSelectionChanged:
+    def __init__(self, profile):
+        self.profile = profile
+
+
 class WindowClosed:
     """
     The user requested the window to be closed.
