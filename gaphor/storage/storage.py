@@ -158,10 +158,9 @@ def save_generator(writer, factory):  # noqa: C901
     writer.endDocument()
 
 
-def load_elements(elements, factory, gaphor_version="1.0.0", status_queue=None):
+def load_elements(elements, factory, gaphor_version="1.0.0"):
     for status in load_elements_generator(elements, factory, gaphor_version):
-        if status_queue:
-            status_queue(status)
+        pass
 
 
 def load_elements_generator(elements, factory, gaphor_version):
