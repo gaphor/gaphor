@@ -67,12 +67,10 @@ class FileManager(Service, ActionProvider):
         generator.  If loading is successful, the filename is set."""
 
         queue = Queue()
-        status_window: Optional[StatusWindow]
-        main_window = self.main_window
         status_window = StatusWindow(
             gettext("Loading..."),
             gettext("Loading model from {filename}").format(filename=filename),
-            parent=main_window.window,
+            parent=self.main_window.window,
             queue=queue,
         )
 
@@ -98,8 +96,7 @@ class FileManager(Service, ActionProvider):
             )
             raise
         finally:
-            if status_window is not None:
-                status_window.destroy()
+            status_window.destroy()
 
     def verify_orphans(self):
         """Verify that no orphaned elements are saved.  This method checks
