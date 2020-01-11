@@ -9,7 +9,7 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import TOOLBOX_ACTIONS
+from gaphor.diagram.diagramtoolbox_uml import uml_toolbox_actions
 from gaphor.ui.abc import UIComponent
 
 log = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ class Toolbox(UIComponent, ActionProvider):
 
     title = gettext("Toolbox")
 
-    def __init__(self, main_window, properties, toolbox_actions=TOOLBOX_ACTIONS):
+    def __init__(self, main_window, properties, toolbox_actions=uml_toolbox_actions):
         self.main_window = main_window
         self.properties = properties
         self._toolbox = None

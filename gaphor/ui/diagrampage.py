@@ -17,7 +17,7 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.diagram.diagramtoolbox import TOOLBOX_ACTIONS
+from gaphor.diagram.diagramtoolbox_uml import uml_toolbox_actions
 from gaphor.diagram.diagramtools import (
     DefaultTool,
     PlacementTool,
@@ -130,7 +130,7 @@ class DiagramPage:
         if tool_name == "toolbox-pointer":
             return DefaultTool(self.event_manager)
 
-        tool = next(t for t in tooliter(TOOLBOX_ACTIONS) if t.id == tool_name)
+        tool = next(t for t in tooliter(uml_toolbox_actions) if t.id == tool_name)
         item_factory = tool.item_factory
         handle_index = tool.handle_index
         return PlacementTool(
@@ -145,7 +145,7 @@ class DiagramPage:
         # accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         upper_offset = ord("A") - ord("a")
-        for title, items in TOOLBOX_ACTIONS:
+        for title, items in uml_toolbox_actions:
             for action_name, label, icon_name, shortcut, *rest in items:
                 if shortcut:
                     key, mod = Gtk.accelerator_parse(shortcut)
