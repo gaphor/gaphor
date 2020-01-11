@@ -545,13 +545,9 @@ class associationstub(umlproperty[T]):
         pass
 
     def unlink(self, obj):
-        try:
-            values = getattr(obj, self._name)
-        except AttributeError:
-            log.exception(f"Failed to unlink {self._name} from {obj}")
-        else:
-            for value in set(values):
-                self.association.__delete__(value, obj)
+        values = getattr(obj, self._name, [])
+        for value in set(values):
+            self.association.__delete__(value, obj)
 
     def _set(self, obj, value):
         try:
