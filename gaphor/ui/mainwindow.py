@@ -85,6 +85,16 @@ def create_recent_files_button(recent_manager=None):
     return button
 
 
+def create_profile_combo():
+    profiles = ["UML", "SysML", "Safety"]
+    profile_combo = Gtk.ComboBoxText.new()
+    for profile in profiles:
+        profile_combo.append_text(profile)
+    profile_combo.set_active(0)
+    profile_combo.show()
+    return profile_combo
+
+
 class MainWindow(Service, ActionProvider):
     """
     The main window for the application.
@@ -173,6 +183,7 @@ class MainWindow(Service, ActionProvider):
         b.set_action_name("tree-view.create-diagram")
         b.show()
         header.pack_start(b)
+        header.pack_start(create_profile_combo())
 
         header.pack_end(
             hamburger_menu(
