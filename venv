@@ -72,7 +72,7 @@ uname -a | grep -q MSYS_NT && {
 	{ ${NO_FORCE_INSTALL} && test -f .venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link; } || {
 		echo "Installing Gaphor in the virtualenv..."
 		pip install -U pip
-		pip install --upgrade poetry==1.0.0b3
+		pip install --upgrade poetry==1.0.2
 
 		poetry install
 	}

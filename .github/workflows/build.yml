@@ -54,7 +54,7 @@ jobs:
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.3
         with:
-          version: 1.0.0b3
+          version: 1.0.2
       - name: Install Python Dependencies
         run: poetry install
       - name: Test with Pytest
@@ -116,7 +116,7 @@ jobs:
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.3
         with:
-          version: 1.0.0b3
+          version: 1.0.2
       - name: Use Python Dependency Cache
         uses: actions/cache@v1.0.3
         with:
