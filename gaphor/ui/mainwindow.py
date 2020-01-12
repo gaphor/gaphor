@@ -142,7 +142,12 @@ class MainWindow(Service, ActionProvider):
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
 
-    def create_profile_combo(self):
+    def create_profile_combo(self) -> Gtk.ComboBoxText:
+        """Create the combo box to select the modeling profile.
+
+        Returns (Gtk.ComboBoxText): The profile combo box.
+
+        """
         profiles = ["UML", "SysML", "Safety"]
         profile_combo = Gtk.ComboBoxText.new()
         profile_combo.connect("changed", self._on_profile_selected)
@@ -311,7 +316,7 @@ class MainWindow(Service, ActionProvider):
         width, height = window.get_size()
         self.properties.set("ui.window-size", (width, height))
 
-    def _on_profile_selected(self, combo):
+    def _on_profile_selected(self, combo: Gtk.ComboBoxText) -> None:
         """Store the selected profile in a property."""
         profile = combo.get_active_text()
         self.event_manager.handle(ProfileSelectionChanged(profile))
