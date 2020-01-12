@@ -2,10 +2,9 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.diagram.diagramtoolbox import TOOLBOX_ACTIONS
+from gaphor.diagram.diagramtoolbox_actions import toolbox_actions
 from gaphor.services.eventmanager import EventManager
 from gaphor.services.properties import Properties
-from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.UML import ElementFactory
 
@@ -102,11 +101,12 @@ def test_placement_partition(tab, element_factory):
     )
 
 
-def test_toolbox_actions_shortcut_unique():
+@pytest.mark.parametrize("profile", ["UML", "SysML", "Safety"])
+def test_toolbox_actions_shortcut_unique(profile):
 
     shortcuts = {}
 
-    for category, items in TOOLBOX_ACTIONS:
+    for category, items in toolbox_actions(profile):
         for action_name, label, icon_name, shortcut, *rest in items:
             try:
                 shortcuts[shortcut].append(action_name)
