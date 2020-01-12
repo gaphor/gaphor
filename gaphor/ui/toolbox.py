@@ -4,7 +4,7 @@ This is the toolbox in the lower left of the screen.
 """
 
 import logging
-from typing import Sequence, Tuple
+from typing import Optional, Sequence, Tuple
 
 from gi.repository import Gdk, GLib, Gtk
 
@@ -59,7 +59,7 @@ class Toolbox(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self._on_profile_changed)
 
     def create_toolbox_button(
-        self, action_name: str, icon_name: str, label: str, shortcut: str
+        self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
     ):
         """Creates a tool button for the toolbox.
 
@@ -99,7 +99,9 @@ class Toolbox(UIComponent, ActionProvider):
 
         return button
 
-    def create_toolbox(self, toolbox_actions):
+    def create_toolbox(
+        self, toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]
+    ) -> Gtk.ToolPalette:
         """Create the Gtk.ToolPalette for the toolbox.
 
         Args:
@@ -134,7 +136,7 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox.show()
         return toolbox
 
-    def create_toolbox_container(self, toolbox):
+    def create_toolbox_container(self, toolbox: Gtk.ToolPalette) -> Gtk.ScrolledWindow:
         """Create a toolbox container.
 
         Args:
@@ -169,7 +171,7 @@ class Toolbox(UIComponent, ActionProvider):
             return uml_toolbox_actions
 
     @event_handler(ProfileSelectionChanged)
-    def _on_profile_changed(self, event):
+    def _on_profile_changed(self, event: ProfileSelectionChanged) -> None:
         """Reconfigures the toolbox based on the profile selected.
 
         When the combo box drop down to select the profile changes
