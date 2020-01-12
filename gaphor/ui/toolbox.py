@@ -11,8 +11,7 @@ from gi.repository import Gdk, GLib, Gtk
 from gaphor.abc import ActionProvider
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef
-from gaphor.diagram.diagramtoolbox_sysml import sysml_toolbox_actions
-from gaphor.diagram.diagramtoolbox_uml import uml_toolbox_actions
+from gaphor.diagram.diagramtoolbox_actions import toolbox_actions
 from gaphor.services.eventmanager import event_handler
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import ProfileSelectionChanged
@@ -38,14 +37,12 @@ class Toolbox(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.main_window = main_window
         self.properties = properties
-        self._toolbox = None
-        self._toolbox_container = None
+        self._toolbox: Optional[Gtk.ToolPalette] = None
+        self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
 
-    def open(self):
-        toolbox_actions = self.select_toolbox_actions(
-            self.properties.get("profile", default="UML")
-        )
-        toolbox = self.create_toolbox(toolbox_actions)
+    def open(self) -> Gtk.ScrolledWindow:
+        profile = self.properties.get("profile", default="UML")
+        toolbox = self.create_toolbox(toolbox_actions(profile))
         toolbox_container = self.create_toolbox_container(toolbox)
         self.event_manager.subscribe(self._on_profile_changed)
         self._toolbox = toolbox
@@ -60,7 +57,7 @@ class Toolbox(UIComponent, ActionProvider):
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
-    ):
+    ) -> Gtk.ToggleToolButton:
         """Creates a tool button for the toolbox.
 
         Args:
@@ -152,24 +149,6 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox_container.show()
         return toolbox_container
 
-    def select_toolbox_actions(
-        self, profile: str
-    ) -> Sequence[Tuple[str, Sequence[ToolDef]]]:
-        """Get the toolbox actions from the profile name.
-
-        Args:
-            profile (String): The name of the profile selected.
-
-        Returns (Set): The toolbox actions.
-
-        """
-        if profile == "UML":
-            return uml_toolbox_actions
-        elif profile == "SysML":
-            return sysml_toolbox_actions
-        else:
-            return uml_toolbox_actions
-
     @event_handler(ProfileSelectionChanged)
     def _on_profile_changed(self, event: ProfileSelectionChanged) -> None:
         """Reconfigures the toolbox based on the profile selected.
@@ -182,8 +161,7 @@ class Toolbox(UIComponent, ActionProvider):
             event: The ProfileSelectionChanged event.
 
         """
-        toolbox_actions = self.select_toolbox_actions(event.profile)
-        toolbox = self.create_toolbox(toolbox_actions)
+        toolbox = self.create_toolbox(toolbox_actions(event.profile))
         if self._toolbox_container:
             self._toolbox_container.remove(self._toolbox_container.get_child())
             self._toolbox_container.add(toolbox)

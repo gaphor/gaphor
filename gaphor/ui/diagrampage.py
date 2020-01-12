@@ -1,5 +1,5 @@
 import logging
-from typing import Optional
+from typing import Optional, Sequence, Tuple
 
 import gaphas.segment  # Just register the handlers in this module
 from gaphas.freehand import FreeHandPainter
@@ -17,7 +17,8 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.diagram.diagramtoolbox_uml import uml_toolbox_actions
+from gaphor.diagram.diagramtoolbox import ToolDef
+from gaphor.diagram.diagramtoolbox_actions import toolbox_actions
 from gaphor.diagram.diagramtools import (
     DefaultTool,
     PlacementTool,
@@ -34,7 +35,7 @@ from gaphor.UML.event import ElementDeleted
 log = logging.getLogger(__name__)
 
 
-def tooliter(toolbox_actions):
+def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
     """
     Iterate toolbox items, regardless of section headers
     """
@@ -130,7 +131,8 @@ class DiagramPage:
         if tool_name == "toolbox-pointer":
             return DefaultTool(self.event_manager)
 
-        tool = next(t for t in tooliter(uml_toolbox_actions) if t.id == tool_name)
+        profile = self.properties.get("profile")
+        tool = next(t for t in tooliter(toolbox_actions(profile)) if t.id == tool_name)
         item_factory = tool.item_factory
         handle_index = tool.handle_index
         return PlacementTool(
@@ -145,7 +147,8 @@ class DiagramPage:
         # accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         upper_offset = ord("A") - ord("a")
-        for title, items in uml_toolbox_actions:
+        profile = self.properties.get("profile")
+        for title, items in toolbox_actions(profile):
             for action_name, label, icon_name, shortcut, *rest in items:
                 if shortcut:
                     key, mod = Gtk.accelerator_parse(shortcut)
