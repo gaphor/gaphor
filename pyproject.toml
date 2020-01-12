@@ -35,8 +35,8 @@ classifiers = [
 python = "^3.7"
 pycairo = "^1.18"
 PyGObject = "^3.30"
-gaphas = "^1.0.0"
-importlib_metadata = "^0.23"
+gaphas = "^2.0"
+importlib_metadata = "^1.4"
 typing_extensions = "^3.7.4"
 generic = "^1.0.0"
 
