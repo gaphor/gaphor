@@ -22,4 +22,4 @@ jobs:
     - name: Build and publish
       run: |
         poetry build
-        poetry publish -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
+        poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
