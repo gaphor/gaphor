@@ -38,7 +38,7 @@ PyGObject = "^3.30"
 gaphas = "^1.0.0"
 importlib_metadata = "^0.23"
 typing_extensions = "^3.7.4"
-generic = {version = "^1.0.0-beta.1", allow-prereleases = true}
+generic = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.5"
@@ -97,5 +97,5 @@ skip_glob = "*/uml2.py"
 filter_files = true
 
 [build-system]
-requires = ["poetry==1.0.0b3"]
+requires = ["poetry==1.0.2"]
 build-backend = "poetry.masonry.api"
