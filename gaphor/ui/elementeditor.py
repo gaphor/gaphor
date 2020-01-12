@@ -135,7 +135,7 @@ class ElementEditor(UIComponent, ActionProvider):
         current_view = self.diagrams.get_current_view()
         self._selection_change(focused_item=current_view and current_view.focused_item)
 
-        # Make sure we recieve
+        # Make sure we receive
         self.event_manager.subscribe(self._selection_change)
         self.event_manager.subscribe(self._element_changed)
 

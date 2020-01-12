@@ -1,14 +1,16 @@
-"""
-Toolbox.
-"""
+"""The Toolbox which is the tool palette.
 
+This is the toolbox in the lower left of the screen.
+"""
 
 import logging
+from typing import Sequence, Tuple
 
 from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import gettext
+from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtoolbox_sysml import sysml_toolbox_actions
 from gaphor.diagram.diagramtoolbox_uml import uml_toolbox_actions
 from gaphor.services.eventmanager import event_handler
@@ -37,14 +39,18 @@ class Toolbox(UIComponent, ActionProvider):
         self.main_window = main_window
         self.properties = properties
         self._toolbox = None
+        self._toolbox_container = None
 
     def open(self):
         toolbox_actions = self.select_toolbox_actions(
             self.properties.get("profile", default="UML")
         )
-        widget = self.construct(toolbox_actions)
+        toolbox = self.create_toolbox(toolbox_actions)
+        toolbox_container = self.create_toolbox_container(toolbox)
         self.event_manager.subscribe(self._on_profile_changed)
-        return widget
+        self._toolbox = toolbox
+        self._toolbox_container = toolbox_container
+        return toolbox_container
 
     def close(self):
         if self._toolbox:
@@ -52,37 +58,56 @@ class Toolbox(UIComponent, ActionProvider):
             self._toolbox = None
         self.event_manager.unsubscribe(self._on_profile_changed)
 
-    def construct(self, toolbox_actions):
-        def toolbox_button(action_name, icon_name, label, shortcut):
-            button = Gtk.ToggleToolButton.new()
-            icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-            button.set_icon_widget(icon)
-            button.set_action_name("diagram.select-tool")
-            button.set_action_target_value(GLib.Variant.new_string(action_name))
-            if label:
-                if shortcut:
-                    a, m = Gtk.accelerator_parse(shortcut)
-                    button.set_tooltip_text(
-                        f"{label} ({Gtk.accelerator_get_label(a, m)})"
-                    )
-                else:
-                    button.set_tooltip_text(f"{label}")
+    def create_toolbox_button(
+        self, action_name: str, icon_name: str, label: str, shortcut: str
+    ):
+        """Creates a tool button for the toolbox.
 
-            # Enable Drag and Drop
-            if action_name != "toolbox-pointer":
-                inner_button = button.get_children()[0]
-                inner_button.drag_source_set(
-                    Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-                    self.DND_TARGETS,
-                    Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-                )
-                inner_button.drag_source_set_icon_name(icon_name)
-                inner_button.connect(
-                    "drag-data-get", self._button_drag_data_get, action_name
-                )
+        Args:
+            action_name (String): The action for the button.
+            icon_name (String): The button icon.
+            label (String): The label for the button.
+            shortcut (String): The button shortcut.
 
-            return button
+        Returns: The Gtk.ToggleToolButton.
 
+        """
+        button = Gtk.ToggleToolButton.new()
+        icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        button.set_icon_widget(icon)
+        button.set_action_name("diagram.select-tool")
+        button.set_action_target_value(GLib.Variant.new_string(action_name))
+        if label:
+            if shortcut:
+                a, m = Gtk.accelerator_parse(shortcut)
+                button.set_tooltip_text(f"{label} ({Gtk.accelerator_get_label(a, m)})")
+            else:
+                button.set_tooltip_text(f"{label}")
+
+        # Enable Drag and Drop
+        if action_name != "toolbox-pointer":
+            inner_button = button.get_children()[0]
+            inner_button.drag_source_set(
+                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                self.DND_TARGETS,
+                Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+            )
+            inner_button.drag_source_set_icon_name(icon_name)
+            inner_button.connect(
+                "drag-data-get", self._button_drag_data_get, action_name
+            )
+
+        return button
+
+    def create_toolbox(self, toolbox_actions):
+        """Create the Gtk.ToolPalette for the toolbox.
+
+        Args:
+            toolbox_actions: The diagramtoolbox actions.
+
+        Returns: The Gtk.ToolPalette.
+
+        """
         toolbox = Gtk.ToolPalette.new()
         toolbox.connect("destroy", self._on_toolbox_destroyed)
 
@@ -97,7 +122,9 @@ class Toolbox(UIComponent, ActionProvider):
             tool_item_group.set_property("collapsed", collapsed.get(index, False))
             tool_item_group.connect("notify::collapsed", on_collapsed, index)
             for action_name, label, icon_name, shortcut, *rest in items:
-                button = toolbox_button(action_name, icon_name, label, shortcut)
+                button = self.create_toolbox_button(
+                    action_name, icon_name, label, shortcut
+                )
                 tool_item_group.insert(button, -1)
                 button.show_all()
 
@@ -105,17 +132,35 @@ class Toolbox(UIComponent, ActionProvider):
             tool_item_group.show()
 
         toolbox.show()
+        return toolbox
 
-        self._toolbox = toolbox
+    def create_toolbox_container(self, toolbox):
+        """Create a toolbox container.
 
-        scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
-        scrolled_window.add(toolbox)
-        scrolled_window.show()
-        return scrolled_window
+        Args:
+            toolbox: The Gtk.ToolPalette to add.
 
-    def select_toolbox_actions(self, profile):
+        Returns: The Gtk.ScrolledWindow.
+
+        """
+        toolbox_container = Gtk.ScrolledWindow()
+        toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        toolbox_container.set_shadow_type(Gtk.ShadowType.IN)
+        toolbox_container.add(toolbox)
+        toolbox_container.show()
+        return toolbox_container
+
+    def select_toolbox_actions(
+        self, profile: str
+    ) -> Sequence[Tuple[str, Sequence[ToolDef]]]:
+        """Get the toolbox actions from the profile name.
+
+        Args:
+            profile (String): The name of the profile selected.
+
+        Returns (Set): The toolbox actions.
+
+        """
         if profile == "UML":
             return uml_toolbox_actions
         elif profile == "SysML":
@@ -125,8 +170,22 @@ class Toolbox(UIComponent, ActionProvider):
 
     @event_handler(ProfileSelectionChanged)
     def _on_profile_changed(self, event):
-        print(f"The Profile is {event.profile}")
-        return self.construct(self.select_toolbox_actions(event.profile))
+        """Reconfigures the toolbox based on the profile selected.
+
+        When the combo box drop down to select the profile changes
+        (UML, SysML, Safety), this event handler reconfigures the
+        toolbox.
+
+        Args:
+            event: The ProfileSelectionChanged event.
+
+        """
+        toolbox_actions = self.select_toolbox_actions(event.profile)
+        toolbox = self.create_toolbox(toolbox_actions)
+        if self._toolbox_container:
+            self._toolbox_container.remove(self._toolbox_container.get_child())
+            self._toolbox_container.add(toolbox)
+        self._toolbox = toolbox
 
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None
