@@ -9,8 +9,11 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import gettext
+from gaphor.diagram.diagramtoolbox_sysml import sysml_toolbox_actions
 from gaphor.diagram.diagramtoolbox_uml import uml_toolbox_actions
+from gaphor.services.eventmanager import event_handler
 from gaphor.ui.abc import UIComponent
+from gaphor.ui.event import ProfileSelectionChanged
 
 log = logging.getLogger(__name__)
 
@@ -29,23 +32,27 @@ class Toolbox(UIComponent, ActionProvider):
 
     title = gettext("Toolbox")
 
-    def __init__(self, main_window, properties, toolbox_actions=uml_toolbox_actions):
+    def __init__(self, event_manager, main_window, properties):
+        self.event_manager = event_manager
         self.main_window = main_window
         self.properties = properties
         self._toolbox = None
-        self._toolbox_actions = toolbox_actions
 
     def open(self):
-        widget = self.construct()
-
+        toolbox_actions = self.select_toolbox_actions(
+            self.properties.get("profile", default="UML")
+        )
+        widget = self.construct(toolbox_actions)
+        self.event_manager.subscribe(self._on_profile_changed)
         return widget
 
     def close(self):
         if self._toolbox:
             self._toolbox.destroy()
             self._toolbox = None
+        self.event_manager.unsubscribe(self._on_profile_changed)
 
-    def construct(self):
+    def construct(self, toolbox_actions):
         def toolbox_button(action_name, icon_name, label, shortcut):
             button = Gtk.ToggleToolButton.new()
             icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
@@ -85,7 +92,7 @@ class Toolbox(UIComponent, ActionProvider):
             collapsed[index] = widget.get_property("collapsed")
             self.properties.set("toolbox-collapsed", collapsed)
 
-        for index, (title, items) in enumerate(self._toolbox_actions):
+        for index, (title, items) in enumerate(toolbox_actions):
             tool_item_group = Gtk.ToolItemGroup.new(title)
             tool_item_group.set_property("collapsed", collapsed.get(index, False))
             tool_item_group.connect("notify::collapsed", on_collapsed, index)
@@ -107,6 +114,19 @@ class Toolbox(UIComponent, ActionProvider):
         scrolled_window.add(toolbox)
         scrolled_window.show()
         return scrolled_window
+
+    def select_toolbox_actions(self, profile):
+        if profile == "UML":
+            return uml_toolbox_actions
+        elif profile == "SysML":
+            return sysml_toolbox_actions
+        else:
+            return uml_toolbox_actions
+
+    @event_handler(ProfileSelectionChanged)
+    def _on_profile_changed(self, event):
+        print(f"The Profile is {event.profile}")
+        return self.construct(self.select_toolbox_actions(event.profile))
 
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None

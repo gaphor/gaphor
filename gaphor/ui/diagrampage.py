@@ -36,7 +36,7 @@ log = logging.getLogger(__name__)
 
 def tooliter(toolbox_actions):
     """
-    Iterate toolbox items, irregardless section headers
+    Iterate toolbox items, regardless of section headers
     """
     for name, section in toolbox_actions:
         yield from section

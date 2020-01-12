@@ -23,6 +23,7 @@ from gaphor.ui.event import (
     DiagramSelectionChanged,
     FileLoaded,
     FileSaved,
+    ProfileSelectionChanged,
     WindowClosed,
 )
 from gaphor.ui.layout import deserialize
@@ -313,6 +314,7 @@ class MainWindow(Service, ActionProvider):
     def _on_profile_selected(self, combo):
         """Store the selected profile in a property."""
         profile = combo.get_active_text()
+        self.event_manager.handle(ProfileSelectionChanged(profile))
         self.properties.set("profile", profile)
 
     # TODO: Does not belong here
