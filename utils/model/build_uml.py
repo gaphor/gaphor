@@ -33,16 +33,25 @@ class build_uml(Command):
         generate_uml2(self.force)
 
 
-def generate_uml2(force=False):
+def generate_py_model(
+    force: bool,
+    gen: os.path,
+    model: os.path,
+    outfile: os.path,
+    overrides: os.path,
+    py_model,
+):
+    """Generate the Python datamodel from the Gaphor model.
+
+    Args:
+        force (bool): Force regeneration.
+        gen: The Gaphor code generator.
+        model: The Gaphor model to generate with.
+        outfile: The output file.
+        overrides: The override file.
+        py_model: The Python module to generate.
+
     """
-    Generate gaphor/UML/uml2.py in the source directory.
-    """
-    gen = os.path.join("utils", "model", "gen_uml.py")
-    overrides = os.path.join("gaphor", "UML", "uml2.override")
-    model = os.path.join("gaphor", "UML", "uml2.gaphor")
-    py_model = os.path.join("gaphor", "UML", "uml2.py")
-    outfile = py_model
-    mkpath(os.path.dirname(outfile))
     if (
         force
         or newer(model, outfile)
@@ -58,5 +67,34 @@ def generate_uml2(force=False):
     byte_compile([outfile])
 
 
+def generate_uml2(force=False):
+    """
+    Generate gaphor/UML/uml2.py in the source directory.
+    """
+    gen = os.path.join("utils", "model", "gen_uml.py")
+    overrides = os.path.join("gaphor", "UML", "uml2.override")
+    model = os.path.join("gaphor", "UML", "uml2.gaphor")
+    py_model = os.path.join("gaphor", "UML", "uml2.py")
+    outfile = py_model
+    mkpath(os.path.dirname(outfile))
+    generate_py_model(force, gen, model, outfile, overrides, py_model)
+
+
+def generate_profiles(force=False):
+    """
+    Generate gaphor/profiles/*.py in the source directory.
+    """
+    profiles = ["sysml", "safety"]
+    gen = os.path.join("utils", "model", "gen_uml.py")
+    for profile in profiles:
+        overrides = os.path.join("gaphor", "profiles", f"{profile}.override")
+        model = os.path.join("gaphor", "profiles", f"{profile}.gaphor")
+        py_model = os.path.join("gaphor", "profiles", f"{profile}.py")
+        outfile = py_model
+        mkpath(os.path.dirname(outfile))
+        generate_py_model(force, gen, model, outfile, overrides, py_model)
+
+
 if __name__ == "__main__":
     generate_uml2()
+    generate_profiles()
