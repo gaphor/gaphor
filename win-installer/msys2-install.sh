@@ -18,4 +18,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-python3-cairo \
     mingw-w64-$MSYS2_ARCH-python3-pip
 
-./venv -S
+pip install poetry==1.0.2
+poetry config virtualenvs.create false
+poetry install
+
