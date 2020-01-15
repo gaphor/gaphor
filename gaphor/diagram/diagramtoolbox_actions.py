@@ -3,6 +3,7 @@
 from typing import Sequence, Tuple
 
 from gaphor.diagram.diagramtoolbox import ToolDef
+from gaphor.diagram.diagramtoolbox_actions_safety import safety_toolbox_actions
 from gaphor.diagram.diagramtoolbox_actions_sysml import sysml_toolbox_actions
 from gaphor.diagram.diagramtoolbox_actions_uml import uml_toolbox_actions
 
@@ -20,5 +21,7 @@ def toolbox_actions(profile: str) -> Sequence[Tuple[str, Sequence[ToolDef]]]:
         return uml_toolbox_actions
     elif profile == "SysML":
         return sysml_toolbox_actions
+    elif profile == "Safety":
+        return safety_toolbox_actions
     else:
         return uml_toolbox_actions

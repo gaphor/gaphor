@@ -184,13 +184,13 @@ class MainWindow(Service, ActionProvider):
         button_box.pack_start(create_recent_files_button(), False, False, 0)
         button_box.show()
         header.pack_start(button_box)
+        header.pack_start(self.create_profile_combo())
         b = Gtk.Button.new_from_icon_name(
             "gaphor-new-diagram-symbolic", Gtk.IconSize.MENU
         )
         b.set_action_name("tree-view.create-diagram")
         b.show()
         header.pack_start(b)
-        header.pack_start(self.create_profile_combo())
 
         header.pack_end(
             hamburger_menu(

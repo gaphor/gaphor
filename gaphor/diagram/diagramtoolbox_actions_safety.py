@@ -1,4 +1,4 @@
-"""The action definition for the SysML toolbox."""
+"""The action definition for the Safety and Reliability Analysis toolbox."""
 
 from typing import Sequence, Tuple
 
@@ -16,7 +16,7 @@ from gaphor.diagram.diagramtoolbox import (
 from gaphor.diagram.diagramtools import PlacementTool
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
-sysml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
+safety_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
     (
         gettext("General"),
         (
@@ -70,7 +70,7 @@ sysml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
         ),
     ),
     (
-        gettext("Block Definition"),
+        gettext("FMEA"),
         (
             ToolDef(
                 "toolbox-class",
@@ -137,74 +137,65 @@ sysml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
         ),
     ),
     (
-        gettext("Internal Block"),
+        gettext("FTA"),
         (
             ToolDef(
-                "toolbox-class",
-                gettext("Class"),
-                "gaphor-class-symbolic",
-                "c",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem, UML.Class, config_func=namespace_config
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-interface",
-                gettext("Interface"),
-                "gaphor-interface-symbolic",
-                "i",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.InterfaceItem,
-                    UML.Interface,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-package",
-                gettext("Package"),
-                "gaphor-package-symbolic",
-                "p",
+                "toolbox-component",
+                gettext("Component"),
+                "gaphor-component-symbolic",
+                "o",
                 PlacementTool.new_item_factory(
-                    diagram.classes.PackageItem,
-                    UML.Package,
+                    diagram.components.ComponentItem,
+                    UML.Component,
                     config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
             ToolDef(
-                "toolbox-association",
-                gettext("Association"),
-                "gaphor-association-symbolic",
-                "<Shift>A",
-                PlacementTool.new_item_factory(diagram.classes.AssociationItem),
+                "toolbox-artifact",
+                gettext("Artifact"),
+                "gaphor-artifact-symbolic",
+                "h",
+                PlacementTool.new_item_factory(
+                    diagram.components.ArtifactItem,
+                    UML.Artifact,
+                    config_func=namespace_config,
+                ),
+                handle_index=SE,
             ),
             ToolDef(
-                "toolbox-dependency",
-                gettext("Dependency"),
-                "gaphor-dependency-symbolic",
-                "<Shift>D",
-                PlacementTool.new_item_factory(diagram.classes.DependencyItem),
+                "toolbox-node",
+                gettext("Node"),
+                "gaphor-node-symbolic",
+                "n",
+                PlacementTool.new_item_factory(
+                    diagram.components.NodeItem, UML.Node, config_func=namespace_config,
+                ),
+                handle_index=SE,
             ),
             ToolDef(
-                "toolbox-generalization",
-                gettext("Generalization"),
-                "gaphor-generalization-symbolic",
-                "<Shift>G",
-                PlacementTool.new_item_factory(diagram.classes.GeneralizationItem),
+                "toolbox-device",
+                gettext("Device"),
+                "gaphor-device-symbolic",
+                "d",
+                PlacementTool.new_item_factory(
+                    diagram.components.NodeItem,
+                    UML.Device,
+                    config_func=namespace_config,
+                ),
+                handle_index=SE,
             ),
             ToolDef(
-                "toolbox-implementation",
-                gettext("Implementation"),
-                "gaphor-implementation-symbolic",
-                "<Shift>I",
-                PlacementTool.new_item_factory(diagram.classes.ImplementationItem),
+                "toolbox-connector",
+                gettext("Connector"),
+                "gaphor-connector-symbolic",
+                "<Shift>C",
+                PlacementTool.new_item_factory(diagram.components.ConnectorItem),
             ),
         ),
     ),
     (
-        gettext("Activity"),
+        gettext("ISO 26262"),
         (
             ToolDef(
                 "toolbox-action",
@@ -324,74 +315,45 @@ sysml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
         ),
     ),
     (
-        gettext("Requirement"),
+        gettext("STPA"),
         (
             ToolDef(
-                "toolbox-class",
-                gettext("Class"),
-                "gaphor-class-symbolic",
-                "c",
+                "toolbox-lifeline",
+                gettext("Lifeline"),
+                "gaphor-lifeline-symbolic",
+                "v",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem, UML.Class, config_func=namespace_config
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-interface",
-                gettext("Interface"),
-                "gaphor-interface-symbolic",
-                "i",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.InterfaceItem,
-                    UML.Interface,
+                    diagram.interactions.LifelineItem,
+                    UML.Lifeline,
                     config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
             ToolDef(
-                "toolbox-package",
-                gettext("Package"),
-                "gaphor-package-symbolic",
-                "p",
-                PlacementTool.new_item_factory(
-                    diagram.classes.PackageItem,
-                    UML.Package,
+                "toolbox-message",
+                gettext("Message"),
+                "gaphor-message-symbolic",
+                "M",
+                item_factory=PlacementTool.new_item_factory(
+                    diagram.interactions.MessageItem
+                ),
+            ),
+            ToolDef(
+                "toolbox-interaction",
+                gettext("Interaction"),
+                "gaphor-interaction-symbolic",
+                "<Shift>N",
+                item_factory=PlacementTool.new_item_factory(
+                    diagram.interactions.InteractionItem,
+                    UML.Interaction,
                     config_func=namespace_config,
                 ),
                 handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-association",
-                gettext("Association"),
-                "gaphor-association-symbolic",
-                "<Shift>A",
-                PlacementTool.new_item_factory(diagram.classes.AssociationItem),
-            ),
-            ToolDef(
-                "toolbox-dependency",
-                gettext("Dependency"),
-                "gaphor-dependency-symbolic",
-                "<Shift>D",
-                PlacementTool.new_item_factory(diagram.classes.DependencyItem),
-            ),
-            ToolDef(
-                "toolbox-generalization",
-                gettext("Generalization"),
-                "gaphor-generalization-symbolic",
-                "<Shift>G",
-                PlacementTool.new_item_factory(diagram.classes.GeneralizationItem),
-            ),
-            ToolDef(
-                "toolbox-implementation",
-                gettext("Implementation"),
-                "gaphor-implementation-symbolic",
-                "<Shift>I",
-                PlacementTool.new_item_factory(diagram.classes.ImplementationItem),
             ),
         ),
     ),
     (
-        gettext("State Machine"),
+        gettext("GSN"),
         (
             ToolDef(
                 "toolbox-state",
@@ -444,60 +406,6 @@ sysml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "<Shift>T",
                 item_factory=PlacementTool.new_item_factory(
                     diagram.states.TransitionItem
-                ),
-            ),
-        ),
-    ),
-    (
-        gettext("Use Case"),
-        (
-            ToolDef(
-                "toolbox-use-case",
-                gettext("Use case"),
-                "gaphor-use-case-symbolic",
-                "u",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.usecases.UseCaseItem,
-                    UML.UseCase,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-actor",
-                gettext("Actor"),
-                "gaphor-actor-symbolic",
-                "t",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.usecases.ActorItem, UML.Actor, config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-use-case-association",
-                gettext("Association"),
-                "gaphor-association-symbolic",
-                "<Shift>B",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.AssociationItem
-                ),
-            ),
-            ToolDef(
-                "toolbox-include",
-                gettext("Include"),
-                "gaphor-include-symbolic",
-                "<Shift>U",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.usecases.IncludeItem
-                ),
-            ),
-            ToolDef(
-                "toolbox-extend",
-                gettext("Extend"),
-                "gaphor-extend-symbolic",
-                "<Shift>X",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.usecases.ExtendItem
                 ),
             ),
         ),
