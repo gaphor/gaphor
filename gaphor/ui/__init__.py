@@ -65,28 +65,29 @@ def main(argv=sys.argv):
 
 
 def run(args):
+    def on_active_window(window, prop, session):
+        Application.active_session = session
+
+    def new_session(app):
+        session = Application.new_session()
+
+        main_window = session.get_service("main_window")
+        main_window.open(app)
+        app.add_window(main_window.window)
+        main_window.window.connect("notify::is-active", on_active_window, session)
+        return session
+
     def app_startup(app):
-        Application.init()
-        apply_application_actions(Application, app)
+        try:
+            Application.init()
+            apply_application_actions(Application, app)
+        except Exception:
+            app.quit()
+            raise
 
     def app_activate(app):
-        # Make sure gui is loaded ASAP.
-        # This prevents menu items from appearing at unwanted places.
-        # main_window = application.get_service("main_window")
-        # main_window.open(app)
-        # app.add_window(main_window.window)
-
         if not Application.has_sessions():
-            session = Application.new_session()
-
-            # Only at application level (startup())?
-            # component_registry = session.get_service("component_registry")
-            # apply_application_actions(component_registry, app)
-
-            main_window = session.get_service("main_window")
-            main_window.open(app)
-            app.add_window(main_window.window)
-
+            session = new_session(app)
             file_manager = session.get_service("file_manager")
             file_manager.action_new()
 
@@ -94,14 +95,7 @@ def run(args):
         print(f"Open files {files} with '{hint}'.")
         assert n_files == 1
         for file in files:
-            session = Application.new_session()
-            # component_registry = session.get_service("component_registry")
-            # apply_application_actions(component_registry, app)
-
-            main_window = session.get_service("main_window")
-            main_window.open(app)
-            app.add_window(main_window.window)
-
+            session = new_session(app)
             file_manager = Application.get_service("file_manager")
             file_manager.load(file.get_path())
 
@@ -120,7 +114,12 @@ def run(args):
 
 
 def quit():
-    Gtk.Application.get_default().quit()
+    session = Application.active_session
+    assert session
+    session.shutdown()
+    Application.sessions.discard(session)
+    if not Application.sessions:
+        Gtk.Application.get_default().quit()
 
 
 def add_main_options(gtk_app):

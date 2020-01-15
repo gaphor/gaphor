@@ -62,6 +62,7 @@ gaphor = 'gaphor.ui:main'
 gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 
 [tool.poetry.plugins."gaphor.appservices"]
+"session" = "gaphor.services.session:Session"
 "help" = "gaphor.services.helpservice:HelpService"
 
 [tool.poetry.plugins."gaphor.services"]

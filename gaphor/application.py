@@ -9,9 +9,11 @@ All important services are present in the application object:
  - action sets
 """
 
+from __future__ import annotations
+
 import inspect
 import logging
-from typing import Dict, Type
+from typing import Dict, Optional, Set, Type
 
 import importlib_metadata
 
@@ -41,8 +43,8 @@ class _Application:
     """
 
     def __init__(self):
-        self.active_session = None
-        self.sessions = set()
+        self.active_session: Optional[Session] = None
+        self.sessions: Set[Session] = set()
 
     def init(self):
         uninitialized_services = load_services("gaphor.appservices")

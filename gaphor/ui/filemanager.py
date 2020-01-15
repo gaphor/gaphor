@@ -337,7 +337,7 @@ class FileManager(Service, ActionProvider):
 
         return False
 
-    @action(name="app.quit", shortcut="<Primary>q")
+    @action(name="quit", shortcut="<Primary>q")
     def file_quit(self):
         """
         Ask user to close window if the model has changed.
