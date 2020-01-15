@@ -21,7 +21,7 @@ from gaphor.ui.event import DiagramOpened
 
 @pytest.fixture
 def application():
-    Application.init(
+    Application.new_session(
         services=[
             "event_manager",
             "component_registry",
@@ -101,7 +101,7 @@ class HandleToolTestCase(unittest.TestCase):
     """
 
     def setUp(self):
-        Application.init(
+        Application.new_session(
             services=[
                 "event_manager",
                 "component_registry",

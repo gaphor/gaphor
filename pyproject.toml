@@ -61,6 +61,9 @@ isort = "^4.3.21"
 gaphor = 'gaphor.ui:main'
 gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 
+[tool.poetry.plugins."gaphor.appservices"]
+"help" = "gaphor.services.helpservice:HelpService"
+
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"
 "event_manager" = "gaphor.services.eventmanager:EventManager"
@@ -75,7 +78,6 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "tools_menu" = "gaphor.ui.menufragment:MenuFragment"
 "copy" = "gaphor.services.copyservice:CopyService"
 "sanitizer" = "gaphor.services.sanitizerservice:SanitizerService"
-"help" = "gaphor.services.helpservice:HelpService"
 "namespace" = "gaphor.ui.namespace:Namespace"
 "toolbox" = "gaphor.ui.toolbox:Toolbox"
 "diagrams" = "gaphor.ui.mainwindow:Diagrams"

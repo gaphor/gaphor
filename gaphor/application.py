@@ -44,13 +44,18 @@ class _Application:
         self.active_session = None
         self.sessions = set()
 
-    def init(self, services=None):
+    def init(self):
+        uninitialized_services = load_services("gaphor.appservices")
+        self._services_by_name = init_services(uninitialized_services)
+
+    def new_session(self, services=None):
         """
         Initialize an application session.
         """
-        self.active_session = Session()
-        self.sessions.add(self.active_session)
-        return self.active_session
+        session = Session()
+        self.sessions.add(session)
+        self.active_session = session
+        return session
 
     def has_sessions(self):
         return bool(self.active_session)
@@ -73,9 +78,11 @@ class _Application:
             session.shutdown()
         self.sessions.clear()
 
-
-# Make sure there is only one!
-Application = _Application()
+    # def all(self, base: Type[T]) -> Iterator[Tuple[T, str]]:
+    def all(self, base):
+        return (
+            (c, n) for n, c in self._services_by_name.items() if isinstance(c, base)
+        )
 
 
 class Session:
@@ -180,3 +187,7 @@ def init_services(uninitialized_services):
         init(name, cls)
 
     return ready
+
+
+# Make sure there is only one!
+Application = _Application()

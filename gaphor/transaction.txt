@@ -8,7 +8,7 @@ Transaction support is located in module gaphor.transaction:
 
 Do some basic initialization, so event emission will work:
 
-    >>> Application.init(services=['event_manager'])
+    >>> Application.new_session(services=['event_manager'])
     >>> event_manager = Application.get_service('event_manager')
 
 The Transaction class is used mainly to signal the begin and end of a transaction. This is done by the TransactionBegin, TransactionCommit and TransactionRollback events:

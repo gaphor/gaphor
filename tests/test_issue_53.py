@@ -9,6 +9,7 @@ from gaphor.storage.storage import load
 @pytest.fixture
 def element_factory():
     Application.init()
+    Application.new_session()
     element_factory = Application.get_service("element_factory")
     dist = importlib_metadata.distribution("gaphor")
     path = dist.locate_file("test-diagrams/issue_53.gaphor")

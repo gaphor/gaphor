@@ -56,6 +56,7 @@ def test_service_load():
     """Test loading services and querying utilities."""
 
     Application.init()
+    session = Application.new_session()
 
     assert (
         Application.get_service("undo_manager") is not None

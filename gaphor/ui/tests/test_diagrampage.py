@@ -10,7 +10,7 @@ from gaphor.ui.mainwindow import DiagramPage
 
 class DiagramPageTestCase(unittest.TestCase):
     def setUp(self):
-        Application.init(
+        Application.new_session(
             services=[
                 "event_manager",
                 "component_registry",

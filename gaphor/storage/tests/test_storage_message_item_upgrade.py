@@ -10,7 +10,7 @@ from gaphor.storage.storage import load_elements
 
 @pytest.fixture
 def application():
-    Application.init(
+    Application.new_session(
         services=["event_manager", "component_registry", "element_factory"]
     )
     yield Application

@@ -65,13 +65,9 @@ def main(argv=sys.argv):
 
 
 def run(args):
-    gtk_app = Gtk.Application(
-        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
-    )
-    add_main_options(gtk_app)
-
     def app_startup(app):
-        pass  # Application.init()
+        Application.init()
+        apply_application_actions(Application, app)
 
     def app_activate(app):
         # Make sure gui is loaded ASAP.
@@ -81,11 +77,11 @@ def run(args):
         # app.add_window(main_window.window)
 
         if not Application.has_sessions():
-            session = Application.init()
+            session = Application.new_session()
 
             # Only at application level (startup())?
-            component_registry = session.get_service("component_registry")
-            apply_application_actions(component_registry, app)
+            # component_registry = session.get_service("component_registry")
+            # apply_application_actions(component_registry, app)
 
             main_window = session.get_service("main_window")
             main_window.open(app)
@@ -98,9 +94,9 @@ def run(args):
         print(f"Open files {files} with '{hint}'.")
         assert n_files == 1
         for file in files:
-            session = Application.init()
-            component_registry = session.get_service("component_registry")
-            apply_application_actions(component_registry, app)
+            session = Application.new_session()
+            # component_registry = session.get_service("component_registry")
+            # apply_application_actions(component_registry, app)
 
             main_window = session.get_service("main_window")
             main_window.open(app)
@@ -112,6 +108,10 @@ def run(args):
     def app_shutdown(app):
         Application.shutdown()
 
+    gtk_app = Gtk.Application(
+        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+    )
+    add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)

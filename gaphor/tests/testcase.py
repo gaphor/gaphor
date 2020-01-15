@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
     services = ["event_manager", "component_registry", "element_factory", "sanitizer"]
 
     def setUp(self):
-        Application.init(services=self.services)
+        Application.new_session(services=self.services)
         self.element_factory = Application.get_service("element_factory")
         assert len(list(self.element_factory.select())) == 0, list(
             self.element_factory.select()
