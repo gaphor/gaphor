@@ -1,6 +1,6 @@
 # Gaphor <img src="logos/gaphor.svg" width="48">
 
-[![Build state](https://github.com/gaphor/gaphor/workflows/build/badge.svg)](https://github.com/gaphor/gaphor/actions)
+[![Build state](https://github.com/gaphor/gaphor/workflows/Build/badge.svg)](https://github.com/gaphor/gaphor/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/maintainability)](https://codeclimate.com/github/gaphor/gaphor/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/test_coverage)](https://codeclimate.com/github/gaphor/gaphor/test_coverage)
 [![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://gaphor.readthedocs.io)
