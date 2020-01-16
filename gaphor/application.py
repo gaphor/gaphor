@@ -83,7 +83,7 @@ class _Application:
     # def all(self, base: Type[T]) -> Iterator[Tuple[T, str]]:
     def all(self, base):
         return (
-            (c, n) for n, c in self._services_by_name.items() if isinstance(c, base)
+            (n, c) for n, c in self._services_by_name.items() if isinstance(c, base)
         )
 
 
@@ -105,7 +105,7 @@ class Session:
 
         for name, srv in services_by_name.items():
             logger.info(f"Initializing service {name}")
-            self.component_registry.register(srv, name)
+            self.component_registry.register(name, srv)
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
 
     def get_service(self, name):
@@ -116,7 +116,7 @@ class Session:
 
     def shutdown(self):
         if self.component_registry:
-            for srv, name in self.component_registry.all(Service):
+            for name, _srv in self.component_registry.all(Service):
                 self.shutdown_service(name)
 
         self.component_registry = None
