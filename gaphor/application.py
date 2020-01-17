@@ -73,6 +73,12 @@ class _Application:
 
         return self.active_session.get_service(name)
 
+    def shutdown_active_session(self):
+        session = self.active_session
+        assert session
+        session.shutdown()
+        self.sessions.discard(session)
+
     def shutdown(self):
         for session in self.sessions:
             self.active_session = None

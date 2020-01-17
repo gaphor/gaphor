@@ -114,10 +114,7 @@ def run(args):
 
 
 def quit():
-    session = Application.active_session
-    assert session
-    session.shutdown()
-    Application.sessions.discard(session)
+    Application.shutdown_active_session()
     if not Application.sessions:
         Gtk.Application.get_default().quit()
 
