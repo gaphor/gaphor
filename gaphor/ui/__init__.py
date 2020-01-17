@@ -96,7 +96,7 @@ def run(args):
         assert n_files == 1
         for file in files:
             session = new_session(app)
-            file_manager = Application.get_service("file_manager")
+            file_manager = session.get_service("file_manager")
             file_manager.load(file.get_path())
 
     def app_shutdown(app):

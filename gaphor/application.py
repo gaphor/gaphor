@@ -34,7 +34,7 @@ class ComponentLookupError(LookupError):
 class _Application:
     """
     The Gaphor application is started from the gaphor.ui module.
-    
+
     This application instance is used to maintain application wide references
     to services and sessions (opened models). It behaves like a singleton in many ways.
 

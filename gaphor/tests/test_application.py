@@ -59,11 +59,11 @@ def test_service_load():
     session = Application.new_session()
 
     assert (
-        Application.get_service("undo_manager") is not None
+        session.get_service("undo_manager") is not None
     ), "Failed to load the undo manager service"
 
     assert (
-        Application.get_service("file_manager") is not None
+        session.get_service("file_manager") is not None
     ), "Failed to load the file manager service"
 
     Application.shutdown()
