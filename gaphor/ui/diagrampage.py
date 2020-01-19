@@ -120,6 +120,7 @@ class DiagramPage:
 
         self.widget.connect("key-press-event", shortcut_action)
         self._on_sloppy_lines()
+        self.select_tool("toolbox-pointer")
 
         return self.widget
 
