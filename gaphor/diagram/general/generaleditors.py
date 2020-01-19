@@ -43,7 +43,6 @@ def CommentItemInlineEditor(item, view, pos=None) -> bool:
     box = view.get_item_bounding_box(view.hovered_item)
 
     frame = Gtk.Frame()
-    frame.set_shadow_type(Gtk.ShadowType.IN)
     frame.add(text_view)
 
     text_view.show()

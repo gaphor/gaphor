@@ -34,7 +34,6 @@ class CommentItemPropertyPage(PropertyPageBase):
         text_view.set_size_request(-1, 100)
 
         frame = Gtk.Frame()
-        frame.set_shadow_type(Gtk.ShadowType.IN)
         frame.add(text_view)
 
         text_view.show()

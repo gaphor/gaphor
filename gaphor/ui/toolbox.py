@@ -103,7 +103,6 @@ class Toolbox(UIComponent, ActionProvider):
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(toolbox)
         scrolled_window.show()
         return scrolled_window

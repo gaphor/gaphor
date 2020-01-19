@@ -95,7 +95,6 @@ class DiagramPage:
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
         scrolled_window.add(view)
         scrolled_window.show_all()
         self.widget = scrolled_window
