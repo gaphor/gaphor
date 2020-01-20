@@ -50,6 +50,7 @@ def create_hamburger_model(export_menu, tools_menu):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
+    part.append(gettext("Save"), "win.file-save")
     part.append(gettext("Save As..."), "win.file-save-as")
     part.append_submenu(gettext("Export"), export_menu)
     model.append_section(None, part)
@@ -179,7 +180,6 @@ class MainWindow(Service, ActionProvider):
                 create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
             )
         )
-        header.pack_end(button(gettext("Save"), "win.file-save"))
 
         b = Gtk.MenuButton.new()
         image = Gtk.Image.new_from_icon_name(
