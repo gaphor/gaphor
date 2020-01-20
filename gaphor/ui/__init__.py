@@ -87,17 +87,17 @@ def run(args):
 
     def app_activate(app):
         if not Application.has_sessions():
-            session = new_session(app)
-            file_manager = session.get_service("file_manager")
-            file_manager.action_new()
+            app.open([], "__new__")
 
     def app_open(app, files, n_files, hint):
-        print(f"Open files {files} with '{hint}'.")
-        assert n_files == 1
-        for file in files:
-            session = new_session(app)
-            file_manager = session.get_service("file_manager")
-            file_manager.load(file.get_path())
+        session = new_session(app)
+        file_manager = session.get_service("file_manager")
+        if hint == "__new__":
+            file_manager.new()
+        else:
+            assert n_files == 1
+            for file in files:
+                file_manager.load(file.get_path())
 
     def app_shutdown(app):
         Application.shutdown()

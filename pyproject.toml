@@ -64,6 +64,7 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 [tool.poetry.plugins."gaphor.appservices"]
 "session" = "gaphor.services.session:Session"
 "help" = "gaphor.services.helpservice:HelpService"
+"app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
 
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"

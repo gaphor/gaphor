@@ -49,7 +49,7 @@ class RecentFilesMenu(Gio.Menu):
         for item in recent_manager.get_items():
             if APPLICATION_ID in item.get_applications():
                 menu_item = Gio.MenuItem.new(
-                    item.get_uri_display().replace(HOME, "~"), "win.file-open-recent"
+                    item.get_uri_display().replace(HOME, "~"), "app.file-open-recent"
                 )
                 filename, _host = GLib.filename_from_uri(item.get_uri())
                 menu_item.set_attribute_value(

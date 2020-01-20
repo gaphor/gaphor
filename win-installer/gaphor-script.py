@@ -14,6 +14,7 @@ if __name__ == "__main__":
     from gaphor.services.session import Session
     from gaphor.services.undomanager import UndoManager
     from gaphor.ui.elementeditor import ElementEditor
+    from gaphor.ui.appfilemanager import AppFileManager
     from gaphor.ui.filemanager import FileManager
     from gaphor.ui.mainwindow import Diagrams
     from gaphor.ui.mainwindow import MainWindow

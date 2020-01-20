@@ -45,8 +45,8 @@ def create_hamburger_model(export_menu, tools_menu):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append(gettext("New"), "win.file-new")
-    part.append(gettext("New from Template"), "win.file-new-template")
+    part.append(gettext("New"), "app.file-new")
+    part.append(gettext("New from Template"), "app.file-new-template")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
@@ -164,7 +164,7 @@ class MainWindow(Service, ActionProvider):
 
         button_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
         button_box.get_style_context().add_class("linked")
-        button_box.pack_start(button(gettext("Open"), "win.file-open"), False, False, 0)
+        button_box.pack_start(button(gettext("Open"), "app.file-open"), False, False, 0)
         button_box.pack_start(create_recent_files_button(), False, False, 0)
         button_box.show()
         header.pack_start(button_box)
