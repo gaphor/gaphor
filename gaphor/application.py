@@ -88,6 +88,8 @@ class _Application(Service, ActionProvider):
     def shutdown(self):
         """
         Forcibly shut down all sessions. No questions asked.
+        
+        This is mainly for testing purposes.
         """
         for session in self.sessions:
             self.active_session = None

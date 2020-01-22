@@ -10,6 +10,8 @@ import sys
 import gi
 
 from gaphor.application import Application, Session
+from gaphor.core import event_handler
+from gaphor.event import SessionShutdown
 from gaphor.ui.actiongroup import apply_application_actions
 
 # fmt: off
@@ -75,6 +77,15 @@ def run(args):
         main_window.open(app)
         app.add_window(main_window.window)
         main_window.window.connect("notify::is-active", on_active_window, session)
+
+        @event_handler(SessionShutdown)
+        def on_session_shutdown(event):
+            Application.shutdown_active_session()
+            if not Application.sessions:
+                app.quit()
+
+        event_manager = session.get_service("event_manager")
+        event_manager.subscribe(on_session_shutdown)
         return session
 
     def app_startup(app):
@@ -107,12 +118,6 @@ def run(args):
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)
     gtk_app.run(args)
-
-
-def quit():
-    Application.shutdown_active_session()
-    if not Application.sessions:
-        Gtk.Application.get_default().quit()
 
 
 def add_main_options(gtk_app):
