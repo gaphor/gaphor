@@ -46,9 +46,7 @@ class EventManager(Service):
         for et in event_types:
             self._events.subscribe(handler, et)
 
-    def unsubscribe(
-        self, handler: Handler, event_types: Optional[Sequence[Type[Event]]] = None
-    ) -> None:
+    def unsubscribe(self, handler: Handler) -> None:
         """
         Unregister a previously registered handler.
         """
