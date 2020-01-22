@@ -20,8 +20,8 @@ from gaphor.ui.event import DiagramOpened
 
 
 @pytest.fixture
-def application():
-    Application.new_session(
+def session():
+    session = Application.new_session(
         services=[
             "event_manager",
             "component_registry",
@@ -37,20 +37,20 @@ def application():
             "tools_menu",
         ]
     )
-    main_window = Application.get_service("main_window")
+    main_window = session.get_service("main_window")
     main_window.open()
-    yield Application
-    Application.shutdown()
+    yield session
+    session.shutdown()
 
 
 @pytest.fixture
-def element_factory(application):
-    return application.get_service("element_factory")
+def element_factory(session):
+    return session.get_service("element_factory")
 
 
 @pytest.fixture
-def event_manager(application):
-    return application.get_service("event_manager")
+def event_manager(session):
+    return session.get_service("event_manager")
 
 
 @pytest.fixture
@@ -101,7 +101,7 @@ class HandleToolTestCase(unittest.TestCase):
     """
 
     def setUp(self):
-        Application.new_session(
+        self.session = Application.new_session(
             services=[
                 "event_manager",
                 "component_registry",
@@ -117,10 +117,10 @@ class HandleToolTestCase(unittest.TestCase):
                 "tools_menu",
             ]
         )
-        self.component_registry = Application.get_service("component_registry")
-        self.event_manager = Application.get_service("event_manager")
+        self.component_registry = self.session.get_service("component_registry")
+        self.event_manager = self.session.get_service("event_manager")
 
-        self.main_window = Application.get_service("main_window")
+        self.main_window = self.session.get_service("main_window")
         self.main_window.open()
 
     def shutDown(self):
@@ -143,7 +143,7 @@ class HandleToolTestCase(unittest.TestCase):
         Test basic glue functionality using CommentItem and CommentLine
         items.
         """
-        element_factory = Application.get_service("element_factory")
+        element_factory = self.session.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         comment = diagram.create(
@@ -183,7 +183,7 @@ class HandleToolTestCase(unittest.TestCase):
     def test_connect_comment_and_actor(self):
         """Test connect/disconnect on comment and actor using comment-line.
         """
-        element_factory = Application.get_service("element_factory")
+        element_factory = self.session.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         comment = diagram.create(
@@ -244,7 +244,7 @@ class HandleToolTestCase(unittest.TestCase):
     def skiptest_connect_3(self):
         """Test connecting through events (button press/release, motion).
         """
-        element_factory = Application.get_service("element_factory")
+        element_factory = self.session.get_service("element_factory")
         diagram = element_factory.create(UML.Diagram)
 
         comment = diagram.create(

@@ -72,12 +72,6 @@ class _Application(Service, ActionProvider):
         doc="The PkgResources distribution for Gaphor",
     )
 
-    def get_service(self, name):
-        if not self.active_session:
-            raise NotInitializedError("First call Application.init() to load services")
-
-        return self.active_session.get_service(name)
-
     def shutdown_active_session(self):
         session = self.active_session
         assert session
@@ -88,7 +82,7 @@ class _Application(Service, ActionProvider):
     def shutdown(self):
         """
         Forcibly shut down all sessions. No questions asked.
-        
+
         This is mainly for testing purposes.
         """
         for session in self.sessions:

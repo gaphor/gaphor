@@ -96,17 +96,17 @@ def clear_events():
 
 @pytest.fixture
 def element_factory():
-    Application.new_session(
+    session = Application.new_session(
         services=["event_manager", "component_registry", "element_factory"]
     )
-    event_manager = Application.get_service("event_manager")
+    event_manager = session.get_service("event_manager")
     event_manager.subscribe(handler)
     clear_events()
-    factory = Application.get_service("element_factory")
+    factory = session.get_service("element_factory")
     yield factory
     del factory
     clear_events()
-    Application.shutdown()
+    session.shutdown()
 
 
 def test_create_event(element_factory):

@@ -9,17 +9,17 @@ from gaphor.storage.storage import load_elements
 
 
 @pytest.fixture
-def application():
-    Application.new_session(
+def session():
+    session = Application.new_session(
         services=["event_manager", "component_registry", "element_factory"]
     )
-    yield Application
-    Application.shutdown()
+    yield session
+    session.shutdown()
 
 
 @pytest.fixture
-def element_factory(application):
-    return application.get_service("element_factory")
+def element_factory(session):
+    return session.get_service("element_factory")
 
 
 def test_message_item_upgrade(element_factory):

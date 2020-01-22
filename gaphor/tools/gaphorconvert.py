@@ -77,10 +77,10 @@ def main(argv=sys.argv[1:]):
     if not args:
         parser.print_help()
 
-    Application.new_session(
+    session = Application.new_session(
         services=["event_manager", "component_registry", "element_factory"]
     )
-    factory = Application.get_service("element_factory")
+    factory = session.get_service("element_factory")
 
     name_re = None
     if options.regex:

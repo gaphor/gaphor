@@ -30,8 +30,8 @@ class TestCase(unittest.TestCase):
     services = ["event_manager", "component_registry", "element_factory", "sanitizer"]
 
     def setUp(self):
-        Application.new_session(services=self.services)
-        self.element_factory = Application.get_service("element_factory")
+        self.session = Application.new_session(services=self.services)
+        self.element_factory = self.session.get_service("element_factory")
         assert len(list(self.element_factory.select())) == 0, list(
             self.element_factory.select()
         )
@@ -42,10 +42,10 @@ class TestCase(unittest.TestCase):
 
     def tearDown(self):
         self.element_factory.shutdown()
-        Application.shutdown()
+        self.session.shutdown()
 
     def get_service(self, name):
-        return Application.get_service(name)
+        return self.session.get_service(name)
 
     def create(self, item_cls: Type[T], subject_cls=None, subject=None) -> T:
         """

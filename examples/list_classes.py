@@ -36,8 +36,8 @@ model = args[0]
 session = Application.new_session()
 
 # Get services we need.
-element_factory = Application.get_service("element_factory")
-file_manager = Application.get_service("file_manager")
+element_factory = session.get_service("element_factory")
+file_manager = session.get_service("file_manager")
 
 # Load model from file.
 file_manager.load(model)
