@@ -34,6 +34,19 @@ class ServiceShutdownEvent(ServiceEvent):
         self.service = service
 
 
+class SessionShutdownRequested(ServiceEvent):
+    """
+    When the application is asked to terminate, it will inform all sessions.
+    The user can then save his/her work.
+    """
+
+
+class SessionShutdown(ServiceEvent):
+    """
+    The session is emitting this event when it's ready to shut down.
+    """
+
+
 class TransactionBegin:
     """
     This event denotes the beginning of a transaction.

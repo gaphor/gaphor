@@ -99,9 +99,6 @@ def run(args):
             for file in files:
                 file_manager.load(file.get_path())
 
-    def app_shutdown(app):
-        Application.shutdown()
-
     gtk_app = Gtk.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
     )
@@ -109,7 +106,6 @@ def run(args):
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)
-    gtk_app.connect("shutdown", app_shutdown)
     gtk_app.run(args)
 
 

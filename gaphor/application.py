@@ -17,8 +17,13 @@ from typing import Dict, Optional, Set, Type
 
 import importlib_metadata
 
-from gaphor.abc import Service
-from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
+from gaphor.abc import ActionProvider, Service
+from gaphor.action import action
+from gaphor.event import (
+    ServiceInitializedEvent,
+    ServiceShutdownEvent,
+    SessionShutdownRequested,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +36,7 @@ class ComponentLookupError(LookupError):
     pass
 
 
-class _Application:
+class _Application(Service, ActionProvider):
     """
     The Gaphor application is started from the gaphor.ui module.
 
@@ -48,7 +53,7 @@ class _Application:
 
     def init(self):
         uninitialized_services = load_services("gaphor.appservices")
-        self._services_by_name = init_services(uninitialized_services)
+        self._services_by_name = init_services(uninitialized_services, application=self)
 
     def new_session(self, services=None):
         """
@@ -78,13 +83,29 @@ class _Application:
         assert session
         session.shutdown()
         self.sessions.discard(session)
+        self.active_session = None
 
     def shutdown(self):
+        """
+        Forcibly shut down all sessions. No questions asked.
+        """
         for session in self.sessions:
             self.active_session = None
-            # TODO: gently quit via file manager
             session.shutdown()
         self.sessions.clear()
+
+    @action(name="app.quit", shortcut="<Primary>q")
+    def quit(self):
+        """
+        The user's application Quit command.
+        """
+        for session in list(self.sessions):
+            self.active_session = session
+            event_manager = session.get_service("event_manager")
+            event_manager.handle(SessionShutdownRequested(self))
+            if self.active_session == session:
+                logger.info("Window not closed, abort quit operation")
+                return
 
     # def all(self, base: Type[T]) -> Iterator[Tuple[T, str]]:
     def all(self, base):
@@ -156,7 +177,7 @@ def load_services(scope, services=None) -> Dict[str, Type[Service]]:
     return uninitialized_services
 
 
-def init_services(uninitialized_services):
+def init_services(uninitialized_services, **known_services):
     """
     Instantiate service definitions, taking into account dependencies
     defined in the constructor.
@@ -164,7 +185,7 @@ def init_services(uninitialized_services):
     Given a dictionary `{name: service-class}`,
     return a map `{name: service-instance}`.
     """
-    ready: Dict[str, Service] = {}
+    ready: Dict[str, Service] = dict(known_services)
 
     def pop(name):
         try:
