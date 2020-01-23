@@ -16,7 +16,7 @@ from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty, QueueFull
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
-from gaphor.ui.event import FileLoaded, FileSaved, WindowClosed
+from gaphor.ui.event import FileLoaded, FileSaved
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -40,11 +40,11 @@ class FileManager(Service, ActionProvider):
         self.properties = properties
         self._filename = None
 
-        event_manager.subscribe(self._on_window_close)
+        event_manager.subscribe(self._on_session_shutdown_request)
 
     def shutdown(self):
         """Called when shutting down the file manager service."""
-        self.event_manager.unsubscribe(self._on_window_close)
+        self.event_manager.unsubscribe(self._on_session_shutdown_request)
 
     def get_filename(self):
         """Return the current file name.  This method is used by the filename
@@ -229,13 +229,17 @@ class FileManager(Service, ActionProvider):
 
         return False
 
-    @event_handler(WindowClosed, SessionShutdownRequested)
-    def _on_window_close(self, event):
+    @event_handler(SessionShutdownRequested)
+    def _on_session_shutdown_request(self, event):
         """
         Ask user to close window if the model has changed.
         The user is asked to either discard the changes, keep the
         application running or save the model and quit afterwards.
         """
+
+        def confirm_shutdown():
+            self.event_manager.handle(SessionShutdown(self))
+
         if self.main_window.model_changed:
             dialog = Gtk.MessageDialog(
                 self.main_window.window,
@@ -262,8 +266,8 @@ class FileManager(Service, ActionProvider):
             if response == Gtk.ResponseType.YES:
                 saved = self.action_save()
                 if saved:
-                    self.event_manager.handle(SessionShutdown(self))
+                    confirm_shutdown()
             if response == Gtk.ResponseType.REJECT:
-                self.event_manager.handle(SessionShutdown(self))
+                confirm_shutdown()
         else:
-            self.event_manager.handle(SessionShutdown(self))
+            confirm_shutdown()

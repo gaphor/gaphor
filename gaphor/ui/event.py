@@ -15,15 +15,6 @@ class DiagramSelectionChanged:
         self.selected_items = selected_items
 
 
-class WindowClosed:
-    """
-    The user requested the window to be closed.
-    """
-
-    def __init__(self, service):
-        self.service = service
-
-
 class FileLoaded:
     def __init__(self, service, filename=None):
         self.service = service

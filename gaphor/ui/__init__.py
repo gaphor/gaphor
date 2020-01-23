@@ -11,7 +11,7 @@ import gi
 
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
-from gaphor.event import SessionShutdown
+from gaphor.event import ActiveSessionChanged, SessionShutdown
 from gaphor.ui.actiongroup import apply_application_actions
 
 # fmt: off
@@ -66,26 +66,30 @@ def main(argv=sys.argv):
         run(argv)
 
 
-def run(args):
-    def on_active_window(window, prop, session):
+def subscribe_to_lifecycle_events(session, gtk_app):
+    @event_handler(ActiveSessionChanged)
+    def on_active_session_changed(event):
         Application.active_session = session
 
+    @event_handler(SessionShutdown)
+    def on_session_shutdown(event):
+        Application.shutdown_session(session)
+        if not Application.sessions:
+            gtk_app.quit()
+
+    event_manager = session.get_service("event_manager")
+    event_manager.subscribe(on_active_session_changed)
+    event_manager.subscribe(on_session_shutdown)
+
+
+def run(args):
     def new_session(app):
         session = Application.new_session()
+        subscribe_to_lifecycle_events(session, gtk_app)
 
         main_window = session.get_service("main_window")
         main_window.open(app)
-        app.add_window(main_window.window)
-        main_window.window.connect("notify::is-active", on_active_window, session)
 
-        @event_handler(SessionShutdown)
-        def on_session_shutdown(event):
-            Application.shutdown_active_session()
-            if not Application.sessions:
-                app.quit()
-
-        event_manager = session.get_service("event_manager")
-        event_manager.subscribe(on_session_shutdown)
         return session
 
     def app_startup(app):

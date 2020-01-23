@@ -72,12 +72,12 @@ class _Application(Service, ActionProvider):
         doc="The PkgResources distribution for Gaphor",
     )
 
-    def shutdown_active_session(self):
-        session = self.active_session
+    def shutdown_session(self, session):
         assert session
         session.shutdown()
         self.sessions.discard(session)
-        self.active_session = None
+        if session is self.active_session:
+            self.active_session = None
 
     def shutdown(self):
         """
@@ -133,7 +133,7 @@ class Session:
 
     def get_service(self, name):
         if not self.component_registry:
-            raise NotInitializedError("First call Application.init() to load services")
+            raise NotInitializedError("Session is no longer alive")
 
         return self.component_registry.get_service(name)
 
