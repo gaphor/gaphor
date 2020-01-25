@@ -39,11 +39,7 @@ class AppFileManager(Service, ActionProvider):
             self.application.open([Gio.File.new_for_path(filename)], "")
 
     def new(self):
-        if self.active_session_is_new():
-            file_manager = self.session.get_service("file_manager")
-            file_manager.new()
-        else:
-            self.application.open([], "__new__")
+        self.application.open([], "__new__")
 
     def active_session_is_new(self):
         """
