@@ -50,6 +50,7 @@ class _Application(Service, ActionProvider):
     def __init__(self):
         self.active_session: Optional[Session] = None
         self.sessions: Set[Session] = set()
+        self.__services_by_name: Dict[str, Service] = {}
 
     def init(self):
         uninitialized_services = load_services("gaphor.appservices")
@@ -89,6 +90,11 @@ class _Application(Service, ActionProvider):
             self.active_session = None
             session.shutdown()
         self.sessions.clear()
+
+        for c in self._services_by_name.values():
+            if c is not self:
+                c.shutdown()
+        self._services_by_name.clear()
 
     @action(name="app.quit", shortcut="<Primary>q")
     def quit(self):
