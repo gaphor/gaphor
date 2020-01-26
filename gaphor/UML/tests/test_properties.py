@@ -565,7 +565,7 @@ def test_derivedunion_events():
     def handler(event, events=events):
         events.append(event)
 
-    Application.register_handler(handler)
+    # Application.register_handler(handler)
     try:
         a = A()
         a.a1 = A()
@@ -655,7 +655,8 @@ def test_derivedunion_events():
         assert isinstance(events[13], DerivedDeleted), type(events[10])
         assert events[14].property is A.b3
     finally:
-        Application.unregister_handler(handler)
+        # Application.unregister_handler(handler)
+        pass
 
 
 @pytest.mark.skip
@@ -711,7 +712,7 @@ def test_redefine_subclass():
     def handler(event, events=events):
         events.append(event)
 
-    Application.register_handler(handler)
+    # Application.register_handler(handler)
     try:
         a = A()
         a.a = A()
@@ -728,4 +729,5 @@ def test_redefine_subclass():
         assert events[0].property is B.b, events[0].property
         assert events[1].property is B.b.original, events[1].property
     finally:
-        Application.unregister_handler(handler)
+        # Application.unregister_handler(handler)
+        pass

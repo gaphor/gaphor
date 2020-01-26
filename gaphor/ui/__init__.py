@@ -10,7 +10,7 @@ from typing import Optional
 
 import gi
 
-from gaphor.application import Application, _Application
+from gaphor.application import Application
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, SessionShutdown
 from gaphor.ui.actiongroup import apply_application_actions
@@ -84,7 +84,7 @@ def subscribe_to_lifecycle_events(session, application, gtk_app):
 
 
 def run(args):
-    application: Optional[_Application] = None
+    application: Optional[Application] = None
 
     def new_session():
         assert application

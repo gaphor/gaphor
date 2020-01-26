@@ -47,7 +47,7 @@ class ComponentLookupError(LookupError):
     pass
 
 
-class _Application(Service, ActionProvider):
+class Application(Service, ActionProvider):
     """
     The Gaphor application is started from the gaphor.ui module.
 
@@ -58,20 +58,14 @@ class _Application(Service, ActionProvider):
     are registered in the "component_registry" service.
     """
 
-    def __init__(self):
+    def __init__(self, appservices=None):
         self.active_session: Optional[Session] = None
         self.sessions: Set[Session] = set()
-        self._services_by_name: Dict[str, Service] = {}
 
-    def __call__(self, appservices=None):
-        """Mimic object instantiation behavior."""
-        assert not self._services_by_name
         uninitialized_services = load_services("gaphor.appservices", appservices)
         self._services_by_name = init_services(uninitialized_services, application=self)
 
         transaction.subscribers.add(self._transaction_proxy)
-
-        return self
 
     def new_session(self, services=None):
         """
@@ -235,7 +229,3 @@ def init_services(uninitialized_services, **known_services):
         init(name, cls)
 
     return ready
-
-
-# Make sure there is only one!
-Application = _Application()
