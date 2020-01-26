@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor import UML
-from gaphor.application import Application, distribution
+from gaphor.application import Session, distribution
 from gaphor.storage import diagramitems
 from gaphor.storage.parser import parse
 from gaphor.storage.storage import load_elements
@@ -9,7 +9,7 @@ from gaphor.storage.storage import load_elements
 
 @pytest.fixture
 def session():
-    session = Application.new_session(
+    session = Session(
         services=["event_manager", "component_registry", "element_factory"]
     )
     yield session

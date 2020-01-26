@@ -1,14 +1,14 @@
 import pytest
 
 from gaphor import UML
-from gaphor.application import Application
+from gaphor.application import Session
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramOpened
 
 
 @pytest.fixture
 def session():
-    session = Application.new_session(
+    session = Session(
         services=[
             "event_manager",
             "component_registry",

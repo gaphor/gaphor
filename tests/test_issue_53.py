@@ -7,8 +7,10 @@ from gaphor.storage.storage import load
 
 @pytest.fixture
 def session():
-    session = Application.new_session()
+    application = Application()
+    session = application.new_session()
     yield session
+    application.shutdown()
 
 
 @pytest.fixture
