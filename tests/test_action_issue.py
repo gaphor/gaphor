@@ -1,6 +1,5 @@
-import importlib_metadata
-
 from gaphor import UML
+from gaphor.application import distribution
 from gaphor.diagram.actions import ActionItem, FlowItem
 from gaphor.storage import storage
 from gaphor.tests import TestCase
@@ -12,8 +11,7 @@ class ActionIssueTestCase(TestCase):
         Test an issue when loading a freshly created action diagram.
         """
         ef = self.element_factory
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("test-diagrams/action-issue.gaphor")
+        path = distribution().locate_file("test-diagrams/action-issue.gaphor")
         storage.load(path, ef)
 
         actions = ef.lselect(lambda e: e.isKindOf(UML.Action))

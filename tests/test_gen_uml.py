@@ -1,7 +1,6 @@
 """Test case that checks the working of the utils/command/gen_uml.py module."""
 
-import importlib_metadata
-
+from gaphor.application import distribution
 from utils.model.gen_uml import generate
 from utils.model.override import Overrides
 
@@ -18,8 +17,7 @@ class PseudoFile:
 
 
 def test_loading():
-    dist = importlib_metadata.distribution("gaphor")
-    model_file = dist.locate_file("tests/test-model.gaphor")
+    model_file = distribution().locate_file("tests/test-model.gaphor")
     outfile = PseudoFile()
 
     generate(model_file, outfile)

@@ -10,8 +10,6 @@ import importlib.resources
 import logging
 import os
 
-import importlib_metadata
-
 log = logging.getLogger(__name__)
 
 try:

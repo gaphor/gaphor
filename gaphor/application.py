@@ -31,6 +31,13 @@ T = TypeVar("T")
 logger = logging.getLogger(__name__)
 
 
+def distribution():
+    """
+    The PkgResources distribution for Gaphor
+    """
+    return importlib_metadata.distribution("gaphor")
+
+
 class NotInitializedError(Exception):
     pass
 
@@ -70,11 +77,6 @@ class _Application(Service, ActionProvider):
 
     def has_sessions(self):
         return bool(self.active_session)
-
-    distribution = property(
-        lambda s: importlib_metadata.distribution("gaphor"),
-        doc="The PkgResources distribution for Gaphor",
-    )
 
     def shutdown_session(self, session):
         assert session
