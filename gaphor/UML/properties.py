@@ -743,21 +743,18 @@ class derivedunion(derived[T]):
         """
         Returns a union of all values as a set.
         """
-        if self.single:
-            return next(iter(self.subsets)).__get__(obj)
-        else:
-            u: Set[T] = set()
-            for s in self.subsets:
-                if s is exclude:
-                    continue
-                tmp = s.__get__(obj)
-                if tmp:
-                    try:
-                        u.update(tmp)
-                    except TypeError:
-                        # [0..1] property
-                        u.add(tmp)
-            return collectionlist(u)
+        u: Set[T] = set()
+        for s in self.subsets:
+            if s is exclude:
+                continue
+            tmp = s.__get__(obj)
+            if tmp:
+                try:
+                    u.update(tmp)
+                except TypeError:
+                    # [0..1] property
+                    u.add(tmp)
+        return collectionlist(u)
 
     def propagate(self, event):
         """

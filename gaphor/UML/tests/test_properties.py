@@ -453,24 +453,44 @@ def test_derivedunion():
     assert d in a.u
 
 
-@pytest.mark.skip
-def test_derivedunion_notify():
+def test_derivedunion_notify_for_single_derived_property():
     class A(Element):
         pass
 
     class E(Element):
         notified = False
 
-        def notify(self, name, pspec):
-            if name == "u":
+        def handle(self, event):
+            if event.property is E.u:
                 self.notified = True
 
     E.a = association("a", A)
     E.u = derivedunion(E, "u", A, 0, "*", E.a)
 
     e = E()
-    assert e.notified is False
     e.a = A()
+
+    assert e.notified is True
+
+
+def test_derivedunion_notify_for_multiple_derived_properties():
+    class A(Element):
+        pass
+
+    class E(Element):
+        notified = False
+
+        def handle(self, event):
+            if event.property is E.u:
+                self.notified = True
+
+    E.a = association("a", A)
+    E.aa = association("aa", A)
+    E.u = derivedunion(E, "u", A, 0, "*", E.a, E.aa)
+
+    e = E()
+    e.a = A()
+
     assert e.notified is True
 
 
