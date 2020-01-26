@@ -55,8 +55,8 @@ def test_load_multi_dependent_service():
 def test_service_load():
     """Test loading services and querying utilities."""
 
-    Application.init()
-    session = Application.new_session()
+    application = Application()
+    session = application.new_session()
 
     assert (
         session.get_service("undo_manager") is not None
@@ -66,4 +66,4 @@ def test_service_load():
         session.get_service("file_manager") is not None
     ), "Failed to load the file manager service"
 
-    Application.shutdown()
+    application.shutdown()

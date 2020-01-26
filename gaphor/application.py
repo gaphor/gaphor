@@ -63,9 +63,12 @@ class _Application(Service, ActionProvider):
         self.sessions: Set[Session] = set()
         self._services_by_name: Dict[str, Service] = {}
 
-    def init(self):
-        uninitialized_services = load_services("gaphor.appservices")
+    def __call__(self, appservices=None):
+        """Mimic object instantiation behavior."""
+        assert not self._services_by_name
+        uninitialized_services = load_services("gaphor.appservices", appservices)
         self._services_by_name = init_services(uninitialized_services, application=self)
+        return self
 
     def new_session(self, services=None):
         """
