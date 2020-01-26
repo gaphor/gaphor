@@ -1,16 +1,15 @@
 import pytest
 
 from gaphor import UML
-from gaphor.application import Application, distribution
+from gaphor.application import Session, distribution
 from gaphor.storage.storage import load
 
 
 @pytest.fixture
 def session():
-    application = Application()
-    session = application.new_session()
+    session = Session()
     yield session
-    application.shutdown()
+    session.shutdown()
 
 
 @pytest.fixture

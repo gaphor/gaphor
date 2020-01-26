@@ -1,5 +1,4 @@
 from gaphor.abc import Service
-from gaphor.application import Application
 
 
 class Session(Service):

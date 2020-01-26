@@ -1,6 +1,5 @@
 import pytest
 
-from gaphor.application import Application
 from gaphor.core import event_handler
 from gaphor.UML.element import Element
 from gaphor.UML.event import AssociationUpdated

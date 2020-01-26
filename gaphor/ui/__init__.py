@@ -10,7 +10,7 @@ from typing import Optional
 
 import gi
 
-from gaphor.application import Application, Session, _Application
+from gaphor.application import Application, _Application
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, SessionShutdown
 from gaphor.ui.actiongroup import apply_application_actions

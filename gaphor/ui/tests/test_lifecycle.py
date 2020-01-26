@@ -15,8 +15,9 @@ class GtkApplicationStub:
 
 @pytest.fixture
 def application():
-    yield Application
-    Application.shutdown()
+    application = Application()
+    yield application
+    application.shutdown()
 
 
 def two_sessions(application, gtk_app=GtkApplicationStub()):

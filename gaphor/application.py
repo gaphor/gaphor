@@ -68,6 +68,9 @@ class _Application(Service, ActionProvider):
         assert not self._services_by_name
         uninitialized_services = load_services("gaphor.appservices", appservices)
         self._services_by_name = init_services(uninitialized_services, application=self)
+
+        transaction.subscribers.add(self._transaction_proxy)
+
         return self
 
     def new_session(self, services=None):
@@ -77,6 +80,7 @@ class _Application(Service, ActionProvider):
         session = Session()
         self.sessions.add(session)
         self.active_session = session
+
         return session
 
     def has_sessions(self):
@@ -95,6 +99,8 @@ class _Application(Service, ActionProvider):
 
         This is mainly for testing purposes.
         """
+        transaction.subscribers.discard(self._transaction_proxy)
+
         while self.sessions:
             self.shutdown_session(self.sessions.pop())
 
@@ -115,11 +121,16 @@ class _Application(Service, ActionProvider):
             if self.active_session == session:
                 logger.info("Window not closed, abort quit operation")
                 return
+        self.shutdown()
 
     def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
         return (
             (n, c) for n, c in self._services_by_name.items() if isinstance(c, base)
         )
+
+    def _transaction_proxy(self, event):
+        if self.active_session:
+            self.active_session.event_manager.handle(event)
 
 
 class Session:
@@ -143,12 +154,6 @@ class Session:
             self.component_registry.register(name, srv)
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
 
-        transaction.subscribers.add(self._transaction_proxy)
-
-    def _transaction_proxy(self, event):
-        if self is Application.active_session:
-            self.event_manager.handle(event)
-
     def get_service(self, name):
         if not self.component_registry:
             raise NotInitializedError("Session is no longer alive")
@@ -156,8 +161,6 @@ class Session:
         return self.component_registry.get_service(name)
 
     def shutdown(self):
-        transaction.subscribers.discard(self._transaction_proxy)
-
         if self.component_registry:
             for name, _srv in self.component_registry.all(Service):
                 self.shutdown_service(name)
