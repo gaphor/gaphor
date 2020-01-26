@@ -50,7 +50,7 @@ class _Application(Service, ActionProvider):
     def __init__(self):
         self.active_session: Optional[Session] = None
         self.sessions: Set[Session] = set()
-        self.__services_by_name: Dict[str, Service] = {}
+        self._services_by_name: Dict[str, Service] = {}
 
     def init(self):
         uninitialized_services = load_services("gaphor.appservices")
@@ -86,10 +86,8 @@ class _Application(Service, ActionProvider):
 
         This is mainly for testing purposes.
         """
-        for session in self.sessions:
-            self.active_session = None
-            session.shutdown()
-        self.sessions.clear()
+        while self.sessions:
+            self.shutdown_session(self.sessions.pop())
 
         for c in self._services_by_name.values():
             if c is not self:
