@@ -17,6 +17,7 @@ from typing import Dict, Iterator, Optional, Set, Tuple, Type, TypeVar
 
 import importlib_metadata
 
+from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.event import (
@@ -139,6 +140,12 @@ class Session:
             self.component_registry.register(name, srv)
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
 
+        transaction.subscribers.add(self._transaction_proxy)
+
+    def _transaction_proxy(self, event):
+        if self is Application.active_session:
+            self.event_manager.handle(event)
+
     def get_service(self, name):
         if not self.component_registry:
             raise NotInitializedError("Session is no longer alive")
@@ -146,6 +153,8 @@ class Session:
         return self.component_registry.get_service(name)
 
     def shutdown(self):
+        transaction.subscribers.discard(self._transaction_proxy)
+
         if self.component_registry:
             for name, _srv in self.component_registry.all(Service):
                 self.shutdown_service(name)
