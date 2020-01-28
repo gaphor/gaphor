@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import inspect
 import logging
-from typing import Dict, Optional, Set, Type
+from typing import Dict, Iterator, Optional, Set, Tuple, Type, TypeVar
 
 import importlib_metadata
 
@@ -24,6 +24,9 @@ from gaphor.event import (
     ServiceShutdownEvent,
     SessionShutdownRequested,
 )
+
+T = TypeVar("T")
+
 
 logger = logging.getLogger(__name__)
 
@@ -107,8 +110,7 @@ class _Application(Service, ActionProvider):
                 logger.info("Window not closed, abort quit operation")
                 return
 
-    # def all(self, base: Type[T]) -> Iterator[Tuple[T, str]]:
-    def all(self, base):
+    def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
         return (
             (n, c) for n, c in self._services_by_name.items() if isinstance(c, base)
         )

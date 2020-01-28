@@ -29,7 +29,7 @@ def two_sessions(application, gtk_app=GtkApplicationStub()):
     return session1, session2
 
 
-def test_most_recently_created_sessio_is_active(application):
+def test_most_recently_created_session_is_active(application):
     session1, session2 = two_sessions(application)
 
     assert application.active_session is session2
