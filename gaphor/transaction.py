@@ -21,7 +21,9 @@ def transactional(func):
         try:
             event_manager = args[0].event_manager
         except (AttributeError, IndexError):
-            event_manager = application.Application.get_service("event_manager")
+            active_session = application.Application.active_session
+            if active_session:
+                event_manager = active_session.get_service("event_manager")
 
         with Transaction(event_manager):
             return func(*args, **kwargs)

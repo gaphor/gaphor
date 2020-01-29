@@ -12,7 +12,7 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
-from gaphor.event import ActionEnabled
+from gaphor.event import ActionEnabled, ActiveSessionChanged, SessionShutdownRequested
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
@@ -23,7 +23,6 @@ from gaphor.ui.event import (
     DiagramSelectionChanged,
     FileLoaded,
     FileSaved,
-    WindowClosed,
 )
 from gaphor.ui.layout import deserialize
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
@@ -45,8 +44,8 @@ def create_hamburger_model(export_menu, tools_menu):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append(gettext("New"), "win.file-new")
-    part.append(gettext("New from Template"), "win.file-new-template")
+    part.append(gettext("New"), "app.file-new")
+    part.append(gettext("New from Template"), "app.file-new-template")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
@@ -60,7 +59,7 @@ def create_hamburger_model(export_menu, tools_menu):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append(gettext("Preferences"), "app.preferences")
+    part.append(gettext("Preferences"), "win.preferences")
     part.append(gettext("Keyboard Shortcuts"), "app.shortcuts")
     part.append(gettext("About Gaphor"), "app.about")
     model.append_section(None, part)
@@ -164,7 +163,7 @@ class MainWindow(Service, ActionProvider):
 
         button_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
         button_box.get_style_context().add_class("linked")
-        button_box.pack_start(button(gettext("Open"), "win.file-open"), False, False, 0)
+        button_box.pack_start(button(gettext("Open"), "app.file-open"), False, False, 0)
         button_box.pack_start(create_recent_files_button(), False, False, 0)
         button_box.show()
         header.pack_start(button_box)
@@ -217,6 +216,7 @@ class MainWindow(Service, ActionProvider):
 
         self.window.present()
 
+        self.window.connect("notify::is-active", self._on_window_active)
         self.window.connect("delete-event", self._on_window_delete)
 
         # We want to store the window size, so it can be reloaded on startup
@@ -287,8 +287,11 @@ class MainWindow(Service, ActionProvider):
         a = ag.lookup_action(event.name)
         a.set_enabled(event.enabled)
 
-    def _on_window_delete(self, window=None, event=None):
-        self.event_manager.handle(WindowClosed(self))
+    def _on_window_active(self, window, prop):
+        self.event_manager.handle(ActiveSessionChanged(self))
+
+    def _on_window_delete(self, window, event):
+        self.event_manager.handle(SessionShutdownRequested(self))
         return True
 
     def _on_window_size_allocate(self, window, allocation):

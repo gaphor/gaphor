@@ -11,11 +11,15 @@ from gaphor.core import action
 
 
 class HelpService(Service, ActionProvider):
-    def __init__(self, main_window):
-        self.main_window = main_window
+    def __init__(self, session):
+        self.session = session
 
     def shutdown(self):
         pass
+
+    @property
+    def window(self):
+        return self.session.get_service("main_window").window
 
     @action(name="app.about")
     def about(self):
@@ -29,7 +33,7 @@ class HelpService(Service, ActionProvider):
 
         about.set_version(str(__version__))
 
-        about.set_transient_for(self.main_window.window)
+        about.set_transient_for(self.window)
 
         about.show_all()
         about.run()
@@ -44,7 +48,8 @@ class HelpService(Service, ActionProvider):
             builder.add_objects_from_file(str(glade_file), ("shortcuts-gaphor",))
 
         shortcuts = builder.get_object("shortcuts-gaphor")
-        shortcuts.set_transient_for(self.main_window.window)
+        shortcuts.set_modal(True)
+        shortcuts.set_transient_for(self.window)
 
         shortcuts.show_all()
         return shortcuts

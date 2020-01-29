@@ -58,8 +58,13 @@ flake8 = "^3.7.9"
 isort = "^4.3.21"
 
 [tool.poetry.scripts]
-gaphor = 'gaphor:main'
+gaphor = 'gaphor.ui:main'
 gaphorconvert = 'gaphor.tools.gaphorconvert:main'
+
+[tool.poetry.plugins."gaphor.appservices"]
+"session" = "gaphor.services.session:Session"
+"help" = "gaphor.services.helpservice:HelpService"
+"app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
 
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"
@@ -75,7 +80,6 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "tools_menu" = "gaphor.ui.menufragment:MenuFragment"
 "copy" = "gaphor.services.copyservice:CopyService"
 "sanitizer" = "gaphor.services.sanitizerservice:SanitizerService"
-"help" = "gaphor.services.helpservice:HelpService"
 "namespace" = "gaphor.ui.namespace:Namespace"
 "toolbox" = "gaphor.ui.toolbox:Toolbox"
 "diagrams" = "gaphor.ui.mainwindow:Diagrams"

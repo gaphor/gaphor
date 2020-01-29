@@ -11,11 +11,12 @@ import gaphor.ui
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
+from gaphor.event import SessionShutdown, SessionShutdownRequested
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty, QueueFull
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
-from gaphor.ui.event import FileLoaded, FileSaved, WindowClosed
+from gaphor.ui.event import FileLoaded, FileSaved
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -39,11 +40,11 @@ class FileManager(Service, ActionProvider):
         self.properties = properties
         self._filename = None
 
-        event_manager.subscribe(self._on_window_close)
+        event_manager.subscribe(self._on_session_shutdown_request)
 
     def shutdown(self):
         """Called when shutting down the file manager service."""
-        self.event_manager.unsubscribe(self._on_window_close)
+        self.event_manager.unsubscribe(self._on_session_shutdown_request)
 
     def get_filename(self):
         """Return the current file name.  This method is used by the filename
@@ -59,6 +60,18 @@ class FileManager(Service, ActionProvider):
             self._filename = filename
 
     filename = property(get_filename, set_filename)
+
+    def new(self):
+        element_factory = self.element_factory
+        element_factory.flush()
+        with element_factory.block_events():
+            model = element_factory.create(UML.Package)
+            model.name = gettext("New model")
+            diagram = element_factory.create(UML.Diagram)
+            diagram.package = model
+            diagram.name = gettext("main")
+        self.filename = None
+        element_factory.model_ready()
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
@@ -176,127 +189,6 @@ class FileManager(Service, ActionProvider):
         finally:
             status_window.destroy()
 
-    def _open_dialog(self, title):
-        """Open a file chooser dialog to select a model
-        file to open."""
-
-        filesel = Gtk.FileChooserDialog(
-            title=title,
-            action=Gtk.FileChooserAction.OPEN,
-            buttons=(
-                Gtk.STOCK_CANCEL,
-                Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OPEN,
-                Gtk.ResponseType.OK,
-            ),
-        )
-        filesel.set_transient_for(self.main_window.window)
-
-        filter = Gtk.FileFilter()
-        filter.set_name("Gaphor models")
-        filter.add_pattern("*.gaphor")
-        filesel.add_filter(filter)
-
-        filter = Gtk.FileFilter()
-        filter.set_name("All files")
-        filter.add_pattern("*")
-        filesel.add_filter(filter)
-
-        if self.filename:
-            filesel.set_current_name(self.filename)
-
-        response = filesel.run()
-        filename = filesel.get_filename()
-        filesel.destroy()
-        if not filename or response != Gtk.ResponseType.OK:
-            return
-        return filename
-
-    @action(name="file-new", shortcut="<Primary>n")
-    def action_new(self):
-        """The new model menu action.  This action will create a new
-        UML model.  This will trigger a FileManagerStateChange event."""
-
-        element_factory = self.element_factory
-        main_window = self.main_window
-
-        if element_factory.size():
-            dialog = QuestionDialog(
-                gettext(
-                    "Opening a new model will flush the"
-                    " currently loaded model.\nAny changes"
-                    " made will not be saved. Do you want to"
-                    " continue?"
-                ),
-                parent=main_window.window,
-            )
-
-            answer = dialog.answer
-            dialog.destroy()
-
-            if not answer:
-                return
-
-        element_factory.flush()
-        with element_factory.block_events():
-            model = element_factory.create(UML.Package)
-            model.name = gettext("New model")
-            diagram = element_factory.create(UML.Diagram)
-            diagram.package = model
-            diagram.name = gettext("main")
-        self.filename = None
-        element_factory.model_ready()
-
-        # main_window.select_element(diagram)
-        # main_window.show_diagram(diagram)
-
-    @action(name="file-new-template")
-    def action_new_from_template(self):
-        """This menu action opens the new model from template dialog."""
-
-        filters = [
-            {"name": gettext("Gaphor Models"), "pattern": "*.gaphor"},
-            {"name": gettext("All Files"), "pattern": "*"},
-        ]
-
-        file_dialog = FileDialog(
-            gettext("New Gaphor Model From Template"), filters=filters
-        )
-
-        filename = file_dialog.selection
-
-        file_dialog.destroy()
-
-        log.debug(filename)
-
-        if filename:
-            self.load(filename)
-            self.filename = None
-
-    @action(name="file-open", shortcut="<Primary>o")
-    def action_open(self):
-        """This menu action opens the standard model open dialog."""
-
-        filters = [
-            {"name": gettext("Gaphor Models"), "pattern": "*.gaphor"},
-            {"name": gettext("All Files"), "pattern": "*"},
-        ]
-
-        file_dialog = FileDialog(gettext("Open Gaphor Model"), filters=filters)
-
-        filename = file_dialog.selection
-
-        file_dialog.destroy()
-
-        log.debug(filename)
-
-        if filename:
-            self.load(filename)
-
-    @action(name="file-open-recent")
-    def action_open_recent(self, filename: str):
-        self.load(filename)
-
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
         """
@@ -337,13 +229,17 @@ class FileManager(Service, ActionProvider):
 
         return False
 
-    @action(name="app.quit", shortcut="<Primary>q")
-    def file_quit(self):
+    @event_handler(SessionShutdownRequested)
+    def _on_session_shutdown_request(self, event):
         """
         Ask user to close window if the model has changed.
         The user is asked to either discard the changes, keep the
         application running or save the model and quit afterwards.
         """
+
+        def confirm_shutdown():
+            self.event_manager.handle(SessionShutdown(self))
+
         if self.main_window.model_changed:
             dialog = Gtk.MessageDialog(
                 self.main_window.window,
@@ -370,12 +266,8 @@ class FileManager(Service, ActionProvider):
             if response == Gtk.ResponseType.YES:
                 saved = self.action_save()
                 if saved:
-                    gaphor.ui.quit()
+                    confirm_shutdown()
             if response == Gtk.ResponseType.REJECT:
-                gaphor.ui.quit()
+                confirm_shutdown()
         else:
-            gaphor.ui.quit()
-
-    @event_handler(WindowClosed)
-    def _on_window_close(self, event):
-        self.file_quit()
+            confirm_shutdown()

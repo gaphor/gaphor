@@ -40,7 +40,8 @@ class FileDialog:
         if filename:
             self.dialog.set_current_name(filename)
 
-    def get_selection(self):
+    @property
+    def selection(self):
         """Return the selected file or files from the dialog.  This is used
         by the selection property."""
 
@@ -60,5 +61,3 @@ class FileDialog:
         """Destroy the GTK dialog."""
 
         self.dialog.destroy()
-
-    selection = property(get_selection)

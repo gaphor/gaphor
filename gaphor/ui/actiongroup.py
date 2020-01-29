@@ -17,7 +17,7 @@ class ActionGroup(NamedTuple):
 
 def apply_application_actions(component_registry, gtk_app):
     scope = "app"
-    for provider, _name in component_registry.all(ActionProvider):
+    for _name, provider in component_registry.all(ActionProvider):
         for attrname, act in iter_actions(provider, scope):
             a = create_gio_action(act, provider, attrname)
             gtk_app.add_action(a)
@@ -31,7 +31,7 @@ def window_action_group(component_registry):
     action_group = Gio.SimpleActionGroup.new()
     accel_group = Gtk.AccelGroup.new()
 
-    for provider, _name in component_registry.all(ActionProvider):
+    for _name, provider in component_registry.all(ActionProvider):
         create_action_group(
             provider, scope, action_group=action_group, accel_group=accel_group
         )

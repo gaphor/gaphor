@@ -39,7 +39,7 @@ def dummy_action_provider():
 @pytest.fixture
 def component_registry(dummy_action_provider):
     component_registry = ComponentRegistry()
-    component_registry.register(dummy_action_provider, "dummy_action_provider")
+    component_registry.register("dummy_action_provider", dummy_action_provider)
     return component_registry
 
 

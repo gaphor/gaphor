@@ -9,14 +9,24 @@ All important services are present in the application object:
  - action sets
 """
 
+from __future__ import annotations
+
 import inspect
 import logging
-from typing import Dict, Type
+from typing import Dict, Iterator, Optional, Set, Tuple, Type, TypeVar
 
 import importlib_metadata
 
-from gaphor.abc import Service
-from gaphor.event import ServiceInitializedEvent, ServiceShutdownEvent
+from gaphor.abc import ActionProvider, Service
+from gaphor.action import action
+from gaphor.event import (
+    ServiceInitializedEvent,
+    ServiceShutdownEvent,
+    SessionShutdownRequested,
+)
+
+T = TypeVar("T")
+
 
 logger = logging.getLogger(__name__)
 
@@ -29,70 +39,117 @@ class ComponentLookupError(LookupError):
     pass
 
 
-class _Application:
+class _Application(Service, ActionProvider):
     """
-    The Gaphor application is started from the Application instance. It behaves
-    like a singleton in many ways.
+    The Gaphor application is started from the gaphor.ui module.
+
+    This application instance is used to maintain application wide references
+    to services and sessions (opened models). It behaves like a singleton in many ways.
 
     The Application is responsible for loading services and plugins. Services
     are registered in the "component_registry" service.
     """
 
     def __init__(self):
-        self._uninitialized_services: Dict[str, Type[Service]] = {}
-        self._app = None
-        self.component_registry = None
-        self.event_manager = None
+        self.active_session: Optional[Session] = None
+        self.sessions: Set[Session] = set()
+        self._services_by_name: Dict[str, Service] = {}
 
-    def init(self, services=None):
+    def init(self):
+        uninitialized_services = load_services("gaphor.appservices")
+        self._services_by_name = init_services(uninitialized_services, application=self)
+
+    def new_session(self, services=None):
         """
-        Initialize the application.
+        Initialize an application session.
         """
-        self.load_services(services)
-        self.init_all_services()
+        session = Session()
+        self.sessions.add(session)
+        self.active_session = session
+        return session
 
-    def load_services(self, services=None):
-        """
-        Load services from resources.
-
-        Service should provide an interface gaphor.abc.Service.
-        """
-        for ep in importlib_metadata.entry_points()["gaphor.services"]:
-            cls = ep.load()
-            if isinstance(cls, Service):
-                raise NameError(f"Entry point {ep.name} doesnt provide Service")
-            if not services or ep.name in services:
-                logger.debug(f'found service entry point "{ep.name}"')
-                self._uninitialized_services[ep.name] = cls
-
-    def init_all_services(self):
-        services_by_name = init_services(self._uninitialized_services)
-
-        self.event_manager = services_by_name["event_manager"]
-        self.component_registry = services_by_name["component_registry"]
-
-        for name, srv in services_by_name.items():
-            logger.info(f"Initializing service {name}")
-            self.component_registry.register(srv, name)
-            self.event_manager.handle(ServiceInitializedEvent(name, srv))
+    def has_sessions(self):
+        return bool(self.active_session)
 
     distribution = property(
         lambda s: importlib_metadata.distribution("gaphor"),
         doc="The PkgResources distribution for Gaphor",
     )
 
+    def shutdown_session(self, session):
+        assert session
+        session.shutdown()
+        self.sessions.discard(session)
+        if session is self.active_session:
+            self.active_session = None
+
+    def shutdown(self):
+        """
+        Forcibly shut down all sessions. No questions asked.
+
+        This is mainly for testing purposes.
+        """
+        while self.sessions:
+            self.shutdown_session(self.sessions.pop())
+
+        for c in self._services_by_name.values():
+            if c is not self:
+                c.shutdown()
+        self._services_by_name.clear()
+
+    @action(name="app.quit", shortcut="<Primary>q")
+    def quit(self):
+        """
+        The user's application Quit command.
+        """
+        for session in list(self.sessions):
+            self.active_session = session
+            event_manager = session.get_service("event_manager")
+            event_manager.handle(SessionShutdownRequested(self))
+            if self.active_session == session:
+                logger.info("Window not closed, abort quit operation")
+                return
+
+    def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
+        return (
+            (n, c) for n, c in self._services_by_name.items() if isinstance(c, base)
+        )
+
+
+class Session:
+    """
+    A user context is a set of services (including UI services)
+    that define a window with loaded model.
+    """
+
+    def __init__(self, services=None):
+        """
+        Initialize the application.
+        """
+        uninitialized_services = load_services("gaphor.services", services)
+        services_by_name = init_services(uninitialized_services)
+
+        self.event_manager = services_by_name["event_manager"]
+        self.component_registry = services_by_name["component_registry"]
+
+        for name, srv in services_by_name.items():
+            logger.info(f"Initializing service {name}")
+            self.component_registry.register(name, srv)
+            self.event_manager.handle(ServiceInitializedEvent(name, srv))
+
     def get_service(self, name):
         if not self.component_registry:
-            raise NotInitializedError("First call Application.init() to load services")
+            raise NotInitializedError("Session is no longer alive")
 
         return self.component_registry.get_service(name)
 
     def shutdown(self):
         if self.component_registry:
-            for srv, name in self.component_registry.all(Service):
+            for name, _srv in self.component_registry.all(Service):
                 self.shutdown_service(name)
 
         self.component_registry = None
+        self.event_manager = None
 
     def shutdown_service(self, name):
         logger.info(f"Shutting down service {name}")
@@ -104,27 +161,33 @@ class _Application:
         self.component_registry.unregister(srv)
         srv.shutdown()
 
-    def run(self, model=None):
-        """Start the GUI application.
 
-        The file_manager service is used here to load a Gaphor model if one was
-        specified on the command line."""
-
-        from gaphor.ui import run
-
-        run(self, model)
-
-
-# Make sure there is only one!
-Application = _Application()
-
-
-def init_services(uninitialized_services):
+def load_services(scope, services=None) -> Dict[str, Type[Service]]:
     """
+    Load services from resources.
+
+    Service should provide an interface `gaphor.abc.Service`.
+    """
+    uninitialized_services = {}
+    for ep in importlib_metadata.entry_points()[scope]:
+        cls = ep.load()
+        if isinstance(cls, Service):
+            raise NameError(f"Entry point {ep.name} doesnt provide Service")
+        if not services or ep.name in services:
+            logger.debug(f'found service entry point "{ep.name}"')
+            uninitialized_services[ep.name] = cls
+    return uninitialized_services
+
+
+def init_services(uninitialized_services, **known_services):
+    """
+    Instantiate service definitions, taking into account dependencies
+    defined in the constructor.
+
     Given a dictionary `{name: service-class}`,
     return a map `{name: service-instance}`.
     """
-    ready: Dict[str, Service] = {}
+    ready: Dict[str, Service] = dict(known_services)
 
     def pop(name):
         try:
@@ -155,3 +218,7 @@ def init_services(uninitialized_services):
         init(name, cls)
 
     return ready
+
+
+# Make sure there is only one!
+Application = _Application()
