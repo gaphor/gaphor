@@ -10,7 +10,7 @@ import uuid
 import gaphas
 
 from gaphor.UML.event import DiagramItemCreated
-from gaphor.UML.properties import umlproperty
+from gaphor.UML.properties import relation_one
 from gaphor.UML.uml2 import Namespace, PackageableElement
 
 log = logging.getLogger(__name__)
@@ -76,7 +76,7 @@ class Diagram(Namespace, PackageableElement):
         super().__init__(id, model)
         self.canvas = DiagramCanvas(self)
 
-    package: umlproperty[Namespace]
+    package: relation_one[Namespace]
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
