@@ -11,18 +11,18 @@ comment
   on, since attributes have been written anyway. Note that no smart things
   wrt inheritance is done.
 %%
-header
-import gaphor.UML.uml2overrides as overrides
-import gaphor.UML.umllex as umllex
-%%
 override Element
 from gaphor.UML.element import Element
 %%
 override Diagram
+# Diagram is defined in gaphor.UML.diagram
 from gaphor.UML.diagram import Diagram
 %%
 override Presentation
-from gaphor.UML.presentation import Presentation
+# Presentation is defined in gaphor.UML.presentation
+%%
+override Element.presentation
+# defined in uml2overrides.py
 %%
 override Presentation.subject
 # Presentation.subject is directly defined in the Presentation class
@@ -46,9 +46,7 @@ override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[st
 MultiplicityElement.upper = MultiplicityElement.upperValue
 %%
 override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
-
-NamedElement.qualifiedName = derived(NamedElement, 'qualifiedName', List[str], 0, 1, lambda obj: [overrides.namedelement_qualifiedname(obj)])
-
+# defined in uml2overrides.py
 %%
 override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
@@ -71,10 +69,7 @@ metaclass. The property is derived from the extensions whose memberEnds
 are typed by the Class.""")
 %%
 override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
-# Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
-#Extension.metaclass = derived(Extension, 'metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
-#Extension.metaclass.filter = extension_metaclass
-Extension.metaclass = property(overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__)
+# defined in uml2overrides.py
 %%
 override Classifier.inheritedMember: derivedunion[NamedElement]
 Classifier.inheritedMember = derivedunion(Classifier, 'inheritedMember', NamedElement, 0, '*')
@@ -89,7 +84,7 @@ override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion(Namespace, 'importedMember', PackageableElement, 0, '*')
 %%
 override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
-Property.opposite = derived(Property, 'opposite', Property, 0, 1, overrides.property_opposite)
+# defined in uml2overrides.py
 %%
 override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived(Property, 'isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'])
@@ -98,25 +93,25 @@ override Constraint.context: derivedunion[Namespace]
 Constraint.context = derivedunion(Constraint, 'context', Namespace, 0, 1)
 %%
 override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
-Property.navigability = derived(Property, 'navigability', bool, 0, 1, overrides.property_navigability)
+# defined in uml2overrides.py
 %%
 override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion(Operation, 'type', DataType, 0, 1)
 %%
 override Lifeline.parse: Callable[[Lifeline, str], None]
-Lifeline.parse = umllex.parse_lifeline
+# defined in uml2overrides.py
 %%
 override Lifeline.render: Callable[[Lifeline], str]
-Lifeline.render = umllex.render_lifeline
+# defined in uml2overrides.py
 %%
 override Component.provided: property
-Component.provided = property(overrides.component_provided, doc=overrides.component_provided.__doc__)
+# defined in uml2overrides.py
 %%
 override Component.required: property
-Component.required = property(overrides.component_required, doc=overrides.component_required.__doc__)
+# defined in uml2overrides.py
 %%
 override Message.messageKind: property
-Message.messageKind = property(overrides.message_messageKind, doc=overrides.message_messageKind.__doc__)
+# defined in uml2overrides.py
 %%
 override StructuredClassifier.part: property
 StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""

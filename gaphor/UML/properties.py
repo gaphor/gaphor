@@ -63,10 +63,6 @@ from gaphor.UML.event import (
 __all__ = ["attribute", "enumeration", "association", "derivedunion", "redefine"]
 
 
-if TYPE_CHECKING:
-    from gaphor.UML.element import Element
-
-
 log = logging.getLogger(__name__)
 
 
@@ -596,7 +592,7 @@ class derived(umlproperty[T]):
         type: Type[T],
         lower: Lower,
         upper: Upper,
-        filter: Callable[[E], List[T]],
+        filter: Callable[[E], List[Optional[T]]],
         *subsets: relation,
     ) -> None:
         super().__init__(name)

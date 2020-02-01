@@ -4,8 +4,8 @@
 from logging import getLogger
 from typing import Callable, Dict, List, Optional, Set, Tuple
 
+from gaphor import UML
 from gaphor.core import event_handler
-from gaphor.UML import uml2
 from gaphor.UML.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -102,12 +102,12 @@ class ElementDispatcher:
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
         self._handlers: Dict[
-            Tuple[uml2.Element, umlproperty], Dict[Handler, Set]
+            Tuple[UML.Element, umlproperty], Dict[Handler, Set]
         ] = dict()
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: Dict[Handler, List[Tuple[uml2.Element, umlproperty]]] = dict()
+        self._reverse: Dict[Handler, List[Tuple[UML.Element, umlproperty]]] = dict()
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
@@ -131,7 +131,7 @@ class ElementDispatcher:
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
-                c = getattr(uml2, cname)
+                c = getattr(UML, cname)
                 assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
                     c, prop.type
                 )
