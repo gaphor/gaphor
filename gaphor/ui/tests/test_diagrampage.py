@@ -1,63 +1,75 @@
-import unittest
-
+import pytest
 from gaphas.examples import Box
 
 from gaphor import UML
-from gaphor.application import Application
+from gaphor.application import Session
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.ui.mainwindow import DiagramPage
 
 
-class DiagramPageTestCase(unittest.TestCase):
-    def setUp(self):
-        session = Application.new_session(
-            services=[
-                "event_manager",
-                "component_registry",
-                "element_factory",
-                "main_window",
-                "properties",
-                "namespace",
-                "diagrams",
-                "toolbox",
-                "elementeditor",
-                "export_menu",
-                "tools_menu",
-            ]
-        )
-        main_window = session.get_service("main_window")
-        main_window.open()
-        self.element_factory = session.get_service("element_factory")
-        self.diagram = self.element_factory.create(UML.Diagram)
-        self.page = DiagramPage(
-            self.diagram,
-            session.get_service("event_manager"),
-            self.element_factory,
-            session.get_service("properties"),
-        )
-        self.page.construct()
-        assert self.page.diagram == self.diagram
-        assert self.page.view.canvas == self.diagram.canvas
-        assert len(self.element_factory.lselect()) == 1
+@pytest.fixture
+def session():
+    session = Session(
+        services=[
+            "event_manager",
+            "component_registry",
+            "element_factory",
+            "main_window",
+            "properties",
+            "namespace",
+            "diagrams",
+            "toolbox",
+            "elementeditor",
+            "export_menu",
+            "tools_menu",
+        ]
+    )
+    yield session
+    session.shutdown()
 
-    def tearDown(self):
-        self.page.close()
-        del self.page
-        self.diagram.unlink()
-        del self.diagram
-        Application.shutdown()
-        assert len(self.element_factory.lselect()) == 0
 
-    def test_creation(self):
-        pass
+@pytest.fixture
+def main_window(session):
+    main_window = session.get_service("main_window")
+    main_window.open()
 
-    def test_placement(self):
-        box = Box()
-        self.diagram.canvas.add(box)
-        self.diagram.canvas.update_now()
-        self.page.view.request_update([box])
 
-        self.diagram.create(
-            CommentItem, subject=self.element_factory.create(UML.Comment)
-        )
-        assert len(self.element_factory.lselect()) == 2
+@pytest.fixture
+def element_factory(session):
+    return session.get_service("element_factory")
+
+
+@pytest.fixture
+def diagram(element_factory):
+    diagram = element_factory.create(UML.Diagram)
+    yield diagram
+    diagram.unlink()
+
+
+@pytest.fixture
+def page(session, diagram, element_factory):
+    page = DiagramPage(
+        diagram,
+        session.get_service("event_manager"),
+        element_factory,
+        session.get_service("properties"),
+    )
+    page.construct()
+    assert page.diagram == diagram
+    assert page.view.canvas == diagram.canvas
+    yield page
+    page.close()
+
+
+def test_creation(page, element_factory):
+    assert len(element_factory.lselect()) == 1
+
+
+def test_placement(diagram, page, element_factory):
+    box = Box()
+    diagram.canvas.add(box)
+    diagram.canvas.update_now()
+    page.view.request_update([box])
+
+    diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
+    assert len(element_factory.lselect()) == 2

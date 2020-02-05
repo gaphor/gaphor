@@ -15,7 +15,7 @@ from gaphas.aspect import ConnectionSink, Connector
 # For DiagramItemConnector aspect:
 import gaphor.diagram.diagramtools  # noqa
 from gaphor import UML
-from gaphor.application import Application
+from gaphor.application import Session
 from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.grouping import Group
 
@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
     services = ["event_manager", "component_registry", "element_factory", "sanitizer"]
 
     def setUp(self):
-        self.session = Application.new_session(services=self.services)
+        self.session = Session(services=self.services)
         self.element_factory = self.session.get_service("element_factory")
         assert len(list(self.element_factory.select())) == 0, list(
             self.element_factory.select()

@@ -18,8 +18,7 @@ import uuid
 
 import gaphas
 
-from gaphor import UML
-from gaphor.application import Application
+from gaphor import UML, application
 from gaphor.i18n import gettext
 from gaphor.storage import diagramitems, parser
 from gaphor.UML.collection import collection
@@ -136,7 +135,7 @@ def save_generator(writer, factory):  # noqa: C901
         None,
         {
             (NAMESPACE_MODEL, "version"): FILE_FORMAT_VERSION,
-            (NAMESPACE_MODEL, "gaphor-version"): Application.distribution.version,
+            (NAMESPACE_MODEL, "gaphor-version"): application.distribution().version,
         },
     )
 

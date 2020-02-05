@@ -10,7 +10,7 @@ from gaphas.painter import Context, ItemPainter
 from gaphas.view import View
 
 import gaphor.UML as UML
-from gaphor.application import Application
+from gaphor.application import Session
 from gaphor.storage import storage
 
 
@@ -77,7 +77,7 @@ def main(argv=sys.argv[1:]):
     if not args:
         parser.print_help()
 
-    session = Application.new_session(
+    session = Session(
         services=["event_manager", "component_registry", "element_factory"]
     )
     factory = session.get_service("element_factory")

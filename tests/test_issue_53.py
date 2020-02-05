@@ -1,22 +1,21 @@
-import importlib_metadata
 import pytest
 
 from gaphor import UML
-from gaphor.application import Application
+from gaphor.application import Session, distribution
 from gaphor.storage.storage import load
 
 
 @pytest.fixture
 def session():
-    session = Application.new_session()
+    session = Session()
     yield session
+    session.shutdown()
 
 
 @pytest.fixture
 def element_factory(session):
     element_factory = session.get_service("element_factory")
-    dist = importlib_metadata.distribution("gaphor")
-    path = dist.locate_file("test-diagrams/issue_53.gaphor")
+    path = distribution().locate_file("test-diagrams/issue_53.gaphor")
     load(path, element_factory)
     yield element_factory
     element_factory.shutdown()

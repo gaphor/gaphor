@@ -15,16 +15,17 @@ class GtkApplicationStub:
 
 @pytest.fixture
 def application():
-    yield Application
-    Application.shutdown()
+    application = Application()
+    yield application
+    application.shutdown()
 
 
 def two_sessions(application, gtk_app=GtkApplicationStub()):
     session1 = application.new_session(["event_manager"])
-    subscribe_to_lifecycle_events(session1, gtk_app)
+    subscribe_to_lifecycle_events(session1, application, gtk_app)
 
     session2 = application.new_session(["event_manager"])
-    subscribe_to_lifecycle_events(session2, gtk_app)
+    subscribe_to_lifecycle_events(session2, application, gtk_app)
 
     return session1, session2
 

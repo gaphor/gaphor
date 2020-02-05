@@ -17,6 +17,7 @@ from typing import Dict, Iterator, Optional, Set, Tuple, Type, TypeVar
 
 import importlib_metadata
 
+from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.event import (
@@ -31,6 +32,13 @@ T = TypeVar("T")
 logger = logging.getLogger(__name__)
 
 
+def distribution():
+    """
+    The PkgResources distribution for Gaphor
+    """
+    return importlib_metadata.distribution("gaphor")
+
+
 class NotInitializedError(Exception):
     pass
 
@@ -39,7 +47,7 @@ class ComponentLookupError(LookupError):
     pass
 
 
-class _Application(Service, ActionProvider):
+class Application(Service, ActionProvider):
     """
     The Gaphor application is started from the gaphor.ui module.
 
@@ -50,14 +58,14 @@ class _Application(Service, ActionProvider):
     are registered in the "component_registry" service.
     """
 
-    def __init__(self):
+    def __init__(self, appservices=None):
         self.active_session: Optional[Session] = None
         self.sessions: Set[Session] = set()
-        self._services_by_name: Dict[str, Service] = {}
 
-    def init(self):
-        uninitialized_services = load_services("gaphor.appservices")
+        uninitialized_services = load_services("gaphor.appservices", appservices)
         self._services_by_name = init_services(uninitialized_services, application=self)
+
+        transaction.subscribers.add(self._transaction_proxy)
 
     def new_session(self, services=None):
         """
@@ -66,15 +74,11 @@ class _Application(Service, ActionProvider):
         session = Session()
         self.sessions.add(session)
         self.active_session = session
+
         return session
 
     def has_sessions(self):
         return bool(self.active_session)
-
-    distribution = property(
-        lambda s: importlib_metadata.distribution("gaphor"),
-        doc="The PkgResources distribution for Gaphor",
-    )
 
     def shutdown_session(self, session):
         assert session
@@ -89,6 +93,8 @@ class _Application(Service, ActionProvider):
 
         This is mainly for testing purposes.
         """
+        transaction.subscribers.discard(self._transaction_proxy)
+
         while self.sessions:
             self.shutdown_session(self.sessions.pop())
 
@@ -109,11 +115,16 @@ class _Application(Service, ActionProvider):
             if self.active_session == session:
                 logger.info("Window not closed, abort quit operation")
                 return
+        self.shutdown()
 
     def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
         return (
             (n, c) for n, c in self._services_by_name.items() if isinstance(c, base)
         )
+
+    def _transaction_proxy(self, event):
+        if self.active_session:
+            self.active_session.event_manager.handle(event)
 
 
 class Session:
@@ -218,7 +229,3 @@ def init_services(uninitialized_services, **known_services):
         init(name, cls)
 
     return ready
-
-
-# Make sure there is only one!
-Application = _Application()

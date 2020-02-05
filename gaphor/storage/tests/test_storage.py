@@ -5,9 +5,8 @@ Unittest the storage and parser modules
 import re
 from io import StringIO
 
-import importlib_metadata
-
 from gaphor import UML
+from gaphor.application import distribution
 from gaphor.diagram.classes import AssociationItem, ClassItem, InterfaceItem
 from gaphor.diagram.general import CommentItem
 from gaphor.misc.xmlwriter import XMLWriter
@@ -152,8 +151,7 @@ class StorageTestCase(TestCase):
         Test if the meta model can be loaded.
         """
 
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("gaphor/UML/uml2.gaphor")
+        path = distribution().locate_file("gaphor/UML/uml2.gaphor")
 
         with open(path) as ifile:
             storage.load(ifile, factory=self.element_factory)
@@ -250,8 +248,7 @@ class StorageTestCase(TestCase):
 
         """Test loading and saving models"""
 
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("test-diagrams/simple-items.gaphor")
+        path = distribution().locate_file("test-diagrams/simple-items.gaphor")
 
         with open(path, "r") as ifile:
             storage.load(ifile, factory=self.element_factory)
@@ -281,8 +278,7 @@ class StorageTestCase(TestCase):
 
         """Test loading and saving models"""
 
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("test-diagrams/old-gaphor-version.gaphor")
+        path = distribution().locate_file("test-diagrams/old-gaphor-version.gaphor")
 
         def load_old_model():
             with open(path, "r") as ifile:

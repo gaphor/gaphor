@@ -1,56 +1,110 @@
+import pytest
+from gaphas.aspect import ConnectionSink, Connector
+
 from gaphor import UML
+from gaphor.application import Application
 from gaphor.core import transactional
 from gaphor.diagram.classes import AssociationItem, ClassItem
-from gaphor.tests import TestCase
+from gaphor.services.eventmanager import EventManager
+from gaphor.services.undomanager import UndoManager
+from gaphor.UML.elementfactory import ElementFactory
 
 
-class UndoTest(TestCase):
+@pytest.fixture
+def application():
+    app = Application()
+    yield app
+    app.shutdown()
 
-    services = TestCase.services + ["undo_manager"]
 
-    def test_class_association_undo_redo(self):
-        factory = self.element_factory
-        undo_manager = self.get_service("undo_manager")
+@pytest.fixture
+def session(application):
+    return application.new_session()
 
-        assert 0 == len(self.diagram.canvas.solver.constraints)
 
-        ci1 = self.create(ClassItem, UML.Class)
-        assert 2 == len(self.diagram.canvas.solver.constraints)
+@pytest.fixture
+def element_factory(session):
+    return session.get_service("element_factory")
 
-        ci2 = self.create(ClassItem, UML.Class)
-        assert 4 == len(self.diagram.canvas.solver.constraints)
 
-        a = self.create(AssociationItem)
+@pytest.fixture
+def undo_manager(session):
+    return session.get_service("undo_manager")
 
-        self.connect(a, a.head, ci1)
-        self.connect(a, a.tail, ci2)
 
-        # Diagram, Association, 2x Class, Property, LiteralSpecification
-        self.assertEqual(6, len(factory.lselect()))
-        assert 6 == len(self.diagram.canvas.solver.constraints)
+def connect(line, handle, item, port=None):
+    """
+    Connect line's handle to an item.
 
-        @transactional
-        def delete_class():
-            ci2.unlink()
+    If port is not provided, then first port is used.
+    """
+    canvas = line.canvas
+    assert line.canvas is item.canvas
 
-        undo_manager.clear_undo_stack()
-        assert not undo_manager.can_undo()
+    if port is None and len(item.ports()) > 0:
+        port = item.ports()[0]
 
-        delete_class()
+    sink = ConnectionSink(item, port)
+    connector = Connector(line, handle)
 
-        assert undo_manager.can_undo()
+    connector.connect(sink)
 
-        assert ci1 == self.get_connected(a.head)
-        assert None is self.get_connected(a.tail)
+    cinfo = canvas.get_connection(handle)
+    assert cinfo.connected is item
+    assert cinfo.port is port
 
-        for i in range(3):
-            assert 3 == len(self.diagram.canvas.solver.constraints)
 
-            undo_manager.undo_transaction()
+def test_class_association_undo_redo(element_factory, undo_manager):
+    diagram = element_factory.create(UML.Diagram)
 
-            assert 6 == len(self.diagram.canvas.solver.constraints)
+    assert 0 == len(diagram.canvas.solver.constraints)
 
-            assert ci1 == self.get_connected(a.head)
-            assert ci2 == self.get_connected(a.tail)
+    ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    assert 2 == len(diagram.canvas.solver.constraints)
 
-            undo_manager.redo_transaction()
+    ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    assert 4 == len(diagram.canvas.solver.constraints)
+
+    a = diagram.create(AssociationItem)
+
+    connect(a, a.head, ci1)
+    connect(a, a.tail, ci2)
+
+    # Diagram, Association, 2x Class, Property, LiteralSpecification
+    assert 6 == len(element_factory.lselect())
+    assert 6 == len(diagram.canvas.solver.constraints)
+
+    @transactional
+    def delete_class():
+        ci2.unlink()
+
+    undo_manager.clear_undo_stack()
+    assert not undo_manager.can_undo()
+
+    delete_class()
+
+    assert undo_manager.can_undo()
+
+    def get_connected(handle):
+        """
+        Get item connected to line via handle.
+        """
+        cinfo = diagram.canvas.get_connection(handle)
+        if cinfo:
+            return cinfo.connected
+        return None
+
+    assert ci1 == get_connected(a.head)
+    assert None is get_connected(a.tail)
+
+    for i in range(3):
+        assert 3 == len(diagram.canvas.solver.constraints)
+
+        undo_manager.undo_transaction()
+
+        assert 6 == len(diagram.canvas.solver.constraints)
+
+        assert ci1 == get_connected(a.head)
+        assert ci2 == get_connected(a.tail)
+
+        undo_manager.redo_transaction()
