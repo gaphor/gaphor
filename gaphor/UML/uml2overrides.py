@@ -13,12 +13,8 @@ from typing import List, Optional, Tuple, Union
 
 import gaphor.UML.uml2 as uml2
 import gaphor.UML.umllex as umllex
-from gaphor.UML.presentation import Presentation
 from gaphor.UML.properties import association, derived
 
-uml2.Element.presentation = association(
-    "presentation", Presentation, composite=True, opposite="subject"
-)
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
 def extension_metaclass(self):
