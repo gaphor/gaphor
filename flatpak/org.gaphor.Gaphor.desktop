@@ -8,3 +8,4 @@ Icon=org.gaphor.Gaphor
 Terminal=false
 Type=Application
 Categories=GTK;GNOME;Development;ProjectManagement;
+MimeType=application/x-gaphor
