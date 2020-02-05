@@ -2,8 +2,6 @@
 Test handle tool functionality.
 """
 
-import unittest
-
 import pytest
 from gaphas.aspect import ConnectionSink, Connector
 from gi.repository import Gdk, Gtk
