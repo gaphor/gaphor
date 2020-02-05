@@ -17,10 +17,10 @@ from typing import (
 )
 
 from gaphor.abc import Service
-from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element, UnlinkEvent
 from gaphor.UML.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.UML.event import ElementCreated, ElementDeleted, ModelFlushed, ModelReady
+from gaphor.UML.uml2 import Diagram
 
 if TYPE_CHECKING:
     from gaphor.services.eventmanager import EventManager  # noqa
