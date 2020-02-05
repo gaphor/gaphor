@@ -4,7 +4,8 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.diagram.actions import ForkNodeItem, ObjectNodeItem
+from gaphor.diagram.actions.activitynodes import ForkNodeItem
+from gaphor.diagram.actions.objectnode import ObjectNodeItem
 from gaphor.diagram.propertypages import (
     NamedElementPropertyPage,
     NamedItemPropertyPage,
