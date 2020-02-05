@@ -162,15 +162,7 @@ class umlproperty(Generic[T]):
         This is called from the Element to denote the element is unlinking.
         """
 
-    @overload
-    def _get(self, obj: Literal[1]) -> Optional[T]:
-        ...
-
-    @overload  # noqa: F811
-    def _get(self, obj: Literal["*"]) -> collection[T]:
-        ...
-
-    def _get(self, obj):  # noqa: F811
+    def _get(self, obj) -> Union[Optional[T], collection[T]]:
         raise NotImplementedError()
 
     def _set(self, obj, value: Optional[T]) -> None:
