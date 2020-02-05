@@ -240,8 +240,8 @@ def test_notification_with_incompatible_elements(
 
 
 class A(Element):
-    one: association["A"]
-    two: association["A"]
+    one: association
+    two: association
 
     def __init__(self, id=None, event_handler=None):
         super().__init__(id, event_handler)

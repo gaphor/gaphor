@@ -109,13 +109,12 @@ class relation_many(Protocol[E]):
 relation = Union[relation_one, relation_many]
 
 T = TypeVar("T")
-A = TypeVar("A", int, str)
 
 Lower = Union[Literal[0], Literal[1], Literal[2]]
 Upper = Union[Literal[1], Literal["*"]]
 
 
-class umlproperty(Generic[T]):
+class umlproperty:
     """
     Superclass for attribute, enumeration and association.
 
@@ -177,7 +176,7 @@ class umlproperty(Generic[T]):
             d.propagate(event)
 
 
-class attribute(umlproperty[A]):
+class attribute(umlproperty, Generic[T]):
     """
     Attribute.
 
@@ -186,11 +185,14 @@ class attribute(umlproperty[A]):
 
     # TODO: check if lower and upper are actually needed for attributes
     def __init__(
-        self, name: str, type: Type[Union[str, int]], default: Optional[A] = None
+        self,
+        name: str,
+        type: Type[Union[str, int]],
+        default: Optional[Union[str, int]] = None,
     ):
         super().__init__(name)
         self.type = type
-        self.default: Optional[A] = default
+        self.default: Optional[Union[str, int]] = default
 
     def load(self, obj, value: str):
         """Load the attribute value."""
@@ -207,7 +209,7 @@ class attribute(umlproperty[A]):
 
     def _get(self, obj):
         try:
-            v: Optional[A] = getattr(obj, self._name)
+            v: Optional[Union[str, int]] = getattr(obj, self._name)
             return v
         except AttributeError:
             return self.default
@@ -241,7 +243,7 @@ class attribute(umlproperty[A]):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class enumeration(umlproperty[str]):
+class enumeration(umlproperty):
     """
     Enumeration
 
@@ -296,7 +298,7 @@ class enumeration(umlproperty[str]):
             self.handle(AttributeUpdated(obj, self, old, self.default))
 
 
-class association(umlproperty[T]):
+class association(umlproperty):
     """
     Association, both uni- and bi-directional.
 
@@ -403,7 +405,7 @@ class association(umlproperty[T]):
             raise AttributeError(f"Value should be of type {self.type.__name__}")
 
         # Set the actual value
-        c = self._get_many(obj)
+        c: collection = self._get_many(obj)
         if not c:
             c = collection(self, obj, self.type)
             setattr(obj, self._name, c)
@@ -462,7 +464,7 @@ class association(umlproperty[T]):
 
         self._del_opposite(obj, value, from_opposite)
 
-        c = self._get_many(obj)
+        c: collection = self._get_many(obj)
         if c:
             items = c.items
             try:
@@ -502,7 +504,7 @@ class AssociationStubError(Exception):
     pass
 
 
-class associationstub(umlproperty[T]):
+class associationstub(umlproperty):
     """
     An association stub is an internal thingy that ensures all associations
     are always bi-directional. This helps the application when one end of
@@ -561,7 +563,7 @@ class unioncache:
         self.version = version
 
 
-class derived(umlproperty[T]):
+class derived(umlproperty, Generic[T]):
     """
     Base class for derived properties, both derived unions and custom
     properties.
@@ -813,7 +815,7 @@ class derivedunion(derived[T]):
                     )
 
 
-class redefine(umlproperty[T]):
+class redefine(umlproperty):
     """
     Redefined association
 

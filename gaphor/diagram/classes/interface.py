@@ -93,6 +93,7 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight, VerticalAlign
+from gaphor.UML.properties import attribute
 
 
 class Folded(Enum):
@@ -206,11 +207,11 @@ class InterfaceItem(ElementPresentation, Classified):
         attribute_watches(self, "Interface")
         operation_watches(self, "Interface")
 
-    show_stereotypes = UML.properties.attribute("show_stereotypes", int)
+    show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
-    show_attributes = UML.properties.attribute("show_attributes", int, default=True)
+    show_attributes: attribute[int] = attribute("show_attributes", int, default=True)
 
-    show_operations = UML.properties.attribute("show_operations", int, default=True)
+    show_operations: attribute[int] = attribute("show_operations", int, default=True)
 
     def load(self, name, value):
         if name == "folded":

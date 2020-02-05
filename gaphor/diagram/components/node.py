@@ -21,6 +21,7 @@ from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
+from gaphor.UML.properties import attribute
 
 
 @represents(UML.Node)
@@ -41,7 +42,7 @@ class NodeItem(ElementPresentation, Classified):
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
 
-    show_stereotypes = UML.properties.attribute("show_stereotypes", int)
+    show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
     def update_shapes(self, event=None):
         self.shape = Box(
