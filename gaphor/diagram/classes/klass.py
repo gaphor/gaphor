@@ -22,6 +22,7 @@ from gaphor.diagram.text import (
     TextDecoration,
     VerticalAlign,
 )
+from gaphor.UML.properties import attribute
 
 log = logging.getLogger(__name__)
 
@@ -60,11 +61,11 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
         attribute_watches(self, "Class")
         operation_watches(self, "Class")
 
-    show_stereotypes = UML.properties.attribute("show_stereotypes", int)
+    show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
-    show_attributes = UML.properties.attribute("show_attributes", int, default=True)
+    show_attributes: attribute[int] = attribute("show_attributes", int, default=True)
 
-    show_operations = UML.properties.attribute("show_operations", int, default=True)
+    show_operations: attribute[int] = attribute("show_operations", int, default=True)
 
     def update_shapes(self, event=None):
         def additional_stereotypes():

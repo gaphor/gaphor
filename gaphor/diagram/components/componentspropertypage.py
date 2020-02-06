@@ -2,7 +2,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.diagram.components import ComponentItem
+from gaphor.diagram.components.component import ComponentItem
 from gaphor.diagram.propertypages import NamedItemPropertyPage, PropertyPages
 
 

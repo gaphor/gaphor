@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from typing import List, Callable, Optional
+import uuid
+
 from gaphor.UML.properties import (
     association,
     attribute,
@@ -14,8 +16,10 @@ from gaphor.UML.properties import (
     redefine,
 )
 from gaphor.UML.collection import collection
+from gaphor.UML.diagram import DiagramCanvas
+from gaphor.UML.event import DiagramItemCreated
 
-# 18: override Element
+# 14: override Element
 from gaphor.UML.element import Element
 
 
@@ -362,8 +366,57 @@ class Stereotype(Class):
     pass
 
 
-# 21: override Diagram
-from gaphor.UML.diagram import Diagram
+# 17: override Diagram
+class Diagram(PackageableElement, Namespace):
+    """Diagrams may contain model elements and can be owned by a Package.
+    """
+
+    package: relation_one[Package]
+
+    def __init__(self, id, model):
+        """Initialize the diagram with an optional id and element model.
+        The diagram also has a canvas."""
+
+        super().__init__(id, model)
+        self.canvas = DiagramCanvas(self)
+
+    def save(self, save_func):
+        """Apply the supplied save function to this diagram and the canvas."""
+
+        super().save(save_func)
+        save_func("canvas", self.canvas)
+
+    def postload(self):
+        """Handle post-load functionality for the diagram canvas."""
+        super().postload()
+        self.canvas.postload()
+
+    def create(self, type, parent=None, subject=None):
+        """Create a new canvas item on the canvas. It is created with
+        a unique ID and it is attached to the diagram's root item.  The type
+        parameter is the element class to create.  The new element also has an
+        optional parent and subject."""
+
+        return self.create_as(type, str(uuid.uuid1()), parent, subject)
+
+    def create_as(self, type, id, parent=None, subject=None):
+        item = type(id, self.model)
+        if subject:
+            item.subject = subject
+        self.canvas.add(item, parent)
+        self.model.handle(DiagramItemCreated(self.model, item))
+        return item
+
+    def unlink(self):
+        """Unlink all canvas items then unlink this diagram."""
+
+        for item in self.canvas.get_all_items():
+            try:
+                item.unlink()
+            except (AttributeError, KeyError):
+                pass
+
+        super().unlink()
 
 
 class DeployedArtifact(NamedElement):
@@ -430,8 +483,8 @@ class Parameter(TypedElement, MultiplicityElement):
     operation: relation_one[Operation]  # type: ignore[assignment]
 
 
-# 24: override Presentation
-from gaphor.UML.presentation import Presentation
+# 69: override Presentation
+# defined in gaphor.UML.presentation
 
 
 class BehavioralFeature(Feature, Namespace):
@@ -608,7 +661,7 @@ class Region(Namespace, RedefinableElement):
     extendedRegion: relation_many[Region]  # type: ignore[assignment]
 
 
-# 30: override Transition
+# 78: override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
     kind: enumeration
@@ -753,9 +806,6 @@ class Reception(BehavioralFeature):
     signal: relation_one[Signal]
 
 
-import gaphor.UML.uml2overrides as overrides
-import gaphor.UML.umllex as umllex
-
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
 # class 'InstanceValue' has been stereotyped as 'SimpleAttribute' too
 # class 'Expression' has been stereotyped as 'SimpleAttribute' too
@@ -810,10 +860,8 @@ Comment.body = attribute("body", str)
 PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
-# 118: override Message.messageKind: property
-Message.messageKind = property(
-    overrides.message_messageKind, doc=overrides.message_messageKind.__doc__
-)
+# 161: override Message.messageKind: property
+# defined in uml2overrides.py
 
 Message.messageSort = enumeration(
     "messageSort",
@@ -883,10 +931,10 @@ DataType.ownedAttribute = association(
     "ownedAttribute", Property, composite=True, opposite="datatype"
 )
 TypedElement.type = association("type", Type, upper=1)
-Element.presentation = association(
-    "presentation", Presentation, composite=True, opposite="subject"
-)
-# 27: override Presentation.subject
+# 72: override Element.presentation
+# defined in uml2overrides.py
+
+# 75: override Presentation.subject
 # Presentation.subject is directly defined in the Presentation class
 
 ActivityParameterNode.parameter = association("parameter", Parameter, lower=1, upper=1)
@@ -1299,33 +1347,22 @@ SendOperationEvent.operation = association("operation", Operation, lower=1, uppe
 SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
 ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-# 48: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+# 96: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+# defined in uml2overrides.py
 
-NamedElement.qualifiedName = derived(
-    NamedElement,
-    "qualifiedName",
-    List[str],
-    0,
-    1,
-    lambda obj: [overrides.namedelement_qualifiedname(obj)],
-)
-
-
-# 42: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
+# 90: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
-# 45: override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
+# 93: override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
 MultiplicityElement.upper = MultiplicityElement.upperValue
 
-# 94: override Property.isComposite(Property.aggregation): derived[bool]
+# 137: override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived(
     Property, "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
 )
 
-# 100: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
-Property.navigability = derived(
-    Property, "navigability", bool, 0, 1, overrides.property_navigability
-)
+# 143: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
+# defined in uml2overrides.py
 
 RedefinableElement.redefinedElement = derivedunion(
     RedefinableElement,
@@ -1382,10 +1419,8 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 91: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
-Property.opposite = derived(
-    Property, "opposite", Optional[Property], 0, 1, overrides.property_opposite
-)
+# 134: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
+# defined in uml2overrides.py
 
 BehavioralFeature.parameter = derivedunion(
     BehavioralFeature,
@@ -1479,7 +1514,7 @@ Namespace.ownedMember = derivedunion(
     Class.ownedReception,
     Interface.ownedReception,
 )
-# 82: override Classifier.general(Generalization.general): derived[Classifier]
+# 125: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived(
     Classifier,
     "general",
@@ -1489,7 +1524,7 @@ Classifier.general = derived(
     lambda self: [g.general for g in self.generalization],
 )
 
-# 53: override Association.endType(Association.memberEnd, Property.type): derived[Type]
+# 99: override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -1504,21 +1539,16 @@ Association.endType = derived(
 )
 
 
-# 97: override Constraint.context: derivedunion[Namespace]
+# 140: override Constraint.context: derivedunion[Namespace]
 Constraint.context = derivedunion(Constraint, "context", Namespace, 0, 1)
 
-# 103: override Operation.type: derivedunion[DataType]
+# 146: override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion(Operation, "type", DataType, 0, 1)
 
-# 73: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
-# Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
-# Extension.metaclass = derived(Extension, 'metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
-# Extension.metaclass.filter = extension_metaclass
-Extension.metaclass = property(
-    overrides.extension_metaclass, doc=overrides.extension_metaclass.__doc__
-)
+# 119: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
+# defined in uml2overrides.py
 
-# 61: override Class.extension(Extension.metaclass): property
+# 107: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
@@ -1580,7 +1610,7 @@ ActivityGroup.superGroup = derivedunion(
 ActivityGroup.subgroup = derivedunion(
     ActivityGroup, "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
 )
-# 79: override Classifier.inheritedMember: derivedunion[NamedElement]
+# 122: override Classifier.inheritedMember: derivedunion[NamedElement]
 Classifier.inheritedMember = derivedunion(
     Classifier, "inheritedMember", NamedElement, 0, "*"
 )
@@ -1606,21 +1636,17 @@ Namespace.member = derivedunion(
     Classifier.inheritedMember,
     StructuredClassifier.role,
 )
-# 115: override Component.required: property
-Component.required = property(
-    overrides.component_required, doc=overrides.component_required.__doc__
-)
+# 158: override Component.required: property
+# defined in uml2overrides.py
 
-# 88: override Namespace.importedMember: derivedunion[PackageableElement]
+# 131: override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion(
     Namespace, "importedMember", PackageableElement, 0, "*"
 )
 
 Action.input = derivedunion(Action, "input", InputPin, 0, "*", SendSignalAction.target)
-# 112: override Component.provided: property
-Component.provided = property(
-    overrides.component_provided, doc=overrides.component_provided.__doc__
-)
+# 155: override Component.provided: property
+# defined in uml2overrides.py
 
 Element.owner = derivedunion(
     Element,
@@ -1673,7 +1699,7 @@ Element.ownedElement = derivedunion(
     DeploymentTarget.deployment,
 )
 ConnectorEnd.definingEnd = derivedunion(ConnectorEnd, "definingEnd", Property, 0, 1)
-# 121: override StructuredClassifier.part: property
+# 164: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
     lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
     doc="""
@@ -1681,7 +1707,7 @@ StructuredClassifier.part = property(
 """,
 )
 
-# 85: override Class.superClass: derived[Classifier]
+# 128: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
 ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, 1, Property.type)
@@ -1748,8 +1774,8 @@ Transition.redefinedTransition = redefine(
     "*",
     RedefinableElement.redefinedElement,
 )
-# 106: override Lifeline.parse: Callable[[Lifeline, str], None]
-Lifeline.parse = umllex.parse_lifeline
+# 149: override Lifeline.parse: Callable[[Lifeline, str], None]
+# defined in uml2overrides.py
 
-# 109: override Lifeline.render: Callable[[Lifeline], str]
-Lifeline.render = umllex.render_lifeline
+# 152: override Lifeline.render: Callable[[Lifeline], str]
+# defined in uml2overrides.py

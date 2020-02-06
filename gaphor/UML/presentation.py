@@ -83,3 +83,8 @@ class Presentation(Element, Generic[S]):
         if self.canvas:
             self.canvas.remove(self)
         super().unlink()
+
+
+Element.presentation = association(
+    "presentation", Presentation, composite=True, opposite="subject"
+)

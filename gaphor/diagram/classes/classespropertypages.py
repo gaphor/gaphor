@@ -5,13 +5,10 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.diagram.classes import (
-    AssociationItem,
-    ClassItem,
-    DependencyItem,
-    Folded,
-    InterfaceItem,
-)
+from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.interface import Folded, InterfaceItem
+from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.components.connector import ConnectorItem
 from gaphor.diagram.propertypages import (
     EditableTreeModel,

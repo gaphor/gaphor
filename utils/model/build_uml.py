@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 This file provides the code generator which transforms gaphor/UML/uml2.gaphor
 into gaphor/UML/uml2.py.

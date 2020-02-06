@@ -163,7 +163,7 @@ def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
     ), "Metaclass and Stereotype are from different models"
 
     model = metaclass.model
-    ext = model.create(Extension)
+    ext: Extension = model.create(Extension)
     p = model.create(Property)
     ext_end = model.create(ExtensionEnd)
 

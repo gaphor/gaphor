@@ -1,11 +1,14 @@
 """
 """
 
+from __future__ import annotations
+
 from logging import getLogger
 from typing import Callable, Dict, List, Optional, Set, Tuple
 
+from gaphor import UML
 from gaphor.core import event_handler
-from gaphor.UML import uml2
+from gaphor.UML.element import Element, Handler
 from gaphor.UML.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -14,8 +17,6 @@ from gaphor.UML.event import (
     ModelReady,
 )
 from gaphor.UML.properties import umlproperty
-
-Handler = Callable[[ElementUpdated], None]
 
 
 class EventWatcher:
@@ -31,7 +32,7 @@ class EventWatcher:
         self.default_handler = default_handler
         self._watched_paths: Dict[str, Handler] = dict()
 
-    def watch(self, path: str, handler: Optional[Handler] = None):
+    def watch(self, path: str, handler: Optional[Handler] = None) -> EventWatcher:
         """
         Watch a certain path of elements starting with the DiagramItem.
         The handler is optional and will default the default provided at
@@ -101,13 +102,11 @@ class ElementDispatcher:
         self.event_manager = event_manager
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers: Dict[
-            Tuple[uml2.Element, umlproperty], Dict[Handler, Set]
-        ] = dict()
+        self._handlers: Dict[Tuple[Element, umlproperty], Dict[Handler, Set]] = dict()
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: Dict[Handler, List[Tuple[uml2.Element, umlproperty]]] = dict()
+        self._reverse: Dict[Handler, List[Tuple[Element, umlproperty]]] = dict()
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
@@ -131,7 +130,7 @@ class ElementDispatcher:
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
-                c = getattr(uml2, cname)
+                c = getattr(UML, cname)
                 assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
                     c, prop.type
                 )

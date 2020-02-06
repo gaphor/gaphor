@@ -2,7 +2,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.diagram.interactions import MessageItem
+from gaphor.diagram.interactions.message import MessageItem
 from gaphor.diagram.propertypages import (
     EditableTreeModel,
     NamedItemPropertyPage,
