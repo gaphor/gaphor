@@ -31,5 +31,32 @@
 	<string>10.13</string>
         <key>NSHighResolutionCapable</key>
         <true/>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>gaphor</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>gaphor.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-gaphor</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Gaphor Model</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.gaphor.model</string>
+			</array>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>Gaphor </string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
