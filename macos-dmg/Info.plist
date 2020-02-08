@@ -29,8 +29,8 @@
 	<string>Copyright 2001-2019 Gaphor Developers, Apache 2 License.</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.13</string>
-        <key>NSHighResolutionCapable</key>
-        <true/>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -52,10 +52,40 @@
 			<array>
 				<string>org.gaphor.model</string>
 			</array>
-			<key>CFBundleTypeOSTypes</key>
+			<key>LSItemContentTypes</key>
 			<array>
-				<string>Gaphor </string>
+				<string>public.data</string>
+				<string>public.content</string>
+				<string>gaphor.model</string>
 			</array>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+		</dict>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>org.gaphor.model</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>gaphor.model</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Gaphor Model</string>
+			<key>UTTypeIconFile</key>
+			<string>gaphor.icns</string>
+			<key>UTTypeReferenceURL</key>
+			<string>https://gaphor.org/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gaphor</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>application/x-gaphor</string>
+			</dict>
 		</dict>
 	</array>
 </dict>
