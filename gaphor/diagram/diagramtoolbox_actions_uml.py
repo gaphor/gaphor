@@ -510,6 +510,15 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                     diagram.profiles.ExtensionItem
                 ),
             ),
+            ToolDef(
+                "toolbox-import",
+                gettext("Import"),
+                "gaphor-import-symbolic",
+                "<Shift>M",
+                item_factory=PlacementTool.new_item_factory(
+                    diagram.profiles.PackageImport
+                ),
+            ),
         ),
     ),
 )
