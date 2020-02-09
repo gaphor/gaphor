@@ -9,7 +9,7 @@
       <object class="GtkShortcutsSection">
         <property name="visible">1</property>
         <property name="section-name">shortcuts</property>
-        <property name="max-height">12</property>
+        <property name="max-height">14</property>
 
         <!-- Application shortcuts -->
         <child>
@@ -77,6 +77,31 @@
           </object>
         </child>
 
+        <!-- Undo shortcuts -->
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="visible">1</property>
+            <property name="title" translatable="yes">Undo</property>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;z</property>
+                <property name="title" translatable="yes">Undo</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;z</property>
+                <property name="title" translatable="yes">Redo</property>
+              </object>
+            </child>
+
+          </object>
+        </child>
+
         <!-- Diagram shortcuts -->
         <child>
           <object class="GtkShortcutsGroup">
@@ -111,7 +136,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;a</property>
-                <property name="title" translatable="yes">Deselect all</property>
+                <property name="title" translatable="yes">Deselect All</property>
               </object>
             </child>
 
@@ -142,16 +167,8 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
-                <property name="accelerator">&lt;Primary&gt;z</property>
-                <property name="title" translatable="yes">Undo</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">1</property>
-                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;z</property>
-                <property name="title" translatable="yes">Redo</property>
+                <property name="accelerator">&lt;Primary&gt;w</property>
+                <property name="title" translatable="yes">Close Diagram</property>
               </object>
             </child>
 

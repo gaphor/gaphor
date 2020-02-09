@@ -25,7 +25,7 @@ def transactional(func):
 
     def _transactional(*args, **kwargs):
         if __debug__ and args and hasattr(args[0], "event_manager"):
-            log.warning("Consider using the Transaction context manager for {args[0]}")
+            log.warning(f"Consider using the Transaction context manager for {args[0]}")
 
         with Transaction(_SubscribersHandler):
             return func(*args, **kwargs)
