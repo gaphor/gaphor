@@ -11,7 +11,7 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import event_handler, gettext
+from gaphor.core import action, event_handler, gettext
 from gaphor.event import ActionEnabled, ActiveSessionChanged, SessionShutdownRequested
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
@@ -19,6 +19,7 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import (
+    DiagramClosed,
     DiagramOpened,
     DiagramSelectionChanged,
     FileLoaded,
@@ -339,6 +340,7 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook.show()
         self._notebook.connect("switch-page", self._on_switch_page)
         self.event_manager.subscribe(self._on_show_diagram)
+        self.event_manager.subscribe(self._on_close_diagram)
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
         return self._notebook
@@ -348,6 +350,7 @@ class Diagrams(UIComponent, ActionProvider):
 
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
+        self.event_manager.unsubscribe(self._on_close_diagram)
         self.event_manager.unsubscribe(self._on_show_diagram)
         if self._notebook:
             self._notebook.destroy()
@@ -376,22 +379,6 @@ class Diagrams(UIComponent, ActionProvider):
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
         return child_widget and child_widget.diagram_page.get_view()
-
-    def cb_close_tab(self, button, widget):
-        """Callback to close the tab and remove the notebook page.
-
-        Args:
-            button (Gtk.Button): The button the callback is from.
-            widget (Gtk.Widget): The child widget of the tab.
-        """
-
-        page_num = self._notebook.page_num(widget)
-        # TODO why does Gtk.Notebook give a GTK-CRITICAL if you remove a page
-        #   with set_show_tabs(True)?
-        self._clear_ui_settings(widget)
-        self._notebook.remove_page(page_num)
-        widget.diagram_page.close()
-        widget.destroy()
 
     def create_tab(self, title, widget):
         """Creates a new Notebook tab with a label and close button.
@@ -428,7 +415,12 @@ class Diagrams(UIComponent, ActionProvider):
         Gtk.Widget.set_focus_on_click(button, False)
 
         button.add(close_image)
-        button.connect("clicked", self.cb_close_tab, widget)
+        button.connect(
+            "clicked",
+            lambda _button: self.event_manager.handle(
+                DiagramClosed(widget.diagram_page.get_diagram())
+            ),
+        )
         tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
         tab_box.show_all()
         return tab_box
@@ -448,9 +440,9 @@ class Diagrams(UIComponent, ActionProvider):
             return widgets_on_pages
 
         num_pages = self._notebook.get_n_pages()
-        for page in range(0, num_pages):
-            widget = self._notebook.get_nth_page(page)
-            widgets_on_pages.append((page, widget))
+        for page_num in range(0, num_pages):
+            widget = self._notebook.get_nth_page(page_num)
+            widgets_on_pages.append((page_num, widget))
         return widgets_on_pages
 
     def _on_switch_page(self, notebook, page, new_page_num):
@@ -472,6 +464,11 @@ class Diagrams(UIComponent, ActionProvider):
         window = page.get_toplevel()
         window.insert_action_group("diagram", None)
         window.remove_accel_group(page.action_group.shortcuts)
+
+    @action(name="close-current-tab", shortcut="<Primary>w")
+    def close_current_tab(self):
+        diagram = self.get_current_diagram()
+        self.event_manager.handle(DiagramClosed(diagram))
 
     @event_handler(DiagramOpened)
     def _on_show_diagram(self, event):
@@ -503,6 +500,29 @@ class Diagrams(UIComponent, ActionProvider):
 
         self.create_tab(diagram.name, widget)
         return page
+
+    @event_handler(DiagramClosed)
+    def _on_close_diagram(self, event):
+        """Callback to close the tab and remove the notebook page.
+
+        Args:
+            button (Gtk.Button): The button the callback is from.
+            widget (Gtk.Widget): The child widget of the tab.
+        """
+        diagram = event.diagram
+
+        for page_num, widget in self.get_widgets_on_pages():
+            if widget.diagram_page.get_diagram() is diagram:
+                break
+        else:
+            log.warn(f"No tab found for diagram {diagram}")
+            return
+
+        if diagram is self.get_current_diagram():
+            self._clear_ui_settings(widget)
+        self._notebook.remove_page(page_num)
+        widget.diagram_page.close()
+        widget.destroy()
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
