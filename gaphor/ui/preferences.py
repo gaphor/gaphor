@@ -12,7 +12,7 @@ class Preferences(Service, ActionProvider):
         self.main_window = main_window
         self.properties = properties
 
-    @action(name="win.preferences")
+    @action(name="win.preferences", shortcut="<Primary>comma")
     def open(self):
         builder = Gtk.Builder()
         with importlib.resources.path("gaphor.ui", "mockups.glade") as glade_file:

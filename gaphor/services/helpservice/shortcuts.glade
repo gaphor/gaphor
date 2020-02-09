@@ -4,58 +4,35 @@
 
   <object class="GtkShortcutsWindow" id="shortcuts-gaphor">
     <property name="modal">1</property>
-    
+
     <child>
       <object class="GtkShortcutsSection">
         <property name="visible">1</property>
         <property name="section-name">shortcuts</property>
         <property name="max-height">12</property>
 
-        <!-- Overview shortcuts -->
+        <!-- Application shortcuts -->
         <child>
           <object class="GtkShortcutsGroup">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">Overview</property>
+            <property name="title" translatable="yes">Application</property>
 
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
-                <property name="accelerator">&lt;Primary&gt;z</property>
-                <property name="title" translatable="yes">Undo</property>
+                <property name="accelerator">&lt;Primary&gt;comma</property>
+                <property name="title" translatable="yes">Preferences</property>
               </object>
             </child>
 
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
-                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;z</property>
-                <property name="title" translatable="yes">Redo</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">1</property>
-                <property name="accelerator">F2</property>
-                <property name="title" translatable="yes">Edit</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">1</property>
-                <property name="accelerator">&lt;Primary&gt;e</property>
-                <property name="title" translatable="yes">Show/Hide Editor</property>
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">1</property>
-                <property name="accelerator">&lt;Ctrl&gt;q</property>
+                <property name="accelerator">&lt;Primary&gt;q</property>
                 <property name="title" translatable="yes">Quit Gaphor</property>
               </object>
             </child>
+
           </object>
         </child>
 
@@ -69,7 +46,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;Primary&gt;n</property>
-                <property name="title" translatable="yes">New</property>
+                <property name="title" translatable="yes">New Window</property>
               </object>
             </child>
 
@@ -97,13 +74,6 @@
               </object>
             </child>
 
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">1</property>
-                <property name="accelerator">&lt;Primary&gt;q</property>
-                <property name="title" translatable="yes">Quit</property>
-              </object>
-            </child>
           </object>
         </child>
 
@@ -112,6 +82,22 @@
           <object class="GtkShortcutsGroup">
             <property name="visible">1</property>
             <property name="title" translatable="yes">Diagrams</property>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
+                <property name="accelerator">F2</property>
+                <property name="title" translatable="yes">Edit</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;e</property>
+                <property name="title" translatable="yes">Show/Hide Editor</property>
+              </object>
+            </child>
 
             <child>
               <object class="GtkShortcutsShortcut">
@@ -152,6 +138,23 @@
                 <property name="title" translatable="yes">Delete</property>
               </object>
             </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;z</property>
+                <property name="title" translatable="yes">Undo</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;z</property>
+                <property name="title" translatable="yes">Redo</property>
+              </object>
+            </child>
+
           </object>
         </child>
 
