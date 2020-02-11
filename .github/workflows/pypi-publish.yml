@@ -21,5 +21,6 @@ jobs:
       run: poetry install
     - name: Build and publish
       run: |
+        make translate
         poetry build
         poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
