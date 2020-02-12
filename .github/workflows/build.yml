@@ -151,11 +151,13 @@ jobs:
           poetry build
           cd macos-dmg
           ./package.sh
+          mkdir artifact
+          cp Gaphor-*.dmg artifact/Gaphor.dmg
       - name: Upload Build Assets
         uses: actions/upload-artifact@v1
         with:
           name: Gaphor.dmg
-          path: macos-dmg/*dmg
+          path: macos-dmg/artifact/Gaphor.dmg
       - name: Upload Assets to release
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
