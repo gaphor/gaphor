@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - master
+  release:
+    types: [created, edited, published, prereleased]
 
 jobs:
   lint:
@@ -31,7 +33,7 @@ jobs:
           pip install flake8==3.7.9
           flake8 gaphor
 
-  test-linux:
+  linux:
     needs: lint
     runs-on: ubuntu-latest
     strategy:
@@ -68,7 +70,17 @@ jobs:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
           coverageCommand: coverage xml
-  test-windows:
+      - name: Build
+        run: |
+          make translate
+          poetry build
+      - name: Publish to PyPI
+        if: github.event_name == 'release'
+        run: |
+          poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
+
+
+  windows:
     needs: lint
     runs-on: windows-latest
     env:
@@ -103,7 +115,9 @@ jobs:
         env:
           CHERE_INVOKING: yes
           PY_IGNORE_IMPORTMISMATCH: yes
-  test-macos:
+
+
+  macos:
     needs: lint
     runs-on: macOS-latest
     env:
@@ -132,3 +146,19 @@ jobs:
           pip install pytest-xvfb
       - name: Test with Pytest
         run: pytest
+      - name: Create macOS Binary
+        run: |
+          poetry build
+          cd macos-dmg
+          ./package.sh
+      - name: Upload Assets
+        uses: actions/upload-artifact@v1
+        with:
+          name: Gaphor.dmg
+          path: macos-dmg/*dmg
+      - name: Upload Assets to release
+        uses: AButler/upload-release-assets@v2.0
+        if: github.event_name == 'release'
+        with:
+          files: 'macos-dmg/*dmg;dist/*'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
