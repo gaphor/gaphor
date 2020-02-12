@@ -34,12 +34,15 @@ jobs:
   test-linux:
     needs: lint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        py_ver: [3.7, 3.8]
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: ${{ matrix.py_ver }}
       - name: Use Python Dependency Cache
         uses: actions/cache@v1.0.3
         with:
@@ -54,7 +57,7 @@ jobs:
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.3
         with:
-          version: 1.0.2
+          version: 1.0.3
       - name: Install Python Dependencies
         run: poetry install
       - name: Test with Pytest
@@ -116,7 +119,7 @@ jobs:
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.3
         with:
-          version: 1.0.2
+          version: 1.0.3
       - name: Use Python Dependency Cache
         uses: actions/cache@v1.0.3
         with:
