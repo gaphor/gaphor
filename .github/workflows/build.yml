@@ -66,6 +66,7 @@ jobs:
         run: xvfb-run pytest --cov=gaphor/
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v2.3.0
+        if: matrix.py_ver == '3.7'
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
@@ -75,7 +76,7 @@ jobs:
           make translate
           poetry build
       - name: Publish to PyPI
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' && matrix.py_ver == '3.7'
         run: |
           poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
@@ -127,7 +128,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.7
       - name: Install macOS Dependencies
         run: brew install gobject-introspection gtk+3 adwaita-icon-theme
       - name: Install Poetry
@@ -143,15 +144,14 @@ jobs:
       - name: Install Python Dependencies
         run: |
           poetry install
-          pip install pytest-xvfb
       - name: Test with Pytest
         run: pytest
-      - name: Create macOS Binary
+      - name: Create macOS Application
         run: |
           poetry build
           cd macos-dmg
           ./package.sh
-      - name: Upload Assets
+      - name: Upload Build Assets
         uses: actions/upload-artifact@v1
         with:
           name: Gaphor.dmg
