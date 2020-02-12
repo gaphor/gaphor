@@ -30,7 +30,7 @@ rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
 python3 -m venv --copies --prompt Gaphor.app "${APPHOME}"
 source "${APPHOME}/bin/activate"
 
-VERSION="$(cat ../pyproject.toml | grep '^version' | sed 's/.*\"\([0-9.]*\)\"/\1/')"
+VERSION="$(poetry version | cut -d' ' -f2)"
 PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
 
 
