@@ -64,8 +64,7 @@ jobs:
         # TODO: release build if $GITHUB_REF == $V else add ${GITHUB_REF:0:8}
         id: meta
         run: |
-          V=$(poetry version | cut -d' ' -f2)
-          echo "##[set-output name=version;]$V"
+          echo "##[set-output name=version;]$(poetry version | cut -d' ' -f2)"
       - name: Install Python Dependencies
         run: poetry install
       - name: Test with Pytest
@@ -83,9 +82,16 @@ jobs:
           poetry build
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v1
+        if: matrix.py_ver == '3.7'
         with:
           name: gaphor-${{ steps.meta.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.meta.outputs.version }}.tar.gz
+      - name: Upload gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
+        uses: actions/upload-artifact@v1
+        if: matrix.py_ver == '3.7'
+        with:
+          name: gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
+          path: dist/gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
       - name: Publish to PyPI
         if: github.event_name == 'release' && matrix.py_ver == '3.7'
         run: |
@@ -98,6 +104,8 @@ jobs:
     env:
       MSYSTEM: MINGW64
       MSYS2_ARCH: x86_64
+      CHERE_INVOKING: yes
+      PY_IGNORE_IMPORTMISMATCH: yes
     steps:
       - uses: actions/checkout@v1
       - name: Install MSYS2
@@ -118,15 +126,20 @@ jobs:
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
           C:\tools\msys64\usr\bin\bash -lc "win-installer/msys2-install.sh"
-        env:
-          CHERE_INVOKING: yes
       - name: Run Tests
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
           C:\tools\msys64\usr\bin\bash -lc "win-installer/msys2-test.sh"
-        env:
-          CHERE_INVOKING: yes
-          PY_IGNORE_IMPORTMISMATCH: yes
+      - name: Create Windows Binaries
+        run: |
+          $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
+          C:\tools\msys64\usr\bin\bash -lc "win-installer/msys2-build.sh"
+      - name: Upload Assets
+        uses: AButler/upload-release-assets@v2.0
+        if: github.event_name == 'release'
+        with:
+          files: 'win-installer/*.exe'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
 
   macos:
@@ -146,6 +159,10 @@ jobs:
         uses: dschep/install-poetry-action@v1.3
         with:
           version: 1.0.3
+      - name: Collect Metadata
+        id: meta
+        run: |
+          echo "##[set-output name=version;]$(poetry version | cut -d' ' -f2)"
       - name: Use Python Dependency Cache
         uses: actions/cache@v1.0.3
         with:
@@ -164,14 +181,14 @@ jobs:
           ./package.sh
           mkdir artifact
           cp Gaphor-*.dmg artifact/Gaphor.dmg
-      - name: Upload Build Assets
+      - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
         uses: actions/upload-artifact@v1
         with:
-          name: Gaphor.dmg
-          path: macos-dmg/artifact/Gaphor.dmg
+          name: Gaphor-${{ steps.meta.outputs.version }}.dmg
+          path: macos-dmg/Gaphor-${{ steps.meta.outputs.version }}.dmg
       - name: Upload Assets to release
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
         with:
-          files: 'macos-dmg/*dmg'
+          files: 'macos-dmg/Gaphor-${{ steps.meta.outputs.version }}.dmg'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
