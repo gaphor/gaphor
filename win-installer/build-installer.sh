@@ -7,9 +7,7 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 
-set -e
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "${DIR}"
+set -euo pipefail
 
 # CONFIG START
 
@@ -18,6 +16,9 @@ BUILD_VERSION="0"
 
 # CONFIG END
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "${DIR}"
+
 MISC="${DIR}"/misc
 if [ "${ARCH}" = "x86_64" ]; then
     MINGW="mingw64"
@@ -25,16 +26,7 @@ else
     MINGW="mingw32"
 fi
 
-function get_version {
-	python3 - <<END
-from tomlkit import parse
-with open('../pyproject.toml', 'r') as f:
-	parsed_toml = parse(f.read())
-	print(parsed_toml["tool"]["poetry"]["version"])
-END
-}
-
-VERSION="$(get_version)"
+VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 
 function set_build_root {
     DIST_LOCATION="$1"
@@ -61,9 +53,11 @@ function install_deps {
         mingw-w64-"${ARCH}"-python3-setuptools \
     	mingw-w64-"${ARCH}"-python3-importlib-metadata
 
+    pip install pyinstaller==3.6
 }
 
 function build_pyinstaller {
+    sed "s/__version__/$VERSION/g" file_version_info.txt.in > file_version_info.txt
     pyinstaller -y gaphor.spec
 }
 
