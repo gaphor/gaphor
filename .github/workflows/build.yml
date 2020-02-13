@@ -60,6 +60,12 @@ jobs:
         uses: dschep/install-poetry-action@v1.3
         with:
           version: 1.0.3
+      - name: Collect Metadata
+        # TODO: release build if $GITHUB_REF == $V else add ${GITHUB_REF:0:8}
+        id: meta
+        run: |
+          V=$(poetry version | cut -d' ' -f2)
+          echo "##[set-output name=version;]$V"
       - name: Install Python Dependencies
         run: poetry install
       - name: Test with Pytest
@@ -75,6 +81,11 @@ jobs:
         run: |
           make translate
           poetry build
+      - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
+        uses: actions/upload-artifact@v1
+        with:
+          name: gaphor-${{ steps.meta.outputs.version }}.tar.gz
+          path: dist/gaphor-${{ steps.meta.outputs.version }}.tar.gz
       - name: Publish to PyPI
         if: github.event_name == 'release' && matrix.py_ver == '3.7'
         run: |
@@ -162,5 +173,5 @@ jobs:
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
         with:
-          files: 'macos-dmg/*dmg;dist/*'
+          files: 'macos-dmg/*dmg'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
