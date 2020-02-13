@@ -8,16 +8,7 @@ version = "0.7.12"
 
 [[package]]
 category = "dev"
-description = "Python graph (network) package"
-name = "altgraph"
-optional = false
-python-versions = "*"
-version = "0.17"
-
-[[package]]
-category = "dev"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
-marker = "python_version >= \"3.6\" and python_version < \"4.0\""
 name = "appdirs"
 optional = false
 python-versions = "*"
@@ -113,11 +104,8 @@ category = "dev"
 description = "Validate configuration and produce human readable error messages."
 name = "cfgv"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.0.1"
-
-[package.dependencies]
-six = "*"
+python-versions = ">=3.6"
+version = "3.0.0"
 
 [[package]]
 category = "dev"
@@ -169,11 +157,11 @@ toml = ["toml"]
 
 [[package]]
 category = "dev"
-description = "Python 2.7 backport of the \"dis\" module from Python 3.5+"
-name = "dis3"
+description = "Distribution utilities"
+name = "distlib"
 optional = false
 python-versions = "*"
-version = "0.1.3"
+version = "0.3.0"
 
 [[package]]
 category = "dev"
@@ -190,6 +178,14 @@ name = "entrypoints"
 optional = false
 python-versions = ">=2.7"
 version = "0.3"
+
+[[package]]
+category = "dev"
+description = "A platform independent file lock."
+name = "filelock"
+optional = false
+python-versions = "*"
+version = "3.0.12"
 
 [[package]]
 category = "dev"
@@ -464,19 +460,6 @@ pycairo = ">=1.11.1"
 
 [[package]]
 category = "dev"
-description = "PyInstaller bundles a Python application and all its dependencies into a single package."
-name = "pyinstaller"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "3.6"
-
-[package.dependencies]
-altgraph = "*"
-dis3 = "*"
-setuptools = "*"
-
-[[package]]
-category = "dev"
 description = "Python parsing module"
 name = "pyparsing"
 optional = false
@@ -614,7 +597,7 @@ description = "Python documentation generator"
 name = "sphinx"
 optional = false
 python-versions = ">=3.5"
-version = "2.4.0"
+version = "2.4.1"
 
 [package.dependencies]
 Jinja2 = ">=2.3"
@@ -767,11 +750,21 @@ description = "Virtual Python Environment builder"
 name = "virtualenv"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-version = "16.7.9"
+version = "20.0.3"
+
+[package.dependencies]
+appdirs = ">=1.4.3,<2"
+distlib = ">=0.3.0,<1"
+filelock = ">=3.0.0,<4"
+six = ">=1.12.0,<2"
+
+[package.dependencies.importlib-metadata]
+python = "<3.8"
+version = ">=0.12,<2"
 
 [package.extras]
-docs = ["sphinx (>=1.8.0,<2)", "towncrier (>=18.5.0)", "sphinx-rtd-theme (>=0.4.2,<1)"]
-testing = ["pytest (>=4.0.0,<5)", "coverage (>=4.5.0,<5)", "pytest-timeout (>=1.3.0,<2)", "six (>=1.10.0,<2)", "pytest-xdist", "pytest-localserver", "pypiserver", "mock", "xonsh"]
+docs = ["sphinx (>=2.0.0,<3)", "sphinx-argparse (>=0.2.5,<1)", "sphinx-rtd-theme (>=0.4.3,<1)", "towncrier (>=19.9.0rc1)", "proselint (>=0.10.2,<1)"]
+testing = ["pytest (>=4.0.0,<6)", "coverage (>=4.5.1,<6)", "pytest-mock (>=2.0.0,<3)", "pytest-env (>=0.6.2,<1)", "packaging (>=20.0)", "xonsh (>=0.9.13,<1)"]
 
 [[package]]
 category = "dev"
@@ -794,17 +787,13 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools"]
 
 [metadata]
-content-hash = "11417616d7e79d32153df1074d941dbc3be9aa8bdac1e5bb2b4947be0d0ad4c9"
+content-hash = "bd17c6e735475b01195a3fd4feeb2b6d22a1d19fcadc4853a36db4819f67ddf3"
 python-versions = "^3.7"
 
 [metadata.files]
 alabaster = [
     {file = "alabaster-0.7.12-py2.py3-none-any.whl", hash = "sha256:446438bdcca0e05bd45ea2de1668c1d9b032e1a9154c2c259092d77031ddd359"},
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
-]
-altgraph = [
-    {file = "altgraph-0.17-py2.py3-none-any.whl", hash = "sha256:c623e5f3408ca61d4016f23a681b9adb100802ca3e3da5e718915a9e4052cebe"},
-    {file = "altgraph-0.17.tar.gz", hash = "sha256:1f05a47122542f97028caf78775a095fbe6a2699b5089de8477eb583167d69aa"},
 ]
 appdirs = [
     {file = "appdirs-1.4.3-py2.py3-none-any.whl", hash = "sha256:d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"},
@@ -838,8 +827,8 @@ certifi = [
     {file = "certifi-2019.11.28.tar.gz", hash = "sha256:25b64c7da4cd7479594d035c08c2d809eb4aab3a26e5a990ea98cc450c320f1f"},
 ]
 cfgv = [
-    {file = "cfgv-2.0.1-py2.py3-none-any.whl", hash = "sha256:fbd93c9ab0a523bf7daec408f3be2ed99a980e20b2d19b50fc184ca6b820d289"},
-    {file = "cfgv-2.0.1.tar.gz", hash = "sha256:edb387943b665bf9c434f717bf630fa78aecd53d5900d2e05da6ad6048553144"},
+    {file = "cfgv-3.0.0-py2.py3-none-any.whl", hash = "sha256:f22b426ed59cd2ab2b54ff96608d846c33dfb8766a67f0b4a6ce130ce244414f"},
+    {file = "cfgv-3.0.0.tar.gz", hash = "sha256:04b093b14ddf9fd4d17c53ebfd55582d27b76ed30050193c14e560770c5360eb"},
 ]
 chardet = [
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
@@ -890,10 +879,8 @@ coverage = [
     {file = "coverage-5.0.3-cp39-cp39m-win_amd64.whl", hash = "sha256:da93027835164b8223e8e5af2cf902a4c80ed93cb0909417234f4a9df3bcd9af"},
     {file = "coverage-5.0.3.tar.gz", hash = "sha256:77afca04240c40450c331fa796b3eab6f1e15c5ecf8bf2b8bee9706cd5452fef"},
 ]
-dis3 = [
-    {file = "dis3-0.1.3-py2-none-any.whl", hash = "sha256:61f7720dd0d8749d23fda3d7227ce74d73da11c2fade993a67ab2f9852451b14"},
-    {file = "dis3-0.1.3-py3-none-any.whl", hash = "sha256:30b6412d33d738663e8ded781b138f4b01116437f0872aa56aa3adba6aeff218"},
-    {file = "dis3-0.1.3.tar.gz", hash = "sha256:9259b881fc1df02ed12ac25f82d4a85b44241854330b1a651e40e0c675cb2d1e"},
+distlib = [
+    {file = "distlib-0.3.0.zip", hash = "sha256:2e166e231a26b36d6dfe35a48c4464346620f8645ed0ace01ee31822b288de21"},
 ]
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
@@ -902,6 +889,10 @@ docutils = [
 entrypoints = [
     {file = "entrypoints-0.3-py2.py3-none-any.whl", hash = "sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19"},
     {file = "entrypoints-0.3.tar.gz", hash = "sha256:c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451"},
+]
+filelock = [
+    {file = "filelock-3.0.12-py3-none-any.whl", hash = "sha256:929b7d63ec5b7d6b71b0fa5ac14e030b3f70b75747cef1b10da9b879fef15836"},
+    {file = "filelock-3.0.12.tar.gz", hash = "sha256:18d82244ee114f543149c66a6e0c14e9c4f8a1044b5cdaadd0f82159d6a6ff59"},
 ]
 flake8 = [
     {file = "flake8-3.7.9-py2.py3-none-any.whl", hash = "sha256:49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca"},
@@ -1043,9 +1034,6 @@ pygments = [
 pygobject = [
     {file = "PyGObject-3.34.0.tar.gz", hash = "sha256:2acb0daf2b3a23a90f52066cc23d1053339fee2f5f7f4275f8baa3704ae0c543"},
 ]
-pyinstaller = [
-    {file = "PyInstaller-3.6.tar.gz", hash = "sha256:3730fa80d088f8bb7084d32480eb87cbb4ddb64123363763cf8f2a1378c1c4b7"},
-]
 pyparsing = [
     {file = "pyparsing-2.4.6-py2.py3-none-any.whl", hash = "sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec"},
     {file = "pyparsing-2.4.6.tar.gz", hash = "sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f"},
@@ -1119,8 +1107,8 @@ snowballstemmer = [
     {file = "snowballstemmer-2.0.0.tar.gz", hash = "sha256:df3bac3df4c2c01363f3dd2cfa78cce2840a79b9f1c2d2de9ce8d31683992f52"},
 ]
 sphinx = [
-    {file = "Sphinx-2.4.0-py3-none-any.whl", hash = "sha256:b3feeed2da588adabd0db5329a309f27317e98382122721511e901833d092028"},
-    {file = "Sphinx-2.4.0.tar.gz", hash = "sha256:fb2ce74c28154872757925edda0060b4c4102cdc86b8b30063f23399678de2ca"},
+    {file = "Sphinx-2.4.1-py3-none-any.whl", hash = "sha256:5024a67f065fe60d9db2005580074d81f22a02dd8f00a5b1ec3d5f4d42bc88d8"},
+    {file = "Sphinx-2.4.1.tar.gz", hash = "sha256:f929b72e0cfe45fa581b8964d54457117863a6a6c9369ecc1a65b8827abd3bf2"},
 ]
 sphinx-rtd-theme = [
     {file = "sphinx_rtd_theme-0.4.3-py2.py3-none-any.whl", hash = "sha256:00cf895504a7895ee433807c62094cf1e95f065843bf3acd17037c3e9a2becd4"},
@@ -1192,8 +1180,8 @@ urllib3 = [
     {file = "urllib3-1.25.8.tar.gz", hash = "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"},
 ]
 virtualenv = [
-    {file = "virtualenv-16.7.9-py2.py3-none-any.whl", hash = "sha256:55059a7a676e4e19498f1aad09b8313a38fcc0cdbe4fdddc0e9b06946d21b4bb"},
-    {file = "virtualenv-16.7.9.tar.gz", hash = "sha256:0d62c70883c0342d59c11d0ddac0d954d0431321a41ab20851facf2b222598f3"},
+    {file = "virtualenv-20.0.3-py2.py3-none-any.whl", hash = "sha256:ec376274f5abb6da25e0ef81d082d2884cda8fd924e1ff73b4c2bb5416d48c87"},
+    {file = "virtualenv-20.0.3.tar.gz", hash = "sha256:526484e29a9a12f0680d251331e7841b36f1e2b918935377f173f764b1b8be89"},
 ]
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
