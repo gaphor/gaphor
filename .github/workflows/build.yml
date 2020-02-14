@@ -61,10 +61,8 @@ jobs:
         with:
           version: 1.0.3
       - name: Collect Metadata
-        # TODO: release build if $GITHUB_REF == $V else add ${GITHUB_REF:0:8}
         id: meta
-        run: |
-          echo "##[set-output name=version;]$(poetry version --no-ansi | cut -d' ' -f2)"
+        run: .github/scripts/metadata.sh
       - name: Install Python Dependencies
         run: poetry install
       - name: Test with Pytest
@@ -126,6 +124,9 @@ jobs:
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
           C:\tools\msys64\usr\bin\bash -lc "win-installer/msys2-install.sh"
+      - name: Collect Metadata
+        id: meta
+        run: C:\tools\msys64\usr\bin\bash -lc ".github/scripts/metadata.sh"
       - name: Run Tests
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
@@ -138,12 +139,12 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-installer.exe
-          path: dist/gaphor-${{ steps.meta.outputs.version }}-installer.exe
+          path: win-installer/gaphor-${{ steps.meta.outputs.version }}-installer.exe
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-portable.exe
         uses: actions/upload-artifact@v1
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-portable.exe
-          path: dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe
+          path: win-installer/gaphor-${{ steps.meta.outputs.version }}-portable.exe
       - name: Upload Assets
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
@@ -171,8 +172,7 @@ jobs:
           version: 1.0.3
       - name: Collect Metadata
         id: meta
-        run: |
-          echo "##[set-output name=version;]$(poetry version --no-ansi | cut -d' ' -f2)"
+        run: .github/scripts/metadata.sh
       - name: Use Python Dependency Cache
         uses: actions/cache@v1.0.3
         with:
