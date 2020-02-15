@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 export MSYS2_FC_CACHE_SKIP=1
 
@@ -16,9 +16,9 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-python3 \
     mingw-w64-$MSYS2_ARCH-python3-gobject \
     mingw-w64-$MSYS2_ARCH-python3-cairo \
-    mingw-w64-$MSYS2_ARCH-python3-pip
+    mingw-w64-$MSYS2_ARCH-python3-pip \
+    mingw-w64-$MSYS2_ARCH-python3-setuptools
 
-pip install poetry==1.0.2
+pip install poetry==1.0.3
 poetry config virtualenvs.create false
 poetry install
-

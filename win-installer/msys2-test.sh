@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 export PYTEST_ADDOPTS="--doctest-modules --junitxml=junit/test-results.xml"
 export PY_IGNORE_IMPORTMISMATCH=1

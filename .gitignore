@@ -40,6 +40,7 @@ flatpak/.flatpak-builder
 
 # Windows Install
 win-installer/_build_root
+win-installer/file_version_info.txt
 
 # MacOS
 package/gaphor.iconset/

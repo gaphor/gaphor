@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "1.1.1"
+version = "1.2.0rc1"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -48,7 +48,6 @@ pytest-runner = "^4.2"
 black = { version = "^19.10b0", python = "^3.6" }
 mypy = "0.740"
 pre-commit = "^1.12"
-pyinstaller = "^3.5"
 sphinx = "^2.2"
 recommonmark = "^0.6.0"
 sphinx-rtd-theme = "^0.4.3"
