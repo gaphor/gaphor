@@ -35,11 +35,12 @@ class StorageTestCase(TestCase):
         assert version_lower_than("0.14.1111", (0, 15, 0))
         assert not version_lower_than("0.15.0", (0, 15, 0))
         assert not version_lower_than("1.33.0", (0, 15, 0))
-        assert version_lower_than("0.15.0.b123", (0, 15, 0))
+        assert not version_lower_than("0.15.0b123", (0, 15, 0))
         assert version_lower_than("0.14.0.b1", (0, 15, 0))
-        assert version_lower_than("0.15.b1", (0, 15, 0))
+        assert not version_lower_than("0.15.b1", (0, 15, 0))
         assert not version_lower_than("0.16.b1", (0, 15, 0))
         assert not version_lower_than("0.15.0.b2", (0, 14, 99))
+        assert not version_lower_than("1.2.0rc2-dev0+7fad31a0", (0, 17, 0))
 
     def test_save_uml(self):
         """Saving gaphor.UML model elements.
