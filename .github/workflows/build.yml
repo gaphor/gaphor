@@ -76,8 +76,7 @@ jobs:
           coverageCommand: coverage xml
       - name: Build
         run: |
-          make translate
-          poetry build
+          make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v1
         if: matrix.py_ver == '3.7'
@@ -186,7 +185,7 @@ jobs:
         run: pytest
       - name: Create macOS Application
         run: |
-          poetry build
+          make dist
           cd macos-dmg
           ./package.sh
           mkdir artifact
