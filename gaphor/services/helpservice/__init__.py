@@ -3,9 +3,9 @@
 
 import importlib
 
+import importlib_metadata
 from gi.repository import GdkPixbuf, Gtk
 
-from gaphor import __version__
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action
 
@@ -31,7 +31,7 @@ class HelpService(Service, ActionProvider):
 
         about = builder.get_object("about")
 
-        about.set_version(str(__version__))
+        about.set_version(importlib_metadata.version("gaphor"))
 
         about.set_transient_for(self.window)
 
