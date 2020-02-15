@@ -8,6 +8,7 @@ pacman --noconfirm -Suy
 
 pacman --noconfirm -S --needed \
     git \
+    make \
     mingw-w64-$MSYS2_ARCH-gcc \
     mingw-w64-$MSYS2_ARCH-gtk3 \
     mingw-w64-$MSYS2_ARCH-pkg-config \
@@ -22,3 +23,4 @@ pacman --noconfirm -S --needed \
 pip install poetry==1.0.3
 poetry config virtualenvs.create false
 poetry install
+make translate
