@@ -324,16 +324,15 @@ def load_generator(filename, factory):
 
 def version_lower_than(gaphor_version, version):
     """
-    if version_lower_than('0.3.0', (0, 15, 0)):
-       ...
+    Only major and minor versions are checked.
+
+    >>> version_lower_than('0.3.0', (0, 15, 0))
+    True
+
     """
     parts = gaphor_version.split(".")
-    try:
-        return tuple(map(int, parts)) < version
-    except ValueError:
-        # We're having a -dev, -pre, -beta, -alpha or whatever version
-        parts = parts[:-1]
-        return tuple(map(int, parts)) <= version
+
+    return tuple(map(int, parts[:2])) < version[:2]
 
 
 def upgrade_canvas_item_to_1_0_2(item):
