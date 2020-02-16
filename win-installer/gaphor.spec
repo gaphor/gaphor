@@ -1,8 +1,10 @@
 # -*- mode: python ; coding: utf-8 -*-
+import sys
 from PyInstaller.utils.hooks import copy_metadata
-
-
+    
 block_cipher = None
+
+sys.modules['FixTk'] = None
 
 a = Analysis(['gaphor-script.py'],
              pathex=['../'],
@@ -20,7 +22,7 @@ a = Analysis(['gaphor-script.py'],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
-             excludes=['lib2to3'],
+             excludes=['lib2to3', 'FixTk', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
@@ -38,7 +40,7 @@ exe = EXE(pyz,
           upx=True,
           icon='misc/gaphor.ico',
           version='file_version_info.txt',
-          console=False )
+          console=False)
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

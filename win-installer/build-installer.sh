@@ -36,20 +36,10 @@ function set_build_root {
 set_build_root "${DIR}/dist/gaphor"
 
 
-function install_pre_deps {
+function install_build_deps {
     pacman -S --needed --noconfirm p7zip git dos2unix upx \
         mingw-w64-"${ARCH}"-nsis \
 	    mingw-w64-"${ARCH}"-wget
-}
-
-function install_deps {
-    pacman --noconfirm --needed -S \
-        mingw-w64-"${ARCH}"-gtk3 \
-        mingw-w64-"${ARCH}"-python3 \
-        mingw-w64-"${ARCH}"-python3-gobject \
-        mingw-w64-"${ARCH}"-gobject-introspection \
-        mingw-w64-"${ARCH}"-python3-cairo \
-        mingw-w64-"${ARCH}"-python3-pip
 
     pip install pyinstaller==3.6
 }
@@ -94,10 +84,8 @@ function main {
         exit $?
     fi
 
-    echo "install pre-dependencies"
-    install_pre_deps
-    echo "install dependencies"
-    install_deps
+    echo "install build dependencies"
+    install_build_deps
     echo "pyinstall gaphor"
     build_pyinstaller
     echo "build installer"
