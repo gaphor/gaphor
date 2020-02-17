@@ -1,10 +1,6 @@
-# -*- mode: python ; coding: utf-8 -*-
-import sys
-from PyInstaller.utils.hooks import copy_metadata
+from PyInstaller.utils.hooks import copy_metadata, collect_submodules
     
 block_cipher = None
-
-sys.modules['FixTk'] = None
 
 a = Analysis(['gaphor-script.py'],
              pathex=['../'],
@@ -19,10 +15,10 @@ a = Analysis(['gaphor-script.py'],
 		       ('../LICENSE.txt', 'gaphor'),
 		       ('../gaphor/locale/*', 'gaphor/locale')
 		     ]+copy_metadata('gaphor'),
-             hiddenimports=[],
-             hookspath=['hooks'],
+             hiddenimports=collect_submodules('packaging') + collect_submodules('pkg_resources') + collect_submodules('gaphas') + collect_submodules('importlib_metadata'),
+             hookspath=[],
              runtime_hooks=[],
-             excludes=['lib2to3', 'FixTk', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter'],
+             excludes=['lib2to3', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
