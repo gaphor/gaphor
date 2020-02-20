@@ -29,22 +29,27 @@ function install_dependencies() {
 
     pacman --noconfirm -S --needed --cachedir "/var/cache/pacman/pkg" --root "${BUILD_ROOT}" \
         mingw-w64-$MSYS2_ARCH-gtk3 \
-        mingw-w64-$MSYS2_ARCH-pkg-config \
         mingw-w64-$MSYS2_ARCH-cairo \
         mingw-w64-$MSYS2_ARCH-gobject-introspection \
         mingw-w64-$MSYS2_ARCH-python3 \
         mingw-w64-$MSYS2_ARCH-python3-gobject \
-        mingw-w64-$MSYS2_ARCH-python3-cairo \
-        mingw-w64-$MSYS2_ARCH-python3-pip
+        mingw-w64-$MSYS2_ARCH-python3-cairo
 
     # Run again, since install script will not always work
-    (cd ${MINGW_BIN} && ./gdk-pixbuf-query-loaders --update-cache)
+    (cd ${MINGW_BIN} && ./gdk-pixbuf-query-loaders --update-cache && glib-compile-schemas ../share/glib-2.0/schemas)
 
     pacman --noconfirm -Rdds --cachedir "/var/cache/pacman/pkg" --root "${BUILD_ROOT}" \
         mingw-w64-$MSYS2_ARCH-ncurses \
         mingw-w64-$MSYS2_ARCH-tk \
         mingw-w64-$MSYS2_ARCH-tcl \
-        mingw-w64-$MSYS2_ARCH-ca-certificates || true
+        mingw-w64-$MSYS2_ARCH-ca-certificates \
+        mingw-w64-$MSYS2_ARCH-sqlite3 \
+        mingw-w64-$MSYS2_ARCH-libtasn1 \
+        mingw-w64-$MSYS2_ARCH-pygobject-devel-3.34.0-3 \
+        mingw-w64-$MSYS2_ARCH-sqlite3 \
+        mingw-w64-$MSYS2_ARCH-python-mako \
+        mingw-w64-$MSYS2_ARCH-python-colorama || true
+
 }
 
 function install_gaphor() {
@@ -58,12 +63,33 @@ function install_gaphor() {
 
 function prepackage_cleanup() {
     rm -rf ${MINGW_ROOT}/ssl
+    rm -rf ${MINGW_ROOT}/include
+    rm -rf ${MINGW_ROOT}/lib/cmake
     rm -rf ${MINGW_ROOT}/libexec
-    find ${MINGW_ROOT}/lib -name '*.a' -exec rm {} \;
     rm -rf ${MINGW_ROOT}/share/doc
     rm -rf ${MINGW_ROOT}/share/gtk-doc
     rm -rf ${MINGW_ROOT}/share/info
     rm -rf ${MINGW_ROOT}/share/man
+    rm -rf ${MINGW_ROOT}/share/installed-tests
+    rm -rf ${MINGW_ROOT}/share/vala
+    find ${MINGW_ROOT}/lib -name '*.a' | xargs rm
+
+    # remove some larger ones
+    rm -rf ${MINGW_ROOT}/share/icons/Adwaita/512x512
+    rm -rf ${MINGW_ROOT}/share/icons/Adwaita/256x256
+    rm -rf ${MINGW_ROOT}/share/icons/Adwaita/96x96
+    ${MINGW_ROOT}/bin/gtk-update-icon-cache-3.0 ${MINGW_ROOT}/share/icons/Adwaita
+
+    # remove some gtk demo icons
+    find "${MINGW_ROOT}/share/icons/hicolor" -name "gtk3-*" | xargs rm -f
+    ${MINGW_ROOT}/bin/gtk-update-icon-cache-3.0 ${MINGW_ROOT}/share/icons/hicolor
+
+    # python related
+    rm -rf "${MINGW_ROOT}"/lib/python3.*/test
+    rm -f "${MINGW_ROOT}"/lib/python3.*/lib-dynload/_tkinter*
+    find "${MINGW_ROOT}"/lib/python3.* -type d -name "test*" | xargs rm -rf
+    find "${MINGW_ROOT}"/lib/python3.* -type d -name "*_test*" | xargs rm -rf
+    find ${MINGW_ROOT}/lib -name '__pycache__' | xargs rm -r
 }
 
 function build_installer {
