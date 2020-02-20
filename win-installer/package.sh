@@ -5,19 +5,19 @@
 # Thanks:
 # - Based on https://github.com/quodlibet/quodlibet
 
-set -euo pipefail
+set -xeuo pipefail
 
-BUILD_ROOT="build/gaphor"
+BUILD_ROOT="build"
 VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 MSYS2_ARCH=x86_64
 MINGW_ROOT=${BUILD_ROOT}/mingw64
 MINGW_BIN=${MINGW_ROOT}/bin
 
-rm -rf ${BUILD_ROOT}
-mkdir -p ${BUILD_ROOT}
-
-# python3 -m venv --copies --prompt Gaphor-win "${BUILD_ROOT}"
-# source "${BUILD_ROOT}/bin/activate"
+function clean_all() {
+    rm -rf ${BUILD_ROOT}
+    mkdir -p ${BUILD_ROOT}
+    rm -f gaphor-*-installer.exe gaphor-*-portable.exe
+}
 
 function install_dependencies() {
     mkdir -p "${BUILD_ROOT}"/var/lib/pacman
@@ -37,11 +37,14 @@ function install_dependencies() {
         mingw-w64-$MSYS2_ARCH-python3-cairo \
         mingw-w64-$MSYS2_ARCH-python3-pip
 
+    # Run again, since install script will not always work
+    (cd ${MINGW_BIN} && ./gdk-pixbuf-query-loaders --update-cache)
+
     pacman --noconfirm -Rdds --cachedir "/var/cache/pacman/pkg" --root "${BUILD_ROOT}" \
         mingw-w64-$MSYS2_ARCH-ncurses \
         mingw-w64-$MSYS2_ARCH-tk \
         mingw-w64-$MSYS2_ARCH-tcl \
-        mingw-w64-$MSYS2_ARCH-ca-certificates
+        mingw-w64-$MSYS2_ARCH-ca-certificates || true
 }
 
 function install_gaphor() {
@@ -56,7 +59,7 @@ function install_gaphor() {
 function prepackage_cleanup() {
     rm -rf ${MINGW_ROOT}/ssl
     rm -rf ${MINGW_ROOT}/libexec
-    rm -rf ${MINGW_ROOT}/lib/*.a
+    find ${MINGW_ROOT}/lib -name '*.a' -exec rm {} \;
     rm -rf ${MINGW_ROOT}/share/doc
     rm -rf ${MINGW_ROOT}/share/gtk-doc
     rm -rf ${MINGW_ROOT}/share/info
@@ -64,30 +67,33 @@ function prepackage_cleanup() {
 }
 
 function build_installer {
-    (cd $MINGW_ROOT && makensis -NOCD -DVERSION="$VERSION" ../../../gaphor.nsi)
+    (cd $MINGW_ROOT && makensis -NOCD -DVERSION="$VERSION" ../../gaphor.nsi)
 
     mv "${MINGW_ROOT}/gaphor-LATEST.exe" "gaphor-$VERSION-installer.exe"
 }
 
 function build_portable_installer {
-    local PORTABLE="$DIR/gaphor-$VERSION-portable"
+    local PORTABLE="$(pwd)/gaphor-$VERSION-portable"
 
     rm -rf "$PORTABLE"
     mkdir "$PORTABLE"
-    cp "$MISC"/gaphor.lnk "$PORTABLE"
-    cp "$MISC"/README-PORTABLE.txt "$PORTABLE"/README.txt
+    cp gaphor.lnk "$PORTABLE"
+    cp README-PORTABLE.txt "$PORTABLE"/README.txt
     unix2dos "$PORTABLE"/README.txt
     mkdir "$PORTABLE"/config
-    cp -RT "${DIST_LOCATION}" "$PORTABLE"/data
+    cp -RT "${MINGW_ROOT}" "$PORTABLE"/data
 
     rm -Rf 7zout 7z1900-x64.exe
     7z a payload.7z "$PORTABLE"
-    wget.exe -P "$DIR" -c https://www.7-zip.org/a/7z1900-x64.exe
+    wget.exe -P "$(pwd)" -c https://www.7-zip.org/a/7z1900-x64.exe
     7z x -o7zout 7z1900-x64.exe
     cat 7zout/7z.sfx payload.7z > "$PORTABLE".exe
     rm -Rf 7zout 7z1900-x64.exe payload.7z "$PORTABLE"
 }
 
+clean_all
 install_dependencies
 install_gaphor
+prepackage_cleanup
 build_installer
+build_portable_installer

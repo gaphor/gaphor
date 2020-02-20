@@ -133,7 +133,8 @@ jobs:
       - name: Create Windows Binaries
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
-          C:\tools\msys64\usr\bin\bash -lc "win-installer/build-installer.sh"
+          C:\tools\msys64\usr\bin\bash -lc "poetry build"
+          C:\tools\msys64\usr\bin\bash -lc "cd win-installer && ./package.sh"
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v1
         with:
