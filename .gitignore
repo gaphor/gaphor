@@ -39,8 +39,7 @@ flatpak/gaphor-repo
 flatpak/.flatpak-builder
 
 # Windows Install
-win-installer/_build_root
-win-installer/file_version_info.txt
+win-installer/gaphor*.exe
 
 # MacOS
 package/gaphor.iconset/
