@@ -4,9 +4,9 @@ set -euo pipefail
 
 export MSYS2_FC_CACHE_SKIP=1
 
-pacman --noconfirm -Suy
+pacman --noconfirm --cachedir "/var/cache/pacman/pkg" -Suy
 
-pacman --noconfirm -S --needed \
+pacman --noconfirm --cachedir "/var/cache/pacman/pkg" -S --needed \
     git \
     make \
     mingw-w64-$MSYS2_ARCH-gcc \
@@ -18,7 +18,10 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-python3-gobject \
     mingw-w64-$MSYS2_ARCH-python3-cairo \
     mingw-w64-$MSYS2_ARCH-python3-pip \
-    mingw-w64-$MSYS2_ARCH-python3-setuptools
+    mingw-w64-$MSYS2_ARCH-python3-setuptools \
+    p7zip dos2unix upx \
+    mingw-w64-$MSYS2_ARCH-nsis \
+    mingw-w64-$MSYS2_ARCH-wget
 
 pip install poetry==1.0.3
 poetry config virtualenvs.create false

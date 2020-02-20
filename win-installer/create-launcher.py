@@ -94,7 +94,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 }
     """
 
-    launch_code = f"import sys; from {module} import {func}; sys.exit({func}())"
+    launch_code = f"import sys; from {module} import {func}; {func}(sys.argv)"
     return template % launch_code
 
 
@@ -207,27 +207,26 @@ def main():
     target = argv[2]
 
     company_name = "Gaphor Community"
-    misc = os.path.dirname(os.path.realpath(__file__))
 
     build_launcher(
         os.path.join(target, "gaphor.exe"),
-        os.path.join(misc, "gaphor.ico"),
+        os.path.join(target, "gaphor.ico"),
         "Gaphor",
         "Gaphor",
         version,
         company_name,
-        "gaphor:main",
+        "gaphor.ui:main",
         True,
     )
 
     build_launcher(
         os.path.join(target, "gaphor-cmd.exe"),
-        os.path.join(misc, "gaphor.ico"),
+        os.path.join(target, "gaphor.ico"),
         "Gaphor",
         "Gaphor",
         version,
         company_name,
-        "gaphor:main",
+        "gaphor.ui:main",
         False,
     )
 
