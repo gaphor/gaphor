@@ -137,7 +137,7 @@ END
 """
 
     def to_ver_list(v):
-        v = re.sub(r"rc\d", "", v)
+        v = re.sub(r"[a-z].*", "", v)
         return ",".join(map(str, (list(map(int, v.split("."))) + [0] * 4)[:4]))
 
     file_version_list = to_ver_list(file_version)
