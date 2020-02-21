@@ -73,6 +73,11 @@ class AssociationItem(LinePresentation, Named):
         ).watch(f"{base}.name", self.on_association_end_value).watch(
             f"{base}.aggregation", self.on_association_end_value
         ).watch(
+            f"{base}.appliedStereotype.slot.definingFeature.name",
+            self.on_association_end_value,
+        ).watch(
+            f"{base}.appliedStereotype.slot.value", self.on_association_end_value
+        ).watch(
             f"{base}.classifier", self.on_association_end_value
         ).watch(
             f"{base}.visibility", self.on_association_end_value
