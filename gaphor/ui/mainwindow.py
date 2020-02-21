@@ -487,6 +487,7 @@ class Diagrams(UIComponent, ActionProvider):
         for page, widget in self.get_widgets_on_pages():
             if widget.diagram_page.get_diagram() is diagram:
                 self._notebook.set_current_page(page)
+                self.get_current_view().grab_focus()
                 return widget.diagram_page
 
         # No existing diagram page found, creating one
@@ -499,6 +500,7 @@ class Diagrams(UIComponent, ActionProvider):
         page.set_drawing_style(self.properties.get("diagram.sloppiness", 0))
 
         self.create_tab(diagram.name, widget)
+        self.get_current_view().grab_focus()
         return page
 
     @event_handler(DiagramClosed)
