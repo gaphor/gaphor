@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-11 23:46+0100\n"
+"POT-Creation-Date: 2020-02-21 20:57+0100\n"
 "PO-Revision-Date: 2006-02-11 08:02+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language: es\n"
@@ -251,13 +251,12 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: ../gaphor/diagram/propertypages.py:466
-msgid "Orthogonal"
+#: ../gaphor/diagram/propertypages.py:467
+msgid "Rectilinear"
 msgstr ""
 
-#: ../gaphor/diagram/actions/actionspropertypages.py:96
-#: ../gaphor/diagram/propertypages.py:479
-msgid "Horizontal"
+#: ../gaphor/diagram/propertypages.py:480
+msgid "Flip orientation"
 msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:34
@@ -270,6 +269,10 @@ msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:90
 msgid "Join specification"
+msgstr ""
+
+#: ../gaphor/diagram/actions/actionspropertypages.py:96
+msgid "Horizontal"
 msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:133
@@ -898,5 +901,8 @@ msgstr "Herramientas"
 #~ "Cualquier modificación no será guardada. ¿Desea continuar?"
 
 #~ msgid "New"
+#~ msgstr ""
+
+#~ msgid "Orthogonal"
 #~ msgstr ""
 

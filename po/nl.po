@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-11 23:46+0100\n"
+"POT-Creation-Date: 2020-02-21 20:57+0100\n"
 "PO-Revision-Date: 2019-11-11 08:45+0100\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl_NL\n"
@@ -239,14 +239,13 @@ msgstr "Extension"
 msgid "Name"
 msgstr "Naam"
 
-#: ../gaphor/diagram/propertypages.py:466
-msgid "Orthogonal"
-msgstr "Orthogonaal"
+#: ../gaphor/diagram/propertypages.py:467
+msgid "Rectilinear"
+msgstr ""
 
-#: ../gaphor/diagram/actions/actionspropertypages.py:96
-#: ../gaphor/diagram/propertypages.py:479
-msgid "Horizontal"
-msgstr "Horizontaal"
+#: ../gaphor/diagram/propertypages.py:480
+msgid "Flip orientation"
+msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:34
 msgid "Upper bound"
@@ -259,6 +258,10 @@ msgstr "Ordering"
 #: ../gaphor/diagram/actions/actionspropertypages.py:90
 msgid "Join specification"
 msgstr "Join specificatie"
+
+#: ../gaphor/diagram/actions/actionspropertypages.py:96
+msgid "Horizontal"
+msgstr "Horizontaal"
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:133
 #: ../gaphor/diagram/states/propertypages.py:34
@@ -720,4 +723,7 @@ msgstr "Hulpmiddelen"
 
 #~ msgid "New"
 #~ msgstr "Nieuw"
+
+#~ msgid "Orthogonal"
+#~ msgstr "Orthogonaal"
 
