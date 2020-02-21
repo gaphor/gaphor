@@ -15,7 +15,8 @@ a = Analysis(['gaphor-script.py'],
 		       ('../LICENSE.txt', 'gaphor'),
 		       ('../gaphor/locale/*', 'gaphor/locale')
 		     ]+copy_metadata('gaphor')+copy_metadata('gaphas'),
-             hiddenimports=[],
+	     # Required until PyInstaller 4.0 is released, works around setuptools changes
+             hiddenimports=collect_submodules('pkg_resources'),
              hookspath=[],
              runtime_hooks=[],
              excludes=['lib2to3', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter'],
