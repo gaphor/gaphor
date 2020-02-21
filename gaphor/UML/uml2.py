@@ -561,6 +561,7 @@ class ActivityGroup(Element):
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
     specification: attribute[str]
+    stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
     context: derivedunion[Namespace]
 
@@ -1185,8 +1186,11 @@ InteractionFragment.enclosingInteraction = association(
 Interaction.fragment = association(
     "fragment", InteractionFragment, opposite="enclosingInteraction"
 )
+Constraint.stateInvariant = association(
+    "stateInvariant", StateInvariant, upper=1, opposite="invariant"
+)
 StateInvariant.invariant = association(
-    "invariant", Constraint, lower=1, upper=1, composite=True
+    "invariant", Constraint, lower=1, upper=1, composite=True, opposite="stateInvariant"
 )
 Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
 InteractionFragment.covered = association(
@@ -1463,6 +1467,7 @@ NamedElement.namespace = derivedunion(
     Parameter.ownerFormalParam,
     Property.useCase,
     Property.actor,
+    InteractionFragment.enclosingInteraction,
     Lifeline.interaction,
     Message.interaction,
     Region.stateMachine,
@@ -1503,7 +1508,7 @@ Namespace.ownedMember = derivedunion(
     BehavioredClassifier.ownedBehavior,
     UseCase.ownedAttribute,
     Actor.ownedAttribute,
-    StateInvariant.invariant,
+    Interaction.fragment,
     Interaction.lifeline,
     Interaction.message,
     StateMachine.region,
@@ -1664,6 +1669,7 @@ Element.owner = derivedunion(
     PackageImport.importingNamespace,
     PackageMerge.mergingPackage,
     NamedElement.namespace,
+    Constraint.stateInvariant,
     Pseudostate.state,
 )
 Element.ownedElement = derivedunion(
@@ -1687,7 +1693,7 @@ Element.ownedElement = derivedunion(
     Activity.edge,
     Activity.node,
     Action.output,
-    Interaction.fragment,
+    StateInvariant.invariant,
     InteractionFragment.generalOrdering,
     Connector.end,
     State.entry,

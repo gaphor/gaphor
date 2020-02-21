@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.1.1">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.2.0rc2">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -171,6 +171,9 @@
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -196,6 +199,9 @@
 <type>
 <ref refid="DCE:D4779F4E-6690-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -261,6 +267,9 @@
 <type>
 <ref refid="DCE:22B3AA56-4B32-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -639,7 +648,7 @@
 <ref refid="DCE:A1BA2C46-83D9-11D7-ADE2-4B1972AF3391"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 239.73051224928787, 380.6650717703349)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 239.73051224928787, 388.6650717703349)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -648,7 +657,7 @@
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-1.7305122492878695, 56.33492822966508)]</val>
+<val>[(0.0, 0.0), (-1.7305122492878695, 48.33492822966508)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:968B8AF4-83D9-11D7-ADE2-4B1972AF3391"/>
@@ -720,7 +729,7 @@
 <val>166.475247525</val>
 </width>
 <height>
-<val>50.0</val>
+<val>58.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -887,6 +896,9 @@
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>abstraction</val>
 </name>
@@ -896,6 +908,9 @@
 <type>
 <ref refid="DCE:601C6612-A419-11D8-B4C8-00061BC22919"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -974,6 +989,9 @@
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>upperValue</val>
 </name>
@@ -983,6 +1001,9 @@
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -1037,6 +1058,9 @@
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -1461,12 +1485,18 @@
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>symbol</val>
 </name>
 <typeValue>
 <val>String</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -1686,6 +1716,9 @@
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -1717,6 +1750,9 @@
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:E96CD03E-509E-11D7-9F0D-F80F4B06507D">
 <aggregation>
@@ -1742,6 +1778,9 @@
 <type>
 <ref refid="DCE:C9A0DCAA-509E-11D7-9F0D-F80F4B06507D"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -1852,6 +1891,9 @@
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -1893,6 +1935,9 @@
 <type>
 <ref refid="DCE:7CE7539A-45D0-11D7-B5CA-613352B2821F"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -2348,6 +2393,9 @@
 <type>
 <ref refid="DCE:403FFD82-78D6-11D7-B68E-7835A4497977"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -2915,6 +2963,9 @@
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -2934,12 +2985,18 @@
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>lower</val>
 </name>
 <typeValue>
 <val>Integer</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -2984,6 +3041,9 @@
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -3012,6 +3072,9 @@
 <type>
 <ref refid="DCE:6D987F90-464D-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -3091,6 +3154,9 @@
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>target</val>
 </name>
@@ -3100,6 +3166,9 @@
 <type>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -3144,6 +3213,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>ownerReturnParam</val>
 </name>
@@ -3153,6 +3225,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:3A787382-4B38-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -3181,6 +3256,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F440F088-7650-11D7-8271-9A319BBF187B"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -3308,6 +3386,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -3418,6 +3499,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Generalization id="DCE:BC28E4EC-509D-11D7-811E-AF5893A6470D">
 <general>
@@ -3447,6 +3531,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>extensionLocation</val>
 </name>
@@ -3456,6 +3543,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:CC9DE0D0-6690-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -3517,6 +3607,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:99C69A58-4A89-11D7-B090-133D836EF880">
 <aggregation>
@@ -3545,6 +3638,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -3570,6 +3666,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:3DD222A6-8405-11D8-82A2-7B88E55A3BEC"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -4483,6 +4582,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -4508,6 +4610,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:3B6508EE-A35C-11D8-9D85-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -4613,6 +4718,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -4635,6 +4743,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>endType</val>
 </name>
@@ -4644,6 +4755,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -4718,6 +4832,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:F7D969E0-4B38-11D7-B391-02BBFE4396CE">
 <appliedStereotype>
@@ -4746,6 +4863,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -4762,12 +4882,18 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>visibility</val>
 </name>
 <typeValue>
 <val>VisibilityKind</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -4790,6 +4916,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>namespace_</val>
 </name>
@@ -4802,6 +4931,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:7D753EF0-464D-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -4846,6 +4978,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:3DB14614-97BA-11D8-9E36-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -5027,6 +5162,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -5052,6 +5190,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -5113,12 +5254,18 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>default</val>
 </name>
 <typeValue>
 <val>String</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -5183,6 +5330,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -5208,6 +5358,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:CC9DE0D0-6690-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -5255,6 +5408,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -5277,6 +5433,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>lowerValue</val>
 </name>
@@ -5286,6 +5445,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -5354,6 +5516,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:81F41A0A-4B32-11D7-B391-02BBFE4396CE">
 <aggregation>
@@ -5373,6 +5538,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>specification</val>
 </name>
@@ -5382,6 +5550,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -5500,6 +5671,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -5614,6 +5788,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5EE88232-4B35-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -5783,6 +5960,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>preContext</val>
 </name>
@@ -5795,6 +5975,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -5812,6 +5995,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>decisionInput</val>
 </name>
@@ -5821,6 +6007,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -6255,6 +6444,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Association id="DCE:7AD72FFE-4A89-11D7-B090-133D836EF880">
 <memberEnd>
@@ -6320,6 +6512,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -6414,6 +6609,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -6452,6 +6650,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>postContext</val>
 </name>
@@ -6464,6 +6665,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -6495,6 +6699,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -6561,6 +6768,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>interface_</val>
 </name>
@@ -6570,6 +6780,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:3B6508EE-A35C-11D8-9D85-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -6639,6 +6852,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -6684,6 +6900,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>owner</val>
 </name>
@@ -6693,6 +6912,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -6739,6 +6961,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>context</val>
 </name>
@@ -6748,6 +6973,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:7D753EF0-464D-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -6797,6 +7025,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -6918,6 +7149,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -7017,6 +7251,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -7064,6 +7301,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -7160,6 +7400,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>defaultValue</val>
 </name>
@@ -7169,6 +7412,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -7272,6 +7518,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -7348,6 +7597,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -7476,6 +7728,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -7545,6 +7800,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -7707,6 +7965,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -7822,6 +8083,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>defaultValue</val>
 </name>
@@ -7831,6 +8095,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -7937,6 +8204,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -7962,6 +8232,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:D4779F4E-6690-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -8732,6 +9005,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:7ED04AAA-4B38-11D7-B391-02BBFE4396CE">
 <appliedStereotype>
@@ -8788,6 +9064,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -8977,6 +9256,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -9674,6 +9956,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Package id="DCE:EA5E3982-97B9-11D8-9E36-00C00C03A405">
 <name>
@@ -9774,6 +10059,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>importingNamespace</val>
 </name>
@@ -9783,6 +10071,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:7D753EF0-464D-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -9926,6 +10217,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -9954,6 +10248,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:D4779F4E-6690-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -10020,6 +10317,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>class_</val>
 </name>
@@ -10029,6 +10329,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -10052,6 +10355,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:109C134E-8402-11D8-82A2-7B88E55A3BEC"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -10080,6 +10386,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:FB6167F2-8405-11D8-82A2-7B88E55A3BEC"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -10778,6 +11087,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -10880,12 +11192,18 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>name</val>
 </name>
 <typeValue>
 <val>String</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -10914,6 +11232,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -11012,6 +11333,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>association</val>
 </name>
@@ -11021,6 +11345,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F3BF94AC-4B55-11D7-A5E6-6257AF3C5118"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -11188,6 +11515,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -11290,6 +11620,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -11315,6 +11648,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:D2803262-97BA-11D8-9E38-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -11346,6 +11682,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -11374,6 +11713,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:B9C8E9D4-65CE-11D7-89A9-9C62884CFFDE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -11462,6 +11804,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -11573,6 +11918,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>context_</val>
 </name>
@@ -11582,6 +11930,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -11636,6 +11987,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -11661,6 +12015,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:D733DED0-65C5-11D7-89A9-9C62884CFFDE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -11732,6 +12089,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -11751,6 +12111,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>owningAssociation</val>
 </name>
@@ -11760,6 +12123,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F3BF94AC-4B55-11D7-A5E6-6257AF3C5118"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -12223,6 +12589,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -12254,6 +12623,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -12270,6 +12642,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>bodyContext</val>
 </name>
@@ -12282,6 +12657,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -12382,12 +12760,18 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>language</val>
 </name>
 <typeValue>
 <val>String</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -12440,6 +12824,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>class_</val>
 </name>
@@ -12449,6 +12836,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -12494,6 +12884,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>enumeration</val>
 </name>
@@ -12503,6 +12896,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:E9D88304-509B-11D7-811E-AF5893A6470D"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -12531,6 +12927,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -12640,6 +13039,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -12659,6 +13061,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>package</val>
 </name>
@@ -12668,6 +13073,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -12729,6 +13137,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -12801,6 +13212,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -12860,6 +13274,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -12997,6 +13414,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -13025,6 +13445,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -13069,6 +13492,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:B8A0A756-8404-11D8-82A2-7B88E55A3BEC">
 <association>
@@ -13108,6 +13534,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:D733DED0-65C5-11D7-89A9-9C62884CFFDE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -13247,6 +13676,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -13266,6 +13698,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>activity</val>
 </name>
@@ -13275,6 +13710,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:99210436-8321-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -13306,6 +13744,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -13325,6 +13766,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val></val>
 </name>
@@ -13337,6 +13781,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -13360,6 +13807,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F7430982-97BA-11D8-9E38-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -13436,6 +13886,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>classifier</val>
 </name>
@@ -13445,6 +13898,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -13467,6 +13923,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>2</val>
 </lowerValue>
+<lowerValue>
+<val>2</val>
+</lowerValue>
 <name>
 <val>memberEnd</val>
 </name>
@@ -13476,6 +13935,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -14031,6 +14493,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>superGroup</val>
 </name>
@@ -14040,6 +14505,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:FB6167F2-8405-11D8-82A2-7B88E55A3BEC"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -14084,6 +14552,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Association id="DCE:68E841A4-83DA-11D7-ADE2-4B1972AF3391">
 <memberEnd>
@@ -14118,6 +14589,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>class_</val>
 </name>
@@ -14130,6 +14604,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -14250,6 +14727,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>activity</val>
 </name>
@@ -14259,6 +14739,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:99210436-8321-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -14849,6 +15332,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:24A72A30-8324-11D8-8D1E-00C00C03A405">
 <association>
@@ -14894,6 +15380,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -14913,12 +15402,18 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>default</val>
 </name>
 <typeValue>
 <val>String</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -15079,6 +15574,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -15128,6 +15626,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -15159,6 +15660,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -15178,6 +15682,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>operation</val>
 </name>
@@ -15187,6 +15694,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -15213,6 +15723,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -15303,6 +15816,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>subject</val>
 </name>
@@ -15312,6 +15828,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -15407,6 +15926,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -15442,6 +15964,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>bodyCondition</val>
 </name>
@@ -15451,6 +15976,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -15557,6 +16085,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -16037,12 +16568,18 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>alias</val>
 </name>
 <typeValue>
 <val>String</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -16097,6 +16634,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:22B3AA56-4B32-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -16165,6 +16705,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:E3AF7EF0-6690-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -16631,12 +17174,18 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>upper</val>
 </name>
 <typeValue>
 <val>UnlimitedNatural</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -17296,6 +17845,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>importingNamespace</val>
 </name>
@@ -17305,6 +17857,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:7D753EF0-464D-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -17432,6 +17987,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>datatype</val>
 </name>
@@ -17441,6 +17999,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:BE828126-509B-11D7-811E-AF5893A6470D"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -17497,6 +18058,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>value</val>
 </name>
@@ -17506,6 +18070,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -17548,6 +18115,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>package</val>
 </name>
@@ -17557,6 +18127,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -17624,6 +18197,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -17706,12 +18282,18 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>lower</val>
 </name>
 <typeValue>
 <val>Integer</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -17898,6 +18480,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>constraint</val>
 </name>
@@ -17907,6 +18492,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -18068,6 +18656,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:3B6508EE-A35C-11D8-9D85-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -18511,6 +19102,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:BFC7B66E-4B37-11D7-B391-02BBFE4396CE">
 <appliedStereotype>
@@ -18536,6 +19130,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:A4EDB020-4B37-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -18571,6 +19168,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:37B70572-8323-11D8-8D1E-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -18644,6 +19244,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Association id="DCE:1DCA3E30-97BC-11D8-9E3C-00C00C03A405">
 <memberEnd>
@@ -18681,6 +19284,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>datatype</val>
 </name>
@@ -18690,6 +19296,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:BE828126-509B-11D7-811E-AF5893A6470D"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -18737,6 +19346,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -18762,6 +19374,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -18821,6 +19436,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:6D987F90-464D-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -18930,6 +19548,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -18949,6 +19570,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>supplier</val>
 </name>
@@ -18958,6 +19582,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -18981,6 +19608,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:109C134E-8402-11D8-82A2-7B88E55A3BEC"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -19516,6 +20146,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -20109,6 +20742,9 @@ BehavioredClassifier.</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -20204,6 +20840,9 @@ BehavioredClassifier.</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>opposite</val>
 </name>
@@ -20213,6 +20852,9 @@ BehavioredClassifier.</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -20552,12 +21194,18 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>upper</val>
 </name>
 <typeValue>
 <val>UnlimitedNatural</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -20610,6 +21258,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -20651,6 +21302,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:4081E42C-8406-11D8-82A2-7B88E55A3BEC">
 <aggregation>
@@ -20682,6 +21336,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:52EEA14C-863A-11D7-8239-5A25B8C2F569">
 <aggregation>
@@ -20701,6 +21358,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>typeValue</val>
 </name>
@@ -20710,6 +21370,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -22044,6 +22707,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -22177,6 +22843,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Class id="DCE:73E17466-4B38-11D7-B391-02BBFE4396CE">
 <name>
@@ -22284,6 +22953,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>featuringClassifier</val>
 </name>
@@ -22293,6 +22965,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -22340,6 +23015,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -22378,6 +23056,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -22877,7 +23558,7 @@ specially for Gaphor</val>
 <val>220.33333333333337</val>
 </width>
 <height>
-<val>110.33333333333334</val>
+<val>117.0</val>
 </height>
 <show_attributes>
 <val>1</val>
@@ -22966,7 +23647,7 @@ specially for Gaphor</val>
 <ref refid="DCE:79EAD5A4-464D-11D7-AA08-1B85D5275D8A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 376.0, 311.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 376.0, 317.66666666666663)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -22975,7 +23656,7 @@ specially for Gaphor</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-102.78593272171258, 108.66666666666663)]</val>
+<val>[(0.0, 0.0), (-102.78593272171258, 102.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FF58ABDE-464C-11D7-AA08-1B85D5275D8A"/>
@@ -23012,7 +23693,7 @@ specially for Gaphor</val>
 <ref refid="DCE:84C5B02A-464D-11D7-AA08-1B85D5275D8A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 519.0, 311.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 519.0, 317.66666666666663)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -23021,7 +23702,7 @@ specially for Gaphor</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (122.6666666666664, 110.33333333333337)]</val>
+<val>[(0.0, 0.0), (122.6666666666664, 103.66666666666674)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FF58ABDE-464C-11D7-AA08-1B85D5275D8A"/>
@@ -23067,7 +23748,7 @@ specially for Gaphor</val>
 <ref refid="DCE:B7B77E54-4694-11D7-B567-379CA7034986"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 561.0, 259.87913533368067)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 561.0, 263.45692800238237)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -23076,7 +23757,7 @@ specially for Gaphor</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (197.66666666666674, 0.0), (197.66666666666674, 184.9159716999162), (152.66666666666652, 184.9159716999162)]</val>
+<val>[(0.0, 0.0), (197.66666666666674, 0.0), (197.66666666666674, 181.3381790312145), (152.66666666666652, 181.3381790312145)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FF58ABDE-464C-11D7-AA08-1B85D5275D8A"/>
@@ -23099,7 +23780,7 @@ specially for Gaphor</val>
 <ref refid="DCE:D339DC26-4694-11D7-B567-379CA7034986"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 561.0, 210.24515424515423)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 561.0, 210.8239148239148)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -23108,7 +23789,7 @@ specially for Gaphor</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (271.6666666666665, 0.0), (271.6666666666665, 284.82518214615004), (152.66666666666652, 284.82518214615004)]</val>
+<val>[(0.0, 0.0), (271.6666666666665, 0.0), (271.6666666666665, 284.24642156738946), (152.66666666666652, 284.24642156738946)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FF58ABDE-464C-11D7-AA08-1B85D5275D8A"/>
@@ -23466,12 +24147,18 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>body</val>
 </name>
 <typeValue>
 <val>String</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -23598,6 +24285,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 <visibility>
 <val>public</val>
 </visibility>
@@ -23623,6 +24313,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:37B70572-8323-11D8-8D1E-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -23705,12 +24398,18 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>qualifiedName</val>
 </name>
 <typeValue>
 <val>String</val>
 </typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -23742,6 +24441,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -23795,6 +24497,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>interface_</val>
 </name>
@@ -23807,11 +24512,17 @@ specially for Gaphor</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:F0547A32-8FD1-11D8-9422-00C00C03A405">
 <association>
 <ref refid="DCE:F0533B36-8FD1-11D8-9422-00C00C03A405"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -23827,6 +24538,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:3A787382-4B38-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -23870,6 +24584,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:109C134E-8402-11D8-82A2-7B88E55A3BEC"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -23918,6 +24635,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:F91A720A-4B37-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -23992,6 +24712,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>type</val>
 </name>
@@ -24001,6 +24724,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -24036,6 +24762,7 @@ specially for Gaphor</val>
 <ref refid="DCE:7AD7ACA4-4A89-11D7-B090-133D836EF880"/>
 <ref refid="DCE:07DC8E08-4A8A-11D7-B090-133D836EF880"/>
 <ref refid="DCE:F0F613D4-4663-11DA-A766-00123FE76EBE"/>
+<ref refid="DCE:AE69FD6C-3B14-11D9-83CE-A0BAF22E8A12"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -24088,6 +24815,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -24774,6 +25504,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>package</val>
 </name>
@@ -24783,6 +25516,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -25454,6 +26190,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>namespace</val>
 </name>
@@ -25463,6 +26202,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:7D753EF0-464D-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -25553,6 +26295,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>source</val>
 </name>
@@ -25562,6 +26307,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -25587,6 +26335,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>relatedElement</val>
 </name>
@@ -25596,6 +26347,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -25618,6 +26372,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>type</val>
 </name>
@@ -25627,6 +26384,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -25658,6 +26418,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:37B70572-8323-11D8-8D1E-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -26320,6 +27083,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Generalization id="DCE:04A9AC5C-A41D-11D8-B0B1-00061BC22919">
 <general>
@@ -26344,6 +27110,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>context</val>
 </name>
@@ -26353,6 +27122,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -26430,6 +27202,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:3085C7C0-4B39-11D7-B391-02BBFE4396CE">
 <appliedStereotype>
@@ -26446,6 +27221,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>ownerFormalParam</val>
 </name>
@@ -26455,6 +27233,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:3A787382-4B38-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -26531,6 +27312,9 @@ specially for Gaphor</val>
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>client</val>
 </name>
@@ -26540,6 +27324,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -26598,6 +27385,9 @@ specially for Gaphor</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:F7D936DC-4B38-11D7-B391-02BBFE4396CE">
 <association>
@@ -26643,6 +27433,9 @@ specially for Gaphor</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -27065,6 +27858,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:1C6D178A-CFD8-11D8-8513-996A34E468FA">
 <appliedStereotype>
@@ -27084,6 +27880,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>useCase</val>
 </name>
@@ -27093,6 +27892,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:D4779F4E-6690-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -27131,6 +27933,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>actor</val>
 </name>
@@ -27140,6 +27945,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:C392E5BC-6690-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -27168,6 +27976,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -28327,13 +29138,13 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:FA5DD7BA-3B13-11D9-83CE-A0BAF22E8A12" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 134.0, 355.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 21.0, 356.0)</val>
 </matrix>
 <width>
-<val>117.0</val>
+<val>226.5</val>
 </width>
 <height>
-<val>59.0</val>
+<val>57.0</val>
 </height>
 <show_attributes>
 <val>1</val>
@@ -28362,7 +29173,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (100.00000000000003, 119.0)]</val>
+<val>[(0.0, 0.0), (1.9743589743590277, 120.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:AB9EC51C-3B13-11D9-83CE-A0BAF22E8A12"/>
@@ -28385,7 +29196,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-158.0, 129.0)]</val>
+<val>[(0.0, 0.0), (-140.5, 130.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:ECB2EF3A-3B13-11D9-83CE-A0BAF22E8A12"/>
@@ -28422,7 +29233,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:2CB46C1A-3B14-11D9-83CE-A0BAF22E8A12"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 192.0, 355.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 206.5, 356.0)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -28431,7 +29242,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, -161.0), (163.0, -161.0)]</val>
+<val>[(0.0, 0.0), (0.0, -162.0), (148.5, -162.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FA5DD7BA-3B13-11D9-83CE-A0BAF22E8A12"/>
@@ -28451,7 +29262,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:6290FC2E-3B14-11D9-83CE-A0BAF22E8A12" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 273.0, 355.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 505.0, 354.0)</val>
 </matrix>
 <width>
 <val>192.0</val>
@@ -28477,7 +29288,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:718F7F32-3B14-11D9-83CE-A0BAF22E8A12"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 408.0, 226.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 482.5, 226.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -28486,7 +29297,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-60.0, 129.0)]</val>
+<val>[(0.0, 0.0), (97.5, 128.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:ECB2EF3A-3B13-11D9-83CE-A0BAF22E8A12"/>
@@ -28520,7 +29331,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:A208B80E-3B14-11D9-83CE-A0BAF22E8A12" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 737.4353870738637, 469.00787353515625)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 738.4353870738637, 543.0078735351562)</val>
 </matrix>
 <width>
 <val>112.0</val>
@@ -28555,7 +29366,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-1.4373401988636942, 44.00787353515625)]</val>
+<val>[(0.0, 0.0), (-0.43734019886369424, 118.00787353515625)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:92E69B90-3B14-11D9-83CE-A0BAF22E8A12"/>
@@ -28598,7 +29409,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:0EAA96C8-4227-11D9-B6C2-00C00C03A405" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 477.5657142857143, 356.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 266.0, 356.0)</val>
 </matrix>
 <width>
 <val>203.0</val>
@@ -28633,7 +29444,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (92.3810436270316, 130.0)]</val>
+<val>[(0.0, 0.0), (-119.1846706586827, 130.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:ECB2EF3A-3B13-11D9-83CE-A0BAF22E8A12"/>
@@ -28755,12 +29566,20 @@ some elements to have a stereotype</val>
 </presentation>
 </Association>
 <Property id="DCE:2CBA41E4-3B14-11D9-83CE-A0BAF22E8A12">
+<appliedStereotype>
+<reflist>
+<ref refid="db3ce42e-54f3-11ea-8c7d-fd01dce16f0a"/>
+</reflist>
+</appliedStereotype>
 <association>
 <ref refid="DCE:2CB46C1A-3B14-11D9-83CE-A0BAF22E8A12"/>
 </association>
 <class_>
 <ref refid="DCE:ECB64200-3B13-11D9-83CE-A0BAF22E8A12"/>
 </class_>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -28773,6 +29592,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:FA613950-3B13-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -28798,6 +29620,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:ECB64200-3B13-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -28874,11 +29699,6 @@ some elements to have a stereotype</val>
 <ref refid="DCE:AE737E62-3B14-11D9-83CE-A0BAF22E8A12"/>
 </reflist>
 </memberEnd>
-<ownedEnd>
-<reflist>
-<ref refid="DCE:AE69FD6C-3B14-11D9-83CE-A0BAF22E8A12"/>
-</reflist>
-</ownedEnd>
 <package>
 <ref refid="DCE:2AF6FCEA-3B13-11D9-83CE-A0BAF22E8A12"/>
 </package>
@@ -28889,18 +29709,38 @@ some elements to have a stereotype</val>
 </presentation>
 </Association>
 <Property id="DCE:AE69FD6C-3B14-11D9-83CE-A0BAF22E8A12">
+<appliedStereotype>
+<reflist>
+<ref refid="a6c9263e-54f4-11ea-8c7d-fd01dce16f0a"/>
+</reflist>
+</appliedStereotype>
 <association>
 <ref refid="DCE:AE644012-3B14-11D9-83CE-A0BAF22E8A12"/>
 </association>
-<owningAssociation>
-<ref refid="DCE:AE644012-3B14-11D9-83CE-A0BAF22E8A12"/>
-</owningAssociation>
+<class_>
+<ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
+</class_>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<name>
+<val>stateInvariant</val>
+</name>
 <presentation>
 <reflist/>
 </presentation>
 <type>
 <ref refid="DCE:92EAD020-3B14-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:AE737E62-3B14-11D9-83CE-A0BAF22E8A12">
 <aggregation>
@@ -28926,6 +29766,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -29292,6 +30135,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:61F1EEA6-3B15-11D9-83CE-A0BAF22E8A12">
 <appliedStereotype>
@@ -29314,6 +30160,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:FF9F4292-3B14-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -29358,6 +30207,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:7A23A03C-3B15-11D9-83CE-A0BAF22E8A12">
 <aggregation>
@@ -29383,6 +30235,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:FF9F4292-3B14-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -29453,6 +30308,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>discriminator</val>
 </name>
@@ -29462,6 +30320,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:A3BC67B6-4A88-11D7-B08C-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -29497,7 +30358,7 @@ some elements to have a stereotype</val>
 <val>180.0</val>
 </width>
 <height>
-<val>60.0</val>
+<val>71.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -29540,7 +30401,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:3D5E1C90-3B17-11D9-83CE-A0BAF22E8A12"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 380.69375548070826, 110.00393676757812)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 380.69375548070826, 121.00393676757812)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29549,7 +30410,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-0.4118171547170846, 162.99606323242188)]</val>
+<val>[(0.0, 0.0), (-0.4118171547170846, 151.99606323242188)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:280BD27C-3B17-11D9-83CE-A0BAF22E8A12"/>
@@ -29716,7 +30577,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:9A34A9D2-3B8A-11D9-96AF-B1C16A765BD4" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1157.0, 147.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1222.5, 142.99612426757812)</val>
 </matrix>
 <width>
 <val>191.0</val>
@@ -29858,7 +30719,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:441F77EA-3B8B-11D9-96AF-B1C16A765BD4" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1117.0, 290.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1182.6148936170212, 287.5)</val>
 </matrix>
 <width>
 <val>203.0</val>
@@ -29907,7 +30768,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:B88B8AE4-3B8B-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1204.8049029622064, 197.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1291.578125, 192.99612426757812)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29916,7 +30777,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (19.165156918033745, 93.0)]</val>
+<val>[(0.0, 0.0), (-1.9931715027387327, 94.50387573242188)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:9A34A9D2-3B8A-11D9-96AF-B1C16A765BD4"/>
@@ -29930,7 +30791,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:C6803244-3B8B-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 485.9998779296875, 96.05044839548512)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 485.9998779296875, 104.4923088606014)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -29939,7 +30800,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (394.99945068359375, 0.0), (394.99945068359375, 185.94955160451474)]</val>
+<val>[(0.0, 0.0), (394.99945068359375, 0.0), (394.99945068359375, 177.50769113939845)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:280BD27C-3B17-11D9-83CE-A0BAF22E8A12"/>
@@ -29950,13 +30811,13 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:00F68B24-3B8C-11D9-96AF-B1C16A765BD4" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1482.0, 294.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1549.078125, 282.0)</val>
 </matrix>
 <width>
-<val>162.0</val>
+<val>160.421875</val>
 </width>
 <height>
-<val>56.0</val>
+<val>64.0</val>
 </height>
 <show_attributes>
 <val>1</val>
@@ -29976,7 +30837,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:24CD5FF0-3B8C-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 485.9998779296875, 54.88765769781068)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 485.9998779296875, 55.783006535019986)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -29985,7 +30846,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (1099.000122070313, 0.0), (1099.000122070313, 239.11234230218932)]</val>
+<val>[(0.0, 0.0), (1165.074871298708, 0.0), (1165.074871298708, 226.21699346498002)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:280BD27C-3B17-11D9-83CE-A0BAF22E8A12"/>
@@ -29999,7 +30860,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:2F4CB856-3B8C-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1348.0, 165.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1413.5, 160.99612426757812)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -30008,7 +30869,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (147.0, 0.0), (147.0, 129.0)]</val>
+<val>[(0.0, 0.0), (148.45148533950623, 0.0), (148.45148533950623, 121.00387573242188)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:9A34A9D2-3B8A-11D9-96AF-B1C16A765BD4"/>
@@ -30031,7 +30892,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:675F8E12-3B8C-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1320.0, 299.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1385.6148936170212, 296.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -30040,7 +30901,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (162.0, 2.0)]</val>
+<val>[(0.0, 0.0), (163.46323138297885, -0.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:441F77EA-3B8B-11D9-96AF-B1C16A765BD4"/>
@@ -30063,7 +30924,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:6D2760DE-3B8C-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1320.0, 340.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1385.6148936170212, 337.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -30072,7 +30933,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (162.0, 0.0)]</val>
+<val>[(0.0, 0.0), (163.46323138297885, -1.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:441F77EA-3B8B-11D9-96AF-B1C16A765BD4"/>
@@ -30092,7 +30953,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:AADEC0BA-3B8C-11D9-96AF-B1C16A765BD4" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1107.1148936170212, 456.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1176.6148936170212, 456.0)</val>
 </matrix>
 <width>
 <val>192.0</val>
@@ -30118,7 +30979,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:C0D02056-3B8C-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1136.4491017964071, 346.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1202.0639954134283, 343.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -30127,7 +30988,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-4.449101796407149, 110.0)]</val>
+<val>[(0.0, 0.0), (-0.5639954134283016, 112.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:441F77EA-3B8B-11D9-96AF-B1C16A765BD4"/>
@@ -30150,7 +31011,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:C61D0842-3B8C-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1240.9880239520958, 346.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1306.602917569117, 343.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -30159,7 +31020,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-22.988023952095773, 110.0)]</val>
+<val>[(0.0, 0.0), (0.47520743088307427, 112.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:441F77EA-3B8B-11D9-96AF-B1C16A765BD4"/>
@@ -30179,7 +31040,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:FBD71B3C-3B8C-11D9-96AF-B1C16A765BD4" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1113.1148936170212, 595.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1176.6148936170212, 613.0)</val>
 </matrix>
 <width>
 <val>139.0</val>
@@ -30205,7 +31066,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:1D50E714-3B8D-11D9-96AF-B1C16A765BD4"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1182.5514619163707, 595.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1246.0514619163707, 613.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -30214,7 +31075,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-5.551461916370954, -83.0)]</val>
+<val>[(0.0, 0.0), (0.448538083629046, -101.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FBD71B3C-3B8C-11D9-96AF-B1C16A765BD4"/>
@@ -30283,7 +31144,7 @@ some elements to have a stereotype</val>
 <ref refid="c9f67110-1ed7-11df-9455-000d93868322"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1117.0, 306.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1182.6148936170212, 303.5)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -30292,7 +31153,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-48.55949491613046, 0.0), (-48.55949491613046, 155.0)]</val>
+<val>[(0.0, 0.0), (-114.17438853315161, 0.0), (-114.17438853315161, 157.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:441F77EA-3B8B-11D9-96AF-B1C16A765BD4"/>
@@ -30458,6 +31319,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>argument</val>
 </name>
@@ -30467,6 +31331,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -30781,6 +31648,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>signature</val>
 </name>
@@ -30790,6 +31660,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -30858,6 +31731,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>sendMessage</val>
 </name>
@@ -30867,6 +31743,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:395B1694-3B17-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -30884,6 +31763,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>sendEvent</val>
 </name>
@@ -30893,6 +31775,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:E77400E4-3B8A-11D9-96AF-B1C16A765BD4"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -30923,6 +31808,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>receiveMessage</val>
 </name>
@@ -30932,6 +31820,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:395B1694-3B17-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -30949,6 +31840,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>receiveEvent</val>
 </name>
@@ -30958,6 +31852,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:E77400E4-3B8A-11D9-96AF-B1C16A765BD4"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -31035,6 +31932,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:83CE85FE-3B8B-11D9-96AF-B1C16A765BD4">
 <aggregation>
@@ -31060,6 +31960,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:395B1694-3B17-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -31190,6 +32093,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Association id="DCE:675F8E12-3B8C-11D9-96AF-B1C16A765BD4">
 <memberEnd>
@@ -31226,6 +32132,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:67701016-3B8C-11D9-96AF-B1C16A765BD4">
 <association>
@@ -31243,6 +32152,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:00FADCEC-3B8C-11D9-96AF-B1C16A765BD4"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -31282,6 +32194,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:6D36CD76-3B8C-11D9-96AF-B1C16A765BD4">
 <association>
@@ -31299,6 +32214,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:00FADCEC-3B8C-11D9-96AF-B1C16A765BD4"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -31338,6 +32256,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:C0E22D78-3B8C-11D9-96AF-B1C16A765BD4">
 <association>
@@ -31355,6 +32276,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:62945412-3B14-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -31394,6 +32318,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:C62DAE04-3B8C-11D9-96AF-B1C16A765BD4">
 <association>
@@ -31411,6 +32338,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:62945412-3B14-11D9-83CE-A0BAF22E8A12"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -31452,6 +32382,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -32065,6 +32998,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:D56902FA-5FD6-11D9-89DE-0050040A5923">
 <appliedStereotype>
@@ -32090,6 +33026,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:812B6CD0-5FD3-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -32142,6 +33081,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:03AC58E2-5FD7-11D9-89DE-0050040A5923">
 <appliedStereotype>
@@ -32155,6 +33097,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:03A7EBCA-5FD7-11D9-89DE-0050040A5923"/>
 </owningAssociation>
@@ -32164,6 +33109,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:99E7E8A4-5FD2-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -32213,6 +33161,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:E2243F5C-5FDF-11D9-BE08-000D936B094A">
 <appliedStereotype>
@@ -32232,6 +33183,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:9D4C814A-5FD3-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -32760,6 +33714,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:0BB33806-5FE6-11D9-A512-000D936B094A">
 <appliedStereotype>
@@ -32776,6 +33733,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>type</val>
 </name>
@@ -32785,6 +33745,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:F3BF94AC-4B55-11D7-A5E6-6257AF3C5118"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -32870,6 +33833,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>2</val>
 </lowerValue>
+<lowerValue>
+<val>2</val>
+</lowerValue>
 <name>
 <val>end</val>
 </name>
@@ -32879,6 +33845,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:27678C1E-5FE6-11D9-A512-000D936B094A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -32901,6 +33870,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:9D4C814A-5FD3-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -32963,6 +33935,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:72B0655C-1FCF-11DA-A6C3-000D936B094A">
 <appliedStereotype>
@@ -32985,6 +33960,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -33060,6 +34038,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>role</val>
 </name>
@@ -33069,6 +34050,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:812B6CD0-5FD3-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -33094,6 +34078,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:27678C1E-5FE6-11D9-A512-000D936B094A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -33153,6 +34140,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:DB9AD2F6-3507-11DA-842A-000D936B094A">
 <appliedStereotype>
@@ -33172,6 +34162,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>definingEnd</val>
 </name>
@@ -33181,6 +34174,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -33231,6 +34227,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:0CA3AB76-3509-11DA-8668-000D936B094A"/>
 </owningAssociation>
@@ -33240,6 +34239,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:99E7E8A4-5FD2-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -33268,6 +34270,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -33305,6 +34310,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:10D0457E-3509-11DA-8668-000D936B094A"/>
 </owningAssociation>
@@ -33314,6 +34322,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:99E7E8A4-5FD2-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -33342,6 +34353,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -33871,6 +34885,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:3A7BD5C8-425B-11DA-B3D0-000D936B094A"/>
 </owningAssociation>
@@ -33880,6 +34897,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:B84757BE-8323-11D8-8D1E-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -33908,6 +34928,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -33954,6 +34977,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:E435939A-425B-11DA-B3D0-000D936B094A">
 <appliedStereotype>
@@ -33970,6 +34996,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>selection</val>
 </name>
@@ -33979,6 +35008,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -34144,6 +35176,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -35639,6 +36674,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>1</val>
 </lowerValue>
+<lowerValue>
+<val>1</val>
+</lowerValue>
 <name>
 <val>region</val>
 </name>
@@ -35648,6 +36686,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:446B73FC-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -35667,6 +36708,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>stateMachine</val>
 </name>
@@ -35676,6 +36720,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:DC96D0D0-4586-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -35780,6 +36827,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:446B73FC-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -35888,6 +36938,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:75D5B5BE-4588-11DA-A04F-00123FE76EBE">
 <appliedStereotype>
@@ -35904,6 +36957,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>container</val>
 </name>
@@ -35913,6 +36969,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:446B73FC-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -35965,6 +37024,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:C335974A-4588-11DA-A04F-00123FE76EBE">
 <association>
@@ -35982,6 +37044,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:E0936CBE-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -36021,6 +37086,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:05BA12A6-4589-11DA-A04F-00123FE76EBE">
 <association>
@@ -36038,6 +37106,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:E0936CBE-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -36157,6 +37228,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:A1B65190-4589-11DA-A04F-00123FE76EBE"/>
 </owningAssociation>
@@ -36166,6 +37240,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:6DE2FD8E-4589-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36186,6 +37263,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:55BDB594-4589-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -36230,11 +37310,17 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:B0FC6164-4589-11DA-A04F-00123FE76EBE">
 <association>
 <ref refid="DCE:B0FA97A8-4589-11DA-A04F-00123FE76EBE"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -36247,6 +37333,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:6DE2FD8E-4589-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36287,6 +37376,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>stateMachine</val>
 </name>
@@ -36296,6 +37388,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:DC96D0D0-4586-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36324,6 +37419,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:55BDB594-4589-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -36437,6 +37535,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:1B23E296-458B-11DA-A04F-00123FE76EBE">
 <appliedStereotype>
@@ -36453,6 +37554,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>state</val>
 </name>
@@ -36462,6 +37566,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36502,6 +37609,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>connectionPoint</val>
 </name>
@@ -36514,6 +37624,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:55BDB594-4589-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -36533,6 +37646,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>state</val>
 </name>
@@ -36542,6 +37658,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36594,6 +37713,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:C311E502-458B-11DA-A04F-00123FE76EBE">
 <appliedStereotype>
@@ -36610,6 +37732,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>state</val>
 </name>
@@ -36619,6 +37744,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36738,6 +37866,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:F81D06C8-4662-11DA-A766-00123FE76EBE"/>
 </owningAssociation>
@@ -36747,6 +37878,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36769,6 +37903,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>entry</val>
 </name>
@@ -36778,6 +37915,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36810,6 +37950,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:12943D78-4663-11DA-A766-00123FE76EBE"/>
 </owningAssociation>
@@ -36819,6 +37962,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36841,6 +37987,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>exit</val>
 </name>
@@ -36850,6 +37999,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36882,6 +38034,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:28F7D0B6-4663-11DA-A766-00123FE76EBE"/>
 </owningAssociation>
@@ -36891,6 +38046,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36913,6 +38071,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>doActivity</val>
 </name>
@@ -36922,6 +38083,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -36965,6 +38129,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>effect</val>
 </name>
@@ -36977,11 +38144,17 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:6DDE1C8A-4663-11DA-A766-00123FE76EBE">
 <association>
 <ref refid="DCE:6DDC2678-4663-11DA-A766-00123FE76EBE"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -36994,6 +38167,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:E0936CBE-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37032,6 +38208,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>statevariant</val>
 </name>
@@ -37041,6 +38220,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37055,6 +38237,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>owningState</val>
 </name>
@@ -37064,6 +38249,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37107,6 +38295,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>guard</val>
 </name>
@@ -37119,11 +38310,17 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:1A68075E-4664-11DA-A766-00123FE76EBE">
 <association>
 <ref refid="DCE:1A671AEC-4664-11DA-A766-00123FE76EBE"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -37136,6 +38333,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:E0936CBE-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37174,6 +38374,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>submachine</val>
 </name>
@@ -37183,6 +38386,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:DC96D0D0-4586-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37203,6 +38409,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -37652,6 +38861,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:B3A8563E-46F8-11DA-91FC-00123FE76EBE"/>
 </owningAssociation>
@@ -37661,6 +38873,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:DC96D0D0-4586-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37675,6 +38890,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>extendedStateMachine</val>
 </name>
@@ -37684,6 +38902,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:DC96D0D0-4586-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37778,6 +38999,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:4CB066FA-46F9-11DA-91FC-00123FE76EBE">
 <association>
@@ -37792,6 +39016,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:E0936CBE-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -37817,6 +39044,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -37849,6 +39079,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:94F89B82-46FA-11DA-91FC-00123FE76EBE"/>
 </owningAssociation>
@@ -37858,6 +39091,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:446B73FC-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37912,6 +39148,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:A96954F4-46F9-11DA-91FC-00123FE76EBE"/>
 </owningAssociation>
@@ -37921,6 +39160,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:BE153618-458A-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -37973,11 +39215,17 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="DCE:C98B8490-46FA-11DA-91FC-00123FE76EBE">
 <association>
 <ref refid="DCE:C98AD39C-46FA-11DA-91FC-00123FE76EBE"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -37990,6 +39238,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:E0936CBE-4587-11DA-A04F-00123FE76EBE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -38380,6 +39631,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="DCE:F8852E08-8352-11DD-8EDA-000D936B094A"/>
 </owningAssociation>
@@ -38389,6 +39643,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:27678C1E-5FE6-11D9-A512-000D936B094A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -38403,6 +39660,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>partWithPort</val>
 </name>
@@ -38412,6 +39672,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -38503,12 +39766,18 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <presentation>
 <reflist/>
 </presentation>
 <type>
 <ref refid="DCE:8BD30E4E-8352-11DD-8EDA-000D936B094A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -38531,6 +39800,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>ownedPort</val>
 </name>
@@ -38540,6 +39812,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:3C5BB4C6-8353-11DD-8EDA-000D936B094A"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -38927,11 +40202,17 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="e248a130-b0ae-11de-8491-000d93868322">
 <association>
 <ref refid="e242b900-b0ae-11de-8491-000d93868322"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -38944,6 +40225,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:CE617CC2-A41C-11D8-B0B1-00061BC22919"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -39143,7 +40427,7 @@ some elements to have a stereotype</val>
 <val>134.0</val>
 </width>
 <height>
-<val>54.0</val>
+<val>71.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -39163,7 +40447,7 @@ some elements to have a stereotype</val>
 <ref refid="4afd4804-b13e-11de-9fae-000d93868322"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 779.9142857142857, 96.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 779.9142857142857, 113.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -39172,7 +40456,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-1.0582251082252014, 48.0)]</val>
+<val>[(0.0, 0.0), (-1.0582251082252014, 31.0)]</val>
 </points>
 <head-connection>
 <ref refid="3dfbd738-b13e-11de-9fae-000d93868322"/>
@@ -39391,7 +40675,7 @@ some elements to have a stereotype</val>
 <val>136.0</val>
 </width>
 <height>
-<val>54.0</val>
+<val>71.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -39411,7 +40695,7 @@ some elements to have a stereotype</val>
 <ref refid="07b62da2-b140-11de-89b9-000d93868322"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -43.49751281738281, 144.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, -43.49751281738281, 161.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -39420,7 +40704,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.6259842519685037, 52.00701904296875)]</val>
+<val>[(0.0, 0.0), (0.6259842519685037, 35.00701904296875)]</val>
 </points>
 <head-connection>
 <ref refid="ffc3daae-b13f-11de-89b9-000d93868322"/>
@@ -39572,6 +40856,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="ba14dc84-b13e-11de-9fae-000d93868322">
 <aggregation>
@@ -39597,6 +40884,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="531be0a4-b13e-11de-9fae-000d93868322"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -39638,6 +40928,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="bdfdf830-b13e-11de-9fae-000d93868322">
 <appliedStereotype>
@@ -39660,6 +40953,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="0c0c0680-b13e-11de-9fae-000d93868322"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -39898,7 +41194,7 @@ some elements to have a stereotype</val>
 <val>134.0</val>
 </width>
 <height>
-<val>54.0</val>
+<val>71.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -39918,7 +41214,7 @@ some elements to have a stereotype</val>
 <ref refid="873077c6-b592-11de-8278-000d93868322"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 404.5913043478261, 176.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 404.5913043478261, 193.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -39927,7 +41223,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-15.389691444600317, 82.0)]</val>
+<val>[(0.0, 0.0), (-15.389691444600317, 65.0)]</val>
 </points>
 <head-connection>
 <ref refid="7d1a195e-b592-11de-8278-000d93868322"/>
@@ -40093,6 +41389,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="3671330c-b592-11de-8278-000d93868322">
 <appliedStereotype>
@@ -40115,6 +41414,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:37B70572-8323-11D8-8D1E-00C00C03A405"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -40163,6 +41465,9 @@ some elements to have a stereotype</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>represents</val>
 </name>
@@ -40172,6 +41477,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -40189,6 +41497,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="22e2685c-b591-11de-8278-000d93868322"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -40238,6 +41549,9 @@ some elements to have a stereotype</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="35df738a-b593-11de-8278-000d93868322">
 <aggregation>
@@ -40263,6 +41577,9 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="22e2685c-b591-11de-8278-000d93868322"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -40307,6 +41624,9 @@ swimlanes</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="b872a8c2-b76d-11de-a410-000d93868322"/>
 </owningAssociation>
@@ -40316,6 +41636,9 @@ swimlanes</val>
 <type>
 <ref refid="DCE:F3BF94AC-4B55-11D7-A5E6-6257AF3C5118"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -40341,6 +41664,9 @@ swimlanes</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -40618,6 +41944,8 @@ swimlanes</val>
 <ref refid="d6afea32-c907-11e9-97bf-90784199a5ed"/>
 <ref refid="0bdf3564-c908-11e9-97bf-90784199a5ed"/>
 <ref refid="4cde7bde-c90c-11e9-97bf-90784199a5ed"/>
+<ref refid="e6f135d6-54f3-11ea-8c7d-fd01dce16f0a"/>
+<ref refid="acdafe4e-54f4-11ea-8c7d-fd01dce16f0a"/>
 </reflist>
 </slot>
 <typeValue>
@@ -45394,7 +46722,7 @@ swimlanes</val>
 <ref refid="176ccbcc-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>ownedElement</val>
+<val>ownedMember</val>
 </value>
 </Slot>
 <InstanceSpecification id="176d6884-fa90-11de-bd51-00224128e79d">
@@ -45422,7 +46750,7 @@ swimlanes</val>
 <ref refid="176d6884-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>ownedMember</val>
+<val>ownedElement</val>
 </value>
 </Slot>
 <InstanceSpecification id="176e1248-fa90-11de-bd51-00224128e79d">
@@ -48348,6 +49676,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <InstanceSpecification id="41c1ec02-3803-11e0-87bf-0021e9e5a3cd">
 <classifier>
@@ -48418,6 +49749,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Association id="9f9a57f6-3803-11e0-87bf-0021e9e5a3cd">
 <memberEnd>
@@ -48476,6 +49810,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Association id="c32a9b9a-3803-11e0-87bf-0021e9e5a3cd">
 <memberEnd>
@@ -48528,6 +49865,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -48615,6 +49955,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Association id="12ac0294-3804-11e0-87bf-0021e9e5a3cd">
 <memberEnd>
@@ -48664,6 +50007,9 @@ to accomodate simpleAttribute</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>replyValue</val>
 </name>
@@ -48673,6 +50019,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="DCE:2DF4E17E-8404-11D8-82A2-7B88E55A3BEC"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -48731,6 +50080,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="DCE:2DF4E17E-8404-11D8-82A2-7B88E55A3BEC"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -49420,6 +50772,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="842f082a-4066-11e0-b382-0019d2b28af0">
 <association>
@@ -49434,6 +50789,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="0236b1ce-4066-11e0-b382-0019d2b28af0"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -50103,7 +51461,7 @@ to accomodate simpleAttribute</val>
 <val>134.0</val>
 </width>
 <height>
-<val>54.0</val>
+<val>71.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -50238,7 +51596,7 @@ to accomodate simpleAttribute</val>
 <ref refid="745b9332-40f2-11e0-9acb-0019d2b28af0"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 387.9142857142857, 162.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 387.9142857142857, 179.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -50247,7 +51605,7 @@ to accomodate simpleAttribute</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-14.914285714285711, 68.0)]</val>
+<val>[(0.0, 0.0), (-14.914285714285711, 51.0)]</val>
 </points>
 <head-connection>
 <ref refid="f198b02e-40f1-11e0-9acb-0019d2b28af0"/>
@@ -50421,6 +51779,9 @@ to accomodate simpleAttribute</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <owningAssociation>
 <ref refid="bb7ca800-40f2-11e0-9acb-0019d2b28af0"/>
 </owningAssociation>
@@ -50430,6 +51791,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -50458,6 +51822,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="4088a6b2-40f2-11e0-9acb-0019d2b28af0"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -50527,6 +51894,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="f36e578a-40f3-11e0-9acb-0019d2b28af0">
 <association>
@@ -50544,6 +51914,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="51a5b96c-40f2-11e0-9acb-0019d2b28af0"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -50926,6 +52299,9 @@ to accomodate simpleAttribute</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>owningSignal</val>
 </name>
@@ -50938,6 +52314,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="135b075a-40f9-11e0-ad29-0019d2b28af0"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -50966,6 +52345,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -51001,6 +52383,9 @@ to accomodate simpleAttribute</val>
 <lowerValue>
 <val>0</val>
 </lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
 <name>
 <val>signal</val>
 </name>
@@ -51010,6 +52395,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="135b075a-40f9-11e0-ad29-0019d2b28af0"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -51027,6 +52415,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="66868314-40f9-11e0-ad29-0019d2b28af0"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -51312,6 +52703,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="d229d65a-40fb-11e0-ad29-0019d2b28af0">
 <association>
@@ -51329,6 +52723,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -51370,6 +52767,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="d51007e0-40fb-11e0-ad29-0019d2b28af0">
 <association>
@@ -51387,6 +52787,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="135b075a-40f9-11e0-ad29-0019d2b28af0"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -51428,6 +52831,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="d9890e2a-40fb-11e0-ad29-0019d2b28af0">
 <association>
@@ -51445,6 +52851,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -51486,6 +52895,9 @@ to accomodate simpleAttribute</val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="e0472094-40fb-11e0-ad29-0019d2b28af0">
 <association>
@@ -51503,6 +52915,9 @@ to accomodate simpleAttribute</val>
 <type>
 <ref refid="135b075a-40f9-11e0-ad29-0019d2b28af0"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -51660,4 +53075,60 @@ to accomodate simpleAttribute</val>
 </reflist>
 </presentation>
 </Comment>
+<InstanceSpecification id="db3ce42e-54f3-11ea-8c7d-fd01dce16f0a">
+<classifier>
+<reflist>
+<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="DCE:2CBA41E4-3B14-11D9-83CE-A0BAF22E8A12"/>
+</reflist>
+</extended>
+<slot>
+<reflist>
+<ref refid="e6f135d6-54f3-11ea-8c7d-fd01dce16f0a"/>
+</reflist>
+</slot>
+</InstanceSpecification>
+<Slot id="e6f135d6-54f3-11ea-8c7d-fd01dce16f0a">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="db3ce42e-54f3-11ea-8c7d-fd01dce16f0a"/>
+</owningInstance>
+<value>
+<val>namespace</val>
+</value>
+</Slot>
+<InstanceSpecification id="a6c9263e-54f4-11ea-8c7d-fd01dce16f0a">
+<classifier>
+<reflist>
+<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="DCE:AE69FD6C-3B14-11D9-83CE-A0BAF22E8A12"/>
+</reflist>
+</extended>
+<slot>
+<reflist>
+<ref refid="acdafe4e-54f4-11ea-8c7d-fd01dce16f0a"/>
+</reflist>
+</slot>
+</InstanceSpecification>
+<Slot id="acdafe4e-54f4-11ea-8c7d-fd01dce16f0a">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="a6c9263e-54f4-11ea-8c7d-fd01dce16f0a"/>
+</owningInstance>
+<value>
+<val>owner</val>
+</value>
+</Slot>
 </gaphor>
