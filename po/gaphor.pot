@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-11 23:46+0100\n"
+"POT-Creation-Date: 2020-02-21 20:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -240,13 +240,12 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: ../gaphor/diagram/propertypages.py:466
-msgid "Orthogonal"
+#: ../gaphor/diagram/propertypages.py:467
+msgid "Rectilinear"
 msgstr ""
 
-#: ../gaphor/diagram/actions/actionspropertypages.py:96
-#: ../gaphor/diagram/propertypages.py:479
-msgid "Horizontal"
+#: ../gaphor/diagram/propertypages.py:480
+msgid "Flip orientation"
 msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:34
@@ -259,6 +258,10 @@ msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:90
 msgid "Join specification"
+msgstr ""
+
+#: ../gaphor/diagram/actions/actionspropertypages.py:96
+msgid "Horizontal"
 msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:133

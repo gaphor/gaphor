@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-11 23:46+0100\n"
+"POT-Creation-Date: 2020-02-21 20:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ygor Mutti <ygormutti@dcc.ufba.br>\n"
 "Language: pt_BR\n"
@@ -238,14 +238,13 @@ msgstr "Extensão"
 msgid "Name"
 msgstr "Nome"
 
-#: ../gaphor/diagram/propertypages.py:466
-msgid "Orthogonal"
-msgstr "Ortogonal"
+#: ../gaphor/diagram/propertypages.py:467
+msgid "Rectilinear"
+msgstr ""
 
-#: ../gaphor/diagram/actions/actionspropertypages.py:96
-#: ../gaphor/diagram/propertypages.py:479
-msgid "Horizontal"
-msgstr "Horizontal"
+#: ../gaphor/diagram/propertypages.py:480
+msgid "Flip orientation"
+msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:34
 msgid "Upper bound"
@@ -258,6 +257,10 @@ msgstr "Ordenação"
 #: ../gaphor/diagram/actions/actionspropertypages.py:90
 msgid "Join specification"
 msgstr "Juntar especificação"
+
+#: ../gaphor/diagram/actions/actionspropertypages.py:96
+msgid "Horizontal"
+msgstr "Horizontal"
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:133
 #: ../gaphor/diagram/states/propertypages.py:34
@@ -725,4 +728,7 @@ msgstr ""
 
 #~ msgid "New"
 #~ msgstr ""
+
+#~ msgid "Orthogonal"
+#~ msgstr "Ortogonal"
 

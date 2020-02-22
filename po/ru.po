@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-11 23:46+0100\n"
+"POT-Creation-Date: 2020-02-21 20:57+0100\n"
 "PO-Revision-Date: 2011-08-22 22:15+0000\n"
 "Last-Translator: Евгений Лежнин <z_lezhnin@mail2000.ru>\n"
 "Language: ru\n"
@@ -239,14 +239,13 @@ msgstr "Расширение"
 msgid "Name"
 msgstr "Имя"
 
-#: ../gaphor/diagram/propertypages.py:466
-msgid "Orthogonal"
-msgstr "Прямоугольный"
+#: ../gaphor/diagram/propertypages.py:467
+msgid "Rectilinear"
+msgstr ""
 
-#: ../gaphor/diagram/actions/actionspropertypages.py:96
-#: ../gaphor/diagram/propertypages.py:479
-msgid "Horizontal"
-msgstr "Горизонтальный"
+#: ../gaphor/diagram/propertypages.py:480
+msgid "Flip orientation"
+msgstr ""
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:34
 msgid "Upper bound"
@@ -259,6 +258,10 @@ msgstr "Порядок"
 #: ../gaphor/diagram/actions/actionspropertypages.py:90
 msgid "Join specification"
 msgstr "Способ соединения"
+
+#: ../gaphor/diagram/actions/actionspropertypages.py:96
+msgid "Horizontal"
+msgstr "Горизонтальный"
 
 #: ../gaphor/diagram/actions/actionspropertypages.py:133
 #: ../gaphor/diagram/states/propertypages.py:34
@@ -720,4 +723,7 @@ msgstr ""
 
 #~ msgid "New"
 #~ msgstr ""
+
+#~ msgid "Orthogonal"
+#~ msgstr "Прямоугольный"
 

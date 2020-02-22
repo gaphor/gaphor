@@ -453,6 +453,7 @@ class LineStylePage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        self.horizontal_button: Gtk.Button
 
     def construct(self):
         page = Gtk.VBox()
@@ -463,7 +464,7 @@ class LineStylePage(PropertyPageBase):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=gettext("Orthogonal"))
+        button = Gtk.CheckButton(label=gettext("Rectilinear"))
         button.set_active(self.item.orthogonal)
         button.connect("toggled", self._on_orthogonal_change)
         hbox.pack_start(button, True, True, 0)
@@ -476,10 +477,13 @@ class LineStylePage(PropertyPageBase):
         self.size_group.add_widget(label)
         hbox.pack_start(label, False, True, 0)
 
-        button = Gtk.CheckButton(label=gettext("Horizontal"))
+        button = Gtk.CheckButton(label=gettext("Flip orientation"))
         button.set_active(self.item.horizontal)
         button.connect("toggled", self._on_horizontal_change)
         hbox.pack_start(button, True, True, 0)
+
+        button.set_sensitive(self.item.orthogonal)
+        self.horizontal_button = button
 
         page.pack_start(hbox, False, True, 0)
 
@@ -490,8 +494,10 @@ class LineStylePage(PropertyPageBase):
         if len(self.item.handles()) < 3:
             line_segment = Segment(self.item, None)
             line_segment.split_segment(0)
-        self.item.orthogonal = button.get_active()
+        active = button.get_active()
+        self.item.orthogonal = active
         self.item.canvas.update_now()
+        self.horizontal_button.set_sensitive(active)
 
     @transactional
     def _on_horizontal_change(self, button):
