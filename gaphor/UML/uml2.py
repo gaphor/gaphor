@@ -529,6 +529,7 @@ class ValuePin(InputPin):
 
 class Action(ExecutableNode):
     effect: attribute[str]
+    interaction: relation_one[Interaction]
     output: relation_many[OutputPin]
     context_: relation_one[Classifier]
     input: relation_many[InputPin]
@@ -576,6 +577,7 @@ class Interaction(Behavior, InteractionFragment):
     fragment: relation_many[InteractionFragment]
     lifeline: relation_many[Lifeline]
     message: relation_many[Message]
+    action: relation_many[Action]
 
 
 class ExecutionOccurence(InteractionFragment):
@@ -586,12 +588,12 @@ class ExecutionOccurence(InteractionFragment):
 
 class StateInvariant(InteractionFragment):
     invariant: relation_one[Constraint]
+    covered: relation_one[Lifeline]  # type: ignore[assignment]
 
 
 class Lifeline(NamedElement):
     coveredBy: relation_many[InteractionFragment]
     interaction: relation_one[Interaction]
-    discriminator: attribute[str]
     parse: Callable[[Lifeline, str], None]
     render: Callable[[Lifeline], str]
 
@@ -616,6 +618,7 @@ class OccurrenceSpecification(InteractionFragment):
     toBefore: relation_many[GeneralOrdering]
     finishExec: relation_many[ExecutionOccurence]
     startExec: relation_many[ExecutionOccurence]
+    covered: relation_one[Lifeline]  # type: ignore[assignment]
 
 
 class GeneralOrdering(NamedElement):
@@ -1202,8 +1205,6 @@ Lifeline.interaction = association(
 Interaction.lifeline = association(
     "lifeline", Lifeline, composite=True, opposite="interaction"
 )
-# 'Lifeline.discriminator' is a simple attribute
-Lifeline.discriminator = attribute("discriminator", str)
 # 'Message.argument' is a simple attribute
 Message.argument = attribute("argument", str)
 Message.signature = association("signature", NamedElement, upper=1)
@@ -1351,6 +1352,10 @@ SendOperationEvent.operation = association("operation", Operation, lower=1, uppe
 SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
 ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
+Action.interaction = association("interaction", Interaction, upper=1, opposite="action")
+Interaction.action = association(
+    "action", Action, composite=True, opposite="interaction"
+)
 # 96: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 # defined in uml2overrides.py
 
@@ -1671,6 +1676,7 @@ Element.owner = derivedunion(
     NamedElement.namespace,
     Constraint.stateInvariant,
     Pseudostate.state,
+    Action.interaction,
 )
 Element.ownedElement = derivedunion(
     Element,
@@ -1703,6 +1709,7 @@ Element.ownedElement = derivedunion(
     State.statevariant,
     Transition.guard,
     DeploymentTarget.deployment,
+    Interaction.action,
 )
 ConnectorEnd.definingEnd = derivedunion(ConnectorEnd, "definingEnd", Property, 0, 1)
 # 164: override StructuredClassifier.part: property
@@ -1779,6 +1786,12 @@ Transition.redefinedTransition = redefine(
     Transition,
     "*",
     RedefinableElement.redefinedElement,
+)
+StateInvariant.covered = redefine(
+    StateInvariant, "covered", Lifeline, 1, InteractionFragment.covered
+)
+OccurrenceSpecification.covered = redefine(
+    OccurrenceSpecification, "covered", Lifeline, 1, InteractionFragment.covered
 )
 # 149: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in uml2overrides.py
