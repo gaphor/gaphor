@@ -770,38 +770,6 @@ class Event(PackageableElement):
     pass
 
 
-class ExecutionEvent(Event):
-    pass
-
-
-class CreationEvent(Event):
-    pass
-
-
-class MessageEvent(Event):
-    pass
-
-
-class DestructionEvent(Event):
-    pass
-
-
-class SendOperationEvent(MessageEvent):
-    operation: relation_one[Operation]
-
-
-class SendSignalEvent(MessageEvent):
-    signal: relation_one[Signal]
-
-
-class ReceiveOperationEvent(MessageEvent):
-    operation: relation_one[Operation]
-
-
-class ReceiveSignalEvent(MessageEvent):
-    signal: relation_one[Signal]
-
-
 class Signal(Classifier):
     ownedAttribute: relation_many[Property]
 
@@ -1348,10 +1316,6 @@ Signal.ownedAttribute = association("ownedAttribute", Property, composite=True)
 Reception.signal = association("signal", Signal, upper=1)
 Class.ownedReception = association("ownedReception", Reception, composite=True)
 Interface.ownedReception = association("ownedReception", Reception, composite=True)
-SendOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
-SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
-ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
 Action.interaction = association("interaction", Interaction, upper=1, opposite="action")
 Interaction.action = association(
     "action", Action, composite=True, opposite="interaction"
