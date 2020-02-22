@@ -15,4 +15,9 @@ icons:		## Generate icons from stensil (requires Inkscape)
 translate:	## Translate and update .po and .mo files (requires PyBabel)
 	$(MAKE) -C po
 
-.PHONY: help dist docs icons translate
+model: gaphor/UML/uml2.py
+
+gaphor/UML/uml2.py: gaphor/UML/uml2.gaphor utils/model/gen_uml.py utils/model/override.py utils/model/writer.py
+	utils/model/gen_uml.py && black $<
+
+.PHONY: help dist docs icons translate model
