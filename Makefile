@@ -3,8 +3,11 @@ help:		## Show this help
 	@echo "make <target>, where <target> is one of:"
 	@grep -hP "\t##" $(MAKEFILE_LIST) | sed -e 's/^\([a-z]*\):.*## /  \1\t/' | expand -t14
 
-dist: translate	## Build application distribution (requires Poetry)
+dist: test translate	## Build application distribution (requires Poetry)
 	poetry build
+
+test:		## Run all but slow tests (requires PyTest)
+	pytest -m "not slow"
 
 docs:		## Generate documentation (requirss Sphinx)
 	$(MAKE) -C docs html
@@ -20,4 +23,4 @@ model: gaphor/UML/uml2.py	## Generate Python model files from Gaphor models (req
 gaphor/UML/uml2.py: gaphor/UML/uml2.gaphor utils/model/gen_uml.py utils/model/override.py utils/model/writer.py
 	utils/model/build_uml.py && black $@
 
-.PHONY: help dist docs icons translate model
+.PHONY: help dist test docs icons translate model
