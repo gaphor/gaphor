@@ -5,6 +5,8 @@ Unittest the storage and parser modules
 import re
 from io import StringIO
 
+import pytest
+
 from gaphor import UML
 from gaphor.application import distribution
 from gaphor.diagram.classes import AssociationItem, ClassItem, InterfaceItem
@@ -147,6 +149,7 @@ class StorageTestCase(TestCase):
         assert len(elements) == 1, elements
         assert elements[0].name == difficult_name, elements[0].name
 
+    @pytest.mark.slow
     def test_load_uml_metamodel(self):
         """
         Test if the meta model can be loaded.
