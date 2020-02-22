@@ -18,6 +18,6 @@ translate:	## Translate and update .po and .mo files (requires PyBabel)
 model: gaphor/UML/uml2.py	## Generate Python model files from Gaphor models (requires Black)
 
 gaphor/UML/uml2.py: gaphor/UML/uml2.gaphor utils/model/gen_uml.py utils/model/override.py utils/model/writer.py
-	utils/model/gen_uml.py && black $<
+	utils/model/build_uml.py && black $@
 
 .PHONY: help dist docs icons translate model
