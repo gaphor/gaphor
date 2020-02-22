@@ -1,4 +1,5 @@
 import logging
+from inspect import isclass
 
 from gaphas.decorators import AsyncIO
 from gi.repository import Gtk
@@ -93,16 +94,36 @@ class ClassOperations(EditableTreeModel):
         return self._item.subject.ownedOperation.swap(o1, o2)
 
 
+def _issubclass(c, b):
+    try:
+        return issubclass(c, b)
+    except TypeError:
+        return False
+
+
 @PropertyPages.register(UML.Class)
 class ClassPropertyPage(NamedElementPropertyPage):
-    """Adapter which shows a property page for a class view."""
+    """Adapter which shows a property page for a class view.
+    Also handles metaclasses.
+    """
 
     subject: UML.Class
+
+    CLASSES = list(
+        sorted(
+            c
+            for c in dir(UML)
+            if _issubclass(getattr(UML, c), UML.Element) and c != "Stereotype"
+        )
+    )
 
     def __init__(self, subject):
         super().__init__(subject)
 
     def construct(self):
+        if UML.model.is_metaclass(self.subject):
+            return self.construct_metaclass()
+
         page = super().construct()
 
         if not self.subject:
@@ -126,6 +147,45 @@ class ClassPropertyPage(NamedElementPropertyPage):
     @transactional
     def _on_abstract_change(self, button):
         self.subject.isAbstract = button.get_active()
+
+    def construct_metaclass(self):
+        page = Gtk.VBox()
+
+        subject = self.subject
+        if not subject:
+            return page
+
+        hbox = create_hbox_label(self, page, gettext("Name"))
+        model = Gtk.ListStore(str)
+        for c in self.CLASSES:
+            model.append([c])
+
+        cb = Gtk.ComboBox.new_with_model_and_entry(model)
+
+        completion = Gtk.EntryCompletion()
+        completion.set_model(model)
+        completion.set_minimum_key_length(1)
+        completion.set_text_column(0)
+        cb.get_child().set_completion(completion)
+
+        entry = cb.get_child()
+        entry.set_text(subject and subject.name or "")
+        hbox.pack_start(cb, True, True, 0)
+        page.default = entry
+
+        # monitor subject.name attribute
+        changed_id = entry.connect("changed", self._on_name_change)
+
+        def handler(event):
+            if event.element is subject and event.new_value is not None:
+                entry.handler_block(changed_id)
+                entry.set_text(event.new_value)
+                entry.handler_unblock(changed_id)
+
+        self.watcher.watch("name", handler).subscribe_all()
+        entry.connect("destroy", self.watcher.unsubscribe_all)
+        page.show_all()
+        return page
 
 
 @PropertyPages.register(InterfaceItem)

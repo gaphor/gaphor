@@ -167,16 +167,14 @@ class ElementEditor(UIComponent, ActionProvider):
         Return an ordered list of (order, name, adapter).
         """
         adaptermap = {}
-        try:
-            if item.subject:
-                for adapter in PropertyPages(item.subject):
-                    adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
-        except AttributeError:
-            pass
+        if item.subject:
+            for adapter in PropertyPages(item.subject):
+                adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
         for adapter in PropertyPages(item):
             adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
 
         adapters = sorted(adaptermap.values())
+        print("adapters", adapters)
         return adapters
 
     def create_pages(self, item):
