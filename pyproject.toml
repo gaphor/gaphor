@@ -100,5 +100,5 @@ skip_glob = "*/uml2.py"
 filter_files = true
 
 [build-system]
-requires = ["poetry==1.0.2"]
+requires = ["poetry==1.0.0b7"]
 build-backend = "poetry.masonry.api"
