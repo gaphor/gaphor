@@ -1,6 +1,10 @@
 #!/bin/bash
 
 TAG="${GITHUB_REF/\/refs\/tags\//}"
+if ! [ -x "$(command -v poetry)" ]; then
+    echo 'Poetry not found, activating venv'
+    source ../../venv
+fi
 VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 
 if [[ "$GITHUB_REF" =~ /refs/tags/.* && "$TAG" == "$VERSION" ]]
