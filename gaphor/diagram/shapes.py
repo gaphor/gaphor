@@ -98,7 +98,8 @@ class Box:
     - min-height
     - min-width
     - padding: a tuple (top, right, bottom, left)
-
+    - vertical-align: alignment of child shapes
+    - border-radius
     """
 
     def __init__(self, *children, style: Style = {}, draw=None):

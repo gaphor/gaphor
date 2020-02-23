@@ -174,7 +174,6 @@ class ElementEditor(UIComponent, ActionProvider):
             adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
 
         adapters = sorted(adaptermap.values())
-        print("adapters", adapters)
         return adapters
 
     def create_pages(self, item):
