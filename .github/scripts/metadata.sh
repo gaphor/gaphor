@@ -16,7 +16,7 @@ else
     RELEASE="false"
 
     # Update version, so it will also show in the Gaphor application
-    poetry version ${VERSION}${REV}
+    poetry version "${VERSION}""${REV}"
 fi
 
 echo "::set-output name=version::${VERSION}${REV}"

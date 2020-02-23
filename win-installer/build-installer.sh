@@ -12,7 +12,6 @@ set -euo pipefail
 # CONFIG START
 
 ARCH="x86_64"
-BUILD_VERSION="0"
 
 # CONFIG END
 
@@ -31,7 +30,6 @@ VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 
 function set_build_root {
     DIST_LOCATION="$1"
-    GAPHOR_LOCATION="${DIST_LOCATION}"/gaphor
 }
 
 set_build_root "${DIR}/dist/gaphor"
@@ -75,10 +73,8 @@ function build_portable_installer {
 }
 
 function main {
-    local GIT_TAG=${1:-"master"}
-
     # started from the wrong env -> switch
-    if [ $(echo "$MSYSTEM" | tr '[A-Z]' '[a-z]') != "$MINGW" ]; then
+    if [ "$(echo "$MSYSTEM" | tr '[:upper:]' '[:lower:]')" != "$MINGW" ]; then
         "/${MINGW}.exe" "$0"
         exit $?
     fi
