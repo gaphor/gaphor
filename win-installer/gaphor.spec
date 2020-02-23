@@ -1,4 +1,5 @@
-from PyInstaller.utils.hooks import copy_metadata, collect_submodules
+from PyInstaller.utils.hooks import copy_metadata
+
     
 block_cipher = None
 
