@@ -18,6 +18,7 @@ BUILD_VERSION="0"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${DIR}"
+source ../venv
 
 MISC="${DIR}"/misc
 if [ "${ARCH}" = "x86_64" ]; then
@@ -42,7 +43,8 @@ function install_build_deps {
 }
 
 function build_pyinstaller {
-    sed "s/__version__/$VERSION/g" file_version_info.txt.in > file_version_info.txt
+    echo "${DIR}"
+    sed "s/__version__/$VERSION/g" "${DIR}"/file_version_info.txt.in > "${DIR}"/file_version_info.txt
     pyinstaller -y gaphor.spec
 }
 

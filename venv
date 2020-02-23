@@ -9,7 +9,7 @@
 # Call `./venv -f` to force a new development installation.
 #
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # If on Macos with brew, make sure we can find the brewed libffi (which is not "linked"):
 echo "Are we on Macos with Homebrew installed?"
@@ -63,14 +63,14 @@ uname -a | grep -q MSYS_NT && {
 
 	PYTHON_VER="$(python3 --version | sed 's/^Python \([0-9]\.[0-9]\).[0-9]$/\1/')"
 
-	test -d $DIR/.venv || {
+	test -d $SCRIPT_DIR/.venv || {
 		echo "Setting up a virtual env for Gaphor..."
-		python3 -m venv --prompt Gaphor ${VENV_OPTS:-} $DIR/.venv
+		python3 -m venv --prompt Gaphor ${VENV_OPTS:-} $SCRIPT_DIR/.venv
 	}
 
-	source $DIR/.venv/bin/activate
+	source $SCRIPT_DIR/.venv/bin/activate
 
-	{ ${NO_FORCE_INSTALL} && test -f $DIR/.venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link; } || {
+	{ ${NO_FORCE_INSTALL} && test -f $SCRIPT_DIR/.venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link; } || {
 		echo "Installing Gaphor in the virtualenv..."
 
 		# Use 1.0.0b7 until https://github.com/python-poetry/poetry/issues/1880 is fixed
@@ -103,4 +103,4 @@ uname -a | grep -q MSYS_NT && {
 		"import gaphor.UML" \
 		"Gaphor was not installed properly, that should not have happened. Please open an issue on GitHub"
 
-) && source $DIR/.venv/bin/activate
+) && source $SCRIPT_DIR/.venv/bin/activate
