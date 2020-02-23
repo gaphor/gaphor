@@ -26,11 +26,13 @@ Style = TypedDict(
         "line-width": float,
         "vertical-spacing": float,
         "border-radius": float,
+        "fill": str,
         "font": str,
         "font-style": FontStyle,
         "font-weight": Optional[FontWeight],
         "text-decoration": Optional[TextDecoration],
         "text-align": TextAlign,
+        "stoke": str,
         "vertical-align": VerticalAlign,
         # CommentItem:
         "ear": int,
@@ -66,6 +68,13 @@ def draw_border(box, context, bounding_box):
         cr.rectangle(x, y, width, height)
 
     cr.close_path()
+
+    fill = box.style("fill")
+    if fill:
+        color = cr.get_source()
+        cr.set_source_rgb(1, 1, 1)  # white
+        cr.fill_preserve()
+        cr.set_source(color)
     cr.stroke()
 
 
@@ -111,6 +120,7 @@ class Box:
             "padding": (0, 0, 0, 0),
             "vertical-align": VerticalAlign.MIDDLE,
             "border-radius": 0,
+            "fill": None,
             **style,  # type: ignore[misc] # noqa: F821
         }
         self._draw_border = draw
