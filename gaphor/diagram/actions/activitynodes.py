@@ -244,6 +244,9 @@ class ForkNodeItem(UML.Presentation[UML.ForkNode], Item):
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[JoinNode].joinSpec")
 
+        self.constraint(vertical=(h1.pos, h2.pos))
+        self.constraint(above=(h1.pos, h2.pos), delta=30)
+
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
         save_func("height", float(self._handles[1].pos.y))
@@ -268,28 +271,6 @@ class ForkNodeItem(UML.Presentation[UML.ForkNode], Item):
         self._combined = value
 
     combined = reversible_property(lambda s: s._combined, _set_combined)
-
-    def setup_canvas(self):
-        assert self.canvas
-        super().setup_canvas()
-
-        h1, h2 = self._handles
-        cadd = self.canvas.solver.add_constraint
-        c1 = EqualsConstraint(a=h1.pos.x, b=h2.pos.x)
-        c2 = LessThanConstraint(smaller=h1.pos.y, bigger=h2.pos.y, delta=30)
-        self.__constraints = (cadd(c1), cadd(c2))
-        list(map(self.canvas.solver.add_constraint, self.__constraints))
-
-    def teardown_canvas(self):
-        assert self.canvas
-        super().teardown_canvas()
-        list(map(self.canvas.solver.remove_constraint, self.__constraints))
-
-    def pre_update(self, context):
-        cr = context.cairo
-        _, h2 = self.handles()
-        _, height = self.shape.size(cr)
-        h2.pos.y = max(h2.pos.y, height)
 
     def draw(self, context):
         h1, h2 = self.handles()
