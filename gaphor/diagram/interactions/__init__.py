@@ -1,3 +1,6 @@
+from gaphor.diagram.interactions.executionspecification import (
+    ExecutionSpecificationItem,
+)
 from gaphor.diagram.interactions.interaction import InteractionItem
 from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.interactions.message import MessageItem
