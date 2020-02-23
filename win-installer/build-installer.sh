@@ -38,10 +38,7 @@ set_build_root "${DIR}/dist/gaphor"
 
 function install_build_deps {
     pacman -S --needed --noconfirm p7zip git dos2unix upx \
-        mingw-w64-"${ARCH}"-nsis \
-	    mingw-w64-"${ARCH}"-wget
-
-    pip install pyinstaller==3.6
+        mingw-w64-"${ARCH}"-nsis mingw-w64-"${ARCH}"-wget
 }
 
 function build_pyinstaller {

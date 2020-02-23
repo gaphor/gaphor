@@ -3,6 +3,7 @@
 set -euo pipefail
 
 export MSYS2_FC_CACHE_SKIP=1
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pacman --noconfirm -Suy
 
@@ -20,7 +21,6 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-python3-pip \
     mingw-w64-$MSYS2_ARCH-python3-setuptools
 
-pip install poetry==1.0.3
-poetry config virtualenvs.create false
-poetry install
+source $DIR/../venv
+pip install pyinstaller
 make translate
