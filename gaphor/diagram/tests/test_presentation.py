@@ -1,6 +1,5 @@
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
-from gaphor.diagram.tests.fixtures import diagram, element_factory
 
 
 class DummyVisualComponent:

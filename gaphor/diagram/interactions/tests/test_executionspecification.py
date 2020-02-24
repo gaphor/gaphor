@@ -1,6 +1,5 @@
 import pytest
 from gaphas.canvas import Canvas, Context, instant_cairo_context
-from gaphas.view import Context
 
 from gaphor import UML
 from gaphor.diagram.interactions.executionspecification import (
