@@ -3,7 +3,7 @@
 from typing import Optional
 
 from gaphor import UML
-from gaphor.diagram.connectors import AbstractConnect, IConnect
+from gaphor.diagram.connectors import BaseConnector, IConnect
 from gaphor.diagram.interactions.executionspecification import (
     ExecutionSpecificationItem,
 )
@@ -12,7 +12,7 @@ from gaphor.diagram.interactions.message import MessageItem
 
 
 @IConnect.register(LifelineItem, MessageItem)
-class MessageLifelineConnect(AbstractConnect):
+class MessageLifelineConnect(BaseConnector):
     """Connect lifeline with a message.
 
     A message can connect to both the lifeline's head (the rectangle)
@@ -138,7 +138,7 @@ class MessageLifelineConnect(AbstractConnect):
 
 
 @IConnect.register(LifelineItem, ExecutionSpecificationItem)
-class ExecutionSpecificationConnect(AbstractConnect):
+class ExecutionSpecificationConnect(BaseConnector):
 
     element: LifelineItem
     line: ExecutionSpecificationItem

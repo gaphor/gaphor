@@ -11,10 +11,10 @@ from gaphor import UML
 from gaphor.diagram.classes.interface import Folded, InterfaceItem
 from gaphor.diagram.components.component import ComponentItem
 from gaphor.diagram.components.connector import ConnectorItem
-from gaphor.diagram.connectors import AbstractConnect, IConnect
+from gaphor.diagram.connectors import BaseConnector, IConnect
 
 
-class ConnectorConnectBase(AbstractConnect):
+class ConnectorConnectBase(BaseConnector):
     def _get_interfaces(self, c1, c2):
         """
         Return list of common interfaces provided by first component and
@@ -195,6 +195,6 @@ class ComponentConnectorConnect(ConnectorConnectBase):
 class InterfaceConnectorConnect(ConnectorConnectBase):
     """Connect connector to an interface to maintain assembly connection.
 
-    See also `AbstractConnect` class for exception of interface item
+    See also `BaseConnector` class for exception of interface item
     connections.
     """

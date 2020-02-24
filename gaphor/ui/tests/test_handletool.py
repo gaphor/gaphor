@@ -77,7 +77,7 @@ def test_aspect_type(commentline):
     assert isinstance(aspect, DiagramItemConnector)
 
 
-def test_query(comment):
+def test_query(comment, commentline):
     assert IConnect(comment, commentline)
 
 

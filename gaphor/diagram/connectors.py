@@ -20,52 +20,7 @@ from gaphor.UML.properties import association, redefine, relation
 T = TypeVar("T", bound=UML.Element)
 
 
-class ConnectBase:
-    """
-    This interface is used by the HandleTool to allow connecting
-    lines to element items. For each specific case (Element, Line) an
-    adapter could be written.
-    """
-
-    def __init__(self, item: ElementPresentation, line_item: LinePresentation):
-        self.item = item
-        self.line_item = line_item
-
-    def allow(self, handle: Handle, port: Port) -> bool:
-        """
-        Determine if a connection is allowed.
-
-        Do some extra checks to see if the items actually can be connected.
-        """
-        return False
-
-    def connect(self, handle: Handle, port: Port) -> bool:
-        """
-        Connect a line's handle to element.
-
-        Note that at the moment of the connect, handle.connected_to may point
-        to some other item. The implementor should do the disconnect of
-        the other element themselves.
-        """
-        raise NotImplementedError(f"No connector for {self.item} and {self.line_item}")
-
-    def disconnect(self, handle: Handle) -> None:
-        """
-        The true disconnect. Disconnect a handle.connected_to from an
-        element. This requires that the relationship is also removed at
-        model level.
-        """
-        raise NotImplementedError(f"No connector for {self.item} and {self.line_item}")
-
-
-# Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
-# This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
-IConnect: FunctionDispatcher[Type[ConnectBase]] = multidispatch(object, object)(
-    ConnectBase
-)
-
-
-class AbstractConnect(ConnectBase):
+class BaseConnector:
     """
     Connection adapter for Gaphor diagram items.
 
@@ -152,7 +107,14 @@ class AbstractConnect(ConnectBase):
         """Disconnect UML model level connections."""
 
 
-class UnaryRelationshipConnect(AbstractConnect):
+# Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
+# This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
+IConnect: FunctionDispatcher[Type[BaseConnector]] = multidispatch(object, object)(
+    BaseConnector
+)
+
+
+class UnaryRelationshipConnect(BaseConnector):
     """
     Base class for relationship connections, such as associations,
     dependencies and implementations.
