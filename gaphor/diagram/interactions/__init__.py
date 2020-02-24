@@ -8,7 +8,7 @@ from gaphor.diagram.interactions.message import MessageItem
 
 def _load():
     from gaphor.diagram.interactions import (
-        messageconnect,
+        interactionsconnect,
         interactionsgrouping,
         interactionspropertypages,
     )

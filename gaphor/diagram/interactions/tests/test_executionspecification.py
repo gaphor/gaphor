@@ -46,7 +46,7 @@ def test_connect_execution_specification_to_lifeline(diagram, element_factory):
     )
 
 
-def test_connect_execution_specification_to_lifeline(diagram, element_factory):
+def test_disconnect_execution_specification_from_lifeline(diagram, element_factory):
     lifeline = diagram.create(
         LifelineItem, subject=element_factory.create(UML.Lifeline)
     )
