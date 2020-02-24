@@ -9,7 +9,7 @@ from gi.repository import Gdk, Gtk
 
 from gaphor import UML
 from gaphor.application import Session
-from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.connectors import Connector
 from gaphor.diagram.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
@@ -79,7 +79,7 @@ def test_aspect_type(commentline):
 
 
 def test_query(comment, commentline):
-    assert IConnect(comment, commentline)
+    assert Connector(comment, commentline)
 
 
 def test_allow(commentline, comment):

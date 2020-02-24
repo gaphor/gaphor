@@ -19,7 +19,7 @@ from gaphas.tool import RubberbandTool, Tool, ToolChain
 from gi.repository import Gdk, Gtk
 
 from gaphor.core import Transaction, transactional
-from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.connectors import Connector
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
@@ -37,7 +37,7 @@ log = logging.getLogger(__name__)
 @ConnectorAspect.register(Presentation)
 class DiagramItemConnector(ItemConnector):
     """
-    Handle Tool (acts on item handles) that uses the IConnect protocol
+    Handle Tool (acts on item handles) that uses the Connector protocol
     to connect items to one-another.
 
     It also adds handles to lines when a line is grabbed on the middle of
@@ -45,7 +45,7 @@ class DiagramItemConnector(ItemConnector):
     """
 
     def allow(self, sink):
-        adapter = IConnect(sink.item, self.item)
+        adapter = Connector(sink.item, self.item)
         return adapter and adapter.allow(self.handle, sink.port)
 
     @transactional
@@ -67,7 +67,7 @@ class DiagramItemConnector(ItemConnector):
             elif cinfo:
                 # first disconnect but disable disconnection handle as
                 # reconnection is going to happen
-                adapter = IConnect(sink.item, item)
+                adapter = Connector(sink.item, item)
                 try:
                     connect = adapter.reconnect
                 except AttributeError:
@@ -83,7 +83,7 @@ class DiagramItemConnector(ItemConnector):
                 connect(handle, sink.port)
             else:
                 # new connection
-                adapter = IConnect(sink.item, item)
+                adapter = Connector(sink.item, item)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
         except Exception:
@@ -126,7 +126,7 @@ class DisconnectHandle:
         else:
             log.debug(f"Disconnecting {item}.{handle}")
             if cinfo:
-                adapter = IConnect(cinfo.connected, item)
+                adapter = Connector(cinfo.connected, item)
                 adapter.disconnect(handle)
 
 

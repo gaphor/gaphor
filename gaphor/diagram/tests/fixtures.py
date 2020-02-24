@@ -3,7 +3,7 @@ from gaphas.aspect import ConnectionSink
 from gaphas.aspect import Connector as ConnectorAspect
 
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.connectors import Connector
 from gaphor.services.eventmanager import EventManager
 from gaphor.UML.elementfactory import ElementFactory
 
@@ -22,7 +22,7 @@ def allow(line, handle, item, port=None):
     if port is None and len(item.ports()) > 0:
         port = item.ports()[0]
 
-    adapter = IConnect(item, line)
+    adapter = Connector(item, line)
     return adapter.allow(handle, port)
 
 

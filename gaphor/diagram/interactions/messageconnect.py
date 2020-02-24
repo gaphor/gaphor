@@ -3,7 +3,7 @@
 from typing import Optional
 
 from gaphor import UML
-from gaphor.diagram.connectors import BaseConnector, IConnect
+from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.interactions.executionspecification import (
     ExecutionSpecificationItem,
 )
@@ -11,7 +11,7 @@ from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.interactions.message import MessageItem
 
 
-@IConnect.register(LifelineItem, MessageItem)
+@Connector.register(LifelineItem, MessageItem)
 class MessageLifelineConnect(BaseConnector):
     """Connect lifeline with a message.
 
@@ -137,7 +137,7 @@ class MessageLifelineConnect(BaseConnector):
             lifetime.min_length = lifetime.MIN_LENGTH
 
 
-@IConnect.register(LifelineItem, ExecutionSpecificationItem)
+@Connector.register(LifelineItem, ExecutionSpecificationItem)
 class ExecutionSpecificationConnect(BaseConnector):
 
     element: LifelineItem

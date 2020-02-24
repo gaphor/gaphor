@@ -7,7 +7,7 @@ gaphor.adapter package.
 """
 
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect, RelationshipConnect
+from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.diagram.states.pseudostates import (
     HistoryPseudostateItem,
     InitialPseudostateItem,
@@ -35,7 +35,7 @@ class VertexConnect(RelationshipConnect):
             relation.guard = self.line.model.create(UML.Constraint)
 
 
-@IConnect.register(VertexItem, TransitionItem)
+@Connector.register(VertexItem, TransitionItem)
 class TransitionConnect(VertexConnect):
     """Connect two state vertices using transition item."""
 
@@ -59,7 +59,7 @@ class TransitionConnect(VertexConnect):
             return None
 
 
-@IConnect.register(InitialPseudostateItem, TransitionItem)
+@Connector.register(InitialPseudostateItem, TransitionItem)
 class InitialPseudostateTransitionConnect(VertexConnect):
     """Connect initial pseudostate using transition item.
 
@@ -90,7 +90,7 @@ class InitialPseudostateTransitionConnect(VertexConnect):
             return None
 
 
-@IConnect.register(HistoryPseudostateItem, TransitionItem)
+@Connector.register(HistoryPseudostateItem, TransitionItem)
 class HistoryPseudostateTransitionConnect(VertexConnect):
     """Connect history pseudostate using transition item.
 

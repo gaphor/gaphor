@@ -1,10 +1,10 @@
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect, RelationshipConnect
+from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.diagram.presentation import Classified
 from gaphor.diagram.profiles.extension import ExtensionItem
 
 
-@IConnect.register(Classified, ExtensionItem)
+@Connector.register(Classified, ExtensionItem)
 class ExtensionConnect(RelationshipConnect):
     """Connect class and stereotype items using an extension item."""
 

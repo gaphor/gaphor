@@ -11,7 +11,7 @@ from gaphor import UML
 from gaphor.diagram.classes.interface import Folded, InterfaceItem
 from gaphor.diagram.components.component import ComponentItem
 from gaphor.diagram.components.connector import ConnectorItem
-from gaphor.diagram.connectors import BaseConnector, IConnect
+from gaphor.diagram.connectors import BaseConnector, Connector
 
 
 class ConnectorConnectBase(BaseConnector):
@@ -186,12 +186,12 @@ class ConnectorConnectBase(BaseConnector):
         iface.request_update()
 
 
-@IConnect.register(ComponentItem, ConnectorItem)
+@Connector.register(ComponentItem, ConnectorItem)
 class ComponentConnectorConnect(ConnectorConnectBase):
     """Connection of connector item to a component."""
 
 
-@IConnect.register(InterfaceItem, ConnectorItem)
+@Connector.register(InterfaceItem, ConnectorItem)
 class InterfaceConnectorConnect(ConnectorConnectBase):
     """Connect connector to an interface to maintain assembly connection.
 

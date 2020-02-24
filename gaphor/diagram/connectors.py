@@ -109,7 +109,7 @@ class BaseConnector:
 
 # Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
 # This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
-IConnect: FunctionDispatcher[Type[BaseConnector]] = multidispatch(object, object)(
+Connector: FunctionDispatcher[Type[BaseConnector]] = multidispatch(object, object)(
     BaseConnector
 )
 
@@ -243,7 +243,7 @@ class UnaryRelationshipConnect(BaseConnector):
         for cinfo in connections or canvas.get_connections(connected=line):
             if line is cinfo.connected:
                 continue
-            adapter = IConnect(line, cinfo.connected)
+            adapter = Connector(line, cinfo.connected)
             assert adapter, "No element to connect {} and {}".format(
                 line, cinfo.connected
             )
@@ -267,7 +267,7 @@ class UnaryRelationshipConnect(BaseConnector):
         solver.solve()
         connections = list(canvas.get_connections(connected=line))
         for cinfo in connections:
-            adapter = IConnect(cinfo.item, cinfo.connected)
+            adapter = Connector(cinfo.item, cinfo.connected)
             adapter.disconnect(cinfo.handle)
         return connections
 

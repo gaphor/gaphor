@@ -17,7 +17,7 @@ from gaphas.aspect import Connector as ConnectorAspect
 import gaphor.diagram.diagramtools  # noqa
 from gaphor import UML
 from gaphor.application import Session
-from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.connectors import Connector
 from gaphor.diagram.grouping import Group
 
 T = TypeVar("T")
@@ -67,7 +67,7 @@ class TestCase(unittest.TestCase):
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
 
-        adapter = IConnect(item, line)
+        adapter = Connector(item, line)
         return adapter.allow(handle, port)
 
     def connect(self, line, handle, item, port=None):
