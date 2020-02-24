@@ -111,7 +111,7 @@ relation = Union[relation_one, relation_many]
 T = TypeVar("T")
 
 Lower = Union[Literal[0], Literal[1], Literal[2]]
-Upper = Union[Literal[1], Literal["*"]]
+Upper = Union[Literal[1], Literal[2], Literal["*"]]
 
 
 class umlproperty:
@@ -618,7 +618,7 @@ class derived(umlproperty, Generic[T]):
         pass
 
     def __str__(self):
-        return f"<derived {self.name}: {str(list(map(str, self.subsets)))[1:-1]}>"
+        return f"<derived {self.name}: {self.type} {str(list(map(str, self.subsets)))[1:-1]}>"
 
     def _update(self, obj):
         """

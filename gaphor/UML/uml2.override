@@ -165,3 +165,11 @@ override StructuredClassifier.part: property
 StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""
     Properties owned by a classifier by composition.
 """)
+%%
+override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+ExecutionSpecification.start = derived(ExecutionSpecification, 'start', OccurrenceSpecification, 0, 1,
+    lambda obj: [eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 0])
+%%
+override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+ExecutionSpecification.finish = derived(ExecutionSpecification, 'finish', OccurrenceSpecification, 0, 1,
+    lambda obj: [eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 1])

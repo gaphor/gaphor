@@ -21,7 +21,7 @@ from gaphor.diagram.connectors import IConnect
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
-from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.diagram.presentation import ElementPresentation, Presentation
 
 # cursor to indicate grouping
 IN_CURSOR_TYPE = Gdk.CursorType.DIAMOND_CROSS
@@ -32,7 +32,7 @@ OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 log = logging.getLogger(__name__)
 
 
-@Connector.register(LinePresentation)
+@Connector.register(Presentation)
 class DiagramItemConnector(ItemConnector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
@@ -290,7 +290,7 @@ class PlacementTool(_PlacementTool):
         return item
 
 
-@InMotion.register(ElementPresentation)
+@InMotion.register(Presentation)
 class DropZoneInMotion(GuidedItemInMotion):
     def move(self, pos):
         """

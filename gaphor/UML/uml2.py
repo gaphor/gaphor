@@ -768,8 +768,9 @@ class Reception(BehavioralFeature):
 
 
 class ExecutionSpecification(InteractionFragment):
-    start: relation_one[OccurrenceSpecification]
-    finish: relation_one[OccurrenceSpecification]
+    executionOccurrenceSpecification: relation_many[ExecutionOccurrenceSpecification]
+    start: relation_one[ExecutionOccurrenceSpecification]
+    finish: relation_one[ExecutionOccurrenceSpecification]
 
 
 class ExecutionOccurrenceSpecification(OccurrenceSpecification):
@@ -1304,14 +1305,19 @@ InteractionFragment.generalOrdering = association(
 GeneralOrdering.interactionFragment = association(
     "interactionFragment", InteractionFragment, upper=1, opposite="generalOrdering"
 )
-ExecutionSpecification.start = association(
-    "start", OccurrenceSpecification, lower=1, upper=1
-)
-ExecutionSpecification.finish = association(
-    "finish", OccurrenceSpecification, lower=1, upper=1
+ExecutionSpecification.executionOccurrenceSpecification = association(
+    "executionOccurrenceSpecification",
+    ExecutionOccurrenceSpecification,
+    upper=2,
+    composite=True,
+    opposite="execution",
 )
 ExecutionOccurrenceSpecification.execution = association(
-    "execution", ExecutionSpecification, lower=1, upper=1
+    "execution",
+    ExecutionSpecification,
+    lower=1,
+    upper=1,
+    opposite="executionOccurrenceSpecification",
 )
 ActionExecutionSpecification.action = association("action", Action, lower=1, upper=1)
 BehaviorExecutionSpecification.behavior = association("behavior", Behavior, upper=1)
@@ -1678,6 +1684,30 @@ StructuredClassifier.part = property(
     doc="""
     Properties owned by a classifier by composition.
 """,
+)
+
+# 169: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+ExecutionSpecification.start = derived(
+    ExecutionSpecification,
+    "start",
+    OccurrenceSpecification,
+    0,
+    1,
+    lambda obj: [
+        eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 0
+    ],
+)
+
+# 173: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+ExecutionSpecification.finish = derived(
+    ExecutionSpecification,
+    "finish",
+    OccurrenceSpecification,
+    0,
+    1,
+    lambda obj: [
+        eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 1
+    ],
 )
 
 # 128: override Class.superClass: derived[Classifier]

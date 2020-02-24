@@ -43,6 +43,8 @@ class ExecutionSpecificationItem(UML.Presentation[UML.ExecutionSpecification], I
         self._min_height = 10
 
         ht, hb = Handle(), Handle()
+        ht.connectable = True
+
         # TODO: need better interface for this!
         self._handles.append(ht)
         self._handles.append(hb)

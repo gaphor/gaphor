@@ -51981,6 +51981,20 @@ to accomodate simpleAttribute</val>
 <ref refid="8ed4600c-55b9-11ea-8c7d-fd01dce16f0a"/>
 </tail-subject>
 </item>
+<item id="3c13aeef-573e-11ea-8c7d-fd01dce16f0a" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 297.61489361702115, 73.00393676757812)</val>
+</matrix>
+<width>
+<val>210.5</val>
+</width>
+<height>
+<val>115.5</val>
+</height>
+<subject>
+<ref refid="3c13aeee-573e-11ea-8c7d-fd01dce16f0a"/>
+</subject>
+</item>
 </canvas>
 </Diagram>
 <Association id="d12cdc47-55b6-11ea-8c7d-fd01dce16f0a">
@@ -52269,6 +52283,7 @@ to accomodate simpleAttribute</val>
 <reflist>
 <ref refid="c96521d9-55b8-11ea-8c7d-fd01dce16f0a"/>
 <ref refid="c5ad5c37-55b8-11ea-8c7d-fd01dce16f0a"/>
+<ref refid="cd2c18bd-55b8-11ea-8c7d-fd01dce16f0a"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -52276,8 +52291,8 @@ to accomodate simpleAttribute</val>
 </package>
 <presentation>
 <reflist>
-<ref refid="5c724237-55b8-11ea-8c7d-fd01dce16f0a"/>
 <ref refid="74d6b76e-55bb-11ea-8c7d-fd01dce16f0a"/>
+<ref refid="5c724237-55b8-11ea-8c7d-fd01dce16f0a"/>
 </reflist>
 </presentation>
 </Class>
@@ -52345,6 +52360,9 @@ to accomodate simpleAttribute</val>
 <class_>
 <ref refid="5c724236-55b8-11ea-8c7d-fd01dce16f0a"/>
 </class_>
+<isDerived>
+<val>1</val>
+</isDerived>
 <name>
 <val>start</val>
 </name>
@@ -52403,6 +52421,9 @@ to accomodate simpleAttribute</val>
 <class_>
 <ref refid="5c724236-55b8-11ea-8c7d-fd01dce16f0a"/>
 </class_>
+<isDerived>
+<val>1</val>
+</isDerived>
 <name>
 <val>finish</val>
 </name>
@@ -52440,11 +52461,6 @@ to accomodate simpleAttribute</val>
 <ref refid="cd2c18be-55b8-11ea-8c7d-fd01dce16f0a"/>
 </reflist>
 </memberEnd>
-<ownedEnd>
-<reflist>
-<ref refid="cd2c18bd-55b8-11ea-8c7d-fd01dce16f0a"/>
-</reflist>
-</ownedEnd>
 <package>
 <ref refid="DCE:2AF6FCEA-3B13-11D9-83CE-A0BAF22E8A12"/>
 </package>
@@ -52455,9 +52471,15 @@ to accomodate simpleAttribute</val>
 </presentation>
 </Association>
 <Property id="cd2c18bd-55b8-11ea-8c7d-fd01dce16f0a">
+<aggregation>
+<val>composite</val>
+</aggregation>
 <association>
 <ref refid="cd2c18bc-55b8-11ea-8c7d-fd01dce16f0a"/>
 </association>
+<class_>
+<ref refid="5c724236-55b8-11ea-8c7d-fd01dce16f0a"/>
+</class_>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -52465,11 +52487,8 @@ to accomodate simpleAttribute</val>
 <val>0</val>
 </lowerValue>
 <name>
-<val>executionOccurenceSpecification</val>
+<val>executionOccurrenceSpecification</val>
 </name>
-<owningAssociation>
-<ref refid="cd2c18bc-55b8-11ea-8c7d-fd01dce16f0a"/>
-</owningAssociation>
 <presentation>
 <reflist/>
 </presentation>
@@ -52731,4 +52750,15 @@ to accomodate simpleAttribute</val>
 <ref refid="5c724236-55b8-11ea-8c7d-fd01dce16f0a"/>
 </specific>
 </Generalization>
+<Comment id="3c13aeee-573e-11ea-8c7d-fd01dce16f0a">
+<body>
+<val>Some changes have been made to the original model,
+to make it fit more to what we need in Gaphor.</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="3c13aeef-573e-11ea-8c7d-fd01dce16f0a"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>

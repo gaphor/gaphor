@@ -4,6 +4,9 @@ from typing import Optional
 
 from gaphor import UML
 from gaphor.diagram.connectors import AbstractConnect, IConnect
+from gaphor.diagram.interactions.executionspecification import (
+    ExecutionSpecificationItem,
+)
 from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.interactions.message import MessageItem
 
@@ -112,8 +115,6 @@ class MessageLifelineConnect(AbstractConnect):
     def disconnect(self, handle):
         assert self.canvas
 
-        super().disconnect(handle)
-
         line = self.line
         received = self.get_connected(line.tail)
         lifeline = self.element
@@ -134,3 +135,42 @@ class MessageLifelineConnect(AbstractConnect):
             # zero, so allow connections to lifeline's lifetime
             lifetime.connectable = True
             lifetime.min_length = lifetime.MIN_LENGTH
+
+
+@IConnect.register(LifelineItem, ExecutionSpecificationItem)
+class ExecutionSpecificationConnect(AbstractConnect):
+
+    element: LifelineItem
+    line: ExecutionSpecificationItem
+
+    def allow(self, handle, port):
+        lifetime = self.element.lifetime
+        return lifetime.visible
+
+    def connect(self, handle, port):
+        lifeline = self.element.subject
+        exec_spec: UML.ExecutionSpecification = self.line.subject
+        model = self.element.model
+        if not exec_spec:
+            exec_spec = model.create(UML.BehaviorExecutionSpecification)
+            self.line.subject = exec_spec
+
+        start_occurence: UML.ExecutionOccurrenceSpecification = model.create(
+            UML.ExecutionOccurrenceSpecification
+        )
+        start_occurence.covered = lifeline
+        start_occurence.execution = exec_spec
+
+        finish_occurence: UML.ExecutionOccurrenceSpecification = model.create(
+            UML.ExecutionOccurrenceSpecification
+        )
+        finish_occurence.covered = lifeline
+        finish_occurence.execution = exec_spec
+
+        return True
+
+    def disconnect(self, handle):
+        exec_spec: Optional[UML.ExecutionSpecification] = self.line.subject
+        del self.line.subject
+        if exec_spec:
+            exec_spec.unlink()
