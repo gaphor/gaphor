@@ -3,7 +3,8 @@ Test handle tool functionality.
 """
 
 import pytest
-from gaphas.aspect import ConnectionSink, Connector
+from gaphas.aspect import ConnectionSink
+from gaphas.aspect import Connector as ConnectorAspect
 from gi.repository import Gdk, Gtk
 
 from gaphor import UML
@@ -73,7 +74,7 @@ def commentline(diagram):
 
 
 def test_aspect_type(commentline):
-    aspect = Connector(commentline, commentline.handles()[0])
+    aspect = ConnectorAspect(commentline, commentline.handles()[0])
     assert isinstance(aspect, DiagramItemConnector)
 
 
@@ -82,7 +83,7 @@ def test_query(comment, commentline):
 
 
 def test_allow(commentline, comment):
-    aspect = Connector(commentline, commentline.handles()[0])
+    aspect = ConnectorAspect(commentline, commentline.handles()[0])
     assert aspect.item is commentline
     assert aspect.handle is commentline.handles()[0]
 
@@ -92,7 +93,7 @@ def test_allow(commentline, comment):
 
 def test_connect(diagram, comment, commentline):
     sink = ConnectionSink(comment, comment.ports()[0])
-    aspect = Connector(commentline, commentline.handles()[0])
+    aspect = ConnectorAspect(commentline, commentline.handles()[0])
     aspect.connect(sink)
     canvas = diagram.canvas
     cinfo = canvas.get_connection(commentline.handles()[0])
@@ -146,7 +147,7 @@ def test_iconnect(session, event_manager, element_factory):
     assert cinfo.constraint is not None
     assert cinfo.connected is actor, cinfo.connected
 
-    Connector(line, handle).disconnect()
+    ConnectorAspect(line, handle).disconnect()
 
     cinfo = diagram.canvas.get_connection(handle)
 

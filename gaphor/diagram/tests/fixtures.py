@@ -1,5 +1,6 @@
 import pytest
-from gaphas.aspect import ConnectionSink, Connector
+from gaphas.aspect import ConnectionSink
+from gaphas.aspect import Connector as ConnectorAspect
 
 from gaphor import UML
 from gaphor.diagram.connectors import IConnect
@@ -37,7 +38,7 @@ def connect(line, handle, item, port=None):
         port = item.ports()[0]
 
     sink = ConnectionSink(item, port)
-    connector = Connector(line, handle)
+    connector = ConnectorAspect(line, handle)
 
     connector.connect(sink)
 

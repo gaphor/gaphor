@@ -10,7 +10,8 @@ import unittest
 from io import StringIO
 from typing import Type, TypeVar
 
-from gaphas.aspect import ConnectionSink, Connector
+from gaphas.aspect import ConnectionSink
+from gaphas.aspect import Connector as ConnectorAspect
 
 # For DiagramItemConnector aspect:
 import gaphor.diagram.diagramtools  # noqa
@@ -82,7 +83,7 @@ class TestCase(unittest.TestCase):
             port = item.ports()[0]
 
         sink = ConnectionSink(item, port)
-        connector = Connector(line, handle)
+        connector = ConnectorAspect(line, handle)
 
         connector.connect(sink)
 

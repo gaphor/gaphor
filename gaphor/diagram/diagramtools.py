@@ -9,7 +9,9 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 
 import logging
 
-from gaphas.aspect import Connector, InMotion, ItemConnector
+from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.aspect import InMotion as InMotionAspect
+from gaphas.aspect import ItemConnector
 from gaphas.guide import GuidedItemInMotion
 from gaphas.tool import ConnectHandleTool, HoverTool, ItemTool
 from gaphas.tool import PlacementTool as _PlacementTool
@@ -32,7 +34,7 @@ OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 log = logging.getLogger(__name__)
 
 
-@Connector.register(Presentation)
+@ConnectorAspect.register(Presentation)
 class DiagramItemConnector(ItemConnector):
     """
     Handle Tool (acts on item handles) that uses the IConnect protocol
@@ -290,7 +292,7 @@ class PlacementTool(_PlacementTool):
         return item
 
 
-@InMotion.register(Presentation)
+@InMotionAspect.register(Presentation)
 class DropZoneInMotion(GuidedItemInMotion):
     def move(self, pos):
         """

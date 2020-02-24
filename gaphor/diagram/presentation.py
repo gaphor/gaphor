@@ -2,6 +2,8 @@ import ast
 from typing import Optional
 
 import gaphas
+from gaphas.aspect import ConnectionSink
+from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.diagram.text import TextAlign, text_point_at_line
@@ -259,10 +261,10 @@ class LinePresentation(Presentation[S], gaphas.Line):
                     port = p
                     dist = d
 
-            return gaphas.aspect.ConnectionSink(item, port)
+            return ConnectionSink(item, port)
 
         def postload_connect(handle, item):
-            connector = gaphas.aspect.Connector(self, handle)
+            connector = ConnectorAspect(self, handle)
             sink = get_sink(handle, item)
             connector.connect(sink)
 
