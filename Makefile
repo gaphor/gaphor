@@ -3,7 +3,7 @@ help:		## Show this help
 	@echo "make <target>, where <target> is one of:"
 	@grep -hP "\t##" $(MAKEFILE_LIST) | sed -e 's/^\([a-z]*\):.*## /  \1\t/' | expand -t14
 
-dist: test translate	## Build application distribution (requires Poetry)
+dist: translate	## Build application distribution (requires Poetry)
 	poetry build
 
 test:		## Run all but slow tests (requires PyTest)
