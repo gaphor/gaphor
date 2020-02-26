@@ -46,6 +46,9 @@ def test_connect_execution_specification_to_lifeline(diagram, element_factory):
 
 
 def test_disconnect_execution_specification_from_lifeline(diagram, element_factory):
+    def elements_of_kind(type):
+        return element_factory.lselect(lambda e: e.isKindOf(type))
+
     lifeline = diagram.create(
         LifelineItem, subject=element_factory.create(UML.Lifeline)
     )
@@ -58,12 +61,134 @@ def test_disconnect_execution_specification_from_lifeline(diagram, element_facto
     assert lifeline.subject
     assert exec_spec.subject is None
     assert exec_spec.canvas
-    assert (
-        element_factory.lselect(lambda e: e.isKindOf(UML.ExecutionSpecification)) == []
+    assert elements_of_kind(UML.ExecutionSpecification) == []
+    assert elements_of_kind(UML.ExecutionOccurrenceSpecification) == []
+
+
+def test_allow_execution_specification_to_execution_specification(diagram):
+    parent_exec_spec = diagram.create(ExecutionSpecificationItem)
+    child_exec_spec = diagram.create(ExecutionSpecificationItem)
+
+    glued = allow(
+        parent_exec_spec,
+        parent_exec_spec.handles()[0],
+        child_exec_spec,
+        child_exec_spec.ports()[0],
     )
-    assert (
-        element_factory.lselect(
-            lambda e: e.isKindOf(UML.ExecutionOccurrenceSpecification)
-        )
-        == []
+
+    assert glued
+
+
+def test_connect_execution_specification_to_execution_specification(
+    diagram, element_factory
+):
+    parent_exec_spec = diagram.create(ExecutionSpecificationItem)
+    child_exec_spec = diagram.create(ExecutionSpecificationItem)
+
+    connect(
+        child_exec_spec,
+        child_exec_spec.handles()[0],
+        parent_exec_spec,
+        parent_exec_spec.ports()[0],
     )
+
+    assert not parent_exec_spec.subject
+    assert not child_exec_spec.subject
+
+
+def test_connect_execution_specification_to_execution_specification_with_lifeline(
+    diagram, element_factory
+):
+    lifeline = diagram.create(
+        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    )
+    lifeline.lifetime.visible = True
+    parent_exec_spec = diagram.create(ExecutionSpecificationItem)
+    child_exec_spec = diagram.create(ExecutionSpecificationItem)
+    connect(
+        parent_exec_spec,
+        parent_exec_spec.handles()[0],
+        lifeline,
+        lifeline.lifetime.port,
+    )
+
+    connect(
+        child_exec_spec,
+        child_exec_spec.handles()[0],
+        parent_exec_spec,
+        parent_exec_spec.ports()[0],
+    )
+
+    assert child_exec_spec.subject
+    assert lifeline.subject
+    assert child_exec_spec.subject.start.covered is lifeline.subject
+    assert (
+        child_exec_spec.subject.executionOccurrenceSpecification[0].covered
+        is lifeline.subject
+    )
+
+
+def test_connect_execution_specification_with_execution_specification_to_lifeline(
+    diagram, element_factory
+):
+    lifeline = diagram.create(
+        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    )
+    lifeline.lifetime.visible = True
+    parent_exec_spec = diagram.create(ExecutionSpecificationItem)
+    child_exec_spec = diagram.create(ExecutionSpecificationItem)
+    connect(
+        child_exec_spec,
+        child_exec_spec.handles()[0],
+        parent_exec_spec,
+        parent_exec_spec.ports()[0],
+    )
+
+    connect(
+        parent_exec_spec,
+        parent_exec_spec.handles()[0],
+        lifeline,
+        lifeline.lifetime.port,
+    )
+
+    assert parent_exec_spec.subject
+    assert child_exec_spec.subject
+    assert lifeline.subject
+    assert parent_exec_spec.subject.start.covered is lifeline.subject
+    assert child_exec_spec.subject.start.covered is lifeline.subject
+    assert (
+        child_exec_spec.subject.executionOccurrenceSpecification[0].covered
+        is lifeline.subject
+    )
+
+
+def test_disconnect_execution_specification_with_execution_specification_from_lifeline(
+    diagram, element_factory
+):
+    elements_of_kind = lambda type: element_factory.lselect(lambda e: e.isKindOf(type))
+    lifeline = diagram.create(
+        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    )
+    lifeline.lifetime.visible = True
+    parent_exec_spec = diagram.create(ExecutionSpecificationItem)
+    child_exec_spec = diagram.create(ExecutionSpecificationItem)
+    connect(
+        parent_exec_spec,
+        parent_exec_spec.handles()[0],
+        lifeline,
+        lifeline.lifetime.port,
+    )
+    connect(
+        child_exec_spec,
+        child_exec_spec.handles()[0],
+        parent_exec_spec,
+        parent_exec_spec.ports()[0],
+    )
+
+    disconnect(parent_exec_spec, parent_exec_spec.handles()[0])
+
+    assert lifeline.subject
+    assert parent_exec_spec.subject is None
+    assert child_exec_spec.subject is None
+    assert elements_of_kind(UML.ExecutionSpecification) == []
+    assert elements_of_kind(UML.ExecutionOccurrenceSpecification) == []

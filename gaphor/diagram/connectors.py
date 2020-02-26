@@ -46,10 +46,10 @@ class BaseConnector:
 
     def __init__(
         self,
-        element: ElementPresentation[UML.Element],
-        line: LinePresentation[UML.Element],
+        element: UML.Presentation[UML.Element],
+        line: UML.Presentation[UML.Element],
     ) -> None:
-        assert element.canvas == line.canvas
+        assert element.canvas is line.canvas
         self.element = element
         self.line = line
         self.canvas = element.canvas
@@ -61,7 +61,7 @@ class BaseConnector:
         assert self.canvas
         return self.canvas.get_connection(handle)
 
-    def get_connected(self, handle: Handle) -> Optional[UML.Presentation]:
+    def get_connected(self, handle: Handle) -> Optional[UML.Presentation[UML.Element]]:
         """
         Get item connected to a handle.
         """
@@ -69,16 +69,6 @@ class BaseConnector:
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
-        return None
-
-    def get_connected_port(self, handle: Handle) -> Optional[Port]:
-        """
-        Get port of item connected to connecting item via specified handle.
-        """
-        assert self.canvas
-        cinfo = self.canvas.get_connection(handle)
-        if cinfo:
-            return cinfo.port
         return None
 
     def allow(self, handle: Handle, port: Port) -> bool:
@@ -125,6 +115,9 @@ class UnaryRelationshipConnect(BaseConnector):
     find an existing relationship in the model that does not yet exist
     on the canvas.
     """
+
+    element: ElementPresentation[UML.Element]
+    line: LinePresentation[UML.Element]
 
     def relationship(
         self, required_type: Type[UML.Element], head: relation, tail: relation

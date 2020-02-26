@@ -9,6 +9,7 @@ from gaphor.diagram.interactions.executionspecification import (
 )
 from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.interactions.message import MessageItem
+from gaphor.diagram.presentation import ElementPresentation
 
 
 @Connector.register(LifelineItem, MessageItem)
@@ -21,6 +22,7 @@ class MessageLifelineConnect(BaseConnector):
     added to a lifetime line, it's considered a sequence diagram.
     """
 
+    element: LifelineItem
     line: MessageItem
 
     def connect_lifelines(self, line, send, received):
@@ -55,7 +57,7 @@ class MessageLifelineConnect(BaseConnector):
         there are no lifelines connected on both ends, then remove the message
         from the data model.
         """
-        send = self.get_connected(line.head)
+        send: Optional[UML.Presentation[UML.Element]] = self.get_connected(line.head)
         received = self.get_connected(line.tail)
 
         if send:
@@ -138,7 +140,7 @@ class MessageLifelineConnect(BaseConnector):
 
 
 @Connector.register(LifelineItem, ExecutionSpecificationItem)
-class ExecutionSpecificationConnect(BaseConnector):
+class LifelineExecutionSpecificationConnect(BaseConnector):
 
     element: LifelineItem
     line: ExecutionSpecificationItem
@@ -167,6 +169,10 @@ class ExecutionSpecificationConnect(BaseConnector):
         finish_occurence.covered = lifeline
         finish_occurence.execution = exec_spec
 
+        canvas = self.line.canvas
+        assert canvas
+        for cinfo in canvas.get_connections(connected=self.line):
+            Connector(self.line, cinfo.item).connect(cinfo.handle, cinfo.port)
         return True
 
     def disconnect(self, handle):
@@ -174,3 +180,41 @@ class ExecutionSpecificationConnect(BaseConnector):
         del self.line.subject
         if exec_spec:
             exec_spec.unlink()
+
+        canvas = self.canvas
+        assert canvas
+        for cinfo in canvas.get_connections(connected=self.line):
+            Connector(self.line, cinfo.item).disconnect(cinfo.handle)
+
+
+@Connector.register(ExecutionSpecificationItem, ExecutionSpecificationItem)
+class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
+
+    element: ExecutionSpecificationItem
+    line: ExecutionSpecificationItem
+
+    def allow(self, _handle, _port):
+        return True
+
+    def connect(self, handle, _port):
+        parent_exec_spec = self.element.subject
+        child_exec_spec: UML.ExecutionSpecification = self.line.subject
+        model = self.element.model
+
+        if not parent_exec_spec:
+            # Can connect child exec spec if parent is not connected
+            return True
+
+        connected_item: Optional[UML.Presentation[UML.Element]] = self.get_connected(
+            self.element.handles()[0]
+        )
+        assert connected_item
+        return Connector(connected_item, self.line).connect(handle, None)
+
+    def disconnect(self, handle):
+        exec_spec: Optional[UML.ExecutionSpecification] = self.line.subject
+        del self.line.subject
+        if exec_spec:
+            exec_spec.unlink()
+
+        # TODO: also disconnect items connected to this item

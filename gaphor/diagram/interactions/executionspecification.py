@@ -43,12 +43,12 @@ class ExecutionSpecificationItem(UML.Presentation[UML.ExecutionSpecification], I
         self._min_height = 10
 
         ht, hb = Handle(), Handle()
-        ht.connectable = True
+        hb.connectable = True
 
         # TODO: need better interface for this!
         self._handles.append(ht)
         self._handles.append(hb)
-        # self._ports.append(LinePort(h1.pos, h2.pos))
+        self._ports.append(LinePort(ht.pos, hb.pos))
 
         self.constraint(above=(ht.pos, hb.pos), delta=self._min_height)
         self.constraint(vertical=(ht.pos, hb.pos))
