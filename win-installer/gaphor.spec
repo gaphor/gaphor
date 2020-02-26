@@ -1,7 +1,6 @@
-# -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import copy_metadata
 
-
+    
 block_cipher = None
 
 a = Analysis(['gaphor-script.py'],
@@ -16,11 +15,11 @@ a = Analysis(['gaphor-script.py'],
 		       ('../gaphor/ui/icons/*.svg', 'gaphor/ui/icons'),
 		       ('../LICENSE.txt', 'gaphor'),
 		       ('../gaphor/locale/*', 'gaphor/locale')
-		     ]+copy_metadata('gaphor'),
+		     ]+copy_metadata('gaphor')+copy_metadata('gaphas'),
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
-             excludes=['lib2to3'],
+             excludes=['lib2to3', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
@@ -38,7 +37,7 @@ exe = EXE(pyz,
           upx=True,
           icon='misc/gaphor.ico',
           version='file_version_info.txt',
-          console=False )
+          console=False)
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

@@ -12,12 +12,12 @@ set -euo pipefail
 # CONFIG START
 
 ARCH="x86_64"
-BUILD_VERSION="0"
 
 # CONFIG END
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${DIR}"
+source ../venv
 
 MISC="${DIR}"/misc
 if [ "${ARCH}" = "x86_64" ]; then
@@ -30,32 +30,19 @@ VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 
 function set_build_root {
     DIST_LOCATION="$1"
-    GAPHOR_LOCATION="${DIST_LOCATION}"/gaphor
 }
 
 set_build_root "${DIR}/dist/gaphor"
 
 
-function install_pre_deps {
+function install_build_deps {
     pacman -S --needed --noconfirm p7zip git dos2unix upx \
-        mingw-w64-"${ARCH}"-nsis \
-	    mingw-w64-"${ARCH}"-wget
-}
-
-function install_deps {
-    pacman --noconfirm --needed -S \
-        mingw-w64-"${ARCH}"-gtk3 \
-        mingw-w64-"${ARCH}"-python3 \
-        mingw-w64-"${ARCH}"-python3-gobject \
-        mingw-w64-"${ARCH}"-gobject-introspection \
-        mingw-w64-"${ARCH}"-python3-cairo \
-        mingw-w64-"${ARCH}"-python3-pip
-
-    pip install pyinstaller==3.6
+        mingw-w64-"${ARCH}"-nsis mingw-w64-"${ARCH}"-wget
 }
 
 function build_pyinstaller {
-    sed "s/__version__/$VERSION/g" file_version_info.txt.in > file_version_info.txt
+    echo "${DIR}"
+    sed "s/__version__/$VERSION/g" "${DIR}"/file_version_info.txt.in > "${DIR}"/file_version_info.txt
     pyinstaller -y gaphor.spec
 }
 
@@ -86,18 +73,14 @@ function build_portable_installer {
 }
 
 function main {
-    local GIT_TAG=${1:-"master"}
-
     # started from the wrong env -> switch
-    if [ $(echo "$MSYSTEM" | tr '[A-Z]' '[a-z]') != "$MINGW" ]; then
+    if [ "$(echo "$MSYSTEM" | tr '[:upper:]' '[:lower:]')" != "$MINGW" ]; then
         "/${MINGW}.exe" "$0"
         exit $?
     fi
 
-    echo "install pre-dependencies"
-    install_pre_deps
-    echo "install dependencies"
-    install_deps
+    echo "install build dependencies"
+    install_build_deps
     echo "pyinstall gaphor"
     build_pyinstaller
     echo "build installer"
