@@ -23,8 +23,9 @@ Stick with BehaviorExecutionSpecification, since it has a [0..1] relation to beh
 ActionExecutionSpecification has a [1] relation to action.
 """
 from gaphas import Handle, Item
-from gaphas.connector import LinePort
+from gaphas.connector import LinePort, Position
 from gaphas.geometry import Rectangle, distance_rectangle_point
+from gaphas.solver import WEAK
 
 from gaphor import UML
 from gaphor.diagram.shapes import Box, draw_border
@@ -40,7 +41,7 @@ class ExecutionSpecificationItem(UML.Presentation[UML.ExecutionSpecification], I
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self._min_height = 10
+        self.bar_width = 12
 
         ht, hb = Handle(), Handle()
         ht.connectable = True
@@ -48,19 +49,27 @@ class ExecutionSpecificationItem(UML.Presentation[UML.ExecutionSpecification], I
         # TODO: need better interface for this!
         self._handles.append(ht)
         self._handles.append(hb)
-        self._ports.append(LinePort(ht.pos, hb.pos))
 
-        self.constraint(above=(ht.pos, hb.pos), delta=self._min_height)
         self.constraint(vertical=(ht.pos, hb.pos))
 
-        self.shape = Box(
-            style={"fill": "white"}, draw=draw_border
-        )  # self.draw_execution_specification)
+        r = self.bar_width / 2
+        nw = Position((-r, 0), strength=WEAK)
+        ne = Position((r, 0), strength=WEAK)
+        se = Position((r, 0), strength=WEAK)
+        sw = Position((-r, 0), strength=WEAK)
+
+        self.constraint(horizontal=(sw, hb.pos))
+        self.constraint(horizontal=(se, hb.pos))
+
+        self._ports.append(LinePort(nw, sw))
+        self._ports.append(LinePort(ne, se))
+
+        self.shape = Box(style={"fill": "white"}, draw=draw_border)
 
     def dimensions(self):
-        d = 10
+        d = self.bar_width
         pt, pb = (h.pos for h in self._handles)
-        return Rectangle(pt.x - d / 2, pt.y, d, pb.y - pt.y)
+        return Rectangle(pt.x - d / 2, pt.y, d, y1=pb.y)
 
     def draw(self, context):
         self.shape.draw(context, self.dimensions())
