@@ -172,6 +172,7 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
     lifeline.lifetime.visible = True
     parent_exec_spec = diagram.create(ExecutionSpecificationItem)
     child_exec_spec = diagram.create(ExecutionSpecificationItem)
+    grand_child_exec_spec = diagram.create(ExecutionSpecificationItem)
     connect(
         parent_exec_spec,
         parent_exec_spec.handles()[0],
@@ -184,11 +185,18 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
         parent_exec_spec,
         parent_exec_spec.ports()[0],
     )
+    connect(
+        grand_child_exec_spec,
+        grand_child_exec_spec.handles()[0],
+        child_exec_spec,
+        child_exec_spec.ports()[0],
+    )
 
     disconnect(parent_exec_spec, parent_exec_spec.handles()[0])
 
     assert lifeline.subject
     assert parent_exec_spec.subject is None
     assert child_exec_spec.subject is None
+    assert grand_child_exec_spec.subject is None
     assert elements_of_kind(UML.ExecutionSpecification) == []
     assert elements_of_kind(UML.ExecutionOccurrenceSpecification) == []

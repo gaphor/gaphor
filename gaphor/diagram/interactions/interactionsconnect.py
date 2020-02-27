@@ -234,7 +234,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
         assert connected_item
         Connector(connected_item, self.line).connect(handle, None)
 
-        canvas = self.line.canvas
+        canvas = self.canvas
         reparent(canvas, self.line, self.element)
 
         return True
@@ -245,4 +245,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
         if exec_spec:
             exec_spec.unlink()
 
-        # TODO: also disconnect items connected to this item
+        canvas = self.canvas
+        assert canvas
+        for cinfo in canvas.get_connections(connected=self.line):
+            Connector(self.line, cinfo.item).disconnect(cinfo.handle)
