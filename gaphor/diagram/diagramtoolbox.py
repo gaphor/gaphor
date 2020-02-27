@@ -380,6 +380,7 @@ TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 item_factory=PlacementTool.new_item_factory(
                     diagram.interactions.ExecutionSpecificationItem
                 ),
+                handle_index=0,
             ),
             ToolDef(
                 "toolbox-interaction",

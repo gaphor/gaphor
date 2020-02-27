@@ -12,6 +12,22 @@ from gaphor.diagram.interactions.message import MessageItem
 from gaphor.diagram.presentation import ElementPresentation
 
 
+def reparent(canvas, item, new_parent):
+    old_parent = canvas.get_parent(item)
+
+    if old_parent:
+        canvas.reparent(item, None)
+        m = canvas.get_matrix_i2c(old_parent)
+        item.matrix *= m
+        old_parent.request_update()
+
+    if new_parent:
+        canvas.reparent(item, new_parent)
+        m = canvas.get_matrix_c2i(new_parent)
+        item.matrix *= m
+        new_parent.request_update()
+
+
 @Connector.register(LifelineItem, MessageItem)
 class MessageLifelineConnect(BaseConnector):
     """Connect lifeline with a message.
@@ -171,6 +187,9 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
         canvas = self.line.canvas
         assert canvas
+
+        reparent(canvas, self.line, self.element)
+
         for cinfo in canvas.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).connect(cinfo.handle, cinfo.port)
         return True
@@ -183,6 +202,11 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
         canvas = self.canvas
         assert canvas
+
+        if canvas.get_parent(self.line) is self.element:
+            new_parent = canvas.get_parent(self.element)
+            reparent(canvas, self.line, new_parent)
+
         for cinfo in canvas.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)
 
@@ -205,11 +229,15 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
             # Can connect child exec spec if parent is not connected
             return True
 
-        connected_item: Optional[UML.Presentation[UML.Element]] = self.get_connected(
-            self.element.handles()[0]
-        )
+        connected_item: Optional[UML.Presentation[UML.Element]]
+        connected_item = self.get_connected(self.element.handles()[0])
         assert connected_item
-        return Connector(connected_item, self.line).connect(handle, None)
+        Connector(connected_item, self.line).connect(handle, None)
+
+        canvas = self.line.canvas
+        reparent(canvas, self.line, self.element)
+
+        return True
 
     def disconnect(self, handle):
         exec_spec: Optional[UML.ExecutionSpecification] = self.line.subject
