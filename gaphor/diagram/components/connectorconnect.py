@@ -6,6 +6,7 @@ Implemented using interface item in assembly connector mode, see
 """
 
 import operator
+from typing import Union
 
 from gaphor import UML
 from gaphor.diagram.classes.interface import Folded, InterfaceItem
@@ -14,7 +15,13 @@ from gaphor.diagram.components.connector import ConnectorItem
 from gaphor.diagram.connectors import BaseConnector, Connector
 
 
+@Connector.register(ComponentItem, ConnectorItem)
+@Connector.register(InterfaceItem, ConnectorItem)
 class ConnectorConnectBase(BaseConnector):
+
+    element: Union[ComponentItem, InterfaceItem]
+    line: ConnectorItem
+
     def _get_interfaces(self, c1, c2):
         """
         Return list of common interfaces provided by first component and
@@ -184,17 +191,3 @@ class ConnectorConnectBase(BaseConnector):
             c = self.get_component(line)
             self.drop_uml(line, c)
         iface.request_update()
-
-
-@Connector.register(ComponentItem, ConnectorItem)
-class ComponentConnectorConnect(ConnectorConnectBase):
-    """Connection of connector item to a component."""
-
-
-@Connector.register(InterfaceItem, ConnectorItem)
-class InterfaceConnectorConnect(ConnectorConnectBase):
-    """Connect connector to an interface to maintain assembly connection.
-
-    See also `BaseConnector` class for exception of interface item
-    connections.
-    """

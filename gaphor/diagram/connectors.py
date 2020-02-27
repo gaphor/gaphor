@@ -12,12 +12,27 @@ from typing import TYPE_CHECKING, List, Optional, Type, TypeVar, Union
 from gaphas.canvas import Connection
 from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
+from typing_extensions import Protocol
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.UML.properties import association, redefine, relation
 
 T = TypeVar("T", bound=UML.Element)
+
+
+class ConnectorProtocol(Protocol):
+    def __init__(self, element: object, line: object,) -> None:
+        ...
+
+    def allow(self, handle: Handle, port: Port) -> bool:
+        ...
+
+    def connect(self, handle: Handle, port: Port) -> bool:
+        ...
+
+    def disconnect(self, handle: Handle) -> None:
+        ...
 
 
 class BaseConnector:
@@ -97,10 +112,24 @@ class BaseConnector:
         """Disconnect UML model level connections."""
 
 
+class NoConnector:
+    def __init__(self, element, line,) -> None:
+        pass
+
+    def allow(self, handle: Handle, port: Port) -> bool:
+        return False
+
+    def connect(self, handle: Handle, port: Port) -> bool:
+        return False
+
+    def disconnect(self, handle: Handle) -> None:
+        pass
+
+
 # Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
 # This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
-Connector: FunctionDispatcher[Type[BaseConnector]] = multidispatch(object, object)(
-    BaseConnector
+Connector: FunctionDispatcher[Type[ConnectorProtocol]] = multidispatch(object, object)(
+    NoConnector
 )
 
 

@@ -3,6 +3,7 @@ Connect comments.
 """
 
 import logging
+from typing import Union
 
 from gaphor import UML
 from gaphor.diagram.connectors import BaseConnector, Connector
@@ -18,6 +19,7 @@ logger = logging.getLogger(__name__)
 class CommentLineElementConnect(BaseConnector):
     """Connect a comment line to any element item."""
 
+    element: Union[CommentItem, ElementPresentation]
     line: CommentLineItem
 
     def allow(self, handle, port):
@@ -88,6 +90,7 @@ class CommentLineElementConnect(BaseConnector):
                 if hct.subject and isinstance(oct.subject, UML.Comment):
                     del oct.subject.annotatedElement[hct.subject]
                 elif hct.subject and oct.subject:
+                    assert isinstance(hct.subject, UML.Comment)
                     del hct.subject.annotatedElement[oct.subject]
             except ValueError:
                 logger.debug(
@@ -100,6 +103,9 @@ class CommentLineElementConnect(BaseConnector):
 @Connector.register(LinePresentation, CommentLineItem)
 class CommentLineLineConnect(BaseConnector):
     """Connect a comment line to any diagram line."""
+
+    element: LinePresentation
+    line: CommentLineItem
 
     def allow(self, handle, port):
         """
@@ -156,7 +162,10 @@ class CommentLineLineConnect(BaseConnector):
                 and c2.subject in c1.subject.annotatedElement
             ):
                 del c1.subject.annotatedElement[c2.subject]
-            elif c2.subject and c1.subject in c2.subject.annotatedElement:
+            elif (
+                isinstance(c2.subject, UML.Comment)
+                and c1.subject in c2.subject.annotatedElement
+            ):
                 del c2.subject.annotatedElement[c1.subject]
         super().disconnect(handle)
 
