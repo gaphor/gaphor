@@ -49,6 +49,7 @@ See also ``lifeline`` module documentation.
 from math import atan2, pi
 
 from gaphor import UML
+from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.text import middle_segment
@@ -256,8 +257,8 @@ class MessageItem(LinePresentation[UML.Message], Named):
         c1 = canvas.get_connection(self.head)
         c2 = canvas.get_connection(self.tail)
         return (
-            c1
+            isinstance(c1, LifelineItem)
             and not c1.connected.lifetime.visible
-            or c2
+            or isinstance(c2, LifelineItem)
             and not c2.connected.lifetime.visible
         )
