@@ -72,8 +72,6 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         Glue to initial pseudostate with transition's head and when there are
         no transitions connected.
         """
-        assert self.canvas
-
         line = self.line
         element = self.element
 

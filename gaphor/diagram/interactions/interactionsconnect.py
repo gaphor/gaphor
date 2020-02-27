@@ -115,8 +115,6 @@ class MessageLifelineConnect(BaseConnector):
         return not (lifetime.visible ^ (port is element.lifetime.port))
 
     def connect(self, handle, port):
-        super().connect(handle, port)
-
         line = self.line
         send = self.get_connected(line.head)
         received = self.get_connected(line.tail)
@@ -129,10 +127,9 @@ class MessageLifelineConnect(BaseConnector):
         else:
             lifetime.visible = False
             lifetime.connectable = False
+        return True
 
     def disconnect(self, handle):
-        assert self.canvas
-
         line = self.line
         received = self.get_connected(line.tail)
         lifeline = self.element
@@ -185,9 +182,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
         finish_occurence.covered = lifeline
         finish_occurence.execution = exec_spec
 
-        canvas = self.line.canvas
-        assert canvas
-
+        canvas = self.canvas
         reparent(canvas, self.line, self.element)
 
         for cinfo in canvas.get_connections(connected=self.line):
@@ -201,7 +196,6 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
             exec_spec.unlink()
 
         canvas = self.canvas
-        assert canvas
 
         if canvas.get_parent(self.line) is self.element:
             new_parent = canvas.get_parent(self.element)
@@ -217,9 +211,6 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
     element: ExecutionSpecificationItem
     line: ExecutionSpecificationItem
 
-    def allow(self, _handle, _port):
-        return True
-
     def connect(self, handle, _port):
         parent_exec_spec = self.element.subject
         child_exec_spec: UML.ExecutionSpecification = self.line.subject
@@ -234,18 +225,15 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
         assert connected_item
         Connector(connected_item, self.line).connect(handle, None)
 
-        canvas = self.canvas
-        reparent(canvas, self.line, self.element)
+        reparent(self.canvas, self.line, self.element)
 
         return True
 
     def disconnect(self, handle):
         exec_spec: Optional[UML.ExecutionSpecification] = self.line.subject
         del self.line.subject
-        if exec_spec:
+        if exec_spec and not exec_spec.presentation:
             exec_spec.unlink()
 
-        canvas = self.canvas
-        assert canvas
-        for cinfo in canvas.get_connections(connected=self.line):
+        for cinfo in self.canvas.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)

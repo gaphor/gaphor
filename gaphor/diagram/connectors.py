@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, List, Optional, Type, TypeVar, Union
 
-from gaphas.canvas import Connection
+from gaphas.canvas import Canvas, Connection
 from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
 from typing_extensions import Protocol
@@ -67,20 +67,18 @@ class BaseConnector:
         assert element.canvas is line.canvas
         self.element = element
         self.line = line
-        self.canvas = element.canvas
+        self.canvas: Canvas = element.canvas
 
     def get_connection(self, handle: Handle) -> Optional[Connection]:
         """
         Get connection information
         """
-        assert self.canvas
         return self.canvas.get_connection(handle)
 
     def get_connected(self, handle: Handle) -> Optional[UML.Presentation[UML.Element]]:
         """
         Get item connected to a handle.
         """
-        assert self.canvas
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
@@ -254,8 +252,6 @@ class UnaryRelationshipConnect(BaseConnector):
         Cause items connected to ``line`` to reconnect, allowing them to
         establish or destroy relationships at model level.
         """
-        assert self.canvas
-
         line = self.line
         canvas = self.canvas
         solver = canvas.solver
@@ -279,8 +275,6 @@ class UnaryRelationshipConnect(BaseConnector):
         Returns a list of (item, handle) pairs that were connected (this
         list can be used to connect items again with connect_connected_items()).
         """
-        assert self.canvas
-
         line = self.line
         canvas = self.canvas
         solver = canvas.solver
