@@ -1,10 +1,14 @@
+from io import StringIO
+
 import pytest
 from gaphas.aspect import ConnectionSink
 from gaphas.aspect import Connector as ConnectorAspect
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
+from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.services.eventmanager import EventManager
+from gaphor.storage import storage
 from gaphor.UML.elementfactory import ElementFactory
 
 
@@ -16,6 +20,39 @@ def element_factory():
 @pytest.fixture
 def diagram(element_factory):
     return element_factory.create(UML.Diagram)
+
+
+@pytest.fixture
+def saver(element_factory):
+    def save():
+        """
+        Save diagram into string.
+        """
+
+        f = StringIO()
+        storage.save(XMLWriter(f), element_factory)
+        data = f.getvalue()
+        f.close()
+
+        return data
+
+    return save
+
+
+@pytest.fixture
+def loader(element_factory):
+    def load(data):
+        """
+        Load data from specified string.
+        """
+        element_factory.flush()
+        assert not list(element_factory.select())
+
+        f = StringIO(data)
+        storage.load(f, factory=element_factory)
+        f.close()
+
+    return load
 
 
 def allow(line, handle, item, port=None):
