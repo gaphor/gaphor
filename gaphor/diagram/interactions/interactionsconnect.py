@@ -28,6 +28,72 @@ def reparent(canvas, item, new_parent):
         new_parent.request_update()
 
 
+def get_connected(item, handle) -> Optional[UML.Presentation[UML.Element]]:
+    """
+    Get item connected to a handle.
+    """
+    cinfo = item.canvas.get_connection(handle)
+    if cinfo:
+        return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
+    return None
+
+
+def connect_lifelines(line, send, received):
+    """
+    Always create a new Message with two EventOccurrence instances.
+    """
+
+    def get_subject():
+        if not line.subject:
+            message = line.model.create(UML.Message)
+            message.name = "call()"
+            line.subject = message
+        return line.subject
+
+    if send:
+        message = get_subject()
+        if not message.sendEvent:
+            event = message.model.create(UML.MessageOccurrenceSpecification)
+            event.sendMessage = message
+            event.covered = send.subject
+
+    if received:
+        message = get_subject()
+        if not message.receiveEvent:
+            event = message.model.create(UML.MessageOccurrenceSpecification)
+            event.receiveMessage = message
+            event.covered = received.subject
+
+
+def disconnect_lifelines(line, send, received):
+    """
+    Disconnect lifeline and set appropriate kind of message item. If
+    there are no lifelines connected on both ends, then remove the message
+    from the data model.
+    """
+    if not line.subject:
+        return
+
+    if send:
+        event = line.subject.receiveEvent
+        if event:
+            event.unlink()
+
+    if received:
+        event = line.subject.sendEvent
+        if event:
+            event.unlink()
+
+    # one is disconnected and one is about to be disconnected,
+    # so destroy the message
+    if not send or not received:
+        # Both ends are disconnected:
+        message = line.subject
+        del line.subject
+        if not message.presentation:
+            message.unlink()
+
+
 @Connector.register(LifelineItem, MessageItem)
 class MessageLifelineConnect(BaseConnector):
     """Connect lifeline with a message.
@@ -40,60 +106,6 @@ class MessageLifelineConnect(BaseConnector):
 
     element: LifelineItem
     line: MessageItem
-
-    def connect_lifelines(self, line, send, received):
-        """
-        Always create a new Message with two EventOccurrence instances.
-        """
-
-        def get_subject():
-            if not line.subject:
-                message = line.model.create(UML.Message)
-                message.name = "call()"
-                line.subject = message
-            return line.subject
-
-        if send:
-            message = get_subject()
-            if not message.sendEvent:
-                event = message.model.create(UML.MessageOccurrenceSpecification)
-                event.sendMessage = message
-                event.covered = send.subject
-
-        if received:
-            message = get_subject()
-            if not message.receiveEvent:
-                event = message.model.create(UML.MessageOccurrenceSpecification)
-                event.receiveMessage = message
-                event.covered = received.subject
-
-    def disconnect_lifelines(self, line):
-        """
-        Disconnect lifeline and set appropriate kind of message item. If
-        there are no lifelines connected on both ends, then remove the message
-        from the data model.
-        """
-        send: Optional[UML.Presentation[UML.Element]] = self.get_connected(line.head)
-        received = self.get_connected(line.tail)
-
-        if send:
-            event = line.subject.receiveEvent
-            if event:
-                event.unlink()
-
-        if received:
-            event = line.subject.sendEvent
-            if event:
-                event.unlink()
-
-        # one is disconnected and one is about to be disconnected,
-        # so destroy the message
-        if not send or not received:
-            # Both ends are disconnected:
-            message = line.subject
-            del line.subject
-            if not message.presentation:
-                message.unlink()
 
     def allow(self, handle, port):
         """
@@ -118,7 +130,7 @@ class MessageLifelineConnect(BaseConnector):
         line = self.line
         send = self.get_connected(line.head)
         received = self.get_connected(line.tail)
-        self.connect_lifelines(line, send, received)
+        connect_lifelines(line, send, received)
 
         lifetime = self.element.lifetime
         # if connected to head, then make lifetime invisible
@@ -131,6 +143,7 @@ class MessageLifelineConnect(BaseConnector):
 
     def disconnect(self, handle):
         line = self.line
+        send: Optional[UML.Presentation[UML.Element]] = get_connected(line, line.head)
         received = self.get_connected(line.tail)
         lifeline = self.element
         lifetime = lifeline.lifetime
@@ -143,13 +156,41 @@ class MessageLifelineConnect(BaseConnector):
             received.is_destroyed = False
             received.request_update()
 
-        self.disconnect_lifelines(line)
+        disconnect_lifelines(line, send, received)
 
         if len(list(self.canvas.get_connections(connected=lifeline))) == 1:
             # after disconnection count of connected items will be
             # zero, so allow connections to lifeline's lifetime
             lifetime.connectable = True
             lifetime.min_length = lifetime.MIN_LENGTH
+
+
+@Connector.register(ExecutionSpecificationItem, MessageItem)
+class ExecutionSpecificationMessageConnect(BaseConnector):
+
+    element: ExecutionSpecificationItem
+    line: MessageItem
+
+    def get_lifeline(self, handle):
+        import gaphas
+
+        connected_item = self.get_connected(handle)
+        if connected_item is None or isinstance(connected_item, LifelineItem):
+            return connected_item
+        return self.get_lifeline(connected_item.handles()[0])  # type: ignore[attr-defined]
+
+    def connect(self, handle, _port):
+        line = self.line
+        send = self.get_lifeline(line.head)
+        received = self.get_lifeline(line.tail)
+        connect_lifelines(line, send, received)
+        return True
+
+    def disconnect(self, handle):
+        line = self.line
+        send = self.get_lifeline(line.head)
+        received = self.get_lifeline(line.tail)
+        disconnect_lifelines(line, send, received)
 
 
 @Connector.register(LifelineItem, ExecutionSpecificationItem)

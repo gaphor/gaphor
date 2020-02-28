@@ -3,6 +3,9 @@ Message connection adapter tests.
 """
 
 from gaphor import UML
+from gaphor.diagram.interactions.executionspecification import (
+    ExecutionSpecificationItem,
+)
 from gaphor.diagram.interactions.lifeline import LifelineItem
 from gaphor.diagram.interactions.message import MessageItem
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
@@ -246,7 +249,8 @@ def test_messages_disconnect_cd(diagram, element_factory):
 
     subject = msg.subject
 
-    assert subject.sendEvent and subject.receiveEvent
+    assert subject.sendEvent
+    assert subject.receiveEvent
 
     messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
     occurrences = element_factory.lselect(
@@ -256,3 +260,42 @@ def test_messages_disconnect_cd(diagram, element_factory):
     # verify integrity of messages
     assert 1 == len(messages)
     assert 2 == len(occurrences)
+
+
+def test_message_connect_to_execution_specification(diagram, element_factory):
+    """Test gluing message on sequence diagram."""
+
+    lifeline = diagram.create(
+        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    )
+    exec_spec = diagram.create(ExecutionSpecificationItem)
+    message = diagram.create(MessageItem)
+    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
+
+    connect(message, message.head, exec_spec, exec_spec.ports()[0])
+
+    assert message.subject
+    assert message.subject.sendEvent.covered is lifeline.subject
+
+
+def test_message_disconnect_from_execution_specification(diagram, element_factory):
+    """Test gluing message on sequence diagram."""
+
+    lifeline = diagram.create(
+        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    )
+    exec_spec = diagram.create(ExecutionSpecificationItem)
+    message = diagram.create(MessageItem)
+    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
+    connect(message, message.head, exec_spec, exec_spec.ports()[0])
+
+    disconnect(message, message.head)
+
+    messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
+    occurrences = element_factory.lselect(
+        lambda e: e.isKindOf(UML.MessageOccurrenceSpecification)
+    )
+
+    assert not message.subject
+    assert not len(messages)
+    assert not len(occurrences)
