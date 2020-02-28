@@ -2,6 +2,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
+from gaphor.diagram.interactions.interactionsconnect import get_lifeline
 from gaphor.diagram.interactions.message import MessageItem
 from gaphor.diagram.propertypages import (
     EditableTreeModel,
@@ -45,10 +46,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
             hbox = create_hbox_label(self, page, gettext("Message sort"))
 
             sort_data = self.MESSAGE_SORT
-            lifeline = None
-            cinfo = item.canvas.get_connection(item.tail)
-            if cinfo:
-                lifeline = cinfo.connected
+            lifeline = get_lifeline(item, item.tail)
 
             # disallow connecting two delete messages to a lifeline
             if (
@@ -79,10 +77,7 @@ class MessagePropertyPage(NamedItemPropertyPage):
 
         item = self.item
         subject = item.subject
-        lifeline = None
-        cinfo = item.canvas.get_connection(item.tail)
-        if cinfo:
-            lifeline = cinfo.connected
+        lifeline = get_lifeline(item, item.tail)
 
         #
         # allow only one delete message to connect to lifeline's lifetime

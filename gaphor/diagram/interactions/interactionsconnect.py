@@ -38,6 +38,13 @@ def get_connected(item, handle) -> Optional[UML.Presentation[UML.Element]]:
     return None
 
 
+def get_lifeline(item, handle):
+    connected_item = get_connected(item, handle)
+    if connected_item is None or isinstance(connected_item, LifelineItem):
+        return connected_item
+    return get_lifeline(connected_item, connected_item.handles()[0])  # type: ignore[attr-defined]
+
+
 def connect_lifelines(line, send, received):
     """
     Always create a new Message with two EventOccurrence instances.
@@ -118,8 +125,7 @@ class MessageLifelineConnect(BaseConnector):
         opposite = line.opposite(handle)
 
         ol = self.get_connected(opposite)
-        if ol:
-            assert isinstance(ol, LifelineItem)
+        if isinstance(ol, LifelineItem):
             opposite_is_visible = ol.lifetime.visible
             # connect lifetimes if both are visible or both invisible
             return not (lifetime.visible ^ opposite_is_visible)
@@ -171,25 +177,17 @@ class ExecutionSpecificationMessageConnect(BaseConnector):
     element: ExecutionSpecificationItem
     line: MessageItem
 
-    def get_lifeline(self, handle):
-        import gaphas
-
-        connected_item = self.get_connected(handle)
-        if connected_item is None or isinstance(connected_item, LifelineItem):
-            return connected_item
-        return self.get_lifeline(connected_item.handles()[0])  # type: ignore[attr-defined]
-
     def connect(self, handle, _port):
         line = self.line
-        send = self.get_lifeline(line.head)
-        received = self.get_lifeline(line.tail)
+        send = get_lifeline(line, line.head)
+        received = get_lifeline(line, line.tail)
         connect_lifelines(line, send, received)
         return True
 
     def disconnect(self, handle):
         line = self.line
-        send = self.get_lifeline(line.head)
-        received = self.get_lifeline(line.tail)
+        send = get_lifeline(line, line.head)
+        received = get_lifeline(line, line.tail)
         disconnect_lifelines(line, send, received)
 
 
