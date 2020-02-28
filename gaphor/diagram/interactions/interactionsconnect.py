@@ -254,8 +254,6 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
 
     def connect(self, handle, _port):
         parent_exec_spec = self.element.subject
-        child_exec_spec: UML.ExecutionSpecification = self.line.subject
-        model = self.element.model
 
         if not parent_exec_spec:
             # Can connect child exec spec if parent is not connected

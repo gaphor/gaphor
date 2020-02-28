@@ -165,7 +165,9 @@ def test_connect_execution_specification_with_execution_specification_to_lifelin
 def test_disconnect_execution_specification_with_execution_specification_from_lifeline(
     diagram, element_factory
 ):
-    elements_of_kind = lambda type: element_factory.lselect(lambda e: e.isKindOf(type))
+    def elements_of_kind(type):
+        return element_factory.lselect(lambda e: e.isKindOf(type))
+
     lifeline = diagram.create(
         LifelineItem, subject=element_factory.create(UML.Lifeline)
     )

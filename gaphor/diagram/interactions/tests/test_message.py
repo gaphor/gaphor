@@ -7,7 +7,7 @@ from gaphor.diagram.interactions.message import MessageItem
 
 
 def test_message_persistence(diagram, element_factory, saver, loader):
-    message = diagram.create(MessageItem, subject=element_factory.create(UML.Message))
+    diagram.create(MessageItem, subject=element_factory.create(UML.Message))
 
     data = saver()
     loader(data)
