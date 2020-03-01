@@ -202,3 +202,35 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
     assert grand_child_exec_spec.subject is None
     assert elements_of_kind(UML.ExecutionSpecification) == []
     assert elements_of_kind(UML.ExecutionOccurrenceSpecification) == []
+
+
+def test_save_and_load(diagram, element_factory, saver, loader):
+    lifeline = diagram.create(
+        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    )
+    lifeline.lifetime.visible = True
+    exec_spec = diagram.create(ExecutionSpecificationItem)
+
+    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
+
+    diagram.canvas.update_now()
+
+    saved_data = saver()
+
+    loader(saved_data)
+
+    exec_specs = element_factory.lselect(
+        lambda e: e.isKindOf(UML.ExecutionSpecification)
+    )
+    loaded_exec_spec = exec_specs[0].presentation[0]
+
+    assert len(exec_specs) == 1
+    assert (
+        len(
+            element_factory.lselect(
+                lambda e: e.isKindOf(UML.ExecutionOccurrenceSpecification)
+            )
+        )
+        == 2
+    )
+    assert loaded_exec_spec.canvas.get_connection(loaded_exec_spec.handles()[0])

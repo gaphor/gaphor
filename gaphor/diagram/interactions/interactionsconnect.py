@@ -209,20 +209,21 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
             exec_spec = model.create(UML.BehaviorExecutionSpecification)
             self.line.subject = exec_spec
 
-        start_occurence: UML.ExecutionOccurrenceSpecification = model.create(
-            UML.ExecutionOccurrenceSpecification
-        )
-        start_occurence.covered = lifeline
-        start_occurence.execution = exec_spec
+            start_occurence: UML.ExecutionOccurrenceSpecification = model.create(
+                UML.ExecutionOccurrenceSpecification
+            )
+            start_occurence.covered = lifeline
+            start_occurence.execution = exec_spec
 
-        finish_occurence: UML.ExecutionOccurrenceSpecification = model.create(
-            UML.ExecutionOccurrenceSpecification
-        )
-        finish_occurence.covered = lifeline
-        finish_occurence.execution = exec_spec
+            finish_occurence: UML.ExecutionOccurrenceSpecification = model.create(
+                UML.ExecutionOccurrenceSpecification
+            )
+            finish_occurence.covered = lifeline
+            finish_occurence.execution = exec_spec
 
         canvas = self.canvas
-        reparent(canvas, self.line, self.element)
+        if canvas.get_parent(self.line) is not self.element:
+            reparent(canvas, self.line, self.element)
 
         for cinfo in canvas.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).connect(cinfo.handle, cinfo.port)

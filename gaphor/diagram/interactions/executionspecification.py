@@ -19,15 +19,18 @@ TODO:ExecutionSpecification is abstract. Should use either
 ActionExecutionSpecification or BehaviorExecutionSpecification.
 What's the difference?
 
-Stick with BehaviorExecutionSpecification, since it has a [0..1] relation to behavior, whereas
-ActionExecutionSpecification has a [1] relation to action.
+Stick with BehaviorExecutionSpecification, since it has a [0..1] relation to
+behavior, whereas ActionExecutionSpecification has a [1] relation to action.
 """
+import ast
+
 from gaphas import Handle, Item
 from gaphas.connector import LinePort, Position
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver import WEAK
 
 from gaphor import UML
+from gaphor.diagram.presentation import postload_connect
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
@@ -78,7 +81,42 @@ class ExecutionSpecificationItem(UML.Presentation[UML.ExecutionSpecification], I
         return distance_rectangle_point(self.dimensions(), pos)
 
     def save(self, save_func):
+        def save_connection(name, handle):
+            assert self.canvas
+            c = self.canvas.get_connection(handle)
+            if c:
+                save_func(name, c.connected, reference=True)
+
+        points = [tuple(map(float, h.pos)) for h in self.handles()]
+
+        save_func("matrix", tuple(self.matrix))
+        save_func("points", points)
+        save_connection("head-connection", self.handles()[0])
         super().save(save_func)
 
     def load(self, name, value):
-        super().load(name, value)
+        if name == "matrix":
+            self.matrix = ast.literal_eval(value)
+        elif name == "points":
+            points = ast.literal_eval(value)
+            for h, p in zip(self.handles(), points):
+                h.pos = p
+        elif name == "head-connection":
+            self._load_head_connection = value
+        else:
+            super().load(name, value)
+
+    def postload(self):
+        assert self.canvas
+
+        # First update matrix and solve constraints (NE and SW handle are
+        # lazy and are resolved by the constraint solver rather than set
+        # directly.
+        self.canvas.update_matrix(self)
+        self.canvas.solver.solve()
+
+        if hasattr(self, "_load_head_connection"):
+            postload_connect(self, self.handles()[0], self._load_head_connection)
+            del self._load_head_connection
+
+        super().postload()
