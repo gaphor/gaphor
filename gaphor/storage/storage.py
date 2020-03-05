@@ -186,8 +186,6 @@ def load_elements_generator(elements, factory, gaphor_version):
 
     for d in factory.select(lambda e: isinstance(e, UML.Diagram)):
         canvas = d.canvas
-        for item in d.canvas.get_all_items():
-            canvas.update_matrix(item)
         # update_now() is implicitly called when lock is released
         canvas.block_updates = False
 

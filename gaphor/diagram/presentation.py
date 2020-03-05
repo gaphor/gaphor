@@ -68,14 +68,6 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     part of the `postload` step. This function finds a suitable spot on the
     `target` item to connect the handle to.
     """
-
-    # First update matrix and solve constraints (NE and SW handle are
-    # lazy and are resolved by the constraint solver rather than set
-    # directly.
-    item.canvas.update_matrix(item)
-    item.canvas.update_matrix(target)
-    item.canvas.solver.solve()
-
     connector = ConnectorAspect(item, handle)
     sink = _get_sink(item, handle, target)
     connector.connect(sink)

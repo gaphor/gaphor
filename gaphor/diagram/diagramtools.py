@@ -16,7 +16,7 @@ from gaphas.guide import GuidedItemInMotion
 from gaphas.tool import ConnectHandleTool, HoverTool, ItemTool
 from gaphas.tool import PlacementTool as _PlacementTool
 from gaphas.tool import RubberbandTool, Tool, ToolChain
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk
 
 from gaphor.core import Transaction, transactional
 from gaphor.diagram.connectors import Connector

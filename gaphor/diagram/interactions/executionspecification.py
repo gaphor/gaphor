@@ -107,14 +107,6 @@ class ExecutionSpecificationItem(UML.Presentation[UML.ExecutionSpecification], I
             super().load(name, value)
 
     def postload(self):
-        assert self.canvas
-
-        # First update matrix and solve constraints (NE and SW handle are
-        # lazy and are resolved by the constraint solver rather than set
-        # directly.
-        self.canvas.update_matrix(self)
-        self.canvas.solver.solve()
-
         if hasattr(self, "_load_head_connection"):
             postload_connect(self, self.handles()[0], self._load_head_connection)
             del self._load_head_connection

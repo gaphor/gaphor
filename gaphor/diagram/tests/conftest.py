@@ -1,1 +1,1 @@
-from gaphor.diagram.tests.fixtures import diagram, element_factory
+from gaphor.diagram.tests.fixtures import diagram, element_factory, loader
