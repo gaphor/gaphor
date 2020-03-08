@@ -29954,6 +29954,11 @@ some elements to have a stereotype</val>
 </presentation>
 </Association>
 <Property id="DCE:61E56BCA-3B15-11D9-83CE-A0BAF22E8A12">
+<appliedStereotype>
+<reflist>
+<ref refid="8678ec7a-611a-11ea-b792-718e3bcfaa5c"/>
+</reflist>
+</appliedStereotype>
 <association>
 <ref refid="DCE:61E0B340-3B15-11D9-83CE-A0BAF22E8A12"/>
 </association>
@@ -29977,11 +29982,6 @@ some elements to have a stereotype</val>
 </upperValue>
 </Property>
 <Property id="DCE:61F1EEA6-3B15-11D9-83CE-A0BAF22E8A12">
-<appliedStereotype>
-<reflist>
-<ref refid="176e1248-fa90-11de-bd51-00224128e79d"/>
-</reflist>
-</appliedStereotype>
 <association>
 <ref refid="DCE:61E0B340-3B15-11D9-83CE-A0BAF22E8A12"/>
 </association>
@@ -41201,6 +41201,7 @@ swimlanes</val>
 <ref refid="177dfffa-fa90-11de-bd51-00224128e79d"/>
 <ref refid="177fd8d4-fa90-11de-bd51-00224128e79d"/>
 <ref refid="0e711764-40fb-11e0-ad29-0019d2b28af0"/>
+<ref refid="8a58e462-611a-11ea-b792-718e3bcfaa5c"/>
 </reflist>
 </slot>
 <typeValue>
@@ -45732,18 +45733,6 @@ swimlanes</val>
 <val>ownedElement</val>
 </value>
 </Slot>
-<InstanceSpecification id="176e1248-fa90-11de-bd51-00224128e79d">
-<classifier>
-<reflist>
-<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
-</reflist>
-</classifier>
-<extended>
-<reflist>
-<ref refid="DCE:61F1EEA6-3B15-11D9-83CE-A0BAF22E8A12"/>
-</reflist>
-</extended>
-</InstanceSpecification>
 <InstanceSpecification id="176e4e02-fa90-11de-bd51-00224128e79d">
 <classifier>
 <reflist>
@@ -52761,4 +52750,32 @@ to make it fit more to what we need in Gaphor.</val>
 </reflist>
 </presentation>
 </Comment>
+<InstanceSpecification id="8678ec7a-611a-11ea-b792-718e3bcfaa5c">
+<classifier>
+<reflist>
+<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="DCE:61E56BCA-3B15-11D9-83CE-A0BAF22E8A12"/>
+</reflist>
+</extended>
+<slot>
+<reflist>
+<ref refid="8a58e462-611a-11ea-b792-718e3bcfaa5c"/>
+</reflist>
+</slot>
+</InstanceSpecification>
+<Slot id="8a58e462-611a-11ea-b792-718e3bcfaa5c">
+<definingFeature>
+<ref refid="16fec320-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="8678ec7a-611a-11ea-b792-718e3bcfaa5c"/>
+</owningInstance>
+<value>
+<val>true</val>
+</value>
+</Slot>
 </gaphor>

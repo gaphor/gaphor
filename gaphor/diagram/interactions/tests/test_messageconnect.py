@@ -158,10 +158,10 @@ def test_disconnection(diagram):
     assert msg.subject is None, f"{msg.subject}"
 
 
-def test_lifetime_connectivity_on_head(diagram):
+def test_lifetime_connectivity_on_head(diagram, element_factory):
     """Test lifeline's lifetime connectivity change on head connection
     """
-    ll = diagram.create(LifelineItem)
+    ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
     msg = diagram.create(MessageItem)
 
     # connect message to lifeline's head, lifeline's lifetime
@@ -177,10 +177,10 @@ def test_lifetime_connectivity_on_head(diagram):
     assert ll.lifetime.MIN_LENGTH == ll.lifetime.min_length
 
 
-def test_lifetime_connectivity_on_lifetime(diagram):
+def test_lifetime_connectivity_on_lifetime(diagram, element_factory):
     """Test lifeline's lifetime connectivity change on lifetime connection
     """
-    ll = diagram.create(LifelineItem)
+    ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
     msg = diagram.create(MessageItem)
 
     ll.lifetime.visible = True

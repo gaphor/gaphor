@@ -45,6 +45,34 @@ def get_lifeline(item, handle):
     return get_lifeline(connected_item, connected_item.handles()[0])  # type: ignore[attr-defined]
 
 
+def order_lifeline_covered_by(lifeline):
+    canvas = lifeline.canvas
+
+    def y_and_occurence(connected):
+        for conn in canvas.get_connections(connected=connected):
+            m = canvas.get_matrix_i2c(conn.item)
+            if isinstance(conn.item, ExecutionSpecificationItem):
+                yield (
+                    m.transform_point(*conn.handle.pos)[1],
+                    conn.item.subject.start,
+                )
+                yield (
+                    m.transform_point(*conn.item.bottom.pos)[1],
+                    conn.item.subject.finish,
+                )
+                yield from y_and_occurence(conn.item)
+            elif isinstance(conn.item, MessageItem):
+                yield (
+                    m.transform_point(*conn.handle.pos)[1],
+                    conn.item.subject.sendEvent
+                    if conn.handle is conn.item.head
+                    else conn.item.subject.receiveEvent,
+                )
+
+    keys = {o: y for y, o in y_and_occurence(lifeline)}
+    lifeline.subject.coveredBy.order(keys.get)
+
+
 def connect_lifelines(line, send, received):
     """
     Always create a new Message with two EventOccurrence instances.
@@ -63,6 +91,7 @@ def connect_lifelines(line, send, received):
             event = message.model.create(UML.MessageOccurrenceSpecification)
             event.sendMessage = message
             event.covered = send.subject
+            order_lifeline_covered_by(send)
 
     if received:
         message = get_subject()
@@ -70,6 +99,7 @@ def connect_lifelines(line, send, received):
             event = message.model.create(UML.MessageOccurrenceSpecification)
             event.receiveMessage = message
             event.covered = received.subject
+            order_lifeline_covered_by(received)
 
 
 def disconnect_lifelines(line, send, received):

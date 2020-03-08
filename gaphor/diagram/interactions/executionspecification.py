@@ -69,6 +69,14 @@ class ExecutionSpecificationItem(UML.Presentation[UML.ExecutionSpecification], I
 
         self.shape = Box(style={"fill": "white"}, draw=draw_border)
 
+    @property
+    def top(self):
+        return self._handles[0]
+
+    @property
+    def bottom(self):
+        return self._handles[1]
+
     def dimensions(self):
         d = self.bar_width
         pt, pb = (h.pos for h in self._handles)
