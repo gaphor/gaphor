@@ -26,6 +26,7 @@ TODO:
 """
 
 import abc
+import importlib
 from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
@@ -72,6 +73,11 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
 
     order = 0  # Order number, used for ordered display
     name = "Properties"
+
+    def __init__(self):
+        super().__init__()
+        self.builder = Gtk.Builder()
+        self.builder.set_translation_domain("gaphor")
 
     @abc.abstractmethod
     def construct(self):
@@ -392,6 +398,7 @@ class NamedElementPropertyPage(PropertyPageBase):
     NAME_LABEL = gettext("Name")
 
     def __init__(self, subject: UML.NamedElement):
+        super().__init__()
         assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
             subject
         )
@@ -399,36 +406,41 @@ class NamedElementPropertyPage(PropertyPageBase):
         self.watcher = subject.watcher() if subject else DummyEventWatcher()
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
+        with importlib.resources.path(
+            "gaphor.diagram", "propertypages.glade"
+        ) as glade_file:
+            self.builder.add_objects_from_file(
+                str(glade_file), ["named-element-editor"]
+            )
+
     def construct(self):
-        page = Gtk.VBox()
+        page = self.builder.get_object("named-element-editor")
 
         subject = self.subject
         if not subject:
             return page
 
-        hbox = create_hbox_label(self, page, self.NAME_LABEL)
-        entry = Gtk.Entry()
+        entry = self.builder.get_object("name-entry")
         entry.set_text(subject and subject.name or "")
-        hbox.pack_start(entry, True, True, 0)
         page.default = entry
-
-        # monitor subject.name attribute
-        changed_id = entry.connect("changed", self._on_name_change)
 
         def handler(event):
             if event.element is subject and event.new_value is not None:
-                entry.handler_block(changed_id)
                 entry.set_text(event.new_value)
-                entry.handler_unblock(changed_id)
 
         if self.watcher:
             self.watcher.watch("name", handler).subscribe_all()
-            entry.connect("destroy", self.watcher.unsubscribe_all)
 
+        self.builder.connect_signals(
+            {
+                "name-changed": (self._on_name_changed,),
+                "name-entry-destroyed": (self.watcher.unsubscribe_all,),
+            }
+        )
         return page
 
     @transactional
-    def _on_name_change(self, entry):
+    def _on_name_changed(self, entry):
         self.subject.name = entry.get_text()
 
 
@@ -447,46 +459,34 @@ class LineStylePage(PropertyPageBase):
     """Basic line style properties: color, orthogonal, etc."""
 
     order = 400
-    name = "Style"
 
     def __init__(self, item):
         super().__init__()
         self.item = item
         self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.horizontal_button: Gtk.Button
+        with importlib.resources.path(
+            "gaphor.diagram", "propertypages.glade"
+        ) as glade_file:
+            self.builder.add_objects_from_file(str(glade_file), ["line-editor"])
 
     def construct(self):
-        page = Gtk.VBox()
+        page = self.builder.get_object("line-editor")
 
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
+        rectilinear_button = self.builder.get_object("line-rectilinear")
+        rectilinear_button.set_active(self.item.orthogonal)
 
-        button = Gtk.CheckButton(label=gettext("Rectilinear"))
-        button.set_active(self.item.orthogonal)
-        button.connect("toggled", self._on_orthogonal_change)
-        hbox.pack_start(button, True, True, 0)
+        horizontal_button = self.builder.get_object("flip-orientation")
+        horizontal_button.set_active(self.item.horizontal)
+        horizontal_button.set_sensitive(self.item.orthogonal)
+        self.horizontal_button = horizontal_button
 
-        page.pack_start(hbox, False, True, 0)
-
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
-
-        button = Gtk.CheckButton(label=gettext("Flip orientation"))
-        button.set_active(self.item.horizontal)
-        button.connect("toggled", self._on_horizontal_change)
-        hbox.pack_start(button, True, True, 0)
-
-        button.set_sensitive(self.item.orthogonal)
-        self.horizontal_button = button
-
-        page.pack_start(hbox, False, True, 0)
-
+        self.builder.connect_signals(
+            {
+                "rectilinear-changed": (self._on_orthogonal_change,),
+                "orientation-changed": (self._on_horizontal_change,),
+            }
+        )
         return page
 
     @transactional

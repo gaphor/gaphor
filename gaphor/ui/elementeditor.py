@@ -189,11 +189,15 @@ class ElementEditor(UIComponent, ActionProvider):
                 page = adapter.construct()
                 if page is None:
                     continue
-                elif isinstance(page, Gtk.Container):
-                    page.set_border_width(6)
+                # elif isinstance(page, Gtk.Container):
+                #     page.set_border_width(6)
                 if first:
                     self.vbox.pack_start(page, False, True, 0)
                     first = False
+                elif isinstance(page, Gtk.Expander):
+                    page.set_expanded(self._expanded_pages.get(name, True))
+                    page.connect_after("activate", self.on_expand, name)
+                    self.vbox.pack_start(page, False, True, 0)
                 else:
                     expander = Gtk.Expander()
                     expander.set_use_markup(True)
