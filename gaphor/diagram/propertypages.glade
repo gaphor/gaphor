@@ -22,6 +22,7 @@
             <property name="receives_default">False</property>
             <property name="valign">start</property>
             <property name="draw_indicator">True</property>
+            <signal name="toggled" handler="show-attributes-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -133,6 +134,7 @@ Use -/= to move items up or down.
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
             <property name="draw_indicator">True</property>
+            <signal name="toggled" handler="orientation-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>

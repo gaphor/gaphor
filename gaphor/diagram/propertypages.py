@@ -477,6 +477,8 @@ class LineStylePage(PropertyPageBase):
 
     order = 400
 
+    name = "Style"
+
     def __init__(self, item):
         super().__init__()
         self.item = item
