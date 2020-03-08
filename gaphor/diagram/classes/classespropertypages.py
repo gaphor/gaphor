@@ -1,3 +1,4 @@
+import importlib
 import logging
 from inspect import isclass
 
@@ -20,6 +21,9 @@ from gaphor.diagram.propertypages import (
     create_hbox_label,
     create_tree_view,
     create_uml_combo,
+    on_bool_cell_edited,
+    on_keypress_event,
+    on_text_cell_edited,
 )
 
 log = logging.getLogger(__name__)
@@ -241,46 +245,27 @@ class AttributesPage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.watcher = item.subject and item.subject.watcher()
+        with importlib.resources.path(
+            "gaphor.diagram", "propertypages.glade"
+        ) as glade_file:
+            self.builder.add_objects_from_file(str(glade_file), ["attributes-editor"])
 
     def construct(self):
-        page = Gtk.VBox()
-
         if not self.item.subject:
-            return page
+            return
 
-        # Show attributes toggle
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=gettext("Show attributes"))
-        button.set_active(self.item.show_attributes)
-        button.connect("toggled", self._on_show_attributes_change)
-        hbox.pack_start(button, True, True, 0)
-        page.pack_start(hbox, False, True, 0)
+        page = self.builder.get_object("attributes-editor")
 
-        def create_model():
-            return ClassAttributes(self.item, (str, bool, object))
+        show_attributes = self.builder.get_object("show-attributes")
+        show_attributes.set_active(self.item.show_attributes)
 
-        self.model = create_model()
+        self.model = ClassAttributes(self.item, (str, bool, object))
 
-        tip = """\
-Add and edit class attributes according to UML syntax. Attribute syntax examples
-- attr
-- + attr: int
-- # /attr: int
-"""
-        tree_view = create_tree_view(
-            self.model, (gettext("Attributes"), gettext("S")), tip
-        )
-        page.pack_start(tree_view, True, True, 0)
+        tree_view: Gtk.TreeView = self.builder.get_object("attributes-list")
+        tree_view.set_model(self.model)
 
-        @AsyncIO(single=True)
         def handler(event):
-            # Single it's asynchronous, make sure all properties are still there
-            if not tree_view.props.has_focus and self.item and self.item.subject:
-                self.model = create_model()
-                tree_view.set_model(self.model)
+            print("should update model here")
 
         self.watcher.watch("ownedAttribute.name", handler).watch(
             "ownedAttribute.isDerived", handler
@@ -295,7 +280,16 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
         ).watch(
             "ownedAttribute.typeValue", handler
         ).subscribe_all()
-        tree_view.connect("destroy", self.watcher.unsubscribe_all)
+
+        self.builder.connect_signals(
+            {
+                "show-attributes-changed": (self._on_show_attributes_change,),
+                "attributes-name-edited": (on_text_cell_edited, self.model, 0),
+                "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
+                "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "attributes-keypress": (on_keypress_event,),
+            }
+        )
         return page
 
     @transactional

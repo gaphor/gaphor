@@ -260,6 +260,23 @@ def on_bool_cell_edited(renderer, path, model, col):
     model.set_value(iter, col, renderer.get_active())
 
 
+@transactional
+def on_keypress_event(tree, event):
+    k = Gdk.keyval_name(event.keyval).lower()
+    if k == "backspace" or k == "kp_delete":
+        model, iter = tree.get_selection().get_selected()
+        if iter:
+            model.remove(iter)
+    elif k == "equal" or k == "kp_add":
+        model, iter = tree.get_selection().get_selected()
+        model.swap(iter, model.iter_next(iter))
+        return True
+    elif k == "minus":
+        model, iter = tree.get_selection().get_selected()
+        model.swap(iter, model.iter_previous(iter))
+        return True
+
+
 class UMLComboModel(Gtk.ListStore):
     """UML combo box model.
 
@@ -353,7 +370,7 @@ def create_tree_view(model, names, tip="", ro_cols=None):
     tree_view.set_search_column(-1)
 
     n = model.get_n_columns() - 1
-    for name, i in zip(names, list(range(n))):
+    for name, i in zip(names, range(n)):
         col_type = model.get_column_type(i)
         if col_type == GObject.TYPE_STRING:
             renderer = Gtk.CellRendererText()

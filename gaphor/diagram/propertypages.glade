@@ -2,6 +2,103 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkExpander" id="attributes-editor">
+    <property name="visible">True</property>
+    <property name="can_focus">True</property>
+    <property name="expanded">True</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_top">6</property>
+        <property name="margin_bottom">12</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkCheckButton" id="show-attributes">
+            <property name="label" translatable="yes">Show Attributes</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="valign">start</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkTreeView" id="attributes-list">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="tooltip_text" translatable="yes">Add and edit class attributes according to UML syntax.
+Attribute syntax examples
+- attr
+- + attr: int
+- # /attr: int
+
+Press ENTER to edit item, BS/DEL to remove item.
+Use -/= to move items up or down.
+</property>
+            <property name="enable_grid_lines">horizontal</property>
+            <signal name="key-press-event" handler="attributes-keypress" swapped="no"/>
+            <child internal-child="selection">
+              <object class="GtkTreeSelection"/>
+            </child>
+            <child>
+              <object class="GtkTreeViewColumn">
+                <property name="resizable">True</property>
+                <property name="title" translatable="yes">Attributes</property>
+                <property name="expand">True</property>
+                <child>
+                  <object class="GtkCellRendererText">
+                    <property name="xpad">2</property>
+                    <property name="ypad">2</property>
+                    <property name="xalign">0</property>
+                    <property name="editable">True</property>
+                    <signal name="edited" handler="attributes-name-edited" swapped="no"/>
+                  </object>
+                  <attributes>
+                    <attribute name="text">0</attribute>
+                  </attributes>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkTreeViewColumn">
+                <property name="title" translatable="yes">S</property>
+                <child>
+                  <object class="GtkCellRendererToggle">
+                    <signal name="toggled" handler="attributes-static-edited" swapped="no"/>
+                  </object>
+                  <attributes>
+                    <attribute name="active">1</attribute>
+                  </attributes>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Attributes</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+    </child>
+  </object>
   <object class="GtkExpander" id="line-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
