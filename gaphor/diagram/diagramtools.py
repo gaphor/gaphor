@@ -225,7 +225,7 @@ class PlacementTool(_PlacementTool):
                 # mechanisms
 
                 # First make sure all matrices are updated:
-                view.canvas.update_matrix(self.new_item)
+                view.canvas.update_matrices([self.new_item])
                 view.update_matrix(self.new_item)
 
                 vpos = event.x, event.y
