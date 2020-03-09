@@ -38,6 +38,16 @@ from gaphor.core import gettext, transactional
 from gaphor.UML.element import DummyEventWatcher
 
 
+def builder(object_id):
+    builder = Gtk.Builder()
+    builder.set_translation_domain("gaphor")
+    with importlib.resources.path(
+        "gaphor.diagram", "propertypages.glade"
+    ) as glade_file:
+        builder.add_objects_from_file(str(glade_file), [object_id])
+    return builder
+
+
 class _PropertyPages:
     """
     Generic handler for property pages.
@@ -76,8 +86,6 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
 
     def __init__(self):
         super().__init__()
-        self.builder = Gtk.Builder()
-        self.builder.set_translation_domain("gaphor")
 
     @abc.abstractmethod
     def construct(self):
@@ -422,13 +430,7 @@ class NamedElementPropertyPage(PropertyPageBase):
         self.subject = subject
         self.watcher = subject.watcher() if subject else DummyEventWatcher()
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
-
-        with importlib.resources.path(
-            "gaphor.diagram", "propertypages.glade"
-        ) as glade_file:
-            self.builder.add_objects_from_file(
-                str(glade_file), ["named-element-editor"]
-            )
+        self.builder = builder("named-element-editor")
 
     def construct(self):
         page = self.builder.get_object("named-element-editor")
@@ -484,10 +486,7 @@ class LineStylePage(PropertyPageBase):
         self.item = item
         self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.horizontal_button: Gtk.Button
-        with importlib.resources.path(
-            "gaphor.diagram", "propertypages.glade"
-        ) as glade_file:
-            self.builder.add_objects_from_file(str(glade_file), ["line-editor"])
+        self.builder = builder("line-editor")
 
     def construct(self):
         page = self.builder.get_object("line-editor")

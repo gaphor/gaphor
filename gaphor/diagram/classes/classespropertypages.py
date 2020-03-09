@@ -18,6 +18,7 @@ from gaphor.diagram.propertypages import (
     NamedItemPropertyPage,
     PropertyPageBase,
     PropertyPages,
+    builder,
     create_hbox_label,
     create_tree_view,
     create_uml_combo,
@@ -245,10 +246,7 @@ class AttributesPage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.watcher = item.subject and item.subject.watcher()
-        with importlib.resources.path(
-            "gaphor.diagram", "propertypages.glade"
-        ) as glade_file:
-            self.builder.add_objects_from_file(str(glade_file), ["attributes-editor"])
+        self.builder = builder("attributes-editor")
 
     def construct(self):
         if not self.item.subject:
@@ -310,44 +308,24 @@ class OperationsPage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.watcher = item.subject and item.subject.watcher()
+        self.builder = builder("operations-editor")
 
     def construct(self):
-        page = Gtk.VBox()
-
         if not self.item.subject:
-            return page
+            return
 
-        # Show operations toggle
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=gettext("Show operations"))
-        button.set_active(self.item.show_operations)
-        button.connect("toggled", self._on_show_operations_change)
-        hbox.pack_start(button, True, True, 0)
-        page.pack_start(hbox, False, True, 0)
+        page = self.builder.get_object("operations-editor")
 
-        def create_model():
-            return ClassOperations(self.item, (str, bool, bool, object))
+        show_operations = self.builder.get_object("show-operations")
+        show_operations.set_active(self.item.show_operations)
 
-        self.model = create_model()
-        tip = """\
-Add and edit class operations according to UML syntax. Operation syntax examples
-- call()
-- + call(a: int, b: str)
-- # call(a: int: b: str): bool
-"""
-        tree_view = create_tree_view(
-            self.model, (gettext("Operation"), gettext("A"), gettext("S")), tip
-        )
-        page.pack_start(tree_view, True, True, 0)
+        self.model = ClassOperations(self.item, (str, bool, bool, object))
 
-        @AsyncIO(single=True)
+        tree_view: Gtk.TreeView = self.builder.get_object("operations-list")
+        tree_view.set_model(self.model)
+
         def handler(event):
-            if not tree_view.props.has_focus and self.item and self.item.subject:
-                self.model = create_model()
-                tree_view.set_model(self.model)
+            print("TODO: operations handler")
 
         self.watcher.watch("ownedOperation.name", handler).watch(
             "ownedOperation.isAbstract", handler
@@ -366,7 +344,17 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         ).watch(
             "ownedOperation.formalParameter.defaultValue", handler
         ).subscribe_all()
-        tree_view.connect("destroy", self.watcher.unsubscribe_all)
+
+        self.builder.connect_signals(
+            {
+                "show-operations-changed": (self._on_show_operations_change,),
+                "operations-name-edited": (on_text_cell_edited, self.model, 0),
+                "operations-abstract-edited": (on_bool_cell_edited, self.model, 1),
+                "operations-static-edited": (on_bool_cell_edited, self.model, 2),
+                "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "operations-keypress": (on_keypress_event,),
+            }
+        )
 
         return page
 
