@@ -529,6 +529,7 @@ class ValuePin(InputPin):
 
 class Action(ExecutableNode):
     effect: attribute[str]
+    interaction: relation_one[Interaction]
     output: relation_many[OutputPin]
     context_: relation_one[Classifier]
     input: relation_many[InputPin]
@@ -561,6 +562,7 @@ class ActivityGroup(Element):
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
     specification: attribute[str]
+    stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
     context: derivedunion[Namespace]
 
@@ -575,22 +577,17 @@ class Interaction(Behavior, InteractionFragment):
     fragment: relation_many[InteractionFragment]
     lifeline: relation_many[Lifeline]
     message: relation_many[Message]
-
-
-class ExecutionOccurence(InteractionFragment):
-    finish: relation_one[OccurrenceSpecification]
-    start: relation_one[OccurrenceSpecification]
-    behavior: relation_many[Behavior]
+    action: relation_many[Action]
 
 
 class StateInvariant(InteractionFragment):
     invariant: relation_one[Constraint]
+    covered: relation_one[Lifeline]  # type: ignore[assignment]
 
 
 class Lifeline(NamedElement):
     coveredBy: relation_many[InteractionFragment]
     interaction: relation_one[Interaction]
-    discriminator: attribute[str]
     parse: Callable[[Lifeline, str], None]
     render: Callable[[Lifeline], str]
 
@@ -599,10 +596,10 @@ class Message(NamedElement):
     messageKind: property
     messageSort: enumeration
     argument: attribute[str]
-    signature: relation_one[NamedElement]
     sendEvent: relation_one[MessageEnd]
     receiveEvent: relation_one[MessageEnd]
     interaction: relation_one[Interaction]
+    signature: relation_one[NamedElement]
 
 
 class MessageEnd(NamedElement):
@@ -611,15 +608,11 @@ class MessageEnd(NamedElement):
 
 
 class OccurrenceSpecification(InteractionFragment):
-    toAfter: relation_many[GeneralOrdering]
-    toBefore: relation_many[GeneralOrdering]
-    finishExec: relation_many[ExecutionOccurence]
-    startExec: relation_many[ExecutionOccurence]
+    covered: relation_one[Lifeline]  # type: ignore[assignment]
 
 
 class GeneralOrdering(NamedElement):
-    before: relation_one[OccurrenceSpecification]
-    after: relation_one[OccurrenceSpecification]
+    interactionFragment: relation_one[InteractionFragment]
 
 
 class Connector(Feature):
@@ -766,44 +759,30 @@ class Event(PackageableElement):
     pass
 
 
-class ExecutionEvent(Event):
-    pass
-
-
-class CreationEvent(Event):
-    pass
-
-
-class MessageEvent(Event):
-    pass
-
-
-class DestructionEvent(Event):
-    pass
-
-
-class SendOperationEvent(MessageEvent):
-    operation: relation_one[Operation]
-
-
-class SendSignalEvent(MessageEvent):
-    signal: relation_one[Signal]
-
-
-class ReceiveOperationEvent(MessageEvent):
-    operation: relation_one[Operation]
-
-
-class ReceiveSignalEvent(MessageEvent):
-    signal: relation_one[Signal]
-
-
 class Signal(Classifier):
     ownedAttribute: relation_many[Property]
 
 
 class Reception(BehavioralFeature):
     signal: relation_one[Signal]
+
+
+class ExecutionSpecification(InteractionFragment):
+    executionOccurrenceSpecification: relation_many[ExecutionOccurrenceSpecification]
+    start: relation_one[ExecutionOccurrenceSpecification]
+    finish: relation_one[ExecutionOccurrenceSpecification]
+
+
+class ExecutionOccurrenceSpecification(OccurrenceSpecification):
+    execution: relation_one[ExecutionSpecification]
+
+
+class ActionExecutionSpecification(ExecutionSpecification):
+    action: relation_one[Action]
+
+
+class BehaviorExecutionSpecification(ExecutionSpecification):
+    behavior: relation_one[Behavior]
 
 
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
@@ -1185,8 +1164,11 @@ InteractionFragment.enclosingInteraction = association(
 Interaction.fragment = association(
     "fragment", InteractionFragment, opposite="enclosingInteraction"
 )
+Constraint.stateInvariant = association(
+    "stateInvariant", StateInvariant, upper=1, opposite="invariant"
+)
 StateInvariant.invariant = association(
-    "invariant", Constraint, lower=1, upper=1, composite=True
+    "invariant", Constraint, lower=1, upper=1, composite=True, opposite="stateInvariant"
 )
 Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
 InteractionFragment.covered = association(
@@ -1198,11 +1180,8 @@ Lifeline.interaction = association(
 Interaction.lifeline = association(
     "lifeline", Lifeline, composite=True, opposite="interaction"
 )
-# 'Lifeline.discriminator' is a simple attribute
-Lifeline.discriminator = attribute("discriminator", str)
 # 'Message.argument' is a simple attribute
 Message.argument = attribute("argument", str)
-Message.signature = association("signature", NamedElement, upper=1)
 MessageEnd.sendMessage = association(
     "sendMessage", Message, upper=1, opposite="sendEvent"
 )
@@ -1221,34 +1200,6 @@ Message.interaction = association(
 Interaction.message = association(
     "message", Message, composite=True, opposite="interaction"
 )
-InteractionFragment.generalOrdering = association(
-    "generalOrdering", GeneralOrdering, composite=True
-)
-GeneralOrdering.before = association(
-    "before", OccurrenceSpecification, lower=1, upper=1, opposite="toAfter"
-)
-OccurrenceSpecification.toAfter = association(
-    "toAfter", GeneralOrdering, opposite="before"
-)
-GeneralOrdering.after = association(
-    "after", OccurrenceSpecification, lower=1, upper=1, opposite="toBefore"
-)
-OccurrenceSpecification.toBefore = association(
-    "toBefore", GeneralOrdering, opposite="after"
-)
-ExecutionOccurence.finish = association(
-    "finish", OccurrenceSpecification, lower=1, upper=1, opposite="finishExec"
-)
-OccurrenceSpecification.finishExec = association(
-    "finishExec", ExecutionOccurence, opposite="finish"
-)
-ExecutionOccurence.start = association(
-    "start", OccurrenceSpecification, lower=1, upper=1, opposite="startExec"
-)
-OccurrenceSpecification.startExec = association(
-    "startExec", ExecutionOccurence, opposite="start"
-)
-ExecutionOccurence.behavior = association("behavior", Behavior)
 StructuredClassifier.ownedConnector = association(
     "ownedConnector", Connector, composite=True
 )
@@ -1343,10 +1294,33 @@ Signal.ownedAttribute = association("ownedAttribute", Property, composite=True)
 Reception.signal = association("signal", Signal, upper=1)
 Class.ownedReception = association("ownedReception", Reception, composite=True)
 Interface.ownedReception = association("ownedReception", Reception, composite=True)
-SendOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
-SendSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
-ReceiveOperationEvent.operation = association("operation", Operation, lower=1, upper=1)
-ReceiveSignalEvent.signal = association("signal", Signal, lower=1, upper=1)
+Action.interaction = association("interaction", Interaction, upper=1, opposite="action")
+Interaction.action = association(
+    "action", Action, composite=True, opposite="interaction"
+)
+Message.signature = association("signature", NamedElement, upper=1)
+InteractionFragment.generalOrdering = association(
+    "generalOrdering", GeneralOrdering, composite=True, opposite="interactionFragment"
+)
+GeneralOrdering.interactionFragment = association(
+    "interactionFragment", InteractionFragment, upper=1, opposite="generalOrdering"
+)
+ExecutionSpecification.executionOccurrenceSpecification = association(
+    "executionOccurrenceSpecification",
+    ExecutionOccurrenceSpecification,
+    upper=2,
+    composite=True,
+    opposite="execution",
+)
+ExecutionOccurrenceSpecification.execution = association(
+    "execution",
+    ExecutionSpecification,
+    lower=1,
+    upper=1,
+    opposite="executionOccurrenceSpecification",
+)
+ActionExecutionSpecification.action = association("action", Action, lower=1, upper=1)
+BehaviorExecutionSpecification.behavior = association("behavior", Behavior, upper=1)
 # 96: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 # defined in uml2overrides.py
 
@@ -1463,6 +1437,7 @@ NamedElement.namespace = derivedunion(
     Parameter.ownerFormalParam,
     Property.useCase,
     Property.actor,
+    InteractionFragment.enclosingInteraction,
     Lifeline.interaction,
     Message.interaction,
     Region.stateMachine,
@@ -1503,7 +1478,7 @@ Namespace.ownedMember = derivedunion(
     BehavioredClassifier.ownedBehavior,
     UseCase.ownedAttribute,
     Actor.ownedAttribute,
-    StateInvariant.invariant,
+    Interaction.fragment,
     Interaction.lifeline,
     Interaction.message,
     StateMachine.region,
@@ -1664,7 +1639,10 @@ Element.owner = derivedunion(
     PackageImport.importingNamespace,
     PackageMerge.mergingPackage,
     NamedElement.namespace,
+    Constraint.stateInvariant,
     Pseudostate.state,
+    Action.interaction,
+    GeneralOrdering.interactionFragment,
 )
 Element.ownedElement = derivedunion(
     Element,
@@ -1687,8 +1665,7 @@ Element.ownedElement = derivedunion(
     Activity.edge,
     Activity.node,
     Action.output,
-    Interaction.fragment,
-    InteractionFragment.generalOrdering,
+    StateInvariant.invariant,
     Connector.end,
     State.entry,
     State.exit,
@@ -1697,6 +1674,8 @@ Element.ownedElement = derivedunion(
     State.statevariant,
     Transition.guard,
     DeploymentTarget.deployment,
+    Interaction.action,
+    InteractionFragment.generalOrdering,
 )
 ConnectorEnd.definingEnd = derivedunion(ConnectorEnd, "definingEnd", Property, 0, 1)
 # 164: override StructuredClassifier.part: property
@@ -1705,6 +1684,30 @@ StructuredClassifier.part = property(
     doc="""
     Properties owned by a classifier by composition.
 """,
+)
+
+# 169: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+ExecutionSpecification.start = derived(
+    ExecutionSpecification,
+    "start",
+    OccurrenceSpecification,
+    0,
+    1,
+    lambda obj: [
+        eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 0
+    ],
+)
+
+# 173: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+ExecutionSpecification.finish = derived(
+    ExecutionSpecification,
+    "finish",
+    OccurrenceSpecification,
+    0,
+    1,
+    lambda obj: [
+        eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 1
+    ],
 )
 
 # 128: override Class.superClass: derived[Classifier]
@@ -1773,6 +1776,12 @@ Transition.redefinedTransition = redefine(
     Transition,
     "*",
     RedefinableElement.redefinedElement,
+)
+StateInvariant.covered = redefine(
+    StateInvariant, "covered", Lifeline, 1, InteractionFragment.covered
+)
+OccurrenceSpecification.covered = redefine(
+    OccurrenceSpecification, "covered", Lifeline, 1, InteractionFragment.covered
 )
 # 149: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in uml2overrides.py

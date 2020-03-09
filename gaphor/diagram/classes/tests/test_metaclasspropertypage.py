@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.diagram.profiles.metaclasspropertypage import MetaclassNamePropertyPage
+from gaphor.diagram.classes.classespropertypages import ClassPropertyPage
 from gaphor.tests import TestCase
 
 
@@ -10,7 +10,7 @@ class MetaclassPropertyPageTest(TestCase):
         class_ = self.element_factory.create(UML.Class)
 
         class_.name = "Class"
-        editor = MetaclassNamePropertyPage(class_)
+        editor = ClassPropertyPage(class_)
         page = editor.construct()
         assert page
         entry = page.get_children()[0].get_children()[1]
@@ -28,7 +28,7 @@ class MetaclassPropertyPageTest(TestCase):
         stereotype.name = "NewStereotype"
         UML.model.create_extension(metaclass, stereotype)
 
-        editor = MetaclassNamePropertyPage(metaclass)
+        editor = ClassPropertyPage(metaclass)
         page = editor.construct()
         assert page
         combo = page.get_children()[0].get_children()[1]

@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 import ast
 from typing import Optional
 
 import gaphas
+from gaphas.aspect import ConnectionSink
+from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.diagram.text import TextAlign, text_point_at_line
@@ -41,6 +45,32 @@ def from_package_str(item):
     return (
         f"(from {namespace.name})" if namespace is not canvas.diagram.namespace else ""
     )
+
+
+def _get_sink(item, handle, target):
+    assert item.canvas
+
+    hpos = item.canvas.get_matrix_i2i(item, target).transform_point(*handle.pos)
+    port = None
+    dist = 10e6
+    for p in target.ports():
+        pos, d = p.glue(hpos)
+        if not port or d < dist:
+            port = p
+            dist = d
+
+    return ConnectionSink(target, port)
+
+
+def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
+    """
+    Helper function: when loading a model, handles should be connected as
+    part of the `postload` step. This function finds a suitable spot on the
+    `target` item to connect the handle to.
+    """
+    connector = ConnectorAspect(item, handle)
+    sink = _get_sink(item, handle, target)
+    connector.connect(sink)
 
 
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
@@ -247,25 +277,6 @@ class LinePresentation(Presentation[S], gaphas.Line):
     def postload(self):
         assert self.canvas
 
-        def get_sink(handle, item):
-            assert self.canvas
-
-            hpos = self.canvas.get_matrix_i2i(self, item).transform_point(*handle.pos)
-            port = None
-            dist = 10e6
-            for p in item.ports():
-                pos, d = p.glue(hpos)
-                if not port or d < dist:
-                    port = p
-                    dist = d
-
-            return gaphas.aspect.ConnectionSink(item, port)
-
-        def postload_connect(handle, item):
-            connector = gaphas.aspect.Connector(self, handle)
-            sink = get_sink(handle, item)
-            connector.connect(sink)
-
         if hasattr(self, "_load_orthogonal"):
             # Ensure there are enough handles
             if self._load_orthogonal and len(self._handles) < 3:
@@ -274,18 +285,12 @@ class LinePresentation(Presentation[S], gaphas.Line):
             self.orthogonal = self._load_orthogonal
             del self._load_orthogonal
 
-        # First update matrix and solve constraints (NE and SW handle are
-        # lazy and are resolved by the constraint solver rather than set
-        # directly.
-        self.canvas.update_matrix(self)
-        self.canvas.solver.solve()
-
         if hasattr(self, "_load_head_connection"):
-            postload_connect(self.head, self._load_head_connection)
+            postload_connect(self, self.head, self._load_head_connection)
             del self._load_head_connection
 
         if hasattr(self, "_load_tail_connection"):
-            postload_connect(self.tail, self._load_tail_connection)
+            postload_connect(self, self.tail, self._load_tail_connection)
             del self._load_tail_connection
 
         super().postload()

@@ -111,7 +111,7 @@ relation = Union[relation_one, relation_many]
 T = TypeVar("T")
 
 Lower = Union[Literal[0], Literal[1], Literal[2]]
-Upper = Union[Literal[1], Literal["*"]]
+Upper = Union[Literal[1], Literal[2], Literal["*"]]
 
 
 class umlproperty:
@@ -381,7 +381,9 @@ class association(umlproperty):
 
     def _set_one(self, obj, value, from_opposite, do_notify) -> None:
         if not (isinstance(value, self.type) or (value is None)):
-            raise AttributeError(f"Value should be of type {self.type.__name__}")
+            raise AttributeError(
+                f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
+            )
 
         old = self._get(obj)
 
@@ -616,7 +618,7 @@ class derived(umlproperty, Generic[T]):
         pass
 
     def __str__(self):
-        return f"<derived {self.name}: {str(list(map(str, self.subsets)))[1:-1]}>"
+        return f"<derived {self.name}: {self.type} {str(list(map(str, self.subsets)))[1:-1]}>"
 
     def _update(self, obj):
         """
@@ -841,7 +843,7 @@ class redefine(umlproperty):
         self.name = name
         self._name = "_" + name
         self.type = type
-        self.original = original
+        self.original: Union[association, derived] = original
         self.upper = original.upper
         self.lower = original.lower
 
@@ -872,32 +874,20 @@ class redefine(umlproperty):
     def __str__(self) -> str:
         return f"<redefine {self.name}[{self.lower}..{self.upper}]: {self.type.__name__} = {str(self.original)}>"
 
-    def __get__(self, obj, class_=None):
-        # No longer needed
-        if not obj:
-            return self
-        return self.original.__get__(obj, class_)
-
-    def __set__(self, obj, value: T) -> None:
-        # No longer needed
-        if not isinstance(value, self.type):
-            raise AttributeError(f"Value should be of type {self.type.__name__}")
-        self.original.__set__(obj, value)
-
-    def __delete__(self, obj, value=None):
-        # No longer needed
-        self.original.__delete__(obj, value)
-
     def _get(self, obj):
         return self.original._get(obj)
 
-    def _set(self, obj, value, from_opposite=False):
+    def _set(self, obj, value, from_opposite=False, do_notify=True):
+        if not (isinstance(value, self.type) or (self.upper == 1 and value is None)):
+            raise AttributeError(
+                f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
+            )
         assert isinstance(self.original, association)
-        return self.original._set(obj, value, from_opposite)
+        return self.original._set(obj, value, from_opposite, do_notify)
 
-    def _del(self, obj, value, from_opposite=False):
+    def _del(self, obj, value, from_opposite=False, do_notify=True):
         assert isinstance(self.original, association)
-        return self.original._del(obj, value, from_opposite)
+        return self.original._del(obj, value, from_opposite, do_notify)
 
     def propagate(self, event):
         if event.property is self.original and isinstance(

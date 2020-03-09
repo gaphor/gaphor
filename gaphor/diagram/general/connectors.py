@@ -3,9 +3,10 @@ Connect comments.
 """
 
 import logging
+from typing import Union
 
 from gaphor import UML
-from gaphor.diagram.connectors import AbstractConnect, IConnect
+from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
@@ -13,11 +14,12 @@ from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 logger = logging.getLogger(__name__)
 
 
-@IConnect.register(CommentItem, CommentLineItem)
-@IConnect.register(ElementPresentation, CommentLineItem)
-class CommentLineElementConnect(AbstractConnect):
+@Connector.register(CommentItem, CommentLineItem)
+@Connector.register(ElementPresentation, CommentLineItem)
+class CommentLineElementConnect(BaseConnector):
     """Connect a comment line to any element item."""
 
+    element: Union[CommentItem, ElementPresentation]
     line: CommentLineItem
 
     def allow(self, handle, port):
@@ -88,6 +90,7 @@ class CommentLineElementConnect(AbstractConnect):
                 if hct.subject and isinstance(oct.subject, UML.Comment):
                     del oct.subject.annotatedElement[hct.subject]
                 elif hct.subject and oct.subject:
+                    assert isinstance(hct.subject, UML.Comment)
                     del hct.subject.annotatedElement[oct.subject]
             except ValueError:
                 logger.debug(
@@ -97,9 +100,12 @@ class CommentLineElementConnect(AbstractConnect):
         super().disconnect(handle)
 
 
-@IConnect.register(LinePresentation, CommentLineItem)
-class CommentLineLineConnect(AbstractConnect):
+@Connector.register(LinePresentation, CommentLineItem)
+class CommentLineLineConnect(BaseConnector):
     """Connect a comment line to any diagram line."""
+
+    element: LinePresentation
+    line: CommentLineItem
 
     def allow(self, handle, port):
         """
@@ -156,12 +162,15 @@ class CommentLineLineConnect(AbstractConnect):
                 and c2.subject in c1.subject.annotatedElement
             ):
                 del c1.subject.annotatedElement[c2.subject]
-            elif c2.subject and c1.subject in c2.subject.annotatedElement:
+            elif (
+                isinstance(c2.subject, UML.Comment)
+                and c1.subject in c2.subject.annotatedElement
+            ):
                 del c2.subject.annotatedElement[c1.subject]
         super().disconnect(handle)
 
 
-@IConnect.register(CommentLineItem, LinePresentation)
+@Connector.register(CommentLineItem, LinePresentation)
 class InverseCommentLineLineConnect(CommentLineLineConnect):
     """
     In case a line is disconnected that contains a comment-line,

@@ -285,7 +285,7 @@ def test_realization(factory):
 # Tests for interaction messages.
 
 
-def test_create(factory):
+def test_interaction_messages_cloning(factory):
     """Test message creation."""
     m = factory.create(UML.Message)
     send = factory.create(UML.MessageOccurrenceSpecification)

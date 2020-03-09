@@ -169,7 +169,8 @@ class collection(Generic[T]):
 
             self.object.handle(AssociationUpdated(self.object, self.property))
             return True
-        except IndexError:
+        except (IndexError, ValueError):
             return False
-        except ValueError:
-            return False
+
+    def order(self, key):
+        self.items.sort(key=key)

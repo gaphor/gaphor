@@ -1,9 +1,5 @@
-import pytest
-
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
-from gaphor.services.eventmanager import EventManager
-from gaphor.UML.elementfactory import ElementFactory
 
 
 class DummyVisualComponent:
@@ -22,16 +18,6 @@ class StubElement(ElementPresentation):
 class StubLine(LinePresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model, shape_middle=DummyVisualComponent())
-
-
-@pytest.fixture
-def element_factory():
-    return ElementFactory(EventManager())
-
-
-@pytest.fixture
-def diagram(element_factory):
-    return element_factory.create(UML.Diagram)
 
 
 def test_creation(element_factory):

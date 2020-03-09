@@ -373,6 +373,16 @@ TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 ),
             ),
             ToolDef(
+                "toolbox-execution-specification",
+                gettext("Execution Specification"),
+                "gaphor-execution-specification-symbolic",
+                None,
+                item_factory=PlacementTool.new_item_factory(
+                    diagram.interactions.ExecutionSpecificationItem
+                ),
+                handle_index=0,
+            ),
+            ToolDef(
                 "toolbox-interaction",
                 gettext("Interaction"),
                 "gaphor-interaction-symbolic",

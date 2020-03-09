@@ -9,19 +9,21 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 
 import logging
 
-from gaphas.aspect import Connector, InMotion, ItemConnector
+from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.aspect import InMotion as InMotionAspect
+from gaphas.aspect import ItemConnector
 from gaphas.guide import GuidedItemInMotion
 from gaphas.tool import ConnectHandleTool, HoverTool, ItemTool
 from gaphas.tool import PlacementTool as _PlacementTool
 from gaphas.tool import RubberbandTool, Tool, ToolChain
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk
 
 from gaphor.core import Transaction, transactional
-from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.connectors import Connector
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
-from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.diagram.presentation import ElementPresentation, Presentation
 
 # cursor to indicate grouping
 IN_CURSOR_TYPE = Gdk.CursorType.DIAMOND_CROSS
@@ -32,10 +34,10 @@ OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
 log = logging.getLogger(__name__)
 
 
-@Connector.register(LinePresentation)
+@ConnectorAspect.register(Presentation)
 class DiagramItemConnector(ItemConnector):
     """
-    Handle Tool (acts on item handles) that uses the IConnect protocol
+    Handle Tool (acts on item handles) that uses the Connector protocol
     to connect items to one-another.
 
     It also adds handles to lines when a line is grabbed on the middle of
@@ -43,7 +45,7 @@ class DiagramItemConnector(ItemConnector):
     """
 
     def allow(self, sink):
-        adapter = IConnect(sink.item, self.item)
+        adapter = Connector(sink.item, self.item)
         return adapter and adapter.allow(self.handle, sink.port)
 
     @transactional
@@ -65,7 +67,7 @@ class DiagramItemConnector(ItemConnector):
             elif cinfo:
                 # first disconnect but disable disconnection handle as
                 # reconnection is going to happen
-                adapter = IConnect(sink.item, item)
+                adapter = Connector(sink.item, item)
                 try:
                     connect = adapter.reconnect
                 except AttributeError:
@@ -81,7 +83,7 @@ class DiagramItemConnector(ItemConnector):
                 connect(handle, sink.port)
             else:
                 # new connection
-                adapter = IConnect(sink.item, item)
+                adapter = Connector(sink.item, item)
                 self.connect_handle(sink, callback=callback)
                 adapter.connect(handle, sink.port)
         except Exception:
@@ -124,7 +126,7 @@ class DisconnectHandle:
         else:
             log.debug(f"Disconnecting {item}.{handle}")
             if cinfo:
-                adapter = IConnect(cinfo.connected, item)
+                adapter = Connector(cinfo.connected, item)
                 adapter.disconnect(handle)
 
 
@@ -223,7 +225,7 @@ class PlacementTool(_PlacementTool):
                 # mechanisms
 
                 # First make sure all matrices are updated:
-                view.canvas.update_matrix(self.new_item)
+                view.canvas.update_matrices([self.new_item])
                 view.update_matrix(self.new_item)
 
                 vpos = event.x, event.y
@@ -290,7 +292,7 @@ class PlacementTool(_PlacementTool):
         return item
 
 
-@InMotion.register(ElementPresentation)
+@InMotionAspect.register(Presentation)
 class DropZoneInMotion(GuidedItemInMotion):
     def move(self, pos):
         """

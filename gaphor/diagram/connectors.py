@@ -9,9 +9,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, List, Optional, Type, TypeVar, Union
 
-from gaphas.canvas import Connection
+from gaphas.canvas import Canvas, Connection
 from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
+from typing_extensions import Protocol
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
@@ -20,52 +21,21 @@ from gaphor.UML.properties import association, redefine, relation
 T = TypeVar("T", bound=UML.Element)
 
 
-class ConnectBase:
-    """
-    This interface is used by the HandleTool to allow connecting
-    lines to element items. For each specific case (Element, Line) an
-    adapter could be written.
-    """
-
-    def __init__(self, item: ElementPresentation, line_item: LinePresentation):
-        self.item = item
-        self.line_item = line_item
+class ConnectorProtocol(Protocol):
+    def __init__(self, element: object, line: object,) -> None:
+        ...
 
     def allow(self, handle: Handle, port: Port) -> bool:
-        """
-        Determine if a connection is allowed.
-
-        Do some extra checks to see if the items actually can be connected.
-        """
-        return False
+        ...
 
     def connect(self, handle: Handle, port: Port) -> bool:
-        """
-        Connect a line's handle to element.
-
-        Note that at the moment of the connect, handle.connected_to may point
-        to some other item. The implementor should do the disconnect of
-        the other element themselves.
-        """
-        raise NotImplementedError(f"No connector for {self.item} and {self.line_item}")
+        ...
 
     def disconnect(self, handle: Handle) -> None:
-        """
-        The true disconnect. Disconnect a handle.connected_to from an
-        element. This requires that the relationship is also removed at
-        model level.
-        """
-        raise NotImplementedError(f"No connector for {self.item} and {self.line_item}")
+        ...
 
 
-# Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
-# This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
-IConnect: FunctionDispatcher[Type[ConnectBase]] = multidispatch(object, object)(
-    ConnectBase
-)
-
-
-class AbstractConnect(ConnectBase):
+class BaseConnector:
     """
     Connection adapter for Gaphor diagram items.
 
@@ -91,39 +61,27 @@ class AbstractConnect(ConnectBase):
 
     def __init__(
         self,
-        element: ElementPresentation[UML.Element],
-        line: LinePresentation[UML.Element],
+        element: UML.Presentation[UML.Element],
+        line: UML.Presentation[UML.Element],
     ) -> None:
-        assert element.canvas == line.canvas
+        assert element.canvas is line.canvas
         self.element = element
         self.line = line
-        self.canvas = element.canvas
+        self.canvas: Canvas = element.canvas
 
     def get_connection(self, handle: Handle) -> Optional[Connection]:
         """
         Get connection information
         """
-        assert self.canvas
         return self.canvas.get_connection(handle)
 
-    def get_connected(self, handle: Handle) -> Optional[UML.Presentation]:
+    def get_connected(self, handle: Handle) -> Optional[UML.Presentation[UML.Element]]:
         """
         Get item connected to a handle.
         """
-        assert self.canvas
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
-        return None
-
-    def get_connected_port(self, handle: Handle) -> Optional[Port]:
-        """
-        Get port of item connected to connecting item via specified handle.
-        """
-        assert self.canvas
-        cinfo = self.canvas.get_connection(handle)
-        if cinfo:
-            return cinfo.port
         return None
 
     def allow(self, handle: Handle, port: Port) -> bool:
@@ -152,7 +110,28 @@ class AbstractConnect(ConnectBase):
         """Disconnect UML model level connections."""
 
 
-class UnaryRelationshipConnect(AbstractConnect):
+class NoConnector:
+    def __init__(self, element, line,) -> None:
+        pass
+
+    def allow(self, handle: Handle, port: Port) -> bool:
+        return False
+
+    def connect(self, handle: Handle, port: Port) -> bool:
+        return False
+
+    def disconnect(self, handle: Handle) -> None:
+        pass
+
+
+# Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
+# This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
+Connector: FunctionDispatcher[Type[ConnectorProtocol]] = multidispatch(object, object)(
+    NoConnector
+)
+
+
+class UnaryRelationshipConnect(BaseConnector):
     """
     Base class for relationship connections, such as associations,
     dependencies and implementations.
@@ -163,6 +142,9 @@ class UnaryRelationshipConnect(AbstractConnect):
     find an existing relationship in the model that does not yet exist
     on the canvas.
     """
+
+    element: ElementPresentation[UML.Element]
+    line: LinePresentation[UML.Element]
 
     def relationship(
         self, required_type: Type[UML.Element], head: relation, tail: relation
@@ -270,8 +252,6 @@ class UnaryRelationshipConnect(AbstractConnect):
         Cause items connected to ``line`` to reconnect, allowing them to
         establish or destroy relationships at model level.
         """
-        assert self.canvas
-
         line = self.line
         canvas = self.canvas
         solver = canvas.solver
@@ -281,7 +261,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         for cinfo in connections or canvas.get_connections(connected=line):
             if line is cinfo.connected:
                 continue
-            adapter = IConnect(line, cinfo.connected)
+            adapter = Connector(line, cinfo.connected)
             assert adapter, "No element to connect {} and {}".format(
                 line, cinfo.connected
             )
@@ -295,8 +275,6 @@ class UnaryRelationshipConnect(AbstractConnect):
         Returns a list of (item, handle) pairs that were connected (this
         list can be used to connect items again with connect_connected_items()).
         """
-        assert self.canvas
-
         line = self.line
         canvas = self.canvas
         solver = canvas.solver
@@ -305,7 +283,7 @@ class UnaryRelationshipConnect(AbstractConnect):
         solver.solve()
         connections = list(canvas.get_connections(connected=line))
         for cinfo in connections:
-            adapter = IConnect(cinfo.item, cinfo.connected)
+            adapter = Connector(cinfo.item, cinfo.connected)
             adapter.disconnect(cinfo.handle)
         return connections
 

@@ -11,10 +11,10 @@ from gaphor.diagram.classes.classconnect import DependencyConnect, Implementatio
 from gaphor.diagram.classes.dependency import DependencyItem
 from gaphor.diagram.classes.implementation import ImplementationItem
 from gaphor.diagram.classes.interface import Folded, InterfaceItem
-from gaphor.diagram.connectors import IConnect
+from gaphor.diagram.connectors import Connector
 
 
-@IConnect.register(InterfaceItem, ImplementationItem)
+@Connector.register(InterfaceItem, ImplementationItem)
 class ImplementationInterfaceConnect(ImplementationConnect):
     """Connect interface item and a behaviored classifier using an
     implementation.
@@ -39,7 +39,7 @@ class ImplementationInterfaceConnect(ImplementationConnect):
             self.line.request_update()
 
 
-@IConnect.register(InterfaceItem, DependencyItem)
+@Connector.register(InterfaceItem, DependencyItem)
 class DependencyInterfaceConnect(DependencyConnect):
     """Connect interface item with dependency item."""
 
