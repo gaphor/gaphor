@@ -18,6 +18,7 @@ from gaphor.diagram.propertypages import (
     NamedItemPropertyPage,
     PropertyPageBase,
     PropertyPages,
+    UMLComboModel,
     builder,
     create_hbox_label,
     create_tree_view,
@@ -382,28 +383,29 @@ class DependencyPropertyPage(PropertyPageBase):
         self.item = item
         self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = self.item.watcher()
+        self.builder = builder("dependency-editor")
 
     def construct(self):
-        page = Gtk.VBox()
+        page = self.builder.get_object("dependency-editor")
 
-        hbox = create_hbox_label(self, page, gettext("Dependency type"))
+        dependency_combo = self.builder.get_object("dependency-combo")
+        model = UMLComboModel(self.DEPENDENCY_TYPES)
+        dependency_combo.set_model(model)
 
-        self.combo = create_uml_combo(
-            self.DEPENDENCY_TYPES, self._on_dependency_type_change
-        )
-        hbox.pack_start(self.combo, False, True, 0)
-
-        hbox = create_hbox_label(self, page, "")
-
-        button = Gtk.CheckButton(gettext("Automatic"))
-        button.set_active(self.item.auto_dependency)
-        button.connect("toggled", self._on_auto_dependency_change)
-        hbox.pack_start(button, True, True, 0)
-
-        self.watcher.watch("subject", self._on_subject_change).subscribe_all()
-        button.connect("destroy", self.watcher.unsubscribe_all)
+        automatic = self.builder.get_object("automatic")
+        automatic.set_active(self.item.auto_dependency)
 
         self.update()
+
+        self.watcher.watch("subject", self._on_subject_change).subscribe_all()
+
+        self.builder.connect_signals(
+            {
+                "dependency-type-changed": (self._on_dependency_type_change,),
+                "automatic-changed": (self._on_auto_dependency_change,),
+                "dependency-type-destroy": (self.watcher.unsubscribe_all,),
+            }
+        )
 
         return page
 
@@ -416,15 +418,16 @@ class DependencyPropertyPage(PropertyPageBase):
 
         Disallow dependency type when dependency is established.
         """
-        combo = self.combo
-        item = self.item
-        index = combo.get_model().get_index(item.dependency_type)
-        combo.props.sensitive = not item.auto_dependency
-        combo.set_active(index)
+        combo = self.builder.get_object("dependency-combo")
+        if combo.get_model():
+            item = self.item
+            index = combo.get_model().get_index(item.dependency_type)
+            combo.props.sensitive = not item.auto_dependency
+            combo.set_active(index)
 
     @transactional
     def _on_dependency_type_change(self, combo):
-        combo = self.combo
+        combo = self.builder.get_object("dependency-combo")
         cls = combo.get_model().get_value(combo.get_active())
         self.item.dependency_type = cls
         subject = self.item.subject

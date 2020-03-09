@@ -2,6 +2,19 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkLabel" id="00-instructions">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="label" translatable="yes">To create a fresh model: create a window, create the
+desired element, in the tree view pop upmenu, select
+Remove Parent.
+
+Padding between elements is 6px.
+
+Edit, from the popup menu, will allow you to add cell 
+renderers and such.</property>
+    <property name="xalign">0</property>
+  </object>
   <object class="GtkExpander" id="attributes-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
@@ -99,6 +112,61 @@ Use -/= to move items up or down.</property>
           <attribute name="weight" value="bold"/>
         </attributes>
       </object>
+    </child>
+  </object>
+  <object class="GtkBox" id="dependency-editor">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Dependency type</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkComboBox" id="dependency-combo">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <signal name="changed" handler="dependency-type-changed" swapped="no"/>
+        <child>
+          <object class="GtkCellRendererText"/>
+          <attributes>
+            <attribute name="text">0</attribute>
+          </attributes>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="automatic">
+        <property name="label" translatable="yes">Automatic</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="draw_indicator">True</property>
+        <signal name="toggled" handler="automatic-changed" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
     </child>
   </object>
   <object class="GtkExpander" id="line-editor">
