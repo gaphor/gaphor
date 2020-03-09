@@ -20,6 +20,7 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     UMLComboModel,
     builder,
+    create_hbox_label,
     on_bool_cell_edited,
     on_keypress_event,
     on_text_cell_edited,
@@ -177,7 +178,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
         page.default = entry
 
         # monitor subject.name attribute
-        changed_id = entry.connect("changed", self._on_name_change)
+        changed_id = entry.connect("changed", self._on_name_changed)
 
         def handler(event):
             if event.element is subject and event.new_value is not None:
