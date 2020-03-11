@@ -5,7 +5,6 @@ from gaphor.core import gettext, transactional
 from gaphor.diagram.interactions.interactionsconnect import get_lifeline
 from gaphor.diagram.interactions.message import MessageItem
 from gaphor.diagram.propertypages import (
-    EditableTreeModel,
     NamedItemPropertyPage,
     PropertyPages,
     create_hbox_label,

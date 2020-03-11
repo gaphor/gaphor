@@ -193,31 +193,31 @@ class ClassPropertyPage(NamedElementPropertyPage):
 
 
 @PropertyPages.register(InterfaceItem)
-class InterfacePropertyPage(NamedItemPropertyPage):
+class InterfacePropertyPage(PropertyPageBase):
     """Adapter which shows a property page for an interface view."""
 
+    name = "Interface"
+    order = 15
+
+    def __init__(self, item):
+        self.item = item
+        self.builder = builder("interface-editor")
+
     def construct(self):
-        page = super().construct()
+        page = self.builder.get_object("interface-editor")
         item = self.item
-
-        # Fold toggle
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
-
-        button = Gtk.CheckButton(gettext("Folded"))
-        button.set_active(item.folded != Folded.NONE)
-        button.connect("toggled", self._on_fold_change)
 
         connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
         disallowed = (ConnectorItem,)
         can_fold = not any(map(lambda i: isinstance(i, disallowed), connected_items))
 
-        button.set_sensitive(can_fold)
-        hbox.pack_start(button, True, True, 0)
-        page.pack_start(hbox, False, True, 0)
+        folded = self.builder.get_object("folded")
+        folded.set_active(item.folded != Folded.NONE)
+        folded.set_sensitive(can_fold)
+
+        self.builder.connect_signals(
+            {"folded-changed": (self._on_fold_change,),}
+        )
 
         return page
 
@@ -448,7 +448,7 @@ class AssociationPropertyPage(PropertyPageBase):
 
     name = "Association"
 
-    order = 100
+    order = 20
 
     def __init__(self, item):
         self.item = item
