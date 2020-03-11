@@ -357,60 +357,6 @@ def create_hbox_label(adapter, page, label):
     return hbox
 
 
-def create_tree_view(model, names, tip="", ro_cols=None):
-    """
-    Create a tree view for an editable tree model.
-
-    :Parameters:
-     model
-        Model, for which tree view is created.
-     names
-        Names of columns.
-     tip
-        User interface tool tip for tree view.
-     ro_cols
-        Collection of indices pointing read only columns.
-    """
-    if ro_cols is None:
-        ro_cols = set()
-
-    tree_view = Gtk.TreeView(model=model)
-    tree_view.set_search_column(-1)
-
-    n = model.get_n_columns() - 1
-    for name, i in zip(names, range(n)):
-        col_type = model.get_column_type(i)
-        if col_type == GObject.TYPE_STRING:
-            renderer = Gtk.CellRendererText()
-            renderer.set_property("editable", i not in ro_cols)
-            renderer.set_property("is-expanded", True)
-            renderer.connect("edited", on_text_cell_edited, model, i)
-            col = Gtk.TreeViewColumn(name, renderer, text=i)
-            col.set_expand(True)
-            tree_view.append_column(col)
-        elif col_type == GObject.TYPE_BOOLEAN:
-            renderer = Gtk.CellRendererToggle()
-            renderer.set_property("activatable", i not in ro_cols)
-            renderer.connect("toggled", on_bool_cell_edited, model, i)
-            col = Gtk.TreeViewColumn(name, renderer, active=i)
-            col.set_expand(False)
-            tree_view.append_column(col)
-
-    tree_view.connect("key_press_event", remove_on_keypress)
-    tree_view.connect("key_press_event", swap_on_keypress)
-
-    tip = (
-        tip
-        + """
-Press ENTER to edit item, BS/DEL to remove item.
-Use -/= to move items up or down.\
-    """
-    )
-    tree_view.set_tooltip_text(tip)
-
-    return tree_view
-
-
 @PropertyPages.register(UML.NamedElement)
 class NamedElementPropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.

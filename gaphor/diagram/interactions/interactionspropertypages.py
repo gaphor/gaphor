@@ -9,7 +9,6 @@ from gaphor.diagram.propertypages import (
     NamedItemPropertyPage,
     PropertyPages,
     create_hbox_label,
-    create_tree_view,
     create_uml_combo,
 )
 
