@@ -10,21 +10,244 @@ desired element, in the tree view pop upmenu, select
 Remove Parent.
 
 Padding between elements is 6px.
-
+Top margin is always 6 px.
 Edit, from the popup menu, will allow you to add cell 
 renderers and such.</property>
     <property name="xalign">0</property>
   </object>
+  <object class="GtkBox" id="association-editor">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="margin_top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <signal name="destroy" handler="association-editor-destroy" swapped="no"/>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkCheckButton" id="show-direction">
+            <property name="label" translatable="yes">Show direction</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="draw_indicator">True</property>
+            <signal name="toggled" handler="show-direction-changed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="invert-direction-changed" swapped="no"/>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">object-flip-horizontal-symbolic</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkExpander">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="margin_top">6</property>
+        <property name="expanded">True</property>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">6</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkEntry" id="head-name">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="secondary_icon_tooltip_text" translatable="yes">Enter attribute name and multiplicity, for example
+- name
++ name [1]
+- name [1..2]
+~ 1..2
+- [1..2]</property>
+                <signal name="changed" handler="head-name-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="head-navigation">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <items>
+                  <item id="0" translatable="yes">Unknown navigation</item>
+                  <item id="1" translatable="yes">Not navigable</item>
+                  <item id="2" translatable="yes">Navigable</item>
+                </items>
+                <signal name="changed" handler="head-navigation-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="head-aggregation">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <items>
+                  <item id="0" translatable="yes">No aggregation</item>
+                  <item id="1" translatable="yes">Shared</item>
+                  <item id="2" translatable="yes">Composite</item>
+                </items>
+                <signal name="changed" handler="head-aggregation-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child type="label">
+          <object class="GtkLabel" id="head-title">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Head:</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+            </attributes>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkExpander">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="margin_top">6</property>
+        <property name="expanded">True</property>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">6</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkEntry" id="tail-name">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="secondary_icon_tooltip_text" translatable="yes">Enter attribute name and multiplicity, for example
+- name
++ name [1]
+- name [1..2]
+~ 1..2
+- [1..2]</property>
+                <signal name="changed" handler="tail-name-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="tail-navigation">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <items>
+                  <item id="0" translatable="yes">Unknown navigation</item>
+                  <item id="1" translatable="yes">Not navigable</item>
+                  <item id="2" translatable="yes">Navigable</item>
+                </items>
+                <signal name="changed" handler="tail-navigation-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="tail-aggregation">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="tearoff_title" translatable="yes">title</property>
+                <items>
+                  <item id="0" translatable="yes">No aggregation</item>
+                  <item id="1" translatable="yes">Shared</item>
+                  <item id="2" translatable="yes">Composite</item>
+                </items>
+                <signal name="changed" handler="tail-aggregation-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child type="label">
+          <object class="GtkLabel" id="tail-title">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Tail:</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+            </attributes>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+  </object>
   <object class="GtkExpander" id="attributes-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
+    <property name="margin_top">6</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="margin_top">6</property>
-        <property name="margin_bottom">12</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
@@ -45,10 +268,16 @@ renderers and such.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkTreeView" id="attributes-list">
+          <object class="GtkFrame">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="tooltip_text" translatable="yes">Add and edit class attributes according to UML syntax.
+            <property name="can_focus">False</property>
+            <property name="label_xalign">0</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTreeView" id="attributes-list">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="tooltip_text" translatable="yes">Add and edit class attributes according to UML syntax.
 Attribute syntax examples
 - attr
 - + attr: int
@@ -56,43 +285,52 @@ Attribute syntax examples
 
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.</property>
-            <property name="enable_grid_lines">horizontal</property>
-            <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
-            <signal name="key-press-event" handler="attributes-keypress" swapped="no"/>
-            <child internal-child="selection">
-              <object class="GtkTreeSelection"/>
-            </child>
-            <child>
-              <object class="GtkTreeViewColumn">
-                <property name="resizable">True</property>
-                <property name="title" translatable="yes">Attributes</property>
-                <property name="expand">True</property>
+                <property name="headers_clickable">False</property>
+                <property name="reorderable">True</property>
+                <property name="enable_search">False</property>
+                <property name="show_expanders">False</property>
+                <property name="enable_grid_lines">horizontal</property>
+                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
+                <signal name="key-press-event" handler="attributes-keypress" swapped="no"/>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
                 <child>
-                  <object class="GtkCellRendererText">
-                    <property name="xpad">2</property>
-                    <property name="ypad">2</property>
-                    <property name="xalign">0</property>
-                    <property name="editable">True</property>
-                    <signal name="edited" handler="attributes-name-edited" swapped="no"/>
+                  <object class="GtkTreeViewColumn">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Attributes</property>
+                    <property name="expand">True</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <property name="xpad">2</property>
+                        <property name="ypad">2</property>
+                        <property name="xalign">0</property>
+                        <property name="editable">True</property>
+                        <signal name="edited" handler="attributes-name-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
                   </object>
-                  <attributes>
-                    <attribute name="text">0</attribute>
-                  </attributes>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">S</property>
+                    <child>
+                      <object class="GtkCellRendererToggle">
+                        <signal name="toggled" handler="attributes-static-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="active">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
                 </child>
               </object>
             </child>
-            <child>
-              <object class="GtkTreeViewColumn">
-                <property name="title" translatable="yes">S</property>
-                <child>
-                  <object class="GtkCellRendererToggle">
-                    <signal name="toggled" handler="attributes-static-edited" swapped="no"/>
-                  </object>
-                  <attributes>
-                    <attribute name="active">1</attribute>
-                  </attributes>
-                </child>
-              </object>
+            <child type="label_item">
+              <placeholder/>
             </child>
           </object>
           <packing>
@@ -117,6 +355,7 @@ Use -/= to move items up or down.</property>
   <object class="GtkBox" id="dependency-editor">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
@@ -172,6 +411,7 @@ Use -/= to move items up or down.</property>
   <object class="GtkExpander" id="line-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
+    <property name="margin_top">6</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
@@ -227,7 +467,7 @@ Use -/= to move items up or down.</property>
   <object class="GtkBox" id="named-element-editor">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="margin_bottom">12</property>
+    <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <property name="baseline_position">top</property>
@@ -264,13 +504,13 @@ Use -/= to move items up or down.</property>
   <object class="GtkExpander" id="operations-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
+    <property name="margin_top">6</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="margin_top">6</property>
-        <property name="margin_bottom">12</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
@@ -290,66 +530,81 @@ Use -/= to move items up or down.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkTreeView" id="operations-list">
+          <object class="GtkFrame">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="tooltip_text" translatable="yes">Add and edit class operations according to UML syntax. Operation syntax examples
+            <property name="can_focus">False</property>
+            <property name="label_xalign">0</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTreeView" id="operations-list">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="tooltip_text" translatable="yes">Add and edit class operations according to UML syntax. Operation syntax examples
 - call()
 - + call(a: int, b: str)
 - # call(a: int: b: str): bool
 
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.</property>
-            <property name="enable_grid_lines">horizontal</property>
-            <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
-            <signal name="key-press-event" handler="operations-keypress" swapped="no"/>
-            <child internal-child="selection">
-              <object class="GtkTreeSelection"/>
-            </child>
-            <child>
-              <object class="GtkTreeViewColumn">
-                <property name="resizable">True</property>
-                <property name="title" translatable="yes">Operations</property>
-                <property name="expand">True</property>
+                <property name="headers_clickable">False</property>
+                <property name="reorderable">True</property>
+                <property name="enable_search">False</property>
+                <property name="show_expanders">False</property>
+                <property name="enable_grid_lines">horizontal</property>
+                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
+                <signal name="key-press-event" handler="operations-keypress" swapped="no"/>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
                 <child>
-                  <object class="GtkCellRendererText">
-                    <property name="xpad">2</property>
-                    <property name="ypad">2</property>
-                    <property name="xalign">0</property>
-                    <property name="editable">True</property>
-                    <signal name="edited" handler="operations-name-edited" swapped="no"/>
+                  <object class="GtkTreeViewColumn">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Operations</property>
+                    <property name="expand">True</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <property name="xpad">2</property>
+                        <property name="ypad">2</property>
+                        <property name="xalign">0</property>
+                        <property name="editable">True</property>
+                        <signal name="edited" handler="operations-name-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
                   </object>
-                  <attributes>
-                    <attribute name="text">0</attribute>
-                  </attributes>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">A</property>
+                    <child>
+                      <object class="GtkCellRendererToggle">
+                        <signal name="toggled" handler="operations-abstract-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="active">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">S</property>
+                    <child>
+                      <object class="GtkCellRendererToggle">
+                        <signal name="toggled" handler="operations-static-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="active">2</attribute>
+                      </attributes>
+                    </child>
+                  </object>
                 </child>
               </object>
             </child>
-            <child>
-              <object class="GtkTreeViewColumn">
-                <property name="title" translatable="yes">A</property>
-                <child>
-                  <object class="GtkCellRendererToggle">
-                    <signal name="toggled" handler="operations-abstract-edited" swapped="no"/>
-                  </object>
-                  <attributes>
-                    <attribute name="active">1</attribute>
-                  </attributes>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkTreeViewColumn">
-                <property name="title" translatable="yes">S</property>
-                <child>
-                  <object class="GtkCellRendererToggle">
-                    <signal name="toggled" handler="operations-static-edited" swapped="no"/>
-                  </object>
-                  <attributes>
-                    <attribute name="active">2</attribute>
-                  </attributes>
-                </child>
-              </object>
+            <child type="label_item">
+              <placeholder/>
             </child>
           </object>
           <packing>

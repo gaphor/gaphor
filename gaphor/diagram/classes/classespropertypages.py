@@ -379,7 +379,6 @@ class DependencyPropertyPage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = self.item.watcher()
         self.builder = builder("dependency-editor")
 
@@ -440,57 +439,77 @@ class DependencyPropertyPage(PropertyPageBase):
 
 
 @PropertyPages.register(AssociationItem)
-class AssociationPropertyPage(NamedItemPropertyPage):
+class AssociationPropertyPage(PropertyPageBase):
     """
     """
 
-    def construct_end(self, title, end):
+    NAVIGABILITY = (None, False, True)
+    AGGREGATION = ("none", "shared", "composite")
 
-        if not end.subject:
-            return None
+    name = "Association"
 
-        frame = Gtk.Frame.new(f"{title} (: {end.subject.type.name})")
-        vbox = Gtk.VBox()
-        vbox.set_border_width(6)
-        vbox.set_spacing(6)
-        frame.add(vbox)
+    order = 100
 
-        self.create_pages(end, vbox)
+    def __init__(self, item):
+        self.item = item
+        self.subject = self.item.subject
+        self.watcher = self.item.watcher()
+        self.builder = builder("association-editor")
 
-        return frame
+    def construct_end(self, end_name, end):
+        title = self.builder.get_object(f"{end_name}-title")
+        title.set_text(f"{end_name.title()} (: {end.subject.type.name})")
+
+        name = self.builder.get_object(f"{end_name}-name")
+        name.set_text(
+            UML.format(
+                end.subject, visibility=True, is_derived=True, multiplicity=True,
+            )
+            or ""
+        )
+
+        navigation = self.builder.get_object(f"{end_name}-navigation")
+        navigation.set_active(self.NAVIGABILITY.index(end.subject.navigability))
+
+        aggregation = self.builder.get_object(f"{end_name}-aggregation")
+        aggregation.set_active(self.AGGREGATION.index(end.subject.aggregation))
 
     def construct(self):
-        page = super().construct()
-
         if not self.subject:
-            return page
+            return None
 
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
+        page = self.builder.get_object("association-editor")
 
-        button = Gtk.CheckButton(label=gettext("Show direction"))
-        button.set_active(self.item.show_direction)
-        button.connect("toggled", self._on_show_direction_change)
-        hbox.pack_start(button, True, True, 0)
+        head = self.item.head_end
+        tail = self.item.tail_end
 
-        button = Gtk.Button.new_from_icon_name(
-            "object-flip-horizontal-symbolic", Gtk.IconSize.BUTTON
+        show_direction = self.builder.get_object("show-direction")
+        show_direction.set_active(self.item.show_direction)
+
+        self.construct_end("head", head)
+        self.construct_end("tail", tail)
+
+        def handler(event):
+            print("TODO: association end handlers")
+
+        # Watch on association end:
+        # self.watcher.watch("name", handler).watch("aggregation", handler).watch(
+        #     "visibility", handler
+        # ).watch("lowerValue", handler).watch("upperValue", handler).subscribe_all()
+
+        self.builder.connect_signals(
+            {
+                "show-direction-changed": (self._on_show_direction_change,),
+                "invert-direction-changed": (self._on_invert_direction_change,),
+                "head-name-changed": (self._on_end_name_change, head),
+                "head-navigation-changed": (self._on_end_navigability_change, head),
+                "head-aggregation-changed": (self._on_end_aggregation_change, head),
+                "tail-name-changed": (self._on_end_name_change, tail),
+                "tail-navigation-changed": (self._on_end_navigability_change, tail),
+                "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
+                "association-editor-destroy": (self.watcher.unsubscribe_all,),
+            }
         )
-        button.connect("clicked", self._on_invert_direction_change)
-        hbox.pack_start(button, True, True, 0)
-
-        page.pack_start(hbox, False, True, 0)
-
-        box = self.construct_end(gettext("Head"), self.item.head_end)
-        if box:
-            page.pack_start(box, False, True, 0)
-
-        box = self.construct_end(gettext("Tail"), self.item.tail_end)
-        if box:
-            page.pack_start(box, False, True, 0)
 
         return page
 
@@ -502,140 +521,16 @@ class AssociationPropertyPage(NamedItemPropertyPage):
     def _on_invert_direction_change(self, button):
         self.item.invert_direction()
 
-    def get_adapters(self, item):
-        """
-        Return an ordered list of (order, name, adapter).
-        """
-        adaptermap = {}
-        try:
-            if item.subject:
-                for adapter in PropertyPages(item.subject):
-                    adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
-        except AttributeError:
-            pass
-        for adapter in PropertyPages(item):
-            adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
+    @transactional
+    def _on_end_name_change(self, entry, end):
+        UML.parse(end.subject, entry.get_text())
 
-        adapters = sorted(adaptermap.values())
-        return adapters
-
-    def create_pages(self, item, vbox):
-        """
-        Load all tabs that can operate on the given item.
-
-        The first item will not contain a title.
-        """
-        adapters = self.get_adapters(item)
-
-        first = True
-        for _, name, adapter in adapters:
-            try:
-                page = adapter.construct()
-                if page is None:
-                    continue
-                if first:
-                    vbox.pack_start(page, False, True, 0)
-                    first = False
-                else:
-                    expander = Gtk.Expander()
-                    expander.set_use_markup(True)
-                    expander.set_label(f"<b>{name}</b>")
-                    expander.add(page)
-                    expander.show_all()
-                    vbox.pack_start(expander, False, True, 0)
-            except Exception:
-                log.error(
-                    "Could not construct property page for " + name, exc_info=True
-                )
-
-
-@PropertyPages.register(UML.Property)
-class AssociationEndPropertyPage(PropertyPageBase):
-    """Property page for association end properties."""
-
-    order = 0
-
-    NAVIGABILITY = [None, False, True]
-
-    def __init__(self, subject):
-        self.subject = subject
-        self.watcher = subject and subject.watcher()
-
-    def construct(self):
-        vbox = Gtk.VBox()
-        entry = Gtk.Entry()
-        # entry.set_text(UML.format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
-
-        # monitor subject attribute (all, cause it contains many children)
-        changed_id = entry.connect("changed", self._on_end_name_change)
-
-        def handler(event):
-            if not entry.props.has_focus:
-                entry.handler_block(changed_id)
-                entry.set_text(
-                    UML.format(
-                        self.subject,
-                        visibility=True,
-                        is_derived=True,
-                        multiplicity=True,
-                    )
-                    or ""
-                )
-                # entry.set_text(UML.format(self.subject, multiplicity=True) or '')
-                entry.handler_unblock(changed_id)
-
-        handler(None)
-
-        self.watcher.watch("name", handler).watch("aggregation", handler).watch(
-            "visibility", handler
-        ).watch("lowerValue", handler).watch("upperValue", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
-
-        vbox.pack_start(entry, True, True, 0)
-
-        entry.set_tooltip_text(
-            """\
-Enter attribute name and multiplicity, for example
-- name
-+ name [1]
-- name [1..2]
-~ 1..2
-- [1..2]\
-"""
+    @transactional
+    def _on_end_navigability_change(self, combo, end):
+        UML.model.set_navigability(
+            end.subject.association, end.subject, self.NAVIGABILITY[combo.get_active()]
         )
 
-        combo = Gtk.ComboBoxText()
-        for t in ("Unknown navigation", "Not navigable", "Navigable"):
-            combo.append_text(t)
-
-        nav = self.subject.navigability
-        combo.set_active(self.NAVIGABILITY.index(nav))
-
-        combo.connect("changed", self._on_navigability_change)
-        vbox.pack_start(combo, False, True, 0)
-
-        combo = Gtk.ComboBoxText()
-        for t in ("No aggregation", "Shared", "Composite"):
-            combo.append_text(t)
-
-        combo.set_active(
-            ["none", "shared", "composite"].index(self.subject.aggregation)
-        )
-
-        combo.connect("changed", self._on_aggregation_change)
-        vbox.pack_start(combo, False, True, 0)
-
-        return vbox
-
     @transactional
-    def _on_end_name_change(self, entry):
-        UML.parse(self.subject, entry.get_text())
-
-    @transactional
-    def _on_navigability_change(self, combo):
-        nav = self.NAVIGABILITY[combo.get_active()]
-        UML.model.set_navigability(self.subject.association, self.subject, nav)
-
-    @transactional
-    def _on_aggregation_change(self, combo):
-        self.subject.aggregation = ("none", "shared", "composite")[combo.get_active()]
+    def _on_end_aggregation_change(self, combo, end):
+        end.subject.aggregation = self.AGGREGATION[combo.get_active()]
