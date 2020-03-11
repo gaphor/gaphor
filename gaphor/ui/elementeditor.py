@@ -125,10 +125,6 @@ class ElementEditor(UIComponent, ActionProvider):
         vbox.pack_start(sep, False, False, 0)
         sep.show()
 
-        label = Gtk.Label.new(gettext("Element Editor"))
-        vbox.pack_start(label, False, False, 0)
-        label.show()
-
         vbox.show()
         self.vbox = vbox
 
@@ -189,24 +185,12 @@ class ElementEditor(UIComponent, ActionProvider):
                 page = adapter.construct()
                 if page is None:
                     continue
-                # elif isinstance(page, Gtk.Container):
-                #     page.set_border_width(6)
-                if first:
-                    self.vbox.pack_start(page, False, True, 0)
-                    first = False
                 elif isinstance(page, Gtk.Expander):
                     page.set_expanded(self._expanded_pages.get(name, True))
                     page.connect_after("activate", self.on_expand, name)
                     self.vbox.pack_start(page, False, True, 0)
                 else:
-                    expander = Gtk.Expander()
-                    expander.set_use_markup(True)
-                    expander.set_label(f"<b>{name}</b>")
-                    expander.add(page)
-                    expander.show_all()
-                    expander.set_expanded(self._expanded_pages.get(name, True))
-                    expander.connect_after("activate", self.on_expand, name)
-                    self.vbox.pack_start(expander, False, True, 0)
+                    self.vbox.pack_start(page, False, True, 0)
                 page.show_all()
             except Exception:
                 log.error(
@@ -218,7 +202,7 @@ class ElementEditor(UIComponent, ActionProvider):
         Remove all tabs from the notebook.
         """
         assert self.vbox
-        for page in self.vbox.get_children()[3:]:
+        for page in self.vbox.get_children()[2:]:
             page.destroy()
 
     def on_expand(self, widget, name):
