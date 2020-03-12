@@ -165,7 +165,7 @@ class ClassPropertyPage(NamedElementPropertyPage):
             model.append([c])
 
         cb = Gtk.ComboBox.new_with_model_and_entry(model)
-
+        cb.set_entry_text_column(0)
         completion = Gtk.EntryCompletion()
         completion.set_model(model)
         completion.set_minimum_key_length(1)
