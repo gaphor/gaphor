@@ -215,9 +215,7 @@ class InterfacePropertyPage(PropertyPageBase):
         folded.set_active(item.folded != Folded.NONE)
         folded.set_sensitive(can_fold)
 
-        self.builder.connect_signals(
-            {"folded-changed": (self._on_fold_change,),}
-        )
+        self.builder.connect_signals({"folded-changed": (self._on_fold_change,)})
 
         return page
 

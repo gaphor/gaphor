@@ -64,40 +64,57 @@ class StereotypePage(PropertyPageBase):
         return page
 
     def refresh(self):
-        self.model.clear()
         subject = self.item.subject
         stereotypes = UML.model.get_stereotypes(subject)
         instances = subject.appliedStereotype
 
+        def upsert(path, parent, row_data):
+            try:
+                new_row = self.model.get_iter(path)
+            except ValueError:
+                new_row = self.model.append(parent, row_data)
+            else:
+                row = self.model[path]
+                row[:] = row_data
+            return new_row
+
         # shortcut map stereotype -> slot (InstanceSpecification)
         slots = {}
-        for obj in instances:
-            for slot in obj.slot:
+        for applied in instances:
+            for slot in applied.slot:
                 slots[slot.definingFeature] = slot
 
-        for st in stereotypes:
-            for obj in instances:
-                if st in obj.classifier:
+        for st_index, st in enumerate(stereotypes):
+            for applied in instances:
+                if st in applied.classifier:
                     break
             else:
-                obj = None
+                applied = None
 
-            parent = self.model.append(
-                None, (st.name, "", bool(obj), True, False, st, None, None)
+            parent = upsert(
+                f"{st_index}",
+                None,
+                (st.name, "", bool(applied), True, False, st, None, None),
             )
-
-            if obj:
-                for attr in st.ownedAttribute:
-                    if not attr.association:
-                        slot = slots.get(attr)
-                        value = slot.value if slot else ""
-                        data = (attr.name, value, True, False, True, attr, obj, slot)
-                        self.model.append(parent, data)
-            else:
-                for attr in st.ownedAttribute:
-                    if not attr.association:
-                        data = (attr.name, "", False, False, True, attr, None, None)
-                        self.model.append(parent, data)
+            for attr_index, attr in enumerate(
+                attr for attr in st.ownedAttribute if not attr.association
+            ):
+                slot = slots.get(attr)
+                value = slot.value if slot else ""
+                upsert(
+                    f"{st_index}:{attr_index}",
+                    parent,
+                    (
+                        attr.name,
+                        value,
+                        bool(applied),
+                        False,
+                        bool(applied),
+                        attr,
+                        applied,
+                        slot,
+                    ),
+                )
 
     @transactional
     def _on_show_stereotypes_change(self, button):
@@ -117,7 +134,6 @@ class StereotypePage(PropertyPageBase):
 
         row[2] = value
 
-        # TODO: change refresh in a refresh of the data model, rather than a clear-refresh
         self.refresh()
 
     @transactional
@@ -128,7 +144,7 @@ class StereotypePage(PropertyPageBase):
         Slot is created if instance Create valuChange value of instance spe
         """
         row = self.model[path]
-        name, old_value, is_applied, _, _, attr, obj, slot = row
+        name, old_value, is_applied, _, _, attr, applied, slot = row
         if isinstance(attr, UML.Stereotype):
             return  # don't edit stereotype rows
 
@@ -136,7 +152,7 @@ class StereotypePage(PropertyPageBase):
             return  # nothing to do and don't create slot without value
 
         if slot is None:
-            slot = UML.model.add_slot(obj, attr)
+            slot = UML.model.add_slot(applied, attr)
 
         assert slot
 
@@ -144,7 +160,7 @@ class StereotypePage(PropertyPageBase):
             slot.value = value
         else:
             # no value, then remove slot
-            del obj.slot[slot]
+            del applied.slot[slot]
             slot = None
             value = ""
 

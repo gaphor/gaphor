@@ -179,7 +179,6 @@ class ElementEditor(UIComponent, ActionProvider):
         assert self.vbox
         adapters = self._get_adapters(item)
 
-        first = True
         for _, name, adapter in adapters:
             try:
                 page = adapter.construct()
