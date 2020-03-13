@@ -1,26 +1,27 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import gettext, transactional
+from gaphor.core import transactional
 from gaphor.diagram.interactions.interactionsconnect import get_lifeline
 from gaphor.diagram.interactions.message import MessageItem
 from gaphor.diagram.propertypages import (
-    NamedItemPropertyPage,
+    PropertyPageBase,
     PropertyPages,
-    create_hbox_label,
-    create_uml_combo,
+    UMLComboModel,
+    builder,
 )
 
 
 @PropertyPages.register(MessageItem)
-class MessagePropertyPage(NamedItemPropertyPage):
+class MessagePropertyPage(PropertyPageBase):
     """Property page for editing message items.
 
     When message is on communication diagram, then additional messages can
     be added. On sequence diagram sort of message can be changed.
     """
 
-    NAME_LABEL = gettext("Message")
+    name = "Message"
+    order = 15
 
     MESSAGE_SORT = [
         ("Call", "synchCall"),
@@ -31,63 +32,61 @@ class MessagePropertyPage(NamedItemPropertyPage):
         ("Reply", "reply"),
     ]
 
-    def construct(self):
-        page = super().construct()
+    def __init__(self, item):
+        self.item = item
+        self.builder = builder("message-editor")
 
+    def construct(self):
         item = self.item
         subject = item.subject
 
-        if not subject:
-            return page
+        if not subject or item.is_communication():
+            return
 
-        if not item.is_communication():
-            hbox = create_hbox_label(self, page, gettext("Message sort"))
+        page = self.builder.get_object("message-editor")
 
-            sort_data = self.MESSAGE_SORT
-            lifeline = get_lifeline(item, item.tail)
+        sort_data = self.MESSAGE_SORT
+        lifeline = get_lifeline(item, item.tail)
 
-            # disallow connecting two delete messages to a lifeline
-            if (
-                lifeline
-                and lifeline.is_destroyed
-                and subject.messageSort != "deleteMessage"
-            ):
-                sort_data = list(sort_data)
-                assert sort_data[4][1] == "deleteMessage"
-                del sort_data[4]
+        # disallow connecting two delete messages to a lifeline
+        if (
+            lifeline
+            and lifeline.is_destroyed
+            and subject.messageSort != "deleteMessage"
+        ):
+            sort_data = list(sort_data)
+            assert sort_data[4][1] == "deleteMessage"
+            del sort_data[4]
 
-            combo = self.combo = create_uml_combo(
-                sort_data, self._on_message_sort_change
-            )
-            hbox.pack_start(combo, False, True, 0)
+        self.model = UMLComboModel(sort_data)
+        combo = self.builder.get_object("message-combo")
+        combo.set_model(self.model)
 
-            index = combo.get_model().get_index(subject.messageSort)
-            combo.set_active(index)
+        index = self.model.get_index(subject.messageSort)
+        combo.set_active(index)
 
+        self.builder.connect_signals(
+            {"message-combo-changed": (self._on_message_sort_change,)}
+        )
         return page
 
     @transactional
     def _on_message_sort_change(self, combo):
         """Update message item's message sort information."""
 
-        combo = self.combo
-        ms = combo.get_model().get_value(combo.get_active())
+        ms = self.model.get_value(combo.get_active())
 
         item = self.item
         subject = item.subject
         lifeline = get_lifeline(item, item.tail)
 
-        #
         # allow only one delete message to connect to lifeline's lifetime
         # destroyed status can be changed only by delete message itself
-        #
         if lifeline:
             if subject.messageSort == "deleteMessage" or not lifeline.is_destroyed:
                 is_destroyed = ms == "deleteMessage"
                 lifeline.is_destroyed = is_destroyed
-                # TODO: is required here?
                 lifeline.request_update()
 
         subject.messageSort = ms
-        # TODO: is required here?
         item.request_update()
