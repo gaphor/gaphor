@@ -32,10 +32,11 @@ class StereotypePage(PropertyPageBase):
         page = self.builder.get_object("stereotypes-editor")
 
         show_stereotypes = self.builder.get_object("show-stereotypes")
-        show_stereotypes.set_sensitive(hasattr(self.item, "show_stereotypes"))
-        # show stereotypes attributes toggle
+
         if hasattr(self.item, "show_stereotypes"):
             show_stereotypes.set_active(self.item.show_stereotypes)
+        else:
+            show_stereotypes.destroy()
 
         self.model = Gtk.TreeStore.new(
             [
