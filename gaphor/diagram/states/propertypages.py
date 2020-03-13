@@ -10,48 +10,59 @@ from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.diagram.propertypages import (
     NamedItemPropertyPage,
+    PropertyPageBase,
     PropertyPages,
+    builder,
     create_hbox_label,
 )
 from gaphor.diagram.states.state import StateItem
 from gaphor.diagram.states.transition import TransitionItem
 
 
-@PropertyPages.register(TransitionItem)
-class TransitionPropertyPage(NamedItemPropertyPage):
+@PropertyPages.register(UML.Transition)
+class TransitionPropertyPage(PropertyPageBase):
     """Transition property page allows to edit guard specification."""
+
+    name = "Transition"
+    order = 15
 
     subject: UML.Transition
 
+    def __init__(self, subject):
+        self.subject = subject
+        self.watcher = subject.watcher()
+        self.builder = builder("transition-editor")
+
     def construct(self):
-        page = super().construct()
-
         subject = self.subject
-
         if not subject:
-            return page
+            return
 
-        hbox = create_hbox_label(self, page, gettext("Guard"))
-        entry = Gtk.Entry()
-        v = subject.guard.specification
-        entry.set_text(v if v else "")
-        changed_id = entry.connect("changed", self._on_guard_change)
-        hbox.pack_start(entry, True, True, 0)
+        page = self.builder.get_object("transition-editor")
+
+        guard = self.builder.get_object("guard")
+        v = subject.guard.specification if subject.guard else ""
+        guard.set_text(v)
 
         def handler(event):
-            entry.handler_block(changed_id)
-            v = event.new_value
-            entry.set_text(v if v else "")
-            entry.handler_unblock(changed_id)
+            if event.element is subject.guard:
+                guard.set_text(event.new_value or "")
 
         self.watcher.watch("guard[Constraint].specification", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
 
+        self.builder.connect_signals(
+            {
+                "guard-changed": (self._on_guard_change,),
+                "transition-editor-destroy": (self.watcher.unsubscribe_all,),
+            }
+        )
         return page
 
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
+        if not self.subject.guard:
+            self.subject.guard = self.subject.model.create(UML.Constraint)
         self.subject.guard.specification = value
 
 
