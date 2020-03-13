@@ -10,7 +10,7 @@ desired element, in the tree view pop upmenu, select
 Remove Parent.
 
 Padding between elements is 6px.
-Top margin is always 6 px.
+Top margin is 6 px, 12px for expanders.
 Edit, from the popup menu, will allow you to add cell 
 renderers and such.</property>
     <property name="xalign">0</property>
@@ -26,6 +26,7 @@ renderers and such.</property>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="spacing">6</property>
         <child>
           <object class="GtkCheckButton" id="show-direction">
             <property name="label" translatable="yes">Show direction</property>
@@ -241,7 +242,7 @@ renderers and such.</property>
   <object class="GtkExpander" id="attributes-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
-    <property name="margin_top">6</property>
+    <property name="margin_top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
@@ -432,7 +433,7 @@ Use -/= to move items up or down.</property>
   <object class="GtkExpander" id="line-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
-    <property name="margin_top">6</property>
+    <property name="margin_top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
@@ -590,7 +591,7 @@ Use -/= to move items up or down.</property>
   <object class="GtkExpander" id="operations-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
-    <property name="margin_top">6</property>
+    <property name="margin_top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
@@ -712,90 +713,209 @@ Use -/= to move items up or down.</property>
       </object>
     </child>
   </object>
-  <object class="GtkBox" id="stereotypes-editor">
+  <object class="GtkExpander" id="state-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
-    <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
+    <property name="can_focus">True</property>
+    <property name="margin_top">12</property>
+    <property name="expanded">True</property>
     <child>
-      <object class="GtkCheckButton" id="show-stereotypes">
-        <property name="label" translatable="yes">Show stereotype attributes</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">False</property>
-        <property name="draw_indicator">True</property>
-        <signal name="toggled" handler="show-stereotypes-changed" swapped="no"/>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkFrame">
+      <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label_xalign">0</property>
-        <property name="shadow_type">in</property>
+        <property name="margin_top">6</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
         <child>
-          <object class="GtkTreeView" id="stereotype-list">
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Entry</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <child internal-child="selection">
-              <object class="GtkTreeSelection"/>
-            </child>
-            <child>
-              <object class="GtkTreeViewColumn">
-                <property name="title" translatable="yes">Attributes</property>
-                <child>
-                  <object class="GtkCellRendererToggle">
-                    <signal name="toggled" handler="toggle-stereotype" swapped="no"/>
-                  </object>
-                  <attributes>
-                    <attribute name="visible">3</attribute>
-                    <attribute name="active">2</attribute>
-                  </attributes>
-                </child>
-                <child>
-                  <object class="GtkCellRendererText"/>
-                  <attributes>
-                    <attribute name="text">0</attribute>
-                  </attributes>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkTreeViewColumn">
-                <property name="title" translatable="yes">Value</property>
-                <child>
-                  <object class="GtkCellRendererText">
-                    <signal name="edited" handler="set-slot-value" swapped="no"/>
-                  </object>
-                  <attributes>
-                    <attribute name="editable">4</attribute>
-                    <attribute name="text">1</attribute>
-                  </attributes>
-                </child>
-              </object>
-            </child>
+            <signal name="changed" handler="entry-changed" swapped="no"/>
           </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
         </child>
-        <child type="label_item">
-          <placeholder/>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Exit</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="exit">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <signal name="changed" handler="exit-changed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Do Activity</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="do-activity">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <signal name="changed" handler="do-activity-changed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">5</property>
+          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
+    </child>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Activities</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+    </child>
+  </object>
+  <object class="GtkExpander" id="stereotypes-editor">
+    <property name="visible">True</property>
+    <property name="can_focus">True</property>
+    <property name="margin_top">12</property>
+    <property name="expanded">True</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_top">6</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkCheckButton" id="show-stereotypes">
+            <property name="label" translatable="yes">Show stereotype attributes</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="draw_indicator">True</property>
+            <signal name="toggled" handler="show-stereotypes-changed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFrame">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label_xalign">0</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTreeView" id="stereotype-list">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">Attributes</property>
+                    <child>
+                      <object class="GtkCellRendererToggle">
+                        <signal name="toggled" handler="toggle-stereotype" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="visible">3</attribute>
+                        <attribute name="active">2</attribute>
+                      </attributes>
+                    </child>
+                    <child>
+                      <object class="GtkCellRendererText"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">Value</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <signal name="edited" handler="set-slot-value" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="editable">4</attribute>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label_item">
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Stereotypes</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
     </child>
   </object>
   <object class="GtkBox" id="transition-editor">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>

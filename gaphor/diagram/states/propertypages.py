@@ -7,16 +7,8 @@ gaphor.adapter package.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import gettext, transactional
-from gaphor.diagram.propertypages import (
-    NamedItemPropertyPage,
-    PropertyPageBase,
-    PropertyPages,
-    builder,
-    create_hbox_label,
-)
-from gaphor.diagram.states.state import StateItem
-from gaphor.diagram.states.transition import TransitionItem
+from gaphor.core import transactional
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, builder
 
 
 @PropertyPages.register(UML.Transition)
@@ -41,8 +33,8 @@ class TransitionPropertyPage(PropertyPageBase):
         page = self.builder.get_object("transition-editor")
 
         guard = self.builder.get_object("guard")
-        v = subject.guard.specification if subject.guard else ""
-        guard.set_text(v)
+        if subject.guard:
+            guard.set_text(subject.guard.specification)
 
         def handler(event):
             if event.element is subject.guard:
@@ -66,43 +58,45 @@ class TransitionPropertyPage(PropertyPageBase):
         self.subject.guard.specification = value
 
 
-@PropertyPages.register(StateItem)
-class StatePropertyPage(NamedItemPropertyPage):
+@PropertyPages.register(UML.State)
+class StatePropertyPage(PropertyPageBase):
     """State property page."""
 
+    name = "State"
+    order = 15
     subject: UML.State
 
+    def __init__(self, subject):
+        self.subject = subject
+        self.builder = builder("state-editor")
+
     def construct(self):
-        page = super().construct()
-
         subject = self.subject
-
+        print("state subject", subject)
         if not subject:
-            return page
+            return
 
-        hbox = create_hbox_label(self, page, gettext("Entry"))
-        entry = Gtk.Entry()
+        page = self.builder.get_object("state-editor")
+
+        entry = self.builder.get_object("entry")
         if subject.entry:
             entry.set_text(subject.entry.name or "")
-        entry.connect("changed", self.on_text_change, self.set_entry)
-        hbox.pack_start(entry, True, True, 0)
 
-        hbox = create_hbox_label(self, page, gettext("Exit"))
-        entry = Gtk.Entry()
+        exit = self.builder.get_object("exit")
         if subject.exit:
-            entry.set_text(subject.exit.name or "")
-        entry.connect("changed", self.on_text_change, self.set_exit)
-        hbox.pack_start(entry, True, True, 0)
+            exit.set_text(subject.exit.name or "")
 
-        hbox = create_hbox_label(self, page, gettext("Do Activity"))
-        entry = Gtk.Entry()
+        do_activity = self.builder.get_object("do-activity")
         if subject.doActivity:
-            entry.set_text(self.subject.doActivity.name or "")
-        entry.connect("changed", self.on_text_change, self.set_do_activity)
-        hbox.pack_start(entry, True, True, 0)
+            do_activity.set_text(self.subject.doActivity.name or "")
 
-        page.show_all()
-
+        self.builder.connect_signals(
+            {
+                "entry-changed": (self.on_text_change, self.set_entry),
+                "exit-changed": (self.on_text_change, self.set_exit),
+                "do-activity-changed": (self.on_text_change, self.set_do_activity),
+            }
+        )
         return page
 
     @transactional
