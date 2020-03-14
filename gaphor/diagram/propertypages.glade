@@ -703,6 +703,74 @@ Use -/= to move items up or down.</property>
       </packing>
     </child>
   </object>
+  <object class="GtkBox" id="object-node-editor">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="margin_top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Upper Bound</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkEntry" id="upper-bound">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <signal name="changed" handler="upper-bound-changed" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="show-ordering">
+        <property name="label" translatable="yes">Show Ordering</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="draw_indicator">True</property>
+        <signal name="toggled" handler="show-ordering-changed" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkComboBoxText" id="ordering">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <items>
+          <item id="0" translatable="yes">ordered</item>
+          <item id="1" translatable="yes">unordered</item>
+          <item id="2" translatable="yes">LIFO</item>
+          <item id="3" translatable="yes">FIFO</item>
+        </items>
+        <signal name="changed" handler="ordering-changed" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">3</property>
+      </packing>
+    </child>
+  </object>
   <object class="GtkExpander" id="operations-editor">
     <property name="visible">True</property>
     <property name="can_focus">True</property>

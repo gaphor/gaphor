@@ -9,7 +9,9 @@ from gaphor.diagram.actions.objectnode import ObjectNodeItem
 from gaphor.diagram.propertypages import (
     NamedElementPropertyPage,
     NamedItemPropertyPage,
+    PropertyPageBase,
     PropertyPages,
+    builder,
     create_hbox_label,
 )
 
@@ -19,49 +21,51 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
     """
     """
 
+    name = "ObjectNode"
+    order = 15
+
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
     subject: UML.ObjectNode
 
-    def construct(self):
-        page = super().construct()
+    def __init__(self, item):
+        self.item = item
+        self.builder = builder("object-node-editor")
 
-        subject = self.subject
+    def construct(self):
+        subject = self.item.subject
 
         if not subject:
-            return page
+            return
 
-        hbox = create_hbox_label(self, page, gettext("Upper bound"))
-        entry = Gtk.Entry()
-        entry.set_text(subject.upperBound or "")
-        entry.connect("changed", self._on_upper_bound_change)
-        hbox.pack_start(entry, True, True, 0)
+        upper_bound = self.builder.get_object("upper-bound")
+        upper_bound.set_text(subject.upperBound or "")
 
-        hbox = create_hbox_label(self, page, "")
-        combo = Gtk.ComboBoxText()
-        for v in self.ORDERING_VALUES:
-            combo.append_text(v)
-        combo.set_active(self.ORDERING_VALUES.index(subject.ordering))
-        combo.connect("changed", self._on_ordering_change)
-        hbox.pack_start(combo, False, True, 0)
+        ordering = self.builder.get_object("ordering")
+        ordering.set_active(self.ORDERING_VALUES.index(subject.ordering))
 
-        hbox = create_hbox_label(self, page, "")
-        button = Gtk.CheckButton(gettext("Ordering"))
-        button.set_active(self.item.show_ordering)
-        button.connect("toggled", self._on_ordering_show_change)
-        hbox.pack_start(button, False, True, 0)
+        show_ordering = self.builder.get_object("show-ordering")
+        show_ordering.set_active(self.item.show_ordering)
 
-        return page
+        self.builder.connect_signals(
+            {
+                "upper-bound-changed": (self._on_upper_bound_change,),
+                "ordering-changed": (self._on_ordering_change,),
+                "show-ordering-changed": (self._on_ordering_show_change,),
+            }
+        )
+
+        return self.builder.get_object("object-node-editor")
 
     @transactional
     def _on_upper_bound_change(self, entry):
         value = entry.get_text().strip()
-        self.subject.upperBound = value
+        self.item.subject.upperBound = value
 
     @transactional
     def _on_ordering_change(self, combo):
         value = self.ORDERING_VALUES[combo.get_active()]
-        self.subject.ordering = value
+        self.item.subject.ordering = value
 
     @transactional
     def _on_ordering_show_change(self, button):
@@ -90,13 +94,9 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
             hbox = create_hbox_label(self, page, gettext("Join specification"))
             entry = Gtk.Entry()
             entry.set_text(subject.joinSpec or "")
-            entry.connect("changed", self._on_join_spec_change)
-            hbox.pack_start(entry, True, True, 0)
 
         button = Gtk.CheckButton(gettext("Horizontal"))
         button.set_active(self.item.matrix[2] != 0)
-        button.connect("toggled", self._on_horizontal_change)
-        page.pack_start(button, False, True, 0)
 
         return page
 
@@ -133,18 +133,14 @@ class FlowPropertyPageAbstract(NamedElementPropertyPage):
         hbox = create_hbox_label(self, page, gettext("Guard"))
         entry = Gtk.Entry()
         entry.set_text(subject.guard or "")
-        changed_id = entry.connect("changed", self._on_guard_change)
-        hbox.pack_start(entry, True, True, 0)
 
         def handler(event):
-            entry.handler_block(changed_id)
+            # entry.handler_block(changed_id)
             v = event.new_value
             entry.set_text(v if v else "")
-            entry.handler_unblock(changed_id)
+            # entry.handler_unblock(changed_id)
 
         self.watcher.watch("guard", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
-
         return page
 
     @transactional
