@@ -1,6 +1,7 @@
 1.2.0
 -----
-- Gaphor supports multiple windows
+- Improved support for Sequence Diagrams
+- Support multiple windows
 - Proper file icons on Mac and Linux
 - No longer a console on Windows
 - Support i18n
