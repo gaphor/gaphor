@@ -3,23 +3,14 @@ import math
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import gettext, transactional
+from gaphor.core import transactional
 from gaphor.diagram.actions.activitynodes import ForkNodeItem
 from gaphor.diagram.actions.objectnode import ObjectNodeItem
-from gaphor.diagram.propertypages import (
-    NamedElementPropertyPage,
-    NamedItemPropertyPage,
-    PropertyPageBase,
-    PropertyPages,
-    builder,
-    create_hbox_label,
-)
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, builder
 
 
 @PropertyPages.register(ObjectNodeItem)
-class ObjectNodePropertyPage(NamedItemPropertyPage):
-    """
-    """
+class ObjectNodePropertyPage(PropertyPageBase):
 
     name = "ObjectNode"
     order = 15
@@ -73,38 +64,25 @@ class ObjectNodePropertyPage(NamedItemPropertyPage):
 
 
 @PropertyPages.register(ForkNodeItem)
-class JoinNodePropertyPage(NamedItemPropertyPage):
-    """
-    """
+class ForkNodePropertyPage(PropertyPageBase):
 
-    subject: UML.JoinNode
+    name = "ForkNode"
+    order = 20
+
+    def __init__(self, item):
+        self.item = item
+        self.builder = builder("fork-node-editor")
 
     def construct(self):
-        page = super().construct()
+        horizontal = self.builder.get_object("horizontal")
+        horizontal.set_active(self.item.matrix[2] != 0)
 
-        subject = self.subject
-
-        if not subject:
-            return page
-
-        hbox = Gtk.HBox()
-        page.pack_start(hbox, False, True, 0)
-
-        if isinstance(subject, UML.JoinNode):
-            hbox = create_hbox_label(self, page, gettext("Join specification"))
-            entry = Gtk.Entry()
-            entry.set_text(subject.joinSpec or "")
-
-        button = Gtk.CheckButton(gettext("Horizontal"))
-        button.set_active(self.item.matrix[2] != 0)
-
-        return page
+        self.builder.connect_signals(
+            {"horizontal-changed": (self._on_horizontal_change,)}
+        )
+        return self.builder.get_object("fork-node-editor")
 
     @transactional
-    def _on_join_spec_change(self, entry):
-        value = entry.get_text().strip()
-        self.subject.joinSpec = value
-
     def _on_horizontal_change(self, button):
         if button.get_active():
             self.item.matrix.rotate(math.pi / 2)
@@ -113,35 +91,75 @@ class JoinNodePropertyPage(NamedItemPropertyPage):
         self.item.request_update()
 
 
-@PropertyPages.register(UML.ControlFlow)
-@PropertyPages.register(UML.ObjectFlow)
-class FlowPropertyPageAbstract(NamedElementPropertyPage):
-    """Flow item element editor."""
+@PropertyPages.register(UML.JoinNode)
+class JoinNodePropertyPage(PropertyPageBase):
 
-    subject: UML.ActivityEdge
+    name = "JoinNode"
+    order = 15
+
+    subject: UML.JoinNode
+
+    def __init__(self, subject):
+        self.subject = subject
+        self.builder = builder("join-node-editor")
 
     def construct(self):
-        assert self.watcher
-
-        page = super().construct()
-
         subject = self.subject
 
         if not subject:
-            return page
+            return
 
-        hbox = create_hbox_label(self, page, gettext("Guard"))
-        entry = Gtk.Entry()
-        entry.set_text(subject.guard or "")
+        join_spec = self.builder.get_object("join-spec")
+        join_spec.set_text(subject.joinSpec or "")
+
+        self.builder.connect_signals(
+            {"join-spec-changed": (self._on_join_spec_change,)}
+        )
+        return self.builder.get_object("join-node-editor")
+
+    @transactional
+    def _on_join_spec_change(self, entry):
+        value = entry.get_text().strip()
+        self.subject.joinSpec = value
+
+
+@PropertyPages.register(UML.ControlFlow)
+@PropertyPages.register(UML.ObjectFlow)
+class FlowPropertyPageAbstract(PropertyPageBase):
+    """Flow item element editor."""
+
+    name = "flow"
+    order = 15
+
+    subject: UML.ActivityEdge
+
+    def __init__(self, subject):
+        self.subject = subject
+        self.watcher = subject.watcher() if subject else None
+        self.builder = builder("transition-editor")
+
+    def construct(self):
+        subject = self.subject
+
+        if not subject:
+            return
+
+        guard = self.builder.get_object("guard")
+        guard.set_text(subject.guard or "")
 
         def handler(event):
-            # entry.handler_block(changed_id)
             v = event.new_value
-            entry.set_text(v if v else "")
-            # entry.handler_unblock(changed_id)
+            guard.set_text(v if v else "")
 
         self.watcher.watch("guard", handler).subscribe_all()
-        return page
+
+        self.builder.connect_signals(
+            {
+                "guard-changed": (self._on_guard_change,),
+                "transition-destroy": (self.watcher.unsubscribe_all,),
+            }
+        )
+        return self.builder.get_object("transition-editor")
 
     @transactional
     def _on_guard_change(self, entry):
