@@ -8,7 +8,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, builder
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
 @PropertyPages.register(UML.Transition)
@@ -23,16 +23,15 @@ class TransitionPropertyPage(PropertyPageBase):
     def __init__(self, subject):
         self.subject = subject
         self.watcher = subject.watcher()
-        self.builder = builder("transition-editor")
 
     def construct(self):
         subject = self.subject
         if not subject:
             return
 
-        page = self.builder.get_object("transition-editor")
+        builder = new_builder("transition-editor")
 
-        guard = self.builder.get_object("guard")
+        guard = builder.get_object("guard")
         if subject.guard:
             guard.set_text(subject.guard.specification)
 
@@ -42,13 +41,13 @@ class TransitionPropertyPage(PropertyPageBase):
 
         self.watcher.watch("guard[Constraint].specification", handler).subscribe_all()
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {
                 "guard-changed": (self._on_guard_change,),
                 "transition-destroy": (self.watcher.unsubscribe_all,),
             }
         )
-        return page
+        return builder.get_object("transition-editor")
 
     @transactional
     def _on_guard_change(self, entry):
@@ -68,36 +67,34 @@ class StatePropertyPage(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.builder = builder("state-editor")
 
     def construct(self):
         subject = self.subject
-        print("state subject", subject)
         if not subject:
             return
 
-        page = self.builder.get_object("state-editor")
+        builder = new_builder("state-editor")
 
-        entry = self.builder.get_object("entry")
+        entry = builder.get_object("entry")
         if subject.entry:
             entry.set_text(subject.entry.name or "")
 
-        exit = self.builder.get_object("exit")
+        exit = builder.get_object("exit")
         if subject.exit:
             exit.set_text(subject.exit.name or "")
 
-        do_activity = self.builder.get_object("do-activity")
+        do_activity = builder.get_object("do-activity")
         if subject.doActivity:
             do_activity.set_text(self.subject.doActivity.name or "")
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {
                 "entry-changed": (self.on_text_change, self.set_entry),
                 "exit-changed": (self.on_text_change, self.set_exit),
                 "do-activity-changed": (self.on_text_change, self.set_do_activity),
             }
         )
-        return page
+        return builder.get_object("state-editor")
 
     @transactional
     def on_text_change(self, entry, method):

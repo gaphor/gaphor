@@ -2,7 +2,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, builder
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
 @PropertyPages.register(UML.Comment)
@@ -12,7 +12,6 @@ class CommentItemPropertyPage(PropertyPageBase):
     def __init__(self, subject):
         self.subject = subject
         self.watcher = subject and subject.watcher()
-        self.builder = builder("comment-editor")
 
     def construct(self):
         subject = self.subject
@@ -20,8 +19,8 @@ class CommentItemPropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        page = self.builder.get_object("comment-editor")
-        text_view = self.builder.get_object("comment")
+        builder = new_builder("comment-editor")
+        text_view = builder.get_object("comment")
 
         buffer = Gtk.TextBuffer()
         if subject.body:
@@ -39,7 +38,7 @@ class CommentItemPropertyPage(PropertyPageBase):
         self.watcher.watch("body", handler).subscribe_all()
         text_view.connect("destroy", self.watcher.unsubscribe_all)
 
-        return page
+        return builder.get_object("comment-editor")
 
     @transactional
     def _on_body_change(self, buffer):

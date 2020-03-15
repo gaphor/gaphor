@@ -38,7 +38,7 @@ from gaphor.core import gettext, transactional
 from gaphor.UML.element import DummyEventWatcher
 
 
-def builder(object_id):
+def new_builder(object_id):
     builder = Gtk.Builder()
     builder.set_translation_domain("gaphor")
     with importlib.resources.path(
@@ -376,18 +376,16 @@ class NamedElementPropertyPage(PropertyPageBase):
         self.subject = subject
         self.watcher = subject.watcher() if subject else DummyEventWatcher()
         self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
-        self.builder = builder("named-element-editor")
 
     def construct(self):
-        page = self.builder.get_object("named-element-editor")
+        builder = new_builder("named-element-editor")
 
         subject = self.subject
         if not subject:
-            return page
+            return
 
-        entry = self.builder.get_object("name-entry")
+        entry = builder.get_object("name-entry")
         entry.set_text(subject and subject.name or "")
-        page.default = entry
 
         def handler(event):
             if event.element is subject and event.new_value is not None:
@@ -396,13 +394,13 @@ class NamedElementPropertyPage(PropertyPageBase):
         if self.watcher:
             self.watcher.watch("name", handler).subscribe_all()
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {
                 "name-changed": (self._on_name_changed,),
                 "name-entry-destroyed": (self.watcher.unsubscribe_all,),
             }
         )
-        return page
+        return builder.get_object("named-element-editor")
 
     @transactional
     def _on_name_changed(self, entry):
@@ -432,26 +430,25 @@ class LineStylePage(PropertyPageBase):
         self.item = item
         self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.horizontal_button: Gtk.Button
-        self.builder = builder("line-editor")
 
     def construct(self):
-        page = self.builder.get_object("line-editor")
+        builder = new_builder("line-editor")
 
-        rectilinear_button = self.builder.get_object("line-rectilinear")
+        rectilinear_button = builder.get_object("line-rectilinear")
         rectilinear_button.set_active(self.item.orthogonal)
 
-        horizontal_button = self.builder.get_object("flip-orientation")
+        horizontal_button = builder.get_object("flip-orientation")
         horizontal_button.set_active(self.item.horizontal)
         horizontal_button.set_sensitive(self.item.orthogonal)
         self.horizontal_button = horizontal_button
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {
                 "rectilinear-changed": (self._on_orthogonal_change,),
                 "orientation-changed": (self._on_horizontal_change,),
             }
         )
-        return page
+        return builder.get_object("line-editor")
 
     @transactional
     def _on_orthogonal_change(self, button):

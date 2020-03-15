@@ -8,7 +8,7 @@ from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
     UMLComboModel,
-    builder,
+    new_builder,
 )
 
 
@@ -34,7 +34,6 @@ class MessagePropertyPage(PropertyPageBase):
 
     def __init__(self, item):
         self.item = item
-        self.builder = builder("message-editor")
 
     def construct(self):
         item = self.item
@@ -43,7 +42,7 @@ class MessagePropertyPage(PropertyPageBase):
         if not subject or item.is_communication():
             return
 
-        page = self.builder.get_object("message-editor")
+        builder = new_builder("message-editor")
 
         sort_data = self.MESSAGE_SORT
         lifeline = get_lifeline(item, item.tail)
@@ -59,16 +58,16 @@ class MessagePropertyPage(PropertyPageBase):
             del sort_data[4]
 
         self.model = UMLComboModel(sort_data)
-        combo = self.builder.get_object("message-combo")
+        combo = builder.get_object("message-combo")
         combo.set_model(self.model)
 
         index = self.model.get_index(subject.messageSort)
         combo.set_active(index)
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {"message-combo-changed": (self._on_message_sort_change,)}
         )
-        return page
+        return builder.get_object("message-editor")
 
     @transactional
     def _on_message_sort_change(self, combo):

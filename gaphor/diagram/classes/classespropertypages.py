@@ -18,8 +18,8 @@ from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
     UMLComboModel,
-    builder,
     create_hbox_label,
+    new_builder,
     on_bool_cell_edited,
     on_keypress_event,
     on_text_cell_edited,
@@ -200,23 +200,22 @@ class InterfacePropertyPage(PropertyPageBase):
 
     def __init__(self, item):
         self.item = item
-        self.builder = builder("interface-editor")
 
     def construct(self):
-        page = self.builder.get_object("interface-editor")
+        builder = new_builder("interface-editor")
         item = self.item
 
         connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
         disallowed = (ConnectorItem,)
         can_fold = not any(map(lambda i: isinstance(i, disallowed), connected_items))
 
-        folded = self.builder.get_object("folded")
+        folded = builder.get_object("folded")
         folded.set_active(item.folded != Folded.NONE)
         folded.set_sensitive(can_fold)
 
-        self.builder.connect_signals({"folded-changed": (self._on_fold_change,)})
+        builder.connect_signals({"folded-changed": (self._on_fold_change,)})
 
-        return page
+        return builder.get_object("interface-editor")
 
     @transactional
     def _on_fold_change(self, button):
@@ -242,20 +241,20 @@ class AttributesPage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.watcher = item.subject and item.subject.watcher()
-        self.builder = builder("attributes-editor")
 
     def construct(self):
         if not self.item.subject:
             return
 
-        page = self.builder.get_object("attributes-editor")
+        builder = new_builder("attributes-editor")
+        page = builder.get_object("attributes-editor")
 
-        show_attributes = self.builder.get_object("show-attributes")
+        show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)
 
         self.model = ClassAttributes(self.item, (str, bool, object))
 
-        tree_view: Gtk.TreeView = self.builder.get_object("attributes-list")
+        tree_view: Gtk.TreeView = builder.get_object("attributes-list")
         tree_view.set_model(self.model)
 
         def handler(event):
@@ -275,7 +274,7 @@ class AttributesPage(PropertyPageBase):
             "ownedAttribute.typeValue", handler
         ).subscribe_all()
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {
                 "show-attributes-changed": (self._on_show_attributes_change,),
                 "attributes-name-edited": (on_text_cell_edited, self.model, 0),
@@ -304,20 +303,19 @@ class OperationsPage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.watcher = item.subject and item.subject.watcher()
-        self.builder = builder("operations-editor")
 
     def construct(self):
         if not self.item.subject:
             return
 
-        page = self.builder.get_object("operations-editor")
+        builder = new_builder("operations-editor")
 
-        show_operations = self.builder.get_object("show-operations")
+        show_operations = builder.get_object("show-operations")
         show_operations.set_active(self.item.show_operations)
 
         self.model = ClassOperations(self.item, (str, bool, bool, object))
 
-        tree_view: Gtk.TreeView = self.builder.get_object("operations-list")
+        tree_view: Gtk.TreeView = builder.get_object("operations-list")
         tree_view.set_model(self.model)
 
         def handler(event):
@@ -341,7 +339,7 @@ class OperationsPage(PropertyPageBase):
             "ownedOperation.formalParameter.defaultValue", handler
         ).subscribe_all()
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {
                 "show-operations-changed": (self._on_show_operations_change,),
                 "operations-name-edited": (on_text_cell_edited, self.model, 0),
@@ -352,7 +350,7 @@ class OperationsPage(PropertyPageBase):
             }
         )
 
-        return page
+        return builder.get_object("operations-editor")
 
     @transactional
     def _on_show_operations_change(self, button):
@@ -377,11 +375,9 @@ class DependencyPropertyPage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.watcher = self.item.watcher()
-        self.builder = builder("dependency-editor")
+        self.builder = new_builder("dependency-editor")
 
     def construct(self):
-        page = self.builder.get_object("dependency-editor")
-
         dependency_combo = self.builder.get_object("dependency-combo")
         model = UMLComboModel(self.DEPENDENCY_TYPES)
         dependency_combo.set_model(model)
@@ -401,7 +397,7 @@ class DependencyPropertyPage(PropertyPageBase):
             }
         )
 
-        return page
+        return self.builder.get_object("dependency-editor")
 
     def _on_subject_change(self, event):
         self.update()
@@ -421,7 +417,6 @@ class DependencyPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_dependency_type_change(self, combo):
-        combo = self.builder.get_object("dependency-combo")
         cls = combo.get_model().get_value(combo.get_active())
         self.item.dependency_type = cls
         subject = self.item.subject
@@ -451,13 +446,12 @@ class AssociationPropertyPage(PropertyPageBase):
         self.item = item
         self.subject = self.item.subject
         self.watcher = self.item.watcher()
-        self.builder = builder("association-editor")
 
-    def construct_end(self, end_name, end):
-        title = self.builder.get_object(f"{end_name}-title")
+    def construct_end(self, builder, end_name, end):
+        title = builder.get_object(f"{end_name}-title")
         title.set_text(f"{end_name.title()} (: {end.subject.type.name})")
 
-        name = self.builder.get_object(f"{end_name}-name")
+        name = builder.get_object(f"{end_name}-name")
         name.set_text(
             UML.format(
                 end.subject, visibility=True, is_derived=True, multiplicity=True,
@@ -465,26 +459,26 @@ class AssociationPropertyPage(PropertyPageBase):
             or ""
         )
 
-        navigation = self.builder.get_object(f"{end_name}-navigation")
+        navigation = builder.get_object(f"{end_name}-navigation")
         navigation.set_active(self.NAVIGABILITY.index(end.subject.navigability))
 
-        aggregation = self.builder.get_object(f"{end_name}-aggregation")
+        aggregation = builder.get_object(f"{end_name}-aggregation")
         aggregation.set_active(self.AGGREGATION.index(end.subject.aggregation))
 
     def construct(self):
         if not self.subject:
             return None
 
-        page = self.builder.get_object("association-editor")
+        builder = new_builder("association-editor")
 
         head = self.item.head_end
         tail = self.item.tail_end
 
-        show_direction = self.builder.get_object("show-direction")
+        show_direction = builder.get_object("show-direction")
         show_direction.set_active(self.item.show_direction)
 
-        self.construct_end("head", head)
-        self.construct_end("tail", tail)
+        self.construct_end(builder, "head", head)
+        self.construct_end(builder, "tail", tail)
 
         def handler(event):
             print("TODO: association end handlers")
@@ -494,7 +488,7 @@ class AssociationPropertyPage(PropertyPageBase):
         #     "visibility", handler
         # ).watch("lowerValue", handler).watch("upperValue", handler).subscribe_all()
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {
                 "show-direction-changed": (self._on_show_direction_change,),
                 "invert-direction-changed": (self._on_invert_direction_change,),
@@ -508,7 +502,7 @@ class AssociationPropertyPage(PropertyPageBase):
             }
         )
 
-        return page
+        return builder.get_object("association-editor")
 
     @transactional
     def _on_show_direction_change(self, button):

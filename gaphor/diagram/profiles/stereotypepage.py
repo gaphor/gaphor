@@ -6,7 +6,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, builder
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
 @PropertyPages.register(UML.Element)
@@ -17,7 +17,6 @@ class StereotypePage(PropertyPageBase):
 
     def __init__(self, item):
         self.item = item
-        self.builder = builder("stereotypes-editor")
 
     def construct(self):
 
@@ -29,9 +28,9 @@ class StereotypePage(PropertyPageBase):
         if not stereotypes:
             return None
 
-        page = self.builder.get_object("stereotypes-editor")
+        builder = new_builder("stereotypes-editor")
 
-        show_stereotypes = self.builder.get_object("show-stereotypes")
+        show_stereotypes = builder.get_object("show-stereotypes")
 
         if hasattr(self.item, "show_stereotypes"):
             show_stereotypes.set_active(self.item.show_stereotypes)
@@ -51,10 +50,10 @@ class StereotypePage(PropertyPageBase):
             ]
         )
 
-        stereotype_list = self.builder.get_object("stereotype-list")
+        stereotype_list = builder.get_object("stereotype-list")
         stereotype_list.set_model(self.model)
 
-        self.builder.connect_signals(
+        builder.connect_signals(
             {
                 "show-stereotypes-changed": (self._on_show_stereotypes_change,),
                 "toggle-stereotype": (self._toggle_stereotype, self.model, 2),
@@ -62,7 +61,7 @@ class StereotypePage(PropertyPageBase):
             }
         )
         self.refresh()
-        return page
+        return builder.get_object("stereotypes-editor")
 
     def refresh(self):
         subject = self.item.subject

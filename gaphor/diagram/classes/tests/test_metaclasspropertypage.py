@@ -13,7 +13,7 @@ class MetaclassPropertyPageTest(TestCase):
         editor = ClassPropertyPage(class_)
         page = editor.construct()
         assert page
-        entry = editor.builder.get_object("name-entry")
+        entry = page.get_children()[1]
         assert Gtk.Entry is type(entry)
 
         assert "Class" == entry.get_text()
