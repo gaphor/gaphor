@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "GITHUB_REF is $GITHUB_REF"
-TAG="${GITHUB_REF/\/refs\/tags\//}"
+TAG="${GITHUB_REF/refs\/tags\//}"
 echo "TAG is $TAG"
 if ! [ -x "$(command -v poetry)" ]; then
     echo 'Poetry not found, activating venv'
