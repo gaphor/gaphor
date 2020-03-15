@@ -45,7 +45,7 @@ class TransitionPropertyPage(PropertyPageBase):
         self.builder.connect_signals(
             {
                 "guard-changed": (self._on_guard_change,),
-                "transition-editor-destroy": (self.watcher.unsubscribe_all,),
+                "transition-destroy": (self.watcher.unsubscribe_all,),
             }
         )
         return page
