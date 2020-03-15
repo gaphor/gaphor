@@ -15,7 +15,6 @@ from gaphor.diagram.components.connector import ConnectorItem
 from gaphor.diagram.propertypages import (
     EditableTreeModel,
     NamedElementPropertyPage,
-    NamedItemPropertyPage,
     PropertyPageBase,
     PropertyPages,
     UMLComboModel,
