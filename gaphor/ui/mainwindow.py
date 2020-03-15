@@ -32,13 +32,12 @@ from gaphor.UML.event import AttributeUpdated, ModelFlushed, ModelReady
 log = logging.getLogger(__name__)
 
 
-def hamburger_menu(hamburger_model):
-    button = Gtk.MenuButton()
-    image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU)
-    button.add(image)
-    button.set_popover(Gtk.Popover.new_from_model(button, hamburger_model))
-    button.show_all()
-    return button
+def new_builder():
+    builder = Gtk.Builder()
+    builder.set_translation_domain("gaphor")
+    with importlib.resources.path("gaphor.ui", "mainwindow.glade") as glade_file:
+        builder.add_from_file(str(glade_file))
+    return builder
 
 
 def create_hamburger_model(export_menu, tools_menu):
@@ -68,22 +67,13 @@ def create_hamburger_model(export_menu, tools_menu):
     return model
 
 
-def create_recent_files_button(recent_manager=None):
-    button = Gtk.MenuButton()
-    image = Gtk.Image.new_from_icon_name("pan-down-symbolic", Gtk.IconSize.MENU)
-    button.add(image)
-
+def create_recent_files_model(recent_manager=None):
     model = Gio.Menu.new()
     model.append_section(
         gettext("Recently opened files"),
         RecentFilesMenu(recent_manager or Gtk.RecentManager.get_default()),
     )
-
-    popover = Gtk.Popover.new_from_model(button, model)
-    button.set_popover(popover)
-    button.show_all()
-
-    return button
+    return model
 
 
 class MainWindow(Service, ActionProvider):
@@ -145,50 +135,18 @@ class MainWindow(Service, ActionProvider):
     def open(self, gtk_app=None):
         """Open the main window.
         """
-        self.window = (
-            Gtk.ApplicationWindow.new(gtk_app)
-            if gtk_app
-            else Gtk.Window.new(type=Gtk.WindowType.TOPLEVEL)
+
+        builder = new_builder()
+        self.window = builder.get_object("main-window")
+        self.window.set_application(gtk_app)
+
+        hamburger = builder.get_object("hamburger")
+        hamburger.bind_model(
+            create_hamburger_model(self.export_menu.menu, self.tools_menu.menu), None
         )
 
-        def button(label, action_name):
-            b = Gtk.Button.new_with_label(label)
-            b.set_action_name(action_name)
-            b.show()
-            return b
-
-        header = Gtk.HeaderBar()
-        header.set_show_close_button(True)
-        self.window.set_titlebar(header)
-        header.show()
-
-        button_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
-        button_box.get_style_context().add_class("linked")
-        button_box.pack_start(button(gettext("Open"), "app.file-open"), False, False, 0)
-        button_box.pack_start(create_recent_files_button(), False, False, 0)
-        button_box.show()
-        header.pack_start(button_box)
-        b = Gtk.Button.new_from_icon_name(
-            "gaphor-new-diagram-symbolic", Gtk.IconSize.MENU
-        )
-        b.set_action_name("tree-view.create-diagram")
-        b.show()
-        header.pack_start(b)
-
-        header.pack_end(
-            hamburger_menu(
-                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
-            )
-        )
-
-        b = Gtk.MenuButton.new()
-        image = Gtk.Image.new_from_icon_name(
-            "document-edit-symbolic", Gtk.IconSize.MENU
-        )
-        b.add(image)
-        b.set_action_name("win.show-editors")
-        b.show_all()
-        header.pack_end(b)
+        recent_files = builder.get_object("recent-files")
+        recent_files.bind_model(create_recent_files_model(), None)
 
         self.set_title()
 
@@ -215,7 +173,7 @@ class MainWindow(Service, ActionProvider):
         self.window.insert_action_group("win", action_group)
         self.window.add_accel_group(accel_group)
 
-        self.window.present()
+        self.window.show_all()
 
         self.window.connect("notify::is-active", self._on_window_active)
         self.window.connect("delete-event", self._on_window_delete)
