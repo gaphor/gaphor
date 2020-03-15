@@ -2,13 +2,13 @@
 
 import importlib.resources
 import logging
-from typing import Optional
+from typing import Optional, Set, Tuple
 
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler, gettext
-from gaphor.diagram.propertypages import PropertyPages
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Presentation
@@ -84,12 +84,11 @@ class ElementEditor(UIComponent, ActionProvider):
         adaptermap = {}
         if item.subject:
             for adapter in PropertyPages(item.subject):
-                adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
+                adaptermap[(adapter.order, adapter.__class__.__name__)] = adapter
         for adapter in PropertyPages(item):
-            adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
+            adaptermap[(adapter.order, adapter.__class__.__name__)] = adapter
 
-        adapters = sorted(adaptermap.values())
-        return adapters
+        return sorted(adaptermap.items())
 
     def create_pages(self, item):
         """
@@ -98,17 +97,15 @@ class ElementEditor(UIComponent, ActionProvider):
         assert self.vbox
         adapters = self._get_adapters(item)
 
-        for _, name, adapter in adapters:
+        for (_, name), adapter in adapters:
             try:
                 page = adapter.construct()
-                if page is None:
+                if not page:
                     continue
                 elif isinstance(page, Gtk.Expander):
                     page.set_expanded(self._expanded_pages.get(name, True))
                     page.connect_after("activate", self.on_expand, name)
-                    self.vbox.pack_start(page, False, True, 0)
-                else:
-                    self.vbox.pack_start(page, False, True, 0)
+                self.vbox.pack_start(page, False, True, 0)
                 page.show_all()
             except Exception:
                 log.error(

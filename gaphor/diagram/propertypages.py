@@ -38,13 +38,13 @@ from gaphor.core import gettext, transactional
 from gaphor.UML.element import DummyEventWatcher
 
 
-def new_builder(object_id):
+def new_builder(*object_ids):
     builder = Gtk.Builder()
     builder.set_translation_domain("gaphor")
     with importlib.resources.path(
         "gaphor.diagram", "propertypages.glade"
     ) as glade_file:
-        builder.add_objects_from_file(str(glade_file), [object_id])
+        builder.add_objects_from_file(str(glade_file), object_ids)
     return builder
 
 
@@ -328,35 +328,6 @@ class UMLComboModel(Gtk.ListStore):
         return self._data[index][1]
 
 
-def create_uml_combo(data, callback):
-    """
-    Create a combo box using ``UMLComboModel`` model.
-
-    Combo box is returned.
-    """
-    model = UMLComboModel(data)
-    combo = Gtk.ComboBox(model=model)
-    cell = Gtk.CellRendererText()
-    combo.pack_start(cell, True)
-    combo.add_attribute(cell, "text", 0)
-    combo.connect("changed", callback)
-    return combo
-
-
-def create_hbox_label(adapter, page, label):
-    """
-    Create a HBox with a label for given property page adapter and page
-    itself.
-    """
-    hbox = Gtk.HBox(spacing=12)
-    label = Gtk.Label(label=label)
-    # label.set_alignment(0.0, 0.5)
-    adapter.size_group.add_widget(label)
-    hbox.pack_start(label, False, True, 0)
-    page.pack_start(hbox, False, True, 0)
-    return hbox
-
-
 @PropertyPages.register(UML.NamedElement)
 class NamedElementPropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
@@ -375,9 +346,11 @@ class NamedElementPropertyPage(PropertyPageBase):
         )
         self.subject = subject
         self.watcher = subject.watcher() if subject else DummyEventWatcher()
-        self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
+        if UML.model.is_metaclass(self.subject):
+            return
+
         builder = new_builder("named-element-editor")
 
         subject = self.subject
@@ -428,7 +401,6 @@ class LineStylePage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.horizontal_button: Gtk.Button
 
     def construct(self):

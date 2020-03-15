@@ -353,6 +353,28 @@ Use -/= to move items up or down.</property>
       </object>
     </child>
   </object>
+  <object class="GtkBox" id="classifier-editor">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="margin_top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkCheckButton" id="abstract">
+        <property name="label" translatable="yes">Abstract</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="draw_indicator">True</property>
+        <signal name="toggled" handler="abstract-changed" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+  </object>
   <object class="GtkBox" id="comment-editor">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -658,29 +680,6 @@ Use -/= to move items up or down.</property>
       </packing>
     </child>
   </object>
-  <object class="GtkListStore" id="metaclass-model">
-    <columns>
-      <!-- column-name class -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Class</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Interface</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Element</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkEntryCompletion" id="metaclass-completion">
-    <property name="model">metaclass-model</property>
-    <property name="text_column">0</property>
-    <property name="inline_completion">True</property>
-    <property name="inline_selection">True</property>
-  </object>
   <object class="GtkBox" id="metaclass-editor">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -703,16 +702,16 @@ Use -/= to move items up or down.</property>
       </packing>
     </child>
     <child>
-      <object class="GtkComboBox">
+      <object class="GtkComboBoxText" id="metaclass-combo">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="model">metaclass-model</property>
         <property name="has_entry">True</property>
-        <property name="entry_text_column">0</property>
+        <signal name="changed" handler="metaclass-combo-changed" swapped="no"/>
+        <signal name="destroy" handler="metaclass-combo-destroy" swapped="no"/>
         <child internal-child="entry">
           <object class="GtkEntry">
-            <property name="can_focus">False</property>
-            <property name="completion">metaclass-completion</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">NamedElement</property>
           </object>
         </child>
       </object>
