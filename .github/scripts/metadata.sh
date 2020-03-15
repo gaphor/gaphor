@@ -7,7 +7,7 @@ if ! [ -x "$(command -v poetry)" ]; then
 fi
 VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 
-if [[ "$GITHUB_REF" =~ /refs/tags/.* && "$TAG" == "$VERSION" ]]
+if [[ "$GITHUB_REF" =~ \/refs\/tags\/.* && "$TAG" == "$VERSION" ]]
 then
     REV=""
     RELEASE="true"
