@@ -3,26 +3,22 @@
 toolitemgroup > button {
     border-width: 1px 0px 0px 0px;
     border-radius: 0px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     background-image: none;
     box-shadow: none;
+}
+
+toolitemgroup:first-child > button {
+    border-width: 0px;
 }
 
 #no-item-selected {
     padding: 12px;
 }
 
-#elementeditor {
-    padding-top: 2px;
-}
-    
-#elementeditor label {
-    padding: 2px;
-}
-
-#elementeditor > label {
-    padding-bottom: 6px;
+#diagrams {
+    border-top-width: 0px;
 }
 
 #diagram-tab {
