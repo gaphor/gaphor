@@ -244,15 +244,15 @@ def on_bool_cell_edited(renderer, path, model, col):
 @transactional
 def on_keypress_event(tree, event):
     k = Gdk.keyval_name(event.keyval).lower()
-    if k == "backspace" or k == "kp_delete":
+    if k in ("backspace", "delete"):
         model, iter = tree.get_selection().get_selected()
         if iter:
             model.remove(iter)
-    elif k == "equal" or k == "kp_add":
+    elif k in ("equal", "plus"):
         model, iter = tree.get_selection().get_selected()
         model.swap(iter, model.iter_next(iter))
         return True
-    elif k == "minus":
+    elif k in ("minus", "underscore"):
         model, iter = tree.get_selection().get_selected()
         model.swap(iter, model.iter_previous(iter))
         return True
