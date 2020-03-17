@@ -226,32 +226,6 @@ class EditableTreeModel(Gtk.ListStore):
 
 
 @transactional
-def remove_on_keypress(tree, event):
-    """Remove selected items from GTK model on ``backspace`` keypress."""
-
-    k = Gdk.keyval_name(event.keyval).lower()
-    if k == "backspace" or k == "kp_delete":
-        model, iter = tree.get_selection().get_selected()
-        if iter:
-            model.remove(iter)
-
-
-@transactional
-def swap_on_keypress(tree, event):
-    """Swap selected and previous (or next) items."""
-
-    k = Gdk.keyval_name(event.keyval).lower()
-    if k == "equal" or k == "kp_add":
-        model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_next(iter))
-        return True
-    elif k == "minus":
-        model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_previous(iter))
-        return True
-
-
-@transactional
 def on_text_cell_edited(renderer, path, value, model, col=0):
     """Update editable tree model based on fresh user input."""
 
@@ -377,16 +351,6 @@ class NamedElementPropertyPage(PropertyPageBase):
     @transactional
     def _on_name_changed(self, entry):
         self.subject.name = entry.get_text()
-
-
-class NamedItemPropertyPage(NamedElementPropertyPage):
-    """
-    Base class for named _diagram item_ based adapters.
-    """
-
-    def __init__(self, item):
-        self.item = item
-        super().__init__(item.subject)
 
 
 @PropertyPages.register(gaphas.item.Line)
