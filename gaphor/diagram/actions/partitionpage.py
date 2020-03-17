@@ -4,34 +4,32 @@ from gi.repository import Gtk
 
 from gaphor.core import gettext, transactional
 from gaphor.diagram.actions.partition import PartitionItem
-from gaphor.diagram.propertypages import NamedItemPropertyPage, PropertyPages
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
 @PropertyPages.register(PartitionItem)
-class PartitionPropertyPage(NamedItemPropertyPage):
+class PartitionPropertyPage(PropertyPageBase):
     """Partition property page."""
+
+    order = 15
+
+    def __init__(self, item):
+        self.item = item
 
     def construct(self):
         item = self.item
 
-        page = super().construct()
+        if item.toplevel:
+            return
 
-        if item.subject:
-            if not item._toplevel:
-                hbox = Gtk.HBox(spacing=12)
-                button = Gtk.CheckButton(gettext("External"))
-                button.set_active(item.subject.isExternal)
-                button.connect("toggled", self._on_external_change)
-                hbox.pack_start(button, True, True, 0)
-                page.pack_start(hbox, False, True, 0)
-            else:
-                pass
-                # hbox = Gtk.HBox(spacing=12)
-                # button = Gtk.CheckButton(_('Dimension'))
-                # button.set_active(item.subject.isDimension)
-                # button.connect('toggled', self._on_dimension_change)
+        builder = new_builder("partition-editor")
 
-        return page
+        external = builder.get_object("external")
+        external.set_active(item.subject.isExternal)
+
+        builder.connect_signals({"external-changed": (self._on_external_change,)})
+
+        return builder.get_object("partition-editor")
 
     @transactional
     def _on_external_change(self, button):
