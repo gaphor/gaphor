@@ -15,7 +15,6 @@ from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_bu
 class TransitionPropertyPage(PropertyPageBase):
     """Transition property page allows to edit guard specification."""
 
-    name = "Transition"
     order = 15
 
     subject: UML.Transition
@@ -61,7 +60,6 @@ class TransitionPropertyPage(PropertyPageBase):
 class StatePropertyPage(PropertyPageBase):
     """State property page."""
 
-    name = "State"
     order = 15
     subject: UML.State
 

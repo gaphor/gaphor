@@ -8,7 +8,6 @@ from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_bu
 @PropertyPages.register(UML.Component)
 class ComponentPropertyPage(PropertyPageBase):
 
-    name = "Component"
     order = 15
 
     subject: UML.Component

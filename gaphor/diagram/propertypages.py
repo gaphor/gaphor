@@ -81,8 +81,7 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
     A property page which can display itself in a notebook
     """
 
-    order = 0  # Order number, used for ordered display
-    name = "Properties"
+    order = 100  # Order number, used for ordered display
 
     def __init__(self):
         super().__init__()
@@ -395,8 +394,6 @@ class LineStylePage(PropertyPageBase):
     """Basic line style properties: color, orthogonal, etc."""
 
     order = 400
-
-    name = "Style"
 
     def __init__(self, item):
         super().__init__()

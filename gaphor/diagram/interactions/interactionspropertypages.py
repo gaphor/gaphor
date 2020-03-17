@@ -20,7 +20,6 @@ class MessagePropertyPage(PropertyPageBase):
     be added. On sequence diagram sort of message can be changed.
     """
 
-    name = "Message"
     order = 15
 
     MESSAGE_SORT = [

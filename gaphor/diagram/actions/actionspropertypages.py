@@ -12,7 +12,6 @@ from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_bu
 @PropertyPages.register(ObjectNodeItem)
 class ObjectNodePropertyPage(PropertyPageBase):
 
-    name = "ObjectNode"
     order = 15
 
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
@@ -67,7 +66,6 @@ class ObjectNodePropertyPage(PropertyPageBase):
 @PropertyPages.register(ForkNodeItem)
 class ForkNodePropertyPage(PropertyPageBase):
 
-    name = "ForkNode"
     order = 20
 
     def __init__(self, item):
@@ -94,7 +92,6 @@ class ForkNodePropertyPage(PropertyPageBase):
 @PropertyPages.register(UML.JoinNode)
 class JoinNodePropertyPage(PropertyPageBase):
 
-    name = "JoinNode"
     order = 15
 
     subject: UML.JoinNode
@@ -127,7 +124,6 @@ class JoinNodePropertyPage(PropertyPageBase):
 class FlowPropertyPageAbstract(PropertyPageBase):
     """Flow item element editor."""
 
-    name = "flow"
     order = 15
 
     subject: UML.ActivityEdge

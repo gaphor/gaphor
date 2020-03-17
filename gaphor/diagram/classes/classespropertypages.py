@@ -126,7 +126,6 @@ class ClassifierPropertyPage(PropertyPageBase):
 class InterfacePropertyPage(PropertyPageBase):
     """Adapter which shows a property page for an interface view."""
 
-    name = "Interface"
     order = 15
 
     def __init__(self, item):
@@ -166,7 +165,6 @@ class AttributesPage(PropertyPageBase):
     """An editor for attributes associated with classes and interfaces."""
 
     order = 20
-    name = "Attributes"
 
     def __init__(self, item):
         super().__init__()
@@ -228,7 +226,6 @@ class OperationsPage(PropertyPageBase):
     """An editor for operations associated with classes and interfaces."""
 
     order = 30
-    name = "Operations"
 
     def __init__(self, item):
         super().__init__()
@@ -368,8 +365,6 @@ class AssociationPropertyPage(PropertyPageBase):
 
     NAVIGABILITY = (None, False, True)
     AGGREGATION = ("none", "shared", "composite")
-
-    name = "Association"
 
     order = 20
 

@@ -13,7 +13,6 @@ from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_bu
 class StereotypePage(PropertyPageBase):
 
     order = 40
-    name = "Stereotypes"
 
     def __init__(self, item):
         self.item = item

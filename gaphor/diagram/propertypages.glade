@@ -683,6 +683,7 @@ Use -/= to move items up or down.</property>
   <object class="GtkBox" id="metaclass-editor">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>

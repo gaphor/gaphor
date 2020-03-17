@@ -18,6 +18,8 @@ class MetaclassPropertyPage(PropertyPageBase):
     Also handles metaclasses.
     """
 
+    order = 10
+
     subject: UML.Class
 
     CLASSES = list(
