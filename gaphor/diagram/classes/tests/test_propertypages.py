@@ -13,6 +13,6 @@ class ClassPropertyPagesTestCase(TestCase):
         model.append([None, False, None])
         path = Gtk.TreePath.new_first()
         iter = model.get_iter(path)
-        model.set_value(iter, col=0, value="attr")
+        model.update(iter, col=0, value="attr")
 
         assert model[iter][-1] is class_item.subject.ownedAttribute[0]

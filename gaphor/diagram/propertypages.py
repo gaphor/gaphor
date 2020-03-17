@@ -30,6 +30,7 @@ import importlib
 from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
+from gaphas.decorators import AsyncIO
 from gaphas.segment import Segment
 from gi.repository import Gdk, GObject, Gtk
 
@@ -129,13 +130,6 @@ class EditableTreeModel(Gtk.ListStore):
             self.append(data)
         self._add_empty()
 
-    def refresh(self, obj):
-        for row in self:
-            if row[-1] is obj:
-                self._set_object_value(row, len(row) - 1, obj)
-                self.row_changed(row.path, row.iter)
-                return
-
     def _get_rows(self):
         """Return rows to be edited.
 
@@ -191,11 +185,11 @@ class EditableTreeModel(Gtk.ListStore):
         self.append([None] * self.get_n_columns())
 
     @transactional
-    def set_value(self, iter, col, value):
-        row = self[iter][:]
+    def update(self, iter, col, value):
+        row = self[iter]
 
         if col == 0 and not value and row[-1]:
-            # kill row and delete object if text of first column is empty
+            # delete row and object if text of first column is empty
             self.remove(iter)
 
         elif col == 0 and value and not row[-1]:
@@ -207,10 +201,6 @@ class EditableTreeModel(Gtk.ListStore):
 
         elif row[-1]:
             self._set_object_value(row, col, value)
-
-        self.set(iter, list(range(len(row))), row)
-
-        self.set(iter, list(range(len(row))), row)
 
     def remove(self, iter):
         """
@@ -230,7 +220,7 @@ def on_text_cell_edited(renderer, path, value, model, col=0):
     """Update editable tree model based on fresh user input."""
 
     iter = model.get_iter(path)
-    model.set_value(iter, col, value)
+    model.update(iter, col, value)
 
 
 @transactional
@@ -238,7 +228,7 @@ def on_bool_cell_edited(renderer, path, model, col):
     """Update editable tree model based on fresh user input."""
 
     iter = model.get_iter(path)
-    model.set_value(iter, col, renderer.get_active())
+    model.update(iter, col, renderer.get_active())
 
 
 @transactional

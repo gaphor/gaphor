@@ -276,6 +276,7 @@ renderers and such.</property>
             <property name="shadow_type">in</property>
             <child>
               <object class="GtkTreeView" id="attributes-list">
+                <property name="height_request">112</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="tooltip_text" translatable="yes">Add and edit class attributes according to UML syntax.
@@ -864,6 +865,7 @@ Use -/= to move items up or down.</property>
             <property name="shadow_type">in</property>
             <child>
               <object class="GtkTreeView" id="operations-list">
+                <property name="height_request">112</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="tooltip_text" translatable="yes">Add and edit class operations according to UML syntax. Operation syntax examples
