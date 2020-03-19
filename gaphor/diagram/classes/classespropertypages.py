@@ -187,7 +187,7 @@ class AttributesPage(PropertyPageBase):
         tree_view.set_model(self.model)
 
         def handler(event):
-            print("should update model here")
+            print("TODO: should update model here")
 
         self.watcher.watch("ownedAttribute.name", handler).watch(
             "ownedAttribute.isDerived", handler
@@ -371,25 +371,32 @@ class AssociationPropertyPage(PropertyPageBase):
     def __init__(self, item):
         self.item = item
         self.subject = self.item.subject
-        self.watcher = self.item.watcher()
+        self.watcher = self.subject.watcher()
+        self.semaphore = 0
 
     def construct_end(self, builder, end_name, end):
         title = builder.get_object(f"{end_name}-title")
         title.set_text(f"{end_name.title()} (: {end.subject.type.name})")
 
-        name = builder.get_object(f"{end_name}-name")
-        name.set_text(
-            UML.format(
-                end.subject, visibility=True, is_derived=True, multiplicity=True,
-            )
-            or ""
-        )
+        self.update_end_name(builder, end_name, end.subject)
 
         navigation = builder.get_object(f"{end_name}-navigation")
         navigation.set_active(self.NAVIGABILITY.index(end.subject.navigability))
 
         aggregation = builder.get_object(f"{end_name}-aggregation")
         aggregation.set_active(self.AGGREGATION.index(end.subject.aggregation))
+
+    def update_end_name(self, builder, end_name, subject):
+        name = builder.get_object(f"{end_name}-name")
+        new_name = (
+            UML.format(subject, visibility=True, is_derived=True, multiplicity=True,)
+            or ""
+        )
+        if not name.is_focus() and not self.semaphore:
+            self.semaphore += 1
+            name.set_text(new_name)
+            self.semaphore -= 1
+        return name
 
     def construct(self):
         if not self.subject:
@@ -407,12 +414,17 @@ class AssociationPropertyPage(PropertyPageBase):
         self.construct_end(builder, "tail", tail)
 
         def handler(event):
-            print("TODO: association end handlers")
+            end_name = "head" if event.element is head.subject else "tail"
+            self.update_end_name(builder, end_name, event.element)
 
         # Watch on association end:
-        # self.watcher.watch("name", handler).watch("aggregation", handler).watch(
-        #     "visibility", handler
-        # ).watch("lowerValue", handler).watch("upperValue", handler).subscribe_all()
+        self.watcher.watch("memberEnd[Property].name", handler).watch(
+            "memberEnd[Property].aggregation", handler
+        ).watch("memberEnd[Property].visibility", handler).watch(
+            "memberEnd[Property].lowerValue", handler
+        ).watch(
+            "memberEnd[Property].upperValue", handler
+        ).subscribe_all()
 
         builder.connect_signals(
             {
@@ -440,7 +452,10 @@ class AssociationPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_end_name_change(self, entry, end):
-        UML.parse(end.subject, entry.get_text())
+        if not self.semaphore:
+            self.semaphore += 1
+            UML.parse(end.subject, entry.get_text())
+            self.semaphore -= 1
 
     @transactional
     def _on_end_navigability_change(self, combo, end):
