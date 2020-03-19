@@ -187,7 +187,10 @@ class AttributesPage(PropertyPageBase):
         tree_view.set_model(self.model)
 
         def handler(event):
-            print("TODO: should update model here")
+            attribute = event.element
+            for row in self.model:
+                if row[-1] is attribute:
+                    row[:] = [UML.format(attribute), attribute.isStatic, attribute]
 
         self.watcher.watch("ownedAttribute.name", handler).watch(
             "ownedAttribute.isDerived", handler
@@ -247,7 +250,15 @@ class OperationsPage(PropertyPageBase):
         tree_view.set_model(self.model)
 
         def handler(event):
-            print("TODO: operations handler")
+            operation = event.element
+            for row in self.model:
+                if row[-1] is operation:
+                    row[:] = [
+                        UML.format(operation),
+                        operation.isAbstract,
+                        operation.isStatic,
+                        operation,
+                    ]
 
         self.watcher.watch("ownedOperation.name", handler).watch(
             "ownedOperation.isAbstract", handler
