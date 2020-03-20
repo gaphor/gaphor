@@ -50,6 +50,10 @@ class PartitionItem(ElementPresentation, Named):
         self.min_width = 100
         self.min_height = 300
 
+    @property
+    def toplevel(self):
+        return self._toplevel
+
     def pre_update(self, context):
         assert self.canvas
 

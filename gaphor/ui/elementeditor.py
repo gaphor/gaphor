@@ -1,13 +1,14 @@
 """The element editor is a utility window used for editing elements."""
 
+import importlib.resources
 import logging
-from typing import Optional
+from typing import Optional, Set, Tuple
 
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
-from gaphor.core import action, event_handler, gettext, primary
-from gaphor.diagram.propertypages import PropertyPages
+from gaphor.core import action, event_handler, gettext
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Presentation
@@ -16,79 +17,12 @@ from gaphor.UML.event import AssociationUpdated
 log = logging.getLogger(__name__)
 
 
-def icon_button(icon_name, action_name, tooltip_text=None):
-    b = Gtk.Button()
-    image = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-    b.add(image)
-    b.set_action_name(action_name)
-    if tooltip_text:
-        b.set_tooltip_text(tooltip_text)
-    b.show_all()
-    return b
-
-
-def undo_buttons():
-    box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
-    box.get_style_context().add_class("linked")
-    box.pack_start(
-        icon_button(
-            "edit-undo-symbolic",
-            "win.edit-undo",
-            gettext("Undo") + f" ({primary()}+Z)",
-        ),
-        False,
-        False,
-        0,
-    )
-    box.pack_start(
-        icon_button(
-            "edit-redo-symbolic",
-            "win.edit-redo",
-            gettext("Redo") + f" ({primary()}+Shift+Z)",
-        ),
-        False,
-        True,
-        0,
-    )
-    box.show()
-    return box
-
-
-def zoom_buttons():
-    box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
-    box.get_style_context().add_class("linked")
-    box.pack_start(
-        icon_button(
-            "zoom-in-symbolic",
-            "diagram.zoom-in",
-            gettext("Zoom in") + f" ({primary()}++)",
-        ),
-        False,
-        False,
-        0,
-    )
-    box.pack_start(
-        icon_button(
-            "zoom-original-symbolic",
-            "diagram.zoom-100",
-            gettext("Zoom 100%") + f" ({primary()}+0)",
-        ),
-        False,
-        False,
-        0,
-    )
-    box.pack_start(
-        icon_button(
-            "zoom-out-symbolic",
-            "diagram.zoom-out",
-            gettext("Zoom out") + f" ({primary()}+-)",
-        ),
-        False,
-        False,
-        0,
-    )
-    box.show()
-    return box
+def new_builder():
+    builder = Gtk.Builder()
+    builder.set_translation_domain("gaphor")
+    with importlib.resources.path("gaphor.ui", "elementeditor.glade") as glade_file:
+        builder.add_from_file(str(glade_file))
+    return builder
 
 
 class ElementEditor(UIComponent, ActionProvider):
@@ -112,25 +46,10 @@ class ElementEditor(UIComponent, ActionProvider):
 
     def open(self):
         """Display the ElementEditor pane."""
+        builder = new_builder()
 
-        vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 2)
-
-        toolbar = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
-        toolbar.pack_start(undo_buttons(), False, False, 0)
-        toolbar.pack_end(zoom_buttons(), False, False, 0)
-        vbox.pack_start(toolbar, False, False, 0)
-        toolbar.show()
-
-        sep = Gtk.Separator.new(Gtk.Orientation.HORIZONTAL)
-        vbox.pack_start(sep, False, False, 0)
-        sep.show()
-
-        label = Gtk.Label.new(gettext("Element Editor"))
-        vbox.pack_start(label, False, False, 0)
-        label.show()
-
-        vbox.show()
-        self.vbox = vbox
+        self.revealer = builder.get_object("elementeditor")
+        self.vbox = builder.get_object("editors")
 
         current_view = self.diagrams.get_current_view()
         self._selection_change(focused_item=current_view and current_view.focused_item)
@@ -139,13 +58,9 @@ class ElementEditor(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._selection_change)
         self.event_manager.subscribe(self._element_changed)
 
-        revealer = Gtk.Revealer.new()
-        revealer.add(vbox)
-        revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_LEFT)
-        revealer.show()
-        self.revealer = revealer
+        self.revealer.show_all()
 
-        return revealer
+        return self.revealer
 
     @action(name="win.show-editors", shortcut="<Primary>e", state=False)
     def toggle_editor_visibility(self, active):
@@ -169,12 +84,11 @@ class ElementEditor(UIComponent, ActionProvider):
         adaptermap = {}
         if item.subject:
             for adapter in PropertyPages(item.subject):
-                adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
+                adaptermap[(adapter.order, adapter.__class__.__name__)] = adapter
         for adapter in PropertyPages(item):
-            adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
+            adaptermap[(adapter.order, adapter.__class__.__name__)] = adapter
 
-        adapters = sorted(adaptermap.values())
-        return adapters
+        return sorted(adaptermap.items())
 
     def create_pages(self, item):
         """
@@ -183,26 +97,15 @@ class ElementEditor(UIComponent, ActionProvider):
         assert self.vbox
         adapters = self._get_adapters(item)
 
-        first = True
-        for _, name, adapter in adapters:
+        for (_, name), adapter in adapters:
             try:
                 page = adapter.construct()
-                if page is None:
+                if not page:
                     continue
-                elif isinstance(page, Gtk.Container):
-                    page.set_border_width(6)
-                if first:
-                    self.vbox.pack_start(page, False, True, 0)
-                    first = False
-                else:
-                    expander = Gtk.Expander()
-                    expander.set_use_markup(True)
-                    expander.set_label(f"<b>{name}</b>")
-                    expander.add(page)
-                    expander.show_all()
-                    expander.set_expanded(self._expanded_pages.get(name, True))
-                    expander.connect_after("activate", self.on_expand, name)
-                    self.vbox.pack_start(expander, False, True, 0)
+                elif isinstance(page, Gtk.Expander):
+                    page.set_expanded(self._expanded_pages.get(name, True))
+                    page.connect_after("activate", self.on_expand, name)
+                self.vbox.pack_start(page, False, True, 0)
                 page.show_all()
             except Exception:
                 log.error(
@@ -214,7 +117,7 @@ class ElementEditor(UIComponent, ActionProvider):
         Remove all tabs from the notebook.
         """
         assert self.vbox
-        for page in self.vbox.get_children()[3:]:
+        for page in self.vbox.get_children():
             page.destroy()
 
     def on_expand(self, widget, name):

@@ -2,14 +2,12 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
 @PropertyPages.register(UML.Comment)
 class CommentItemPropertyPage(PropertyPageBase):
     """Property page for Comments."""
-
-    order = 0
 
     def __init__(self, subject):
         self.subject = subject
@@ -17,29 +15,17 @@ class CommentItemPropertyPage(PropertyPageBase):
 
     def construct(self):
         subject = self.subject
-        page = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
 
         if not subject:
-            return page
+            return
 
-        label = Gtk.Label(label=gettext("Comment"))
-        label.set_justify(Gtk.Justification.LEFT)
-        page.pack_start(label, False, True, 0)
+        builder = new_builder("comment-editor")
+        text_view = builder.get_object("comment")
 
         buffer = Gtk.TextBuffer()
         if subject.body:
             buffer.set_text(subject.body)
-        text_view = Gtk.TextView()
         text_view.set_buffer(buffer)
-        text_view.set_size_request(-1, 100)
-
-        frame = Gtk.Frame()
-        frame.add(text_view)
-
-        text_view.show()
-        frame.show()
-
-        page.pack_start(frame, True, True, 0)
 
         changed_id = buffer.connect("changed", self._on_body_change)
 
@@ -52,7 +38,7 @@ class CommentItemPropertyPage(PropertyPageBase):
         self.watcher.watch("body", handler).subscribe_all()
         text_view.connect("destroy", self.watcher.unsubscribe_all)
 
-        return page
+        return builder.get_object("comment-editor")
 
     @transactional
     def _on_body_change(self, buffer):

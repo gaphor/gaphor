@@ -42,13 +42,16 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
         end_item = item.tail_end
 
     if end_item:
-        text = UML.format(
-            end_item.subject,
-            visibility=True,
-            is_derived=True,
-            type=True,
-            multiplicity=True,
-            default=True,
+        text = (
+            UML.format(
+                end_item.subject,
+                visibility=True,
+                is_derived=True,
+                type=True,
+                multiplicity=True,
+                default=True,
+            )
+            or ""
         )
         entry = popup_entry(text, update_end_text)
         bb = end_item.name_bounds

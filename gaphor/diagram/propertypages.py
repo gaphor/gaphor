@@ -26,15 +26,27 @@ TODO:
 """
 
 import abc
+import importlib
 from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
+from gaphas.decorators import AsyncIO
 from gaphas.segment import Segment
 from gi.repository import Gdk, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.UML.element import DummyEventWatcher
+
+
+def new_builder(*object_ids):
+    builder = Gtk.Builder()
+    builder.set_translation_domain("gaphor")
+    with importlib.resources.path(
+        "gaphor.diagram", "propertypages.glade"
+    ) as glade_file:
+        builder.add_objects_from_file(str(glade_file), object_ids)
+    return builder
 
 
 class _PropertyPages:
@@ -70,8 +82,10 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
     A property page which can display itself in a notebook
     """
 
-    order = 0  # Order number, used for ordered display
-    name = "Properties"
+    order = 100  # Order number, used for ordered display
+
+    def __init__(self):
+        super().__init__()
 
     @abc.abstractmethod
     def construct(self):
@@ -115,13 +129,6 @@ class EditableTreeModel(Gtk.ListStore):
         for data in self._get_rows():
             self.append(data)
         self._add_empty()
-
-    def refresh(self, obj):
-        for row in self:
-            if row[-1] is obj:
-                self._set_object_value(row, len(row) - 1, obj)
-                self.row_changed(row.path, row.iter)
-                return
 
     def _get_rows(self):
         """Return rows to be edited.
@@ -178,11 +185,11 @@ class EditableTreeModel(Gtk.ListStore):
         self.append([None] * self.get_n_columns())
 
     @transactional
-    def set_value(self, iter, col, value):
-        row = self[iter][:]
+    def update(self, iter, col, value):
+        row = self[iter]
 
         if col == 0 and not value and row[-1]:
-            # kill row and delete object if text of first column is empty
+            # delete row and object if text of first column is empty
             self.remove(iter)
 
         elif col == 0 and value and not row[-1]:
@@ -194,10 +201,6 @@ class EditableTreeModel(Gtk.ListStore):
 
         elif row[-1]:
             self._set_object_value(row, col, value)
-
-        self.set(iter, list(range(len(row))), row)
-
-        self.set(iter, list(range(len(row))), row)
 
     def remove(self, iter):
         """
@@ -213,37 +216,11 @@ class EditableTreeModel(Gtk.ListStore):
 
 
 @transactional
-def remove_on_keypress(tree, event):
-    """Remove selected items from GTK model on ``backspace`` keypress."""
-
-    k = Gdk.keyval_name(event.keyval).lower()
-    if k == "backspace" or k == "kp_delete":
-        model, iter = tree.get_selection().get_selected()
-        if iter:
-            model.remove(iter)
-
-
-@transactional
-def swap_on_keypress(tree, event):
-    """Swap selected and previous (or next) items."""
-
-    k = Gdk.keyval_name(event.keyval).lower()
-    if k == "equal" or k == "kp_add":
-        model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_next(iter))
-        return True
-    elif k == "minus":
-        model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_previous(iter))
-        return True
-
-
-@transactional
 def on_text_cell_edited(renderer, path, value, model, col=0):
     """Update editable tree model based on fresh user input."""
 
     iter = model.get_iter(path)
-    model.set_value(iter, col, value)
+    model.update(iter, col, value)
 
 
 @transactional
@@ -251,7 +228,24 @@ def on_bool_cell_edited(renderer, path, model, col):
     """Update editable tree model based on fresh user input."""
 
     iter = model.get_iter(path)
-    model.set_value(iter, col, renderer.get_active())
+    model.update(iter, col, renderer.get_active())
+
+
+@transactional
+def on_keypress_event(tree, event):
+    k = Gdk.keyval_name(event.keyval).lower()
+    if k in ("backspace", "delete"):
+        model, iter = tree.get_selection().get_selected()
+        if iter:
+            model.remove(iter)
+    elif k in ("equal", "plus"):
+        model, iter = tree.get_selection().get_selected()
+        model.swap(iter, model.iter_next(iter))
+        return True
+    elif k in ("minus", "underscore"):
+        model, iter = tree.get_selection().get_selected()
+        model.swap(iter, model.iter_previous(iter))
+        return True
 
 
 class UMLComboModel(Gtk.ListStore):
@@ -297,89 +291,6 @@ class UMLComboModel(Gtk.ListStore):
         return self._data[index][1]
 
 
-def create_uml_combo(data, callback):
-    """
-    Create a combo box using ``UMLComboModel`` model.
-
-    Combo box is returned.
-    """
-    model = UMLComboModel(data)
-    combo = Gtk.ComboBox(model=model)
-    cell = Gtk.CellRendererText()
-    combo.pack_start(cell, True)
-    combo.add_attribute(cell, "text", 0)
-    combo.connect("changed", callback)
-    return combo
-
-
-def create_hbox_label(adapter, page, label):
-    """
-    Create a HBox with a label for given property page adapter and page
-    itself.
-    """
-    hbox = Gtk.HBox(spacing=12)
-    label = Gtk.Label(label=label)
-    # label.set_alignment(0.0, 0.5)
-    adapter.size_group.add_widget(label)
-    hbox.pack_start(label, False, True, 0)
-    page.pack_start(hbox, False, True, 0)
-    return hbox
-
-
-def create_tree_view(model, names, tip="", ro_cols=None):
-    """
-    Create a tree view for an editable tree model.
-
-    :Parameters:
-     model
-        Model, for which tree view is created.
-     names
-        Names of columns.
-     tip
-        User interface tool tip for tree view.
-     ro_cols
-        Collection of indices pointing read only columns.
-    """
-    if ro_cols is None:
-        ro_cols = set()
-
-    tree_view = Gtk.TreeView(model=model)
-    tree_view.set_search_column(-1)
-
-    n = model.get_n_columns() - 1
-    for name, i in zip(names, list(range(n))):
-        col_type = model.get_column_type(i)
-        if col_type == GObject.TYPE_STRING:
-            renderer = Gtk.CellRendererText()
-            renderer.set_property("editable", i not in ro_cols)
-            renderer.set_property("is-expanded", True)
-            renderer.connect("edited", on_text_cell_edited, model, i)
-            col = Gtk.TreeViewColumn(name, renderer, text=i)
-            col.set_expand(True)
-            tree_view.append_column(col)
-        elif col_type == GObject.TYPE_BOOLEAN:
-            renderer = Gtk.CellRendererToggle()
-            renderer.set_property("activatable", i not in ro_cols)
-            renderer.connect("toggled", on_bool_cell_edited, model, i)
-            col = Gtk.TreeViewColumn(name, renderer, active=i)
-            col.set_expand(False)
-            tree_view.append_column(col)
-
-    tree_view.connect("key_press_event", remove_on_keypress)
-    tree_view.connect("key_press_event", swap_on_keypress)
-
-    tip = (
-        tip
-        + """
-Press ENTER to edit item, BS/DEL to remove item.
-Use -/= to move items up or down.\
-    """
-    )
-    tree_view.set_tooltip_text(tip)
-
-    return tree_view
-
-
 @PropertyPages.register(UML.NamedElement)
 class NamedElementPropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
@@ -392,54 +303,44 @@ class NamedElementPropertyPage(PropertyPageBase):
     NAME_LABEL = gettext("Name")
 
     def __init__(self, subject: UML.NamedElement):
+        super().__init__()
         assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
             subject
         )
         self.subject = subject
         self.watcher = subject.watcher() if subject else DummyEventWatcher()
-        self.size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
     def construct(self):
-        page = Gtk.VBox()
+        if UML.model.is_metaclass(self.subject):
+            return
+
+        builder = new_builder("named-element-editor")
 
         subject = self.subject
         if not subject:
-            return page
+            return
 
-        hbox = create_hbox_label(self, page, self.NAME_LABEL)
-        entry = Gtk.Entry()
+        entry = builder.get_object("name-entry")
         entry.set_text(subject and subject.name or "")
-        hbox.pack_start(entry, True, True, 0)
-        page.default = entry
-
-        # monitor subject.name attribute
-        changed_id = entry.connect("changed", self._on_name_change)
 
         def handler(event):
             if event.element is subject and event.new_value is not None:
-                entry.handler_block(changed_id)
                 entry.set_text(event.new_value)
-                entry.handler_unblock(changed_id)
 
         if self.watcher:
             self.watcher.watch("name", handler).subscribe_all()
-            entry.connect("destroy", self.watcher.unsubscribe_all)
 
-        return page
+        builder.connect_signals(
+            {
+                "name-changed": (self._on_name_changed,),
+                "name-entry-destroyed": (self.watcher.unsubscribe_all,),
+            }
+        )
+        return builder.get_object("named-element-editor")
 
     @transactional
-    def _on_name_change(self, entry):
+    def _on_name_changed(self, entry):
         self.subject.name = entry.get_text()
-
-
-class NamedItemPropertyPage(NamedElementPropertyPage):
-    """
-    Base class for named _diagram item_ based adapters.
-    """
-
-    def __init__(self, item):
-        self.item = item
-        super().__init__(item.subject)
 
 
 @PropertyPages.register(gaphas.item.Line)
@@ -447,47 +348,30 @@ class LineStylePage(PropertyPageBase):
     """Basic line style properties: color, orthogonal, etc."""
 
     order = 400
-    name = "Style"
 
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.horizontal_button: Gtk.Button
 
     def construct(self):
-        page = Gtk.VBox()
+        builder = new_builder("line-editor")
 
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
+        rectilinear_button = builder.get_object("line-rectilinear")
+        rectilinear_button.set_active(self.item.orthogonal)
 
-        button = Gtk.CheckButton(label=gettext("Rectilinear"))
-        button.set_active(self.item.orthogonal)
-        button.connect("toggled", self._on_orthogonal_change)
-        hbox.pack_start(button, True, True, 0)
+        horizontal_button = builder.get_object("flip-orientation")
+        horizontal_button.set_active(self.item.horizontal)
+        horizontal_button.set_sensitive(self.item.orthogonal)
+        self.horizontal_button = horizontal_button
 
-        page.pack_start(hbox, False, True, 0)
-
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
-
-        button = Gtk.CheckButton(label=gettext("Flip orientation"))
-        button.set_active(self.item.horizontal)
-        button.connect("toggled", self._on_horizontal_change)
-        hbox.pack_start(button, True, True, 0)
-
-        button.set_sensitive(self.item.orthogonal)
-        self.horizontal_button = button
-
-        page.pack_start(hbox, False, True, 0)
-
-        return page
+        builder.connect_signals(
+            {
+                "rectilinear-changed": (self._on_orthogonal_change,),
+                "orientation-changed": (self._on_horizontal_change,),
+            }
+        )
+        return builder.get_object("line-editor")
 
     @transactional
     def _on_orthogonal_change(self, button):
