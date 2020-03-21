@@ -10,13 +10,14 @@ import unittest
 from io import StringIO
 from typing import Type, TypeVar
 
-from gaphas.aspect import ConnectionSink, Connector
+from gaphas.aspect import ConnectionSink
+from gaphas.aspect import Connector as ConnectorAspect
 
 # For DiagramItemConnector aspect:
 import gaphor.diagram.diagramtools  # noqa
 from gaphor import UML
-from gaphor.application import Application
-from gaphor.diagram.connectors import IConnect
+from gaphor.application import Session
+from gaphor.diagram.connectors import Connector
 from gaphor.diagram.grouping import Group
 
 T = TypeVar("T")
@@ -30,8 +31,8 @@ class TestCase(unittest.TestCase):
     services = ["event_manager", "component_registry", "element_factory", "sanitizer"]
 
     def setUp(self):
-        Application.init(services=self.services)
-        self.element_factory = Application.get_service("element_factory")
+        self.session = Session(services=self.services)
+        self.element_factory = self.session.get_service("element_factory")
         assert len(list(self.element_factory.select())) == 0, list(
             self.element_factory.select()
         )
@@ -42,10 +43,10 @@ class TestCase(unittest.TestCase):
 
     def tearDown(self):
         self.element_factory.shutdown()
-        Application.shutdown()
+        self.session.shutdown()
 
     def get_service(self, name):
-        return Application.get_service(name)
+        return self.session.get_service(name)
 
     def create(self, item_cls: Type[T], subject_cls=None, subject=None) -> T:
         """
@@ -66,7 +67,7 @@ class TestCase(unittest.TestCase):
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
 
-        adapter = IConnect(item, line)
+        adapter = Connector(item, line)
         return adapter.allow(handle, port)
 
     def connect(self, line, handle, item, port=None):
@@ -82,7 +83,7 @@ class TestCase(unittest.TestCase):
             port = item.ports()[0]
 
         sink = ConnectionSink(item, port)
-        connector = Connector(line, handle)
+        connector = ConnectorAspect(line, handle)
 
         connector.connect(sink)
 

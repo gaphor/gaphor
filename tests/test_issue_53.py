@@ -1,27 +1,27 @@
-import importlib_metadata
 import pytest
 
 from gaphor import UML
-from gaphor.application import Application
+from gaphor.application import Session, distribution
 from gaphor.storage.storage import load
 
 
 @pytest.fixture
-def element_factory():
-    Application.init()
-    element_factory = Application.get_service("element_factory")
-    dist = importlib_metadata.distribution("gaphor")
-    path = dist.locate_file("test-diagrams/issue_53.gaphor")
+def session():
+    session = Session()
+    yield session
+    session.shutdown()
+
+
+@pytest.fixture
+def element_factory(session):
+    element_factory = session.get_service("element_factory")
+    path = distribution().locate_file("test-diagrams/issue_53.gaphor")
     load(path, element_factory)
     yield element_factory
-    Application.get_service("element_factory").shutdown()
-    Application.shutdown()
+    element_factory.shutdown()
 
 
-def test_package_removal(element_factory):
-    # Load the application
-    element_factory = Application.get_service("element_factory")
-
+def test_package_removal(session, element_factory):
     # Find all profile instances
     profiles = element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
 

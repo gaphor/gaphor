@@ -3,9 +3,9 @@ Test GitHub issue #4. Diagram could not be loaded due to JuggleError
 (presumed cyclic resolving of diagram items).
 """
 
-import importlib_metadata
 from gi.repository import GLib, Gtk
 
+from gaphor.application import distribution
 from gaphor.storage.storage import load
 from gaphor.tests import TestCase
 
@@ -24,8 +24,7 @@ class CyclicDiagramTestCase(TestCase):
         This does not nearly resemble the error, since the model should
         be loaded from within the mainloop (which will delay all updates).
         """
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("test-diagrams/diagram-#4.gaphor")
+        path = distribution().locate_file("test-diagrams/diagram-#4.gaphor")
         load(path, self.element_factory)
 
     def test_bug_idle(self):
@@ -38,8 +37,7 @@ class CyclicDiagramTestCase(TestCase):
 
         def handler():
             try:
-                dist = importlib_metadata.distribution("gaphor")
-                path = dist.locate_file("test-diagrams/diagram-#4.gaphor")
+                path = distribution().locate_file("test-diagrams/diagram-#4.gaphor")
                 load(path, self.element_factory)
             finally:
                 Gtk.main_quit()

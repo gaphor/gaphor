@@ -51,7 +51,6 @@ class StatusWindow:
 
         self.progress_bar.set_size_request(400, -1)
 
-        frame.set_shadow_type(Gtk.ShadowType.IN)
         frame.add(vbox)
 
         label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)

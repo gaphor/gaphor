@@ -47,7 +47,7 @@ class AssociationSet(AssociationUpdated):
         element being set.  The old_value parameter is the old association
         and the new_value parameter is the new association."""
 
-        AssociationUpdated.__init__(self, element, association)
+        super().__init__(element, association)
         self.old_value = old_value
         self.new_value = new_value
 
@@ -60,7 +60,7 @@ class AssociationAdded(AssociationUpdated):
         has been added to.  The association parameter is the association
         element being added."""
 
-        AssociationUpdated.__init__(self, element, association)
+        super().__init__(element, association)
         self.new_value = new_value
 
 
@@ -72,7 +72,7 @@ class AssociationDeleted(AssociationUpdated):
         has been deleted from.  The association parameter is the deleted
         association element."""
 
-        AssociationUpdated.__init__(self, element, association)
+        super().__init__(element, association)
         self.old_value = old_value
 
 

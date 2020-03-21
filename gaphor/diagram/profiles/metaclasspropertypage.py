@@ -1,16 +1,8 @@
-"""
-Metaclass item editors.
-"""
-
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import gettext
-from gaphor.diagram.propertypages import (
-    NamedElementPropertyPage,
-    PropertyPages,
-    create_hbox_label,
-)
+from gaphor.core import transactional
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
 def _issubclass(c, b):
@@ -21,62 +13,62 @@ def _issubclass(c, b):
 
 
 @PropertyPages.register(UML.Class)
-class MetaclassNamePropertyPage(NamedElementPropertyPage):
-    """
-    Metaclass name editor. Provides editable combo box entry with
-    predefined list of names of UML classes.
+class MetaclassPropertyPage(PropertyPageBase):
+    """Adapter which shows a property page for a class view.
+    Also handles metaclasses.
     """
 
     order = 10
 
-    NAME_LABEL = gettext("Name")
+    subject: UML.Class
 
     CLASSES = list(
         sorted(
-            n
-            for n in dir(UML)
-            if _issubclass(getattr(UML, n), UML.Element) and n != "Stereotype"
+            c
+            for c in dir(UML)
+            if _issubclass(getattr(UML, c), UML.Element) and c != "Stereotype"
         )
     )
 
+    def __init__(self, subject):
+        self.subject = subject
+        self.watcher = subject.watcher()
+
     def construct(self):
         if not UML.model.is_metaclass(self.subject):
-            return super().construct()
+            return
 
-        page = Gtk.VBox()
+        builder = new_builder("metaclass-editor")
 
-        subject = self.subject
-        if not subject:
-            return page
-
-        hbox = create_hbox_label(self, page, self.NAME_LABEL)
-        model = Gtk.ListStore(str)
+        combo = builder.get_object("metaclass-combo")
         for c in self.CLASSES:
-            model.append([c])
-
-        cb = Gtk.ComboBox.new_with_model_and_entry(model)
+            combo.append_text(c)
 
         completion = Gtk.EntryCompletion()
-        completion.set_model(model)
+        completion.set_model(combo.get_model())
         completion.set_minimum_key_length(1)
         completion.set_text_column(0)
-        cb.get_child().set_completion(completion)
 
-        entry = cb.get_child()
-        entry.set_text(subject and subject.name or "")
-        hbox.pack_start(cb, True, True, 0)
-        page.default = entry
+        entry = combo.get_child()
+        entry.set_completion(completion)
 
-        # monitor subject.name attribute
-        changed_id = entry.connect("changed", self._on_name_change)
+        entry.set_text(self.subject and self.subject.name or "")
 
         def handler(event):
-            if event.element is subject and event.new_value is not None:
-                entry.handler_block(changed_id)
+            if event.element is self.subject and event.new_value is not None:
                 entry.set_text(event.new_value)
-                entry.handler_unblock(changed_id)
 
         self.watcher.watch("name", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
-        page.show_all()
-        return page
+
+        builder.connect_signals(
+            {
+                "metaclass-combo-changed": (self._on_name_changed,),
+                "metaclass-combo-destroy": (self.watcher.unsubscribe_all,),
+            }
+        )
+
+        return builder.get_object("metaclass-editor")
+
+    @transactional
+    def _on_name_changed(self, combo):
+        self.subject.name = combo.get_active_text()

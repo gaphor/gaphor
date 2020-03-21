@@ -1,6 +1,6 @@
 # Gaphor <img src="logos/gaphor.svg" width="48">
 
-[![Build state](https://github.com/gaphor/gaphor/workflows/build/badge.svg)](https://github.com/gaphor/gaphor/actions)
+[![Build state](https://github.com/gaphor/gaphor/workflows/Build/badge.svg)](https://github.com/gaphor/gaphor/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/maintainability)](https://codeclimate.com/github/gaphor/gaphor/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/test_coverage)](https://codeclimate.com/github/gaphor/gaphor/test_coverage)
 [![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://gaphor.readthedocs.io)
@@ -108,10 +108,8 @@ $ pacman -Suy
 $ pacman -S git mingw-w64-x86-64-gcc mingw-w64-x86-64-gtk3 \
 mingw-w64-x86-64-pkg-config mingw-w64-x86-64-cairo \
 mingw-w64-x86-64-gobject-introspection mingw-w64-x86-64-python3 \
-mingw-w64-x86-64-python3-importlib-metadata mingw-w64-x86-64-python3-gobject \
-mingw-w64-x86-64-python3-cairo mingw-w64-x86-64-python3-pip \
-mingw-w64-x86-64-python3-setuptools mingw-w64-x86-64-python3-zope.interface \
-mingw-w64-x86-64-python3-coverage mingw-w64-x86-64-python3-pytest
+mingw-w64-x86-64-python3-gobject mingw-w64-x86-64-python3-cairo \
+mingw-w64-x86-64-python3-pip mingw-w64-x86-64-python3-setuptools
 ```
 
 Ensure `/mingw64/bin` is added to your `PATH`:

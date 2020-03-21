@@ -1,5 +1,7 @@
 """Factory for and registration of model elements."""
 
+from __future__ import annotations
+
 import uuid
 from collections import OrderedDict
 from contextlib import contextmanager
@@ -15,10 +17,10 @@ from typing import (
 )
 
 from gaphor.abc import Service
-from gaphor.UML.diagram import Diagram
 from gaphor.UML.element import Element, UnlinkEvent
-from gaphor.UML.elementdispatcher import ElementDispatcher
+from gaphor.UML.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.UML.event import ElementCreated, ElementDeleted, ModelFlushed, ModelReady
+from gaphor.UML.uml2 import Diagram
 
 if TYPE_CHECKING:
     from gaphor.services.eventmanager import EventManager  # noqa
@@ -40,7 +42,7 @@ class ElementFactory(Service):
     flushed: all element are removed from the factory (element is None)
     """
 
-    def __init__(self, event_manager: Optional["EventManager"] = None):
+    def __init__(self, event_manager: Optional[EventManager] = None):
         self.event_manager = event_manager
         self.element_dispatcher = (
             ElementDispatcher(event_manager) if event_manager else None
@@ -154,6 +156,10 @@ class ElementFactory(Service):
         Returns True if the factory holds no elements.
         """
         return bool(self._elements)
+
+    def watcher(self, element: Element, default_handler=None):
+        element_dispatcher = self.element_dispatcher
+        return EventWatcher(element, element_dispatcher, default_handler)
 
     def flush(self) -> None:
         """Flush all elements (remove them from the factory).

@@ -10,7 +10,7 @@ from gi.repository import Gtk
 widget_factory: Dict[str, Callable] = {}
 
 
-def deserialize(layout, container, layoutstr, itemfactory):
+def deserialize(container, layoutstr, itemfactory):
     """
     Return a new layout with it's attached frames. Frames that should be floating
     already have their Gtk.Window attached (check frame.get_parent()). Transient settings
@@ -32,9 +32,11 @@ def deserialize(layout, container, layoutstr, itemfactory):
                 _des(e, i, widget)
         return widget
 
+    layout = []
     tree = fromstring(layoutstr)
     for index, element in enumerate(tree):
         layout.append(_des(element, index, container))
+    return layout
 
 
 def add(widget, index, parent_widget, resize=False, shrink=False):

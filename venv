@@ -9,6 +9,7 @@
 # Call `./venv -f` to force a new development installation.
 #
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # If on Macos with brew, make sure we can find the brewed libffi (which is not "linked"):
 echo "Are we on Macos with Homebrew installed?"
@@ -62,23 +63,21 @@ uname -a | grep -q MSYS_NT && {
 
 	PYTHON_VER="$(python3 --version | sed 's/^Python \([0-9]\.[0-9]\).[0-9]$/\1/')"
 
-	test -d .venv || {
+	test -d $SCRIPT_DIR/.venv || {
 		echo "Setting up a virtual env for Gaphor..."
-		python3 -m venv --prompt Gaphor ${VENV_OPTS:-} .venv
+		python3 -m venv --prompt Gaphor ${VENV_OPTS:-} $SCRIPT_DIR/.venv
 	}
 
-	source .venv/bin/activate
+	source $SCRIPT_DIR/.venv/bin/activate
 
-	{ ${NO_FORCE_INSTALL} && test -f .venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link; } || {
+	{ ${NO_FORCE_INSTALL} && test -f $SCRIPT_DIR/.venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link; } || {
 		echo "Installing Gaphor in the virtualenv..."
-		pip install -U pip
-		pip install --upgrade poetry==1.0.0b3
 
+		# Use 1.0.0b7 until https://github.com/python-poetry/poetry/issues/1880 is fixed
+		pip install --upgrade poetry==1.0.0b7
+		poetry config virtualenvs.create false
 		poetry install
 	}
-
-	# Remove once a new version of pyinstaller is released
-	pip install -U git+https://github.com/pyinstaller/pyinstaller.git@1eadfa55f2ad21539d7773dfb23f27ebd9db26d8
 
 	test_module() {
 		python3 -c "$1" 2>&- || {
@@ -104,4 +103,4 @@ uname -a | grep -q MSYS_NT && {
 		"import gaphor.UML" \
 		"Gaphor was not installed properly, that should not have happened. Please open an issue on GitHub"
 
-) && source .venv/bin/activate
+) && source $SCRIPT_DIR/.venv/bin/activate

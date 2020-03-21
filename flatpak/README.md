@@ -1,5 +1,10 @@
 # Flatpak Packaging for Gaphor
 
+This folder contains some additional files used by Flatpak.
+
+The Flatpak configuration itself is found on
+https://github.com/flathub/org.gaphor.Gaphor.
+
 ## Create and Install a Flatpak
 
 1. [Install Flatpak](https://flatpak.org/setup)

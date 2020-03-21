@@ -18,8 +18,7 @@ import uuid
 
 import gaphas
 
-from gaphor import UML
-from gaphor.application import Application
+from gaphor import UML, application
 from gaphor.i18n import gettext
 from gaphor.storage import diagramitems, parser
 from gaphor.UML.collection import collection
@@ -42,15 +41,11 @@ def save_generator(writer, factory):  # noqa: C901
     gaphor.misc.xmlwriter.XMLWriter instance.
     """
 
-    # Maintain a set of id's, one for elements, one for references.
-    # Write only to file if references is a subset of elements
-
     def save_reference(name, value):
         """
         Save a value as a reference to another element in the model.
         This applies to both UML as well as canvas items.
         """
-        # Save a reference to the object:
         if value.id:
             writer.startElement(name, {})
             writer.startElement("ref", {"refid": value.id})
@@ -65,7 +60,6 @@ def save_generator(writer, factory):  # noqa: C901
             writer.startElement(name, {})
             writer.startElement("reflist", {})
             for v in value:
-                # save_reference(name, v)
                 if v.id:
                     writer.startElement("ref", {"refid": v.id})
                     writer.endElement("ref")
@@ -124,7 +118,6 @@ def save_generator(writer, factory):  # noqa: C901
             )
             value.save(save_canvasitem)
 
-            # save subitems
             for child in value.canvas.get_children(value):
                 save_canvasitem(None, child)
 
@@ -142,7 +135,7 @@ def save_generator(writer, factory):  # noqa: C901
         None,
         {
             (NAMESPACE_MODEL, "version"): FILE_FORMAT_VERSION,
-            (NAMESPACE_MODEL, "gaphor-version"): Application.distribution.version,
+            (NAMESPACE_MODEL, "gaphor-version"): application.distribution().version,
         },
     )
 
@@ -159,19 +152,17 @@ def save_generator(writer, factory):  # noqa: C901
         if n % 25 == 0:
             yield (n * 100) / size
 
-    # writer.endElement('gaphor')
     writer.endElementNS((NAMESPACE_MODEL, "gaphor"), None)
     writer.endPrefixMapping("")
     writer.endDocument()
 
 
-def load_elements(elements, factory, gaphor_version="1.0.0", status_queue=None):
+def load_elements(elements, factory, gaphor_version="1.0.0"):
     for status in load_elements_generator(elements, factory, gaphor_version):
-        if status_queue:
-            status_queue(status)
+        pass
 
 
-def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
+def load_elements_generator(elements, factory, gaphor_version):
     """
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
@@ -184,11 +175,29 @@ def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
     def update_status_queue(_n=[0]):
         n = _n[0] = _n[0] + 1
         if n % 30 == 0:
-            return (n * 100) / size
+            yield (n * 100) / size
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
+    yield from _load_elements_and_canvasitems(
+        elements, factory, gaphor_version, update_status_queue
+    )
+    yield from _load_attributes_and_references(elements, update_status_queue)
 
+    for d in factory.select(lambda e: isinstance(e, UML.Diagram)):
+        canvas = d.canvas
+        # update_now() is implicitly called when lock is released
+        canvas.block_updates = False
+
+    # do a postload:
+    for id, elem in list(elements.items()):
+        yield from update_status_queue()
+        elem.element.postload()
+
+
+def _load_elements_and_canvasitems(
+    elements, factory, gaphor_version, update_status_queue
+):
     def create_canvasitems(diagram, canvasitems, parent=None):
         """
         Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
@@ -208,9 +217,7 @@ def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
             create_canvasitems(diagram, item.canvasitems, parent=item.element)
 
     for id, elem in list(elements.items()):
-        st = update_status_queue()
-        if st:
-            yield st
+        yield from update_status_queue()
         if isinstance(elem, parser.element):
             cls = getattr(UML, elem.type)
             elem.element = factory.create_as(cls, id)
@@ -223,11 +230,10 @@ def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
                 f"Item with id {id} and type {type(elem)} can not be instantiated"
             )
 
-    # load attributes and create references:
+
+def _load_attributes_and_references(elements, update_status_queue):
     for id, elem in list(elements.items()):
-        st = update_status_queue()
-        if st:
-            yield st
+        yield from update_status_queue()
         # Ensure that all elements have their element instance ready...
         assert hasattr(elem, "element")
 
@@ -253,29 +259,6 @@ def load_elements_generator(elements, factory, gaphor_version):  # noqa: C901
                     log.exception(f"Invalid ID for reference ({refids})")
                 else:
                     elem.element.load(name, ref.element)
-
-    # Before version 0.7.2 there was only decision node (no merge nodes).
-    # This node could have many incoming and outgoing flows (edges).
-    # According to UML specification decision node has no more than one
-    # incoming node.
-    #
-    # Now, we have implemented merge node, which can have many incoming
-    # flows. We also support combining of decision and merge nodes as
-    # described in UML specification.
-    #
-    # Data model, loaded from file, is updated automatically, so there is
-    # no need for special function.
-
-    for d in factory.select(lambda e: isinstance(e, UML.Diagram)):
-        # update_now() is implicitly called when lock is released
-        d.canvas.block_updates = False
-
-    # do a postload:
-    for id, elem in list(elements.items()):
-        st = update_status_queue()
-        if st:
-            yield st
-        elem.element.postload()
 
 
 def load(filename, factory, status_queue=None):
@@ -342,16 +325,15 @@ def load_generator(filename, factory):
 
 def version_lower_than(gaphor_version, version):
     """
-    if version_lower_than('0.3.0', (0, 15, 0)):
-       ...
+    Only major and minor versions are checked.
+
+    >>> version_lower_than('0.3.0', (0, 15, 0))
+    True
+
     """
     parts = gaphor_version.split(".")
-    try:
-        return tuple(map(int, parts)) < version
-    except ValueError:
-        # We're having a -dev, -pre, -beta, -alpha or whatever version
-        parts = parts[:-1]
-        return tuple(map(int, parts)) <= version
+
+    return tuple(map(int, parts[:2])) < version[:2]
 
 
 def upgrade_canvas_item_to_1_0_2(item):

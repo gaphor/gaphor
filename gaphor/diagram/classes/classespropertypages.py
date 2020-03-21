@@ -1,27 +1,27 @@
+import importlib
 import logging
+from inspect import isclass
 
 from gaphas.decorators import AsyncIO
 from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.diagram.classes import (
-    AssociationItem,
-    ClassItem,
-    DependencyItem,
-    Folded,
-    InterfaceItem,
-)
+from gaphor.diagram.classes.association import AssociationItem
+from gaphor.diagram.classes.dependency import DependencyItem
+from gaphor.diagram.classes.interface import Folded, InterfaceItem
+from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.components.connector import ConnectorItem
 from gaphor.diagram.propertypages import (
     EditableTreeModel,
     NamedElementPropertyPage,
-    NamedItemPropertyPage,
     PropertyPageBase,
     PropertyPages,
-    create_hbox_label,
-    create_tree_view,
-    create_uml_combo,
+    UMLComboModel,
+    new_builder,
+    on_bool_cell_edited,
+    on_keypress_event,
+    on_text_cell_edited,
 )
 
 log = logging.getLogger(__name__)
@@ -96,35 +96,26 @@ class ClassOperations(EditableTreeModel):
         return self._item.subject.ownedOperation.swap(o1, o2)
 
 
-@PropertyPages.register(UML.Class)
-class ClassPropertyPage(NamedElementPropertyPage):
-    """Adapter which shows a property page for a class view."""
+@PropertyPages.register(UML.Classifier)
+class ClassifierPropertyPage(PropertyPageBase):
 
-    subject: UML.Class
+    order = 15
 
     def __init__(self, subject):
-        super().__init__(subject)
+        self.subject = subject
 
     def construct(self):
-        page = super().construct()
+        if UML.model.is_metaclass(self.subject):
+            return
 
-        if not self.subject:
-            return page
+        builder = new_builder("classifier-editor")
 
-        # Abstract toggle
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=gettext("Abstract"))
-        button.set_active(self.subject.isAbstract)
+        abstract = builder.get_object("abstract")
+        abstract.set_active(self.subject.isAbstract)
 
-        button.connect("toggled", self._on_abstract_change)
-        hbox.pack_start(button, True, True, 0)
-        page.pack_start(hbox, False, True, 0)
+        builder.connect_signals({"abstract-changed": (self._on_abstract_change,)})
 
-        return page
+        return builder.get_object("classifier-editor")
 
     @transactional
     def _on_abstract_change(self, button):
@@ -132,33 +123,29 @@ class ClassPropertyPage(NamedElementPropertyPage):
 
 
 @PropertyPages.register(InterfaceItem)
-class InterfacePropertyPage(NamedItemPropertyPage):
+class InterfacePropertyPage(PropertyPageBase):
     """Adapter which shows a property page for an interface view."""
 
+    order = 15
+
+    def __init__(self, item):
+        self.item = item
+
     def construct(self):
-        page = super().construct()
+        builder = new_builder("interface-editor")
         item = self.item
-
-        # Fold toggle
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
-
-        button = Gtk.CheckButton(gettext("Folded"))
-        button.set_active(item.folded != Folded.NONE)
-        button.connect("toggled", self._on_fold_change)
 
         connected_items = [c.item for c in item.canvas.get_connections(connected=item)]
         disallowed = (ConnectorItem,)
         can_fold = not any(map(lambda i: isinstance(i, disallowed), connected_items))
 
-        button.set_sensitive(can_fold)
-        hbox.pack_start(button, True, True, 0)
-        page.pack_start(hbox, False, True, 0)
+        folded = builder.get_object("folded")
+        folded.set_active(item.folded != Folded.NONE)
+        folded.set_sensitive(can_fold)
 
-        return page
+        builder.connect_signals({"folded-changed": (self._on_fold_change,)})
+
+        return builder.get_object("interface-editor")
 
     @transactional
     def _on_fold_change(self, button):
@@ -178,7 +165,6 @@ class AttributesPage(PropertyPageBase):
     """An editor for attributes associated with classes and interfaces."""
 
     order = 20
-    name = "Attributes"
 
     def __init__(self, item):
         super().__init__()
@@ -186,44 +172,25 @@ class AttributesPage(PropertyPageBase):
         self.watcher = item.subject and item.subject.watcher()
 
     def construct(self):
-        page = Gtk.VBox()
-
         if not self.item.subject:
-            return page
+            return
 
-        # Show attributes toggle
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=gettext("Show attributes"))
-        button.set_active(self.item.show_attributes)
-        button.connect("toggled", self._on_show_attributes_change)
-        hbox.pack_start(button, True, True, 0)
-        page.pack_start(hbox, False, True, 0)
+        builder = new_builder("attributes-editor")
+        page = builder.get_object("attributes-editor")
 
-        def create_model():
-            return ClassAttributes(self.item, (str, bool, object))
+        show_attributes = builder.get_object("show-attributes")
+        show_attributes.set_active(self.item.show_attributes)
 
-        self.model = create_model()
+        self.model = ClassAttributes(self.item, (str, bool, object))
 
-        tip = """\
-Add and edit class attributes according to UML syntax. Attribute syntax examples
-- attr
-- + attr: int
-- # /attr: int
-"""
-        tree_view = create_tree_view(
-            self.model, (gettext("Attributes"), gettext("S")), tip
-        )
-        page.pack_start(tree_view, True, True, 0)
+        tree_view: Gtk.TreeView = builder.get_object("attributes-list")
+        tree_view.set_model(self.model)
 
-        @AsyncIO(single=True)
         def handler(event):
-            # Single it's asynchronous, make sure all properties are still there
-            if not tree_view.props.has_focus and self.item and self.item.subject:
-                self.model = create_model()
-                tree_view.set_model(self.model)
+            attribute = event.element
+            for row in self.model:
+                if row[-1] is attribute:
+                    row[:] = [UML.format(attribute), attribute.isStatic, attribute]
 
         self.watcher.watch("ownedAttribute.name", handler).watch(
             "ownedAttribute.isDerived", handler
@@ -238,7 +205,16 @@ Add and edit class attributes according to UML syntax. Attribute syntax examples
         ).watch(
             "ownedAttribute.typeValue", handler
         ).subscribe_all()
-        tree_view.connect("destroy", self.watcher.unsubscribe_all)
+
+        builder.connect_signals(
+            {
+                "show-attributes-changed": (self._on_show_attributes_change,),
+                "attributes-name-edited": (on_text_cell_edited, self.model, 0),
+                "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
+                "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "attributes-keypress": (on_keypress_event,),
+            }
+        )
         return page
 
     @transactional
@@ -253,7 +229,6 @@ class OperationsPage(PropertyPageBase):
     """An editor for operations associated with classes and interfaces."""
 
     order = 30
-    name = "Operations"
 
     def __init__(self, item):
         super().__init__()
@@ -261,42 +236,29 @@ class OperationsPage(PropertyPageBase):
         self.watcher = item.subject and item.subject.watcher()
 
     def construct(self):
-        page = Gtk.VBox()
-
         if not self.item.subject:
-            return page
+            return
 
-        # Show operations toggle
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        hbox.pack_start(label, False, True, 0)
-        button = Gtk.CheckButton(label=gettext("Show operations"))
-        button.set_active(self.item.show_operations)
-        button.connect("toggled", self._on_show_operations_change)
-        hbox.pack_start(button, True, True, 0)
-        page.pack_start(hbox, False, True, 0)
+        builder = new_builder("operations-editor")
 
-        def create_model():
-            return ClassOperations(self.item, (str, bool, bool, object))
+        show_operations = builder.get_object("show-operations")
+        show_operations.set_active(self.item.show_operations)
 
-        self.model = create_model()
-        tip = """\
-Add and edit class operations according to UML syntax. Operation syntax examples
-- call()
-- + call(a: int, b: str)
-- # call(a: int: b: str): bool
-"""
-        tree_view = create_tree_view(
-            self.model, (gettext("Operation"), gettext("A"), gettext("S")), tip
-        )
-        page.pack_start(tree_view, True, True, 0)
+        self.model = ClassOperations(self.item, (str, bool, bool, object))
 
-        @AsyncIO(single=True)
+        tree_view: Gtk.TreeView = builder.get_object("operations-list")
+        tree_view.set_model(self.model)
+
         def handler(event):
-            if not tree_view.props.has_focus and self.item and self.item.subject:
-                self.model = create_model()
-                tree_view.set_model(self.model)
+            operation = event.element
+            for row in self.model:
+                if row[-1] is operation:
+                    row[:] = [
+                        UML.format(operation),
+                        operation.isAbstract,
+                        operation.isStatic,
+                        operation,
+                    ]
 
         self.watcher.watch("ownedOperation.name", handler).watch(
             "ownedOperation.isAbstract", handler
@@ -315,9 +277,19 @@ Add and edit class operations according to UML syntax. Operation syntax examples
         ).watch(
             "ownedOperation.formalParameter.defaultValue", handler
         ).subscribe_all()
-        tree_view.connect("destroy", self.watcher.unsubscribe_all)
 
-        return page
+        builder.connect_signals(
+            {
+                "show-operations-changed": (self._on_show_operations_change,),
+                "operations-name-edited": (on_text_cell_edited, self.model, 0),
+                "operations-abstract-edited": (on_bool_cell_edited, self.model, 1),
+                "operations-static-edited": (on_bool_cell_edited, self.model, 2),
+                "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "operations-keypress": (on_keypress_event,),
+            }
+        )
+
+        return builder.get_object("operations-editor")
 
     @transactional
     def _on_show_operations_change(self, button):
@@ -341,32 +313,30 @@ class DependencyPropertyPage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.size_group = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.watcher = self.item.watcher()
+        self.builder = new_builder("dependency-editor")
 
     def construct(self):
-        page = Gtk.VBox()
+        dependency_combo = self.builder.get_object("dependency-combo")
+        model = UMLComboModel(self.DEPENDENCY_TYPES)
+        dependency_combo.set_model(model)
 
-        hbox = create_hbox_label(self, page, gettext("Dependency type"))
-
-        self.combo = create_uml_combo(
-            self.DEPENDENCY_TYPES, self._on_dependency_type_change
-        )
-        hbox.pack_start(self.combo, False, True, 0)
-
-        hbox = create_hbox_label(self, page, "")
-
-        button = Gtk.CheckButton(gettext("Automatic"))
-        button.set_active(self.item.auto_dependency)
-        button.connect("toggled", self._on_auto_dependency_change)
-        hbox.pack_start(button, True, True, 0)
-
-        self.watcher.watch("subject", self._on_subject_change).subscribe_all()
-        button.connect("destroy", self.watcher.unsubscribe_all)
+        automatic = self.builder.get_object("automatic")
+        automatic.set_active(self.item.auto_dependency)
 
         self.update()
 
-        return page
+        self.watcher.watch("subject", self._on_subject_change).subscribe_all()
+
+        self.builder.connect_signals(
+            {
+                "dependency-type-changed": (self._on_dependency_type_change,),
+                "automatic-changed": (self._on_auto_dependency_change,),
+                "dependency-type-destroy": (self.watcher.unsubscribe_all,),
+            }
+        )
+
+        return self.builder.get_object("dependency-editor")
 
     def _on_subject_change(self, event):
         self.update()
@@ -377,15 +347,15 @@ class DependencyPropertyPage(PropertyPageBase):
 
         Disallow dependency type when dependency is established.
         """
-        combo = self.combo
-        item = self.item
-        index = combo.get_model().get_index(item.dependency_type)
-        combo.props.sensitive = not item.auto_dependency
-        combo.set_active(index)
+        combo = self.builder.get_object("dependency-combo")
+        if combo.get_model():
+            item = self.item
+            index = combo.get_model().get_index(item.dependency_type)
+            combo.props.sensitive = not item.auto_dependency
+            combo.set_active(index)
 
     @transactional
     def _on_dependency_type_change(self, combo):
-        combo = self.combo
         cls = combo.get_model().get_value(combo.get_active())
         self.item.dependency_type = cls
         subject = self.item.subject
@@ -400,59 +370,88 @@ class DependencyPropertyPage(PropertyPageBase):
 
 
 @PropertyPages.register(AssociationItem)
-class AssociationPropertyPage(NamedItemPropertyPage):
+class AssociationPropertyPage(PropertyPageBase):
     """
     """
 
-    def construct_end(self, title, end):
+    NAVIGABILITY = (None, False, True)
+    AGGREGATION = ("none", "shared", "composite")
 
-        if not end.subject:
-            return None
+    order = 20
 
-        frame = Gtk.Frame.new(f"{title} (: {end.subject.type.name})")
-        vbox = Gtk.VBox()
-        vbox.set_border_width(6)
-        vbox.set_spacing(6)
-        frame.add(vbox)
+    def __init__(self, item):
+        self.item = item
+        self.subject = self.item.subject
+        self.watcher = self.subject.watcher()
+        self.semaphore = 0
 
-        self.create_pages(end, vbox)
+    def construct_end(self, builder, end_name, end):
+        title = builder.get_object(f"{end_name}-title")
+        title.set_text(f"{end_name.title()} (: {end.subject.type.name})")
 
-        return frame
+        self.update_end_name(builder, end_name, end.subject)
+
+        navigation = builder.get_object(f"{end_name}-navigation")
+        navigation.set_active(self.NAVIGABILITY.index(end.subject.navigability))
+
+        aggregation = builder.get_object(f"{end_name}-aggregation")
+        aggregation.set_active(self.AGGREGATION.index(end.subject.aggregation))
+
+    def update_end_name(self, builder, end_name, subject):
+        name = builder.get_object(f"{end_name}-name")
+        new_name = (
+            UML.format(subject, visibility=True, is_derived=True, multiplicity=True,)
+            or ""
+        )
+        if not name.is_focus() and not self.semaphore:
+            self.semaphore += 1
+            name.set_text(new_name)
+            self.semaphore -= 1
+        return name
 
     def construct(self):
-        page = super().construct()
-
         if not self.subject:
-            return page
+            return None
 
-        hbox = Gtk.HBox()
-        label = Gtk.Label(label="")
-        label.set_justify(Gtk.Justification.LEFT)
-        self.size_group.add_widget(label)
-        hbox.pack_start(label, False, True, 0)
+        builder = new_builder("association-editor")
 
-        button = Gtk.CheckButton(label=gettext("Show direction"))
-        button.set_active(self.item.show_direction)
-        button.connect("toggled", self._on_show_direction_change)
-        hbox.pack_start(button, True, True, 0)
+        head = self.item.head_end
+        tail = self.item.tail_end
 
-        button = Gtk.Button.new_from_icon_name(
-            "object-flip-horizontal-symbolic", Gtk.IconSize.BUTTON
+        show_direction = builder.get_object("show-direction")
+        show_direction.set_active(self.item.show_direction)
+
+        self.construct_end(builder, "head", head)
+        self.construct_end(builder, "tail", tail)
+
+        def handler(event):
+            end_name = "head" if event.element is head.subject else "tail"
+            self.update_end_name(builder, end_name, event.element)
+
+        # Watch on association end:
+        self.watcher.watch("memberEnd[Property].name", handler).watch(
+            "memberEnd[Property].aggregation", handler
+        ).watch("memberEnd[Property].visibility", handler).watch(
+            "memberEnd[Property].lowerValue", handler
+        ).watch(
+            "memberEnd[Property].upperValue", handler
+        ).subscribe_all()
+
+        builder.connect_signals(
+            {
+                "show-direction-changed": (self._on_show_direction_change,),
+                "invert-direction-changed": (self._on_invert_direction_change,),
+                "head-name-changed": (self._on_end_name_change, head),
+                "head-navigation-changed": (self._on_end_navigability_change, head),
+                "head-aggregation-changed": (self._on_end_aggregation_change, head),
+                "tail-name-changed": (self._on_end_name_change, tail),
+                "tail-navigation-changed": (self._on_end_navigability_change, tail),
+                "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
+                "association-editor-destroy": (self.watcher.unsubscribe_all,),
+            }
         )
-        button.connect("clicked", self._on_invert_direction_change)
-        hbox.pack_start(button, True, True, 0)
 
-        page.pack_start(hbox, False, True, 0)
-
-        box = self.construct_end(gettext("Head"), self.item.head_end)
-        if box:
-            page.pack_start(box, False, True, 0)
-
-        box = self.construct_end(gettext("Tail"), self.item.tail_end)
-        if box:
-            page.pack_start(box, False, True, 0)
-
-        return page
+        return builder.get_object("association-editor")
 
     @transactional
     def _on_show_direction_change(self, button):
@@ -462,140 +461,19 @@ class AssociationPropertyPage(NamedItemPropertyPage):
     def _on_invert_direction_change(self, button):
         self.item.invert_direction()
 
-    def get_adapters(self, item):
-        """
-        Return an ordered list of (order, name, adapter).
-        """
-        adaptermap = {}
-        try:
-            if item.subject:
-                for adapter in PropertyPages(item.subject):
-                    adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
-        except AttributeError:
-            pass
-        for adapter in PropertyPages(item):
-            adaptermap[adapter.name] = (adapter.order, adapter.name, adapter)
+    @transactional
+    def _on_end_name_change(self, entry, end):
+        if not self.semaphore:
+            self.semaphore += 1
+            UML.parse(end.subject, entry.get_text())
+            self.semaphore -= 1
 
-        adapters = sorted(adaptermap.values())
-        return adapters
-
-    def create_pages(self, item, vbox):
-        """
-        Load all tabs that can operate on the given item.
-
-        The first item will not contain a title.
-        """
-        adapters = self.get_adapters(item)
-
-        first = True
-        for _, name, adapter in adapters:
-            try:
-                page = adapter.construct()
-                if page is None:
-                    continue
-                if first:
-                    vbox.pack_start(page, False, True, 0)
-                    first = False
-                else:
-                    expander = Gtk.Expander()
-                    expander.set_use_markup(True)
-                    expander.set_label(f"<b>{name}</b>")
-                    expander.add(page)
-                    expander.show_all()
-                    vbox.pack_start(expander, False, True, 0)
-            except Exception:
-                log.error(
-                    "Could not construct property page for " + name, exc_info=True
-                )
-
-
-@PropertyPages.register(UML.Property)
-class AssociationEndPropertyPage(PropertyPageBase):
-    """Property page for association end properties."""
-
-    order = 0
-
-    NAVIGABILITY = [None, False, True]
-
-    def __init__(self, subject):
-        self.subject = subject
-        self.watcher = subject and subject.watcher()
-
-    def construct(self):
-        vbox = Gtk.VBox()
-        entry = Gtk.Entry()
-        # entry.set_text(UML.format(self.subject, visibility=True, is_derived=Truemultiplicity=True) or '')
-
-        # monitor subject attribute (all, cause it contains many children)
-        changed_id = entry.connect("changed", self._on_end_name_change)
-
-        def handler(event):
-            if not entry.props.has_focus:
-                entry.handler_block(changed_id)
-                entry.set_text(
-                    UML.format(
-                        self.subject,
-                        visibility=True,
-                        is_derived=True,
-                        multiplicity=True,
-                    )
-                    or ""
-                )
-                # entry.set_text(UML.format(self.subject, multiplicity=True) or '')
-                entry.handler_unblock(changed_id)
-
-        handler(None)
-
-        self.watcher.watch("name", handler).watch("aggregation", handler).watch(
-            "visibility", handler
-        ).watch("lowerValue", handler).watch("upperValue", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
-
-        vbox.pack_start(entry, True, True, 0)
-
-        entry.set_tooltip_text(
-            """\
-Enter attribute name and multiplicity, for example
-- name
-+ name [1]
-- name [1..2]
-~ 1..2
-- [1..2]\
-"""
+    @transactional
+    def _on_end_navigability_change(self, combo, end):
+        UML.model.set_navigability(
+            end.subject.association, end.subject, self.NAVIGABILITY[combo.get_active()]
         )
 
-        combo = Gtk.ComboBoxText()
-        for t in ("Unknown navigation", "Not navigable", "Navigable"):
-            combo.append_text(t)
-
-        nav = self.subject.navigability
-        combo.set_active(self.NAVIGABILITY.index(nav))
-
-        combo.connect("changed", self._on_navigability_change)
-        vbox.pack_start(combo, False, True, 0)
-
-        combo = Gtk.ComboBoxText()
-        for t in ("No aggregation", "Shared", "Composite"):
-            combo.append_text(t)
-
-        combo.set_active(
-            ["none", "shared", "composite"].index(self.subject.aggregation)
-        )
-
-        combo.connect("changed", self._on_aggregation_change)
-        vbox.pack_start(combo, False, True, 0)
-
-        return vbox
-
     @transactional
-    def _on_end_name_change(self, entry):
-        UML.parse(self.subject, entry.get_text())
-
-    @transactional
-    def _on_navigability_change(self, combo):
-        nav = self.NAVIGABILITY[combo.get_active()]
-        UML.model.set_navigability(self.subject.association, self.subject, nav)
-
-    @transactional
-    def _on_aggregation_change(self, combo):
-        self.subject.aggregation = ("none", "shared", "composite")[combo.get_active()]
+    def _on_end_aggregation_change(self, combo, end):
+        end.subject.aggregation = self.AGGREGATION[combo.get_active()]

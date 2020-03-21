@@ -1,35 +1,35 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import gettext, transactional
-from gaphor.diagram.components import ComponentItem
-from gaphor.diagram.propertypages import NamedItemPropertyPage, PropertyPages
+from gaphor.core import transactional
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
-@PropertyPages.register(ComponentItem)
-class ComponentPropertyPage(NamedItemPropertyPage):
-    """
-    """
+@PropertyPages.register(UML.Component)
+class ComponentPropertyPage(PropertyPageBase):
+
+    order = 15
 
     subject: UML.Component
 
-    def construct(self):
-        page = super().construct()
+    def __init__(self, subject):
+        self.subject = subject
 
+    def construct(self):
         subject = self.subject
 
         if not subject:
-            return page
+            return
 
-        hbox = Gtk.HBox()
-        page.pack_start(hbox, False, True, 0)
+        builder = new_builder("component-editor")
 
-        button = Gtk.CheckButton(gettext("Indirectly instantiated"))
-        button.set_active(subject.isIndirectlyInstantiated)
-        button.connect("toggled", self._on_ii_change)
-        hbox.pack_start(button, False, True, 0)
+        ii = builder.get_object("indirectly-instantiated")
+        ii.set_active(subject.isIndirectlyInstantiated)
 
-        return page
+        builder.connect_signals(
+            {"indirectly-instantiated-changed": (self._on_ii_change,)}
+        )
+        return builder.get_object("component-editor")
 
     @transactional
     def _on_ii_change(self, button):

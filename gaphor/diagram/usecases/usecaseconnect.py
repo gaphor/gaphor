@@ -3,13 +3,13 @@ Use cases related connection adapters.
 """
 
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect, RelationshipConnect
+from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.diagram.usecases.extend import ExtendItem
 from gaphor.diagram.usecases.include import IncludeItem
 from gaphor.diagram.usecases.usecase import UseCaseItem
 
 
-@IConnect.register(UseCaseItem, IncludeItem)
+@Connector.register(UseCaseItem, IncludeItem)
 class IncludeConnect(RelationshipConnect):
     """Connect use cases with an include item relationship."""
 
@@ -33,7 +33,7 @@ class IncludeConnect(RelationshipConnect):
         self.line.subject = relation
 
 
-@IConnect.register(UseCaseItem, ExtendItem)
+@Connector.register(UseCaseItem, ExtendItem)
 class ExtendConnect(RelationshipConnect):
     """Connect use cases with an extend item relationship."""
 

@@ -8,7 +8,7 @@ import optparse
 import sys
 
 import gaphor.UML as UML
-from gaphor import Application
+from gaphor.application import Session
 
 # Setup command line options.
 usage = "usage: %prog [options] file.gaphor"
@@ -33,11 +33,11 @@ if len(args) != 1:
 model = args[0]
 
 # Create the Gaphor application object.
-Application.init()
+session = Session()
 
 # Get services we need.
-element_factory = Application.get_service("element_factory")
-file_manager = Application.get_service("file_manager")
+element_factory = session.get_service("element_factory")
+file_manager = session.get_service("file_manager")
 
 # Load model from file.
 file_manager.load(model)

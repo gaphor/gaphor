@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.diagram.profiles.metaclasspropertypage import MetaclassNamePropertyPage
+from gaphor.diagram.profiles.metaclasspropertypage import MetaclassPropertyPage
 from gaphor.tests import TestCase
 
 
@@ -10,16 +10,9 @@ class MetaclassPropertyPageTest(TestCase):
         class_ = self.element_factory.create(UML.Class)
 
         class_.name = "Class"
-        editor = MetaclassNamePropertyPage(class_)
+        editor = MetaclassPropertyPage(class_)
         page = editor.construct()
-        assert page
-        entry = page.get_children()[0].get_children()[1]
-        assert Gtk.Entry is type(entry)
-
-        assert "Class" == entry.get_text()
-
-        class_.name = "Blah"
-        assert "Blah" == entry.get_text()
+        assert not page
 
     def test_name_selection_for_metaclass(self):
         metaclass = self.element_factory.create(UML.Class)
@@ -28,11 +21,11 @@ class MetaclassPropertyPageTest(TestCase):
         stereotype.name = "NewStereotype"
         UML.model.create_extension(metaclass, stereotype)
 
-        editor = MetaclassNamePropertyPage(metaclass)
+        editor = MetaclassPropertyPage(metaclass)
         page = editor.construct()
         assert page
-        combo = page.get_children()[0].get_children()[1]
-        assert Gtk.ComboBox is type(combo)
+        combo = page.get_children()[1]
+        assert Gtk.ComboBoxText is type(combo)
 
         assert "Class" == combo.get_child().get_text()
 

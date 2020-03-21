@@ -29,6 +29,7 @@ dist-flatpaks: $(DIST)/$(ID).flatpak
 clean:
 	rm -rf $(BUILD)
 	rm -rf $(DIST)
+	rm -rf .flatpak-builder
 
 python-modules:
 	python3 flatpak-builder-tools/pip/flatpak-pip-generator \

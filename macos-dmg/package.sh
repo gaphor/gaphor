@@ -30,9 +30,7 @@ rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
 python3 -m venv --copies --prompt Gaphor.app "${APPHOME}"
 source "${APPHOME}/bin/activate"
 
-pip install "importlib_metadata >= 0.17"
-
-VERSION="$(cat ../pyproject.toml | grep '^version' | sed 's/.*\"\([0-9.]*\)\"/\1/')"
+VERSION="$(poetry version | cut -d' ' -f2)"
 PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
 
 
@@ -98,10 +96,10 @@ rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/share"
 
 log "Installing Gaphor in ${INSTALLDIR}..."
 
-pip3 install --no-warn-script-location ..
+pip3 install --no-warn-script-location ../dist/gaphor-${VERSION}-py3-none-any.whl
 
 
-# Fix dynamic link dependencies:
+echo "Fixing dynamic link dependencies..."
 
 function map {
   local fun=$1

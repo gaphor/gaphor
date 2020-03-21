@@ -1,5 +1,5 @@
 """
-Application wide events are managed here.
+Application lifecycle events are managed here.
 """
 
 from gaphor.abc import Service
@@ -32,6 +32,25 @@ class ServiceShutdownEvent(ServiceEvent):
     def __init__(self, name: str, service: Service):
         self.name = name
         self.service = service
+
+
+class ActiveSessionChanged(ServiceEvent):
+    """
+    Event emitted when a session becomes the active session.
+    """
+
+
+class SessionShutdownRequested(ServiceEvent):
+    """
+    When the application is asked to terminate, it will inform all sessions.
+    The user can then save his/her work.
+    """
+
+
+class SessionShutdown(ServiceEvent):
+    """
+    The session is emitting this event when it's ready to shut down.
+    """
 
 
 class TransactionBegin:

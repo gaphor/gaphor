@@ -249,14 +249,6 @@ class NamespaceView(Gtk.TreeView):
                 context.finish(False, False, time)
             else:
                 context.finish(True, True, time)
-                # Finally let's try to select the element again.
-                # iter = self.iter_for_element(element)
-                # if iter:
-                #     self.expand_row(
-                #         path=Gtk.TreePath.new_from_indices(path[:-1]), open_all=False
-                #     )
-                # selection = self.get_selection()
-                # selection.select_path(path)
 
 
 class Namespace(UIComponent):
@@ -270,10 +262,7 @@ class Namespace(UIComponent):
         self.model = Gtk.TreeStore.new([object])
         self.toplevel_types = _default_filter_list
 
-    def init(self):
-        # Event handler registration is in a separate function,
-        # since putting it in with widget construction will cause
-        # unit tests to fail, on macOS at least.
+    def open(self):
         em = self.event_manager
         em.subscribe(self._on_element_create)
         em.subscribe(self._on_element_delete)
@@ -282,8 +271,6 @@ class Namespace(UIComponent):
         em.subscribe(self._on_association_set)
         em.subscribe(self._on_attribute_change)
 
-    def open(self):
-        self.init()
         return self.construct()
 
     def close(self):
@@ -340,8 +327,6 @@ class Namespace(UIComponent):
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
-        scrolled_window.set_placement(Gtk.CornerType.TOP_RIGHT)
         scrolled_window.add(view)
         scrolled_window.show()
         view.show()
@@ -422,10 +407,20 @@ class Namespace(UIComponent):
         return None
 
     def _visible(self, element):
-        # Spacial case: Non-navigable properties
+        # Special case: Non-navigable properties
         return type(element) in self.toplevel_types and not (
             isinstance(element, UML.Property) and element.namespace is None
         )
+
+    def _add(self, element, iter=None):
+        if self._visible(element):
+            child_iter = self.model.append(iter, [element])
+            if isinstance(element, UML.Namespace):
+                for e in element.ownedMember:
+                    # check if owned member is indeed within parent's namespace
+                    # the check is important in case on Node classes
+                    if element is e.namespace:
+                        self._add(e, child_iter)
 
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
@@ -433,16 +428,6 @@ class Namespace(UIComponent):
         Load a new model completely.
         """
         log.info("Rebuilding namespace model")
-
-        def add(element, iter=None):
-            if self._visible(element):
-                child_iter = self.model.append(iter, [element])
-                if isinstance(element, UML.Namespace):
-                    for e in element.ownedMember:
-                        # check if owned member is indeed within parent's namespace
-                        # the check is important in case on Node classes
-                        if element is e.namespace:
-                            add(e, child_iter)
 
         self.model.clear()
 
@@ -453,7 +438,7 @@ class Namespace(UIComponent):
         )
 
         for element in toplevel:
-            add(element)
+            self._add(element)
 
         # Expand all root elements:
         if self._namespace:  # None for testing
@@ -496,7 +481,7 @@ class Namespace(UIComponent):
                 new_iter = self.iter_for_element(new_value)
                 # Should be either set (sub node) or unset (root node)
                 if bool(new_iter) == bool(new_value):
-                    self.model.append(new_iter, [element])
+                    self._add(element, new_iter)
 
     @event_handler(AttributeUpdated)
     def _on_attribute_change(self, event: AttributeUpdated):

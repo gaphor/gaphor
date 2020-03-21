@@ -7,92 +7,92 @@ gaphor.adapter package.
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import gettext, transactional
-from gaphor.diagram.propertypages import (
-    NamedItemPropertyPage,
-    PropertyPages,
-    create_hbox_label,
-)
-from gaphor.diagram.states.state import StateItem
-from gaphor.diagram.states.transition import TransitionItem
+from gaphor.core import transactional
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
-@PropertyPages.register(TransitionItem)
-class TransitionPropertyPage(NamedItemPropertyPage):
+@PropertyPages.register(UML.Transition)
+class TransitionPropertyPage(PropertyPageBase):
     """Transition property page allows to edit guard specification."""
+
+    order = 15
 
     subject: UML.Transition
 
+    def __init__(self, subject):
+        self.subject = subject
+        self.watcher = subject.watcher()
+
     def construct(self):
-        page = super().construct()
-
         subject = self.subject
-
         if not subject:
-            return page
+            return
 
-        hbox = create_hbox_label(self, page, gettext("Guard"))
-        entry = Gtk.Entry()
-        v = subject.guard.specification
-        entry.set_text(v if v else "")
-        changed_id = entry.connect("changed", self._on_guard_change)
-        hbox.pack_start(entry, True, True, 0)
+        builder = new_builder("transition-editor")
+
+        guard = builder.get_object("guard")
+        if subject.guard:
+            guard.set_text(subject.guard.specification)
 
         def handler(event):
-            entry.handler_block(changed_id)
-            v = event.new_value
-            entry.set_text(v if v else "")
-            entry.handler_unblock(changed_id)
+            if event.element is subject.guard:
+                guard.set_text(event.new_value or "")
 
         self.watcher.watch("guard[Constraint].specification", handler).subscribe_all()
-        entry.connect("destroy", self.watcher.unsubscribe_all)
 
-        return page
+        builder.connect_signals(
+            {
+                "guard-changed": (self._on_guard_change,),
+                "transition-destroy": (self.watcher.unsubscribe_all,),
+            }
+        )
+        return builder.get_object("transition-editor")
 
     @transactional
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
+        if not self.subject.guard:
+            self.subject.guard = self.subject.model.create(UML.Constraint)
         self.subject.guard.specification = value
 
 
-@PropertyPages.register(StateItem)
-class StatePropertyPage(NamedItemPropertyPage):
+@PropertyPages.register(UML.State)
+class StatePropertyPage(PropertyPageBase):
     """State property page."""
 
+    order = 15
     subject: UML.State
 
+    def __init__(self, subject):
+        self.subject = subject
+
     def construct(self):
-        page = super().construct()
-
         subject = self.subject
-
         if not subject:
-            return page
+            return
 
-        hbox = create_hbox_label(self, page, gettext("Entry"))
-        entry = Gtk.Entry()
+        builder = new_builder("state-editor")
+
+        entry = builder.get_object("entry")
         if subject.entry:
             entry.set_text(subject.entry.name or "")
-        entry.connect("changed", self.on_text_change, self.set_entry)
-        hbox.pack_start(entry, True, True, 0)
 
-        hbox = create_hbox_label(self, page, gettext("Exit"))
-        entry = Gtk.Entry()
+        exit = builder.get_object("exit")
         if subject.exit:
-            entry.set_text(subject.exit.name or "")
-        entry.connect("changed", self.on_text_change, self.set_exit)
-        hbox.pack_start(entry, True, True, 0)
+            exit.set_text(subject.exit.name or "")
 
-        hbox = create_hbox_label(self, page, gettext("Do Activity"))
-        entry = Gtk.Entry()
+        do_activity = builder.get_object("do-activity")
         if subject.doActivity:
-            entry.set_text(self.subject.doActivity.name or "")
-        entry.connect("changed", self.on_text_change, self.set_do_activity)
-        hbox.pack_start(entry, True, True, 0)
+            do_activity.set_text(self.subject.doActivity.name or "")
 
-        page.show_all()
-
-        return page
+        builder.connect_signals(
+            {
+                "entry-changed": (self.on_text_change, self.set_entry),
+                "exit-changed": (self.on_text_change, self.set_exit),
+                "do-activity-changed": (self.on_text_change, self.set_do_activity),
+            }
+        )
+        return builder.get_object("state-editor")
 
     @transactional
     def on_text_change(self, entry, method):

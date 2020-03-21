@@ -113,7 +113,7 @@ class CopyService(Service, ActionProvider):
         # update items' matrix immediately
         for item in new_items.values():
             item.matrix.translate(10, 10)
-            canvas.update_matrix(item)
+            canvas.update_matrices([item])
 
         # solve internal constraints of items immediately as item.postload
         # reconnects items and all handles have to be in place

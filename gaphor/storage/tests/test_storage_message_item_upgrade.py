@@ -1,32 +1,30 @@
-import importlib_metadata
 import pytest
 
 from gaphor import UML
-from gaphor.application import Application
+from gaphor.application import Session, distribution
 from gaphor.storage import diagramitems
 from gaphor.storage.parser import parse
 from gaphor.storage.storage import load_elements
 
 
 @pytest.fixture
-def application():
-    Application.init(
+def session():
+    session = Session(
         services=["event_manager", "component_registry", "element_factory"]
     )
-    yield Application
-    Application.shutdown()
+    yield session
+    session.shutdown()
 
 
 @pytest.fixture
-def element_factory(application):
-    return application.get_service("element_factory")
+def element_factory(session):
+    return session.get_service("element_factory")
 
 
 def test_message_item_upgrade(element_factory):
     """
     """
-    dist = importlib_metadata.distribution("gaphor")
-    path = dist.locate_file("test-diagrams/multiple-messages.gaphor")
+    path = distribution().locate_file("test-diagrams/multiple-messages.gaphor")
 
     elements = parse(path)
     load_elements(elements, element_factory)

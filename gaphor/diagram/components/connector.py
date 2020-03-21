@@ -108,7 +108,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Connector)
-class ConnectorItem(LinePresentation, Named):
+class ConnectorItem(LinePresentation[UML.Connector], Named):
     """
     Connector item line.
 

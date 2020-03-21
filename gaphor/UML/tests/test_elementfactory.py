@@ -2,7 +2,7 @@ import gc
 
 import pytest
 
-from gaphor.application import Application
+from gaphor.application import Session
 from gaphor.core import event_handler
 from gaphor.services.eventmanager import EventManager
 from gaphor.UML import Parameter
@@ -96,17 +96,12 @@ def clear_events():
 
 @pytest.fixture
 def element_factory():
-    Application.init(
-        services=["event_manager", "component_registry", "element_factory"]
-    )
-    event_manager = Application.get_service("event_manager")
+    event_manager = EventManager()
     event_manager.subscribe(handler)
     clear_events()
-    factory = Application.get_service("element_factory")
+    factory = ElementFactory(event_manager)
     yield factory
-    del factory
     clear_events()
-    Application.shutdown()
 
 
 def test_create_event(element_factory):

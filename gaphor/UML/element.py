@@ -7,15 +7,12 @@ from __future__ import annotations
 
 import logging
 import uuid
-from typing import TYPE_CHECKING, Optional, Sequence, Type, Union
+from typing import Callable, Iterator, Optional, Type, TypeVar, Union
 
-from gaphor.UML.elementdispatcher import EventWatcher
+from typing_extensions import Protocol
+
+from gaphor.UML.event import ElementUpdated
 from gaphor.UML.properties import relation_many, relation_one, umlproperty
-
-if TYPE_CHECKING:
-    from gaphor.UML.elementfactory import ElementFactory  # noqa
-    from gaphor.UML.presentation import Presentation  # noqa
-
 
 __all__ = ["Element"]
 
@@ -39,7 +36,7 @@ class Element:
     """
 
     def __init__(
-        self, id: Optional[Id] = None, model: Optional["ElementFactory"] = None
+        self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
     ):
         """
         Create an element. As optional parameters an id and model can be
@@ -64,7 +61,7 @@ class Element:
         return self._id
 
     @property
-    def model(self) -> "ElementFactory":
+    def model(self) -> RepositoryProtocol:
         "The owning model, raises AssertionError when model is not set."
         assert (
             self._model
@@ -75,7 +72,7 @@ class Element:
     owner: relation_one[Element]
     ownedComment: relation_many[Element]
     ownedElement: relation_many[Element]
-    presentation: relation_many[Presentation]
+    presentation: relation_many[Element]
 
     def umlproperties(self):
         """
@@ -143,9 +140,12 @@ class Element:
         if model:
             model.handle(event)
 
-    def watcher(self, default_handler=None):
-        dispatcher = self._model.element_dispatcher if self._model else None
-        return EventWatcher(self, dispatcher, default_handler)
+    def watcher(self, default_handler=None) -> EventWatcherProtocol:
+        model = self._model
+        if model:
+            return model.watcher(self, default_handler)
+        else:
+            return DummyEventWatcher()
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
@@ -160,3 +160,53 @@ class Element:
         Returns true if the object is of the same type as other.
         """
         return isinstance(self, type(other))
+
+
+class DummyEventWatcher:
+    def watch(self, path: str, handler: Optional[Handler] = None) -> DummyEventWatcher:
+        return self
+
+    def subscribe_all(self) -> None:
+        pass
+
+    def unsubscribe_all(self) -> None:
+        pass
+
+
+T = TypeVar("T", bound=Element)
+
+Handler = Callable[[ElementUpdated], None]
+
+
+class RepositoryProtocol(Protocol):
+    def create(self, type: Type[T]) -> T:
+        ...
+
+    def create_as(self, type: Type[T], id: str) -> T:
+        ...
+
+    def select(
+        self, expression: Optional[Callable[[Element], bool]] = None
+    ) -> Iterator[Element]:
+        ...
+
+    def watcher(
+        self, element: Element, default_handler: Optional[Handler] = None
+    ) -> EventWatcherProtocol:
+        ...
+
+    def handle(self, event: object) -> None:
+        ...
+
+
+class EventWatcherProtocol(Protocol):
+    def watch(
+        self, path: str, handler: Optional[Handler] = None
+    ) -> EventWatcherProtocol:
+        ...
+
+    def subscribe_all(self) -> None:
+        ...
+
+    def unsubscribe_all(self) -> None:
+        ...

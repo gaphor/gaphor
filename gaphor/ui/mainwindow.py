@@ -11,14 +11,15 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import event_handler, gettext
-from gaphor.event import ActionEnabled
+from gaphor.core import action, event_handler, gettext
+from gaphor.event import ActionEnabled, ActiveSessionChanged, SessionShutdownRequested
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import (
+    DiagramClosed,
     DiagramOpened,
     DiagramSelectionChanged,
     FileLoaded,
@@ -33,24 +34,24 @@ from gaphor.UML.event import AttributeUpdated, ModelFlushed, ModelReady
 log = logging.getLogger(__name__)
 
 
-def hamburger_menu(hamburger_model):
-    button = Gtk.MenuButton()
-    image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.MENU)
-    button.add(image)
-    button.set_popover(Gtk.Popover.new_from_model(button, hamburger_model))
-    button.show_all()
-    return button
+def new_builder():
+    builder = Gtk.Builder()
+    builder.set_translation_domain("gaphor")
+    with importlib.resources.path("gaphor.ui", "mainwindow.glade") as glade_file:
+        builder.add_from_file(str(glade_file))
+    return builder
 
 
 def create_hamburger_model(export_menu, tools_menu):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append(gettext("New"), "win.file-new")
-    part.append(gettext("New from Template"), "win.file-new-template")
+    part.append(gettext("New Window"), "app.file-new")
+    part.append(gettext("New from Template"), "app.file-new-template")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
+    part.append(gettext("Save"), "win.file-save")
     part.append(gettext("Save As..."), "win.file-save-as")
     part.append_submenu(gettext("Export"), export_menu)
     model.append_section(None, part)
@@ -60,7 +61,7 @@ def create_hamburger_model(export_menu, tools_menu):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append(gettext("Preferences"), "app.preferences")
+    part.append(gettext("Preferences"), "win.preferences")
     part.append(gettext("Keyboard Shortcuts"), "app.shortcuts")
     part.append(gettext("About Gaphor"), "app.about")
     model.append_section(None, part)
@@ -68,22 +69,13 @@ def create_hamburger_model(export_menu, tools_menu):
     return model
 
 
-def create_recent_files_button(recent_manager=None):
-    button = Gtk.MenuButton()
-    image = Gtk.Image.new_from_icon_name("pan-down-symbolic", Gtk.IconSize.MENU)
-    button.add(image)
-
+def create_recent_files_model(recent_manager=None):
     model = Gio.Menu.new()
     model.append_section(
         gettext("Recently opened files"),
         RecentFilesMenu(recent_manager or Gtk.RecentManager.get_default()),
     )
-
-    popover = Gtk.Popover.new_from_model(button, model)
-    button.set_popover(popover)
-    button.show_all()
-
-    return button
+    return model
 
 
 class MainWindow(Service, ActionProvider):
@@ -142,71 +134,21 @@ class MainWindow(Service, ActionProvider):
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
 
-    def create_profile_combo(self) -> Gtk.ComboBoxText:
-        """Create the combo box to select the modeling profile.
-
-        Returns (Gtk.ComboBoxText): The profile combo box.
-
-        """
-        profiles = ["UML", "SysML", "Safety"]
-        profile_combo = Gtk.ComboBoxText.new()
-        profile_combo.connect("changed", self._on_profile_selected)
-        for profile in profiles:
-            profile_combo.append_text(profile)
-        selected_profile = self.properties.get("profile", default="UML")
-        profile_combo.set_active(profiles.index(selected_profile))
-        profile_combo.show()
-        return profile_combo
-
     def open(self, gtk_app=None):
         """Open the main window.
         """
-        self.window = (
-            Gtk.ApplicationWindow.new(gtk_app)
-            if gtk_app
-            else Gtk.Window.new(type=Gtk.WindowType.TOPLEVEL)
+
+        builder = new_builder()
+        self.window = builder.get_object("main-window")
+        self.window.set_application(gtk_app)
+
+        hamburger = builder.get_object("hamburger")
+        hamburger.bind_model(
+            create_hamburger_model(self.export_menu.menu, self.tools_menu.menu), None
         )
 
-        def button(label, action_name):
-            b = Gtk.Button.new_with_label(label)
-            b.set_action_name(action_name)
-            b.show()
-            return b
-
-        header = Gtk.HeaderBar()
-        header.set_show_close_button(True)
-        self.window.set_titlebar(header)
-        header.show()
-
-        button_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
-        button_box.get_style_context().add_class("linked")
-        button_box.pack_start(button(gettext("Open"), "win.file-open"), False, False, 0)
-        button_box.pack_start(create_recent_files_button(), False, False, 0)
-        button_box.show()
-        header.pack_start(button_box)
-        header.pack_start(self.create_profile_combo())
-        b = Gtk.Button.new_from_icon_name(
-            "gaphor-new-diagram-symbolic", Gtk.IconSize.MENU
-        )
-        b.set_action_name("tree-view.create-diagram")
-        b.show()
-        header.pack_start(b)
-
-        header.pack_end(
-            hamburger_menu(
-                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
-            )
-        )
-        header.pack_end(button(gettext("Save"), "win.file-save"))
-
-        b = Gtk.MenuButton.new()
-        image = Gtk.Image.new_from_icon_name(
-            "document-edit-symbolic", Gtk.IconSize.MENU
-        )
-        b.add(image)
-        b.set_action_name("win.show-editors")
-        b.show_all()
-        header.pack_end(b)
+        recent_files = builder.get_object("recent-files")
+        recent_files.bind_model(create_recent_files_model(), None)
 
         self.set_title()
 
@@ -224,17 +166,16 @@ class MainWindow(Service, ActionProvider):
                 self.window.insert_action_group(prefix, widget.get_action_group(prefix))
             return widget
 
-        self.layout = []
-
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
-            deserialize(self.layout, self.window, f.read(), _factory)
+            self.layout = deserialize(self.window, f.read(), _factory)
 
         action_group, accel_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
         self.window.add_accel_group(accel_group)
 
-        self.window.present()
+        self.window.show_all()
 
+        self.window.connect("notify::is-active", self._on_window_active)
         self.window.connect("delete-event", self._on_window_delete)
 
         # We want to store the window size, so it can be reloaded on startup
@@ -305,8 +246,11 @@ class MainWindow(Service, ActionProvider):
         a = ag.lookup_action(event.name)
         a.set_enabled(event.enabled)
 
-    def _on_window_delete(self, window=None, event=None):
-        self.event_manager.handle(WindowClosed(self))
+    def _on_window_active(self, window, prop):
+        self.event_manager.handle(ActiveSessionChanged(self))
+
+    def _on_window_delete(self, window, event):
+        self.event_manager.handle(SessionShutdownRequested(self))
         return True
 
     def _on_window_size_allocate(self, window, allocation):
@@ -315,12 +259,6 @@ class MainWindow(Service, ActionProvider):
         """
         width, height = window.get_size()
         self.properties.set("ui.window-size", (width, height))
-
-    def _on_profile_selected(self, combo: Gtk.ComboBoxText) -> None:
-        """Store the selected profile in a property."""
-        profile = combo.get_active_text()
-        self.event_manager.handle(ProfileSelectionChanged(profile))
-        self.properties.set("profile", profile)
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
@@ -360,6 +298,7 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook.show()
         self._notebook.connect("switch-page", self._on_switch_page)
         self.event_manager.subscribe(self._on_show_diagram)
+        self.event_manager.subscribe(self._on_close_diagram)
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
         return self._notebook
@@ -369,6 +308,7 @@ class Diagrams(UIComponent, ActionProvider):
 
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
+        self.event_manager.unsubscribe(self._on_close_diagram)
         self.event_manager.unsubscribe(self._on_show_diagram)
         if self._notebook:
             self._notebook.destroy()
@@ -397,22 +337,6 @@ class Diagrams(UIComponent, ActionProvider):
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
         return child_widget and child_widget.diagram_page.get_view()
-
-    def cb_close_tab(self, button, widget):
-        """Callback to close the tab and remove the notebook page.
-
-        Args:
-            button (Gtk.Button): The button the callback is from.
-            widget (Gtk.Widget): The child widget of the tab.
-        """
-
-        page_num = self._notebook.page_num(widget)
-        # TODO why does Gtk.Notebook give a GTK-CRITICAL if you remove a page
-        #   with set_show_tabs(True)?
-        self._clear_ui_settings(widget)
-        self._notebook.remove_page(page_num)
-        widget.diagram_page.close()
-        widget.destroy()
 
     def create_tab(self, title, widget):
         """Creates a new Notebook tab with a label and close button.
@@ -449,7 +373,12 @@ class Diagrams(UIComponent, ActionProvider):
         Gtk.Widget.set_focus_on_click(button, False)
 
         button.add(close_image)
-        button.connect("clicked", self.cb_close_tab, widget)
+        button.connect(
+            "clicked",
+            lambda _button: self.event_manager.handle(
+                DiagramClosed(widget.diagram_page.get_diagram())
+            ),
+        )
         tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
         tab_box.show_all()
         return tab_box
@@ -469,9 +398,9 @@ class Diagrams(UIComponent, ActionProvider):
             return widgets_on_pages
 
         num_pages = self._notebook.get_n_pages()
-        for page in range(0, num_pages):
-            widget = self._notebook.get_nth_page(page)
-            widgets_on_pages.append((page, widget))
+        for page_num in range(0, num_pages):
+            widget = self._notebook.get_nth_page(page_num)
+            widgets_on_pages.append((page_num, widget))
         return widgets_on_pages
 
     def _on_switch_page(self, notebook, page, new_page_num):
@@ -494,6 +423,11 @@ class Diagrams(UIComponent, ActionProvider):
         window.insert_action_group("diagram", None)
         window.remove_accel_group(page.action_group.shortcuts)
 
+    @action(name="close-current-tab", shortcut="<Primary>w")
+    def close_current_tab(self):
+        diagram = self.get_current_diagram()
+        self.event_manager.handle(DiagramClosed(diagram))
+
     @event_handler(DiagramOpened)
     def _on_show_diagram(self, event):
         """Show a Diagram element in the Notebook.
@@ -511,6 +445,7 @@ class Diagrams(UIComponent, ActionProvider):
         for page, widget in self.get_widgets_on_pages():
             if widget.diagram_page.get_diagram() is diagram:
                 self._notebook.set_current_page(page)
+                self.get_current_view().grab_focus()
                 return widget.diagram_page
 
         # No existing diagram page found, creating one
@@ -523,7 +458,31 @@ class Diagrams(UIComponent, ActionProvider):
         page.set_drawing_style(self.properties.get("diagram.sloppiness", 0))
 
         self.create_tab(diagram.name, widget)
+        self.get_current_view().grab_focus()
         return page
+
+    @event_handler(DiagramClosed)
+    def _on_close_diagram(self, event):
+        """Callback to close the tab and remove the notebook page.
+
+        Args:
+            button (Gtk.Button): The button the callback is from.
+            widget (Gtk.Widget): The child widget of the tab.
+        """
+        diagram = event.diagram
+
+        for page_num, widget in self.get_widgets_on_pages():
+            if widget.diagram_page.get_diagram() is diagram:
+                break
+        else:
+            log.warn(f"No tab found for diagram {diagram}")
+            return
+
+        if diagram is self.get_current_diagram():
+            self._clear_ui_settings(widget)
+        self._notebook.remove_page(page_num)
+        widget.diagram_page.close()
+        widget.destroy()
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):

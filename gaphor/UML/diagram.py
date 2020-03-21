@@ -9,10 +9,6 @@ import uuid
 
 import gaphas
 
-from gaphor.UML.event import DiagramItemCreated
-from gaphor.UML.properties import umlproperty
-from gaphor.UML.uml2 import Namespace, PackageableElement
-
 log = logging.getLogger(__name__)
 
 
@@ -63,56 +59,3 @@ class DiagramCanvas(gaphas.Canvas):
         """Return a list of all canvas items that match expression."""
 
         return list(filter(expression, self.get_all_items()))
-
-
-class Diagram(Namespace, PackageableElement):
-    """Diagrams may contain model elements and can be owned by a Package.
-    """
-
-    def __init__(self, id=None, model=None):
-        """Initialize the diagram with an optional id and element model.
-        The diagram also has a canvas."""
-
-        super().__init__(id, model)
-        self.canvas = DiagramCanvas(self)
-
-    package: umlproperty[Namespace]
-
-    def save(self, save_func):
-        """Apply the supplied save function to this diagram and the canvas."""
-
-        super().save(save_func)
-        save_func("canvas", self.canvas)
-
-    def postload(self):
-        """Handle post-load functionality for the diagram canvas."""
-        super().postload()
-        self.canvas.postload()
-
-    def create(self, type, parent=None, subject=None):
-        """Create a new canvas item on the canvas. It is created with
-        a unique ID and it is attached to the diagram's root item.  The type
-        parameter is the element class to create.  The new element also has an
-        optional parent and subject."""
-
-        return self.create_as(type, str(uuid.uuid1()), parent, subject)
-
-    def create_as(self, type, id, parent=None, subject=None):
-        assert issubclass(type, gaphas.Item)
-        item = type(id, self.model)
-        if subject:
-            item.subject = subject
-        self.canvas.add(item, parent)
-        self.model.handle(DiagramItemCreated(self.model, item))
-        return item
-
-    def unlink(self):
-        """Unlink all canvas items then unlink this diagram."""
-
-        for item in self.canvas.get_all_items():
-            try:
-                item.unlink()
-            except (AttributeError, KeyError):
-                pass
-
-        super().unlink()

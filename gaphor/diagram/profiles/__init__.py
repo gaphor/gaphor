@@ -6,7 +6,7 @@ def _load():
     from gaphor.diagram.profiles import (
         extensionconnect,
         metaclasspropertypage,
-        stereotypepage,
+        stereotypepropertypages,
     )
 
 

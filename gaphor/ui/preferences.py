@@ -12,10 +12,8 @@ class Preferences(Service, ActionProvider):
         self.main_window = main_window
         self.properties = properties
 
-    @action(name="app.preferences")
+    @action(name="win.preferences", shortcut="<Primary>comma")
     def open(self):
-        # self.hand_drawn_style.active = self.properties.get("diagram.sloppiness", 0.0) > 0.0
-
         builder = Gtk.Builder()
         with importlib.resources.path("gaphor.ui", "mockups.glade") as glade_file:
             builder.add_objects_from_file(str(glade_file), ("preferences",))

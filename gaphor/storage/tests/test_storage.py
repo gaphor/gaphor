@@ -5,9 +5,10 @@ Unittest the storage and parser modules
 import re
 from io import StringIO
 
-import importlib_metadata
+import pytest
 
 from gaphor import UML
+from gaphor.application import distribution
 from gaphor.diagram.classes import AssociationItem, ClassItem, InterfaceItem
 from gaphor.diagram.general import CommentItem
 from gaphor.misc.xmlwriter import XMLWriter
@@ -36,11 +37,12 @@ class StorageTestCase(TestCase):
         assert version_lower_than("0.14.1111", (0, 15, 0))
         assert not version_lower_than("0.15.0", (0, 15, 0))
         assert not version_lower_than("1.33.0", (0, 15, 0))
-        assert version_lower_than("0.15.0.b123", (0, 15, 0))
+        assert not version_lower_than("0.15.0b123", (0, 15, 0))
         assert version_lower_than("0.14.0.b1", (0, 15, 0))
-        assert version_lower_than("0.15.b1", (0, 15, 0))
+        assert not version_lower_than("0.15.b1", (0, 15, 0))
         assert not version_lower_than("0.16.b1", (0, 15, 0))
         assert not version_lower_than("0.15.0.b2", (0, 14, 99))
+        assert not version_lower_than("1.2.0rc2-dev0+7fad31a0", (0, 17, 0))
 
     def test_save_uml(self):
         """Saving gaphor.UML model elements.
@@ -147,13 +149,13 @@ class StorageTestCase(TestCase):
         assert len(elements) == 1, elements
         assert elements[0].name == difficult_name, elements[0].name
 
+    @pytest.mark.slow
     def test_load_uml_metamodel(self):
         """
         Test if the meta model can be loaded.
         """
 
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("gaphor/UML/uml2.gaphor")
+        path = distribution().locate_file("gaphor/UML/uml2.gaphor")
 
         with open(path) as ifile:
             storage.load(ifile, factory=self.element_factory)
@@ -250,8 +252,7 @@ class StorageTestCase(TestCase):
 
         """Test loading and saving models"""
 
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("test-diagrams/simple-items.gaphor")
+        path = distribution().locate_file("test-diagrams/simple-items.gaphor")
 
         with open(path, "r") as ifile:
             storage.load(ifile, factory=self.element_factory)
@@ -281,8 +282,7 @@ class StorageTestCase(TestCase):
 
         """Test loading and saving models"""
 
-        dist = importlib_metadata.distribution("gaphor")
-        path = dist.locate_file("test-diagrams/old-gaphor-version.gaphor")
+        path = distribution().locate_file("test-diagrams/old-gaphor-version.gaphor")
 
         def load_old_model():
             with open(path, "r") as ifile:

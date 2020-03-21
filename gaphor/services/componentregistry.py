@@ -16,7 +16,7 @@ class ComponentRegistry(Service):
     """
 
     def __init__(self) -> None:
-        self._comp: Set[Tuple[object, str]] = set()
+        self._comp: Set[Tuple[str, object]] = set()
 
     def shutdown(self) -> None:
         pass
@@ -27,14 +27,14 @@ class ComponentRegistry(Service):
         """
         return self.get(Service, name)  # type: ignore[misc] # noqa: F821
 
-    def register(self, component: object, name: str):
-        self._comp.add((component, name))
+    def register(self, name: str, component: object) -> None:
+        self._comp.add((name, component))
 
-    def unregister(self, component: object):
-        self._comp = {(c, n) for c, n in self._comp if c is not component}
+    def unregister(self, component: object) -> None:
+        self._comp = {(n, c) for n, c in self._comp if c is not component}
 
     def get(self, base: Type[T], name: str) -> T:
-        found = {(c, n) for c, n in self._comp if isinstance(c, base) and n == name}
+        found = [(n, c) for n, c in self._comp if isinstance(c, base) and n == name]
         if len(found) > 1:
             raise ComponentLookupError(
                 f"More than one component matches {base}+{name}: {found}"
@@ -43,7 +43,7 @@ class ComponentRegistry(Service):
             raise ComponentLookupError(
                 f"Component with type {base} and name {name} is not registered"
             )
-        return next(iter(found))[0]
+        return found[0][1]
 
-    def all(self, base: Type[T]) -> Iterator[Tuple[T, str]]:
-        return ((c, n) for c, n in self._comp if isinstance(c, base))
+    def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
+        return ((n, c) for n, c in self._comp if isinstance(c, base))

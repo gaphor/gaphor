@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "1.1.1"
+version = "1.2.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -35,10 +35,10 @@ classifiers = [
 python = "^3.7"
 pycairo = "^1.18"
 PyGObject = "^3.30"
-gaphas = "^1.0.0"
-importlib_metadata = "^0.23"
+gaphas = "^2.0"
+importlib_metadata = "^1.4"
 typing_extensions = "^3.7.4"
-generic = {version = "^1.0.0-beta.1", allows-prereleases = true}
+generic = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.5"
@@ -48,7 +48,6 @@ pytest-runner = "^4.2"
 black = { version = "^19.10b0", python = "^3.6" }
 mypy = "0.740"
 pre-commit = "^1.12"
-pyinstaller = "^3.5"
 sphinx = "^2.2"
 recommonmark = "^0.6.0"
 sphinx-rtd-theme = "^0.4.3"
@@ -58,8 +57,13 @@ flake8 = "^3.7.9"
 isort = "^4.3.21"
 
 [tool.poetry.scripts]
-gaphor = 'gaphor:main'
+gaphor = 'gaphor.ui:main'
 gaphorconvert = 'gaphor.tools.gaphorconvert:main'
+
+[tool.poetry.plugins."gaphor.appservices"]
+"session" = "gaphor.services.session:Session"
+"help" = "gaphor.services.helpservice:HelpService"
+"app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
 
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"
@@ -75,12 +79,10 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "tools_menu" = "gaphor.ui.menufragment:MenuFragment"
 "copy" = "gaphor.services.copyservice:CopyService"
 "sanitizer" = "gaphor.services.sanitizerservice:SanitizerService"
-"help" = "gaphor.services.helpservice:HelpService"
 "namespace" = "gaphor.ui.namespace:Namespace"
 "toolbox" = "gaphor.ui.toolbox:Toolbox"
 "diagrams" = "gaphor.ui.mainwindow:Diagrams"
-# Console Window is causing Test Seg Faults with GitHub Actions
-# "consolewindow" = "gaphor.plugins.console:ConsoleWindow"
+"consolewindow" = "gaphor.plugins.console:ConsoleWindow"
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
@@ -97,5 +99,5 @@ skip_glob = "*/uml2.py"
 filter_files = true
 
 [build-system]
-requires = ["poetry==1.0.0b3"]
+requires = ["poetry==1.0.0b7"]
 build-backend = "poetry.masonry.api"

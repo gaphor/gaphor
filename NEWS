@@ -1,3 +1,16 @@
+1.2.0
+-----
+- Improved support for Sequence Diagrams
+- Support multiple windows
+- Proper file icons on Mac and Linux
+- No longer a console on Windows
+- Support i18n
+- Improved search in tree view
+- "Show in Diagram" option in tree view popup menu
+- Internally, the Gaphor application is no longer a singleton
+- Overall a lot of code simplification
+- A fair share of bug fixes
+
 1.1.1
 -----
 - Reset tool after creation by default
@@ -113,7 +126,7 @@ For a complete set of changes and fixes see:
 
 0.11.2
 ------
-- improved items's connection adapters 
+- improved items's connection adapters
 - fixed comment line, comment, message and lifeline items connection
   adapters to implement UML specification more closely
 - items gluing speedup
@@ -171,7 +184,7 @@ NOTE: if you have Zope 3 installed it's probably not a good idea to install
 - actions: flow final, fork, join and object nodes
 - assembly connector
 - flows and also initial, flow final and activity final nodes can have names
-- flows can be splitted and merged using activity edge connectors 
+- flows can be splitted and merged using activity edge connectors
 - object inspector panel added
 - pdf file export
 - gaphorconvert utility, which allows easy batch conversion of diagrams

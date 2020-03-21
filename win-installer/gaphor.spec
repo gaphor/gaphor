@@ -1,7 +1,6 @@
-# -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import copy_metadata
 
-
+    
 block_cipher = None
 
 a = Analysis(['gaphor-script.py'],
@@ -14,12 +13,13 @@ a = Analysis(['gaphor-script.py'],
 		       ('../gaphor/services/helpservice/*.png', 'gaphor/services/helpservice'),
 		       ('../gaphor/services/helpservice/*.glade', 'gaphor/services/helpservice'),
 		       ('../gaphor/ui/icons/*.svg', 'gaphor/ui/icons'),
-		       ('../LICENSE.txt', 'gaphor')
-		     ]+copy_metadata('gaphor'),
+		       ('../LICENSE.txt', 'gaphor'),
+		       ('../gaphor/locale/*', 'gaphor/locale')
+		     ]+copy_metadata('gaphor')+copy_metadata('gaphas'),
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
-             excludes=['lib2to3'],
+             excludes=['lib2to3', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
@@ -28,16 +28,16 @@ pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
-          [('v', None, 'OPTION')],
+          options=[],
           exclude_binaries=True,
-          name='launch-gaphor',
+          name='gaphor',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           icon='misc/gaphor.ico',
           version='file_version_info.txt',
-          console=True )
+          console=False)
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

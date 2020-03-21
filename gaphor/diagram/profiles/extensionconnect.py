@@ -1,10 +1,12 @@
+from typing import Optional
+
 from gaphor import UML
-from gaphor.diagram.connectors import IConnect, RelationshipConnect
+from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.diagram.presentation import Classified
 from gaphor.diagram.profiles.extension import ExtensionItem
 
 
-@IConnect.register(Classified, ExtensionItem)
+@Connector.register(Classified, ExtensionItem)
 class ExtensionConnect(RelationshipConnect):
     """Connect class and stereotype items using an extension item."""
 
@@ -31,8 +33,11 @@ class ExtensionConnect(RelationshipConnect):
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         if c1 and c2:
-            head_type = c1.subject
-            tail_type = c2.subject
+            assert isinstance(c1.subject, UML.Class)
+            assert isinstance(c2.subject, UML.Stereotype)
+
+            head_type: UML.Class = c1.subject
+            tail_type: UML.Stereotype = c2.subject
 
             # First check if we do not already contain the right subject:
             if line.subject:
