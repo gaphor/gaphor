@@ -82,7 +82,7 @@ class ElementEditor(UIComponent, ActionProvider):
         Return an ordered list of (order, name, adapter).
         """
         adaptermap = {}
-        if item.subject:
+        if isinstance(item, Presentation) and item.subject:
             for adapter in PropertyPages(item.subject):
                 adaptermap[(adapter.order, adapter.__class__.__name__)] = adapter
         for adapter in PropertyPages(item):
