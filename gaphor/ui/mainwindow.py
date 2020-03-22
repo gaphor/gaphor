@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 from typing import List, Tuple
 
-from gi.repository import Gdk, Gio, GLib, Gtk
+from gi.repository import Gdk, Gio, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
@@ -150,6 +150,11 @@ class MainWindow(Service, ActionProvider):
         self.window = builder.get_object("main-window")
         self.window.set_application(gtk_app)
 
+        profile_combo = builder.get_object("profile-combo")
+        profile_combo.connect("changed", self._on_profile_selected)
+        selected_profile = self.properties.get("profile", default="UML")
+        profile_combo.set_active_id(selected_profile)
+
         hamburger = builder.get_object("hamburger")
         hamburger.bind_model(
             create_hamburger_model(self.export_menu.menu, self.tools_menu.menu), None
@@ -267,6 +272,12 @@ class MainWindow(Service, ActionProvider):
         """
         width, height = window.get_size()
         self.properties.set("ui.window-size", (width, height))
+
+    def _on_profile_selected(self, combo):
+        """Store the selected profile in a property."""
+        profile = combo.get_active_text()
+        # self.event_manager.handle(ProfileSelectionChanged(profile))
+        self.properties.set("profile", profile)
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
