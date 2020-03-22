@@ -381,8 +381,8 @@ class AssociationPropertyPage(PropertyPageBase):
 
     def __init__(self, item):
         self.item = item
-        self.subject = self.item.subject
-        self.watcher = self.subject.watcher()
+        self.subject = item.subject
+        self.watcher = item.subject and self.subject.watcher()
         self.semaphore = 0
 
     def construct_end(self, builder, end_name, end):
