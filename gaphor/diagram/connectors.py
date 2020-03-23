@@ -48,14 +48,16 @@ class BaseConnector:
 
     The following methods are required to make this work:
 
-    - `allow()`: is the connection allowed at all (during mouse movement for example).
-    - `connect()`: Establish a connection between element and line. Also takes care of
-      disconnects, if required (e.g. 1:1 relationships)
+    - `allow()`: is the connection allowed at all (during mouse movement for
+       example).
+    - `connect()`: Establish a connection between element and line. Also takes
+       care of disconnects, if required (e.g. 1:1 relationships)
     - `disconnect()`: Break connection, called when dropping a handle on a
-       point where it can not connect.
+       point where it cannot connect.
     - `reconnect()`: Connect to another item (only used if present)
 
-    By convention the adapters are registered by (element, line) -- in that order.
+    By convention the adapters are registered by (element, line) -- in that
+    order.
 
     """
 
