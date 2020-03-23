@@ -16,8 +16,6 @@ from gaphor.core import gettext
 from gaphor.diagram.diagramtools import DefaultTool, PlacementTool
 from gaphor.UML.event import DiagramItemCreated
 
-__all__ = ["TOOLBOX_ACTIONS"]
-
 ItemFactory = Callable[[UML.Diagram, Optional[UML.Presentation]], UML.Presentation]
 
 
