@@ -1,63 +1,58 @@
-"""
-Extension item connection adapter tests.
-"""
+"""Extension item connection adapter tests."""
 
 from gaphor import UML
 from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.profiles.extension import ExtensionItem
-from gaphor.tests import TestCase
+from gaphor.diagram.tests.fixtures import allow, connect
 
 
-class ExtensionConnectorTestCase(TestCase):
-    """
-    Extension item connection adapter tests.
-    """
+def test_glue(element_factory, diagram):
+    """Test extension item glue."""
 
-    def test_class_glue(self):
-        """Test extension item gluing to a class."""
+    ext = diagram.create(ExtensionItem)
+    st = diagram.create(ClassItem, subject=element_factory.create(UML.Stereotype))
+    cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
-        ext = self.create(ExtensionItem)
-        cls = self.create(ClassItem, UML.Class)
+    glued = allow(ext, ext.tail, st)
+    assert glued
 
-        # cannot connect extension item tail to a class
-        glued = self.allow(ext, ext.tail, cls)
-        assert not glued
+    connect(ext, ext.tail, st)
 
-    def test_stereotype_glue(self):
-        """Test extension item gluing to a stereotype."""
+    glued = allow(ext, ext.head, cls)
+    assert glued
 
-        ext = self.create(ExtensionItem)
-        st = self.create(ClassItem, UML.Stereotype)
 
-        # test precondition
-        assert isinstance(st.subject, UML.Stereotype)
+def test_class_glue(element_factory, diagram):
+    """Test extension item gluing to a class."""
 
-        # can connect extension item head to a Stereotype UML metaclass,
-        # because it derives from Class UML metaclass
-        glued = self.allow(ext, ext.head, st)
-        assert glued
+    ext = diagram.create(ExtensionItem)
+    cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
-    def test_glue(self):
-        """Test extension item glue
-        """
-        ext = self.create(ExtensionItem)
-        st = self.create(ClassItem, UML.Stereotype)
-        cls = self.create(ClassItem, UML.Class)
+    # cannot connect extension item tail to a class
+    glued = allow(ext, ext.tail, cls)
+    assert not glued
 
-        glued = self.allow(ext, ext.tail, st)
-        assert glued
 
-        self.connect(ext, ext.tail, st)
+def test_stereotype_glue(element_factory, diagram):
+    """Test extension item gluing to a stereotype."""
 
-        glued = self.allow(ext, ext.head, cls)
-        assert glued
+    ext = diagram.create(ExtensionItem)
+    st = diagram.create(ClassItem, subject=element_factory.create(UML.Stereotype))
 
-    def test_connection(self):
-        """Test extension item connection
-        """
-        ext = self.create(ExtensionItem)
-        st = self.create(ClassItem, UML.Stereotype)
-        cls = self.create(ClassItem, UML.Class)
+    # test precondition
+    assert isinstance(st.subject, UML.Stereotype)
 
-        self.connect(ext, ext.tail, st)
-        self.connect(ext, ext.head, cls)
+    # can connect extension item head to a Stereotype UML metaclass,
+    # because it derives from Class UML metaclass
+    glued = allow(ext, ext.head, st)
+    assert glued
+
+
+def test_connection(element_factory, diagram):
+    """Test extension item connection."""
+    ext = diagram.create(ExtensionItem)
+    st = diagram.create(ClassItem, subject=element_factory.create(UML.Stereotype))
+    cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    connect(ext, ext.tail, st)
+    connect(ext, ext.head, cls)
