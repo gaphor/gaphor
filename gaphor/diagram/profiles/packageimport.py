@@ -8,7 +8,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.PackageImport)
-class PackageImport(LinePresentation):
+class PackageImportItem(LinePresentation):
     """Profile Import dependency relationship."""
 
     def __init__(self, id=None, model=None):
