@@ -10,7 +10,7 @@ from gaphor.diagram.connectors import (
     RelationshipConnect,
     UnaryRelationshipConnect,
 )
-from gaphor.diagram.presentation import Classified, ElementPresentation, Named
+from gaphor.diagram.presentation import Classified, Named
 
 
 @Connector.register(Named, DependencyItem)
