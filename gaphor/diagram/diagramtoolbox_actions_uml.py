@@ -516,7 +516,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-import-symbolic",
                 "<Shift>M",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.profiles.PackageImport
+                    diagram.profiles.PackageImportItem
                 ),
             ),
         ),

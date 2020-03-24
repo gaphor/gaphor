@@ -1,6 +1,4 @@
-"""
-Stereotype property page.
-"""
+"""Stereotype property page."""
 
 from gi.repository import Gtk
 

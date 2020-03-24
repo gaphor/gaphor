@@ -1,5 +1,3 @@
-from typing import Optional
-
 from gaphor import UML
 from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.diagram.presentation import Classified
