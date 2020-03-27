@@ -49,31 +49,28 @@ building of the image is done at the [Gaphor Flathub
 repository](https://github.com/flathub/org.gaphor.Gaphor).
 
 1. [Install Flatpak](https://flatpak.org/setup)
- 
+
 1. Install flatpak-builder
- 
+
        $ sudo apt-get install flatpak-builder
 
 1. Install the GNOME SDK
 
        $ flatpak install flathub org.gnome.Sdk 3.34
 
-1. Add the Flathub repository and install the necessary SDK:
+1. Clone the Flathub repository and install the necessary SDK:
 
-       $ cd flatpak
+       git clone https://github.com/flathub/org.gaphor.Gaphor.git
+       $ cd org.gaphor.Gaphor
        $ make setup
-	
+
 1. Build Gaphor Flatpak
 
        $ make
-        
+
 1. Install the Flatpak
 
        $ make install
-       
-In order to update the Gaphor dependencies in the yaml manifest files:
-
-    $ make python-modules 
 
 ## Linux Distribution Packages
 
