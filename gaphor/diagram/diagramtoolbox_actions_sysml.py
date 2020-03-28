@@ -136,73 +136,7 @@ sysml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
             ),
         ),
     ),
-    (
-        gettext("Internal Block"),
-        (
-            ToolDef(
-                "toolbox-class",
-                gettext("Class"),
-                "gaphor-class-symbolic",
-                "c",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem, UML.Class, config_func=namespace_config
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-interface",
-                gettext("Interface"),
-                "gaphor-interface-symbolic",
-                "i",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.InterfaceItem,
-                    UML.Interface,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-package",
-                gettext("Package"),
-                "gaphor-package-symbolic",
-                "p",
-                PlacementTool.new_item_factory(
-                    diagram.classes.PackageItem,
-                    UML.Package,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-association",
-                gettext("Association"),
-                "gaphor-association-symbolic",
-                "<Shift>A",
-                PlacementTool.new_item_factory(diagram.classes.AssociationItem),
-            ),
-            ToolDef(
-                "toolbox-dependency",
-                gettext("Dependency"),
-                "gaphor-dependency-symbolic",
-                "<Shift>D",
-                PlacementTool.new_item_factory(diagram.classes.DependencyItem),
-            ),
-            ToolDef(
-                "toolbox-generalization",
-                gettext("Generalization"),
-                "gaphor-generalization-symbolic",
-                "<Shift>G",
-                PlacementTool.new_item_factory(diagram.classes.GeneralizationItem),
-            ),
-            ToolDef(
-                "toolbox-implementation",
-                gettext("Implementation"),
-                "gaphor-implementation-symbolic",
-                "<Shift>I",
-                PlacementTool.new_item_factory(diagram.classes.ImplementationItem),
-            ),
-        ),
-    ),
+    (gettext("Internal Block"), (),),
     (
         gettext("Activity"),
         (
@@ -323,73 +257,7 @@ sysml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
             ),
         ),
     ),
-    (
-        gettext("Requirement"),
-        (
-            ToolDef(
-                "toolbox-class",
-                gettext("Class"),
-                "gaphor-class-symbolic",
-                "c",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem, UML.Class, config_func=namespace_config
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-interface",
-                gettext("Interface"),
-                "gaphor-interface-symbolic",
-                "i",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.InterfaceItem,
-                    UML.Interface,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-package",
-                gettext("Package"),
-                "gaphor-package-symbolic",
-                "p",
-                PlacementTool.new_item_factory(
-                    diagram.classes.PackageItem,
-                    UML.Package,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-association",
-                gettext("Association"),
-                "gaphor-association-symbolic",
-                "<Shift>A",
-                PlacementTool.new_item_factory(diagram.classes.AssociationItem),
-            ),
-            ToolDef(
-                "toolbox-dependency",
-                gettext("Dependency"),
-                "gaphor-dependency-symbolic",
-                "<Shift>D",
-                PlacementTool.new_item_factory(diagram.classes.DependencyItem),
-            ),
-            ToolDef(
-                "toolbox-generalization",
-                gettext("Generalization"),
-                "gaphor-generalization-symbolic",
-                "<Shift>G",
-                PlacementTool.new_item_factory(diagram.classes.GeneralizationItem),
-            ),
-            ToolDef(
-                "toolbox-implementation",
-                gettext("Implementation"),
-                "gaphor-implementation-symbolic",
-                "<Shift>I",
-                PlacementTool.new_item_factory(diagram.classes.ImplementationItem),
-            ),
-        ),
-    ),
+    (gettext("Requirement"), (),),
     (
         gettext("State Machine"),
         (
