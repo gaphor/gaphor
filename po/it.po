@@ -31,7 +31,7 @@ msgstr "Linea"
 
 #: ../gaphor/diagram/diagramtoolbox.py:73
 msgid "Box"
-msgstr ""
+msgstr "Scatola"
 
 #: ../gaphor/diagram/diagramtoolbox.py:81
 msgid "Ellipse"
@@ -47,11 +47,11 @@ msgstr "Riga di commento"
 
 #: ../gaphor/diagram/diagramtoolbox.py:107
 msgid "Classes"
-msgstr "Categorie"
+msgstr "Classi"
 
 #: ../gaphor/diagram/diagramtoolbox.py:111
 msgid "Class"
-msgstr "Categoria"
+msgstr "Classe"
 
 #: ../gaphor/diagram/diagramtoolbox.py:121
 msgid "Interface"
@@ -158,7 +158,7 @@ msgstr "Interazioni"
 
 #: ../gaphor/diagram/diagramtoolbox.py:356
 msgid "Lifeline"
-msgstr ""
+msgstr "Tempo di vita"
 
 #: ../gaphor/diagram/diagramtoolbox.py:368
 msgid "Message"
@@ -486,7 +486,7 @@ msgstr "Stereotipi"
 
 #: ../gaphor/diagram/propertypages.glade
 msgid "Guard"
-msgstr ""
+msgstr Guardia"
 
 #: ../gaphor/diagram/classes/classespropertypages.py:308
 msgid "Usage"
@@ -703,7 +703,7 @@ msgstr "<Nessuno>"
 
 #: ../gaphor/ui/elementeditor.py:33
 msgid "Element Editor"
-msgstr ""
+msgstr "Editor di elementi"
 
 #: ../gaphor/ui/elementeditor.py:45
 msgid "Properties"
@@ -803,7 +803,7 @@ msgstr "Modificati"
 
 #: ../gaphor/ui/mockups.glade
 msgid "Sloppy lines"
-msgstr ""
+msgstr "Linee scritte a mano"
 
 #: ../gaphor/ui/mockups.glade
 msgid "Reset to pointer tool after placing an item on a diagram"
@@ -843,5 +843,5 @@ msgstr "Nessun modello aperto di recente"
 
 #: ../gaphor/ui/toolbox.py:30
 msgid "Toolbox"
-msgstr "Cassetta degli attrezzi"
+msgstr "Strumenti"
 
