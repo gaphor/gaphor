@@ -11,15 +11,8 @@ from gaphor.diagram.classes.generalization import GeneralizationItem
 from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
-from gaphor.diagram.tests.fixtures import (
-    allow,
-    connect,
-    diagram,
-    disconnect,
-    element_factory,
-)
+from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.diagram.usecases.actor import ActorItem
-from gaphor.tests import TestCase
 
 T = TypeVar("T")
 

@@ -51,7 +51,7 @@ class SanitizerService(Service):
         Link comment and element if a comment line is present, but comment
         and element subject are not connected yet.
         """
-        if not event.property is UML.Presentation.subject:  # type: ignore[misc]
+        if event.property is not UML.Presentation.subject:  # type: ignore[misc]
             return
 
         element: UML.Presentation = event.element
