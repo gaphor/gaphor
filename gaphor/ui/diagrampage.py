@@ -124,14 +124,15 @@ class DiagramPage:
 
         return self.widget
 
-    def get_tool(self, tool_name):
+    def get_tool(self, tool_name, profile=None):
         """
         Return a tool associated with an id (action name).
         """
         if tool_name == "toolbox-pointer":
             return DefaultTool(self.event_manager)
 
-        profile = self.properties.get("profile")
+        if not profile:
+            profile = self.properties.get("profile")
         tool = next(t for t in tooliter(toolbox_actions(profile)) if t.id == tool_name)
         item_factory = tool.item_factory
         handle_index = tool.handle_index

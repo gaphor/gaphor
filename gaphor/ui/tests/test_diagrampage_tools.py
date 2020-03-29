@@ -36,10 +36,17 @@ def tab(event_manager, element_factory, properties):
     window.destroy()
 
 
-def test_pointer(tab):
-    tool = tab.get_tool("toolbox-pointer")
-
+def get_tool(tab, tool_name, profile=None):
+    tool = tab.get_tool(tool_name, profile)
+    # Ensure the factory is working
+    tool.create_item((0, 0))
+    tab.diagram.canvas.update()
     assert tool
+    return tool
+
+
+def test_pointer(tab):
+    tool = get_tool(tab, "toolbox-pointer")
 
 
 @pytest.mark.parametrize(
@@ -81,21 +88,16 @@ def test_pointer(tab):
     ],
 )
 def test_placement_action(tab, tool_name):
-    print(tool_name)
-    tool = tab.get_tool(tool_name)
-
-    # Ensure the factory is working
-    tool.create_item((0, 0))
-    tab.diagram.canvas.update()
+    get_tool(tab, tool_name, "UML")
 
 
 def test_placement_object_node(tab, element_factory):
-    test_placement_action(tab, "toolbox-object-node")
+    get_tool(tab, "toolbox-object-node", "UML")
     assert 1 == len(element_factory.lselect(lambda e: isinstance(e, UML.ObjectNode)))
 
 
 def test_placement_partition(tab, element_factory):
-    test_placement_action(tab, "toolbox-partition")
+    get_tool(tab, "toolbox-partition", "UML")
     assert 0 == len(
         element_factory.lselect(lambda e: isinstance(e, UML.ActivityPartition))
     )
