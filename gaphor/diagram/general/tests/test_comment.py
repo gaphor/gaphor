@@ -141,6 +141,35 @@ def test_commentline_element_disconnect(create, diagram):
     assert not diagram.canvas.get_connection(line.tail)
 
 
+def test_commentline_relationship_disconnect(create):
+    """Test comment line to a relationship item connection and unlink.
+
+    Demonstrates defect #103.
+    """
+    clazz1 = create(ClassItem, UML.Class)
+    clazz2 = create(ClassItem, UML.Class)
+    gen = create(GeneralizationItem)
+
+    connect(gen, gen.head, clazz1)
+    connect(gen, gen.tail, clazz2)
+
+    assert gen.subject
+
+    # now, connect comment to a generalization (relationship)
+    comment = create(CommentItem, UML.Comment)
+    line = create(CommentLineItem)
+    connect(line, line.head, comment)
+    connect(line, line.tail, gen)
+
+    assert gen.subject in comment.subject.annotatedElement
+    assert comment.subject in gen.subject.ownedComment
+
+    disconnect(gen, gen.head)
+
+    assert gen.subject is None
+    assert not comment.subject.annotatedElement
+
+
 def test_commentline_unlink(create):
     """Test comment line unlinking.
     """

@@ -7,6 +7,7 @@ the model clean and in sync with diagrams.
 from gaphor import UML
 from gaphor.abc import Service
 from gaphor.core import event_handler
+from gaphor.diagram.general import CommentLineItem
 from gaphor.UML.event import AssociationDeleted, AssociationSet
 
 
@@ -20,15 +21,18 @@ class SanitizerService(Service):
         self.event_manager = event_manager
 
         event_manager.subscribe(self._unlink_on_presentation_delete)
+        event_manager.subscribe(self.update_annotated_element_link)
         event_manager.subscribe(self._unlink_on_stereotype_delete)
         event_manager.subscribe(self._unlink_on_extension_delete)
         event_manager.subscribe(self._disconnect_extension_end)
 
     def shutdown(self):
-        self.event_manager.unsubscribe(self._unlink_on_presentation_delete)
-        self.event_manager.unsubscribe(self._unlink_on_stereotype_delete)
-        self.event_manager.unsubscribe(self._unlink_on_extension_delete)
-        self.event_manager.unsubscribe(self._disconnect_extension_end)
+        event_manager = self.event_manager
+        event_manager.unsubscribe(self._unlink_on_presentation_delete)
+        event_manager.unsubscribe(self.update_annotated_element_link)
+        event_manager.unsubscribe(self._unlink_on_stereotype_delete)
+        event_manager.unsubscribe(self._unlink_on_extension_delete)
+        event_manager.unsubscribe(self._disconnect_extension_end)
 
     @event_handler(AssociationDeleted)
     def _unlink_on_presentation_delete(self, event):
@@ -41,8 +45,33 @@ class SanitizerService(Service):
             if old_presentation and not event.element.presentation:
                 event.element.unlink()
 
-    def perform_unlink_for_instances(self, st, meta):
+    @event_handler(AssociationSet)
+    def update_annotated_element_link(self, event):
+        """
+        Link comment and element if a comment line is present, but comment
+        and element subject are not connected yet.
+        """
+        if not event.property is UML.Presentation.subject:  # type: ignore[misc]
+            return
 
+        element: UML.Presentation = event.element
+        subject = event.new_value
+        if not element.canvas or not subject:
+            return
+
+        for cinfo in element.canvas.get_connections(connected=element):
+            comment_line = cinfo.item
+            if not isinstance(comment_line, CommentLineItem):
+                continue
+            opposite = comment_line.opposite(cinfo.handle)
+            opposite_cinfo = element.canvas.get_connection(opposite)
+            if not opposite_cinfo:
+                continue
+            comment_item = opposite_cinfo.connected
+            comment = comment_item.subject
+            comment.annotatedElement = subject
+
+    def perform_unlink_for_instances(self, st, meta):
         inst = UML.model.find_instances(st)
 
         for i in list(inst):
