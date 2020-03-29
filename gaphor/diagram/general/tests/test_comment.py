@@ -81,6 +81,28 @@ def test_commentline_element_connect(create, diagram):
     assert ac.subject in comment.subject.annotatedElement
 
 
+def test_commentline_glie_to_item_with_no_subject(create, diagram):
+    """Test comment line connecting to comment and actor items.
+    """
+    line = create(CommentLineItem)
+    gi = create(GeneralizationItem)
+
+    assert allow(line, line.tail, gi)
+
+
+def test_commentline_item_with_no_subject_connect(create, diagram):
+    """Test comment line connecting to comment and actor items.
+    """
+    comment = create(CommentItem, UML.Comment)
+    line = create(CommentLineItem)
+    gi = create(GeneralizationItem)
+
+    connect(line, line.head, comment)
+    connect(line, line.tail, gi)
+    assert diagram.canvas.get_connection(line.tail).connected is gi
+    assert 0 == len(comment.subject.annotatedElement)
+
+
 def test_commentline_element_reconnect(create, diagram):
     """Test comment line connecting to comment and actor items.
     """
