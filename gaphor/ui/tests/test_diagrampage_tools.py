@@ -46,7 +46,8 @@ def get_tool(tab, tool_name, profile=None):
 
 
 def test_pointer(tab):
-    get_tool(tab, "toolbox-pointer")
+    tool = tab.get_tool("toolbox-pointer")
+    assert tool
 
 
 @pytest.mark.parametrize(
