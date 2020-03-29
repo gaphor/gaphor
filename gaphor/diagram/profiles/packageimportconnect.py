@@ -14,13 +14,10 @@ class PackageImportConnect(RelationshipConnect):
         line = self.line
         element = self.element
 
-        # Element at the head should be a Package
-        if handle is line.head and not isinstance(element.subject, UML.Package):
-            return None
-
-        # Element at the tail should also be a Package
-        if handle is line.tail and not isinstance(element.subject, UML.Package):
-            return None
+        # Element at the head and tail should be a Package
+        for line_end in [line.head, line.tail]:
+            if handle is line_end and not isinstance(element.subject, UML.Package):
+                return None
 
         return super().allow(handle, port)
 

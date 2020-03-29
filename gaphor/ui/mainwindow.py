@@ -132,9 +132,20 @@ class MainWindow(Service, ActionProvider):
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
 
+    def _factory(self, name):
+        comp = self.get_ui_component(name)
+        widget = comp.open()
+
+        # Okay, this may be hackish. Action groups on component level are also added
+        # to the main window. This ensures that we can call those items from the
+        # (main) menus as well. Also this makes enabling/disabling work.
+        for prefix in widget.list_action_prefixes():
+            assert prefix not in ("app", "win")
+            self.window.insert_action_group(prefix, widget.get_action_group(prefix))
+        return widget
+
     def open(self, gtk_app=None):
-        """Open the main window.
-        """
+        """Open the main window."""
 
         builder = new_builder()
         self.window = builder.get_object("main-window")
@@ -157,20 +168,8 @@ class MainWindow(Service, ActionProvider):
 
         self.window.set_default_size(*self.size)
 
-        def _factory(name):
-            comp = self.get_ui_component(name)
-            widget = comp.open()
-
-            # Okay, this may be hackish. Action groups on component level are also added
-            # to the main window. This ensures that we can call those items from the
-            # (main) menus as well. Also this makes enabling/disabling work.
-            for prefix in widget.list_action_prefixes():
-                assert prefix not in ("app", "win")
-                self.window.insert_action_group(prefix, widget.get_action_group(prefix))
-            return widget
-
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
-            self.layout = deserialize(self.window, f.read(), _factory)
+            self.layout = deserialize(self.window, f.read(), self._factory)
 
         action_group, accel_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
