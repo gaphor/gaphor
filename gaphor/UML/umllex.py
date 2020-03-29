@@ -1,5 +1,5 @@
 """
-Lexical analizer for attributes and operations.
+The lexical analyzer for attributes and operations.
 
 In this module some parse functions are added for attributes and operations.
 The regular expressions are constructed based on a series of

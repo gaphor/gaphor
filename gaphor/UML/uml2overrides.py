@@ -1,6 +1,6 @@
 """
 Special methods (overrides) that add behavior to the model
-that can not simply be generated.
+that cannot simply be generated.
 
 Derived methods always return a list. Note this is not the case
 for normal properties.
