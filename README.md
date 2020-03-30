@@ -24,7 +24,7 @@ tool.
 ## :bookmark_tabs: Table of Contents
 
 - [Background](#background)
-- [Install](#install)
+- [Install](#floppy_disk-install)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -62,6 +62,10 @@ To install Gaphor in Linux use Flatpak:
 1. [Install Flatpak](https://flatpak.org/setup)
 1. `flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
 1. `flatpak install --user flathub org.gaphor.Gaphor`
+
+#### Arch Linux
+
+Can be installed from [AUR package](https://aur.archlinux.org/packages/python-gaphor/).
 
 ### macOS
 We are still working on packaging GTK with Gaphor and it is currently an
