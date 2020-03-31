@@ -252,6 +252,15 @@
         "doc",
         "platform"
       ]
+    },
+    {
+      "login": "albanobattistella",
+      "name": "albanobattistella",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/34811668?v=4",
+      "profile": "http://www.zorinos.com",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
