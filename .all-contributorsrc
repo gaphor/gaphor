@@ -242,7 +242,18 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "actionless",
+      "name": "Yauhen Kirylau",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1655669?v=4",
+      "profile": "https://github.com/actionless",
+      "contributions": [
+        "doc",
+        "platform"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
