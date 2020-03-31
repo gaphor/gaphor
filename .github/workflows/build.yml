@@ -11,6 +11,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python
@@ -36,6 +37,7 @@ jobs:
   linux:
     needs: lint
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       matrix:
         py_ver: [3.7, 3.8]
@@ -98,6 +100,7 @@ jobs:
   windows:
     needs: lint
     runs-on: windows-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
       MSYSTEM: MINGW64
       MSYS2_ARCH: x86_64
@@ -155,6 +158,7 @@ jobs:
   macos:
     needs: lint
     runs-on: macOS-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
       PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.2.1/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
