@@ -72,7 +72,7 @@ class CommentLineElementConnect(BaseConnector):
         if super().connect(handle, port):
             opposite = self.line.opposite(handle)
             connected_to = self.get_connected(opposite)
-            if connected_to:
+            if connected_to and connected_to.subject:
                 if isinstance(connected_to.subject, UML.Comment):
                     connected_to.subject.annotatedElement = self.element.subject
                 else:
@@ -118,19 +118,7 @@ class CommentLineLineConnect(BaseConnector):
         connected_to = self.get_connected(opposite)
 
         # do not connect to the same item nor connect to other comment line
-        if (
-            connected_to is element
-            or not element.subject
-            or isinstance(element, CommentLineItem)
-        ):
-            return None
-
-        # Same goes for subjects:
-        if (
-            connected_to
-            and (not (connected_to.subject or element.subject))
-            and connected_to.subject is element.subject
-        ):
+        if connected_to is element or isinstance(element, CommentLineItem):
             return None
 
         # One end should be connected to a CommentItem:

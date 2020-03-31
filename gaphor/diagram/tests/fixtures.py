@@ -13,8 +13,13 @@ from gaphor.UML.elementfactory import ElementFactory
 
 
 @pytest.fixture
-def element_factory():
-    return ElementFactory(EventManager())
+def event_manager():
+    return EventManager()
+
+
+@pytest.fixture
+def element_factory(event_manager):
+    return ElementFactory(event_manager)
 
 
 @pytest.fixture
