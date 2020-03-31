@@ -7,6 +7,7 @@ on:
 jobs:
   update-release-draft:
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       # Drafts your next Release notes as Pull Requests are merged into "master"
       - uses: toolmantim/release-drafter@v5.2.0
