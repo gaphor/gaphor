@@ -10,20 +10,10 @@ import code
 import os
 import pydoc
 import sys
+from rlcompleter import Completer
 from typing import Dict, List
 
 from gi.repository import Gdk, GLib, Gtk, Pango
-
-if os.getenv("GITHUB_REF"):
-    # Work around issues in CI with loading rlcompleter
-    # https://github.com/gaphor/gaphor/issues/245
-    class Completer:
-        pass
-
-
-else:
-    from rlcompleter import Completer
-
 
 if __name__ == "__main__":
     import gi
