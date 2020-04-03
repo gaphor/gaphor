@@ -13,7 +13,7 @@ from gi.repository import Gtk
 from gaphor.i18n import gettext
 
 
-def error_handler(message=None, exc_info=None):
+def error_handler(message=None, exc_info=None, window=None):
     exc_type, exc_value, exc_traceback = exc_info or sys.exc_info()
 
     if not exc_type:
@@ -42,6 +42,7 @@ def error_handler(message=None, exc_info=None):
         buttons,
         message,
     )
+    dialog.set_transient_for(window)
     answer = dialog.run()
     dialog.destroy()
     if answer == Gtk.ResponseType.YES:
