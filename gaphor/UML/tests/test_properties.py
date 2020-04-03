@@ -170,12 +170,7 @@ def test_association_1_n():
     assert a1.one is None
     assert a2.one is b2
 
-    try:
-        del b1.two[a1]
-    except ValueError:
-        pass  # ok
-    else:
-        assert 0, "should not be removed"
+    del b1.two[a1]
 
 
 def test_association_n_n():
