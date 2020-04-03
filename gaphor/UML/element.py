@@ -105,6 +105,11 @@ class Element:
         else:
             prop.load(self, value)
 
+    def __str__(self):
+        return f"<{self.__class__.__module__}.{self.__class__.__name__} element {self._id}>"
+
+    __repr__ = __str__
+
     def postload(self):
         """
         Fix up the odds and ends.
