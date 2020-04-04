@@ -455,7 +455,7 @@ class association(umlproperty):
         try:
             delattr(obj, self._name)
         except AttributeError:
-            log.exception(f"Delete attribute failed for {obj} with {self._name}")
+            pass
         else:
             if do_notify:
                 self.handle(AssociationSet(obj, self, value, None))
@@ -472,7 +472,7 @@ class association(umlproperty):
             try:
                 items.remove(value)
             except ValueError:
-                log.exception(f"Removing {value} from list {items} failed")
+                pass
             else:
                 if do_notify:
                     self.handle(AssociationDeleted(obj, self, value))

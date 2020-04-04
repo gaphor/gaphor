@@ -101,12 +101,14 @@ class FileManager(Service, ActionProvider):
 
             self.filename = filename
             self.event_manager.handle(FileLoaded(self, filename))
-        except (QueueEmpty, QueueFull):
+        except Exception:
             error_handler(
                 message=gettext(
                     "Error while loading model from file {filename}"
-                ).format(filename=filename)
+                ).format(filename=filename),
+                window=self.main_window.window,
             )
+            self.new()
             raise
         finally:
             status_window.destroy()
@@ -179,12 +181,14 @@ class FileManager(Service, ActionProvider):
 
             self.filename = filename
             self.event_manager.handle(FileSaved(self, filename))
-        except (OSError, QueueEmpty, QueueFull):
+        except Exception:
             error_handler(
                 message=gettext("Error while saving model to file {filename}").format(
                     filename=filename
-                )
+                ),
+                window=self.main_window.window,
             )
+            self.new()
             raise
         finally:
             status_window.destroy()

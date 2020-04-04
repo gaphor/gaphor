@@ -103,8 +103,6 @@ class collection(Generic[T]):
     def remove(self, value: T) -> None:
         if value in self.items:
             self.property.__delete__(self.object, value)
-        else:
-            raise ValueError(f"{value} not in collection")
 
     def index(self, key: T) -> int:
         """
