@@ -1,12 +1,9 @@
 """
 The Application object. One application should be available.
 
-All important services are present in the application object:
- - plugin manager
- - undo manager
- - main window
- - UML element factory
- - action sets
+An application can host multiple sessions. From a user point of
+view a session is represented as a window in which a diagram
+can be edited.
 """
 
 from __future__ import annotations
