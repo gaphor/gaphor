@@ -341,9 +341,6 @@ class UnaryRelationshipConnect(BaseConnector):
 class RelationshipConnect(UnaryRelationshipConnect):
     """Base for relationship connections between unique elements."""
 
-    def connect_subject(self, handle: Handle) -> bool:
-        pass
-
     def allow(self, handle: Handle, port: Port) -> bool:
         """
         In addition to the normal check, both relationship ends may not be
