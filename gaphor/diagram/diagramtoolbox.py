@@ -6,9 +6,13 @@ The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
-from typing import Callable, NamedTuple, Optional
+from typing import Callable, NamedTuple, Optional, Sequence, Tuple
 
-from gaphor import UML
+from gaphas.item import SE
+
+from gaphor import UML, diagram
+from gaphor.core import gettext
+from gaphor.diagram.diagramtools import PlacementTool
 
 __all__ = ["TOOLBOX_ACTIONS"]
 
