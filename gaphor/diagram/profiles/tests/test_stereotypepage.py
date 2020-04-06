@@ -18,12 +18,9 @@ def class_(diagram, element_factory):
 def test_stereotype_page_with_no_stereotype(diagram, class_):
     """Test the Stereotype Property Page not created for a Class."""
 
-    # GIVEN a Class
-    # WHEN we open a Stereotype Property Page for the Class
     editor = StereotypePage(class_)
     page = editor.construct()
 
-    # THEN we don't create a property page
     assert page is None
 
 
@@ -31,7 +28,6 @@ def test_stereotype_page_with_stereotype(element_factory, diagram, class_):
     """Test creation of a Stereotype Property Page."""
 
     # Create a stereotype applicable to Class types:
-    # GIVEN a Class with a MetaClass Extension, a Property, and a Class
     metaclass = element_factory.create(UML.Class)
     metaclass.name = "Class"
     stereotype = element_factory.create(UML.Stereotype)
@@ -40,11 +36,9 @@ def test_stereotype_page_with_stereotype(element_factory, diagram, class_):
     attr = element_factory.create(UML.Property)
     attr.name = "Property"
 
-    # WHEN we open a new Stereotype Property Page
     editor = StereotypePage(class_)
     page = editor.construct()
     editor.refresh()
 
-    # THEN we create an editor model, and a property page
     assert len(editor.model) == 1
     assert page is not None
