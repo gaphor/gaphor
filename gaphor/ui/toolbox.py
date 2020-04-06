@@ -99,14 +99,8 @@ class Toolbox(UIComponent, ActionProvider):
     def create_toolbox(
         self, toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]
     ) -> Gtk.ToolPalette:
-        """Create the Gtk.ToolPalette for the toolbox.
+        """Create the Gtk.ToolPalette for the toolbox."""
 
-        Args:
-            toolbox_actions: The diagramtoolbox actions.
-
-        Returns: The Gtk.ToolPalette.
-
-        """
         toolbox = Gtk.ToolPalette.new()
         toolbox.connect("destroy", self._on_toolbox_destroyed)
 
