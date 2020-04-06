@@ -339,8 +339,7 @@ class UnaryRelationshipConnect(BaseConnector):
 
 
 class RelationshipConnect(UnaryRelationshipConnect):
-    """
-    """
+    """Base for relationship connections between unique elements."""
 
     def allow(self, handle: Handle, port: Port) -> bool:
         """

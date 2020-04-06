@@ -87,6 +87,20 @@
           </packing>
         </child>
         <child>
+          <object class="GtkComboBoxText" id="profile-combo">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <items>
+              <item id="UML" translatable="yes">UML</item>
+              <item id="SysML" translatable="yes">SysML</item>
+              <item id="Safety" translatable="yes">Safety</item>
+            </items>
+          </object>
+          <packing>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkMenuButton">
             <property name="visible">True</property>
             <property name="can_focus">True</property>

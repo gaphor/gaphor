@@ -1,55 +1,22 @@
-"""
-This module contains the actions used in the Toolbox (lower left section
-of the main window.
+"""The action definition for the SysML toolbox."""
 
-The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
-the actions bound to the toolbuttons should change as well.
-"""
-
-from typing import Callable, NamedTuple, Optional, Sequence, Tuple
+from typing import Sequence, Tuple
 
 from gaphas.item import SE
 
 from gaphor import UML, diagram
 from gaphor.core import gettext
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    history_pseudostate_config,
+    initial_pseudostate_config,
+    metaclass_config,
+    namespace_config,
+)
 from gaphor.diagram.diagramtools import PlacementTool
 
-__all__ = ["TOOLBOX_ACTIONS"]
-
-ItemFactory = Callable[[UML.Diagram, Optional[UML.Presentation]], UML.Presentation]
-
-
-class ToolDef(NamedTuple):
-    id: str
-    name: str
-    icon_name: str
-    shortcut: Optional[str]
-    item_factory: Optional[ItemFactory]
-    handle_index: int = -1
-
-
-def namespace_config(new_item):
-    subject = new_item.subject
-    diagram = new_item.canvas.diagram
-    subject.package = diagram.namespace
-    subject.name = f"New{type(subject).__name__}"
-
-
-def initial_pseudostate_config(new_item):
-    new_item.subject.kind = "initial"
-
-
-def history_pseudostate_config(new_item):
-    new_item.subject.kind = "shallowHistory"
-
-
-def metaclass_config(new_item):
-    namespace_config(new_item)
-    new_item.subject.name = "Class"
-
-
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
-TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[ToolDef]]] = (
+sysml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
     (
         gettext("General"),
         (
@@ -103,7 +70,7 @@ TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[ToolDef]]] = (
         ),
     ),
     (
-        gettext("Classes"),
+        gettext("Blocks"),
         (
             ToolDef(
                 "toolbox-class",
@@ -166,64 +133,6 @@ TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-implementation-symbolic",
                 "<Shift>I",
                 PlacementTool.new_item_factory(diagram.classes.ImplementationItem),
-            ),
-        ),
-    ),
-    (
-        gettext("Components"),
-        (
-            ToolDef(
-                "toolbox-component",
-                gettext("Component"),
-                "gaphor-component-symbolic",
-                "o",
-                PlacementTool.new_item_factory(
-                    diagram.components.ComponentItem,
-                    UML.Component,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-artifact",
-                gettext("Artifact"),
-                "gaphor-artifact-symbolic",
-                "h",
-                PlacementTool.new_item_factory(
-                    diagram.components.ArtifactItem,
-                    UML.Artifact,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-node",
-                gettext("Node"),
-                "gaphor-node-symbolic",
-                "n",
-                PlacementTool.new_item_factory(
-                    diagram.components.NodeItem, UML.Node, config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-device",
-                gettext("Device"),
-                "gaphor-device-symbolic",
-                "d",
-                PlacementTool.new_item_factory(
-                    diagram.components.NodeItem,
-                    UML.Device,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-connector",
-                gettext("Connector"),
-                "gaphor-connector-symbolic",
-                "<Shift>C",
-                PlacementTool.new_item_factory(diagram.components.ConnectorItem),
             ),
         ),
     ),
@@ -348,54 +257,6 @@ TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[ToolDef]]] = (
         ),
     ),
     (
-        gettext("Interactions"),
-        (
-            ToolDef(
-                "toolbox-lifeline",
-                gettext("Lifeline"),
-                "gaphor-lifeline-symbolic",
-                "v",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.interactions.LifelineItem,
-                    UML.Lifeline,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-message",
-                gettext("Message"),
-                "gaphor-message-symbolic",
-                "M",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.interactions.MessageItem
-                ),
-            ),
-            ToolDef(
-                "toolbox-execution-specification",
-                gettext("Execution Specification"),
-                "gaphor-execution-specification-symbolic",
-                None,
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.interactions.ExecutionSpecificationItem
-                ),
-                handle_index=0,
-            ),
-            ToolDef(
-                "toolbox-interaction",
-                gettext("Interaction"),
-                "gaphor-interaction-symbolic",
-                "<Shift>N",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.interactions.InteractionItem,
-                    UML.Interaction,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-        ),
-    ),
-    (
         gettext("States"),
         (
             ToolDef(
@@ -503,54 +364,6 @@ TOOLBOX_ACTIONS: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "<Shift>X",
                 item_factory=PlacementTool.new_item_factory(
                     diagram.usecases.ExtendItem
-                ),
-            ),
-        ),
-    ),
-    (
-        gettext("Profiles"),
-        (
-            ToolDef(
-                "toolbox-profile",
-                gettext("Profile"),
-                "gaphor-profile-symbolic",
-                "r",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.PackageItem,
-                    UML.Profile,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-metaclass",
-                gettext("Metaclass"),
-                "gaphor-metaclass-symbolic",
-                "m",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem, UML.Class, config_func=metaclass_config
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-stereotype",
-                gettext("Stereotype"),
-                "gaphor-stereotype-symbolic",
-                "z",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem,
-                    UML.Stereotype,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-extension",
-                gettext("Extension"),
-                "gaphor-extension-symbolic",
-                "<Shift>E",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.profiles.ExtensionItem
                 ),
             ),
         ),

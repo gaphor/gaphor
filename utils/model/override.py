@@ -22,7 +22,7 @@ class Overrides:
                 self.read_overrides(fp)
 
     def read_overrides(self, fp):
-        """Read a file and return a dictionary of overriden properties
+        """Read a file and return a dictionary of overridden properties
         and their implementation.
 
         An override file ahs the form:
@@ -87,7 +87,7 @@ class Overrides:
         return key in self.overrides
 
     def get_override(self, key):
-        """Write override data for 'key' to a file refered to by 'fp'."""
+        """Write override data for 'key' to a file referred to by 'fp'."""
         _deps, _type_hint, data, line = self.overrides.get(key, ((), None, None, None))
         if not data:
             return None
