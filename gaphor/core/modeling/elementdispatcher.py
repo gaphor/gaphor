@@ -8,15 +8,15 @@ from typing import Callable, Dict, List, Optional, Set, Tuple
 
 from gaphor import UML
 from gaphor.core import event_handler
-from gaphor.UML.element import Element, Handler
-from gaphor.UML.event import (
+from gaphor.core.modeling.element import Element, Handler
+from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
     AssociationSet,
     ElementUpdated,
     ModelReady,
 )
-from gaphor.UML.properties import umlproperty
+from gaphor.core.modeling.properties import umlproperty
 
 
 class EventWatcher:

@@ -8,11 +8,11 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler, gettext
+from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Presentation
-from gaphor.UML.event import AssociationUpdated
 
 log = logging.getLogger(__name__)
 

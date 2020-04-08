@@ -13,11 +13,7 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.ui.abc import UIComponent
-from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramOpened
-from gaphor.ui.iconname import get_icon_name
-from gaphor.UML.event import (
+from gaphor.core.modeling.event import (
     AttributeUpdated,
     DerivedSet,
     ElementCreated,
@@ -25,6 +21,10 @@ from gaphor.UML.event import (
     ModelFlushed,
     ModelReady,
 )
+from gaphor.ui.abc import UIComponent
+from gaphor.ui.actiongroup import create_action_group
+from gaphor.ui.event import DiagramOpened
+from gaphor.ui.iconname import get_icon_name
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import ElementFactory

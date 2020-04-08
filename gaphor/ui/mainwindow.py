@@ -12,6 +12,7 @@ from gi.repository import Gdk, Gio, Gtk
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
+from gaphor.core.modeling.event import AttributeUpdated, ModelFlushed, ModelReady
 from gaphor.event import ActionEnabled, ActiveSessionChanged, SessionShutdownRequested
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
@@ -28,7 +29,6 @@ from gaphor.ui.event import (
 )
 from gaphor.ui.layout import deserialize
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
-from gaphor.UML.event import AttributeUpdated, ModelFlushed, ModelReady
 
 log = logging.getLogger(__name__)
 

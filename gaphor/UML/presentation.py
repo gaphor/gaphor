@@ -15,8 +15,8 @@ from typing import (
     Union,
 )
 
-from gaphor.UML.element import Element
-from gaphor.UML.properties import association, relation_one
+from gaphor.core.modeling import Element
+from gaphor.core.modeling.properties import association, relation_one
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
@@ -27,7 +27,7 @@ S = TypeVar("S", bound=Element)
 
 class Presentation(Element, Generic[S]):
     """
-    This presentation is used to link the behaviors of `gaphor.UML.Element` and `gaphas.Item`.
+    This presentation is used to link the behaviors of `gaphor.core.modeling` and `gaphas.Item`.
     """
 
     def __init__(self, id=None, model=None):

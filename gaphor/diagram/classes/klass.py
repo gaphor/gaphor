@@ -1,6 +1,7 @@
 import logging
 
 from gaphor import UML
+from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.classes.stereotype import stereotype_compartments
 from gaphor.diagram.presentation import (
     Classified,
@@ -22,7 +23,6 @@ from gaphor.diagram.text import (
     TextDecoration,
     VerticalAlign,
 )
-from gaphor.UML.properties import attribute
 
 log = logging.getLogger(__name__)
 

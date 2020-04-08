@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import List, Callable, Optional
 import uuid
 
-from gaphor.UML.properties import (
+from gaphor.core.modeling.properties import (
     association,
     attribute,
     enumeration,
@@ -15,12 +15,12 @@ from gaphor.UML.properties import (
     relation_many,
     redefine,
 )
-from gaphor.UML.collection import collection
+from gaphor.core.modeling.collection import collection
 from gaphor.UML.diagram import DiagramCanvas
-from gaphor.UML.event import DiagramItemCreated
+from gaphor.core.modeling.event import DiagramItemCreated
 
 # 14: override Element
-from gaphor.UML.element import Element
+from gaphor.core.modeling import Element
 
 
 class NamedElement(Element):

@@ -81,7 +81,7 @@ class querymixin:
     >>> m[1].name
     'two'
     >>> m['it.name=="one"'] # doctest: +ELLIPSIS
-    [<gaphor.UML.listmixins.A object at 0x...>]
+    [<gaphor.core.modeling.listmixins.A object at 0x...>]
     >>> m['it.name=="two"', 0].name
     'two'
     """
@@ -223,21 +223,21 @@ class recursemixin:
     Invoking ``a.children[:]`` should now return a recurseproxy object:
 
     >>> a.children[:]                                       # doctest: +ELLIPSIS
-    <gaphor.UML.listmixins.recurseproxy object at 0x...>
+    <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
     >>> list(a.children[:].name)                            # doctest: +ELLIPSIS
     ['a', 'e']
 
     Now calling a child on the list will return a list of all children:
 
     >>> a.children[:].children                              # doctest: +ELLIPSIS
-    <gaphor.UML.listmixins.recurseproxy object at 0x...>
+    <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
     >>> list(a.children[:].children)                        # doctest: +ELLIPSIS
-    [<gaphor.UML.listmixins.A object at 0x...>, <gaphor.UML.listmixins.A object at 0x...>, <gaphor.UML.listmixins.A object at 0x...>, <gaphor.UML.listmixins.A object at 0x...>, <gaphor.UML.listmixins.A object at 0x...>]
+    [<gaphor.core.modeling.listmixins.A object at 0x...>, <gaphor.core.modeling.listmixins.A object at 0x...>, <gaphor.core.modeling.listmixins.A object at 0x...>, <gaphor.core.modeling.listmixins.A object at 0x...>, <gaphor.core.modeling.listmixins.A object at 0x...>]
 
     And of course we're interested in the names:
 
     >>> a.children[:].children.name                         # doctest: +ELLIPSIS
-    <gaphor.UML.listmixins.recurseproxy object at 0x...>
+    <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
     >>> list(a.children[:].children.name)
     ['b', 'c', 'd', 'one', 'two']
     """

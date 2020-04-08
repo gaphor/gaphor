@@ -8,9 +8,9 @@ import gaphas
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext, transactional
+from gaphor.core.modeling.collection import collection
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.UML import Element, Presentation
-from gaphor.UML.collection import collection
 
 
 class CopyService(Service, ActionProvider):

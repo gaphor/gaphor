@@ -13,7 +13,7 @@ from typing import List, Optional, Tuple, Union
 
 import gaphor.UML.uml2 as uml2
 import gaphor.UML.umllex as umllex
-from gaphor.UML.properties import association, derived
+from gaphor.core.modeling.properties import association, derived
 
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271

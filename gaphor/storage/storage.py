@@ -19,9 +19,9 @@ import uuid
 import gaphas
 
 from gaphor import UML, application
+from gaphor.core.modeling.collection import collection
 from gaphor.i18n import gettext
 from gaphor.storage import diagramitems, parser
-from gaphor.UML.collection import collection
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
@@ -86,7 +86,7 @@ def save_generator(writer, factory):  # noqa: C901
     def save_element(name, value):
         """
         Save attributes and references from items in the gaphor.UML module.
-        A value may be a primitive (string, int), a gaphor.UML.collection
+        A value may be a primitive (string, int), a gaphor.core.modeling.collection
         (which contains a list of references to other UML elements) or a
         gaphas.Canvas (which contains canvas items).
         """

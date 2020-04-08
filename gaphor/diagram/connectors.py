@@ -15,8 +15,8 @@ from generic.multidispatch import FunctionDispatcher, multidispatch
 from typing_extensions import Protocol
 
 from gaphor import UML
+from gaphor.core.modeling.properties import association, redefine, relation
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
-from gaphor.UML.properties import association, redefine, relation
 
 T = TypeVar("T", bound=UML.Element)
 

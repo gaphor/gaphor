@@ -11,8 +11,8 @@ from typing import Callable, Iterator, Optional, Type, TypeVar, Union
 
 from typing_extensions import Protocol
 
-from gaphor.UML.event import ElementUpdated
-from gaphor.UML.properties import relation_many, relation_one, umlproperty
+from gaphor.core.modeling.event import ElementUpdated
+from gaphor.core.modeling.properties import relation_many, relation_one, umlproperty
 
 __all__ = ["Element"]
 

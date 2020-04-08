@@ -5,8 +5,8 @@
 import inspect
 from typing import Generic, List, Type, TypeVar, Union, overload
 
-from gaphor.UML.event import AssociationUpdated
-from gaphor.UML.listmixins import querymixin, recursemixin
+from gaphor.core.modeling.event import AssociationUpdated
+from gaphor.core.modeling.listmixins import querymixin, recursemixin
 
 T = TypeVar("T")
 
@@ -39,7 +39,7 @@ class collectionlist(recursemixin, querymixin, List[T]):
     >>> list(c.ownedOperation[0].formalParameter[:].name)
     ['foo', 'bar']
     >>> c.ownedOperation[:].formalParameter.name   # doctest: +ELLIPSIS
-    <gaphor.UML.listmixins.recurseproxy object at 0x...>
+    <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
     >>> list(c.ownedOperation[:].formalParameter.name)
     ['foo', 'bar']
     >>> c.ownedOperation[0].formalParameter['it.name=="foo"', 0].name
