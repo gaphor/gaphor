@@ -1,11 +1,11 @@
 import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.services.eventmanager import EventManager
 from gaphor.tests import TestCase
 from gaphor.UML import Element
-from gaphor.UML.elementdispatcher import ElementDispatcher, EventWatcher
-from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML.properties import association
 
 

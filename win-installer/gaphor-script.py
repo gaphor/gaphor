@@ -1,7 +1,7 @@
 if __name__ == "__main__":
     import gaphor
     from gaphor import core
-    from gaphor.UML.elementfactory import ElementFactory
+    from gaphor.core.modeling import ElementFactory
     from gaphor.plugins.console import ConsoleWindow
     from gaphor.plugins.diagramexport import DiagramExport
     from gaphor.plugins.xmiexport import XMIExport

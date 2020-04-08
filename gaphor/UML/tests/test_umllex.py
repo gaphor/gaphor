@@ -5,8 +5,8 @@ Parsing of UML model elements from string tests.
 import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import ElementFactory
 from gaphor.services.eventmanager import EventManager
-from gaphor.UML.elementfactory import ElementFactory
 from gaphor.UML.umllex import attribute_pat, operation_pat, parameter_pat
 
 

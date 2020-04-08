@@ -4,10 +4,10 @@ from gaphas.aspect import ConnectionSink, Connector
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.core import transactional
+from gaphor.core.modeling import ElementFactory
 from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.services.eventmanager import EventManager
 from gaphor.services.undomanager import UndoManager
-from gaphor.UML.elementfactory import ElementFactory
 
 
 @pytest.fixture

@@ -8,9 +8,9 @@ This file is part of Gaphor.
 
 __all__ = ["Compare"]
 
+import gaphor.core.modeling
 import gaphor.storage
 import gaphor.storage.parser
-import gaphor.UML
 
 
 class Compare:
@@ -78,7 +78,7 @@ class Compare:
         A tuple (elements, factory) is returned.
         """
         elements = gaphor.storage.parser.parse(filename)
-        factory = gaphor.UML.ElementFactory()
+        factory = gaphor.core.modleing.ElementFactory()
         try:
             gaphor.storage.load_elements(elements, factory)
         except Exception as e:

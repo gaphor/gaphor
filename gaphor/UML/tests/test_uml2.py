@@ -1,13 +1,14 @@
 import pytest
 
 import gaphor.UML as UML
+from gaphor.core.modeling import ElementFactory
 from gaphor.services.eventmanager import EventManager
 
 
 @pytest.fixture
 def factory():
     event_manager = EventManager()
-    return UML.ElementFactory(event_manager)
+    return ElementFactory(event_manager)
 
 
 def test_association(factory):

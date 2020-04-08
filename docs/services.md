@@ -33,7 +33,7 @@ emitted are with `UML.Elements`. Those classes, or more specifically, the
 properties, send notifications every time their state changes.
 
 ```eval_rst
-.. autoclass:: gaphor.UML.elementfactory.ElementFactory
+.. autoclass:: gaphor.core.modeling.ElementFactory
 ```
 
 ## Plugins

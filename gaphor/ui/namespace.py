@@ -27,7 +27,7 @@ from gaphor.UML.event import (
 )
 
 if TYPE_CHECKING:
-    from gaphor.UML.elementfactory import ElementFactory
+    from gaphor.core.modeling import ElementFactory
     from gaphor.services.eventmanager import EventManager
 
 # The following items will be shown in the treeview, although they

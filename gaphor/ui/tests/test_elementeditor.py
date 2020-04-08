@@ -1,9 +1,9 @@
 import pytest
 
+from gaphor.core.modeling import ElementFactory
 from gaphor.services.eventmanager import EventManager
 from gaphor.ui.elementeditor import ElementEditor
 from gaphor.ui.mainwindow import Diagrams
-from gaphor.UML.elementfactory import ElementFactory
 
 
 @pytest.fixture

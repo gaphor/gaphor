@@ -1,8 +1,8 @@
 import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import ElementFactory
 from gaphor.plugins.xmiexport.exportmodel import XMIExport
-from gaphor.UML.elementfactory import ElementFactory
 
 
 @pytest.fixture

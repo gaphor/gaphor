@@ -3,9 +3,9 @@ from io import StringIO
 import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import ElementFactory
 from gaphor.services.eventmanager import EventManager
 from gaphor.storage import storage
-from gaphor.UML.elementfactory import ElementFactory
 
 
 @pytest.fixture
