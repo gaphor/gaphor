@@ -21,8 +21,8 @@ def element_factory(event_manager):
 
 
 @pytest.fixture
-def properties(event_manager):
-    return Properties(event_manager)
+def properties():
+    return {}
 
 
 @pytest.fixture
