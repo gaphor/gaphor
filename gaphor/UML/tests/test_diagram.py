@@ -1,8 +1,8 @@
 import gaphas
 import pytest
 
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.services.eventmanager import EventManager
 from gaphor.UML import Diagram
 from gaphor.UML.presentation import Presentation
 

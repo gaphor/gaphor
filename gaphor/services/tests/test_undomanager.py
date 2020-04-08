@@ -3,8 +3,8 @@ Test the UndoManager.
 """
 
 from gaphor.core import event_handler
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.services.eventmanager import EventManager
 from gaphor.services.undomanager import UndoManager
 from gaphor.tests.testcase import TestCase
 from gaphor.transaction import Transaction

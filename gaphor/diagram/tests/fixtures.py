@@ -5,10 +5,10 @@ from gaphas.aspect import ConnectionSink
 from gaphas.aspect import Connector as ConnectorAspect
 
 from gaphor import UML
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
 from gaphor.diagram.connectors import Connector
 from gaphor.misc.xmlwriter import XMLWriter
-from gaphor.services.eventmanager import EventManager
 from gaphor.storage import storage
 
 

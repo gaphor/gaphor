@@ -3,8 +3,8 @@ from io import StringIO
 import pytest
 
 from gaphor import UML
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.services.eventmanager import EventManager
 from gaphor.storage import storage
 
 

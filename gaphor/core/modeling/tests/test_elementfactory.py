@@ -4,8 +4,8 @@ import pytest
 
 from gaphor.application import Session
 from gaphor.core import event_handler
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.services.eventmanager import EventManager
 from gaphor.UML import Parameter
 from gaphor.UML.event import (
     ElementCreated,

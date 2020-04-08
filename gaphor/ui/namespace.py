@@ -28,7 +28,7 @@ from gaphor.UML.event import (
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import ElementFactory
-    from gaphor.services.eventmanager import EventManager
+    from gaphor.core.eventmanager import EventManager
 
 # The following items will be shown in the treeview, although they
 # are UML.Namespace elements.

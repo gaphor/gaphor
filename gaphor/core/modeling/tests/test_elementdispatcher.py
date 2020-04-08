@@ -1,9 +1,9 @@
 import pytest
 
 from gaphor import UML
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
-from gaphor.services.eventmanager import EventManager
 from gaphor.tests import TestCase
 from gaphor.UML import Element
 from gaphor.UML.properties import association

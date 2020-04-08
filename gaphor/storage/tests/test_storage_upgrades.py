@@ -1,7 +1,7 @@
 import pytest
 
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.services.eventmanager import EventManager
 from gaphor.storage import diagramitems
 from gaphor.storage.parser import canvas, canvasitem, element
 from gaphor.storage.storage import load_elements

@@ -2,9 +2,9 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
 from gaphor.diagram.diagramtoolbox import TOOLBOX_ACTIONS
-from gaphor.services.eventmanager import EventManager
 from gaphor.services.properties import Properties
 from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagrampage import DiagramPage

@@ -1,6 +1,6 @@
 import pytest
 
-import gaphor.services.eventmanager
+import gaphor.core.eventmanager
 import gaphor.UML as UML
 from gaphor.core.modeling import ElementFactory
 from gaphor.ui.namespace import Namespace
@@ -8,7 +8,7 @@ from gaphor.ui.namespace import Namespace
 
 @pytest.fixture
 def event_manager():
-    return gaphor.services.eventmanager.EventManager()
+    return gaphor.core.eventmanager.EventManager()
 
 
 @pytest.fixture

@@ -7,7 +7,7 @@ if __name__ == "__main__":
     from gaphor.plugins.xmiexport import XMIExport
     from gaphor.services.componentregistry import ComponentRegistry
     from gaphor.services.copyservice import CopyService
-    from gaphor.services.eventmanager import EventManager
+    from gaphor.core.eventmanager import EventManager
     from gaphor.services.helpservice import HelpService
     from gaphor.services.properties import Properties
     from gaphor.services.sanitizerservice import SanitizerService
