@@ -70,15 +70,6 @@ class Diagram(PackageableElement, Namespace):
 
         super().unlink()
 %%
-override Presentation
-# defined in gaphor.core.modeling.presentation
-%%
-override Element.presentation
-# defined in uml2overrides.py
-%%
-override Presentation.subject
-# Presentation.subject is directly defined in the Presentation class
-%%
 override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
