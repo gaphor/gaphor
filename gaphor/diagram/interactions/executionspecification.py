@@ -30,6 +30,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver import WEAK
 
 from gaphor import UML
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import postload_connect
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
@@ -37,7 +38,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.ExecutionSpecification)
-class ExecutionSpecificationItem(UML.Presentation[UML.ExecutionSpecification], Item):
+class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item):
     """
     Representation of interaction execution specification.
     """

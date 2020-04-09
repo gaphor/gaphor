@@ -5,6 +5,7 @@ For ease of creation, maintain a mapping from UML Element to Diagram Item.
 from typing import Dict
 
 from gaphor import UML
+from gaphor.core.modeling import Presentation
 
 
 def represents(uml_element):
@@ -20,7 +21,7 @@ def represents(uml_element):
 
 
 # Map UML elements to their (default) representation.
-_uml_to_item_map: Dict[UML.Element, UML.Presentation] = {}
+_uml_to_item_map: Dict[UML.Element, Presentation] = {}
 
 
 def get_diagram_item(element):

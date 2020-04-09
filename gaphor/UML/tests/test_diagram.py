@@ -2,9 +2,8 @@ import gaphas
 import pytest
 
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling import ElementFactory, Presentation
 from gaphor.UML import Diagram
-from gaphor.UML.presentation import Presentation
 
 
 class Example(Presentation, gaphas.Element):

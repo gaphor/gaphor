@@ -67,7 +67,7 @@ class Diagram(PackageableElement, Namespace):
         super().unlink()
 %%
 override Presentation
-# defined in gaphor.UML.presentation
+# defined in gaphor.core.modeling.presentation
 %%
 override Element.presentation
 # defined in uml2overrides.py

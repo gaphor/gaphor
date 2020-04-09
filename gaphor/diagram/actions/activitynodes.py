@@ -12,6 +12,7 @@ from gaphas.state import observed, reversible_property
 from gaphas.util import path_ellipse
 
 from gaphor import UML
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, IconBox, Text
 from gaphor.diagram.support import represents
@@ -209,7 +210,7 @@ def draw_decision_node(_box, context, _bounding_box):
 
 
 @represents(UML.ForkNode)
-class ForkNodeItem(UML.Presentation[UML.ForkNode], Item):
+class ForkNodeItem(Presentation[UML.ForkNode], Item):
     """
     Representation of fork and join node.
     """

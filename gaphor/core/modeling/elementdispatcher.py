@@ -79,10 +79,10 @@ class ElementDispatcher:
     subclass lookups and is pretty specific. As a result this dispatcher is
     tailored for dispatching events from the data model (ElementUpdated)
 
-    For example: if you're a TransitionItem (UML.Presentation instance) and
-    you're interested in the value of the guard attribute of the model element
-    that's represented by this item (gaphor.UML.Transition), you can register
-    a handler like this::
+    For example: if you're a TransitionItem (gaphor.core.modeling.Presentation
+    instance) and you're interested in the value of the guard attribute of the
+    model element that's represented by this item (gaphor.UML.Transition), you
+    can register a handler like this::
 
       dispatcher.subscribe(element,
               'guard.specification[LiteralSpecification].value', self._handler)

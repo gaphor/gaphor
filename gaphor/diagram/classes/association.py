@@ -19,6 +19,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.state import reversible_property
 
 from gaphor import UML
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
@@ -366,7 +367,7 @@ def draw_tail_navigable(context):
     cr.line_to(15, 6)
 
 
-class AssociationEnd(UML.Presentation):
+class AssociationEnd(Presentation):
     """
     An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and

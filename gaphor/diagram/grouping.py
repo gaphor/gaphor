@@ -22,8 +22,7 @@ from typing import TYPE_CHECKING, Type
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-if TYPE_CHECKING:
-    from gaphor import UML
+from gaphor.core.modeling import Presentation
 
 
 # TODO: I think this should have been called Namespacing or something similar,
@@ -42,7 +41,7 @@ class AbstractGroup(metaclass=abc.ABCMeta):
         Item to be grouped.
     """
 
-    def __init__(self, parent: UML.Presentation, item: UML.Presentation) -> None:
+    def __init__(self, parent: Presentation, item: Presentation) -> None:
         self.parent = parent
         self.item = item
 

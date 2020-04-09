@@ -12,11 +12,12 @@ from gaphas.item import SE
 
 from gaphor import UML, diagram
 from gaphor.core import gettext
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.diagramtools import PlacementTool
 
 __all__ = ["TOOLBOX_ACTIONS"]
 
-ItemFactory = Callable[[UML.Diagram, Optional[UML.Presentation]], UML.Presentation]
+ItemFactory = Callable[[UML.Diagram, Optional[Presentation]], Presentation]
 
 
 class ToolDef(NamedTuple):

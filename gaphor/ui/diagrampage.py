@@ -15,6 +15,7 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
+from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.event import ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtoolbox_actions import toolbox_actions
@@ -218,7 +219,7 @@ class DiagramPage:
         assert self.view
         items = self.view.selected_items
         for i in list(items):
-            if isinstance(i, UML.Presentation):
+            if isinstance(i, Presentation):
                 i.unlink()
             else:
                 if i.canvas:

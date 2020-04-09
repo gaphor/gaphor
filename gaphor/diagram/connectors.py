@@ -14,11 +14,11 @@ from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
 from typing_extensions import Protocol
 
-from gaphor import UML
+from gaphor.core.modeling import Element, Presentation
 from gaphor.core.modeling.properties import association, redefine, relation
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
-T = TypeVar("T", bound=UML.Element)
+T = TypeVar("T", bound=Element)
 
 
 class ConnectorProtocol(Protocol):
@@ -60,9 +60,7 @@ class BaseConnector:
     """
 
     def __init__(
-        self,
-        element: UML.Presentation[UML.Element],
-        line: UML.Presentation[UML.Element],
+        self, element: Presentation[Element], line: Presentation[Element],
     ) -> None:
         assert element.canvas is line.canvas
         self.element = element
@@ -75,7 +73,7 @@ class BaseConnector:
         """
         return self.canvas.get_connection(handle)
 
-    def get_connected(self, handle: Handle) -> Optional[UML.Presentation[UML.Element]]:
+    def get_connected(self, handle: Handle) -> Optional[Presentation[Element]]:
         """
         Get item connected to a handle.
         """
@@ -143,12 +141,12 @@ class UnaryRelationshipConnect(BaseConnector):
     on the canvas.
     """
 
-    element: ElementPresentation[UML.Element]
-    line: LinePresentation[UML.Element]
+    element: ElementPresentation[Element]
+    line: LinePresentation[Element]
 
     def relationship(
-        self, required_type: Type[UML.Element], head: relation, tail: relation
-    ) -> Optional[UML.Element]:
+        self, required_type: Type[Element], head: relation, tail: relation
+    ) -> Optional[Element]:
         """
         Find an existing relationship in the model that meets the
         required type and is connected to the same model element the head
@@ -180,7 +178,7 @@ class UnaryRelationshipConnect(BaseConnector):
         assert isinstance(head, (association, redefine)), f"head is {head}"
         assert isinstance(tail, (association, redefine)), f"tail is {tail}"
         assert tail.opposite, f"Tail end of {line} has no opposite definition"
-        gen: UML.Element
+        gen: Element
         for gen in getattr(tail_subject, tail.opposite):
             if not isinstance(gen, required_type):
                 continue
