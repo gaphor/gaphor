@@ -16,10 +16,10 @@ from gaphor.core.modeling.properties import (
     redefine,
 )
 from gaphor.core.modeling.collection import collection
-from gaphor.UML.diagram import DiagramCanvas
 from gaphor.core.modeling.event import DiagramItemCreated
+from gaphor.core.modeling.diagram import DiagramCanvas
 
-# 14: override Element
+# 18: override Element
 from gaphor.core.modeling import Element
 
 
@@ -366,7 +366,7 @@ class Stereotype(Class):
     pass
 
 
-# 17: override Diagram
+# 21: override Diagram
 class Diagram(PackageableElement, Namespace):
     """Diagrams may contain model elements and can be owned by a Package.
     """
@@ -483,8 +483,8 @@ class Parameter(TypedElement, MultiplicityElement):
     operation: relation_one[Operation]  # type: ignore[assignment]
 
 
-# 69: override Presentation
-# defined in gaphor.UML.presentation
+# 73: override Presentation
+# defined in gaphor.core.modeling.presentation
 
 
 class BehavioralFeature(Feature, Namespace):
@@ -654,7 +654,7 @@ class Region(Namespace, RedefinableElement):
     extendedRegion: relation_many[Region]  # type: ignore[assignment]
 
 
-# 78: override Transition
+# 82: override Transition
 # Invert order of superclasses to avoid MRO issues
 class Transition(RedefinableElement, NamedElement):
     kind: enumeration
@@ -839,7 +839,7 @@ Comment.body = attribute("body", str)
 PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
-# 161: override Message.messageKind: property
+# 165: override Message.messageKind: property
 # defined in uml2overrides.py
 
 Message.messageSort = enumeration(
@@ -910,10 +910,10 @@ DataType.ownedAttribute = association(
     "ownedAttribute", Property, composite=True, opposite="datatype"
 )
 TypedElement.type = association("type", Type, upper=1)
-# 72: override Element.presentation
+# 76: override Element.presentation
 # defined in uml2overrides.py
 
-# 75: override Presentation.subject
+# 79: override Presentation.subject
 # Presentation.subject is directly defined in the Presentation class
 
 ActivityParameterNode.parameter = association("parameter", Parameter, lower=1, upper=1)
@@ -1321,21 +1321,21 @@ ExecutionOccurrenceSpecification.execution = association(
 )
 ActionExecutionSpecification.action = association("action", Action, lower=1, upper=1)
 BehaviorExecutionSpecification.behavior = association("behavior", Behavior, upper=1)
-# 96: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+# 100: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 # defined in uml2overrides.py
 
-# 90: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
+# 94: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
-# 93: override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
+# 97: override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
 MultiplicityElement.upper = MultiplicityElement.upperValue
 
-# 137: override Property.isComposite(Property.aggregation): derived[bool]
+# 141: override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived(
     Property, "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
 )
 
-# 143: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
+# 147: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
 # defined in uml2overrides.py
 
 RedefinableElement.redefinedElement = derivedunion(
@@ -1393,7 +1393,7 @@ Feature.featuringClassifier = derivedunion(
     Property.datatype,
     Operation.interface_,
 )
-# 134: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
+# 138: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
 # defined in uml2overrides.py
 
 BehavioralFeature.parameter = derivedunion(
@@ -1489,7 +1489,7 @@ Namespace.ownedMember = derivedunion(
     Class.ownedReception,
     Interface.ownedReception,
 )
-# 125: override Classifier.general(Generalization.general): derived[Classifier]
+# 129: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived(
     Classifier,
     "general",
@@ -1499,7 +1499,7 @@ Classifier.general = derived(
     lambda self: [g.general for g in self.generalization],
 )
 
-# 99: override Association.endType(Association.memberEnd, Property.type): derived[Type]
+# 103: override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -1514,16 +1514,16 @@ Association.endType = derived(
 )
 
 
-# 140: override Constraint.context: derivedunion[Namespace]
+# 144: override Constraint.context: derivedunion[Namespace]
 Constraint.context = derivedunion(Constraint, "context", Namespace, 0, 1)
 
-# 146: override Operation.type: derivedunion[DataType]
+# 150: override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion(Operation, "type", DataType, 0, 1)
 
-# 119: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
+# 123: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # defined in uml2overrides.py
 
-# 107: override Class.extension(Extension.metaclass): property
+# 111: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
@@ -1585,7 +1585,7 @@ ActivityGroup.superGroup = derivedunion(
 ActivityGroup.subgroup = derivedunion(
     ActivityGroup, "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
 )
-# 122: override Classifier.inheritedMember: derivedunion[NamedElement]
+# 126: override Classifier.inheritedMember: derivedunion[NamedElement]
 Classifier.inheritedMember = derivedunion(
     Classifier, "inheritedMember", NamedElement, 0, "*"
 )
@@ -1611,16 +1611,16 @@ Namespace.member = derivedunion(
     Classifier.inheritedMember,
     StructuredClassifier.role,
 )
-# 158: override Component.required: property
+# 162: override Component.required: property
 # defined in uml2overrides.py
 
-# 131: override Namespace.importedMember: derivedunion[PackageableElement]
+# 135: override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion(
     Namespace, "importedMember", PackageableElement, 0, "*"
 )
 
 Action.input = derivedunion(Action, "input", InputPin, 0, "*", SendSignalAction.target)
-# 155: override Component.provided: property
+# 159: override Component.provided: property
 # defined in uml2overrides.py
 
 Element.owner = derivedunion(
@@ -1678,7 +1678,7 @@ Element.ownedElement = derivedunion(
     InteractionFragment.generalOrdering,
 )
 ConnectorEnd.definingEnd = derivedunion(ConnectorEnd, "definingEnd", Property, 0, 1)
-# 164: override StructuredClassifier.part: property
+# 168: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
     lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
     doc="""
@@ -1686,7 +1686,7 @@ StructuredClassifier.part = property(
 """,
 )
 
-# 169: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 173: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.start = derived(
     ExecutionSpecification,
     "start",
@@ -1698,7 +1698,7 @@ ExecutionSpecification.start = derived(
     ],
 )
 
-# 173: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 177: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.finish = derived(
     ExecutionSpecification,
     "finish",
@@ -1710,7 +1710,7 @@ ExecutionSpecification.finish = derived(
     ],
 )
 
-# 128: override Class.superClass: derived[Classifier]
+# 132: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
 ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, 1, Property.type)
@@ -1783,8 +1783,8 @@ StateInvariant.covered = redefine(
 OccurrenceSpecification.covered = redefine(
     OccurrenceSpecification, "covered", Lifeline, 1, InteractionFragment.covered
 )
-# 149: override Lifeline.parse: Callable[[Lifeline, str], None]
+# 153: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in uml2overrides.py
 
-# 152: override Lifeline.render: Callable[[Lifeline], str]
+# 156: override Lifeline.render: Callable[[Lifeline], str]
 # defined in uml2overrides.py

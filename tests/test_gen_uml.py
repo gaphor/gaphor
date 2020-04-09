@@ -43,8 +43,6 @@ from gaphor.core.modeling.properties import (
     redefine,
 )
 from gaphor.core.modeling.collection import collection
-from gaphor.UML.diagram import DiagramCanvas
-from gaphor.core.modeling.event import DiagramItemCreated
 class Element:
     pass
 

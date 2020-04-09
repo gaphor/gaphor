@@ -21,6 +21,7 @@ class Writer:
 
         try:
             out.write(header)
+            out.write(self.overrides.header)
             for cls in self.classdefs.values():
                 if cls[0].endswith(":"):
                     for d in cls:
@@ -33,8 +34,6 @@ class Writer:
                     out.write("\n")
 
                 out.write("\n\n")
-
-            out.write(self.overrides.header)
 
             for d in self.features:
                 out.write(d)

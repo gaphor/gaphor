@@ -11,6 +11,10 @@ comment
   on, since attributes have been written anyway. Note that no smart things
   wrt inheritance is done.
 %%
+header
+from gaphor.core.modeling.event import DiagramItemCreated
+from gaphor.core.modeling.diagram import DiagramCanvas
+%%
 override Element
 from gaphor.core.modeling import Element
 %%
