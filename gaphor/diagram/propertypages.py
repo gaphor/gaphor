@@ -36,7 +36,7 @@ from gi.repository import Gdk, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.core.modeling import DummyEventWatcher
+from gaphor.core.modeling.element import DummyEventWatcher
 
 
 def new_builder(*object_ids):

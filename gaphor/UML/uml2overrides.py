@@ -169,24 +169,5 @@ uml2.Message.messageKind = property(
 )
 
 
-def namedelement_qualifiedname(self) -> List[str]:
-    """
-    Returns the qualified name of the element as a tuple
-    """
-    if self.namespace:
-        return namedelement_qualifiedname(self.namespace) + [self.name]
-    else:
-        return [self.name]
-
-
 uml2.Lifeline.parse = umllex.parse_lifeline
 uml2.Lifeline.render = umllex.render_lifeline
-
-uml2.NamedElement.qualifiedName = derived(
-    uml2.NamedElement,
-    "qualifiedName",
-    List[str],
-    0,
-    1,
-    lambda obj: [namedelement_qualifiedname(obj)],
-)
