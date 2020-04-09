@@ -20,8 +20,8 @@ def generate_uml2(force=False):
     Generate gaphor/UML/uml2.py in the source directory.
     """
     gen = os.path.join("utils", "model", "gen_uml.py")
-    overrides = os.path.join("gaphor", "UML", "uml2.override")
-    model = os.path.join("gaphor", "UML", "uml2.gaphor")
+    overrides = os.path.join("models", "UML.override")
+    model = os.path.join("models", "UML.gaphor")
     py_model = os.path.join("gaphor", "UML", "uml2.py")
     outfile = py_model
     mkpath(os.path.dirname(outfile))

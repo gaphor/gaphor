@@ -155,7 +155,7 @@ class StorageTestCase(TestCase):
         Test if the meta model can be loaded.
         """
 
-        path = distribution().locate_file("gaphor/UML/uml2.gaphor")
+        path = distribution().locate_file("models/UML.gaphor")
 
         with open(path) as ifile:
             storage.load(ifile, factory=self.element_factory)
