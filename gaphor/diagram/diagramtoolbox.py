@@ -10,12 +10,12 @@ from typing import Callable, NamedTuple, Optional, Sequence, Tuple
 
 from gaphas.item import SE
 
-from gaphor import UML, diagram
+from gaphor import diagram
 from gaphor.core import gettext
-from gaphor.core.modeling import Presentation
+from gaphor.core.modeling import Diagram, Presentation
 from gaphor.diagram.diagramtools import PlacementTool
 
-ItemFactory = Callable[[UML.Diagram, Optional[Presentation]], Presentation]
+ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
 
 
 class ToolDef(NamedTuple):

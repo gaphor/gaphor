@@ -12,7 +12,7 @@ from gi.repository import Gdk, Gio, Gtk
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
-from gaphor.core.modeling.event import AttributeUpdated, ModelFlushed, ModelReady
+from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed, ModelReady
 from gaphor.event import ActionEnabled, ActiveSessionChanged, SessionShutdownRequested
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui import APPLICATION_ID
@@ -235,7 +235,7 @@ class MainWindow(Service, ActionProvider):
         """
         # TODO: Make handlers for ModelReady from within the GUI obj
         for diagram in self.element_factory.select(
-            lambda e: e.isKindOf(UML.Diagram)
+            lambda e: e.isKindOf(Diagram)
             and not (e.namespace and e.namespace.namespace)
         ):
             self.event_manager.handle(DiagramOpened(diagram))

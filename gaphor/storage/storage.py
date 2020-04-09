@@ -19,6 +19,7 @@ import uuid
 import gaphas
 
 from gaphor import UML, application
+from gaphor.core.modeling import Diagram, Element
 from gaphor.core.modeling.collection import collection
 from gaphor.i18n import gettext
 from gaphor.storage import diagramitems, parser
@@ -90,7 +91,7 @@ def save_generator(writer, factory):  # noqa: C901
         (which contains a list of references to other UML elements) or a
         gaphas.Canvas (which contains canvas items).
         """
-        if isinstance(value, (UML.Element, gaphas.Item)):
+        if isinstance(value, (Element, gaphas.Item)):
             save_reference(name, value)
         elif isinstance(value, collection):
             save_collection(name, value)
@@ -123,7 +124,7 @@ def save_generator(writer, factory):  # noqa: C901
 
             writer.endElement("item")
 
-        elif isinstance(value, UML.Element):
+        elif isinstance(value, Element):
             save_reference(name, value)
         else:
             save_value(name, value)
@@ -184,7 +185,7 @@ def load_elements_generator(elements, factory, gaphor_version):
     )
     yield from _load_attributes_and_references(elements, update_status_queue)
 
-    for d in factory.select(lambda e: isinstance(e, UML.Diagram)):
+    for d in factory.select(lambda e: isinstance(e, Diagram)):
         canvas = d.canvas
         # update_now() is implicitly called when lock is released
         canvas.block_updates = False
@@ -221,7 +222,7 @@ def _load_elements_and_canvasitems(
         if isinstance(elem, parser.element):
             cls = getattr(UML, elem.type)
             elem.element = factory.create_as(cls, id)
-            if isinstance(elem.element, UML.Diagram):
+            if isinstance(elem.element, Diagram):
                 assert elem.canvas
                 elem.element.canvas.block_updates = True
                 create_canvasitems(elem.element, elem.canvas.canvasitems)
