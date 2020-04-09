@@ -6,14 +6,29 @@ from gaphas.item import SE
 
 from gaphor import UML, diagram
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import (
-    ToolDef,
-    history_pseudostate_config,
-    initial_pseudostate_config,
-    metaclass_config,
-    namespace_config,
-)
+from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtools import PlacementTool
+
+
+def namespace_config(new_item):
+    subject = new_item.subject
+    diagram = new_item.canvas.diagram
+    subject.package = diagram.namespace
+    subject.name = f"New{type(subject).__name__}"
+
+
+def initial_pseudostate_config(new_item):
+    new_item.subject.kind = "initial"
+
+
+def history_pseudostate_config(new_item):
+    new_item.subject.kind = "shallowHistory"
+
+
+def metaclass_config(new_item):
+    namespace_config(new_item)
+    new_item.subject.name = "Class"
+
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
 uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
@@ -337,6 +352,16 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 item_factory=PlacementTool.new_item_factory(
                     diagram.interactions.MessageItem
                 ),
+            ),
+            ToolDef(
+                "toolbox-execution-specification",
+                gettext("Execution Specification"),
+                "gaphor-execution-specification-symbolic",
+                None,
+                item_factory=PlacementTool.new_item_factory(
+                    diagram.interactions.ExecutionSpecificationItem
+                ),
+                handle_index=0,
             ),
             ToolDef(
                 "toolbox-interaction",

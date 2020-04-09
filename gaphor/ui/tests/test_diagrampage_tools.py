@@ -4,7 +4,7 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.diagram.diagramtoolbox import TOOLBOX_ACTIONS
+from gaphor.diagram.diagramtoolbox_actions_uml import uml_toolbox_actions
 from gaphor.services.properties import Properties
 from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagrampage import DiagramPage
@@ -102,11 +102,11 @@ def test_placement_partition(tab, element_factory):
     )
 
 
-def test_toolbox_actions_shortcut_unique():
+def test_uml_toolbox_actions_shortcut_unique():
 
     shortcuts = {}
 
-    for category, items in TOOLBOX_ACTIONS:
+    for category, items in uml_toolbox_actions:
         for action_name, label, icon_name, shortcut, *rest in items:
             try:
                 shortcuts[shortcut].append(action_name)
