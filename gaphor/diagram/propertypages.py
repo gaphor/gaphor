@@ -36,7 +36,7 @@ from gi.repository import Gdk, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.UML.element import DummyEventWatcher
+from gaphor.core.modeling.element import DummyEventWatcher, Element
 
 
 def new_builder(*object_ids):
@@ -58,7 +58,7 @@ class _PropertyPages:
 
     def __init__(self) -> None:
         self.pages: List[
-            Tuple[Type[UML.Element], Callable[[UML.Element], PropertyPageBase]]
+            Tuple[Type[Element], Callable[[Element], PropertyPageBase]]
         ] = []
 
     def register(self, subject_type):

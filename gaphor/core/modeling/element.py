@@ -7,12 +7,16 @@ from __future__ import annotations
 
 import logging
 import uuid
-from typing import Callable, Iterator, Optional, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Callable, Iterator, Optional, Type, TypeVar, Union
 
 from typing_extensions import Protocol
 
-from gaphor.UML.event import ElementUpdated
-from gaphor.UML.properties import relation_many, relation_one, umlproperty
+from gaphor.core.modeling.event import ElementUpdated
+from gaphor.core.modeling.properties import relation_many, relation_one, umlproperty
+
+if TYPE_CHECKING:
+    from gaphor.core.modeling.presentation import Presentation
+    from gaphor.UML import Comment
 
 __all__ = ["Element"]
 
@@ -32,8 +36,14 @@ Id = Union[str, bool]
 
 class Element:
     """
-    Base class for UML data classes.
+    Base class for all model data classes.
     """
+
+    appliedStereotype: relation_many[Element]
+    owner: relation_one[Element]
+    ownedComment: relation_many[Comment]
+    ownedElement: relation_many[Element]
+    presentation: relation_many[Presentation]
 
     def __init__(
         self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
@@ -67,12 +77,6 @@ class Element:
             self._model
         ), "You can not retrieve the model since it's not set on construction"
         return self._model
-
-    appliedStereotype: relation_many[Element]
-    owner: relation_one[Element]
-    ownedComment: relation_many[Element]
-    ownedElement: relation_many[Element]
-    presentation: relation_many[Element]
 
     def umlproperties(self):
         """

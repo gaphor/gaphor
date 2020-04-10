@@ -1,13 +1,13 @@
 if __name__ == "__main__":
     import gaphor
     from gaphor import core
-    from gaphor.UML.elementfactory import ElementFactory
+    from gaphor.core.modeling import ElementFactory
     from gaphor.plugins.console import ConsoleWindow
     from gaphor.plugins.diagramexport import DiagramExport
     from gaphor.plugins.xmiexport import XMIExport
     from gaphor.services.componentregistry import ComponentRegistry
     from gaphor.services.copyservice import CopyService
-    from gaphor.services.eventmanager import EventManager
+    from gaphor.core.eventmanager import EventManager
     from gaphor.services.helpservice import HelpService
     from gaphor.services.properties import Properties
     from gaphor.services.sanitizerservice import SanitizerService

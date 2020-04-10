@@ -13,7 +13,7 @@ from typing import List, Optional, Tuple, Union
 
 import gaphor.UML.uml2 as uml2
 import gaphor.UML.umllex as umllex
-from gaphor.UML.properties import association, derived
+from gaphor.core.modeling.properties import association, derived
 
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
@@ -169,24 +169,5 @@ uml2.Message.messageKind = property(
 )
 
 
-def namedelement_qualifiedname(self) -> List[str]:
-    """
-    Returns the qualified name of the element as a tuple
-    """
-    if self.namespace:
-        return namedelement_qualifiedname(self.namespace) + [self.name]
-    else:
-        return [self.name]
-
-
 uml2.Lifeline.parse = umllex.parse_lifeline
 uml2.Lifeline.render = umllex.render_lifeline
-
-uml2.NamedElement.qualifiedName = derived(
-    uml2.NamedElement,
-    "qualifiedName",
-    List[str],
-    0,
-    1,
-    lambda obj: [namedelement_qualifiedname(obj)],
-)

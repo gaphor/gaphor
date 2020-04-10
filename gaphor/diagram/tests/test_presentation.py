@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 
@@ -21,7 +22,7 @@ class StubLine(LinePresentation):
 
 
 def test_creation(element_factory):
-    p = element_factory.create(UML.Presentation)
+    p = element_factory.create(Presentation)
 
     assert p
     assert p.model

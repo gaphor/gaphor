@@ -7,8 +7,9 @@ the model clean and in sync with diagrams.
 from gaphor import UML
 from gaphor.abc import Service
 from gaphor.core import event_handler
+from gaphor.core.modeling import Presentation
+from gaphor.core.modeling.event import AssociationDeleted, AssociationSet
 from gaphor.diagram.general import CommentLineItem
-from gaphor.UML.event import AssociationDeleted, AssociationSet
 
 
 class SanitizerService(Service):
@@ -51,10 +52,10 @@ class SanitizerService(Service):
         Link comment and element if a comment line is present, but comment
         and element subject are not connected yet.
         """
-        if event.property is not UML.Presentation.subject:  # type: ignore[misc]
+        if event.property is not Presentation.subject:  # type: ignore[misc]
             return
 
-        element: UML.Presentation = event.element
+        element: Presentation = event.element
         subject = event.new_value
         if not element.canvas or not subject:
             return

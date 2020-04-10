@@ -3,6 +3,7 @@
 from typing import Optional
 
 from gaphor import UML
+from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.interactions.executionspecification import (
     ExecutionSpecificationItem,
@@ -28,7 +29,7 @@ def reparent(canvas, item, new_parent):
         new_parent.request_update()
 
 
-def get_connected(item, handle) -> Optional[UML.Presentation[UML.Element]]:
+def get_connected(item, handle) -> Optional[Presentation[Element]]:
     """
     Get item connected to a handle.
     """
@@ -179,7 +180,7 @@ class MessageLifelineConnect(BaseConnector):
 
     def disconnect(self, handle):
         line = self.line
-        send: Optional[UML.Presentation[UML.Element]] = get_connected(line, line.head)
+        send: Optional[Presentation[Element]] = get_connected(line, line.head)
         received = self.get_connected(line.tail)
         lifeline = self.element
         lifetime = lifeline.lifetime
@@ -288,7 +289,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
             # Can connect child exec spec if parent is not connected
             return True
 
-        connected_item: Optional[UML.Presentation[UML.Element]]
+        connected_item: Optional[Presentation[Element]]
         connected_item = self.get_connected(self.element.handles()[0])
         assert connected_item
         Connector(connected_item, self.line).connect(handle, None)

@@ -1,12 +1,18 @@
+from __future__ import annotations
+
+from typing import List, Optional
+
 from gaphor.core import event_handler
-from gaphor.UML.element import Element
-from gaphor.UML.event import AssociationUpdated
-from gaphor.UML.properties import (
+from gaphor.core.modeling import Element
+from gaphor.core.modeling.event import AssociationUpdated
+from gaphor.core.modeling.properties import (
     association,
     attribute,
     derivedunion,
     enumeration,
     redefine,
+    relation_many,
+    relation_one,
 )
 
 
@@ -15,10 +21,10 @@ def test_association_1_x():
     # 1:-
     #
     class A(Element):
-        pass
+        one: relation_one[Optional[B]]
 
     class B(Element):
-        pass
+        two: relation_one[A]
 
     A.one = association("one", B, 0, 1, opposite="two")
     B.two = association("two", A, 0, 1)
@@ -46,13 +52,10 @@ def test_association_n_x():
     # n:-
     #
     class A(Element):
-        pass
+        one: relation_many[B]
 
     class B(Element):
-        pass
-
-    class C(Element):
-        pass
+        two: relation_one[A]
 
     A.one = association("one", B, 0, "*", opposite="two")
     B.two = association("two", A, 0, 1)
@@ -69,10 +72,10 @@ def test_association_1_1():
     # 1:1
     #
     class A(Element):
-        pass
+        one: relation_one[B]
 
     class B(Element):
-        pass
+        two: relation_one[A]
 
     class C(Element):
         pass
@@ -110,10 +113,10 @@ def test_association_1_n():
     # 1:n
     #
     class A(Element):
-        pass
+        one: relation_one[B]
 
     class B(Element):
-        pass
+        two: relation_many[A]
 
     class C(Element):
         pass
@@ -178,10 +181,10 @@ def test_association_n_n():
     # n:n
     #
     class A(Element):
-        pass
+        one: relation_many[B]
 
     class B(Element):
-        pass
+        two: relation_many[A]
 
     class C(Element):
         pass
@@ -234,7 +237,7 @@ def test_association_n_n():
 
 def test_association_swap():
     class A(Element):
-        pass
+        one: relation_many[B]
 
     class B(Element):
         pass
@@ -254,7 +257,7 @@ def test_association_swap():
     assert a.one[0] is b1
     assert a.one[1] is b2
 
-    events = []
+    events: List[object] = []
 
     @event_handler(AssociationUpdated)
     def handler(event, events=events):
@@ -279,7 +282,7 @@ def test_association_unlink_1():
     # unlink
     #
     class A(Element):
-        pass
+        one: relation_many[B]
 
     class B(Element):
         pass
@@ -314,10 +317,10 @@ def test_association_unlink_2():
     # unlink
     #
     class A(Element):
-        pass
+        one: relation_many[B]
 
     class B(Element):
-        pass
+        two: relation_many[A]
 
     class C(Element):
         pass
@@ -351,9 +354,9 @@ def test_association_unlink_2():
 
 def test_attributes():
     class A(Element):
-        pass
+        a: attribute[str]
 
-    A.a = attribute("a", bytes, "default")
+    A.a = attribute("a", str, "default")
 
     a = A()
     assert a.a == "default", a.a
@@ -371,7 +374,7 @@ def test_attributes():
 
 def test_enumerations():
     class A(Element):
-        pass
+        a: enumeration
 
     A.a = enumeration("a", ("one", "two", "three"), "one")
     a = A()
@@ -392,7 +395,9 @@ def test_enumerations():
 
 def test_derivedunion():
     class A(Element):
-        pass
+        a: relation_many[A]
+        b: relation_one[A]
+        u: relation_many[A]
 
     A.a = association("a", A)
     A.b = association("b", A, 0, 1)
@@ -428,6 +433,9 @@ def test_derivedunion_notify_for_single_derived_property():
     class E(Element):
         notified = False
 
+        a: relation_many[A]
+        u: relation_many[A]
+
         def handle(self, event):
             if event.property is E.u:
                 self.notified = True
@@ -448,6 +456,10 @@ def test_derivedunion_notify_for_multiple_derived_properties():
     class E(Element):
         notified = False
 
+        a: relation_many[A]
+        aa: relation_many[A]
+        u: relation_many[A]
+
         def handle(self, event):
             if event.property is E.u:
                 self.notified = True
@@ -464,7 +476,10 @@ def test_derivedunion_notify_for_multiple_derived_properties():
 
 def test_derivedunion_listmixins():
     class A(Element):
-        pass
+        a: relation_many[A]
+        b: relation_many[A]
+        u: relation_many[A]
+        name: attribute[str]
 
     A.a = association("a", A)
     A.b = association("b", A)
@@ -479,13 +494,16 @@ def test_derivedunion_listmixins():
     a.a[1].name = "bar"
     a.b[0].name = "baz"
 
-    assert list(a.a[:].name) == ["foo", "bar"]
-    assert sorted(list(a.u[:].name)) == ["bar", "baz", "foo"]
+    assert list(a.a[:].name) == ["foo", "bar"]  # type: ignore[attr-defined]
+    assert sorted(list(a.u[:].name)) == ["bar", "baz", "foo"]  # type: ignore[attr-defined]
 
 
 def test_composite():
     class A(Element):
         is_unlinked = False
+        name: str
+        comp: relation_many[A]
+        other: relation_many[A]
 
         def unlink(self):
             self.is_unlinked = True

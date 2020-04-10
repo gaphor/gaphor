@@ -18,9 +18,12 @@ icons:		## Generate icons from stensil (requires Inkscape)
 translate:	## Translate and update .po and .mo files (requires PyBabel)
 	$(MAKE) -C po
 
-model: gaphor/UML/uml2.py	## Generate Python model files from Gaphor models (requires Black, MyPy)
+model: gaphor/core/modeling/coremodel.py gaphor/UML/uml2.py	## Generate Python model files from Gaphor models (requires Black, MyPy)
 
-gaphor/UML/uml2.py: gaphor/UML/uml2.gaphor gaphor/UML/uml2.override utils/model/gen_uml.py utils/model/override.py utils/model/writer.py
+gaphor/core/modeling/coremodel.py: models/Core.gaphor models/Core.override utils/model/gen_uml.py utils/model/override.py utils/model/writer.py
+	utils/model/build_core.py && black $@ && mypy gaphor/core/modeling
+
+gaphor/UML/uml2.py: models/UML.gaphor models/UML.override utils/model/gen_uml.py utils/model/override.py utils/model/writer.py
 	utils/model/build_uml.py && black $@ && mypy gaphor/UML
 
 .PHONY: help dist test docs icons translate model

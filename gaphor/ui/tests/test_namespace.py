@@ -1,24 +1,19 @@
 import pytest
 
-import gaphor.services.componentregistry
-import gaphor.services.eventmanager
+import gaphor.core.eventmanager
 import gaphor.UML as UML
+from gaphor.core.modeling import ElementFactory
 from gaphor.ui.namespace import Namespace
 
 
 @pytest.fixture
 def event_manager():
-    return gaphor.services.eventmanager.EventManager()
+    return gaphor.core.eventmanager.EventManager()
 
 
 @pytest.fixture
 def element_factory(event_manager):
-    return UML.elementfactory.ElementFactory(event_manager)
-
-
-@pytest.fixture
-def component_registry():
-    return gaphor.services.componentregistry.ComponentRegistry()
+    return ElementFactory(event_manager)
 
 
 @pytest.fixture

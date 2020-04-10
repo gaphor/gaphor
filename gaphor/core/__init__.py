@@ -5,6 +5,6 @@ An average module should only need to import this module.
 """
 
 from gaphor.action import action
+from gaphor.core.eventmanager import event_handler
 from gaphor.i18n import gettext
-from gaphor.services.eventmanager import event_handler
 from gaphor.transaction import Transaction, transactional

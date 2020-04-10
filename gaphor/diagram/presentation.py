@@ -8,8 +8,8 @@ from gaphas.aspect import ConnectionSink
 from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
+from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.diagram.text import TextAlign, text_point_at_line
-from gaphor.UML.presentation import Presentation, S
 
 
 class Named:

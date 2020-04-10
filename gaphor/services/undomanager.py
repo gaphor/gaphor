@@ -19,15 +19,7 @@ from gaphas import state
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler, gettext
-from gaphor.event import (
-    ActionEnabled,
-    ServiceEvent,
-    TransactionBegin,
-    TransactionCommit,
-    TransactionRollback,
-)
-from gaphor.transaction import Transaction, transactional
-from gaphor.UML.event import (
+from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
     AssociationSet,
@@ -36,7 +28,15 @@ from gaphor.UML.event import (
     ElementDeleted,
     ModelReady,
 )
-from gaphor.UML.properties import association as association_property
+from gaphor.core.modeling.properties import association as association_property
+from gaphor.event import (
+    ActionEnabled,
+    ServiceEvent,
+    TransactionBegin,
+    TransactionCommit,
+    TransactionRollback,
+)
+from gaphor.transaction import Transaction, transactional
 
 logger = logging.getLogger(__name__)
 

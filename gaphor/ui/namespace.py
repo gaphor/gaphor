@@ -13,22 +13,23 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.ui.abc import UIComponent
-from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramOpened
-from gaphor.ui.iconname import get_icon_name
-from gaphor.UML.event import (
+from gaphor.core.modeling import (
     AttributeUpdated,
     DerivedSet,
+    Diagram,
     ElementCreated,
     ElementDeleted,
     ModelFlushed,
     ModelReady,
 )
+from gaphor.ui.abc import UIComponent
+from gaphor.ui.actiongroup import create_action_group
+from gaphor.ui.event import DiagramOpened
+from gaphor.ui.iconname import get_icon_name
 
 if TYPE_CHECKING:
-    from gaphor.UML.elementfactory import ElementFactory
-    from gaphor.services.eventmanager import EventManager
+    from gaphor.core.modeling import ElementFactory
+    from gaphor.core.eventmanager import EventManager
 
 # The following items will be shown in the treeview, although they
 # are UML.Namespace elements.
@@ -43,7 +44,7 @@ _default_filter_list = (
     UML.Interaction,
     UML.UseCase,
     UML.Actor,
-    UML.Diagram,
+    Diagram,
     UML.Profile,
     UML.Stereotype,
     UML.Property,
@@ -131,7 +132,7 @@ class NamespaceView(Gtk.TreeView):
         element = model.get_value(iter, 0)
         text = element and (element.name or "").replace("\n", " ") or "&lt;None&gt;"
 
-        if isinstance(element, UML.Diagram):
+        if isinstance(element, Diagram):
             text = f"<b>{text}</b>"
         elif (
             isinstance(element, UML.Classifier) or isinstance(element, UML.Operation)
@@ -211,7 +212,7 @@ class NamespaceView(Gtk.TreeView):
             model = self.get_model()
             element = self.element_factory.lookup(element_id)
             assert isinstance(
-                element, (UML.Diagram, UML.Package, UML.Type)
+                element, (Diagram, UML.Package, UML.Type)
             ), f"Element with id {element_id} is not part of the model"
             path, position = drop_info
             iter = model.get_iter(path)
@@ -524,7 +525,7 @@ class Namespace(UIComponent):
         """
         element = view.get_selected_element()
         action_group = view.get_action_group("tree-view")
-        action_group.lookup_action("open").set_enabled(isinstance(element, UML.Diagram))
+        action_group.lookup_action("open").set_enabled(isinstance(element, Diagram))
         action_group.lookup_action("create-diagram").set_enabled(
             isinstance(element, UML.Package)
             or (
@@ -536,7 +537,7 @@ class Namespace(UIComponent):
             isinstance(element, UML.Package)
         )
         action_group.lookup_action("delete").set_enabled(
-            isinstance(element, UML.Diagram)
+            isinstance(element, Diagram)
             or (isinstance(element, UML.Package) and not element.presentation)
         )
 
@@ -573,7 +574,7 @@ class Namespace(UIComponent):
         assert self._namespace
         element = self._namespace.get_selected_element()
         # TODO: Candidate for adapter?
-        if isinstance(element, UML.Diagram):
+        if isinstance(element, Diagram):
             self.event_manager.handle(DiagramOpened(element))
         else:
             log.debug(f"No action defined for element {type(element).__name__}")
@@ -606,7 +607,7 @@ class Namespace(UIComponent):
         element = self._namespace.get_selected_element()
         while not isinstance(element, UML.Package):
             element = element.namespace
-        diagram = self.element_factory.create(UML.Diagram)
+        diagram = self.element_factory.create(Diagram)
         diagram.package = element
 
         if element:
@@ -641,7 +642,7 @@ class Namespace(UIComponent):
         element = self._namespace.get_selected_element()
         if isinstance(element, UML.Package):
             element.unlink()
-        elif isinstance(element, UML.Diagram):
+        elif isinstance(element, Diagram):
             m = Gtk.MessageDialog(
                 None,
                 Gtk.DialogFlags.MODAL,

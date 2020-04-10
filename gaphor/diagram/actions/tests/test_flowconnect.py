@@ -5,6 +5,7 @@ Flow item connection adapters tests.
 from typing import Type
 
 from gaphor import UML
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.actions.action import ActionItem
 from gaphor.diagram.actions.activitynodes import (
     ActivityFinalNodeItem,
@@ -299,7 +300,7 @@ class FlowItemDesisionAndForkNodes:
       object flows or all control flows.
     """
 
-    item_cls: Type[UML.Presentation]
+    item_cls: Type[Presentation]
     fork_node_cls: Type[UML.ControlNode]
     join_node_cls: Type[UML.ControlNode]
 

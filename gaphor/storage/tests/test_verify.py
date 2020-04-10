@@ -1,10 +1,11 @@
 from gaphor import UML
-from gaphor.services.eventmanager import EventManager
+from gaphor.core.eventmanager import EventManager
+from gaphor.core.modeling import ElementFactory
 from gaphor.storage.verify import orphan_references
 
 
 def test_verifier():
-    factory = UML.ElementFactory(EventManager())
+    factory = ElementFactory(EventManager())
     c = factory.create(UML.Class)
     p = factory.create(UML.Property)
     c.ownedAttribute = p

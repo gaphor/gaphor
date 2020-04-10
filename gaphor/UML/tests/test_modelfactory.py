@@ -1,13 +1,14 @@
 import pytest
 
 from gaphor import UML
-from gaphor.services.eventmanager import EventManager
+from gaphor.core.eventmanager import EventManager
+from gaphor.core.modeling import ElementFactory
 
 
 @pytest.fixture
 def factory():
     event_manager = EventManager()
-    return UML.ElementFactory(event_manager)
+    return ElementFactory(event_manager)
 
 
 def test_stereotype_name(factory):

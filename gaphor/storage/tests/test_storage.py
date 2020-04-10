@@ -151,19 +151,12 @@ class StorageTestCase(TestCase):
 
     @pytest.mark.slow
     def test_load_uml_metamodel(self):
-        """
-        Test if the meta model can be loaded.
-        """
-
-        path = distribution().locate_file("gaphor/UML/uml2.gaphor")
+        path = distribution().locate_file("models/UML.gaphor")
 
         with open(path) as ifile:
             storage.load(ifile, factory=self.element_factory)
 
-    def test_load_uml_relationships(self):
-        """
-        Test loading of a freshly saved model with relationship objects.
-        """
+    def test_save_and_load_model_with_relationships(self):
         self.element_factory.create(UML.Package)
         self.create(CommentItem, UML.Comment)
         self.create(ClassItem, UML.Class)
@@ -200,11 +193,7 @@ class StorageTestCase(TestCase):
         d1 = d.canvas.select(lambda e: isinstance(e, ClassItem))[0]
         assert d1
 
-    def test_connection(self):
-        """
-        Test connection loading of an association and two classes.
-        (Should count for all line-like objects alike if this works).
-        """
+    def test_save_and_load_of_association_with_two_connected_classes(self):
         c1 = self.create(ClassItem, UML.Class)
         c2 = self.create(ClassItem, UML.Class)
         c2.matrix.translate(200, 200)
@@ -248,10 +237,7 @@ class StorageTestCase(TestCase):
         assert cinfo_tail.connected is not None
         assert cinfo_head.connected is not cinfo_tail.connected
 
-    def test_load_save(self):
-
-        """Test loading and saving models"""
-
+    def test_load_and_save_of_a_model(self):
         path = distribution().locate_file("test-diagrams/simple-items.gaphor")
 
         with open(path, "r") as ifile:
@@ -267,10 +253,6 @@ class StorageTestCase(TestCase):
 
         copy = pf.data
 
-        with open("tmp.gaphor", "w") as ofile:
-
-            ofile.write(copy)
-
         expr = re.compile('gaphor-version="[^"]*"')
         orig = expr.sub("%VER%", orig)
         copy = expr.sub("%VER%", copy)
@@ -278,9 +260,7 @@ class StorageTestCase(TestCase):
         self.maxDiff = None
         assert copy == orig, "Saved model does not match copy"
 
-    def test_loading_an_old_version(self):
-
-        """Test loading and saving models"""
+    def test_can_not_load_models_older_that_0_17_0(self):
 
         path = distribution().locate_file("test-diagrams/old-gaphor-version.gaphor")
 

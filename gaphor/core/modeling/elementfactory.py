@@ -17,13 +17,19 @@ from typing import (
 )
 
 from gaphor.abc import Service
-from gaphor.UML.element import Element, UnlinkEvent
-from gaphor.UML.elementdispatcher import ElementDispatcher, EventWatcher
-from gaphor.UML.event import ElementCreated, ElementDeleted, ModelFlushed, ModelReady
-from gaphor.UML.uml2 import Diagram
+from gaphor.core.modeling.element import Element, UnlinkEvent
+from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
+from gaphor.core.modeling.event import (
+    ElementCreated,
+    ElementDeleted,
+    ModelFlushed,
+    ModelReady,
+)
+
+# from gaphor.UML.uml2 import Diagram
 
 if TYPE_CHECKING:
-    from gaphor.services.eventmanager import EventManager  # noqa
+    from gaphor.core.eventmanager import EventManager  # noqa
 
 
 T = TypeVar("T", bound=Element)
@@ -170,6 +176,8 @@ class ElementFactory(Service):
         self.handle(ModelFlushed(self))
 
         with self.block_events():
+            from gaphor.UML.uml2 import Diagram
+
             for element in self.lselect(lambda e: isinstance(e, Diagram)):
                 assert isinstance(element, Diagram)
                 element.canvas.block_updates = True
@@ -181,7 +189,7 @@ class ElementFactory(Service):
     def model_ready(self) -> None:
         """
         Send notification that a new model has been loaded by means of the
-        ModelReady event from gaphor.UML.event.
+        ModelReady event from gaphor.core.modeling.event.
         """
         self.handle(ModelReady(self))
 

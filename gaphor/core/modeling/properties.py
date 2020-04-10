@@ -42,8 +42,8 @@ from typing import (
 
 from typing_extensions import Literal, Protocol
 
-from gaphor.UML.collection import collection, collectionlist
-from gaphor.UML.event import (
+from gaphor.core.modeling.collection import collection, collectionlist
+from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
     AssociationSet,

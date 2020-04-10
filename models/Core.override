@@ -1,0 +1,50 @@
+header
+from typing import TYPE_CHECKING
+from gaphor.core.modeling.element import Element
+
+if TYPE_CHECKING:
+    from gaphor.UML import Dependency, Namespace
+%%
+override Element
+# defined above
+%%
+override NamedElement
+# Define extra attributes defined in UML model
+class NamedElement(Element):
+    name: attribute[str]
+    qualifiedName: derived[List[str]]
+    namespace: relation_one[Namespace]
+    clientDependency: relation_many[Dependency]
+    supplierDependency: relation_many[Dependency]
+%%
+override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+
+def _namedelement_qualifiedname(self) -> List[str]:
+    """
+    Returns the qualified name of the element as a tuple
+    """
+    if self.namespace:
+        return _namedelement_qualifiedname(self.namespace) + [self.name]
+    else:
+        return [self.name]
+
+NamedElement.qualifiedName = derived(
+    NamedElement,
+    "qualifiedName",
+    List[str],
+    0,
+    1,
+    lambda obj: [_namedelement_qualifiedname(obj)],
+)
+%%
+override Presentation
+# defined in gaphor.core.modeling.presentation
+%%
+override Element.presentation
+# defined in gaphor.core.modeling.presentation
+%%
+override Presentation.subject
+# defined in gaphor.core.modeling.presentation
+%%
+override Diagram
+# defined in gaphor.core.modeling.diagram

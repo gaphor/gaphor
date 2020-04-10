@@ -3,7 +3,7 @@ import pathlib
 import pytest
 from gi.repository import GLib
 
-from gaphor.services.eventmanager import EventManager
+from gaphor.core.eventmanager import EventManager
 from gaphor.ui.event import FileLoaded
 from gaphor.ui.recentfiles import RecentFiles
 

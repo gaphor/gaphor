@@ -67,10 +67,10 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"
-"event_manager" = "gaphor.services.eventmanager:EventManager"
+"event_manager" = "gaphor.core.eventmanager:EventManager"
 "properties" = "gaphor.services.properties:Properties"
 "undo_manager" = "gaphor.services.undomanager:UndoManager"
-"element_factory" = "gaphor.UML.elementfactory:ElementFactory"
+"element_factory" = "gaphor.core.modeling:ElementFactory"
 "file_manager" = "gaphor.ui.filemanager:FileManager"
 "recent_files" = "gaphor.ui.recentfiles:RecentFiles"
 "main_window" = "gaphor.ui.mainwindow:MainWindow"

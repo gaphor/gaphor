@@ -10,9 +10,9 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import gettext
+from gaphor.core.eventmanager import event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtoolbox_actions import toolbox_actions
-from gaphor.services.eventmanager import event_handler
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import ProfileSelectionChanged
 

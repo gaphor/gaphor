@@ -43,8 +43,8 @@ class Transaction:
     """
     The transaction. On start and end of a transaction an event is emitted.
 
-    >>> import gaphor.services.eventmanager
-    >>> event_manager = gaphor.services.eventmanager.EventManager()
+    >>> import gaphor.core.eventmanager
+    >>> event_manager = gaphor.core.eventmanager.EventManager()
 
     Transactions can be nested. If the outermost transaction is committed or
     rolled back, an event is emitted.

@@ -78,6 +78,7 @@ from gaphas.geometry import distance_line_point, distance_point_point
 from gaphas.item import NE, NW, SE, SW
 
 from gaphor import UML
+from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.classes.klass import (
     attribute_watches,
     attributes_compartment,
@@ -93,7 +94,6 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight, VerticalAlign
-from gaphor.UML.properties import attribute
 
 
 class Folded(Enum):

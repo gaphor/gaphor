@@ -3,8 +3,8 @@
 from unittest import TestCase
 
 from gaphor.core import event_handler
+from gaphor.core.eventmanager import EventManager
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor.services.eventmanager import EventManager
 from gaphor.transaction import Transaction, TransactionError
 
 begins = []

@@ -3,11 +3,11 @@ Test the UndoManager.
 """
 
 from gaphor.core import event_handler
-from gaphor.services.eventmanager import EventManager
+from gaphor.core.eventmanager import EventManager
+from gaphor.core.modeling import ElementFactory
 from gaphor.services.undomanager import UndoManager
 from gaphor.tests.testcase import TestCase
 from gaphor.transaction import Transaction
-from gaphor.UML.elementfactory import ElementFactory
 
 
 class TestUndoManager(TestCase):
@@ -100,8 +100,8 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_undo_attribute(self):
-        from gaphor.UML.properties import attribute
-        from gaphor.UML.element import Element
+        from gaphor.core.modeling.properties import attribute
+        from gaphor.core.modeling import Element
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
@@ -127,8 +127,8 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_undo_association_1_x(self):
-        from gaphor.UML.properties import association
-        from gaphor.UML.element import Element
+        from gaphor.core.modeling.properties import association
+        from gaphor.core.modeling import Element
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
@@ -180,8 +180,8 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_undo_association_1_n(self):
-        from gaphor.UML.properties import association
-        from gaphor.UML.element import Element
+        from gaphor.core.modeling.properties import association
+        from gaphor.core.modeling import Element
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
@@ -237,7 +237,7 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_element_factory_undo(self):
-        from gaphor.UML.element import Element
+        from gaphor.core.modeling import Element
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
@@ -268,7 +268,7 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_element_factory_rollback(self):
-        from gaphor.UML.element import Element
+        from gaphor.core.modeling import Element
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
@@ -289,8 +289,8 @@ class TestUndoManager(TestCase):
 
     def test_uml_associations(self):
 
-        from gaphor.UML.event import AssociationUpdated
-        from gaphor.UML.properties import association, derivedunion
+        from gaphor.core.modeling.event import AssociationUpdated
+        from gaphor.core.modeling.properties import association, derivedunion
         from gaphor.UML import Element
 
         event_manager = EventManager()
@@ -343,7 +343,7 @@ class TestUndoManager(TestCase):
             undo_manager.shutdown()
 
     def test_redo_stack(self):
-        from gaphor.UML.element import Element
+        from gaphor.core.modeling import Element
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
