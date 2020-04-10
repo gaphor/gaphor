@@ -38,15 +38,12 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    strategy:
-      matrix:
-        py_ver: [3.7, 3.8]
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: ${{ matrix.py_ver }}
+          python-version: 3.8
       - name: Use Python Dependency Cache
         uses: actions/cache@v1.0.3
         with:
