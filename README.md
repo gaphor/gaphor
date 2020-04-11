@@ -109,11 +109,11 @@ To setup a development environment in Windows:
 1) Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
 ```bash
 $ pacman -Suy
-$ pacman -S git mingw-w64-x86-64-gcc mingw-w64-x86-64-gtk3 \
-mingw-w64-x86-64-pkg-config mingw-w64-x86-64-cairo \
-mingw-w64-x86-64-gobject-introspection mingw-w64-x86-64-python3 \
-mingw-w64-x86-64-python3-gobject mingw-w64-x86-64-python3-cairo \
-mingw-w64-x86-64-python3-pip mingw-w64-x86-64-python3-setuptools
+$ pacman -S git mingw-w64-x86_64-gcc mingw-w64-x86_64-gtk3 \
+mingw-w64-x86_64-pkg-config mingw-w64-x86_64-cairo \
+mingw-w64-x86_64-gobject-introspection mingw-w64-x86_64-python \
+mingw-w64-x86_64-python-gobject mingw-w64-x86_64-python-cairo \
+mingw-w64-x86_64-python-pip
 ```
 
 Ensure `/mingw64/bin` is added to your `PATH`:
