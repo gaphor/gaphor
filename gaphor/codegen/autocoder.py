@@ -230,7 +230,7 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
 
         if isinstance(refs, type([])):
             unrefs = []
-            for r in refs:
+            for r in refs:  # type: ignore
                 unrefs.append(all_elements[r])
             val.references[attr] = unrefs
         else:
@@ -256,14 +256,14 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
                     # via the Extension instances)
                     classes[key] = val
                     # Add extra properties for easy code generation:
-                    val.specialization = []
-                    val.generalization = []
-                    val.stereotypeName = None
-                    val.written = False
+                    val.specialization = []  # type: ignore
+                    val.generalization = []  # type: ignore
+                    val.stereotypeName = None  # type: ignore
+                    val.written = False  # type: ignore
             elif val.type == "Generalization":
                 generalizations[key] = val
             elif val.type == "Association":
-                val.asAttribute = None
+                val.asAttribute = None  # type: ignore
                 associations[key] = val
             elif val.type == "Property":
                 properties[key] = val
@@ -273,7 +273,7 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
                     for slot in st.slot or []:
                         resolve(slot, "value")
                         resolve(slot, "definingFeature")
-                val.written = False
+                val.written = False  # type: ignore
             elif val.type == "Operation":
                 operations[key] = val
             elif val.type == "Extension":
@@ -296,10 +296,10 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
         for p in c.get("ownedAttribute") or []:
             a = properties.get(p)
             # set class_name, since add_attribute depends on it
-            a.class_name = c["name"]
-            if not a.get("association"):
-                if overrides.derives(f"{a.class_name}.{a.name}"):
-                    derivedattributes[a.name] = a
+            a.class_name = c["name"]  # type: ignore
+            if not a.get("association"):  # type: ignore
+                if overrides.derives(f"{a.class_name}.{a.name}"):  # type: ignore
+                    derivedattributes[a.name] = a  # type: ignore
                 else:
                     writer.add_attribute(a, enumerations)
 
@@ -331,7 +331,7 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
             ):
                 assert not derivedunions.get(e1.name), (
                     "%s.%s is already in derived union set in class %s"
-                    % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)
+                    % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)  # type: ignore
                 )
                 derivedunions[e1.name] = e1
                 e1.union = []
@@ -344,7 +344,7 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
         for s in a.subsets or ():
             try:
                 if a["type"] in classes:
-                    derivedunions[s].union.append(a)
+                    derivedunions[s].union.append(a)  # type: ignore
             except KeyError:
                 msg(f"not a derived union: {a.class_name}.{s}")
 
@@ -365,7 +365,7 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
     for c in classes.values():
         for p in c.get("ownedOperation") or ():
             o = operations.get(p)
-            o.class_name = c["name"]
+            o.class_name = c["name"]  # type: ignore
             writer.add_operation(o)
 
     writer.write(outfile, header)
