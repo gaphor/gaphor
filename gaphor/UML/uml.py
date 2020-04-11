@@ -2,31 +2,25 @@
 
 from __future__ import annotations
 
-from typing import List, Callable, Optional
 import uuid
+from typing import Callable, List, Optional
 
+# 23: override Diagram
+# 20: override PackageableElement
+# 17: override NamedElement
+# 14: override Element
+from gaphor.core.modeling import Diagram, Element, NamedElement, PackageableElement
+from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.properties import (
     association,
     attribute,
-    enumeration,
     derived,
     derivedunion,
-    relation_one,
-    relation_many,
+    enumeration,
     redefine,
+    relation_many,
+    relation_one,
 )
-from gaphor.core.modeling.collection import collection
-
-# 14: override Element
-from gaphor.core.modeling import Element
-
-
-# 17: override NamedElement
-from gaphor.core.modeling import NamedElement
-
-
-# 20: override PackageableElement
-from gaphor.core.modeling import PackageableElement
 
 
 class InstanceSpecification(PackageableElement):
@@ -358,10 +352,6 @@ class InitialNode(ControlNode):
 
 class Stereotype(Class):
     pass
-
-
-# 23: override Diagram
-from gaphor.core.modeling import Diagram
 
 
 class DeployedArtifact(NamedElement):
@@ -777,7 +767,7 @@ PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
 # 106: override Message.messageKind: property
-# defined in uml2overrides.py
+# defined in umloverrides.py
 
 Message.messageSort = enumeration(
     "messageSort",
@@ -1264,7 +1254,7 @@ Property.isComposite = derived(
 )
 
 # 88: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
-# defined in uml2overrides.py
+# defined in umloverrides.py
 
 RedefinableElement.redefinedElement = derivedunion(
     RedefinableElement,
@@ -1322,7 +1312,7 @@ Feature.featuringClassifier = derivedunion(
     Operation.interface_,
 )
 # 79: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
-# defined in uml2overrides.py
+# defined in umloverrides.py
 
 BehavioralFeature.parameter = derivedunion(
     BehavioralFeature,
@@ -1449,7 +1439,7 @@ Constraint.context = derivedunion(Constraint, "context", Namespace, 0, 1)
 Operation.type = derivedunion(Operation, "type", DataType, 0, 1)
 
 # 64: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
-# defined in uml2overrides.py
+# defined in umloverrides.py
 
 # 52: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
@@ -1540,7 +1530,7 @@ Namespace.member = derivedunion(
     StructuredClassifier.role,
 )
 # 103: override Component.required: property
-# defined in uml2overrides.py
+# defined in umloverrides.py
 
 # 76: override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion(
@@ -1549,7 +1539,7 @@ Namespace.importedMember = derivedunion(
 
 Action.input = derivedunion(Action, "input", InputPin, 0, "*", SendSignalAction.target)
 # 100: override Component.provided: property
-# defined in uml2overrides.py
+# defined in umloverrides.py
 
 Element.owner = derivedunion(
     Element,
@@ -1712,7 +1702,7 @@ OccurrenceSpecification.covered = redefine(
     OccurrenceSpecification, "covered", Lifeline, 1, InteractionFragment.covered
 )
 # 94: override Lifeline.parse: Callable[[Lifeline, str], None]
-# defined in uml2overrides.py
+# defined in umloverrides.py
 
 # 97: override Lifeline.render: Callable[[Lifeline], str]
-# defined in uml2overrides.py
+# defined in umloverrides.py

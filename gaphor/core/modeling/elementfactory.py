@@ -26,8 +26,6 @@ from gaphor.core.modeling.event import (
     ModelReady,
 )
 
-# from gaphor.UML.uml2 import Diagram
-
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager  # noqa
 
@@ -176,7 +174,7 @@ class ElementFactory(Service):
         self.handle(ModelFlushed(self))
 
         with self.block_events():
-            from gaphor.UML.uml2 import Diagram
+            from gaphor.UML.uml import Diagram
 
             for element in self.lselect(lambda e: isinstance(e, Diagram)):
                 assert isinstance(element, Diagram)

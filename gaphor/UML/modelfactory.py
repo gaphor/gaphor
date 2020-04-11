@@ -11,7 +11,7 @@ Functions collected in this module allow to
 import itertools
 from typing import Iterable, Sequence
 
-from gaphor.UML.uml2 import (
+from gaphor.UML.uml import (
     Association,
     Class,
     Classifier,
