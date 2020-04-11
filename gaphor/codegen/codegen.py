@@ -14,42 +14,44 @@ from gaphor.codegen import autocoder
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("model_name", type=str, help="gaphor model name stem")
-    parser.add_argument("--no-overrides", action="store_true", help="no overrides file")
     parser.add_argument(
-        "--model_dir",
+        "modelfile",
         type=Path,
-        default=Path(__file__).absolute().parent.parent.parent / "models",
-        help="optional, path to the model directory, defaults to the models " "package",
+        help="gaphor model filename, default location is the "
+        "models package if full filename not given.",
     )
     parser.add_argument(
-        "--output_dir",
+        "outfile",
         type=Path,
-        help="optional, path to the output direction, defaults to the "
-        "model_name package",
+        help="python data model filename, default location is "
+        "the model name package if full filename not "
+        "given.",
+    )
+    parser.add_argument(
+        "overrides",
+        type=Path,
+        help="override filename, default location is the "
+        "models package if full filename not given.",
     )
     args = parser.parse_args()
-    model: str = args.model_name
-    model_file: Path = args.model_dir / f"{model}.gaphor"
-
-    if args.no_overrides:
-        overrides = None
-    else:
-        overrides = args.model_dir / f"{args.model_name}.override"
-
-    if args.output_dir:
-        outfile = args.output_dir / f"{model.lower()}.py"
-    elif model == "Core":
-        outfile = Path(__file__).absolute().parent.parent / "core/modeling/coremodel.py"
-    else:
-        outfile = (
-            Path(__file__).absolute().parent.parent / model / f"{model.lower()}.py"
+    modelfile: Path = args.modelfile
+    outfile: Path = args.outfile
+    if str(modelfile) == modelfile.name:
+        modelfile = (
+            Path(__file__).absolute().parent.parent.parent / "models" / modelfile
+        )
+    if str(outfile) == outfile.name:
+        outfile = Path(__file__).absolute().parent.parent / modelfile.stem / outfile
+    overrides: Path = args.overrides
+    if str(overrides) == overrides.name:
+        overrides = (
+            Path(__file__).absolute().parent.parent.parent / "models" / overrides
         )
 
-    print(f"Generating {outfile.name} from {model}.gaphor...")
+    print(f"Generating {args.outfile} from {args.modelfile}...")
     print("  (warnings can be ignored)")
 
-    autocoder.generate(model_file, outfile, overrides)
+    autocoder.generate(modelfile, outfile, overrides)
     byte_compile([str(outfile)])
 
 
