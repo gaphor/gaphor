@@ -4,10 +4,10 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.diagram.diagramtoolbox_actions_uml import uml_toolbox_actions
 from gaphor.services.properties import Properties
 from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagrampage import DiagramPage
+from gaphor.UML.toolbox import uml_toolbox_actions
 
 
 @pytest.fixture

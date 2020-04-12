@@ -4,7 +4,7 @@ from typing import Sequence, Tuple
 
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtoolbox_actions_sysml import sysml_toolbox_actions
-from gaphor.diagram.diagramtoolbox_actions_uml import uml_toolbox_actions
+from gaphor.UML.toolbox import uml_toolbox_actions
 
 
 def toolbox_actions(profile: str) -> Sequence[Tuple[str, Sequence[ToolDef]]]:
