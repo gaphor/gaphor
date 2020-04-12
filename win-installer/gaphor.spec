@@ -1,6 +1,6 @@
 from PyInstaller.utils.hooks import copy_metadata
 
-    
+
 block_cipher = None
 
 a = Analysis(['gaphor-script.py'],
@@ -12,7 +12,7 @@ a = Analysis(['gaphor-script.py'],
 		       ('../gaphor/ui/*.glade', 'gaphor/ui'),
 		       ('../gaphor/services/helpservice/*.png', 'gaphor/services/helpservice'),
 		       ('../gaphor/services/helpservice/*.glade', 'gaphor/services/helpservice'),
-		       ('../gaphor/ui/icons/*.svg', 'gaphor/ui/icons'),
+		       ('../gaphor/ui/icons/hicolor/scalable/actions/*.svg', 'gaphor/ui/icons/hicolor/scalable/actions'),
 		       ('../LICENSE.txt', 'gaphor'),
 		       ('../gaphor/locale/*', 'gaphor/locale')
 		     ]+copy_metadata('gaphor')+copy_metadata('gaphas'),

@@ -51,8 +51,9 @@ ICONS=diagram \
 	extension \
 	property
 
-ICON_FILES=$(patsubst %,gaphor-%-symbolic.svg,$(ICONS))
+ICON_THEME=hicolor/scalable/actions
 
+ICON_FILES=$(patsubst %,$(ICON_THEME)/gaphor-%-symbolic.svg,$(ICONS))
 INKSCAPE=flatpak run org.inkscape.Inkscape
 
 all: verify $(ICON_FILES)
@@ -60,12 +61,12 @@ all: verify $(ICON_FILES)
 verify: stensil.svg
 	@for icon in $(ICONS); do grep -q "id=\"$$icon\"" $< || { echo "ERROR: No layer named $$icon"; exit 1; }; done
 
-gaphor-%-symbolic.svg: stensil.svg
+$(ICON_THEME)/gaphor-%-symbolic.svg: stensil.svg
 	$(INKSCAPE) -z --export-id=$* --export-id-only \
-		--export-plain-svg=.$@ $<
+		--export-plain-svg=.$*.svg $<
 	$(INKSCAPE) --verb EditSelectAll --verb SelectionUnGroup \
 		--verb=EditSelectAll --verb StrokeToPath \
-		--verb FileSave --verb FileQuit .$@
-	$(INKSCAPE) --export-plain-svg=$@ .$@ && rm .$@
+		--verb FileSave --verb FileQuit .$*.svg
+	$(INKSCAPE) --export-plain-svg=$@ .$*.svg && rm .$*.svg
 
 .PHONY: all verify
