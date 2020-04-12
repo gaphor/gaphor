@@ -1,4 +1,4 @@
-"""The core UML metamodel events."""
+"""The core modeling events."""
 
 from gaphor.event import ServiceEvent
 
@@ -14,7 +14,7 @@ class ElementUpdated:
 
 
 class AttributeUpdated(ElementUpdated):
-    """A UML attribute has changed value."""
+    """A attribute has changed value."""
 
     def __init__(self, element, attribute, old_value, new_value):
         """Constructor.  The element parameter is the element with the
@@ -28,7 +28,7 @@ class AttributeUpdated(ElementUpdated):
 
 
 class AssociationUpdated(ElementUpdated):
-    """An association UML element has changed."""
+    """An association element has changed."""
 
     def __init__(self, element, association):
         """Constructor.  The element parameter is the element the association

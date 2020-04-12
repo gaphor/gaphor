@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Base class for UML model elements.
+Base class for model elements.
 """
 
 from __future__ import annotations
@@ -80,7 +80,7 @@ class Element:
 
     def umlproperties(self):
         """
-        Iterate over all UML properties
+        Iterate over all properties
         """
         umlprop = umlproperty
         class_ = type(self)

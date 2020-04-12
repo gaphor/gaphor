@@ -248,8 +248,8 @@ def on_keypress_event(tree, event):
         return True
 
 
-class UMLComboModel(Gtk.ListStore):
-    """UML combo box model.
+class ComboModel(Gtk.ListStore):
+    """combo box model.
 
     Model allows to easily create a combo box with values and their labels,
     for example

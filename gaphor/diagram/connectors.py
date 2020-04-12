@@ -86,10 +86,6 @@ class BaseConnector:
         """
         Determine if items can be connected.
 
-        The method contains a hack for folded interfaces, see
-        `gaphor.UML.classes.interface` module documentation for
-        connection to folded interface rules.
-
         Returns `True` if connection is allowed.
         """
         return True
@@ -98,7 +94,7 @@ class BaseConnector:
         """
         Connect to an element. Note that at this point the line may
         be connected to some other, or the same element.
-        Also the connection at UML level still exists.
+        Also the connection at model level still exists.
 
         Returns `True` if a connection is established.
         """

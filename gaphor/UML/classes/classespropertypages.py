@@ -8,11 +8,11 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.diagram.propertypages import (
+    ComboModel,
     EditableTreeModel,
     NamedElementPropertyPage,
     PropertyPageBase,
     PropertyPages,
-    UMLComboModel,
     new_builder,
     on_bool_cell_edited,
     on_keypress_event,
@@ -318,7 +318,7 @@ class DependencyPropertyPage(PropertyPageBase):
 
     def construct(self):
         dependency_combo = self.builder.get_object("dependency-combo")
-        model = UMLComboModel(self.DEPENDENCY_TYPES)
+        model = ComboModel(self.DEPENDENCY_TYPES)
         dependency_combo.set_model(model)
 
         automatic = self.builder.get_object("automatic")

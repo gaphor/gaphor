@@ -116,7 +116,7 @@ class ElementDispatcher:
 
     def _path_to_properties(self, element, path):
         """
-        Given a start element and a path, return a tuple of UML properties
+        Given a start element and a path, return a tuple of properties
         (association, attribute, etc.) representing the path.
         """
         from gaphor import UML

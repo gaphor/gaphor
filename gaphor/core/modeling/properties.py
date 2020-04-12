@@ -1,7 +1,7 @@
 """
-Properties used to create the UML 2.0 data model.
+Properties used to create the Gaphor data models.
 
-The logic for creating and destroying connections between UML objects is
+The logic for creating and destroying connections between elements is
 implemented in Python property classes. These classes are simply instantiated
 like this:
     class Class(Element): pass
@@ -431,7 +431,9 @@ class association(umlproperty):
         elif not self.opposite:
             if not self.stub:
                 self.stub = associationstub(self)
-                setattr(self.type, "UML_associationstub_%x" % id(self), self.stub)
+                # Do not let property start with underscore, or it will not be found
+                # as a umlproperty.
+                setattr(self.type, "GAPHOR__associationstub__%x" % id(self), self.stub)
             self.stub._set(value, obj)
 
     def _del(self, obj, value, from_opposite=False, do_notify=True):

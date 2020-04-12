@@ -3,9 +3,9 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
+    ComboModel,
     PropertyPageBase,
     PropertyPages,
-    UMLComboModel,
     new_builder,
 )
 from gaphor.UML.interactions.interactionsconnect import get_lifeline
@@ -56,7 +56,7 @@ class MessagePropertyPage(PropertyPageBase):
             assert sort_data[4][1] == "deleteMessage"
             del sort_data[4]
 
-        self.model = UMLComboModel(sort_data)
+        self.model = ComboModel(sort_data)
         combo = builder.get_object("message-combo")
         combo.set_model(self.model)
 
