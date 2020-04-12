@@ -24,6 +24,6 @@ gaphor/core/modeling/coremodel.py: models/Core.gaphor models/Core.override gapho
 	gaphor/codegen/codegen.py models/Core.gaphor gaphor/core/modeling/coremodel.py models/Core.override && black $@ && mypy gaphor/core/modeling && isort gaphor/core/modeling/coremodel.py
 
 gaphor/UML/uml.py: models/UML.gaphor models/UML.override gaphor/codegen/autocoder.py gaphor/codegen/override.py gaphor/codegen/writer.py
-	gaphor/codegen/codegen.py models/UML.gaphor uml.py models/UML.override && black $@ && mypy gaphor/UML && isort gaphor/UML/UML.gaphor
+	gaphor/codegen/codegen.py models/UML.gaphor gaphor/UML/uml.py models/UML.override && black $@ && mypy gaphor/UML && isort gaphor/UML/UML.gaphor
 
 .PHONY: help dist test docs icons translate model
