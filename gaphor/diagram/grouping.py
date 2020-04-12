@@ -29,10 +29,8 @@ from gaphor.core.modeling import Presentation
 #   since that's the modeling concept.
 class AbstractGroup(metaclass=abc.ABCMeta):
     """
-    Base class for grouping UML objects, i.e.
+    Base class for grouping model elements, i.e.
     interactions contain lifelines and components contain classes objects.
-
-    Base class for grouping UML objects.
 
     :Attributes:
      parent

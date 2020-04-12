@@ -1,8 +1,7 @@
 import pytest
 
-from gaphor import UML
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling import Comment, ElementFactory
 from gaphor.diagram.general.generalpropertypages import CommentItemPropertyPage
 
 
@@ -12,7 +11,7 @@ def element_factory():
 
 
 def test_property_page_construction(element_factory):
-    comment = element_factory.create(UML.Comment)
+    comment = element_factory.create(Comment)
     prop_page = CommentItemPropertyPage(comment)
 
     widget = prop_page.construct()

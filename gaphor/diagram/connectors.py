@@ -101,7 +101,7 @@ class BaseConnector:
         return True
 
     def disconnect(self, handle: Handle) -> None:
-        """Disconnect UML model level connections."""
+        """Disconnect model level connections."""
 
 
 class NoConnector:

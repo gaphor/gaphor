@@ -7,6 +7,7 @@ from typing import Type, TypeVar
 import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import Comment
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
@@ -40,7 +41,7 @@ def create(element_factory, diagram):
 def test_commentline_annotated_element(create, diagram):
     """Test comment line item annotated element creation
     """
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
 
     connect(line, line.head, comment)
@@ -52,7 +53,7 @@ def test_commentline_annotated_element(create, diagram):
 def test_commentline_same_comment_glue(create):
     """Test comment line item gluing to already connected comment item."""
 
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
 
     connect(line, line.head, comment)
@@ -63,7 +64,7 @@ def test_commentline_same_comment_glue(create):
 def test_commentline_element_connect(create, diagram):
     """Test comment line connecting to comment and actor items.
     """
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
     ac = create(ActorItem, UML.Actor)
 
@@ -86,7 +87,7 @@ def test_commentline_glie_to_item_with_no_subject(create, diagram):
 def test_commentline_item_with_no_subject_connect(create, diagram):
     """Test comment line connecting to comment and actor items.
     """
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
     gi = create(GeneralizationItem)
 
@@ -99,7 +100,7 @@ def test_commentline_item_with_no_subject_connect(create, diagram):
 def test_commentline_element_reconnect(create, diagram):
     """Test comment line connecting to comment and actor items.
     """
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
     ac = create(ActorItem, UML.Actor)
 
@@ -121,7 +122,7 @@ def test_commentline_element_reconnect(create, diagram):
 def test_commentline_element_disconnect(create, diagram):
     """Test comment line connecting to comment and disconnecting actor item.
     """
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
     ac = create(ActorItem, UML.Actor)
 
@@ -149,7 +150,7 @@ def test_commentline_relationship_disconnect(create):
     assert gen.subject
 
     # now, connect comment to a generalization (relationship)
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
     connect(line, line.head, comment)
     connect(line, line.tail, gen)
@@ -167,7 +168,7 @@ def test_commentline_unlink(create):
     """Test comment line unlinking.
     """
     clazz = create(ClassItem, UML.Class)
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
 
     connect(line, line.head, comment)
@@ -193,7 +194,7 @@ def test_commentline_element_unlink(create):
     """Test comment line unlinking using a class item.
     """
     clazz = create(ClassItem, UML.Class)
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
 
     connect(line, line.head, comment)
@@ -231,7 +232,7 @@ def test_commentline_relationship_unlink(create):
     assert gen.subject
 
     # now, connect comment to a generalization (relationship)
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
     connect(line, line.head, comment)
     connect(line, line.tail, gen)
@@ -252,7 +253,7 @@ def test_commentline_linked_to_same_element_twice(create):
     clazz = create(ClassItem, UML.Class)
 
     # now, connect comment to a generalization (relationship)
-    comment = create(CommentItem, UML.Comment)
+    comment = create(CommentItem, Comment)
     line1 = create(CommentLineItem)
     connect(line1, line1.head, comment)
     connect(line1, line1.tail, clazz)
