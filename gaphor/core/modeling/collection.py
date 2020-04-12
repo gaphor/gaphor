@@ -26,9 +26,9 @@ class collectionlist(recursemixin, querymixin, List[T]):
     >>> c = Class()
     >>> c.ownedOperation = Operation()
     >>> c.ownedOperation   # doctest: +ELLIPSIS
-    [<gaphor.UML.uml2.Operation element ...>]
+    [<gaphor.UML.uml.Operation element ...>]
     >>> c.ownedOperation[0]   # doctest: +ELLIPSIS
-    <gaphor.UML.uml2.Operation element ...>
+    <gaphor.UML.uml.Operation element ...>
     >>> c.ownedOperation = Operation()
     >>> c.ownedOperation[0].formalParameter = Parameter()
     >>> c.ownedOperation[0].formalParameter = Parameter()
