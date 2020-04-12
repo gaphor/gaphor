@@ -14,6 +14,15 @@ comment
 override Element
 from gaphor.core.modeling import Element
 %%
+override Comment
+from gaphor.core.modeling import Comment
+%%
+override Element.ownedComment
+# Defined in Core model
+%%
+override Comment.annotatedElement
+# Defined in Core model
+%%
 override NamedElement
 from gaphor.core.modeling import NamedElement
 %%

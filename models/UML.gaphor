@@ -6375,25 +6375,6 @@ BehavioredClassifier.</val>
 </reflist>
 </presentation>
 </Association>
-<Property id="DCE:BBDDA4FC-45D3-11D7-BB76-BD95C061CFD6">
-<appliedStereotype>
-<reflist>
-<ref refid="1715b3d2-fa90-11de-bd51-00224128e79d"/>
-</reflist>
-</appliedStereotype>
-<class_>
-<ref refid="DCE:7CE7539A-45D0-11D7-B5CA-613352B2821F"/>
-</class_>
-<name>
-<val>body</val>
-</name>
-<typeValue>
-<val>String</val>
-</typeValue>
-<visibility>
-<val>public</val>
-</visibility>
-</Property>
 <Property id="DCE:941D8B20-509C-11D7-811E-AF5893A6470D">
 <aggregation>
 <val>composite</val>
@@ -8279,7 +8260,7 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 180.0, 412.0)</val>
 </matrix>
 <width>
-<val>207.0</val>
+<val>208.0</val>
 </width>
 <height>
 <val>74.0</val>
@@ -8334,7 +8315,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-13.106245996156247, 65.0)]</val>
+<val>[(0.0, 0.0), (-12.692715093446168, 65.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:2719269C-4B38-11D7-B391-02BBFE4396CE"/>
@@ -8357,7 +8338,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-103.0, 143.0)]</val>
+<val>[(0.0, 0.0), (-102.21739130434781, 143.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:A4ED1438-4B37-11D7-B391-02BBFE4396CE"/>
@@ -17412,16 +17393,16 @@ BehavioredClassifier.</val>
 </item>
 <item id="DCE:7CC56B6A-45D0-11D7-B5CA-613352B2821F" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 392.0, 377.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 392.0, 378.0)</val>
 </matrix>
 <width>
-<val>115.69531249999997</val>
+<val>111.5</val>
 </width>
 <height>
-<val>67.5</val>
+<val>50.0</val>
 </height>
 <show_attributes>
-<val>1</val>
+<val>0</val>
 </show_attributes>
 <show_operations>
 <val>0</val>
@@ -17447,7 +17428,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (50.0435406901442, 96.0)]</val>
+<val>[(0.0, 0.0), (48.16504255581583, 97.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
@@ -17464,13 +17445,13 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 423.0, 249.0)</val>
 </matrix>
 <orthogonal>
-<val>0</val>
+<val>1</val>
 </orthogonal>
 <horizontal>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (270.0, 0.0), (270.0, 156.4765625), (84.6953125, 156.4765625)]</val>
+<val>[(0.0, 0.0), (270.0, 0.0), (270.0, 150.09375), (80.5, 150.09375)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
@@ -17597,6 +17578,40 @@ BehavioredClassifier.</val>
 <tail-subject>
 <ref refid="DCE:5C694A28-45D1-11D7-B5CA-613352B2821F"/>
 </tail-subject>
+</item>
+<item id="a06fc75a-7cf9-11ea-b719-1f391582df99" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 585.0, 162.3928571428571)</val>
+</matrix>
+<width>
+<val>183.0</val>
+</width>
+<height>
+<val>44.0</val>
+</height>
+<subject>
+<ref refid="a06fc759-7cf9-11ea-b719-1f391582df99"/>
+</subject>
+</item>
+<item id="a652d711-7cf9-11ea-b719-1f391582df99" type="CommentLineItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 650.0, 249.0)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (24.5, -42.60714285714289)]</val>
+</points>
+<head-connection>
+<ref refid="DCE:C270BD48-45D0-11D7-B5CA-613352B2821F"/>
+</head-connection>
+<tail-connection>
+<ref refid="a06fc75a-7cf9-11ea-b719-1f391582df99"/>
+</tail-connection>
 </item>
 </canvas>
 </Diagram>
@@ -23664,7 +23679,6 @@ specially for Gaphor</val>
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="DCE:BBDDA4FC-45D3-11D7-BB76-BD95C061CFD6"/>
 <ref refid="DCE:1D9FC11C-45D1-11D7-B5CA-613352B2821F"/>
 </reflist>
 </ownedAttribute>
@@ -26607,6 +26621,11 @@ specially for Gaphor</val>
 <ref refid="DCE:1D9FC11C-45D1-11D7-B5CA-613352B2821F"/>
 </reflist>
 </memberEnd>
+<ownedComment>
+<reflist>
+<ref refid="a06fc759-7cf9-11ea-b719-1f391582df99"/>
+</reflist>
+</ownedComment>
 <package>
 <ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
 </package>
@@ -41663,11 +41682,6 @@ swimlanes</val>
 <ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
 </reflist>
 </classifier>
-<extended>
-<reflist>
-<ref refid="DCE:BBDDA4FC-45D3-11D7-BB76-BD95C061CFD6"/>
-</reflist>
-</extended>
 </InstanceSpecification>
 <InstanceSpecification id="1715ed66-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -52220,4 +52234,19 @@ to make it fit more to what we need in Gaphor.</val>
 <val>1</val>
 </upperValue>
 </Property>
+<Comment id="a06fc759-7cf9-11ea-b719-1f391582df99">
+<annotatedElement>
+<reflist>
+<ref refid="DCE:1D9F8954-45D1-11D7-B5CA-613352B2821F"/>
+</reflist>
+</annotatedElement>
+<body>
+<val>Redefine association defined in Core model.</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="a06fc75a-7cf9-11ea-b719-1f391582df99"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>
