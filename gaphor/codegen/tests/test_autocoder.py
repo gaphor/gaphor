@@ -17,7 +17,7 @@ class PseudoFile:
 
 
 def test_loading():
-    model_file = distribution().locate_file("gaphor/codegen/tests/test-model.gaphor")
+    model_file = distribution().locate_file("models/test-models/test-model.gaphor")
     outfile = PseudoFile()
 
     generate(model_file, outfile)

@@ -24,7 +24,7 @@ def element_factory(session):
 def test_message_item_upgrade(element_factory):
     """
     """
-    path = distribution().locate_file("test-diagrams/multiple-messages.gaphor")
+    path = distribution().locate_file("models/test-models/multiple-messages.gaphor")
 
     elements = parse(path)
     load_elements(elements, element_factory)
