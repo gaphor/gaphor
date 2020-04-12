@@ -14,45 +14,15 @@ from gaphor.codegen import autocoder
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "modelfile",
-        type=Path,
-        help="gaphor model filename, default location is the "
-        "models package if full filename not given.",
-    )
-    parser.add_argument(
-        "outfile",
-        type=Path,
-        help="python data model filename, default location is "
-        "the model name package if full filename not "
-        "given.",
-    )
-    parser.add_argument(
-        "overrides",
-        type=Path,
-        help="override filename, default location is the "
-        "models package if full filename not given.",
-    )
+    parser.add_argument("modelfile", type=Path, help="gaphor model filename")
+    parser.add_argument("outfile", type=Path, help="python data model filename")
+    parser.add_argument("overrides", type=Path, help="override filename")
     args = parser.parse_args()
-    modelfile: Path = args.modelfile
-    outfile: Path = args.outfile
-    if str(modelfile) == modelfile.name:
-        modelfile = (
-            Path(__file__).absolute().parent.parent.parent / "models" / modelfile
-        )
-    if str(outfile) == outfile.name:
-        outfile = Path(__file__).absolute().parent.parent / modelfile.stem / outfile
-    overrides: Path = args.overrides
-    if str(overrides) == overrides.name:
-        overrides = (
-            Path(__file__).absolute().parent.parent.parent / "models" / overrides
-        )
-
     print(f"Generating {args.outfile} from {args.modelfile}...")
     print("  (warnings can be ignored)")
 
-    autocoder.generate(modelfile, outfile, overrides)
-    byte_compile([str(outfile)])
+    autocoder.generate(args.modelfile, args.outfile, args.overrides)
+    byte_compile([str(args.outfile)])
 
 
 if __name__ == "__main__":
