@@ -76,8 +76,8 @@ class relation_one(Protocol[E]):
     def __get__(self, obj: None, class_=None) -> relation_one[E]:
         ...
 
-    @overload  # noqa: F811
-    def __get__(self, obj, class_=None) -> E:
+    @overload
+    def __get__(self, obj, class_=None) -> E:  # noqa: F811
         ...
 
     def __set__(self, obj, value: E) -> None:
@@ -95,8 +95,8 @@ class relation_many(Protocol[E]):
     def __get__(self, obj: None, class_=None) -> relation_many[E]:
         ...
 
-    @overload  # noqa: F811
-    def __get__(self, obj, class_=None) -> collection[E]:
+    @overload
+    def __get__(self, obj, class_=None) -> collection[E]:  # noqa: F811
         ...
 
     def __set__(self, obj, value: E) -> None:
