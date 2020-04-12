@@ -1,7 +1,7 @@
 import pytest
 
-from gaphor.diagram.classes import DependencyItem
-from gaphor.diagram.components import NodeItem
+from gaphor.UML.classes import DependencyItem
+from gaphor.UML.components import NodeItem
 
 PARENT_X = 189
 PARENT_Y = 207

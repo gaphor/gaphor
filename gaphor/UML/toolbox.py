@@ -93,7 +93,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-class-symbolic",
                 "c",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem, UML.Class, config_func=namespace_config
+                    UML.classes.ClassItem, UML.Class, config_func=namespace_config
                 ),
                 handle_index=SE,
             ),
@@ -103,7 +103,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-interface-symbolic",
                 "i",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.InterfaceItem,
+                    UML.classes.InterfaceItem,
                     UML.Interface,
                     config_func=namespace_config,
                 ),
@@ -115,9 +115,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-package-symbolic",
                 "p",
                 PlacementTool.new_item_factory(
-                    diagram.classes.PackageItem,
-                    UML.Package,
-                    config_func=namespace_config,
+                    UML.classes.PackageItem, UML.Package, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -126,28 +124,28 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 gettext("Association"),
                 "gaphor-association-symbolic",
                 "<Shift>A",
-                PlacementTool.new_item_factory(diagram.classes.AssociationItem),
+                PlacementTool.new_item_factory(UML.classes.AssociationItem),
             ),
             ToolDef(
                 "toolbox-dependency",
                 gettext("Dependency"),
                 "gaphor-dependency-symbolic",
                 "<Shift>D",
-                PlacementTool.new_item_factory(diagram.classes.DependencyItem),
+                PlacementTool.new_item_factory(UML.classes.DependencyItem),
             ),
             ToolDef(
                 "toolbox-generalization",
                 gettext("Generalization"),
                 "gaphor-generalization-symbolic",
                 "<Shift>G",
-                PlacementTool.new_item_factory(diagram.classes.GeneralizationItem),
+                PlacementTool.new_item_factory(UML.classes.GeneralizationItem),
             ),
             ToolDef(
                 "toolbox-implementation",
                 gettext("Implementation"),
                 "gaphor-implementation-symbolic",
                 "<Shift>I",
-                PlacementTool.new_item_factory(diagram.classes.ImplementationItem),
+                PlacementTool.new_item_factory(UML.classes.ImplementationItem),
             ),
         ),
     ),
@@ -160,7 +158,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-component-symbolic",
                 "o",
                 PlacementTool.new_item_factory(
-                    diagram.components.ComponentItem,
+                    UML.components.ComponentItem,
                     UML.Component,
                     config_func=namespace_config,
                 ),
@@ -172,7 +170,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-artifact-symbolic",
                 "h",
                 PlacementTool.new_item_factory(
-                    diagram.components.ArtifactItem,
+                    UML.components.ArtifactItem,
                     UML.Artifact,
                     config_func=namespace_config,
                 ),
@@ -184,7 +182,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-node-symbolic",
                 "n",
                 PlacementTool.new_item_factory(
-                    diagram.components.NodeItem, UML.Node, config_func=namespace_config,
+                    UML.components.NodeItem, UML.Node, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -194,9 +192,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-device-symbolic",
                 "d",
                 PlacementTool.new_item_factory(
-                    diagram.components.NodeItem,
-                    UML.Device,
-                    config_func=namespace_config,
+                    UML.components.NodeItem, UML.Device, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -205,7 +201,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 gettext("Connector"),
                 "gaphor-connector-symbolic",
                 "<Shift>C",
-                PlacementTool.new_item_factory(diagram.components.ConnectorItem),
+                PlacementTool.new_item_factory(UML.components.ConnectorItem),
             ),
         ),
     ),
@@ -218,9 +214,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-action-symbolic",
                 "a",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.ActionItem,
-                    UML.Action,
-                    config_func=namespace_config,
+                    UML.actions.ActionItem, UML.Action, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -230,7 +224,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-initial-node-symbolic",
                 "j",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.InitialNodeItem, UML.InitialNode
+                    UML.actions.InitialNodeItem, UML.InitialNode
                 ),
                 handle_index=SE,
             ),
@@ -240,7 +234,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-activity-final-node-symbolic",
                 "f",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.ActivityFinalNodeItem, UML.ActivityFinalNode
+                    UML.actions.ActivityFinalNodeItem, UML.ActivityFinalNode
                 ),
                 handle_index=SE,
             ),
@@ -250,7 +244,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-flow-final-node-symbolic",
                 "w",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.FlowFinalNodeItem, UML.FlowFinalNode
+                    UML.actions.FlowFinalNodeItem, UML.FlowFinalNode
                 ),
                 handle_index=SE,
             ),
@@ -260,7 +254,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-decision-node-symbolic",
                 "g",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.DecisionNodeItem, UML.DecisionNode
+                    UML.actions.DecisionNodeItem, UML.DecisionNode
                 ),
                 handle_index=SE,
             ),
@@ -270,7 +264,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-fork-node-symbolic",
                 "<Shift>R",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.ForkNodeItem, UML.JoinNode
+                    UML.actions.ForkNodeItem, UML.JoinNode
                 ),
                 handle_index=1,
             ),
@@ -280,7 +274,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-object-node-symbolic",
                 "<Shift>O",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.ObjectNodeItem,
+                    UML.actions.ObjectNodeItem,
                     UML.ObjectNode,
                     config_func=namespace_config,
                 ),
@@ -291,9 +285,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 gettext("Partition"),
                 "gaphor-partition-symbolic",
                 "<Shift>P",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.PartitionItem
-                ),
+                item_factory=PlacementTool.new_item_factory(UML.actions.PartitionItem),
                 handle_index=SE,
             ),
             ToolDef(
@@ -301,7 +293,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 gettext("Control/object flow"),
                 "gaphor-control-flow-symbolic",
                 "<Shift>F",
-                item_factory=PlacementTool.new_item_factory(diagram.actions.FlowItem),
+                item_factory=PlacementTool.new_item_factory(UML.actions.FlowItem),
             ),
             ToolDef(
                 "toolbox-send-signal-action",
@@ -309,7 +301,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-send-signal-action-symbolic",
                 None,
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.SendSignalActionItem,
+                    UML.actions.SendSignalActionItem,
                     UML.SendSignalAction,
                     config_func=namespace_config,
                 ),
@@ -321,7 +313,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-accept-event-action-symbolic",
                 None,
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.actions.AcceptEventActionItem,
+                    UML.actions.AcceptEventActionItem,
                     UML.AcceptEventAction,
                     config_func=namespace_config,
                 ),
@@ -338,7 +330,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-lifeline-symbolic",
                 "v",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.interactions.LifelineItem,
+                    UML.interactions.LifelineItem,
                     UML.Lifeline,
                     config_func=namespace_config,
                 ),
@@ -350,7 +342,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-message-symbolic",
                 "M",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.interactions.MessageItem
+                    UML.interactions.MessageItem
                 ),
             ),
             ToolDef(
@@ -359,7 +351,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-execution-specification-symbolic",
                 None,
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.interactions.ExecutionSpecificationItem
+                    UML.interactions.ExecutionSpecificationItem
                 ),
                 handle_index=0,
             ),
@@ -369,7 +361,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-interaction-symbolic",
                 "<Shift>N",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.interactions.InteractionItem,
+                    UML.interactions.InteractionItem,
                     UML.Interaction,
                     config_func=namespace_config,
                 ),
@@ -386,7 +378,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-state-symbolic",
                 "s",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.states.StateItem, UML.State, config_func=namespace_config
+                    UML.states.StateItem, UML.State, config_func=namespace_config
                 ),
                 handle_index=SE,
             ),
@@ -396,7 +388,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-initial-pseudostate-symbolic",
                 "<Shift>S",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.states.InitialPseudostateItem,
+                    UML.states.InitialPseudostateItem,
                     UML.Pseudostate,
                     initial_pseudostate_config,
                 ),
@@ -408,7 +400,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-final-state-symbolic",
                 "x",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.states.FinalStateItem, UML.FinalState
+                    UML.states.FinalStateItem, UML.FinalState
                 ),
                 handle_index=SE,
             ),
@@ -418,7 +410,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-pseudostate-symbolic",
                 "q",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.states.HistoryPseudostateItem,
+                    UML.states.HistoryPseudostateItem,
                     UML.Pseudostate,
                     history_pseudostate_config,
                 ),
@@ -429,9 +421,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 gettext("Transition"),
                 "gaphor-transition-symbolic",
                 "<Shift>T",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.states.TransitionItem
-                ),
+                item_factory=PlacementTool.new_item_factory(UML.states.TransitionItem),
             ),
         ),
     ),
@@ -444,9 +434,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-use-case-symbolic",
                 "u",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.usecases.UseCaseItem,
-                    UML.UseCase,
-                    config_func=namespace_config,
+                    UML.usecases.UseCaseItem, UML.UseCase, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -456,7 +444,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-actor-symbolic",
                 "t",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.usecases.ActorItem, UML.Actor, config_func=namespace_config,
+                    UML.usecases.ActorItem, UML.Actor, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -466,7 +454,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-association-symbolic",
                 "<Shift>B",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.AssociationItem
+                    UML.classes.AssociationItem
                 ),
             ),
             ToolDef(
@@ -474,18 +462,14 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 gettext("Include"),
                 "gaphor-include-symbolic",
                 "<Shift>U",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.usecases.IncludeItem
-                ),
+                item_factory=PlacementTool.new_item_factory(UML.usecases.IncludeItem),
             ),
             ToolDef(
                 "toolbox-extend",
                 gettext("Extend"),
                 "gaphor-extend-symbolic",
                 "<Shift>X",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.usecases.ExtendItem
-                ),
+                item_factory=PlacementTool.new_item_factory(UML.usecases.ExtendItem),
             ),
         ),
     ),
@@ -498,9 +482,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-profile-symbolic",
                 "r",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.PackageItem,
-                    UML.Profile,
-                    config_func=namespace_config,
+                    UML.classes.PackageItem, UML.Profile, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -510,7 +492,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-metaclass-symbolic",
                 "m",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem, UML.Class, config_func=metaclass_config
+                    UML.classes.ClassItem, UML.Class, config_func=metaclass_config
                 ),
                 handle_index=SE,
             ),
@@ -520,9 +502,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-stereotype-symbolic",
                 "z",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.classes.ClassItem,
-                    UML.Stereotype,
-                    config_func=namespace_config,
+                    UML.classes.ClassItem, UML.Stereotype, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -531,9 +511,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 gettext("Extension"),
                 "gaphor-extension-symbolic",
                 "<Shift>E",
-                item_factory=PlacementTool.new_item_factory(
-                    diagram.profiles.ExtensionItem
-                ),
+                item_factory=PlacementTool.new_item_factory(UML.profiles.ExtensionItem),
             ),
             ToolDef(
                 "toolbox-import",
@@ -541,7 +519,7 @@ uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
                 "gaphor-import-symbolic",
                 "<Shift>M",
                 item_factory=PlacementTool.new_item_factory(
-                    diagram.profiles.PackageImportItem
+                    UML.profiles.PackageImportItem
                 ),
             ),
         ),

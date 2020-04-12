@@ -87,7 +87,7 @@ class BaseConnector:
         Determine if items can be connected.
 
         The method contains a hack for folded interfaces, see
-        `gaphor.diagram.classes.interface` module documentation for
+        `gaphor.UML.classes.interface` module documentation for
         connection to folded interface rules.
 
         Returns `True` if connection is allowed.

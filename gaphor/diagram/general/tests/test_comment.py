@@ -7,12 +7,12 @@ from typing import Type, TypeVar
 import pytest
 
 from gaphor import UML
-from gaphor.diagram.classes.generalization import GeneralizationItem
-from gaphor.diagram.classes.klass import ClassItem
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
-from gaphor.diagram.usecases.actor import ActorItem
+from gaphor.UML.classes.generalization import GeneralizationItem
+from gaphor.UML.classes.klass import ClassItem
+from gaphor.UML.usecases.actor import ActorItem
 
 T = TypeVar("T")
 
