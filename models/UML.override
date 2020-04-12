@@ -62,7 +62,7 @@ metaclass. The property is derived from the extensions whose memberEnds
 are typed by the Class.""")
 %%
 override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
-# defined in uml2overrides.py
+# defined in umloverrides.py
 %%
 override Classifier.inheritedMember: derivedunion[NamedElement]
 Classifier.inheritedMember = derivedunion(Classifier, 'inheritedMember', NamedElement, 0, '*')
@@ -77,7 +77,7 @@ override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion(Namespace, 'importedMember', PackageableElement, 0, '*')
 %%
 override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
-# defined in uml2overrides.py
+# defined in umloverrides.py
 %%
 override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived(Property, 'isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'])
@@ -86,25 +86,25 @@ override Constraint.context: derivedunion[Namespace]
 Constraint.context = derivedunion(Constraint, 'context', Namespace, 0, 1)
 %%
 override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
-# defined in uml2overrides.py
+# defined in umloverrides.py
 %%
 override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion(Operation, 'type', DataType, 0, 1)
 %%
 override Lifeline.parse: Callable[[Lifeline, str], None]
-# defined in uml2overrides.py
+# defined in umloverrides.py
 %%
 override Lifeline.render: Callable[[Lifeline], str]
-# defined in uml2overrides.py
+# defined in umloverrides.py
 %%
 override Component.provided: property
-# defined in uml2overrides.py
+# defined in umloverrides.py
 %%
 override Component.required: property
-# defined in uml2overrides.py
+# defined in umloverrides.py
 %%
 override Message.messageKind: property
-# defined in uml2overrides.py
+# defined in umloverrides.py
 %%
 override StructuredClassifier.part: property
 StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""

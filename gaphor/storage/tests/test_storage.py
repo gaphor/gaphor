@@ -238,7 +238,7 @@ class StorageTestCase(TestCase):
         assert cinfo_head.connected is not cinfo_tail.connected
 
     def test_load_and_save_of_a_model(self):
-        path = distribution().locate_file("test-diagrams/simple-items.gaphor")
+        path = distribution().locate_file("models/test-models/simple-items.gaphor")
 
         with open(path, "r") as ifile:
             storage.load(ifile, factory=self.element_factory)
@@ -262,7 +262,9 @@ class StorageTestCase(TestCase):
 
     def test_can_not_load_models_older_that_0_17_0(self):
 
-        path = distribution().locate_file("test-diagrams/old-gaphor-version.gaphor")
+        path = distribution().locate_file(
+            "models/test-models/old-gaphor-version.gaphor"
+        )
 
         def load_old_model():
             with open(path, "r") as ifile:

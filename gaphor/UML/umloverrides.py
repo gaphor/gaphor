@@ -11,9 +11,9 @@ from __future__ import annotations
 import itertools
 from typing import List, Optional, Tuple, Union
 
-import gaphor.UML.uml2 as uml2
 import gaphor.UML.umllex as umllex
 from gaphor.core.modeling.properties import association, derived
+from gaphor.UML import uml
 
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
@@ -32,12 +32,10 @@ def extension_metaclass(self):
 # Don't use derived() now, it can not deal with a [0..1] property derived from a [0..*] property.
 # Extension.metaclass = derived(Extension, 'metaclass', Class, 0, 1, Extension.ownedEnd, Association.memberEnd)
 # Extension.metaclass.filter = extension_metaclass
-uml2.Extension.metaclass = property(
-    extension_metaclass, doc=extension_metaclass.__doc__
-)
+uml.Extension.metaclass = property(extension_metaclass, doc=extension_metaclass.__doc__)
 
 
-def property_opposite(self: uml2.Property) -> List[Optional[uml2.Property]]:
+def property_opposite(self: uml.Property) -> List[Optional[uml.Property]]:
     """
     In the case where the property is one navigable end of a binary
     association with both ends navigable, this gives the other end.
@@ -54,12 +52,12 @@ def property_opposite(self: uml2.Property) -> List[Optional[uml2.Property]]:
     return [None]
 
 
-uml2.Property.opposite = derived(
-    uml2.Property, "opposite", uml2.Property, 0, 1, property_opposite
+uml.Property.opposite = derived(
+    uml.Property, "opposite", uml.Property, 0, 1, property_opposite
 )
 
 
-def property_navigability(self: uml2.Property) -> List[Optional[bool]]:
+def property_navigability(self: uml.Property) -> List[Optional[bool]]:
     """
     Get navigability of an association end.
     If no association is related to the property, then unknown navigability
@@ -70,8 +68,8 @@ def property_navigability(self: uml2.Property) -> List[Optional[bool]]:
         return [None]  # assume unknown
     owner = self.opposite.type
     if (
-        isinstance(owner, (uml2.Class, uml2.Interface))
-        and isinstance(self.type, (uml2.Class, uml2.Interface))
+        isinstance(owner, (uml.Class, uml.Interface))
+        and isinstance(self.type, (uml.Class, uml.Interface))
         and (self in owner.ownedAttribute)
         or self in assoc.navigableOwnedEnd
     ):
@@ -82,8 +80,8 @@ def property_navigability(self: uml2.Property) -> List[Optional[bool]]:
         return [False]
 
 
-uml2.Property.navigability = derived(
-    uml2.Property, "navigability", bool, 0, 1, property_navigability
+uml.Property.navigability = derived(
+    uml.Property, "navigability", bool, 0, 1, property_navigability
 )
 
 
@@ -95,7 +93,7 @@ def _pr_interface_deps(classifier, dep_type):
     return (
         dep.supplier[0]
         for dep in classifier.clientDependency
-        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(uml2.Interface)
+        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(uml.Interface)
     )
 
 
@@ -113,41 +111,41 @@ def _pr_rc_interface_deps(component, dep_type):
     )
 
 
-def component_provided(self) -> List[Union[uml2.Implementation, uml2.Realization]]:
+def component_provided(self) -> List[Union[uml.Implementation, uml.Realization]]:
     """
     Interfaces provided to component environment.
     """
     implementations = (
         impl.contract[0]
         for impl in self.implementation
-        if impl.isKindOf(uml2.Implementation)
+        if impl.isKindOf(uml.Implementation)
     )
-    realizations = _pr_interface_deps(self, uml2.Realization)
+    realizations = _pr_interface_deps(self, uml.Realization)
 
     # realizing classifiers realizations
     # this generator of generators, so flatten it later
-    rc_realizations = _pr_rc_interface_deps(self, uml2.Realization)
+    rc_realizations = _pr_rc_interface_deps(self, uml.Realization)
 
     return list(itertools.chain(implementations, realizations, *rc_realizations))
 
 
-uml2.Component.provided = property(component_provided, doc=component_provided.__doc__)
+uml.Component.provided = property(component_provided, doc=component_provided.__doc__)
 
 
-def component_required(self) -> List[uml2.Usage]:
+def component_required(self) -> List[uml.Usage]:
     """
     Interfaces required by component.
     """
-    usages = _pr_interface_deps(self, uml2.Usage)
+    usages = _pr_interface_deps(self, uml.Usage)
 
     # realizing classifiers usages
     # this generator of generators, so flatten it later
-    rc_usages = _pr_rc_interface_deps(self, uml2.Usage)
+    rc_usages = _pr_rc_interface_deps(self, uml.Usage)
 
     return list(itertools.chain(usages, *rc_usages))
 
 
-uml2.Component.required = property(component_required, doc=component_required.__doc__)
+uml.Component.required = property(component_required, doc=component_required.__doc__)
 
 
 def message_messageKind(self) -> str:
@@ -164,10 +162,8 @@ def message_messageKind(self) -> str:
     return kind
 
 
-uml2.Message.messageKind = property(
-    message_messageKind, doc=message_messageKind.__doc__
-)
+uml.Message.messageKind = property(message_messageKind, doc=message_messageKind.__doc__)
 
 
-uml2.Lifeline.parse = umllex.parse_lifeline
-uml2.Lifeline.render = umllex.render_lifeline
+uml.Lifeline.parse = umllex.parse_lifeline
+uml.Lifeline.render = umllex.render_lifeline

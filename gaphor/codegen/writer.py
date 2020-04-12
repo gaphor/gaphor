@@ -10,7 +10,7 @@ def msg(s):
 class Writer:
     def __init__(self, overrides=None):
         self.overrides = overrides
-        self.classdefs = OrderedDict()
+        self.classdefs: OrderedDict = OrderedDict()
         self.features = []
 
     def write(self, filename, header):

@@ -12,7 +12,7 @@ __all__ = ["parse_property", "parse_operation"]
 import re
 from functools import singledispatch
 
-import gaphor.UML.uml2 as uml2
+from gaphor.UML import uml
 
 
 @singledispatch
@@ -124,7 +124,7 @@ parameter_pat = compile(
 lifeline_pat = compile("^" + name_subpat + type_subpat + garbage_subpat)
 
 
-def _set_visibility(el: uml2.Feature, vis: str):
+def _set_visibility(el: uml.Feature, vis: str):
     if vis == "+":
         el.visibility = "public"
     elif vis == "#":
@@ -140,7 +140,7 @@ def _set_visibility(el: uml2.Feature, vis: str):
             pass
 
 
-def parse_attribute(el: uml2.Property, s: str) -> None:
+def parse_attribute(el: uml.Property, s: str) -> None:
     """
     Parse string s in the property. Tagged values, multiplicity and stuff
     like that is altered to reflect the data in the property string.
@@ -170,7 +170,7 @@ def parse_attribute(el: uml2.Property, s: str) -> None:
         el.defaultValue = g("default")
 
 
-def parse_association_end(el: uml2.Property, s: str) -> None:
+def parse_association_end(el: uml.Property, s: str) -> None:
     """
     Parse the text at one end of an association. The association end holds
     two strings. It is automatically figured out which string is fed to the
@@ -215,16 +215,16 @@ def parse_association_end(el: uml2.Property, s: str) -> None:
                 el.upperValue = g("mult_u")
 
 
-@parse.register(uml2.Property)
-def parse_property(el: uml2.Property, s: str) -> None:
+@parse.register(uml.Property)
+def parse_property(el: uml.Property, s: str) -> None:
     if el.association:
         parse_association_end(el, s)
     else:
         parse_attribute(el, s)
 
 
-@parse.register(uml2.Operation)
-def parse_operation(el: uml2.Operation, s: str) -> None:
+@parse.register(uml.Operation)
+def parse_operation(el: uml.Operation, s: str) -> None:
     """
     Parse string s in the operation. Tagged values, parameters and
     visibility is altered to reflect the data in the operation string.
@@ -233,15 +233,15 @@ def parse_operation(el: uml2.Operation, s: str) -> None:
     if not m or m.group("garbage"):
         el.name = s
         del el.visibility
-        list(map(uml2.Parameter.unlink, list(el.returnResult)))
-        list(map(uml2.Parameter.unlink, list(el.formalParameter)))
+        list(map(uml.Parameter.unlink, list(el.returnResult)))
+        list(map(uml.Parameter.unlink, list(el.formalParameter)))
     else:
         g = m.group
         create = el.model.create
         _set_visibility(el, g("vis"))
         el.name = g("name")
         if not el.returnResult:
-            el.returnResult = create(uml2.Parameter)
+            el.returnResult = create(uml.Parameter)
         p = el.returnResult[0]
         p.direction = "return"
         p.typeValue = g("type")
@@ -258,7 +258,7 @@ def parse_operation(el: uml2.Operation, s: str) -> None:
             try:
                 p = el.formalParameter[pindex]
             except IndexError:
-                p = create(uml2.Parameter)
+                p = create(uml.Parameter)
             p.direction = g("dir") or "in"
             p.name = g("name")
             p.typeValue = g("type")
@@ -276,7 +276,7 @@ def parse_operation(el: uml2.Operation, s: str) -> None:
             fp.unlink()
 
 
-def parse_lifeline(el: uml2.Lifeline, s: str) -> None:
+def parse_lifeline(el: uml.Lifeline, s: str) -> None:
     """
     Parse string s in a lifeline. If a class is defined and can be found
     in the datamodel, then a class is connected to the lifelines 'represents'
@@ -295,14 +295,14 @@ def parse_lifeline(el: uml2.Lifeline, s: str) -> None:
         # Lifeline.represents: ConnectableElement
 
 
-def render_lifeline(el: uml2.Lifeline) -> str:
+def render_lifeline(el: uml.Lifeline) -> str:
     """
     """
     return el.name or ""
 
 
-@parse.register(uml2.NamedElement)
-def parse_namedelement(el: uml2.NamedElement, text: str) -> None:
+@parse.register(uml.NamedElement)
+def parse_namedelement(el: uml.NamedElement, text: str) -> None:
     """
     Parse named element by simply assigning text to its name.
     """

@@ -1,12 +1,13 @@
-"""
-This file contains code for loading up an override file.  The override file
-provides implementations of functions where the code generator could not
-do its job correctly.
+"""Code for loading up an override file.
+
+The override file provides implementations of functions where the code
+generator could not do its job correctly.
 
 This is a simple rip-off of the override script used in PyGTK.
 """
 
 import re
+from typing import List
 
 OVERRIDE_RE = re.compile(
     r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],\"]+))?$"
@@ -34,7 +35,7 @@ class Overrides:
         # bufs contains a list of (lines, line_number) pairs.
         bufs = []
         line_number = 1
-        lines = []
+        lines: List[str] = []
         line = fp.readline()
         linenum = 1
         while line:
