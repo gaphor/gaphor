@@ -50,9 +50,7 @@ def saver(element_factory):
 
 
 @pytest.fixture
-def loader(element_factory):
-    model_provider = UMLModelProvider()
-
+def loader(element_factory, model_provider):
     def load(data):
         """
         Load data from specified string.
