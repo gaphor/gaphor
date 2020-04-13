@@ -6,7 +6,7 @@ from gaphas.item import SE
 
 from gaphor import UML, diagram
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef
+from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
 from gaphor.diagram.diagramtools import PlacementTool
 
 
@@ -31,7 +31,7 @@ def metaclass_config(new_item):
 
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
-uml_toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]] = (
+uml_toolbox_actions: ToolboxDefinition = (
     (
         gettext("General"),
         (

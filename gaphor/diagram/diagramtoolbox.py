@@ -25,3 +25,6 @@ class ToolDef(NamedTuple):
     shortcut: Optional[str]
     item_factory: Optional[ItemFactory]
     handle_index: int = -1
+
+
+ToolboxDefinition = Sequence[Tuple[str, Sequence[ToolDef]]]
