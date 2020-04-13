@@ -1,6 +1,6 @@
 from gaphor import UML
-from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.tests import TestCase
+from gaphor.UML.classes import AssociationItem, ClassItem
 
 
 class GaphasTest(TestCase):

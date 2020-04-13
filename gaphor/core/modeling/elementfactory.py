@@ -17,6 +17,7 @@ from typing import (
 )
 
 from gaphor.abc import Service
+from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.element import Element, UnlinkEvent
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.event import (
@@ -174,8 +175,6 @@ class ElementFactory(Service):
         self.handle(ModelFlushed(self))
 
         with self.block_events():
-            from gaphor.UML.uml import Diagram
-
             for element in self.lselect(lambda e: isinstance(e, Diagram)):
                 assert isinstance(element, Diagram)
                 element.canvas.block_updates = True

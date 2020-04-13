@@ -3,10 +3,10 @@ import logging
 from gi.repository import Gdk
 
 from gaphor import UML
-from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.tests import TestCase
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramOpened
+from gaphor.UML.classes import AssociationItem, ClassItem
 
 logging.basicConfig(level=logging.DEBUG)
 

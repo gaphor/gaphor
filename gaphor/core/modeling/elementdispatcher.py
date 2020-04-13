@@ -6,7 +6,6 @@ from __future__ import annotations
 from logging import getLogger
 from typing import Callable, Dict, List, Optional, Set, Tuple
 
-from gaphor import UML
 from gaphor.core import event_handler
 from gaphor.core.modeling.element import Element, Handler
 from gaphor.core.modeling.event import (
@@ -117,9 +116,11 @@ class ElementDispatcher:
 
     def _path_to_properties(self, element, path):
         """
-        Given a start element and a path, return a tuple of UML properties
+        Given a start element and a path, return a tuple of properties
         (association, attribute, etc.) representing the path.
         """
+        from gaphor import UML
+
         c = type(element)
         tpath = []
         for attr in path.split("."):

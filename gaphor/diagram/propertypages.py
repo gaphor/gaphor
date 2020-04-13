@@ -36,7 +36,8 @@ from gi.repository import Gdk, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.core.modeling.element import DummyEventWatcher, Element
+from gaphor.core.modeling import Element, NamedElement
+from gaphor.core.modeling.element import DummyEventWatcher
 
 
 def new_builder(*object_ids):
@@ -248,8 +249,8 @@ def on_keypress_event(tree, event):
         return True
 
 
-class UMLComboModel(Gtk.ListStore):
-    """UML combo box model.
+class ComboModel(Gtk.ListStore):
+    """combo box model.
 
     Model allows to easily create a combo box with values and their labels,
     for example
@@ -291,7 +292,7 @@ class UMLComboModel(Gtk.ListStore):
         return self._data[index][1]
 
 
-@PropertyPages.register(UML.NamedElement)
+@PropertyPages.register(NamedElement)
 class NamedElementPropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
 
@@ -302,9 +303,9 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     NAME_LABEL = gettext("Name")
 
-    def __init__(self, subject: UML.NamedElement):
+    def __init__(self, subject: NamedElement):
         super().__init__()
-        assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
+        assert subject is None or isinstance(subject, NamedElement), "%s" % type(
             subject
         )
         self.subject = subject

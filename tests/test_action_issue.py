@@ -1,8 +1,8 @@
 from gaphor import UML
 from gaphor.application import distribution
-from gaphor.diagram.actions import ActionItem, FlowItem
 from gaphor.storage import storage
 from gaphor.tests import TestCase
+from gaphor.UML.actions import ActionItem, FlowItem
 
 
 class ActionIssueTestCase(TestCase):

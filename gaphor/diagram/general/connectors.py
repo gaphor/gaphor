@@ -5,7 +5,7 @@ Connect comments.
 import logging
 from typing import Union
 
-from gaphor import UML
+from gaphor.core.modeling import Comment
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
@@ -26,7 +26,7 @@ class CommentLineElementConnect(BaseConnector):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
-        One of the ends should be connected to a UML.Comment element.
+        One of the ends should be connected to a Comment element.
         """
         opposite = self.line.opposite(handle)
         connected_to = self.get_connected(opposite)
@@ -55,11 +55,11 @@ class CommentLineElementConnect(BaseConnector):
             and element
             and (
                 (
-                    isinstance(connected_to.subject, UML.Comment)
+                    isinstance(connected_to.subject, Comment)
                     and self.element.subject in connected_to.subject.annotatedElement
                 )
                 or (
-                    isinstance(self.element.subject, UML.Comment)
+                    isinstance(self.element.subject, Comment)
                     and connected_to.subject in self.element.subject.annotatedElement
                 )
             )
@@ -73,10 +73,10 @@ class CommentLineElementConnect(BaseConnector):
             opposite = self.line.opposite(handle)
             connected_to = self.get_connected(opposite)
             if connected_to and connected_to.subject:
-                if isinstance(connected_to.subject, UML.Comment):
+                if isinstance(connected_to.subject, Comment):
                     connected_to.subject.annotatedElement = self.element.subject
                 else:
-                    assert isinstance(self.element.subject, UML.Comment)
+                    assert isinstance(self.element.subject, Comment)
                     self.element.subject.annotatedElement = connected_to.subject
 
     def disconnect(self, handle):
@@ -87,10 +87,10 @@ class CommentLineElementConnect(BaseConnector):
         if hct and oct:
             logger.debug(f"Disconnecting {hct} and {oct}")
             try:
-                if hct.subject and isinstance(oct.subject, UML.Comment):
+                if hct.subject and isinstance(oct.subject, Comment):
                     del oct.subject.annotatedElement[hct.subject]
                 elif hct.subject and oct.subject:
-                    assert isinstance(hct.subject, UML.Comment)
+                    assert isinstance(hct.subject, Comment)
                     del hct.subject.annotatedElement[oct.subject]
             except ValueError:
                 logger.debug(
@@ -111,7 +111,7 @@ class CommentLineLineConnect(BaseConnector):
         """
         In addition to the normal check, both line ends may not be connected
         to the same element. Same goes for subjects.
-        One of the ends should be connected to a UML.Comment element.
+        One of the ends should be connected to a Comment element.
         """
         opposite = self.line.opposite(handle)
         element = self.element
@@ -134,10 +134,10 @@ class CommentLineLineConnect(BaseConnector):
             opposite = self.line.opposite(handle)
             c = self.get_connected(opposite)
             if c and self.element.subject:
-                if isinstance(c.subject, UML.Comment):
+                if isinstance(c.subject, Comment):
                     c.subject.annotatedElement = self.element.subject
                 else:
-                    assert isinstance(self.element.subject, UML.Comment)
+                    assert isinstance(self.element.subject, Comment)
                     self.element.subject.annotatedElement = c.subject
 
     def disconnect(self, handle):
@@ -146,12 +146,12 @@ class CommentLineLineConnect(BaseConnector):
         c2 = self.get_connected(opposite)
         if c1 and c2:
             if (
-                isinstance(c1.subject, UML.Comment)
+                isinstance(c1.subject, Comment)
                 and c2.subject in c1.subject.annotatedElement
             ):
                 del c1.subject.annotatedElement[c2.subject]
             elif (
-                isinstance(c2.subject, UML.Comment)
+                isinstance(c2.subject, Comment)
                 and c1.subject in c2.subject.annotatedElement
             ):
                 del c2.subject.annotatedElement[c1.subject]

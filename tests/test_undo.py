@@ -6,8 +6,8 @@ from gaphor.application import Application
 from gaphor.core import transactional
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.diagram.classes import AssociationItem, ClassItem
 from gaphor.services.undomanager import UndoManager
+from gaphor.UML.classes import AssociationItem, ClassItem
 
 
 @pytest.fixture

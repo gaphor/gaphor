@@ -4,9 +4,8 @@ import pytest
 from gaphas.aspect import ConnectionSink
 from gaphas.aspect import Connector as ConnectorAspect
 
-from gaphor import UML
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.diagram.connectors import Connector
 from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage
@@ -24,7 +23,7 @@ def element_factory(event_manager):
 
 @pytest.fixture
 def diagram(element_factory):
-    return element_factory.create(UML.Diagram)
+    return element_factory.create(Diagram)
 
 
 @pytest.fixture

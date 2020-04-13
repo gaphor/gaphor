@@ -13,9 +13,9 @@ from gaphor.diagram.connectors import Connector
 from gaphor.diagram.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
-from gaphor.diagram.usecases.actor import ActorItem
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramOpened
+from gaphor.UML.usecases.actor import ActorItem
 
 
 @pytest.fixture

@@ -6,13 +6,6 @@ diagram).
 
 import gi
 
-import gaphor.diagram.actions
-import gaphor.diagram.classes
-import gaphor.diagram.components
 import gaphor.diagram.general
-import gaphor.diagram.interactions
-import gaphor.diagram.profiles
-import gaphor.diagram.states
-import gaphor.diagram.usecases
 
 gi.require_version("PangoCairo", "1.0")

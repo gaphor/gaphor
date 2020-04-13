@@ -2,12 +2,18 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, List
+import uuid
+from typing import TYPE_CHECKING, Callable, List, Optional
 
+from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import (
+    association,
     attribute,
     derived,
+    derivedunion,
+    enumeration,
+    redefine,
     relation_many,
     relation_one,
 )
@@ -40,7 +46,23 @@ class PackageableElement(NamedElement):
 # defined in gaphor.core.modeling.presentation
 
 
+class Comment(Element):
+    body: attribute[str]
+    annotatedElement: relation_many[Element]
+
+
 NamedElement.name = attribute("name", str)
+Comment.body = attribute("body", str)
+# 46: override Presentation.subject
+# defined in gaphor.core.modeling.presentation
+
+# 43: override Element.presentation
+# defined in gaphor.core.modeling.presentation
+
+Comment.annotatedElement = association(
+    "annotatedElement", Element, opposite="ownedComment"
+)
+Element.ownedComment = association("ownedComment", Comment, opposite="annotatedElement")
 # 20: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 

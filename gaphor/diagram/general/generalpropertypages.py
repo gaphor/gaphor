@@ -1,11 +1,11 @@
 from gi.repository import Gtk
 
-from gaphor import UML
 from gaphor.core import gettext, transactional
+from gaphor.core.modeling import Comment
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 
 
-@PropertyPages.register(UML.Comment)
+@PropertyPages.register(Comment)
 class CommentItemPropertyPage(PropertyPageBase):
     """Property page for Comments."""
 

@@ -1,5 +1,5 @@
 """
-For ease of creation, maintain a mapping from (UML) Element to Diagram Item.
+For ease of creation, maintain a mapping from Element to Diagram Item.
 """
 
 from typing import Dict
@@ -9,7 +9,7 @@ from gaphor.core.modeling import Element, Presentation
 
 def represents(uml_element):
     """
-    A decorator to assign a default (UML) Element type to a diagram item.
+    A decorator to assign a default Element type to a diagram item.
     """
 
     def wrapper(presentation):
@@ -19,15 +19,15 @@ def represents(uml_element):
     return wrapper
 
 
-# Map UML elements to their (default) representation.
-_uml_to_item_map: Dict[Element, Presentation] = {}
+# Map elements to their (default) representation.
+_element_to_item_map: Dict[Element, Presentation] = {}
 
 
 def get_diagram_item(element):
-    global _uml_to_item_map
-    return _uml_to_item_map.get(element)
+    global _element_to_item_map
+    return _element_to_item_map.get(element)
 
 
 def set_diagram_item(element, item):
-    global _uml_to_item_map
-    _uml_to_item_map[element] = item
+    global _element_to_item_map
+    _element_to_item_map[element] = item
