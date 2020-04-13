@@ -40,6 +40,12 @@ class ModelProvider(metaclass=abc.ABCMeta):
         Human readable name of the model.
         """
 
+    @abc.abstractproperty
+    def toolbox_definition(self) -> ToolboxDefinition:
+        """
+        Get structure for the toolbox.
+        """
+
     @abc.abstractmethod
     def lookup_element(self, name: str) -> Optional[Type[Element]]:
         """
@@ -50,10 +56,4 @@ class ModelProvider(metaclass=abc.ABCMeta):
     def lookup_diagram_item(self, name: str) -> Optional[Type[Presentation]]:
         """
         Look up a diagram item type (class) by name.
-        """
-
-    @abc.abstractmethod
-    def toolbox_definition(self) -> ToolboxDefinition:
-        """
-        Get structure for the toolbox.
         """

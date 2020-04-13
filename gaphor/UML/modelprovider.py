@@ -10,6 +10,7 @@ import gaphor.UML.uml as uml
 from gaphor.abc import ModelProvider, Service
 from gaphor.core import gettext
 from gaphor.core.modeling import Element
+from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 from gaphor.UML.toolbox import uml_toolbox_actions
 
 
@@ -30,5 +31,6 @@ class UMLModelProvider(Service, ModelProvider):
     def lookup_diagram_item(self, name):
         return getattr(diagramitems, name, None)
 
-    def toolbox_definition(self):
+    @property
+    def toolbox_definition(self) -> ToolboxDefinition:
         return uml_toolbox_actions

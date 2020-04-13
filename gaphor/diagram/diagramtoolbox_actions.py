@@ -2,12 +2,11 @@
 
 from typing import Sequence, Tuple
 
-from gaphor.diagram.diagramtoolbox import ToolDef
+from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
 from gaphor.diagram.diagramtoolbox_actions_sysml import sysml_toolbox_actions
-from gaphor.UML.toolbox import uml_toolbox_actions
 
 
-def toolbox_actions(profile: str) -> Sequence[Tuple[str, Sequence[ToolDef]]]:
+def toolbox_actions(profile: str) -> ToolboxDefinition:
     """Get the toolbox actions from the profile name.
 
     Args:
@@ -16,9 +15,11 @@ def toolbox_actions(profile: str) -> Sequence[Tuple[str, Sequence[ToolDef]]]:
     Returns (Set): The toolbox actions.
 
     """
+    from gaphor.UML.modelprovider import UMLModelProvider
+
     if profile == "UML":
-        return uml_toolbox_actions
+        return UMLModelProvider().toolbox_definition
     elif profile == "SysML":
         return sysml_toolbox_actions
     else:
-        return uml_toolbox_actions
+        return UMLModelProvider().toolbox_definition
