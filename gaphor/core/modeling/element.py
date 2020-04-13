@@ -16,7 +16,7 @@ from gaphor.core.modeling.properties import relation_many, relation_one, umlprop
 
 if TYPE_CHECKING:
     from gaphor.core.modeling.presentation import Presentation
-    from gaphor.UML import Comment
+    from gaphor.core.modeling.coremodel import Comment
 
 __all__ = ["Element"]
 

@@ -13,7 +13,6 @@ from gaphas.painter import (
 from gaphas.view import GtkView
 from gi.repository import Gdk, GLib, Gtk
 
-from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.event import ElementDeleted
@@ -367,7 +366,7 @@ class DiagramPage:
 
             else:
                 log.warning(
-                    "No graphical representation for UML element %s"
+                    "No graphical representation for element %s"
                     % type(element).__name__
                 )
             context.finish(True, False, time)

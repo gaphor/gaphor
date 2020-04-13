@@ -2,9 +2,8 @@ from io import StringIO
 
 import pytest
 
-from gaphor import UML
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.storage import storage
 
 
@@ -15,7 +14,7 @@ def element_factory():
 
 @pytest.fixture
 def diagram(element_factory):
-    return element_factory.create(UML.Diagram)
+    return element_factory.create(Diagram)
 
 
 @pytest.fixture

@@ -1,8 +1,8 @@
 import pytest
 from gaphas.examples import Box
 
-from gaphor import UML
 from gaphor.application import Session
+from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.ui.mainwindow import DiagramPage
 
@@ -41,7 +41,7 @@ def element_factory(session):
 
 @pytest.fixture
 def diagram(element_factory):
-    diagram = element_factory.create(UML.Diagram)
+    diagram = element_factory.create(Diagram)
     yield diagram
     diagram.unlink()
 
@@ -71,5 +71,5 @@ def test_placement(diagram, page, element_factory):
     diagram.canvas.update_now()
     page.view.request_update([box])
 
-    diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
+    diagram.create(CommentItem, subject=element_factory.create(Comment))
     assert len(element_factory.lselect()) == 2

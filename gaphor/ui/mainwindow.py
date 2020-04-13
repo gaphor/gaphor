@@ -9,7 +9,6 @@ from typing import List, Tuple
 
 from gi.repository import Gdk, Gio, Gtk
 
-from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed, ModelReady
@@ -515,7 +514,7 @@ class Diagrams(UIComponent, ActionProvider):
 
     @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
-        if event.property is UML.Diagram.name:
+        if event.property is Diagram.name:
             for page in range(0, self._notebook.get_n_pages()):
                 widget = self._notebook.get_nth_page(page)
                 if event.element is widget.diagram_page.diagram:

@@ -1,7 +1,7 @@
 import pytest
 
-from gaphor import UML
 from gaphor.application import Session
+from gaphor.core.modeling import Diagram
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramOpened
 
@@ -44,7 +44,7 @@ def test_creation(session):
 
 def test_show_diagram(session):
     element_factory = session.get_service("element_factory")
-    diagram = element_factory.create(UML.Diagram)
+    diagram = element_factory.create(Diagram)
     main_w = session.get_service("main_window")
     main_w.open()
     event_manager = session.get_service("event_manager")
