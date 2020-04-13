@@ -97,8 +97,10 @@ class ElementDispatcher:
 
     logger = getLogger("ElementDispatcher")
 
-    def __init__(self, event_manager):
+    def __init__(self, event_manager, uml_model_provider):
         self.event_manager = event_manager
+        self.model_provider = uml_model_provider
+
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
         self._handlers: Dict[Tuple[Element, umlproperty], Dict[Handler, Set]] = dict()
@@ -131,7 +133,7 @@ class ElementDispatcher:
             prop = getattr(c, attr)
             tpath.append(prop)
             if cname:
-                c = getattr(UML, cname)
+                c = self.model_provider.lookup_element(cname)
                 assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
                     c, prop.type
                 )

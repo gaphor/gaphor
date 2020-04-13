@@ -5,6 +5,7 @@ import pytest
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.storage import storage
+from gaphor.UML.modelprovider import UMLModelProvider
 
 
 @pytest.fixture
@@ -13,12 +14,17 @@ def element_factory():
 
 
 @pytest.fixture
+def model_provider():
+    return UMLModelProvider()
+
+
+@pytest.fixture
 def diagram(element_factory):
     return element_factory.create(Diagram)
 
 
 @pytest.fixture
-def loader(element_factory):
+def loader(element_factory, model_provider):
     def load(data):
         """
         Load data from specified string.
@@ -27,7 +33,7 @@ def loader(element_factory):
         assert not list(element_factory.select())
 
         f = StringIO(data)
-        storage.load(f, factory=element_factory)
+        storage.load(f, factory=element_factory, model_provider=model_provider)
         f.close()
 
     return load

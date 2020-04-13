@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from typing import Optional, Type
-    from gaphor.core.modeling import Element
+    from gaphor.core.modeling import Element, Presentation
     from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 
 
@@ -35,9 +35,14 @@ class ModelProvider(metaclass=abc.ABCMeta):
     """
 
     @abc.abstractmethod
-    def lookup(self, name: str) -> Optional[Type[Element]]:
+    def lookup_element(self, name: str) -> Optional[Type[Element]]:
         """
         Look up a model element type (class) by name.
+        """
+
+    def lookup_diagram_item(self, name: str) -> Optional[Type[Presentation]]:
+        """
+        Look up a diagram item type (class) by name.
         """
 
     @abc.abstractmethod

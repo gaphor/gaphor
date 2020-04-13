@@ -78,9 +78,15 @@ def main(argv=sys.argv[1:]):
         parser.print_help()
 
     session = Session(
-        services=["event_manager", "component_registry", "element_factory"]
+        services=[
+            "event_manager",
+            "component_registry",
+            "element_factory",
+            "uml_model_provider",
+        ]
     )
     factory = session.get_service("element_factory")
+    model_provider = session.get_service("uml_model_provider")
 
     name_re = None
     if options.regex:
@@ -89,7 +95,7 @@ def main(argv=sys.argv[1:]):
     # we should have some gaphor files to be processed at this point
     for model in args:
         message(f"loading model {model}")
-        storage.load(model, factory)
+        storage.load(model, factory, model_provider)
         message("ready for rendering")
 
         for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):

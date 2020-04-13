@@ -71,6 +71,7 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "properties" = "gaphor.services.properties:Properties"
 "undo_manager" = "gaphor.services.undomanager:UndoManager"
 "element_factory" = "gaphor.core.modeling:ElementFactory"
+"model_provider" = "gaphor.UML.modelprovider:UMLModelProvider"
 "uml_model_provider" = "gaphor.UML.modelprovider:UMLModelProvider"
 "file_manager" = "gaphor.ui.filemanager:FileManager"
 "recent_files" = "gaphor.ui.recentfiles:RecentFiles"

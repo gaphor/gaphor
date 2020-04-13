@@ -1,10 +1,11 @@
 import pytest
 
+import gaphor.UML.diagramitems as diagramitems
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.storage import diagramitems
 from gaphor.storage.parser import canvas, canvasitem, element
 from gaphor.storage.storage import load_elements
+from gaphor.UML.modelprovider import UMLModelProvider
 
 
 @pytest.fixture
@@ -13,7 +14,12 @@ def element_factory():
 
 
 @pytest.fixture
-def loader(element_factory):
+def model_provider():
+    return UMLModelProvider()
+
+
+@pytest.fixture
+def loader(element_factory, model_provider):
     def _loader(*parsed_items):
         parsed_data = {
             "1": element(
@@ -21,7 +27,7 @@ def loader(element_factory):
             ),
             **{p.id: p for p in parsed_items},
         }
-        load_elements(parsed_data, element_factory)
+        load_elements(parsed_data, element_factory, model_provider)
         return element_factory.lselect()[0].canvas.get_root_items()[0]
 
     return _loader

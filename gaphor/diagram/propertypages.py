@@ -34,7 +34,6 @@ from gaphas.decorators import AsyncIO
 from gaphas.segment import Segment
 from gi.repository import Gdk, GObject, Gtk
 
-from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.core.modeling import Element, NamedElement
 from gaphor.core.modeling.element import DummyEventWatcher
@@ -312,6 +311,8 @@ class NamedElementPropertyPage(PropertyPageBase):
         self.watcher = subject.watcher() if subject else DummyEventWatcher()
 
     def construct(self):
+        from gaphor import UML
+
         if UML.model.is_metaclass(self.subject):
             return
 

@@ -49,8 +49,12 @@ class ElementFactory(Service):
 
     def __init__(self, event_manager: Optional[EventManager] = None):
         self.event_manager = event_manager
+        from gaphor.UML.modelprovider import UMLModelProvider
+
         self.element_dispatcher = (
-            ElementDispatcher(event_manager) if event_manager else None
+            ElementDispatcher(event_manager, UMLModelProvider())
+            if event_manager
+            else None
         )
         self._elements: Dict[str, Element] = OrderedDict()
         self._block_events = 0

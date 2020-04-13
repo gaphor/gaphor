@@ -15,8 +15,9 @@ def session():
 @pytest.fixture
 def element_factory(session):
     element_factory = session.get_service("element_factory")
+    model_provider = session.get_service("uml_model_provider")
     path = distribution().locate_file("test-models/issue_53.gaphor")
-    load(path, element_factory)
+    load(path, element_factory, model_provider)
     yield element_factory
     element_factory.shutdown()
 
