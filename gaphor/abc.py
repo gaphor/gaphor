@@ -34,12 +34,19 @@ class ModelProvider(metaclass=abc.ABCMeta):
     to a model implementation, such as UML, SysML, Safety.
     """
 
+    @abc.abstractproperty
+    def name(self) -> str:
+        """
+        Human readable name of the model.
+        """
+
     @abc.abstractmethod
     def lookup_element(self, name: str) -> Optional[Type[Element]]:
         """
         Look up a model element type (class) by name.
         """
 
+    @abc.abstractmethod
     def lookup_diagram_item(self, name: str) -> Optional[Type[Presentation]]:
         """
         Look up a diagram item type (class) by name.

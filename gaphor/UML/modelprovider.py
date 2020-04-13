@@ -8,6 +8,7 @@ from typing import Optional
 import gaphor.UML.diagramitems as diagramitems
 import gaphor.UML.uml as uml
 from gaphor.abc import ModelProvider, Service
+from gaphor.core import gettext
 from gaphor.core.modeling import Element
 from gaphor.UML.toolbox import uml_toolbox_actions
 
@@ -18,6 +19,10 @@ class UMLModelProvider(Service, ModelProvider):
 
     def shutdown(self):
         pass
+
+    @property
+    def name(self):
+        return gettext("UML")
 
     def lookup_element(self, name):
         return getattr(uml, name, None)
