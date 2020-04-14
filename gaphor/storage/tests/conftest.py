@@ -13,7 +13,7 @@ def model_provider():
 
 
 @pytest.fixture
-def loader(element_factory, model_provider):
+def loader(element_factory, model_provider):  # noqa: F811
     def load(data):
         """
         Load data from specified string.
