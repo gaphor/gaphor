@@ -9,16 +9,6 @@ from gaphor.UML.modelprovider import UMLModelProvider
 
 
 @pytest.fixture
-def element_factory():
-    return ElementFactory(EventManager())
-
-
-@pytest.fixture
-def model_provider():
-    return UMLModelProvider()
-
-
-@pytest.fixture
 def loader(element_factory, model_provider):
     def _loader(*parsed_items):
         parsed_data = {

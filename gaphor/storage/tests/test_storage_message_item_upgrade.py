@@ -7,30 +7,6 @@ from gaphor.storage.parser import parse
 from gaphor.storage.storage import load_elements
 
 
-@pytest.fixture
-def session():
-    session = Session(
-        services=[
-            "event_manager",
-            "component_registry",
-            "element_factory",
-            "model_provider",
-        ]
-    )
-    yield session
-    session.shutdown()
-
-
-@pytest.fixture
-def element_factory(session):
-    return session.get_service("element_factory")
-
-
-@pytest.fixture
-def model_factory(session):
-    return session.get_service("model_provider")
-
-
 def test_message_item_upgrade(element_factory, model_provider):
     """
     """

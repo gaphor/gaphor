@@ -32,6 +32,7 @@ class TestCase(unittest.TestCase):
         "event_manager",
         "component_registry",
         "element_factory",
+        "element_dispatcher",
         "model_provider",
         "sanitizer",
     ]

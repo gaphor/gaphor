@@ -6,6 +6,7 @@ from gaphas.aspect import Connector as ConnectorAspect
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
+from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.diagram.connectors import Connector
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
@@ -19,7 +20,9 @@ def event_manager():
 
 @pytest.fixture
 def element_factory(event_manager):
-    return ElementFactory(event_manager)
+    return ElementFactory(
+        event_manager, ElementDispatcher(event_manager, UMLModelProvider())
+    )
 
 
 @pytest.fixture
@@ -29,7 +32,9 @@ def model_provider():
 
 @pytest.fixture
 def diagram(element_factory):
-    return element_factory.create(Diagram)
+    diagram = element_factory.create(Diagram)
+    yield diagram
+    diagram.unlink()
 
 
 @pytest.fixture

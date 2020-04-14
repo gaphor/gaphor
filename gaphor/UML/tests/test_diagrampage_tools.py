@@ -4,20 +4,12 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.services.properties import Properties
 from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagrampage import DiagramPage
+from gaphor.UML.modelprovider import UMLModelProvider
 from gaphor.UML.toolbox import uml_toolbox_actions
-
-
-@pytest.fixture
-def event_manager():
-    return EventManager()
-
-
-@pytest.fixture
-def element_factory(event_manager):
-    return ElementFactory(event_manager)
 
 
 @pytest.fixture

@@ -82,6 +82,7 @@ def main(argv=sys.argv[1:]):
             "event_manager",
             "component_registry",
             "element_factory",
+            "element_dispatcher",
             "model_provider",
         ]
     )

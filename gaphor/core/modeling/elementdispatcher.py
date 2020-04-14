@@ -6,6 +6,7 @@ from __future__ import annotations
 from logging import getLogger
 from typing import Callable, Dict, List, Optional, Set, Tuple
 
+from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling.element import Element, Handler
 from gaphor.core.modeling.event import (
@@ -68,7 +69,7 @@ class EventWatcher:
             dispatcher.unsubscribe(handler)
 
 
-class ElementDispatcher:
+class ElementDispatcher(Service):
     """
     The Element based Dispatcher allows handlers to receive only events
     related to certain elements. Those elements should be registered too.
