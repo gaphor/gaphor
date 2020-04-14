@@ -82,11 +82,11 @@ def main(argv=sys.argv[1:]):
             "event_manager",
             "component_registry",
             "element_factory",
-            "uml_model_provider",
+            "model_provider",
         ]
     )
     factory = session.get_service("element_factory")
-    model_provider = session.get_service("uml_model_provider")
+    model_provider = session.get_service("model_provider")
 
     name_re = None
     if options.regex:

@@ -7,22 +7,15 @@ from typing import Optional
 
 import gaphor.UML.diagramitems as diagramitems
 import gaphor.UML.uml as uml
-from gaphor.abc import ModelProvider, Service
+from gaphor.abc import ModelProvider
 from gaphor.core import gettext
-from gaphor.core.modeling import Element
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 from gaphor.UML.toolbox import uml_toolbox_actions
 
 
-class UMLModelProvider(Service, ModelProvider):
-    def __init__(self):
-        pass
-
-    def shutdown(self):
-        pass
-
+class UMLModelProvider(ModelProvider):
     @property
-    def name(self):
+    def name(self) -> str:
         return gettext("UML")
 
     def lookup_element(self, name):

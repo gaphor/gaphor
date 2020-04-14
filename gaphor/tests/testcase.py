@@ -32,14 +32,14 @@ class TestCase(unittest.TestCase):
         "event_manager",
         "component_registry",
         "element_factory",
-        "uml_model_provider",
+        "model_provider",
         "sanitizer",
     ]
 
     def setUp(self):
         self.session = Session(services=self.services)
         self.element_factory = self.session.get_service("element_factory")
-        self.model_provider = self.session.get_service("uml_model_provider")
+        self.model_provider = self.session.get_service("model_provider")
         assert len(list(self.element_factory.select())) == 0, list(
             self.element_factory.select()
         )

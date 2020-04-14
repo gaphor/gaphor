@@ -97,9 +97,9 @@ class ElementDispatcher:
 
     logger = getLogger("ElementDispatcher")
 
-    def __init__(self, event_manager, uml_model_provider):
+    def __init__(self, event_manager, model_provider):
         self.event_manager = event_manager
-        self.model_provider = uml_model_provider
+        self.model_provider = model_provider
 
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}

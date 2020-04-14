@@ -72,7 +72,6 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "undo_manager" = "gaphor.services.undomanager:UndoManager"
 "element_factory" = "gaphor.core.modeling:ElementFactory"
 "model_provider" = "gaphor.services.modelprovider:ModelProviderService"
-"uml_model_provider" = "gaphor.UML.modelprovider:UMLModelProvider"
 "file_manager" = "gaphor.ui.filemanager:FileManager"
 "recent_files" = "gaphor.ui.recentfiles:RecentFiles"
 "main_window" = "gaphor.ui.mainwindow:MainWindow"
@@ -91,6 +90,7 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 
 [tool.poetry.plugins."gaphor.modelproviders"]
 "UML" = "gaphor.UML.modelprovider:UMLModelProvider"
+# "SysML" = "gaphor.SysML.modelprovider:SysMLModelProvider"
 
 [tool.isort]
 multi_line_output = 3

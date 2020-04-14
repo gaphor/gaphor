@@ -14,7 +14,7 @@ def session():
             "event_manager",
             "component_registry",
             "element_factory",
-            "uml_model_provider",
+            "model_provider",
         ]
     )
     yield session
@@ -28,7 +28,7 @@ def element_factory(session):
 
 @pytest.fixture
 def model_factory(session):
-    return session.get_service("uml_model_provider")
+    return session.get_service("model_provider")
 
 
 def test_message_item_upgrade(element_factory, model_provider):
