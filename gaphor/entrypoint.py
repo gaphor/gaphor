@@ -9,6 +9,10 @@ T = TypeVar("T")
 logger = logging.getLogger(__name__)
 
 
+def initialize(scope, services=None, **known_services: T) -> Dict[str, T]:
+    return init_entrypoints(load_entrypoints(scope, services), **known_services)
+
+
 def load_entrypoints(scope, services=None) -> Dict[str, Type[T]]:
     """
     Load services from resources.

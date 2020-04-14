@@ -17,7 +17,7 @@ from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core.eventmanager import EventManager
-from gaphor.entrypoint import init_entrypoints, load_entrypoints
+from gaphor.entrypoint import initialize
 from gaphor.event import (
     ServiceInitializedEvent,
     ServiceShutdownEvent,
@@ -57,12 +57,7 @@ class Application(Service, ActionProvider):
         self.active_session: Optional[Session] = None
         self.sessions: Set[Session] = set()
 
-        uninitialized_services: Dict[str, Type[Service]] = load_entrypoints(
-            "gaphor.appservices"
-        )
-        self._services_by_name = init_entrypoints(
-            uninitialized_services, application=self
-        )
+        self._services_by_name = initialize("gaphor.appservices", application=self)
 
         transaction.subscribers.add(self._transaction_proxy)
 
@@ -136,10 +131,7 @@ class Session:
         """
         Initialize the application.
         """
-        uninitialized_services: Dict[str, Type[Service]] = load_entrypoints(
-            "gaphor.services", services
-        )
-        services_by_name = init_entrypoints(uninitialized_services)
+        services_by_name: Dict[str, Service] = initialize("gaphor.services", services)
 
         self.event_manager: EventManager = cast(
             EventManager, services_by_name["event_manager"]
