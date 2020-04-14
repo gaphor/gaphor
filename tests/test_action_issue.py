@@ -11,7 +11,7 @@ class ActionIssueTestCase(TestCase):
         Test an issue when loading a freshly created action diagram.
         """
         ef = self.element_factory
-        path = distribution().locate_file("models/test-models/action-issue.gaphor")
+        path = distribution().locate_file("test-models/action-issue.gaphor")
         storage.load(path, ef)
 
         actions = ef.lselect(lambda e: e.isKindOf(UML.Action))

@@ -1,0 +1,13 @@
+comment
+  This is a file with custom definitions for Gaphor's data model.
+
+  Parts are separated by '%%' (no training spaces) on a line.
+  Comment parts start with 'comment' on the line below the percentage
+  symbols, 'override' is used to define a overridden variable.
+
+  Overrides may in their turn derive from other properties, in that case
+  the 'derives' keyword may be used. It's only useful to declare the
+  associations (and other derived properties) an overridden value depends
+  on, since attributes have been written anyway. Note that no smart things
+  wrt inheritance is done.
+%%

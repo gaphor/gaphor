@@ -101,8 +101,7 @@ class Writer:
         type = a.typeValue
         if type is None:
             raise ValueError(
-                "ERROR! type is not specified for property %s.%s"
-                % (a.class_name, a.name)
+                f"ERROR! type is not specified for property {a.class_name}.{a.name}"
             )
 
         if type.lower() == "boolean":
@@ -185,8 +184,7 @@ class Writer:
                 o_derived = tail.derived
             except KeyError:
                 msg(
-                    "ERROR! no name, but navigable: %s (%s.%s)"
-                    % (tail.id, tail.class_name, tail.name)
+                    f"ERROR! no name, but navigable: {tail.id} ({tail.class_name}.{tail.name})"
                 )
             else:
                 assert not (
@@ -244,8 +242,7 @@ class Writer:
         else:
             if not self.overrides.has_override(f"{d.class_name}.{d.name}"):
                 msg(
-                    "no subsets for derived union: %s.%s[%s..%s]"
-                    % (d.class_name, d.name, d.lower, d.upper)
+                    f"no subsets for derived union: {d.class_name}.{d.name}[{d.lower}..{d.upper}]"
                 )
             self.add_property(
                 d.class_name,
