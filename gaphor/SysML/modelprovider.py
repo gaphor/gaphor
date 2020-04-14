@@ -8,13 +8,13 @@ import gaphor.UML.uml as uml
 from gaphor.abc import ModelProvider
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
-from gaphor.UML.toolbox import uml_toolbox_actions
+from gaphor.SysML.toolbox import sysml_toolbox_actions
 
 
-class UMLModelProvider(ModelProvider):
+class SysMLModelProvider(ModelProvider):
     @property
     def name(self) -> str:
-        return gettext("UML")
+        return gettext("SysML")
 
     def lookup_element(self, name):
         return getattr(uml, name, None)
@@ -24,4 +24,4 @@ class UMLModelProvider(ModelProvider):
 
     @property
     def toolbox_definition(self) -> ToolboxDefinition:
-        return uml_toolbox_actions
+        return sysml_toolbox_actions

@@ -3,7 +3,6 @@
 from typing import Sequence, Tuple
 
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
-from gaphor.diagram.diagramtoolbox_actions_sysml import sysml_toolbox_actions
 
 
 def toolbox_actions(profile: str) -> ToolboxDefinition:
@@ -16,10 +15,11 @@ def toolbox_actions(profile: str) -> ToolboxDefinition:
 
     """
     from gaphor.UML.modelprovider import UMLModelProvider
+    from gaphor.SysML.modelprovider import SysMLModelProvider
 
     if profile == "UML":
         return UMLModelProvider().toolbox_definition
     elif profile == "SysML":
-        return sysml_toolbox_actions
+        return SysMLModelProvider().toolbox_definition
     else:
         return UMLModelProvider().toolbox_definition
