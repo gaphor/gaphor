@@ -35,14 +35,15 @@ class ModelProviderService(Service, ModelProvider):
     def name(self):
         return self.active_provider.name
 
+    @property
+    def toolbox_definition(self):
+        return self.active_provider.toolbox_definition
+
     def lookup_element(self, name):
         return self.first(lambda provider: provider.lookup_element(name))
 
     def lookup_diagram_item(self, name):
         return self.first(lambda provider: provider.lookup_diagram_item(name))
-
-    def toolbox_definition(self):
-        return self.active_provider.toolbox_definition
 
     def first(self, predicate):
         for _, provider in self.model_providers.items():

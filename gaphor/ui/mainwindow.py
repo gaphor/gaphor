@@ -277,8 +277,8 @@ class MainWindow(Service, ActionProvider):
     def _on_profile_selected(self, combo):
         """Store the selected profile in a property."""
         profile = combo.get_active_text()
-        self.event_manager.handle(ProfileSelectionChanged(profile))
         self.properties.set("profile", profile)
+        self.event_manager.handle(ProfileSelectionChanged(profile))
 
     # TODO: Does not belong here
     def create_item(self, ui_component):
@@ -300,10 +300,11 @@ class Diagrams(UIComponent, ActionProvider):
 
     title = gettext("Diagrams")
 
-    def __init__(self, event_manager, element_factory, properties):
+    def __init__(self, event_manager, element_factory, properties, model_provider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.properties = properties
+        self.model_provider = model_provider
         self._notebook: Gtk.Notebook = None
 
     def open(self):
@@ -470,12 +471,15 @@ class Diagrams(UIComponent, ActionProvider):
 
         # No existing diagram page found, creating one
         page = DiagramPage(
-            diagram, self.event_manager, self.element_factory, self.properties
+            diagram,
+            self.event_manager,
+            self.element_factory,
+            self.properties,
+            self.model_provider,
         )
         widget = page.construct()
         widget.set_name("diagram-tab")
         widget.diagram_page = page
-        page.set_drawing_style(self.properties.get("diagram.sloppiness", 0))
 
         self.create_tab(diagram.name, widget)
         self.get_current_view().grab_focus()

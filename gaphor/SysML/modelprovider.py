@@ -16,12 +16,12 @@ class SysMLModelProvider(ModelProvider):
     def name(self) -> str:
         return gettext("SysML")
 
+    @property
+    def toolbox_definition(self) -> ToolboxDefinition:
+        return sysml_toolbox_actions
+
     def lookup_element(self, name):
         return getattr(uml, name, None)
 
     def lookup_diagram_item(self, name):
         return getattr(diagramitems, name, None)
-
-    @property
-    def toolbox_definition(self) -> ToolboxDefinition:
-        return sysml_toolbox_actions

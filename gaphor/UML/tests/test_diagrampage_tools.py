@@ -20,7 +20,9 @@ def properties():
 @pytest.fixture
 def tab(event_manager, element_factory, properties):
     diagram = element_factory.create(UML.Diagram)
-    tab = DiagramPage(diagram, event_manager, element_factory, properties,)
+    tab = DiagramPage(
+        diagram, event_manager, element_factory, properties, UMLModelProvider()
+    )
 
     window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
     window.add(tab.construct())

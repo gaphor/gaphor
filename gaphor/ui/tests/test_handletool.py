@@ -16,13 +16,14 @@ from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.mainwindow import Diagrams
+from gaphor.UML.modelprovider import UMLModelProvider
 from gaphor.UML.usecases.actor import ActorItem
 
 
 @pytest.fixture
 def diagrams(event_manager, element_factory, properties):
     window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-    diagrams = Diagrams(event_manager, element_factory, properties)
+    diagrams = Diagrams(event_manager, element_factory, properties, UMLModelProvider())
     window.add(diagrams.open())
     window.show()
     yield diagrams
