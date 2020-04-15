@@ -90,6 +90,7 @@ class MainWindow(Service, ActionProvider):
         component_registry,
         element_factory,
         properties,
+        model_provider,
         export_menu,
         tools_menu,
     ):
@@ -97,6 +98,7 @@ class MainWindow(Service, ActionProvider):
         self.component_registry = component_registry
         self.element_factory = element_factory
         self.properties = properties
+        self.model_provider = model_provider
         self.export_menu = export_menu
         self.tools_menu = tools_menu
 
@@ -132,16 +134,15 @@ class MainWindow(Service, ActionProvider):
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
 
-    def create_profile_combo(self):
-        profiles = ["UML", "SysML", "Safety"]
-        profile_combo = Gtk.ComboBoxText.new()
+    def populate_profile_combo(self, profile_combo):
+        # For now, use name. Should populate a Popup on a settings button.
+        profiles = [id for id, name in self.model_provider.profiles]
         profile_combo.connect("changed", self._on_profile_selected)
-        for profile in profiles:
-            profile_combo.append_text(profile)
-        selected_profile = self.properties.get("profile", default="UML")
+        for id, name in self.model_provider.profiles:
+            profile_combo.append(id, name)
+        selected_profile = self.model_provider.active_profile
+
         profile_combo.set_active(profiles.index(selected_profile))
-        profile_combo.show()
-        return profile_combo
 
     def open(self, gtk_app=None):
         """Open the main window.
@@ -152,9 +153,7 @@ class MainWindow(Service, ActionProvider):
         self.window.set_application(gtk_app)
 
         profile_combo = builder.get_object("profile-combo")
-        profile_combo.connect("changed", self._on_profile_selected)
-        selected_profile = self.properties.get("profile", default="UML")
-        profile_combo.set_active_id(selected_profile)
+        self.populate_profile_combo(profile_combo)
 
         hamburger = builder.get_object("hamburger")
         hamburger.bind_model(

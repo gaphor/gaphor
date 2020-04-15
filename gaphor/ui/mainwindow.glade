@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkPopover" id="hamburger">
@@ -90,11 +90,6 @@
           <object class="GtkComboBoxText" id="profile-combo">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <items>
-              <item id="UML" translatable="yes">UML</item>
-              <item id="SysML" translatable="yes">SysML</item>
-              <item id="Safety" translatable="yes">Safety</item>
-            </items>
           </object>
           <packing>
             <property name="position">4</property>

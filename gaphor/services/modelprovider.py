@@ -25,11 +25,23 @@ class ModelProviderService(Service, ModelProvider):
         pass
 
     @property
-    def active_provider(self):
+    def profiles(self):
+        """
+        A Generator, returns tuples (id, localized name).
+        """
+        for id, provider in self.model_providers.items():
+            yield id, provider.name
+
+    @property
+    def active_profile(self):
         profile = self.properties.get("profile", default=self.DEFAULT_PROFILE)
         if profile not in self.model_providers:
             profile = self.DEFAULT_PROFILE
-        return self.model_providers[profile]
+        return profile
+
+    @property
+    def active_provider(self):
+        return self.model_providers[self.active_profile]
 
     @property
     def name(self):
