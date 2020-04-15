@@ -13,8 +13,8 @@ class ModelProviderService(Service, ModelProvider):
         Create a new Model Provider. It will provide all models defined
         as entrypoints under `[gaphor.modelproviders]`.
 
-        Te `properties` argument is optional, in which case the service will
-        default to UML.
+        The `properties` argument is optional, in which case the service
+        will default to UML.
         """
         self.model_providers: Dict[str, ModelProvider] = initialize(
             "gaphor.modelproviders"
