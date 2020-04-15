@@ -85,12 +85,6 @@ def iter_actions(provider, scope):
             yield (attrname, act)
 
 
-def set_action_state(action_group, action_name, state):
-    action_group.lookup_action(action_name).set_state(
-        GLib.Variant.new_boolean(bool(state))
-    )
-
-
 _GVARIANT_TYPE_STR = GLib.VariantType.new("s")
 _GVARIANT_TYPE_INT = GLib.VariantType.new("i")
 _GVARIANT_TYPE_BOOL = GLib.VariantType.new("b")

@@ -190,6 +190,8 @@ class MainWindow(Service, ActionProvider):
         self.window.insert_action_group("win", action_group)
         self.window.add_accel_group(accel_group)
 
+        self._on_modeling_language_selection_changed()
+
         self.window.show_all()
 
         self.window.connect("notify::is-active", self._on_window_active)
@@ -265,7 +267,7 @@ class MainWindow(Service, ActionProvider):
         a.set_enabled(event.enabled)
 
     @event_handler(ModelingLanguageChanged)
-    def _on_modeling_language_selection_changed(self, event):
+    def _on_modeling_language_selection_changed(self, event=None):
         if self.modeling_language_name:
             self.modeling_language_name.set_text(
                 self.model_provider.active_modeling_language_name

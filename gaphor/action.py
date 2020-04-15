@@ -52,3 +52,14 @@ class action:
 
 def is_action(func):
     return hasattr(func, "__action__")
+
+
+def init_action_state(func, state):
+    """
+    Initialize action state.
+
+    NB. Use only during initialization. State is only updated
+    on the action. Not on widgets based on the action.
+    """
+    if is_action(func):
+        func.__action__.state = state
