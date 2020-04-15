@@ -18,8 +18,7 @@ import uuid
 
 import gaphas
 
-import gaphor.UML.diagramitems as diagramitems
-from gaphor import UML, application
+from gaphor import application
 from gaphor.core.modeling import Diagram, Element
 from gaphor.core.modeling.collection import collection
 from gaphor.i18n import gettext

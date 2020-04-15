@@ -4,6 +4,7 @@ UML related assets.
 """
 
 import gaphor.UML.diagramitems as diagramitems
+import gaphor.UML.iconname
 import gaphor.UML.uml as uml
 from gaphor.abc import ModelProvider
 from gaphor.core import gettext

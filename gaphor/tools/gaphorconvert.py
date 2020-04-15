@@ -9,14 +9,14 @@ import cairo
 from gaphas.painter import Context, ItemPainter
 from gaphas.view import View
 
-import gaphor.UML as UML
 from gaphor.application import Session
+from gaphor.core.modeling import Diagram
 from gaphor.storage import storage
 
 
 def pkg2dir(package):
     """
-    Return directory path from UML package class.
+    Return directory path from package class.
     """
     name = []
     while package:
@@ -99,7 +99,7 @@ def main(argv=sys.argv[1:]):
         storage.load(model, factory, model_provider)
         message("ready for rendering")
 
-        for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
+        for diagram in factory.select(lambda e: e.isKindOf(Diagram)):
             odir = pkg2dir(diagram.package)
 
             # just diagram name

@@ -87,7 +87,7 @@ class ElementDispatcher(Service):
       dispatcher.subscribe(element,
               'guard.specification[LiteralSpecification].value', self._handler)
 
-    Note the '<' and '>'. This is because guard references ValueSpecification,
+    Note the '[' and ']'. This is because guard references ValueSpecification,
     which does not have a value attribute. Therefore the default reference type
     is overruled in favour of the LiteralSpecification.
 
@@ -122,17 +122,16 @@ class ElementDispatcher(Service):
         Given a start element and a path, return a tuple of properties
         (association, attribute, etc.) representing the path.
         """
-        from gaphor import UML
-
         c = type(element)
         tpath = []
         for attr in path.split("."):
             cname = ""
             if "[" in attr:
-                assert attr.endswith("]"), f'"{attr}" should end with ">"'
+                assert attr.endswith("]"), f'"{attr}" should end with "]"'
                 attr, cname = attr[:-1].split("[")
             prop = getattr(c, attr)
             tpath.append(prop)
+
             if cname:
                 c = self.model_provider.lookup_element(cname)
                 assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
