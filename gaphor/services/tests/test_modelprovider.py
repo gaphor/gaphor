@@ -2,6 +2,6 @@ from gaphor.services.modelprovider import ModelProviderService
 
 
 def test_loading_of_model_providers():
-    model_provider = ModelProviderService(properties={})
+    model_provider = ModelProviderService(event_manager=None, properties={})
 
     assert "UML" in model_provider.model_providers

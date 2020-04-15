@@ -13,7 +13,7 @@ from gaphor.core import gettext
 from gaphor.core.eventmanager import event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.event import ProfileSelectionChanged
+from gaphor.ui.event import ModelingLanguageChanged
 
 log = logging.getLogger(__name__)
 
@@ -43,7 +43,7 @@ class Toolbox(UIComponent, ActionProvider):
     def open(self) -> Gtk.ScrolledWindow:
         toolbox = self.create_toolbox(self.model_provider.toolbox_definition)
         toolbox_container = self.create_toolbox_container(toolbox)
-        self.event_manager.subscribe(self._on_profile_changed)
+        self.event_manager.subscribe(self._on_modeling_language_changed)
         self._toolbox = toolbox
         self._toolbox_container = toolbox_container
         return toolbox_container
@@ -52,7 +52,7 @@ class Toolbox(UIComponent, ActionProvider):
         if self._toolbox:
             self._toolbox.destroy()
             self._toolbox = None
-        self.event_manager.unsubscribe(self._on_profile_changed)
+        self.event_manager.unsubscribe(self._on_modeling_language_changed)
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
@@ -141,16 +141,12 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox_container.show()
         return toolbox_container
 
-    @event_handler(ProfileSelectionChanged)
-    def _on_profile_changed(self, event: ProfileSelectionChanged) -> None:
-        """Reconfigures the toolbox based on the profile selected.
-
-        When the combo box drop down to select the profile changes
-        (UML, SysML, Safety), this event handler reconfigures the
-        toolbox.
+    @event_handler(ModelingLanguageChanged)
+    def _on_modeling_language_changed(self, event) -> None:
+        """Reconfigures the toolbox based on the modeling language selected.
 
         Args:
-            event: The ProfileSelectionChanged event.
+            event: The ModelingLanguageChanged event.
 
         """
         toolbox = self.create_toolbox(self.model_provider.toolbox_definition)

@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 from typing import List, Tuple
 
-from gi.repository import Gdk, Gio, Gtk
+from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
@@ -24,7 +24,7 @@ from gaphor.ui.event import (
     DiagramSelectionChanged,
     FileLoaded,
     FileSaved,
-    ProfileSelectionChanged,
+    ModelingLanguageChanged,
 )
 from gaphor.ui.layout import deserialize
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
@@ -76,6 +76,15 @@ def create_recent_files_model(recent_manager=None):
     return model
 
 
+def create_modeling_language_model(model_provider):
+    model = Gio.Menu.new()
+    for id, name in model_provider.modeling_languages:
+        menu_item = Gio.MenuItem.new(name, "win.select-modeling-language")
+        menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
+        model.append_item(menu_item)
+    return model
+
+
 class MainWindow(Service, ActionProvider):
     """
     The main window for the application.
@@ -107,6 +116,7 @@ class MainWindow(Service, ActionProvider):
         self.filename = None
         self.model_changed = False
         self.layout = None
+        self.modeling_language_name = None
 
         self.init_styling()
 
@@ -130,19 +140,10 @@ class MainWindow(Service, ActionProvider):
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._new_model_content)
         em.unsubscribe(self._on_action_enabled)
+        em.unsubscribe(self._on_modeling_language_selection_changed)
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
-
-    def populate_profile_combo(self, profile_combo):
-        # For now, use name. Should populate a Popup on a settings button.
-        profiles = [id for id, name in self.model_provider.profiles]
-        profile_combo.connect("changed", self._on_profile_selected)
-        for id, name in self.model_provider.profiles:
-            profile_combo.append(id, name)
-        selected_profile = self.model_provider.active_profile
-
-        profile_combo.set_active(profiles.index(selected_profile))
 
     def open(self, gtk_app=None):
         """Open the main window.
@@ -152,8 +153,11 @@ class MainWindow(Service, ActionProvider):
         self.window = builder.get_object("main-window")
         self.window.set_application(gtk_app)
 
-        profile_combo = builder.get_object("profile-combo")
-        self.populate_profile_combo(profile_combo)
+        select_modeling_language = builder.get_object("select-modeling-language")
+        select_modeling_language.bind_model(
+            create_modeling_language_model(self.model_provider), None
+        )
+        self.modeling_language_name = builder.get_object("modeling-language-name")
 
         hamburger = builder.get_object("hamburger")
         hamburger.bind_model(
@@ -200,6 +204,7 @@ class MainWindow(Service, ActionProvider):
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._new_model_content)
         em.subscribe(self._on_action_enabled)
+        em.subscribe(self._on_modeling_language_selection_changed)
 
     def open_welcome_page(self):
         """
@@ -259,6 +264,13 @@ class MainWindow(Service, ActionProvider):
         a = ag.lookup_action(event.name)
         a.set_enabled(event.enabled)
 
+    @event_handler(ModelingLanguageChanged)
+    def _on_modeling_language_selection_changed(self, event):
+        if self.modeling_language_name:
+            self.modeling_language_name.set_text(
+                self.model_provider.active_modeling_language_name
+            )
+
     def _on_window_active(self, window, prop):
         self.event_manager.handle(ActiveSessionChanged(self))
 
@@ -272,12 +284,6 @@ class MainWindow(Service, ActionProvider):
         """
         width, height = window.get_size()
         self.properties.set("ui.window-size", (width, height))
-
-    def _on_profile_selected(self, combo):
-        """Store the selected profile in a property."""
-        profile = combo.get_active_text()
-        self.properties.set("profile", profile)
-        self.event_manager.handle(ProfileSelectionChanged(profile))
 
     # TODO: Does not belong here
     def create_item(self, ui_component):

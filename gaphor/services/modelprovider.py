@@ -1,14 +1,16 @@
 from typing import Dict
 
-from gaphor.abc import ModelProvider, Service
+from gaphor.abc import ActionProvider, ModelProvider, Service
+from gaphor.core import action
 from gaphor.entrypoint import initialize
+from gaphor.ui.event import ModelingLanguageChanged
 
 
-class ModelProviderService(Service, ModelProvider):
+class ModelProviderService(Service, ActionProvider, ModelProvider):
 
     DEFAULT_PROFILE = "UML"
 
-    def __init__(self, properties={}):
+    def __init__(self, event_manager, properties={}):
         """
         Create a new Model Provider. It will provide all models defined
         as entrypoints under `[gaphor.modelproviders]`.
@@ -16,16 +18,18 @@ class ModelProviderService(Service, ModelProvider):
         The `properties` argument is optional, in which case the service
         will default to UML.
         """
+        self.event_manager = event_manager
+        self.properties = properties
+
         self.model_providers: Dict[str, ModelProvider] = initialize(
             "gaphor.modelproviders"
         )
-        self.properties = properties
 
     def shutdown(self):
         pass
 
     @property
-    def profiles(self):
+    def modeling_languages(self):
         """
         A Generator, returns tuples (id, localized name).
         """
@@ -33,23 +37,29 @@ class ModelProviderService(Service, ModelProvider):
             yield id, provider.name
 
     @property
-    def active_profile(self):
-        profile = self.properties.get("profile", default=self.DEFAULT_PROFILE)
-        if profile not in self.model_providers:
-            profile = self.DEFAULT_PROFILE
-        return profile
+    def active_modeling_language(self):
+        modeling_language = self.properties.get(
+            "modeling-language", self.DEFAULT_PROFILE
+        )
+        if modeling_language not in self.model_providers:
+            modeling_language = self.DEFAULT_PROFILE
+        return modeling_language
 
     @property
-    def active_provider(self):
-        return self.model_providers[self.active_profile]
+    def active_modeling_language_name(self):
+        return self.model_providers[self.active_modeling_language].name
+
+    @property
+    def _modeling_language(self):
+        return self.model_providers[self.active_modeling_language]
 
     @property
     def name(self):
-        return self.active_provider.name
+        return self._modeling_language.name
 
     @property
     def toolbox_definition(self):
-        return self.active_provider.toolbox_definition
+        return self._modeling_language.toolbox_definition
 
     def lookup_element(self, name):
         return self.first(lambda provider: provider.lookup_element(name))
@@ -62,3 +72,8 @@ class ModelProviderService(Service, ModelProvider):
             type = predicate(provider)
             if type:
                 return type
+
+    @action(name="select-modeling-language", state=DEFAULT_PROFILE)
+    def action_open_recent(self, modeling_language: str):
+        self.properties.set("modeling-language", modeling_language)
+        self.event_manager.handle(ModelingLanguageChanged(modeling_language))

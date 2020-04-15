@@ -20,9 +20,9 @@ class DiagramSelectionChanged:
         self.selected_items = selected_items
 
 
-class ProfileSelectionChanged:
-    def __init__(self, profile):
-        self.profile = profile
+class ModelingLanguageChanged:
+    def __init__(self, modeling_language):
+        self.modeling_language = modeling_language
 
 
 class FileLoaded:
