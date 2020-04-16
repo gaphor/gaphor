@@ -150,7 +150,7 @@ class TestCase(unittest.TestCase):
         Save diagram into string.
         """
         from gaphor.storage import storage
-        from gaphor.misc.xmlwriter import XMLWriter
+        from gaphor.storage.xmlwriter import XMLWriter
 
         f = StringIO()
         storage.save(XMLWriter(f), factory=self.element_factory)

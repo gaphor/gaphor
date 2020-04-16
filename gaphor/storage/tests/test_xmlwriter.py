@@ -1,6 +1,6 @@
 import sys
 
-from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.storage.xmlwriter import XMLWriter
 
 
 class Writer:

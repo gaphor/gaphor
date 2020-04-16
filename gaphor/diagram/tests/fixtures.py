@@ -7,8 +7,8 @@ from gaphas.aspect import Connector as ConnectorAspect
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.diagram.connectors import Connector
-from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage
+from gaphor.storage.xmlwriter import XMLWriter
 
 
 @pytest.fixture

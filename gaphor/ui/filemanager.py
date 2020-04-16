@@ -14,8 +14,8 @@ from gaphor.core import action, event_handler, gettext
 from gaphor.event import SessionShutdown, SessionShutdownRequested
 from gaphor.misc.errorhandler import error_handler
 from gaphor.misc.gidlethread import GIdleThread, Queue, QueueEmpty, QueueFull
-from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage, verify
+from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.event import FileLoaded, FileSaved
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog

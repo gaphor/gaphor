@@ -39,7 +39,7 @@ def save(writer=None, factory=None, status_queue=None):
 def save_generator(writer, factory):  # noqa: C901
     """
     Save the current model using @writer, which is a
-    gaphor.misc.xmlwriter.XMLWriter instance.
+    gaphor.storage.xmlwriter.XMLWriter instance.
     """
 
     def save_reference(name, value):

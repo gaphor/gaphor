@@ -1,6 +1,6 @@
 import logging
 
-from gaphor.misc.xmlwriter import XMLWriter
+from gaphor.storage.xmlwriter import XMLWriter
 
 logger = logging.getLogger(__name__)
 

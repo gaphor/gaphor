@@ -10,8 +10,8 @@ import pytest
 from gaphor import UML
 from gaphor.application import distribution
 from gaphor.diagram.general import CommentItem
-from gaphor.misc.xmlwriter import XMLWriter
 from gaphor.storage import storage
+from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 
