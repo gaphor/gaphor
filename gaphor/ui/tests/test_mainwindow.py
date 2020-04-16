@@ -13,7 +13,7 @@ def session():
             "event_manager",
             "component_registry",
             "element_factory",
-            "model_provider",
+            "modeling_language",
             "properties",
             "main_window",
             "namespace",

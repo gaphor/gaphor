@@ -51,13 +51,13 @@ class DiagramPage:
     ]
 
     def __init__(
-        self, diagram, event_manager, element_factory, properties, model_provider
+        self, diagram, event_manager, element_factory, properties, modeling_language
     ):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.properties = properties
         self.diagram = diagram
-        self.model_provider = model_provider
+        self.modeling_language = modeling_language
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
         self.event_manager.subscribe(self._on_element_delete)
@@ -136,7 +136,7 @@ class DiagramPage:
 
         tool = next(
             t
-            for t in tooliter(self.model_provider.toolbox_definition)
+            for t in tooliter(self.modeling_language.toolbox_definition)
             if t.id == tool_name
         )
         item_factory = tool.item_factory
@@ -153,7 +153,7 @@ class DiagramPage:
         # accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         upper_offset = ord("A") - ord("a")
-        for title, items in self.model_provider.toolbox_definition:
+        for title, items in self.modeling_language.toolbox_definition:
             for action_name, label, icon_name, shortcut, *rest in items:
                 if shortcut:
                     key, mod = Gtk.accelerator_parse(shortcut)

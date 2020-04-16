@@ -98,9 +98,9 @@ class ElementDispatcher(Service):
 
     logger = getLogger("ElementDispatcher")
 
-    def __init__(self, event_manager, model_provider):
+    def __init__(self, event_manager, modeling_language):
         self.event_manager = event_manager
-        self.model_provider = model_provider
+        self.modeling_language = modeling_language
 
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
@@ -133,7 +133,7 @@ class ElementDispatcher(Service):
             tpath.append(prop)
 
             if cname:
-                c = self.model_provider.lookup_element(cname)
+                c = self.modeling_language.lookup_element(cname)
                 assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
                     c, prop.type
                 )

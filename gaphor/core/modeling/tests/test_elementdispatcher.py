@@ -6,7 +6,7 @@ from gaphor.core.modeling import Element, ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.properties import association
 from gaphor.tests import TestCase
-from gaphor.UML.modelprovider import UMLModelProvider
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 class Event:
@@ -23,13 +23,13 @@ def event_manager():
 
 
 @pytest.fixture
-def model_provider():
-    return UMLModelProvider()
+def modeling_language():
+    return UMLModelingLanguage()
 
 
 @pytest.fixture
-def dispatcher(event_manager, model_provider):
-    return ElementDispatcher(event_manager, model_provider)
+def dispatcher(event_manager, modeling_language):
+    return ElementDispatcher(event_manager, modeling_language)
 
 
 @pytest.fixture

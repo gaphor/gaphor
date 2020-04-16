@@ -83,11 +83,11 @@ def main(argv=sys.argv[1:]):
             "component_registry",
             "element_factory",
             "element_dispatcher",
-            "model_provider",
+            "modeling_language",
         ]
     )
     factory = session.get_service("element_factory")
-    model_provider = session.get_service("model_provider")
+    modeling_language = session.get_service("modeling_language")
 
     name_re = None
     if options.regex:
@@ -96,7 +96,7 @@ def main(argv=sys.argv[1:]):
     # we should have some gaphor files to be processed at this point
     for model in args:
         message(f"loading model {model}")
-        storage.load(model, factory, model_provider)
+        storage.load(model, factory, modeling_language)
         message("ready for rendering")
 
         for diagram in factory.select(lambda e: e.isKindOf(Diagram)):

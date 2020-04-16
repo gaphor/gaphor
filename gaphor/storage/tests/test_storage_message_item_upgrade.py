@@ -7,13 +7,13 @@ from gaphor.storage.parser import parse
 from gaphor.storage.storage import load_elements
 
 
-def test_message_item_upgrade(element_factory, model_provider):
+def test_message_item_upgrade(element_factory, modeling_language):
     """
     """
     path = distribution().locate_file("test-models/multiple-messages.gaphor")
 
     elements = parse(path)
-    load_elements(elements, element_factory, model_provider)
+    load_elements(elements, element_factory, modeling_language)
 
     diagram = element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
     items = diagram.canvas.get_root_items()

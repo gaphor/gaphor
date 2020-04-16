@@ -155,7 +155,9 @@ class StorageTestCase(TestCase):
 
         with open(path) as ifile:
             storage.load(
-                ifile, factory=self.element_factory, model_provider=self.model_provider
+                ifile,
+                factory=self.element_factory,
+                modeling_language=self.modeling_language,
             )
 
     def test_save_and_load_model_with_relationships(self):
@@ -225,7 +227,7 @@ class StorageTestCase(TestCase):
         assert not list(self.element_factory.select())
         fd = StringIO(data)
         storage.load(
-            fd, factory=self.element_factory, model_provider=self.model_provider
+            fd, factory=self.element_factory, modeling_language=self.modeling_language
         )
         fd.close()
 
@@ -246,7 +248,9 @@ class StorageTestCase(TestCase):
 
         with open(path, "r") as ifile:
             storage.load(
-                ifile, factory=self.element_factory, model_provider=self.model_provider
+                ifile,
+                factory=self.element_factory,
+                modeling_language=self.modeling_language,
             )
 
         pf = PseudoFile()
@@ -275,7 +279,7 @@ class StorageTestCase(TestCase):
                 storage.load(
                     ifile,
                     factory=self.element_factory,
-                    model_provider=self.model_provider,
+                    modeling_language=self.modeling_language,
                 )
 
         self.assertRaises(ValueError, load_old_model)

@@ -8,7 +8,7 @@ from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.services.properties import Properties
 from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.UML.modelprovider import UMLModelProvider
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.toolbox import uml_toolbox_actions
 
 
@@ -21,7 +21,7 @@ def properties():
 def tab(event_manager, element_factory, properties):
     diagram = element_factory.create(UML.Diagram)
     tab = DiagramPage(
-        diagram, event_manager, element_factory, properties, UMLModelProvider()
+        diagram, event_manager, element_factory, properties, UMLModelingLanguage()
     )
 
     window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)

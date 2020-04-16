@@ -32,11 +32,11 @@ class FileManager(Service, ActionProvider):
     The file service, responsible for loading and saving Gaphor models.
     """
 
-    def __init__(self, event_manager, element_factory, model_provider, main_window):
+    def __init__(self, event_manager, element_factory, modeling_language, main_window):
         """File manager constructor.  There is no current filename yet."""
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.model_provider = model_provider
+        self.modeling_language = modeling_language
         self.main_window = main_window
         self._filename = None
 
@@ -89,7 +89,7 @@ class FileManager(Service, ActionProvider):
 
         try:
             loader = storage.load_generator(
-                filename.encode("utf-8"), self.element_factory, self.model_provider
+                filename.encode("utf-8"), self.element_factory, self.modeling_language
             )
             worker = GIdleThread(loader, queue)
 

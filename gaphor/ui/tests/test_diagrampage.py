@@ -4,13 +4,13 @@ from gaphas.examples import Box
 from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.ui.mainwindow import DiagramPage
-from gaphor.UML.modelprovider import UMLModelProvider
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture
 def page(diagram, event_manager, element_factory, properties):
     page = DiagramPage(
-        diagram, event_manager, element_factory, properties, UMLModelProvider()
+        diagram, event_manager, element_factory, properties, UMLModelingLanguage()
     )
     page.construct()
     assert page.diagram == diagram

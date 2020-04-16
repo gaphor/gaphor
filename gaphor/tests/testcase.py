@@ -33,14 +33,14 @@ class TestCase(unittest.TestCase):
         "component_registry",
         "element_factory",
         "element_dispatcher",
-        "model_provider",
+        "modeling_language",
         "sanitizer",
     ]
 
     def setUp(self):
         self.session = Session(services=self.services)
         self.element_factory = self.session.get_service("element_factory")
-        self.model_provider = self.session.get_service("model_provider")
+        self.modeling_language = self.session.get_service("modeling_language")
         assert len(list(self.element_factory.select())) == 0, list(
             self.element_factory.select()
         )
@@ -179,7 +179,7 @@ class TestCase(unittest.TestCase):
 
         f = StringIO(data)
         storage.load(
-            f, factory=self.element_factory, model_provider=self.model_provider
+            f, factory=self.element_factory, modeling_language=self.modeling_language
         )
         f.close()
 

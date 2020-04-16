@@ -76,9 +76,9 @@ def create_recent_files_model(recent_manager=None):
     return model
 
 
-def create_modeling_language_model(model_provider):
+def create_modeling_language_model(modeling_language):
     model = Gio.Menu.new()
-    for id, name in model_provider.modeling_languages:
+    for id, name in modeling_language.modeling_languages:
         menu_item = Gio.MenuItem.new(name, "win.select-modeling-language")
         menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
         model.append_item(menu_item)
@@ -99,7 +99,7 @@ class MainWindow(Service, ActionProvider):
         component_registry,
         element_factory,
         properties,
-        model_provider,
+        modeling_language,
         export_menu,
         tools_menu,
     ):
@@ -107,7 +107,7 @@ class MainWindow(Service, ActionProvider):
         self.component_registry = component_registry
         self.element_factory = element_factory
         self.properties = properties
-        self.model_provider = model_provider
+        self.modeling_language = modeling_language
         self.export_menu = export_menu
         self.tools_menu = tools_menu
 
@@ -155,7 +155,7 @@ class MainWindow(Service, ActionProvider):
 
         select_modeling_language = builder.get_object("select-modeling-language")
         select_modeling_language.bind_model(
-            create_modeling_language_model(self.model_provider), None
+            create_modeling_language_model(self.modeling_language), None
         )
         self.modeling_language_name = builder.get_object("modeling-language-name")
 
@@ -270,7 +270,7 @@ class MainWindow(Service, ActionProvider):
     def _on_modeling_language_selection_changed(self, event=None):
         if self.modeling_language_name:
             self.modeling_language_name.set_text(
-                self.model_provider.active_modeling_language_name
+                self.modeling_language.active_modeling_language_name
             )
 
     def _on_window_active(self, window, prop):
@@ -307,11 +307,11 @@ class Diagrams(UIComponent, ActionProvider):
 
     title = gettext("Diagrams")
 
-    def __init__(self, event_manager, element_factory, properties, model_provider):
+    def __init__(self, event_manager, element_factory, properties, modeling_language):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.properties = properties
-        self.model_provider = model_provider
+        self.modeling_language = modeling_language
         self._notebook: Gtk.Notebook = None
 
     def open(self):
@@ -482,7 +482,7 @@ class Diagrams(UIComponent, ActionProvider):
             self.event_manager,
             self.element_factory,
             self.properties,
-            self.model_provider,
+            self.modeling_language,
         )
         widget = page.construct()
         widget.set_name("diagram-tab")

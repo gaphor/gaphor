@@ -5,11 +5,11 @@ from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
 from gaphor.storage.parser import canvas, canvasitem, element
 from gaphor.storage.storage import load_elements
-from gaphor.UML.modelprovider import UMLModelProvider
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture
-def loader(element_factory, model_provider):
+def loader(element_factory, modeling_language):
     def _loader(*parsed_items):
         parsed_data = {
             "1": element(
@@ -17,7 +17,7 @@ def loader(element_factory, model_provider):
             ),
             **{p.id: p for p in parsed_items},
         }
-        load_elements(parsed_data, element_factory, model_provider)
+        load_elements(parsed_data, element_factory, modeling_language)
         return element_factory.lselect()[0].canvas.get_root_items()[0]
 
     return _loader

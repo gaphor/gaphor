@@ -10,7 +10,7 @@ from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.diagram.connectors import Connector
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
-from gaphor.UML.modelprovider import UMLModelProvider
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture
@@ -21,13 +21,13 @@ def event_manager():
 @pytest.fixture
 def element_factory(event_manager):
     return ElementFactory(
-        event_manager, ElementDispatcher(event_manager, UMLModelProvider())
+        event_manager, ElementDispatcher(event_manager, UMLModelingLanguage())
     )
 
 
 @pytest.fixture
-def model_provider():
-    return UMLModelProvider()
+def modeling_language():
+    return UMLModelingLanguage()
 
 
 @pytest.fixture
@@ -55,7 +55,7 @@ def saver(element_factory):
 
 
 @pytest.fixture
-def loader(element_factory, model_provider):
+def loader(element_factory, modeling_language):
     def load(data):
         """
         Load data from specified string.
@@ -64,7 +64,7 @@ def loader(element_factory, model_provider):
         assert not list(element_factory.select())
 
         f = StringIO(data)
-        storage.load(f, factory=element_factory, model_provider=model_provider)
+        storage.load(f, factory=element_factory, modeling_language=modeling_language)
         f.close()
 
     return load

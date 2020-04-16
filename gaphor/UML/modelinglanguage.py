@@ -4,21 +4,22 @@ UML related assets.
 """
 
 import gaphor.UML.diagramitems as diagramitems
+import gaphor.UML.iconname
 import gaphor.UML.uml as uml
-from gaphor.abc import ModelProvider
+from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
-from gaphor.SysML.toolbox import sysml_toolbox_actions
+from gaphor.UML.toolbox import uml_toolbox_actions
 
 
-class SysMLModelProvider(ModelProvider):
+class UMLModelingLanguage(ModelingLanguage):
     @property
     def name(self) -> str:
-        return gettext("SysML")
+        return gettext("UML")
 
     @property
     def toolbox_definition(self) -> ToolboxDefinition:
-        return sysml_toolbox_actions
+        return uml_toolbox_actions
 
     def lookup_element(self, name):
         return getattr(uml, name, None)

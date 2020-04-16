@@ -72,7 +72,7 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "undo_manager" = "gaphor.services.undomanager:UndoManager"
 "element_factory" = "gaphor.core.modeling:ElementFactory"
 "element_dispatcher" = "gaphor.core.modeling.elementdispatcher:ElementDispatcher"
-"model_provider" = "gaphor.services.modelprovider:ModelProviderService"
+"modeling_language" = "gaphor.services.modelinglanguage:ModelingLanguageService"
 "file_manager" = "gaphor.ui.filemanager:FileManager"
 "recent_files" = "gaphor.ui.recentfiles:RecentFiles"
 "main_window" = "gaphor.ui.mainwindow:MainWindow"
@@ -89,9 +89,9 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 
-[tool.poetry.plugins."gaphor.modelproviders"]
-"UML" = "gaphor.UML.modelprovider:UMLModelProvider"
-"SysML" = "gaphor.SysML.modelprovider:SysMLModelProvider"
+[tool.poetry.plugins."gaphor.modelinglanguages"]
+"UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
+"SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
 
 [tool.isort]
 multi_line_output = 3

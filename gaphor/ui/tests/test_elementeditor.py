@@ -3,7 +3,7 @@ import pytest
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
 from gaphor.ui.elementeditor import ElementEditor
-from gaphor.UML.modelprovider import UMLModelProvider
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 class DiagramsStub:

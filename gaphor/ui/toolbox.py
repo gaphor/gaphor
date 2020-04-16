@@ -32,16 +32,16 @@ class Toolbox(UIComponent, ActionProvider):
 
     title = gettext("Toolbox")
 
-    def __init__(self, event_manager, main_window, properties, model_provider):
+    def __init__(self, event_manager, main_window, properties, modeling_language):
         self.event_manager = event_manager
         self.main_window = main_window
         self.properties = properties
-        self.model_provider = model_provider
+        self.modeling_language = modeling_language
         self._toolbox: Optional[Gtk.ToolPalette] = None
         self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
 
     def open(self) -> Gtk.ScrolledWindow:
-        toolbox = self.create_toolbox(self.model_provider.toolbox_definition)
+        toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         toolbox_container = self.create_toolbox_container(toolbox)
         self.event_manager.subscribe(self._on_modeling_language_changed)
         self._toolbox = toolbox
@@ -149,7 +149,7 @@ class Toolbox(UIComponent, ActionProvider):
             event: The ModelingLanguageChanged event.
 
         """
-        toolbox = self.create_toolbox(self.model_provider.toolbox_definition)
+        toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         if self._toolbox_container:
             self._toolbox_container.remove(self._toolbox_container.get_child())
             self._toolbox_container.add(toolbox)

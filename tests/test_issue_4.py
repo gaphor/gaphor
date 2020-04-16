@@ -25,7 +25,7 @@ class CyclicDiagramTestCase(TestCase):
         be loaded from within the mainloop (which will delay all updates).
         """
         path = distribution().locate_file("test-models/diagram-#4.gaphor")
-        load(path, self.element_factory, self.model_provider)
+        load(path, self.element_factory, self.modeling_language)
 
     def test_bug_idle(self):
         """
@@ -38,7 +38,7 @@ class CyclicDiagramTestCase(TestCase):
         def handler():
             try:
                 path = distribution().locate_file("test-models/diagram-#4.gaphor")
-                load(path, self.element_factory, self.model_provider)
+                load(path, self.element_factory, self.modeling_language)
             finally:
                 Gtk.main_quit()
 
