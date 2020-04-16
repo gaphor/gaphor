@@ -130,7 +130,7 @@ class FlowPropertyPageAbstract(PropertyPageBase):
 
     def __init__(self, subject):
         self.subject = subject
-        self.watcher = subject.watcher() if subject else None
+        self.watcher = subject and subject.watcher()
 
     def construct(self):
         subject = self.subject
