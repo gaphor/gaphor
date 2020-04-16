@@ -3,7 +3,7 @@ a queue."""
 
 from gi.repository import Gdk, GLib, Gtk, Pango
 
-from gaphor.misc.gidlethread import QueueEmpty
+from gaphor.ui.gidlethread import QueueEmpty
 
 
 class StatusWindow:

@@ -8,9 +8,19 @@ import sys
 from typing import Dict
 
 from gaphas.decorators import AsyncIO
+from gi.repository import GLib
 
 from gaphor.abc import Service
-from gaphor.misc import get_config_dir
+
+
+def get_config_dir() -> str:
+    """Return the directory where the user's config is stored. This varies
+    depending on platform."""
+
+    config_dir = os.path.join(GLib.get_user_config_dir(), "gaphor")
+    os.makedirs(config_dir, exist_ok=True)
+
+    return config_dir
 
 
 class PropertyChanged:

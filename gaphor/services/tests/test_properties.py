@@ -2,7 +2,7 @@ import os
 import tempfile
 from unittest import TestCase
 
-from gaphor.services.properties import FileBackend, Properties
+from gaphor.services.properties import FileBackend, Properties, get_config_dir
 
 
 class MockEventManager(list):
@@ -46,3 +46,9 @@ class TestProperties(TestCase):
 
         assert 3 == prop("test2", 3)
         assert 3 == prop("test2", 4)
+
+
+def test_config_dir():
+    config_dir = get_config_dir()
+
+    assert config_dir.endswith("gaphor")

@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.misc.gidlethread import GIdleThread
+from gaphor.ui.gidlethread import GIdleThread
 
 
 def counter(count):

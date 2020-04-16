@@ -14,7 +14,7 @@ QueueFull - raised when the queue reaches it's max size and the oldest item
 import sys
 import time
 import types
-from typing import Any, List, Tuple
+from typing import Any, List, Optional, Tuple, Union
 
 from gi.repository import GLib
 
@@ -59,7 +59,7 @@ class GIdleThread:
         self._generator = generator
         self._queue = queue
         self._idle_id = 0
-        self._exc_info: Tuple[Any, Any, Any] = (None, None, None)
+        self._exc: Optional[BaseException] = None
 
     def start(self, priority=GLib.PRIORITY_LOW):
         """Start the generator. Default priority is low, so screen updates
@@ -103,24 +103,18 @@ class GIdleThread:
         return self._idle_id != 0
 
     error = property(
-        lambda self: self._exc_info[0],
+        lambda self: self._exc,
         doc="Return a possible exception that had occured "
         "during execution of the generator",
-    )
-
-    exc_info = property(
-        lambda self: self._exc_info,
-        doc="Return a exception information as provided by " "sys.exc_info()",
     )
 
     def reraise(self):
         """Rethrow the error that occurred during execution of the idle process.
         """
-        exc_info = self._exc_info
+        exc = self._exc
 
-        exctype, value = exc_info[:2]
-        if exctype:
-            raise exctype(value)
+        if exc:
+            raise exc
 
     def __generator_executer(self):
         try:
@@ -136,8 +130,8 @@ class GIdleThread:
         except StopIteration:
             self._idle_id = 0
             return False
-        except Exception:
-            self._exc_info = sys.exc_info()
+        except BaseException as e:
+            self._exc = e
             self._idle_id = 0
             return False
 
