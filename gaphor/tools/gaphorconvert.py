@@ -9,14 +9,14 @@ import cairo
 from gaphas.painter import Context, ItemPainter
 from gaphas.view import View
 
-import gaphor.UML as UML
 from gaphor.application import Session
+from gaphor.core.modeling import Diagram
 from gaphor.storage import storage
 
 
 def pkg2dir(package):
     """
-    Return directory path from UML package class.
+    Return directory path from package class.
     """
     name = []
     while package:
@@ -78,9 +78,16 @@ def main(argv=sys.argv[1:]):
         parser.print_help()
 
     session = Session(
-        services=["event_manager", "component_registry", "element_factory"]
+        services=[
+            "event_manager",
+            "component_registry",
+            "element_factory",
+            "element_dispatcher",
+            "modeling_language",
+        ]
     )
     factory = session.get_service("element_factory")
+    modeling_language = session.get_service("modeling_language")
 
     name_re = None
     if options.regex:
@@ -89,10 +96,10 @@ def main(argv=sys.argv[1:]):
     # we should have some gaphor files to be processed at this point
     for model in args:
         message(f"loading model {model}")
-        storage.load(model, factory)
+        storage.load(model, factory, modeling_language)
         message("ready for rendering")
 
-        for diagram in factory.select(lambda e: e.isKindOf(UML.Diagram)):
+        for diagram in factory.select(lambda e: e.isKindOf(Diagram)):
             odir = pkg2dir(diagram.package)
 
             # just diagram name

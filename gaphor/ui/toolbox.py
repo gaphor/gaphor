@@ -12,9 +12,8 @@ from gaphor.abc import ActionProvider
 from gaphor.core import gettext
 from gaphor.core.eventmanager import event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
-from gaphor.diagram.diagramtoolbox_actions import toolbox_actions
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.event import ProfileSelectionChanged
+from gaphor.ui.event import ModelingLanguageChanged
 
 log = logging.getLogger(__name__)
 
@@ -33,18 +32,18 @@ class Toolbox(UIComponent, ActionProvider):
 
     title = gettext("Toolbox")
 
-    def __init__(self, event_manager, main_window, properties):
+    def __init__(self, event_manager, main_window, properties, modeling_language):
         self.event_manager = event_manager
         self.main_window = main_window
         self.properties = properties
+        self.modeling_language = modeling_language
         self._toolbox: Optional[Gtk.ToolPalette] = None
         self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
 
     def open(self) -> Gtk.ScrolledWindow:
-        profile = self.properties.get("profile", default="UML")
-        toolbox = self.create_toolbox(toolbox_actions(profile))
+        toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         toolbox_container = self.create_toolbox_container(toolbox)
-        self.event_manager.subscribe(self._on_profile_changed)
+        self.event_manager.subscribe(self._on_modeling_language_changed)
         self._toolbox = toolbox
         self._toolbox_container = toolbox_container
         return toolbox_container
@@ -53,7 +52,7 @@ class Toolbox(UIComponent, ActionProvider):
         if self._toolbox:
             self._toolbox.destroy()
             self._toolbox = None
-        self.event_manager.unsubscribe(self._on_profile_changed)
+        self.event_manager.unsubscribe(self._on_modeling_language_changed)
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
@@ -142,19 +141,15 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox_container.show()
         return toolbox_container
 
-    @event_handler(ProfileSelectionChanged)
-    def _on_profile_changed(self, event: ProfileSelectionChanged) -> None:
-        """Reconfigures the toolbox based on the profile selected.
-
-        When the combo box drop down to select the profile changes
-        (UML, SysML, Safety), this event handler reconfigures the
-        toolbox.
+    @event_handler(ModelingLanguageChanged)
+    def _on_modeling_language_changed(self, event) -> None:
+        """Reconfigures the toolbox based on the modeling language selected.
 
         Args:
-            event: The ProfileSelectionChanged event.
+            event: The ModelingLanguageChanged event.
 
         """
-        toolbox = self.create_toolbox(toolbox_actions(event.profile))
+        toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         if self._toolbox_container:
             self._toolbox_container.remove(self._toolbox_container.get_child())
             self._toolbox_container.add(toolbox)

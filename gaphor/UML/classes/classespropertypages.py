@@ -7,10 +7,10 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
+from gaphor.core.modeling import NamedElement
 from gaphor.diagram.propertypages import (
     ComboModel,
     EditableTreeModel,
-    NamedElementPropertyPage,
     PropertyPageBase,
     PropertyPages,
     new_builder,
@@ -94,6 +94,59 @@ class ClassOperations(EditableTreeModel):
 
     def _swap_objects(self, o1, o2):
         return self._item.subject.ownedOperation.swap(o1, o2)
+
+
+@PropertyPages.register(NamedElement)
+class NamedElementPropertyPage(PropertyPageBase):
+    """An adapter which works for any named item view.
+
+    It also sets up a table view which can be extended.
+    """
+
+    order = 10
+
+    NAME_LABEL = gettext("Name")
+
+    def __init__(self, subject: NamedElement):
+        super().__init__()
+        assert subject is None or isinstance(subject, NamedElement), "%s" % type(
+            subject
+        )
+        self.subject = subject
+        self.watcher = subject.watcher() if subject else None
+
+    def construct(self):
+        if UML.model.is_metaclass(self.subject):
+            return
+
+        builder = new_builder("named-element-editor")
+
+        subject = self.subject
+        if not subject:
+            return
+
+        assert self.watcher
+
+        entry = builder.get_object("name-entry")
+        entry.set_text(subject and subject.name or "")
+
+        def handler(event):
+            if event.element is subject and event.new_value is not None:
+                entry.set_text(event.new_value)
+
+        self.watcher.watch("name", handler).subscribe_all()
+
+        builder.connect_signals(
+            {
+                "name-changed": (self._on_name_changed,),
+                "name-entry-destroyed": (self.watcher.unsubscribe_all,),
+            }
+        )
+        return builder.get_object("named-element-editor")
+
+    @transactional
+    def _on_name_changed(self, entry):
+        self.subject.name = entry.get_text()
 
 
 @PropertyPages.register(UML.Classifier)

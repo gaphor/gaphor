@@ -6,6 +6,7 @@ from __future__ import annotations
 from logging import getLogger
 from typing import Callable, Dict, List, Optional, Set, Tuple
 
+from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling.element import Element, Handler
 from gaphor.core.modeling.event import (
@@ -68,7 +69,7 @@ class EventWatcher:
             dispatcher.unsubscribe(handler)
 
 
-class ElementDispatcher:
+class ElementDispatcher(Service):
     """
     The Element based Dispatcher allows handlers to receive only events
     related to certain elements. Those elements should be registered too.
@@ -86,7 +87,7 @@ class ElementDispatcher:
       dispatcher.subscribe(element,
               'guard.specification[LiteralSpecification].value', self._handler)
 
-    Note the '<' and '>'. This is because guard references ValueSpecification,
+    Note the '[' and ']'. This is because guard references ValueSpecification,
     which does not have a value attribute. Therefore the default reference type
     is overruled in favour of the LiteralSpecification.
 
@@ -97,8 +98,10 @@ class ElementDispatcher:
 
     logger = getLogger("ElementDispatcher")
 
-    def __init__(self, event_manager):
+    def __init__(self, event_manager, modeling_language):
         self.event_manager = event_manager
+        self.modeling_language = modeling_language
+
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
         self._handlers: Dict[Tuple[Element, umlproperty], Dict[Handler, Set]] = dict()
@@ -119,19 +122,18 @@ class ElementDispatcher:
         Given a start element and a path, return a tuple of properties
         (association, attribute, etc.) representing the path.
         """
-        from gaphor import UML
-
         c = type(element)
         tpath = []
         for attr in path.split("."):
             cname = ""
             if "[" in attr:
-                assert attr.endswith("]"), f'"{attr}" should end with ">"'
+                assert attr.endswith("]"), f'"{attr}" should end with "]"'
                 attr, cname = attr[:-1].split("[")
             prop = getattr(c, attr)
             tpath.append(prop)
+
             if cname:
-                c = getattr(UML, cname)
+                c = self.modeling_language.lookup_element(cname)
                 assert issubclass(c, prop.type), "{} should be a subclass of {}".format(
                     c, prop.type
                 )

@@ -24,7 +24,7 @@ def create(element_factory, diagram):
         """
         Create an item with specified subject.
         """
-        if subject_cls is not None:
+        if subject_cls:
             subject = element_factory.create(subject_cls)
         item = diagram.create(item_cls, subject=subject)
         diagram.canvas.update()

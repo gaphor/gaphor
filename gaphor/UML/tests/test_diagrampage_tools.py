@@ -4,20 +4,12 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.services.properties import Properties
 from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagrampage import DiagramPage
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.toolbox import uml_toolbox_actions
-
-
-@pytest.fixture
-def event_manager():
-    return EventManager()
-
-
-@pytest.fixture
-def element_factory(event_manager):
-    return ElementFactory(event_manager)
 
 
 @pytest.fixture
@@ -28,7 +20,9 @@ def properties():
 @pytest.fixture
 def tab(event_manager, element_factory, properties):
     diagram = element_factory.create(UML.Diagram)
-    tab = DiagramPage(diagram, event_manager, element_factory, properties,)
+    tab = DiagramPage(
+        diagram, event_manager, element_factory, properties, UMLModelingLanguage()
+    )
 
     window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
     window.add(tab.construct())

@@ -154,7 +154,11 @@ class StorageTestCase(TestCase):
         path = distribution().locate_file("models/UML.gaphor")
 
         with open(path) as ifile:
-            storage.load(ifile, factory=self.element_factory)
+            storage.load(
+                ifile,
+                factory=self.element_factory,
+                modeling_language=self.modeling_language,
+            )
 
     def test_save_and_load_model_with_relationships(self):
         self.element_factory.create(UML.Package)
@@ -222,7 +226,9 @@ class StorageTestCase(TestCase):
         self.element_factory.flush()
         assert not list(self.element_factory.select())
         fd = StringIO(data)
-        storage.load(fd, factory=self.element_factory)
+        storage.load(
+            fd, factory=self.element_factory, modeling_language=self.modeling_language
+        )
         fd.close()
 
         diagrams = list(self.kindof(UML.Diagram))
@@ -241,7 +247,11 @@ class StorageTestCase(TestCase):
         path = distribution().locate_file("test-models/simple-items.gaphor")
 
         with open(path, "r") as ifile:
-            storage.load(ifile, factory=self.element_factory)
+            storage.load(
+                ifile,
+                factory=self.element_factory,
+                modeling_language=self.modeling_language,
+            )
 
         pf = PseudoFile()
 
@@ -266,6 +276,10 @@ class StorageTestCase(TestCase):
 
         def load_old_model():
             with open(path, "r") as ifile:
-                storage.load(ifile, factory=self.element_factory)
+                storage.load(
+                    ifile,
+                    factory=self.element_factory,
+                    modeling_language=self.modeling_language,
+                )
 
         self.assertRaises(ValueError, load_old_model)

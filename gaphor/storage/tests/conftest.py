@@ -2,24 +2,18 @@ from io import StringIO
 
 import pytest
 
-from gaphor import UML
-from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
+from gaphor.diagram.tests.fixtures import diagram, element_factory, event_manager
 from gaphor.storage import storage
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture
-def element_factory():
-    return ElementFactory(EventManager())
+def modeling_language():
+    return UMLModelingLanguage()
 
 
 @pytest.fixture
-def diagram(element_factory):
-    return element_factory.create(UML.Diagram)
-
-
-@pytest.fixture
-def loader(element_factory):
+def loader(element_factory, modeling_language):  # noqa: F811
     def load(data):
         """
         Load data from specified string.
@@ -28,7 +22,7 @@ def loader(element_factory):
         assert not list(element_factory.select())
 
         f = StringIO(data)
-        storage.load(f, factory=element_factory)
+        storage.load(f, factory=element_factory, modeling_language=modeling_language)
         f.close()
 
     return load

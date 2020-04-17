@@ -47,11 +47,13 @@ class ElementFactory(Service):
     flushed: all element are removed from the factory (element is None)
     """
 
-    def __init__(self, event_manager: Optional[EventManager] = None):
+    def __init__(
+        self,
+        event_manager: Optional[EventManager] = None,
+        element_dispatcher: Optional[ElementDispatcher] = None,
+    ):
         self.event_manager = event_manager
-        self.element_dispatcher = (
-            ElementDispatcher(event_manager) if event_manager else None
-        )
+        self.element_dispatcher = element_dispatcher
         self._elements: Dict[str, Element] = OrderedDict()
         self._block_events = 0
 

@@ -13,12 +13,10 @@ from gaphas.painter import (
 from gaphas.view import GtkView
 from gi.repository import Gdk, GLib, Gtk
 
-from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.event import ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
-from gaphor.diagram.diagramtoolbox_actions import toolbox_actions
 from gaphor.diagram.diagramtools import (
     DefaultTool,
     PlacementTool,
@@ -52,11 +50,14 @@ class DiagramPage:
         Gtk.TargetEntry.new("gaphor/toolbox-action", 0, VIEW_TARGET_TOOLBOX_ACTION),
     ]
 
-    def __init__(self, diagram, event_manager, element_factory, properties):
+    def __init__(
+        self, diagram, event_manager, element_factory, properties, modeling_language
+    ):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.properties = properties
         self.diagram = diagram
+        self.modeling_language = modeling_language
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
         self.event_manager.subscribe(self._on_element_delete)
@@ -122,6 +123,8 @@ class DiagramPage:
         self._on_sloppy_lines()
         self.select_tool("toolbox-pointer")
 
+        self.set_drawing_style(self.properties.get("diagram.sloppiness", 0))
+
         return self.widget
 
     def get_tool(self, tool_name):
@@ -131,8 +134,11 @@ class DiagramPage:
         if tool_name == "toolbox-pointer":
             return DefaultTool(self.event_manager)
 
-        profile = self.properties.get("profile")
-        tool = next(t for t in tooliter(toolbox_actions(profile)) if t.id == tool_name)
+        tool = next(
+            t
+            for t in tooliter(self.modeling_language.toolbox_definition)
+            if t.id == tool_name
+        )
         item_factory = tool.item_factory
         handle_index = tool.handle_index
         return PlacementTool(
@@ -147,8 +153,7 @@ class DiagramPage:
         # accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         upper_offset = ord("A") - ord("a")
-        profile = self.properties.get("profile")
-        for title, items in toolbox_actions(profile):
+        for title, items in self.modeling_language.toolbox_definition:
             for action_name, label, icon_name, shortcut, *rest in items:
                 if shortcut:
                     key, mod = Gtk.accelerator_parse(shortcut)
@@ -367,7 +372,7 @@ class DiagramPage:
 
             else:
                 log.warning(
-                    "No graphical representation for UML element %s"
+                    "No graphical representation for element %s"
                     % type(element).__name__
                 )
             context.finish(True, False, time)

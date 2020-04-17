@@ -8,59 +8,28 @@ from gaphas.aspect import Connector as ConnectorAspect
 from gi.repository import Gdk, Gtk
 
 from gaphor import UML
-from gaphor.application import Session
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
+from gaphor.services.componentregistry import ComponentRegistry
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramOpened
+from gaphor.ui.mainwindow import Diagrams
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.usecases.actor import ActorItem
 
 
 @pytest.fixture
-def session():
-    session = Session(
-        services=[
-            "event_manager",
-            "component_registry",
-            "element_factory",
-            "main_window",
-            "properties_manager",
-            "properties",
-            "namespace",
-            "diagrams",
-            "toolbox",
-            "elementeditor",
-            "export_menu",
-            "tools_menu",
-        ]
+def diagrams(event_manager, element_factory, properties):
+    window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+    diagrams = Diagrams(
+        event_manager, element_factory, properties, UMLModelingLanguage()
     )
-    main_window = session.get_service("main_window")
-    main_window.open()
-    yield session
-    session.shutdown()
-
-
-@pytest.fixture
-def element_factory(session):
-    return session.get_service("element_factory")
-
-
-@pytest.fixture
-def event_manager(session):
-    return session.get_service("event_manager")
-
-
-@pytest.fixture
-def main_window(session):
-    main_window = session.get_service("main_window")
-    yield main_window
-
-
-@pytest.fixture
-def diagram(element_factory):
-    return element_factory.create(UML.Diagram)
+    window.add(diagrams.open())
+    window.show()
+    yield diagrams
+    diagrams.close()
 
 
 @pytest.fixture
@@ -100,12 +69,11 @@ def test_connect(diagram, comment, commentline):
     assert cinfo, cinfo
 
 
-def current_diagram_view(session):
+def current_diagram_view(diagrams):
     """
     Get a view for the current diagram.
     """
-    component_registry = session.get_service("component_registry")
-    view = component_registry.get(UIComponent, "diagrams").get_current_view()
+    view = diagrams.get_current_view()
 
     # realize view, forces bounding box recalculation
     while Gtk.events_pending():
@@ -114,7 +82,7 @@ def current_diagram_view(session):
     return view
 
 
-def test_iconnect(session, event_manager, element_factory):
+def test_iconnect(event_manager, element_factory, diagrams):
     """
     Test basic glue functionality using CommentItem and CommentLine
     items.
@@ -129,7 +97,7 @@ def test_iconnect(session, event_manager, element_factory):
 
     line = diagram.create(CommentLineItem)
 
-    view = current_diagram_view(session)
+    view = current_diagram_view(diagrams)
     assert view, "View should be available here"
     comment_bb = view.get_item_bounding_box(comment)
 
@@ -154,7 +122,7 @@ def test_iconnect(session, event_manager, element_factory):
     assert cinfo is None
 
 
-def test_connect_comment_and_actor(session, event_manager, element_factory):
+def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     """Test connect/disconnect on comment and actor using comment-line.
     """
     diagram = element_factory.create(UML.Diagram)
@@ -163,7 +131,7 @@ def test_connect_comment_and_actor(session, event_manager, element_factory):
 
     line = diagram.create(CommentLineItem)
 
-    view = current_diagram_view(session)
+    view = current_diagram_view(diagrams)
     assert view, "View should be available here"
 
     tool = ConnectHandleTool(view)

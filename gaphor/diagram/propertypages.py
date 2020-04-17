@@ -34,10 +34,8 @@ from gaphas.decorators import AsyncIO
 from gaphas.segment import Segment
 from gi.repository import Gdk, GObject, Gtk
 
-from gaphor import UML
 from gaphor.core import gettext, transactional
-from gaphor.core.modeling import Element, NamedElement
-from gaphor.core.modeling.element import DummyEventWatcher
+from gaphor.core.modeling import Element
 
 
 def new_builder(*object_ids):
@@ -290,58 +288,6 @@ class ComboModel(Gtk.ListStore):
         Get value for given ``index``.
         """
         return self._data[index][1]
-
-
-@PropertyPages.register(NamedElement)
-class NamedElementPropertyPage(PropertyPageBase):
-    """An adapter which works for any named item view.
-
-    It also sets up a table view which can be extended.
-    """
-
-    order = 10
-
-    NAME_LABEL = gettext("Name")
-
-    def __init__(self, subject: NamedElement):
-        super().__init__()
-        assert subject is None or isinstance(subject, NamedElement), "%s" % type(
-            subject
-        )
-        self.subject = subject
-        self.watcher = subject.watcher() if subject else DummyEventWatcher()
-
-    def construct(self):
-        if UML.model.is_metaclass(self.subject):
-            return
-
-        builder = new_builder("named-element-editor")
-
-        subject = self.subject
-        if not subject:
-            return
-
-        entry = builder.get_object("name-entry")
-        entry.set_text(subject and subject.name or "")
-
-        def handler(event):
-            if event.element is subject and event.new_value is not None:
-                entry.set_text(event.new_value)
-
-        if self.watcher:
-            self.watcher.watch("name", handler).subscribe_all()
-
-        builder.connect_signals(
-            {
-                "name-changed": (self._on_name_changed,),
-                "name-entry-destroyed": (self.watcher.unsubscribe_all,),
-            }
-        )
-        return builder.get_object("named-element-editor")
-
-    @transactional
-    def _on_name_changed(self, entry):
-        self.subject.name = entry.get_text()
 
 
 @PropertyPages.register(gaphas.item.Line)

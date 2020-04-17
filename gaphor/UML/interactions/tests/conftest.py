@@ -4,5 +4,6 @@ from gaphor.diagram.tests.fixtures import (
     element_factory,
     event_manager,
     loader,
+    modeling_language,
     saver,
 )

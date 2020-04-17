@@ -28,11 +28,19 @@ log.setLevel(logging.WARNING)
 
 class TestCase(unittest.TestCase):
 
-    services = ["event_manager", "component_registry", "element_factory", "sanitizer"]
+    services = [
+        "event_manager",
+        "component_registry",
+        "element_factory",
+        "element_dispatcher",
+        "modeling_language",
+        "sanitizer",
+    ]
 
     def setUp(self):
         self.session = Session(services=self.services)
         self.element_factory = self.session.get_service("element_factory")
+        self.modeling_language = self.session.get_service("modeling_language")
         assert len(list(self.element_factory.select())) == 0, list(
             self.element_factory.select()
         )
@@ -170,7 +178,9 @@ class TestCase(unittest.TestCase):
         from gaphor.storage import storage
 
         f = StringIO(data)
-        storage.load(f, factory=self.element_factory)
+        storage.load(
+            f, factory=self.element_factory, modeling_language=self.modeling_language
+        )
         f.close()
 
         self.diagram = self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[

@@ -18,11 +18,11 @@ import uuid
 
 import gaphas
 
-from gaphor import UML, application
+from gaphor import application
 from gaphor.core.modeling import Diagram, Element
 from gaphor.core.modeling.collection import collection
 from gaphor.i18n import gettext
-from gaphor.storage import diagramitems, parser
+from gaphor.storage import parser
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
@@ -158,12 +158,14 @@ def save_generator(writer, factory):  # noqa: C901
     writer.endDocument()
 
 
-def load_elements(elements, factory, gaphor_version="1.0.0"):
-    for status in load_elements_generator(elements, factory, gaphor_version):
+def load_elements(elements, factory, modeling_language, gaphor_version="1.0.0"):
+    for status in load_elements_generator(
+        elements, factory, modeling_language, gaphor_version
+    ):
         pass
 
 
-def load_elements_generator(elements, factory, gaphor_version):
+def load_elements_generator(elements, factory, modeling_language, gaphor_version):
     """
     Load a file and create a model if possible.
     Exceptions: IOError, ValueError.
@@ -181,7 +183,7 @@ def load_elements_generator(elements, factory, gaphor_version):
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     yield from _load_elements_and_canvasitems(
-        elements, factory, gaphor_version, update_status_queue
+        elements, factory, modeling_language, gaphor_version, update_status_queue
     )
     yield from _load_attributes_and_references(elements, update_status_queue)
 
@@ -197,7 +199,7 @@ def load_elements_generator(elements, factory, gaphor_version):
 
 
 def _load_elements_and_canvasitems(
-    elements, factory, gaphor_version, update_status_queue
+    elements, factory, modeling_language, gaphor_version, update_status_queue
 ):
     def create_canvasitems(diagram, canvasitems, parent=None):
         """
@@ -213,14 +215,14 @@ def _load_elements_and_canvasitems(
             item = upgrade_canvas_item_to_1_0_2(item)
             if version_lower_than(gaphor_version, (1, 1, 0)):
                 item = upgrade_presentation_item_to_1_1_0(item)
-            cls = getattr(diagramitems, item.type)
+            cls = modeling_language.lookup_diagram_item(item.type)
             item.element = diagram.create_as(cls, item.id, parent=parent)
             create_canvasitems(diagram, item.canvasitems, parent=item.element)
 
     for id, elem in list(elements.items()):
         yield from update_status_queue()
         if isinstance(elem, parser.element):
-            cls = getattr(UML, elem.type)
+            cls = modeling_language.lookup_element(elem.type)
             elem.element = factory.create_as(cls, id)
             if isinstance(elem.element, Diagram):
                 assert elem.canvas
@@ -262,18 +264,18 @@ def _load_attributes_and_references(elements, update_status_queue):
                     elem.element.load(name, ref.element)
 
 
-def load(filename, factory, status_queue=None):
+def load(filename, factory, modeling_language, status_queue=None):
     """
     Load a file and create a model if possible.
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
     """
-    for status in load_generator(filename, factory):
+    for status in load_generator(filename, factory, modeling_language):
         if status_queue:
             status_queue(status)
 
 
-def load_generator(filename, factory):
+def load_generator(filename, factory, modeling_language):
     """
     Load a file and create a model if possible.
     This function is a generator. It will yield values from 0 to 100 (%)
@@ -310,7 +312,7 @@ def load_generator(filename, factory):
     with factory.block_events():
         try:
             for percentage in load_elements_generator(
-                elements, factory, gaphor_version
+                elements, factory, modeling_language, gaphor_version
             ):
                 if percentage:
                     yield percentage / 2 + 50

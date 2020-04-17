@@ -5,9 +5,12 @@ A registry for components (e.g. services) and event handling.
 from typing import Iterator, Set, Tuple, Type, TypeVar
 
 from gaphor.abc import Service
-from gaphor.application import ComponentLookupError
 
 T = TypeVar("T", bound=Service)
+
+
+class ComponentLookupError(LookupError):
+    pass
 
 
 class ComponentRegistry(Service):

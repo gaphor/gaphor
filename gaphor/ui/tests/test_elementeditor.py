@@ -3,24 +3,17 @@ import pytest
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
 from gaphor.ui.elementeditor import ElementEditor
-from gaphor.ui.mainwindow import Diagrams
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
+
+
+class DiagramsStub:
+    def get_current_view(self):
+        return None
 
 
 @pytest.fixture
-def event_manager():
-    return EventManager()
-
-
-@pytest.fixture
-def element_factory(event_manager):
-    return ElementFactory(event_manager)
-
-
-@pytest.fixture
-def diagrams(event_manager, element_factory):
-    return Diagrams(
-        event_manager=event_manager, element_factory=element_factory, properties={}
-    )
+def diagrams():
+    return DiagramsStub()
 
 
 def test_reopen_of_window(event_manager, element_factory, diagrams):

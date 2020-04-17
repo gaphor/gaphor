@@ -71,6 +71,8 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "properties" = "gaphor.services.properties:Properties"
 "undo_manager" = "gaphor.services.undomanager:UndoManager"
 "element_factory" = "gaphor.core.modeling:ElementFactory"
+"element_dispatcher" = "gaphor.core.modeling.elementdispatcher:ElementDispatcher"
+"modeling_language" = "gaphor.services.modelinglanguage:ModelingLanguageService"
 "file_manager" = "gaphor.ui.filemanager:FileManager"
 "recent_files" = "gaphor.ui.recentfiles:RecentFiles"
 "main_window" = "gaphor.ui.mainwindow:MainWindow"
@@ -78,7 +80,7 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "export_menu" = "gaphor.ui.menufragment:MenuFragment"
 "tools_menu" = "gaphor.ui.menufragment:MenuFragment"
 "copy" = "gaphor.services.copyservice:CopyService"
-"sanitizer" = "gaphor.services.sanitizerservice:SanitizerService"
+"sanitizer" = "gaphor.UML.sanitizerservice:SanitizerService"
 "namespace" = "gaphor.ui.namespace:Namespace"
 "toolbox" = "gaphor.ui.toolbox:Toolbox"
 "diagrams" = "gaphor.ui.mainwindow:Diagrams"
@@ -86,6 +88,10 @@ gaphorconvert = 'gaphor.tools.gaphorconvert:main'
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
+
+[tool.poetry.plugins."gaphor.modelinglanguages"]
+"UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
+"SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
 
 [tool.isort]
 multi_line_output = 3

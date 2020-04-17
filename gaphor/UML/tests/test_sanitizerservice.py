@@ -3,8 +3,8 @@ import pytest
 from gaphor import UML
 from gaphor.diagram.general import CommentItem, CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.services.sanitizerservice import SanitizerService
 from gaphor.UML.classes import ClassItem, GeneralizationItem
+from gaphor.UML.sanitizerservice import SanitizerService
 
 
 @pytest.fixture(autouse=True)

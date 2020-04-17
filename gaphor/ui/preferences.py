@@ -3,8 +3,8 @@ import importlib
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import action
-from gaphor.ui.actiongroup import create_action_group, set_action_state
+from gaphor.action import action, init_action_state
+from gaphor.ui.actiongroup import create_action_group
 
 
 class Preferences(Service, ActionProvider):
@@ -31,19 +31,15 @@ class Preferences(Service, ActionProvider):
         pass
 
     def create_action_group(self):
-        action_group, accel_group = create_action_group(self, "pref")
-
-        set_action_state(
-            action_group,
-            "hand-drawn-style",
+        init_action_state(
+            Preferences.hand_drawn_style,
             self.properties.get("diagram.sloppiness", 0.0) > 0.0,
         )
-
-        set_action_state(
-            action_group,
-            "reset-tool-after-create",
+        init_action_state(
+            Preferences.reset_tool_after_create,
             self.properties.get("reset-tool-after-create", True),
         )
+        action_group, accel_group = create_action_group(self, "pref")
         return action_group
 
     @action(name="pref.hand-drawn-style", state=False)
