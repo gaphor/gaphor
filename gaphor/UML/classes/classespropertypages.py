@@ -125,6 +125,8 @@ class NamedElementPropertyPage(PropertyPageBase):
         if not subject:
             return
 
+        assert self.watcher
+
         entry = builder.get_object("name-entry")
         entry.set_text(subject and subject.name or "")
 
@@ -132,17 +134,12 @@ class NamedElementPropertyPage(PropertyPageBase):
             if event.element is subject and event.new_value is not None:
                 entry.set_text(event.new_value)
 
-        if self.watcher:
-            self.watcher.watch("name", handler).subscribe_all()
-
-        def unsubscribe_all():
-            if self.watcher:
-                self.watcher.unsubscribe_all()
+        self.watcher.watch("name", handler).subscribe_all()
 
         builder.connect_signals(
             {
                 "name-changed": (self._on_name_changed,),
-                "name-entry-destroyed": (unsubscribe_all,),
+                "name-entry-destroyed": (self.watcher.unsubscribe_all,),
             }
         )
         return builder.get_object("named-element-editor")
