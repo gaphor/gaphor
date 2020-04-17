@@ -66,8 +66,9 @@ def create_action_group(provider, scope, action_group=None, accel_group=None):
 
 def create_gio_action(act, provider, attrname):
     if act.state is not None:
+        state = act.state(provider) if callable(act.state) else act.state
         a = Gio.SimpleAction.new_stateful(
-            act.name, as_variant_type(act.arg_type), to_variant(act.state)
+            act.name, as_variant_type(act.arg_type), to_variant(state)
         )
         a.connect("change-state", _action_activate, provider, attrname)
     else:

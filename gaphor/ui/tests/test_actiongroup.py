@@ -30,6 +30,13 @@ class DummyActionProvider(ActionProvider):
     def toggle(self, state):
         self.toggle_state = state
 
+    def dyn_state(self):
+        return "my-state"
+
+    @action(name="my-action", state=dyn_state)
+    def my_state(self, state):
+        pass
+
 
 @pytest.fixture
 def dummy_action_provider():
@@ -44,7 +51,6 @@ def component_registry(dummy_action_provider):
 
 
 def test_window_action_group(component_registry):
-
     action_group, accel_group = window_action_group(component_registry)
 
     assert action_group.lookup_action("new")
@@ -112,3 +118,12 @@ def test_from_variant_to_python_value():
 def test_invalid_gvariant_to_python():
     with pytest.raises(ValueError):
         from_variant(GLib.Variant.new_double(1.0))
+
+
+def test_dynamic_state(component_registry):
+    action_group, accel_group = window_action_group(component_registry)
+
+    assert action_group.lookup_action("my-action")
+    assert (
+        from_variant(action_group.lookup_action("my-action").get_state()) == "my-state"
+    )

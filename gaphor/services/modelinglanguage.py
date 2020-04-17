@@ -1,7 +1,7 @@
 from typing import Dict
 
 from gaphor.abc import ActionProvider, ModelingLanguage, Service
-from gaphor.action import action, init_action_state
+from gaphor.action import action
 from gaphor.entrypoint import initialize
 from gaphor.ui.event import ModelingLanguageChanged
 
@@ -23,11 +23,6 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
 
         self._modeling_languages: Dict[str, ModelingLanguage] = initialize(
             "gaphor.modelinglanguages"
-        )
-
-        init_action_state(
-            ModelingLanguageService.action_select_modeling_language,
-            self.active_modeling_language,
         )
 
     def shutdown(self):
@@ -78,7 +73,10 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
             if type:
                 return type
 
-    @action(name="select-modeling-language", state=DEFAULT_LANGUAGE)
+    @action(
+        name="select-modeling-language",
+        state=lambda self: self.active_modeling_language,
+    )
     def action_select_modeling_language(self, modeling_language: str):
         self.properties.set("modeling-language", modeling_language)
         self.event_manager.handle(ModelingLanguageChanged(modeling_language))

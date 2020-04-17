@@ -3,7 +3,7 @@ import importlib
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.action import action, init_action_state
+from gaphor.action import action
 from gaphor.ui.actiongroup import create_action_group
 
 
@@ -31,18 +31,13 @@ class Preferences(Service, ActionProvider):
         pass
 
     def create_action_group(self):
-        init_action_state(
-            Preferences.hand_drawn_style,
-            self.properties.get("diagram.sloppiness", 0.0) > 0.0,
-        )
-        init_action_state(
-            Preferences.reset_tool_after_create,
-            self.properties.get("reset-tool-after-create", True),
-        )
         action_group, accel_group = create_action_group(self, "pref")
         return action_group
 
-    @action(name="pref.hand-drawn-style", state=False)
+    @action(
+        name="pref.hand-drawn-style",
+        state=lambda self: self.properties.get("diagram.sloppiness", 0.0) > 0.0,
+    )
     def hand_drawn_style(self, active):
         """Toggle between straight diagrams and "hand drawn" diagram style."""
 
@@ -52,6 +47,9 @@ class Preferences(Service, ActionProvider):
             sloppiness = 0.0
         self.properties.set("diagram.sloppiness", sloppiness)
 
-    @action(name="pref.reset-tool-after-create", state=True)
+    @action(
+        name="pref.reset-tool-after-create",
+        state=lambda self: self.properties.get("reset-tool-after-create", True),
+    )
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)
