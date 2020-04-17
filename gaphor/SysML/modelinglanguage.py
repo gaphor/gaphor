@@ -1,6 +1,6 @@
 """
-The UML Model Provider is the entrypoint for an application to
-UML related assets.
+The SysML Modeling Language module is the entrypoint for
+SysML related assets.
 """
 
 import gaphor.UML.diagramitems as diagramitems

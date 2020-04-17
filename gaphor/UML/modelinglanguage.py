@@ -1,5 +1,5 @@
 """
-The UML Model Provider is the entrypoint for an application to
+The UML Modeling Language module is the entrypoint for
 UML related assets.
 """
 
