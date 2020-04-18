@@ -1,8 +1,8 @@
-"""Test case that checks the working of the autocoder.py module."""
+"""Test case that checks the working of the uml_coder.py module."""
 
 from gaphor.application import distribution
-from gaphor.codegen.autocoder import generate
 from gaphor.codegen.override import Overrides
+from gaphor.codegen.uml_coder import generate
 
 
 class PseudoFile:

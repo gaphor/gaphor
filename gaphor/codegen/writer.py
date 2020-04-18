@@ -21,7 +21,8 @@ class Writer:
 
         try:
             out.write(header)
-            out.write(self.overrides.header)
+            if self.overrides:
+                out.write(self.overrides.header)
             for cls in self.classdefs.values():
                 if cls[0].endswith(":"):
                     for d in cls:
