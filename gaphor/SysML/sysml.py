@@ -1,3 +1,4 @@
+from gaphor.core.modeling.properties import association, attribute
 from gaphor.UML import (
     Abstraction,
     AcceptEventAction,
@@ -29,7 +30,7 @@ from gaphor.UML import (
 )
 
 
-class Requirement:
+class Requirement(AbstractRequirement):
     pass
 
 
@@ -37,23 +38,23 @@ class AbstractRequirement:
     pass
 
 
-class Trace:
+class Trace(DirectedRelationshipPropertyPath):
     pass
 
 
-class Copy:
+class Copy(Trace):
     pass
 
 
-class Verify:
+class Verify(Trace):
     pass
 
 
-class DeriveReqt:
+class DeriveReqt(Trace):
     pass
 
 
-class Satisfy:
+class Satisfy(Trace):
     pass
 
 
@@ -93,7 +94,7 @@ class BindingConnector:
     pass
 
 
-class NestedConnectorEnd:
+class NestedConnectorEnd(ElementPropertyPath):
     pass
 
 
@@ -105,7 +106,7 @@ class EndPathMultiplicity:
     pass
 
 
-class BoundReference:
+class BoundReference(EndPathMultiplicity):
     pass
 
 
@@ -129,7 +130,7 @@ class FlowProperty:
     pass
 
 
-class InterfaceBlock:
+class InterfaceBlock(Block):
     pass
 
 
@@ -137,15 +138,15 @@ class AddStructuralFeatureValueAction:
     pass
 
 
-class InvocationOnNestedPortAction:
+class InvocationOnNestedPortAction(ElementPropertyPath):
     pass
 
 
-class TriggerOnNestedPort:
+class TriggerOnNestedPort(ElementPropertyPath):
     pass
 
 
-class AddFlowPropertyValueOnNestedPortAction:
+class AddFlowPropertyValueOnNestedPortAction(ElementPropertyPath):
     pass
 
 
@@ -197,7 +198,7 @@ class ElementGroup:
     pass
 
 
-class ConstraintBlock:
+class ConstraintBlock(Block):
     pass
 
 
@@ -213,11 +214,11 @@ class Probability:
     pass
 
 
-class Continuous:
+class Continuous(Rate):
     pass
 
 
-class Discrete:
+class Discrete(Rate):
     pass
 
 
@@ -233,7 +234,7 @@ class Overwrite:
     pass
 
 
-class Allocate:
+class Allocate(DirectedRelationshipPropertyPath):
     pass
 
 

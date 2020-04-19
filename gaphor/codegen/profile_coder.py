@@ -25,16 +25,19 @@ def generate(filename, outfile=None, overridesfile=None):
     with open(outfile, "w") as f:
         # Put imports at the top
         f.write(f"from gaphor.UML import Element\n")
+        f.write(f"from gaphor.core.modeling.properties import attribute\n")
+        f.write(f"from gaphor.core.modeling.properties import association\n")
+        classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
 
         klass_names: Set = set()
         uml_names: List = dir(UML.uml)
-        for klass in element_factory.select(lambda e: e.isKindOf(UML.Class)):
-            name = klass.name
+        for cls in classes:
+            name = cls.name
             if name in uml_names:
-                f.write(f"from gaphor.UML import {name}\n")
+                f.write(f"from gaphor.UML import {name}\n\n")
             elif name not in klass_names and name[0] != "~":
-                print(f"{name} with owned elements: {klass.ownedElement}")
-                f.write(f"class {name}:\n")
+                print(f"{name} with owned elements: {cls.ownedElement}")
+                f.write(f"class {name}({', '.join(g.name for g in cls.general)}):\n")
                 f.write("    pass\n\n")
                 klass_names.add(name)
 
