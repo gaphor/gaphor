@@ -1,3 +1,54 @@
+from gaphor.UML import (
+    Abstraction,
+    AcceptEventAction,
+    ActivityEdge,
+    ActivityPartition,
+    Behavior,
+    Class,
+    Classifier,
+    Comment,
+    Connector,
+    ConnectorEnd,
+    DataType,
+    Dependency,
+    DirectedRelationship,
+    Element,
+    Feature,
+    Generalization,
+    InstanceSpecification,
+    InvocationAction,
+    NamedElement,
+    ObjectNode,
+    Operation,
+    Optional,
+    Parameter,
+    Port,
+    Property,
+    StructuralFeature,
+    Trigger,
+)
+
+
+class Requirement:
+    pass
+
+
+class AbstractRequirement:
+    pass
+
+
+class Trace:
+    pass
+
+
+class Copy:
+    pass
+
+
+class Verify:
+    pass
+
+
 class DeriveReqt:
     pass
 
@@ -6,39 +57,7 @@ class Satisfy:
     pass
 
 
-class Port:
-    pass
-
-
-class BoundReference:
-    pass
-
-
-class ChangeEvent:
-    pass
-
-
-class Allocate:
-    pass
-
-
 class TestCase:
-    pass
-
-
-class Classifier:
-    pass
-
-
-class ChangeSructuralFeatureEvent:
-    pass
-
-
-class Parameter:
-    pass
-
-
-class StructuralFeature:
     pass
 
 
@@ -46,171 +65,7 @@ class Block:
     pass
 
 
-class ElementPropertyPath:
-    pass
-
-
-class AcceptEventAction:
-    pass
-
-
-class ProxyPort:
-    pass
-
-
-class AcceptChangeStructuralFeatureEventAction:
-    pass
-
-
-class ActivityPartition:
-    pass
-
-
-class FullPort:
-    pass
-
-
-class AdjuntProperty:
-    pass
-
-
-class ActivityEdge:
-    pass
-
-
-class ParameterSet:
-    pass
-
-
-class Optional:
-    pass
-
-
-class AllocateActivityPartition:
-    pass
-
-
-class Rate:
-    pass
-
-
-class DirectedRelationship:
-    pass
-
-
-class Probability:
-    pass
-
-
-class DirectedRelationshipPropertyPath:
-    pass
-
-
-class Continuous:
-    pass
-
-
-class Property:
-    pass
-
-
-class Discrete:
-    pass
-
-
-class FlowProperty:
-    pass
-
-
-class Behavior:
-    pass
-
-
-class Operation:
-    pass
-
-
-class Trace:
-    pass
-
-
-class ObjectNode:
-    pass
-
-
-class AbstractRequirement:
-    pass
-
-
-class ControlOperator:
-    pass
-
-
-class InterfaceBlock:
-    pass
-
-
-class NoBuffer:
-    pass
-
-
-class Overwrite:
-    pass
-
-
-class BindingConnector:
-    pass
-
-
-class ClassifierBehaviorProperty:
-    pass
-
-
-class ConnectorEnd:
-    pass
-
-
-class NestedConnectorEnd:
-    pass
-
-
-class Connector:
-    pass
-
-
-class InvocationAction:
-    pass
-
-
-class Copy:
-    pass
-
-
-class NamedElement:
-    pass
-
-
-class Verify:
-    pass
-
-
-class ConstraintBlock:
-    pass
-
-
-class Class:
-    pass
-
-
 class ConnectorProperty:
-    pass
-
-
-class Tagged:
-    pass
-
-
-class Refine:
     pass
 
 
@@ -222,15 +77,59 @@ class DistributedProperty:
     pass
 
 
+class ValueType:
+    pass
+
+
+class ElementPropertyPath:
+    pass
+
+
+class DirectedRelationshipPropertyPath:
+    pass
+
+
+class BindingConnector:
+    pass
+
+
+class NestedConnectorEnd:
+    pass
+
+
 class PropertySpecificType:
     pass
 
 
-class Trigger:
+class EndPathMultiplicity:
     pass
 
 
-class ValueType:
+class BoundReference:
+    pass
+
+
+class AdjuntProperty:
+    pass
+
+
+class ClassifierBehaviorProperty:
+    pass
+
+
+class ProxyPort:
+    pass
+
+
+class FullPort:
+    pass
+
+
+class FlowProperty:
+    pass
+
+
+class InterfaceBlock:
     pass
 
 
@@ -242,27 +141,7 @@ class InvocationOnNestedPortAction:
     pass
 
 
-class Feature:
-    pass
-
-
-class Requirement:
-    pass
-
-
-class DirectedFeature:
-    pass
-
-
 class TriggerOnNestedPort:
-    pass
-
-
-class DataType:
-    pass
-
-
-class Element:
     pass
 
 
@@ -270,15 +149,19 @@ class AddFlowPropertyValueOnNestedPortAction:
     pass
 
 
-class EndPathMultiplicity:
+class ChangeEvent:
     pass
 
 
-class InstanceSpecification:
+class ChangeSructuralFeatureEvent:
     pass
 
 
-class Abstraction:
+class AcceptChangeStructuralFeatureEventAction:
+    pass
+
+
+class DirectedFeature:
     pass
 
 
@@ -298,10 +181,6 @@ class Stakeholder:
     pass
 
 
-class Generalization:
-    pass
-
-
 class Expose:
     pass
 
@@ -318,9 +197,53 @@ class ElementGroup:
     pass
 
 
-class Comment:
+class ConstraintBlock:
     pass
 
 
-class Dependency:
+class ParameterSet:
+    pass
+
+
+class Rate:
+    pass
+
+
+class Probability:
+    pass
+
+
+class Continuous:
+    pass
+
+
+class Discrete:
+    pass
+
+
+class ControlOperator:
+    pass
+
+
+class NoBuffer:
+    pass
+
+
+class Overwrite:
+    pass
+
+
+class Allocate:
+    pass
+
+
+class AllocateActivityPartition:
+    pass
+
+
+class Refine:
+    pass
+
+
+class Tagged:
     pass

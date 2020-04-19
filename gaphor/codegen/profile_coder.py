@@ -7,12 +7,6 @@ from gaphor.application import Session
 from gaphor.storage import storage
 
 
-def kind_of(factory, cls):
-    """Find UML metaclass instances using element factory."""
-
-    return factory.lselect(lambda e: e.isKindOf(cls))
-
-
 def generate(filename, outfile=None, overridesfile=None):
     services = [
         "element_dispatcher",
@@ -28,13 +22,18 @@ def generate(filename, outfile=None, overridesfile=None):
         storage.load(
             filename, factory=element_factory, modeling_language=modeling_language,
         )
-    classes: List = kind_of(element_factory, UML.Class)
-
     with open(outfile, "w") as f:
+        # Put imports at the top
+        f.write(f"from gaphor.UML import Element\n")
+
         klass_names: Set = set()
-        for klass in classes:
+        uml_names: List = dir(UML.uml)
+        for klass in element_factory.select(lambda e: e.isKindOf(UML.Class)):
             name = klass.name
-            if name not in klass_names and name[0] != "~":
+            if name in uml_names:
+                f.write(f"from gaphor.UML import {name}\n")
+            elif name not in klass_names and name[0] != "~":
+                print(f"{name} with owned elements: {klass.ownedElement}")
                 f.write(f"class {name}:\n")
                 f.write("    pass\n\n")
                 klass_names.add(name)
