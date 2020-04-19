@@ -25,7 +25,10 @@ class EventWatcher:
     """
 
     def __init__(
-        self, element, element_dispatcher, default_handler: Optional[Handler] = None
+        self,
+        element: Element,
+        element_dispatcher: Optional[ElementDispatcher],
+        default_handler: Optional[Handler] = None,
     ):
         self.element = element
         self.element_dispatcher = element_dispatcher
@@ -53,6 +56,8 @@ class EventWatcher:
 
     def subscribe_all(self):
         dispatcher = self.element_dispatcher
+        if not dispatcher:
+            return
         element = self.element
 
         for path, handler in self._watched_paths.items():
@@ -64,6 +69,8 @@ class EventWatcher:
         destroy signals much easier though).
         """
         dispatcher = self.element_dispatcher
+        if not dispatcher:
+            return
 
         for path, handler in self._watched_paths.items():
             dispatcher.unsubscribe(handler)
