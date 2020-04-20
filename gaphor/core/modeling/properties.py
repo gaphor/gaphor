@@ -634,7 +634,7 @@ class derived(umlproperty, Generic[T]):
             )
             uc = unioncache(u[0] if u else None, self.version)
         else:
-            uc = unioncache(u, self.version)
+            uc = unioncache(collectionlist(u), self.version)
         setattr(obj, self._name, uc)
         return uc
 
