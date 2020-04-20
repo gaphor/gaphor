@@ -27,7 +27,7 @@ gaphor/UML/uml.py: models/UML.gaphor models/UML.override gaphor/codegen/uml_code
 	gaphor/codegen/codegen.py models/UML.gaphor gaphor/UML/uml.py models/UML.override && mypy gaphor/UML && isort $@ && black $@
 
 gaphor/SysML/sysml.py: models/SysML.gaphor models/SysML.override gaphor/codegen/profile_coder.py gaphor/codegen/override.py gaphor/codegen/writer.py
-	gaphor/codegen/codegen.py --profile models/SysML.gaphor gaphor/SysML/sysml.py models/SysML.override && mypy gaphor/SysML && isort $@ && black $@
+	gaphor/codegen/codegen.py --profile models/SysML.gaphor gaphor/SysML/sysml.py models/SysML.override && black $@ && isort $@ && mypy gaphor/SysML
 
 gaphor/Safety/safety.py: models/Safety.gaphor models/Safety.override gaphor/codegen/profile_coder.py.py gaphor/codegen/override.py gaphor/codegen/writer.py
 	gaphor/codegen/codegen.py --profile models/Safety.gaphor gaphor/Safety/safety.py models/Safety.override && mypy gaphor/Safety && isort $@ && black $@

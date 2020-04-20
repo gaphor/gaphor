@@ -30,16 +30,211 @@ from gaphor.UML import (
 )
 
 
-class Requirement(AbstractRequirement):
-    pass
-
-
 class AbstractRequirement:
+    derived: attribute[AbstractRequirement]
+    tracedTo: attribute[NamedElement]
+    id: attribute[str]
+    verifiedBy: attribute[NamedElement]
+    master: attribute[AbstractRequirement]
+    refinedBy: attribute[NamedElement]
+    base_NamedElement: attribute[NamedElement]
+    satisfiedBy: attribute[NamedElement]
+    text: attribute[str]
+    baseClass: association
+
+
+class TestCase:
+    baseClass: association
+
+
+class Block:
+    isEncapsulated: attribute[int]
+    baseClass: association
+
+
+class ConnectorProperty:
+    connector: attribute[Connector]
+    baseClass: association
+
+
+class ParticipantProperty:
+    end: attribute[Property]
+    baseClass: association
+
+
+class DistributedProperty:
+    baseClass: association
+
+
+class ValueType:
+    baseClass: association
+    unit: association
+
+
+class ElementPropertyPath:
+    baseClass: association
+    propertyPath: association
+
+
+class DirectedRelationshipPropertyPath:
+    baseClass: association
+    targetContext: association
+    sourceContext: association
+
+
+class BindingConnector:
+    baseClass: association
+
+
+class PropertySpecificType:
+    baseClass: association
+
+
+class EndPathMultiplicity:
+    upper: attribute[int]
+    lower: attribute[int]
+    baseClass: association
+
+
+class AdjuntProperty:
+    baseClass: association
+    principal: association
+
+
+class ClassifierBehaviorProperty:
     pass
 
 
-class Trace(DirectedRelationshipPropertyPath):
+class ProxyPort:
+    baseClass: association
+
+
+class FullPort:
+    baseClass: association
+
+
+class FlowProperty:
+    direction: attribute
+    baseClass: association
+
+
+class AddStructuralFeatureValueAction:
     pass
+
+
+class ChangeEvent:
+    pass
+
+
+class ChangeSructuralFeatureEvent:
+    baseClass: association
+    structuralFeature: association
+
+
+class AcceptChangeStructuralFeatureEventAction:
+    baseClass: association
+
+
+class DirectedFeature:
+    featureDirection: attribute
+    baseClass: association
+
+
+class Conform:
+    baseClass: association
+
+
+class View:
+    viewpoint: attribute[Viewpoint]
+    stakeholder: attribute[Stakeholder]
+    baseClass: association
+
+
+class Viewpoint:
+    method: attribute[Behavior]
+    presentation: attribute[str]
+    purpose: attribute[str]
+    concern: attribute[str]
+    stakeholder: attribute[Stakeholder]
+    concernList: attribute[Comment]
+    language: attribute[str]
+    baseClass: association
+
+
+class Stakeholder:
+    concern: attribute[str]
+    concernList: attribute[Comment]
+    baseClass: association
+
+
+class Expose:
+    baseClass: association
+
+
+class Rationale:
+    baseClass: association
+
+
+class Problem:
+    baseClass: association
+
+
+class ElementGroup:
+    criterion: attribute[str]
+    member: attribute[Element]
+    name: attribute[str]
+    orderedMember: attribute[Element]
+    size: attribute[int]
+    baseClass: association
+
+
+class ParameterSet:
+    pass
+
+
+class Rate:
+    rate: attribute[InstanceSpecification]
+    baseClass: association
+
+
+class Probability:
+    probability: attribute
+    baseClass: association
+
+
+class ControlOperator:
+    baseClass: association
+
+
+class NoBuffer:
+    baseClass: association
+
+
+class Overwrite:
+    baseClass: association
+
+
+class AllocateActivityPartition:
+    baseClass: association
+
+
+class Trace:
+    pass
+
+
+class Refine:
+    pass
+
+
+class Tagged:
+    nonunique: attribute[bool]
+    ordered: attribute[bool]
+    subsets: attribute[str]
+    baseClass: association
+
+
+class Requirement(AbstractRequirement):
+    baseClass: association
 
 
 class Copy(Trace):
@@ -58,159 +253,34 @@ class Satisfy(Trace):
     pass
 
 
-class TestCase:
-    pass
-
-
-class Block:
-    pass
-
-
-class ConnectorProperty:
-    pass
-
-
-class ParticipantProperty:
-    pass
-
-
-class DistributedProperty:
-    pass
-
-
-class ValueType:
-    pass
-
-
-class ElementPropertyPath:
-    pass
-
-
-class DirectedRelationshipPropertyPath:
-    pass
-
-
-class BindingConnector:
-    pass
-
-
 class NestedConnectorEnd(ElementPropertyPath):
-    pass
-
-
-class PropertySpecificType:
-    pass
-
-
-class EndPathMultiplicity:
-    pass
+    baseClass: association
 
 
 class BoundReference(EndPathMultiplicity):
-    pass
-
-
-class AdjuntProperty:
-    pass
-
-
-class ClassifierBehaviorProperty:
-    pass
-
-
-class ProxyPort:
-    pass
-
-
-class FullPort:
-    pass
-
-
-class FlowProperty:
-    pass
+    bindingPath: attribute[Property]
+    boundend: attribute[ConnectorEnd]
 
 
 class InterfaceBlock(Block):
     pass
 
 
-class AddStructuralFeatureValueAction:
-    pass
-
-
 class InvocationOnNestedPortAction(ElementPropertyPath):
-    pass
+    onNestedPort: association
+    baseClass: association
 
 
 class TriggerOnNestedPort(ElementPropertyPath):
-    pass
+    baseClass: association
+    onNestedPort: association
 
 
 class AddFlowPropertyValueOnNestedPortAction(ElementPropertyPath):
-    pass
-
-
-class ChangeEvent:
-    pass
-
-
-class ChangeSructuralFeatureEvent:
-    pass
-
-
-class AcceptChangeStructuralFeatureEventAction:
-    pass
-
-
-class DirectedFeature:
-    pass
-
-
-class Conform:
-    pass
-
-
-class View:
-    pass
-
-
-class Viewpoint:
-    pass
-
-
-class Stakeholder:
-    pass
-
-
-class Expose:
-    pass
-
-
-class Rationale:
-    pass
-
-
-class Problem:
-    pass
-
-
-class ElementGroup:
-    pass
+    baseClass: association
 
 
 class ConstraintBlock(Block):
-    pass
-
-
-class ParameterSet:
-    pass
-
-
-class Rate:
-    pass
-
-
-class Probability:
     pass
 
 
@@ -222,29 +292,5 @@ class Discrete(Rate):
     pass
 
 
-class ControlOperator:
-    pass
-
-
-class NoBuffer:
-    pass
-
-
-class Overwrite:
-    pass
-
-
 class Allocate(DirectedRelationshipPropertyPath):
-    pass
-
-
-class AllocateActivityPartition:
-    pass
-
-
-class Refine:
-    pass
-
-
-class Tagged:
-    pass
+    baseClass: association
