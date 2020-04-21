@@ -158,13 +158,13 @@ class Element:
 
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
-    def isKindOf(self, class_: Type[Element]):
+    def isKindOf(self, class_: Type[Element]) -> bool:
         """
         Returns true if the object is an instance of `class_`.
         """
         return isinstance(self, class_)
 
-    def isTypeOf(self, other: Element):
+    def isTypeOf(self, other: Element) -> bool:
         """
         Returns true if the object is of the same type as other.
         """
