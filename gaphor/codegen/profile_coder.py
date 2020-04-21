@@ -1,10 +1,11 @@
 """Parse a SysML Gaphor Model and generate a SysML data model."""
 
-from typing import List, Optional, Set
+from typing import List, Optional, Set, TextIO
 
 from gaphor import UML
-from gaphor.application import Session
+from gaphor.core.modeling.elementfactory import ElementFactory
 from gaphor.storage import storage
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 def type_converter(association) -> Optional[str]:
@@ -23,7 +24,7 @@ def type_converter(association) -> Optional[str]:
         return str(association.typeValue)
 
 
-def write_attributes(cls: UML.Class, filename) -> None:
+def write_attributes(cls: UML.Class, filename: TextIO) -> None:
     if not cls.attribute or not cls.attribute[0].name:
         filename.write("    pass\n\n")
     else:
@@ -36,23 +37,15 @@ def write_attributes(cls: UML.Class, filename) -> None:
             filename.write(f"    {o}: operation\n")
 
 
-def generate(filename, outfile=None, overridesfile=None):
-    services = [
-        "element_dispatcher",
-        "event_manager",
-        "component_registry",
-        "element_factory",
-        "modeling_language",
-    ]
-    session = Session(services=services)
-    element_factory = session.get_service("element_factory")
-    modeling_language = session.get_service("modeling_language")
+def generate(filename, outfile=None, overridesfile=None) -> None:
+    element_factory = ElementFactory()
+    modeling_language = UMLModelingLanguage()
     with open(filename):
         storage.load(
-            filename, factory=element_factory, modeling_language=modeling_language,
+            filename, element_factory, modeling_language,
         )
     with open(outfile, "w") as f:
-        classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
+        classes: List = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
 
         cls_names: Set = set()
 
@@ -82,4 +75,3 @@ def generate(filename, outfile=None, overridesfile=None):
                 cls_names.add(cls.name)
 
     element_factory.shutdown()
-    session.shutdown()
