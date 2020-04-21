@@ -4,10 +4,12 @@ from typing import List, Optional
 
 from gaphor.core import event_handler
 from gaphor.core.modeling import Element
+from gaphor.core.modeling.collection import collectionlist
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.properties import (
     association,
     attribute,
+    derived,
     derivedunion,
     enumeration,
     redefine,
@@ -391,6 +393,18 @@ def test_enumerations():
         assert 0, "a.a could not be four"
     del a.a
     assert a.a == "one"
+
+
+def test_derived():
+    class A(Element):
+        a: relation_many[A]
+
+    A.a = derived(A, "a", str, 0, "*", lambda self: ["a", "b", "c"])
+
+    a = A()
+
+    assert isinstance(a.a, collectionlist)
+    assert a.a == ["a", "b", "c"]
 
 
 def test_derivedunion():
