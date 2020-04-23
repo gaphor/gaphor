@@ -1,6 +1,7 @@
 """Parse a SysML Gaphor Model and generate a SysML data model."""
 
-from typing import List, Optional, Set, TextIO
+from collections import deque
+from typing import Deque, Dict, List, Optional, Set, TextIO
 
 from gaphor import UML
 from gaphor.core.modeling.elementfactory import ElementFactory
@@ -37,6 +38,22 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
             filename.write(f"    {o}: operation\n")
 
 
+def breadth_first_search(tree: Dict, root) -> List:
+    explored: List = []
+    queue: Deque = deque()
+    queue.appendleft(root)
+    while queue:
+        node = queue.popleft()
+        if node not in explored:
+            explored.append(node)
+            neighbors = tree.get(node)
+            if neighbors:
+                for neighbor in neighbors:
+                    queue.append(neighbor)
+    explored.reverse()
+    return explored
+
+
 def generate(filename, outfile=None, overridesfile=None) -> None:
     element_factory = ElementFactory()
     modeling_language = UMLModelingLanguage()
@@ -45,33 +62,60 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
             filename, element_factory, modeling_language,
         )
     with open(outfile, "w") as f:
+        trees: Dict = {}
+        nontree_classes: List = []
+        uml_directory: List = dir(UML.uml)
+        uml_classes: List = []
+        cls_added: Set = set()
+
         classes: List = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
+        for cls in classes:
+            if cls.name not in cls_added and cls.name[0] != "~":
+                if cls.name in uml_directory:
+                    uml_classes.append(cls)
+                elif not cls.general:
+                    nontree_classes.append(cls)
+                else:
+                    trees[cls] = [g for g in cls.general]
+                cls_added.add(cls.name)
 
-        cls_names: Set = set()
-
-        # Step 1: add imports
         f.write(f"from gaphor.UML import Element\n")
-        f.write(f"from gaphor.core.modeling.properties import attribute, association\n")
-        uml_names: List = dir(UML.uml)
-        for cls in classes:
-            if cls.name in uml_names:
-                f.write(f"from gaphor.UML import {cls.name}\n\n")
-                cls_names.add(cls.name)
+        f.write(
+            f"from gaphor.core.modeling.properties import attribute, " f"association\n"
+        )
+        for cls in uml_classes:
+            f.write(f"from gaphor.UML import {cls.name}\n\n")
 
-        # Step 2: classes with no inheritance
-        for cls in classes:
-            if cls.name not in cls_names and cls.name[0] != "~" and not cls.general:
+        cls_written: Set = set()
+
+        for root in trees.keys():
+            cls_search: List = breadth_first_search(trees, root)
+            for cls in cls_search:
+                if cls.name not in cls_written:
+                    if cls.general:
+                        f.write(
+                            f"class {cls.name}("
+                            f"{', '.join(g.name for g in cls.general)}):\n"
+                        )
+                    else:
+                        f.write(f"class {cls.name}:\n")
+                    cls_written.add(cls.name)
+                    write_attributes(cls, filename=f)
+        for cls in nontree_classes:
+            if cls.name not in cls_written:
                 f.write(f"class {cls.name}:\n")
                 write_attributes(cls, filename=f)
-                cls_names.add(cls.name)
+                cls_written.add(cls.name)
 
-        # Step 3: classes with inheritance
-        for cls in classes:
-            if cls.name not in cls_names and cls.name[0] != "~":
-                f.write(
-                    f"class {cls.name}({', '.join(g.name for g in cls.general)}):\n"
-                )
-                write_attributes(cls, filename=f)
-                cls_names.add(cls.name)
+        # stereotypes = element_factory.lselect(lambda e: isinstance(e,
+        # UML.Stereotype))
+        # for st in stereotypes:
+        #     if st.name[0] != "~":
+        #         meta = st.ownedAttribute["it.name == 'baseClass'"][
+        #         :].association.ownedEnd.class_.name
+        #         print(meta.name)
+        #         f.write(f"class {st.name}:\n")
+        #         write_attributes(st, filename=f)
+        #         cls_names.add(st.name)
 
     element_factory.shutdown()
