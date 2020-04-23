@@ -49,7 +49,7 @@ def breadth_first_search(tree: Dict, root) -> List:
             neighbors = tree.get(node)
             if neighbors:
                 for neighbor in neighbors:
-                    queue.append(neighbor)
+                    queue.appendleft(neighbor)
     explored.reverse()
     return explored
 
@@ -101,6 +101,7 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
                         f.write(f"class {cls.name}:\n")
                     cls_written.add(cls.name)
                     write_attributes(cls, filename=f)
+
         for cls in nontree_classes:
             if cls.name not in cls_written:
                 f.write(f"class {cls.name}:\n")
