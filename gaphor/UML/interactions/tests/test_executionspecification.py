@@ -12,7 +12,7 @@ def test_draw_on_canvas():
     exec_spec = ExecutionSpecificationItem()
     canvas.add(exec_spec)
     cr = instant_cairo_context()
-    exec_spec.draw(Context(cairo=cr))
+    exec_spec.draw(Context(cairo=cr, dropzone=False))
 
 
 def test_allow_execution_specification_to_lifeline(diagram):
