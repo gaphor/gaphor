@@ -358,6 +358,7 @@ class DropZoneInMotion(GuidedItemInMotion):
                 canvas.reparent(item, None)
                 m = canvas.get_matrix_i2c(old_parent)
                 item.matrix *= m
+                old_parent.update_shapes()
                 old_parent.request_update()
 
             if new_parent:
@@ -368,6 +369,7 @@ class DropZoneInMotion(GuidedItemInMotion):
                 canvas.reparent(item, new_parent)
                 m = canvas.get_matrix_c2i(new_parent)
                 item.matrix *= m
+                new_parent.update_shapes()
                 new_parent.request_update()
         finally:
             view.dropzone_item = None
