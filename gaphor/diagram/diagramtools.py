@@ -195,7 +195,10 @@ class PlacementTool(_PlacementTool):
 
             adapter = Group(parent, item)
             if parent and adapter.can_contain():
-                diagram.canvas.reparent(item, parent=parent)
+                canvas = diagram.canvas
+                canvas.reparent(item, parent=parent)
+                m = canvas.get_matrix_c2i(parent)
+                item.matrix *= m
                 adapter.group()
 
             return item
