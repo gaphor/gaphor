@@ -41,6 +41,8 @@ class NodeItem(ElementPresentation, Classified):
         self.watch("subject.appliedStereotype.slot", self.update_shapes)
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
+        self.watch("subject[Node].ownedConnector", self.update_shapes)
+        self.watch("subject[Node].deployment", self.update_shapes)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
