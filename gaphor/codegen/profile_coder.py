@@ -38,14 +38,12 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
             type_value = type_converter(a)
             filename.write(f"    {a.name}: attribute[{type_value}]\n")
         for a in cls.attribute["it.association"]:  # type: ignore
+            type_value = type_converter(a)
             if a.name == "baseClass":
-                meta_classes = cls.ownedAttribute["it.name == 'baseClass'"][  # type: ignore
-                    :
-                ].association.ownedEnd.class_.name
-                for meta_cls in meta_classes:
-                    filename.write(f"    {meta_cls}: association\n")
+                meta_cls = a.association.ownedEnd.class_.name
+                filename.write(f"    {meta_cls}: association\n")
             else:
-                filename.write(f"    {a.name}: association\n")
+                filename.write(f"    {a.name}: relation_one[{type_value}]\n")
         for o in cls.ownedOperation:
             filename.write(f"    {o}: operation\n")
 
@@ -77,23 +75,21 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
         trees: Dict[UML.Class, List[UML.Class]] = {}
         uml_directory: List[str] = dir(UML.uml)
         uml_classes: List[UML.Class] = []
-        cls_added: Set[UML.Class] = set()
 
         classes: List = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
         for idx, cls in enumerate(classes):
             if cls.name[0] == "~":
                 classes.pop(idx)
         for cls in classes:
-            if cls.name not in cls_added:
-                if cls.name in uml_directory:
-                    uml_classes.append(cls)
-                else:
-                    trees[cls] = [g for g in cls.general]
-                cls_added.add(cls.name)
+            if cls.name in uml_directory:
+                uml_classes.append(cls)
+            else:
+                trees[cls] = [g for g in cls.general]
 
         f.write(f"from gaphor.UML import Element\n")
+        f.write(f"from gaphor.core.modeling.properties import attribute, association\n")
         f.write(
-            f"from gaphor.core.modeling.properties import attribute, " f"association\n"
+            f"from gaphor.core.modeling.properties import relation_one, relation_many\n"
         )
         for cls in uml_classes:
             f.write(f"from gaphor.UML import {cls.name}\n\n")
