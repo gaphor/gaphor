@@ -56,11 +56,14 @@ def breadth_first_search(tree: Dict, root) -> List:
         node = queue.popleft()
         if node not in explored:
             explored.append(node)
-            neighbors = tree.get(node)
+            neighbors = []
+            for key, value in tree.items():
+                if node in value:
+                    neighbors.append(key)
             if neighbors:
                 for neighbor in neighbors:
                     queue.appendleft(neighbor)
-    explored.reverse()
+    # explored.reverse()
     return explored
 
 
@@ -73,6 +76,7 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
         )
     with open(outfile, "w") as f:
         trees: Dict[UML.Class, List[UML.Class]] = {}
+        referenced: List[Element] = []
         uml_directory: List[str] = dir(UML.uml)
         uml_classes: List[UML.Class] = []
 
@@ -85,6 +89,8 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
                 uml_classes.append(cls)
             else:
                 trees[cls] = [g for g in cls.general]
+                for gen in cls.general:
+                    referenced.append(gen)
 
         f.write(f"from gaphor.UML import Element\n")
         f.write(f"from gaphor.core.modeling.properties import attribute, association\n")
@@ -95,8 +101,10 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
             f.write(f"from gaphor.UML import {cls.name}\n\n")
 
         cls_written: Set[Element] = set()
-
-        for root in trees.keys():
+        root_nodes: List[Element] = [
+            key for key, value in trees.items() if not value and key in referenced
+        ]
+        for root in root_nodes:
             cls_search: List = breadth_first_search(trees, root)
             for cls in cls_search:
                 if cls.name not in cls_written:
