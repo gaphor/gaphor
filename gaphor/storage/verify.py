@@ -50,28 +50,22 @@ def orphan_references(factory):
         elif isinstance(value, collection):
             verify_collection(name, value)
         elif isinstance(value, gaphas.Canvas):
-            value.save(verify_canvasitem)
+            value.save(verify_canvas)
 
-    def verify_canvasitem(name, value, reference=False):
+    def verify_canvas(value):
+        elements.add(value.id)
+        value.save(verify_canvasitem)
+        for child in value.canvas.get_children(value):
+            verify_canvas(child)
+
+    def verify_canvasitem(name, value):
         """
         Verify attributes and references in a gaphor.diagram.* object.
         The extra attribute referenced can be used to force UML.
         """
-        if isinstance(value, collection) or (
-            isinstance(value, (list, tuple)) and reference is True
-        ):
+        if isinstance(value, collection):
             verify_collection(name, value)
-        elif reference:
-            verify_reference(name, value)
-        elif isinstance(value, gaphas.Item):
-            elements.add(value.id)
-            value.save(verify_canvasitem)
-
-            # save subitems
-            for child in value.canvas.get_children(value):
-                verify_canvasitem(None, child)
-
-        elif isinstance(value, Element):
+        elif isinstance(value, (Element, gaphas.Item)):
             verify_reference(name, value)
 
     for e in list(factory.values()):
