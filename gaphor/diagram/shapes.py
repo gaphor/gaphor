@@ -75,6 +75,9 @@ def draw_border(box, context, bounding_box):
         cr.set_source_rgb(1, 1, 1)  # white
         cr.fill_preserve()
         cr.set_source(color)
+
+    draw_highlight(context)
+
     cr.stroke()
 
 
@@ -87,14 +90,15 @@ def draw_top_separator(box, context, bounding_box):
 
 
 def draw_highlight(context):
+    if not context.dropzone:
+        return
     highlight_color = (0, 0, 1, 0.4)
     cr = context.cairo
     cr.save()
     try:
-        if context.dropzone:
-            cr.set_source_rgba(*highlight_color)
-            cr.set_line_width(cr.get_line_width() * 3.141)
-            cr.stroke_preserve()
+        cr.set_source_rgba(*highlight_color)
+        cr.set_line_width(cr.get_line_width() * 3.141)
+        cr.stroke_preserve()
     finally:
         cr.restore()
 
