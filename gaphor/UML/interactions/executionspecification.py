@@ -94,7 +94,7 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item)
             assert self.canvas
             c = self.canvas.get_connection(handle)
             if c:
-                save_func(name, c.connected, reference=True)
+                save_func(name, c.connected)
 
         points = [tuple(map(float, h.pos)) for h in self.handles()]
 

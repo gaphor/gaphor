@@ -177,7 +177,7 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
 
     def save(self, save_func):
         if self._combined:
-            save_func("combined", self._combined, reference=True)
+            save_func("combined", self._combined)
         super().save(save_func)
 
     def load(self, name, value):
@@ -252,7 +252,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item):
         save_func("matrix", tuple(self.matrix))
         save_func("height", float(self._handles[1].pos.y))
         if self._combined:
-            save_func("combined", self._combined, reference=True)
+            save_func("combined", self._combined)
         super().save(save_func)
 
     def load(self, name, value):

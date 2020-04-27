@@ -97,34 +97,33 @@ def save_generator(writer, factory):  # noqa: C901
             save_collection(name, value)
         elif isinstance(value, gaphas.Canvas):
             writer.startElement("canvas", {})
-            value.save(save_canvasitem)
+            value.save(save_canvas)
             writer.endElement("canvas")
         else:
             save_value(name, value)
 
-    def save_canvasitem(name, value, reference=False):
+    def save_canvas(value):
         """
         Save attributes and references in a gaphor.diagram.* object.
         The extra attribute reference can be used to force UML
         """
-        if isinstance(value, collection) or (
-            isinstance(value, (list, tuple)) and reference is True
-        ):
+        assert isinstance(value, gaphas.Item)
+        writer.startElement("item", {"id": value.id, "type": value.__class__.__name__})
+        value.save(save_canvas_item)
+
+        for child in value.canvas.get_children(value):
+            save_canvas(child)
+
+        writer.endElement("item")
+
+    def save_canvas_item(name, value):
+        """
+        Save attributes and references in a gaphor.diagram.* object.
+        The extra attribute reference can be used to force UML
+        """
+        if isinstance(value, collection):
             save_collection(name, value)
-        elif reference:
-            save_reference(name, value)
-        elif isinstance(value, gaphas.Item):
-            writer.startElement(
-                "item", {"id": value.id, "type": value.__class__.__name__}
-            )
-            value.save(save_canvasitem)
-
-            for child in value.canvas.get_children(value):
-                save_canvasitem(None, child)
-
-            writer.endElement("item")
-
-        elif isinstance(value, Element):
+        elif isinstance(value, (Element, gaphas.Item)):
             save_reference(name, value)
         else:
             save_value(name, value)
