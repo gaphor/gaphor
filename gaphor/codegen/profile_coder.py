@@ -48,22 +48,37 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
             filename.write(f"    {o}: operation\n")
 
 
-def breadth_first_search(tree: Dict, root) -> List:
-    explored: List = []
-    queue: Deque = deque()
+def find_root_nodes(
+    trees: Dict[UML.Class, List[UML.Class]], referenced: List[UML.Class]
+) -> List[UML.Class]:
+    """Find the root nodes of tree models.
+
+    The root nodes aren't generalizing other UML.Class objects, but are being
+    referenced by others through their own generalizations.
+
+    """
+    return [key for key, value in trees.items() if not value and key in referenced]
+
+
+def breadth_first_search(
+    trees: Dict[UML.Class, List[UML.Class]], root: UML.Class
+) -> List[UML.Class]:
+    """Perform Breadth-First Search."""
+
+    explored: List[UML.Class] = []
+    queue: Deque[UML.Class] = deque()
     queue.appendleft(root)
     while queue:
         node = queue.popleft()
         if node not in explored:
             explored.append(node)
-            neighbors = []
-            for key, value in tree.items():
+            neighbors: List[UML.Class] = []
+            for key, value in trees.items():
                 if node in value:
                     neighbors.append(key)
             if neighbors:
                 for neighbor in neighbors:
                     queue.appendleft(neighbor)
-    # explored.reverse()
     return explored
 
 
@@ -76,7 +91,7 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
         )
     with open(outfile, "w") as f:
         trees: Dict[UML.Class, List[UML.Class]] = {}
-        referenced: List[Element] = []
+        referenced: List[UML.Class] = []
         uml_directory: List[str] = dir(UML.uml)
         uml_classes: List[UML.Class] = []
 
@@ -101,9 +116,7 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
             f.write(f"from gaphor.UML import {cls.name}\n\n")
 
         cls_written: Set[Element] = set()
-        root_nodes: List[Element] = [
-            key for key, value in trees.items() if not value and key in referenced
-        ]
+        root_nodes = find_root_nodes(trees, referenced)
         for root in root_nodes:
             cls_search: List = breadth_first_search(trees, root)
             for cls in cls_search:
