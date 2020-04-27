@@ -31,7 +31,7 @@ class CopyServiceTestCase(TestCase):
         diagram = ef.create(UML.Diagram)
         ci = diagram.create(CommentItem, subject=ef.create(UML.Comment))
 
-        service.copy([ci])
+        service.copy({ci})
         assert diagram.canvas.get_all_items() == [ci]
 
         service.paste(diagram)
