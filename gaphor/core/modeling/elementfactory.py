@@ -134,27 +134,15 @@ class ElementFactory(Service):
         """
         return list(self.select(expression))
 
-    def keys(self) -> List[str]:
+    def keys(self) -> Iterator[str]:
         """
         Return a list with all id's in the factory.
         """
-        return list(self._elements.keys())
-
-    def iterkeys(self) -> Iterator[str]:
-        """
-        Return a iterator with all id's in the factory.
-        """
         return iter(self._elements.keys())
 
-    def values(self) -> List[Element]:
+    def values(self) -> Iterator[Element]:
         """
         Return a list with all elements in the factory.
-        """
-        return list(self._elements.values())
-
-    def itervalues(self) -> Iterator[Element]:
-        """
-        Return a iterator with all elements in the factory.
         """
         return iter(self._elements.values())
 
