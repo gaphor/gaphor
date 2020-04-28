@@ -11,8 +11,10 @@ The copy() function returns only data that has to be part of the copy buffer.
 the `paste()` function will load this data in a model.
 """
 
+from __future__ import annotations
+
 from functools import singledispatch
-from typing import Callable, Dict, List, NamedTuple, Tuple, Type, TypeVar
+from typing import Callable, Dict, List, NamedTuple, Set, Tuple, Type, TypeVar
 
 import gaphas
 
@@ -41,67 +43,87 @@ def paste(copy_data: T, diagram: Diagram, lookup: Callable[[str], Element]):
     raise ValueError(f"No paster for {copy_data}")
 
 
-class PresentationCopy(NamedTuple):
+def serialize(value):
+    if isinstance(value, (Element, gaphas.Item)):
+        return ("r", value.id)
+    elif isinstance(value, collection):
+        return ("c", [serialize(v) for v in value])
+    else:
+        if isinstance(value, bool):
+            value = int(value)
+        return ("v", str(value))
+
+
+def deserialize(ser, lookup):
+    vtype, value = ser
+    if vtype == "r":
+        return lookup(value)
+    elif vtype == "c":
+        return [deserialize(v, lookup) for v in value]
+    elif vtype == "v":
+        return value
+
+
+class ElementCopy(NamedTuple):
     cls: Type[Element]
     data: Dict[str, Tuple[str, str]]
 
 
 @copy.register
-def _copy_presentation(item: Presentation) -> PresentationCopy:
+def _copy_element(item: Element) -> ElementCopy:
     buffer = {}
 
     def save_func(name, value):
-        if isinstance(value, (Element, gaphas.Item)):
-            buffer[name] = ("r", value.id)
-        else:
-            assert not isinstance(value, collection)
-            if isinstance(value, bool):
-                value = int(value)
-            buffer[name] = ("v", str(value))
+        buffer[name] = serialize(value)
 
     item.save(save_func)
-    return PresentationCopy(cls=item.__class__, data=buffer)
+    return ElementCopy(cls=item.__class__, data=buffer)
 
 
 @paste.register
-def _paste_presentation(copy_data: PresentationCopy, diagram, lookup):
+def _paste_element(copy_data: ElementCopy, diagram, lookup):
     cls, data = copy_data
     item = diagram.create(cls)
-    for key, (vtype, value) in data.items():
-        if vtype == "r":
-            other = lookup(value)
-            if other:
-                item.load(key, other)
-        elif vtype == "v":
-            item.load(key, value)
+    for name, ser in data.items():
+        value = deserialize(ser, lookup)
+        if value is not None:
+            item.load(name, value)
     item.canvas.update_matrices([item])
     item.postload()
     return item
 
 
-class ListOfData(NamedTuple):
-    data: Dict[str, object]
+class CopyData(NamedTuple):
+    items: Dict[str, object]
+    elements: Dict[str, object]
 
 
 @copy.register
-def _copy_all(items: set) -> ListOfData:
-    return ListOfData(data={item.id: copy(item) for item in items})
+def _copy_all(items: set) -> CopyData:
+    return CopyData(
+        items={item.id: copy(item) for item in items},
+        elements={
+            item.subject.id: copy(item.subject)
+            for item in items
+            if isinstance(item, Presentation) and item.subject
+        },
+    )
 
 
 @paste.register
-def _paste_all(copy_data: ListOfData, diagram, lookup):
-    new_data: Dict[str, Element] = {}
+def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
+    new_items: Dict[str, Presentation] = {}
 
     def _lookup(ref: str):
-        if ref in new_data:
-            return new_data[ref]
-        elif ref in copy_data.data:
-            new_data[ref] = paste(copy_data.data[ref], diagram, _lookup)
-            return new_data[ref]
+        if ref in new_items:
+            return new_items[ref]
+        elif ref in copy_data.items:
+            new_items[ref] = paste(copy_data.items[ref], diagram, _lookup)
+            return new_items[ref]
         else:
             return lookup(ref)
 
-    for old_id, data in copy_data.data.items():
-        new_data[old_id] = paste(data, diagram, _lookup)
+    for old_id, data in copy_data.items.items():
+        new_items[old_id] = paste(data, diagram, _lookup)
 
-    return set(new_data.values())
+    return set(new_items.values())

@@ -58,3 +58,32 @@ def test_copy_item_without_copying_connection(diagram, element_factory):
     assert len(element_factory.lselect(lambda e: isinstance(e, UML.Class))) == 1
     assert type(new_items) is set
     assert len(new_items) == 1
+
+
+def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
+    cls = element_factory.create(UML.Class)
+    orig_cls_id = cls.id
+    cls_item = diagram.create(ClassItem, subject=cls)
+
+    buffer = copy({cls_item})
+
+    cls_item.unlink()
+    cls.unlink()  # normally handled by the sanitizer service
+
+    assert len(diagram.canvas.get_all_items()) == 0
+    assert len(element_factory.lselect()) == 1
+    assert not element_factory.lookup(orig_cls_id)
+
+    try:
+        new_items = paste(buffer, diagram, element_factory.lookup)
+    except:
+        import pprint
+
+        pprint.pprint(buffer)
+        raise
+    assert len(diagram.canvas.get_root_items()) == 1
+    assert len(element_factory.lselect(lambda e: isinstance(e, UML.Class))) == 1
+    assert element_factory.lookup(orig_cls_id)
+
+
+# copy/paste non-presentation element
