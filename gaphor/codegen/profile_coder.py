@@ -1,7 +1,7 @@
 """Parse a SysML Gaphor Model and generate a SysML data model."""
 
 from collections import deque
-from typing import Deque, Dict, List, Optional, Set, TextIO
+from typing import Deque, Dict, List, Optional, Set, TextIO, Tuple
 
 from gaphor import UML
 from gaphor.core.modeling.element import Element
@@ -48,6 +48,48 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
             filename.write(f"    {o}: operation\n")
 
 
+def filter_uml_classes(
+    classes: List[UML.Class],
+) -> Tuple[List[UML.Class], List[UML.Class]]:
+    """Remove classes that are part of UML."""
+    uml_directory: List[str] = dir(UML.uml)
+    filtered_classes = [
+        cls
+        for cls in classes
+        if cls.name and cls.name[0] != "~" and cls.name not in uml_directory
+    ]
+    uml_classes = [cls for cls in classes if cls.name in uml_directory]
+    return filtered_classes, uml_classes
+
+
+def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Class]]:
+    """Create a tree of UML.Class elements.
+
+    The relationship between the classes is a generalization. Since the opposite
+    relationship, `cls.specific` is not currently stored, only the children
+    know who their parents are, the parents don't know the children.
+
+    """
+    trees = {}
+    for cls in classes:
+        trees[cls] = [g for g in cls.general]
+    return trees
+
+
+def create_referenced(classes: List[UML.Class]) -> List[UML.Class]:
+    """UML.Class elements that are referenced by others.
+
+    We consider a UML.Class referenced when its child UML.Class has a
+    generalization relationship to it.
+
+    """
+    referenced = []
+    for cls in classes:
+        for gen in cls.general:
+            referenced.append(gen)
+    return referenced
+
+
 def find_root_nodes(
     trees: Dict[UML.Class, List[UML.Class]], referenced: List[UML.Class]
 ) -> List[UML.Class]:
@@ -90,36 +132,26 @@ def generate(filename, outfile=None, overridesfile=None) -> None:
             filename, element_factory, modeling_language,
         )
     with open(outfile, "w") as f:
-        trees: Dict[UML.Class, List[UML.Class]] = {}
-        referenced: List[UML.Class] = []
-        uml_directory: List[str] = dir(UML.uml)
-        uml_classes: List[UML.Class] = []
-
-        classes: List = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-        for idx, cls in enumerate(classes):
-            if cls.name[0] == "~":
-                classes.pop(idx)
-        for cls in classes:
-            if cls.name in uml_directory:
-                uml_classes.append(cls)
-            else:
-                trees[cls] = [g for g in cls.general]
-                for gen in cls.general:
-                    referenced.append(gen)
-
         f.write(f"from gaphor.UML import Element\n")
         f.write(f"from gaphor.core.modeling.properties import attribute, association\n")
         f.write(
             f"from gaphor.core.modeling.properties import relation_one, relation_many\n"
         )
+
+        classes: List = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
+
+        classes, uml_classes = filter_uml_classes(classes)
         for cls in uml_classes:
             f.write(f"from gaphor.UML import {cls.name}\n\n")
 
-        cls_written: Set[Element] = set()
+        trees = create_class_trees(classes)
+        referenced = create_referenced(classes)
         root_nodes = find_root_nodes(trees, referenced)
+
+        cls_written: Set[str] = set()
         for root in root_nodes:
-            cls_search: List = breadth_first_search(trees, root)
-            for cls in cls_search:
+            classes_found: List = breadth_first_search(trees, root)
+            for cls in classes_found:
                 if cls.name not in cls_written:
                     if cls.general:
                         f.write(
