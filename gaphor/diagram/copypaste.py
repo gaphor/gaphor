@@ -14,7 +14,17 @@ the `paste()` function will load this data in a model.
 from __future__ import annotations
 
 from functools import singledispatch
-from typing import Callable, Dict, List, NamedTuple, Set, Tuple, Type, TypeVar
+from typing import (
+    Callable,
+    Dict,
+    NamedTuple,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+)
 
 import gaphas
 
@@ -57,36 +67,69 @@ def serialize(value):
 def deserialize(ser, lookup):
     vtype, value = ser
     if vtype == "r":
-        return lookup(value)
+        e = lookup(value)
+        if e:
+            yield e
     elif vtype == "c":
-        return [deserialize(v, lookup) for v in value]
+        # TODO: should apply elements to model one at a time
+        for v in value:
+            yield from deserialize(v, lookup)
     elif vtype == "v":
-        return value
+        yield value
 
 
 class ElementCopy(NamedTuple):
+    cls: Type[Element]
+    id: Union[str, bool]
+    data: Dict[str, Tuple[str, str]]
+
+
+@copy.register
+def copy_element(item: Element) -> ElementCopy:
+    buffer = {}
+
+    def save_func(name, value):
+        # do not copy Element.presentation, to avoid cyclic dependencies
+        if name != "presentation":
+            buffer[name] = serialize(value)
+
+    item.save(save_func)
+    return ElementCopy(cls=item.__class__, id=item.id, data=buffer)
+
+
+@paste.register
+def paste_element(copy_data: ElementCopy, diagram, lookup):
+    cls, id, data = copy_data
+    item = diagram.model.create_as(cls, id)
+    for name, ser in data.items():
+        for value in deserialize(ser, lookup):
+            item.load(name, value)
+    item.postload()
+    return item
+
+
+class PresentationCopy(NamedTuple):
     cls: Type[Element]
     data: Dict[str, Tuple[str, str]]
 
 
 @copy.register
-def _copy_element(item: Element) -> ElementCopy:
+def _copy_presentation(item: Presentation) -> PresentationCopy:
     buffer = {}
 
     def save_func(name, value):
         buffer[name] = serialize(value)
 
     item.save(save_func)
-    return ElementCopy(cls=item.__class__, data=buffer)
+    return PresentationCopy(cls=item.__class__, data=buffer)
 
 
 @paste.register
-def _paste_element(copy_data: ElementCopy, diagram, lookup):
+def _paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     cls, data = copy_data
     item = diagram.create(cls)
     for name, ser in data.items():
-        value = deserialize(ser, lookup)
-        if value is not None:
+        for value in deserialize(ser, lookup):
             item.load(name, value)
     item.canvas.update_matrices([item])
     item.postload()
@@ -113,17 +156,32 @@ def _copy_all(items: set) -> CopyData:
 @paste.register
 def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
     new_items: Dict[str, Presentation] = {}
+    new_elements: Dict[str, Optional[Element]] = {}
 
-    def _lookup(ref: str):
+    # element_lookup prefers elements already in the model
+    def element_lookup(ref: str):
+        if ref in new_elements:
+            return new_elements[ref]
+        looked_up = lookup(ref)
+        if looked_up:
+            return looked_up
+        if ref in copy_data.elements:
+            new_elements[ref] = None
+            new_elements[ref] = paste(copy_data.elements[ref], diagram, element_lookup)
+            return new_elements[ref]
+
+    # item_lookup copies items. Elements are looked up
+    def item_lookup(ref: str):
         if ref in new_items:
             return new_items[ref]
         elif ref in copy_data.items:
-            new_items[ref] = paste(copy_data.items[ref], diagram, _lookup)
+            new_items[ref] = paste(copy_data.items[ref], diagram, item_lookup)
             return new_items[ref]
-        else:
-            return lookup(ref)
+        return element_lookup(ref)
 
     for old_id, data in copy_data.items.items():
-        new_items[old_id] = paste(data, diagram, _lookup)
+        if old_id in new_items:
+            continue
+        new_items[old_id] = paste(data, diagram, item_lookup)
 
     return set(new_items.values())
