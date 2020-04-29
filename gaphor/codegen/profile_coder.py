@@ -31,6 +31,7 @@ def type_converter(association, enumerations: Dict = {}) -> Optional[str]:
 
 
 def write_attributes(cls: UML.Class, filename: TextIO) -> None:
+    """Write attributes based on attribute type."""
     if not cls.attribute or not cls.attribute[0].name:
         filename.write("    pass\n\n")
     else:
@@ -76,22 +77,22 @@ def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Cla
     return trees
 
 
-def create_referenced(classes: List[UML.Class]) -> List[UML.Class]:
+def create_referenced(classes: List[UML.Class]) -> Set[UML.Class]:
     """UML.Class elements that are referenced by others.
 
     We consider a UML.Class referenced when its child UML.Class has a
     generalization relationship to it.
 
     """
-    referenced = []
+    referenced = set()
     for cls in classes:
         for gen in cls.general:
-            referenced.append(gen)
+            referenced.add(gen)
     return referenced
 
 
 def find_root_nodes(
-    trees: Dict[UML.Class, List[UML.Class]], referenced: List[UML.Class]
+    trees: Dict[UML.Class, List[UML.Class]], referenced: Set[UML.Class]
 ) -> List[UML.Class]:
     """Find the root nodes of tree models.
 
