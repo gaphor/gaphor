@@ -335,7 +335,7 @@ class association(umlproperty):
                 "Value for %s should be of type %s (%s)"
                 % (self.name, self.type.__name__, type(value).__name__)
             )
-        self._set(obj, value, do_notify=False)
+        self._set(obj, value)
 
     def __str__(self):
         if self.lower == self.upper:
