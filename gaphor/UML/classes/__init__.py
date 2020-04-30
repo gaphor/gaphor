@@ -11,6 +11,7 @@ from gaphor.UML.classes import (
     interfaceconnect,
     classeseditors,
     classespropertypages,
+    copypaste,
 )
 
 __all__ = [

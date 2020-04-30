@@ -84,7 +84,6 @@ class ElementCopy(NamedTuple):
     data: Dict[str, Tuple[str, str]]
 
 
-@copy.register
 def copy_element(item: Element) -> ElementCopy:
     buffer = {}
 
@@ -97,15 +96,20 @@ def copy_element(item: Element) -> ElementCopy:
     return ElementCopy(cls=item.__class__, id=item.id, data=buffer)
 
 
-@paste.register
+copy.register(Element, copy_element)  # type: ignore[arg-type]
+
+
 def paste_element(copy_data: ElementCopy, diagram, lookup):
     cls, id, data = copy_data
-    item = diagram.model.create_as(cls, id)
+    element = diagram.model.create_as(cls, id)
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
-            item.load(name, value)
-    item.postload()
-    return item
+            element.load(name, value)
+    element.postload()
+    return element
+
+
+paste.register(ElementCopy, paste_element)
 
 
 class PresentationCopy(NamedTuple):
