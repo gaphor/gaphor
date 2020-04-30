@@ -365,9 +365,7 @@ class association(umlproperty):
             setattr(obj, self._name, v)
         return v
 
-    def _set(
-        self, obj, value: Optional[T], from_opposite=False, do_notify=True
-    ) -> None:
+    def _set(self, obj, value: Optional[T], from_opposite=False) -> None:
         """
         Set a new value for our attribute. If this is a collection, append
         to the existing collection.
@@ -375,11 +373,11 @@ class association(umlproperty):
         This method is called from the opposite association property.
         """
         if self.upper == 1:
-            self._set_one(obj, value, from_opposite, do_notify)
+            self._set_one(obj, value, from_opposite)
         else:
-            self._set_many(obj, value, from_opposite, do_notify)
+            self._set_many(obj, value, from_opposite)
 
-    def _set_one(self, obj, value, from_opposite, do_notify) -> None:
+    def _set_one(self, obj, value, from_opposite) -> None:
         if not (isinstance(value, self.type) or (value is None)):
             raise AttributeError(
                 f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
@@ -397,12 +395,11 @@ class association(umlproperty):
 
         if value is not None:
             setattr(obj, self._name, value)
-            self._set_opposite(obj, value, from_opposite, do_notify)
+            self._set_opposite(obj, value, from_opposite)
 
-        if do_notify:
-            self.handle(AssociationSet(obj, self, old, value))
+        self.handle(AssociationSet(obj, self, old, value))
 
-    def _set_many(self, obj, value, from_opposite, do_notify) -> None:
+    def _set_many(self, obj, value, from_opposite) -> None:
         if not isinstance(value, self.type):
             raise AttributeError(f"Value should be of type {self.type.__name__}")
 
@@ -415,19 +412,16 @@ class association(umlproperty):
             return
 
         c.items.append(value)
-        self._set_opposite(obj, value, from_opposite, do_notify)
+        self._set_opposite(obj, value, from_opposite)
 
-        if do_notify:
-            self.handle(AssociationAdded(obj, self, value))
+        self.handle(AssociationAdded(obj, self, value))
 
-    def _set_opposite(
-        self, obj, value: Optional[T], from_opposite=False, do_notify=True
-    ) -> None:
+    def _set_opposite(self, obj, value: Optional[T], from_opposite=False) -> None:
         if not from_opposite and self.opposite:
             opposite = getattr(type(value), self.opposite)
             if not opposite.opposite:
                 opposite.stub = self
-            opposite._set(value, obj, from_opposite=True, do_notify=do_notify)
+            opposite._set(value, obj, from_opposite=True)
         elif not self.opposite:
             if not self.stub:
                 self.stub = associationstub(self)
@@ -879,13 +873,13 @@ class redefine(umlproperty):
     def _get(self, obj):
         return self.original._get(obj)
 
-    def _set(self, obj, value, from_opposite=False, do_notify=True):
+    def _set(self, obj, value, from_opposite=False):
         if not (isinstance(value, self.type) or (self.upper == 1 and value is None)):
             raise AttributeError(
                 f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
             )
         assert isinstance(self.original, association)
-        return self.original._set(obj, value, from_opposite, do_notify)
+        return self.original._set(obj, value, from_opposite)
 
     def _del(self, obj, value, from_opposite=False, do_notify=True):
         assert isinstance(self.original, association)
