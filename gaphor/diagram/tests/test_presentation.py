@@ -105,14 +105,16 @@ def test_line_saving_without_subject(diagram):
 
 
 def test_line_loading(element_factory, diagram):
-    subject = element_factory.create(UML.Dependency)
-    p = diagram.create(StubLine)
 
-    p.load("matrix", "(2.0, 0.0, 0.0, 2.0, 0.0, 0.0)")
-    p.load("orthogonal", "0")
-    p.load("horizontal", "1")
-    p.load("points", "[(1.0, 2.0), (3.0, 4.0)]")
-    p.load("subject", subject)
+    with element_factory.block_events():
+        subject = element_factory.create(UML.Dependency)
+        p = diagram.create(StubLine)
+
+        p.load("matrix", "(2.0, 0.0, 0.0, 2.0, 0.0, 0.0)")
+        p.load("orthogonal", "0")
+        p.load("horizontal", "1")
+        p.load("points", "[(1.0, 2.0), (3.0, 4.0)]")
+        p.load("subject", subject)
 
     assert tuple(p.matrix) == (2.0, 0.0, 0.0, 2.0, 0.0, 0.0)
     assert not p.orthogonal
