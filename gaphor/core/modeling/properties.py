@@ -329,6 +329,12 @@ class association(umlproperty):
         self.opposite = opposite
         self.stub: Optional[associationstub] = None
 
+    def save(self, obj, save_func: Callable[[str, object], None]):
+        if hasattr(obj, self._name):
+            v = self._get(obj)
+            if v:
+                save_func(self.name, v)
+
     def load(self, obj, value):
         if not isinstance(value, self.type):
             raise AttributeError(
