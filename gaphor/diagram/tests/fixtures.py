@@ -8,6 +8,7 @@ from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.diagram.connectors import Connector
+from gaphor.diagram.copypaste import copy, paste
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
@@ -119,3 +120,10 @@ def clear_model(diagram, element_factory):
 
     for item in diagram.canvas.get_all_items():
         item.unlink()
+
+
+def copy_clear_and_paste(items, diagram, element_factory):
+    buffer = copy(items)
+    clear_model(diagram, element_factory)
+    print(buffer)
+    return paste(buffer, diagram, element_factory.lookup)
