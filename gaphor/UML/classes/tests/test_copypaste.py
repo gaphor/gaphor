@@ -1,7 +1,7 @@
 from gaphor import UML
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.tests.fixtures import clear_model, connect
-from gaphor.UML.classes import AssociationItem, ClassItem
+from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 
 
 def test_class_with_attributes(diagram, element_factory):
@@ -43,10 +43,38 @@ def test_class_with_operation(diagram, element_factory):
     new_cls_item = new_items.pop()
 
     assert isinstance(new_cls_item, ClassItem)
-    print("param: ", new_cls_item.subject.ownedOperation[0].formalParameter)
-    print(element_factory.lselect())
     assert (
         UML.format(new_cls_item.subject.ownedOperation[0])
+        == "- oper(inout param: str): str"
+    )
+
+
+def test_interface_with_attributes_and_operation(diagram, element_factory):
+    iface = element_factory.create(UML.Interface)
+
+    attr = element_factory.create(UML.Property)
+    UML.parse(attr, "- attr: str")
+    iface.ownedAttribute = attr
+
+    oper = element_factory.create(UML.Operation)
+    UML.parse(oper, "- oper(inout param: str): str")
+    iface.ownedOperation = oper
+
+    iface_item = diagram.create(InterfaceItem, subject=iface)
+
+    buffer = copy({iface_item})
+
+    clear_model(diagram, element_factory)
+
+    print(buffer)
+
+    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_iface_item = new_items.pop()
+
+    assert isinstance(new_iface_item, InterfaceItem)
+    assert UML.format(new_iface_item.subject.ownedAttribute[0]) == "- attr: str"
+    assert (
+        UML.format(new_iface_item.subject.ownedOperation[0])
         == "- oper(inout param: str): str"
     )
 
