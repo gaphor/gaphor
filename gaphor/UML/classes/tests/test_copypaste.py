@@ -1,6 +1,5 @@
 from gaphor import UML
-from gaphor.diagram.copypaste import copy, paste
-from gaphor.diagram.tests.fixtures import clear_model, connect
+from gaphor.diagram.tests.fixtures import clear_model, connect, copy_clear_and_paste
 from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 
 
@@ -12,13 +11,7 @@ def test_class_with_attributes(diagram, element_factory):
 
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy({cls_item})
-
-    clear_model(diagram, element_factory)
-
-    print(buffer)
-
-    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_items = copy_clear_and_paste({cls_item}, diagram, element_factory)
     new_cls_item = new_items.pop()
 
     assert isinstance(new_cls_item, ClassItem)
@@ -33,13 +26,7 @@ def test_class_with_operation(diagram, element_factory):
 
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy({cls_item})
-
-    clear_model(diagram, element_factory)
-
-    print(buffer)
-
-    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_items = copy_clear_and_paste({cls_item}, diagram, element_factory)
     new_cls_item = new_items.pop()
 
     assert isinstance(new_cls_item, ClassItem)
@@ -62,13 +49,7 @@ def test_interface_with_attributes_and_operation(diagram, element_factory):
 
     iface_item = diagram.create(InterfaceItem, subject=iface)
 
-    buffer = copy({iface_item})
-
-    clear_model(diagram, element_factory)
-
-    print(buffer)
-
-    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_items = copy_clear_and_paste({iface_item}, diagram, element_factory)
     new_iface_item = new_items.pop()
 
     assert isinstance(new_iface_item, InterfaceItem)
@@ -100,13 +81,9 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
         diagram, element_factory
     )
 
-    buffer = copy({gen_cls_item, assoc_item, spc_cls_item})
-
-    clear_model(diagram, element_factory)
-
-    print(buffer)
-
-    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_items = copy_clear_and_paste(
+        {gen_cls_item, assoc_item, spc_cls_item}, diagram, element_factory
+    )
     new_cls1, new_cls2 = element_factory.lselect(lambda e: isinstance(e, UML.Class))
     new_assoc = element_factory.lselect(lambda e: isinstance(e, UML.Association))[0]
 

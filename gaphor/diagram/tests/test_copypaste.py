@@ -2,7 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.diagram.copypaste import copy, paste
-from gaphor.diagram.tests.fixtures import clear_model, connect
+from gaphor.diagram.tests.fixtures import clear_model, connect, copy_clear_and_paste
 from gaphor.UML.classes import ClassItem, GeneralizationItem
 
 
@@ -132,13 +132,9 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
         diagram, element_factory
     )
 
-    buffer = copy({gen_cls_item, gen_item, spc_cls_item})
-
-    clear_model(diagram, element_factory)
-
-    print(buffer)
-
-    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_items = copy_clear_and_paste(
+        {gen_cls_item, gen_item, spc_cls_item}, diagram, element_factory
+    )
     new_cls1, new_cls2 = element_factory.lselect(lambda e: isinstance(e, UML.Class))
     new_gen = element_factory.lselect(lambda e: isinstance(e, UML.Generalization))[0]
 
