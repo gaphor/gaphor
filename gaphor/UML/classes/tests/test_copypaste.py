@@ -4,6 +4,53 @@ from gaphor.diagram.tests.fixtures import clear_model, connect
 from gaphor.UML.classes import AssociationItem, ClassItem
 
 
+def test_class_with_attributes(diagram, element_factory):
+    cls = element_factory.create(UML.Class)
+    attr = element_factory.create(UML.Property)
+    UML.parse(attr, "- attr: str")
+    cls.ownedAttribute = attr
+
+    cls_item = diagram.create(ClassItem, subject=cls)
+
+    buffer = copy({cls_item})
+
+    clear_model(diagram, element_factory)
+
+    print(buffer)
+
+    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_cls_item = new_items.pop()
+
+    assert isinstance(new_cls_item, ClassItem)
+    assert UML.format(new_cls_item.subject.ownedAttribute[0]) == "- attr: str"
+
+
+def test_class_with_operation(diagram, element_factory):
+    cls = element_factory.create(UML.Class)
+    oper = element_factory.create(UML.Operation)
+    UML.parse(oper, "- oper(inout param: str): str")
+    cls.ownedOperation = oper
+
+    cls_item = diagram.create(ClassItem, subject=cls)
+
+    buffer = copy({cls_item})
+
+    clear_model(diagram, element_factory)
+
+    print(buffer)
+
+    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_cls_item = new_items.pop()
+
+    assert isinstance(new_cls_item, ClassItem)
+    print("param: ", new_cls_item.subject.ownedOperation[0].formalParameter)
+    print(element_factory.lselect())
+    assert (
+        UML.format(new_cls_item.subject.ownedOperation[0])
+        == "- oper(inout param: str): str"
+    )
+
+
 def two_classes_and_an_association(diagram, element_factory):
     gen_cls = element_factory.create(UML.Class)
     spc_cls = element_factory.create(UML.Class)

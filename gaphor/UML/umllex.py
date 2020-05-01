@@ -160,7 +160,6 @@ def parse_attribute(el: uml.Property, s: str) -> None:
             el.defaultValue = None
     else:
         g = m.group
-        el.model.create
         _set_visibility(el, g("vis"))
         el.isDerived = g("derived") and True or False
         el.name = g("name")
