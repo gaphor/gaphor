@@ -8,7 +8,7 @@ from gaphor.diagram.copypaste import (
     paste,
     paste_element,
 )
-from gaphor.UML import Association, Class
+from gaphor.UML import Association, Class, Interface
 
 
 class ClassCopy(NamedTuple):
@@ -18,8 +18,9 @@ class ClassCopy(NamedTuple):
     owned_operations: List[ElementCopy]
 
 
-@copy.register
-def copy_class(element: Class):
+@copy.register(Class)
+@copy.register(Interface)
+def copy_class(element):
     return ClassCopy(
         element_copy=copy_element(element),
         owned_attributes=[
