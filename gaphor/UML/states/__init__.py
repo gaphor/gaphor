@@ -27,7 +27,7 @@ from gaphor.UML.states.pseudostates import (
 from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.transition import TransitionItem
 
-from gaphor.UML.states import propertypages, vertexconnect
+from gaphor.UML.states import propertypages, vertexconnect, copypaste
 
 __all__ = [
     "FinalStateItem",
