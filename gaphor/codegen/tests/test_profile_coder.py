@@ -2,12 +2,16 @@ from typing import Dict, List, Set
 
 import pytest
 
+from gaphor.application import Session, distribution
 from gaphor.codegen.profile_coder import (
     breadth_first_search,
     create_class_trees,
     create_referenced,
     filter_uml_classes,
     find_root_nodes,
+    generate,
+    header,
+    type_converter,
     write_attributes,
 )
 from gaphor.diagram.tests.fixtures import connect
@@ -125,5 +129,31 @@ def test_create_referenced(classes):
 
     assert len(referenced) is 2
     ref_iter = iter(referenced)
-    assert next(ref_iter) == classes[0]
-    assert next(ref_iter) == classes[2]
+    assert next(ref_iter) == classes[0] or classes[2]
+    assert next(ref_iter) == classes[2] or classes[0]
+
+
+def test_model_header(tmp_path):
+    """Load a model with no relationships to test header."""
+    path = distribution().locate_file("test-models/multiple-messages.gaphor")
+    outfile = tmp_path / "profile.py"
+
+    generate(path, outfile)
+
+    assert outfile.read_text() == header
+
+
+def test_model_with_extension(tmp_path):
+    """Load a model with an extension relationship."""
+    path = distribution().locate_file("test-models/codegen-extension.gaphor")
+    outfile = tmp_path / "profile.py"
+
+    generate(path, outfile)
+
+    extension = """
+from gaphor.UML import Class
+
+class NewStereotype:
+    Class: association
+"""
+    assert extension in outfile.read_text()
