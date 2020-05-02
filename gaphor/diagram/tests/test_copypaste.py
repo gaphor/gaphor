@@ -120,7 +120,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
 
     print(buffer)
 
-    new_items = paste(buffer, diagram, element_factory.lookup)
+    paste(buffer, diagram, element_factory.lookup)
     new_cls = element_factory.lselect(lambda e: isinstance(e, UML.Class))[0]
     assert len(diagram.canvas.get_root_items()) == 1
     assert new_cls.package is package
