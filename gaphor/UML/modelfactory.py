@@ -156,7 +156,7 @@ def get_applied_stereotypes(element):
 
 def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
     """
-    Create an Extension association between an metaclass and a stereotype.
+    Create an Extension association between a metaclass and a stereotype.
     """
     assert (
         metaclass.model is stereotype.model
