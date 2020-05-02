@@ -1,10 +1,10 @@
 """Parse a SysML Gaphor Model and generate a SysML data model."""
 
 from collections import deque
+from os import PathLike
 from typing import Deque, Dict, List, Optional, Set, TextIO, Tuple
 
 from gaphor import UML
-from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.elementfactory import ElementFactory
 from gaphor.storage import storage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
@@ -146,7 +146,16 @@ def breadth_first_search(
     return explored
 
 
-def generate(filename, outfile=None, overridesfile=None) -> None:
+def generate(
+    filename: PathLike, outfile: PathLike, overridesfile: Optional[PathLike] = None,
+) -> None:
+    """Generates the Python data model.
+
+    Opens the Gaphor model, generates the list of classes using the element
+    factory, and then creates a new Python data model using a relationship
+    search tree.
+
+    """
     element_factory = ElementFactory()
     modeling_language = UMLModelingLanguage()
     with open(filename):
