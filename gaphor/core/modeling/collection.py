@@ -6,12 +6,12 @@ import inspect
 from typing import Generic, List, Type, TypeVar, Union, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
-from gaphor.core.modeling.listmixins import querymixin, recursemixin
+from gaphor.core.modeling.listmixins import querymixin, recursemixin, recurseproxy
 
 T = TypeVar("T")
 
 
-class collectionlist(recursemixin, querymixin, List[T]):
+class collectionlist(recursemixin, querymixin, List[T]):  # type: ignore[misc]
     """
     >>> c = collectionlist()
     >>> c.append('a')
@@ -73,8 +73,8 @@ class collection(Generic[T]):
     def __getitem__(self, key: int) -> T:
         ...
 
-    @overload
-    def __getitem__(self, key: slice) -> List[T]:  # noqa: F811
+    @overload  # Literal[slice(None, None, None)]
+    def __getitem__(self, key: slice) -> recurseproxy[T]:  # noqa: F811
         ...
 
     def __getitem__(self, key: Union[int, slice]):  # noqa: F811
