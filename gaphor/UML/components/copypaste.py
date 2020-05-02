@@ -22,7 +22,7 @@ def copy_connector(element: Connector):
     return ConnectorCopy(
         element_copy=copy_element(element),
         ends=[copy_element(end) for end in element.end],
-        ports=[copy_element(port) for port in element.end[:].partWithPort],  # type: ignore[attr-defined]
+        ports=[copy_element(port) for port in element.end[:].partWithPort],
     )
 
 

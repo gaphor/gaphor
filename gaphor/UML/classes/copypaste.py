@@ -31,8 +31,8 @@ def copy_class(element):
         owned_parameters=[
             copy_element(oper)
             for oper in itertools.chain(
-                element.ownedOperation[:].formalParameter,  # type: ignore[attr-defined]
-                element.ownedOperation[:].returnResult,  # type: ignore[attr-defined]
+                element.ownedOperation[:].formalParameter,
+                element.ownedOperation[:].returnResult,
             )
         ],
         owned_operations=[copy_element(oper) for oper in element.ownedOperation],

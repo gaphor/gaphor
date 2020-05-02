@@ -10,6 +10,7 @@ from typing import (
     Callable,
     Generic,
     Iterable,
+    List,
     Optional,
     TypeVar,
     Union,
@@ -20,6 +21,7 @@ from gaphor.core.modeling.properties import association, relation_one
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
+    from gaphas.connector import Handle  # noqa
     from gaphas.matrix import Matrix  # noqa
 
 S = TypeVar("S", bound=Element)
@@ -44,6 +46,7 @@ class Presentation(Element, Generic[S]):
         "subject", Element, upper=1, opposite="presentation"
     )
 
+    handles: Callable[[Presentation], List[Handle]]
     request_update: Callable[[Presentation], None]
 
     canvas: Optional[Canvas]
