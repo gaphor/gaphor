@@ -23,5 +23,6 @@ def test_connector(diagram, element_factory):
 
     assert isinstance(new_conn.presentation[0], ConnectorItem)
     assert new_conn.kind == "assembly"
+    assert len(new_conn.end) == 1
     assert new_conn.end[0].role is new_iface
     assert new_conn.end[0].partWithPort in new_comp.ownedPort
