@@ -255,10 +255,10 @@ class recursemixin(Generic[T]):
         ...
 
     @overload
-    def __getitem__(self, key: slice) -> recurseproxy[T]:  # noqa: F811
+    def __getitem__(self, key: slice) -> recurseproxy[T]:
         ...
 
-    def __getitem__(self, key):  # noqa: F811
+    def __getitem__(self, key):
         if key == self._recursemixin_trigger:
             return self.proxy_class()(self)
         else:
