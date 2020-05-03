@@ -53,35 +53,39 @@ def type_converter(association, enumerations: Dict = {}) -> Optional[str]:
 
 def write_attributes(cls: UML.Class, filename: TextIO) -> None:
     """Write attributes based on attribute type."""
-    if not cls.attribute or not cls.attribute[0].name:
+    written = False
+    for a in cls.attribute["not it.association"]:  # type: ignore
+        type_value = type_converter(a)
+        filename.write(f"    {a.name}: attribute[{type_value}]\n")
+        written = True
+    for a in cls.attribute["it.association"]:  # type: ignore
+        if a.name and a.name != "baseClass":
+            type_value = type_converter(a)
+            filename.write(f"    {a.name}: relation_one[{type_value}]\n")
+            written = True
+    for o in cls.ownedOperation:
+        filename.write(f"    {o}: operation\n")
+        written = True
+    if not written:
         filename.write("    pass\n\n")
-    else:
-        for a in cls.attribute["not it.association"]:  # type: ignore
-            type_value = type_converter(a)
-            filename.write(f"    {a.name}: attribute[{type_value}]\n")
-        for a in cls.attribute["it.association"]:  # type: ignore
-            type_value = type_converter(a)
-            if a.name == "baseClass":
-                meta_cls = a.association.ownedEnd.class_.name
-                filename.write(f"    {meta_cls}: association\n")
-            else:
-                filename.write(f"    {a.name}: relation_one[{type_value}]\n")
-        for o in cls.ownedOperation:
-            filename.write(f"    {o}: operation\n")
 
 
-def filter_uml_classes(
-    classes: List[UML.Class],
-) -> Tuple[List[UML.Class], List[UML.Class]]:
+def filter_uml_classes(classes: List[UML.Class],) -> List[UML.Class]:
     """Remove classes that are part of UML."""
     uml_directory: List[str] = dir(UML.uml)
     filtered_classes = [
-        cls
-        for cls in classes
-        if cls.name and cls.name[0] != "~" and cls.name not in uml_directory
+        cls for cls in classes if cls.name and cls.name not in uml_directory
     ]
     uml_classes = [cls for cls in classes if cls.name in uml_directory]
-    return filtered_classes, uml_classes
+    return uml_classes
+
+
+def get_class_extension(cls: UML.Class):
+    """Get the meta classes connected with extensions."""
+    for a in cls.attribute["it.association"]:  # type: ignore
+        if a.name == "baseClass":
+            meta_cls = a.association.ownedEnd.class_
+            yield meta_cls
 
 
 def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Class]]:
@@ -95,6 +99,8 @@ def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Cla
     trees = {}
     for cls in classes:
         trees[cls] = [g for g in cls.general]
+        for meta_cls in get_class_extension(cls):
+            trees[cls].append(meta_cls)
     return trees
 
 
@@ -109,6 +115,8 @@ def create_referenced(classes: List[UML.Class]) -> Set[UML.Class]:
     for cls in classes:
         for gen in cls.general:
             referenced.add(gen)
+        for meta_cls in get_class_extension(cls):
+            referenced.add(meta_cls)
     return referenced
 
 
@@ -165,25 +173,27 @@ def generate(
     with open(outfile, "w") as f:
         f.write(header)
         classes: List = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-
-        classes, uml_classes = filter_uml_classes(classes)
-        for cls in uml_classes:
-            f.write(f"from gaphor.UML import {cls.name}\n\n")
+        classes = [cls for cls in classes if cls.name[0] != "~"]
 
         trees = create_class_trees(classes)
         referenced = create_referenced(classes)
         root_nodes = find_root_nodes(trees, referenced)
 
         cls_written: Set[str] = set()
+        uml_classes = filter_uml_classes(classes)
+        for cls in uml_classes:
+            f.write(f"from gaphor.UML import {cls.name}\n\n")
+            cls_written.add(cls.name)
+
         for root in root_nodes:
             classes_found: List = breadth_first_search(trees, root)
             for cls in classes_found:
                 if cls.name not in cls_written:
-                    if cls.general:
-                        f.write(
-                            f"class {cls.name}("
-                            f"{', '.join(g.name for g in cls.general)}):\n"
-                        )
+                    base_classes = [g.name for g in cls.general] + [
+                        ext.name for ext in get_class_extension(cls)
+                    ]
+                    if base_classes:
+                        f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
                     else:
                         f.write(f"class {cls.name}:\n")
                     cls_written.add(cls.name)

@@ -688,11 +688,8 @@
 </tail-connection>
 </item>
 <item id="e99e83e4-2143-11ea-ab0b-c72c0738acd2" type="ExtensionItem">
-<subject>
-<ref refid="eb67bf56-2143-11ea-ab0b-c72c0738acd2"/>
-</subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 262.84187486436633, 112.04000854492188)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 266.078125, 122.54141970034001)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -701,11 +698,8 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 53.67823000307439), (-13.432847435091759, 53.67823000307439)]</val>
+<val>[(0.0, 0.0), (0.0, 43.17681884765625), (-16.669097570725427, 43.17681884765625)]</val>
 </points>
-<head-connection>
-<ref refid="d69a5a17-2143-11ea-ab0b-c72c0738acd2"/>
-</head-connection>
 <tail-connection>
 <ref refid="4b3c5149-20e6-11ea-9209-e76c3117c943"/>
 </tail-connection>
@@ -850,8 +844,14 @@
 <val>100.0</val>
 </width>
 <height>
-<val>87.0</val>
+<val>71.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
 <subject>
 <ref refid="c4989f2a-2144-11ea-ab0b-c72c0738acd2"/>
 </subject>
@@ -900,11 +900,8 @@
 </tail-connection>
 </item>
 <item id="dd2804f4-2144-11ea-ab0b-c72c0738acd2" type="ExtensionItem">
-<subject>
-<ref refid="deef9928-2144-11ea-ab0b-c72c0738acd2"/>
-</subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 156.2313232421875, 517.300048828125)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 157.671875, 514.828125)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -913,11 +910,8 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 32.7586669921875), (-1.533447265625, 32.7586669921875)]</val>
+<val>[(0.0, 0.0), (0.0, 35.2305908203125), (-2.9739990234375, 35.2305908203125)]</val>
 </points>
-<head-connection>
-<ref refid="c4989f2b-2144-11ea-ab0b-c72c0738acd2"/>
-</head-connection>
 <tail-connection>
 <ref refid="caabb597-2144-11ea-ab0b-c72c0738acd2"/>
 </tail-connection>
@@ -1287,11 +1281,6 @@
 <name>
 <val>Trace</val>
 </name>
-<ownedAttribute>
-<reflist>
-<ref refid="eb67bf57-2143-11ea-ab0b-c72c0738acd2"/>
-</reflist>
-</ownedAttribute>
 <package>
 <ref refid="682de294-20e1-11ea-9209-e76c3117c943"/>
 </package>
@@ -10006,11 +9995,6 @@
 <name>
 <val>Trace</val>
 </name>
-<ownedAttribute>
-<reflist>
-<ref refid="eb67bf58-2143-11ea-ab0b-c72c0738acd2"/>
-</reflist>
-</ownedAttribute>
 <ownedComment>
 <reflist>
 <ref refid="dc231126-2143-11ea-ab0b-c72c0738acd2"/>
@@ -10041,50 +10025,6 @@
 </reflist>
 </presentation>
 </Comment>
-<Extension id="eb67bf56-2143-11ea-ab0b-c72c0738acd2">
-<memberEnd>
-<reflist>
-<ref refid="eb67bf57-2143-11ea-ab0b-c72c0738acd2"/>
-<ref refid="eb67bf58-2143-11ea-ab0b-c72c0738acd2"/>
-</reflist>
-</memberEnd>
-<ownedEnd>
-<ref refid="eb67bf58-2143-11ea-ab0b-c72c0738acd2"/>
-</ownedEnd>
-<presentation>
-<reflist>
-<ref refid="e99e83e4-2143-11ea-ab0b-c72c0738acd2"/>
-</reflist>
-</presentation>
-</Extension>
-<Property id="eb67bf57-2143-11ea-ab0b-c72c0738acd2">
-<association>
-<ref refid="eb67bf56-2143-11ea-ab0b-c72c0738acd2"/>
-</association>
-<class_>
-<ref refid="4b3c5148-20e6-11ea-9209-e76c3117c943"/>
-</class_>
-<name>
-<val>baseClass</val>
-</name>
-<type>
-<ref refid="d69a5a16-2143-11ea-ab0b-c72c0738acd2"/>
-</type>
-</Property>
-<ExtensionEnd id="eb67bf58-2143-11ea-ab0b-c72c0738acd2">
-<aggregation>
-<val>composite</val>
-</aggregation>
-<association>
-<ref refid="eb67bf56-2143-11ea-ab0b-c72c0738acd2"/>
-</association>
-<class_>
-<ref refid="d69a5a16-2143-11ea-ab0b-c72c0738acd2"/>
-</class_>
-<type>
-<ref refid="4b3c5148-20e6-11ea-9209-e76c3117c943"/>
-</type>
-</ExtensionEnd>
 <Class id="515d800c-2144-11ea-ab0b-c72c0738acd2">
 <name>
 <val>NamedElement</val>
@@ -10164,11 +10104,6 @@
 <name>
 <val>Refine</val>
 </name>
-<ownedAttribute>
-<reflist>
-<ref refid="deef992a-2144-11ea-ab0b-c72c0738acd2"/>
-</reflist>
-</ownedAttribute>
 <ownedComment>
 <reflist>
 <ref refid="dc231126-2143-11ea-ab0b-c72c0738acd2"/>
@@ -10192,11 +10127,6 @@
 <name>
 <val>Refine</val>
 </name>
-<ownedAttribute>
-<reflist>
-<ref refid="deef9929-2144-11ea-ab0b-c72c0738acd2"/>
-</reflist>
-</ownedAttribute>
 <package>
 <ref refid="682de294-20e1-11ea-9209-e76c3117c943"/>
 </package>
@@ -10219,50 +10149,6 @@
 <ref refid="caabb596-2144-11ea-ab0b-c72c0738acd2"/>
 </specific>
 </Generalization>
-<Extension id="deef9928-2144-11ea-ab0b-c72c0738acd2">
-<memberEnd>
-<reflist>
-<ref refid="deef9929-2144-11ea-ab0b-c72c0738acd2"/>
-<ref refid="deef992a-2144-11ea-ab0b-c72c0738acd2"/>
-</reflist>
-</memberEnd>
-<ownedEnd>
-<ref refid="deef992a-2144-11ea-ab0b-c72c0738acd2"/>
-</ownedEnd>
-<presentation>
-<reflist>
-<ref refid="dd2804f4-2144-11ea-ab0b-c72c0738acd2"/>
-</reflist>
-</presentation>
-</Extension>
-<Property id="deef9929-2144-11ea-ab0b-c72c0738acd2">
-<association>
-<ref refid="deef9928-2144-11ea-ab0b-c72c0738acd2"/>
-</association>
-<class_>
-<ref refid="caabb596-2144-11ea-ab0b-c72c0738acd2"/>
-</class_>
-<name>
-<val>baseClass</val>
-</name>
-<type>
-<ref refid="c4989f2a-2144-11ea-ab0b-c72c0738acd2"/>
-</type>
-</Property>
-<ExtensionEnd id="deef992a-2144-11ea-ab0b-c72c0738acd2">
-<aggregation>
-<val>composite</val>
-</aggregation>
-<association>
-<ref refid="deef9928-2144-11ea-ab0b-c72c0738acd2"/>
-</association>
-<class_>
-<ref refid="c4989f2a-2144-11ea-ab0b-c72c0738acd2"/>
-</class_>
-<type>
-<ref refid="caabb596-2144-11ea-ab0b-c72c0738acd2"/>
-</type>
-</ExtensionEnd>
 <Comment id="f0c9899c-2144-11ea-ab0b-c72c0738acd2">
 <body>
 <val>SysML 1.6 Figure 16-1</val>
@@ -10786,8 +10672,10 @@ FlowDirectionKind</val>
 <reflist>
 <ref refid="cd161a86-2100-11ea-ab0b-c72c0738acd2"/>
 <ref refid="1178a6b2-2101-11ea-ab0b-c72c0738acd2"/>
+<ref refid="bacfa8c8-2101-11ea-ab0b-c72c0738acd2"/>
 <ref refid="cf12c194-2101-11ea-ab0b-c72c0738acd2"/>
 <ref refid="585f9b90-2105-11ea-ab0b-c72c0738acd2"/>
+<ref refid="6fbc48f2-2109-11ea-ab0b-c72c0738acd2"/>
 <ref refid="3edad25c-210a-11ea-ab0b-c72c0738acd2"/>
 <ref refid="552c11e2-210a-11ea-ab0b-c72c0738acd2"/>
 <ref refid="b4b89072-210a-11ea-ab0b-c72c0738acd2"/>
@@ -10813,8 +10701,6 @@ FlowDirectionKind</val>
 <ref refid="d69a5a16-2143-11ea-ab0b-c72c0738acd2"/>
 <ref refid="515d800c-2144-11ea-ab0b-c72c0738acd2"/>
 <ref refid="c4989f2a-2144-11ea-ab0b-c72c0738acd2"/>
-<ref refid="bacfa8c8-2101-11ea-ab0b-c72c0738acd2"/>
-<ref refid="6fbc48f2-2109-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedClassifier>
 <package>

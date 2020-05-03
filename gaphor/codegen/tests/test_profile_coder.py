@@ -117,9 +117,8 @@ def test_filter_uml_classes(classes):
     classes[4].name = "Car"
     assert len(classes) == 5
 
-    classes, uml_classes = filter_uml_classes(classes)
+    uml_classes = filter_uml_classes(classes)
 
-    assert len(classes) == 2
     assert len(uml_classes) == 2
 
 
@@ -153,7 +152,7 @@ def test_model_with_extension(tmp_path):
     extension = """
 from gaphor.UML import Class
 
-class NewStereotype:
-    Class: association
+class NewStereotype(Class):
+    pass
 """
     assert extension in outfile.read_text()
