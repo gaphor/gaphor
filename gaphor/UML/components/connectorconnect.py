@@ -150,6 +150,14 @@ class ConnectorConnectBase(BaseConnector):
                     assert assembly.kind == "assembly"
                     break
 
+            if line.subject:
+                assert isinstance(line.subject, UML.Connector)
+                assembly = line.subject
+                assert assembly.end
+                assert assembly.end[:].partWithPort
+                assert iface in assembly.end[:].role
+                return
+
             if assembly is None:
                 assembly = self.element.model.create(UML.Connector)
                 assembly.kind = "assembly"
