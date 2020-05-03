@@ -74,10 +74,10 @@ class collection(Generic[T]):
         ...
 
     @overload  # Literal[slice(None, None, None)]
-    def __getitem__(self, key: slice) -> recurseproxy[T]:  # noqa: F811
+    def __getitem__(self, key: slice) -> recurseproxy[T]:
         ...
 
-    def __getitem__(self, key: Union[int, slice]):  # noqa: F811
+    def __getitem__(self, key: Union[int, slice]):
         return self.items.__getitem__(key)
 
     def __contains__(self, obj) -> bool:
