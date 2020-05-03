@@ -80,7 +80,7 @@ def filter_uml_classes(classes: List[UML.Class],) -> List[UML.Class]:
     return uml_classes
 
 
-def get_class_extension(cls: UML.Class):
+def get_class_extensions(cls: UML.Class):
     """Get the meta classes connected with extensions."""
     for a in cls.attribute["it.association"]:  # type: ignore
         if a.name == "baseClass":
@@ -98,9 +98,9 @@ def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Cla
     """
     trees = {}
     for cls in classes:
-        trees[cls] = [g for g in cls.general]
-        for meta_cls in get_class_extension(cls):
-            trees[cls].append(meta_cls)
+        base_classes = [base_cls for base_cls in cls.general]
+        meta_classes = [meta_cls for meta_cls in get_class_extensions(cls)]
+        trees[cls] = base_classes + meta_classes
     return trees
 
 
@@ -115,7 +115,7 @@ def create_referenced(classes: List[UML.Class]) -> Set[UML.Class]:
     for cls in classes:
         for gen in cls.general:
             referenced.add(gen)
-        for meta_cls in get_class_extension(cls):
+        for meta_cls in get_class_extensions(cls):
             referenced.add(meta_cls)
     return referenced
 
@@ -190,7 +190,7 @@ def generate(
             for cls in classes_found:
                 if cls.name not in cls_written:
                     base_classes = [g.name for g in cls.general] + [
-                        ext.name for ext in get_class_extension(cls)
+                        ext.name for ext in get_class_extensions(cls)
                     ]
                     if base_classes:
                         f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
