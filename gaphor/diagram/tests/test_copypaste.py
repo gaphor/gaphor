@@ -2,6 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.diagram.copypaste import copy, paste
+from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 from gaphor.diagram.tests.fixtures import clear_model, connect, copy_clear_and_paste
 from gaphor.UML.classes import ClassItem, GeneralizationItem
 
@@ -145,4 +146,13 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
     assert new_gen.presentation[0] in new_items
 
 
-# copy/paste non-presentation element
+def test_copy_remove_paste_simple_items(diagram, element_factory):
+    box = diagram.create(Box)
+    ellipse = diagram.create(Ellipse)
+    line = diagram.create(Line)
+
+    new_items = copy_clear_and_paste({box, ellipse, line}, diagram, element_factory)
+
+    new_box = next(item for item in new_items if isinstance(item, Box))
+
+    assert new_box
