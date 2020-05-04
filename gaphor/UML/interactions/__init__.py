@@ -7,6 +7,7 @@ from gaphor.UML.interactions import (
     interactionsconnect,
     interactionsgrouping,
     interactionspropertypages,
+    copypaste,
 )
 
 __all__ = [
