@@ -30,6 +30,7 @@ import gaphas
 
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.collection import collection
+from gaphor.diagram.general.simpleitem import SimpleItem
 
 T = TypeVar("T")
 
@@ -117,8 +118,7 @@ class PresentationCopy(NamedTuple):
     data: Dict[str, Tuple[str, str]]
 
 
-@copy.register
-def _copy_presentation(item: Presentation) -> PresentationCopy:
+def copy_presentation(item) -> PresentationCopy:
     buffer = {}
 
     def save_func(name, value):
@@ -128,8 +128,12 @@ def _copy_presentation(item: Presentation) -> PresentationCopy:
     return PresentationCopy(cls=item.__class__, data=buffer)
 
 
+copy.register(Presentation, copy_presentation)  # type: ignore[arg-type]
+copy.register(SimpleItem, copy_presentation)  # type: ignore[arg-type]
+
+
 @paste.register
-def _paste_presentation(copy_data: PresentationCopy, diagram, lookup):
+def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     cls, data = copy_data
     item = diagram.create(cls)
     for name, ser in data.items():
