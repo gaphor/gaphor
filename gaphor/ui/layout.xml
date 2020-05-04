@@ -1,13 +1,13 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <layout>
-    <paned orientation="horizontal" position="200">
-      <paned orientation="vertical" position="200">
-        <component name="namespace"/>
-        <component name="toolbox" resize="true"/>
-      </paned>
-      <box orientation="horizontal">
-        <component name="diagrams" resize="true"/>
-        <component name="elementeditor"/>
-      </box>
+  <paned name="ui.namespace-width" orientation="horizontal" position="200">
+    <paned name="ui.namespace-height" orientation="vertical" position="200">
+      <component name="namespace" />
+      <component name="toolbox" resize="true" />
     </paned>
+    <box orientation="horizontal">
+      <component name="diagrams" resize="true" />
+      <component name="elementeditor" />
+    </box>
+  </paned>
 </layout>

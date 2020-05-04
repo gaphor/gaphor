@@ -184,7 +184,7 @@ class MainWindow(Service, ActionProvider):
             return widget
 
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
-            self.layout = deserialize(self.window, f.read(), _factory)
+            self.layout = deserialize(self.window, f.read(), _factory, self.properties)
 
         action_group, accel_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
