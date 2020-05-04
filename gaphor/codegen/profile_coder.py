@@ -97,11 +97,7 @@ def filter_uml_classes(classes: List[UML.Class],) -> List[UML.Class]:
     """Remove classes that are part of UML."""
 
     uml_directory: List[str] = dir(UML.uml)
-    filtered_classes = [
-        cls for cls in classes if cls.name and cls.name not in uml_directory
-    ]
-    uml_classes = [cls for cls in classes if cls.name in uml_directory]
-    return uml_classes
+    return [cls for cls in classes if cls.name in uml_directory]
 
 
 def get_class_extensions(cls: UML.Class):
