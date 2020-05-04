@@ -32,6 +32,8 @@ from gaphor.core.modeling.properties import (
 
 
 def type_converter(association, enumerations: Dict = {}) -> Optional[str]:
+    """Convert association types for Python data model."""
+
     type_value = association.typeValue
     if type_value is None:
         return None
@@ -51,8 +53,29 @@ def type_converter(association, enumerations: Dict = {}) -> Optional[str]:
         return str(type_value)
 
 
+def write_class_signature(
+    trees: Dict[UML.Class, List[UML.Class]],
+    cls: UML.Class,
+    cls_written: Set[str],
+    filename: TextIO,
+) -> bool:
+    """Write a class signature."""
+
+    base_classes = [cls.name for cls in trees[cls]]
+    if base_classes:
+        if all(cls_name in cls_written for cls_name in base_classes):
+            filename.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
+        else:
+            return False
+    else:
+        filename.write(f"class {cls.name}:\n")
+    write_attributes(cls, filename)
+    return True
+
+
 def write_attributes(cls: UML.Class, filename: TextIO) -> None:
     """Write attributes based on attribute type."""
+
     written = False
     for a in cls.attribute["not it.association"]:  # type: ignore
         type_value = type_converter(a)
@@ -72,6 +95,7 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
 
 def filter_uml_classes(classes: List[UML.Class],) -> List[UML.Class]:
     """Remove classes that are part of UML."""
+
     uml_directory: List[str] = dir(UML.uml)
     filtered_classes = [
         cls for cls in classes if cls.name and cls.name not in uml_directory
@@ -190,25 +214,12 @@ def generate(
         classes_deferred: List[UML.Class] = []
         for cls in classes_found:
             if cls.name not in cls_written:
-                base_classes = [g.name for g in cls.general] + [
-                    ext.name for ext in get_class_extensions(cls)
-                ]
-                if base_classes:
-                    if all(cls_name in cls_written for cls_name in base_classes):
-                        f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
-                    else:
-                        classes_deferred.append(cls)
-                        continue
+                if write_class_signature(trees, cls, cls_written, f):
+                    cls_written.add(cls.name)
                 else:
-                    f.write(f"class {cls.name}:\n")
-                cls_written.add(cls.name)
-                write_attributes(cls, filename=f)
+                    classes_deferred.append(cls)
 
         for cls in classes_deferred:
-            base_classes = [g.name for g in cls.general] + [
-                ext.name for ext in get_class_extensions(cls)
-            ]
-            f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
-            write_attributes(cls, filename=f)
+            write_class_signature(trees, cls, cls_written, f)
 
     element_factory.shutdown()
