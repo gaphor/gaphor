@@ -7,6 +7,18 @@ from gaphor.UML.interactions.executionspecification import ExecutionSpecificatio
 from gaphor.UML.interactions.lifeline import LifelineItem
 
 
+def create_lifeline_with_execution_specification(diagram, element_factory):
+    lifeline = diagram.create(
+        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    )
+    lifeline.lifetime.visible = True
+    exec_spec = diagram.create(ExecutionSpecificationItem)
+
+    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
+
+    return lifeline, exec_spec
+
+
 def test_draw_on_canvas():
     canvas = Canvas()
     exec_spec = ExecutionSpecificationItem()
@@ -26,13 +38,9 @@ def test_allow_execution_specification_to_lifeline(diagram):
 
 
 def test_connect_execution_specification_to_lifeline(diagram, element_factory):
-    lifeline = diagram.create(
-        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    lifeline, exec_spec = create_lifeline_with_execution_specification(
+        diagram, element_factory
     )
-    lifeline.lifetime.visible = True
-    exec_spec = diagram.create(ExecutionSpecificationItem)
-
-    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
 
     assert exec_spec.subject
     assert lifeline.subject
@@ -47,12 +55,9 @@ def test_disconnect_execution_specification_from_lifeline(diagram, element_facto
     def elements_of_kind(type):
         return element_factory.lselect(lambda e: e.isKindOf(type))
 
-    lifeline = diagram.create(
-        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    lifeline, exec_spec = create_lifeline_with_execution_specification(
+        diagram, element_factory
     )
-    lifeline.lifetime.visible = True
-    exec_spec = diagram.create(ExecutionSpecificationItem)
-    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
 
     disconnect(exec_spec, exec_spec.handles()[0])
 
@@ -97,18 +102,11 @@ def test_connect_execution_specification_to_execution_specification(
 def test_connect_execution_specification_to_execution_specification_with_lifeline(
     diagram, element_factory
 ):
-    lifeline = diagram.create(
-        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    lifeline, parent_exec_spec = create_lifeline_with_execution_specification(
+        diagram, element_factory
     )
-    lifeline.lifetime.visible = True
-    parent_exec_spec = diagram.create(ExecutionSpecificationItem)
+
     child_exec_spec = diagram.create(ExecutionSpecificationItem)
-    connect(
-        parent_exec_spec,
-        parent_exec_spec.handles()[0],
-        lifeline,
-        lifeline.lifetime.port,
-    )
 
     connect(
         child_exec_spec,
@@ -166,19 +164,11 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
     def elements_of_kind(type):
         return element_factory.lselect(lambda e: e.isKindOf(type))
 
-    lifeline = diagram.create(
-        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    lifeline, parent_exec_spec = create_lifeline_with_execution_specification(
+        diagram, element_factory
     )
-    lifeline.lifetime.visible = True
-    parent_exec_spec = diagram.create(ExecutionSpecificationItem)
     child_exec_spec = diagram.create(ExecutionSpecificationItem)
     grand_child_exec_spec = diagram.create(ExecutionSpecificationItem)
-    connect(
-        parent_exec_spec,
-        parent_exec_spec.handles()[0],
-        lifeline,
-        lifeline.lifetime.port,
-    )
     connect(
         child_exec_spec,
         child_exec_spec.handles()[0],
@@ -203,13 +193,9 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
 
 
 def test_save_and_load(diagram, element_factory, saver, loader):
-    lifeline = diagram.create(
-        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    lifeline, exec_spec = create_lifeline_with_execution_specification(
+        diagram, element_factory
     )
-    lifeline.lifetime.visible = True
-    exec_spec = diagram.create(ExecutionSpecificationItem)
-
-    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
 
     diagram.canvas.update_now()
 
