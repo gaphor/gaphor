@@ -13,9 +13,11 @@ def to_kebab_case(s):
     return TO_KEBAB.sub("\\1-\\2", s).lower()
 
 
-@singledispatch
-def get_icon_name(element):
+def get_default_icon_name(element):
     """
     Get an icon name for a model element.
     """
     return f"gaphor-{to_kebab_case(element.__class__.__name__)}-symbolic"
+
+
+get_icon_name = singledispatch(get_default_icon_name)
