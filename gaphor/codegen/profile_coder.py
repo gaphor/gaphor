@@ -133,13 +133,14 @@ def find_root_nodes(
 
 
 def breadth_first_search(
-    trees: Dict[UML.Class, List[UML.Class]], root: UML.Class
+    trees: Dict[UML.Class, List[UML.Class]], root_nodes: List[UML.Class]
 ) -> List[UML.Class]:
     """Perform Breadth-First Search."""
 
     explored: List[UML.Class] = []
     queue: Deque[UML.Class] = deque()
-    queue.appendleft(root)
+    for root in root_nodes:
+        queue.append(root)
     while queue:
         node = queue.popleft()
         if node not in explored:
@@ -150,7 +151,7 @@ def breadth_first_search(
                     neighbors.append(key)
             if neighbors:
                 for neighbor in neighbors:
-                    queue.appendleft(neighbor)
+                    queue.append(neighbor)
     return explored
 
 
@@ -185,19 +186,18 @@ def generate(
             f.write(f"from gaphor.UML import {cls.name}\n\n")
             cls_written.add(cls.name)
 
-        for root in root_nodes:
-            classes_found: List = breadth_first_search(trees, root)
-            for cls in classes_found:
-                if cls.name not in cls_written:
-                    base_classes = [g.name for g in cls.general] + [
-                        ext.name for ext in get_class_extensions(cls)
-                    ]
-                    if base_classes:
-                        f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
-                    else:
-                        f.write(f"class {cls.name}:\n")
-                    cls_written.add(cls.name)
-                    write_attributes(cls, filename=f)
+        classes_found: List = breadth_first_search(trees, root_nodes)
+        for cls in classes_found:
+            if cls.name not in cls_written:
+                base_classes = [g.name for g in cls.general] + [
+                    ext.name for ext in get_class_extensions(cls)
+                ]
+                if base_classes:
+                    f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
+                else:
+                    f.write(f"class {cls.name}:\n")
+                cls_written.add(cls.name)
+                write_attributes(cls, filename=f)
 
         for cls, generalizations in trees.items():
             if not generalizations:
