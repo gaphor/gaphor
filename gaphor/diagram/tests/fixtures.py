@@ -110,20 +110,20 @@ def disconnect(line, handle):
     assert not canvas.get_connection(handle)
 
 
-def clear_model(diagram, element_factory):
+def clear_model(diagram, element_factory, retain=[]):
     """
     Clear the model and diagram, leaving only an empty diagram.
     """
     for element in list(element_factory.values()):
-        if element is not diagram:
+        if element is not diagram and element not in retain:
             element.unlink()
 
     for item in diagram.canvas.get_all_items():
         item.unlink()
 
 
-def copy_clear_and_paste(items, diagram, element_factory):
+def copy_clear_and_paste(items, diagram, element_factory, retain=[]):
     buffer = copy(items)
-    clear_model(diagram, element_factory)
+    clear_model(diagram, element_factory, retain)
     print(buffer)
     return paste(buffer, diagram, element_factory.lookup)

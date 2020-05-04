@@ -146,6 +146,22 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
     assert new_gen.presentation[0] in new_items
 
 
+def test_copy_remove_paste_items_when_namespace_is_removed(diagram, element_factory):
+    package = element_factory.create(UML.Package)
+    cls = element_factory.create(UML.Class)
+    cls.package = package
+    cls_item = diagram.create(ClassItem, subject=cls)
+
+    diagram_package = element_factory.create(UML.Package)
+    diagram.package = diagram_package
+
+    copy_clear_and_paste({cls_item}, diagram, element_factory, retain=[diagram_package])
+
+    new_cls = element_factory.lselect(lambda e: isinstance(e, UML.Class))[0]
+
+    assert new_cls.namespace is diagram_package
+
+
 def test_copy_remove_paste_simple_items(diagram, element_factory):
     box = diagram.create(Box)
     ellipse = diagram.create(Ellipse)

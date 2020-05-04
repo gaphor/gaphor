@@ -3,16 +3,19 @@ from typing import Dict, List, NamedTuple
 
 from gaphor.diagram.copypaste import (
     ElementCopy,
+    NamedElementCopy,
     copy,
     copy_element,
+    copy_named_element,
     paste,
     paste_element,
+    paste_named_element,
 )
 from gaphor.UML import Association, Class, Interface
 
 
 class ClassCopy(NamedTuple):
-    element_copy: ElementCopy
+    element_copy: NamedElementCopy
     owned_attributes: List[ElementCopy]
     owned_parameters: List[ElementCopy]
     owned_operations: List[ElementCopy]
@@ -22,7 +25,7 @@ class ClassCopy(NamedTuple):
 @copy.register(Interface)
 def copy_class(element):
     return ClassCopy(
-        element_copy=copy_element(element),
+        element_copy=copy_named_element(element),
         owned_attributes=[
             copy_element(attr)
             for attr in element.ownedAttribute
@@ -47,18 +50,18 @@ def paste_class(copy_data: ClassCopy, diagram, lookup):
         copy_data.owned_operations,
     ):
         paste_element(attr, diagram, lookup)
-    return paste_element(copy_data.element_copy, diagram, lookup)
+    return paste_named_element(copy_data.element_copy, diagram, lookup)
 
 
 class AssociationCopy(NamedTuple):
-    element_copy: ElementCopy
+    element_copy: NamedElementCopy
     member_ends: List[ElementCopy]
 
 
 @copy.register
 def copy_association(element: Association):
     return AssociationCopy(
-        element_copy=copy_element(element),
+        element_copy=copy_named_element(element),
         member_ends=[copy_element(end) for end in element.memberEnd],
     )
 
@@ -67,4 +70,4 @@ def copy_association(element: Association):
 def paste_association(copy_data: AssociationCopy, diagram, lookup):
     for member_end in copy_data.member_ends:
         paste_element(member_end, diagram, lookup)
-    return paste_element(copy_data.element_copy, diagram, lookup)
+    return paste_named_element(copy_data.element_copy, diagram, lookup)

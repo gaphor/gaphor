@@ -28,7 +28,7 @@ from typing import (
 
 import gaphas
 
-from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling import Diagram, Element, NamedElement, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.diagram.general.simpleitem import SimpleItem
 
@@ -85,7 +85,7 @@ class ElementCopy(NamedTuple):
     data: Dict[str, Tuple[str, str]]
 
 
-def copy_element(item: Element) -> ElementCopy:
+def copy_element(element: Element) -> ElementCopy:
     buffer = {}
 
     def save_func(name, value):
@@ -93,8 +93,8 @@ def copy_element(item: Element) -> ElementCopy:
         if name != "presentation":
             buffer[name] = serialize(value)
 
-    item.save(save_func)
-    return ElementCopy(cls=item.__class__, id=item.id, data=buffer)
+    element.save(save_func)
+    return ElementCopy(cls=element.__class__, id=element.id, data=buffer)
 
 
 copy.register(Element, copy_element)  # type: ignore[arg-type]
@@ -111,6 +111,30 @@ def paste_element(copy_data: ElementCopy, diagram, lookup):
 
 
 paste.register(ElementCopy, paste_element)
+
+
+class NamedElementCopy(NamedTuple):
+    element_copy: ElementCopy
+    with_namespace: bool
+
+
+def copy_named_element(element: NamedElement) -> NamedElementCopy:
+    return NamedElementCopy(
+        element_copy=copy_element(element), with_namespace=bool(element.namespace)
+    )
+
+
+copy.register(NamedElement, copy_named_element)  # type: ignore[arg-type]
+
+
+def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
+    element = paste_element(copy_data.element_copy, diagram, lookup)
+    if copy_data.with_namespace and not element.namespace:
+        element.package = diagram.namespace
+    return element
+
+
+paste.register(NamedElementCopy, paste_named_element)
 
 
 class PresentationCopy(NamedTuple):
