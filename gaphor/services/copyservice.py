@@ -101,6 +101,9 @@ class CopyService(Service, ActionProvider):
         if not view:
             return
 
+        if not self.copy_buffer:
+            return
+
         new_items = self.paste(diagram)
 
         view.unselect_all()
