@@ -7,7 +7,7 @@ from typing import Dict, Set
 import gaphas
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import Transaction, action, event_handler, gettext
+from gaphor.core import Transaction, action, event_handler
 from gaphor.core.modeling import Element, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.diagram.copypaste import copy, paste
@@ -75,26 +75,34 @@ class CopyService(Service, ActionProvider):
 
         return new_items
 
+    def update_paste_state(self, view):
+        win_action_group = view.get_action_group("win")
+        if win_action_group:
+            win_action_group.lookup_action("edit-paste").set_enabled(
+                bool(self.copy_buffer)
+            )
+
     @action(
-        name="edit-copy",
-        label=gettext("Copy"),
-        icon_name="edit-copy",
-        shortcut="<Primary>c",
+        name="edit-copy", shortcut="<Primary>c",
     )
     def copy_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
             items = view.selected_items
             self.copy(items)
-            win_action_group = view.get_action_group("win")
-            if win_action_group:
-                win_action_group.lookup_action("edit-paste").set_enabled(
-                    bool(self.copy_buffer)
-                )
+        self.update_paste_state(view)
 
-    @action(
-        name="edit-paste", label="_Paste", icon_name="edit-paste", shortcut="<Primary>v"
-    )
+    @action(name="edit-cut", shortcut="<Primary>x")
+    def cut_action(self):
+        view = self.diagrams.get_current_view()
+        if view.is_focus():
+            items = view.selected_items
+            self.copy(items)
+            for i in list(items):
+                i.unlink()
+        self.update_paste_state(view)
+
+    @action(name="edit-paste", shortcut="<Primary>v")
     def paste_action(self):
         view = self.diagrams.get_current_view()
         diagram = self.diagrams.get_current_diagram()
