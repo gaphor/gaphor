@@ -186,24 +186,29 @@ def generate(
             f.write(f"from gaphor.UML import {cls.name}\n\n")
             cls_written.add(cls.name)
 
-        classes_found: List = breadth_first_search(trees, root_nodes)
+        classes_found: List[UML.Class] = breadth_first_search(trees, root_nodes)
+        classes_deferred: List[UML.Class] = []
         for cls in classes_found:
             if cls.name not in cls_written:
                 base_classes = [g.name for g in cls.general] + [
                     ext.name for ext in get_class_extensions(cls)
                 ]
                 if base_classes:
-                    f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
+                    if all(cls_name in cls_written for cls_name in base_classes):
+                        f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
+                    else:
+                        classes_deferred.append(cls)
+                        continue
                 else:
                     f.write(f"class {cls.name}:\n")
                 cls_written.add(cls.name)
                 write_attributes(cls, filename=f)
 
-        for cls, generalizations in trees.items():
-            if not generalizations:
-                if cls.name not in cls_written:
-                    f.write(f"class {cls.name}:\n")
-                    write_attributes(cls, filename=f)
-                    cls_written.add(cls.name)
+        for cls in classes_deferred:
+            base_classes = [g.name for g in cls.general] + [
+                ext.name for ext in get_class_extensions(cls)
+            ]
+            f.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
+            write_attributes(cls, filename=f)
 
     element_factory.shutdown()
