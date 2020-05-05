@@ -5,7 +5,7 @@ Test transition item and state vertices connections.
 from gaphor import UML
 from gaphor.tests import TestCase
 from gaphor.UML.states.finalstate import FinalStateItem
-from gaphor.UML.states.pseudostates import InitialPseudostateItem
+from gaphor.UML.states.pseudostates import PseudostateItem
 from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.transition import TransitionItem
 
@@ -93,7 +93,7 @@ class TransitionConnectorTestCase(TestCase):
     def test_initial_pseudostate_connect(self):
         """Test transition and initial pseudostate connection
         """
-        v1 = self.create(InitialPseudostateItem, UML.Pseudostate)
+        v1 = self.create(PseudostateItem, UML.Pseudostate)
         v2 = self.create(StateItem, UML.State)
 
         t = self.create(TransitionItem)
@@ -125,7 +125,7 @@ class TransitionConnectorTestCase(TestCase):
     def test_initial_pseudostate_disconnect(self):
         """Test transition and initial pseudostate disconnection
         """
-        v1 = self.create(InitialPseudostateItem, UML.Pseudostate)
+        v1 = self.create(PseudostateItem, UML.Pseudostate)
         self.create(StateItem, UML.State)
 
         t = self.create(TransitionItem)
@@ -142,7 +142,7 @@ class TransitionConnectorTestCase(TestCase):
     def test_initial_pseudostate_tail_glue(self):
         """Test transition tail and initial pseudostate gluing."""
 
-        v1 = self.create(InitialPseudostateItem, UML.Pseudostate)
+        v1 = self.create(PseudostateItem, UML.Pseudostate)
         t = self.create(TransitionItem)
         assert t.subject is None
 

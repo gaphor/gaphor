@@ -212,9 +212,11 @@ def _load_elements_and_canvasitems(
 
         for item in canvasitems:
             item = upgrade_canvas_item_to_1_0_2(item)
+            item = upgrade_canvas_item_to_1_3_0(item)
             if version_lower_than(gaphor_version, (1, 1, 0)):
                 item = upgrade_presentation_item_to_1_1_0(item)
             cls = modeling_language.lookup_diagram_item(item.type)
+            assert cls, f"No diagram item for type {item.type}"
             item.element = diagram.create_as(cls, item.id, parent=parent)
             create_canvasitems(diagram, item.canvasitems, parent=item.element)
 
@@ -343,6 +345,12 @@ def upgrade_canvas_item_to_1_0_2(item):
         item.type = "ClassItem"
     elif item.type == "SubsystemItem":
         item.type = "ComponentItem"
+    return item
+
+
+def upgrade_canvas_item_to_1_3_0(item):
+    if item.type in ("InitialPseudostateItem", "HistoryPseudostateItem"):
+        item.type = "PseudostateItem"
     return item
 
 
