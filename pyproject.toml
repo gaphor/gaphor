@@ -101,7 +101,7 @@ use_parentheses = true
 line_length = 88
 known_third_party = ["cairo", "gaphas", "generic", "gi", "importlib_metadata", "pytest", "recommonmark", "setuptools", "tomlkit", "typing_extensions"]
 skip = "flatpak,.venv,build,dist"
-skip_glob = "*/uml2.py"
+skip_glob = "gaphor/diagram/general/__init__.py,gaphor/UML/__init__.py,gaphor/UML/*/__init__.py"
 filter_files = true
 
 [build-system]

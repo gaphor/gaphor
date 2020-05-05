@@ -27,9 +27,12 @@ from gaphor.UML.states.pseudostates import (
 from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.transition import TransitionItem
 
+from gaphor.UML.states import propertypages, vertexconnect
 
-def _load():
-    from gaphor.UML.states import propertypages, vertexconnect
-
-
-_load()
+__all__ = [
+    "FinalStateItem",
+    "HistoryPseudostateItem",
+    "InitialPseudostateItem",
+    "StateItem",
+    "TransitionItem",
+]
