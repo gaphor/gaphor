@@ -408,10 +408,7 @@ class association(umlproperty):
 
         # Set the actual value
         c: collection = self._get_many(obj)
-        if not c:
-            c = collection(self, obj, self.type)
-            setattr(obj, self._name, c)
-        elif value in c:
+        if value in c:
             return
 
         c.items.append(value)
