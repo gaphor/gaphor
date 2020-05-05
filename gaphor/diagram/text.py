@@ -50,6 +50,7 @@ def text_draw_focus_box(context, x, y, w, h):
         cr = context.cairo
         cr.save()
         try:
+            cr.set_dash((), 0)
             cr.set_source_rgb(0.6, 0.6, 0.6)
             cr.set_line_width(0.5)
             cr.rectangle(x, y, w, h)
