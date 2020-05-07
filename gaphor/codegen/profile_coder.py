@@ -5,7 +5,7 @@ from os import PathLike
 from typing import Deque, Dict, List, Optional, Set, TextIO, Tuple
 
 from gaphor import UML
-from gaphor.core.modeling.elementfactory import ElementFactory
+from gaphor.core.modeling import Element, ElementFactory
 from gaphor.storage import storage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
@@ -44,7 +44,7 @@ def type_converter(association, enumerations: Dict = {}) -> Optional[str]:
         return "int"
     elif type_value.lower() in ("integer", "unlimitednatural"):
         return "int"
-    elif type_value.lower() == "string":
+    elif type_value.lower() == "string" or type_value == "ValueSpecification":
         return "str"
     elif type_value.endswith("Kind") or type_value.endswith("Sort"):
         # e = list(filter(lambda e: e["name"] == type_value, list(enumerations.values())))[0]
@@ -93,11 +93,11 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
         filename.write("    pass\n\n")
 
 
-def filter_uml_classes(classes: List[UML.Class],) -> List[UML.Class]:
-    """Remove classes that are part of UML."""
-
-    uml_directory: List[str] = dir(UML.uml)
-    return [cls for cls in classes if cls.name in uml_directory]
+def filter_uml_classes(
+    classes: List[UML.Class], modeling_language: UMLModelingLanguage
+) -> List[UML.Class]:
+    """Identify classes that are part of UML."""
+    return [cls for cls in classes if modeling_language.lookup_element(cls.name)]
 
 
 def get_class_extensions(cls: UML.Class):
@@ -140,39 +140,17 @@ def create_referenced(classes: List[UML.Class]) -> Set[UML.Class]:
     return referenced
 
 
-def find_root_nodes(
-    trees: Dict[UML.Class, List[UML.Class]], referenced: Set[UML.Class]
-) -> List[UML.Class]:
-    """Find the root nodes of tree models.
+def write_class_def(cls, trees, f, cls_written=set()):
+    if cls in cls_written:
+        return
 
-    The root nodes aren't generalizing other UML.Class objects, but are being
-    referenced by others through their own generalizations.
+    generalizations = trees[cls]
+    for g in generalizations:
+        write_class_def(g, trees, f, cls_written)
 
-    """
-    return [key for key, value in trees.items() if not value and key in referenced]
-
-
-def breadth_first_search(
-    trees: Dict[UML.Class, List[UML.Class]], root_nodes: List[UML.Class]
-) -> List[UML.Class]:
-    """Perform Breadth-First Search."""
-
-    explored: List[UML.Class] = []
-    queue: Deque[UML.Class] = deque()
-    for root in root_nodes:
-        queue.append(root)
-    while queue:
-        node = queue.popleft()
-        if node not in explored:
-            explored.append(node)
-            neighbors: List[UML.Class] = []
-            for key, value in trees.items():
-                if node in value:
-                    neighbors.append(key)
-            if neighbors:
-                for neighbor in neighbors:
-                    queue.append(neighbor)
-    return explored
+    f.write(f"class {cls.name}({', '.join(g.name for g in generalizations)}):\n")
+    write_attributes(cls, filename=f)
+    cls_written.add(cls)
 
 
 def generate(
@@ -200,24 +178,13 @@ def generate(
 
         trees = create_class_trees(classes)
         referenced = create_referenced(classes)
-        root_nodes = find_root_nodes(trees, referenced)
 
-        cls_written: Set[str] = set()
-        uml_classes = filter_uml_classes(classes)
+        uml_classes = filter_uml_classes(classes, modeling_language)
         for cls in uml_classes:
             f.write(f"from gaphor.UML import {cls.name}\n\n")
-            cls_written.add(cls.name)
 
-        classes_found: List[UML.Class] = breadth_first_search(trees, root_nodes)
-        classes_deferred: List[UML.Class] = []
-        for cls in classes_found:
-            if cls.name not in cls_written:
-                if write_class_signature(trees, cls, cls_written, f):
-                    cls_written.add(cls.name)
-                else:
-                    classes_deferred.append(cls)
-
-        for cls in classes_deferred:
-            write_class_signature(trees, cls, cls_written, f)
+        cls_written: Set[Element] = set(uml_classes)
+        for cls in trees.keys():
+            write_class_def(cls, trees, f, cls_written)
 
     element_factory.shutdown()
