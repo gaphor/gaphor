@@ -18,6 +18,7 @@ from gaphor.core.modeling import (
     PackageableElement,
 )
 from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import (
     association,
     attribute,
@@ -193,7 +194,6 @@ class Generalization(DirectedRelationship):
 
 class BehavioredClassifier(Classifier):
     ownedBehavior: relation_many[Behavior]
-    ownedTrigger: relation_many[Trigger]
     implementation: relation_many[Implementation]  # type: ignore[assignment]
 
 
@@ -497,6 +497,7 @@ class Constraint(PackageableElement):
     specification: attribute[str]
     stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
+    parameterSet: relation_one[ParameterSet]
     context: derivedunion[Namespace]
 
 
@@ -718,6 +719,26 @@ class BehaviorExecutionSpecification(ExecutionSpecification):
     behavior: relation_one[Behavior]
 
 
+class ChangeEvent(Event):
+    changeExpression: attribute[str]
+
+
+class StructuralFeatureAction(Action):
+    pass
+
+
+class WriteStructuralFeatureAction(StructuralFeatureAction):
+    pass
+
+
+class AddStructuralFeatureValueAction(WriteStructuralFeatureAction):
+    isReplaceAll: attribute[int]
+
+
+class ParameterSet(NamedElement):
+    condition: relation_many[Constraint]
+
+
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
 # class 'InstanceValue' has been stereotyped as 'SimpleAttribute' too
 # class 'Expression' has been stereotyped as 'SimpleAttribute' too
@@ -806,6 +827,9 @@ Port.isService = attribute("isService", int)
 ActivityPartition.isDimension = attribute("isDimension", int, default=False)
 ActivityPartition.isExternal = attribute("isExternal", int, default=False)
 AcceptEventAction.isUnmarshall = attribute("isUnmarshall", int, default=False)
+AddStructuralFeatureValueAction.isReplaceAll = attribute(
+    "isReplaceAll", int, default=False
+)
 Operation.precondition = association("precondition", Constraint, composite=True)
 Package.ownedDiagram = association(
     "ownedDiagram", Diagram, composite=True, opposite="package"
@@ -1212,7 +1236,6 @@ ReplyAction.returnInformation = association(
 )
 SendSignalAction.target = association("target", InputPin, composite=True)
 Collaboration.collaborationRole = association("collaborationRole", ConnectableElement)
-BehavioredClassifier.ownedTrigger = association("ownedTrigger", Trigger, composite=True)
 Trigger.event = association("event", Event, lower=1, upper=1)
 Signal.ownedAttribute = association("ownedAttribute", Property, composite=True)
 Reception.signal = association("signal", Signal, upper=1)
@@ -1245,6 +1268,14 @@ ExecutionOccurrenceSpecification.execution = association(
 )
 ActionExecutionSpecification.action = association("action", Action, lower=1, upper=1)
 BehaviorExecutionSpecification.behavior = association("behavior", Behavior, upper=1)
+# 'ChangeEvent.changeExpression' is a simple attribute
+ChangeEvent.changeExpression = attribute("changeExpression", str)
+Constraint.parameterSet = association(
+    "parameterSet", ParameterSet, upper=1, opposite="condition"
+)
+ParameterSet.condition = association(
+    "condition", Constraint, composite=True, opposite="parameterSet"
+)
 # 47: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1405,7 +1436,6 @@ Namespace.ownedMember = derivedunion(
     StateMachine.region,
     Region.subvertex,
     Node.nestedNode,
-    BehavioredClassifier.ownedTrigger,
     Signal.ownedAttribute,
     Class.ownedReception,
     Interface.ownedReception,
@@ -1564,6 +1594,7 @@ Element.owner = derivedunion(
     Pseudostate.state,
     Action.interaction,
     GeneralOrdering.interactionFragment,
+    Constraint.parameterSet,
 )
 Element.ownedElement = derivedunion(
     Element,
@@ -1597,6 +1628,7 @@ Element.ownedElement = derivedunion(
     DeploymentTarget.deployment,
     Interaction.action,
     InteractionFragment.generalOrdering,
+    ParameterSet.condition,
 )
 ConnectorEnd.definingEnd = derivedunion(ConnectorEnd, "definingEnd", Property, 0, 1)
 # 118: override StructuredClassifier.part: property
