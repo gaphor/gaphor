@@ -55,7 +55,7 @@ class StereotypePage(PropertyPageBase):
         builder.connect_signals(
             {
                 "show-stereotypes-changed": (self._on_show_stereotypes_change,),
-                "toggle-stereotype": (self._toggle_stereotype, self.model, 2),
+                "toggle-stereotype": (self._toggle_stereotype, subject, self.model, 2),
                 "set-slot-value": (self._set_value, self.model, 1),
             }
         )
@@ -120,12 +120,12 @@ class StereotypePage(PropertyPageBase):
         self.item.show_stereotypes = button.get_active()
 
     @transactional
-    def _toggle_stereotype(self, renderer, path, model, col):
-        row = self.model[path]
+    def _toggle_stereotype(self, renderer, path, subject, model, col):
+        row = model[path]
         name, old_value, is_applied, _, _, stereotype, _, _ = row
         value = not is_applied
 
-        subject = self.item.subject
+        subject = subject
         if value:
             UML.model.apply_stereotype(subject, stereotype)
         else:
@@ -142,7 +142,7 @@ class StereotypePage(PropertyPageBase):
 
         Slot is created if instance Create valuChange value of instance spe
         """
-        row = self.model[path]
+        row = model[path]
         name, old_value, is_applied, _, _, attr, applied, slot = row
         if isinstance(attr, UML.Stereotype):
             return  # don't edit stereotype rows
