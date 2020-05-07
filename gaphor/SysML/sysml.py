@@ -51,6 +51,34 @@ from gaphor.UML import (
 )
 
 
+class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
+    pass
+
+
+class Probability(ParameterSet, ActivityEdge):
+    probability: attribute[ValueSpecification]
+
+
+class Rate(Parameter, ActivityEdge):
+    rate: attribute[InstanceSpecification]
+
+
+class AllocateActivityPartition(ActivityPartition):
+    pass
+
+
+class ControlOperator(Behavior, Operation):
+    pass
+
+
+class TestCase(Operation, Behavior):
+    pass
+
+
+class ChangeSructuralFeatureEvent(ChangeEvent):
+    structuralFeature: relation_one[None]
+
+
 class Block(Class):
     isEncapsulated: attribute[int]
 
@@ -61,69 +89,13 @@ class View(Class):
 
 
 class Viewpoint(Class):
+    language: attribute[str]
     method: attribute[Behavior]
     presentation: attribute[str]
     purpose: attribute[str]
     concern: attribute[str]
     stakeholder: attribute[Stakeholder]
     concernList: attribute[Comment]
-    language: attribute[str]
-
-
-class ConnectorProperty(Property):
-    connector: attribute[Connector]
-
-
-class ParticipantProperty(Property):
-    end: attribute[Property]
-
-
-class DistributedProperty(Property):
-    pass
-
-
-class EndPathMultiplicity(Property):
-    upper: attribute[int]
-    lower: attribute[int]
-
-
-class AdjuntProperty(Property):
-    principal: relation_one[None]
-
-
-class FlowProperty(Property):
-    direction: attribute[None]
-
-
-class Tagged(Property):
-    subsets: attribute[str]
-    nonunique: attribute[bool]
-    ordered: attribute[bool]
-
-
-class ClassifierBehaviorProperty(Property):
-    pass
-
-
-class ValueType(DataType):
-    unit: relation_one[None]
-
-
-class ElementPropertyPath(Element):
-    propertyPath: relation_one[None]
-
-
-class DirectedRelationshipPropertyPath(DirectedRelationship):
-    sourceContext: relation_one[None]
-    targetContext: relation_one[None]
-
-
-class BindingConnector(Connector):
-    pass
-
-
-class NestedConnectorEnd(ElementPropertyPath, ConnectorEnd):
-    pass
 
 
 class PropertySpecificType(Classifier):
@@ -135,34 +107,41 @@ class Stakeholder(Classifier):
     concern: attribute[str]
 
 
-class ProxyPort(Port):
+class ElementGroup(Comment):
+    orderedMember: attribute[Element]
+    size: attribute[int]
+    criterion: attribute[str]
+    member: attribute[Element]
+    name: attribute[str]
+
+
+class Problem(Comment):
     pass
 
 
-class FullPort(Port):
+class Rationale(Comment):
     pass
 
 
-class InvocationOnNestedPortAction(ElementPropertyPath, InvocationAction):
-    onNestedPort: relation_one[None]
-
-
-class TriggerOnNestedPort(ElementPropertyPath, Trigger):
-    onNestedPort: relation_one[None]
-
-
-class AddFlowPropertyValueOnNestedPortAction(
-    ElementPropertyPath, AddStructuralFeatureValueAction
-):
+class BindingConnector(Connector):
     pass
 
 
-class ChangeSructuralFeatureEvent(ChangeEvent):
-    structuralFeature: relation_one[None]
+class ValueType(DataType):
+    unit: relation_one[None]
 
 
-class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
+class Expose(Dependency):
     pass
+
+
+class DirectedRelationshipPropertyPath(DirectedRelationship):
+    sourceContext: relation_one[None]
+    targetContext: relation_one[None]
+
+
+class ElementPropertyPath(Element):
+    propertyPath: relation_one[None]
 
 
 class DirectedFeature(Feature):
@@ -173,40 +152,20 @@ class Conform(Generalization):
     pass
 
 
-class Rationale(Comment):
-    pass
+class InvocationOnNestedPortAction(ElementPropertyPath, InvocationAction):
+    onNestedPort: relation_one[None]
 
 
-class Problem(Comment):
-    pass
-
-
-class ElementGroup(Comment):
-    criterion: attribute[str]
-    member: attribute[Element]
-    name: attribute[str]
-    orderedMember: attribute[Element]
-    size: attribute[int]
-
-
-class Expose(Dependency):
-    pass
-
-
-class Rate(Parameter, ActivityEdge):
-    rate: attribute[InstanceSpecification]
-
-
-class Probability(ParameterSet, ActivityEdge):
-    probability: attribute[ValueSpecification]
-
-
-class TestCase(Operation, Behavior):
-    pass
-
-
-class ControlOperator(Behavior, Operation):
-    pass
+class AbstractRequirement(NamedElement):
+    tracedTo: attribute[NamedElement]
+    id: attribute[str]
+    verifiedBy: attribute[NamedElement]
+    master: attribute[AbstractRequirement]
+    refinedBy: attribute[NamedElement]
+    satisfiedBy: attribute[NamedElement]
+    base_NamedElement: attribute[NamedElement]
+    text: attribute[str]
+    derived: attribute[AbstractRequirement]
 
 
 class NoBuffer(ObjectNode):
@@ -217,45 +176,51 @@ class Overwrite(ObjectNode):
     pass
 
 
-class Allocate(DirectedRelationshipPropertyPath, Abstraction):
+class FullPort(Port):
     pass
 
 
-class AllocateActivityPartition(ActivityPartition):
+class ProxyPort(Port):
     pass
 
 
-class AbstractRequirement(NamedElement):
-    master: attribute[AbstractRequirement]
-    refinedBy: attribute[NamedElement]
-    satisfiedBy: attribute[NamedElement]
-    base_NamedElement: attribute[NamedElement]
-    text: attribute[str]
-    derived: attribute[AbstractRequirement]
-    tracedTo: attribute[NamedElement]
-    id: attribute[str]
-    verifiedBy: attribute[NamedElement]
+class AdjuntProperty(Property):
+    principal: relation_one[None]
 
 
-class InterfaceBlock(Block):
+class ClassifierBehaviorProperty(Property):
     pass
 
 
-class ConstraintBlock(Block):
+class ConnectorProperty(Property):
+    connector: attribute[Connector]
+
+
+class DistributedProperty(Property):
     pass
 
 
-class BoundReference(EndPathMultiplicity):
-    bindingPath: attribute[Property]
-    boundend: attribute[ConnectorEnd]
+class EndPathMultiplicity(Property):
+    lower: attribute[int]
+    upper: attribute[int]
 
 
-class Trace(DirectedRelationshipPropertyPath):
-    pass
+class FlowProperty(Property):
+    direction: attribute[None]
 
 
-class Refine(DirectedRelationshipPropertyPath):
-    pass
+class ParticipantProperty(Property):
+    end: attribute[Property]
+
+
+class Tagged(Property):
+    subsets: attribute[str]
+    nonunique: attribute[bool]
+    ordered: attribute[bool]
+
+
+class TriggerOnNestedPort(ElementPropertyPath, Trigger):
+    onNestedPort: relation_one[None]
 
 
 class Continuous(Rate):
@@ -266,11 +231,28 @@ class Discrete(Rate):
     pass
 
 
-class Copy(Trace):
+class ConstraintBlock(Block):
     pass
 
 
-class Verify(Trace):
+class InterfaceBlock(Block):
+    pass
+
+
+class Refine(DirectedRelationshipPropertyPath):
+    pass
+
+
+class Trace(DirectedRelationshipPropertyPath):
+    pass
+
+
+class BoundReference(EndPathMultiplicity):
+    bindingPath: attribute[Property]
+    boundend: attribute[ConnectorEnd]
+
+
+class Copy(Trace):
     pass
 
 
@@ -282,5 +264,23 @@ class Satisfy(Trace):
     pass
 
 
+class Verify(Trace):
+    pass
+
+
+class Allocate(DirectedRelationshipPropertyPath, Abstraction):
+    pass
+
+
+class AddFlowPropertyValueOnNestedPortAction(
+    ElementPropertyPath, AddStructuralFeatureValueAction
+):
+    pass
+
+
 class Requirement(AbstractRequirement, Class):
+    pass
+
+
+class NestedConnectorEnd(ElementPropertyPath, ConnectorEnd):
     pass

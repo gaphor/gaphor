@@ -194,7 +194,9 @@ def generate(
     with open(outfile, "w") as f:
         f.write(header)
         classes: List = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
-        classes = [cls for cls in classes if cls.name[0] != "~"]
+        classes = sorted(
+            (cls for cls in classes if cls.name[0] != "~"), key=lambda c: c.name
+        )
 
         trees = create_class_trees(classes)
         referenced = create_referenced(classes)
