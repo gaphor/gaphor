@@ -450,6 +450,13 @@ class AssociationPropertyPage(PropertyPageBase):
         aggregation = builder.get_object(f"{end_name}-aggregation")
         aggregation.set_active(self.AGGREGATION.index(end.subject.aggregation))
 
+        stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
+        stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
+
+        stereotypes = UML.model.get_stereotypes(end.subject)
+        if not stereotypes:
+            stereotype_frame.destroy()
+
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
         new_name = (
