@@ -1135,7 +1135,7 @@
 <ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
 </class_>
 <name>
-<val>id</val>
+<val>externalId</val>
 </name>
 <typeValue>
 <val>String</val>
@@ -4092,8 +4092,6 @@
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="209c87a8-210b-11ea-ab0b-c72c0738acd2"/>
-<ref refid="30c6b842-210b-11ea-ab0b-c72c0738acd2"/>
 <ref refid="85c1ec33-210f-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedAttribute>
@@ -4143,58 +4141,6 @@
 <ref refid="f19164ec-210a-11ea-ab0b-c72c0738acd2"/>
 </specific>
 </Generalization>
-<Property id="209c87a8-210b-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="efc51366-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
-<defaultValue>
-<val>0</val>
-</defaultValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<name>
-<val>lower</val>
-</name>
-<typeValue>
-<val>Integer</val>
-</typeValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-</Property>
-<Property id="30c6b842-210b-11ea-ab0b-c72c0738acd2">
-<class_>
-<ref refid="efc51366-210a-11ea-ab0b-c72c0738acd2"/>
-</class_>
-<defaultValue>
-<val>unlimited</val>
-</defaultValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<name>
-<val>upper</val>
-</name>
-<typeValue>
-<val>UnlimitedNatural</val>
-</typeValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-</Property>
 <Property id="3c3acf38-210b-11ea-ab0b-c72c0738acd2">
 <class_>
 <ref refid="f19164ec-210a-11ea-ab0b-c72c0738acd2"/>

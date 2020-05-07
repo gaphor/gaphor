@@ -52,15 +52,15 @@ from gaphor.UML import (
 
 
 class AbstractRequirement(NamedElement):
-    master: attribute[AbstractRequirement]
-    verifiedBy: attribute[NamedElement]
-    refinedBy: attribute[NamedElement]
     base_NamedElement: attribute[NamedElement]
     satisfiedBy: attribute[NamedElement]
     text: attribute[str]
     derived: attribute[AbstractRequirement]
     tracedTo: attribute[NamedElement]
-    id: attribute[str]
+    externalId: attribute[str]
+    verifiedBy: attribute[NamedElement]
+    master: attribute[AbstractRequirement]
+    refinedBy: attribute[NamedElement]
 
 
 class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
@@ -103,13 +103,12 @@ class Block(Class):
 
 
 class EndPathMultiplicity(Property):
-    upper: attribute[int]
-    lower: attribute[int]
+    pass
 
 
 class BoundReference(EndPathMultiplicity):
-    boundend: attribute[ConnectorEnd]
     bindingPath: attribute[Property]
+    boundend: attribute[ConnectorEnd]
 
 
 class ChangeSructuralFeatureEvent(ChangeEvent):
@@ -132,7 +131,7 @@ class ConstraintBlock(Block):
     pass
 
 
-class Rate(Parameter, ActivityEdge):
+class Rate(ActivityEdge, Parameter):
     rate: attribute[InstanceSpecification]
 
 
@@ -169,11 +168,11 @@ class DistributedProperty(Property):
 
 
 class ElementGroup(Comment):
+    orderedMember: attribute[Element]
+    size: attribute[int]
     criterion: attribute[str]
     member: attribute[Element]
     name: attribute[str]
-    orderedMember: attribute[Element]
-    size: attribute[int]
 
 
 class Expose(Dependency):
@@ -245,14 +244,14 @@ class Satisfy(Trace):
 
 
 class Stakeholder(Classifier):
-    concern: attribute[str]
     concernList: attribute[Comment]
+    concern: attribute[str]
 
 
 class Tagged(Property):
+    subsets: attribute[str]
     nonunique: attribute[bool]
     ordered: attribute[bool]
-    subsets: attribute[str]
 
 
 class TestCase(Behavior):
@@ -277,13 +276,13 @@ class View(Class):
 
 
 class Viewpoint(Class):
+    language: attribute[str]
     method: attribute[Behavior]
     presentation: attribute[str]
     purpose: attribute[str]
     concern: attribute[str]
     stakeholder: attribute[Stakeholder]
     concernList: attribute[Comment]
-    language: attribute[str]
 
 
 class _Refine:
