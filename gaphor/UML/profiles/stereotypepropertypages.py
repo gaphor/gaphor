@@ -73,7 +73,7 @@ def stereotype_model(subject):
     )
     refresh(subject, model)
 
-    return model, (_toggle_stereotype, subject, model, 2), (_set_value, model, 1)
+    return model, (_toggle_stereotype, subject, model), (_set_value, model)
 
 
 def refresh(subject, model):
@@ -130,12 +130,11 @@ def refresh(subject, model):
 
 
 @transactional
-def _toggle_stereotype(renderer, path, subject, model, col):
+def _toggle_stereotype(renderer, path, subject, model):
     row = model[path]
     name, old_value, is_applied, _, _, stereotype, _, _ = row
     value = not is_applied
 
-    subject = subject
     if value:
         UML.model.apply_stereotype(subject, stereotype)
     else:
@@ -147,7 +146,7 @@ def _toggle_stereotype(renderer, path, subject, model, col):
 
 
 @transactional
-def _set_value(renderer, path, value, model, col=0):
+def _set_value(renderer, path, value, model):
     """
     Set value of stereotype property applied to an UML element.
 
