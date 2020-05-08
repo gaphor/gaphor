@@ -23,6 +23,7 @@ from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.components.connector import ConnectorItem
+from gaphor.UML.profiles.stereotypepropertypages import stereotype_model
 
 log = logging.getLogger(__name__)
 
@@ -439,23 +440,31 @@ class AssociationPropertyPage(PropertyPageBase):
         self.semaphore = 0
 
     def construct_end(self, builder, end_name, end):
+        subject = end.subject
         title = builder.get_object(f"{end_name}-title")
-        title.set_text(f"{end_name.title()} (: {end.subject.type.name})")
+        title.set_text(f"{end_name.title()} (: {subject.type.name})")
 
-        self.update_end_name(builder, end_name, end.subject)
+        self.update_end_name(builder, end_name, subject)
 
         navigation = builder.get_object(f"{end_name}-navigation")
-        navigation.set_active(self.NAVIGABILITY.index(end.subject.navigability))
+        navigation.set_active(self.NAVIGABILITY.index(subject.navigability))
 
         aggregation = builder.get_object(f"{end_name}-aggregation")
-        aggregation.set_active(self.AGGREGATION.index(end.subject.aggregation))
+        aggregation.set_active(self.AGGREGATION.index(subject.aggregation))
 
-        stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
-        stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
-
-        stereotypes = UML.model.get_stereotypes(end.subject)
-        if not stereotypes:
+        stereotypes = UML.model.get_stereotypes(subject)
+        if stereotypes:
+            stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
+            model, toggle_handler, set_value_handler = stereotype_model(subject)
+            stereotype_list.set_model(model)
+            return {
+                f"{end_name}-toggle-stereotype": toggle_handler,
+                f"{end_name}-set-slot-value": set_value_handler,
+            }
+        else:
+            stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
             stereotype_frame.destroy()
+            return {}
 
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
@@ -481,8 +490,8 @@ class AssociationPropertyPage(PropertyPageBase):
         show_direction = builder.get_object("show-direction")
         show_direction.set_active(self.item.show_direction)
 
-        self.construct_end(builder, "head", head)
-        self.construct_end(builder, "tail", tail)
+        head_signal_handlers = self.construct_end(builder, "head", head)
+        tail_signal_handlers = self.construct_end(builder, "tail", tail)
 
         def handler(event):
             end_name = "head" if event.element is head.subject else "tail"
@@ -508,6 +517,8 @@ class AssociationPropertyPage(PropertyPageBase):
                 "tail-navigation-changed": (self._on_end_navigability_change, tail),
                 "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
                 "association-editor-destroy": (self.watcher.unsubscribe_all,),
+                **head_signal_handlers,
+                **tail_signal_handlers,
             }
         )
 
