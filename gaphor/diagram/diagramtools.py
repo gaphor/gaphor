@@ -263,8 +263,8 @@ class PlacementTool(_PlacementTool):
             adapter = Group(parent, self._factory.item_class())
             if adapter and adapter.can_contain():
                 view.dropzone_item = parent
-                cursor = Gdk.Cursor.new_for_display(
-                    view.get_window().get_display(), IN_CURSOR_TYPE
+                cursor = Gdk.Cursor.new_from_name(
+                    view.get_window().get_display(), "cell"
                 )
                 view.get_window().set_cursor(cursor)
                 self._parent = parent
@@ -318,8 +318,8 @@ class DropZoneInMotion(GuidedItemInMotion):
             # are we going to remove from parent?
             group = Group(current_parent, item)
             if group:
-                cursor = Gdk.Cursor.new_for_display(
-                    view.get_window().get_display(), OUT_CURSOR_TYPE
+                cursor = Gdk.Cursor.new_from_name(
+                    view.get_window().get_display(), "default"
                 )
                 view.get_window().set_cursor(cursor)
                 view.dropzone_item = current_parent
@@ -329,8 +329,8 @@ class DropZoneInMotion(GuidedItemInMotion):
             # are we going to add to parent?
             group = Group(over_item, item)
             if group and group.can_contain():
-                cursor = Gdk.Cursor.new_for_display(
-                    view.get_window().get_display(), IN_CURSOR_TYPE
+                cursor = Gdk.Cursor.new_from_name(
+                    view.get_window().get_display(), "cell"
                 )
                 view.get_window().set_cursor(cursor)
                 view.dropzone_item = over_item
