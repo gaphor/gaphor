@@ -58,7 +58,7 @@ class DiagramCanvas(gaphas.Canvas):
         """Apply the supplied save function to all root diagram items."""
 
         for item in self.get_root_items():
-            save_func(None, item)
+            save_func(item)
 
     def postload(self):
         """Called after the diagram canvas has loaded.  Currently does nothing.

@@ -17,7 +17,6 @@ from gaphor.core.modeling import (
     NamedElement,
     PackageableElement,
 )
-from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.properties import (
     association,
     attribute,
@@ -634,6 +633,7 @@ class FinalState(State):
 class Port(Property):
     isBehavior: attribute[int]
     isService: attribute[int]
+    encapsulatedClassifier: relation_many[EncapsulatedClassifer]
 
 
 class Deployment(Dependency):
@@ -1178,7 +1178,12 @@ StateMachine.extendedStateMachine = association(
     "extendedStateMachine", StateMachine, upper=1
 )
 ConnectorEnd.partWithPort = association("partWithPort", Property, upper=1)
-EncapsulatedClassifer.ownedPort = association("ownedPort", Port, composite=True)
+Port.encapsulatedClassifier = association(
+    "encapsulatedClassifier", EncapsulatedClassifer, opposite="ownedPort"
+)
+EncapsulatedClassifer.ownedPort = association(
+    "ownedPort", Port, composite=True, opposite="encapsulatedClassifier"
+)
 Element.appliedStereotype = association(
     "appliedStereotype", InstanceSpecification, opposite="extended"
 )
@@ -1336,6 +1341,7 @@ RedefinableElement.redefinitionContext = derivedunion(
     Operation.class_,
     Property.classifier,
     Operation.datatype,
+    Port.encapsulatedClassifier,
 )
 NamedElement.namespace = derivedunion(
     NamedElement,

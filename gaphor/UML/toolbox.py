@@ -387,7 +387,7 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-initial-pseudostate-symbolic",
                 "<Shift>S",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.InitialPseudostateItem,
+                    diagramitems.PseudostateItem,
                     UML.Pseudostate,
                     initial_pseudostate_config,
                 ),
@@ -409,7 +409,7 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-pseudostate-symbolic",
                 "q",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.HistoryPseudostateItem,
+                    diagramitems.PseudostateItem,
                     UML.Pseudostate,
                     history_pseudostate_config,
                 ),

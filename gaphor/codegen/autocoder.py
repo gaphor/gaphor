@@ -24,8 +24,6 @@ from __future__ import annotations
 import uuid
 from typing import TYPE_CHECKING, Callable, List, Optional
 
-from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import (
     association,
     attribute,

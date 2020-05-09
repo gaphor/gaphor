@@ -354,7 +354,7 @@ class DiagramPage:
     def _on_key_press_event(self, view, event):
         """
         Handle the 'Delete' key. This can not be handled directly (through
-        GTK's accelerators) since otherwise this key will confuse the text
+        GTK's accelerators), otherwise this key will confuse the text
         edit stuff.
         """
         if (

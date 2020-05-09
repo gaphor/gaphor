@@ -7,6 +7,7 @@ from gaphor.UML.components import (
     componentsgrouping,
     connectorconnect,
     componentspropertypage,
+    copypaste,
 )
 
 __all__ = ["ArtifactItem", "ComponentItem", "ConnectorItem", "NodeItem"]

@@ -8,10 +8,7 @@ gaphor.adapter package.
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector, RelationshipConnect
-from gaphor.UML.states.pseudostates import (
-    HistoryPseudostateItem,
-    InitialPseudostateItem,
-)
+from gaphor.UML.states.pseudostates import PseudostateItem
 from gaphor.UML.states.state import VertexItem
 from gaphor.UML.states.transition import TransitionItem
 
@@ -59,12 +56,9 @@ class TransitionConnect(VertexConnect):
             return None
 
 
-@Connector.register(InitialPseudostateItem, TransitionItem)
-class InitialPseudostateTransitionConnect(VertexConnect):
-    """Connect initial pseudostate using transition item.
-
-    It modifies InitialPseudostateItem._connected attribute to disallow
-    connection of more than one transition.
+@Connector.register(PseudostateItem, TransitionItem)
+class PseudostateTransitionConnect(VertexConnect):
+    """Connect pseudostate using transition item.
     """
 
     def allow(self, handle, port):
@@ -74,29 +68,19 @@ class InitialPseudostateTransitionConnect(VertexConnect):
         """
         line = self.line
         element = self.element
+        assert isinstance(element.subject, UML.Pseudostate)
 
-        # Check if no other items are connected
-        connections = self.canvas.get_connections(connected=element)
-        connected_items = [
-            c
-            for c in connections
-            if isinstance(c.item, TransitionItem) and c.item is not line
-        ]
-        if handle is line.head and not any(connected_items):
-            return super().allow(handle, port)
+        if element.subject.kind == "initial":
+            # Check if no other items are connected
+            connections = self.canvas.get_connections(connected=element)
+            connected_items = [
+                c
+                for c in connections
+                if isinstance(c.item, TransitionItem) and c.item is not line
+            ]
+            if handle is line.head and not any(connected_items):
+                return super().allow(handle, port)
+            else:
+                return None
         else:
-            return None
-
-
-@Connector.register(HistoryPseudostateItem, TransitionItem)
-class HistoryPseudostateTransitionConnect(VertexConnect):
-    """Connect history pseudostate using transition item.
-
-    It modifies InitialPseudostateItem._connected attribute to disallow
-    connection of more than one transition.
-    """
-
-    def allow(self, handle, port):
-        """
-        """
-        return super().allow(handle, port)
+            return super().allow(handle, port)

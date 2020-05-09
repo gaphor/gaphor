@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.2.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.3.0">
 <Package id="a80225e6-8a24-11e9-94a9-784f435640ba">
 <name>
 <val>New model</val>
@@ -592,7 +592,7 @@
 <ref refid="684d6c98-8a25-11e9-94a9-784f435640ba"/>
 </subject>
 </item>
-<item id="6ae17ada-8a25-11e9-94a9-784f435640ba" type="InitialPseudostateItem">
+<item id="6ae17ada-8a25-11e9-94a9-784f435640ba" type="PseudostateItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 214.0, 881.5)</val>
 </matrix>
@@ -620,7 +620,7 @@
 <ref refid="6ca25c22-8a25-11e9-94a9-784f435640ba"/>
 </subject>
 </item>
-<item id="6e1580c0-8a25-11e9-94a9-784f435640ba" type="HistoryPseudostateItem">
+<item id="6e1580c0-8a25-11e9-94a9-784f435640ba" type="PseudostateItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 345.5, 885.5)</val>
 </matrix>
@@ -1365,9 +1365,21 @@
 </presentation>
 </Association>
 <Property id="0495b7c9-8dda-11ea-9685-03ae027faeeb">
+<aggregation>
+<val>composite</val>
+</aggregation>
 <association>
 <ref refid="0495b7c8-8dda-11ea-9685-03ae027faeeb"/>
 </association>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<name>
+<val>bar</val>
+</name>
 <owningAssociation>
 <ref refid="0495b7c8-8dda-11ea-9685-03ae027faeeb"/>
 </owningAssociation>
@@ -1377,11 +1389,23 @@
 <type>
 <ref refid="fb69bd28-8dd9-11ea-9685-03ae027faeeb"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+<visibility>
+<val>private</val>
+</visibility>
 </Property>
 <Property id="0495b7ca-8dda-11ea-9685-03ae027faeeb">
 <association>
 <ref refid="0495b7c8-8dda-11ea-9685-03ae027faeeb"/>
 </association>
+<name>
+<val>foo</val>
+</name>
 <owningAssociation>
 <ref refid="0495b7c8-8dda-11ea-9685-03ae027faeeb"/>
 </owningAssociation>
@@ -1391,6 +1415,12 @@
 <type>
 <ref refid="e38cbc97-8dd9-11ea-9685-03ae027faeeb"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Dependency id="060f641e-8dda-11ea-9685-03ae027faeeb">
 <client>
@@ -1398,6 +1428,9 @@
 <ref refid="e38cbc97-8dd9-11ea-9685-03ae027faeeb"/>
 </reflist>
 </client>
+<name>
+<val>dep</val>
+</name>
 <presentation>
 <reflist>
 <ref refid="caf6d3c6-8a24-11e9-94a9-784f435640ba"/>
@@ -1446,6 +1479,9 @@
 <ref refid="e38cbc97-8dd9-11ea-9685-03ae027faeeb"/>
 </reflist>
 </client>
+<name>
+<val>impl</val>
+</name>
 <presentation>
 <reflist>
 <ref refid="cf949bac-8a24-11e9-94a9-784f435640ba"/>

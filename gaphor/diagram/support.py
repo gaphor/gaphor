@@ -23,9 +23,19 @@ def represents(uml_element):
 _element_to_item_map: Dict[Element, Presentation] = {}
 
 
-def get_diagram_item(element):
+def get_diagram_item(element_cls):
     global _element_to_item_map
-    return _element_to_item_map.get(element)
+    return _element_to_item_map.get(element_cls)
+
+
+def get_model_element(item_cls):
+    global _element_to_item_map
+    elements = [
+        element
+        for element, presentation in _element_to_item_map.items()
+        if item_cls is presentation
+    ]
+    return elements[0] if elements else None
 
 
 def set_diagram_item(element, item):
