@@ -163,7 +163,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.8
       - name: Install macOS Dependencies
         run: brew install gobject-introspection gtk+3 adwaita-icon-theme
       - name: Install Poetry
@@ -189,8 +189,6 @@ jobs:
           make dist
           cd macos-dmg
           ./package.sh
-          mkdir artifact
-          cp Gaphor-*.dmg artifact/Gaphor.dmg
       - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
         uses: actions/upload-artifact@v1
         with:
