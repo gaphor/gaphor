@@ -8,10 +8,10 @@ repos:
   rev: v0.770
   hooks:
   - id: mypy
-# - repo: https://gitlab.com/pycqa/flake8
-#   rev: 3.7.9
-#   hooks:
-#   - id: flake8
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.8.0a2
+  hooks:
+  - id: flake8
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v2.4.0
   hooks:

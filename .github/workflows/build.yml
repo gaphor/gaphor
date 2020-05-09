@@ -25,14 +25,7 @@ jobs:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Lint with Pre-commit
-        uses: pre-commit/action@v1.0.0
-      - name: Lint with Flake8
-        run: |
-          # flake8 pre-commit hook is causing errors
-          # try again once new version of pyflakes is released (> 2.1.1)
-          pip install git+https://github.com/PyCQA/pyflakes.git@1911c203a13826d2eb03d582d60874b91e36f4fc --upgrade
-          pip install flake8==3.7.9
-          flake8 gaphor
+        uses: pre-commit/action@v1.0.1
 
   linux:
     needs: lint
