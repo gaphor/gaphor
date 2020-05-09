@@ -46,14 +46,14 @@ pytest = "^5.0"
 pytest-cov = "^2.5"
 pytest-runner = "^4.2"
 black = { version = "^19.10b0", python = "^3.6" }
-mypy = "0.740"
+mypy = "0.770"
 pre-commit = "^1.12"
 sphinx = "^2.2"
 recommonmark = "^0.6.0"
 sphinx-rtd-theme = "^0.4.3"
 babel = "^2.7.0"
 babelgladeextractor = "^0.6.0"
-flake8 = "^3.7.9"
+flake8 = { version = "^3.8.0a2", allow-prereleases = true }
 isort = "^4.3.21"
 
 [tool.poetry.scripts]
