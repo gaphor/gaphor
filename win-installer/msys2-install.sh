@@ -10,6 +10,7 @@ pacman --noconfirm -Suy
 pacman --noconfirm -S --needed \
     git \
     make \
+    mingw-w64-"$MSYS2_ARCH"-freetype-2.10.1-1-any \
     mingw-w64-"$MSYS2_ARCH"-gcc \
     mingw-w64-"$MSYS2_ARCH"-gtk3 \
     mingw-w64-"$MSYS2_ARCH"-pkg-config \
