@@ -133,9 +133,9 @@ def main(argv):
 
     if "--delete" in argv[1:]:
         while libs:
-            for l in libs:
-                print("DELETE:", l)
-                os.unlink(l)
+            for lib in libs:
+                print("DELETE:", lib)
+                os.unlink(lib)
             libs = get_things_to_delete(sys.prefix)
 
 
