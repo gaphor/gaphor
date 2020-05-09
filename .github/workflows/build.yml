@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
@@ -70,13 +70,13 @@ jobs:
         run: |
           make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: matrix.py_ver == '3.7'
         with:
           name: gaphor-${{ steps.meta.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.meta.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         if: matrix.py_ver == '3.7'
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
@@ -97,7 +97,7 @@ jobs:
       CHERE_INVOKING: yes
       PY_IGNORE_IMPORTMISMATCH: yes
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Install MSYS2
         run: |
           choco install --no-progress msys2 --params="/NoUpdate /NoPath"
@@ -128,12 +128,12 @@ jobs:
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
           C:\tools\msys64\usr\bin\bash -lc "win-installer/build-installer.sh"
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-installer.exe
           path: win-installer/gaphor-${{ steps.meta.outputs.version }}-installer.exe
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-portable.exe
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-portable.exe
           path: win-installer/gaphor-${{ steps.meta.outputs.version }}-portable.exe
@@ -147,18 +147,21 @@ jobs:
 
   macos:
     needs: lint
-    runs-on: macOS-latest
+    runs-on: macos-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
-      PKG_CONFIG_PATH: /usr/local/Cellar/libffi/3.3/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      LDFLAGS: -L/usr/local/opt/python@3.8/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.8/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
-          python-version: 3.7
+          python-version: 3.8
       - name: Install macOS Dependencies
-        run: brew install gobject-introspection gtk+3 adwaita-icon-theme
+        run: |
+          brew list
+          brew install gobject-introspection gtk+3 adwaita-icon-theme
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.3
         with:
@@ -182,10 +185,8 @@ jobs:
           make dist
           cd macos-dmg
           ./package.sh
-          mkdir artifact
-          cp Gaphor-*.dmg artifact/Gaphor.dmg
       - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: Gaphor-${{ steps.meta.outputs.version }}.dmg
           path: macos-dmg/Gaphor-${{ steps.meta.outputs.version }}.dmg
