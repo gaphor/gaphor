@@ -56,7 +56,7 @@ function rel_path {
   brew deps gobject-introspection
   echo adwaita-icon-theme
   brew deps adwaita-icon-theme
-} | sed 's/python@3.8/python/' | sort -u |\
+} | sort -u |\
 while read dep
 do
   log "Processing files for Homebrew formula $dep"
