@@ -172,7 +172,6 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
         for value in deserialize(ser, lookup):
             item.load(name, value)
     item.canvas.update_matrices([item])
-    item.postload()
     return item
 
 
@@ -226,5 +225,8 @@ def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
         if old_id in new_items:
             continue
         new_items[old_id] = paste(data, diagram, item_lookup)
+
+    for new_item in new_items.values():
+        new_item.postload()
 
     return set(new_items.values())
