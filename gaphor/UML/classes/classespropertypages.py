@@ -423,6 +423,10 @@ class DependencyPropertyPage(PropertyPageBase):
         self.update()
 
 
+def _dummy_handler(*args):
+    pass
+
+
 @PropertyPages.register(AssociationItem)
 class AssociationPropertyPage(PropertyPageBase):
     """
@@ -464,7 +468,10 @@ class AssociationPropertyPage(PropertyPageBase):
         else:
             stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
             stereotype_frame.destroy()
-            return {}
+            return {
+                f"{end_name}-toggle-stereotype": (_dummy_handler,),
+                f"{end_name}-set-slot-value": (_dummy_handler,),
+            }
 
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
