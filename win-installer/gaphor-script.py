@@ -10,7 +10,7 @@ if __name__ == "__main__":
     from gaphor.core.eventmanager import EventManager
     from gaphor.services.helpservice import HelpService
     from gaphor.services.properties import Properties
-    from gaphor.services.sanitizerservice import SanitizerService
+    from gaphor.UML.sanitizerservice import SanitizerService
     from gaphor.services.session import Session
     from gaphor.services.undomanager import UndoManager
     from gaphor.ui.elementeditor import ElementEditor
