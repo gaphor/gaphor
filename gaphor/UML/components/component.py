@@ -23,6 +23,7 @@ class ComponentItem(ElementPresentation, Classified):
         self.watch("subject.appliedStereotype.slot", self.update_shapes)
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
+        self.watch("subject[Classifier].useCase", self.update_shapes)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 

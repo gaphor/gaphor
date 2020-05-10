@@ -78,6 +78,7 @@ class Classifier(Namespace, Type, RedefinableElement):
     isAbstract: attribute[int]
     ownedUseCase: relation_many[UseCase]
     generalization: relation_many[Generalization]
+    useCase: relation_many[UseCase]
     redefinedClassifier: relation_many[Classifier]
     substitution: relation_many[Substitution]
     attribute: relation_many[Property]
@@ -971,7 +972,8 @@ Slot.owningInstance = association(
 InstanceSpecification.slot = association(
     "slot", Slot, composite=True, opposite="owningInstance"
 )
-UseCase.subject = association("subject", Classifier)
+UseCase.subject = association("subject", Classifier, opposite="useCase")
+Classifier.useCase = association("useCase", UseCase, opposite="subject")
 Property.owningAssociation = association(
     "owningAssociation", Association, upper=1, opposite="ownedEnd"
 )
