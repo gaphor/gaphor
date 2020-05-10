@@ -8,7 +8,6 @@
 
 import code
 import os
-import pydoc
 import sys
 from rlcompleter import Completer
 from typing import Dict, List
@@ -33,7 +32,7 @@ Type "help" for more information.
 class Help:
     def __call__(self, obj=None):
         if obj:
-            pydoc.help(obj)
+            return obj.__doc__
         else:
             return str(self)
 
