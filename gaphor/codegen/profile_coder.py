@@ -77,15 +77,16 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
     """Write attributes based on attribute type."""
 
     written = False
-    for a in cls.attribute["not it.association"]:  # type: ignore
+    for a in cls.attribute["it.name and it.name != 'baseClass'"]:  # type: ignore
         type_value = type_converter(a)
-        filename.write(f"    {a.name}: attribute[{type_value}]\n")
-        written = True
-    for a in cls.attribute["it.association"]:  # type: ignore
-        if a.name and a.name != "baseClass":
-            type_value = type_converter(a)
+        if type_value in ("int", "str"):
+            filename.write(f"    {a.name}: attribute[{type_value}]\n")
+        elif a.upperValue == "1":
             filename.write(f"    {a.name}: relation_one[{type_value}]\n")
-            written = True
+        else:
+            filename.write(f"    {a.name}: relation_many[{type_value}]\n")
+        written = True
+
     for o in cls.ownedOperation:
         filename.write(f"    {o}: operation\n")
         written = True

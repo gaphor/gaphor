@@ -52,15 +52,15 @@ from gaphor.UML import (
 
 
 class AbstractRequirement(NamedElement):
-    base_NamedElement: attribute[NamedElement]
-    satisfiedBy: attribute[NamedElement]
+    base_NamedElement: relation_one[NamedElement]
+    refinedBy: relation_many[NamedElement]
+    satisfiedBy: relation_many[NamedElement]
+    derived: relation_many[AbstractRequirement]
     text: attribute[str]
-    derived: attribute[AbstractRequirement]
-    tracedTo: attribute[NamedElement]
     externalId: attribute[str]
-    verifiedBy: attribute[NamedElement]
-    master: attribute[AbstractRequirement]
-    refinedBy: attribute[NamedElement]
+    tracedTo: relation_many[NamedElement]
+    master: relation_many[AbstractRequirement]
+    verifiedBy: relation_many[NamedElement]
 
 
 class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
@@ -68,7 +68,7 @@ class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
 
 
 class ElementPropertyPath(Element):
-    propertyPath: relation_one[None]
+    propertyPath: relation_many[None]
 
 
 class AddFlowPropertyValueOnNestedPortAction(
@@ -107,8 +107,8 @@ class EndPathMultiplicity(Property):
 
 
 class BoundReference(EndPathMultiplicity):
-    bindingPath: attribute[Property]
-    boundend: attribute[ConnectorEnd]
+    bindingPath: relation_many[Property]
+    boundend: relation_many[ConnectorEnd]
 
 
 class ChangeSructuralFeatureEvent(ChangeEvent):
@@ -124,7 +124,7 @@ class Conform(Generalization):
 
 
 class ConnectorProperty(Property):
-    connector: attribute[Connector]
+    connector: relation_one[Connector]
 
 
 class ConstraintBlock(Block):
@@ -132,7 +132,7 @@ class ConstraintBlock(Block):
 
 
 class Rate(ActivityEdge, Parameter):
-    rate: attribute[InstanceSpecification]
+    rate: relation_many[InstanceSpecification]
 
 
 class Continuous(Rate):
@@ -156,7 +156,7 @@ class DeriveReqt(Trace):
 
 
 class DirectedFeature(Feature):
-    featureDirection: attribute[None]
+    featureDirection: relation_one[None]
 
 
 class Discrete(Rate):
@@ -168,10 +168,10 @@ class DistributedProperty(Property):
 
 
 class ElementGroup(Comment):
-    orderedMember: attribute[Element]
+    orderedMember: relation_many[Element]
     size: attribute[int]
     criterion: attribute[str]
-    member: attribute[Element]
+    member: relation_many[Element]
     name: attribute[str]
 
 
@@ -180,7 +180,7 @@ class Expose(Dependency):
 
 
 class FlowProperty(Property):
-    direction: attribute[None]
+    direction: relation_one[None]
 
 
 class FullPort(Port):
@@ -192,7 +192,7 @@ class InterfaceBlock(Block):
 
 
 class InvocationOnNestedPortAction(ElementPropertyPath, InvocationAction):
-    onNestedPort: relation_one[None]
+    onNestedPort: relation_many[None]
 
 
 class NestedConnectorEnd(ElementPropertyPath, ConnectorEnd):
@@ -208,7 +208,7 @@ class Overwrite(ObjectNode):
 
 
 class ParticipantProperty(Property):
-    end: attribute[Property]
+    end_: relation_one[Property]
 
 
 class Probability(ActivityEdge, ParameterSet):
@@ -244,14 +244,14 @@ class Satisfy(Trace):
 
 
 class Stakeholder(Classifier):
-    concernList: attribute[Comment]
+    concernList: relation_many[Comment]
     concern: attribute[str]
 
 
 class Tagged(Property):
     subsets: attribute[str]
-    nonunique: attribute[bool]
-    ordered: attribute[bool]
+    nonunique: relation_many[bool]
+    ordered: relation_many[bool]
 
 
 class TestCase(Behavior):
@@ -259,7 +259,7 @@ class TestCase(Behavior):
 
 
 class TriggerOnNestedPort(ElementPropertyPath, Trigger):
-    onNestedPort: relation_one[None]
+    onNestedPort: relation_many[None]
 
 
 class ValueType(DataType):
@@ -271,18 +271,18 @@ class Verify(Trace):
 
 
 class View(Class):
-    viewpoint: attribute[Viewpoint]
-    stakeholder: attribute[Stakeholder]
+    viewpoint: relation_one[Viewpoint]
+    stakeholder: relation_many[Stakeholder]
 
 
 class Viewpoint(Class):
+    concernList: relation_many[Comment]
     language: attribute[str]
-    method: attribute[Behavior]
+    method: relation_many[Behavior]
     presentation: attribute[str]
     purpose: attribute[str]
     concern: attribute[str]
-    stakeholder: attribute[Stakeholder]
-    concernList: attribute[Comment]
+    stakeholder: relation_many[Stakeholder]
 
 
 class _Refine:
