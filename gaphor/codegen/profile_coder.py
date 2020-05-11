@@ -100,7 +100,7 @@ def create_referenced(classes: List[UML.Class]) -> Set[UML.Class]:
     return referenced
 
 
-def write_class_def(cls, trees, f, cls_written=set()):
+def write_class_def(cls, trees, f, cls_written=set()) -> None:
     if cls in cls_written:
         return
 
@@ -109,11 +109,11 @@ def write_class_def(cls, trees, f, cls_written=set()):
         write_class_def(g, trees, f, cls_written)
 
     f.write(f"class {cls.name}({', '.join(g.name for g in generalizations)}):\n")
-    write_attributes(cls, filename=f)
+    write_attributes(cls, f)
     cls_written.add(cls)
 
 
-def write_attributes(cls: UML.Class, filename: TextIO) -> None:
+def write_attributes(cls: UML.Class, f: TextIO) -> None:
     """Write attributes based on attribute type."""
 
     written = False
@@ -123,31 +123,35 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
             continue
         type_value = type_converter(a)
         if type_value in ("int", "str"):
-            filename.write(f"    {a.name}: attribute[{type_value}]\n")
+            f.write(f"    {a.name}: attribute[{type_value}]\n")
         elif a.upperValue == "1":
-            filename.write(f"    {a.name}: relation_one[{type_value}]\n")
+            f.write(f"    {a.name}: relation_one[{type_value}]\n")
         else:
-            filename.write(f"    {a.name}: relation_many[{type_value}]\n")
+            f.write(f"    {a.name}: relation_many[{type_value}]\n")
         written = True
 
     for o in cls.ownedOperation:
-        filename.write(f"    {o}: operation\n")
+        f.write(f"    {o}: operation\n")
         written = True
     if not written:
-        filename.write("    pass\n\n")
+        f.write("    pass\n\n")
 
 
-def write_properties(
-    cls: UML.Class, filename: TextIO,
-):
+def write_properties(cls: UML.Class, f: TextIO,) -> None:
     for a in cls.attribute:
         if not a.name or a.name == "baseClass" or a.isDerived:
             continue
         type_value = type_converter(a)
         if type_value in ("int", "str"):
             # TODO: add default value, if there is one
-            filename.write(
-                f'{cls.name}.{a.name} = attribute("{a.name}", {type_value})\n'
+            f.write(f'{cls.name}.{a.name} = attribute("{a.name}", {type_value})\n')
+        else:
+            upper = '"*"' if a.upperValue == "*" else a.upperValue
+            if not a.type:
+                print(f"No type for {cls.name}.{a.name}")
+                continue
+            f.write(
+                f'{cls.name}.{a.name} = association("{a.name}", {a.type.name}, upper={upper})\n'
             )
 
 

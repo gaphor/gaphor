@@ -237,8 +237,8 @@ class Stakeholder(Classifier):
 
 
 class Tagged(Property):
-    ordered: relation_many[bool]
     nonunique: relation_many[bool]
+    ordered: relation_many[bool]
     subsets: attribute[str]
 
 
@@ -279,10 +279,24 @@ class _Trace:
 
 
 AbstractRequirement.externalId = attribute("externalId", str)
+AdjuntProperty.principal = association("principal", Element, upper=1)
 Block.isEncapsulated = attribute("isEncapsulated", int)
+ChangeSructuralFeatureEvent.structuralFeature = association(
+    "structuralFeature", StructuralFeature, upper=1
+)
+DirectedRelationshipPropertyPath.sourceContext = association(
+    "sourceContext", Classifier, upper=1
+)
+DirectedRelationshipPropertyPath.targetContext = association(
+    "targetContext", Classifier, upper=1
+)
 ElementGroup.name = attribute("name", str)
+ElementPropertyPath.propertyPath = association("propertyPath", Property, upper="*")
+InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, upper="*")
 Probability.probability = attribute("probability", str)
 Tagged.subsets = attribute("subsets", str)
+TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, upper="*")
+ValueType.unit = association("unit", InstanceSpecification, upper=1)
 Viewpoint.presentation = attribute("presentation", str)
 Viewpoint.purpose = attribute("purpose", str)
 Viewpoint.language = attribute("language", str)
