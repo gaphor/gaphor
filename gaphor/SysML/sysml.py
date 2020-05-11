@@ -53,14 +53,7 @@ from gaphor.UML import (
 
 class AbstractRequirement(NamedElement):
     base_NamedElement: relation_one[NamedElement]
-    refinedBy: relation_many[NamedElement]
-    satisfiedBy: relation_many[NamedElement]
-    derived: relation_many[AbstractRequirement]
-    text: attribute[str]
     externalId: attribute[str]
-    tracedTo: relation_many[NamedElement]
-    master: relation_many[AbstractRequirement]
-    verifiedBy: relation_many[NamedElement]
 
 
 class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
@@ -107,7 +100,6 @@ class EndPathMultiplicity(Property):
 
 
 class BoundReference(EndPathMultiplicity):
-    bindingPath: relation_many[Property]
     boundend: relation_many[ConnectorEnd]
 
 
@@ -169,9 +161,6 @@ class DistributedProperty(Property):
 
 class ElementGroup(Comment):
     orderedMember: relation_many[Element]
-    size: attribute[int]
-    criterion: attribute[str]
-    member: relation_many[Element]
     name: attribute[str]
 
 
@@ -245,7 +234,6 @@ class Satisfy(Trace):
 
 class Stakeholder(Classifier):
     concernList: relation_many[Comment]
-    concern: attribute[str]
 
 
 class Tagged(Property):
@@ -271,17 +259,14 @@ class Verify(Trace):
 
 
 class View(Class):
-    viewpoint: relation_one[Viewpoint]
-    stakeholder: relation_many[Stakeholder]
+    pass
 
 
 class Viewpoint(Class):
     concernList: relation_many[Comment]
     language: attribute[str]
-    method: relation_many[Behavior]
     presentation: attribute[str]
     purpose: attribute[str]
-    concern: attribute[str]
     stakeholder: relation_many[Stakeholder]
 
 

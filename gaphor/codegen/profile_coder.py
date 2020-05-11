@@ -77,7 +77,10 @@ def write_attributes(cls: UML.Class, filename: TextIO) -> None:
     """Write attributes based on attribute type."""
 
     written = False
-    for a in cls.attribute["it.name and it.name != 'baseClass'"]:  # type: ignore
+    for a in cls.attribute:  # type: ignore
+        # TODO: do write derived values if override is available
+        if not a.name or a.name == "baseClass" or a.isDerived:
+            continue
         type_value = type_converter(a)
         if type_value in ("int", "str"):
             filename.write(f"    {a.name}: attribute[{type_value}]\n")
