@@ -52,8 +52,8 @@ from gaphor.UML import (
 
 
 class AbstractRequirement(NamedElement):
-    base_NamedElement: relation_one[NamedElement]
     externalId: attribute[str]
+    base_NamedElement: relation_one[NamedElement]
 
 
 class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
@@ -75,8 +75,8 @@ class AdjuntProperty(Property):
 
 
 class DirectedRelationshipPropertyPath(DirectedRelationship):
-    targetContext: relation_one[None]
     sourceContext: relation_one[None]
+    targetContext: relation_one[None]
 
 
 class Allocate(DirectedRelationshipPropertyPath, Abstraction):
@@ -160,8 +160,8 @@ class DistributedProperty(Property):
 
 
 class ElementGroup(Comment):
-    orderedMember: relation_many[Element]
     name: attribute[str]
+    orderedMember: relation_many[Element]
 
 
 class Expose(Dependency):
@@ -237,9 +237,9 @@ class Stakeholder(Classifier):
 
 
 class Tagged(Property):
-    subsets: attribute[str]
-    nonunique: relation_many[bool]
     ordered: relation_many[bool]
+    nonunique: relation_many[bool]
+    subsets: attribute[str]
 
 
 class TestCase(Behavior):
@@ -263,11 +263,11 @@ class View(Class):
 
 
 class Viewpoint(Class):
-    concernList: relation_many[Comment]
-    language: attribute[str]
     presentation: attribute[str]
     purpose: attribute[str]
     stakeholder: relation_many[Stakeholder]
+    concernList: relation_many[Comment]
+    language: attribute[str]
 
 
 class _Refine:
@@ -276,3 +276,13 @@ class _Refine:
 
 class _Trace:
     pass
+
+
+AbstractRequirement.externalId = attribute("externalId", str)
+Block.isEncapsulated = attribute("isEncapsulated", int)
+ElementGroup.name = attribute("name", str)
+Probability.probability = attribute("probability", str)
+Tagged.subsets = attribute("subsets", str)
+Viewpoint.presentation = attribute("presentation", str)
+Viewpoint.purpose = attribute("purpose", str)
+Viewpoint.language = attribute("language", str)

@@ -53,50 +53,6 @@ def type_converter(association, enumerations: Dict = {}) -> Optional[str]:
         return str(type_value)
 
 
-def write_class_signature(
-    trees: Dict[UML.Class, List[UML.Class]],
-    cls: UML.Class,
-    cls_written: Set[str],
-    filename: TextIO,
-) -> bool:
-    """Write a class signature."""
-
-    base_classes = [cls.name for cls in trees[cls]]
-    if base_classes:
-        if all(cls_name in cls_written for cls_name in base_classes):
-            filename.write(f"class {cls.name}(" f"{', '.join(base_classes)}):\n")
-        else:
-            return False
-    else:
-        filename.write(f"class {cls.name}:\n")
-    write_attributes(cls, filename)
-    return True
-
-
-def write_attributes(cls: UML.Class, filename: TextIO) -> None:
-    """Write attributes based on attribute type."""
-
-    written = False
-    for a in cls.attribute:  # type: ignore
-        # TODO: do write derived values if override is available
-        if not a.name or a.name == "baseClass" or a.isDerived:
-            continue
-        type_value = type_converter(a)
-        if type_value in ("int", "str"):
-            filename.write(f"    {a.name}: attribute[{type_value}]\n")
-        elif a.upperValue == "1":
-            filename.write(f"    {a.name}: relation_one[{type_value}]\n")
-        else:
-            filename.write(f"    {a.name}: relation_many[{type_value}]\n")
-        written = True
-
-    for o in cls.ownedOperation:
-        filename.write(f"    {o}: operation\n")
-        written = True
-    if not written:
-        filename.write("    pass\n\n")
-
-
 def filter_uml_classes(
     classes: List[UML.Class], modeling_language: UMLModelingLanguage
 ) -> List[UML.Class]:
@@ -157,6 +113,44 @@ def write_class_def(cls, trees, f, cls_written=set()):
     cls_written.add(cls)
 
 
+def write_attributes(cls: UML.Class, filename: TextIO) -> None:
+    """Write attributes based on attribute type."""
+
+    written = False
+    for a in cls.attribute:  # type: ignore
+        # TODO: do write derived values if override is available
+        if not a.name or a.name == "baseClass" or a.isDerived:
+            continue
+        type_value = type_converter(a)
+        if type_value in ("int", "str"):
+            filename.write(f"    {a.name}: attribute[{type_value}]\n")
+        elif a.upperValue == "1":
+            filename.write(f"    {a.name}: relation_one[{type_value}]\n")
+        else:
+            filename.write(f"    {a.name}: relation_many[{type_value}]\n")
+        written = True
+
+    for o in cls.ownedOperation:
+        filename.write(f"    {o}: operation\n")
+        written = True
+    if not written:
+        filename.write("    pass\n\n")
+
+
+def write_properties(
+    cls: UML.Class, filename: TextIO,
+):
+    for a in cls.attribute:
+        if not a.name or a.name == "baseClass" or a.isDerived:
+            continue
+        type_value = type_converter(a)
+        if type_value in ("int", "str"):
+            # TODO: add default value, if there is one
+            filename.write(
+                f'{cls.name}.{a.name} = attribute("{a.name}", {type_value})\n'
+            )
+
+
 def generate(
     filename: PathLike, outfile: PathLike, overridesfile: Optional[PathLike] = None,
 ) -> None:
@@ -190,5 +184,10 @@ def generate(
         cls_written: Set[Element] = set(uml_classes)
         for cls in trees.keys():
             write_class_def(cls, trees, f, cls_written)
+
+        f.write("\n\n")
+
+        for cls in trees.keys():
+            write_properties(cls, f)
 
     element_factory.shutdown()
