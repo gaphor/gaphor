@@ -31,14 +31,17 @@ from gaphor.core.modeling.properties import (
 """
 
 
-def type_converter(association, enumerations: Dict = {}) -> Optional[str]:
+def type_converter(property: UML.Property, enumerations: Dict = {}) -> Optional[str]:
     """Convert association types for Python data model."""
 
-    type_value = association.typeValue
+    if property.type:
+        return str(property.type.name)
+
+    type_value = property.typeValue
     if type_value is None:
         return None
         # raise ValueError(
-        #     f"ERROR! type is not specified for property {association.name}"
+        #     f"ERROR! type is not specified for property {property.name}"
         # )
     if type_value.lower() == "boolean":
         return "int"
@@ -146,12 +149,12 @@ def write_properties(cls: UML.Class, f: TextIO,) -> None:
             # TODO: add default value, if there is one
             f.write(f'{cls.name}.{a.name} = attribute("{a.name}", {type_value})\n')
         else:
-            upper = '"*"' if a.upperValue == "*" else a.upperValue
-            if not a.type:
+            upper = '"*"' if a.upperValue == "*" else (a.upperValue or 1)
+            if not type_value:
                 print(f"No type for {cls.name}.{a.name}")
                 continue
             f.write(
-                f'{cls.name}.{a.name} = association("{a.name}", {a.type.name}, upper={upper})\n'
+                f'{cls.name}.{a.name} = association("{a.name}", {type_value}, upper={upper})\n'
             )
 
 

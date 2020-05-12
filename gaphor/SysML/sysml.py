@@ -61,7 +61,7 @@ class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
 
 
 class ElementPropertyPath(Element):
-    propertyPath: relation_many[None]
+    propertyPath: relation_many[Property]
 
 
 class AddFlowPropertyValueOnNestedPortAction(
@@ -71,12 +71,12 @@ class AddFlowPropertyValueOnNestedPortAction(
 
 
 class AdjuntProperty(Property):
-    principal: relation_one[None]
+    principal: relation_one[Element]
 
 
 class DirectedRelationshipPropertyPath(DirectedRelationship):
-    sourceContext: relation_one[None]
-    targetContext: relation_one[None]
+    sourceContext: relation_one[Classifier]
+    targetContext: relation_one[Classifier]
 
 
 class Allocate(DirectedRelationshipPropertyPath, Abstraction):
@@ -104,7 +104,7 @@ class BoundReference(EndPathMultiplicity):
 
 
 class ChangeSructuralFeatureEvent(ChangeEvent):
-    structuralFeature: relation_one[None]
+    structuralFeature: relation_one[StructuralFeature]
 
 
 class ClassifierBehaviorProperty(Property):
@@ -181,7 +181,7 @@ class InterfaceBlock(Block):
 
 
 class InvocationOnNestedPortAction(ElementPropertyPath, InvocationAction):
-    onNestedPort: relation_many[None]
+    onNestedPort: relation_many[Port]
 
 
 class NestedConnectorEnd(ElementPropertyPath, ConnectorEnd):
@@ -247,11 +247,11 @@ class TestCase(Behavior):
 
 
 class TriggerOnNestedPort(ElementPropertyPath, Trigger):
-    onNestedPort: relation_many[None]
+    onNestedPort: relation_many[Port]
 
 
 class ValueType(DataType):
-    unit: relation_one[None]
+    unit: relation_one[InstanceSpecification]
 
 
 class Verify(Trace):
@@ -279,11 +279,16 @@ class _Trace:
 
 
 AbstractRequirement.externalId = attribute("externalId", str)
+AbstractRequirement.base_NamedElement = association(
+    "base_NamedElement", NamedElement, upper=1
+)
 AdjuntProperty.principal = association("principal", Element, upper=1)
 Block.isEncapsulated = attribute("isEncapsulated", int)
+BoundReference.boundend = association("boundend", ConnectorEnd, upper=1)
 ChangeSructuralFeatureEvent.structuralFeature = association(
     "structuralFeature", StructuralFeature, upper=1
 )
+ConnectorProperty.connector = association("connector", Connector, upper=1)
 DirectedRelationshipPropertyPath.sourceContext = association(
     "sourceContext", Classifier, upper=1
 )
@@ -291,12 +296,20 @@ DirectedRelationshipPropertyPath.targetContext = association(
     "targetContext", Classifier, upper=1
 )
 ElementGroup.name = attribute("name", str)
+ElementGroup.orderedMember = association("orderedMember", Element, upper="*")
 ElementPropertyPath.propertyPath = association("propertyPath", Property, upper="*")
 InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, upper="*")
+ParticipantProperty.end_ = association("end_", Property, upper=1)
 Probability.probability = attribute("probability", str)
+Rate.rate = association("rate", InstanceSpecification, upper=1)
+Stakeholder.concernList = association("concernList", Comment, upper="*")
+Tagged.nonunique = association("nonunique", bool, upper=1)
+Tagged.ordered = association("ordered", bool, upper=1)
 Tagged.subsets = attribute("subsets", str)
 TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, upper="*")
 ValueType.unit = association("unit", InstanceSpecification, upper=1)
 Viewpoint.presentation = attribute("presentation", str)
 Viewpoint.purpose = attribute("purpose", str)
+Viewpoint.stakeholder = association("stakeholder", Stakeholder, upper="*")
+Viewpoint.concernList = association("concernList", Comment, upper="*")
 Viewpoint.language = attribute("language", str)
