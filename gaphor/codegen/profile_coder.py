@@ -153,6 +153,7 @@ def write_properties(cls: UML.Class, f: TextIO,) -> None:
             if not type_value:
                 print(f"No type for {cls.name}.{a.name}")
                 continue
+            # TODO: Add lower, composite and opposite parameters
             f.write(
                 f'{cls.name}.{a.name} = association("{a.name}", {type_value}, upper={upper})\n'
             )
