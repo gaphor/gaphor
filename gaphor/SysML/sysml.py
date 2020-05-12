@@ -160,8 +160,8 @@ class DistributedProperty(Property):
 
 
 class ElementGroup(Comment):
-    name: attribute[str]
     orderedMember: relation_many[Element]
+    name: attribute[str]
 
 
 class Expose(Dependency):
@@ -200,7 +200,7 @@ class ParticipantProperty(Property):
     end_: relation_one[Property]
 
 
-class Probability(ActivityEdge, ParameterSet):
+class Probability(ParameterSet, ActivityEdge):
     probability: attribute[str]
 
 
@@ -237,9 +237,9 @@ class Stakeholder(Classifier):
 
 
 class Tagged(Property):
-    nonunique: relation_many[bool]
     ordered: relation_many[bool]
     subsets: attribute[str]
+    nonunique: relation_many[bool]
 
 
 class TestCase(Behavior):
@@ -252,6 +252,7 @@ class TriggerOnNestedPort(ElementPropertyPath, Trigger):
 
 class ValueType(DataType):
     unit: relation_one[InstanceSpecification]
+    quantityKind: relation_one[InstanceSpecification]
 
 
 class Verify(Trace):
@@ -263,18 +264,14 @@ class View(Class):
 
 
 class Viewpoint(Class):
+    language: attribute[str]
     presentation: attribute[str]
     purpose: attribute[str]
     stakeholder: relation_many[Stakeholder]
     concernList: relation_many[Comment]
-    language: attribute[str]
 
 
 class _Refine:
-    pass
-
-
-class _Trace:
     pass
 
 
@@ -295,21 +292,22 @@ DirectedRelationshipPropertyPath.sourceContext = association(
 DirectedRelationshipPropertyPath.targetContext = association(
     "targetContext", Classifier, upper=1
 )
-ElementGroup.name = attribute("name", str)
 ElementGroup.orderedMember = association("orderedMember", Element, upper="*")
+ElementGroup.name = attribute("name", str)
 ElementPropertyPath.propertyPath = association("propertyPath", Property, upper="*")
 InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, upper="*")
 ParticipantProperty.end_ = association("end_", Property, upper=1)
 Probability.probability = attribute("probability", str)
 Rate.rate = association("rate", InstanceSpecification, upper=1)
 Stakeholder.concernList = association("concernList", Comment, upper="*")
-Tagged.nonunique = association("nonunique", bool, upper=1)
 Tagged.ordered = association("ordered", bool, upper=1)
 Tagged.subsets = attribute("subsets", str)
+Tagged.nonunique = association("nonunique", bool, upper=1)
 TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, upper="*")
 ValueType.unit = association("unit", InstanceSpecification, upper=1)
+ValueType.quantityKind = association("quantityKind", InstanceSpecification, upper=1)
+Viewpoint.language = attribute("language", str)
 Viewpoint.presentation = attribute("presentation", str)
 Viewpoint.purpose = attribute("purpose", str)
 Viewpoint.stakeholder = association("stakeholder", Stakeholder, upper="*")
 Viewpoint.concernList = association("concernList", Comment, upper="*")
-Viewpoint.language = attribute("language", str)

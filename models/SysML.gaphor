@@ -1904,6 +1904,11 @@
 <ref refid="94c1d354-2101-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedAttribute>
+<ownedComment>
+<reflist>
+<ref refid="0131a2ed-9412-11ea-8c4e-d5df8503c3c0"/>
+</reflist>
+</ownedComment>
 <package>
 <ref refid="397ef0d2-20e1-11ea-9209-e76c3117c943"/>
 </package>
@@ -2027,6 +2032,7 @@
 <reflist>
 <ref refid="c4e10aab-2101-11ea-ab0b-c72c0738acd2"/>
 <ref refid="cc0b4f1a-2104-11ea-ab0b-c72c0738acd2"/>
+<ref refid="a940fca9-2104-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -2294,6 +2300,40 @@
 <ref refid="60cc4486-2105-11ea-ab0b-c72c0738acd2"/>
 </subject>
 </item>
+<item id="0131a2ee-9412-11ea-8c4e-d5df8503c3c0" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 262.87677001953125, 361.1194763183594)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>95.0</val>
+</height>
+<subject>
+<ref refid="0131a2ed-9412-11ea-8c4e-d5df8503c3c0"/>
+</subject>
+</item>
+<item id="0dcc8508-9412-11ea-8c4e-d5df8503c3c0" type="CommentLineItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 288.87225341796875, 293.88978576660156)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (9.24505615234375, 67.22969055175781)]</val>
+</points>
+<head-connection>
+<ref refid="5ce19bca-2104-11ea-ab0b-c72c0738acd2"/>
+</head-connection>
+<tail-connection>
+<ref refid="0131a2ee-9412-11ea-8c4e-d5df8503c3c0"/>
+</tail-connection>
+</item>
 </canvas>
 </Diagram>
 <Diagram id="6d89dc70-2104-11ea-ab0b-c72c0738acd2">
@@ -2473,7 +2513,6 @@
 </memberEnd>
 <ownedEnd>
 <reflist>
-<ref refid="a940fca9-2104-11ea-ab0b-c72c0738acd2"/>
 <ref refid="a940fcaa-2104-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedEnd>
@@ -2490,6 +2529,9 @@
 <association>
 <ref refid="a940fca8-2104-11ea-ab0b-c72c0738acd2"/>
 </association>
+<class_>
+<ref refid="7c3c3a9a-2101-11ea-ab0b-c72c0738acd2"/>
+</class_>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -2499,9 +2541,6 @@
 <name>
 <val>quantityKind</val>
 </name>
-<owningAssociation>
-<ref refid="a940fca8-2104-11ea-ab0b-c72c0738acd2"/>
-</owningAssociation>
 <presentation>
 <reflist/>
 </presentation>
@@ -9905,7 +9944,7 @@
 </Generalization>
 <Class id="d69a5a16-2143-11ea-ab0b-c72c0738acd2">
 <name>
-<val>_Trace</val>
+<val>~Trace</val>
 </name>
 <ownedComment>
 <reflist>
@@ -10929,6 +10968,21 @@ otherwise MRO can not be resolved.</val>
 <presentation>
 <reflist>
 <ref refid="ebb12ac2-90a3-11ea-85c4-7f4489bdcce3"/>
+</reflist>
+</presentation>
+</Comment>
+<Comment id="0131a2ed-9412-11ea-8c4e-d5df8503c3c0">
+<annotatedElement>
+<reflist>
+<ref refid="1f09001a-2101-11ea-ab0b-c72c0738acd2"/>
+</reflist>
+</annotatedElement>
+<body>
+<val>Property "end" is defined in base class already.</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="0131a2ee-9412-11ea-8c4e-d5df8503c3c0"/>
 </reflist>
 </presentation>
 </Comment>
