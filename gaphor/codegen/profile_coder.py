@@ -197,6 +197,7 @@ def generate(
 
         cls_written: Set[Element] = set(uml_classes)
         for cls in trees.keys():
+            cls.attribute.sort(key=lambda a: a.name or "")  # type: ignore[attr-defined]
             write_class_def(cls, trees, f, cls_written)
 
         f.write("\n\n")

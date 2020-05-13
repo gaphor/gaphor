@@ -52,9 +52,9 @@ from gaphor.UML import (
 
 
 class AbstractRequirement(NamedElement):
-    text: attribute[str]
-    externalId: attribute[str]
     base_NamedElement: relation_one[NamedElement]
+    externalId: attribute[str]
+    text: attribute[str]
 
 
 class AcceptChangeStructuralFeatureEventAction(AcceptEventAction):
@@ -240,9 +240,9 @@ class Stakeholder(Classifier):
 
 
 class Tagged(Property):
-    subsets: attribute[str]
     nonunique: relation_many[bool]
     ordered: relation_many[bool]
+    subsets: attribute[str]
 
 
 class TestCase(Behavior):
@@ -254,8 +254,8 @@ class TriggerOnNestedPort(ElementPropertyPath, Trigger):
 
 
 class ValueType(DataType):
-    unit: relation_one[InstanceSpecification]
     quantityKind: relation_one[InstanceSpecification]
+    unit: relation_one[InstanceSpecification]
 
 
 class Verify(Trace):
@@ -267,22 +267,22 @@ class View(Class):
 
 
 class Viewpoint(Class):
+    concernList: relation_many[Comment]
+    language: attribute[str]
     presentation: attribute[str]
     purpose: attribute[str]
     stakeholder: relation_many[Stakeholder]
-    concernList: relation_many[Comment]
-    language: attribute[str]
 
 
 class _Refine:
     pass
 
 
-AbstractRequirement.text = attribute("text", str)
-AbstractRequirement.externalId = attribute("externalId", str)
 AbstractRequirement.base_NamedElement = association(
     "base_NamedElement", NamedElement, upper=1
 )
+AbstractRequirement.externalId = attribute("externalId", str)
+AbstractRequirement.text = attribute("text", str)
 AdjuntProperty.principal = association("principal", Element, upper=1)
 Block.isEncapsulated = attribute("isEncapsulated", int)
 BoundReference.boundend = association("boundend", ConnectorEnd, upper=1)
@@ -290,6 +290,9 @@ ChangeSructuralFeatureEvent.structuralFeature = association(
     "structuralFeature", StructuralFeature, upper=1
 )
 ConnectorProperty.connector = association("connector", Connector, upper=1)
+DirectedRelationshipPropertyPath.sourceContext = association(
+    "sourceContext", Classifier, upper=1
+)
 DirectedRelationshipPropertyPath.sourcePropertyPath = association(
     "sourcePropertyPath", Property
 )
@@ -299,9 +302,6 @@ DirectedRelationshipPropertyPath.targetContext = association(
 DirectedRelationshipPropertyPath.targetPropertyPath = association(
     "targetPropertyPath", Property
 )
-DirectedRelationshipPropertyPath.sourceContext = association(
-    "sourceContext", Classifier, upper=1
-)
 ElementGroup.name = attribute("name", str)
 ElementGroup.orderedMember = association("orderedMember", Element)
 ElementPropertyPath.propertyPath = association("propertyPath", Property, lower=1)
@@ -310,14 +310,14 @@ ParticipantProperty.end_ = association("end_", Property, upper=1)
 Probability.probability = attribute("probability", str)
 Rate.rate = association("rate", InstanceSpecification, upper=1)
 Stakeholder.concernList = association("concernList", Comment)
-Tagged.subsets = attribute("subsets", str)
 Tagged.nonunique = association("nonunique", bool, upper=1)
 Tagged.ordered = association("ordered", bool, upper=1)
+Tagged.subsets = attribute("subsets", str)
 TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, lower=1)
-ValueType.unit = association("unit", InstanceSpecification, upper=1)
 ValueType.quantityKind = association("quantityKind", InstanceSpecification, upper=1)
+ValueType.unit = association("unit", InstanceSpecification, upper=1)
+Viewpoint.concernList = association("concernList", Comment)
+Viewpoint.language = attribute("language", str)
 Viewpoint.presentation = attribute("presentation", str)
 Viewpoint.purpose = attribute("purpose", str)
 Viewpoint.stakeholder = association("stakeholder", Stakeholder)
-Viewpoint.concernList = association("concernList", Comment)
-Viewpoint.language = attribute("language", str)
