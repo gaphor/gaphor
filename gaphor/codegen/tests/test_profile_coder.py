@@ -12,6 +12,7 @@ from gaphor.codegen.profile_coder import (
     header,
     write_attributes,
 )
+from gaphor.core.modeling.properties import attribute, derived
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import uml as UML
 from gaphor.UML.classes import ClassItem
@@ -105,6 +106,32 @@ def test_write_attributes_no_attribute(filename, element_factory):
     write_attributes(cls_item.subject, filename)
 
     assert filename.data == "    pass\n\n"
+
+
+def test_write_attributes_for_derived(filename, element_factory):
+    """Test writing derived attribute."""
+    diagram = element_factory.create(UML.Diagram)
+    book = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    book.subject.name = "Book"
+    book.subject.title = attribute("title", str)
+    book.subject.loanPeriod = attribute("loadPeriod", int, default=14)
+
+    library_book = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    library_book.subject.name = "Library Book"
+    library_book.subject.loanPeriod = derived(
+        book.subject, "loanPeriod", int, 0, 1, lambda e: [e]
+    )
+    gen = diagram.create(
+        GeneralizationItem, subject=element_factory.create(UML.Generalization)
+    )
+    connect(gen, gen.tail, library_book)
+    connect(gen, gen.head, book)
+
+    write_attributes(library_book.subject, filename)
+
+    assert filename.data == "    pass\n\n"
+    # TODO: This should be a derived attribute
+    # assert filename.data == "    loanPeriod: derived[int]\n\n"
 
 
 def test_type_converter():
