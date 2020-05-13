@@ -5,15 +5,13 @@ Test handle tool functionality.
 import pytest
 from gaphas.aspect import ConnectionSink
 from gaphas.aspect import Connector as ConnectorAspect
-from gi.repository import Gdk, Gtk
+from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
-from gaphor.services.componentregistry import ComponentRegistry
-from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.mainwindow import Diagrams
 from gaphor.UML.modelinglanguage import UMLModelingLanguage

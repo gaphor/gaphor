@@ -2,13 +2,11 @@ from typing import Dict, List, Set
 
 import pytest
 
-from gaphor.application import Session, distribution
+from gaphor.application import distribution
 from gaphor.codegen.profile_coder import (
-    breadth_first_search,
     create_class_trees,
     create_referenced,
     filter_uml_classes,
-    find_root_nodes,
     generate,
     get_class_extensions,
     header,
@@ -19,6 +17,7 @@ from gaphor.UML import uml as UML
 from gaphor.UML.classes import ClassItem
 from gaphor.UML.classes.generalization import GeneralizationItem
 from gaphor.UML.modelfactory import create_extension
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 class PseudoFile:
@@ -98,31 +97,6 @@ def test_get_class_extension(classes):
     assert classes[2] in meta
 
 
-def test_breadth_first_search(tree, classes):
-    """Test simple tree structure using BFS."""
-    root_nodes = [classes[0], classes[5]]
-    found_classes = breadth_first_search(tree, root_nodes)
-
-    assert len(found_classes) == 7
-    assert len(found_classes) == len(set(found_classes))
-    assert found_classes[0] is classes[0]
-    assert found_classes[1] is classes[5]
-    assert found_classes[2] is classes[1]
-    assert found_classes[3] is classes[2]
-    assert found_classes[4] is classes[6]
-    assert found_classes[5] is classes[3]
-    assert found_classes[6] is classes[4]
-
-
-def test_find_root_nodes(tree, classes):
-    """Test finding the root nodes."""
-    referenced: Set[UML.Class] = set([classes[0], classes[2], classes[5]])
-
-    root_nodes = find_root_nodes(tree, referenced)
-    assert len(root_nodes) == 2
-    assert root_nodes[0] is classes[0]
-
-
 def test_write_attributes_no_attribute(filename, element_factory):
     """Test writing pass when no attributes."""
     diagram = element_factory.create(UML.Diagram)
@@ -148,7 +122,7 @@ def test_filter_uml_classes(classes):
     classes[6].name = "Van"
     assert len(classes) == 7
 
-    uml_classes = filter_uml_classes(classes)
+    uml_classes = filter_uml_classes(classes, UMLModelingLanguage())
 
     assert len(uml_classes) == 2
 
@@ -170,7 +144,7 @@ def test_model_header(tmp_path):
 
     generate(path, outfile)
 
-    assert outfile.read_text() == header
+    assert outfile.read_text() == header + "\n\n"
 
 
 def test_model_with_extension(tmp_path):
