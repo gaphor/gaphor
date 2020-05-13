@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.3.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.2.0">
 <Package id="7273ceaa-20df-11ea-9209-e76c3117c943">
 <name>
 <val>Profiles</val>
@@ -346,7 +346,7 @@
 <val>289.0</val>
 </width>
 <height>
-<val>227.0</val>
+<val>244.0</val>
 </height>
 <subject>
 <ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
@@ -357,7 +357,7 @@
 <ref refid="8b204fea-2144-11ea-ab0b-c72c0738acd2"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 826.8790283203125, 497.20684814453125)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 826.8790283203125, 503.397320314651)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -366,7 +366,7 @@
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (62.293487548828125, 0.0), (62.293487548828125, -0.3719482421875)]</val>
+<val>[(0.0, 0.0), (62.293487548828125, 0.0), (62.293487548828125, -6.562420412307233)]</val>
 </points>
 <head-connection>
 <ref refid="2d1ce65f-20e2-11ea-9209-e76c3117c943"/>
@@ -1076,6 +1076,7 @@
 <ref refid="ed597250-20e4-11ea-9209-e76c3117c943"/>
 <ref refid="f63b8da4-20e4-11ea-9209-e76c3117c943"/>
 <ref refid="5ab44390-2144-11ea-ab0b-c72c0738acd2"/>
+<ref refid="71d9fb4a-94b1-11ea-880f-b1efd5008378"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -1134,6 +1135,32 @@
 <class_>
 <ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
 </class_>
+<isDerived>
+<val>1</val>
+</isDerived>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<name>
+<val>derivedFrom</val>
+</name>
+<typeValue>
+<val>AbstractRequirement</val>
+</typeValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</Property>
+<Property id="aa3e55bc-20e4-11ea-9209-e76c3117c943">
+<class_>
+<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
+</class_>
 <name>
 <val>externalId</val>
 </name>
@@ -1147,7 +1174,7 @@
 <val>1</val>
 </upperValue>
 </Property>
-<Property id="aa3e55bc-20e4-11ea-9209-e76c3117c943">
+<Property id="b751a2f4-20e4-11ea-9209-e76c3117c943">
 <class_>
 <ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
 </class_>
@@ -1173,7 +1200,7 @@
 <val>*</val>
 </upperValue>
 </Property>
-<Property id="b751a2f4-20e4-11ea-9209-e76c3117c943">
+<Property id="dc7813b0-20e4-11ea-9209-e76c3117c943">
 <class_>
 <ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
 </class_>
@@ -1199,7 +1226,7 @@
 <val>*</val>
 </upperValue>
 </Property>
-<Property id="dc7813b0-20e4-11ea-9209-e76c3117c943">
+<Property id="e31b6276-20e4-11ea-9209-e76c3117c943">
 <class_>
 <ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
 </class_>
@@ -1225,13 +1252,10 @@
 <val>*</val>
 </upperValue>
 </Property>
-<Property id="e31b6276-20e4-11ea-9209-e76c3117c943">
+<Property id="ed597250-20e4-11ea-9209-e76c3117c943">
 <class_>
 <ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
 </class_>
-<isDerived>
-<val>1</val>
-</isDerived>
 <name>
 <val>text</val>
 </name>
@@ -1243,32 +1267,6 @@
 </upperValue>
 <upperValue>
 <val>1</val>
-</upperValue>
-</Property>
-<Property id="ed597250-20e4-11ea-9209-e76c3117c943">
-<class_>
-<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
-</class_>
-<isDerived>
-<val>1</val>
-</isDerived>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<name>
-<val>tracedTo</val>
-</name>
-<typeValue>
-<val>NamedElement</val>
-</typeValue>
-<upperValue>
-<val>*</val>
-</upperValue>
-<upperValue>
-<val>*</val>
 </upperValue>
 </Property>
 <Property id="f63b8da4-20e4-11ea-9209-e76c3117c943">
@@ -1285,7 +1283,7 @@
 <val>0</val>
 </lowerValue>
 <name>
-<val>verifiedBy</val>
+<val>tracedTo</val>
 </name>
 <typeValue>
 <val>NamedElement</val>
@@ -10986,4 +10984,30 @@ otherwise MRO can not be resolved.</val>
 </reflist>
 </presentation>
 </Comment>
+<Property id="71d9fb4a-94b1-11ea-880f-b1efd5008378">
+<class_>
+<ref refid="2d1ce65e-20e2-11ea-9209-e76c3117c943"/>
+</class_>
+<isDerived>
+<val>1</val>
+</isDerived>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<name>
+<val>verifiedBy</val>
+</name>
+<typeValue>
+<val>NamedElement</val>
+</typeValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
+</Property>
 </gaphor>
