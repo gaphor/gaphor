@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.2.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.3.0">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -18088,11 +18088,6 @@ BehavioredClassifier.</val>
 <ref refid="DCE:3EEBCC18-6698-11D7-A84E-6C8643AD0CA4"/>
 </reflist>
 </memberEnd>
-<ownedEnd>
-<reflist>
-<ref refid="DCE:3EEBCC18-6698-11D7-A84E-6C8643AD0CA4"/>
-</reflist>
-</ownedEnd>
 <package>
 <ref refid="DCE:5573D924-6690-11D7-A84E-6C8643AD0CA4"/>
 </package>
@@ -18525,6 +18520,7 @@ BehavioredClassifier.</val>
 <ref refid="DCE:BFC7B66E-4B37-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:38A9AE44-4B54-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:E1377E1A-4B34-11D7-B391-02BBFE4396CE"/>
+<ref refid="DCE:3EEBCC18-6698-11D7-A84E-6C8643AD0CA4"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -22444,12 +22440,12 @@ specially for Gaphor</val>
 <association>
 <ref refid="DCE:3EEB934C-6698-11D7-A84E-6C8643AD0CA4"/>
 </association>
+<class_>
+<ref refid="DCE:F10D682A-4A87-11D7-B08B-133D836EF880"/>
+</class_>
 <name>
 <val>useCase</val>
 </name>
-<owningAssociation>
-<ref refid="DCE:3EEB934C-6698-11D7-A84E-6C8643AD0CA4"/>
-</owningAssociation>
 <presentation>
 <reflist/>
 </presentation>

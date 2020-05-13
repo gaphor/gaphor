@@ -111,8 +111,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.group(s, uc2)
         assert 1 == len(uc2.subject.subject)
 
-        # Classifier.useCase is not navigable to UseCase
-        # self.assertEqual(2, len(s.subject.useCase))
+        self.assertEqual(2, len(s.subject.useCase))
 
     def test_grouping_with_namespace(self):
         """Test adding an use case to a subsystem (with namespace)
@@ -120,14 +119,9 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         s = self.create(ComponentItem, UML.Component)
         uc = self.create(UseCaseItem, UML.UseCase)
 
-        # manipulate namespace
-        c = self.element_factory.create(UML.Class)
-        attribute = self.element_factory.create(UML.Property)
-        c.ownedAttribute = attribute
-
         self.group(s, uc)
         assert 1 == len(uc.subject.subject)
-        assert s.subject.namespace is not uc.subject
+        assert s.subject in uc.subject.subject
 
     def test_ungrouping(self):
         """Test removal of use case from subsystem
@@ -141,10 +135,8 @@ class SubsystemUseCaseGroupTestCase(TestCase):
 
         self.ungroup(s, uc1)
         assert 0 == len(uc1.subject.subject)
-        # Classifier.useCase is not navigable to UseCase
-        # self.assertEqual(1, len(s.subject.useCase))
+        self.assertEqual(1, len(s.subject.useCase))
 
         self.ungroup(s, uc2)
         assert 0 == len(uc2.subject.subject)
-        # Classifier.useCase is not navigable to UseCase
-        # self.assertEqual(0, len(s.subject.useCase))
+        self.assertEqual(0, len(s.subject.useCase))

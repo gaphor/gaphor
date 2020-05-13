@@ -140,6 +140,7 @@ paste.register(NamedElementCopy, paste_named_element)
 class PresentationCopy(NamedTuple):
     cls: Type[Element]
     data: Dict[str, Tuple[str, str]]
+    parent: Optional[str]
 
 
 def copy_presentation(item) -> PresentationCopy:
@@ -149,7 +150,10 @@ def copy_presentation(item) -> PresentationCopy:
         buffer[name] = serialize(value)
 
     item.save(save_func)
-    return PresentationCopy(cls=item.__class__, data=buffer)
+    parent = item.canvas.get_parent(item)
+    return PresentationCopy(
+        cls=item.__class__, data=buffer, parent=parent.id if parent else None
+    )
 
 
 copy.register(Presentation, copy_presentation)  # type: ignore[arg-type]
@@ -158,13 +162,16 @@ copy.register(SimpleItem, copy_presentation)  # type: ignore[arg-type]
 
 @paste.register
 def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
-    cls, data = copy_data
+    cls, data, parent = copy_data
     item = diagram.create(cls)
+    if parent:
+        p = lookup(parent)
+        if p:
+            diagram.canvas.reparent(item, p)
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             item.load(name, value)
     item.canvas.update_matrices([item])
-    item.postload()
     return item
 
 
@@ -209,11 +216,17 @@ def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
         elif ref in copy_data.items:
             new_items[ref] = paste(copy_data.items[ref], diagram, item_lookup)
             return new_items[ref]
+        looked_up = diagram.lookup(ref)
+        if looked_up:
+            return looked_up
         return element_lookup(ref)
 
     for old_id, data in copy_data.items.items():
         if old_id in new_items:
             continue
         new_items[old_id] = paste(data, diagram, item_lookup)
+
+    for new_item in new_items.values():
+        new_item.postload()
 
     return set(new_items.values())

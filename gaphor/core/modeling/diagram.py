@@ -110,6 +110,11 @@ class Diagram(PackageableElement):
         self.model.handle(DiagramItemCreated(self.model, item))
         return item
 
+    def lookup(self, id):
+        for item in self.canvas.get_all_items():
+            if item.id == id:
+                return item
+
     def unlink(self):
         """Unlink all canvas items then unlink this diagram."""
 

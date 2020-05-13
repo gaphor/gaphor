@@ -23,6 +23,7 @@ class ComponentItem(ElementPresentation, Classified):
         self.watch("subject.appliedStereotype.slot", self.update_shapes)
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
+        self.watch("subject[Classifier].useCase", self.update_shapes)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
@@ -50,6 +51,10 @@ class ComponentItem(ElementPresentation, Classified):
             },
             draw=draw_border
         )
+
+    def postload(self):
+        self.update_shapes()
+        super().postload()
 
 
 def draw_component_icon(box, context, bounding_box):

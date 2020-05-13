@@ -73,6 +73,10 @@ class NodeItem(ElementPresentation, Classified):
             draw=draw_node
         )
 
+    def postload(self):
+        self.update_shapes()
+        super().postload()
+
 
 def draw_node(box, context, bounding_box):
     cr = context.cairo
