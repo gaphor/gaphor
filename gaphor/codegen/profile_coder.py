@@ -153,9 +153,15 @@ def write_properties(cls: UML.Class, f: TextIO,) -> None:
             if not type_value:
                 print(f"No type for {cls.name}.{a.name}")
                 continue
-            # TODO: Add lower, composite and opposite parameters
+            lower = "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"
+            composite = ", composite=True" if a.aggregation == "composite" else ""
+            opposite = (
+                f', opposite="{a.opposite.name}"'
+                if a.opposite and a.opposite.name and a.opposite.class_
+                else ""
+            )
             f.write(
-                f'{cls.name}.{a.name} = association("{a.name}", {type_value}, upper={upper})\n'
+                f'{cls.name}.{a.name} = association("{a.name}", {type_value}{lower}, upper={upper}{composite}{opposite})\n'
             )
 
 

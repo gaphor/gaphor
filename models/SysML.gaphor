@@ -3224,6 +3224,8 @@
 <ref refid="863f06e7-2109-11ea-ab0b-c72c0738acd2"/>
 <ref refid="bb09a981-2109-11ea-ab0b-c72c0738acd2"/>
 <ref refid="b5026069-2109-11ea-ab0b-c72c0738acd2"/>
+<ref refid="0d347fdd-210f-11ea-ab0b-c72c0738acd2"/>
+<ref refid="e7945aaf-210e-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -4559,7 +4561,6 @@
 </memberEnd>
 <ownedEnd>
 <reflist>
-<ref refid="e7945aaf-210e-11ea-ab0b-c72c0738acd2"/>
 <ref refid="e7945ab0-210e-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedEnd>
@@ -4581,6 +4582,9 @@
 <association>
 <ref refid="e7945aae-210e-11ea-ab0b-c72c0738acd2"/>
 </association>
+<class_>
+<ref refid="79455f30-2109-11ea-ab0b-c72c0738acd2"/>
+</class_>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -4590,9 +4594,6 @@
 <name>
 <val>targetPropertyPath</val>
 </name>
-<owningAssociation>
-<ref refid="e7945aae-210e-11ea-ab0b-c72c0738acd2"/>
-</owningAssociation>
 <presentation>
 <reflist/>
 </presentation>
@@ -4641,7 +4642,6 @@
 </memberEnd>
 <ownedEnd>
 <reflist>
-<ref refid="0d347fdd-210f-11ea-ab0b-c72c0738acd2"/>
 <ref refid="0d347fde-210f-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedEnd>
@@ -4663,6 +4663,9 @@
 <association>
 <ref refid="0d347fdc-210f-11ea-ab0b-c72c0738acd2"/>
 </association>
+<class_>
+<ref refid="79455f30-2109-11ea-ab0b-c72c0738acd2"/>
+</class_>
 <lowerValue>
 <val>0</val>
 </lowerValue>
@@ -4672,9 +4675,6 @@
 <name>
 <val>sourcePropertyPath</val>
 </name>
-<owningAssociation>
-<ref refid="0d347fdc-210f-11ea-ab0b-c72c0738acd2"/>
-</owningAssociation>
 <presentation>
 <reflist/>
 </presentation>

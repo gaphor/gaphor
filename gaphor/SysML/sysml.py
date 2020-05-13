@@ -52,6 +52,7 @@ from gaphor.UML import (
 
 
 class AbstractRequirement(NamedElement):
+    text: attribute[str]
     externalId: attribute[str]
     base_NamedElement: relation_one[NamedElement]
 
@@ -75,8 +76,10 @@ class AdjuntProperty(Property):
 
 
 class DirectedRelationshipPropertyPath(DirectedRelationship):
-    sourceContext: relation_one[Classifier]
+    sourcePropertyPath: relation_many[Property]
     targetContext: relation_one[Classifier]
+    targetPropertyPath: relation_many[Property]
+    sourceContext: relation_one[Classifier]
 
 
 class Allocate(DirectedRelationshipPropertyPath, Abstraction):
@@ -160,8 +163,8 @@ class DistributedProperty(Property):
 
 
 class ElementGroup(Comment):
-    orderedMember: relation_many[Element]
     name: attribute[str]
+    orderedMember: relation_many[Element]
 
 
 class Expose(Dependency):
@@ -200,7 +203,7 @@ class ParticipantProperty(Property):
     end_: relation_one[Property]
 
 
-class Probability(ParameterSet, ActivityEdge):
+class Probability(ActivityEdge, ParameterSet):
     probability: attribute[str]
 
 
@@ -237,9 +240,9 @@ class Stakeholder(Classifier):
 
 
 class Tagged(Property):
-    ordered: relation_many[bool]
     subsets: attribute[str]
     nonunique: relation_many[bool]
+    ordered: relation_many[bool]
 
 
 class TestCase(Behavior):
@@ -264,17 +267,18 @@ class View(Class):
 
 
 class Viewpoint(Class):
-    language: attribute[str]
     presentation: attribute[str]
     purpose: attribute[str]
     stakeholder: relation_many[Stakeholder]
     concernList: relation_many[Comment]
+    language: attribute[str]
 
 
 class _Refine:
     pass
 
 
+AbstractRequirement.text = attribute("text", str)
 AbstractRequirement.externalId = attribute("externalId", str)
 AbstractRequirement.base_NamedElement = association(
     "base_NamedElement", NamedElement, upper=1
@@ -286,28 +290,38 @@ ChangeSructuralFeatureEvent.structuralFeature = association(
     "structuralFeature", StructuralFeature, upper=1
 )
 ConnectorProperty.connector = association("connector", Connector, upper=1)
-DirectedRelationshipPropertyPath.sourceContext = association(
-    "sourceContext", Classifier, upper=1
+DirectedRelationshipPropertyPath.sourcePropertyPath = association(
+    "sourcePropertyPath", Property, upper="*"
 )
 DirectedRelationshipPropertyPath.targetContext = association(
     "targetContext", Classifier, upper=1
 )
-ElementGroup.orderedMember = association("orderedMember", Element, upper="*")
+DirectedRelationshipPropertyPath.targetPropertyPath = association(
+    "targetPropertyPath", Property, upper="*"
+)
+DirectedRelationshipPropertyPath.sourceContext = association(
+    "sourceContext", Classifier, upper=1
+)
 ElementGroup.name = attribute("name", str)
-ElementPropertyPath.propertyPath = association("propertyPath", Property, upper="*")
-InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, upper="*")
+ElementGroup.orderedMember = association("orderedMember", Element, upper="*")
+ElementPropertyPath.propertyPath = association(
+    "propertyPath", Property, lower=1, upper="*"
+)
+InvocationOnNestedPortAction.onNestedPort = association(
+    "onNestedPort", Port, lower=1, upper="*"
+)
 ParticipantProperty.end_ = association("end_", Property, upper=1)
 Probability.probability = attribute("probability", str)
 Rate.rate = association("rate", InstanceSpecification, upper=1)
 Stakeholder.concernList = association("concernList", Comment, upper="*")
-Tagged.ordered = association("ordered", bool, upper=1)
 Tagged.subsets = attribute("subsets", str)
 Tagged.nonunique = association("nonunique", bool, upper=1)
-TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, upper="*")
+Tagged.ordered = association("ordered", bool, upper=1)
+TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, lower=1, upper="*")
 ValueType.unit = association("unit", InstanceSpecification, upper=1)
 ValueType.quantityKind = association("quantityKind", InstanceSpecification, upper=1)
-Viewpoint.language = attribute("language", str)
 Viewpoint.presentation = attribute("presentation", str)
 Viewpoint.purpose = attribute("purpose", str)
 Viewpoint.stakeholder = association("stakeholder", Stakeholder, upper="*")
 Viewpoint.concernList = association("concernList", Comment, upper="*")
+Viewpoint.language = attribute("language", str)
