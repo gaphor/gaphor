@@ -291,37 +291,33 @@ ChangeSructuralFeatureEvent.structuralFeature = association(
 )
 ConnectorProperty.connector = association("connector", Connector, upper=1)
 DirectedRelationshipPropertyPath.sourcePropertyPath = association(
-    "sourcePropertyPath", Property, upper="*"
+    "sourcePropertyPath", Property
 )
 DirectedRelationshipPropertyPath.targetContext = association(
     "targetContext", Classifier, upper=1
 )
 DirectedRelationshipPropertyPath.targetPropertyPath = association(
-    "targetPropertyPath", Property, upper="*"
+    "targetPropertyPath", Property
 )
 DirectedRelationshipPropertyPath.sourceContext = association(
     "sourceContext", Classifier, upper=1
 )
 ElementGroup.name = attribute("name", str)
-ElementGroup.orderedMember = association("orderedMember", Element, upper="*")
-ElementPropertyPath.propertyPath = association(
-    "propertyPath", Property, lower=1, upper="*"
-)
-InvocationOnNestedPortAction.onNestedPort = association(
-    "onNestedPort", Port, lower=1, upper="*"
-)
+ElementGroup.orderedMember = association("orderedMember", Element)
+ElementPropertyPath.propertyPath = association("propertyPath", Property, lower=1)
+InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, lower=1)
 ParticipantProperty.end_ = association("end_", Property, upper=1)
 Probability.probability = attribute("probability", str)
 Rate.rate = association("rate", InstanceSpecification, upper=1)
-Stakeholder.concernList = association("concernList", Comment, upper="*")
+Stakeholder.concernList = association("concernList", Comment)
 Tagged.subsets = attribute("subsets", str)
 Tagged.nonunique = association("nonunique", bool, upper=1)
 Tagged.ordered = association("ordered", bool, upper=1)
-TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, lower=1, upper="*")
+TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, lower=1)
 ValueType.unit = association("unit", InstanceSpecification, upper=1)
 ValueType.quantityKind = association("quantityKind", InstanceSpecification, upper=1)
 Viewpoint.presentation = attribute("presentation", str)
 Viewpoint.purpose = attribute("purpose", str)
-Viewpoint.stakeholder = association("stakeholder", Stakeholder, upper="*")
-Viewpoint.concernList = association("concernList", Comment, upper="*")
+Viewpoint.stakeholder = association("stakeholder", Stakeholder)
+Viewpoint.concernList = association("concernList", Comment)
 Viewpoint.language = attribute("language", str)
