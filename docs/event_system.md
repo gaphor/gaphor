@@ -17,5 +17,10 @@ example: an AttributeUpdated event is a subtype of ElementUpdated. If I'm
 interested in all changes done to elements I can register to ElementUpdated and
 recieve all AttributeUpdated events as well.
 
+```eval_rst
+.. autoclass:: gaphor.core.eventmanager.EventManager
+   :members:
+```
+
 For more information about how the Generic library handles events see the
 [Generic documentation](https://generic.readthedocs.io).

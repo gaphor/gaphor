@@ -29,15 +29,15 @@ These are the things that should be distinguished:
 ```xml
 <Class id="xxx.xxx...">
   <package>
-    <ref refid="xxx.../>
+    <ref refid="xxx..."/>
   </package>
 </Class>
 <Package id="xxx...">
   <ownedClassifier>
-     <reflist>
-       <ref refid="xxx.xxx..."/>
-   ...
-     </reflist>
+    <reflist>
+      <ref refid="xxx.xxx..."/>
+      ...
+    </reflist>
   </ownedClassifier>
 </Package>
 ```
@@ -47,9 +47,7 @@ strings:
 
 ```xml
 <Class id="xxx.xxx...">
-  <name>
-    <![CDATA[My name]]>
-  </name>
+  <name>My name</name>
   <intvar>4</intvar>
 </Class>
 ```
@@ -60,9 +58,12 @@ the same way it is done now:
 ```xml
 <Diagram id="...">
   <canvas>
-   <item type="AssociationItem">
-     <subject> <ref refid="..."/> </subject> <width><val>100.0</val></width>
-        </item>
+    <item type="AssociationItem">
+      <subject>
+        <ref refid="..."/>
+      </subject>
+      <width><val>100.0</val></width>
+    </item>
   </canvas>
 </Diagram>
 ```

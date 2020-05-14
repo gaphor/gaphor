@@ -21,7 +21,7 @@ But let's not get ahead of ourselves. What is the functionality a modeling langu
 * A toolbox definition
 * Connectors, allow diagram items to connect
 * Grouping
-* Editor pages
+* Editor pages, shown in the collabsable pane on the right side
 * Inline (diagram) editor popups
 * Copy/paste behavior when element copying is not trivial (e.i. more than one element is involved)
 
@@ -30,5 +30,5 @@ The first three are exposed by methods defined on the ModelingLanguage class. Al
 
 ```eval_rst
 .. autoclass:: gaphor.abc.ModelingLanguage
+   :members:
 ```
-

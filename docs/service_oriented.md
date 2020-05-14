@@ -11,7 +11,7 @@ grouped in so called *entry point groups*. For example the console_scripts
 entry point group is used to start an application from the command line.
 
 
-# Services
+## Services
 
 Gaphor is modeled around the concept of Services. Each service can be
 registered with the application and then be used by other services or
@@ -65,7 +65,7 @@ add/remove signals in the undo system. Another example of events that are
 emitted are with `UML.Element`s. Those classes, or more specifically, the
 properties, send notifications every time their state changes.
 
-# Entry Points
+## Entry Points
 
 Gaphor uses a main entry point group called `gaphor.services`.
 
@@ -89,6 +89,7 @@ Each service (and plugin) should implement the `gaphor.abc.Service` interface:
 
 ```eval_rst
 .. autoclass:: gaphor.abc.Service
+   :members:
 ```
 
 Another more specialized service that also inherits from `gaphor.abc.Service`,
@@ -98,6 +99,7 @@ implement the `gaphor.ui.abc.UIComponent` interface:
 
 ```eval_rst
 .. autoclass:: gaphor.ui.abc.UIComponent
+   :members:
 ```
 
 Typically a service and UI component would like to present some actions
@@ -107,6 +109,7 @@ interface:
 
 ```eval_rst
 .. autoclass:: gaphor.abc.ActionProvider 
+   :members:
 ```
 
 ## Example plugin

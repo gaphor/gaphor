@@ -6,7 +6,7 @@ Gaphor is built in a light, service oriented fashion. The application is split
 in a series of services, such as a file, event, and undo managers. Those
 services are loaded based on entry points defined in the `pyproject.toml` file.
 To learn more about the architecture, please see the description about the
-[Service Oriented Architecture](so.md).
+[Service Oriented Architecture](service_oriented.md).
 
 ## Events
 
@@ -33,7 +33,7 @@ button is pressed.
 
 The main portion of Gaphor that executes first is called the `Application`.
 Only one Application instance is permitted. The Application will look for
-services defined as [gaphor.services](services.md). Those services are loaded
+services defined as [gaphor.services](service_oriented.md). Those services are loaded
 and initialized.
 
 The most notable services are:

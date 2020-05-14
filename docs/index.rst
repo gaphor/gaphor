@@ -13,9 +13,6 @@ If you're into writing plug-ins for Gaphor you should have a look at our
 fabulous `Hello world <https://github.com/gaphor/gaphor.plugins.helloworld>`_
 plug-in.
 
-Installation
-------------
-
 Setting up a development environment, and packaging Gaphor on different
 platforms:
 
@@ -27,27 +24,32 @@ platforms:
    macos
    windows
 
-.. _tech-section:
-
-Technical documentation
------------------------
-
 .. toctree::
-   :caption: Technical documentation
+   :caption: Concepts
    :maxdepth: 1
 
    framework
+   service_oriented
+   event_system
+   modeling_language
+   items
+   undo
+
+.. toctree::
+   :caption: UML and data model
+   :maxdepth: 1
+
    model
    stereotypes
    datamodel
    connect
-   items
-   service_oriented
-   modeling_language
+
+.. toctree::
+   :caption: Storage
+   :maxdepth: 1
+
    storage
-   undo
    xml-format
-   event_system
 
 External links
 --------------
