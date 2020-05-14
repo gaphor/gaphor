@@ -49,9 +49,6 @@ def type_converter(property: UML.Property, enumerations: Dict = {}) -> Optional[
         return "int"
     elif type_value.lower() == "string" or type_value == "ValueSpecification":
         return "str"
-    elif type_value.endswith("Kind") or type_value.endswith("Sort"):
-        # e = list(filter(lambda e: e["name"] == type_value, list(enumerations.values())))[0]
-        return None
     else:
         return str(type_value)
 
@@ -125,13 +122,16 @@ def write_attributes(cls: UML.Class, f: TextIO) -> None:
         if not a.name or a.name == "baseClass" or a.isDerived:
             continue
         type_value = type_converter(a)
-        if type_value in ("int", "str"):
-            f.write(f"    {a.name}: attribute[{type_value}]\n")
-        elif a.upperValue == "1":
-            f.write(f"    {a.name}: relation_one[{type_value}]\n")
-        else:
-            f.write(f"    {a.name}: relation_many[{type_value}]\n")
-        written = True
+        if type_value:
+            if type_value in ("int", "str"):
+                f.write(f"    {a.name}: attribute[{type_value}]\n")
+            elif "Kind" in type_value:
+                f.write(f"    {a.name}: enumeration\n")
+            elif a.upperValue == "1":
+                f.write(f"    {a.name}: relation_one[{type_value}]\n")
+            else:
+                f.write(f"    {a.name}: relation_many[{type_value}]\n")
+            written = True
 
     for o in cls.ownedOperation:
         f.write(f"    {o}: operation\n")
@@ -141,6 +141,12 @@ def write_attributes(cls: UML.Class, f: TextIO) -> None:
 
 
 def write_properties(cls: UML.Class, f: TextIO,) -> None:
+    if "Kind" in cls.name:
+        attributes = tuple([a.name for a in cls.attribute])
+        f.write(
+            f'{cls.name}.kind = enumeration("kind", {attributes}, "{attributes[0]}")\n'
+        )
+        return
     for a in cls.attribute:
         if not a.name or a.name == "baseClass" or a.isDerived:
             continue
@@ -189,7 +195,7 @@ def generate(
         )
 
         trees = create_class_trees(classes)
-        referenced = create_referenced(classes)
+        create_referenced(classes)
 
         uml_classes = filter_uml_classes(classes, modeling_language)
         for cls in uml_classes:
