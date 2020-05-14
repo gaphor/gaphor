@@ -38,6 +38,12 @@ and initialized.
 
 The most notable services are:
 
+### event_manager
+
+This is the central compoment used for event dispatching. Every service that
+does something with events (both sending and receiving) depends on this
+component.
+
 ### file_manager
 
 Loading and saving a model is done through this service.
