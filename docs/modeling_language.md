@@ -1,4 +1,4 @@
-# Modeling Languages in Gaphor
+# Modeling Languages
 
 Since version 2.0, Gaphor supports the concept of Modeling languages. This
 allows for development of separate modeling languages separate from the Gaphor

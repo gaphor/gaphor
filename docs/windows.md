@@ -36,5 +36,5 @@ script that creates a Windows installer using
 1. Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
 ```bash
 $ cd win-installer
-$ source build-installer.sh
+$ ./build-installer.sh
 ```

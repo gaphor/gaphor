@@ -13,25 +13,27 @@ If you're into writing plug-ins for Gaphor you should have a look at our
 fabulous `Hello world <https://github.com/gaphor/gaphor.plugins.helloworld>`_
 plug-in.
 
-Platforms
----------
+Installation
+------------
 
 Setting up a development environment, and packaging Gaphor on different
 platforms:
 
 .. toctree::
+   :caption: Installation
    :maxdepth: 1
 
-   windows
    linux
    macos
+   windows
 
 .. _tech-section:
 
-Tech section
-------------
+Technical documentation
+-----------------------
 
 .. toctree::
+   :caption: Technical documentation
    :maxdepth: 1
 
    framework
@@ -47,11 +49,8 @@ Tech section
    xml-format
    event_system
 
-.. toctree::
-   :maxdepth: 2
-
 External links
-^^^^^^^^^^^^^^
+--------------
 
 * You should definitely check out `Agile Modeling <http://www.agilemodeling.com>`_ including these pages:
 
