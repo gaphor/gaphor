@@ -7,40 +7,51 @@ other objects living within the application.
 Each service should implement the Service interface. This interface
 defines one method:
 
-    init(application)
+    shutdown(self)
 
-where application is the Application object for Gaphor (which is a
-service itself and therefore implements Service too.
+Which is called when a service needs to be cleaned up.
 
 Each service is allowed to define its own interface, as long as Service
 is implemented too.
 
-Services should be defined as entry_points in the `pyproject.toml` file.
+Services should be defined as entry points in the `pyproject.toml` file.
 
-Typically a service does some work in the background.
+Typically a service does some work in the background. Service can also expose
+actions that can be invoked by users. For example, the _Ctrl-z_ key combo
+(undo) is implemented by the UndoManager service.
+
+A service can depend on another services. Dependencies are resolved during
+service initialization. To define a service dependency, just add it to the
+constructor by it's name defined in the entrypoint:
+
+    class MyService(Service):
+
+        def __init__(self, event_manager, element_factory):
+            self.event_manager = event_manager
+            self.element_factory = element_factory
+            event_manager.subscribe(self._element_changed)
+
+        def shutdown(self):
+            self.event_manager.unsubscribe(self._element_changed)
+
+        @event_handler(ElementChanged)
+        def _element_changed(self, event):
+
+Services that expose actions should also inherit from the ActionProvider
+interface. This interface does not require any additional methods to be
+implemented. Action methods should be annotated with a `@action` annotation.
 
 ## Example: ElementFactory
 
-A nice example of a service in use is the ElementFactory. Currently it is
-tightly bound to the `gaphor.UML` module. A default factory is created in
-`__init__.py`.
+A nice example of a service in use is the ElementFactory. It is one of the core services.
 
-The undo_manager depends on the events emitted by the ElementFactory. When an
+The UndoManager depends on the events emitted by the ElementFactory. When an
 important events occurs, like an element is created or destroyed, that event is
 emitted. We then use an event handler for ElementFactory that stores the
 add/remove signals in the undo system. Another example of events that are
-emitted are with `UML.Elements`. Those classes, or more specifically, the
+emitted are with `UML.Element`s. Those classes, or more specifically, the
 properties, send notifications every time their state changes.
 
 ```eval_rst
 .. autoclass:: gaphor.core.modeling.ElementFactory
 ```
-
-## Plugins
-
-Currently a plugin is defined by an XML file. This will change as
-plugins should be distributable as Eggs too. A plugin will contain user
-interface information along with its service definition.
-
-For more information, please also see our how-to on [writing a
-plugin](https://gaphor.org/pages/writing-a-plugin.html)
