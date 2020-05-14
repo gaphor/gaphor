@@ -40,8 +40,8 @@ Tech section
    datamodel
    connect
    items
-   services
-   so
+   service_oriented
+   modeling_language
    storage
    undo
    xml-format
