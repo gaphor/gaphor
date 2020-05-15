@@ -127,6 +127,81 @@ sysml_toolbox_actions: ToolboxDefinition = (
         ),
     ),
     (
+        gettext("Internal Blocks"),
+        (
+            ToolDef(
+                "toolbox-block",
+                gettext("Block"),
+                "gaphor-class-symbolic",
+                "b",
+                item_factory=PlacementTool.new_item_factory(
+                    sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                ),
+                handle_index=SE,
+            ),
+            ToolDef(
+                "toolbox-package",
+                gettext("Package"),
+                "gaphor-package-symbolic",
+                "p",
+                PlacementTool.new_item_factory(
+                    uml_items.PackageItem, UML.Package, config_func=namespace_config,
+                ),
+                handle_index=SE,
+            ),
+        ),
+    ),
+    (
+        gettext("Requirements"),
+        (
+            ToolDef(
+                "toolbox-requirement",
+                gettext("Requirement"),
+                "gaphor-class-symbolic",
+                "b",
+                item_factory=PlacementTool.new_item_factory(
+                    sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                ),
+                handle_index=SE,
+            ),
+            ToolDef(
+                "toolbox-satisfy-dependency",
+                gettext("Satisfy"),
+                "gaphor-dependency-symbolic",
+                "<Shift>D",
+                PlacementTool.new_item_factory(uml_items.DependencyItem),
+            ),
+            ToolDef(
+                "toolbox-derive-dependency",
+                gettext("Derive"),
+                "gaphor-dependency-symbolic",
+                "<Shift>D",
+                PlacementTool.new_item_factory(uml_items.DependencyItem),
+            ),
+            ToolDef(
+                "toolbox-trace-dependency",
+                gettext("Trace"),
+                "gaphor-dependency-symbolic",
+                "<Shift>D",
+                PlacementTool.new_item_factory(uml_items.DependencyItem),
+            ),
+            ToolDef(
+                "toolbox-refine-dependency",
+                gettext("Refine"),
+                "gaphor-dependency-symbolic",
+                "<Shift>D",
+                PlacementTool.new_item_factory(uml_items.DependencyItem),
+            ),
+            ToolDef(
+                "toolbox-verify-dependency",
+                gettext("Verify"),
+                "gaphor-dependency-symbolic",
+                "<Shift>D",
+                PlacementTool.new_item_factory(uml_items.DependencyItem),
+            ),
+        ),
+    ),
+    (
         gettext("Actions"),
         (
             ToolDef(
