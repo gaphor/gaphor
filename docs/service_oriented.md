@@ -2,19 +2,20 @@
 
 Gaphor has a service oriented architecture. What does this mean? Well, Gaphor
 is built as a set of small islands (services). Each island provides a specific
-piece of functionality. For example, separate services are used to load/save
-models, provide the menu structure, and handle the undo system.
+piece of functionality. For example, we use separate services to load/save
+models, provide the menu structure, and to handle the undo system.
 
-Service are defined as entry points in the `pyproject.toml`. With entry points
-applications can register functionality for specific purposes. Entry points are
-grouped in so called *entry point groups*. For example the console_scripts
-entry point group is used to start an application from the command line.
+We define services as entry points in the `pyproject.toml`. With entry points,
+applications can register functionality for specific purposes. We also group
+entry points in to *entry point groups*. For example, we use the
+console_scripts entry point group to start an application from the command
+line.
 
 
 ## Services
 
-Gaphor is modeled around the concept of Services. Each service can be
-registered with the application and then be used by other services or
+Gaphor is modeled around the concept of services. Each service can be
+registered with the application and then it can be used by other services or
 other objects living within the application.
 
 Each service should implement the Service interface. This interface
@@ -24,18 +25,18 @@ defines one method:
 
 Which is called when a service needs to be cleaned up.
 
-Each service is allowed to define its own methods, as long as Service
+We allow each service to define its own methods, as long as the service
 is implemented too.
 
 Services should be defined as entry points in the `pyproject.toml` file.
 
-Typically a service does some work in the background. Service can also expose
+Typically, a service does some work in the background. Services can also expose
 actions that can be invoked by users. For example, the _Ctrl-z_ key combo
 (undo) is implemented by the UndoManager service.
 
-A service can depend on another services. Dependencies are resolved during
-service initialization. To define a service dependency, just add it to the
-constructor by it's name defined in the entrypoint:
+A service can also depend on another services. Service initialization resolves
+these dependencies. To define a service dependency, just add it to the
+constructor by its name defined in the entry point:
 
     class MyService(Service):
 
@@ -52,7 +53,7 @@ constructor by it's name defined in the entrypoint:
 
 Services that expose actions should also inherit from the ActionProvider
 interface. This interface does not require any additional methods to be
-implemented. Action methods should be annotated with a `@action` annotation.
+implemented. Action methods should be annotated with an `@action` annotation.
 
 ## Example: ElementFactory
 

@@ -15,7 +15,7 @@ Pay attention to the following changes/additions with respect to the
 official Gaphor model, in the `models/UML.gaphor` file:
 
 -   Additions to the model have been put in the package
-    AuxilaryConstructs.Presentations and .Stereotypes.
+    AuxiliaryConstructs.Presentations and .Stereotypes.
 -   A Diagram element is added in order to model the diagrams.
 -   A special construct has been put into place in order to apply
     stereotypes to model elements. The current UML Specification is not
