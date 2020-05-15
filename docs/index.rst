@@ -54,6 +54,7 @@ platforms:
 .. toctree::
    :caption: Services
    :maxdepth: 1
+
    undo
 
 External links
