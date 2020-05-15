@@ -263,6 +263,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "gavr123456789",
+      "name": "gavr123456789",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/30507409?v=4",
+      "profile": "https://gavr123456789.gitlab.io/hugo-test/",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
