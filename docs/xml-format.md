@@ -16,10 +16,10 @@ These are the things that should be distinguished:
 - Model elements should have their class name as tag name:
 
 ```xml
-<Class id="DCE:xxx.xxx...">
+<Class id="1234-5678-...">
   ...
 </Class>
-<Package id="DCE:xxx...">
+<Package id="xxx...">
   ...
 </Package>
 ```
@@ -27,17 +27,17 @@ These are the things that should be distinguished:
 - Support for the two types of Associations, single and multiple:
 
 ```xml
-<Class id="DCE:xxx.xxx...">
+<Class id="xxx.xxx...">
   <package>
-    <ref refid="DCE:xxx.../>
+    <ref refid="xxx..."/>
   </package>
 </Class>
-<Package id="DCE:xxx...">
+<Package id="xxx...">
   <ownedClassifier>
-     <reflist>
-       <ref refid="DCE:xxx.xxx..."/>
-   ...
-     </reflist>
+    <reflist>
+      <ref refid="xxx.xxx..."/>
+      ...
+    </reflist>
   </ownedClassifier>
 </Package>
 ```
@@ -46,10 +46,8 @@ These are the things that should be distinguished:
 strings:
 
 ```xml
-<Class id="DCE:xxx.xxx...">
-  <name>
-    <![CDATA[My name]]>
-  </name>
+<Class id="xxx.xxx...">
+  <name>My name</name>
   <intvar>4</intvar>
 </Class>
 ```
@@ -60,9 +58,12 @@ the same way it is done now:
 ```xml
 <Diagram id="...">
   <canvas>
-   <item type="AssociationItem">
-     <subject> <ref refid="DCE:..."/> </subject> <width><val>100.0</val></width>
-        </item>
+    <item type="AssociationItem">
+      <subject>
+        <ref refid="..."/>
+      </subject>
+      <width><val>100.0</val></width>
+    </item>
   </canvas>
 </Diagram>
 ```

@@ -1,4 +1,4 @@
-# Saving and Loading Gaphor Diagrams
+# Saving and Loading models
 
 The root element of Gaphor models is the `Gaphor` tag, all other elements are
 contained in this. The Gaphor element delimits the beginning and the end of an
