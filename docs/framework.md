@@ -22,7 +22,7 @@ description of the [event system](event_system.md).
 
 ## Transactional
 
-Gaphor is transactional, which means it keeps track of the functions it
+Gaphor is [transactional](transaction.md), which means it keeps track of the functions it
 performs as a series of transactions. The transactions work by sending an
 event when a transaction starts and sending another when a transaction ends.
 This allows, for example, the undo manager to keep a running log of the
@@ -32,9 +32,10 @@ button is pressed.
 ## Main Components
 
 The main portion of Gaphor that executes first is called the `Application`.
-Only one Application instance is permitted. The Application will look for
-services defined as [gaphor.services](service_oriented.md). Those services are loaded
-and initialized.
+Gaphor can have multiple models open at any time. Each model is kept in a
+`Session`.
+Only one Application instance is active. Each session will load its own
+services defined as [gaphor.services](service_oriented.md).
 
 The most notable services are:
 
