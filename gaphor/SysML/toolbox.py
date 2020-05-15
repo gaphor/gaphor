@@ -4,11 +4,13 @@ from typing import Sequence, Tuple
 
 from gaphas.item import SE
 
-import gaphor.UML.diagramitems as diagramitems
+import gaphor.SysML.diagramitems as sysml_items
+import gaphor.UML.diagramitems as uml_items
 from gaphor import UML, diagram
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
 from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.SysML import sysml
 
 
 def namespace_config(new_item):
@@ -89,12 +91,12 @@ sysml_toolbox_actions: ToolboxDefinition = (
         gettext("Blocks"),
         (
             ToolDef(
-                "toolbox-class",
-                gettext("Class"),
+                "toolbox-block",
+                gettext("Block"),
                 "gaphor-class-symbolic",
                 "c",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.ClassItem, UML.Class, config_func=namespace_config
+                    sysml_items.BlockItem, sysml.Block, config_func=namespace_config
                 ),
                 handle_index=SE,
             ),
@@ -104,7 +106,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-interface-symbolic",
                 "i",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.InterfaceItem,
+                    uml_items.InterfaceItem,
                     UML.Interface,
                     config_func=namespace_config,
                 ),
@@ -116,7 +118,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-package-symbolic",
                 "p",
                 PlacementTool.new_item_factory(
-                    diagramitems.PackageItem, UML.Package, config_func=namespace_config,
+                    uml_items.PackageItem, UML.Package, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -125,28 +127,28 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 gettext("Association"),
                 "gaphor-association-symbolic",
                 "<Shift>A",
-                PlacementTool.new_item_factory(diagramitems.AssociationItem),
+                PlacementTool.new_item_factory(uml_items.AssociationItem),
             ),
             ToolDef(
                 "toolbox-dependency",
                 gettext("Dependency"),
                 "gaphor-dependency-symbolic",
                 "<Shift>D",
-                PlacementTool.new_item_factory(diagramitems.DependencyItem),
+                PlacementTool.new_item_factory(uml_items.DependencyItem),
             ),
             ToolDef(
                 "toolbox-generalization",
                 gettext("Generalization"),
                 "gaphor-generalization-symbolic",
                 "<Shift>G",
-                PlacementTool.new_item_factory(diagramitems.GeneralizationItem),
+                PlacementTool.new_item_factory(uml_items.GeneralizationItem),
             ),
             ToolDef(
                 "toolbox-implementation",
                 gettext("Implementation"),
                 "gaphor-implementation-symbolic",
                 "<Shift>I",
-                PlacementTool.new_item_factory(diagramitems.ImplementationItem),
+                PlacementTool.new_item_factory(uml_items.ImplementationItem),
             ),
         ),
     ),
@@ -159,7 +161,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-action-symbolic",
                 "a",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.ActionItem, UML.Action, config_func=namespace_config,
+                    uml_items.ActionItem, UML.Action, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -169,7 +171,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-initial-node-symbolic",
                 "j",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.InitialNodeItem, UML.InitialNode
+                    uml_items.InitialNodeItem, UML.InitialNode
                 ),
                 handle_index=SE,
             ),
@@ -179,7 +181,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-activity-final-node-symbolic",
                 "f",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.ActivityFinalNodeItem, UML.ActivityFinalNode
+                    uml_items.ActivityFinalNodeItem, UML.ActivityFinalNode
                 ),
                 handle_index=SE,
             ),
@@ -189,7 +191,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-flow-final-node-symbolic",
                 "w",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.FlowFinalNodeItem, UML.FlowFinalNode
+                    uml_items.FlowFinalNodeItem, UML.FlowFinalNode
                 ),
                 handle_index=SE,
             ),
@@ -199,7 +201,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-decision-node-symbolic",
                 "g",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.DecisionNodeItem, UML.DecisionNode
+                    uml_items.DecisionNodeItem, UML.DecisionNode
                 ),
                 handle_index=SE,
             ),
@@ -209,7 +211,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-fork-node-symbolic",
                 "<Shift>R",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.ForkNodeItem, UML.JoinNode
+                    uml_items.ForkNodeItem, UML.JoinNode
                 ),
                 handle_index=1,
             ),
@@ -219,7 +221,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-object-node-symbolic",
                 "<Shift>O",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.ObjectNodeItem,
+                    uml_items.ObjectNodeItem,
                     UML.ObjectNode,
                     config_func=namespace_config,
                 ),
@@ -230,7 +232,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 gettext("Partition"),
                 "gaphor-partition-symbolic",
                 "<Shift>P",
-                item_factory=PlacementTool.new_item_factory(diagramitems.PartitionItem),
+                item_factory=PlacementTool.new_item_factory(uml_items.PartitionItem),
                 handle_index=SE,
             ),
             ToolDef(
@@ -238,7 +240,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 gettext("Control/object flow"),
                 "gaphor-control-flow-symbolic",
                 "<Shift>F",
-                item_factory=PlacementTool.new_item_factory(diagramitems.FlowItem),
+                item_factory=PlacementTool.new_item_factory(uml_items.FlowItem),
             ),
             ToolDef(
                 "toolbox-send-signal-action",
@@ -246,7 +248,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-send-signal-action-symbolic",
                 None,
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.SendSignalActionItem,
+                    uml_items.SendSignalActionItem,
                     UML.SendSignalAction,
                     config_func=namespace_config,
                 ),
@@ -258,7 +260,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-accept-event-action-symbolic",
                 None,
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.AcceptEventActionItem,
+                    uml_items.AcceptEventActionItem,
                     UML.AcceptEventAction,
                     config_func=namespace_config,
                 ),
@@ -275,7 +277,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-state-symbolic",
                 "s",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.StateItem, UML.State, config_func=namespace_config
+                    uml_items.StateItem, UML.State, config_func=namespace_config
                 ),
                 handle_index=SE,
             ),
@@ -285,7 +287,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-initial-pseudostate-symbolic",
                 "<Shift>S",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.InitialPseudostateItem,
+                    uml_items.InitialPseudostateItem,
                     UML.Pseudostate,
                     initial_pseudostate_config,
                 ),
@@ -297,7 +299,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-final-state-symbolic",
                 "x",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.FinalStateItem, UML.FinalState
+                    uml_items.FinalStateItem, UML.FinalState
                 ),
                 handle_index=SE,
             ),
@@ -307,7 +309,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-pseudostate-symbolic",
                 "q",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.HistoryPseudostateItem,
+                    uml_items.HistoryPseudostateItem,
                     UML.Pseudostate,
                     history_pseudostate_config,
                 ),
@@ -318,9 +320,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 gettext("Transition"),
                 "gaphor-transition-symbolic",
                 "<Shift>T",
-                item_factory=PlacementTool.new_item_factory(
-                    diagramitems.TransitionItem
-                ),
+                item_factory=PlacementTool.new_item_factory(uml_items.TransitionItem),
             ),
         ),
     ),
@@ -333,7 +333,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-use-case-symbolic",
                 "u",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.UseCaseItem, UML.UseCase, config_func=namespace_config,
+                    uml_items.UseCaseItem, UML.UseCase, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -343,7 +343,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-actor-symbolic",
                 "t",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.ActorItem, UML.Actor, config_func=namespace_config,
+                    uml_items.ActorItem, UML.Actor, config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -352,23 +352,21 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 gettext("Association"),
                 "gaphor-association-symbolic",
                 "<Shift>B",
-                item_factory=PlacementTool.new_item_factory(
-                    diagramitems.AssociationItem
-                ),
+                item_factory=PlacementTool.new_item_factory(uml_items.AssociationItem),
             ),
             ToolDef(
                 "toolbox-include",
                 gettext("Include"),
                 "gaphor-include-symbolic",
                 "<Shift>U",
-                item_factory=PlacementTool.new_item_factory(diagramitems.IncludeItem),
+                item_factory=PlacementTool.new_item_factory(uml_items.IncludeItem),
             ),
             ToolDef(
                 "toolbox-extend",
                 gettext("Extend"),
                 "gaphor-extend-symbolic",
                 "<Shift>X",
-                item_factory=PlacementTool.new_item_factory(diagramitems.ExtendItem),
+                item_factory=PlacementTool.new_item_factory(uml_items.ExtendItem),
             ),
         ),
     ),

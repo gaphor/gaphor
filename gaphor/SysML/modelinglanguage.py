@@ -3,8 +3,8 @@ The SysML Modeling Language module is the entrypoint for
 SysML related assets.
 """
 
-import gaphor.UML.diagramitems as diagramitems
-import gaphor.UML.uml as uml
+import gaphor.SysML.diagramitems as diagramitems
+import gaphor.SysML.sysml as sysml
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
@@ -21,7 +21,7 @@ class SysMLModelingLanguage(ModelingLanguage):
         return sysml_toolbox_actions
 
     def lookup_element(self, name):
-        return getattr(uml, name, None)
+        return getattr(sysml, name, None)
 
     def lookup_diagram_item(self, name):
         return getattr(diagramitems, name, None)
