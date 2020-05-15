@@ -1,36 +1,38 @@
-Transaction support for Gaphor
-==============================
+# Transaction support
 
-Transaction support is located in module gaphor.transaction:
+Transaction support is located in module `gaphor.transaction`:
 
     >>> from gaphor import transaction
-    >>> from gaphor.application import Application
 
-Do some basic initialization, so event emission will work:
+    >>> import sys, logging
+    >>> transaction.log.addHandler(logging.StreamHandler(sys.stdout))
 
-    >>> application = Application()
-    >>> session = application.new_session(services=['event_manager'])
-    >>> event_manager = session.get_service('event_manager')
+Do some basic initialization, so event emission will work. Since the transaction
+decorator does not know about the active user session (window), it emits it's
+events via a global list of subscribers:
+
+    >>> from gaphor.core.eventmanager import EventManager
+    >>> event_manager = EventManager()
+    >>> transaction.subscribers.add(event_manager.handle)
 
 The Transaction class is used mainly to signal the begin and end of a transaction. This is done by the TransactionBegin, TransactionCommit and TransactionRollback events:
 
     >>> from gaphor.core import event_handler
     >>> @event_handler(transaction.TransactionBegin)
     ... def transaction_begin_handler(event):
-    ...     print 'tx begin'
+    ...     print('tx begin')
     >>> event_manager.subscribe(transaction_begin_handler)
 
 Same goes for commit and rollback events:
 
     >>> @event_handler(transaction.TransactionCommit)
     ... def transaction_commit_handler(event):
-    ...     print 'tx commit'
+    ...     print('tx commit')
     >>> event_manager.subscribe(transaction_commit_handler)
     >>> @event_handler(transaction.TransactionRollback)
     ... def transaction_rollback_handler(event):
-    ...     print 'tx rollback'
+    ...     print('tx rollback')
     >>> event_manager.subscribe(transaction_rollback_handler)
-
 
 A Transaction is started by initiating a Transaction instance:
 
@@ -48,8 +50,7 @@ After a commit, a rollback is no longer allowed (the transaction is closed):
     ... # doctest: +ELLIPSIS
     Traceback (most recent call last):
     ...
-    TransactionError: No Transaction on stack.
-
+    gaphor.transaction.TransactionError: No Transaction on stack.
 
 Transactions may be nested:
 
@@ -69,7 +70,7 @@ Transactions should be closed in the right order (subtransactions first):
     ... # doctest: +ELLIPSIS
     Traceback (most recent call last):
     ...
-    TransactionError: Transaction on stack is not the transaction being closed.
+    gaphor.transaction.TransactionError: Transaction on stack is not the transaction being closed.
     >>> tx2.commit()
     >>> tx.commit()
     tx commit
@@ -79,7 +80,7 @@ The transactional decorator can be used to mark functions as transactional:
 
     >>> @transaction.transactional
     ... def a():
-    ...     print 'do something'
+    ...     print('do something')
     >>> a()
     tx begin
     do something
@@ -90,30 +91,15 @@ performed:
 
     >>> @transaction.transactional
     ... def a():
-    ...     raise IndexError, 'bla'
-    >>> a()
-    ... # doctest: +ELLIPSIS
+    ...     raise IndexError('bla')
+    >>> a() # doctest; +ELLIPSIS
     Traceback (most recent call last):
     ...
     IndexError: bla
+
     >>> transaction.Transaction._stack
     []
 
-All transactions are marked for rollback once an exception is raised:
-
-    >>> tx = transaction.Transaction(event_manager)
-    tx begin
-    >>> a()
-    ... # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    IndexError: bla
-    >>> tx._need_rollback
-    True
-    >>> tx.commit()
-    tx rollback
-
-
 Cleanup:
 
-    >>> application.shutdown()
+    >>> transaction.subscribers.discard(event_manager.handle)

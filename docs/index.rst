@@ -32,8 +32,8 @@ platforms:
    service_oriented
    event_system
    modeling_language
+   transaction
    items
-   undo
 
 .. toctree::
    :caption: UML and data model
@@ -50,6 +50,11 @@ platforms:
 
    storage
    xml-format
+
+.. toctree::
+   :caption: Services
+   :maxdepth: 1
+   undo
 
 External links
 --------------
