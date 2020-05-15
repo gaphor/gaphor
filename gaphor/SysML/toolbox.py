@@ -94,21 +94,9 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "toolbox-block",
                 gettext("Block"),
                 "gaphor-class-symbolic",
-                "c",
+                "b",
                 item_factory=PlacementTool.new_item_factory(
                     sysml_items.BlockItem, sysml.Block, config_func=namespace_config
-                ),
-                handle_index=SE,
-            ),
-            ToolDef(
-                "toolbox-interface",
-                gettext("Interface"),
-                "gaphor-interface-symbolic",
-                "i",
-                item_factory=PlacementTool.new_item_factory(
-                    uml_items.InterfaceItem,
-                    UML.Interface,
-                    config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -130,25 +118,11 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 PlacementTool.new_item_factory(uml_items.AssociationItem),
             ),
             ToolDef(
-                "toolbox-dependency",
-                gettext("Dependency"),
-                "gaphor-dependency-symbolic",
-                "<Shift>D",
-                PlacementTool.new_item_factory(uml_items.DependencyItem),
-            ),
-            ToolDef(
                 "toolbox-generalization",
                 gettext("Generalization"),
                 "gaphor-generalization-symbolic",
                 "<Shift>G",
                 PlacementTool.new_item_factory(uml_items.GeneralizationItem),
-            ),
-            ToolDef(
-                "toolbox-implementation",
-                gettext("Implementation"),
-                "gaphor-implementation-symbolic",
-                "<Shift>I",
-                PlacementTool.new_item_factory(uml_items.ImplementationItem),
             ),
         ),
     ),
