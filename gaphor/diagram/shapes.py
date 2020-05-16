@@ -26,7 +26,8 @@ Style = TypedDict(
         "vertical-spacing": float,
         "border-radius": float,
         "fill": str,
-        "font": str,
+        "font-family": str,
+        "font-size": float,
         "font-style": FontStyle,
         "font-weight": Optional[FontWeight],
         "text-decoration": Optional[TextDecoration],
@@ -247,7 +248,8 @@ class Text:
         self._style: Style = {
             "min-width": 30,
             "min-height": 14,
-            "font": "sans 10",
+            "font-family": "sans",
+            "font-size": 14,
             "font-style": FontStyle.NORMAL,
             "font-weight": None,
             "text-decoration": None,
@@ -270,7 +272,8 @@ class Text:
     def font(self):
         style = self.style
         return {
-            "font": style("font"),
+            "font-family": style("font-family"),
+            "font-size": style("font-size"),
             "font-style": style("font-style"),
             "font-weight": style("font-weight"),
             "text-decoration": style("text-decoration"),

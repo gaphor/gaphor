@@ -104,13 +104,21 @@ def _text_layout(cr, text, font, width):
     layout = _pango_cairo_create_layout(cr)
 
     if isinstance(font, dict):
-        fd = Pango.FontDescription.from_string(font["font"])
+        fd = Pango.FontDescription.new()
+        font_family = font.get("font-family")
+        font_size = font.get("font-size")
+        assert font_family, "Font family should be set"
+        assert font_size, "Font size should be set"
+        fd.set_family(font_family)
+        fd.set_absolute_size(font_size * Pango.SCALE)
+
         font_weight = font.get("font-weight")
         font_style = font.get("font-style")
         if font_weight:
             fd.set_weight(getattr(Pango.Weight, font_weight.name))
         if font_style:
             fd.set_style(getattr(Pango.Style, font_style.name))
+
         layout.set_font_description(fd)
         underline = (
             font.get("text-decoration", TextDecoration.NONE) == TextDecoration.UNDERLINE
