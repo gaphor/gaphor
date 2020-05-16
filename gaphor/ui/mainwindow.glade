@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.2 -->
 <interface>
-  <requires lib="gtk+" version="3.20" />
+  <requires lib="gtk+" version="3.20"/>
   <!-- interface-local-resource-path ./icons -->
   <object class="GtkPopover" id="hamburger">
     <property name="can_focus">False</property>
     <property name="position">bottom</property>
     <child>
-      <placeholder />
+      <placeholder/>
     </child>
   </object>
   <object class="GtkPopover" id="recent-files">
     <property name="can_focus">False</property>
     <property name="position">bottom</property>
     <child>
-      <placeholder />
+      <placeholder/>
     </child>
   </object>
   <object class="GtkPopover" id="select-modeling-language">
     <property name="can_focus">False</property>
     <property name="position">bottom</property>
     <child>
-      <placeholder />
+      <placeholder/>
     </child>
   </object>
   <object class="GtkApplicationWindow" id="main-window">
@@ -72,7 +72,7 @@
               </packing>
             </child>
             <style>
-              <class name="linked" />
+              <class name="linked"/>
             </style>
           </object>
         </child>
@@ -101,6 +101,7 @@
             <property name="can_focus">True</property>
             <property name="focus_on_click">False</property>
             <property name="receives_default">True</property>
+            <property name="relief">none</property>
             <property name="popover">select-modeling-language</property>
             <child>
               <object class="GtkBox">
@@ -181,7 +182,7 @@
       </object>
     </child>
     <child>
-      <placeholder />
+      <placeholder/>
     </child>
   </object>
 </interface>
