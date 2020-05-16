@@ -2,18 +2,10 @@
 
 from __future__ import annotations
 
-import uuid
-from typing import TYPE_CHECKING, Callable, List, Optional
-
-from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import (
     association,
     attribute,
-    derived,
-    derivedunion,
     enumeration,
-    redefine,
     relation_many,
     relation_one,
 )
@@ -76,10 +68,10 @@ class AdjuntProperty(Property):
 
 
 class DirectedRelationshipPropertyPath(DirectedRelationship):
-    sourcePropertyPath: relation_many[Property]
-    targetContext: relation_one[Classifier]
     targetPropertyPath: relation_many[Property]
+    targetContext: relation_one[Classifier]
     sourceContext: relation_one[Classifier]
+    sourcePropertyPath: relation_many[Property]
 
 
 class Allocate(DirectedRelationshipPropertyPath, Abstraction):
@@ -126,7 +118,7 @@ class ConstraintBlock(Block):
     pass
 
 
-class Rate(ActivityEdge, Parameter):
+class Rate(Parameter, ActivityEdge):
     rate: relation_many[InstanceSpecification]
 
 
@@ -151,7 +143,7 @@ class DeriveReqt(Trace):
 
 
 class DirectedFeature(Feature):
-    featureDirection: relation_one[None]
+    featureDirection: enumeration
 
 
 class Discrete(Rate):
@@ -172,7 +164,7 @@ class Expose(Dependency):
 
 
 class FlowProperty(Property):
-    direction: relation_one[None]
+    direction: enumeration
 
 
 class FullPort(Port):
@@ -290,6 +282,9 @@ ChangeSructuralFeatureEvent.structuralFeature = association(
     "structuralFeature", StructuralFeature, upper=1
 )
 ConnectorProperty.connector = association("connector", Connector, upper=1)
+DirectedFeature.featureDirection.kind = enumeration(
+    "kind", ("required", "providedRequired", "provided"), "required"
+)
 DirectedRelationshipPropertyPath.sourceContext = association(
     "sourceContext", Classifier, upper=1
 )
@@ -305,6 +300,7 @@ DirectedRelationshipPropertyPath.targetPropertyPath = association(
 ElementGroup.name = attribute("name", str)
 ElementGroup.orderedMember = association("orderedMember", Element)
 ElementPropertyPath.propertyPath = association("propertyPath", Property, lower=1)
+FlowProperty.direction.kind = enumeration("kind", ("out", "inout", "in"), "out")
 InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, lower=1)
 ParticipantProperty.end_ = association("end_", Property, upper=1)
 Probability.probability = attribute("probability", str)

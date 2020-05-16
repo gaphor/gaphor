@@ -7,10 +7,12 @@ from gaphor.codegen.profile_coder import (
     create_class_trees,
     create_referenced,
     filter_uml_classes,
+    find_enumerations,
     generate,
     get_class_extensions,
     header,
     write_attributes,
+    write_properties,
 )
 from gaphor.core.modeling.properties import attribute, derived
 from gaphor.diagram.tests.fixtures import connect
@@ -154,6 +156,38 @@ def test_filter_uml_classes(classes):
     assert len(uml_classes) == 2
 
 
+def test_find_enumerations(classes):
+    """Test filtering of classes between UML and others."""
+    classes[0].name = "VehicleTypeKind"
+    classes[1].name = "WheelKind"
+    classes[2].name = "Behavior"
+    classes[3].name = "Transportation"
+    classes[4].name = "Car"
+    classes[5].name = "Truck"
+    classes[6].name = "Van"
+    assert len(classes) == 7
+
+    classes, enumerations = find_enumerations(classes)
+
+    assert len(enumerations) == 2
+    assert len(classes) == 5
+
+
+def test_write_properties_enumeration(filename, element_factory):
+    """"""
+    diagram = element_factory.create(UML.Diagram)
+    cls_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    enum_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    enum_item.subject.name = "VehicleTypeKind"
+    enum_item.subject.car = attribute
+    enumerations = {enum_item.subject.name: enum_item.subject}
+
+    write_properties(cls_item.subject, filename, enumerations)
+
+    # TODO: complete test for enumeration
+    assert filename.data == ""
+
+
 def test_create_referenced(classes):
     """Test list of referenced UML.Class objects."""
     referenced = create_referenced(classes)
@@ -171,7 +205,7 @@ def test_model_header(tmp_path):
 
     generate(path, outfile)
 
-    assert outfile.read_text() == header + "\n\n"
+    assert header in outfile.read_text()
 
 
 def test_model_with_extension(tmp_path):
@@ -183,7 +217,6 @@ def test_model_with_extension(tmp_path):
 
     extension = """
 from gaphor.UML import Class
-
 class NewStereotype(Class):
     pass
 """
