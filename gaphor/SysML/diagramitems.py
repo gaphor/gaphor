@@ -1,1 +1,2 @@
-from gaphor.SysML.block import *
+from gaphor.SysML.blocks import *
+from gaphor.SysML.requirements import *

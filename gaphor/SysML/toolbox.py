@@ -160,7 +160,9 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-class-symbolic",
                 "b",
                 item_factory=PlacementTool.new_item_factory(
-                    sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                    sysml_items.RequirementItem,
+                    sysml.Requirement,
+                    config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
