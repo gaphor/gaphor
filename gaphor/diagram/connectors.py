@@ -169,11 +169,15 @@ class UnaryRelationshipConnect(BaseConnector):
         ):
             return line.subject
 
-        # Try to find a relationship, that is already created, but not
-        # yet displayed in the diagram.
         assert isinstance(head, (association, redefine)), f"head is {head}"
         assert isinstance(tail, (association, redefine)), f"tail is {tail}"
-        assert tail.opposite, f"Tail end of {line} has no opposite definition"
+
+        # Try to find a relationship, that is already created, but not
+        # yet displayed in the diagram on the tail side, since tail should
+        # have a reference to head at least.
+        if not tail.opposite:
+            return None
+
         gen: Element
         for gen in getattr(tail_subject, tail.opposite):
             if not isinstance(gen, required_type):

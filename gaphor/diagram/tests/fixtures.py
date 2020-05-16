@@ -70,7 +70,7 @@ def loader(element_factory, modeling_language):
     return load
 
 
-def allow(line, handle, item, port=None):
+def allow(line, handle, item, port=None) -> bool:
     if port is None and len(item.ports()) > 0:
         port = item.ports()[0]
 
