@@ -19,7 +19,6 @@ from gaphor.diagram.text import (
 Style = TypedDict(
     "Style",
     {
-        "width": float,
         "padding": Tuple[float, float, float, float],
         "min-width": float,
         "min-height": float,
@@ -246,7 +245,6 @@ class Text:
         self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
         self._style: Style = {
-            "width": -1,
             "min-width": 30,
             "min-height": 14,
             "font": "sans 10",
