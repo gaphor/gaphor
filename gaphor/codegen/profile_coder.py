@@ -1,8 +1,7 @@
 """Parse a SysML Gaphor Model and generate a SysML data model."""
 
-from collections import deque
 from os import PathLike
-from typing import Deque, Dict, List, Optional, Set, TextIO, Tuple
+from typing import Dict, List, Optional, Set, TextIO, Tuple
 
 from gaphor import UML
 from gaphor.core.modeling import Element, ElementFactory

@@ -1,4 +1,4 @@
-from typing import Dict, List, Set
+from typing import Dict, List, Type
 
 import pytest
 
@@ -11,6 +11,7 @@ from gaphor.codegen.profile_coder import (
     generate,
     get_class_extensions,
     header,
+    type_converter,
     write_attributes,
     write_properties,
 )
@@ -98,6 +99,41 @@ def test_get_class_extension(classes):
     meta_classes = get_class_extensions(classes[6])
     meta = [cls for cls in meta_classes]
     assert classes[2] in meta
+
+
+def test_type_converter_boolean(element_factory):
+    """Test type convert for boolean."""
+    prop = element_factory.create(UML.Property)
+    prop.typeValue = "boolean"
+    assert type_converter(prop) == "int"
+
+
+def test_type_converter_int(element_factory):
+    """Test type convert for an integer."""
+    prop = element_factory.create(UML.Property)
+    prop.typeValue = "integer"
+    assert type_converter(prop) == "int"
+
+
+def test_type_converter_str(element_factory):
+    """Test type convert for a string."""
+    prop = element_factory.create(UML.Property)
+    prop.typeValue = "string"
+    assert type_converter(prop) == "str"
+
+
+def test_type_converter_other(element_factory):
+    """Test type convert for other type."""
+    prop = element_factory.create(UML.Property)
+    prop.typeValue = "other_type"
+    assert type_converter(prop) == "other_type"
+
+
+def test_type_converter_none(element_factory):
+    """Test type convert with no type."""
+    prop = element_factory.create(UML.Property)
+    with pytest.raises(ValueError):
+        assert type_converter(prop)
 
 
 def test_write_attributes_no_attribute(filename, element_factory):
