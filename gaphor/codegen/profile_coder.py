@@ -155,7 +155,7 @@ def write_properties(
                 enum = enumerations[type_value]
                 values = tuple([a.name for a in enum.attribute])
                 f.write(
-                    f'{cls.name}.{a.name}.kind = enumeration("kind", {values}, "{values[0]}")\n'
+                    f'{cls.name}.{a.name} = enumeration("kind", {values}, "{values[0]}")\n'
                 )
             else:
                 lower = "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"

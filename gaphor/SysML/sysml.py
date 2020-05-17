@@ -195,7 +195,7 @@ class ParticipantProperty(Property):
     end_: relation_one[Property]
 
 
-class Probability(ActivityEdge, ParameterSet):
+class Probability(ParameterSet, ActivityEdge):
     probability: attribute[str]
 
 
@@ -282,7 +282,7 @@ ChangeSructuralFeatureEvent.structuralFeature = association(
     "structuralFeature", StructuralFeature, upper=1
 )
 ConnectorProperty.connector = association("connector", Connector, upper=1)
-DirectedFeature.featureDirection.kind = enumeration(
+DirectedFeature.featureDirection = enumeration(
     "kind", ("required", "providedRequired", "provided"), "required"
 )
 DirectedRelationshipPropertyPath.sourceContext = association(
@@ -300,7 +300,7 @@ DirectedRelationshipPropertyPath.targetPropertyPath = association(
 ElementGroup.name = attribute("name", str)
 ElementGroup.orderedMember = association("orderedMember", Element)
 ElementPropertyPath.propertyPath = association("propertyPath", Property, lower=1)
-FlowProperty.direction.kind = enumeration("kind", ("out", "inout", "in"), "out")
+FlowProperty.direction = enumeration("kind", ("out", "inout", "in"), "out")
 InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, lower=1)
 ParticipantProperty.end_ = association("end_", Property, upper=1)
 Probability.probability = attribute("probability", str)
