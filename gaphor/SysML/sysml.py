@@ -44,7 +44,6 @@ from gaphor.UML import (
 
 
 class AbstractRequirement(NamedElement):
-    base_NamedElement: relation_one[NamedElement]
     externalId: attribute[str]
     text: attribute[str]
 
@@ -118,7 +117,7 @@ class ConstraintBlock(Block):
     pass
 
 
-class Rate(Parameter, ActivityEdge):
+class Rate(ActivityEdge, Parameter):
     rate: relation_many[InstanceSpecification]
 
 
@@ -195,7 +194,7 @@ class ParticipantProperty(Property):
     end_: relation_one[Property]
 
 
-class Probability(ParameterSet, ActivityEdge):
+class Probability(ActivityEdge, ParameterSet):
     probability: attribute[str]
 
 
@@ -270,9 +269,6 @@ class _Refine:
     pass
 
 
-AbstractRequirement.base_NamedElement = association(
-    "base_NamedElement", NamedElement, upper=1
-)
 AbstractRequirement.externalId = attribute("externalId", str)
 AbstractRequirement.text = attribute("text", str)
 AdjuntProperty.principal = association("principal", Element, upper=1)
