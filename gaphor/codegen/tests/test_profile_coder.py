@@ -101,6 +101,15 @@ def test_get_class_extension(classes):
     assert classes[2] in meta
 
 
+def test_type_converter_with_type(element_factory):
+    """Test type convert for boolean."""
+    prop = element_factory.create(UML.Property)
+    cls = element_factory.create(UML.Class)
+    prop.type = cls
+    prop.type.name = "boolean"
+    assert type_converter(prop) == "boolean"
+
+
 def test_type_converter_boolean(element_factory):
     """Test type convert for boolean."""
     prop = element_factory.create(UML.Property)
@@ -138,42 +147,82 @@ def test_type_converter_none(element_factory):
 
 def test_write_attributes_no_attribute(filename, element_factory):
     """Test writing pass when no attributes."""
-    diagram = element_factory.create(UML.Diagram)
-    cls_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    book = element_factory.create(UML.Class)
 
-    write_attributes(cls_item.subject, filename)
+    write_attributes(book, filename)
+
+    assert filename.data == "    pass\n\n"
+
+
+def test_write_attributes_no_name(filename, element_factory):
+    """Test writing pass when attribute has no name."""
+    book = element_factory.create(UML.Class)
+    book.ownedAttribute = element_factory.create(UML.Property)
+
+    write_attributes(book, filename)
 
     assert filename.data == "    pass\n\n"
 
 
-def test_write_attributes_for_derived(filename, element_factory):
-    """Test writing derived attribute."""
-    diagram = element_factory.create(UML.Diagram)
-    book = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    book.subject.name = "Book"
-    book.subject.title = attribute("title", str)
-    book.subject.loanPeriod = attribute("loadPeriod", int, default=14)
+def test_write_attributes_for_attribute(filename, element_factory):
+    """Test writing a normal attribute."""
+    book = element_factory.create(UML.Class)
+    book.ownedAttribute = element_factory.create(UML.Property)
+    book.ownedAttribute[0].name = "title"
+    book.ownedAttribute[0].typeValue = "str"
 
-    library_book = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    library_book.subject.name = "Library Book"
-    library_book.subject.loanPeriod = derived(
-        book.subject, "loanPeriod", int, 0, 1, lambda e: [e]
-    )
-    gen = diagram.create(
-        GeneralizationItem, subject=element_factory.create(UML.Generalization)
-    )
-    connect(gen, gen.tail, library_book)
-    connect(gen, gen.head, book)
+    write_attributes(book, filename)
 
-    write_attributes(library_book.subject, filename)
-
-    assert filename.data == "    pass\n\n"
-    # TODO: This should be a derived attribute
-    # assert filename.data == "    loanPeriod: derived[int]\n\n"
+    assert filename.data == "    title: attribute[str]\n"
 
 
-def test_type_converter():
-    assert True
+def test_write_attributes_for_enumeration(filename, element_factory):
+    """Test writing an attribute for an enumeration."""
+    book = element_factory.create(UML.Class)
+    book.ownedAttribute = element_factory.create(UML.Property)
+    book.ownedAttribute[0].name = "duration"
+    book.ownedAttribute[0].typeValue = "loanDurationKind"
+
+    write_attributes(book, filename)
+
+    assert filename.data == "    duration: enumeration\n"
+
+
+def test_write_attributes_for_relation_one(filename, element_factory):
+    """Test writing an attribute with upper value of one."""
+    patron = element_factory.create(UML.Class)
+    patron.ownedAttribute = element_factory.create(UML.Property)
+    patron.ownedAttribute[0].name = "libraryCard"
+    patron.ownedAttribute[0].typeValue = "Card"
+    patron.ownedAttribute[0].upperValue = "1"
+
+    write_attributes(patron, filename)
+
+    assert filename.data == "    libraryCard: relation_one[Card]\n"
+
+
+def test_write_attributes_for_relation_many(filename, element_factory):
+    """Test writing an attribute with upper value of any."""
+    library = element_factory.create(UML.Class)
+    library.ownedAttribute = element_factory.create(UML.Property)
+    library.ownedAttribute[0].name = "books"
+    library.ownedAttribute[0].typeValue = "Book"
+    library.ownedAttribute[0].upperValue = "*"
+
+    write_attributes(library, filename)
+
+    assert filename.data == "    books: relation_many[Book]\n"
+
+
+def test_write_attributes_with_operations(filename, element_factory):
+    """Test writing an attribute for an operation."""
+    library = element_factory.create(UML.Class)
+    library.ownedOperation = element_factory.create(UML.Operation)
+    library.ownedOperation[0].name = "open"
+
+    write_attributes(library, filename)
+
+    assert filename.data == "    open: operation\n"
 
 
 def test_filter_uml_classes(classes):

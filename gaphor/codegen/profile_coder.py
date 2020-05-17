@@ -131,7 +131,7 @@ def write_attributes(cls: UML.Class, f: TextIO) -> None:
             written = True
 
     for o in cls.ownedOperation:
-        f.write(f"    {o}: operation\n")
+        f.write(f"    {o.name}: operation\n")
         written = True
     if not written:
         f.write("    pass\n\n")
