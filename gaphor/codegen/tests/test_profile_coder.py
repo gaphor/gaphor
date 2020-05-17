@@ -86,14 +86,6 @@ def classes(nodes) -> List[UML.Class]:
     return [cls_item.subject for cls_item in nodes.values()]
 
 
-@pytest.fixture
-def tree(classes) -> Dict[UML.Class, List[UML.Class]]:
-    """Create tree of UML.Class."""
-    tree = create_class_trees(classes)
-    assert len(tree) == 7
-    return tree
-
-
 def test_get_class_extension(classes):
     """Test getting meta class using UML.Extension."""
     meta_classes = get_class_extensions(classes[6])
@@ -258,19 +250,84 @@ def test_find_enumerations(classes):
     assert len(classes) == 5
 
 
-def test_write_properties_enumeration(filename, element_factory):
-    """"""
-    diagram = element_factory.create(UML.Diagram)
-    cls_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    enum_item = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    enum_item.subject.name = "VehicleTypeKind"
-    enum_item.subject.car = attribute
-    enumerations = {enum_item.subject.name: enum_item.subject}
+def test_write_properties_no_attribute(filename, element_factory):
+    """Test for no property written with no attributes."""
+    book = element_factory.create(UML.Class)
 
-    write_properties(cls_item.subject, filename, enumerations)
+    write_properties(book, filename)
 
-    # TODO: complete test for enumeration
     assert filename.data == ""
+
+
+def test_write_properties_no_name(filename, element_factory):
+    """Test writing a property when its attribute has no name."""
+    book = element_factory.create(UML.Class)
+    book.ownedAttribute = element_factory.create(UML.Property)
+
+    write_properties(book, filename)
+
+    assert filename.data == ""
+
+
+def test_write_properties_for_attribute(filename, element_factory):
+    """Test writing a property for a normal attribute."""
+    book = element_factory.create(UML.Class)
+    book.name = "Book"
+    book.ownedAttribute = element_factory.create(UML.Property)
+    book.ownedAttribute[0].name = "title"
+    book.ownedAttribute[0].typeValue = "str"
+    a = book.ownedAttribute[0]
+
+    write_properties(book, filename)
+
+    assert (
+        filename.data
+        == f'{book.name}.{a.name} = attribute("{a.name}", {a.typeValue})\n'
+    )
+
+
+def test_write_properties_for_enumeration(filename, element_factory):
+    """Test writing property for an enumeration."""
+    book = element_factory.create(UML.Class)
+    book.name = "Book"
+    book.ownedAttribute = element_factory.create(UML.Property)
+    book.ownedAttribute[0].name = "duration"
+    book.ownedAttribute[0].typeValue = "loanDurationKind"
+    a = book.ownedAttribute[0]
+    enum = element_factory.create(UML.Class)
+    enum.name = "loanDurationKind"
+    enum.ownedAttribute = element_factory.create(UML.Property)
+    enum.ownedAttribute[0].name = "14"
+    e = enum.ownedAttribute[0]
+    enumerations = {enum.name: enum}
+
+    write_properties(book, filename, enumerations)
+
+    assert (
+        filename.data
+        == f'{book.name}.{a.name} = enumeration("kind", (\'{e.name}\',), "{e.name}")\n'
+    )
+
+
+def test_write_properties_for_association(filename, element_factory):
+    """Test writing property for an association."""
+    patron = element_factory.create(UML.Class)
+    patron.ownedAttribute = element_factory.create(UML.Property)
+    a = patron.ownedAttribute[0]
+    a.name = "libraryCard"
+    type_value = a.typeValue = "Card"
+    a.upperValue = "1"
+    a.aggregation = "composite"
+    upper = f", upper={a.upperValue}"
+    composite = ", composite=True"
+    lower = opposite = ""
+
+    write_properties(patron, filename)
+
+    assert (
+        filename.data
+        == f'{patron.name}.{a.name} = association("{a.name}", {type_value}{lower}{upper}{composite}{opposite})\n'
+    )
 
 
 def test_create_referenced(classes):

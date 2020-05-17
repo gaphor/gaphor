@@ -98,6 +98,7 @@ def create_referenced(classes: List[UML.Class]) -> Set[UML.Class]:
 
 
 def write_class_def(cls, trees, f, cls_written=set()) -> None:
+    """Write the Class definition."""
     if cls in cls_written:
         return
 
@@ -138,7 +139,7 @@ def write_attributes(cls: UML.Class, f: TextIO) -> None:
 
 
 def write_properties(
-    cls: UML.Class, f: TextIO, enumerations: Dict[str, UML.Class]
+    cls: UML.Class, f: TextIO, enumerations: Dict[str, UML.Class] = {}
 ) -> None:
     for a in cls.attribute:
         if not a.name or a.name == "baseClass" or a.isDerived:
@@ -152,8 +153,9 @@ def write_properties(
                 print(f"No type for {cls.name}.{a.name}")
                 continue
             if "Kind" in type_value:
-                enum = enumerations[type_value]
-                values = tuple([a.name for a in enum.attribute])
+                enum = enumerations.get(type_value)
+                if enum:
+                    values = tuple([a.name for a in enum.attribute])
                 f.write(
                     f'{cls.name}.{a.name} = enumeration("kind", {values}, "{values[0]}")\n'
                 )
