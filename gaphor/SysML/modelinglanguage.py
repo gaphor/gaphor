@@ -4,6 +4,7 @@ SysML related assets.
 """
 
 import gaphor.SysML.diagramitems as diagramitems
+import gaphor.SysML.propertypages
 import gaphor.SysML.sysml as sysml
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
