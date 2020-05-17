@@ -3,13 +3,39 @@ Trivial drawing aids (box, line, ellipse).
 """
 
 import ast
+from typing import Optional
 
+from gaphas.canvas import Canvas
 from gaphas.item import NW, Element
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
 
-class Line(_Line):
+class SimpleItem:
+    """
+    Marker for simple (non-Presentation) diagram items.
+    """
+
+    canvas: Optional[Canvas]
+
+    def save(self, save_func):
+        ...
+
+    def load(self, name, value):
+        ...
+
+    def postload(self):
+        ...
+
+    def unlink(self):
+        """
+        Remove the item from the canvas.
+        """
+        if self.canvas:
+            self.canvas.remove(self)
+
+
+class Line(_Line, SimpleItem):
     def __init__(self, id=None, model=None):
         super().__init__()
         self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
@@ -56,7 +82,7 @@ class Line(_Line):
         super().draw(context)
 
 
-class Box(Element):
+class Box(Element, SimpleItem):
     """
     A Box has 4 handles (for a start)::
 
@@ -99,7 +125,7 @@ class Box(Element):
         cr.stroke()
 
 
-class Ellipse(Element):
+class Ellipse(Element, SimpleItem):
     """
     """
 

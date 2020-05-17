@@ -12,15 +12,15 @@ The events are sent using a signaling mechanism, called handlers.
 ## Model details
 
 Pay attention to the following changes/additions with respect to the
-official Gaphor model, in the `uml2.gaphor` file:
+official Gaphor model, in the `models/UML.gaphor` file:
 
 -   Additions to the model have been put in the package
-    AuxilaryConstructs.Presentations and .Stereotypes.
+    AuxiliaryConstructs.Presentations and .Stereotypes.
 -   A Diagram element is added in order to model the diagrams.
 -   A special construct has been put into place in order to apply
     stereotypes to model elements. The current UML Specification is not
     clear on that subject.
 -   The Slot.value reference is singular.
-
-``` note:: ValueSpecification is generated as if it were a normal attribute. As a result, its subclasses (Expression, OpaqueExpression, InstanceValue, LiteralSpecification and its Literal* subclasses) are not available.
-```
+-   ValueSpecification is generated as if it were a normal attribute. As a
+    result, its subclasses (Expression, OpaqueExpression, InstanceValue,
+    LiteralSpecification and its Literal* subclasses) are not available.

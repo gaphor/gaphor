@@ -6,7 +6,7 @@ Gaphor is built in a light, service oriented fashion. The application is split
 in a series of services, such as a file, event, and undo managers. Those
 services are loaded based on entry points defined in the `pyproject.toml` file.
 To learn more about the architecture, please see the description about the
-[Service Oriented Architecture](so.md).
+[Service Oriented Architecture](service_oriented.md).
 
 ## Events
 
@@ -22,7 +22,7 @@ description of the [event system](event_system.md).
 
 ## Transactional
 
-Gaphor is transactional, which means it keeps track of the functions it
+Gaphor is [transactional](transaction.md), which means it keeps track of the functions it
 performs as a series of transactions. The transactions work by sending an
 event when a transaction starts and sending another when a transaction ends.
 This allows, for example, the undo manager to keep a running log of the
@@ -32,11 +32,18 @@ button is pressed.
 ## Main Components
 
 The main portion of Gaphor that executes first is called the `Application`.
-Only one Application instance is permitted. The Application will look for
-services defined as [gaphor.services](services.md). Those services are loaded
-and initialized.
+Gaphor can have multiple models open at any time. Each model is kept in a
+`Session`.
+Only one Application instance is active. Each session will load its own
+services defined as [gaphor.services](service_oriented.md).
 
 The most notable services are:
+
+### event_manager
+
+This is the central component used for event dispatching. Every service that
+does something with events (both sending and receiving) depends on this
+component.
 
 ### file_manager
 

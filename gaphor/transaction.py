@@ -110,7 +110,7 @@ class Transaction:
         try:
             last = self._stack.pop()
         except IndexError:
-            raise TransactionError("No Transaction on stack.")
+            raise TransactionError("No Transaction on stack.") from None
         if last is not self:
             self._stack.append(last)
             raise TransactionError(

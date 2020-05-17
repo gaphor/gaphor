@@ -107,9 +107,10 @@ class ConnectorConnectBase(BaseConnector):
          component
             Component item.
         """
-        p = component.subject.ownedPort[0]
-        p.unlink()
-        connector.subject = None
+        if component and component.subject:
+            p = component.subject.ownedPort[0]
+            p.unlink()
+            connector.subject = None
 
     def allow(self, handle, port):
         iface = self.element
@@ -148,6 +149,14 @@ class ConnectorConnectBase(BaseConnector):
                     assembly = c.item.subject
                     assert assembly.kind == "assembly"
                     break
+
+            if line.subject:
+                assert isinstance(line.subject, UML.Connector)
+                assembly = line.subject
+                assert assembly.end
+                assert assembly.end[:].partWithPort
+                assert iface in assembly.end[:].role
+                return
 
             if assembly is None:
                 assembly = self.element.model.create(UML.Connector)

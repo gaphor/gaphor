@@ -4,13 +4,10 @@ Test pseudostates.
 
 from gaphor import UML
 from gaphor.tests.testcase import TestCase
-from gaphor.UML.states.pseudostates import (
-    HistoryPseudostateItem,
-    InitialPseudostateItem,
-)
+from gaphor.UML.states.pseudostates import PseudostateItem
 
 
-class InitialPseudostate(TestCase):
+class Pseudostate(TestCase):
     """
     Initial pseudostate item test cases.
     """
@@ -18,13 +15,13 @@ class InitialPseudostate(TestCase):
     def test_initial_pseudostate(self):
         """Test creation of initial pseudostate
         """
-        item = self.create(InitialPseudostateItem, UML.Pseudostate)
+        item = self.create(PseudostateItem, UML.Pseudostate)
         assert "initial" == item.subject.kind
 
     def test_history_pseudostate(self):
         """Test creation of initial pseudostate
         """
-        item = self.create(HistoryPseudostateItem, UML.Pseudostate)
+        item = self.create(PseudostateItem, UML.Pseudostate)
         # history setting is done in the DiagramToolbox factory:
         item.subject.kind = "shallowHistory"
         assert "shallowHistory" == item.subject.kind

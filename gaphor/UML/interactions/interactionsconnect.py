@@ -41,7 +41,7 @@ def get_lifeline(item, handle):
     connected_item = get_connected(item, handle)
     if connected_item is None or isinstance(connected_item, LifelineItem):
         return connected_item
-    return get_lifeline(connected_item, connected_item.handles()[0])  # type: ignore[attr-defined]
+    return get_lifeline(connected_item, connected_item.handles()[0])
 
 
 def order_lifeline_covered_by(lifeline):

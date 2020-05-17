@@ -3,13 +3,16 @@ from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.interactions.message import MessageItem
 
+from gaphor.UML.interactions import (
+    interactionsconnect,
+    interactionsgrouping,
+    interactionspropertypages,
+    copypaste,
+)
 
-def _load():
-    from gaphor.UML.interactions import (
-        interactionsconnect,
-        interactionsgrouping,
-        interactionspropertypages,
-    )
-
-
-_load()
+__all__ = [
+    "ExecutionSpecificationItem",
+    "InteractionItem",
+    "LifelineItem",
+    "MessageItem",
+]

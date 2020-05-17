@@ -7,9 +7,10 @@ from typing import Dict, Set
 import gaphas
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import action, event_handler, gettext, transactional
+from gaphor.core import Transaction, action, event_handler
 from gaphor.core.modeling import Element, Presentation
 from gaphor.core.modeling.collection import collection
+from gaphor.diagram.copypaste import copy, paste
 from gaphor.ui.event import DiagramSelectionChanged
 
 
@@ -33,7 +34,7 @@ class CopyService(Service, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.diagrams = diagrams
-        self.copy_buffer: Set[gaphas.Item] = set()
+        self.copy_buffer: object = None
 
         event_manager.subscribe(self._update)
 
@@ -52,115 +53,71 @@ class CopyService(Service, ActionProvider):
 
     def copy(self, items):
         if items:
-            self.copy_buffer = set(items)
+            self.copy_buffer = copy(items)
 
-    @transactional
     def paste(self, diagram):
         """
         Paste items in the copy-buffer to the diagram
         """
         canvas = diagram.canvas
-        if not canvas:
-            return
 
-        copy_items = [c for c in self.copy_buffer if c.canvas]
+        with Transaction(self.event_manager):
+            # Create new id's that have to be used to create the items:
+            new_items: Set[Presentation] = paste(
+                self.copy_buffer, diagram, self.element_factory.lookup
+            )
 
-        # Create new id's that have to be used to create the items:
-        new_items: Dict[str, Presentation] = {
-            ci.id: diagram.create(type(ci)) for ci in copy_items
-        }
+            # move pasted items a bit, so user can see result of his action :)
+            for item in new_items:
+                if canvas.get_parent(item) not in new_items:
+                    item.matrix.translate(10, 10)
 
-        def copy_func(copy):
-            def _copy_func(name, value, reference=False):
-                """
-                Copy an element, preferably from the list of new items,
-                otherwise from the element factory.
-                If it does not exist there, do not copy it!
-                """
-
-                def load_element():
-                    item = new_items.get(value.id)
-                    if item:
-                        copy.load(name, item)
-                    else:
-                        item = self.element_factory.lookup(value.id)
-                        if item:
-                            copy.load(name, item)
-
-                if reference or isinstance(value, Element):
-                    setattr(copy, name, value)
-                elif isinstance(value, collection):
-                    values = value
-                    for value in values:
-                        setattr(copy, name, value)
-                elif isinstance(value, gaphas.Item):
-                    load_element()
-                else:
-                    # Plain attribute
-                    copy.load(name, str(value))
-
-            return _copy_func
-
-        # Copy attributes and references. References should be
-        #  1. in the ElementFactory (hence they are model elements)
-        #  2. referred to in new_items
-        #  3. canvas property is overridden
-        for ci in copy_items:
-            ci.save(copy_func(new_items[ci.id]))
-            # new_items[ci.id].subject = ci.subject
-
-        # move pasted items a bit, so user can see result of his action :)
-        # update items' matrix immediately
-        for item in new_items.values():
-            item.matrix.translate(10, 10)
-            canvas.update_matrices([item])
-
-        # solve internal constraints of items immediately as item.postload
-        # reconnects items and all handles have to be in place
-        canvas.solver.solve()
-        for item in new_items.values():
-            item.postload()
+            canvas.update_matrices(new_items)
 
         return new_items
 
+    def update_paste_state(self, view):
+        win_action_group = view.get_action_group("win")
+        if win_action_group:
+            win_action_group.lookup_action("edit-paste").set_enabled(
+                bool(self.copy_buffer)
+            )
+
     @action(
-        name="edit-copy",
-        label=gettext("Copy"),
-        icon_name="edit-copy",
-        shortcut="<Primary>c",
+        name="edit-copy", shortcut="<Primary>c",
     )
     def copy_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
             items = view.selected_items
             self.copy(items)
-            win_action_group = view.get_action_group("win")
-            if win_action_group:
-                win_action_group.lookup_action("edit-paste").set_enabled(
-                    bool(self.copy_buffer)
-                )
+        self.update_paste_state(view)
 
-    @action(
-        name="edit-paste", label="_Paste", icon_name="edit-paste", shortcut="<Primary>v"
-    )
+    @action(name="edit-cut", shortcut="<Primary>x")
+    def cut_action(self):
+        view = self.diagrams.get_current_view()
+        if view.is_focus():
+            items = view.selected_items
+            self.copy(items)
+            for i in list(items):
+                i.unlink()
+        self.update_paste_state(view)
+
+    @action(name="edit-paste", shortcut="<Primary>v")
     def paste_action(self):
         view = self.diagrams.get_current_view()
         diagram = self.diagrams.get_current_diagram()
         if not view:
             return
 
+        if not self.copy_buffer:
+            return
+
         new_items = self.paste(diagram)
 
-        focused_item = view.focused_item
         view.unselect_all()
 
-        for item in new_items.values():
+        for item in new_items:
             view.select_item(item)
 
-        new_focused_item = (
-            new_items[focused_item.id] if focused_item else new_items.pop()
-        )
-
-        self.event_manager.handle(
-            DiagramSelectionChanged(view, new_focused_item, new_items)
-        )
+        self.event_manager.handle(DiagramSelectionChanged(view, None, new_items))

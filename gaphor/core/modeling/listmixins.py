@@ -10,9 +10,12 @@ See the documentation on the mixins.
 
 """
 
+from __future__ import annotations
+
+from typing import Callable, Generic, Iterable, List, Sequence, TypeVar, overload
+
 __all__ = ["querymixin", "recursemixin"]
 
-from typing import Callable, List, TypeVar
 
 T = TypeVar("T")
 
@@ -124,7 +127,7 @@ def issafeiterable(obj):
     return False
 
 
-class recurseproxy:
+class recurseproxy(Generic[T]):
     """
     Proxy object (helper) for the recusemixin.
 
@@ -134,10 +137,10 @@ class recurseproxy:
     getitem operations act as if they're executed on the original list.
     """
 
-    def __init__(self, sequence):
+    def __init__(self, sequence: Sequence[T]):
         self.__sequence = sequence
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: int) -> T:
         return self.__sequence.__getitem__(key)
 
     def __iter__(self):
@@ -147,7 +150,7 @@ class recurseproxy:
         """
         return iter(self.__sequence)
 
-    def __getattr__(self, key):
+    def __getattr__(self, key) -> recurseproxy[T]:
         """
         Create a new proxy for the attribute.
         """
@@ -163,11 +166,11 @@ class recurseproxy:
                 except AttributeError:
                     pass
 
-        # Create a copy of the proxy type, inclusing a copy of the sequence type
-        return type(self)(type(self.__sequence)(mygetattr()))
+        # Create a copy of the proxy type, including a copy of the sequence type
+        return type(self)(type(self.__sequence)(mygetattr()))  # type: ignore[call-arg]
 
 
-class recursemixin:
+class recursemixin(Generic[T]):
     """
     Mixin class for lists, sets, etc. If data is requested using ``[:]``,
     a ``recurseproxy`` instance is created.
@@ -246,6 +249,14 @@ class recursemixin:
 
     def proxy_class(self):
         return recurseproxy
+
+    @overload
+    def __getitem__(self, key: int) -> T:
+        ...
+
+    @overload
+    def __getitem__(self, key: slice) -> recurseproxy[T]:
+        ...
 
     def __getitem__(self, key):
         if key == self._recursemixin_trigger:

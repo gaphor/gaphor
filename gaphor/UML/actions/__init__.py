@@ -16,14 +16,25 @@ from gaphor.UML.actions.objectnode import ObjectNodeItem
 from gaphor.UML.actions.partition import PartitionItem
 
 
-def _load():
-    from gaphor.UML.actions import (
-        actionsgrouping,
-        flowconnect,
-        partitionpage,
-        actionseditors,
-        actionspropertypages,
-    )
+from gaphor.UML.actions import (
+    actionsgrouping,
+    flowconnect,
+    partitionpage,
+    actionseditors,
+    actionspropertypages,
+)
 
-
-_load()
+__all__ = [
+    "AcceptEventActionItem",
+    "ActionItem",
+    "SendSignalActionItem",
+    "ActivityFinalNodeItem",
+    "ActivityNodeItem",
+    "DecisionNodeItem",
+    "FlowFinalNodeItem",
+    "ForkNodeItem",
+    "InitialNodeItem",
+    "FlowItem",
+    "ObjectNodeItem",
+    "PartitionItem",
+]

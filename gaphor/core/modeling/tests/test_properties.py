@@ -508,8 +508,8 @@ def test_derivedunion_listmixins():
     a.a[1].name = "bar"
     a.b[0].name = "baz"
 
-    assert list(a.a[:].name) == ["foo", "bar"]  # type: ignore[attr-defined]
-    assert sorted(list(a.u[:].name)) == ["bar", "baz", "foo"]  # type: ignore[attr-defined]
+    assert list(a.a[:].name) == ["foo", "bar"]
+    assert sorted(list(a.u[:].name)) == ["bar", "baz", "foo"]
 
 
 def test_composite():

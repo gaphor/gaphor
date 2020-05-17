@@ -20,15 +20,15 @@ import ast
 import gaphas
 
 from gaphor import UML
-from gaphor.diagram.presentation import LinePresentation
-from gaphor.diagram.shapes import Text
+from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Dependency)
-class DependencyItem(LinePresentation):
+class DependencyItem(LinePresentation, Named):
     """
     Dependency item represents several types of dependencies, i.e. normal
     dependency or usage.
@@ -54,12 +54,16 @@ class DependencyItem(LinePresentation):
             UML.Implementation: ("implements",),
         }
 
-        self.shape_middle = Text(
-            text=lambda: stereotypes_str(
-                self.subject, additional_stereotype.get(self._dependency_type, ())
+        self.shape_middle = Box(
+            Text(
+                text=lambda: stereotypes_str(
+                    self.subject, additional_stereotype.get(self._dependency_type, ())
+                ),
+                style={"min-width": 0, "min-height": 0},
             ),
-            style={"min-width": 0, "min-height": 0},
+            EditableText(text=lambda: self.subject.name or ""),
         )
+        self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
     def save(self, save_func):

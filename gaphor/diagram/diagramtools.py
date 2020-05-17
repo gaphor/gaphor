@@ -25,12 +25,6 @@ from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
 from gaphor.diagram.presentation import ElementPresentation, Presentation
 
-# cursor to indicate grouping
-IN_CURSOR_TYPE = Gdk.CursorType.DIAMOND_CROSS
-
-# cursor to indicate ungrouping
-OUT_CURSOR_TYPE = Gdk.CursorType.CROSSHAIR
-
 log = logging.getLogger(__name__)
 
 
@@ -195,8 +189,11 @@ class PlacementTool(_PlacementTool):
 
             adapter = Group(parent, item)
             if parent and adapter.can_contain():
+                canvas = diagram.canvas
+                canvas.reparent(item, parent=parent)
+                m = canvas.get_matrix_c2i(parent)
+                item.matrix *= m
                 adapter.group()
-                diagram.canvas.reparent(item, parent=parent)
 
             return item
 
@@ -260,21 +257,15 @@ class PlacementTool(_PlacementTool):
             adapter = Group(parent, self._factory.item_class())
             if adapter and adapter.can_contain():
                 view.dropzone_item = parent
-                cursor = Gdk.Cursor.new_for_display(
-                    view.get_window().get_display(), IN_CURSOR_TYPE
-                )
-                view.get_window().set_cursor(cursor)
                 self._parent = parent
             else:
                 view.dropzone_item = None
-                view.get_window().set_cursor(None)
                 self._parent = None
             parent.request_update(matrix=False)
         else:
             if view.dropzone_item:
                 view.dropzone_item.request_update(matrix=False)
             view.dropzone_item = None
-            view.get_window().set_cursor(None)
 
     def _create_item(self, pos):
         """
@@ -288,7 +279,6 @@ class PlacementTool(_PlacementTool):
         finally:
             self._parent = None
             view.dropzone_item = None
-            view.get_window().set_cursor(None)
         return item
 
 
@@ -308,17 +298,12 @@ class DropZoneInMotion(GuidedItemInMotion):
 
         if not over_item:
             view.dropzone_item = None
-            view.get_window().set_cursor(None)
             return
 
         if current_parent and not over_item:
             # are we going to remove from parent?
             group = Group(current_parent, item)
             if group:
-                cursor = Gdk.Cursor.new_for_display(
-                    view.get_window().get_display(), OUT_CURSOR_TYPE
-                )
-                view.get_window().set_cursor(cursor)
                 view.dropzone_item = current_parent
                 current_parent.request_update(matrix=False)
 
@@ -326,10 +311,6 @@ class DropZoneInMotion(GuidedItemInMotion):
             # are we going to add to parent?
             group = Group(over_item, item)
             if group and group.can_contain():
-                cursor = Gdk.Cursor.new_for_display(
-                    view.get_window().get_display(), IN_CURSOR_TYPE
-                )
-                view.get_window().set_cursor(cursor)
                 view.dropzone_item = over_item
                 over_item.request_update(matrix=False)
 
@@ -351,27 +332,28 @@ class DropZoneInMotion(GuidedItemInMotion):
                 return
 
             if old_parent:
+                canvas.reparent(item, None)
+                m = canvas.get_matrix_i2c(old_parent)
+                item.matrix *= m
+
                 adapter = Group(old_parent, item)
                 if adapter:
                     adapter.ungroup()
 
-                canvas.reparent(item, None)
-                m = canvas.get_matrix_i2c(old_parent)
-                item.matrix *= m
                 old_parent.request_update()
 
             if new_parent:
+                canvas.reparent(item, new_parent)
+                m = canvas.get_matrix_c2i(new_parent)
+                item.matrix *= m
+
                 adapter = Group(new_parent, item)
                 if adapter and adapter.can_contain():
                     adapter.group()
 
-                canvas.reparent(item, new_parent)
-                m = canvas.get_matrix_c2i(new_parent)
-                item.matrix *= m
                 new_parent.request_update()
         finally:
             view.dropzone_item = None
-            view.get_window().set_cursor(None)
 
 
 class TransactionalToolChain(ToolChain):

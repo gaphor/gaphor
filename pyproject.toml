@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "1.2.0"
+version = "1.3.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -46,14 +46,14 @@ pytest = "^5.0"
 pytest-cov = "^2.5"
 pytest-runner = "^4.2"
 black = { version = "^19.10b0", python = "^3.6" }
-mypy = "0.740"
+mypy = "0.770"
 pre-commit = "^1.12"
 sphinx = "^2.2"
 recommonmark = "^0.6.0"
 sphinx-rtd-theme = "^0.4.3"
 babel = "^2.7.0"
 babelgladeextractor = "^0.6.0"
-flake8 = "^3.7.9"
+flake8 = { version = "^3.8.0a2", allow-prereleases = true }
 isort = "^4.3.21"
 
 [tool.poetry.scripts]
@@ -101,6 +101,7 @@ use_parentheses = true
 line_length = 88
 known_third_party = ["cairo", "gaphas", "generic", "gi", "importlib_metadata", "pytest", "recommonmark", "setuptools", "tomlkit", "typing_extensions"]
 skip = "flatpak,.venv,build,dist"
+skip_glob = "gaphor/diagram/general/__init__.py,gaphor/UML/__init__.py,gaphor/UML/*/__init__.py"
 filter_files = true
 
 [build-system]

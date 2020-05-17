@@ -1,5 +1,6 @@
+import importlib
 import logging
-from typing import Optional, Sequence, Tuple
+from typing import Dict, Optional, Sequence, Tuple
 
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (
@@ -11,7 +12,7 @@ from gaphas.painter import (
     ToolPainter,
 )
 from gaphas.view import GtkView
-from gi.repository import Gdk, GLib, Gtk
+from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
 from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.core.modeling import Presentation
@@ -38,6 +39,25 @@ def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
     """
     for name, section in toolbox_actions:
         yield from section
+
+
+with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
+    PLACEMENT_BASE = GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
+
+_placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
+
+
+def get_placement_cursor(display, icon_name):
+    if icon_name in _placement_pixbuf_map:
+        pixbuf = _placement_pixbuf_map[icon_name]
+    else:
+        pixbuf = PLACEMENT_BASE.copy()
+        icon = Gtk.IconTheme.get_default().load_icon(icon_name, 24, 0)
+        icon.copy_area(
+            0, 0, icon.get_width(), icon.get_height(), pixbuf, 9, 15,
+        )
+        _placement_pixbuf_map[icon_name] = pixbuf
+    return Gdk.Cursor.new_from_pixbuf(display, pixbuf, 1, 1)
 
 
 class DiagramPage:
@@ -148,6 +168,15 @@ class DiagramPage:
             handle_index=handle_index,
         )
 
+    def get_tool_icon_name(self, tool_name):
+        if tool_name == "toolbox-pointer":
+            return None
+        return next(
+            t
+            for t in tooliter(self.modeling_language.toolbox_definition)
+            if t.id == tool_name
+        ).icon_name
+
     def get_toolbox_shortcuts(self):
         shortcuts = {}
         # accelerator keys are lower case. Since we handle them in a key-press event
@@ -236,6 +265,12 @@ class DiagramPage:
         if self.view:
             tool.append(self.get_tool(tool_name))
             self.view.tool = tool
+            icon_name = self.get_tool_icon_name(tool_name)
+            window = self.view.get_window()
+            if icon_name and window:
+                window.set_cursor(get_placement_cursor(window.get_display(), icon_name))
+            elif window:
+                window.set_cursor(None)
 
     @event_handler(DiagramItemPlaced)
     def _on_diagram_item_placed(self, event):
@@ -319,7 +354,7 @@ class DiagramPage:
     def _on_key_press_event(self, view, event):
         """
         Handle the 'Delete' key. This can not be handled directly (through
-        GTK's accelerators) since otherwise this key will confuse the text
+        GTK's accelerators), otherwise this key will confuse the text
         edit stuff.
         """
         if (

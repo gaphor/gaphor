@@ -207,7 +207,7 @@ def format_slot(el):
 
 
 @format.register(UML.NamedElement)
-def format_namedelement(el):
+def format_namedelement(el, **kwargs):
     """
     Format named element.
     """

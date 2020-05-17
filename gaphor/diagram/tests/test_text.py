@@ -87,7 +87,8 @@ def test_text_with_font_as_dict(cr):
         cr,
         "Example",
         {
-            "font": "sans 10",
+            "font-family": "sans",
+            "font-size": 10,
             "font-style": FontStyle.ITALIC,
             "font-weight": FontWeight.BOLD,
             "text-decoration": TextDecoration.UNDERLINE,
@@ -102,9 +103,10 @@ def test_text_with_font_as_dict_with_values_set_to_none(cr):
         cr,
         "Example",
         {
-            "font": "sans bold 10",
+            "font-family": "sans",
+            "font-size": 9.5,
             "font-style": None,
-            "font-weight": None,
+            "font-weight": FontWeight.BOLD,
             "text-decoration": TextDecoration.NONE,
         },
     )
@@ -113,6 +115,6 @@ def test_text_with_font_as_dict_with_values_set_to_none(cr):
 
 
 def test_text_with_just_font_as_dict(cr):
-    w, h = text_size(cr, "Example", {"font": "sans 10"})
+    w, h = text_size(cr, "Example", {"font-family": "sans", "font-size": 10})
     assert w
     assert h

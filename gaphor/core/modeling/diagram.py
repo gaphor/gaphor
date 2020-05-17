@@ -58,7 +58,7 @@ class DiagramCanvas(gaphas.Canvas):
         """Apply the supplied save function to all root diagram items."""
 
         for item in self.get_root_items():
-            save_func(None, item)
+            save_func(item)
 
     def postload(self):
         """Called after the diagram canvas has loaded.  Currently does nothing.
@@ -109,6 +109,11 @@ class Diagram(PackageableElement):
         self.canvas.add(item, parent)
         self.model.handle(DiagramItemCreated(self.model, item))
         return item
+
+    def lookup(self, id):
+        for item in self.canvas.get_all_items():
+            if item.id == id:
+                return item
 
     def unlink(self):
         """Unlink all canvas items then unlink this diagram."""

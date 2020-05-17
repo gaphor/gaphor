@@ -51,6 +51,7 @@ from math import atan2, pi
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.support import represents
 from gaphor.diagram.text import middle_segment
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.modelfactory import stereotypes_str
@@ -58,6 +59,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 PI_2 = pi / 2
 
 
+@represents(UML.Message)
 class MessageItem(LinePresentation[UML.Message], Named):
     """
     Message item is drawn on sequence and communication diagrams.

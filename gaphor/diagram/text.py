@@ -50,7 +50,12 @@ def text_draw_focus_box(context, x, y, w, h):
         cr = context.cairo
         cr.save()
         try:
-            cr.set_source_rgb(0.6, 0.6, 0.6)
+            # cr.set_dash(() if context.focused else (2.0, 2.0), 0)
+            cr.set_dash((), 0)
+            if context.focused:
+                cr.set_source_rgb(0.6, 0.6, 0.6)
+            else:
+                cr.set_source_rgb(0.8, 0.8, 0.8)
             cr.set_line_width(0.5)
             cr.rectangle(x, y, w, h)
             cr.stroke()
@@ -99,13 +104,21 @@ def _text_layout(cr, text, font, width):
     layout = _pango_cairo_create_layout(cr)
 
     if isinstance(font, dict):
-        fd = Pango.FontDescription.from_string(font["font"])
+        fd = Pango.FontDescription.new()
+        font_family = font.get("font-family")
+        font_size = font.get("font-size")
+        assert font_family, "Font family should be set"
+        assert font_size, "Font size should be set"
+        fd.set_family(font_family)
+        fd.set_absolute_size(font_size * Pango.SCALE)
+
         font_weight = font.get("font-weight")
         font_style = font.get("font-style")
         if font_weight:
             fd.set_weight(getattr(Pango.Weight, font_weight.name))
         if font_style:
             fd.set_style(getattr(Pango.Style, font_style.name))
+
         layout.set_font_description(fd)
         underline = (
             font.get("text-decoration", TextDecoration.NONE) == TextDecoration.UNDERLINE

@@ -15,23 +15,29 @@ from gaphor.UML.states.state import VertexItem
 
 
 @represents(UML.Pseudostate)
-class InitialPseudostateItem(ElementPresentation, VertexItem):
+class PseudostateItem(ElementPresentation, VertexItem):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         for h in self.handles():
             h.movable = False
 
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Pseudostate].kind", self.update_shapes)
+
+    def update_shapes(self):
         self.shape = IconBox(
-            Box(draw=draw_initial_pseudostate),
+            Box(
+                draw=draw_history_pseudostate
+                if self.subject and self.subject.kind == "shallowHistory"
+                else draw_initial_pseudostate
+            ),
             Text(
                 text=lambda: stereotypes_str(self.subject),
                 style={"min-width": 0, "min-height": 0},
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            EditableText(text=lambda: self.subject.name or ""),
         )
-
-        self.watch("subject[NamedElement].name")
-        self.watch("subject.appliedStereotype.classifier.name")
 
 
 def draw_initial_pseudostate(box, context, bounding_box):
@@ -44,25 +50,6 @@ def draw_initial_pseudostate(box, context, bounding_box):
     path_ellipse(cr, r, r, d, d)
     cr.set_line_width(0.01)
     cr.fill()
-
-
-@represents(UML.Pseudostate)
-class HistoryPseudostateItem(ElementPresentation, VertexItem):
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
-        for h in self.handles():
-            h.movable = False
-        self.shape = IconBox(
-            Box(draw=draw_history_pseudostate),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
-        )
-
-        self.watch("subject[NamedElement].name")
-        self.watch("subject.appliedStereotype.classifier.name")
 
 
 def draw_history_pseudostate(box, context, bounding_box):

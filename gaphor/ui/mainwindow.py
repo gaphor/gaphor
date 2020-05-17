@@ -184,7 +184,7 @@ class MainWindow(Service, ActionProvider):
             return widget
 
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
-            self.layout = deserialize(self.window, f.read(), _factory)
+            self.layout = deserialize(self.window, f.read(), _factory, self.properties)
 
         action_group, accel_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
@@ -270,7 +270,9 @@ class MainWindow(Service, ActionProvider):
     def _on_modeling_language_selection_changed(self, event=None):
         if self.modeling_language_name:
             self.modeling_language_name.set_text(
-                self.modeling_language.active_modeling_language_name
+                gettext("Profile: {}").format(
+                    self.modeling_language.active_modeling_language_name
+                )
             )
 
     def _on_window_active(self, window, prop):

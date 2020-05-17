@@ -10,7 +10,7 @@ from gi.repository import Gtk
 widget_factory: Dict[str, Callable] = {}
 
 
-def deserialize(container, layoutstr, itemfactory):
+def deserialize(container, layoutstr, itemfactory, properties):
     """
     Return a new layout with it's attached frames. Frames that should be floating
     already have their Gtk.Window attached (check frame.get_parent()). Transient settings
@@ -26,7 +26,12 @@ def deserialize(container, layoutstr, itemfactory):
             add(widget, index, parent_widget, resize)
         else:
             factory = widget_factory[element.tag]
-            widget = factory(parent=parent_widget, index=index, **element.attrib)
+            widget = factory(
+                parent=parent_widget,
+                index=index,
+                properties=properties,
+                **element.attrib,
+            )
             assert widget, f"No widget ({widget})"
             for i, e in enumerate(element):
                 _des(e, i, widget)
@@ -63,22 +68,27 @@ def factory(typename):
     return _factory
 
 
+def _position_changed(paned, _gparam, properties):
+    properties.set(paned.get_name(), paned.props.position)
+
+
 @factory("paned")
-def paned(parent, index, orientation, position=None):
+def paned(parent, index, properties, name, orientation, position=None):
     paned = Gtk.Paned.new(
         Gtk.Orientation.HORIZONTAL
         if orientation == "horizontal"
         else Gtk.Orientation.VERTICAL
     )
+    paned.set_name(name)
     add(paned, index, parent)
-    if position:
-        paned.set_position(int(position))
+    paned.set_position(properties.get(name, int(position)))
+    paned.connect("notify::position", _position_changed, properties)
     paned.show()
     return paned
 
 
 @factory("box")
-def box(parent, index, orientation):
+def box(parent, index, properties, orientation):
     box = Gtk.Box.new(
         Gtk.Orientation.HORIZONTAL
         if orientation == "horizontal"

@@ -1,6 +1,5 @@
 """Unit tests for transactions in Gaphor."""
-
-from unittest import TestCase
+import pytest
 
 from gaphor.core import event_handler
 from gaphor.core.eventmanager import EventManager
@@ -30,123 +29,122 @@ def handle_rollback(event):
     rollbacks.append(event)
 
 
-class TransactionTestCase(TestCase):
-    """Test case for transactions with the component registry
-    enabled."""
+@pytest.fixture
+def event_manager():
+    event_manager = EventManager()
 
-    def setUp(self):
-        """Initialize Gaphor services and register transaction event
-        handlers."""
+    event_manager.subscribe(handle_begins)
+    event_manager.subscribe(handle_commits)
+    event_manager.subscribe(handle_rollback)
 
-        self.event_manager = EventManager()
+    del begins[:]
+    del commits[:]
+    del rollbacks[:]
 
-        self.event_manager.subscribe(handle_begins)
-        self.event_manager.subscribe(handle_commits)
-        self.event_manager.subscribe(handle_rollback)
+    yield event_manager
 
-        del begins[:]
-        del commits[:]
-        del rollbacks[:]
+    event_manager.unsubscribe(handle_begins)
+    event_manager.unsubscribe(handle_commits)
+    event_manager.unsubscribe(handle_rollback)
 
-    def tearDown(self):
-        """Finished with the test case.  Unregister event handlers that
-        store transaction events."""
 
-        self.event_manager.unsubscribe(handle_begins)
-        self.event_manager.unsubscribe(handle_commits)
-        self.event_manager.unsubscribe(handle_rollback)
+def test_transaction_commit(event_manager):
+    """Test committing a transaction."""
 
-    def test_transaction_commit(self):
-        """Test committing a transaction."""
+    tx = Transaction(event_manager)
 
-        tx = Transaction(self.event_manager)
+    assert tx._stack, "Transaction has no stack"
+    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
+    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
+    assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
 
-        assert tx._stack, "Transaction has no stack"
-        assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-        assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-        assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    tx.commit()
 
+    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
+    assert 1 == len(commits), "Incorrect number of TransactionCommit events"
+    assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    assert not tx._stack, "Transaction stack is not empty"
+
+    with pytest.raises(TransactionError):
         tx.commit()
 
-        assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-        assert 1 == len(commits), "Incorrect number of TransactionCommit events"
-        assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
-        assert not tx._stack, "Transaction stack is not empty"
 
-        try:
-            tx.commit()
-        except TransactionError:
-            pass
-        else:
-            self.fail("Commit should not have succeeded")
+def test_transaction_rollback(event_manager):
+    """Test rolling back a transaction."""
 
-    def test_transaction_rollback(self):
-        """Test rolling back a transaction."""
+    tx = Transaction(event_manager)
 
-        tx = Transaction(self.event_manager)
+    assert tx._stack, "Transaction has no stack"
+    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
+    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
+    assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
 
-        assert tx._stack, "Transaction has no stack"
-        assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-        assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-        assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    tx.rollback()
 
-        tx.rollback()
+    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
+    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
+    assert 1 == len(rollbacks), "Incorrect number of TransactionRollback events"
 
-        assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-        assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-        assert 1 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    assert not tx._stack, "Transaction stack is not empty"
 
-        assert not tx._stack, "Transaction stack is not empty"
 
-    def test_transaction_commit_after_rollback(self):
-        """Test committing one transaction after rolling back another
-        transaction."""
+def test_transaction_commit_after_rollback(event_manager):
+    """Test committing one transaction after rolling back another
+    transaction."""
 
-        tx1 = Transaction(self.event_manager)
-        tx2 = Transaction(self.event_manager)
+    tx1 = Transaction(event_manager)
+    tx2 = Transaction(event_manager)
 
-        tx2.rollback()
+    tx2.rollback()
+    tx1.commit()
+
+    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
+    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
+    assert 1 == len(rollbacks), "Incorrect number of TransactionRollback events"
+
+
+def test_transaction_rollback_after_commit(event_manager):
+    """Test committing one transaction after rolling back another
+    transaction."""
+
+    tx1 = Transaction(event_manager)
+    tx2 = Transaction(event_manager)
+
+    tx2.commit()
+    tx1.rollback()
+
+    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
+    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
+    assert 1 == len(rollbacks), "Incorrect number of TransactionRollback events"
+
+
+def test_transaction_stack(event_manager):
+    """Test the transaction stack."""
+
+    tx1 = Transaction(event_manager)
+    tx2 = Transaction(event_manager)
+
+    with pytest.raises(TransactionError):
         tx1.commit()
 
-        assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-        assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-        assert 1 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    tx2.rollback()
+    tx1.rollback()
 
-    def test_transaction_stack(self):
-        """Test the transaction stack."""
 
-        tx1 = Transaction(self.event_manager)
-        tx2 = Transaction(self.event_manager)
+def test_transaction_context(event_manager):
+    """Test the transaction context manager."""
 
-        try:
-            self.assertRaises(TransactionError, tx1.commit)
-        finally:
-            tx2.rollback()
-            tx1.rollback()
+    with Transaction(event_manager) as tx:
 
-    def test_transaction_context(self):
-        """Test the transaction context manager."""
+        assert isinstance(tx, Transaction), "Context is not a Transaction instance"
+        assert Transaction._stack, "Transaction instance has no stack inside a context"
 
-        with Transaction(self.event_manager) as tx:
+    assert not Transaction._stack, "Transaction stack should be empty"
 
-            assert isinstance(tx, Transaction), "Context is not a Transaction instance"
-            assert (
-                Transaction._stack
-            ), "Transaction instance has no stack inside a context"
 
-        assert not Transaction._stack, "Transaction stack should be empty"
+def test_transaction_context_error(event_manager):
+    """Test the transaction context manager with errors."""
 
-    def test_transaction_context_error(self):
-        """Test the transaction context manager with errors."""
-
-        try:
-            with Transaction(self.event_manager):
-                raise TypeError("transaction error")
-        except TypeError as e:
-            assert "transaction error" == str(
-                e
-            ), "Transaction context manager did no raise correct exception"
-        else:
-            self.fail(
-                "Transaction context manager did not raise exception when it should have"
-            )
+    with pytest.raises(TypeError, match="transaction error"):
+        with Transaction(event_manager):
+            raise TypeError("transaction error")

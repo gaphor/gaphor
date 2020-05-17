@@ -6,14 +6,20 @@ from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.classes.package import PackageItem
 
+from gaphor.UML.classes import (
+    classconnect,
+    interfaceconnect,
+    classeseditors,
+    classespropertypages,
+    copypaste,
+)
 
-def _load():
-    from gaphor.UML.classes import (
-        classconnect,
-        interfaceconnect,
-        classeseditors,
-        classespropertypages,
-    )
-
-
-_load()
+__all__ = [
+    "AssociationItem",
+    "DependencyItem",
+    "GeneralizationItem",
+    "ImplementationItem",
+    "InterfaceItem",
+    "ClassItem",
+    "PackageItem",
+]

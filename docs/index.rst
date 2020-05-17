@@ -13,45 +13,52 @@ If you're into writing plug-ins for Gaphor you should have a look at our
 fabulous `Hello world <https://github.com/gaphor/gaphor.plugins.helloworld>`_
 plug-in.
 
-Platforms
----------
-
 Setting up a development environment, and packaging Gaphor on different
 platforms:
 
 .. toctree::
+   :caption: Installation
    :maxdepth: 1
 
-   windows
    linux
    macos
-
-.. _tech-section:
-
-Tech section
-------------
+   windows
 
 .. toctree::
+   :caption: Concepts
    :maxdepth: 1
 
    framework
+   service_oriented
+   event_system
+   modeling_language
+   transaction
+   items
+
+.. toctree::
+   :caption: UML and data model
+   :maxdepth: 1
+
    model
    stereotypes
    datamodel
    connect
-   items
-   services
-   so
-   storage
-   undo
-   xml-format
-   event_system
 
 .. toctree::
-   :maxdepth: 2
+   :caption: Storage
+   :maxdepth: 1
+
+   storage
+   xml-format
+
+.. toctree::
+   :caption: Services
+   :maxdepth: 1
+
+   undo
 
 External links
-^^^^^^^^^^^^^^
+--------------
 
 * You should definitely check out `Agile Modeling <http://www.agilemodeling.com>`_ including these pages:
 
