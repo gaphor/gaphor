@@ -106,8 +106,6 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     order = 10
 
-    NAME_LABEL = gettext("Name")
-
     def __init__(self, subject: NamedElement):
         super().__init__()
         assert subject is None or isinstance(subject, NamedElement), "%s" % type(
