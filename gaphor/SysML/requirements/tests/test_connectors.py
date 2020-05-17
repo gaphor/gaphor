@@ -13,7 +13,7 @@ from gaphor.SysML.requirements.requirement import RequirementItem
 
 
 @pytest.mark.parametrize(
-    "item_class", [DeriveReqtItem, RefineItem, SatisfyItem, TraceItem, VerifyItem,]
+    "item_class", [DeriveReqtItem, RefineItem, SatisfyItem, TraceItem, VerifyItem]
 )
 def test_relation_allow_connect_disconnect_cycle(diagram, element_factory, item_class):
     req1 = element_factory.create(sysml.Requirement)
