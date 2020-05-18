@@ -5,11 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   width="10.414213"
-   height="15.427444"
-   viewBox="0 0 2.7554272 4.0818448"
+   id="svg4268"
    version="1.1"
-   id="svg4268">
+   viewBox="0 0 2.7554277 4.0783448"
+   height="15.414216"
+   width="10.414215">
   <defs
      id="defs4262" />
   <metadata
@@ -25,7 +25,7 @@
     </rdf:RDF>
   </metadata>
   <path
-     id="path901"
-     d="M 0,0 V 3.9238281 L 0.9609375,2.9628906 1.3417969,3.9121094 A 0.26512367,0.26512367 0 1 0 1.8339844,3.7148438 L 1.4492188,2.7558594 c 0.00153,0 0.00237,0 0.00391,0 0.2213631,2e-7 0.4876732,0 0.6640625,0 H 2.7558594 Z M 0.52929688,1.2773438 1.4785156,2.2265625 c -0.00859,0 -0.016927,0 -0.025391,0 -0.084548,-10e-8 -0.1509347,0 -0.2148438,0 H 1.1054688 A 0.26460981,0.26460981 0 0 0 0.87109375,2.3046875 L 0.52929688,2.6464844 Z"
-     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+     id="path12"
+     d="M 0 0 L 0 3.9238281 L 0.9609375 2.9628906 L 1.3417969 3.9121094 A 0.2645835 0.2645835 0 0 0 1.6855469 4.0585938 A 0.2645835 0.2645835 0 0 0 1.8339844 3.7148438 L 1.4492188 2.7558594 C 1.4507516 2.7558594 1.4515878 2.7558594 1.453125 2.7558594 C 1.6744881 2.7558596 1.9407982 2.7558594 2.1171875 2.7558594 L 2.7558594 2.7558594 L 0 0 z M 0.52929688 1.2773438 L 1.4785156 2.2265625 C 1.4699278 2.2265625 1.4615889 2.2265625 1.453125 2.2265625 C 1.3685765 2.2265624 1.3021903 2.2265625 1.2382812 2.2265625 L 1.0644531 2.2265625 A 0.2645835 0.2645835 0 0 0 1.0585938 2.2265625 A 0.2645835 0.2645835 0 0 0 0.87109375 2.3046875 L 0.52929688 2.6464844 L 0.52929688 1.2773438 z "
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1;opacity:1" />
 </svg>

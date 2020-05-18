@@ -5,11 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   width="11.999996"
-   height="11.999982"
-   viewBox="0 0 3.1749989 3.1749953"
+   id="svg4268"
    version="1.1"
-   id="svg4268">
+   viewBox="0 0 3.1749987 3.174995"
+   height="11.999981"
+   width="11.999995">
   <defs
      id="defs4262" />
   <metadata
@@ -24,11 +24,8 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <ellipse
-     ry="1.5874976"
-     rx="1.5874995"
-     cy="1.5874974"
-     cx="1.5874995"
-     id="path1183"
-     style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+  <path
+     d="M 3.1749987,1.587497 A 1.5874995,1.5874976 0 0 1 1.5874997,3.174995 1.5874995,1.5874976 0 0 1 0,1.587497 1.5874995,1.5874976 0 0 1 1.5874997,0 1.5874995,1.5874976 0 0 1 3.1749987,1.587497"
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="path1183" />
 </svg>

@@ -5,11 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   width="15.999999"
-   height="11.999982"
-   viewBox="0 0 4.233333 3.1749953"
+   id="svg4268"
    version="1.1"
-   id="svg4268">
+   viewBox="0 0 4.2333332 3.1749961"
+   height="11.999985"
+   width="16">
   <defs
      id="defs4262" />
   <metadata
@@ -24,8 +24,16 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <path
-     id="rect1179"
-     d="M 1.3222656,0 C 0.59394644,0 0,0.59394644 0,1.3222656 v 0.5292969 c 0,0.7283192 0.59394644,1.3242187 1.3222656,1.3242187 h 1.5878906 c 0.7283192,0 1.3222657,-0.5958995 1.3222657,-1.3242187 V 1.3222656 C 4.2324219,0.59394644 3.6384754,0 2.9101562,0 Z m 0,0.52929688 h 1.5878906 c 0.444314,0 0.7949219,0.34865479 0.7949219,0.79296872 v 0.5292969 c 0,0.444314 -0.3506079,0.7949219 -0.7949219,0.7949219 H 1.3222656 c -0.44431393,0 -0.79296872,-0.3506079 -0.79296872,-0.7949219 V 1.3222656 c 0,-0.44431393 0.34865479,-0.79296872 0.79296872,-0.79296872 z"
-     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+  <g
+     style="opacity:1"
+     id="g10">
+    <path
+       id="path12"
+       d="m 1.3229166,0.264583 h 1.5875001 c 0.5863166,0 1.0583332,0.472017 1.0583332,1.058333 v 0.529163 c 0,0.586316 -0.4720166,1.058333 -1.0583332,1.058333 H 1.3229166 c -0.5863165,0 -1.0583331,-0.472017 -1.0583331,-1.058333 V 1.322916 c 0,-0.586316 0.4720166,-1.058333 1.0583331,-1.058333 z"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#f0f0f0;fill-opacity:0.299488;fill-rule:nonzero;stroke:none;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1.0;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1;" />
+    <path
+       id="path14"
+       d="M 1.3222656 0 C 0.59394629 -9.1940888e-17 2.9605947e-16 0.59394679 0 1.3222656 L 0 1.8515625 C 0 2.5798813 0.59394629 3.1757813 1.3222656 3.1757812 L 2.9101562 3.1757812 C 3.6384757 3.1757812 4.2324219 2.5798813 4.2324219 1.8515625 L 4.2324219 1.3222656 C 4.2324219 0.59394679 3.6384757 -1.4802974e-16 2.9101562 0 L 1.3222656 0 z M 1.3222656 0.52929688 L 2.9101562 0.52929688 C 3.35447 0.52929687 3.7050781 0.87795246 3.7050781 1.3222656 L 3.7050781 1.8515625 C 3.7050781 2.2958757 3.35447 2.6464844 2.9101562 2.6464844 L 1.3222656 2.6464844 C 0.87795196 2.6464844 0.52929688 2.2958757 0.52929688 1.8515625 L 0.52929688 1.3222656 C 0.52929688 0.87795246 0.87795196 0.52929687 1.3222656 0.52929688 z "
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1.0;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1;" />
+  </g>
 </svg>
