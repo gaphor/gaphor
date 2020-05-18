@@ -47,9 +47,16 @@ ICONS=diagram \
 	extend \
 	profile \
 	metaclass \
+	import \
 	stereotype \
 	extension \
-	property
+	property \
+	requirement \
+	satisfy \
+	derive \
+	trace \
+	refine \
+	verify
 
 ICON_THEME=hicolor/scalable/actions
 

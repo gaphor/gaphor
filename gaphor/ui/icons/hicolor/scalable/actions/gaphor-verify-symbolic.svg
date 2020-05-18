@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
-   sodipodi:docname="gaphor-include-symbolic.svg"
+   sodipodi:docname="gaphor-verify-symbolic.svg"
    id="svg4268"
    version="1.1"
    viewBox="0 0 4.2359917 4.235993"
@@ -19,11 +19,11 @@
      inkscape:window-maximized="1"
      inkscape:window-y="27"
      inkscape:window-x="72"
-     inkscape:cy="14.698627"
-     inkscape:cx="8.005024"
+     inkscape:cy="12.654174"
+     inkscape:cx="16.159508"
      inkscape:zoom="54.340861"
      showgrid="false"
-     id="namedview526"
+     id="namedview146"
      inkscape:window-height="1016"
      inkscape:window-width="1848"
      inkscape:pageshadow="2"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -57,14 +57,14 @@
      d="m 3.4472656,0.4140625 0.375,0.375 0.072266,-0.0722656 -0.375,-0.375 z m -1.1210937,1.1230469 0.3730469,0.3730468 0.375,-0.3730468 -0.375,-0.375 z m -1.1230469,1.1210937 0.3730469,0.375 0.375,-0.375 -0.375,-0.3730469 z M 0.08007812,3.78125 l 0.375,0.375 L 0.828125,3.78125 0.45507812,3.4082031 Z"
      id="path4598-1-9" />
   <text
-     id="text530"
-     y="4.2362032"
-     x="2.7757652"
+     id="text150"
+     y="4.2322788"
+     x="2.4857488"
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
      xml:space="preserve"><tspan
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82222px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold';stroke-width:0.264583"
-       y="4.2362032"
-       x="2.7757652"
-       id="tspan528"
-       sodipodi:role="line">I</tspan></text>
+       y="4.2322788"
+       x="2.4857488"
+       id="tspan148"
+       sodipodi:role="line">V</tspan></text>
 </svg>
