@@ -288,10 +288,12 @@ class DiagramPage:
 
         if sloppiness:
             item_painter = FreeHandPainter(ItemPainter(), sloppiness=sloppiness)
-            box_painter = FreeHandPainter(BoundingBoxPainter(), sloppiness=sloppiness)
+            box_painter = FreeHandPainter(
+                BoundingBoxPainter(item_painter), sloppiness=sloppiness
+            )
         else:
             item_painter = ItemPainter()
-            box_painter = BoundingBoxPainter()
+            box_painter = BoundingBoxPainter(item_painter)
 
         view.painter = (
             PainterChain()
