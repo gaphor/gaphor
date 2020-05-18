@@ -3,14 +3,7 @@ import logging
 from typing import Dict, Optional, Sequence, Tuple
 
 from gaphas.freehand import FreeHandPainter
-from gaphas.painter import (
-    BoundingBoxPainter,
-    FocusedItemPainter,
-    HandlePainter,
-    ItemPainter,
-    PainterChain,
-    ToolPainter,
-)
+from gaphas.painter import FocusedItemPainter, HandlePainter, PainterChain, ToolPainter
 from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
@@ -24,6 +17,7 @@ from gaphor.diagram.diagramtools import (
     TransactionalToolChain,
 )
 from gaphor.diagram.event import DiagramItemPlaced
+from gaphor.diagram.painter import BoundingBoxPainter, ItemPainter
 from gaphor.diagram.support import get_diagram_item
 from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
