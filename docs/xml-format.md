@@ -6,8 +6,8 @@ would be possible to also generate a Document Type Definition (DTD) as well.
 These are the things that should be distinguished:
 - Model elements
 - Associations with other model elements (referenced by ID):
-  - Relations with multiplicty of zero to one (0..1)
-  - Relations with multiplicty of zero or more (0..*)
+  - Relations with multiplicity of zero to one (0..1)
+  - Relations with multiplicity of zero or more (0..*)
 - Attributes, which always have a multiplicity of zero to one (0..1)
 - Diagrams
   - One canvas

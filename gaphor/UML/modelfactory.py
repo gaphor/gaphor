@@ -238,7 +238,7 @@ def create_generalization(general, specific):
 def create_implementation(contract, implementatingClassifier):
     assert (
         contract.model is implementatingClassifier.model
-    ), "Contract and Implementating classifier are from different models"
+    ), "Contract and Implementing classifier are from different models"
     model = contract.model
     impl = model.create(Implementation)
     impl.contract = contract
@@ -276,9 +276,9 @@ def set_navigability(assoc, end, nav):
      False
         association end is not navigable
      None
-        association end navigability is unkown
+        association end navigability is unknown
 
-    There are two ways of specifing that an end is navigable
+    There are two ways of specifying that an end is navigable
 
     - an end is in Association.navigableOwnedEnd collection
     - an end is class (interface) attribute (stored in Class.ownedAttribute
@@ -360,7 +360,7 @@ def dependency_type(client, supplier):
 
 def clone_message(msg, inverted=False):
     """
-    Create new message based on speciied message.
+    Create new message based on specified message.
 
     If inverted is set to True, then inverted message is created.
     """
@@ -391,7 +391,7 @@ def swap_element(element, new_class):
     """
     A "trick" to swap the element type.
 
-    Used in certain cases where the underlaying element type
+    Used in certain cases where the underlying element type
     may change.
     """
     if element.__class__ is not new_class:

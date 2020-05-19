@@ -5,7 +5,7 @@ Messages are implemented according to UML 2.1.1 specification.
 
 Implementation Details
 ======================
-Message sort is supported but occurence specification is not implemented.
+Message sort is supported but occurrence specification is not implemented.
 This means that model drawn on a diagram is not complete on UML datamodel
 level, still it is valid UML diagram (see Lifelines Diagram in UML
 specification, page 461).
@@ -33,7 +33,7 @@ documentation for more information).
 
 Events
 ------
-Occurence specification is not implemented, therefore
+Occurrence specification is not implemented, therefore
 - no events implemented (i.e. destroy event)
 - no message sequence number on communication diagram
 

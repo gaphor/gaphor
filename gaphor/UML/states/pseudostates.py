@@ -42,7 +42,7 @@ class PseudostateItem(ElementPresentation, VertexItem):
 
 def draw_initial_pseudostate(box, context, bounding_box):
     """
-    Draw intial pseudostate symbol.
+    Draw initial pseudostate symbol.
     """
     cr = context.cairo
     r = 10

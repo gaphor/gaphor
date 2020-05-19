@@ -225,7 +225,7 @@ class ElementDispatcher(Service):
 
     def unsubscribe(self, handler):
         """
-        Unregister a handler from the registy.
+        Unregister a handler from the registry.
         """
         try:
             reverse = reversed(self._reverse[handler])

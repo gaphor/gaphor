@@ -14,7 +14,7 @@ It is not clear how to attach a connectable element to a lifeline. For now,
 
 Destruction Event
 -----------------
-Occurence specification is not implemented, therefore destruction event
+Occurrence specification is not implemented, therefore destruction event
 cannot be supported. Still, destruction event notation is shown at the
 bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.

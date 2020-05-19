@@ -162,7 +162,7 @@ class AssemblyConnectorTestCase(TestCase):
         """
         Generate interfaces with names specified by arguments.
 
-        :Paramters:
+        :Parameters:
          args
             List of interface names.
         """

@@ -104,7 +104,7 @@ class GIdleThread:
 
     error = property(
         lambda self: self._exc,
-        doc="Return a possible exception that had occured "
+        doc="Return a possible exception that had occurred "
         "during execution of the generator",
     )
 

@@ -163,7 +163,7 @@ For a complete set of changes and fixes see:
 -----
 - New pure-python canvas implementation (gaphas)
 - Zope Adapters used for item connections
-- Undo managements temporaly disabled
+- Undo managements temporarily disabled
 - Added loads of unit tests
 
 NOTE: if you have Zope 3 installed it's probably not a good idea to install
@@ -184,7 +184,7 @@ NOTE: if you have Zope 3 installed it's probably not a good idea to install
 - actions: flow final, fork, join and object nodes
 - assembly connector
 - flows and also initial, flow final and activity final nodes can have names
-- flows can be splitted and merged using activity edge connectors
+- flows can be split and merged using activity edge connectors
 - object inspector panel added
 - pdf file export
 - gaphorconvert utility, which allows easy batch conversion of diagrams

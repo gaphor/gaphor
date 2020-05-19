@@ -305,7 +305,7 @@ class Namespace(UIComponent):
             row = model[rowiter]
             matched = False
 
-            # Search in child rows.  If any element in the underlaying
+            # Search in child rows.  If any element in the underlying
             # tree matches, it will expand.
             for inner in row.iterchildren():
                 if not search_func(model, column, key, inner.iter):

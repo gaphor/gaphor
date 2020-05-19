@@ -9,7 +9,7 @@ from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollbac
 
 log = logging.getLogger(__name__)
 
-# Sessions should subscribe a hook to receive events emited via @transactional
+# Sessions should subscribe a hook to receive events emitted via @transactional
 subscribers: Set[Callable[[object], None]] = set()
 
 

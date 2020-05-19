@@ -25,7 +25,7 @@ language implementation can offer?
 * A toolbox definition
 * Connectors, allow diagram items to connect
 * Grouping
-* Editor pages, shown in the collapsable pane on the right side
+* Editor pages, shown in the collapsible pane on the right side
 * Inline (diagram) editor popups
 * Copy/paste behavior when element copying is not trivial, for example with
   more than one element is involved

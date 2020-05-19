@@ -44,7 +44,7 @@ The main method that Gaphor is packaged for Linux is with a Flatpak package.
 and package management for Linux. It offer a sandbox environment in which
 users can run application software in isolation from the rest of the system.
 
-We distribute the offical Flatpak using [Flathub](https://flathub.org), and
+We distribute the official Flatpak using [Flathub](https://flathub.org), and
 building of the image is done at the [Gaphor Flathub
 repository](https://github.com/flathub/org.gaphor.Gaphor).
 

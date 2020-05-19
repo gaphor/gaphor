@@ -3,7 +3,7 @@ Association item - graphical representation of an association.
 
 Plan:
  - transform AssociationEnd in a (dumb) data class
- - for assocation name and direction tag, use the same trick as is used
+ - for association name and direction tag, use the same trick as is used
    for line ends.
 """
 
@@ -49,7 +49,7 @@ class AssociationItem(LinePresentation, Named):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        # AssociationEnds are really inseperable from the AssociationItem.
+        # AssociationEnds are really inseparable from the AssociationItem.
         # We give them the same id as the association item.
         self._head_end = AssociationEnd(owner=self, end="head")
         self._tail_end = AssociationEnd(owner=self, end="tail")

@@ -68,7 +68,7 @@ def main(argv=sys.argv[1:]):
         "--regex",
         dest="regex",
         metavar="regex",
-        help="process diagrams which name matches given regular expresion;"
+        help="process diagrams which name matches given regular expression;"
         " name includes package name; regular expressions are case insensitive",
     )
 

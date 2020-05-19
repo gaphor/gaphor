@@ -295,5 +295,5 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
     def point(self, pos):
         h1, h2 = self._handles
         d, p = distance_line_point(h1.pos, h2.pos, pos)
-        # Substract line_width / 2
+        # Subtract line_width / 2
         return d - 3

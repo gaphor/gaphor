@@ -16,7 +16,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 class FlowItem(LinePresentation, Named):
     """
     Representation of control flow and object flow. Flow item has name and
-    guard. It can be splitted into two flows with activity edge connectors.
+    guard. It can be split into two flows with activity edge connectors.
     """
 
     def __init__(self, id=None, model=None):

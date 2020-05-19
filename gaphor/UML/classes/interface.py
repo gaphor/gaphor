@@ -8,7 +8,7 @@ Interface item implementation. There are several notations supported
 
 Interface item can act as icon of assembly connector, see
 `gaphor.diagram.connector` module documentation for details. *Documentation
-of this module does not take into accout assembly connector icon mode.*
+of this module does not take into account assembly connector icon mode.*
 
 Folded Interface Item
 =====================
