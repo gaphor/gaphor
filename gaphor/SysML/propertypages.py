@@ -37,8 +37,6 @@ class RequirementPropertyPage(PropertyPageBase):
             if event.element is subject and event.new_value is not None:
                 entry.set_text(event.new_value)
 
-        self.watcher.watch("name", id_handler)
-
         text_view = builder.get_object("requirement-text")
 
         buffer = builder.get_object("requirement-text-buffer")

@@ -31,7 +31,6 @@ class DirectedRelationshipPropertyPathConnect(RelationshipConnect):
         )
 
     def connect_subject(self, handle):
-        print(f"connect {self.relation_type}")
         relation = self.relationship_or_new(
             self.relation_type,
             self.relation_type.sourceContext,
