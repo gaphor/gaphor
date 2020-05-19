@@ -17,6 +17,8 @@ from gaphor.diagram.text import (
     text_size,
 )
 
+# Style is using SVG properties where possible
+# https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
 Style = TypedDict(
     "Style",
     {
@@ -26,14 +28,14 @@ Style = TypedDict(
         "line-width": float,
         "vertical-spacing": float,
         "border-radius": float,
-        "fill": str,
+        "fill": Optional[Tuple[float, float, float, float]],  # RGBA
         "font-family": str,
         "font-size": float,
         "font-style": FontStyle,
         "font-weight": Optional[FontWeight],
         "text-decoration": Optional[TextDecoration],
         "text-align": TextAlign,
-        "stoke": str,
+        "stroke": Optional[Tuple[float, float, float, float]],  # RGBA
         "vertical-align": VerticalAlign,
         # CommentItem:
         "ear": int,
@@ -47,6 +49,25 @@ class Padding:  # Enum
     RIGHT = 1
     BOTTOM = 2
     LEFT = 3
+
+
+DEFAULT_STYLE: Style = {
+    "min-width": 0,
+    "min-height": 0,
+    "padding": (0, 0, 0, 0),
+    "vertical-align": VerticalAlign.MIDDLE,
+    "vertical-spacing": 4,
+    "border-radius": 0,
+    "padding": (0, 0, 0, 0),
+    "fill": None,
+    "stroke": None,
+    "font-family": "sans",
+    "font-size": 14,
+    "font-style": FontStyle.NORMAL,
+    "font-weight": None,
+    "text-decoration": None,
+    "text-align": TextAlign.CENTER,
+}
 
 
 def draw_border(box, context, bounding_box):
@@ -72,13 +93,17 @@ def draw_border(box, context, bounding_box):
 
     fill = box.style("fill")
     if fill:
-        color = cr.get_source()
-        cr.set_source_rgb(1, 1, 1)  # white
-        cr.fill_preserve()
-        cr.set_source(color)
-
+        cr.save()
+        try:
+            cr.set_source_rgba(*fill)
+            cr.fill_preserve()
+        finally:
+            cr.restore()
     draw_highlight(context)
 
+    stroke = box.style("stroke")
+    if stroke:
+        cr.set_source_rgba(*stroke)
     cr.stroke()
 
 
@@ -90,7 +115,7 @@ def draw_top_separator(box, context, bounding_box):
     cr.stroke()
 
 
-def draw_highlight(context):
+def draw_highlight(context, highlight_color=(0, 0, 1, 0.4)):
     if not context.dropzone:
         return
     highlight_color = (0, 0, 1, 0.4)
@@ -120,12 +145,7 @@ class Box:
         self.children = children
         self.sizes: List[Tuple[int, int]] = []
         self._style: Style = {
-            "min-width": 0,
-            "min-height": 0,
-            "padding": (0, 0, 0, 0),
-            "vertical-align": VerticalAlign.MIDDLE,
-            "border-radius": 0,
-            "fill": None,
+            **DEFAULT_STYLE,  # type: ignore[misc] # noqa: F821
             **style,  # type: ignore[misc] # noqa: F821
         }
         self._draw_border = draw
@@ -165,8 +185,9 @@ class Box:
             return min_width, min_height
 
     def draw(self, context, bounding_box):
-        padding = self.style("padding")
-        valign = self.style("vertical-align")
+        style = self.style
+        padding = style("padding")
+        valign = style("vertical-align")
         height = sum(h for _w, h in self.sizes)
         if self._draw_border:
             self._draw_border(self, context, bounding_box)
@@ -204,10 +225,7 @@ class IconBox:
         self.children = children
         self.sizes: List[Tuple[int, int]] = []
         self._style: Style = {
-            "min-width": 0,
-            "min-height": 0,
-            "vertical-spacing": 4,
-            "padding": (0, 0, 0, 0),
+            **DEFAULT_STYLE,  # type: ignore[misc] # noqa: F821
             **style,  # type: ignore[misc] # noqa: F821
         }
 
@@ -247,16 +265,8 @@ class Text:
         self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
         self._style: Style = {
-            "min-width": 30,
-            "min-height": 14,
-            "font-family": "sans",
-            "font-size": 14,
-            "font-style": FontStyle.NORMAL,
-            "font-weight": None,
-            "text-decoration": None,
-            "text-align": TextAlign.CENTER,
-            "vertical-align": VerticalAlign.MIDDLE,
-            "padding": (0, 0, 0, 0),
+            **DEFAULT_STYLE,  # type: ignore[misc] # noqa: F821
+            **{"min-width": 30, "min-height": 14},
             **style,  # type: ignore[misc] # noqa: F821
         }
 
