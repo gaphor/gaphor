@@ -5,12 +5,17 @@ Test classes.
 from gaphas.canvas import instant_cairo_context
 
 from gaphor import UML
+from gaphor.diagram.shapes import SizeContext
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.classes.klass import ClassItem
 
 
 def compartments(item):
     return item.shape.children[1:]
+
+
+def context():
+    return SizeContext(cairo=instant_cairo_context())
 
 
 class ClassTestCase(TestCase):
@@ -39,7 +44,7 @@ class ClassTestCase(TestCase):
 
         diagram.canvas.update()
         assert 1 == len(compartments(klass)[0])
-        assert compartments(klass)[0].size(instant_cairo_context()) > (44.0, 20.0)
+        assert compartments(klass)[0].size(context()) > (44.0, 20.0)
 
         oper = element_factory.create(UML.Operation)
         oper.name = 4 * "x"  # about 44 pixels
@@ -51,7 +56,7 @@ class ClassTestCase(TestCase):
 
         diagram.canvas.update()
         assert 2 == len(compartments(klass)[1])
-        assert compartments(klass)[1].size(instant_cairo_context()) > (63.0, 34.0)
+        assert compartments(klass)[1].size(context()) > (63.0, 34.0)
 
     def test_attribute_removal(self):
 

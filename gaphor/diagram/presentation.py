@@ -9,6 +9,7 @@ from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.core.modeling.presentation import Presentation, S
+from gaphor.diagram.shapes import DrawContext, SizeContext
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -104,11 +105,10 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         be drawn or when styling changes.
         """
 
-    def pre_update(self, context):
-        cr = context.cairo
-        self.min_width, self.min_height = self.shape.size(cr)
+    def pre_update(self, context: SizeContext):
+        self.min_width, self.min_height = self.shape.size(context)
 
-    def draw(self, context):
+    def draw(self, context: DrawContext):
         self._shape.draw(context, Rectangle(0, 0, self.width, self.height))
 
     def setup_canvas(self):
@@ -177,15 +177,14 @@ class LinePresentation(Presentation[S], gaphas.Line):
         doc="""A line, contrary to an element, has some styling of it's own.""",
     )
 
-    def post_update(self, context):
+    def post_update(self, context: SizeContext):
         def shape_bounds(shape, align):
             if shape:
-                size = shape.size(cr)
+                size = shape.size(context)
                 x, y = text_point_at_line(points, size, align)
                 return Rectangle(x, y, *size)
 
         super().post_update(context)
-        cr = context.cairo
         points = [h.pos for h in self.handles()]
         self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
@@ -206,7 +205,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
         ]
         return min(d0, *ds) if ds else d0
 
-    def draw(self, context):
+    def draw(self, context: DrawContext):
         cr = context.cairo
         cr.set_line_width(self.style("line-width"))
         if self.style("dash-style"):

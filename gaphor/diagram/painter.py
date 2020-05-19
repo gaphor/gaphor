@@ -9,34 +9,18 @@ and handles).
 from dataclasses import dataclass
 
 from cairo import ANTIALIAS_NONE, LINE_JOIN_ROUND
-from cairo import Context as CairoContext
 from gaphas.aspect import PaintFocused
 from gaphas.canvas import Context
 from gaphas.geometry import Rectangle
 from gaphas.painter import CairoBoundingBoxContext, Painter
+
+from gaphor.diagram.shapes import DrawContext, Style
 
 DEBUG_DRAW_BOUNDING_BOX = False
 
 # The tolerance for Cairo. Bigger values increase speed and reduce accuracy
 # (default: 0.1)
 TOLERANCE = 0.8
-
-
-@dataclass(frozen=True)
-class DrawContext:
-    """
-    Special context for draw()'ing the item. The draw-context contains
-    stuff like the cairo context and flags like selected and
-    focused.
-    """
-
-    painter: Painter
-    cairo: CairoContext
-    selected: bool
-    focused: bool
-    hovered: bool
-    dropzone: bool
-    draw_all: bool
 
 
 class ItemPainter(Painter):
@@ -49,7 +33,6 @@ class ItemPainter(Painter):
 
             item.draw(
                 DrawContext(
-                    painter=self,
                     cairo=cairo,
                     selected=(item in view.selected_items),
                     focused=(item is view.focused_item),

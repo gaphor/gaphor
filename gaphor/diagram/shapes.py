@@ -1,7 +1,8 @@
+from dataclasses import dataclass
 from math import pi
 from typing import List, Optional, Tuple
 
-from gaphas.canvas import Context
+from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
 from typing_extensions import TypedDict
 
@@ -70,7 +71,28 @@ DEFAULT_STYLE: Style = {
 }
 
 
-def draw_border(box, context, bounding_box):
+@dataclass(frozen=True)
+class SizeContext:
+    cairo: CairoContext
+
+
+@dataclass(frozen=True)
+class DrawContext:
+    """
+    Special context for draw()'ing the item. The draw-context contains
+    stuff like the cairo context and flags like selected and
+    focused.
+    """
+
+    cairo: CairoContext
+    selected: bool
+    focused: bool
+    hovered: bool
+    dropzone: bool
+    draw_all: bool
+
+
+def draw_border(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
     d = box.style("border-radius")
     x, y, width, height = bounding_box
@@ -107,7 +129,7 @@ def draw_border(box, context, bounding_box):
     cr.stroke()
 
 
-def draw_top_separator(box, context, bounding_box):
+def draw_top_separator(box, context: DrawContext, bounding_box: Rectangle):
     x, y, w, h = bounding_box
     cr = context.cairo
     cr.move_to(x, y)
@@ -115,7 +137,7 @@ def draw_top_separator(box, context, bounding_box):
     cr.stroke()
 
 
-def draw_highlight(context, highlight_color=(0, 0, 1, 0.4)):
+def draw_highlight(context: DrawContext, highlight_color=(0, 0, 1, 0.4)):
     if not context.dropzone:
         return
     highlight_color = (0, 0, 1, 0.4)
@@ -163,12 +185,12 @@ class Box:
     def __getitem__(self, index):
         return self.children[index]
 
-    def size(self, cr):
+    def size(self, context: SizeContext):
         style = self.style
         min_width = style("min-width")
         min_height = style("min-height")
         padding = style("padding")
-        self.sizes = sizes = [c.size(cr) for c in self.children]
+        self.sizes = sizes = [c.size(context) for c in self.children]
         if sizes:
             widths, heights = list(zip(*sizes))
             return (
@@ -184,7 +206,7 @@ class Box:
         else:
             return min_width, min_height
 
-    def draw(self, context, bounding_box):
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = self.style
         padding = style("padding")
         valign = style("vertical-align")
@@ -233,19 +255,19 @@ class IconBox:
     def style(self):
         return self._style.__getitem__
 
-    def size(self, cr):
+    def size(self, context: SizeContext):
         style = self.style
         min_width = style("min-width")
         min_height = style("min-height")
         padding = style("padding")
-        self.sizes = [c.size(cr) for c in self.children]
-        width, height = self.icon.size(cr)
+        self.sizes = [c.size(context) for c in self.children]
+        width, height = self.icon.size(context)
         return (
             max(min_width, width + padding[Padding.RIGHT] + padding[Padding.LEFT]),
             max(min_height, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
         )
 
-    def draw(self, context, bounding_box):
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
         padding = self.style("padding")
         vertical_spacing = self.style("vertical-spacing")
         x = bounding_box.x + padding[Padding.LEFT]
@@ -289,12 +311,12 @@ class Text:
             "text-decoration": style("text-decoration"),
         }
 
-    def size(self, cr):
+    def size(self, context: SizeContext):
         min_w = self.style("min-width")
         min_h = self.style("min-height")
         padding = self.style("padding")
 
-        width, height = text_size(cr, self.text(), self.font(), self.width())
+        width, height = text_size(context.cairo, self.text(), self.font(), self.width())
         return (
             max(min_w, width + padding[Padding.RIGHT] + padding[Padding.LEFT]),
             max(min_h, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
@@ -311,7 +333,7 @@ class Text:
         )
 
     def draw(
-        self, context: Context, bounding_box: Rectangle
+        self, context: DrawContext, bounding_box: Rectangle
     ) -> Tuple[int, int, int, int]:
         """Draw the text, return the location and size."""
         cr = context.cairo
@@ -344,7 +366,7 @@ class EditableText(Text):
         return s
 
     def draw(
-        self, context: Context, bounding_box: Rectangle
+        self, context: DrawContext, bounding_box: Rectangle
     ) -> Tuple[int, int, int, int]:
         """Draw the editable text."""
         x, y, w, h = super().draw(context, bounding_box)
@@ -357,21 +379,21 @@ class EditableText(Text):
         return x, y, w, h
 
 
-def draw_default_head(context):
+def draw_default_head(context: DrawContext):
     """
     Default head drawer: move cursor to the first handle.
     """
     context.cairo.move_to(0, 0)
 
 
-def draw_default_tail(context):
+def draw_default_tail(context: DrawContext):
     """
     Default tail drawer: draw line to the last handle.
     """
     context.cairo.line_to(0, 0)
 
 
-def draw_arrow_head(context):
+def draw_arrow_head(context: DrawContext):
     cr = context.cairo
     cr.set_dash((), 0)
     cr.move_to(15, -6)
@@ -381,7 +403,7 @@ def draw_arrow_head(context):
     cr.move_to(0, 0)
 
 
-def draw_arrow_tail(context):
+def draw_arrow_tail(context: DrawContext):
     cr = context.cairo
     cr.line_to(0, 0)
     cr.stroke()

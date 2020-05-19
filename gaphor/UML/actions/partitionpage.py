@@ -23,7 +23,7 @@ class PartitionPropertyPage(PropertyPageBase):
         builder = new_builder("partition-editor")
 
         external = builder.get_object("external")
-        external.set_active(item.subject.isExternal)
+        external.set_active(item.subject and item.subject.isExternal)
 
         builder.connect_signals({"external-changed": (self._on_external_change,)})
 

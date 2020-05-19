@@ -56,7 +56,7 @@ class PartitionItem(ElementPresentation, Named):
     def pre_update(self, context):
         assert self.canvas
 
-        self._header_size = self.shape.size(context.cairo)
+        self._header_size = self.shape.size(context)
 
         # get subpartitions
         children: List[PartitionItem] = list(

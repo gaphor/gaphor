@@ -2,7 +2,7 @@ import cairo
 import pytest
 from gaphas.geometry import Rectangle
 
-from gaphor.diagram.shapes import Box, IconBox, Text
+from gaphor.diagram.shapes import Box, IconBox, SizeContext, Text
 
 
 @pytest.fixture
@@ -17,16 +17,16 @@ def fixed_text_size(monkeypatch):
 
 
 @pytest.fixture
-def cr():
+def context():
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
     cr = cairo.Context(surface)
-    return cr
+    return SizeContext(cairo=cr)
 
 
 def test_box_size():
     box = Box()
 
-    assert box.size(cr=None) == (0, 0)
+    assert box.size(context=None) == (0, 0)
 
 
 def test_draw_empty_box():
@@ -49,7 +49,7 @@ def test_draw_box_with_custom_draw_function():
     assert called
 
 
-def test_draw_icon_box(cr):
+def test_draw_icon_box(context):
     box_drawn = None
 
     def box_draw(box, context, bounding_box):
@@ -59,36 +59,36 @@ def test_draw_icon_box(cr):
     shape = IconBox(Box(draw=box_draw), Text(text="some text"))
 
     bounding_box = Rectangle(11, 12, 13, 14)
-    shape.draw(cr, bounding_box)
+    shape.draw(context, bounding_box)
 
     assert box_drawn == bounding_box
 
 
-def test_text_has_width(cr, fixed_text_size):
+def test_text_has_width(context, fixed_text_size):
     text = Text(lambda: "some text")
 
-    w, _ = text.size(cr)
+    w, _ = text.size(context)
     assert w == fixed_text_size[0]
 
 
-def test_text_has_height(cr, fixed_text_size):
+def test_text_has_height(context, fixed_text_size):
     text = Text("some text")
 
-    _, h = text.size(cr)
+    _, h = text.size(context)
     assert h == fixed_text_size[1]
 
 
-def test_text_with_min_width(cr):
+def test_text_with_min_width(context):
     style = {"min-width": 100, "min-height": 0}
     text = Text("some text", style=style)
 
-    w, _ = text.size(cr)
+    w, _ = text.size(context)
     assert w == 100
 
 
-def test_text_width_min_height(cr):
+def test_text_width_min_height(context):
     style = {"min-width": 0, "min-height": 40}
     text = Text("some text", style=style)
 
-    _, h = text.size(cr)
+    _, h = text.size(context)
     assert h == 40
