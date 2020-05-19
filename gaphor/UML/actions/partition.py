@@ -35,7 +35,6 @@ class PartitionItem(ElementPresentation, Named):
                     self.subject,
                     self.subject and self.subject.isExternal and ("external",) or (),
                 ),
-                style={"min-width": 0, "min-height": 0},
             ),
             Text(text=lambda: self.subject.name or ""),
             style={

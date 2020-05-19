@@ -32,10 +32,7 @@ class PseudostateItem(ElementPresentation, VertexItem):
                 if self.subject and self.subject.kind == "shallowHistory"
                 else draw_initial_pseudostate
             ),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject.name or ""),
         )
 

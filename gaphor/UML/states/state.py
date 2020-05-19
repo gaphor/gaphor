@@ -57,10 +57,7 @@ class StateItem(ElementPresentation[UML.State], VertexItem):
 
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                    style={"min-width": 0, "min-height": 0},
-                ),
+                Text(text=lambda: stereotypes_str(self.subject),),
                 EditableText(text=lambda: self.subject.name or ""),
                 style={"padding": (4, 4, 4, 4)},
             ),

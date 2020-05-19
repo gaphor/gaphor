@@ -60,10 +60,7 @@ class AssociationItem(LinePresentation, Named):
         self._dir_pos = 0, 0
 
         self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject.name or ""),
         )
 

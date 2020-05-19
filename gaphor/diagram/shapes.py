@@ -265,9 +265,8 @@ class Text:
         self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
         self._style: Style = {
-            **DEFAULT_STYLE,  # type: ignore[misc] # noqa: F821
-            **{"min-width": 30, "min-height": 14},
-            **style,  # type: ignore[misc] # noqa: F821
+            **DEFAULT_STYLE,  # type: ignore[misc]
+            **style,  # type: ignore[misc]
         }
 
     @property
@@ -335,7 +334,7 @@ class Text:
 
 class EditableText(Text):
     def __init__(self, text=lambda: "", width=lambda: -1, style: Style = {}):
-        super().__init__(text, width, style)
+        super().__init__(text, width, {"min-width": 30, "min-height": 14, **style})  # type: ignore[misc]
         self.bounding_box = Rectangle()
         self.text_size = (0, 0)
 

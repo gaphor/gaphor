@@ -33,10 +33,7 @@ class ActorItem(ElementPresentation, Classified):
                 style={"min-width": ARM * 2, "min-height": HEAD + NECK + BODY + ARM},
                 draw=draw_actor,
             ),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},

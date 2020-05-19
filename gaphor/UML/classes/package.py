@@ -22,7 +22,6 @@ class PackageItem(ElementPresentation, Named):
                     self.subject,
                     isinstance(self.subject, UML.Profile) and ("profile",) or (),
                 ),
-                style={"min-width": 0, "min-height": 0},
             ),
             EditableText(
                 text=lambda: self.subject and self.subject.name or "",

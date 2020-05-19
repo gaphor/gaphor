@@ -54,7 +54,6 @@ class NodeItem(ElementPresentation, Classified):
                         self.subject,
                         isinstance(self.subject, UML.Device) and ("device",) or (),
                     ),
-                    style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",

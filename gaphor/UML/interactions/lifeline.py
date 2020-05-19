@@ -166,10 +166,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         self._ports.append(self.lifetime.port)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},

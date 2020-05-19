@@ -21,10 +21,7 @@ class UseCaseItem(ElementPresentation, Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},

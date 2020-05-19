@@ -59,7 +59,6 @@ class DependencyItem(LinePresentation, Named):
                 text=lambda: stereotypes_str(
                     self.subject, additional_stereotype.get(self._dependency_type, ())
                 ),
-                style={"min-width": 0, "min-height": 0},
             ),
             EditableText(text=lambda: self.subject.name or ""),
         )

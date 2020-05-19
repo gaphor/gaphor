@@ -30,10 +30,7 @@ class ComponentItem(ElementPresentation, Classified):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: UML.model.stereotypes_str(self.subject),
-                    style={"min-width": 0, "min-height": 0},
-                ),
+                Text(text=lambda: UML.model.stereotypes_str(self.subject),),
                 EditableText(
                     text=lambda: self.subject.name or "",
                     style={"font-weight": FontWeight.BOLD},
