@@ -104,6 +104,8 @@ jobs:
       - name: Update MSYS2
         run: |
           $env:PATH = "C:\tools\msys64\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
+          C:\tools\msys64\usr\bin\pacman --noconfirm -Sy pacman
+          C:\tools\msys64\usr\bin\pacman --noconfirm -Su
           C:\tools\msys64\usr\bin\pacman --noconfirm -Syyuu
           C:\tools\msys64\usr\bin\pacman --noconfirm -Syuu
       - name: Use Python Dependency Cache
