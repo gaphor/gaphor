@@ -9,7 +9,7 @@ import argparse
 from distutils.util import byte_compile
 from pathlib import Path
 
-from gaphor.codegen import autocoder
+from gaphor.codegen import profile_coder, uml_coder
 
 
 def main() -> None:
@@ -17,11 +17,14 @@ def main() -> None:
     parser.add_argument("modelfile", type=Path, help="gaphor model filename")
     parser.add_argument("outfile", type=Path, help="python data model filename")
     parser.add_argument("overrides", type=Path, help="override filename")
+    parser.add_argument("--profile", help="generate a profile", action="store_true")
     args = parser.parse_args()
     print(f"Generating {args.outfile} from {args.modelfile}...")
     print("  (warnings can be ignored)")
-
-    autocoder.generate(args.modelfile, args.outfile, args.overrides)
+    if args.profile:
+        profile_coder.generate(args.modelfile, args.outfile, args.overrides)
+    else:
+        uml_coder.generate(args.modelfile, args.outfile, args.overrides)
     byte_compile([str(args.outfile)])
 
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.2 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkLabel" id="00-instructions">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="label" translatable="yes">To create a fresh model: create a window, create the
+desired element, in the tree view pop upmenu, select
+Remove Parent.
+
+Padding between elements is 6px.
+Top margin is 6 px, 12px for expanders.
+Edit, from the popup menu, will allow you to add cell 
+renderers and such.</property>
+    <property name="xalign">0</property>
+  </object>
+  <object class="GtkTextBuffer" id="requirement-text-buffer"/>
+  <object class="GtkBox" id="requirement-editor">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="margin_top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <property name="baseline_position">top</property>
+    <signal name="destroy" handler="requirement-destroyed" swapped="no"/>
+    <child>
+      <object class="GtkLabel" id="label1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Id</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkEntry" id="requirement-id">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <signal name="changed" handler="requirement-id-changed" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label2">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_top">6</property>
+        <property name="label" translatable="yes">Text</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkFrame">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label_xalign">0</property>
+        <property name="shadow_type">in</property>
+        <child>
+          <object class="GtkAlignment">
+            <property name="height_request">100</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkTextView" id="requirement-text">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="wrap_mode">word</property>
+                <property name="buffer">requirement-text-buffer</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="label_item">
+          <placeholder/>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">3</property>
+      </packing>
+    </child>
+  </object>
+</interface>

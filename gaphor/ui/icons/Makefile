@@ -47,9 +47,16 @@ ICONS=diagram \
 	extend \
 	profile \
 	metaclass \
+	import \
 	stereotype \
 	extension \
-	property
+	property \
+	requirement \
+	satisfy \
+	derive \
+	trace \
+	refine \
+	verify
 
 ICON_THEME=hicolor/scalable/actions
 
@@ -62,11 +69,10 @@ verify: stensil.svg
 	@for icon in $(ICONS); do grep -q "id=\"$$icon\"" $< || { echo "ERROR: No layer named $$icon"; exit 1; }; done
 
 $(ICON_THEME)/gaphor-%-symbolic.svg: stensil.svg
-	$(INKSCAPE) -z --export-id=$* --export-id-only \
-		--export-plain-svg=.$*.svg $<
-	$(INKSCAPE) --verb EditSelectAll --verb SelectionUnGroup \
-		--verb=EditSelectAll --verb StrokeToPath \
-		--verb FileSave --verb FileQuit .$*.svg
-	$(INKSCAPE) --export-plain-svg=$@ .$*.svg && rm .$*.svg
+	$(INKSCAPE) --export-id=$* --export-id-only --export-text-to-path
+		--export-plain-svg --export-overwrite --export-filename=.$*.svg $< && \
+	$(INKSCAPE) --with-gui --batch-process \
+		--verb="EditSelectAll;SelectionUnGroup;EditSelectAll;StrokeToPath;FileSave" \
+		--export-plain-svg --export-overwrite --export-filename=$@ .$*.svg && rm .$*.svg
 
 .PHONY: all verify

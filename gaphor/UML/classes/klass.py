@@ -67,20 +67,20 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
 
     show_operations: attribute[int] = attribute("show_operations", int, default=True)
 
-    def update_shapes(self, event=None):
-        def additional_stereotypes():
-            if isinstance(self.subject, UML.Stereotype):
-                return ["stereotype"]
-            elif UML.model.is_metaclass(self.subject):
-                return ["metaclass"]
-            else:
-                return ()
+    def additional_stereotypes(self):
+        if isinstance(self.subject, UML.Stereotype):
+            return ["stereotype"]
+        elif UML.model.is_metaclass(self.subject):
+            return ["metaclass"]
+        else:
+            return ()
 
+    def update_shapes(self, event=None):
         self.shape = Box(
             Box(
                 Text(
                     text=lambda: UML.model.stereotypes_str(
-                        self.subject, additional_stereotypes()
+                        self.subject, self.additional_stereotypes()
                     ),
                     style={"min-width": 0, "min-height": 0},
                 ),

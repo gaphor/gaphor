@@ -44,7 +44,7 @@ class ElementFactory(Service):
     create - a new model element is created (element is newly created element)
     remove - a model element is removed (element is to be removed element)
     model - a new model has been loaded (element is None) flush - model is
-    flushed: all element are removed from the factory (element is None)
+      flushed: all element are removed from the factory (element is None)
     """
 
     def __init__(

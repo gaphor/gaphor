@@ -116,7 +116,7 @@ Upper = Union[Literal[1], Literal[2], Literal["*"]]
 
 class umlproperty:
     """
-    Superclass for attribute, enumeration and association.
+    Superclass for an attribute, enumeration, and association.
 
     The subclasses should define a ``name`` attribute that contains the name
     of the property. Derived properties (derivedunion and redefine) can be
@@ -304,9 +304,9 @@ class association(umlproperty):
 
     Element.assoc = association('assoc', Element, opposite='other')
 
-    A listerer is connected to the value added to the association. This
-    will cause the association to be ended if the element on the other end
-    of the association is unlinked.
+    We connect a listener to the value added to the association. This will
+    cause the association to be ended if we unlink the element on the other end
+    of the association.
 
     If the association is a composite relationship, the association will
     unlink all elements attached to if it is unlinked.

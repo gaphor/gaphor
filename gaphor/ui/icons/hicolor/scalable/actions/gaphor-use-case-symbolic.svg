@@ -5,11 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   width="16"
-   height="12"
-   viewBox="0 0 4.2333332 3.1750001"
+   id="svg4268"
    version="1.1"
-   id="svg4268">
+   viewBox="0 0 4.233333 3.1750001"
+   height="12"
+   width="15.999999">
   <defs
      id="defs4262" />
   <metadata
@@ -25,7 +25,7 @@
     </rdf:RDF>
   </metadata>
   <path
-     id="path1130"
-     d="M 2.1171875,0 C 1.5546804,0 1.0393013,0.16110174 0.65234375,0.4375 0.26538618,0.71389826 0,1.1224833 0,1.5878906 0,2.053298 0.26538618,2.461883 0.65234375,2.7382812 c 0.38695755,0.2763983 0.90233665,0.4375001 1.46484375,0.4375 0.5625071,0 1.0759331,-0.1611017 1.4628906,-0.4375 C 3.9670357,2.461883 4.2324219,2.053298 4.2324219,1.5878906 4.2324219,1.1224833 3.9670357,0.71389826 3.5800781,0.4375 3.1931206,0.16110174 2.6796946,0 2.1171875,0 Z m 0,0.52929688 c 0.4603703,0 0.8728852,0.13548723 1.15625,0.33789062 0.2833648,0.2024034 0.4316406,0.4554838 0.4316406,0.7207031 0,0.2652193 -0.1482758,0.5182998 -0.4316406,0.7207032 -0.2833648,0.2024033 -0.6958797,0.3378906 -1.15625,0.3378906 -0.4603703,0 -0.8728852,-0.1354873 -1.15625,-0.3378906 C 0.67757275,2.1061904 0.52929688,1.8531099 0.52929688,1.5878906 0.52929687,1.3226713 0.67757275,1.0695909 0.9609375,0.8671875 1.2443023,0.66478411 1.6568172,0.52929687 2.1171875,0.52929688 Z"
-     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.5291667;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+     id="path12"
+     d="M 2.1171875 0 C 1.5546807 6.50819e-08 1.0393012 0.16110188 0.65234375 0.4375 C 0.26538625 0.71389812 2.9551527e-07 1.1224834 0 1.5878906 C -1.970103e-07 2.0532981 0.2653862 2.4618829 0.65234375 2.7382812 C 1.0393013 3.0146796 1.5546804 3.1757812 2.1171875 3.1757812 C 2.6796946 3.1757812 3.1931206 3.0146796 3.5800781 2.7382812 C 3.8782183 2.5253239 3.993755 2.1870859 4.0820312 1.8515625 L 4.2324219 1.8515625 L 4.2324219 1.5878906 L 4.2324219 1.3222656 L 4.0820312 1.3222656 C 3.9934419 0.9874481 3.8777212 0.65010212 3.5800781 0.4375 C 3.1931206 0.16110188 2.6796943 6.50819e-08 2.1171875 0 z M 2.1171875 0.52929688 C 2.5775576 0.52929693 2.9900728 0.66478424 3.2734375 0.8671875 C 3.5568022 1.0695908 3.705078 1.3226715 3.7050781 1.5878906 C 3.7050782 1.8531099 3.5568022 2.1061903 3.2734375 2.3085938 C 2.9900728 2.5109972 2.5775578 2.6464843 2.1171875 2.6464844 C 1.6568172 2.6464843 1.2443022 2.5109972 0.9609375 2.3085938 C 0.67757284 2.1061903 0.52929676 1.8531099 0.52929688 1.5878906 C 0.52929704 1.3226715 0.67757284 1.0695908 0.9609375 0.8671875 C 1.2443022 0.66478424 1.6568174 0.52929693 2.1171875 0.52929688 z "
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1;opacity:1" />
 </svg>
