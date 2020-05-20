@@ -7,12 +7,11 @@
 #
 
 import code
-import os
 import sys
 from rlcompleter import Completer
 from typing import Dict, List
 
-from gi.repository import Gdk, GLib, Gtk, Pango
+from gi.repository import Gdk, Gtk, Pango
 
 if __name__ == "__main__":
     import gi

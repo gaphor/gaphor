@@ -1,8 +1,6 @@
-import pytest
-
 import gaphor.UML.diagramitems as diagramitems
 from gaphor import UML
-from gaphor.application import Session, distribution
+from gaphor.application import distribution
 from gaphor.storage.parser import parse
 from gaphor.storage.storage import load_elements
 

@@ -14,7 +14,6 @@ from gaphor.core import action, event_handler, gettext
 from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed, ModelReady
 from gaphor.event import ActionEnabled, ActiveSessionChanged, SessionShutdownRequested
 from gaphor.services.undomanager import UndoManagerStateChanged
-from gaphor.ui import APPLICATION_ID
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.diagrampage import DiagramPage

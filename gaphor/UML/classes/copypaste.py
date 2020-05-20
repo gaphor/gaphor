@@ -1,5 +1,5 @@
 import itertools
-from typing import Dict, List, NamedTuple
+from typing import List, NamedTuple
 
 from gaphor.diagram.copypaste import (
     ElementCopy,

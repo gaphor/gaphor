@@ -12,7 +12,7 @@ See the documentation on the mixins.
 
 from __future__ import annotations
 
-from typing import Callable, Generic, Iterable, List, Sequence, TypeVar, overload
+from typing import Callable, Generic, Iterable, Sequence, TypeVar, overload
 
 __all__ = ["querymixin", "recursemixin"]
 

@@ -18,7 +18,7 @@ to be aware that `AbstractGroup.item` can be null.
 from __future__ import annotations
 
 import abc
-from typing import TYPE_CHECKING, Type
+from typing import Type
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 

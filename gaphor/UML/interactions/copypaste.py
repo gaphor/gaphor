@@ -1,4 +1,3 @@
-import itertools
 from typing import List, NamedTuple, Optional
 
 from gaphor.diagram.copypaste import (

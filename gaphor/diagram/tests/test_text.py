@@ -6,7 +6,6 @@ from gaphor.diagram.text import (
     FontWeight,
     TextAlign,
     TextDecoration,
-    VerticalAlign,
     text_point_at_line,
     text_size,
 )

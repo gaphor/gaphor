@@ -53,7 +53,6 @@ from gaphor.core.modeling.event import (
     DerivedDeleted,
     DerivedSet,
     DerivedUpdated,
-    ElementUpdated,
     RedefinedAdded,
     RedefinedDeleted,
     RedefinedSet,

@@ -7,7 +7,7 @@ gaphor.adapter package.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, List, Optional, Type, TypeVar, Union
+from typing import List, Optional, Type, TypeVar, Union
 
 from gaphas.canvas import Canvas, Connection
 from gaphas.connector import Handle, Port

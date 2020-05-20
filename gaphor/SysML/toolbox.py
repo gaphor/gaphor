@@ -1,7 +1,5 @@
 """The action definition for the SysML toolbox."""
 
-from typing import Sequence, Tuple
-
 from gaphas.item import SE
 
 import gaphor.SysML.diagramitems as sysml_items

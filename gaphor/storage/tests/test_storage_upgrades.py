@@ -1,11 +1,8 @@
 import pytest
 
 import gaphor.UML.diagramitems as diagramitems
-from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
 from gaphor.storage.parser import canvas, canvasitem, element
 from gaphor.storage.storage import load_elements
-from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture

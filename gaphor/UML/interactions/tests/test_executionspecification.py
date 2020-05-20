@@ -1,4 +1,3 @@
-import pytest
 from gaphas.canvas import Canvas, Context, instant_cairo_context
 
 from gaphor import UML

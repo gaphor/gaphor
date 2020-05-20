@@ -18,7 +18,7 @@ from gaphas import state
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
-from gaphor.core import event_handler, gettext
+from gaphor.core import event_handler
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,

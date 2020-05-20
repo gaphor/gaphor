@@ -21,7 +21,6 @@ import gaphas
 from gaphor import application
 from gaphor.core.modeling import Diagram, Element
 from gaphor.core.modeling.collection import collection
-from gaphor.i18n import gettext
 from gaphor.storage import parser
 
 FILE_FORMAT_VERSION = "3.0"

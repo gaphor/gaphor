@@ -3,7 +3,7 @@ Event Manager.
 """
 
 
-from typing import Optional, Sequence, Type
+from typing import Sequence, Type
 
 from generic.event import Event, Handler
 from generic.event import Manager as _Manager

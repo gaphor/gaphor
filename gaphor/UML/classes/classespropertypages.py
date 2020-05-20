@@ -1,8 +1,5 @@
-import importlib
 import logging
-from inspect import isclass
 
-from gaphas.decorators import AsyncIO
 from gi.repository import Gtk
 
 from gaphor import UML

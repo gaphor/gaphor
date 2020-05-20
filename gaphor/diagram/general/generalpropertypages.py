@@ -1,6 +1,6 @@
 from gi.repository import Gtk
 
-from gaphor.core import gettext, transactional
+from gaphor.core import transactional
 from gaphor.core.modeling import Comment
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 

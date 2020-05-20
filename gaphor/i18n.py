@@ -8,7 +8,6 @@ __all__ = ["gettext"]
 import gettext as _gettext
 import importlib.resources
 import logging
-import os
 
 log = logging.getLogger(__name__)
 

@@ -7,7 +7,7 @@ from gaphor.diagram.copypaste import (
     paste,
     paste_element,
 )
-from gaphor.UML import Behavior, State
+from gaphor.UML import State
 
 
 class StateCopy(NamedTuple):

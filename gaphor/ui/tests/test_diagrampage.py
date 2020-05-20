@@ -1,7 +1,7 @@
 import pytest
 from gaphas.examples import Box
 
-from gaphor.core.modeling import Comment, Diagram
+from gaphor.core.modeling import Comment
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.ui.mainwindow import DiagramPage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage

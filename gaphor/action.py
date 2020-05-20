@@ -2,8 +2,7 @@
 
 """
 
-import platform
-from typing import Optional, Sequence, get_type_hints
+from typing import get_type_hints
 
 
 class action:

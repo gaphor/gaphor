@@ -3,11 +3,9 @@ The file service is responsible for loading and saving the user data.
 """
 
 import logging
-from typing import Optional
 
 from gi.repository import Gtk
 
-import gaphor.ui
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
@@ -17,7 +15,7 @@ from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.event import FileLoaded, FileSaved
 from gaphor.ui.filedialog import FileDialog
-from gaphor.ui.gidlethread import GIdleThread, Queue, QueueEmpty, QueueFull
+from gaphor.ui.gidlethread import GIdleThread, Queue
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
 

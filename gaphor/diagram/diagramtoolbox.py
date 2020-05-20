@@ -8,10 +8,6 @@ the actions bound to the toolbuttons should change as well.
 
 from typing import Callable, NamedTuple, Optional, Sequence, Tuple
 
-from gaphas.item import SE
-
-from gaphor import diagram
-from gaphor.core import gettext
 from gaphor.core.modeling import Diagram, Presentation
 from gaphor.diagram.diagramtools import PlacementTool
 

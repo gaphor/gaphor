@@ -2,7 +2,6 @@
 1:n and n:m relations in the data model are saved using a collection.
 """
 
-import inspect
 from typing import Generic, List, Type, TypeVar, Union, overload
 
 from gaphor.core.modeling.event import AssociationUpdated

@@ -1,8 +1,6 @@
 """Activity partition property page."""
 
-from gi.repository import Gtk
-
-from gaphor.core import gettext, transactional
+from gaphor.core import transactional
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
 from gaphor.UML.actions.partition import PartitionItem
 

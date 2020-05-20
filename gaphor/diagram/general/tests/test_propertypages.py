@@ -1,7 +1,4 @@
-import pytest
-
-from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Comment, ElementFactory
+from gaphor.core.modeling import Comment
 from gaphor.diagram.general.generalpropertypages import CommentItemPropertyPage
 
 

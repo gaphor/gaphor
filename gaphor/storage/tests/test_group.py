@@ -1,5 +1,3 @@
-import pytest
-
 from gaphor.UML.classes import DependencyItem
 from gaphor.UML.components import NodeItem
 

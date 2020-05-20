@@ -2,14 +2,11 @@
 Copy / Paste functionality
 """
 
-from typing import Dict, Set
-
-import gaphas
+from typing import Set
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action, event_handler
-from gaphor.core.modeling import Element, Presentation
-from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.ui.event import DiagramSelectionChanged
 

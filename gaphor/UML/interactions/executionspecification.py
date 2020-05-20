@@ -34,7 +34,6 @@ from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import postload_connect
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
-from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.ExecutionSpecification)

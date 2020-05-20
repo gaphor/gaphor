@@ -4,17 +4,7 @@ Base code for presentation elements
 
 from __future__ import annotations
 
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Generic,
-    Iterable,
-    List,
-    Optional,
-    TypeVar,
-    Union,
-)
+from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import association, relation_one

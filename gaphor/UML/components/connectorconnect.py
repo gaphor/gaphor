@@ -10,7 +10,7 @@ from typing import Union
 
 from gaphor import UML
 from gaphor.diagram.connectors import BaseConnector, Connector
-from gaphor.UML.classes.interface import Folded, InterfaceItem
+from gaphor.UML.classes.interface import InterfaceItem
 from gaphor.UML.components.component import ComponentItem
 from gaphor.UML.components.connector import ConnectorItem
 

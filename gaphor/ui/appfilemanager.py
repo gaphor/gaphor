@@ -5,7 +5,6 @@ from gi.repository import Gio
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.ui.filedialog import FileDialog
-from gaphor.ui.questiondialog import QuestionDialog
 
 log = logging.getLogger(__name__)
 

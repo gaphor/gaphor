@@ -1,8 +1,4 @@
-import pytest
-
 from gaphor import UML
-from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
 
 
 def test_stereotype_name(element_factory):

@@ -12,12 +12,9 @@ from gaphor.UML.actions.action import (
     SendSignalActionItem,
 )
 from gaphor.UML.actions.activitynodes import (
-    ActivityFinalNodeItem,
     ActivityNodeItem,
     DecisionNodeItem,
-    FlowFinalNodeItem,
     ForkNodeItem,
-    InitialNodeItem,
 )
 from gaphor.UML.actions.flow import FlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem

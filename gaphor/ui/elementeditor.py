@@ -2,7 +2,7 @@
 
 import importlib.resources
 import logging
-from typing import Optional, Set, Tuple
+from typing import Optional
 
 from gi.repository import Gtk
 
@@ -10,7 +10,7 @@ from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.event import AssociationUpdated
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+from gaphor.diagram.propertypages import PropertyPages
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
 

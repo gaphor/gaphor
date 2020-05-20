@@ -2,11 +2,6 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
-from gaphor.core.modeling.elementdispatcher import ElementDispatcher
-from gaphor.services.properties import Properties
-from gaphor.tests.testcase import TestCase
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.toolbox import uml_toolbox_actions

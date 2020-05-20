@@ -5,7 +5,6 @@ Activity control nodes.
 import ast
 import math
 
-from gaphas.constraint import EqualsConstraint, LessThanConstraint
 from gaphas.geometry import Rectangle, distance_line_point
 from gaphas.item import Handle, Item, LinePort
 from gaphas.state import observed, reversible_property

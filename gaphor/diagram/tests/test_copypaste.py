@@ -1,9 +1,7 @@
-import pytest
-
 from gaphor import UML
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
-from gaphor.diagram.tests.fixtures import clear_model, connect, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
 from gaphor.UML.classes import ClassItem, GeneralizationItem
 
 

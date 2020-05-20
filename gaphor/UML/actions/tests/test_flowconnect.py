@@ -10,7 +10,6 @@ from gaphor.tests import TestCase
 from gaphor.UML.actions.action import ActionItem
 from gaphor.UML.actions.activitynodes import (
     ActivityFinalNodeItem,
-    ActivityNodeItem,
     DecisionNodeItem,
     FlowFinalNodeItem,
     ForkNodeItem,

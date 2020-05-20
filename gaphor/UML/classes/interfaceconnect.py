@@ -11,7 +11,7 @@ from gaphor.diagram.connectors import Connector
 from gaphor.UML.classes.classconnect import DependencyConnect, ImplementationConnect
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.implementation import ImplementationItem
-from gaphor.UML.classes.interface import Folded, InterfaceItem
+from gaphor.UML.classes.interface import InterfaceItem
 
 
 @Connector.register(InterfaceItem, ImplementationItem)

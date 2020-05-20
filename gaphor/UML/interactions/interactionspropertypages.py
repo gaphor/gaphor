@@ -1,6 +1,3 @@
-from gi.repository import Gtk
-
-from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     ComboModel,

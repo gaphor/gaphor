@@ -4,7 +4,7 @@
 import importlib
 
 import importlib_metadata
-from gi.repository import GdkPixbuf, Gtk
+from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action

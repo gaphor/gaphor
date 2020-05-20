@@ -23,7 +23,7 @@ from gaphor.diagram.connectors import Connector
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
-from gaphor.diagram.presentation import ElementPresentation, Presentation
+from gaphor.diagram.presentation import Presentation
 
 log = logging.getLogger(__name__)
 

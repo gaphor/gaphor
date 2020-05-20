@@ -2,7 +2,6 @@ import gc
 
 import pytest
 
-from gaphor.application import Session
 from gaphor.core import event_handler
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory

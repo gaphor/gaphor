@@ -1,6 +1,5 @@
 """The action definition for the UML toolbox."""
 
-from typing import Sequence, Tuple
 
 from gaphas.item import SE
 

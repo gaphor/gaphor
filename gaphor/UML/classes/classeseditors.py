@@ -1,7 +1,4 @@
-from typing import Optional
-
 from gaphas.geometry import Rectangle, distance_point_point_fast
-from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional

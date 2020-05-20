@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.diagram.tests.fixtures import clear_model, connect, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
 from gaphor.UML.interactions import LifelineItem, MessageItem
 from gaphor.UML.interactions.tests.test_executionspecification import (
     create_lifeline_with_execution_specification,

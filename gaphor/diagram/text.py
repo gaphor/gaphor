@@ -3,7 +3,7 @@ Support classes for dealing with text.
 """
 
 from enum import Enum
-from typing import Any, Dict, Tuple, TypeVar
+from typing import Dict, Tuple, TypeVar
 
 import cairo
 import gi

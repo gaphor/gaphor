@@ -12,7 +12,6 @@ from gaphor.core.modeling.properties import (
     derived,
     derivedunion,
     enumeration,
-    redefine,
     relation_many,
     relation_one,
 )

@@ -11,7 +11,7 @@ Recreate the model using some very dynamic class, so we can set all
 attributes and traverse them to generate the data model.
 """
 
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional
 
 from gaphor.codegen import override
 from gaphor.codegen.writer import Writer, msg
