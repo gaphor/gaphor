@@ -1,6 +1,7 @@
-from gaphas.canvas import Canvas, Context, instant_cairo_context
+from gaphas.canvas import Canvas, instant_cairo_context
 
 from gaphor import UML
+from gaphor.diagram.shapes import DrawContext
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -23,7 +24,17 @@ def test_draw_on_canvas():
     exec_spec = ExecutionSpecificationItem()
     canvas.add(exec_spec)
     cr = instant_cairo_context()
-    exec_spec.draw(Context(cairo=cr, dropzone=False))
+    exec_spec.draw(
+        DrawContext(
+            cairo=cr,
+            selected=False,
+            focused=False,
+            hovered=False,
+            dropzone=False,
+            draw_all=False,
+            style={},
+        )
+    )
 
 
 def test_allow_execution_specification_to_lifeline(diagram):

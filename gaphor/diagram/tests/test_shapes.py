@@ -2,7 +2,7 @@ import cairo
 import pytest
 from gaphas.geometry import Rectangle
 
-from gaphor.diagram.shapes import Box, IconBox, SizeContext, Text
+from gaphor.diagram.shapes import Box, DrawContext, IconBox, Text
 
 
 @pytest.fixture
@@ -20,7 +20,15 @@ def fixed_text_size(monkeypatch):
 def context():
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
     cr = cairo.Context(surface)
-    return SizeContext(cairo=cr)
+    return DrawContext(
+        cairo=cr,
+        selected=False,
+        focused=False,
+        hovered=False,
+        dropzone=False,
+        draw_all=False,
+        style={},
+    )
 
 
 def test_box_size():
@@ -29,13 +37,13 @@ def test_box_size():
     assert box.size(context=None) == (0, 0)
 
 
-def test_draw_empty_box():
+def test_draw_empty_box(context):
     box = Box(draw=None)
 
-    box.draw(context=None, bounding_box=Rectangle())
+    box.draw(context=context, bounding_box=Rectangle())
 
 
-def test_draw_box_with_custom_draw_function():
+def test_draw_box_with_custom_draw_function(context):
     called = False
 
     def draw(box, context, bounding_box):
@@ -44,7 +52,7 @@ def test_draw_box_with_custom_draw_function():
 
     box = Box(draw=draw)
 
-    box.draw(context=None, bounding_box=Rectangle())
+    box.draw(context=context, bounding_box=Rectangle())
 
     assert called
 

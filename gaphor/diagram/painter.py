@@ -39,6 +39,7 @@ class ItemPainter(Painter):
                     hovered=(item is view.hovered_item),
                     dropzone=(item is view.dropzone_item),
                     draw_all=draw_all,
+                    style={"stroke": (0.1, 0.1, 0.8, 1.0), "font-size": 20},
                 )
             )
 

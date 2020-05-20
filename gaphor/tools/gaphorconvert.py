@@ -6,11 +6,11 @@ import re
 import sys
 
 import cairo
-from gaphas.painter import Context, ItemPainter
-from gaphas.view import View
+from gaphas.view import Context, View
 
 from gaphor.application import Session
 from gaphor.core.modeling import Diagram
+from gaphor.diagram.painter import BoundingBoxPainter, ItemPainter
 from gaphor.storage import storage
 
 
@@ -127,7 +127,9 @@ def main(argv=sys.argv[1:]):
             message(f"rendering: {pname} -> {outfilename}...")
 
             view = View(diagram.canvas)
-            view.painter = ItemPainter()
+            painter = ItemPainter()
+            view.painter = painter
+            view.bounding_box_painter = BoundingBoxPainter(painter)
 
             tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
             tmpcr = cairo.Context(tmpsurface)
