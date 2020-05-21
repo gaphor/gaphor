@@ -31,10 +31,10 @@ def context():
     )
 
 
-def test_box_size():
+def test_box_size(context):
     box = Box()
 
-    assert box.size(context=None) == (0, 0)
+    assert box.size(context=context) == (0, 0)
 
 
 def test_draw_empty_box(context):

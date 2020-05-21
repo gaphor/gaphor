@@ -10,7 +10,7 @@ from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.core.modeling.presentation import Presentation, S
-from gaphor.diagram.shapes import DEFAULT_STYLE, DrawContext, SizeContext, Style
+from gaphor.diagram.shapes import DrawContext, SizeContext, combined_style
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -106,8 +106,10 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         be drawn or when styling changes.
         """
 
-    def pre_update(self, context: SizeContext):
-        self.min_width, self.min_height = self.shape.size(context)
+    def pre_update(self, context):
+        self.min_width, self.min_height = self.shape.size(
+            SizeContext(cairo=context.cairo, style={})
+        )
 
     def draw(self, context: DrawContext):
         self._shape.draw(context, Rectangle(0, 0, self.width, self.height))
@@ -178,10 +180,12 @@ class LinePresentation(Presentation[S], gaphas.Line):
         doc="""A line, contrary to an element, has some styling of it's own.""",
     )
 
-    def post_update(self, context: SizeContext):
+    def post_update(self, context):
         def shape_bounds(shape, align):
             if shape:
-                size = shape.size(context)
+                size = shape.size(
+                    SizeContext(cairo=context.cairo, style=self._inline_style)
+                )
                 x, y = text_point_at_line(points, size, align)
                 return Rectangle(x, y, *size)
 
@@ -208,11 +212,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
 
     def draw(self, context: DrawContext):
         cr = context.cairo
-        style: Style = {
-            **DEFAULT_STYLE,  # type:  ignore[misc]
-            **context.style,
-            **self._inline_style,
-        }
+        style = combined_style(context, self._inline_style)
         new_context = replace(context, style=style)
         cr.set_line_width(style["line-width"])
         if style["dash-style"]:

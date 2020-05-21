@@ -15,7 +15,7 @@ def compartments(item):
 
 
 def context():
-    return SizeContext(cairo=instant_cairo_context())
+    return SizeContext(cairo=instant_cairo_context(), style={})
 
 
 class ClassTestCase(TestCase):

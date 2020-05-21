@@ -10,7 +10,7 @@ from gaphas.item import NW, Element
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
-from gaphor.diagram.shapes import DEFAULT_STYLE
+from gaphor.diagram.shapes import combined_style
 
 
 class SimpleItem:
@@ -77,7 +77,7 @@ class Line(_Line, SimpleItem):
 
     def draw(self, context):
         cr = context.cairo
-        style = {**DEFAULT_STYLE, **context.style}
+        style = combined_style(context)
         if style["stroke"]:
             cr.set_source_rgba(*style["stroke"])
         cr.set_line_width(style["line-width"])
@@ -115,7 +115,7 @@ class Box(Element, SimpleItem):
         pass
 
     def draw(self, context):
-        style = {**DEFAULT_STYLE, **context.style}
+        style = combined_style(context)
         cr = context.cairo
         nw = self._handles[NW]
         cr.rectangle(nw.pos.x, nw.pos.y, self.width, self.height)
@@ -155,7 +155,7 @@ class Ellipse(Element, SimpleItem):
 
     def draw(self, context):
         cr = context.cairo
-        style = {**DEFAULT_STYLE, **context.style}
+        style = combined_style(context)
 
         rx = self.width / 2.0
         ry = self.height / 2.0

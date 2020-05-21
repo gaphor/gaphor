@@ -11,7 +11,7 @@ from typing import List
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, draw_highlight
+from gaphor.diagram.shapes import Box, SizeContext, Text, draw_highlight
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import VerticalAlign
 from gaphor.UML.modelfactory import stereotypes_str
@@ -56,7 +56,7 @@ class PartitionItem(ElementPresentation, Named):
     def pre_update(self, context):
         assert self.canvas
 
-        self._header_size = self.shape.size(context)
+        self._header_size = self.shape.size(SizeContext(cairo=context.cairo, style={}))
 
         # get subpartitions
         children: List[PartitionItem] = list(

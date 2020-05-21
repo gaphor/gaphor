@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from math import pi
-from typing import Callable, List, Optional, Sequence, Tuple
+from typing import Callable, List, Optional, Sequence, Tuple, Union
 
 from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
@@ -80,6 +80,7 @@ DEFAULT_STYLE: Style = {
 @dataclass(frozen=True)
 class SizeContext:
     cairo: CairoContext
+    style: Style
 
 
 @dataclass(frozen=True)
@@ -162,6 +163,15 @@ def draw_highlight(context: DrawContext, highlight_color=(0, 0, 1, 0.4)):
         cr.restore()
 
 
+def combined_style(
+    context: Union[SizeContext, DrawContext], inline_style: Style = {}
+) -> Style:
+    """
+    Combine default style, context style and inline styles into one style.
+    """
+    return {**DEFAULT_STYLE, **context.style, **inline_style}  # type: ignore[misc]
+
+
 class Box:
     """
     A box like shape.
@@ -183,10 +193,6 @@ class Box:
         self.children = children
         self.sizes: List[Tuple[int, int]] = []
         self._inline_style = style
-        self._style: Style = {
-            **DEFAULT_STYLE,  # type: ignore[misc]
-            **style,  # type: ignore[misc]
-        }
         self._draw_border = draw
 
     def __len__(self):
@@ -199,7 +205,7 @@ class Box:
         return self.children[index]
 
     def size(self, context: SizeContext):
-        style = self._style
+        style: Style = combined_style(context, self._inline_style)
         min_width = style["min-width"]
         min_height = style["min-height"]
         padding = style["padding"]
@@ -220,8 +226,7 @@ class Box:
             return min_width, min_height
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style: Style = {**DEFAULT_STYLE, **context.style, **self._inline_style}  # type: ignore[misc]
-        # FixMe: updating style now, should be done separately, as part of the update
+        style: Style = combined_style(context, self._inline_style)
         new_context = replace(context, style=style)
         padding = style["padding"]
         valign = style["vertical-align"]
@@ -263,13 +268,9 @@ class IconBox:
         self.children = children
         self.sizes: List[Tuple[int, int]] = []
         self._inline_style = style
-        self._style: Style = {
-            **DEFAULT_STYLE,  # type: ignore[misc]
-            **style,  # type: ignore[misc]
-        }
 
     def size(self, context: SizeContext):
-        style = self._style
+        style = combined_style(context, self._inline_style)
         min_width = style["min-width"]
         min_height = style["min-height"]
         padding = style["padding"]
@@ -281,8 +282,7 @@ class IconBox:
         )
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style: Style = {**DEFAULT_STYLE, **context.style, **self._inline_style}  # type: ignore[misc]
-        # FixMe: updating style now, should be done separately, as part of the update
+        style = combined_style(context, self._inline_style)
         new_context = replace(context, style=style)
         padding = style["padding"]
         vertical_spacing = style["vertical-spacing"]
@@ -303,10 +303,6 @@ class Text:
         self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
         self._inline_style = style
-        self._style: Style = {
-            **DEFAULT_STYLE,  # type: ignore[misc]
-            **style,  # type: ignore[misc]
-        }
 
     def text(self):
         try:
@@ -315,7 +311,7 @@ class Text:
             return ""
 
     def size(self, context: SizeContext):
-        style = self._style
+        style = combined_style(context, self._inline_style)
         min_w = style["min-width"]
         min_h = style["min-height"]
         padding = style["padding"]
@@ -340,8 +336,7 @@ class Text:
         self, context: DrawContext, bounding_box: Rectangle
     ) -> Tuple[int, int, int, int]:
         """Draw the text, return the location and size."""
-        style: Style = {**DEFAULT_STYLE, **context.style, **self._inline_style}  # type: ignore[misc]
-
+        style = combined_style(context, self._inline_style)
         min_w = max(style["min-width"], bounding_box.width)
         min_h = max(style["min-height"], bounding_box.height)
         text_align = style["text-align"]
@@ -374,7 +369,7 @@ class EditableText(Text):
         self, context: DrawContext, bounding_box: Rectangle
     ) -> Tuple[int, int, int, int]:
         """Draw the editable text."""
-        style: Style = {**DEFAULT_STYLE, **context.style, **self._inline_style}  # type: ignore[misc]
+        style = combined_style(context, self._inline_style)
         x, y, w, h = super().draw(context, bounding_box)
         text_box = self.text_box(style, bounding_box)
         text_align = style["text-align"]
