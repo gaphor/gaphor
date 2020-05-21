@@ -43,7 +43,7 @@ class ImplementationItem(LinePresentation, Named):
     def draw_head(self, context):
         cr = context.cairo
         cr.move_to(0, 0)
-        if self.style("dash-style"):
+        if context.style.get("dash-style"):
             cr.set_dash((), 0)
             cr.line_to(15, -10)
             cr.line_to(15, 10)

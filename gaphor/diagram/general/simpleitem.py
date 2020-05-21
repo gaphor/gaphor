@@ -10,6 +10,8 @@ from gaphas.item import NW, Element
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
+from gaphor.diagram.shapes import DEFAULT_STYLE
+
 
 class SimpleItem:
     """
@@ -38,7 +40,6 @@ class SimpleItem:
 class Line(_Line, SimpleItem):
     def __init__(self, id=None, model=None):
         super().__init__()
-        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
         self.fuzziness = 2
         self._handles[0].connectable = False
@@ -76,9 +77,10 @@ class Line(_Line, SimpleItem):
 
     def draw(self, context):
         cr = context.cairo
-        style = self.style
-        cr.set_line_width(style("line-width"))
-        cr.set_source_rgba(*style("color"))
+        style = {**DEFAULT_STYLE, **context.style}
+        if style["stroke"]:
+            cr.set_source_rgba(*style["stroke"])
+        cr.set_line_width(style["line-width"])
         super().draw(context)
 
 
@@ -92,7 +94,6 @@ class Box(Element, SimpleItem):
 
     def __init__(self, id=None, model=None):
         super().__init__(10, 10)
-        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
 
     id = property(lambda self: self._id, doc="Id")
@@ -114,14 +115,15 @@ class Box(Element, SimpleItem):
         pass
 
     def draw(self, context):
+        style = {**DEFAULT_STYLE, **context.style}
         cr = context.cairo
         nw = self._handles[NW]
-        style = self.style
         cr.rectangle(nw.pos.x, nw.pos.y, self.width, self.height)
         # cr.set_source_rgba(*style("color"))
         # cr.fill_preserve()
-        cr.set_source_rgba(*style("color"))
-        cr.set_line_width(style("line-width"))
+        if style["stroke"]:
+            cr.set_source_rgba(*style["stroke"])
+        cr.set_line_width(style["line-width"])
         cr.stroke()
 
 
@@ -131,7 +133,6 @@ class Ellipse(Element, SimpleItem):
 
     def __init__(self, id=None, model=None):
         super().__init__()
-        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
         self._id = id
 
     id = property(lambda self: self._id, doc="Id")
@@ -154,13 +155,14 @@ class Ellipse(Element, SimpleItem):
 
     def draw(self, context):
         cr = context.cairo
-        style = self.style
+        style = {**DEFAULT_STYLE, **context.style}
 
         rx = self.width / 2.0
         ry = self.height / 2.0
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)
-        cr.set_source_rgba(*style("color"))
-        cr.set_line_width(style("line-width"))
+        if style["stroke"]:
+            cr.set_source_rgba(*style["stroke"])
+        cr.set_line_width(style["line-width"])
         cr.stroke()

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from math import pi
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, List, Optional, Sequence, Tuple
 
 from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
@@ -40,6 +40,8 @@ Style = TypedDict(
         "text-align": TextAlign,
         "stroke": Optional[Tuple[float, float, float, float]],  # RGBA
         "vertical-align": VerticalAlign,
+        "line-width": float,
+        "dash-style": Sequence[float],
         # CommentItem:
         "ear": int,
     },
@@ -63,6 +65,8 @@ DEFAULT_STYLE: Style = {
     "border-radius": 0,
     "padding": (0, 0, 0, 0),
     "fill": None,
+    "line-width": 2,
+    "dash-style": [],
     "stroke": None,
     "font-family": "sans",
     "font-size": 14,
@@ -304,10 +308,6 @@ class Text:
             **style,  # type: ignore[misc]
         }
 
-    @property
-    def style(self):
-        return self._style.__getitem__
-
     def text(self):
         try:
             return self._text()
@@ -315,12 +315,12 @@ class Text:
             return ""
 
     def size(self, context: SizeContext):
-        min_w = self.style("min-width")
-        min_h = self.style("min-height")
-        padding = self.style("padding")
+        style = self._style
+        min_w = style["min-width"]
+        min_h = style["min-height"]
+        padding = style["padding"]
 
-        style = {**self._style}
-        width, height = text_size(context.cairo, self.text(), style, self.width())
+        width, height = text_size(context.cairo, self.text(), style, self.width())  # type: ignore[type-var]
         return (
             max(min_w, width + padding[Padding.RIGHT] + padding[Padding.LEFT]),
             max(min_h, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
@@ -341,8 +341,6 @@ class Text:
     ) -> Tuple[int, int, int, int]:
         """Draw the text, return the location and size."""
         style: Style = {**DEFAULT_STYLE, **context.style, **self._inline_style}  # type: ignore[misc]
-        # FixMe: updating style now, should be done separately, as part of the update
-        self._style = style
 
         min_w = max(style["min-width"], bounding_box.width)
         min_h = max(style["min-height"], bounding_box.height)

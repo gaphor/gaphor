@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+from dataclasses import replace
 from typing import Optional
 
 import gaphas
@@ -9,7 +10,7 @@ from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.core.modeling.presentation import Presentation, S
-from gaphor.diagram.shapes import DrawContext, SizeContext
+from gaphor.diagram.shapes import DEFAULT_STYLE, DrawContext, SizeContext, Style
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -152,7 +153,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
     ):
         super().__init__(id, model)
 
-        self._style = {"dash-style": (), "line-width": 2, **style}
+        self._inline_style = style
 
         self.shape_head = shape_head
         self.shape_middle = shape_middle
@@ -168,12 +169,12 @@ class LinePresentation(Presentation[S], gaphas.Line):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
-    def _set_style(self, style):
-        self._style.update(style)
+    def _set_inline_style(self, style):
+        self._inline_style.update(style)
 
     style = property(
-        lambda self: self._style.__getitem__,
-        _set_style,
+        lambda self: self._inline_style.__getitem__,
+        _set_inline_style,
         doc="""A line, contrary to an element, has some styling of it's own.""",
     )
 
@@ -207,11 +208,17 @@ class LinePresentation(Presentation[S], gaphas.Line):
 
     def draw(self, context: DrawContext):
         cr = context.cairo
-        cr.set_line_width(self.style("line-width"))
-        if self.style("dash-style"):
-            cr.set_dash(self.style("dash-style"), 0)
+        style: Style = {
+            **DEFAULT_STYLE,  # type:  ignore[misc]
+            **context.style,
+            **self._inline_style,
+        }
+        new_context = replace(context, style=style)
+        cr.set_line_width(style["line-width"])
+        if style["dash-style"]:
+            cr.set_dash(style["dash-style"], 0)
 
-        super().draw(context)
+        super().draw(new_context)
 
         for shape, rect in (
             (self.shape_head, self._shape_head_rect),
@@ -219,7 +226,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
             (self.shape_tail, self._shape_tail_rect),
         ):
             if shape:
-                shape.draw(context, rect)
+                shape.draw(new_context, rect)
 
     def setup_canvas(self):
         super().setup_canvas()

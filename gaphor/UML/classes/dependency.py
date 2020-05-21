@@ -103,7 +103,7 @@ class DependencyItem(LinePresentation, Named):
 
     def draw_head(self, context):
         cr = context.cairo
-        if self.style("dash-style"):
+        if context.style.get("dash-style"):
             cr.set_dash((), 0)
             cr.move_to(15, -6)
             cr.line_to(0, 0)
