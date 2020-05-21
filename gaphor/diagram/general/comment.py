@@ -35,7 +35,7 @@ class CommentItem(ElementPresentation):
 
     def draw_border(self, box, context, bounding_box):
         cr = context.cairo
-        ear = box.style("ear")
+        ear = context.style["ear"]
         x, y, w, h = bounding_box
         line_to = cr.line_to
         cr.move_to(w - ear, y)

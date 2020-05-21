@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import pi
 from typing import Callable, List, Optional, Tuple
 
@@ -97,7 +97,7 @@ class DrawContext:
 
 def draw_border(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
-    d = box.style("border-radius")
+    d = context.style["border-radius"]
     x, y, width, height = bounding_box
 
     cr.move_to(x, d)
@@ -116,7 +116,7 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
 
     cr.close_path()
 
-    fill = box.style("fill")
+    fill = context.style["fill"]
     if fill:
         cr.save()
         try:
@@ -126,7 +126,7 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
             cr.restore()
     draw_highlight(context)
 
-    stroke = box.style("stroke")
+    stroke = context.style["stroke"]
     if stroke:
         cr.set_source_rgba(*stroke)
     cr.stroke()
@@ -138,7 +138,7 @@ def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
     cr.move_to(x, y)
     cr.line_to(x + w, y)
 
-    stroke = box.style("stroke")
+    stroke = context.style["stroke"]
     if stroke:
         cr.set_source_rgba(*stroke)
     cr.stroke()
@@ -222,14 +222,13 @@ class Box:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style: Style = {**DEFAULT_STYLE, **context.style, **self._inline_style}  # type: ignore[misc]
         # FixMe: updating style now, should be done separately, as part of the update
-        self._style = style
-
+        new_context = replace(context, style=style)
         padding = style["padding"]
         valign = style["vertical-align"]
         height = sum(h for _w, h in self.sizes)
 
         if self._draw_border:
-            self._draw_border(self, context, bounding_box)
+            self._draw_border(self, new_context, bounding_box)
         x = bounding_box.x + padding[Padding.LEFT]
         if valign is VerticalAlign.MIDDLE:
             y = (
@@ -288,15 +287,14 @@ class IconBox:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style: Style = {**DEFAULT_STYLE, **context.style, **self._inline_style}  # type: ignore[misc]
         # FixMe: updating style now, should be done separately, as part of the update
-        self._style = style
-
+        new_context = replace(context, style=style)
         padding = style["padding"]
         vertical_spacing = style["vertical-spacing"]
         x = bounding_box.x + padding[Padding.LEFT]
         y = bounding_box.y + padding[Padding.TOP]
         w = bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT]
         h = bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM]
-        self.icon.draw(context, Rectangle(x, y, w, h))
+        self.icon.draw(new_context, Rectangle(x, y, w, h))
         y = y + bounding_box.height + vertical_spacing
         for c, (cw, ch) in zip(self.children, self.sizes):
             mw = max(w, cw)

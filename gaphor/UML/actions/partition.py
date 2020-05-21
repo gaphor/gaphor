@@ -112,7 +112,7 @@ class PartitionItem(ElementPresentation, Named):
         assert self.canvas
 
         cr = context.cairo
-        cr.set_line_width(box.style("line-width"))
+        cr.set_line_width(context.style["line-width"])
 
         if self.subject and not self.subject.isDimension and self._toplevel:
             cr.move_to(0, 0)
