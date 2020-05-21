@@ -185,10 +185,6 @@ class Box:
         }
         self._draw_border = draw
 
-    @property
-    def style(self):
-        return self._style.__getitem__
-
     def __len__(self):
         return len(self.children)
 
@@ -199,10 +195,10 @@ class Box:
         return self.children[index]
 
     def size(self, context: SizeContext):
-        style = self.style
-        min_width = style("min-width")
-        min_height = style("min-height")
-        padding = style("padding")
+        style = self._style
+        min_width = style["min-width"]
+        min_height = style["min-height"]
+        padding = style["padding"]
         self.sizes = sizes = [c.size(context) for c in self.children]
         if sizes:
             widths, heights = list(zip(*sizes))
@@ -268,15 +264,11 @@ class IconBox:
             **style,  # type: ignore[misc]
         }
 
-    @property
-    def style(self):
-        return self._style.__getitem__
-
     def size(self, context: SizeContext):
-        style = self.style
-        min_width = style("min-width")
-        min_height = style("min-height")
-        padding = style("padding")
+        style = self._style
+        min_width = style["min-width"]
+        min_height = style["min-height"]
+        padding = style["padding"]
         self.sizes = [c.size(context) for c in self.children]
         width, height = self.icon.size(context)
         return (
