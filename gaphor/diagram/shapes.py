@@ -96,7 +96,6 @@ class DrawContext:
     focused: bool
     hovered: bool
     dropzone: bool
-    draw_all: bool
     style: Style
 
 

@@ -31,7 +31,6 @@ def test_draw_on_canvas():
             focused=False,
             hovered=False,
             dropzone=False,
-            draw_all=False,
             style={},
         )
     )

@@ -45,7 +45,6 @@ class FlowTestCase(TestCase):
             focused=True,
             selected=True,
             dropzone=False,
-            draw_all=False,
             style={},
         )
 

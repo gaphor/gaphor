@@ -26,7 +26,6 @@ def context():
         focused=False,
         hovered=False,
         dropzone=False,
-        draw_all=False,
         style={},
     )
 

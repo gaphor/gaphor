@@ -47,7 +47,7 @@ class TextDecoration(Enum):
 
 
 def text_draw_focus_box(context, x, y, w, h):
-    if context.hovered or context.focused or context.draw_all:
+    if context.hovered or context.focused:
         cr = context.cairo
         cr.save()
         try:

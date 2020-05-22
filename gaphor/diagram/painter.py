@@ -24,7 +24,7 @@ TOLERANCE = 0.8
 
 
 class ItemPainter(Painter):
-    def draw_item(self, item, cairo, draw_all=False):
+    def draw_item(self, item, cairo):
         view = self.view
         cairo.save()
         try:
@@ -38,7 +38,6 @@ class ItemPainter(Painter):
                     focused=(item is view.focused_item),
                     hovered=(item is view.hovered_item),
                     dropzone=(item is view.dropzone_item),
-                    draw_all=draw_all,
                     # style={"stroke": (0.1, 0.1, 0.8, 1.0), "font-size": 20},
                     style={},
                 )
@@ -84,7 +83,7 @@ class BoundingBoxPainter(Painter):
 
     def draw_item(self, item, cairo):
         cairo = CairoBoundingBoxContext(cairo)
-        self.item_painter.draw_item(item, cairo, draw_all=True)
+        self.item_painter.draw_item(item, cairo)
         bounds = cairo.get_bounds()
 
         # Update bounding box with handles.
