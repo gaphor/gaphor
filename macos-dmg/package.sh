@@ -67,7 +67,7 @@ while read f
 do
   echo "$(rel_path $f) $f"
 done |\
-grep '^bin/gdk-pixbuf-query-loaders\|^bin/gtk-query-immodules-3.0\|^lib/\|^share/gir-1.0/\|^share/locale/\|^share/icons/\|^share/themes/\|^share/fontconfig/\|^Frameworks/' |\
+grep '^bin/gdk-pixbuf-query-loaders\|^bin/gtk-query-immodules-3.0\|^lib/\|^share/gir-1.0/\|^share/glib-2.0/schemas/\|^share/locale/\|^share/icons/\|^share/themes/\|^share/fontconfig/\|^Frameworks/' |\
 while read rf f
 do
   # log "Adding ${INSTALLDIR}/${rf}"
@@ -142,14 +142,6 @@ function fix_paths {
   done
 }
 
-function fix_gir {
-  local gir="$1"
-  log Fixing $gir
-  local outfile="$(basename $gir | sed 's/gir$/typelib/')"
-  sed -i "" 's#/usr/local/Cellar/[^/]*/[^/]*#@executable_path/..#' "${gir}"
-  g-ir-compiler --output="${INSTALLDIR}/lib/girepository-1.0/${outfile}" "${gir}"
-}
-
 {
   # Libraries
   find ${APPHOME} -type f -name '*.so'
@@ -160,8 +152,18 @@ function fix_gir {
   echo ${MACOSDIR}/python
 } | map fix_paths
 
-find "${INSTALLDIR}" -type f -name '*.gir' | map fix_gir
+function compile_gir {
+  local gir="$1"
+  log "Compiling $gir"
+  local outfile="$(basename $gir | sed 's/gir$/typelib/')"
+  sed -i "" 's#/usr/local/Cellar/[^/]*/[^/]*#@executable_path/..#' "${gir}"
+  g-ir-compiler --output="${INSTALLDIR}/lib/girepository-1.0/${outfile}" "${gir}"
+}
 
+find "${INSTALLDIR}" -type f -name '*.gir' | map compile_gir
+
+log "Compiling schemas"
+glib-compile-schemas ${INSTALLDIR}/share/glib-2.0/schemas
 
 log "Building Gaphor-$VERSION.dmg..."
 
