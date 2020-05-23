@@ -45,6 +45,7 @@ class RequirementItem(ClassItem):
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",
+                    width=lambda: self.width - 4,
                     style={
                         "font-weight": FontWeight.BOLD,
                         "font-style": FontStyle.ITALIC
