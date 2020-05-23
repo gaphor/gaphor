@@ -272,6 +272,16 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "Xander982",
+      "name": "Xander982",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/51178927?v=4",
+      "profile": "https://github.com/Xander982",
+      "contributions": [
+        "content",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
