@@ -10,6 +10,7 @@ from gaphor.diagram.text import (
     TextAlign,
     TextDecoration,
     VerticalAlign,
+    focus_box_pos,
     text_draw,
     text_draw_focus_box,
     text_point_in_box,
@@ -295,7 +296,6 @@ class Text:
         min_w = max(self.style("min-width"), bounding_box.width)
         min_h = max(self.style("min-height"), bounding_box.height)
         text_align = self.style("text-align")
-        vertical_align = self.style("vertical-align")
         padding = self.style("padding")
 
         text_box = Rectangle(
@@ -309,11 +309,10 @@ class Text:
             cr,
             self.text(),
             self.font(),
-            lambda w, h: text_point_in_box(
-                text_box, (w, h), text_align, vertical_align
-            ),
+            lambda w, h: text_point_in_box(text_box),
             width=text_box.width,
             default_size=(min_w, min_h),
+            text_align=text_align,
         )
         return x, y, w, h
 
@@ -325,6 +324,17 @@ class EditableText(Text):
 
     def draw(self, context, bounding_box):
         x, y, w, h = super().draw(context, bounding_box)
+        cr = context.cairo
+        padding = self.style("padding")
+        text_align = self.style("text-align")
+        vertical_align = self.style("vertical-align")
+        text_box = Rectangle(
+            bounding_box.x + padding[Padding.LEFT],
+            bounding_box.y + padding[Padding.TOP],
+            bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT],
+            bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM],
+        )
+        x, y = focus_box_pos(text_box, self.size(cr), text_align, vertical_align)
         text_draw_focus_box(context, x, y, w, h)
         self.bounding_box = Rectangle(x, y, width=w, height=h)
 

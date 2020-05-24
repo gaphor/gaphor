@@ -50,7 +50,6 @@ def text_draw_focus_box(context, x, y, w, h):
         cr = context.cairo
         cr.save()
         try:
-            # cr.set_dash(() if context.focused else (2.0, 2.0), 0)
             cr.set_dash((), 0)
             if context.focused:
                 cr.set_source_rgb(0.6, 0.6, 0.6)
@@ -73,7 +72,9 @@ def text_size(
     return layout.get_pixel_size()  # type: ignore[no-any-return] # noqa: F723
 
 
-def text_draw(cr, text, font, calculate_pos, width=-1, default_size=(0, 0)):
+def text_draw(
+    cr, text, font, calculate_pos, width=-1, default_size=(0, 0), text_align=None
+):
     """
     Draw text relative to (x, y).
     text - text to print (utf8)
@@ -83,7 +84,7 @@ def text_draw(cr, text, font, calculate_pos, width=-1, default_size=(0, 0)):
     """
 
     if text:
-        layout = _text_layout(cr, text, font, width)
+        layout = _text_layout(cr, text, font, width, text_align)
         w, h = layout.get_pixel_size()
     else:
         layout = None
@@ -99,7 +100,7 @@ def text_draw(cr, text, font, calculate_pos, width=-1, default_size=(0, 0)):
     return (x, y, w, h)
 
 
-def _text_layout(cr, text, font, width):
+def _text_layout(cr, text, font, width, text_align=None):
     underline = False
     layout = _pango_cairo_create_layout(cr)
 
@@ -132,6 +133,8 @@ def _text_layout(cr, text, font, width):
     else:
         layout.set_text(text, length=-1)
     layout.set_width(int(width * Pango.SCALE))
+    if text_align is TextAlign.CENTER:
+        layout.set_alignment(Pango.Alignment.CENTER)
     return layout
 
 
@@ -162,11 +165,17 @@ def _pango_cairo_show_layout(cr, layout):
         PangoCairo.show_layout(cr, layout)
 
 
-def text_point_in_box(bounding_box, text_size, text_align, vertical_align):
+def text_point_in_box(bounding_box):
+    x, y, width, height = bounding_box
+    return x, y
+
+
+def focus_box_pos(bounding_box, text_size, text_align, vertical_align):
     x, y, width, height = bounding_box
     w, h = text_size
 
     if text_align is TextAlign.CENTER:
+        print("Center")
         x += (width - w) / 2
     elif text_align is TextAlign.RIGHT:
         x += width - w
