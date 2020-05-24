@@ -11,7 +11,7 @@ from typing import List
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, SizeContext, Text, draw_highlight
+from gaphor.diagram.shapes import Box, SizeContext, Text, cairo_state, draw_highlight
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import VerticalAlign
 from gaphor.UML.modelfactory import stereotypes_str
@@ -144,10 +144,9 @@ class PartitionItem(ElementPresentation, Named):
         cr.stroke()
 
         if context.hovered or context.dropzone:
-            cr.save()
-            cr.set_dash((1.0, 5.0), 0)
-            cr.set_line_width(1.0)
-            cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
-            draw_highlight(context)
-            cr.stroke()
-            cr.restore()
+            with cairo_state(cr):
+                cr.set_dash((1.0, 5.0), 0)
+                cr.set_line_width(1.0)
+                cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
+                draw_highlight(context)
+                cr.stroke()

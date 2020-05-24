@@ -25,16 +25,13 @@ from gaphor.diagram.shapes import (
     Box,
     EditableText,
     Text,
+    cairo_state,
     draw_default_head,
     draw_default_tail,
+    text_draw_focus_box,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import (
-    middle_segment,
-    text_draw,
-    text_draw_focus_box,
-    text_size,
-)
+from gaphor.diagram.text import middle_segment, text_draw, text_size
 from gaphor.UML.modelfactory import stereotypes_str
 
 
@@ -222,20 +219,16 @@ class AssociationItem(LinePresentation, Named):
 
     def draw(self, context):
         super().draw(context)
-        cr = context.cairo
         self._head_end.draw(context)
         self._tail_end.draw(context)
         if self._show_direction:
-            cr.save()
-            try:
+            with cairo_state(context.cairo) as cr:
                 cr.translate(*self._dir_pos)
                 cr.rotate(self._dir_angle)
                 cr.move_to(0, 0)
                 cr.line_to(6, 5)
                 cr.line_to(0, 10)
                 cr.fill()
-            finally:
-                cr.restore()
 
 
 def get_center_pos(points, inverted=False):

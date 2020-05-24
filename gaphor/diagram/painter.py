@@ -14,7 +14,7 @@ from gaphas.canvas import Context
 from gaphas.geometry import Rectangle
 from gaphas.painter import CairoBoundingBoxContext, Painter
 
-from gaphor.diagram.shapes import DrawContext, Style
+from gaphor.diagram.shapes import DrawContext, Style, cairo_state
 
 DEBUG_DRAW_BOUNDING_BOX = False
 
@@ -27,7 +27,7 @@ class ItemPainter(Painter):
     def draw_item(self, item, cairo):
         view = self.view
         cairo.save()
-        try:
+        with cairo_state(cairo):
             cairo.set_matrix(view.matrix)
             cairo.transform(view.canvas.get_matrix_i2c(item))
 
@@ -39,12 +39,9 @@ class ItemPainter(Painter):
                     hovered=(item is view.hovered_item),
                     dropzone=(item is view.dropzone_item),
                     # style={"stroke": (0.1, 0.1, 0.8, 1.0), "font-size": 20},
-                    style={},
+                    style={"text-color": (1.0, 0.0, 0.1, 1.0)},
                 )
             )
-
-        finally:
-            cairo.restore()
 
     def _draw_bounds(self, item, cairo):
         view = self.view
@@ -53,13 +50,12 @@ class ItemPainter(Painter):
         except KeyError:
             pass  # No bounding box right now..
         else:
-            cairo.save()
-            cairo.identity_matrix()
-            cairo.set_source_rgb(0.8, 0, 0)
-            cairo.set_line_width(1.0)
-            cairo.rectangle(*b)
-            cairo.stroke()
-            cairo.restore()
+            with cairo_state(cairo):
+                cairo.identity_matrix()
+                cairo.set_source_rgb(0.8, 0, 0)
+                cairo.set_line_width(1.0)
+                cairo.rectangle(*b)
+                cairo.stroke()
 
     def paint(self, context):
         cairo = context.cairo

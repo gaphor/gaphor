@@ -5,7 +5,7 @@ Artifact item.
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
+from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.UML.classes.stereotype import stereotype_compartments
@@ -59,8 +59,7 @@ def draw_artifact_icon(box, context, bounding_box):
     ix = bounding_box.width - icon_margin_x - w
     iy = icon_margin_y
 
-    cr.save()
-    try:
+    with cairo_state(context.cairo) as cr:
         cr.set_line_width(1.0)
         cr.move_to(ix + w - ear, iy)
         for x, y in (
@@ -74,5 +73,3 @@ def draw_artifact_icon(box, context, bounding_box):
         ):
             cr.line_to(x, y)
         cr.stroke()
-    finally:
-        cr.restore()

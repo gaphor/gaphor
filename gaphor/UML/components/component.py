@@ -5,7 +5,7 @@ Component item.
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
+from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.UML.classes.stereotype import stereotype_compartments
@@ -63,13 +63,10 @@ def draw_component_icon(box, context, bounding_box):
     icon_margin_x = 6
     icon_margin_y = 12
 
-    cr = context.cairo
-
     ix = bounding_box.width - icon_margin_x - icon_width
     iy = icon_margin_y
 
-    cr.save()
-    try:
+    with cairo_state(context.cairo) as cr:
         cr.set_line_width(1.0)
         cr.rectangle(ix, iy, icon_width, icon_height)
         cr.stroke()
@@ -90,5 +87,3 @@ def draw_component_icon(box, context, bounding_box):
         cr.fill_preserve()
         cr.set_source(color)
         cr.stroke()
-    finally:
-        cr.restore()

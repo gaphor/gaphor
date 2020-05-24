@@ -33,7 +33,7 @@ from gaphas.solver import STRONG
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
@@ -234,12 +234,11 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
             top = self.lifetime.top
             bottom = self.lifetime.bottom
             cr = context.cairo
-            cr.save()
-            cr.set_dash((7.0, 5.0), 0)
-            cr.move_to(top.pos.x, top.pos.y)
-            cr.line_to(bottom.pos.x, bottom.pos.y)
-            cr.stroke()
-            cr.restore()
+            with cairo_state(cr):
+                cr.set_dash((7.0, 5.0), 0)
+                cr.move_to(top.pos.x, top.pos.y)
+                cr.line_to(bottom.pos.x, bottom.pos.y)
+                cr.stroke()
 
             # draw destruction event
             if self.is_destroyed:

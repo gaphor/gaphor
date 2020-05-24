@@ -46,23 +46,6 @@ class TextDecoration(Enum):
     UNDERLINE = "underline"
 
 
-def text_draw_focus_box(context, x, y, w, h):
-    if context.hovered or context.focused:
-        cr = context.cairo
-        cr.save()
-        try:
-            cr.set_dash((), 0)
-            if context.focused:
-                cr.set_source_rgb(0.6, 0.6, 0.6)
-            else:
-                cr.set_source_rgb(0.8, 0.8, 0.8)
-            cr.set_line_width(0.5)
-            cr.rectangle(x, y, w, h)
-            cr.stroke()
-        finally:
-            cr.restore()
-
-
 def text_size(
     cr, text: str, font: Font, width=-1, default_size: Tuple[int, int] = (0, 0)
 ) -> Tuple[int, int]:
