@@ -42,6 +42,7 @@ Style = TypedDict(
         "vertical-align": VerticalAlign,
         "line-width": float,
         "dash-style": Sequence[float],
+        "highlight-color": Optional[Tuple[float, float, float, float]],  # RGBA
         # CommentItem:
         "ear": int,
     },
@@ -75,6 +76,7 @@ DEFAULT_STYLE: Style = {
     "text-decoration": None,
     "text-align": TextAlign.CENTER,
     "text-color": None,
+    "highlight-color": (0, 0, 1, 0.4),
 }
 
 
@@ -158,10 +160,10 @@ def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
     cr.stroke()
 
 
-def draw_highlight(context: DrawContext, highlight_color=(0, 0, 1, 0.4)):
+def draw_highlight(context: DrawContext):
     if not context.dropzone:
         return
-    highlight_color = (0, 0, 1, 0.4)
+    highlight_color = context.style["highlight-color"]
     with cairo_state(context.cairo) as cr:
         cr.set_source_rgba(*highlight_color)
         cr.set_line_width(cr.get_line_width() * 3.141)
