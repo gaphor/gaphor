@@ -10,7 +10,6 @@ save(filename)
 
 __all__ = ["load", "save"]
 
-import gc
 import io
 import logging
 import os.path
@@ -308,7 +307,6 @@ def load_generator(filename, factory, modeling_language):
     log.info(f"Read {len(elements)} elements from file")
 
     factory.flush()
-    gc.collect()
     with factory.block_events():
         try:
             for percentage in load_elements_generator(
@@ -318,7 +316,6 @@ def load_generator(filename, factory, modeling_language):
                     yield percentage / 2 + 50
                 else:
                     yield percentage
-            gc.collect()
             yield 100
         except Exception as e:
             log.warning(f"file {filename} could not be loaded ({e})")
