@@ -12,6 +12,7 @@ htmlcov
 .eggs/
 gaphor.egg-info/
 tmp.gaphor
+gaphor.prof
 .gpg
 pip-wheel-metadata
 
