@@ -26,6 +26,7 @@ from gaphor.core.modeling.event import (
     ModelFlushed,
     ModelReady,
 )
+from gaphor.core.modeling.presentation import Presentation
 
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager  # noqa
@@ -74,26 +75,11 @@ class ElementFactory(Service):
         This method should only be used when loading models, since it does
         not emit an ElementCreated event.
         """
-        assert issubclass(type, Element)
+        if not type or not issubclass(type, Element) or issubclass(type, Presentation):
+            raise TypeError(f"Type {type} is not a valid model element")
         obj = type(id, self)
         self._elements[id] = obj
         return obj
-
-    def bind(self, element: Element) -> None:
-        """
-        Bind an already created element to the element factory.
-        The element may not be bound to another factory already.
-        """
-        if hasattr(element, "_model") and element._model:
-            raise AttributeError("element is already bound")
-        if not isinstance(element.id, str):
-            raise AttributeError(
-                f"Element should contain a string id (found: {element.id}"
-            )
-        if self._elements.get(element.id):
-            raise AttributeError("an element already exists with the same id")
-        element._model = self
-        self._elements[element.id] = element
 
     def size(self) -> int:
         """
