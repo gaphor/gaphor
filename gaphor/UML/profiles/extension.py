@@ -34,6 +34,5 @@ class ExtensionItem(LinePresentation, Named):
         cr.line_to(15, -10)
         cr.line_to(15, 10)
         cr.line_to(0, 0)
-        cr.set_source_rgb(0, 0, 0)
         cr.fill()
         cr.move_to(15, 0)

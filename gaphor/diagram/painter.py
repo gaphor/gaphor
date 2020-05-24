@@ -38,8 +38,7 @@ class ItemPainter(Painter):
                     focused=(item is view.focused_item),
                     hovered=(item is view.hovered_item),
                     dropzone=(item is view.dropzone_item),
-                    # style={"stroke": (0.1, 0.1, 0.8, 1.0), "font-size": 20},
-                    style={},
+                    style=item.canvas.get_style(item),
                 )
             )
 

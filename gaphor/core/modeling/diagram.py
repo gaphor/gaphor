@@ -69,6 +69,13 @@ class DiagramCanvas(gaphas.Canvas):
 
         return list(filter(expression, self.get_all_items()))
 
+    def get_style(self, item):
+        return {
+            "stroke": (0.05, 0.05, 0.3, 1),
+            "text-color": (0, 0, 0, 1),
+            "fill": (0.01, 0.01, 0.95, 0.2),
+        }
+
 
 class Diagram(PackageableElement):
     """Diagrams may contain model elements and can be owned by a Package.

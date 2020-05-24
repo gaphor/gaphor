@@ -84,7 +84,7 @@ from gaphor.diagram.presentation import (
     ElementPresentation,
     from_package_str,
 )
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, draw_border
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.UML.classes.klass import (
@@ -384,4 +384,4 @@ class InterfaceItem(ElementPresentation, Classified):
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
 
-        cr.stroke()
+        stroke(context)

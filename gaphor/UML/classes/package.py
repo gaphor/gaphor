@@ -4,7 +4,7 @@ Package diagram item.
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named, from_package_str
-from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
@@ -41,17 +41,17 @@ class PackageItem(ElementPresentation, Named):
 
 
 def draw_package(box, context, bounding_box):
-    cr = context.cairo
-    o = 0.0
-    h = bounding_box.height
-    w = bounding_box.width
-    x = 50
-    y = 20
-    cr.move_to(x, y)
-    cr.line_to(x, o)
-    cr.line_to(o, o)
-    cr.line_to(o, h)
-    cr.line_to(w, h)
-    cr.line_to(w, y)
-    cr.line_to(o, y)
-    cr.stroke()
+    with cairo_state(context.cairo) as cr:
+        o = 0.0
+        h = bounding_box.height
+        w = bounding_box.width
+        x = 50
+        y = 20
+        cr.move_to(x, y)
+        cr.line_to(x, o)
+        cr.line_to(o, o)
+        cr.line_to(o, h)
+        cr.line_to(w, h)
+        cr.line_to(w, y)
+        cr.line_to(o, y)
+        stroke(context)

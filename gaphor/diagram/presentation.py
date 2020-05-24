@@ -215,8 +215,10 @@ class LinePresentation(Presentation[S], gaphas.Line):
         style = combined_style(context, self._inline_style)
         new_context = replace(context, style=style)
         cr.set_line_width(style["line-width"])
-        if style["dash-style"]:
-            cr.set_dash(style["dash-style"], 0)
+        cr.set_dash(style["dash-style"] or (), 0)
+        stroke = style["stroke"]
+        if stroke:
+            cr.set_source_rgba(*stroke)
 
         super().draw(new_context)
 

@@ -13,7 +13,7 @@ from gaphas.util import path_ellipse
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -55,6 +55,10 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
 
 def draw_initial_node(_box, context, _bounding_box):
     cr = context.cairo
+    stroke = context.style["stroke"]
+    if stroke:
+        cr.set_source_rgba(*stroke)
+
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
@@ -87,20 +91,24 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
 
 def draw_activity_final_node(_box, context, _bounding_box):
     cr = context.cairo
+    stroke_color = context.style["stroke"]
+    if stroke_color:
+        cr.set_source_rgba(*stroke_color)
+
     inner_radius = 10
     outer_radius = 15
-
     r = outer_radius + 1
-    d = inner_radius * 2
-    path_ellipse(cr, r, r, d, d)
-    cr.set_line_width(0.01)
-    cr.fill()
 
     d = r * 2
     path_ellipse(cr, r, r, d, d)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
-    cr.stroke()
+    stroke(context)
+
+    d = inner_radius * 2
+    path_ellipse(cr, r, r, d, d)
+    cr.set_line_width(0.01)
+    cr.fill()
 
 
 @represents(UML.FlowFinalNode)
@@ -130,14 +138,14 @@ def draw_flow_final_node(_box, context, _bounding_box):
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
-    cr.stroke()
+    stroke(context)
 
     dr = (1 - math.sin(math.pi / 4)) * r
     cr.move_to(dr, dr)
     cr.line_to(d - dr, d - dr)
     cr.move_to(dr, d - dr)
     cr.line_to(d - dr, dr)
-    cr.stroke()
+    stroke(context, fill=False)
 
 
 @represents(UML.DecisionNode)
@@ -193,7 +201,7 @@ def draw_decision_node(_box, context, _bounding_box):
     cr.line_to(r2, r * 2)
     cr.line_to(0, r)
     cr.close_path()
-    cr.stroke()
+    stroke(context)
 
 
 @represents(UML.ForkNode)
@@ -273,7 +281,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
         cr.move_to(h1.pos.x, h1.pos.y)
         cr.line_to(h2.pos.x, h2.pos.y)
 
-        cr.stroke()
+        stroke(context)
 
     def point(self, pos):
         h1, h2 = self._handles

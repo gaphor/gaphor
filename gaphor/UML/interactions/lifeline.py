@@ -33,7 +33,7 @@ from gaphas.solver import STRONG
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state
+from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
@@ -228,7 +228,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         """
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
-        cr.stroke()
+        stroke(context)
 
         if context.hovered or context.focused or self.lifetime.visible:
             top = self.lifetime.top

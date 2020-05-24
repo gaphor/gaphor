@@ -509,6 +509,9 @@ class AssociationEnd(Presentation):
             return
 
         cr = context.cairo
+        text_color = context.style.get("text-color")
+        if text_color:
+            cr.set_source_rgba(*text_color)
 
         text_draw(
             cr,

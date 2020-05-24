@@ -4,7 +4,7 @@ Action diagram item.
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -56,7 +56,7 @@ class SendSignalActionItem(ElementPresentation, Named):
         cr.line_to(0, height)
         cr.close_path()
 
-        cr.stroke()
+        stroke(context)
 
 
 @represents(UML.AcceptEventAction)
@@ -85,4 +85,4 @@ class AcceptEventActionItem(ElementPresentation, Named):
         cr.line_to(d, height / 2)
         cr.close_path()
 
-        cr.stroke()
+        stroke(context)

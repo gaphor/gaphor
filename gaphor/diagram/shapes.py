@@ -114,6 +114,28 @@ class cairo_state:
         self._cr.restore()
 
 
+def stroke(context: DrawContext, fill=True, highlight=False):
+    style = context.style
+    cr = context.cairo
+    fill_color = style.get("fill")
+    if fill and fill_color:
+        with cairo_state(cr):
+            cr.set_source_rgba(*fill_color)
+            cr.fill_preserve()
+
+    if highlight:
+        draw_highlight(context)
+
+    with cairo_state(cr):
+        stroke = style.get("stroke")
+        if stroke:
+            cr.set_source_rgba(*stroke)
+        line_width = style.get("line-width")
+        if line_width:
+            cr.set_line_width(line_width)
+        cr.stroke()
+
+
 def draw_border(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
     d = context.style["border-radius"]
@@ -135,17 +157,7 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
 
     cr.close_path()
 
-    fill = context.style["fill"]
-    if fill:
-        with cairo_state(cr):
-            cr.set_source_rgba(*fill)
-            cr.fill_preserve()
-    draw_highlight(context)
-
-    stroke = context.style["stroke"]
-    if stroke:
-        cr.set_source_rgba(*stroke)
-    cr.stroke()
+    stroke(context)
 
 
 def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
@@ -154,10 +166,7 @@ def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
     cr.move_to(x, y)
     cr.line_to(x + w, y)
 
-    stroke = context.style["stroke"]
-    if stroke:
-        cr.set_source_rgba(*stroke)
-    cr.stroke()
+    stroke(context, fill=False)
 
 
 def draw_highlight(context: DrawContext):

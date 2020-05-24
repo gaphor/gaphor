@@ -5,7 +5,7 @@ CommentItem diagram item
 
 from gaphor.core.modeling import Comment
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import TextAlign, VerticalAlign
 
@@ -46,4 +46,4 @@ class CommentItem(ElementPresentation):
         line_to(x, h)
         line_to(w, h)
         line_to(w, y + ear)
-        cr.stroke()
+        stroke(context)

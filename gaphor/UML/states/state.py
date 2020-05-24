@@ -5,7 +5,7 @@ State diagram item.
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_top_separator
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.UML.modelfactory import stereotypes_str
@@ -90,4 +90,4 @@ def draw_state(box, context, bounding_box):
     cr.curve_to(ddx, height, 0, height - ddy, 0, height - dy)
     cr.close_path()
 
-    cr.stroke()
+    stroke(context)

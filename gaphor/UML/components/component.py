@@ -5,7 +5,14 @@ Component item.
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, draw_border
+from gaphor.diagram.shapes import (
+    Box,
+    EditableText,
+    Text,
+    cairo_state,
+    draw_border,
+    stroke,
+)
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.UML.classes.stereotype import stereotype_compartments
@@ -67,23 +74,26 @@ def draw_component_icon(box, context, bounding_box):
     iy = icon_margin_y
 
     with cairo_state(context.cairo) as cr:
+        fill_color = context.style["fill"] or (1, 1, 1, 1)
+        stroke_color = context.style["stroke"] or (0, 0, 0, 1)
+
         cr.set_line_width(1.0)
         cr.rectangle(ix, iy, icon_width, icon_height)
+        cr.set_source_rgba(*stroke_color)
         cr.stroke()
 
         bx = ix - bar_padding
         bar_upper_y = iy + bar_padding
         bar_lower_y = iy + bar_padding * 3
 
-        color = cr.get_source()
         cr.rectangle(bx, bar_lower_y, bar_width, bar_height)
-        cr.set_source_rgb(1, 1, 1)  # white
+        cr.set_source_rgba(*fill_color)
         cr.fill_preserve()
-        cr.set_source(color)
+        cr.set_source_rgba(*stroke_color)
         cr.stroke()
 
         cr.rectangle(bx, bar_upper_y, bar_width, bar_height)
-        cr.set_source_rgb(1, 1, 1)  # white
+        cr.set_source_rgba(*fill_color)
         cr.fill_preserve()
-        cr.set_source(color)
+        cr.set_source_rgba(*stroke_color)
         cr.stroke()
