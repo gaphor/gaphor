@@ -1,6 +1,7 @@
 from math import pi
 from typing import List, Optional, Tuple
 
+import cairo
 from gaphas.geometry import Rectangle
 from typing_extensions import TypedDict
 
@@ -13,7 +14,6 @@ from gaphor.diagram.text import (
     focus_box_pos,
     text_draw,
     text_draw_focus_box,
-    text_point_in_box,
     text_size,
 )
 
@@ -291,25 +291,30 @@ class Text:
             max(min_h, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
         )
 
-    def draw(self, context, bounding_box):
-        cr = context.cairo
-        min_w = max(self.style("min-width"), bounding_box.width)
-        min_h = max(self.style("min-height"), bounding_box.height)
-        text_align = self.style("text-align")
+    def text_box(self, bounding_box: cairo.Context) -> Rectangle:
         padding = self.style("padding")
-
-        text_box = Rectangle(
+        return Rectangle(
             bounding_box.x + padding[Padding.LEFT],
             bounding_box.y + padding[Padding.TOP],
             bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT],
             bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM],
         )
 
+    def draw(
+        self, context: cairo.Context, bounding_box: Rectangle
+    ) -> Tuple[int, int, int, int]:
+        """Draw the text, return the location and size."""
+        cr = context.cairo
+        min_w = max(self.style("min-width"), bounding_box.width)
+        min_h = max(self.style("min-height"), bounding_box.height)
+        text_align = self.style("text-align")
+        text_box = self.text_box(bounding_box)
+
         x, y, w, h = text_draw(
             cr,
             self.text(),
             self.font(),
-            lambda w, h: text_point_in_box(text_box),
+            lambda w, h: (bounding_box.x, bounding_box.y),
             width=text_box.width,
             default_size=(min_w, min_h),
             text_align=text_align,
@@ -322,21 +327,21 @@ class EditableText(Text):
         super().__init__(text, width, style)
         self.bounding_box = Rectangle()
 
-    def draw(self, context, bounding_box):
+    def draw(
+        self, context: cairo.Context, bounding_box: Rectangle
+    ) -> Tuple[int, int, int, int]:
+        """Draw the editable text."""
         x, y, w, h = super().draw(context, bounding_box)
+        text_box = super().text_box(bounding_box)
         cr = context.cairo
-        padding = self.style("padding")
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
-        text_box = Rectangle(
-            bounding_box.x + padding[Padding.LEFT],
-            bounding_box.y + padding[Padding.TOP],
-            bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT],
-            bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM],
+        focus_x, focus_y = focus_box_pos(
+            text_box, self.size(cr), text_align, vertical_align
         )
-        x, y = focus_box_pos(text_box, self.size(cr), text_align, vertical_align)
-        text_draw_focus_box(context, x, y, w, h)
+        text_draw_focus_box(context, focus_x, focus_y, w, h)
         self.bounding_box = Rectangle(x, y, width=w, height=h)
+        return x, y, w, h
 
 
 def draw_default_head(context):

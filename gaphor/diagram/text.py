@@ -8,6 +8,7 @@ from typing import Dict, Tuple, TypeVar
 import cairo
 import gi
 from gaphas.freehand import FreeHandCairoContext
+from gaphas.geometry import Rectangle
 from gaphas.painter import CairoBoundingBoxContext
 
 # fmt: off
@@ -170,17 +171,17 @@ def _pango_cairo_show_layout(cr, layout):
         PangoCairo.show_layout(cr, layout)
 
 
-def text_point_in_box(bounding_box):
-    x, y, width, height = bounding_box
-    return x, y
-
-
-def focus_box_pos(bounding_box, text_size, text_align, vertical_align):
+def focus_box_pos(
+    bounding_box: Rectangle,
+    text_size: cairo.Context,
+    text_align: TextAlign,
+    vertical_align: VerticalAlign,
+) -> Tuple[int, int]:
+    """Calculate the focus box position based on alignment style."""
     x, y, width, height = bounding_box
     w, h = text_size
 
     if text_align is TextAlign.CENTER:
-        print("Center")
         x += (width - w) / 2
     elif text_align is TextAlign.RIGHT:
         x += width - w
