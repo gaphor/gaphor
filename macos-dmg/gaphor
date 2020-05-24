@@ -25,6 +25,7 @@ export GTK_DATA_PREFIX="${CONTENTS}/share"
 export GTK_EXE_PREFIX="${CONTENTS}"
 export GTK_PATH="${CONTENTS}"
 export XDG_DATA_HOME="${CONTENTS}/share"
+export XDG_DATA_DIRS="${CONTENTS}/share"
 export FONTCONFIG_FILE="${CONTENTS}/Resources/etc/fonts/fonts.conf"
 #export GTK_THEME=Adwaita:dark
 export GI_TYPELIB_PATH="${CONTENTS}/lib/girepository-1.0"
