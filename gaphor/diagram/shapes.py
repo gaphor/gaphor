@@ -292,6 +292,7 @@ class Text:
         )
 
     def text_box(self, bounding_box: cairo.Context) -> Rectangle:
+        """Add padding to a bounding box."""
         padding = self.style("padding")
         return Rectangle(
             bounding_box.x + padding[Padding.LEFT],
@@ -336,10 +337,8 @@ class EditableText(Text):
         cr = context.cairo
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
-        focus_x, focus_y = focus_box_pos(
-            text_box, self.size(cr), text_align, vertical_align
-        )
-        text_draw_focus_box(context, focus_x, focus_y, w, h)
+        x, y = focus_box_pos(text_box, self.size(cr), text_align, vertical_align)
+        text_draw_focus_box(context, x, y, w, h)
         self.bounding_box = Rectangle(x, y, width=w, height=h)
         return x, y, w, h
 
