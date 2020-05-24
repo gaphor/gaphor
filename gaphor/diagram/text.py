@@ -73,7 +73,13 @@ def text_size(
 
 
 def text_draw(
-    cr, text, font, calculate_pos, width=-1, default_size=(0, 0), text_align=None
+    cr,
+    text,
+    font,
+    calculate_pos,
+    width=-1,
+    default_size=(0, 0),
+    text_align=TextAlign.CENTER,
 ):
     """
     Draw text relative to (x, y).
@@ -100,7 +106,7 @@ def text_draw(
     return (x, y, w, h)
 
 
-def _text_layout(cr, text, font, width, text_align=None):
+def _text_layout(cr, text, font, width, text_align=TextAlign.CENTER):
     underline = False
     layout = _pango_cairo_create_layout(cr)
 
@@ -133,8 +139,7 @@ def _text_layout(cr, text, font, width, text_align=None):
     else:
         layout.set_text(text, length=-1)
     layout.set_width(int(width * Pango.SCALE))
-    if text_align is TextAlign.CENTER:
-        layout.set_alignment(Pango.Alignment.CENTER)
+    layout.set_alignment(getattr(Pango.Alignment, text_align.name))
     return layout
 
 
