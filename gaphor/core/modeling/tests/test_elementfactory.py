@@ -12,6 +12,7 @@ from gaphor.core.modeling.event import (
     ModelReady,
     ServiceEvent,
 )
+from gaphor.core.modeling.presentation import Presentation
 from gaphor.UML import Parameter
 
 
@@ -24,6 +25,11 @@ def factory():
 def test_create(factory):
     factory.create(Parameter)
     assert len(list(factory.values())) == 1
+
+
+def test_should_not_create_presentation_elements(factory):
+    with pytest.raises(TypeError):
+        factory.create(Presentation)
 
 
 def test_flush(factory):

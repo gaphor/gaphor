@@ -49,3 +49,10 @@ def test_canvas_is_unlinked(element_factory):
     diagram.unlink()
 
     assert example.test_unlinked
+
+
+def test_can_only_add_diagram_items(element_factory):
+    diagram = element_factory.create(Diagram)
+
+    with pytest.raises(TypeError):
+        diagram.create(Diagram)

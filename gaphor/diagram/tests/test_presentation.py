@@ -21,8 +21,8 @@ class StubLine(LinePresentation):
         super().__init__(id, model, shape_middle=DummyVisualComponent())
 
 
-def test_creation(element_factory):
-    p = element_factory.create(Presentation)
+def test_creation(diagram):
+    p = diagram.create(StubElement)
 
     assert p
     assert p.model
