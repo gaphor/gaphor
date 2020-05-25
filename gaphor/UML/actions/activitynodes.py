@@ -55,7 +55,7 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
 
 def draw_initial_node(_box, context, _bounding_box):
     cr = context.cairo
-    stroke = context.style["stroke"]
+    stroke = context.style["color"]
     if stroke:
         cr.set_source_rgba(*stroke)
 
@@ -91,7 +91,7 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
 
 def draw_activity_final_node(_box, context, _bounding_box):
     cr = context.cairo
-    stroke_color = context.style["stroke"]
+    stroke_color = context.style["color"]
     if stroke_color:
         cr.set_source_rgba(*stroke_color)
 

@@ -30,7 +30,7 @@ Style = TypedDict(
         "line-width": float,
         "vertical-spacing": float,
         "border-radius": float,
-        "fill": Optional[Tuple[float, float, float, float]],  # RGBA
+        "background-color": Optional[Tuple[float, float, float, float]],  # RGBA
         "font-family": str,
         "font-size": float,
         "font-style": FontStyle,
@@ -38,7 +38,7 @@ Style = TypedDict(
         "text-decoration": Optional[TextDecoration],
         "text-align": TextAlign,
         "text-color": Optional[Tuple[float, float, float, float]],  # RGBA
-        "stroke": Optional[Tuple[float, float, float, float]],  # RGBA
+        "color": Optional[Tuple[float, float, float, float]],  # RGBA
         "vertical-align": VerticalAlign,
         "line-width": float,
         "dash-style": Sequence[float],
@@ -65,10 +65,10 @@ DEFAULT_STYLE: Style = {
     "vertical-spacing": 4,
     "border-radius": 0,
     "padding": (0, 0, 0, 0),
-    "fill": None,
+    "background-color": None,
     "line-width": 2,
     "dash-style": [],
-    "stroke": None,
+    "color": None,
     "font-family": "sans",
     "font-size": 14,
     "font-style": FontStyle.NORMAL,
@@ -117,7 +117,7 @@ class cairo_state:
 def stroke(context: DrawContext, fill=True, highlight=False):
     style = context.style
     cr = context.cairo
-    fill_color = style.get("fill")
+    fill_color = style.get("background-color")
     if fill and fill_color:
         with cairo_state(cr):
             cr.set_source_rgba(*fill_color)
@@ -127,7 +127,7 @@ def stroke(context: DrawContext, fill=True, highlight=False):
         draw_highlight(context)
 
     with cairo_state(cr):
-        stroke = style.get("stroke")
+        stroke = style.get("color")
         if stroke:
             cr.set_source_rgba(*stroke)
         line_width = style.get("line-width")

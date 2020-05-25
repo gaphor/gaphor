@@ -79,6 +79,6 @@ def draw_artifact_icon(box, context, bounding_box):
             (ix + w, iy + ear),
         ):
             cr.line_to(x, y)
-        stroke_color = context.style["stroke"] or (0, 0, 0, 1)
+        stroke_color = context.style["color"] or (0, 0, 0, 1)
         cr.set_source_rgba(*stroke_color)
         cr.stroke()

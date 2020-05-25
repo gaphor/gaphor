@@ -67,7 +67,9 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item)
         self._ports.append(LinePort(nw, sw))
         self._ports.append(LinePort(ne, se))
 
-        self.shape = Box(style={"fill": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border)
+        self.shape = Box(
+            style={"background-color": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border
+        )
 
     @property
     def top(self):

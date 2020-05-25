@@ -42,7 +42,7 @@ def draw_initial_pseudostate(box, context, bounding_box):
     Draw initial pseudostate symbol.
     """
     cr = context.cairo
-    stroke = context.style["stroke"]
+    stroke = context.style["color"]
     if stroke:
         cr.set_source_rgba(*stroke)
     r = 10

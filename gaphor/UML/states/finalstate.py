@@ -39,7 +39,7 @@ def draw_final_state(box, context, bounding_box):
     cr.set_line_width(2)
     stroke(context)
 
-    stroke_color = context.style["stroke"]
+    stroke_color = context.style["color"]
     if stroke_color:
         cr.set_source_rgba(*stroke_color)
 

@@ -78,8 +78,8 @@ class Line(_Line, SimpleItem):
     def draw(self, context):
         cr = context.cairo
         style = combined_style(context)
-        if style["stroke"]:
-            cr.set_source_rgba(*style["stroke"])
+        if style["color"]:
+            cr.set_source_rgba(*style["color"])
         cr.set_line_width(style["line-width"])
         super().draw(context)
 

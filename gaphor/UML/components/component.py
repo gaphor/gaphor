@@ -74,8 +74,8 @@ def draw_component_icon(box, context, bounding_box):
     iy = icon_margin_y
 
     with cairo_state(context.cairo) as cr:
-        fill_color = context.style["fill"] or (1, 1, 1, 1)
-        stroke_color = context.style["stroke"] or (0, 0, 0, 1)
+        fill_color = context.style["background-color"] or (1, 1, 1, 1)
+        stroke_color = context.style["color"] or (0, 0, 0, 1)
 
         cr.set_line_width(1.0)
         cr.rectangle(ix, iy, icon_width, icon_height)

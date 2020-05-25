@@ -216,7 +216,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
         new_context = replace(context, style=style)
         cr.set_line_width(style["line-width"])
         cr.set_dash(style["dash-style"] or (), 0)
-        stroke = style["stroke"]
+        stroke = style["color"]
         if stroke:
             cr.set_source_rgba(*stroke)
 
