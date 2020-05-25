@@ -288,18 +288,6 @@ class MainWindow(Service, ActionProvider):
         width, height = window.get_size()
         self.properties.set("ui.window-size", (width, height))
 
-    # TODO: Does not belong here
-    def create_item(self, ui_component):
-        """
-        Create an item for a ui component. This method can be called from UIComponents.
-        """
-        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-        window.set_transient_for(self.window)
-        window.set_title(ui_component.title)
-        window.add(ui_component.open())
-        window.show()
-        window.ui_component = ui_component
-
 
 Gtk.AccelMap.add_filter("gaphor")
 
