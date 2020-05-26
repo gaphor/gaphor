@@ -42,17 +42,15 @@ def test_association(factory):
         property1 in element.ownedMember
     ), f"Namespace.ownedMember does not contain ownedEnd - {element.ownedEnd}"
 
-    assert property1 in element.ownedEnd, (
-        "Association.ownedEnd does not contain navigableOwnedEnd - %s"
-        % element.ownedEnd
-    )
+    assert (
+        property1 in element.ownedEnd
+    ), f"Association.ownedEnd does not contain navigableOwnedEnd - {element.ownedEnd}"
 
 
-#    def test_association_class(self):
-#        try:
-#            element = self.factory.create(UML.AssociationClass)
-#        except AttributeError:
-#            self.fail('AssociationClass elements are not part of the meta-model')
+def test_association_class(factory):
+    with pytest.raises(AttributeError) as exc_info:
+        factory.create(UML.AssociationClass)
+    assert "has no attribute 'AssociationClass'" in str(exc_info.value)
 
 
 def test_class(factory):
