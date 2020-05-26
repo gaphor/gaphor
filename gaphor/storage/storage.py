@@ -184,7 +184,7 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
     )
     yield from _load_attributes_and_references(elements, update_status_queue)
 
-    for d in factory.select(lambda e: isinstance(e, Diagram)):
+    for d in factory.select(Diagram):
         canvas = d.canvas
         # update_now() is implicitly called when lock is released
         canvas.block_updates = False

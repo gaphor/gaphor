@@ -53,7 +53,7 @@ def test_lost_message_connection(diagram, element_factory):
 
     connect(msg, msg.head, ll)
 
-    messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
+    messages = element_factory.lselect(UML.Message)
     occurrences = element_factory.lselect(
         lambda e: e.isKindOf(UML.MessageOccurrenceSpecification)
     )
@@ -76,7 +76,7 @@ def test_found_message_connection(diagram, element_factory):
 
     connect(msg, msg.tail, ll)
 
-    messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
+    messages = element_factory.lselect(UML.Message)
     occurrences = element_factory.lselect(
         lambda e: e.isKindOf(UML.MessageOccurrenceSpecification)
     )
@@ -101,7 +101,7 @@ def test_complete_message_connection(diagram, element_factory):
     connect(msg, msg.head, ll1)
     connect(msg, msg.tail, ll2)
 
-    messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
+    messages = element_factory.lselect(UML.Message)
     occurrences = element_factory.lselect(
         lambda e: e.isKindOf(UML.MessageOccurrenceSpecification)
     )
@@ -250,7 +250,7 @@ def test_messages_disconnect_cd(diagram, element_factory):
     assert subject.sendEvent
     assert subject.receiveEvent
 
-    messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
+    messages = element_factory.lselect(UML.Message)
     occurrences = element_factory.lselect(
         lambda e: e.isKindOf(UML.MessageOccurrenceSpecification)
     )
@@ -289,7 +289,7 @@ def test_message_disconnect_from_execution_specification(diagram, element_factor
 
     disconnect(message, message.head)
 
-    messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
+    messages = element_factory.lselect(UML.Message)
     occurrences = element_factory.lselect(
         lambda e: e.isKindOf(UML.MessageOccurrenceSpecification)
     )

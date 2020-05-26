@@ -23,7 +23,7 @@ class ActivityNodesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(lambda e: isinstance(e, DecisionNodeItem))[0]
+        item = self.diagram.canvas.select(DecisionNodeItem)[0]
         assert item.combined is None, item.combined
 
         merge_node = factory.create(UML.MergeNode)
@@ -31,7 +31,7 @@ class ActivityNodesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(lambda e: isinstance(e, DecisionNodeItem))[0]
+        item = self.diagram.canvas.select(DecisionNodeItem)[0]
         assert item.combined is not None, item.combined
         assert isinstance(item.combined, UML.MergeNode)
 
@@ -44,7 +44,7 @@ class ActivityNodesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(lambda e: isinstance(e, ForkNodeItem))[0]
+        item = self.diagram.canvas.select(ForkNodeItem)[0]
         assert item.combined is None, item.combined
 
         merge_node = factory.create(UML.JoinNode)
@@ -52,6 +52,6 @@ class ActivityNodesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(lambda e: isinstance(e, ForkNodeItem))[0]
+        item = self.diagram.canvas.select(ForkNodeItem)[0]
         assert item.combined is not None, item.combined
         assert isinstance(item.combined, UML.JoinNode)

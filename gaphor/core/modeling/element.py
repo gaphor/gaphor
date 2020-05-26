@@ -195,7 +195,7 @@ class RepositoryProtocol(Protocol):
         ...
 
     def select(
-        self, expression: Optional[Callable[[Element], bool]] = None
+        self, expression: Union[Callable[[Element], bool], Type[T], None] = None
     ) -> Iterator[Element]:
         ...
 

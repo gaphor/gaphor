@@ -62,7 +62,7 @@ def test_connect_execution_specification_to_lifeline(diagram, element_factory):
 
 def test_disconnect_execution_specification_from_lifeline(diagram, element_factory):
     def elements_of_kind(type):
-        return element_factory.lselect(lambda e: e.isKindOf(type))
+        return element_factory.lselect(type)
 
     lifeline, exec_spec = create_lifeline_with_execution_specification(
         diagram, element_factory
@@ -171,7 +171,7 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
     diagram, element_factory
 ):
     def elements_of_kind(type):
-        return element_factory.lselect(lambda e: e.isKindOf(type))
+        return element_factory.lselect(type)
 
     lifeline, parent_exec_spec = create_lifeline_with_execution_specification(
         diagram, element_factory

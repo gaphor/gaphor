@@ -14,6 +14,7 @@ from typing import (
     Optional,
     Type,
     TypeVar,
+    Union,
 )
 
 from gaphor.abc import Service
@@ -100,20 +101,20 @@ class ElementFactory(Service):
         return self.lookup(element.id) is element
 
     def select(
-        self, expression: Optional[Callable[[Element], bool]] = None
+        self, expression: Union[Callable[[Element], bool], Type[T], None] = None
     ) -> Iterator[Element]:
         """
         Iterate elements that comply with expression.
         """
         if expression is None:
             yield from self._elements.values()
+        elif isinstance(expression, type):
+            yield from (e for e in self._elements.values() if isinstance(e, expression))
         else:
-            for e in self._elements.values():
-                if expression(e):
-                    yield e
+            yield from (e for e in self._elements.values() if expression(e))
 
     def lselect(
-        self, expression: Optional[Callable[[Element], bool]] = None
+        self, expression: Union[Callable[[Element], bool], Type[T], None] = None
     ) -> List[Element]:
         """
         Like select(), but returns a list.
@@ -151,7 +152,7 @@ class ElementFactory(Service):
         self.handle(ModelFlushed(self))
 
         with self.block_events():
-            for element in self.lselect(lambda e: isinstance(e, Diagram)):
+            for element in self.lselect(Diagram):
                 assert isinstance(element, Diagram)
                 element.canvas.block_updates = True
                 element.unlink()

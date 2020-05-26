@@ -90,11 +90,11 @@ class StorageTestCase(TestCase):
         self.load(data)
 
         assert len(self.element_factory.lselect()) == 4
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Package))) == 1
+        assert len(self.element_factory.lselect(UML.Package)) == 1
         # diagram is created in TestCase.setUp
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Comment))) == 1
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Class))) == 1
+        assert len(self.element_factory.lselect(UML.Diagram)) == 1
+        assert len(self.element_factory.lselect(UML.Comment)) == 1
+        assert len(self.element_factory.lselect(UML.Class)) == 1
 
     def test_load_uml_2(self):
         """
@@ -111,21 +111,19 @@ class StorageTestCase(TestCase):
         self.load(data)
 
         assert len(self.element_factory.lselect()) == 5
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Package))) == 1
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
-        d = self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Comment))) == 1
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Class))) == 1
-        assert (
-            len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Interface))) == 1
-        )
+        assert len(self.element_factory.lselect(UML.Package)) == 1
+        assert len(self.element_factory.lselect(UML.Diagram)) == 1
+        d = self.element_factory.lselect(UML.Diagram)[0]
+        assert len(self.element_factory.lselect(UML.Comment)) == 1
+        assert len(self.element_factory.lselect(UML.Class)) == 1
+        assert len(self.element_factory.lselect(UML.Interface)) == 1
 
-        c = self.element_factory.lselect(lambda e: e.isKindOf(UML.Class))[0]
+        c = self.element_factory.lselect(UML.Class)[0]
         assert c.presentation
         assert c.presentation[0].subject is c
         # assert c.presentation[0].subject.name.startwith('Class')
 
-        iface = self.element_factory.lselect(lambda e: e.isKindOf(UML.Interface))[0]
+        iface = self.element_factory.lselect(UML.Interface)[0]
         assert iface.name == "Circus"
         assert len(iface.presentation) == 1
         assert tuple(iface.presentation[0].matrix) == (1, 0, 0, 1, 10, 10), tuple(
@@ -176,15 +174,12 @@ class StorageTestCase(TestCase):
         self.load(data)
 
         assert len(self.element_factory.lselect()) == 4
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Package))) == 1
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 1
-        d = self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Comment))) == 1
-        assert len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Class))) == 1
-        assert (
-            len(self.element_factory.lselect(lambda e: e.isKindOf(UML.Association)))
-            == 0
-        )
+        assert len(self.element_factory.lselect(UML.Package)) == 1
+        assert len(self.element_factory.lselect(UML.Diagram)) == 1
+        d = self.element_factory.lselect(UML.Diagram)[0]
+        assert len(self.element_factory.lselect(UML.Comment)) == 1
+        assert len(self.element_factory.lselect(UML.Class)) == 1
+        assert len(self.element_factory.lselect(UML.Association)) == 0
 
         # Check load/save of other canvas items.
         assert len(d.canvas.get_all_items()) == 3

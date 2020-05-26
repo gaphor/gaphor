@@ -83,7 +83,7 @@ class Presentation(Element, Generic[S]):
 
     @property
     def stylesheet(self):
-        return next(self.model.select(lambda e: isinstance(e, Stylesheet)), None)
+        return next(self.model.select(Stylesheet), None)
 
 
 Element.presentation = association(

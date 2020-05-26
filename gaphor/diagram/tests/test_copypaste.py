@@ -40,7 +40,7 @@ def test_copy_multiple_items(diagram, element_factory):
     paste(buffer, diagram, element_factory.lookup)
 
     assert len(diagram.canvas.get_root_items()) == 4
-    assert len(element_factory.lselect(lambda e: isinstance(e, UML.Class))) == 1
+    assert len(element_factory.lselect(UML.Class)) == 1
 
 
 def test_copy_item_without_copying_connection(diagram, element_factory):
@@ -54,7 +54,7 @@ def test_copy_item_without_copying_connection(diagram, element_factory):
     new_items = paste(buffer, diagram, element_factory.lookup)
 
     assert len(diagram.canvas.get_root_items()) == 3
-    assert len(element_factory.lselect(lambda e: isinstance(e, UML.Class))) == 1
+    assert len(element_factory.lselect(UML.Class)) == 1
     assert type(new_items) is set
     assert len(new_items) == 1
 
@@ -95,10 +95,8 @@ def test_copy_item_with_connection(diagram, element_factory):
     assert new_cls_item2 in new_items
 
     # Model elements are not copied
-    assert len(element_factory.lselect(lambda e: isinstance(e, UML.Class))) == 2
-    assert (
-        len(element_factory.lselect(lambda e: isinstance(e, UML.Generalization))) == 1
-    )
+    assert len(element_factory.lselect(UML.Class)) == 2
+    assert len(element_factory.lselect(UML.Generalization)) == 1
 
 
 def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
@@ -120,7 +118,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     print(buffer)
 
     paste(buffer, diagram, element_factory.lookup)
-    new_cls = element_factory.lselect(lambda e: isinstance(e, UML.Class))[0]
+    new_cls = element_factory.lselect(UML.Class)[0]
     assert len(diagram.canvas.get_root_items()) == 1
     assert new_cls.package is package
     assert element_factory.lookup(orig_cls_id) is new_cls
@@ -134,8 +132,8 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
     new_items = copy_clear_and_paste(
         {gen_cls_item, gen_item, spc_cls_item}, diagram, element_factory
     )
-    new_cls1, new_cls2 = element_factory.lselect(lambda e: isinstance(e, UML.Class))
-    new_gen = element_factory.lselect(lambda e: isinstance(e, UML.Generalization))[0]
+    new_cls1, new_cls2 = element_factory.lselect(UML.Class)
+    new_gen = element_factory.lselect(UML.Generalization)[0]
 
     assert new_gen.general in {new_cls1, new_cls2}
     assert new_gen.specific in {new_cls1, new_cls2}
@@ -155,7 +153,7 @@ def test_copy_remove_paste_items_when_namespace_is_removed(diagram, element_fact
 
     copy_clear_and_paste({cls_item}, diagram, element_factory, retain=[diagram_package])
 
-    new_cls = element_factory.lselect(lambda e: isinstance(e, UML.Class))[0]
+    new_cls = element_factory.lselect(UML.Class)[0]
 
     assert new_cls.namespace is diagram_package
 

@@ -151,7 +151,7 @@ class TestCase(unittest.TestCase):
         """
         Find UML metaclass instances using element factory.
         """
-        return self.element_factory.lselect(lambda e: e.isKindOf(cls))
+        return self.element_factory.lselect(cls)
 
     def save(self):
         """
@@ -183,6 +183,4 @@ class TestCase(unittest.TestCase):
         )
         f.close()
 
-        self.diagram = self.element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[
-            0
-        ]
+        self.diagram = self.element_factory.lselect(UML.Diagram)[0]

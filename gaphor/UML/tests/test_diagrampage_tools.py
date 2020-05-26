@@ -81,14 +81,12 @@ def test_placement_action(tab, tool_name):
 
 def test_placement_object_node(tab, element_factory):
     test_placement_action(tab, "toolbox-object-node")
-    assert 1 == len(element_factory.lselect(lambda e: isinstance(e, UML.ObjectNode)))
+    assert 1 == len(element_factory.lselect(UML.ObjectNode))
 
 
 def test_placement_partition(tab, element_factory):
     test_placement_action(tab, "toolbox-partition")
-    assert 0 == len(
-        element_factory.lselect(lambda e: isinstance(e, UML.ActivityPartition))
-    )
+    assert 0 == len(element_factory.lselect(UML.ActivityPartition))
 
 
 def test_uml_toolbox_actions_shortcut_unique():

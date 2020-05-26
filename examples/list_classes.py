@@ -43,7 +43,7 @@ file_manager = session.get_service("file_manager")
 file_manager.load(model)
 
 # Find all classes using factory select.
-for cls in element_factory.select(lambda e: e.isKindOf(UML.Class)):
+for cls in element_factory.select(UML.Class):
 
     print(f"Found class {cls.name}")
 

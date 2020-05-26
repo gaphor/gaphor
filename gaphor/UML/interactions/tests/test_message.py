@@ -11,7 +11,7 @@ def test_message_persistence(diagram, element_factory, saver, loader):
 
     data = saver()
     loader(data)
-    new_diagram = next(element_factory.select(lambda e: isinstance(e, UML.Diagram)))
-    item = new_diagram.canvas.select(lambda e: isinstance(e, MessageItem))[0]
+    new_diagram = next(element_factory.select(UML.Diagram))
+    item = new_diagram.canvas.select(MessageItem)[0]
 
     assert item

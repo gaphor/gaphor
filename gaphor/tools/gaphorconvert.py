@@ -99,7 +99,7 @@ def main(argv=sys.argv[1:]):
         storage.load(model, factory, modeling_language)
         message("ready for rendering")
 
-        for diagram in factory.select(lambda e: e.isKindOf(Diagram)):
+        for diagram in factory.select(Diagram):
             odir = pkg2dir(diagram.package)
 
             # just diagram name
