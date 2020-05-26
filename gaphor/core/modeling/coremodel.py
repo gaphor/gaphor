@@ -50,8 +50,13 @@ class Comment(Element):
     annotatedElement: relation_many[Element]
 
 
+class Stylesheet(Element):
+    stylesheet: attribute[str]
+
+
 NamedElement.name = attribute("name", str)
 Comment.body = attribute("body", str)
+Stylesheet.stylesheet = attribute("stylesheet", str)
 # 46: override Presentation.subject
 # defined in gaphor.core.modeling.presentation
 
