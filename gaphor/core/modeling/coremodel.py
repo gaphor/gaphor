@@ -37,11 +37,11 @@ class PackageableElement(NamedElement):
     pass
 
 
-# 49: override Diagram
+# 55: override Diagram
 # defined in gaphor.core.modeling.diagram
 
 
-# 40: override Presentation
+# 46: override Presentation
 # defined in gaphor.core.modeling.presentation
 
 
@@ -50,17 +50,19 @@ class Comment(Element):
     annotatedElement: relation_many[Element]
 
 
-class Stylesheet(Element):
-    stylesheet: attribute[str]
+# 40: override Stylesheet
+# defined in gaphor.core.modeling.presentation
 
 
 NamedElement.name = attribute("name", str)
 Comment.body = attribute("body", str)
-Stylesheet.stylesheet = attribute("stylesheet", str)
-# 46: override Presentation.subject
+# 43: override Stylesheet.stylesheet
 # defined in gaphor.core.modeling.presentation
 
-# 43: override Element.presentation
+# 52: override Presentation.subject
+# defined in gaphor.core.modeling.presentation
+
+# 49: override Element.presentation
 # defined in gaphor.core.modeling.presentation
 
 Comment.annotatedElement = association(

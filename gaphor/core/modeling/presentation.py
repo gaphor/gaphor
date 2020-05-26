@@ -7,7 +7,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
 
 from gaphor.core.modeling import Element
-from gaphor.core.modeling.properties import association, relation_one
+from gaphor.core.modeling.properties import association, attribute, relation_one
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
@@ -15,6 +15,10 @@ if TYPE_CHECKING:
     from gaphas.matrix import Matrix  # noqa
 
 S = TypeVar("S", bound=Element)
+
+
+class Stylesheet(Element):
+    stylesheet: attribute[str] = attribute("stylesheet", str)
 
 
 class Presentation(Element, Generic[S]):
@@ -76,6 +80,10 @@ class Presentation(Element, Generic[S]):
         if self.canvas:
             self.canvas.remove(self)
         super().unlink()
+
+    @property
+    def stylesheet(self):
+        return next(self.model.select(lambda e: isinstance(e, Stylesheet)), None)
 
 
 Element.presentation = association(
