@@ -32,7 +32,7 @@ from gaphas.solver import WEAK
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import postload_connect
-from gaphor.diagram.shapes import Box, draw_border
+from gaphor.diagram.shapes import Box, DrawContext, draw_border
 from gaphor.diagram.support import represents
 
 
@@ -85,7 +85,9 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item)
         return Rectangle(pt.x - d / 2, pt.y, d, y1=pb.y)
 
     def draw(self, context):
-        self.shape.draw(context, self.dimensions())
+        self.shape.draw(
+            DrawContext.from_context(context, self.style), self.dimensions()
+        )
 
     def point(self, pos):
         return distance_rectangle_point(self.dimensions(), pos)

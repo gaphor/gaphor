@@ -15,7 +15,7 @@ class ImplementationTestCase(TestCase):
     def test_default_line_style(self):
         impl = self.create(ImplementationItem)
 
-        assert impl.style("dash-style")
+        assert impl.style["dash-style"]
 
     def test_folded_interface_connection(self):
         """Test connecting implementation to folded interface
@@ -26,7 +26,7 @@ class ImplementationTestCase(TestCase):
 
         self.connect(impl, impl.head, iface, iface.ports()[0])
 
-        assert not impl.style("dash-style")
+        assert not impl.style["dash-style"]
 
     def test_folded_interface_disconnection(self):
         """Test disconnection implementation from folded interface
@@ -39,14 +39,14 @@ class ImplementationTestCase(TestCase):
         self.disconnect(impl, impl.head)
         impl.request_update()
 
-        assert impl.style("dash-style")
+        assert impl.style["dash-style"]
 
 
 class DependencyTestCase(TestCase):
     def test_default_line_style(self):
         dep = self.create(DependencyItem)
 
-        assert dep.style("dash-style")
+        assert dep.style["dash-style"]
 
     def test_folded_interface_connection(self):
         """Test connecting dependency to folded interface
@@ -62,7 +62,7 @@ class DependencyTestCase(TestCase):
         iface.canvas.update_now()
 
         assert dep.subject
-        assert not dep.style("dash-style")
+        assert not dep.style["dash-style"]
         assert iface.folded == Folded.REQUIRED
 
     def test_folded_interface_disconnection(self):
@@ -76,7 +76,7 @@ class DependencyTestCase(TestCase):
         self.disconnect(dep, dep.head)
         dep.request_update()
 
-        assert dep.style("dash-style")
+        assert dep.style["dash-style"]
         assert iface.folded == Folded.PROVIDED
 
     def test_unfolded_interface_connection(self):
@@ -86,4 +86,4 @@ class DependencyTestCase(TestCase):
         dep = self.create(DependencyItem)
 
         self.connect(dep, dep.head, iface, iface.ports()[0])
-        assert (7.0, 5.0) == dep.style("dash-style")
+        assert (7.0, 5.0) == dep.style["dash-style"]

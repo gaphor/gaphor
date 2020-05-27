@@ -82,6 +82,10 @@ DEFAULT_STYLE: Style = {
 
 @dataclass(frozen=True)
 class SizeContext:
+    @classmethod
+    def from_context(cls, context, style) -> SizeContext:
+        return SizeContext(cairo=context.cairo, style=style)
+
     cairo: CairoContext
     style: Style
 
@@ -94,12 +98,23 @@ class DrawContext:
     focused.
     """
 
+    @classmethod
+    def from_context(cls, context, style) -> DrawContext:
+        return DrawContext(
+            cairo=context.cairo,
+            style=style,
+            selected=context.selected,
+            focused=context.focused,
+            hovered=context.hovered,
+            dropzone=context.dropzone,
+        )
+
     cairo: CairoContext
+    style: Style
     selected: bool
     focused: bool
     hovered: bool
     dropzone: bool
-    style: Style
 
 
 class cairo_state:
@@ -179,13 +194,11 @@ def draw_highlight(context: DrawContext):
         cr.stroke_preserve()
 
 
-def combined_style(
-    context: Union[SizeContext, DrawContext], inline_style: Style = {}
-) -> Style:
+def combined_style(item_style: Style, inline_style: Style = {}) -> Style:
     """
     Combine default style, context style and inline styles into one style.
     """
-    return {**DEFAULT_STYLE, **context.style, **inline_style}  # type: ignore[misc]
+    return {**DEFAULT_STYLE, **item_style, **inline_style}  # type: ignore[misc]
 
 
 class Box:
@@ -221,7 +234,7 @@ class Box:
         return self.children[index]
 
     def size(self, context: SizeContext):
-        style: Style = combined_style(context, self._inline_style)
+        style: Style = combined_style(context.style, self._inline_style)
         min_width = style["min-width"]
         min_height = style["min-height"]
         padding = style["padding"]
@@ -242,7 +255,7 @@ class Box:
             return min_width, min_height
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style: Style = combined_style(context, self._inline_style)
+        style: Style = combined_style(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding = style["padding"]
         valign = style["vertical-align"]
@@ -286,7 +299,7 @@ class IconBox:
         self._inline_style = style
 
     def size(self, context: SizeContext):
-        style = combined_style(context, self._inline_style)
+        style = combined_style(context.style, self._inline_style)
         min_width = style["min-width"]
         min_height = style["min-height"]
         padding = style["padding"]
@@ -298,7 +311,7 @@ class IconBox:
         )
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style = combined_style(context, self._inline_style)
+        style = combined_style(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding = style["padding"]
         vertical_spacing = style["vertical-spacing"]
@@ -327,7 +340,7 @@ class Text:
             return ""
 
     def size(self, context: SizeContext):
-        style = combined_style(context, self._inline_style)
+        style = combined_style(context.style, self._inline_style)
         min_w = style["min-width"]
         min_h = style["min-height"]
         padding = style["padding"]
@@ -352,7 +365,7 @@ class Text:
         self, context: DrawContext, bounding_box: Rectangle
     ) -> Tuple[int, int, int, int]:
         """Draw the text, return the location and size."""
-        style = combined_style(context, self._inline_style)
+        style = combined_style(context.style, self._inline_style)
         min_w = max(style["min-width"], bounding_box.width)
         min_h = max(style["min-height"], bounding_box.height)
         text_align = style["text-align"]
@@ -390,7 +403,7 @@ class EditableText(Text):
         self, context: DrawContext, bounding_box: Rectangle
     ) -> Tuple[int, int, int, int]:
         """Draw the editable text."""
-        style = combined_style(context, self._inline_style)
+        style = combined_style(context.style, self._inline_style)
         x, y, w, h = super().draw(context, bounding_box)
         text_box = self.text_box(style, bounding_box)
         text_align = style["text-align"]

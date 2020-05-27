@@ -111,8 +111,11 @@ class ElementPresentation(Presentation[S], gaphas.Element):
             SizeContext(cairo=context.cairo, style={})
         )
 
-    def draw(self, context: DrawContext):
-        self._shape.draw(context, Rectangle(0, 0, self.width, self.height))
+    def draw(self, context):
+        self._shape.draw(
+            DrawContext.from_context(context, self.style),
+            Rectangle(0, 0, self.width, self.height),
+        )
 
     def setup_canvas(self):
         super().setup_canvas()
@@ -175,7 +178,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self._inline_style.update(style)
 
     style = property(
-        lambda self: self._inline_style.__getitem__,
+        lambda self: {**super().style, **self._inline_style},
         _set_inline_style,
         doc="""A line, contrary to an element, has some styling of it's own.""",
     )
@@ -210,10 +213,10 @@ class LinePresentation(Presentation[S], gaphas.Line):
         ]
         return min(d0, *ds) if ds else d0
 
-    def draw(self, context: DrawContext):
+    def draw(self, context):
         cr = context.cairo
-        style = combined_style(context, self._inline_style)
-        new_context = replace(context, style=style)
+        style = combined_style(self.style, self._inline_style)
+        new_context = DrawContext.from_context(context, style)
         cr.set_line_width(style["line-width"])
         cr.set_dash(style["dash-style"] or (), 0)
         stroke = style["color"]

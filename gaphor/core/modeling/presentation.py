@@ -20,6 +20,13 @@ S = TypeVar("S", bound=Element)
 class Stylesheet(Element):
     stylesheet: attribute[str] = attribute("stylesheet", str)
 
+    def item_style(self, item):
+        return {
+            "color": (0.05, 0.05, 0.3, 1),
+            "text-color": (0, 0, 0, 1),
+            "background-color": (0.01, 0.01, 0.95, 0.2),
+        }
+
 
 class Presentation(Element, Generic[S]):
     """
@@ -39,6 +46,15 @@ class Presentation(Element, Generic[S]):
     subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
     )
+
+    @property
+    def stylesheet(self) -> Optional[Stylesheet]:
+        return next(self.model.select(Stylesheet), None,)  # type: ignore[arg-type]
+
+    @property
+    def style(self):
+        sheet = self.stylesheet
+        return sheet and sheet.item_style(self) or {}
 
     handles: Callable[[Presentation], List[Handle]]
     request_update: Callable[[Presentation], None]
@@ -80,10 +96,6 @@ class Presentation(Element, Generic[S]):
         if self.canvas:
             self.canvas.remove(self)
         super().unlink()
-
-    @property
-    def stylesheet(self):
-        return next(self.model.select(Stylesheet), None)
 
 
 Element.presentation = association(

@@ -19,10 +19,8 @@ def create_lifeline_with_execution_specification(diagram, element_factory):
     return lifeline, exec_spec
 
 
-def test_draw_on_canvas():
-    canvas = Canvas()
-    exec_spec = ExecutionSpecificationItem()
-    canvas.add(exec_spec)
+def test_draw_on_canvas(diagram):
+    exec_spec = diagram.create(ExecutionSpecificationItem)
     cr = instant_cairo_context()
     exec_spec.draw(
         DrawContext(

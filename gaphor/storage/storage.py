@@ -222,6 +222,7 @@ def _load_elements_and_canvasitems(
         yield from update_status_queue()
         if isinstance(elem, parser.element):
             cls = modeling_language.lookup_element(elem.type)
+            assert cls, f"Type {elem.type} can not be loaded: no such element"
             elem.element = factory.create_as(cls, id)
             if isinstance(elem.element, Diagram):
                 assert elem.canvas

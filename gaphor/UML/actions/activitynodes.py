@@ -13,7 +13,7 @@ from gaphas.util import path_ellipse
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, DrawContext, EditableText, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -267,7 +267,9 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
     def draw(self, context):
         h1, h2 = self.handles()
         height = h2.pos.y - h1.pos.y
-        self.shape.draw(context, Rectangle(0, 0, 1, height))
+        self.shape.draw(
+            DrawContext.from_context(context, self.style), Rectangle(0, 0, 1, height)
+        )
 
     def draw_fork_node(self, _box, context, _bounding_box):
         """

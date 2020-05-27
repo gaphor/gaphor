@@ -23,6 +23,7 @@ from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
+    DrawContext,
     EditableText,
     Text,
     cairo_state,
@@ -218,11 +219,12 @@ class AssociationItem(LinePresentation, Named):
         )
 
     def draw(self, context):
-        super().draw(context)
-        self._head_end.draw(context)
-        self._tail_end.draw(context)
+        draw_context = DrawContext.from_context(context, self.style)
+        super().draw(draw_context)
+        self._head_end.draw(draw_context)
+        self._tail_end.draw(draw_context)
         if self._show_direction:
-            with cairo_state(context.cairo) as cr:
+            with cairo_state(draw_context.cairo) as cr:
                 cr.translate(*self._dir_pos)
                 cr.rotate(self._dir_angle)
                 cr.move_to(0, 0)
