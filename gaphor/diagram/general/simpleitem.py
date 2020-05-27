@@ -10,46 +10,16 @@ from gaphas.item import NW, Element
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
+from gaphor.core.modeling import Presentation, Stylesheet
 from gaphor.diagram.shapes import DrawContext, combined_style, stroke
 
 
-class SimpleItem:
-    """
-    Marker for simple (non-Presentation) diagram items.
-    """
-
-    canvas: Optional[Canvas]
-
-    @property
-    def style(self):
-        return {}
-
-    def save(self, save_func):
-        ...
-
-    def load(self, name, value):
-        ...
-
-    def postload(self):
-        ...
-
-    def unlink(self):
-        """
-        Remove the item from the canvas.
-        """
-        if self.canvas:
-            self.canvas.remove(self)
-
-
-class Line(_Line, SimpleItem):
+class Line(Presentation, _Line):
     def __init__(self, id=None, model=None):
-        super().__init__()
-        self._id = id
+        super().__init__(id, model)
         self.fuzziness = 2
         self._handles[0].connectable = False
         self._handles[-1].connectable = False
-
-    id = property(lambda self: self._id, doc="Id")
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -88,7 +58,7 @@ class Line(_Line, SimpleItem):
         super().draw(context)
 
 
-class Box(Element, SimpleItem):
+class Box(Presentation, Element):
     """
     A Box has 4 handles (for a start)::
 
@@ -97,10 +67,7 @@ class Box(Element, SimpleItem):
     """
 
     def __init__(self, id=None, model=None):
-        super().__init__(10, 10)
-        self._id = id
-
-    id = property(lambda self: self._id, doc="Id")
+        super().__init__(id, model)
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -125,15 +92,12 @@ class Box(Element, SimpleItem):
         stroke(DrawContext.from_context(context, self.style))
 
 
-class Ellipse(Element, SimpleItem):
+class Ellipse(Presentation, Element):
     """
     """
 
     def __init__(self, id=None, model=None):
-        super().__init__()
-        self._id = id
-
-    id = property(lambda self: self._id, doc="Id")
+        super().__init__(id, model)
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
