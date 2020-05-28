@@ -17,16 +17,32 @@ if TYPE_CHECKING:
 S = TypeVar("S", bound=Element)
 
 
+def read_style_py():
+    """
+    Intermediate solution to read styling from an external file
+    This allows for testing some styles at least.
+    """
+    from gaphor.services.properties import get_config_dir
+    import os.path
+    import ast
+
+    sheet_py = os.path.join(get_config_dir(), "stylesheet.py")
+    try:
+        with open(sheet_py) as f:
+            return ast.literal_eval(f.read())
+    except OSError:
+        return {}
+
+
 class Stylesheet(Element):
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        self._style = read_style_py()
+
     stylesheet: attribute[str] = attribute("stylesheet", str)
 
     def item_style(self, item):
-        return {
-            "color": (0.05, 0.05, 0.3, 1),
-            "text-color": (0, 0, 0, 1),
-            "background-color": (0.01, 0.01, 0.95, 0.2),
-            "font-size": 28,
-        }
+        return self._style
 
 
 class Presentation(Element, Generic[S]):
