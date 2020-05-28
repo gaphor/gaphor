@@ -25,6 +25,7 @@ class Stylesheet(Element):
             "color": (0.05, 0.05, 0.3, 1),
             "text-color": (0, 0, 0, 1),
             "background-color": (0.01, 0.01, 0.95, 0.2),
+            "font-size": 28,
         }
 
 

@@ -108,7 +108,7 @@ class ElementPresentation(Presentation[S], gaphas.Element):
 
     def pre_update(self, context):
         self.min_width, self.min_height = self.shape.size(
-            SizeContext(cairo=context.cairo, style={})
+            SizeContext.from_context(context, self.style)
         )
 
     def draw(self, context):
@@ -184,11 +184,11 @@ class LinePresentation(Presentation[S], gaphas.Line):
     )
 
     def post_update(self, context):
+        size_context = SizeContext.from_context(context, self.style)
+
         def shape_bounds(shape, align):
             if shape:
-                size = shape.size(
-                    SizeContext(cairo=context.cairo, style=self._inline_style)
-                )
+                size = shape.size(size_context)
                 x, y = text_point_at_line(points, size, align)
                 return Rectangle(x, y, *size)
 
