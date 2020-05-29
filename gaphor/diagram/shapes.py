@@ -1,7 +1,7 @@
 from math import pi
 from typing import List, Optional, Tuple
 
-import cairo
+from gaphas.canvas import Context
 from gaphas.geometry import Rectangle
 from typing_extensions import TypedDict
 
@@ -291,7 +291,7 @@ class Text:
             max(min_h, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
         )
 
-    def text_box(self, bounding_box: cairo.Context) -> Rectangle:
+    def text_box(self, bounding_box: Rectangle) -> Rectangle:
         """Add padding to a bounding box."""
         padding = self.style("padding")
         return Rectangle(
@@ -302,7 +302,7 @@ class Text:
         )
 
     def draw(
-        self, context: cairo.Context, bounding_box: Rectangle
+        self, context: Context, bounding_box: Rectangle
     ) -> Tuple[int, int, int, int]:
         """Draw the text, return the location and size."""
         cr = context.cairo
@@ -329,11 +329,11 @@ class EditableText(Text):
         self.bounding_box = Rectangle()
 
     def draw(
-        self, context: cairo.Context, bounding_box: Rectangle
+        self, context: Context, bounding_box: Rectangle
     ) -> Tuple[int, int, int, int]:
         """Draw the editable text."""
         x, y, w, h = super().draw(context, bounding_box)
-        text_box = super().text_box(bounding_box)
+        text_box = self.text_box(bounding_box)
         cr = context.cairo
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")

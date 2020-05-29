@@ -3,7 +3,7 @@ Support classes for dealing with text.
 """
 
 from enum import Enum
-from typing import Dict, Tuple, TypeVar
+from typing import Dict, Tuple, TypeVar, Union
 
 import cairo
 import gi
@@ -173,7 +173,7 @@ def _pango_cairo_show_layout(cr, layout):
 
 def focus_box_pos(
     bounding_box: Rectangle,
-    text_size: cairo.Context,
+    text_size: Tuple[Union[float, int], Union[float, int]],
     text_align: TextAlign,
     vertical_align: VerticalAlign,
 ) -> Tuple[int, int]:
