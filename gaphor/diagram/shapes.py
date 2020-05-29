@@ -334,10 +334,10 @@ class EditableText(Text):
         """Draw the editable text."""
         x, y, w, h = super().draw(context, bounding_box)
         text_box = self.text_box(bounding_box)
-        cr = context.cairo
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
-        x, y = focus_box_pos(text_box, self.size(cr), text_align, vertical_align)
+        bounding_size = (bounding_box.width, bounding_box.height)
+        x, y = focus_box_pos(text_box, bounding_size, text_align, vertical_align)
         text_draw_focus_box(context, x, y, w, h)
         self.bounding_box = Rectangle(x, y, width=w, height=h)
         return x, y, w, h
