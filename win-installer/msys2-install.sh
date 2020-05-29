@@ -22,4 +22,4 @@ pacman --noconfirm -S --needed \
 
 source "$DIR"/../venv
 pip install pyinstaller
-make translate
+make translations
