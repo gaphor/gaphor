@@ -327,6 +327,12 @@ class EditableText(Text):
     def __init__(self, text=lambda: "", width=lambda: -1, style: Style = {}):
         super().__init__(text, width, style)
         self.bounding_box = Rectangle()
+        self.text_size = (0, 0)
+
+    def size(self, cr):
+        s = super().size(cr)
+        self.text_size = s
+        return s
 
     def draw(
         self, context: Context, bounding_box: Rectangle
@@ -336,8 +342,7 @@ class EditableText(Text):
         text_box = self.text_box(bounding_box)
         text_align = self.style("text-align")
         vertical_align = self.style("vertical-align")
-        bounding_size = (bounding_box.width, bounding_box.height)
-        x, y = focus_box_pos(text_box, bounding_size, text_align, vertical_align)
+        x, y = focus_box_pos(text_box, self.text_size, text_align, vertical_align)
         text_draw_focus_box(context, x, y, w, h)
         self.bounding_box = Rectangle(x, y, width=w, height=h)
         return x, y, w, h
