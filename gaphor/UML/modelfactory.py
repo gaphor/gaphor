@@ -313,7 +313,7 @@ def set_navigability(assoc, end, nav):
     When an end is non-navigable, then it is just member of an association.
     """
     # remove "navigable" and "unspecified" navigation indicators first
-    if type(end.type) in (Class, Interface):
+    if isinstance(end.type, (Class, Interface)):
         owner = end.opposite.type
         if end in owner.ownedAttribute:
             owner.ownedAttribute.remove(end)
@@ -325,7 +325,7 @@ def set_navigability(assoc, end, nav):
     assert end not in assoc.navigableOwnedEnd
 
     if nav is True:
-        if type(end.type) in (Class, Interface):
+        if isinstance(end.type, (Class, Interface)):
             owner = end.opposite.type
             owner.ownedAttribute = end
         else:
