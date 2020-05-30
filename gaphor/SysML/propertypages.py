@@ -119,7 +119,3 @@ class PartsAndReferencesPage(PropertyPageBase):
     def _on_show_references_change(self, button):
         self.item.show_references = button.get_active()
         self.item.request_update()
-
-
-PropertyPages.register(BlockItem)(AttributesPage)
-PropertyPages.register(BlockItem)(OperationsPage)

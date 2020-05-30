@@ -20,9 +20,6 @@ from gaphor.diagram.support import represents
 from gaphor.SysML.sysml import Block
 from gaphor.UML.classes.klass import (
     attribute_watches,
-    attributes_compartment,
-    operation_watches,
-    operations_compartment,
     stereotype_compartments,
     stereotype_watches,
 )
@@ -36,12 +33,8 @@ class BlockItem(ElementPresentation[Block], Classified):
         super().__init__(id, model)
 
         self.watch("show_stereotypes", self.update_shapes).watch(
-            "show_attributes", self.update_shapes
-        ).watch("show_operations", self.update_shapes).watch(
             "show_parts", self.update_shapes
-        ).watch(
-            "show_references", self.update_shapes
-        ).watch(
+        ).watch("show_references", self.update_shapes).watch(
             "subject[NamedElement].name"
         ).watch(
             "subject[NamedElement].namespace.name"
@@ -51,14 +44,9 @@ class BlockItem(ElementPresentation[Block], Classified):
             "subject[Class].ownedAttribute.aggregation", self.update_shapes
         )
         attribute_watches(self, "Block")
-        operation_watches(self, "Block")
         stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
-
-    show_attributes: attribute[int] = attribute("show_attributes", int, default=False)
-
-    show_operations: attribute[int] = attribute("show_operations", int, default=False)
 
     show_parts: attribute[int] = attribute("show_parts", int, default=False)
 
@@ -86,18 +74,6 @@ class BlockItem(ElementPresentation[Block], Classified):
                     style={"font-size": 10, "min-width": 0, "min-height": 0},
                 ),
                 style={"padding": (12, 4, 12, 4)},
-            ),
-            *(
-                self.show_attributes
-                and self.subject
-                and [attributes_compartment(self.subject)]
-                or []
-            ),
-            *(
-                self.show_operations
-                and self.subject
-                and [operations_compartment(self.subject)]
-                or []
             ),
             *(
                 self.show_parts
