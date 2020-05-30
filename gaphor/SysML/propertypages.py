@@ -5,6 +5,8 @@ from gi.repository import Gtk
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.SysML import sysml
+from gaphor.SysML.requirements.requirement import RequirementItem
+from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
 
 
 def new_builder(*object_ids):
@@ -70,3 +72,7 @@ class RequirementPropertyPage(PropertyPageBase):
         self.subject.text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
+
+
+PropertyPages.register(RequirementItem)(AttributesPage)
+PropertyPages.register(RequirementItem)(OperationsPage)
