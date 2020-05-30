@@ -87,7 +87,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 174.91839599609347, 521.4187622070312)</val>
 </matrix>
 <width>
-<val>184.0</val>
+<val>186.0</val>
 </width>
 <height>
 <val>66.0</val>
@@ -231,7 +231,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 74.77569580078125), (-312.4324951171878, 74.77569580078125), (-312.4324951171878, 400.1944580078125)]</val>
+<val>[(0.0, 0.0), (0.0, 74.77569580078125), (-311.43589451002066, 74.77569580078125), (-311.43589451002066, 400.1944580078125)]</val>
 </points>
 <head-connection>
 <ref refid="4cda498f-7a95-11ea-a112-7f953848cf85"/>
@@ -371,7 +371,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 405.7207298415308, 523.8687744140625)</val>
 </matrix>
 <width>
-<val>147.0</val>
+<val>149.0</val>
 </width>
 <height>
 <val>66.0</val>
@@ -397,7 +397,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 74.77569580078125), (-99.67199572428763, 74.77569580078125), (-99.67199572428763, 402.64447021484375)]</val>
+<val>[(0.0, 0.0), (0.0, 74.77569580078125), (-98.67207745885685, 74.77569580078125), (-98.67207745885685, 402.64447021484375)]</val>
 </points>
 <head-connection>
 <ref refid="4cda498f-7a95-11ea-a112-7f953848cf85"/>
@@ -422,7 +422,7 @@
 </item>
 <item id="ada170c7-9f17-11ea-b537-dfaaecc5bf61" type="CommentLineItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 431.7618408203125, 523.8687744140625)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 432.1161416499558, 523.8687744140625)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -431,7 +431,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-50.89434814453125, -45.74224853515625)]</val>
+<val>[(0.0, 0.0), (-51.24864897417456, -45.74224853515625)]</val>
 </points>
 <head-connection>
 <ref refid="15e4b0b3-9f17-11ea-b537-dfaaecc5bf61"/>
@@ -844,10 +844,10 @@
 <val>1</val>
 </isDerived>
 <name>
-<val>stylesheet</val>
+<val>styleSheet</val>
 </name>
 <typeValue>
-<val>Stylesheet</val>
+<val>StyleSheet</val>
 </typeValue>
 </Property>
 <Class id="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61">
@@ -857,7 +857,7 @@
 </reflist>
 </generalization>
 <name>
-<val>Stylesheet</val>
+<val>StyleSheet</val>
 </name>
 <ownedAttribute>
 <reflist>
@@ -883,7 +883,7 @@
 <ref refid="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61"/>
 </class_>
 <name>
-<val>stylesheet</val>
+<val>styleSheet</val>
 </name>
 <typeValue>
 <val>String</val>

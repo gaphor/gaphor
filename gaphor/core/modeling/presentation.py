@@ -26,7 +26,7 @@ def read_style_py():
     import os.path
     import ast
 
-    sheet_py = os.path.join(get_config_dir(), "stylesheet.py")
+    sheet_py = os.path.join(get_config_dir(), "styleSheet.py")
     try:
         with open(sheet_py) as f:
             return ast.literal_eval(f.read())
@@ -34,12 +34,12 @@ def read_style_py():
         return {}
 
 
-class Stylesheet(Element):
+class StyleSheet(Element):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         self._style = read_style_py()
 
-    stylesheet: attribute[str] = attribute("stylesheet", str)
+    styleSheet: attribute[str] = attribute("styleSheet", str)
 
     def item_style(self, item):
         return self._style
@@ -65,12 +65,12 @@ class Presentation(Element, Generic[S]):
     )
 
     @property
-    def stylesheet(self) -> Optional[Stylesheet]:
-        return next(self.model.select(Stylesheet), None,)  # type: ignore[arg-type]
+    def styleSheet(self) -> Optional[StyleSheet]:
+        return next(self.model.select(StyleSheet), None,)  # type: ignore[arg-type]
 
     @property
     def style(self):
-        sheet = self.stylesheet
+        sheet = self.styleSheet
         return sheet and sheet.item_style(self) or {}
 
     handles: Callable[[Presentation], List[Handle]]

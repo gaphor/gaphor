@@ -10,7 +10,7 @@ from gaphas.item import NW, Element
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
-from gaphor.core.modeling import Presentation, Stylesheet
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.shapes import DrawContext, combined_style, stroke
 
 

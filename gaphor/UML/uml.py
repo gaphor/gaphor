@@ -16,7 +16,7 @@ from gaphor.core.modeling import (
     Element,
     NamedElement,
     PackageableElement,
-    Stylesheet,
+    StyleSheet,
 )
 from gaphor.core.modeling.properties import (
     association,

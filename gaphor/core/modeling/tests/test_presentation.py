@@ -4,7 +4,7 @@ from gaphas.item import Item
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.elementfactory import ElementFactory
-from gaphor.core.modeling.presentation import Presentation, Stylesheet
+from gaphor.core.modeling.presentation import Presentation, StyleSheet
 
 
 class StubItem(Presentation, Item):
@@ -23,13 +23,13 @@ def diagram(element_factory):
 
 
 def test_presentation_stylesheet(diagram, element_factory):
-    stylesheet = element_factory.create(Stylesheet)
+    styleSheet = element_factory.create(StyleSheet)
     presentation = diagram.create(StubItem)
 
-    assert presentation.stylesheet is stylesheet
+    assert presentation.styleSheet is styleSheet
 
 
 def test_presentation_stylesheet_is_absent(diagram):
     presentation = diagram.create(StubItem)
 
-    assert presentation.stylesheet is None
+    assert presentation.styleSheet is None
