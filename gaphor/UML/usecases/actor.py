@@ -6,7 +6,7 @@ from math import pi
 
 from gaphor import UML
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
@@ -33,10 +33,7 @@ class ActorItem(ElementPresentation, Classified):
                 style={"min-width": ARM * 2, "min-height": HEAD + NECK + BODY + ARM},
                 draw=draw_actor,
             ),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},
@@ -72,4 +69,4 @@ def draw_actor(box, context, bounding_box):
     cr.move_to(0, (HEAD + NECK + BODY + ARM) * fy)
     cr.line_to(ARM * fx, (HEAD + NECK + BODY) * fy)
     cr.line_to(ARM * 2 * fx, (HEAD + NECK + BODY + ARM) * fy)
-    cr.stroke()
+    stroke(context, fill=False)

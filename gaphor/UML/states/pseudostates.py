@@ -8,7 +8,7 @@ from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.UML.states.state import VertexItem
@@ -32,10 +32,7 @@ class PseudostateItem(ElementPresentation, VertexItem):
                 if self.subject and self.subject.kind == "shallowHistory"
                 else draw_initial_pseudostate
             ),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject.name or ""),
         )
 
@@ -45,6 +42,9 @@ def draw_initial_pseudostate(box, context, bounding_box):
     Draw initial pseudostate symbol.
     """
     cr = context.cairo
+    stroke = context.style["color"]
+    if stroke:
+        cr.set_source_rgba(*stroke)
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
@@ -57,11 +57,12 @@ def draw_history_pseudostate(box, context, bounding_box):
     r = 15
     d = r * 2
     path_ellipse(cr, r, r, d, d)
-    # cr.set_line_width(1)
+    stroke(context)
+
     cr.move_to(12, 10)
     cr.line_to(12, 20)
     cr.move_to(18, 10)
     cr.line_to(18, 20)
     cr.move_to(12, 15)
     cr.line_to(18, 15)
-    cr.stroke()
+    stroke(context, fill=False)

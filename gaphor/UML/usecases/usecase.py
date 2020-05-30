@@ -6,7 +6,7 @@ from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.shapes import Box, EditableText, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
@@ -21,10 +21,7 @@ class UseCaseItem(ElementPresentation, Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},
@@ -45,4 +42,4 @@ def draw_usecase(box, context, bounding_box):
 
     cr.move_to(bounding_box.width, ry)
     path_ellipse(cr, rx, ry, bounding_box.width, bounding_box.height)
-    cr.stroke()
+    stroke(context)

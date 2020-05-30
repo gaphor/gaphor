@@ -1,6 +1,7 @@
-from gaphas.canvas import Context, instant_cairo_context
+from gaphas.canvas import instant_cairo_context
 
 import gaphor.UML as UML
+from gaphor.diagram.shapes import DrawContext
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.actions.flow import FlowItem
 
@@ -38,8 +39,13 @@ class FlowTestCase(TestCase):
 
     def test_draw(self):
         flow = self.create(FlowItem, UML.ControlFlow)
-        context = Context(
-            cairo=instant_cairo_context(), hovered=True, focused=True, selected=True
+        context = DrawContext(
+            cairo=instant_cairo_context(),
+            hovered=True,
+            focused=True,
+            selected=True,
+            dropzone=False,
+            style={},
         )
 
         flow.draw(context)

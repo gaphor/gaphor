@@ -4,10 +4,10 @@ from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 
 class DummyVisualComponent:
-    def size(self, cr):
+    def size(self, ctx):
         return 0, 0
 
-    def draw(self, cr, bounding_box):
+    def draw(self, ctx, bounding_box):
         pass
 
 

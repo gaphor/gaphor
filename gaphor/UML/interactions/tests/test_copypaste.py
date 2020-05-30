@@ -24,7 +24,7 @@ def test_message(diagram, element_factory):
     new_message: UML.Message = element_factory.lselect(
         lambda e: isinstance(e, UML.Message)
     )[0]
-    new_lifelines = element_factory.lselect(lambda e: isinstance(e, UML.Lifeline))
+    new_lifelines = element_factory.lselect(UML.Lifeline)
 
     assert new_message.sendEvent.covered in new_lifelines
     assert new_message.receiveEvent.covered in new_lifelines

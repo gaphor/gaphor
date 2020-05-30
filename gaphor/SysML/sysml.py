@@ -67,10 +67,10 @@ class AdjuntProperty(Property):
 
 
 class DirectedRelationshipPropertyPath(DirectedRelationship):
-    targetPropertyPath: relation_many[Property]
-    targetContext: relation_one[Classifier]
     sourceContext: relation_one[Classifier]
     sourcePropertyPath: relation_many[Property]
+    targetPropertyPath: relation_many[Property]
+    targetContext: relation_one[Classifier]
 
 
 class Allocate(DirectedRelationshipPropertyPath, Abstraction):

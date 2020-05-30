@@ -4,7 +4,7 @@ Action diagram item.
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -15,10 +15,7 @@ class ActionItem(ElementPresentation, Named):
         super().__init__(id, model)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject.name or ""),
             style={
                 "min-width": 50,
@@ -39,10 +36,7 @@ class SendSignalActionItem(ElementPresentation, Named):
         super().__init__(id, model)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject.name or ""),
             style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
             draw=self.draw_border,
@@ -62,7 +56,7 @@ class SendSignalActionItem(ElementPresentation, Named):
         cr.line_to(0, height)
         cr.close_path()
 
-        cr.stroke()
+        stroke(context)
 
 
 @represents(UML.AcceptEventAction)
@@ -71,10 +65,7 @@ class AcceptEventActionItem(ElementPresentation, Named):
         super().__init__(id, model)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject.name or ""),
             style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
             draw=self.draw_border,
@@ -94,4 +85,4 @@ class AcceptEventActionItem(ElementPresentation, Named):
         cr.line_to(d, height / 2)
         cr.close_path()
 
-        cr.stroke()
+        stroke(context)

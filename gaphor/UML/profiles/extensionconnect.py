@@ -52,7 +52,7 @@ class ExtensionConnect(RelationshipConnect):
             # Find all associations and determine if the properties on
             # the association ends have a type that points to the class.
             ext: UML.Extension
-            for ext in line.model.select(lambda e: isinstance(e, UML.Extension)):  # type: ignore[assignment]
+            for ext in line.model.select(UML.Extension):  # type: ignore[assignment]
                 end1 = ext.memberEnd[0]
                 end2 = ext.memberEnd[1]
                 if (end1.type is head_type and end2.type is tail_type) or (

@@ -82,7 +82,6 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
                     text=lambda: UML.model.stereotypes_str(
                         self.subject, self.additional_stereotypes()
                     ),
-                    style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",

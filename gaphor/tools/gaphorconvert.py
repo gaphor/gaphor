@@ -6,8 +6,8 @@ import re
 import sys
 
 import cairo
-from gaphas.painter import Context, ItemPainter
-from gaphas.view import View
+from gaphas.painter import BoundingBoxPainter, ItemPainter
+from gaphas.view import Context, View
 
 from gaphor.application import Session
 from gaphor.core.modeling import Diagram
@@ -99,7 +99,7 @@ def main(argv=sys.argv[1:]):
         storage.load(model, factory, modeling_language)
         message("ready for rendering")
 
-        for diagram in factory.select(lambda e: e.isKindOf(Diagram)):
+        for diagram in factory.select(Diagram):
             odir = pkg2dir(diagram.package)
 
             # just diagram name
@@ -128,6 +128,7 @@ def main(argv=sys.argv[1:]):
 
             view = View(diagram.canvas)
             view.painter = ItemPainter()
+            view.bounding_box_painter = BoundingBoxPainter()
 
             tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
             tmpcr = cairo.Context(tmpsurface)

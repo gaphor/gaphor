@@ -10,41 +10,16 @@ from gaphas.item import NW, Element
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
-
-class SimpleItem:
-    """
-    Marker for simple (non-Presentation) diagram items.
-    """
-
-    canvas: Optional[Canvas]
-
-    def save(self, save_func):
-        ...
-
-    def load(self, name, value):
-        ...
-
-    def postload(self):
-        ...
-
-    def unlink(self):
-        """
-        Remove the item from the canvas.
-        """
-        if self.canvas:
-            self.canvas.remove(self)
+from gaphor.core.modeling import Presentation
+from gaphor.diagram.shapes import DrawContext, combined_style, stroke
 
 
-class Line(_Line, SimpleItem):
+class Line(Presentation, _Line):
     def __init__(self, id=None, model=None):
-        super().__init__()
-        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
-        self._id = id
+        super().__init__(id, model)
         self.fuzziness = 2
         self._handles[0].connectable = False
         self._handles[-1].connectable = False
-
-    id = property(lambda self: self._id, doc="Id")
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -76,13 +51,14 @@ class Line(_Line, SimpleItem):
 
     def draw(self, context):
         cr = context.cairo
-        style = self.style
-        cr.set_line_width(style("line-width"))
-        cr.set_source_rgba(*style("color"))
+        style = combined_style(self.style)
+        if style["color"]:
+            cr.set_source_rgba(*style["color"])
+        cr.set_line_width(style["line-width"])
         super().draw(context)
 
 
-class Box(Element, SimpleItem):
+class Box(Presentation, Element):
     """
     A Box has 4 handles (for a start)::
 
@@ -91,11 +67,7 @@ class Box(Element, SimpleItem):
     """
 
     def __init__(self, id=None, model=None):
-        super().__init__(10, 10)
-        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
-        self._id = id
-
-    id = property(lambda self: self._id, doc="Id")
+        super().__init__(id, model)
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -116,25 +88,16 @@ class Box(Element, SimpleItem):
     def draw(self, context):
         cr = context.cairo
         nw = self._handles[NW]
-        style = self.style
         cr.rectangle(nw.pos.x, nw.pos.y, self.width, self.height)
-        # cr.set_source_rgba(*style("color"))
-        # cr.fill_preserve()
-        cr.set_source_rgba(*style("color"))
-        cr.set_line_width(style("line-width"))
-        cr.stroke()
+        stroke(DrawContext.from_context(context, self.style))
 
 
-class Ellipse(Element, SimpleItem):
+class Ellipse(Presentation, Element):
     """
     """
 
     def __init__(self, id=None, model=None):
-        super().__init__()
-        self.style = {"line-width": 2, "color": (0, 0, 0, 1)}.__getitem__
-        self._id = id
-
-    id = property(lambda self: self._id, doc="Id")
+        super().__init__(id, model)
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -154,13 +117,10 @@ class Ellipse(Element, SimpleItem):
 
     def draw(self, context):
         cr = context.cairo
-        style = self.style
 
         rx = self.width / 2.0
         ry = self.height / 2.0
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)
-        cr.set_source_rgba(*style("color"))
-        cr.set_line_width(style("line-width"))
-        cr.stroke()
+        stroke(DrawContext.from_context(context, self.style))

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+from dataclasses import replace
 from typing import Optional
 
 import gaphas
@@ -9,6 +10,7 @@ from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.core.modeling.presentation import Presentation, S
+from gaphor.diagram.shapes import DrawContext, SizeContext, combined_style
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -105,11 +107,15 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         """
 
     def pre_update(self, context):
-        cr = context.cairo
-        self.min_width, self.min_height = self.shape.size(cr)
+        self.min_width, self.min_height = self.shape.size(
+            SizeContext.from_context(context, self.style)
+        )
 
     def draw(self, context):
-        self._shape.draw(context, Rectangle(0, 0, self.width, self.height))
+        self._shape.draw(
+            DrawContext.from_context(context, self.style),
+            Rectangle(0, 0, self.width, self.height),
+        )
 
     def setup_canvas(self):
         super().setup_canvas()
@@ -152,7 +158,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
     ):
         super().__init__(id, model)
 
-        self._style = {"dash-style": (), "line-width": 2, **style}
+        self._inline_style = style
 
         self.shape_head = shape_head
         self.shape_middle = shape_middle
@@ -168,24 +174,25 @@ class LinePresentation(Presentation[S], gaphas.Line):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
-    def _set_style(self, style):
-        self._style.update(style)
+    def _set_inline_style(self, style):
+        self._inline_style.update(style)
 
     style = property(
-        lambda self: self._style.__getitem__,
-        _set_style,
+        lambda self: {**super().style, **self._inline_style},
+        _set_inline_style,
         doc="""A line, contrary to an element, has some styling of it's own.""",
     )
 
     def post_update(self, context):
+        size_context = SizeContext.from_context(context, self.style)
+
         def shape_bounds(shape, align):
             if shape:
-                size = shape.size(cr)
+                size = shape.size(size_context)
                 x, y = text_point_at_line(points, size, align)
                 return Rectangle(x, y, *size)
 
         super().post_update(context)
-        cr = context.cairo
         points = [h.pos for h in self.handles()]
         self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
@@ -208,11 +215,15 @@ class LinePresentation(Presentation[S], gaphas.Line):
 
     def draw(self, context):
         cr = context.cairo
-        cr.set_line_width(self.style("line-width"))
-        if self.style("dash-style"):
-            cr.set_dash(self.style("dash-style"), 0)
+        style = combined_style(self.style, self._inline_style)
+        new_context = DrawContext.from_context(context, style)
+        cr.set_line_width(style["line-width"])
+        cr.set_dash(style["dash-style"] or (), 0)
+        stroke = style["color"]
+        if stroke:
+            cr.set_source_rgba(*stroke)
 
-        super().draw(context)
+        super().draw(new_context)
 
         for shape, rect in (
             (self.shape_head, self._shape_head_rect),
@@ -220,7 +231,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
             (self.shape_tail, self._shape_tail_rect),
         ):
             if shape:
-                shape.draw(context, rect)
+                shape.draw(new_context, rect)
 
     def setup_canvas(self):
         super().setup_canvas()

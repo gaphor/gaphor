@@ -13,7 +13,7 @@ from gaphas.util import path_ellipse
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text
+from gaphor.diagram.shapes import Box, DrawContext, EditableText, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -45,10 +45,7 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
         self.shape = IconBox(
             Box(style={"min-width": 20, "min-height": 20}, draw=draw_initial_node),
             # Text should be left-top
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -58,6 +55,10 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
 
 def draw_initial_node(_box, context, _bounding_box):
     cr = context.cairo
+    stroke = context.style["color"]
+    if stroke:
+        cr.set_source_rgba(*stroke)
+
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
@@ -80,10 +81,7 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
                 style={"min-width": 30, "min-height": 30}, draw=draw_activity_final_node
             ),
             # Text should be right-bottom
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -93,20 +91,24 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
 
 def draw_activity_final_node(_box, context, _bounding_box):
     cr = context.cairo
+    stroke_color = context.style["color"]
+    if stroke_color:
+        cr.set_source_rgba(*stroke_color)
+
     inner_radius = 10
     outer_radius = 15
-
     r = outer_radius + 1
-    d = inner_radius * 2
-    path_ellipse(cr, r, r, d, d)
-    cr.set_line_width(0.01)
-    cr.fill()
 
     d = r * 2
     path_ellipse(cr, r, r, d, d)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
-    cr.stroke()
+    stroke(context)
+
+    d = inner_radius * 2
+    path_ellipse(cr, r, r, d, d)
+    cr.set_line_width(0.01)
+    cr.fill()
 
 
 @represents(UML.FlowFinalNode)
@@ -123,10 +125,7 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
         self.shape = IconBox(
             Box(style={"min-width": 20, "min-height": 20}, draw=draw_flow_final_node),
             # Text should be right-bottom
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -139,14 +138,14 @@ def draw_flow_final_node(_box, context, _bounding_box):
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
-    cr.stroke()
+    stroke(context)
 
     dr = (1 - math.sin(math.pi / 4)) * r
     cr.move_to(dr, dr)
     cr.line_to(d - dr, d - dr)
     cr.move_to(dr, d - dr)
     cr.line_to(d - dr, dr)
-    cr.stroke()
+    stroke(context, fill=False)
 
 
 @represents(UML.DecisionNode)
@@ -164,10 +163,7 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
         self.shape = IconBox(
             Box(style={"min-width": 20, "min-height": 30}, draw=draw_decision_node),
             # Text should be left-top
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -205,7 +201,7 @@ def draw_decision_node(_box, context, _bounding_box):
     cr.line_to(r2, r * 2)
     cr.line_to(0, r)
     cr.close_path()
-    cr.stroke()
+    stroke(context)
 
 
 @represents(UML.ForkNode)
@@ -226,17 +222,13 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
 
         self.shape = IconBox(
             Box(style={"min-width": 0, "min-height": 45}, draw=self.draw_fork_node),
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
             Text(
                 text=lambda: isinstance(self.subject, UML.JoinNode)
                 and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
                 and f"{{ joinSpec = {self.subject.joinSpec} }}"
                 or "",
-                style={"min-width": 0, "min-height": 0},
             ),
         )
 
@@ -275,7 +267,9 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
     def draw(self, context):
         h1, h2 = self.handles()
         height = h2.pos.y - h1.pos.y
-        self.shape.draw(context, Rectangle(0, 0, 1, height))
+        self.shape.draw(
+            DrawContext.from_context(context, self.style), Rectangle(0, 0, 1, height)
+        )
 
     def draw_fork_node(self, _box, context, _bounding_box):
         """
@@ -289,7 +283,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
         cr.move_to(h1.pos.x, h1.pos.y)
         cr.line_to(h2.pos.x, h2.pos.y)
 
-        cr.stroke()
+        stroke(context)
 
     def point(self, pos):
         h1, h2 = self._handles

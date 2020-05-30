@@ -50,7 +50,7 @@ from math import atan2, pi
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import middle_segment
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -81,10 +81,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
             id,
             model,
             shape_middle=Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                    style={"min-width": 0, "min-height": 0},
-                ),
+                Text(text=lambda: stereotypes_str(self.subject),),
                 EditableText(text=lambda: self.subject.name or ""),
             ),
         )
@@ -202,8 +199,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
         cr.stroke()
 
     def _draw_decorating_arrow(self, cr, inverted=False):
-        cr.save()
-        try:
+        with cairo_state(cr):
             angle: float = self._arrow_angle
 
             hint = -1
@@ -236,8 +232,6 @@ class MessageItem(LinePresentation[UML.Message], Named):
             cr.move_to(dr, -r)
             cr.line_to(d, 0)
             cr.stroke()
-        finally:
-            cr.restore()
 
     def draw(self, context):
         super().draw(context)

@@ -37,6 +37,12 @@ NamedElement.qualifiedName = derived(
     lambda obj: [_namedelement_qualifiedname(obj)],
 )
 %%
+override StyleSheet
+# defined in gaphor.core.modeling.presentation
+%%
+override StyleSheet.styleSheet
+# defined in gaphor.core.modeling.presentation
+%%
 override Presentation
 # defined in gaphor.core.modeling.presentation
 %%

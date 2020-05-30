@@ -30,7 +30,7 @@ override PackageableElement
 from gaphor.core.modeling import PackageableElement
 %%
 override Diagram
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, StyleSheet
 %%
 override Transition
 # Invert order of superclasses to avoid MRO issues

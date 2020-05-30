@@ -59,7 +59,6 @@ class DependencyItem(LinePresentation, Named):
                 text=lambda: stereotypes_str(
                     self.subject, additional_stereotype.get(self._dependency_type, ())
                 ),
-                style={"min-width": 0, "min-height": 0},
             ),
             EditableText(text=lambda: self.subject.name or ""),
         )
@@ -104,7 +103,7 @@ class DependencyItem(LinePresentation, Named):
 
     def draw_head(self, context):
         cr = context.cairo
-        if self.style("dash-style"):
+        if context.style.get("dash-style"):
             cr.set_dash((), 0)
             cr.move_to(15, -6)
             cr.line_to(0, 0)

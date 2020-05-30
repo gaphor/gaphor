@@ -1,6 +1,7 @@
-from gaphas.canvas import Canvas, Context, instant_cairo_context
+from gaphas.canvas import Canvas, instant_cairo_context
 
 from gaphor import UML
+from gaphor.diagram.shapes import DrawContext
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -18,12 +19,19 @@ def create_lifeline_with_execution_specification(diagram, element_factory):
     return lifeline, exec_spec
 
 
-def test_draw_on_canvas():
-    canvas = Canvas()
-    exec_spec = ExecutionSpecificationItem()
-    canvas.add(exec_spec)
+def test_draw_on_canvas(diagram):
+    exec_spec = diagram.create(ExecutionSpecificationItem)
     cr = instant_cairo_context()
-    exec_spec.draw(Context(cairo=cr, dropzone=False))
+    exec_spec.draw(
+        DrawContext(
+            cairo=cr,
+            selected=False,
+            focused=False,
+            hovered=False,
+            dropzone=False,
+            style={},
+        )
+    )
 
 
 def test_allow_execution_specification_to_lifeline(diagram):
@@ -52,7 +60,7 @@ def test_connect_execution_specification_to_lifeline(diagram, element_factory):
 
 def test_disconnect_execution_specification_from_lifeline(diagram, element_factory):
     def elements_of_kind(type):
-        return element_factory.lselect(lambda e: e.isKindOf(type))
+        return element_factory.lselect(type)
 
     lifeline, exec_spec = create_lifeline_with_execution_specification(
         diagram, element_factory
@@ -161,7 +169,7 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
     diagram, element_factory
 ):
     def elements_of_kind(type):
-        return element_factory.lselect(lambda e: e.isKindOf(type))
+        return element_factory.lselect(type)
 
     lifeline, parent_exec_spec = create_lifeline_with_execution_specification(
         diagram, element_factory

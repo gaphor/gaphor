@@ -7,7 +7,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
 
 from gaphor.core.modeling import Element
-from gaphor.core.modeling.properties import association, relation_one
+from gaphor.core.modeling.properties import association, attribute, relation_one
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
@@ -15,6 +15,34 @@ if TYPE_CHECKING:
     from gaphas.matrix import Matrix  # noqa
 
 S = TypeVar("S", bound=Element)
+
+
+def read_style_py():
+    """
+    Intermediate solution to read styling from an external file
+    This allows for testing some styles at least.
+    """
+    from gaphor.services.properties import get_config_dir
+    import os.path
+    import ast
+
+    sheet_py = os.path.join(get_config_dir(), "styleSheet.py")
+    try:
+        with open(sheet_py) as f:
+            return ast.literal_eval(f.read())
+    except OSError:
+        return {}
+
+
+class StyleSheet(Element):
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+        self._style = read_style_py()
+
+    styleSheet: attribute[str] = attribute("styleSheet", str)
+
+    def item_style(self, item):
+        return self._style
 
 
 class Presentation(Element, Generic[S]):
@@ -35,6 +63,15 @@ class Presentation(Element, Generic[S]):
     subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
     )
+
+    @property
+    def styleSheet(self) -> Optional[StyleSheet]:
+        return next(self.model.select(StyleSheet), None,)  # type: ignore[arg-type]
+
+    @property
+    def style(self):
+        sheet = self.styleSheet
+        return sheet and sheet.item_style(self) or {}
 
     handles: Callable[[Presentation], List[Handle]]
     request_update: Callable[[Presentation], None]

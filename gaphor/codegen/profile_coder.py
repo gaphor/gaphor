@@ -194,7 +194,7 @@ def generate(
         )
     with open(outfile, "w") as f:
         f.write(header)
-        classes: List = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
+        classes: List = element_factory.lselect(UML.Class)
         classes, enumerations = find_enumerations(classes)
 
         classes = sorted(

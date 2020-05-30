@@ -33,7 +33,7 @@ from gaphas.solver import STRONG
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
@@ -166,10 +166,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         self._ports.append(self.lifetime.port)
 
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},
@@ -231,18 +228,17 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         """
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
-        cr.stroke()
+        stroke(context)
 
         if context.hovered or context.focused or self.lifetime.visible:
             top = self.lifetime.top
             bottom = self.lifetime.bottom
             cr = context.cairo
-            cr.save()
-            cr.set_dash((7.0, 5.0), 0)
-            cr.move_to(top.pos.x, top.pos.y)
-            cr.line_to(bottom.pos.x, bottom.pos.y)
-            cr.stroke()
-            cr.restore()
+            with cairo_state(cr):
+                cr.set_dash((7.0, 5.0), 0)
+                cr.move_to(top.pos.x, top.pos.y)
+                cr.line_to(bottom.pos.x, bottom.pos.y)
+                cr.stroke()
 
             # draw destruction event
             if self.is_destroyed:

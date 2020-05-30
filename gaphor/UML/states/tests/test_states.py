@@ -29,7 +29,7 @@ class StateTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        states = self.diagram.canvas.select(lambda e: isinstance(e, StateItem))
+        states = self.diagram.canvas.select(StateItem)
         assert 1 == len(states)
         s1 = states[0]
 

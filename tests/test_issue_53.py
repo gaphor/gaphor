@@ -24,7 +24,7 @@ def element_factory(session):
 
 def test_package_removal(session, element_factory):
     # Find all profile instances
-    profiles = element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
+    profiles = element_factory.lselect(UML.Profile)
 
     # Check there is 1 profile
     assert len(profiles) == 1
@@ -35,15 +35,15 @@ def test_package_removal(session, element_factory):
     # Unlink the presentation
     profiles[0].presentation[0].unlink()
 
-    assert not element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
+    assert not element_factory.lselect(UML.Profile)
 
-    classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
+    classes = element_factory.lselect(UML.Class)
     assert len(classes) == 1
 
     # Check if the link is really removed:
     assert not classes[0].appliedStereotype
-    assert not element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification))
-    assert len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 3
+    assert not element_factory.lselect(UML.InstanceSpecification)
+    assert len(element_factory.lselect(UML.Diagram)) == 3
 
 
 def test_package_removal_by_removing_the_diagram(element_factory):
@@ -56,12 +56,12 @@ def test_package_removal_by_removing_the_diagram(element_factory):
 
     diagram.unlink()
 
-    assert not element_factory.lselect(lambda e: e.isKindOf(UML.Profile))
+    assert not element_factory.lselect(UML.Profile)
 
-    classes = element_factory.lselect(lambda e: e.isKindOf(UML.Class))
+    classes = element_factory.lselect(UML.Class)
     assert len(classes) == 1
 
     # Check if the link is really removed:
     assert not classes[0].appliedStereotype
-    assert not element_factory.lselect(lambda e: e.isKindOf(UML.InstanceSpecification))
-    assert len(element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))) == 2
+    assert not element_factory.lselect(UML.InstanceSpecification)
+    assert len(element_factory.lselect(UML.Diagram)) == 2

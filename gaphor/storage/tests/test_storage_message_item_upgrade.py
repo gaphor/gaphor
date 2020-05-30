@@ -13,11 +13,11 @@ def test_message_item_upgrade(element_factory, modeling_language):
     elements = parse(path)
     load_elements(elements, element_factory, modeling_language)
 
-    diagram = element_factory.lselect(lambda e: e.isKindOf(UML.Diagram))[0]
+    diagram = element_factory.lselect(UML.Diagram)[0]
     items = diagram.canvas.get_root_items()
     message_items = [i for i in items if isinstance(i, diagramitems.MessageItem)]
     subjects = [m.subject for m in message_items]
-    messages = element_factory.lselect(lambda e: e.isKindOf(UML.Message))
+    messages = element_factory.lselect(UML.Message)
     presentations = [m.presentation for m in messages]
 
     assert len(messages) == 10

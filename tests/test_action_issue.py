@@ -15,18 +15,18 @@ class ActionIssueTestCase(TestCase):
         path = distribution().locate_file("test-models/action-issue.gaphor")
         storage.load(path, ef, modeling_language)
 
-        actions = ef.lselect(lambda e: e.isKindOf(UML.Action))
-        flows = ef.lselect(lambda e: e.isKindOf(UML.ControlFlow))
+        actions = ef.lselect(UML.Action)
+        flows = ef.lselect(UML.ControlFlow)
         assert 3 == len(actions)
         assert 3 == len(flows)
 
         # Actions live in partitions:
-        partitions = ef.lselect(lambda e: e.isKindOf(UML.ActivityPartition))
+        partitions = ef.lselect(UML.ActivityPartition)
         assert 2 == len(partitions)
 
         # Okay, so far the data model is saved correctly. Now, how do the
         # handles behave?
-        diagrams = ef.lselect(lambda e: e.isKindOf(UML.Diagram))
+        diagrams = ef.lselect(UML.Diagram)
         assert 1 == len(diagrams)
 
         canvas = diagrams[0].canvas

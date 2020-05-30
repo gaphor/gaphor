@@ -11,7 +11,14 @@ from typing import List
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, draw_highlight
+from gaphor.diagram.shapes import (
+    Box,
+    SizeContext,
+    Text,
+    cairo_state,
+    draw_highlight,
+    stroke,
+)
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import VerticalAlign
 from gaphor.UML.modelfactory import stereotypes_str
@@ -35,7 +42,6 @@ class PartitionItem(ElementPresentation, Named):
                     self.subject,
                     self.subject and self.subject.isExternal and ("external",) or (),
                 ),
-                style={"min-width": 0, "min-height": 0},
             ),
             Text(text=lambda: self.subject.name or ""),
             style={
@@ -57,7 +63,9 @@ class PartitionItem(ElementPresentation, Named):
     def pre_update(self, context):
         assert self.canvas
 
-        self._header_size = self.shape.size(context.cairo)
+        self._header_size = self.shape.size(
+            SizeContext.from_context(context, self.style)
+        )
 
         # get subpartitions
         children: List[PartitionItem] = list(
@@ -113,7 +121,7 @@ class PartitionItem(ElementPresentation, Named):
         assert self.canvas
 
         cr = context.cairo
-        cr.set_line_width(box.style("line-width"))
+        cr.set_line_width(context.style["line-width"])
 
         if self.subject and not self.subject.isDimension and self._toplevel:
             cr.move_to(0, 0)
@@ -142,13 +150,12 @@ class PartitionItem(ElementPresentation, Named):
                 cr.move_to(dp, h)
                 cr.line_to(dp, bounding_box.height)
 
-        cr.stroke()
+        stroke(context)
 
         if context.hovered or context.dropzone:
-            cr.save()
-            cr.set_dash((1.0, 5.0), 0)
-            cr.set_line_width(1.0)
-            cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
-            draw_highlight(context)
-            cr.stroke()
-            cr.restore()
+            with cairo_state(cr):
+                cr.set_dash((1.0, 5.0), 0)
+                cr.set_line_width(1.0)
+                cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
+                draw_highlight(context)
+                cr.stroke()

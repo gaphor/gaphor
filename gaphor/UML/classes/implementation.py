@@ -18,10 +18,7 @@ class ImplementationItem(LinePresentation, Named):
         super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
 
         self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            ),
+            Text(text=lambda: stereotypes_str(self.subject),),
             EditableText(text=lambda: self.subject.name or ""),
         )
         self.watch("subject[NamedElement].name")
@@ -46,7 +43,7 @@ class ImplementationItem(LinePresentation, Named):
     def draw_head(self, context):
         cr = context.cairo
         cr.move_to(0, 0)
-        if self.style("dash-style"):
+        if context.style.get("dash-style"):
             cr.set_dash((), 0)
             cr.line_to(15, -10)
             cr.line_to(15, 10)

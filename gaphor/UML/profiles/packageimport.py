@@ -16,7 +16,6 @@ class PackageImportItem(LinePresentation):
 
         self.shape_middle = Text(
             text=lambda: stereotypes_str(self.subject, ("import",)),
-            style={"min-width": 0, "min-height": 0},
         )
         self.watch("subject.appliedStereotype.classifier.name")
         self.draw_head = draw_arrow_head

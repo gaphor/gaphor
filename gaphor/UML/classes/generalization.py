@@ -15,12 +15,7 @@ class GeneralizationItem(LinePresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-                style={"min-width": 0, "min-height": 0},
-            )
-        )
+        self.shape_middle = Box(Text(text=lambda: stereotypes_str(self.subject),))
         self.watch("subject.appliedStereotype.classifier.name")
 
     def draw_head(self, context):

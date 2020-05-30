@@ -31,10 +31,7 @@ class ObjectNodeItem(ElementPresentation, Named):
 
         self.shape = IconBox(
             Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
-                    style={"min-width": 0, "min-height": 0},
-                ),
+                Text(text=lambda: stereotypes_str(self.subject),),
                 EditableText(text=lambda: self.subject.name or ""),
                 style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
                 draw=draw_border,
@@ -42,13 +39,11 @@ class ObjectNodeItem(ElementPresentation, Named):
             Text(
                 text=lambda: self.subject.upperBound not in (None, DEFAULT_UPPER_BOUND)
                 and f"{{ upperBound = {self.subject.upperBound} }}",
-                style={"min-width": 0, "min-height": 0},
             ),
             Text(
                 text=lambda: self._show_ordering
                 and self.subject.ordering
                 and f"{{ ordering = {self.subject.ordering} }}",
-                style={"min-width": 0, "min-height": 0},
             ),
         )
 

@@ -184,7 +184,7 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
     )
     yield from _load_attributes_and_references(elements, update_status_queue)
 
-    for d in factory.select(lambda e: isinstance(e, Diagram)):
+    for d in factory.select(Diagram):
         canvas = d.canvas
         # update_now() is implicitly called when lock is released
         canvas.block_updates = False
@@ -222,6 +222,7 @@ def _load_elements_and_canvasitems(
         yield from update_status_queue()
         if isinstance(elem, parser.element):
             cls = modeling_language.lookup_element(elem.type)
+            assert cls, f"Type {elem.type} can not be loaded: no such element"
             elem.element = factory.create_as(cls, id)
             if isinstance(elem.element, Diagram):
                 assert elem.canvas

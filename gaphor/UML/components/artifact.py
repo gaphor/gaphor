@@ -5,7 +5,14 @@ Artifact item.
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
+from gaphor.diagram.shapes import (
+    Box,
+    EditableText,
+    Text,
+    cairo_state,
+    draw_border,
+    stroke,
+)
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.UML.classes.stereotype import stereotype_compartments
@@ -29,10 +36,7 @@ class ArtifactItem(ElementPresentation, Classified):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: UML.model.stereotypes_str(self.subject),
-                    style={"min-width": 0, "min-height": 0},
-                ),
+                Text(text=lambda: UML.model.stereotypes_str(self.subject),),
                 EditableText(
                     text=lambda: self.subject.name or "",
                     style={"font-weight": FontWeight.BOLD},
@@ -62,8 +66,7 @@ def draw_artifact_icon(box, context, bounding_box):
     ix = bounding_box.width - icon_margin_x - w
     iy = icon_margin_y
 
-    cr.save()
-    try:
+    with cairo_state(context.cairo) as cr:
         cr.set_line_width(1.0)
         cr.move_to(ix + w - ear, iy)
         for x, y in (
@@ -76,6 +79,6 @@ def draw_artifact_icon(box, context, bounding_box):
             (ix + w, iy + ear),
         ):
             cr.line_to(x, y)
+        stroke_color = context.style["color"] or (0, 0, 0, 1)
+        cr.set_source_rgba(*stroke_color)
         cr.stroke()
-    finally:
-        cr.restore()
