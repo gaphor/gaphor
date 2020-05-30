@@ -1,4 +1,9 @@
-from gaphor.diagram.presentation import from_package_str
+from gaphor.core.modeling.properties import attribute
+from gaphor.diagram.presentation import (
+    Classified,
+    ElementPresentation,
+    from_package_str,
+)
 from gaphor.diagram.shapes import (
     Box,
     EditableText,
@@ -13,34 +18,49 @@ from gaphor.diagram.shapes import (
 from gaphor.diagram.support import represents
 from gaphor.SysML.sysml import Requirement
 from gaphor.UML.classes.klass import (
-    ClassItem,
+    attribute_watches,
     attributes_compartment,
+    operation_watches,
     operations_compartment,
     stereotype_compartments,
+    stereotype_watches,
 )
 from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(Requirement)
-class RequirementItem(ClassItem):
+class RequirementItem(ElementPresentation[Requirement], Classified):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self.show_attributes = False
-        self.show_operations = False
-        self.watch("subject[AbstractRequirement].externalId", self.update_shapes)
-        self.watch("subject[AbstractRequirement].text", self.update_shapes)
+        self.watch("show_stereotypes", self.update_shapes).watch(
+            "show_attributes", self.update_shapes
+        ).watch("show_operations", self.update_shapes).watch(
+            "subject[NamedElement].name"
+        ).watch(
+            "subject[NamedElement].namespace.name"
+        ).watch(
+            "subject[Classifier].isAbstract", self.update_shapes
+        ).watch(
+            "subject[AbstractRequirement].externalId", self.update_shapes
+        ).watch(
+            "subject[AbstractRequirement].text", self.update_shapes
+        )
+        attribute_watches(self, "Requirement")
+        operation_watches(self, "Requirement")
+        stereotype_watches(self)
 
-    def additional_stereotypes(self):
-        return ["requirement"]
+    show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
+
+    show_attributes: attribute[int] = attribute("show_attributes", int, default=False)
+
+    show_operations: attribute[int] = attribute("show_operations", int, default=False)
 
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: stereotypes_str(
-                        self.subject, self.additional_stereotypes()
-                    ),
+                    text=lambda: stereotypes_str(self.subject, ["requirement"]),
                     style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(
@@ -82,7 +102,7 @@ class RequirementItem(ClassItem):
         )
 
     def id_and_text_compartment(self):
-        subject: Requirement = self.subject  # type: ignore[assignment]
+        subject = self.subject
         if subject and (subject.externalId or subject.text):
             return Box(
                 *(

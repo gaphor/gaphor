@@ -46,20 +46,11 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
         ).watch(
             "subject[NamedElement].namespace.name"
         ).watch(
-            "subject.appliedStereotype", self.update_shapes
-        ).watch(
-            "subject.appliedStereotype.classifier.name"
-        ).watch(
-            "subject.appliedStereotype.slot", self.update_shapes
-        ).watch(
-            "subject.appliedStereotype.slot.definingFeature.name"
-        ).watch(
-            "subject.appliedStereotype.slot.value", self.update_shapes
-        ).watch(
             "subject[Classifier].isAbstract", self.update_shapes
         )
         attribute_watches(self, "Class")
         operation_watches(self, "Class")
+        stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
@@ -140,6 +131,8 @@ def attribute_watches(presentation, cast):
     ).watch(
         f"subject[{cast}].ownedAttribute.defaultValue"
     ).watch(
+        f"subject[{cast}].ownedAttribute.type"
+    ).watch(
         f"subject[{cast}].ownedAttribute.typeValue"
     )
 
@@ -167,6 +160,16 @@ def operation_watches(presentation, cast):
         f"subject[{cast}].ownedOperation.formalParameter.typeValue"
     ).watch(
         f"subject[{cast}].ownedOperation.formalParameter.defaultValue"
+    )
+
+
+def stereotype_watches(presentation):
+    presentation.watch("subject.appliedStereotype", presentation.update_shapes).watch(
+        "subject.appliedStereotype.classifier.name"
+    ).watch("subject.appliedStereotype.slot", presentation.update_shapes).watch(
+        "subject.appliedStereotype.slot.definingFeature.name"
+    ).watch(
+        "subject.appliedStereotype.slot.value", presentation.update_shapes
     )
 
 

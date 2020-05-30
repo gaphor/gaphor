@@ -5,6 +5,9 @@ from gi.repository import Gtk
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.SysML import sysml
+from gaphor.SysML.blocks.block import BlockItem
+from gaphor.SysML.requirements.requirement import RequirementItem
+from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
 
 
 def new_builder(*object_ids):
@@ -70,3 +73,49 @@ class RequirementPropertyPage(PropertyPageBase):
         self.subject.text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
+
+
+PropertyPages.register(RequirementItem)(AttributesPage)
+PropertyPages.register(RequirementItem)(OperationsPage)
+
+
+@PropertyPages.register(BlockItem)
+class PartsAndReferencesPage(PropertyPageBase):
+    """An editor for Block items."""
+
+    order = 30
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+        self.watcher = item.subject and item.subject.watcher()
+
+    def construct(self):
+        if not self.item.subject:
+            return
+
+        builder = new_builder("parts-and-references-editor")
+
+        show_parts = builder.get_object("show-parts")
+        show_parts.set_active(self.item.show_parts)
+
+        show_references = builder.get_object("show-references")
+        show_references.set_active(self.item.show_references)
+
+        builder.connect_signals(
+            {
+                "show-parts-changed": (self._on_show_parts_change,),
+                "show-references-changed": (self._on_show_references_change,),
+            }
+        )
+        return builder.get_object("parts-and-references-editor")
+
+    @transactional
+    def _on_show_parts_change(self, button):
+        self.item.show_parts = button.get_active()
+        self.item.request_update()
+
+    @transactional
+    def _on_show_references_change(self, button):
+        self.item.show_references = button.get_active()
+        self.item.request_update()

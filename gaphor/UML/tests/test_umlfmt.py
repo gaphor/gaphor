@@ -79,6 +79,17 @@ def test_association_end(factory, text, name_part, mult_part):
     assert (name_part, mult_part) == format(a)
 
 
+def test_attribute_with_type(factory):
+    """Test simple attribute formatting
+    """
+    a = factory.create(UML.Property)
+    a.type = factory.create(UML.Class)
+    a.name = "attr"
+    a.type.name = "MyClass"
+
+    assert "+ attr: MyClass" == format(a)
+
+
 def test_association_end_with_applied_stereotype(factory):
     a = factory.create(UML.Property)
     a.association = factory.create(UML.Association)

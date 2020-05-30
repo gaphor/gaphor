@@ -216,7 +216,7 @@ def test_relationship_navigability(element_factory):
 
     # class/interface navigability, Association.navigableOwnedEnd not
     # involved
-    assert end in assoc.navigableOwnedEnd
+    assert end in n2.ownedAttribute
     assert end not in assoc.ownedEnd
     assert end.navigability is True
 
@@ -239,7 +239,7 @@ def test_relationship_navigability(element_factory):
     assert end.navigability is None
 
     UML.model.set_navigability(assoc, end, True)
-    assert end in assoc.navigableOwnedEnd
+    assert end in n2.ownedAttribute
     assert end not in assoc.ownedEnd
     assert end.navigability is True
 
