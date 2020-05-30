@@ -132,6 +132,8 @@ def attribute_watches(presentation, cast):
     ).watch(
         f"subject[{cast}].ownedAttribute.defaultValue"
     ).watch(
+        f"subject[{cast}].ownedAttribute.type"
+    ).watch(
         f"subject[{cast}].ownedAttribute.typeValue"
     )
 
