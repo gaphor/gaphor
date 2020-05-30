@@ -82,6 +82,8 @@ def format_attribute(
 
     if type and el.typeValue:
         s.append(f": {el.typeValue}")
+    elif type and el.type and el.type.name:
+        s.append(f": {el.type.name}")
 
     if multiplicity:
         s.append(format_multiplicity(el))
