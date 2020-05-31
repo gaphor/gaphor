@@ -22,6 +22,7 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
+from gaphor.SysML import sysml
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
@@ -46,9 +47,12 @@ _default_filter_list = (
     UML.Actor,
     Diagram,
     UML.Profile,
+    UML.State,
     UML.Stereotype,
     UML.Property,
     UML.Operation,
+    sysml.Block,
+    sysml.Requirement,
 )
 
 
