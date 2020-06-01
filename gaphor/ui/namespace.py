@@ -26,6 +26,8 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.iconname import get_icon_name
+from gaphor.UML.umlfmt import format_attribute, format_operation
+from gaphor.UML.umllex import parse
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import ElementFactory
@@ -100,10 +102,15 @@ class NamespaceView(Gtk.TreeView):
     def _set_pixbuf(self, column, cell, model, iter, data):
         element = model.get_value(iter, 0)
 
-        icon_name = get_icon_name(element)
+        if isinstance(element, (UML.Property, UML.Operation)):
+            cell.set_property("icon-name", None)
+            cell.set_property("visible", False)
+        else:
+            icon_name = get_icon_name(element)
+            cell.set_property("visible", True)
 
-        if icon_name:
-            cell.set_property("icon-name", icon_name)
+            if icon_name:
+                cell.set_property("icon-name", icon_name)
 
     def _set_text(self, column, cell, model, iter, data):
         """
@@ -118,6 +125,10 @@ class NamespaceView(Gtk.TreeView):
             isinstance(element, UML.Classifier) or isinstance(element, UML.Operation)
         ) and element.isAbstract:
             text = f"<i>{text}</i>"
+        elif isinstance(element, UML.Property):
+            text = format_attribute(element)
+        elif isinstance(element, UML.Operation):
+            text = format_operation(element)
 
         cell.set_property("markup", text)
 
@@ -132,7 +143,10 @@ class NamespaceView(Gtk.TreeView):
             model = self.get_property("model")
             iter = model.get_iter_from_string(path_str)
             element = model.get_value(iter, 0)
-            element.name = new_text
+            if isinstance(element, (UML.Property, UML.Operation)):
+                parse(element, new_text)
+            else:
+                element.name = new_text
         except Exception:
             log.error(f'Could not create path from string "{path_str}"')
 
