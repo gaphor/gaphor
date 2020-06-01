@@ -31,26 +31,6 @@ if TYPE_CHECKING:
     from gaphor.core.modeling import ElementFactory
     from gaphor.core.eventmanager import EventManager
 
-# The following items will be shown in the treeview, although they
-# are UML.Namespace elements.
-_default_filter_list = (
-    UML.Class,
-    UML.Interface,
-    UML.Package,
-    UML.Component,
-    UML.Device,
-    UML.Node,
-    UML.Artifact,
-    UML.Interaction,
-    UML.UseCase,
-    UML.Actor,
-    Diagram,
-    UML.Profile,
-    UML.Stereotype,
-    UML.Property,
-    UML.Operation,
-)
-
 
 log = logging.getLogger(__name__)
 
@@ -259,7 +239,6 @@ class Namespace(UIComponent):
         self.element_factory = element_factory
         self._namespace: Optional[NamespaceView] = None
         self.model = Gtk.TreeStore.new([object])
-        self.toplevel_types = _default_filter_list
 
     def open(self):
         em = self.event_manager
@@ -406,9 +385,10 @@ class Namespace(UIComponent):
         return None
 
     def _visible(self, element):
-        # Special case: Non-navigable properties
-        return type(element) in self.toplevel_types and not (
-            isinstance(element, UML.Property) and element.namespace is None
+        """ Special case: Non-navigable properties. """
+        return isinstance(element, UML.NamedElement) and not (
+            isinstance(element, (UML.Property, UML.InstanceSpecification))
+            and element.namespace is None
         )
 
     def _add(self, element, iter=None):
@@ -431,13 +411,12 @@ class Namespace(UIComponent):
         self.model.clear()
 
         toplevel = self.element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement)
-            and type(e) in self.toplevel_types
-            and not e.namespace
+            lambda e: isinstance(e, UML.NamedElement) and not e.namespace
         )
 
         for element in toplevel:
-            self._add(element)
+            if self._visible(element):
+                self._add(element)
 
         # Expand all root elements:
         if self._namespace:  # None for testing
@@ -458,7 +437,7 @@ class Namespace(UIComponent):
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
         element = event.element
-        if type(element) in self.toplevel_types:
+        if isinstance(element, UML.NamedElement):
             iter = self.iter_for_element(element)
             # iter should be here, unless we try to delete an element who's
             # parent element is already deleted, so let's be lenient.
