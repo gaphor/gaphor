@@ -386,9 +386,13 @@ class Namespace(UIComponent):
 
     def _visible(self, element):
         """ Special case: Non-navigable properties. """
-        return isinstance(element, UML.NamedElement) and not (
-            isinstance(element, (UML.Property, UML.InstanceSpecification))
-            and element.namespace is None
+        return (
+            isinstance(element, UML.NamedElement)
+            and not (
+                isinstance(element, (UML.Property, UML.InstanceSpecification))
+                and element.namespace is None
+            )
+            and not isinstance(element, UML.Relationship)
         )
 
     def _add(self, element, iter=None):
