@@ -207,7 +207,7 @@ class NamespaceView(Gtk.TreeView):
             element = self.element_factory.lookup(element_id)
             assert isinstance(
                 element, (Diagram, UML.Package, UML.Type)
-            ), f"Element with id {element_id} is not part of the model"
+            ), f"Element {element} can not be moved"
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)
@@ -401,13 +401,9 @@ class Namespace(UIComponent):
     def _visible(self, element):
         """ Special case: Non-navigable properties. """
         return (
-            isinstance(element, UML.NamedElement)
-            and not (
-                isinstance(element, (UML.Property, UML.InstanceSpecification))
-                and element.namespace is None
-            )
-            and not isinstance(element, UML.Relationship)
-        )
+            (isinstance(element, UML.NamedElement) and element.namespace)
+            or isinstance(element, UML.PackageableElement)
+        ) and not isinstance(element, (UML.InstanceSpecification, UML.Relationship))
 
     def _add(self, element, iter=None):
         if self._visible(element):
@@ -429,7 +425,7 @@ class Namespace(UIComponent):
         self.model.clear()
 
         toplevel = self.element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement) and not e.namespace
+            lambda e: isinstance(e, UML.PackageableElement) and not e.namespace
         )
 
         for element in toplevel:

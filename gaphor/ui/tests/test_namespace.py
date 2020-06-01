@@ -37,7 +37,7 @@ def test_root_element(namespace, element_factory):
 
 
 def test_should_not_add_non_namespace_element(namespace, element_factory):
-    element_factory.create(UML.Activity)
+    element_factory.create(UML.Action)
 
     assert namespace.model.iter_n_children(None) == 0
 
