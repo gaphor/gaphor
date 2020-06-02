@@ -305,4 +305,4 @@ def test_operation_parameter_deletion(factory):
 
     c.unlink()
 
-    assert 0 == len(factory.lselect()), factory.lselect()
+    assert len(factory.lselect()) == 0, factory.lselect()
