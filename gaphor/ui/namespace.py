@@ -219,13 +219,15 @@ class NamespaceView(Gtk.TreeView):
             dest_element = model.get_value(iter, 0)
             assert dest_element
             # Add the item to the parent if it is dropped on the same level,
-                    # else add it to the item.
+            # else add it to the item.
             if position in (
-                        Gtk.TreeViewDropPosition.BEFORE,
-                        Gtk.TreeViewDropPosition.AFTER,
-                    ):
+                Gtk.TreeViewDropPosition.BEFORE,
+                Gtk.TreeViewDropPosition.AFTER,
+            ):
                 parent_iter = model.iter_parent(iter)
-                dest_element = None if parent_iter is None else model.get_value(parent_iter, 0)
+                dest_element = (
+                    None if parent_iter is None else model.get_value(parent_iter, 0)
+                )
             try:
                 # Check if element is part of the namespace of dest_element:
                 ns = dest_element
@@ -487,10 +489,10 @@ class Namespace(UIComponent):
         Element changed, update appropriate row.
         """
         if (
-                event.property is UML.Classifier.isAbstract
-                or event.property is UML.BehavioralFeature.isAbstract
-                or event.property is UML.NamedElement.name
-            ):
+            event.property is UML.Classifier.isAbstract
+            or event.property is UML.BehavioralFeature.isAbstract
+            or event.property is UML.NamedElement.name
+        ):
             element = event.element
 
             iter = self.iter_for_element(element)
@@ -607,7 +609,7 @@ class Namespace(UIComponent):
         diagram = self.element_factory.create(Diagram)
         diagram.package = element
 
-        diagram.name = f'{element.name} diagram' if element else 'New diagram'
+        diagram.name = f"{element.name} diagram" if element else "New diagram"
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()
@@ -620,7 +622,7 @@ class Namespace(UIComponent):
         package = self.element_factory.create(UML.Package)
         package.package = element
 
-        package.name = f'{element.name} package' if element else 'New model'
+        package.name = f"{element.name} package" if element else "New model"
         self.select_element(package)
         self.tree_view_rename_selected()
 

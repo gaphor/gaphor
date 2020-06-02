@@ -34,9 +34,9 @@ class XMIExport:
     def handlePackage(self, xmi, element, idref=False):
 
         attributes = {
-            f'{self.XMI_PREFIX}:id': element.id,
-            'name': element.name,
-            'visibility': element.visibility,
+            f"{self.XMI_PREFIX}:id": element.id,
+            "name": element.name,
+            "visibility": element.visibility,
         }
 
         xmi.startElement(f"{self.UML_PREFIX}:Package", attrs=attributes)
@@ -78,13 +78,13 @@ class XMIExport:
     def handleProperty(self, xmi, element, idref=False):
 
         attributes = {
-            f'{self.XMI_PREFIX}:id': element.id,
-            'isStatic': str(element.isStatic),
-            'isOrdered': str(element.isOrdered),
-            'isUnique': str(element.isUnique),
-            'isDerived': str(element.isDerived),
-            'isDerivedUnion': str(element.isDerivedUnion),
-            'isReadOnly': str(element.isReadOnly),
+            f"{self.XMI_PREFIX}:id": element.id,
+            "isStatic": str(element.isStatic),
+            "isOrdered": str(element.isOrdered),
+            "isUnique": str(element.isUnique),
+            "isDerived": str(element.isDerived),
+            "isDerivedUnion": str(element.isDerivedUnion),
+            "isReadOnly": str(element.isReadOnly),
         }
 
         if element.name is not None:
@@ -103,10 +103,10 @@ class XMIExport:
     def handleOperation(self, xmi, element, idref=False):
 
         attributes = {
-            f'{self.XMI_PREFIX}:id': element.id,
-            'isStatic': str(element.isStatic),
-            'isQuery': str(element.isQuery),
-            'name': element.name,
+            f"{self.XMI_PREFIX}:id": element.id,
+            "isStatic": str(element.isStatic),
+            "isQuery": str(element.isQuery),
+            "name": element.name,
         }
 
         xmi.startElement(f"{self.XMI_PREFIX}:Operation", attrs=attributes)
@@ -121,11 +121,11 @@ class XMIExport:
     def handleParameter(self, xmi, element, idref=False):
 
         attributes = {
-            f'{self.XMI_PREFIX}:id': element.id,
-            'isOrdered': str(element.isOrdered),
-            'isUnique': str(element.isUnique),
-            'direction': element.direction,
-            'name': element.name,
+            f"{self.XMI_PREFIX}:id": element.id,
+            "isOrdered": str(element.isOrdered),
+            "isUnique": str(element.isUnique),
+            "direction": element.direction,
+            "name": element.name,
         }
 
         xmi.startElement(f"{self.XMI_PREFIX}:Parameter", attrs=attributes)
@@ -134,7 +134,7 @@ class XMIExport:
 
     def handleLiteralSpecification(self, xmi, element, idref=False):
 
-        attributes = {f'{self.XMI_PREFIX}:id': element.id, 'value': element.value}
+        attributes = {f"{self.XMI_PREFIX}:id": element.id, "value": element.value}
         xmi.startElement(f"{self.UML_PREFIX}:LiteralSpecification", attrs=attributes)
 
         xmi.endElement(f"{self.UML_PREFIX}:LiteralSpecification")
@@ -142,8 +142,8 @@ class XMIExport:
     def handleAssociation(self, xmi, element, idref=False):
 
         attributes = {
-            f'{self.XMI_PREFIX}:id': element.id,
-            'isDerived': str(element.isDerived),
+            f"{self.XMI_PREFIX}:id": element.id,
+            "isDerived": str(element.isDerived),
         }
 
         xmi.startElement(f"{self.UML_PREFIX}:Association", attrs=attributes)
@@ -162,7 +162,7 @@ class XMIExport:
 
     def handleDependency(self, xmi, element, idref=False):
 
-        attributes = {f'{self.XMI_PREFIX}:id': element.id}
+        attributes = {f"{self.XMI_PREFIX}:id": element.id}
         xmi.startElement(f"{self.UML_PREFIX}:Dependency", attrs=attributes)
 
         for client in element.client:
@@ -180,8 +180,8 @@ class XMIExport:
     def handleGeneralization(self, xmi, element, idref=False):
 
         attributes = {
-            f'{self.XMI_PREFIX}:id': element.id,
-            'isSubstitutable': str(element.isSubstitutable),
+            f"{self.XMI_PREFIX}:id": element.id,
+            "isSubstitutable": str(element.isSubstitutable),
         }
 
         xmi.startElement(f"{self.UML_PREFIX}:Generalization", attrs=attributes)
@@ -200,7 +200,7 @@ class XMIExport:
 
     def handleRealization(self, xmi, element, idref=False):
 
-        attributes = {f'{self.XMI_PREFIX}:id': element.id}
+        attributes = {f"{self.XMI_PREFIX}:id": element.id}
         xmi.startElement(f"{self.UML_PREFIX}:Realization", attrs=attributes)
 
         for client in element.client:
@@ -217,7 +217,7 @@ class XMIExport:
 
     def handleInterface(self, xmi, element, idref=False):
 
-        attributes = {f'{self.XMI_PREFIX}:id': element.id}
+        attributes = {f"{self.XMI_PREFIX}:id": element.id}
         xmi.startElement(f"{self.UML_PREFIX}:Interface", attrs=attributes)
 
         for ownedAttribute in element.ownedAttribute:
@@ -238,9 +238,9 @@ class XMIExport:
         xmi = XMLWriter(out)
 
         attributes = {
-            'xmi.version': self.XMI_VERSION,
-            'xmlns:xmi': self.XMI_NAMESPACE,
-            'xmlns:UML': self.UML_NAMESPACE,
+            "xmi.version": self.XMI_VERSION,
+            "xmlns:xmi": self.XMI_NAMESPACE,
+            "xmlns:UML": self.UML_NAMESPACE,
         }
 
         xmi.startElement("XMI", attrs=attributes)

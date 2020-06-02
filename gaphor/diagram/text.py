@@ -307,7 +307,7 @@ def _text_point_at_line_center(size, p1, p2):
     width, height = size
 
     # move to center and move by delta depending on line angle
-    if d2 < 0.5774:    # <0, 30>, <150, 180>, <-180, -150>, <-30, 0>
+    if d2 < 0.5774:  # <0, 30>, <150, 180>, <-180, -150>, <-30, 0>
         # horizontal mode
         w2 = width / 2.0
         hint = w2 * d2
@@ -315,7 +315,7 @@ def _text_point_at_line_center(size, p1, p2):
         x = x0 - w2
         y = y0 + hint + ofs
     else:
-            # much better in case of vertical lines
+        # much better in case of vertical lines
 
         # determine quadrant, we are interested in 1 or 3 and 2 or 4
         # see hint tuples below

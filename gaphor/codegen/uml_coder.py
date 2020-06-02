@@ -88,7 +88,7 @@ def get_association_ends(a, properties, classes):
     for end in a.memberEnd:
         end = properties[end]
         end.type = classes[end["type"]]
-        end.class_ = classes[end['class_']] if end.get('class_') else None
+        end.class_ = classes[end["class_"]] if end.get("class_") else None
         end.is_simple_attribute = False
         if end.type is not None and end.type.stereotypeName == "SimpleAttribute":
             end.is_simple_attribute = True
@@ -119,7 +119,7 @@ def parse_association_end(head, tail):
     name = head.name
     if name is None:
         raise ValueError(
-            'ERROR! no name, but navigable: %s (%s.%s)'
+            "ERROR! no name, but navigable: %s (%s.%s)"
             % (head.id, head.class_name, name)
         )
 

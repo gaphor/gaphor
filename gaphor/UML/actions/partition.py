@@ -69,11 +69,8 @@ class PartitionItem(ElementPresentation, Named):
 
         # get subpartitions
         children: List[PartitionItem] = [
-            k
-            for k in self.canvas.get_children(self)
-            if isinstance(k, PartitionItem)
+            k for k in self.canvas.get_children(self) if isinstance(k, PartitionItem)
         ]
-
 
         self._toplevel = self.canvas.get_parent(self) is None
         self._subpart = len(children) > 0

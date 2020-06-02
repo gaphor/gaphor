@@ -170,9 +170,9 @@ class AssociationItem(LinePresentation, Named):
 
         # Update line ends using the aggregation and isNavigable values:
         if head_subject and tail_subject:
-            if tail_subject.aggregation == 'composite':
+            if tail_subject.aggregation == "composite":
                 self.draw_head = draw_head_composite
-            elif tail_subject.aggregation == 'shared':
+            elif tail_subject.aggregation == "shared":
                 self.draw_head = draw_head_shared
             elif head_subject.navigability is True:
                 self.draw_head = draw_head_navigable
@@ -180,9 +180,9 @@ class AssociationItem(LinePresentation, Named):
                 self.draw_head = draw_head_none
             else:
                 self.draw_head = draw_default_head
-            if head_subject.aggregation == 'composite':
+            if head_subject.aggregation == "composite":
                 self.draw_tail = draw_tail_composite
-            elif head_subject.aggregation == 'shared':
+            elif head_subject.aggregation == "shared":
                 self.draw_tail = draw_tail_shared
             elif tail_subject.navigability is True:
                 self.draw_tail = draw_tail_navigable
