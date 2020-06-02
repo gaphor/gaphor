@@ -69,16 +69,16 @@ def parse_association_tags(appliedStereotypes):
     for stereotype in appliedStereotypes or []:
         for slot in stereotype.slot or []:
 
-            if slot.definingFeature.name == "subsets":
-                value = slot.value
-                # remove all whitespaces and stuff
-                value = value.replace(" ", "").replace("\n", "").replace("\r", "")
-                subsets = value.split(",")
-
             if slot.definingFeature.name == "redefines":
                 value = slot.value
                 # remove all whitespaces and stuff
                 redefines = value.replace(" ", "").replace("\n", "").replace("\r", "")
+
+            elif slot.definingFeature.name == "subsets":
+                value = slot.value
+                # remove all whitespaces and stuff
+                value = value.replace(" ", "").replace("\n", "").replace("\r", "")
+                subsets = value.split(",")
 
     return subsets, redefines
 
@@ -88,10 +88,7 @@ def get_association_ends(a, properties, classes):
     for end in a.memberEnd:
         end = properties[end]
         end.type = classes[end["type"]]
-        if end.get("class_"):
-            end.class_ = classes[end["class_"]]
-        else:
-            end.class_ = None
+        end.class_ = classes[end['class_']] if end.get('class_') else None
         end.is_simple_attribute = False
         if end.type is not None and end.type.stereotypeName == "SimpleAttribute":
             end.is_simple_attribute = True
@@ -122,8 +119,8 @@ def parse_association_end(head, tail):
     name = head.name
     if name is None:
         raise ValueError(
-            "ERROR! no name, but navigable: %s (%s.%s)"
-            % (head.id, head.class_name, head.name)
+            'ERROR! no name, but navigable: %s (%s.%s)'
+            % (head.id, head.class_name, name)
         )
 
     upper = head.upperValue or "*"
@@ -204,9 +201,7 @@ def enrich_classes_with_stereotypes(classes, all_elements, writer):
 
 def enrich_enumerations_with_values(enumerations, properties):
     for e in list(enumerations.values()):
-        values = []
-        for key in e["ownedAttribute"]:
-            values.append(str(properties[key]["name"]))
+        values = [str(properties[key]["name"]) for key in e["ownedAttribute"]]
         e.enumerates = tuple(values)
     return enumerations
 

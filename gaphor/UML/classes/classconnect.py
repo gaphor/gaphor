@@ -21,7 +21,7 @@ class DependencyConnect(RelationshipConnect):
         element = self.element
 
         # Element should be a NamedElement
-        if not element.subject or not isinstance(element.subject, UML.NamedElement):
+        if not (element.subject and isinstance(element.subject, UML.NamedElement)):
             return False
 
         return super().allow(handle, port)
@@ -30,12 +30,13 @@ class DependencyConnect(RelationshipConnect):
         line = self.line
         dep = line.subject
         assert isinstance(dep, UML.Dependency)
-        if dep and handle is line.head:
-            for s in dep.supplier:
-                del dep.supplier[s]
-        elif dep and handle is line.tail:
-            for c in dep.client:
-                del dep.client[c]
+        if dep:
+            if handle is line.head:
+                for s in dep.supplier:
+                    del dep.supplier[s]
+            elif handle is line.tail:
+                for c in dep.client:
+                    del dep.client[c]
         self.reconnect_relationship(
             handle, line.dependency_type.supplier, line.dependency_type.client
         )

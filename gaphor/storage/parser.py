@@ -302,7 +302,7 @@ def parse(filename):
     """
     loader = GaphorLoader()
 
-    for x in parse_generator(filename, loader):
+    for _ in parse_generator(filename, loader):
         pass
     return loader.elements
 

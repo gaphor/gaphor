@@ -57,7 +57,7 @@ class SanitizerService(Service):
 
         element: Presentation = event.element
         subject = event.new_value
-        if not element.canvas or not subject:
+        if not (element.canvas and subject):
             return
 
         for cinfo in element.canvas.get_connections(connected=element):
@@ -107,8 +107,8 @@ class SanitizerService(Service):
             if not p:
                 return
             st = event.old_value
-            meta = getattr(UML, p.type.name, None)
             if st:
+                meta = getattr(UML, p.type.name, None)
                 self.perform_unlink_for_instances(st, meta)
 
     @event_handler(AssociationDeleted)
@@ -116,6 +116,7 @@ class SanitizerService(Service):
         """
         Remove applied stereotypes when stereotype is deleted.
         """
-        if event.property is UML.InstanceSpecification.classifier:
-            if isinstance(event.old_value, UML.Stereotype):
-                event.element.unlink()
+        if event.property is UML.InstanceSpecification.classifier and isinstance(
+            event.old_value, UML.Stereotype
+        ):
+            event.element.unlink()

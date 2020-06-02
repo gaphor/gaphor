@@ -71,7 +71,7 @@ def test_commentline_element_connect(create, diagram):
     connect(line, line.head, comment)
     connect(line, line.tail, ac)
     assert diagram.canvas.get_connection(line.tail).connected is ac
-    assert 1 == len(comment.subject.annotatedElement)
+    assert len(comment.subject.annotatedElement) == 1
     assert ac.subject in comment.subject.annotatedElement
 
 
@@ -94,7 +94,7 @@ def test_commentline_item_with_no_subject_connect(create, diagram):
     connect(line, line.head, comment)
     connect(line, line.tail, gi)
     assert diagram.canvas.get_connection(line.tail).connected is gi
-    assert 0 == len(comment.subject.annotatedElement)
+    assert len(comment.subject.annotatedElement) == 0
 
 
 def test_commentline_element_reconnect(create, diagram):
@@ -115,7 +115,7 @@ def test_commentline_element_reconnect(create, diagram):
     disconnect(line, line.tail)
     connect(line, line.tail, ac2)
     assert diagram.canvas.get_connection(line.tail).connected is ac2
-    assert 1 == len(comment.subject.annotatedElement)
+    assert len(comment.subject.annotatedElement) == 1
     assert ac2.subject in comment.subject.annotatedElement
 
 

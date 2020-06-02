@@ -186,9 +186,9 @@ def build_launcher(
                     os.path.basename(target),
                     file_version,
                     file_desc,
-                    "launcher.ico",
+                    'launcher.ico',
                     product_name,
-                    product_version,
+                    file_version,
                     company_name,
                 )
             )

@@ -29,7 +29,7 @@ class TransitionConnectorTestCase(TestCase):
 
         assert t.subject is not None
 
-        assert 1 == len(self.kindof(UML.Transition))
+        assert len(self.kindof(UML.Transition)) == 1
 
         assert t.subject == v1.subject.outgoing[0]
         assert t.subject == v2.subject.incoming[0]
@@ -57,15 +57,15 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.tail, v3)
 
         assert s is t.subject
-        assert 1 == len(self.kindof(UML.Transition))
+        assert len(self.kindof(UML.Transition)) == 1
 
         assert t.subject == v1.subject.outgoing[0]
         assert t.subject == v3.subject.incoming[0]
         assert t.subject.source == v1.subject
         assert t.subject.target == v3.subject
 
-        assert 0 == len(v2.subject.incoming)
-        assert 0 == len(v2.subject.outgoing)
+        assert len(v2.subject.incoming) == 0
+        assert len(v2.subject.outgoing) == 0
 
     def test_vertex_disconnect(self):
         """Test transition and state vertices disconnection
@@ -78,7 +78,7 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.tail, v2)
         assert t.subject is not None
 
-        assert 1 == len(self.kindof(UML.Transition))
+        assert len(self.kindof(UML.Transition)) == 1
 
         # test preconditions
         assert t.subject == v1.subject.outgoing[0]
@@ -107,7 +107,7 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.tail, v2)
         assert t.subject is not None
 
-        assert 1 == len(self.kindof(UML.Transition))
+        assert len(self.kindof(UML.Transition)) == 1
 
         # test preconditions
         assert t.subject == v1.subject.outgoing[0]
@@ -167,7 +167,7 @@ class TransitionConnectorTestCase(TestCase):
         self.connect(t, t.tail, v2)
         assert t.subject is not None
 
-        assert 1 == len(self.kindof(UML.Transition))
+        assert len(self.kindof(UML.Transition)) == 1
 
         assert t.subject == v1.subject.outgoing[0]
         assert t.subject == v2.subject.incoming[0]

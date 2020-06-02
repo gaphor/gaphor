@@ -124,7 +124,7 @@ def test_finding_stereotype_instances(element_factory):
     UML.model.apply_stereotype(c2, s1)
 
     result = [e.classifier[0].name for e in UML.model.find_instances(s1)]
-    assert 2 == len(result)
+    assert len(result) == 2
     assert "s1" in result, result
     assert "s2" not in result, result
 

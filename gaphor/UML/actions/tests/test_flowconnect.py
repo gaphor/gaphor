@@ -111,16 +111,16 @@ class FlowItemObjectNodeTestCase(TestCase):
         # reconnect: a1 -> o2
         self.connect(flow, flow.tail, o2)
 
-        assert 0 == len(a1.subject.incoming)
-        assert 1 == len(a1.subject.outgoing)
+        assert len(a1.subject.incoming) == 0
+        assert len(a1.subject.outgoing) == 1
         # no connections to o1
         self.assertEqual(0, len(o1.subject.incoming))
-        assert 0 == len(o1.subject.outgoing)
+        assert len(o1.subject.outgoing) == 0
         # connections to o2 instead
         self.assertEqual(1, len(o2.subject.incoming))
-        assert 0 == len(o2.subject.outgoing)
+        assert len(o2.subject.outgoing) == 0
 
-        assert 1 == len(self.kindof(UML.ObjectFlow))
+        assert len(self.kindof(UML.ObjectFlow)) == 1
         # one guard
         self.assertEqual("tname", flow.subject.name)
         assert "tguard" == flow.subject.guard
@@ -144,17 +144,17 @@ class FlowItemObjectNodeTestCase(TestCase):
         # reconnect with object flow: a1 -> o1
         self.connect(flow, flow.tail, o1)
 
-        assert 0 == len(a1.subject.incoming)
-        assert 1 == len(a1.subject.outgoing)
+        assert len(a1.subject.incoming) == 0
+        assert len(a1.subject.outgoing) == 1
         # no connections to a2
         self.assertEqual(0, len(a2.subject.incoming))
-        assert 0 == len(a2.subject.outgoing)
+        assert len(a2.subject.outgoing) == 0
         # connections to o1 instead
         self.assertEqual(1, len(o1.subject.incoming))
-        assert 0 == len(o1.subject.outgoing)
+        assert len(o1.subject.outgoing) == 0
 
-        assert 0 == len(self.kindof(UML.ControlFlow))
-        assert 1 == len(self.kindof(UML.ObjectFlow))
+        assert len(self.kindof(UML.ControlFlow)) == 0
+        assert len(self.kindof(UML.ObjectFlow)) == 1
         # one guard, not changed
         self.assertEqual("tname", flow.subject.name)
         assert "tguard" == flow.subject.guard
@@ -190,10 +190,10 @@ class FlowItemActionTestCase(TestCase):
 
         assert isinstance(flow.subject, UML.ControlFlow)
 
-        assert 0 == len(a1.subject.incoming)
-        assert 1 == len(a2.subject.incoming)
-        assert 1 == len(a1.subject.outgoing)
-        assert 0 == len(a2.subject.outgoing)
+        assert len(a1.subject.incoming) == 0
+        assert len(a2.subject.incoming) == 1
+        assert len(a1.subject.outgoing) == 1
+        assert len(a2.subject.outgoing) == 0
 
         assert flow.subject in a1.subject.outgoing
         assert flow.subject.source is a1.subject
@@ -212,10 +212,10 @@ class FlowItemActionTestCase(TestCase):
 
         self.disconnect(flow, flow.head)
         assert flow.subject is None
-        assert 0 == len(a1.subject.incoming)
-        assert 0 == len(a2.subject.incoming)
-        assert 0 == len(a1.subject.outgoing)
-        assert 0 == len(a2.subject.outgoing)
+        assert len(a1.subject.incoming) == 0
+        assert len(a2.subject.incoming) == 0
+        assert len(a1.subject.outgoing) == 0
+        assert len(a2.subject.outgoing) == 0
 
     def test_reconnect(self):
         """Test flow item reconnection
@@ -235,16 +235,16 @@ class FlowItemActionTestCase(TestCase):
         # reconnect: a1 -> a3
         self.connect(flow, flow.tail, a3)
 
-        assert 0 == len(a1.subject.incoming)
-        assert 1 == len(a1.subject.outgoing)
+        assert len(a1.subject.incoming) == 0
+        assert len(a1.subject.outgoing) == 1
         # no connections to a2
         self.assertEqual(0, len(a2.subject.incoming))
-        assert 0 == len(a2.subject.outgoing)
+        assert len(a2.subject.outgoing) == 0
         # connections to a3 instead
         self.assertEqual(1, len(a3.subject.incoming))
-        assert 0 == len(a3.subject.outgoing)
+        assert len(a3.subject.outgoing) == 0
 
-        assert 1 == len(self.kindof(UML.ControlFlow))
+        assert len(self.kindof(UML.ControlFlow)) == 1
         # one guard
         self.assertEqual("tname", flow.subject.name)
         assert "tguard" == flow.subject.guard
@@ -268,17 +268,17 @@ class FlowItemActionTestCase(TestCase):
         # reconnect with object flow: a1 -> a2
         self.connect(flow, flow.tail, a2)
 
-        assert 0 == len(a1.subject.incoming)
-        assert 1 == len(a1.subject.outgoing)
+        assert len(a1.subject.incoming) == 0
+        assert len(a1.subject.outgoing) == 1
         # no connections to o1
         self.assertEqual(0, len(o1.subject.incoming))
-        assert 0 == len(o1.subject.outgoing)
+        assert len(o1.subject.outgoing) == 0
         # connections to a2 instead
         self.assertEqual(1, len(a2.subject.incoming))
-        assert 0 == len(a2.subject.outgoing)
+        assert len(a2.subject.outgoing) == 0
 
-        assert 1 == len(self.kindof(UML.ControlFlow))
-        assert 0 == len(self.kindof(UML.ObjectFlow))
+        assert len(self.kindof(UML.ControlFlow)) == 1
+        assert len(self.kindof(UML.ObjectFlow)) == 0
         # one guard, not changed
         self.assertEqual("tname", flow.subject.name)
         assert "tguard" == flow.subject.guard
@@ -381,13 +381,13 @@ class FlowItemDesisionAndForkNodes:
         self.connect(flow2, flow2.head, jn)
         assert isinstance(jn.subject, self.join_node_cls)
 
-        assert 1 == len(jn.subject.incoming)
-        assert 1 == len(jn.subject.outgoing)
+        assert len(jn.subject.incoming) == 1
+        assert len(jn.subject.outgoing) == 1
         assert flow1.subject in jn.subject.incoming
         assert flow2.subject in jn.subject.outgoing
 
         self.connect(flow3, flow3.head, jn)
-        assert 2 == len(jn.subject.outgoing)
+        assert len(jn.subject.outgoing) == 2
 
         assert isinstance(jn.subject, self.fork_node_cls), f"{jn.subject}"
 

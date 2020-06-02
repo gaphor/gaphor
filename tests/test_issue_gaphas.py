@@ -15,7 +15,7 @@ class GaphasTest(TestCase):
 
         a = self.create(AssociationItem)
 
-        assert 3 == len(self.diagram.canvas.get_all_items())
+        assert len(self.diagram.canvas.get_all_items()) == 3
 
         self.connect(a, a.head, c1)
         self.connect(a, a.tail, c2)

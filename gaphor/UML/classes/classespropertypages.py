@@ -202,10 +202,7 @@ class InterfacePropertyPage(PropertyPageBase):
 
         fold = button.get_active()
 
-        if fold:
-            item.folded = Folded.PROVIDED
-        else:
-            item.folded = Folded.NONE
+        item.folded = Folded.PROVIDED if fold else Folded.NONE
 
 
 @PropertyPages.register(ClassItem)
@@ -474,7 +471,7 @@ class AssociationPropertyPage(PropertyPageBase):
             UML.format(subject, visibility=True, is_derived=True, multiplicity=True,)
             or ""
         )
-        if not name.is_focus() and not self.semaphore:
+        if not (name.is_focus() or self.semaphore):
             self.semaphore += 1
             name.set_text(new_name)
             self.semaphore -= 1

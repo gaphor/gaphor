@@ -100,7 +100,7 @@ def test_register_handler_twice(
 
     n_handlers = len(dispatcher._handlers)
 
-    assert 0 == len(event.events)
+    assert len(event.events) == 0
     dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
     assert n_handlers == len(dispatcher._handlers)
     dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
@@ -372,7 +372,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[1].one = a.one.two[0].one
         a.one.two[0].one.two = A()
 
-        assert 6 == len(self.events)
+        assert len(self.events) == 6
 
         a.unlink()
         watcher.unsubscribe_all()
@@ -397,12 +397,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[0].one.two = A()
         a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        assert 7 == len(self.events)
+        assert len(self.events) == 7
 
         a.unlink()
         watcher.unsubscribe_all()
         watcher.unsubscribe_all()
-        assert 0 == len(self.dispatcher._handlers)
+        assert len(self.dispatcher._handlers) == 0
 
     def test_braking_big_diamond(self):
         """
@@ -423,14 +423,14 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[0].one.two = A()
         a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        assert 7 == len(self.events)
-        assert 6 == len(self.dispatcher._handlers)
+        assert len(self.events) == 7
+        assert len(self.dispatcher._handlers) == 6
 
         del a.one.two[0].one
         # a.unlink()
         watcher.unsubscribe_all()
         watcher.unsubscribe_all()
-        assert 0 == len(self.dispatcher._handlers)
+        assert len(self.dispatcher._handlers) == 0
 
     def test_cyclic(self):
         """

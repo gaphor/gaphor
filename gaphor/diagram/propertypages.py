@@ -169,7 +169,7 @@ class EditableTreeModel(Gtk.ListStore):
         - a: path to first row
         - b: path to second row
         """
-        if not a or not b:
+        if not (a and b):
             return
         o1 = self[a][-1]
         o2 = self[b][-1]

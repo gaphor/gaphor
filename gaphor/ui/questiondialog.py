@@ -27,10 +27,7 @@ class QuestionDialog:
 
         answer = self.dialog.run()
 
-        if answer == Gtk.ResponseType.YES:
-            return True
-
-        return False
+        return answer == Gtk.ResponseType.YES
 
     def destroy(self):
         """Destroy the GTK dialog."""

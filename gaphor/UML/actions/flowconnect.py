@@ -164,15 +164,15 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         """
         Decombine join/fork or decision/merge nodes.
         """
-        fork_node_cls = self.fork_node_cls
-        join_node_cls = self.join_node_cls
         element = self.element
         if element.combined:
             join_node = element.subject
             cflow = join_node.outgoing[0]  # combining flow
             fork_node = cflow.target
             assert fork_node is element.combined
+            join_node_cls = self.join_node_cls
             assert isinstance(join_node, join_node_cls)
+            fork_node_cls = self.fork_node_cls
             assert isinstance(fork_node, fork_node_cls)
 
             if len(join_node.incoming) < 2 or len(fork_node.outgoing) < 2:

@@ -217,11 +217,10 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         return False
 
     def show_history(self):
-        if self.current_history == 0:
-            return True
-        else:
+        if self.current_history != 0:
             self.replace_line(self.history[self.current_history])
-            return True
+
+        return True
 
     def current_line(self):
         start, end = self.current_line_bounds()

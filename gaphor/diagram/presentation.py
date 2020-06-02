@@ -34,7 +34,7 @@ def from_package_str(item):
     subject = item.subject
     canvas = item.canvas
 
-    if not subject or not canvas:
+    if not (subject and canvas):
         return False
 
     namespace = subject.namespace
@@ -263,7 +263,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
             self.matrix = ast.literal_eval(value)
         elif name == "points":
             points = ast.literal_eval(value)
-            for x in range(len(points) - 2):
+            for _ in range(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
             for i, p in enumerate(points):

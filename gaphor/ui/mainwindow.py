@@ -217,18 +217,20 @@ class MainWindow(Service, ActionProvider):
         """
         Sets the window title.
         """
-        if self.window:
-            if self.filename:
-                p = Path(self.filename)
-                title = p.name
-                subtitle = str(p.parent).replace(HOME, "~")
-            else:
-                title = self.title
-                subtitle = ""
-            if self.model_changed:
-                title += " [" + gettext("edited") + "]"
-            self.window.set_title(title)
-            self.window.get_titlebar().set_subtitle(subtitle)
+        if not self.window:
+            return
+
+        if self.filename:
+            p = Path(self.filename)
+            title = p.name
+            subtitle = str(p.parent).replace(HOME, "~")
+        else:
+            title = self.title
+            subtitle = ""
+        if self.model_changed:
+            title += " [" + gettext("edited") + "]"
+        self.window.set_title(title)
+        self.window.get_titlebar().set_subtitle(subtitle)
 
     # Signal callbacks:
 
@@ -415,7 +417,7 @@ class Diagrams(UIComponent, ActionProvider):
             return widgets_on_pages
 
         num_pages = self._notebook.get_n_pages()
-        for page_num in range(0, num_pages):
+        for page_num in range(num_pages):
             widget = self._notebook.get_nth_page(page_num)
             widgets_on_pages.append((page_num, widget))
         return widgets_on_pages
@@ -515,7 +517,7 @@ class Diagrams(UIComponent, ActionProvider):
     @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
         if event.property is Diagram.name:
-            for page in range(0, self._notebook.get_n_pages()):
+            for page in range(self._notebook.get_n_pages()):
                 widget = self._notebook.get_nth_page(page)
                 if event.element is widget.diagram_page.diagram:
                     self._notebook.set_tab_label(

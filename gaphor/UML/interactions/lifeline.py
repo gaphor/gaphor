@@ -231,11 +231,11 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         stroke(context)
 
         if context.hovered or context.focused or self.lifetime.visible:
-            top = self.lifetime.top
             bottom = self.lifetime.bottom
             cr = context.cairo
             with cairo_state(cr):
                 cr.set_dash((7.0, 5.0), 0)
+                top = self.lifetime.top
                 cr.move_to(top.pos.x, top.pos.y)
                 cr.line_to(bottom.pos.x, bottom.pos.y)
                 cr.stroke()

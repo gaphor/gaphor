@@ -187,8 +187,8 @@ def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
 def draw_highlight(context: DrawContext):
     if not context.dropzone:
         return
-    highlight_color = context.style["highlight-color"]
     with cairo_state(context.cairo) as cr:
+        highlight_color = context.style["highlight-color"]
         cr.set_source_rgba(*highlight_color)
         cr.set_line_width(cr.get_line_width() * 3.141)
         cr.stroke_preserve()

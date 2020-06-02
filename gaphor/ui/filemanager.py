@@ -153,7 +153,7 @@ class FileManager(Service, ActionProvider):
         extension.  A status window is displayed while the GIdleThread
         is executed.  This thread actually saves the model."""
 
-        if not filename or not len(filename):
+        if not (filename and len(filename)):
             return
 
         self.verify_orphans()

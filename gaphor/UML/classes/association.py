@@ -170,28 +170,26 @@ class AssociationItem(LinePresentation, Named):
 
         # Update line ends using the aggregation and isNavigable values:
         if head_subject and tail_subject:
-            if tail_subject.aggregation == "composite":
+            if tail_subject.aggregation == 'composite':
                 self.draw_head = draw_head_composite
-            elif tail_subject.aggregation == "shared":
+            elif tail_subject.aggregation == 'shared':
                 self.draw_head = draw_head_shared
-            elif self._head_end.subject.navigability is True:
+            elif head_subject.navigability is True:
                 self.draw_head = draw_head_navigable
-            elif self._head_end.subject.navigability is False:
+            elif head_subject.navigability is False:
                 self.draw_head = draw_head_none
             else:
                 self.draw_head = draw_default_head
-
-            if head_subject.aggregation == "composite":
+            if head_subject.aggregation == 'composite':
                 self.draw_tail = draw_tail_composite
-            elif head_subject.aggregation == "shared":
+            elif head_subject.aggregation == 'shared':
                 self.draw_tail = draw_tail_shared
-            elif self._tail_end.subject.navigability is True:
+            elif tail_subject.navigability is True:
                 self.draw_tail = draw_tail_navigable
-            elif self._tail_end.subject.navigability is False:
+            elif tail_subject.navigability is False:
                 self.draw_tail = draw_tail_none
             else:
                 self.draw_tail = draw_default_tail
-
             if self._show_direction:
                 inverted = self.tail_end.subject is self.subject.memberEnd[0]
                 pos, angle = get_center_pos(self.handles(), inverted)
