@@ -130,16 +130,7 @@ class DiagramPage:
 
         self.widget.action_group = create_action_group(self, "diagram")
 
-        shortcuts = self.get_toolbox_shortcuts()
-
-        def shortcut_action(widget, event):
-            action_name = shortcuts.get((event.keyval, event.state))
-            if action_name:
-                widget.get_toplevel().get_action_group("diagram").lookup_action(
-                    "select-tool"
-                ).change_state(GLib.Variant.new_string(action_name))
-
-        self.widget.connect("key-press-event", shortcut_action)
+        self.widget.connect_after("key-press-event", self._on_shortcut_action)
         self._on_sloppy_lines()
         self.select_tool("toolbox-pointer")
 
@@ -176,20 +167,6 @@ class DiagramPage:
             for t in tooliter(self.modeling_language.toolbox_definition)
             if t.id == tool_name
         ).icon_name
-
-    def get_toolbox_shortcuts(self):
-        shortcuts = {}
-        # accelerator keys are lower case. Since we handle them in a key-press event
-        # handler, we'll need the upper-case versions as well in case Shift is pressed.
-        upper_offset = ord("A") - ord("a")
-        for title, items in self.modeling_language.toolbox_definition:
-            for action_name, label, icon_name, shortcut, *rest in items:
-                if shortcut:
-                    key, mod = Gtk.accelerator_parse(shortcut)
-                    shortcuts[key, mod] = action_name
-                    shortcuts[key + upper_offset, mod] = action_name
-
-        return shortcuts
 
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
@@ -365,6 +342,21 @@ class DiagramPage:
             )
         ):
             self.delete_selected_items()
+
+    def _on_shortcut_action(self, widget, event):
+        # accelerator keys are lower case. Since we handle them in a key-press event
+        # handler, we'll need the upper-case versions as well in case Shift is pressed.
+        upper_offset = ord("A") - ord("a")
+        print("key press")
+        for title, items in self.modeling_language.toolbox_definition:
+            for action_name, label, icon_name, shortcut, *rest in items:
+                if not shortcut:
+                    continue
+                key, mod = Gtk.accelerator_parse(shortcut)
+                if event.state == mod and event.keyval in (key, key + upper_offset):
+                    widget.get_toplevel().get_action_group("diagram").lookup_action(
+                        "select-tool"
+                    ).change_state(GLib.Variant.new_string(action_name))
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.event_manager.handle(
