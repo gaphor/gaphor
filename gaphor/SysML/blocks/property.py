@@ -2,7 +2,7 @@
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.diagram.presentation import Classified, ElementPresentation
+from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight, VerticalAlign
@@ -10,7 +10,7 @@ from gaphor.UML.classes.stereotype import stereotype_compartments
 
 
 @represents(UML.Property)
-class PropertyItem(ElementPresentation, Classified):
+class PropertyItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
