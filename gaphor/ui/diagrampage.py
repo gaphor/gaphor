@@ -248,8 +248,8 @@ class DiagramPage:
 
     @action(name="diagram.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
-        tool = TransactionalToolChain(self.event_manager)
         if self.view:
+            tool = TransactionalToolChain(self.event_manager)
             tool.append(self.get_tool(tool_name))
             self.view.tool = tool
             icon_name = self.get_tool_icon_name(tool_name)
@@ -334,9 +334,7 @@ class DiagramPage:
         dialog.set_transient_for(self.widget.get_toplevel())
         value = dialog.run()
         dialog.destroy()
-        if value == Gtk.ResponseType.YES:
-            return True
-        return False
+        return value == Gtk.ResponseType.YES
 
     def _on_key_press_event(self, view, event):
         """
