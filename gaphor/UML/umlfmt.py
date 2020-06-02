@@ -23,7 +23,7 @@ def format_property(el, *args, **kwargs):
     """
     Format property or an association end.
     """
-    if el.association and not (args or kwargs):
+    if el.association and not args and not kwargs:
         return format_association_end(el)
     else:
         return format_attribute(el, *args, **kwargs)
@@ -108,14 +108,11 @@ def format_association_end(el):
         n.append(" ")
         if el.isDerived:
             n.append("/")
-        if el.name:
-            n.append(el.name)
+        n.append(el.name)
 
         name = "".join(n)
 
-    m = []
-    m.append(format_multiplicity(el, bare=True))
-
+    m = [format_multiplicity(el, bare=True)]
     slots = [format(slot) for slot in el.appliedStereotype[:].slot if slot]
     if slots:
         m.append(" { %s }" % ",\n".join(slots))
