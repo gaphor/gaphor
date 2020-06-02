@@ -1,3 +1,4 @@
+import functools
 import importlib
 import logging
 from typing import Dict, Optional, Sequence, Tuple
@@ -45,6 +46,15 @@ with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
     PLACEMENT_BASE = GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
 
 _placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
+
+
+_upper_offset = ord("A") - ord("a")
+
+
+@functools.lru_cache(maxsize=None)
+def parse_shortcut(shortcut):
+    key, mod = Gtk.accelerator_parse(shortcut)
+    return (key, key + _upper_offset), mod
 
 
 def get_placement_cursor(display, icon_name):
@@ -346,14 +356,12 @@ class DiagramPage:
     def _on_shortcut_action(self, widget, event):
         # accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
-        upper_offset = ord("A") - ord("a")
-        print("key press")
-        for title, items in self.modeling_language.toolbox_definition:
-            for action_name, label, icon_name, shortcut, *rest in items:
+        for _title, items in self.modeling_language.toolbox_definition:
+            for action_name, _label, _icon_name, shortcut, *rest in items:
                 if not shortcut:
                     continue
-                key, mod = Gtk.accelerator_parse(shortcut)
-                if event.state == mod and event.keyval in (key, key + upper_offset):
+                keys, mod = parse_shortcut(shortcut)
+                if event.state == mod and event.keyval in keys:
                     widget.get_toplevel().get_action_group("diagram").lookup_action(
                         "select-tool"
                     ).change_state(GLib.Variant.new_string(action_name))
