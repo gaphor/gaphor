@@ -126,7 +126,7 @@ class NamespaceView(Gtk.TreeView):
         ) and element.isAbstract:
             text = f"<i>{text}</i>"
         elif isinstance(element, UML.Property):
-            text = format_attribute(element)
+            text = format_attribute(element) or "&lt;None&gt;"
         elif isinstance(element, UML.Operation):
             text = format_operation(element)
 
