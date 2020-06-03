@@ -49,10 +49,6 @@ class ComponentItem(ElementPresentation, Classified):
             draw=draw_border
         )
 
-    def postload(self):
-        self.update_shapes()
-        super().postload()
-
 
 def draw_component_icon(box, context, bounding_box):
     with cairo_state(context.cairo) as cr:

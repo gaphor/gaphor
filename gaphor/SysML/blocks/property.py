@@ -10,7 +10,7 @@ from gaphor.UML.classes.stereotype import stereotype_compartments
 
 
 @represents(UML.Property)
-class PropertyItem(ElementPresentation, Named):
+class PropertyItem(ElementPresentation[UML.Property], Named):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
@@ -45,7 +45,3 @@ class PropertyItem(ElementPresentation, Named):
             },
             draw=draw_border
         )
-
-    def postload(self):
-        self.update_shapes()
-        super().postload()
