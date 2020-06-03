@@ -18,6 +18,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_left">2</property>
             <property name="margin_right">2</property>
             <property name="spacing">6</property>
             <child>
@@ -164,6 +165,7 @@
           <object class="GtkSeparator">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_left">2</property>
             <property name="margin_right">2</property>
             <property name="margin_top">2</property>
             <property name="margin_bottom">2</property>
@@ -188,6 +190,7 @@
                   <object class="GtkBox" id="editors">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="margin_left">2</property>
                     <property name="margin_right">2</property>
                     <property name="orientation">vertical</property>
                     <child>
