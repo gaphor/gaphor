@@ -18,6 +18,22 @@ from gaphor.ui.event import DiagramSelectionChanged
 log = logging.getLogger(__name__)
 
 
+NO_ITEM_SELECTED = gettext(
+    """\
+    <b>No item selected</b>
+
+    Add a model element from the tool box to the diagram. Here you will see it's properties appear.
+
+    This pane can be hidden by clicking the pensil icon in the header.
+
+    <b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "c" for Class).
+    Tool selection only works from the diagram. If a tool does not get selected, click on the diagram once (so it's focused) and then hit the shortcut key.
+
+    <b>Tip:</b> To search for an element in the tree view, select an element in the tree view and start typing. A search box will automaticaly appear.
+    """
+)
+
+
 def new_builder():
     builder = Gtk.Builder()
     builder.set_translation_domain("gaphor")
@@ -141,24 +157,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
         if item is None:
             label = Gtk.Label()
-            label.set_markup(
-                textwrap.dedent(
-                    gettext(
-                        """
-            <b>No item selected</b>
-
-            Add a model element from the tool box to the diagram. Here you will see it's properties appear.
-
-            This pane can be hidden by clicking the pensil icon in the header.
-
-            <b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "c" for Class).
-            Tool selection only works from the diagram. If a tool does not get selected, click on the diagram once (so it's focused) and then hit the shortcut key.
-
-            <b>Tip:</b> To search for an element in the tree view, select an element in the tree view and start typing. A search box will automaticaly appear.
-            """
-                    )
-                )
-            )
+            label.set_markup(textwrap.dedent(NO_ITEM_SELECTED))
             label.set_name("no-item-selected")
             label.props.wrap = True
             label.props.max_width_chars = 20

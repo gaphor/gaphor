@@ -14,7 +14,7 @@ toolitemgroup:first-child > button {
 }
 
 #no-item-selected {
-    padding: 12px;
+    padding: 4px;
 }
 
 #diagrams {
