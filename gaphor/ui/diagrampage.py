@@ -1,3 +1,4 @@
+import functools
 import importlib
 import logging
 from typing import Dict, Optional, Sequence, Tuple
@@ -45,6 +46,15 @@ with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
     PLACEMENT_BASE = GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
 
 _placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
+
+
+_upper_offset = ord("A") - ord("a")
+
+
+@functools.lru_cache(maxsize=None)
+def parse_shortcut(shortcut):
+    key, mod = Gtk.accelerator_parse(shortcut)
+    return (key, key + _upper_offset), mod
 
 
 def get_placement_cursor(display, icon_name):
@@ -130,16 +140,7 @@ class DiagramPage:
 
         self.widget.action_group = create_action_group(self, "diagram")
 
-        shortcuts = self.get_toolbox_shortcuts()
-
-        def shortcut_action(widget, event):
-            action_name = shortcuts.get((event.keyval, event.state))
-            if action_name:
-                widget.get_toplevel().get_action_group("diagram").lookup_action(
-                    "select-tool"
-                ).change_state(GLib.Variant.new_string(action_name))
-
-        self.widget.connect("key-press-event", shortcut_action)
+        self.widget.connect_after("key-press-event", self._on_shortcut_action)
         self._on_sloppy_lines()
         self.select_tool("toolbox-pointer")
 
@@ -176,20 +177,6 @@ class DiagramPage:
             for t in tooliter(self.modeling_language.toolbox_definition)
             if t.id == tool_name
         ).icon_name
-
-    def get_toolbox_shortcuts(self):
-        shortcuts = {}
-        # accelerator keys are lower case. Since we handle them in a key-press event
-        # handler, we'll need the upper-case versions as well in case Shift is pressed.
-        upper_offset = ord("A") - ord("a")
-        for title, items in self.modeling_language.toolbox_definition:
-            for action_name, label, icon_name, shortcut, *rest in items:
-                if shortcut:
-                    key, mod = Gtk.accelerator_parse(shortcut)
-                    shortcuts[key, mod] = action_name
-                    shortcuts[key + upper_offset, mod] = action_name
-
-        return shortcuts
 
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
@@ -261,8 +248,8 @@ class DiagramPage:
 
     @action(name="diagram.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
-        tool = TransactionalToolChain(self.event_manager)
         if self.view:
+            tool = TransactionalToolChain(self.event_manager)
             tool.append(self.get_tool(tool_name))
             self.view.tool = tool
             icon_name = self.get_tool_icon_name(tool_name)
@@ -347,9 +334,7 @@ class DiagramPage:
         dialog.set_transient_for(self.widget.get_toplevel())
         value = dialog.run()
         dialog.destroy()
-        if value == Gtk.ResponseType.YES:
-            return True
-        return False
+        return value == Gtk.ResponseType.YES
 
     def _on_key_press_event(self, view, event):
         """
@@ -365,6 +350,19 @@ class DiagramPage:
             )
         ):
             self.delete_selected_items()
+
+    def _on_shortcut_action(self, widget, event):
+        # accelerator keys are lower case. Since we handle them in a key-press event
+        # handler, we'll need the upper-case versions as well in case Shift is pressed.
+        for _title, items in self.modeling_language.toolbox_definition:
+            for action_name, _label, _icon_name, shortcut, *rest in items:
+                if not shortcut:
+                    continue
+                keys, mod = parse_shortcut(shortcut)
+                if event.state == mod and event.keyval in keys:
+                    widget.get_toplevel().get_action_group("diagram").lookup_action(
+                        "select-tool"
+                    ).change_state(GLib.Variant.new_string(action_name))
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.event_manager.handle(
