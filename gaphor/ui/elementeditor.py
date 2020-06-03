@@ -150,6 +150,11 @@ class ElementEditor(UIComponent, ActionProvider):
             Add a model element from the tool box to the diagram. Here you will see it's properties appear.
 
             This pane can be hidden by clicking the pensil icon in the header.
+
+            <b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "c" for Class).
+            Tool selection only works from the diagram. If a tool does not get selected, click on the diagram once (so it's focused) and then hit the shortcut key.
+
+            <b>Tip:</b> To search for an element in the tree view, select an element in the tree view and start typing. A search box will automaticaly appear.
             """
                     )
                 )
