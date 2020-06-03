@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkRevealer" id="elementeditor">
@@ -7,6 +7,7 @@
     <property name="can_focus">False</property>
     <property name="transition_type">slide-left</property>
     <property name="transition_duration">200</property>
+    <property name="reveal_child">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

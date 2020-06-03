@@ -62,7 +62,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
         return self.revealer
 
-    @action(name="win.show-editors", shortcut="<Primary>e", state=False)
+    @action(name="win.show-editors", shortcut="<Primary>e", state=True)
     def toggle_editor_visibility(self, active):
         self.revealer.set_reveal_child(active)
 
