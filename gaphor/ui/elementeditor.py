@@ -2,6 +2,7 @@
 
 import importlib.resources
 import logging
+import textwrap
 from typing import Optional
 
 from gi.repository import Gtk
@@ -140,8 +141,22 @@ class ElementEditor(UIComponent, ActionProvider):
 
         if item is None:
             label = Gtk.Label()
-            label.set_markup("<b>No item selected</b>")
+            label.set_markup(
+                textwrap.dedent(
+                    gettext(
+                        """
+            <b>No item selected</b>
+
+            Add a model element from the tool box to the diagram. Here you will see it's properties appear.
+
+            This pane can be hidden by clicking the pensil icon in the header.
+            """
+                    )
+                )
+            )
             label.set_name("no-item-selected")
+            label.props.wrap = True
+            label.props.max_width_chars = 20
             self.vbox.pack_start(child=label, expand=False, fill=True, padding=10)
             label.show()
             return
