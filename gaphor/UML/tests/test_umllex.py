@@ -174,7 +174,7 @@ def test_parse_operation_2_params(factory):
     assert "myfunc2" == o.name
     assert "float" == o.returnResult[0].typeValue
     assert "protected" == o.visibility
-    assert 2 == len(o.formalParameter)
+    assert len(o.formalParameter) == 2
     assert "a" == o.formalParameter[0].name
     assert "str" == o.formalParameter[0].typeValue
     assert o.formalParameter[0].defaultValue is None
@@ -191,7 +191,7 @@ def test_parse_operation_1_param(factory):
     assert "myfunc2" == o.name
     assert "double" == o.returnResult[0].typeValue
     assert "private" == o.visibility
-    assert 1 == len(o.formalParameter)
+    assert len(o.formalParameter) == 1
     assert "a" == o.formalParameter[0].name
     assert "node" == o.formalParameter[0].typeValue
     assert o.formalParameter[0].defaultValue is None

@@ -77,11 +77,12 @@ class MessagePropertyPage(PropertyPageBase):
 
         # allow only one delete message to connect to lifeline's lifetime
         # destroyed status can be changed only by delete message itself
-        if lifeline:
-            if subject.messageSort == "deleteMessage" or not lifeline.is_destroyed:
-                is_destroyed = ms == "deleteMessage"
-                lifeline.is_destroyed = is_destroyed
-                lifeline.request_update()
+        if lifeline and (
+            subject.messageSort == "deleteMessage" or not lifeline.is_destroyed
+        ):
+            is_destroyed = ms == "deleteMessage"
+            lifeline.is_destroyed = is_destroyed
+            lifeline.request_update()
 
         subject.messageSort = ms
         item.request_update()

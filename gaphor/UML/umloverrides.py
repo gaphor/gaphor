@@ -64,7 +64,7 @@ def property_navigability(self: uml.Property) -> List[Optional[bool]]:
     is assumed.
     """
     assoc = self.association
-    if not assoc or not self.opposite:
+    if not (assoc and self.opposite):
         return [None]  # assume unknown
     owner = self.opposite.type
     if (

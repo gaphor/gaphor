@@ -156,7 +156,7 @@ def save_generator(writer, factory):  # noqa: C901
 
 
 def load_elements(elements, factory, modeling_language, gaphor_version="1.0.0"):
-    for status in load_elements_generator(
+    for _ in load_elements_generator(
         elements, factory, modeling_language, gaphor_version
     ):
         pass

@@ -160,7 +160,7 @@ class ElementDispatcher(Service):
         try:
             handlers = self._handlers[key]
         except KeyError:
-            handlers = dict()
+            handlers = {}
             self._handlers[key] = handlers
 
         # Register handler and it's remaining paths

@@ -38,7 +38,8 @@ class CommentLineElementConnect(BaseConnector):
         # Same goes for subjects:
         if (
             connected_to
-            and (not (connected_to.subject or element.subject))
+            and not connected_to.subject
+            and not element.subject
             and connected_to.subject is element.subject
         ):
             return None
@@ -87,11 +88,12 @@ class CommentLineElementConnect(BaseConnector):
         if hct and oct:
             logger.debug(f"Disconnecting {hct} and {oct}")
             try:
-                if hct.subject and isinstance(oct.subject, Comment):
-                    del oct.subject.annotatedElement[hct.subject]
-                elif hct.subject and oct.subject:
-                    assert isinstance(hct.subject, Comment)
-                    del hct.subject.annotatedElement[oct.subject]
+                if hct.subject:
+                    if isinstance(oct.subject, Comment):
+                        del oct.subject.annotatedElement[hct.subject]
+                    elif oct.subject:
+                        assert isinstance(hct.subject, Comment)
+                        del hct.subject.annotatedElement[oct.subject]
             except ValueError:
                 logger.debug(
                     "Invoked CommentLineElementConnect.disconnect() for nonexistent relationship"

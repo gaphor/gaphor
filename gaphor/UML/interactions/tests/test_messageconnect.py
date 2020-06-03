@@ -62,8 +62,8 @@ def test_lost_message_connection(diagram, element_factory):
     assert msg.subject is not None
     assert msg.subject.messageKind == "lost"
 
-    assert 1 == len(messages)
-    assert 1 == len(occurrences)
+    assert len(messages) == 1
+    assert len(occurrences) == 1
     assert messages[0] is msg.subject
     assert occurrences[0] is msg.subject.sendEvent
 
@@ -85,8 +85,8 @@ def test_found_message_connection(diagram, element_factory):
     assert msg.subject is not None
     assert msg.subject.messageKind == "found"
 
-    assert 1 == len(messages)
-    assert 1 == len(occurrences)
+    assert len(messages) == 1
+    assert len(occurrences) == 1
     assert messages[0] is msg.subject
     assert occurrences[0] is msg.subject.receiveEvent
 
@@ -110,8 +110,8 @@ def test_complete_message_connection(diagram, element_factory):
     assert msg.subject is not None
     assert msg.subject.messageKind == "complete"
 
-    assert 1 == len(messages)
-    assert 2 == len(occurrences)
+    assert len(messages) == 1
+    assert len(occurrences) == 2
     assert messages[0] is msg.subject
     assert msg.subject.sendEvent in occurrences, f"{occurrences}"
     assert msg.subject.receiveEvent in occurrences, f"{occurrences}"
@@ -256,8 +256,8 @@ def test_messages_disconnect_cd(diagram, element_factory):
     )
 
     # verify integrity of messages
-    assert 1 == len(messages)
-    assert 2 == len(occurrences)
+    assert len(messages) == 1
+    assert len(occurrences) == 2
 
 
 def test_message_connect_to_execution_specification(diagram, element_factory):

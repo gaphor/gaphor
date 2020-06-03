@@ -47,10 +47,7 @@ def get_required_by_typelibs():
     for tl in os.listdir(repo.get_search_path()[0]):
         namespace, version = os.path.splitext(tl)[0].split("-", 1)
         lib = get_shared_libraries(namespace, version)
-        if lib:
-            libs = lib.lower().split(",")
-        else:
-            libs = []
+        libs = lib.lower().split(",") if lib else []
         for lib in libs:
             deps.add((namespace, version, lib))
     return deps

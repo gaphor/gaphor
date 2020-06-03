@@ -68,13 +68,13 @@ class PartitionItem(ElementPresentation, Named):
         )
 
         # get subpartitions
-        children: List[PartitionItem] = list(
+        children: List[PartitionItem] = [
             k for k in self.canvas.get_children(self) if isinstance(k, PartitionItem)
-        )
+        ]
 
         self._toplevel = self.canvas.get_parent(self) is None
         self._subpart = len(children) > 0
-        self._bottom = not self._toplevel and not self._subpart
+        self._bottom = not (self._toplevel or self._subpart)
 
         if self._toplevel:
             self._header_size = self._header_size[0], self.DELTA
@@ -142,7 +142,6 @@ class PartitionItem(ElementPresentation, Named):
             cr.move_to(0, hd)
             cr.line_to(bounding_box.width, hd)
 
-        if self._subpart:
             # draw inside lines for all children but last one
             dp = 0
             for sl in self.canvas.get_children(self)[:-1]:

@@ -30,7 +30,7 @@ class StateTestCase(TestCase):
         self.load(data)
 
         states = self.diagram.canvas.select(StateItem)
-        assert 1 == len(states)
+        assert len(states) == 1
         s1 = states[0]
 
         assert "test 1 entry" == s1.subject.entry.name

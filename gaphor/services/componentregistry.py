@@ -42,7 +42,7 @@ class ComponentRegistry(Service):
             raise ComponentLookupError(
                 f"More than one component matches {base}+{name}: {found}"
             )
-        if len(found) == 0:
+        if not found:
             raise ComponentLookupError(
                 f"Component with type {base} and name {name} is not registered"
             )

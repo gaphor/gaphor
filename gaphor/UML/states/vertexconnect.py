@@ -66,13 +66,13 @@ class PseudostateTransitionConnect(VertexConnect):
         Glue to initial pseudostate with transition's head and when there are
         no transitions connected.
         """
-        line = self.line
         element = self.element
         assert isinstance(element.subject, UML.Pseudostate)
 
         if element.subject.kind == "initial":
             # Check if no other items are connected
             connections = self.canvas.get_connections(connected=element)
+            line = self.line
             connected_items = [
                 c
                 for c in connections

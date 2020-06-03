@@ -42,10 +42,10 @@ class NodeComponentGroupTestCase(TestCase):
 
         self.group(n, c)
 
-        assert 1 == len(n.subject.ownedAttribute)
-        assert 1 == len(n.subject.ownedConnector)
-        assert 1 == len(c.subject.ownedAttribute)
-        assert 2 == len(self.kindof(UML.ConnectorEnd))
+        assert len(n.subject.ownedAttribute) == 1
+        assert len(n.subject.ownedConnector) == 1
+        assert len(c.subject.ownedAttribute) == 1
+        assert len(self.kindof(UML.ConnectorEnd)) == 2
 
         a1 = n.subject.ownedAttribute[0]
         a2 = c.subject.ownedAttribute[0]
@@ -66,11 +66,11 @@ class NodeComponentGroupTestCase(TestCase):
         self.group(n, c)
         self.ungroup(n, c)
 
-        assert 0 == len(n.subject.ownedAttribute)
-        assert 0 == len(c.subject.ownedAttribute)
-        assert 0 == len(self.kindof(UML.Property))
-        assert 0 == len(self.kindof(UML.Connector))
-        assert 0 == len(self.kindof(UML.ConnectorEnd))
+        assert len(n.subject.ownedAttribute) == 0
+        assert len(c.subject.ownedAttribute) == 0
+        assert len(self.kindof(UML.Property)) == 0
+        assert len(self.kindof(UML.Connector)) == 0
+        assert len(self.kindof(UML.ConnectorEnd)) == 0
 
 
 class NodeArtifactGroupTestCase(TestCase):
@@ -82,7 +82,7 @@ class NodeArtifactGroupTestCase(TestCase):
 
         self.group(n, a)
 
-        assert 1 == len(n.subject.deployment)
+        assert len(n.subject.deployment) == 1
         assert n.subject.deployment[0].deployedArtifact[0] is a.subject
 
     def test_ungrouping(self):
@@ -94,8 +94,8 @@ class NodeArtifactGroupTestCase(TestCase):
         self.group(n, a)
         self.ungroup(n, a)
 
-        assert 0 == len(n.subject.deployment)
-        assert 0 == len(self.kindof(UML.Deployment))
+        assert len(n.subject.deployment) == 0
+        assert len(self.kindof(UML.Deployment)) == 0
 
 
 class SubsystemUseCaseGroupTestCase(TestCase):
@@ -107,9 +107,9 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         uc2 = self.create(UseCaseItem, UML.UseCase)
 
         self.group(s, uc1)
-        assert 1 == len(uc1.subject.subject)
+        assert len(uc1.subject.subject) == 1
         self.group(s, uc2)
-        assert 1 == len(uc2.subject.subject)
+        assert len(uc2.subject.subject) == 1
 
         self.assertEqual(2, len(s.subject.useCase))
 
@@ -120,7 +120,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         uc = self.create(UseCaseItem, UML.UseCase)
 
         self.group(s, uc)
-        assert 1 == len(uc.subject.subject)
+        assert len(uc.subject.subject) == 1
         assert s.subject in uc.subject.subject
 
     def test_ungrouping(self):
@@ -134,9 +134,9 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.group(s, uc2)
 
         self.ungroup(s, uc1)
-        assert 0 == len(uc1.subject.subject)
+        assert len(uc1.subject.subject) == 0
         self.assertEqual(1, len(s.subject.useCase))
 
         self.ungroup(s, uc2)
-        assert 0 == len(uc2.subject.subject)
+        assert len(uc2.subject.subject) == 0
         self.assertEqual(0, len(s.subject.useCase))

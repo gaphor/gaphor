@@ -44,9 +44,9 @@ class PartitionGroupTestCase(TestCase):
         self.group(p2, a1)
 
         assert self.can_group(p2, a1)
-        assert 1 == len(p2.subject.node)
+        assert len(p2.subject.node) == 1
         self.group(p2, a2)
-        assert 2 == len(p2.subject.node)
+        assert len(p2.subject.node) == 2
 
     def test_subpartition_grouping(self):
         """Test adding subpartition to partition
@@ -78,14 +78,14 @@ class PartitionGroupTestCase(TestCase):
         self.group(p2, a2)
 
         self.ungroup(p2, a1)
-        assert 1 == len(p2.subject.node)
+        assert len(p2.subject.node) == 1
         self.ungroup(p2, a2)
-        assert 0 == len(p2.subject.node)
+        assert len(p2.subject.node) == 0
 
         self.ungroup(p1, p2)
         assert p1.subject is None, p1.subject
         assert p2.subject is None, p2.subject
-        assert 0 == len(self.kindof(UML.ActivityPartition))
+        assert len(self.kindof(UML.ActivityPartition)) == 0
 
     def test_ungrouping_with_actions(self):
         """Test subpartition with actions removal
@@ -103,13 +103,13 @@ class PartitionGroupTestCase(TestCase):
 
         partition = p2.subject
         assert len(partition.node) == 2, partition.node
-        assert 2 == len(p2.canvas.get_children(p2)), p2.canvas.get_children(p2)
+        assert len(p2.canvas.get_children(p2)) == 2, p2.canvas.get_children(p2)
 
         self.ungroup(p1, p2)
 
         assert 0 == len(partition.node)
-        assert 0 == len(p2.canvas.get_children(p2))
-        assert 0 == len(partition.node)
+        assert len(p2.canvas.get_children(p2)) == 0
+        assert len(partition.node) == 0
 
     def test_nested_subpartition_ungrouping(self):
         """Test removal of subpartition with swimlanes
@@ -131,7 +131,7 @@ class PartitionGroupTestCase(TestCase):
         assert p2.subject is None, p2.subject
         assert p3.subject is not None, p3.subject
         assert p4.subject is not None, p4.subject
-        assert 2 == len(self.kindof(UML.ActivityPartition))
+        assert len(self.kindof(UML.ActivityPartition)) == 2
 
     def test_nested_subpartition_regrouping(self):
         """Test regrouping of subpartition with swimlanes
@@ -153,10 +153,10 @@ class PartitionGroupTestCase(TestCase):
         assert p2.subject is None, p2.subject
         assert p3.subject is not None, p3.subject
         assert p4.subject is not None, p4.subject
-        assert 2 == len(self.kindof(UML.ActivityPartition))
+        assert len(self.kindof(UML.ActivityPartition)) == 2
 
         self.group(p1, p2)
-        assert 3 == len(self.kindof(UML.ActivityPartition))
+        assert len(self.kindof(UML.ActivityPartition)) == 3
         assert p2.subject is not None, p2.subject
         assert p3.subject is not None, p3.subject
         assert p4.subject is not None, p4.subject

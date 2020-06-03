@@ -62,30 +62,30 @@ class ComponentItem(ElementPresentation, Classified):
 
 
 def draw_component_icon(box, context, bounding_box):
-    bar_width = 12
-    bar_height = 4
-    bar_padding = 4
-    icon_width = 16
-    icon_height = 20
-    icon_margin_x = 6
-    icon_margin_y = 12
-
-    ix = bounding_box.width - icon_margin_x - icon_width
-    iy = icon_margin_y
-
     with cairo_state(context.cairo) as cr:
         fill_color = context.style["background-color"] or (1, 1, 1, 1)
         stroke_color = context.style["color"] or (0, 0, 0, 1)
 
         cr.set_line_width(1.0)
+        icon_height = 20
+        icon_width = 16
+        icon_margin_x = 6
+        ix = bounding_box.width - icon_margin_x - icon_width
+        icon_margin_y = 12
+
+        iy = icon_margin_y
+
         cr.rectangle(ix, iy, icon_width, icon_height)
         cr.set_source_rgba(*stroke_color)
         cr.stroke()
 
+        bar_padding = 4
         bx = ix - bar_padding
         bar_upper_y = iy + bar_padding
         bar_lower_y = iy + bar_padding * 3
 
+        bar_width = 12
+        bar_height = 4
         cr.rectangle(bx, bar_lower_y, bar_width, bar_height)
         cr.set_source_rgba(*fill_color)
         cr.fill_preserve()

@@ -77,11 +77,11 @@ class ClassTestCase(TestCase):
         attr.name = "blah3"
         klass.subject.ownedAttribute = attr
 
-        assert 3 == len(compartments(klass)[0])
+        assert len(compartments(klass)[0]) == 3
 
         attr2.unlink()
 
-        assert 2 == len(compartments(klass)[0])
+        assert len(compartments(klass)[0]) == 2
 
     def test_compartment_resizing(self):
         element_factory = self.element_factory
@@ -99,7 +99,7 @@ class ClassTestCase(TestCase):
         oper.name = "method"
         klass.subject.ownedOperation = oper
 
-        assert 100 == klass.width
+        assert klass.width == 100
 
         attr.name = "x" * 25
 

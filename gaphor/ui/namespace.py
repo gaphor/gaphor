@@ -225,11 +225,9 @@ class NamespaceView(Gtk.TreeView):
                 Gtk.TreeViewDropPosition.AFTER,
             ):
                 parent_iter = model.iter_parent(iter)
-                if parent_iter is None:
-                    dest_element = None
-                else:
-                    dest_element = model.get_value(parent_iter, 0)
-
+                dest_element = (
+                    None if parent_iter is None else model.get_value(parent_iter, 0)
+                )
             try:
                 # Check if element is part of the namespace of dest_element:
                 ns = dest_element
@@ -470,32 +468,33 @@ class Namespace(UIComponent):
     @event_handler(DerivedSet)
     def _on_association_set(self, event: DerivedSet):
 
+        if event.property is not UML.NamedElement.namespace:
+            return
+        old_value, new_value = event.old_value, event.new_value
+
         element = event.element
-        if event.property is UML.NamedElement.namespace:
-            old_value, new_value = event.old_value, event.new_value
+        old_iter = self.iter_for_element(element, old_namespace=old_value)
+        if old_iter:
+            self.model.remove(old_iter)
 
-            old_iter = self.iter_for_element(element, old_namespace=old_value)
-            if old_iter:
-                self.model.remove(old_iter)
-
-            if self._visible(element):
-                new_iter = self.iter_for_element(new_value)
-                # Should be either set (sub node) or unset (root node)
-                if bool(new_iter) == bool(new_value):
-                    self._add(element, new_iter)
+        if self._visible(element):
+            new_iter = self.iter_for_element(new_value)
+            # Should be either set (sub node) or unset (root node)
+            if bool(new_iter) == bool(new_value):
+                self._add(element, new_iter)
 
     @event_handler(AttributeUpdated)
     def _on_attribute_change(self, event: AttributeUpdated):
         """
         Element changed, update appropriate row.
         """
-        element = event.element
-
         if (
             event.property is UML.Classifier.isAbstract
             or event.property is UML.BehavioralFeature.isAbstract
             or event.property is UML.NamedElement.name
         ):
+            element = event.element
+
             iter = self.iter_for_element(element)
             if iter:
                 path = self.model.get_path(iter)
@@ -610,11 +609,7 @@ class Namespace(UIComponent):
         diagram = self.element_factory.create(Diagram)
         diagram.package = element
 
-        if element:
-            diagram.name = f"{element.name} diagram"
-        else:
-            diagram.name = "New diagram"
-
+        diagram.name = f"{element.name} diagram" if element else "New diagram"
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()
@@ -627,11 +622,7 @@ class Namespace(UIComponent):
         package = self.element_factory.create(UML.Package)
         package.package = element
 
-        if element:
-            package.name = f"{element.name} package"
-        else:
-            package.name = "New model"
-
+        package.name = f"{element.name} package" if element else "New model"
         self.select_element(package)
         self.tree_view_rename_selected()
 

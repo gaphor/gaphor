@@ -28,11 +28,7 @@ class XMIExport(Service, ActionProvider):
     )
     def execute(self):
         filename = self.file_manager.filename
-        if filename:
-            filename = filename.replace(".gaphor", ".xmi")
-        else:
-            filename = "model.xmi"
-
+        filename = filename.replace(".gaphor", ".xmi") if filename else "model.xmi"
         file_dialog = FileDialog(
             gettext("Export model to XMI file"), action="save", filename=filename
         )

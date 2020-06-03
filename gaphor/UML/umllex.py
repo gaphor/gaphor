@@ -185,9 +185,8 @@ def parse_association_end(el: uml.Property, s: str) -> None:
 
     # clear also multiplicity if no characters in ``s``
     m = association_end_mult_pat.match(s)
-    if m and not m.group("mult_u"):
-        if el.upperValue:
-            el.upperValue = None
+    if m and not m.group("mult_u") and el.upperValue:
+        el.upperValue = None
 
     if m and m.group("mult_u") or m.group("tags"):
         g = m.group

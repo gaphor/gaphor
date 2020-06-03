@@ -72,8 +72,8 @@ class DependencyTestCase(TestCase):
         self.connect(dep, dep.tail, a3)
 
         assert d is dep.subject
-        assert 1 == len(dep.subject.supplier)
-        assert 1 == len(dep.subject.client)
+        assert len(dep.subject.supplier) == 1
+        assert len(dep.subject.client) == 1
         assert a1.subject in dep.subject.supplier
         assert a3.subject in dep.subject.client
         assert a2.subject not in dep.subject.client, dep.subject.client
@@ -245,7 +245,7 @@ class GeneralizationTestCase(TestCase):
 
         self.connect(gen2, gen2.tail, c4)
         assert gen.subject is not gen2.subject
-        assert 1 == len(c1.subject.generalization)
+        assert len(c1.subject.generalization) == 1
         assert c1.subject.generalization[0] is gen.subject
         # self.assertEqual(1, len(actor2.clientDependency))
         # self.assertTrue(actor2.clientDependency[0] is dep.subject)
