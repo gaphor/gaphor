@@ -18,27 +18,11 @@ from gaphor.ui.event import DiagramSelectionChanged
 log = logging.getLogger(__name__)
 
 
-NO_ITEM_SELECTED = gettext(
-    """\
-    <b>No item selected</b>
-
-    Add a model element from the tool box to the diagram. Here you will see it's properties appear.
-
-    This pane can be hidden by clicking the pensil icon in the header.
-
-    <b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "c" for Class).
-    Tool selection only works from the diagram. If a tool does not get selected, click on the diagram once (so it's focused) and then hit the shortcut key.
-
-    <b>Tip:</b> To search for an element in the tree view, select an element in the tree view and start typing. A search box will automaticaly appear.
-    """
-)
-
-
-def new_builder():
+def new_builder(*object_ids):
     builder = Gtk.Builder()
     builder.set_translation_domain("gaphor")
     with importlib.resources.path("gaphor.ui", "elementeditor.glade") as glade_file:
-        builder.add_from_file(str(glade_file))
+        builder.add_objects_from_file(str(glade_file), object_ids)
     return builder
 
 
@@ -50,20 +34,21 @@ class ElementEditor(UIComponent, ActionProvider):
     title = gettext("Element Editor")
     size = (275, -1)
 
-    def __init__(self, event_manager, element_factory, diagrams):
+    def __init__(self, event_manager, element_factory, diagrams, properties):
         """Constructor. Build the action group for the element editor window.
         This will place a button for opening the window in the toolbar.
         The widget attribute is a PropertyEditor."""
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.diagrams = diagrams
+        self.properties = properties
         self.vbox: Optional[Gtk.Box] = None
         self._current_item = None
         self._expanded_pages = {gettext("Properties"): True}
 
     def open(self):
         """Display the ElementEditor pane."""
-        builder = new_builder()
+        builder = new_builder("elementeditor")
 
         self.revealer = builder.get_object("elementeditor")
         self.vbox = builder.get_object("editors")
@@ -74,8 +59,6 @@ class ElementEditor(UIComponent, ActionProvider):
         # Make sure we receive
         self.event_manager.subscribe(self._selection_change)
         self.event_manager.subscribe(self._element_changed)
-
-        self.revealer.show_all()
 
         return self.revealer
 
@@ -123,7 +106,6 @@ class ElementEditor(UIComponent, ActionProvider):
                     page.set_expanded(self._expanded_pages.get(name, True))
                     page.connect_after("activate", self.on_expand, name)
                 self.vbox.pack_start(page, False, True, 0)
-                page.show_all()
             except Exception:
                 log.error(
                     "Could not construct property page for " + name, exc_info=True
@@ -155,16 +137,28 @@ class ElementEditor(UIComponent, ActionProvider):
         self._current_item = item
         self.clear_pages()
 
-        if item is None:
-            label = Gtk.Label()
-            label.set_markup(textwrap.dedent(NO_ITEM_SELECTED))
-            label.set_name("no-item-selected")
-            label.props.wrap = True
-            label.props.max_width_chars = 20
-            self.vbox.pack_start(child=label, expand=False, fill=True, padding=10)
-            label.show()
-            return
-        self.create_pages(item)
+        if item:
+            self.create_pages(item)
+        else:
+            builder = new_builder("no-item-selected")
+
+            self.vbox.pack_start(
+                child=builder.get_object("no-item-selected"),
+                expand=False,
+                fill=True,
+                padding=0,
+            )
+
+            tips = builder.get_object("tips")
+
+            def on_show_tips_changed(checkbox):
+                active = checkbox.get_active()
+                tips.show() if active else tips.hide()
+                self.properties.set("show-tips", active)
+
+            show_tips = builder.get_object("show-tips")
+            show_tips.connect("toggled", on_show_tips_changed)
+            show_tips.set_active(self.properties.get("show-tips", True))
 
     @event_handler(AssociationUpdated)
     def _element_changed(self, event):

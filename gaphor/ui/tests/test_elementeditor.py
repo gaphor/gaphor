@@ -14,7 +14,7 @@ def diagrams():
 
 
 def test_reopen_of_window(event_manager, element_factory, diagrams):
-    editor = ElementEditor(event_manager, element_factory, diagrams)
+    editor = ElementEditor(event_manager, element_factory, diagrams, properties={})
 
     editor.open()
     editor.close()
