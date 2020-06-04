@@ -59,10 +59,8 @@ def format_attribute(
     will not give you the same result.
     """
     name = el.name
-    if not name:
-        return name
 
-    if no_render_pat.match(name):
+    if name and no_render_pat.match(name):
         return name
 
     # Render all fields if they all are set to False
@@ -71,14 +69,15 @@ def format_attribute(
 
     s = []
 
-    if visibility:
+    if name and visibility:
         s.append(vis_map[el.visibility])
         s.append(" ")
 
-    if is_derived and el.isDerived:
+    if name and is_derived and el.isDerived:
         s.append("/")
 
-    s.append(name)
+    if name:
+        s.append(name)
 
     if type and el.typeValue:
         s.append(f": {el.typeValue}")
