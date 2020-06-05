@@ -9,7 +9,9 @@ class _StyleDeclarations:
     """
 
     def __init__(self) -> None:
-        self.declarations: List[Tuple[str, Callable[[str, object], object]]] = []
+        self.declarations: List[
+            Tuple[str, Callable[[str, object], Optional[object]]]
+        ] = []
 
     def register(self, *properties):
         def reg(func):
@@ -56,10 +58,19 @@ def parse_declarations(rule):
             state = NAME
         elif token.type == "whitespace":
             pass
-        elif token.type in ("ident", "number", "string"):
+        elif token.type in ("ident", "string"):
             if state == NAME:
                 name = token.value
             elif state == VALUE:
                 value.append(token.value)
+        elif token.type in ("dimension", "number"):
+            assert state == VALUE
+            value.append(token.value)
+        elif token.type == "hash":
+            assert state == VALUE
+            value.append("#" + token.value)
+        elif token.type == "function":
+            assert state == VALUE
+            value.append(token)
         else:
-            raise ValueError(f"Can now handle node type {token.type}")
+            raise ValueError(f"Can not handle node type {token.type}")

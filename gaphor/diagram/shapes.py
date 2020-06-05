@@ -8,6 +8,7 @@ from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
 from typing_extensions import TypedDict
 
+from gaphor.diagram.style import Style
 from gaphor.diagram.text import (
     FontStyle,
     FontWeight,
@@ -17,36 +18,6 @@ from gaphor.diagram.text import (
     focus_box_pos,
     text_draw,
     text_size,
-)
-
-# Style is using SVG properties where possible
-# https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
-Style = TypedDict(
-    "Style",
-    {
-        "padding": Tuple[float, float, float, float],
-        "min-width": float,
-        "min-height": float,
-        "line-width": float,
-        "vertical-spacing": float,
-        "border-radius": float,
-        "background-color": Optional[Tuple[float, float, float, float]],  # RGBA
-        "font-family": str,
-        "font-size": float,
-        "font-style": FontStyle,
-        "font-weight": Optional[FontWeight],
-        "text-decoration": Optional[TextDecoration],
-        "text-align": TextAlign,
-        "text-color": Optional[Tuple[float, float, float, float]],  # RGBA
-        "color": Optional[Tuple[float, float, float, float]],  # RGBA
-        "vertical-align": VerticalAlign,
-        "line-width": float,
-        "dash-style": Sequence[float],
-        "highlight-color": Optional[Tuple[float, float, float, float]],  # RGBA
-        # CommentItem:
-        "ear": int,
-    },
-    total=False,
 )
 
 
