@@ -63,7 +63,7 @@ class ComponentItem(ElementPresentation, Classified):
 
 def draw_component_icon(box, context, bounding_box):
     with cairo_state(context.cairo) as cr:
-        stroke_color = context.style["color"] or (0, 0, 0, 1)
+        stroke_color = context.style["color"]
 
         cr.set_line_width(1.0)
         icon_height = 20

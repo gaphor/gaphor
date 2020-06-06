@@ -13,7 +13,7 @@ from gaphor.diagram.text import (
 )
 
 Color = Tuple[float, float, float, float]  # RGBA
-Padding = Tuple[float, float, float, float]
+Padding = Tuple[float, float, float, float]  # top/right/bottom/left
 
 # Style is using SVG properties where possible
 # https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
@@ -26,18 +26,18 @@ Style = TypedDict(
         "line-width": float,
         "vertical-spacing": float,
         "border-radius": float,
-        "background-color": Optional[Color],
+        "background-color": Color,
         "font-family": str,
         "font-size": float,
         "font-style": FontStyle,
-        "font-weight": Optional[FontWeight],
-        "text-decoration": Optional[TextDecoration],
+        "font-weight": FontWeight,
+        "text-decoration": TextDecoration,
         "text-align": TextAlign,
-        "text-color": Optional[Color],
-        "color": Optional[Color],
+        "text-color": Color,
+        "color": Color,
         "vertical-align": VerticalAlign,
         "dash-style": Sequence[float],
-        "highlight-color": Optional[Color],
+        "highlight-color": Color,
         # CommentItem:
         "ear": int,
     },

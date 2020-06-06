@@ -36,17 +36,17 @@ DEFAULT_STYLE: Style = {
     "vertical-spacing": 4,
     "border-radius": 0,
     "padding": (0, 0, 0, 0),
-    "background-color": None,
+    # "background-color": (1, 1, 1, 0),
     "line-width": 2,
     "dash-style": [],
-    "color": None,
+    "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
     "font-style": FontStyle.NORMAL,
-    "font-weight": None,
-    "text-decoration": None,
+    # "font-weight": FontWeight.NORMAL,
+    # "text-decoration": TextDecoration.NONE,
     "text-align": TextAlign.CENTER,
-    "text-color": None,
+    # "text-color": (0, 0, 0, 1),
     "highlight-color": (0, 0, 1, 0.4),
 }
 
@@ -343,7 +343,7 @@ class Text:
         text_box = self.text_box(style, bounding_box)
 
         with cairo_state(context.cairo) as cr:
-            text_color = style["text-color"]
+            text_color = style.get("text-color")
             if text_color:
                 cr.set_source_rgba(*text_color)
 
