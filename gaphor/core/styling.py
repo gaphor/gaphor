@@ -1,6 +1,10 @@
-from typing import Callable, List, Optional, Tuple, Union
+from __future__ import annotations
+
+from typing import Callable, Dict, Generator, List, Optional, Tuple, Union
 
 import tinycss2
+
+Selector = Tuple[tinycss2.ast.Node]
 
 
 class _StyleDeclarations:
@@ -30,13 +34,22 @@ class _StyleDeclarations:
 StyleDeclarations = _StyleDeclarations()
 
 
-def parse_stylesheet(css):
-    rules = tinycss2.parse_stylesheet(css, skip_whitespace=True)
-    for rule in rules:
-        return {
-            prop: StyleDeclarations(prop, value)
-            for prop, value in parse_declarations(rule)
-        }
+def parse_stylesheet(css) -> Generator[Tuple[Selector, Dict[str, object]], None, None]:
+    rules = tinycss2.parse_stylesheet(css, skip_comments=True, skip_whitespace=True)
+    return (
+        (
+            rule.prelude,
+            {
+                prop: value
+                for prop, value in (
+                    (prop, StyleDeclarations(prop, value))
+                    for prop, value in parse_declarations(rule)
+                )
+                if value is not None
+            },
+        )
+        for rule in rules
+    )
 
 
 def parse_declarations(rule):
@@ -53,10 +66,9 @@ def parse_declarations(rule):
         if token.type == "literal" and token.value == ":":
             state = VALUE
         elif token.type == "literal" and token.value == ";":
-            # TODO: dispatch on name to validate content (string, number, tuple)
             yield (name, value[0] if len(value) == 1 else tuple(value))
             state = NAME
-        elif token.type == "whitespace":
+        elif token.type in ("whitespace", "comment"):
             pass
         elif token.type in ("ident", "string"):
             if state == NAME:

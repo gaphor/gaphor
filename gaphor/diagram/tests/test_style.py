@@ -4,6 +4,11 @@ from gaphor.core.styling import parse_stylesheet
 from gaphor.diagram.text import FontWeight
 
 
+def first_decl_block(css):
+    prop, value = next(parse_stylesheet(css))
+    return value
+
+
 @pytest.mark.parametrize(
     "color,rgba",
     [
@@ -19,7 +24,7 @@ from gaphor.diagram.text import FontWeight
 )
 def test_color_parsing(color, rgba):
     css = f"* {{ color: {color}; }}"
-    props = parse_stylesheet(css)
+    props = first_decl_block(css)
 
     if rgba is None:
         assert "color" not in props
@@ -29,14 +34,14 @@ def test_color_parsing(color, rgba):
 
 def test_negative_number():
     css = "* { min-width: -1; }"
-    props = parse_stylesheet(css)
+    props = first_decl_block(css)
 
     assert "min-width" not in props
 
 
 def test_not_a_number():
     css = "* { min-width: foo; }"
-    props = parse_stylesheet(css)
+    props = first_decl_block(css)
 
     assert "min-width" not in props
 
@@ -55,14 +60,14 @@ def test_not_a_number():
 )
 def test_padding(padding, expected):
     css = f"* {{ padding: {padding}; }}"
-    props = parse_stylesheet(css)
+    props = first_decl_block(css)
 
     assert props.get("padding") == expected
 
 
 def test_enum_style():
     css = "* { font-weight: bold; }"
-    props = parse_stylesheet(css)
+    props = first_decl_block(css)
 
     from gaphor.core.styling import StyleDeclarations
 
