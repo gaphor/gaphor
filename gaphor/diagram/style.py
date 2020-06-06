@@ -79,15 +79,16 @@ def parse_positive_number(prop, value) -> Optional[float]:
 def parse_padding(prop, value) -> Optional[Padding]:
     if isinstance(value, float):
         return (value, value, value, value)
-    elif any(not isinstance(v, float) for v in value):
+    n = len(value)
+    if not n or any(not isinstance(v, float) for v in value):
         return None
-    elif len(value) == 2:
-        return (value[0], value[1], value[0], value[1])
-    elif len(value) == 3:
-        return (value[0], value[1], value[2], value[1])
-    elif len(value) == 4:
-        return (value[0], value[1], value[2], value[3])
-    return None
+
+    return (
+        value[0],
+        value[1],
+        value[2] if n > 2 else value[0],
+        value[3] if n > 3 else value[1],
+    )
 
 
 @StyleDeclarations.register("dash-style")

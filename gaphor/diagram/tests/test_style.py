@@ -50,6 +50,7 @@ def test_not_a_number():
         ["1 2 3", (1, 2, 3, 2)],
         ["1 2 3 4", (1, 2, 3, 4)],
         ["foo", None],
+        ["", None],
     ],
 )
 def test_padding(padding, expected):
