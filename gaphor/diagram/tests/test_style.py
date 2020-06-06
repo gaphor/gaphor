@@ -22,7 +22,7 @@ def test_color_parsing(color, rgba):
     props = parse_stylesheet(css)
 
     if rgba is None:
-        assert props["color"] is None
+        assert "color" not in props
     else:
         assert tuple(props["color"]) == rgba
 
@@ -31,14 +31,14 @@ def test_negative_number():
     css = "* { min-width: -1; }"
     props = parse_stylesheet(css)
 
-    assert props["min-width"] is None
+    assert "min-width" not in props
 
 
 def test_not_a_number():
     css = "* { min-width: foo; }"
     props = parse_stylesheet(css)
 
-    assert props["min-width"] is None
+    assert "min-width" not in props
 
 
 @pytest.mark.parametrize(
@@ -57,7 +57,7 @@ def test_padding(padding, expected):
     css = f"* {{ padding: {padding}; }}"
     props = parse_stylesheet(css)
 
-    assert props["padding"] == expected
+    assert props.get("padding") == expected
 
 
 def test_enum_style():

@@ -38,8 +38,6 @@ Style = TypedDict(
         "vertical-align": VerticalAlign,
         "dash-style": Sequence[float],
         "highlight-color": Color,
-        # CommentItem:
-        "ear": int,
     },
     total=False,
 )
