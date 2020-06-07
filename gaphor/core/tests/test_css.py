@@ -15,6 +15,13 @@ def dummy_style_declaration(prop, value):
     return value
 
 
+def test_empty_css():
+    css = ""
+    rules = list(parse_stylesheet(css))
+
+    assert rules == []
+
+
 def test_css_content_for_integer():
     css = """
     * {

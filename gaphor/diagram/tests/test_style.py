@@ -48,6 +48,23 @@ def test_not_a_number():
 
 
 @pytest.mark.parametrize(
+    "family,expected",
+    [
+        ["serif", "serif"],
+        ["sans serif", "sans serif"],
+        ['"DejaVu serif"', "DejaVu serif"],
+        ["Number 1", "Number 1.0"],
+        ["", None],
+    ],
+)
+def test_string_style(family, expected):
+    css = f"* {{ font-family: {family}; }}"
+    props = first_decl_block(css)
+
+    assert props.get("font-family") == expected
+
+
+@pytest.mark.parametrize(
     "padding,expected",
     [
         [0, (0, 0, 0, 0)],
@@ -70,7 +87,12 @@ def test_enum_style():
     css = "* { font-weight: bold; }"
     props = first_decl_block(css)
 
-    from gaphor.core.styling import StyleDeclarations
-
-    print(StyleDeclarations.declarations)
     assert props["font-weight"] == FontWeight.BOLD
+
+
+def test_multi_declaration():
+    css = "* { font-weight: bold; color: black; }"
+    props = first_decl_block(css)
+
+    assert props["font-weight"] == FontWeight.BOLD
+    assert props["color"] == (0, 0, 0, 1)

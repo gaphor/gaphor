@@ -85,6 +85,8 @@ def parse_declarations(rule):
         elif token.type == "literal" and token.value == ";":
             yield (name, value[0] if len(value) == 1 else tuple(value))
             state = NAME
+            name = None
+            value = []
         elif token.type in ("whitespace", "comment"):
             pass
         elif token.type in ("ident", "string"):

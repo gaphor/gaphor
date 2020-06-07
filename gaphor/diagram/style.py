@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Sequence, Tuple
+from typing import Dict, Optional, Sequence, Tuple, Union
 
 import tinycss2.color3
 from typing_extensions import TypedDict
@@ -73,6 +73,15 @@ def parse_positive_number(prop, value) -> Optional[float]:
     return None
 
 
+@StyleDeclarations.register("font-family")
+def parse_string(prop, value) -> Optional[str]:
+    if isinstance(value, str):
+        return value
+    elif value:
+        return " ".join(str(v) for v in value)
+    return None
+
+
 @StyleDeclarations.register("padding")
 def parse_padding(prop, value) -> Optional[Padding]:
     if isinstance(value, float):
@@ -90,11 +99,13 @@ def parse_padding(prop, value) -> Optional[Padding]:
 
 
 @StyleDeclarations.register("dash-style")
-def parse_sequence_numbers(prop, value) -> Optional[Sequence[float]]:
+def parse_sequence_numbers(
+    prop, value: Union[float, Sequence[float]]
+) -> Optional[Sequence[float]]:
     if isinstance(value, float):
-        return (value,)
+        return (value, value)
     elif all(isinstance(v, float) for v in value):
-        return value  # type: ignore[no-any-return]
+        return value
     return None
 
 
