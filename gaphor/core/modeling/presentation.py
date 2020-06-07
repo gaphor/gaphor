@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import association, attribute, relation_one
+from gaphor.core.styling import parse_stylesheet
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
@@ -17,32 +18,54 @@ if TYPE_CHECKING:
 S = TypeVar("S", bound=Element)
 
 
-def read_style_py():
+def read_style_css():
     """
     Intermediate solution to read styling from an external file
     This allows for testing some styles at least.
     """
     from gaphor.services.properties import get_config_dir
     import os.path
-    import ast
 
-    sheet_py = os.path.join(get_config_dir(), "styleSheet.py")
+    style_css = os.path.join(get_config_dir(), "style.css")
     try:
-        with open(sheet_py) as f:
-            return ast.literal_eval(f.read())
+        with open(style_css) as f:
+            return f.read()
     except OSError:
-        return {}
+        return ""
 
 
 class StyleSheet(Element):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self._style = read_style_py()
+        self._watcher = self.watcher()
+        self._watcher.watch("styleSheet", self.update_style_sheet)
+        self._watcher.subscribe_all()
+
+        self._style = {}
+        self.styleSheet = read_style_css()
 
     styleSheet: attribute[str] = attribute("styleSheet", str)
 
+    def postload(self):
+        super().postload()
+        if self.styleSheet:
+            self.compile_style_sheet(self.styleSheet)
+
+    def update_style_sheet(self, event):
+        self.compile_style_sheet(event.new_value)
+
+    def compile_style_sheet(self, css):
+        for selector, style in parse_stylesheet(css):
+            if selector != "error":
+                self._style = style
+                return
+
     def item_style(self, item):
         return self._style
+
+    def unlink(self):
+        self._watcher.unsubscribe_all()
+        super().unlink()
 
 
 class Presentation(Element, Generic[S]):
@@ -102,7 +125,7 @@ class Presentation(Element, Generic[S]):
 
     def unsubscribe_all(self):
         """
-        Subscribe all watched paths, as defined through `watch()`.
+        Unsubscribe all watched paths, as defined through `watch()`.
         """
         self._watcher.unsubscribe_all()
 

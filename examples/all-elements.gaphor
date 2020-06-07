@@ -1509,5 +1509,14 @@
 <val>val</val>
 </name>
 </Property>
-<StyleSheet id="3b6a9420-9fe2-11ea-b537-dfaaecc5bf61"/>
+<StyleSheet id="3b6a9420-9fe2-11ea-b537-dfaaecc5bf61">
+<styleSheet>
+<val>* {
+	font-family: DejaVu serif;
+	color: darkblue;
+	text-color: darkblue;
+}
+</val>
+</styleSheet>
+</StyleSheet>
 </gaphor>
