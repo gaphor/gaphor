@@ -82,7 +82,9 @@ def parse_declarations(rule):
     for token in rule.content:
         if token.type == "literal" and token.value == ":":
             state = VALUE
-        elif token.type == "literal" and token.value == ";":
+        elif (token.type == "literal" and token.value == ";") or (
+            name and value and token.type == "whitespace" and "\n" in token.value
+        ):
             yield (name, value[0] if len(value) == 1 else tuple(value))
             state = NAME
             name = None
@@ -105,3 +107,6 @@ def parse_declarations(rule):
             value.append(token)
         else:
             raise ValueError(f"Can not handle node type {token.type}")
+
+    if state == VALUE and value:
+        yield (name, value[0] if len(value) == 1 else tuple(value))

@@ -118,3 +118,27 @@ def test_invalid_selector():
 
     assert len(rules) == 2
     assert selector == "error"
+
+
+def test_css_declaration_without_semicolumn():
+    css = """
+    * {
+        test-font-family: 'sans'
+    }
+    """
+    props = first_decl_block(css)
+
+    assert props.get("test-font-family") == "sans"
+
+
+def test_css_multiple_declarations_without_semicolumns():
+    css = """
+    * {
+        test-font-family: sans
+        test-font-size: 42
+    }
+    """
+    props = first_decl_block(css)
+
+    assert props.get("test-font-family") == "sans"
+    assert props.get("test-font-size") == 42
