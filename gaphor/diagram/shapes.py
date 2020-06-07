@@ -8,7 +8,7 @@ from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
 from typing_extensions import TypedDict
 
-from gaphor.diagram.style import Style
+from gaphor.diagram.style import Style, combined_style
 from gaphor.diagram.text import (
     FontStyle,
     FontWeight,
@@ -26,29 +26,6 @@ class Padding:  # Enum
     RIGHT = 1
     BOTTOM = 2
     LEFT = 3
-
-
-DEFAULT_STYLE: Style = {
-    "min-width": 0,
-    "min-height": 0,
-    "padding": (0, 0, 0, 0),
-    "vertical-align": VerticalAlign.MIDDLE,
-    "vertical-spacing": 4,
-    "border-radius": 0,
-    "padding": (0, 0, 0, 0),
-    # "background-color": (1, 1, 1, 0),
-    "line-width": 2,
-    "dash-style": [],
-    "color": (0, 0, 0, 1),
-    "font-family": "sans",
-    "font-size": 14,
-    "font-style": FontStyle.NORMAL,
-    # "font-weight": FontWeight.NORMAL,
-    # "text-decoration": TextDecoration.NONE,
-    "text-align": TextAlign.CENTER,
-    # "text-color": (0, 0, 0, 1),
-    "highlight-color": (0, 0, 1, 0.4),
-}
 
 
 @dataclass(frozen=True)
@@ -163,13 +140,6 @@ def draw_highlight(context: DrawContext):
         cr.set_source_rgba(*highlight_color)
         cr.set_line_width(cr.get_line_width() * 3.141)
         cr.stroke_preserve()
-
-
-def combined_style(item_style: Style, inline_style: Style = {}) -> Style:
-    """
-    Combine default style, context style and inline styles into one style.
-    """
-    return {**DEFAULT_STYLE, **item_style, **inline_style}  # type: ignore[misc]
 
 
 class Box:
