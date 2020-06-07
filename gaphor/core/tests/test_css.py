@@ -68,3 +68,46 @@ def test_multiple_rules():
     rules = list(parse_stylesheet(css))
 
     assert len(rules) == 2
+
+
+def test_selectors():
+    css = """
+    foo, bar {}
+    """
+    selector, declarations = next(parse_stylesheet(css))
+
+    assert len(selector) == 2
+
+
+def test_invalid_css_syntax():
+    css = """
+    foo/bar ;
+    """
+    rules = list(parse_stylesheet(css))
+    selector, _ = rules[0]
+
+    assert len(rules) == 1
+    assert selector == "error"
+
+
+def test_invalid_css_syntax_in_declarations():
+    css = """
+    foo { foo : bar : baz }
+    """
+    rules = list(parse_stylesheet(css))
+    _, decls = rules[0]
+
+    assert len(rules) == 1
+    assert len(decls) == 0
+
+
+def test_invalid_selector():
+    css = """
+    foo/bar {}
+    good {}
+    """
+    rules = list(parse_stylesheet(css))
+    selector, _ = rules[0]
+
+    assert len(rules) == 2
+    assert selector == "error"

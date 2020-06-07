@@ -3,8 +3,9 @@ from __future__ import annotations
 from typing import Callable, Dict, Generator, List, Optional, Tuple, Union
 
 import tinycss2
-
-Selector = Tuple[tinycss2.ast.Node]
+from cssselect2.compiler import CompiledSelector, compile_selector_list
+from cssselect2.parser import SelectorError
+from typing_extensions import Literal
 
 
 class _StyleDeclarations:
@@ -34,11 +35,29 @@ class _StyleDeclarations:
 StyleDeclarations = _StyleDeclarations()
 
 
-def parse_stylesheet(css) -> Generator[Tuple[Selector, Dict[str, object]], None, None]:
+def parse_stylesheet(
+    css,
+) -> Generator[
+    Union[
+        Tuple[CompiledSelector, Dict[str, object]],
+        Tuple[Literal["error"], Union[tinycss2.ast.ParseError, SelectorError]],
+    ],
+    None,
+    None,
+]:
     rules = tinycss2.parse_stylesheet(css, skip_comments=True, skip_whitespace=True)
-    return (
-        (
-            rule.prelude,
+    for rule in rules:
+        if rule.type == "error":
+            yield ("error", rule)
+            continue
+        try:
+            selectors = compile_selector_list(rule.prelude)
+        except SelectorError as e:
+            yield ("error", e)
+            continue
+
+        yield (
+            selectors,
             {
                 prop: value
                 for prop, value in (
@@ -48,8 +67,6 @@ def parse_stylesheet(css) -> Generator[Tuple[Selector, Dict[str, object]], None,
                 if value is not None
             },
         )
-        for rule in rules
-    )
 
 
 def parse_declarations(rule):
