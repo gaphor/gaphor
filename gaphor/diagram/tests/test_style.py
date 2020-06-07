@@ -53,7 +53,7 @@ def test_not_a_number():
         ["serif", "serif"],
         ["sans serif", "sans serif"],
         ['"DejaVu serif"', "DejaVu serif"],
-        ["Number 1", "Number 1.0"],
+        ["Number 1", "Number 1"],
         ["", None],
     ],
 )

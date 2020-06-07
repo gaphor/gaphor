@@ -98,7 +98,7 @@ def parse_declarations(rule):
                 value.append(token.value)
         elif token.type in ("dimension", "number"):
             assert state == VALUE
-            value.append(token.value)
+            value.append(token.int_value if token.is_integer else token.value)
         elif token.type == "hash":
             assert state == VALUE
             value.append("#" + token.value)

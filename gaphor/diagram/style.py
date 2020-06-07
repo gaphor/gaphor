@@ -14,6 +14,7 @@ from gaphor.diagram.text import (
 
 Color = Tuple[float, float, float, float]  # RGBA
 Padding = Tuple[float, float, float, float]  # top/right/bottom/left
+Number = Union[int, float]
 
 # Style is using SVG properties where possible
 # https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
@@ -21,14 +22,14 @@ Style = TypedDict(
     "Style",
     {
         "padding": Padding,
-        "min-width": float,
-        "min-height": float,
-        "line-width": float,
-        "vertical-spacing": float,
-        "border-radius": float,
+        "min-width": Number,
+        "min-height": Number,
+        "line-width": Number,
+        "vertical-spacing": Number,
+        "border-radius": Number,
         "background-color": Color,
         "font-family": str,
-        "font-size": float,
+        "font-size": Number,
         "font-style": FontStyle,
         "font-weight": FontWeight,
         "text-decoration": TextDecoration,
@@ -36,11 +37,13 @@ Style = TypedDict(
         "text-color": Color,
         "color": Color,
         "vertical-align": VerticalAlign,
-        "dash-style": Sequence[float],
+        "dash-style": Sequence[Number],
         "highlight-color": Color,
     },
     total=False,
 )
+
+number = (int, float)
 
 
 def _clip_color(c):
@@ -67,8 +70,8 @@ def parse_color(prop, value):
     "border-radius",
     "font-size",
 )
-def parse_positive_number(prop, value) -> Optional[float]:
-    if isinstance(value, float) and value > 0:
+def parse_positive_number(prop, value) -> Optional[Number]:
+    if isinstance(value, number) and value > 0:
         return value
     return None
 
@@ -84,10 +87,10 @@ def parse_string(prop, value) -> Optional[str]:
 
 @StyleDeclarations.register("padding")
 def parse_padding(prop, value) -> Optional[Padding]:
-    if isinstance(value, float):
+    if isinstance(value, number):
         return (value, value, value, value)
     n = len(value)
-    if not n or any(not isinstance(v, float) for v in value):
+    if not n or any(not isinstance(v, number) for v in value):
         return None
 
     return (
@@ -100,11 +103,11 @@ def parse_padding(prop, value) -> Optional[Padding]:
 
 @StyleDeclarations.register("dash-style")
 def parse_sequence_numbers(
-    prop, value: Union[float, Sequence[float]]
-) -> Optional[Sequence[float]]:
-    if isinstance(value, float):
+    prop, value: Union[Number, Sequence[Number]]
+) -> Optional[Sequence[Number]]:
+    if isinstance(value, number):
         return (value, value)
-    elif all(isinstance(v, float) for v in value):
+    elif all(isinstance(v, (int, float)) for v in value):
         return value
     return None
 
