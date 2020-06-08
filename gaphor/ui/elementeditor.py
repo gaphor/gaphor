@@ -26,13 +26,73 @@ def new_builder(*object_ids):
     return builder
 
 
+DEFAULT_STYLE_SHEET = textwrap.dedent(
+    """
+    * {
+     background-color: beige;
+    }
+
+    /****
+     Here you can edit the
+     style of the model.
+     Gaphor supports a
+     subset of CSS3.
+
+     The following proper-
+     ties are supported:
+
+     * padding: Padding
+     * min-width: Number
+     * min-height: Number
+     * line-width: Number
+     * vertical-spacing: Number
+     * border-radius: Number
+     * background-color: Color
+     * font-family: Text
+     * font-size: Number
+     * font-style: normal|italic
+     * font-weight: normal|bold
+     * text-decoration: none|underline
+     * text-align: left|center|right
+     * text-color: Color
+     * color: Color
+     * vertical-align: top|middle|bottom
+     * dash-style: Sequence[Number]
+     * highlight-color: Color
+
+     Color can be a CSS3 color name,
+     a rgb(r, g, b), rgba(r, g, b, a)
+     or hex code (#ff00ff).
+
+     Have fun!
+    ****/
+    """
+)
+
+
+class DelayedFunction:
+    def __init__(self, delay, function):
+        self._delay = delay
+        self._function = function
+        self._source_id = 0
+
+    def __call__(self, *args):
+        print("update timeout", args)
+        if self._source_id:
+            GLib.source_remove(self._source_id)
+
+        def timeout_function():
+            print("call timeout", args)
+            self._function(*args)
+            self._source_id = 0
+
+        self._source_id = GLib.timeout_add(self._delay, timeout_function)
+
+
 class ElementEditor(UIComponent, ActionProvider):
     """The ElementEditor class is a utility window used to edit UML elements.
     It will display the properties of the currently selected element in the
     diagram."""
-
-    title = gettext("Element Editor")
-    size = (275, -1)
 
     def __init__(self, event_manager, element_factory, diagrams, properties):
         """Constructor. Build the action group for the element editor window.
@@ -46,7 +106,12 @@ class ElementEditor(UIComponent, ActionProvider):
         self._current_item = None
         self._expanded_pages = {gettext("Properties"): True}
         self._on_style_sheet_changed_id = -1
-        self._style_sheet_timeout_id = 0
+
+        def tx_update_style_sheet(style_sheet, text):
+            with Transaction(event_manager):
+                style_sheet.styleSheet = text
+
+        self._style_sheet_update = DelayedFunction(800, tx_update_style_sheet)
 
     def open(self):
         """Display the ElementEditor pane."""
@@ -54,18 +119,21 @@ class ElementEditor(UIComponent, ActionProvider):
 
         self.revealer = builder.get_object("elementeditor")
         self.editor_stack = builder.get_object("editor-stack")
+
         self.vbox = builder.get_object("editors")
 
         current_view = self.diagrams.get_current_view()
-        self._selection_change(focused_item=current_view and current_view.focused_item)
+        self._selection_changed(focused_item=current_view and current_view.focused_item)
 
-        self.event_manager.subscribe(self._selection_change)
+        self.event_manager.subscribe(self._selection_changed)
         self.event_manager.subscribe(self._element_changed)
 
         self.enable_style_sheet = builder.get_object("enable-style-sheet")
         self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
+        self.style_sheet_view = builder.get_object("style-sheet-view")
 
         self.event_manager.subscribe(self._model_ready)
+        self.event_manager.subscribe(self._style_sheet_changed)
         self._on_style_sheet_changed_id = self.style_sheet_buffer.connect(
             "changed", self.on_style_sheet_changed
         )
@@ -77,9 +145,11 @@ class ElementEditor(UIComponent, ActionProvider):
         Both the widget and event parameters default to None and are
         idempotent if set."""
 
-        self.event_manager.unsubscribe(self._selection_change)
+        self.event_manager.unsubscribe(self._selection_changed)
         self.event_manager.unsubscribe(self._element_changed)
         self.event_manager.unsubscribe(self._model_ready)
+        self.event_manager.unsubscribe(self._style_sheet_changed)
+
         self.vbox = None
         self._current_item = None
         return True
@@ -87,6 +157,10 @@ class ElementEditor(UIComponent, ActionProvider):
     @action(name="show-editors", shortcut="<Primary>e", state=True)
     def toggle_editor_visibility(self, active):
         self.revealer.set_reveal_child(active)
+
+    @action(name="show-settings", state=False)
+    def toggle_editor_settings(self, active):
+        self.editor_stack.set_visible_child_name("settings" if active else "editors")
 
     ## Diagram item editor
 
@@ -136,7 +210,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self._expanded_pages[name] = widget.get_expanded()
 
     @event_handler(DiagramSelectionChanged)
-    def _selection_change(self, event=None, focused_item=None):
+    def _selection_changed(self, event=None, focused_item=None):
         """
         Called when a diagram item receives focus.
 
@@ -183,16 +257,12 @@ class ElementEditor(UIComponent, ActionProvider):
 
     ## Settings stack
 
-    @action(name="show-settings", state=False)
-    def toggle_editor_settings(self, active):
-        self.editor_stack.set_visible_child_name("settings" if active else "editors")
-
     @action(name="enable-style-sheet", state=False)
     def toggle_enable_style_sheet(self, active):
         style_sheets = self.element_factory.lselect(StyleSheet)
         if active and not style_sheets:
             style_sheet = self.element_factory.create(StyleSheet)
-            style_sheet.style_sheet = "* { }"
+            style_sheet.styleSheet = DEFAULT_STYLE_SHEET
         elif not active and style_sheets:
             for style_sheet in style_sheets:
                 # Trigger style update on diagrams:
@@ -207,23 +277,25 @@ class ElementEditor(UIComponent, ActionProvider):
             )
             style_sheet = style_sheets[0]
 
-            if self._style_sheet_timeout_id:
-                GLib.source_remove(self._style_sheet_timeout_id)
-
-            def tx_update_style_sheet(style_sheet, text):
-                with Transaction(self.event_manager):
-                    style_sheet.styleSheet = text
-                self._style_sheet_timeout_id = 0
-
-            self._style_sheet_timeout_id = GLib.timeout_add(
-                800, tx_update_style_sheet, style_sheet, text
-            )
+            self._style_sheet_update(style_sheet, text)
 
     @event_handler(ModelReady)
     def _model_ready(self, event):
         style_sheets = self.element_factory.lselect(StyleSheet)
 
         self.enable_style_sheet.set_active(bool(style_sheets))
+
+        self.style_sheet_buffer.handler_block(self._on_style_sheet_changed_id)
+        self.style_sheet_buffer.set_text(
+            style_sheets[0].styleSheet if style_sheets else ""
+        )
+        self.style_sheet_buffer.handler_unblock(self._on_style_sheet_changed_id)
+
+    @event_handler(AttributeUpdated)
+    def _style_sheet_changed(self, event):
+        style_sheets = self.element_factory.lselect(StyleSheet)
+        if not style_sheets or self.style_sheet_view.props.has_focus:
+            return
 
         self.style_sheet_buffer.handler_block(self._on_style_sheet_changed_id)
         self.style_sheet_buffer.set_text(

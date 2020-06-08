@@ -346,7 +346,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="can_focus">True</property>
                     <property name="shadow_type">in</property>
                     <child>
-                      <object class="GtkTextView">
+                      <object class="GtkTextView" id="style-sheet-view">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="buffer">style-sheet-buffer</property>
