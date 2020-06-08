@@ -104,14 +104,9 @@ class ElementEditor(UIComponent, ActionProvider):
         self.properties = properties
         self.vbox: Optional[Gtk.Box] = None
         self._current_item = None
-        self._expanded_pages = {gettext("Properties"): True}
-        self._on_style_sheet_changed_id = -1
+        self._expanded_pages = {}
 
-        def tx_update_style_sheet(style_sheet, text):
-            with Transaction(event_manager):
-                style_sheet.styleSheet = text
-
-        self._style_sheet_update = DelayedFunction(800, tx_update_style_sheet)
+        self.settings_stack = SettingsStack(event_manager, element_factory)
 
     def open(self):
         """Display the ElementEditor pane."""
@@ -128,15 +123,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._selection_changed)
         self.event_manager.subscribe(self._element_changed)
 
-        self.enable_style_sheet = builder.get_object("enable-style-sheet")
-        self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
-        self.style_sheet_view = builder.get_object("style-sheet-view")
-
-        self.event_manager.subscribe(self._model_ready)
-        self.event_manager.subscribe(self._style_sheet_changed)
-        self._on_style_sheet_changed_id = self.style_sheet_buffer.connect(
-            "changed", self.on_style_sheet_changed
-        )
+        self.settings_stack.open(builder)
 
         return self.revealer
 
@@ -147,11 +134,12 @@ class ElementEditor(UIComponent, ActionProvider):
 
         self.event_manager.unsubscribe(self._selection_changed)
         self.event_manager.unsubscribe(self._element_changed)
-        self.event_manager.unsubscribe(self._model_ready)
-        self.event_manager.unsubscribe(self._style_sheet_changed)
 
         self.vbox = None
         self._current_item = None
+
+        self.settings_stack.close()
+
         return True
 
     @action(name="show-editors", shortcut="<Primary>e", state=True)
@@ -161,6 +149,10 @@ class ElementEditor(UIComponent, ActionProvider):
     @action(name="show-settings", state=False)
     def toggle_editor_settings(self, active):
         self.editor_stack.set_visible_child_name("settings" if active else "editors")
+
+    @action(name="enable-style-sheet", state=False)
+    def toggle_enable_style_sheet(self, active):
+        self.settings_stack.toggle_enable_style_sheet(active)
 
     ## Diagram item editor
 
@@ -255,50 +247,83 @@ class ElementEditor(UIComponent, ActionProvider):
                 self.clear_pages()
                 self.create_pages(self._current_item)
 
-    ## Settings stack
 
-    @action(name="enable-style-sheet", state=False)
-    def toggle_enable_style_sheet(self, active):
+class SettingsStack:
+    def __init__(self, event_manager, element_factory):
+        self.event_manager = event_manager
+        self.element_factory = element_factory
+
+        self._on_style_sheet_changed_id = -1
+        self._in_update = 0
+
+        def tx_update_style_sheet(style_sheet, text):
+            self._in_update = 1
+            with Transaction(event_manager):
+                style_sheet.styleSheet = text
+            self._in_update = 0
+
+        self._style_sheet_update = DelayedFunction(800, tx_update_style_sheet)
+
+    def open(self, builder):
+        self.enable_style_sheet = builder.get_object("enable-style-sheet")
+        self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
+        self.style_sheet_view = builder.get_object("style-sheet-view")
+
+        self.event_manager.subscribe(self._model_ready)
+        self.event_manager.subscribe(self._style_sheet_changed)
+        self._on_style_sheet_changed_id = self.style_sheet_buffer.connect(
+            "changed", self.on_style_sheet_changed
+        )
+
+    def close(self):
+        self.event_manager.unsubscribe(self._model_ready)
+        self.event_manager.unsubscribe(self._style_sheet_changed)
+
+    @property
+    def style_sheet(self):
         style_sheets = self.element_factory.lselect(StyleSheet)
-        if active and not style_sheets:
-            style_sheet = self.element_factory.create(StyleSheet)
-            style_sheet.styleSheet = DEFAULT_STYLE_SHEET
-        elif not active and style_sheets:
-            for style_sheet in style_sheets:
-                # Trigger style update on diagrams:
-                style_sheet.styleSheet = ""
-                style_sheet.unlink()
+        return style_sheets[0] if style_sheets else None
+
+    def toggle_enable_style_sheet(self, active):
+        style_sheet = self.style_sheet
+        if active and not style_sheet:
+            with Transaction(self.event_manager):
+                style_sheet = self.element_factory.create(StyleSheet)
+                style_sheet.styleSheet = DEFAULT_STYLE_SHEET
+        elif not active and style_sheet:
+            with Transaction(self.event_manager):
+                for style_sheet in self.element_factory.lselect(StyleSheet):
+                    # Trigger style update on diagrams:
+                    style_sheet.styleSheet = ""
+                    style_sheet.unlink()
 
     def on_style_sheet_changed(self, buffer):
-        style_sheets = self.element_factory.lselect(StyleSheet)
-        if style_sheets:
+        style_sheet = self.style_sheet
+        if style_sheet:
             text = buffer.get_text(
                 buffer.get_start_iter(), buffer.get_end_iter(), False
             )
-            style_sheet = style_sheets[0]
 
             self._style_sheet_update(style_sheet, text)
 
     @event_handler(ModelReady)
     def _model_ready(self, event):
-        style_sheets = self.element_factory.lselect(StyleSheet)
+        style_sheet = self.style_sheet
 
-        self.enable_style_sheet.set_active(bool(style_sheets))
+        self.enable_style_sheet.set_active(bool(style_sheet))
 
         self.style_sheet_buffer.handler_block(self._on_style_sheet_changed_id)
-        self.style_sheet_buffer.set_text(
-            style_sheets[0].styleSheet if style_sheets else ""
-        )
+        self.style_sheet_buffer.set_text(style_sheet.styleSheet if style_sheet else "")
         self.style_sheet_buffer.handler_unblock(self._on_style_sheet_changed_id)
 
     @event_handler(AttributeUpdated)
     def _style_sheet_changed(self, event):
-        style_sheets = self.element_factory.lselect(StyleSheet)
-        if not style_sheets or self.style_sheet_view.props.has_focus:
+        style_sheet = self.style_sheet
+        if not (style_sheet or self._in_update):
             return
 
         self.style_sheet_buffer.handler_block(self._on_style_sheet_changed_id)
         self.style_sheet_buffer.set_text(
-            style_sheets[0].styleSheet if style_sheets else ""
+            (style_sheet.styleSheet or "") if style_sheet else ""
         )
         self.style_sheet_buffer.handler_unblock(self._on_style_sheet_changed_id)
