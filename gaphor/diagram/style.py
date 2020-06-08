@@ -87,7 +87,10 @@ def _clip_color(c):
     "background-color", "color", "highlight-color", "text-color"
 )
 def parse_color(prop, value):
-    color = tinycss2.color3.parse_color(value)
+    try:
+        color = tinycss2.color3.parse_color(value)
+    except AttributeError:
+        return None
     return tuple(_clip_color(v) for v in color) if color else None
 
 
