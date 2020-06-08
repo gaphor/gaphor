@@ -5,10 +5,10 @@ import logging
 import textwrap
 from typing import Optional
 
-from gi.repository import Gtk
+from gi.repository import GLib, Gtk
 
 from gaphor.abc import ActionProvider
-from gaphor.core import action, event_handler, gettext
+from gaphor.core import Transaction, action, event_handler, gettext
 from gaphor.core.modeling import Presentation, StyleSheet
 from gaphor.core.modeling.event import AssociationUpdated, AttributeUpdated, ModelReady
 from gaphor.diagram.propertypages import PropertyPages
@@ -46,6 +46,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self._current_item = None
         self._expanded_pages = {gettext("Properties"): True}
         self._on_style_sheet_changed_id = -1
+        self._style_sheet_timeout_id = 0
 
     def open(self):
         """Display the ElementEditor pane."""
@@ -205,8 +206,18 @@ class ElementEditor(UIComponent, ActionProvider):
                 buffer.get_start_iter(), buffer.get_end_iter(), False
             )
             style_sheet = style_sheets[0]
-            if style_sheet.styleSheet != text:
-                style_sheet.styleSheet = text
+
+            if self._style_sheet_timeout_id:
+                GLib.source_remove(self._style_sheet_timeout_id)
+
+            def tx_update_style_sheet(style_sheet, text):
+                with Transaction(self.event_manager):
+                    style_sheet.styleSheet = text
+                self._style_sheet_timeout_id = 0
+
+            self._style_sheet_timeout_id = GLib.timeout_add(
+                800, tx_update_style_sheet, style_sheet, text
+            )
 
     @event_handler(ModelReady)
     def _model_ready(self, event):
