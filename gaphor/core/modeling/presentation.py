@@ -18,22 +18,6 @@ if TYPE_CHECKING:
 S = TypeVar("S", bound=Element)
 
 
-def read_style_css():
-    """
-    Intermediate solution to read styling from an external file
-    This allows for testing some styles at least.
-    """
-    from gaphor.services.properties import get_config_dir
-    import os.path
-
-    style_css = os.path.join(get_config_dir(), "style.css")
-    try:
-        with open(style_css) as f:
-            return f.read()
-    except OSError:
-        return ""
-
-
 class StyleSheet(Element):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
@@ -42,7 +26,6 @@ class StyleSheet(Element):
         self._watcher.subscribe_all()
 
         self._style = {}
-        self.styleSheet = read_style_css()
 
     styleSheet: attribute[str] = attribute("styleSheet", str)
 
