@@ -10,7 +10,13 @@ from gi.repository import GLib, Gtk
 from gaphor.abc import ActionProvider
 from gaphor.core import Transaction, action, event_handler, gettext
 from gaphor.core.modeling import Presentation, StyleSheet
-from gaphor.core.modeling.event import AssociationUpdated, AttributeUpdated, ModelReady
+from gaphor.core.modeling.event import (
+    AssociationUpdated,
+    AttributeUpdated,
+    ElementCreated,
+    ElementDeleted,
+    ModelReady,
+)
 from gaphor.diagram.propertypages import PropertyPages
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
@@ -27,7 +33,7 @@ def new_builder(*object_ids):
 
 
 DEFAULT_STYLE_SHEET = textwrap.dedent(
-    """
+    """\
     * {
      background-color: beige;
     }
@@ -65,6 +71,7 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
      or hex code (#ff00ff).
 
      Have fun!
+
     ****/
     """
 )
@@ -77,12 +84,10 @@ class DelayedFunction:
         self._source_id = 0
 
     def __call__(self, *args):
-        print("update timeout", args)
         if self._source_id:
             GLib.source_remove(self._source_id)
 
         def timeout_function():
-            print("call timeout", args)
             self._function(*args)
             self._source_id = 0
 
@@ -98,15 +103,8 @@ class ElementEditor(UIComponent, ActionProvider):
         """Constructor. Build the action group for the element editor window.
         This will place a button for opening the window in the toolbar.
         The widget attribute is a PropertyEditor."""
-        self.event_manager = event_manager
-        self.element_factory = element_factory
-        self.diagrams = diagrams
-        self.properties = properties
-        self.vbox: Optional[Gtk.Box] = None
-        self._current_item = None
-        self._expanded_pages = {}
-
-        self.settings_stack = SettingsStack(event_manager, element_factory)
+        self.editors = EditorStack(event_manager, diagrams, properties)
+        self.settings = SettingsStack(event_manager, element_factory)
 
     def open(self):
         """Display the ElementEditor pane."""
@@ -115,15 +113,8 @@ class ElementEditor(UIComponent, ActionProvider):
         self.revealer = builder.get_object("elementeditor")
         self.editor_stack = builder.get_object("editor-stack")
 
-        self.vbox = builder.get_object("editors")
-
-        current_view = self.diagrams.get_current_view()
-        self._selection_changed(focused_item=current_view and current_view.focused_item)
-
-        self.event_manager.subscribe(self._selection_changed)
-        self.event_manager.subscribe(self._element_changed)
-
-        self.settings_stack.open(builder)
+        self.editors.open(builder)
+        self.settings.open(builder)
 
         return self.revealer
 
@@ -132,13 +123,8 @@ class ElementEditor(UIComponent, ActionProvider):
         Both the widget and event parameters default to None and are
         idempotent if set."""
 
-        self.event_manager.unsubscribe(self._selection_changed)
-        self.event_manager.unsubscribe(self._element_changed)
-
-        self.vbox = None
-        self._current_item = None
-
-        self.settings_stack.close()
+        self.editors.close()
+        self.settings.close()
 
         return True
 
@@ -152,9 +138,35 @@ class ElementEditor(UIComponent, ActionProvider):
 
     @action(name="enable-style-sheet", state=False)
     def toggle_enable_style_sheet(self, active):
-        self.settings_stack.toggle_enable_style_sheet(active)
+        self.settings.toggle_enable_style_sheet(active)
 
-    ## Diagram item editor
+
+class EditorStack:
+    def __init__(self, event_manager, diagrams, properties):
+        self.event_manager = event_manager
+        self.diagrams = diagrams
+        self.properties = properties
+
+        self.vbox: Optional[Gtk.Box] = None
+        self._current_item = None
+        self._expanded_pages = {}
+
+    def open(self, builder):
+        """Display the ElementEditor pane."""
+        self.vbox = builder.get_object("editors")
+
+        current_view = self.diagrams.get_current_view()
+        self._selection_changed(focused_item=current_view and current_view.focused_item)
+
+        self.event_manager.subscribe(self._selection_changed)
+        self.event_manager.subscribe(self._element_changed)
+
+    def close(self):
+        self.event_manager.unsubscribe(self._selection_changed)
+        self.event_manager.unsubscribe(self._element_changed)
+
+        self.vbox = None
+        self._current_item = None
 
     def _get_adapters(self, item):
         """
@@ -219,25 +231,29 @@ class ElementEditor(UIComponent, ActionProvider):
         if item:
             self.create_pages(item)
         else:
-            builder = new_builder("no-item-selected")
+            self.show_no_item_selected()
 
-            self.vbox.pack_start(
-                child=builder.get_object("no-item-selected"),
-                expand=False,
-                fill=True,
-                padding=0,
-            )
+    def show_no_item_selected(self):
+        assert self.vbox
+        builder = new_builder("no-item-selected")
 
-            tips = builder.get_object("tips")
+        self.vbox.pack_start(
+            child=builder.get_object("no-item-selected"),
+            expand=False,
+            fill=True,
+            padding=0,
+        )
 
-            def on_show_tips_changed(checkbox):
-                active = checkbox.get_active()
-                tips.show() if active else tips.hide()
-                self.properties.set("show-tips", active)
+        tips = builder.get_object("tips")
 
-            show_tips = builder.get_object("show-tips")
-            show_tips.connect("toggled", on_show_tips_changed)
-            show_tips.set_active(self.properties.get("show-tips", True))
+        def on_show_tips_changed(checkbox):
+            active = checkbox.get_active()
+            tips.show() if active else tips.hide()
+            self.properties.set("show-tips", active)
+
+        show_tips = builder.get_object("show-tips")
+        show_tips.connect("toggled", on_show_tips_changed)
+        show_tips.set_active(self.properties.get("show-tips", True))
 
     @event_handler(AssociationUpdated)
     def _element_changed(self, event: AssociationUpdated):
@@ -249,12 +265,12 @@ class ElementEditor(UIComponent, ActionProvider):
 
 
 class SettingsStack:
+    """ Support code for the Settings (cog) pane.
+    """
+
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory = element_factory
-
-        self._on_style_sheet_changed_id = -1
-        self._in_update = 0
 
         def tx_update_style_sheet(style_sheet, text):
             self._in_update = 1
@@ -263,6 +279,7 @@ class SettingsStack:
             self._in_update = 0
 
         self._style_sheet_update = DelayedFunction(800, tx_update_style_sheet)
+        self._in_update = 0
 
     def open(self, builder):
         self.enable_style_sheet = builder.get_object("enable-style-sheet")
@@ -271,13 +288,13 @@ class SettingsStack:
 
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_changed)
-        self._on_style_sheet_changed_id = self.style_sheet_buffer.connect(
-            "changed", self.on_style_sheet_changed
-        )
+        self.event_manager.subscribe(self._style_sheet_created_or_deleted)
+        self.style_sheet_buffer.connect("changed", self.on_style_sheet_changed)
 
     def close(self):
         self.event_manager.unsubscribe(self._model_ready)
         self.event_manager.unsubscribe(self._style_sheet_changed)
+        self.event_manager.unsubscribe(self._style_sheet_created_or_deleted)
 
     @property
     def style_sheet(self):
@@ -293,13 +310,13 @@ class SettingsStack:
         elif not active and style_sheet:
             with Transaction(self.event_manager):
                 for style_sheet in self.element_factory.lselect(StyleSheet):
-                    # Trigger style update on diagrams:
+                    # Resetting the style sheet will trigger an update on diagrams
                     style_sheet.styleSheet = ""
                     style_sheet.unlink()
 
     def on_style_sheet_changed(self, buffer):
         style_sheet = self.style_sheet
-        if style_sheet:
+        if style_sheet and not self._in_update:
             text = buffer.get_text(
                 buffer.get_start_iter(), buffer.get_end_iter(), False
             )
@@ -312,18 +329,22 @@ class SettingsStack:
 
         self.enable_style_sheet.set_active(bool(style_sheet))
 
-        self.style_sheet_buffer.handler_block(self._on_style_sheet_changed_id)
+        self._in_update = 1
         self.style_sheet_buffer.set_text(style_sheet.styleSheet if style_sheet else "")
-        self.style_sheet_buffer.handler_unblock(self._on_style_sheet_changed_id)
+        self._in_update = 0
 
     @event_handler(AttributeUpdated)
     def _style_sheet_changed(self, event):
         style_sheet = self.style_sheet
-        if not (style_sheet or self._in_update):
+        if not style_sheet or self._in_update:
             return
 
-        self.style_sheet_buffer.handler_block(self._on_style_sheet_changed_id)
+        self._in_update = 1
         self.style_sheet_buffer.set_text(
             (style_sheet.styleSheet or "") if style_sheet else ""
         )
-        self.style_sheet_buffer.handler_unblock(self._on_style_sheet_changed_id)
+        self._in_update = 0
+
+    @event_handler(ElementCreated, ElementDeleted)
+    def _style_sheet_created_or_deleted(self, event: ElementDeleted):
+        self.enable_style_sheet.set_active(bool(self.style_sheet))
