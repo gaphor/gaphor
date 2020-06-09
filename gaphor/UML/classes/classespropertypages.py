@@ -347,7 +347,7 @@ class OperationsPage(PropertyPageBase):
 class DependencyPropertyPage(PropertyPageBase):
     """Dependency item editor."""
 
-    order = 0
+    order = 20
 
     DEPENDENCY_TYPES = (
         (gettext("Dependency"), UML.Dependency),
@@ -410,8 +410,8 @@ class DependencyPropertyPage(PropertyPageBase):
             self.item.request_update()
 
     @transactional
-    def _on_auto_dependency_change(self, button):
-        self.item.auto_dependency = button.get_active()
+    def _on_auto_dependency_change(self, switch, gparam):
+        self.item.auto_dependency = switch.get_active()
         self.update()
 
 
