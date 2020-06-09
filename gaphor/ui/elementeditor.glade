@@ -282,9 +282,10 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                       <object class="GtkBox" id="editors">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">2</property>
-                        <property name="margin_right">2</property>
-                        <property name="margin_bottom">2</property>
+                        <property name="margin_left">6</property>
+                        <property name="margin_right">6</property>
+                        <property name="margin_top">6</property>
+                        <property name="margin_bottom">6</property>
                         <property name="orientation">vertical</property>
                         <child>
                           <placeholder/>
@@ -303,10 +304,10 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="margin_left">2</property>
-                <property name="margin_right">2</property>
-                <property name="margin_top">6</property>
-                <property name="margin_bottom">2</property>
+                <property name="margin_left">6</property>
+                <property name="margin_right">6</property>
+                <property name="margin_top">12</property>
+                <property name="margin_bottom">6</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
                 <child>
@@ -326,13 +327,34 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="enable-style-sheet">
-                    <property name="label" translatable="yes">Enable style sheet</property>
+                  <object class="GtkBox">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="action_name">win.enable-style-sheet</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Enable style sheet</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSwitch" id="enable-style-sheet">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="action_name">win.enable-style-sheet</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="pack_type">end</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>

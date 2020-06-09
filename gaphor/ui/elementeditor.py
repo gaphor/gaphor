@@ -347,4 +347,5 @@ class SettingsStack:
 
     @event_handler(ElementCreated, ElementDeleted)
     def _style_sheet_created_or_deleted(self, event: ElementDeleted):
-        self.enable_style_sheet.set_active(bool(self.style_sheet))
+        if isinstance(event.element, StyleSheet):
+            self.enable_style_sheet.set_active(bool(self.style_sheet))
