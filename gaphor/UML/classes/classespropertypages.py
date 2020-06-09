@@ -167,7 +167,7 @@ class ClassifierPropertyPage(PropertyPageBase):
         return builder.get_object("classifier-editor")
 
     @transactional
-    def _on_abstract_change(self, button):
+    def _on_abstract_change(self, button, gparam):
         self.subject.isAbstract = button.get_active()
 
 
@@ -197,7 +197,7 @@ class InterfacePropertyPage(PropertyPageBase):
         return builder.get_object("interface-editor")
 
     @transactional
-    def _on_fold_change(self, button):
+    def _on_fold_change(self, button, gparam):
         item = self.item
 
         fold = button.get_active()
