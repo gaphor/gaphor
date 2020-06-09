@@ -524,7 +524,7 @@ class AssociationPropertyPage(PropertyPageBase):
         return builder.get_object("association-editor")
 
     @transactional
-    def _on_show_direction_change(self, button):
+    def _on_show_direction_change(self, button, gparam):
         self.item.show_direction = button.get_active()
 
     @transactional
