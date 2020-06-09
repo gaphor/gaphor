@@ -63,8 +63,7 @@ class ComponentItem(ElementPresentation, Classified):
 
 def draw_component_icon(box, context, bounding_box):
     with cairo_state(context.cairo) as cr:
-        fill_color = context.style["background-color"] or (1, 1, 1, 1)
-        stroke_color = context.style["color"] or (0, 0, 0, 1)
+        stroke_color = context.style["color"]
 
         cr.set_line_width(1.0)
         icon_height = 20
@@ -75,10 +74,6 @@ def draw_component_icon(box, context, bounding_box):
 
         iy = icon_margin_y
 
-        cr.rectangle(ix, iy, icon_width, icon_height)
-        cr.set_source_rgba(*stroke_color)
-        cr.stroke()
-
         bar_padding = 4
         bx = ix - bar_padding
         bar_upper_y = iy + bar_padding
@@ -86,14 +81,18 @@ def draw_component_icon(box, context, bounding_box):
 
         bar_width = 12
         bar_height = 4
-        cr.rectangle(bx, bar_lower_y, bar_width, bar_height)
-        cr.set_source_rgba(*fill_color)
-        cr.fill_preserve()
         cr.set_source_rgba(*stroke_color)
-        cr.stroke()
 
+        cr.rectangle(bx, bar_lower_y, bar_width, bar_height)
         cr.rectangle(bx, bar_upper_y, bar_width, bar_height)
-        cr.set_source_rgba(*fill_color)
-        cr.fill_preserve()
-        cr.set_source_rgba(*stroke_color)
+
+        cr.move_to(ix, iy + bar_padding)
+        cr.line_to(ix, iy)
+        cr.line_to(ix + icon_width, iy)
+        cr.line_to(ix + icon_width, iy + icon_height)
+        cr.line_to(ix, iy + icon_height)
+        cr.line_to(ix, iy + icon_height - bar_padding)
+        cr.move_to(ix, iy + bar_padding * 3)
+        cr.line_to(ix, iy + bar_padding * 2)
+
         cr.stroke()

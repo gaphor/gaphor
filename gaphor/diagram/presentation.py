@@ -10,7 +10,8 @@ from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.core.modeling.presentation import Presentation, S
-from gaphor.diagram.shapes import DrawContext, SizeContext, combined_style
+from gaphor.diagram.shapes import DrawContext, SizeContext
+from gaphor.diagram.style import combined_style
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 

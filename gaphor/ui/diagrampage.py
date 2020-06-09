@@ -16,8 +16,8 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.core.modeling import Presentation
-from gaphor.core.modeling.event import ElementDeleted
+from gaphor.core.modeling import Presentation, StyleSheet
+from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtools import (
     DefaultTool,
@@ -91,6 +91,7 @@ class DiagramPage:
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
         self.event_manager.subscribe(self._on_element_delete)
+        self.event_manager.subscribe(self._on_style_sheet_updated)
         self.event_manager.subscribe(self._on_sloppy_lines)
         self.event_manager.subscribe(self._on_diagram_item_placed)
 
@@ -188,6 +189,13 @@ class DiagramPage:
         if not event or event.key == "diagram.sloppiness":
             self.set_drawing_style(event and event.new_value or 0.0)
 
+    @event_handler(AttributeUpdated)
+    def _on_style_sheet_updated(self, event: AttributeUpdated):
+        if event.property is StyleSheet.styleSheet:
+            canvas = self.diagram.canvas
+            for item in canvas.get_all_items():
+                canvas.request_update(item)
+
     def close(self):
         """
         Tab is destroyed. Do the same thing that would
@@ -196,6 +204,7 @@ class DiagramPage:
         assert self.widget
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
+        self.event_manager.unsubscribe(self._on_style_sheet_updated)
         self.event_manager.unsubscribe(self._on_sloppy_lines)
         self.event_manager.unsubscribe(self._on_diagram_item_placed)
         self.view = None

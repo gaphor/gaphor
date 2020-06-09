@@ -8,6 +8,7 @@ from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
 from typing_extensions import TypedDict
 
+from gaphor.diagram.style import Style, combined_style
 from gaphor.diagram.text import (
     FontStyle,
     FontWeight,
@@ -19,65 +20,12 @@ from gaphor.diagram.text import (
     text_size,
 )
 
-# Style is using SVG properties where possible
-# https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
-Style = TypedDict(
-    "Style",
-    {
-        "padding": Tuple[float, float, float, float],
-        "min-width": float,
-        "min-height": float,
-        "line-width": float,
-        "vertical-spacing": float,
-        "border-radius": float,
-        "background-color": Optional[Tuple[float, float, float, float]],  # RGBA
-        "font-family": str,
-        "font-size": float,
-        "font-style": FontStyle,
-        "font-weight": Optional[FontWeight],
-        "text-decoration": Optional[TextDecoration],
-        "text-align": TextAlign,
-        "text-color": Optional[Tuple[float, float, float, float]],  # RGBA
-        "color": Optional[Tuple[float, float, float, float]],  # RGBA
-        "vertical-align": VerticalAlign,
-        "line-width": float,
-        "dash-style": Sequence[float],
-        "highlight-color": Optional[Tuple[float, float, float, float]],  # RGBA
-        # CommentItem:
-        "ear": int,
-    },
-    total=False,
-)
-
 
 class Padding:  # Enum
     TOP = 0
     RIGHT = 1
     BOTTOM = 2
     LEFT = 3
-
-
-DEFAULT_STYLE: Style = {
-    "min-width": 0,
-    "min-height": 0,
-    "padding": (0, 0, 0, 0),
-    "vertical-align": VerticalAlign.MIDDLE,
-    "vertical-spacing": 4,
-    "border-radius": 0,
-    "padding": (0, 0, 0, 0),
-    "background-color": None,
-    "line-width": 2,
-    "dash-style": [],
-    "color": None,
-    "font-family": "sans",
-    "font-size": 14,
-    "font-style": FontStyle.NORMAL,
-    "font-weight": None,
-    "text-decoration": None,
-    "text-align": TextAlign.CENTER,
-    "text-color": None,
-    "highlight-color": (0, 0, 1, 0.4),
-}
 
 
 @dataclass(frozen=True)
@@ -192,13 +140,6 @@ def draw_highlight(context: DrawContext):
         cr.set_source_rgba(*highlight_color)
         cr.set_line_width(cr.get_line_width() * 3.141)
         cr.stroke_preserve()
-
-
-def combined_style(item_style: Style, inline_style: Style = {}) -> Style:
-    """
-    Combine default style, context style and inline styles into one style.
-    """
-    return {**DEFAULT_STYLE, **item_style, **inline_style}  # type: ignore[misc]
 
 
 class Box:
@@ -372,7 +313,7 @@ class Text:
         text_box = self.text_box(style, bounding_box)
 
         with cairo_state(context.cairo) as cr:
-            text_color = style["text-color"]
+            text_color = style.get("text-color")
             if text_color:
                 cr.set_source_rgba(*text_color)
 

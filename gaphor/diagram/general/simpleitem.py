@@ -11,7 +11,8 @@ from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.shapes import DrawContext, combined_style, stroke
+from gaphor.diagram.shapes import DrawContext, stroke
+from gaphor.diagram.style import combined_style
 
 
 class Line(Presentation, _Line):
