@@ -30,7 +30,7 @@ renderers and such.</property>
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Show direction</property>
+            <property name="label" translatable="yes">Show Direction</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -383,15 +383,35 @@ renderers and such.</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
-          <object class="GtkCheckButton" id="show-attributes">
-            <property name="label" translatable="yes">Show Attributes</property>
+          <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
-            <property name="valign">start</property>
-            <property name="draw_indicator">True</property>
-            <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
-            <signal name="toggled" handler="show-attributes-changed" swapped="no"/>
+            <property name="can_focus">False</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Show Attributes</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-attributes">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <signal name="notify::active" handler="show-attributes-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack_type">end</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -1036,14 +1056,35 @@ Use -/= to move items up or down.</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
-          <object class="GtkCheckButton" id="show-operations">
-            <property name="label" translatable="yes">Show Operations</property>
+          <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
-            <property name="valign">start</property>
-            <property name="draw_indicator">True</property>
-            <signal name="toggled" handler="show-operations-changed" swapped="no"/>
+            <property name="can_focus">False</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Show Operations</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-operations">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <signal name="notify::active" handler="show-operations-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack_type">end</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -1284,18 +1325,40 @@ Use -/= to move items up or down.</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
-          <object class="GtkCheckButton" id="show-stereotypes">
-            <property name="label" translatable="yes">Show stereotype attributes</property>
+          <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
-            <property name="draw_indicator">True</property>
-            <signal name="toggled" handler="show-stereotypes-changed" swapped="no"/>
+            <property name="can_focus">False</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Show Stereotypes</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-stereotypes">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <signal name="notify::active" handler="show-stereotypes-changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack_type">end</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -1354,7 +1417,7 @@ Use -/= to move items up or down.</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>

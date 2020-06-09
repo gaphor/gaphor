@@ -54,7 +54,7 @@ class StereotypePage(PropertyPageBase):
         return builder.get_object("stereotypes-editor")
 
     @transactional
-    def _on_show_stereotypes_change(self, button):
+    def _on_show_stereotypes_change(self, button, gparam):
         self.item.show_stereotypes = button.get_active()
 
 

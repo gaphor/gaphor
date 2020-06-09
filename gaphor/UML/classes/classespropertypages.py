@@ -264,7 +264,7 @@ class AttributesPage(PropertyPageBase):
         return page
 
     @transactional
-    def _on_show_attributes_change(self, button):
+    def _on_show_attributes_change(self, button, gparam):
         self.item.show_attributes = button.get_active()
         self.item.request_update()
 
@@ -338,7 +338,7 @@ class OperationsPage(PropertyPageBase):
         return builder.get_object("operations-editor")
 
     @transactional
-    def _on_show_operations_change(self, button):
+    def _on_show_operations_change(self, button, gparam):
         self.item.show_operations = button.get_active()
         self.item.request_update()
 
