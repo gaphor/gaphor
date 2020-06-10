@@ -30,7 +30,7 @@ class PartitionPropertyPage(PropertyPageBase):
         return builder.get_object("partition-editor")
 
     @transactional
-    def _on_external_change(self, button):
+    def _on_external_change(self, button, gparam):
         item = self.item
         if item.subject:
             item.subject.isExternal = button.get_active()

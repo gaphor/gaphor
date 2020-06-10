@@ -30,7 +30,7 @@ class ComponentPropertyPage(PropertyPageBase):
         return builder.get_object("component-editor")
 
     @transactional
-    def _on_ii_change(self, button):
+    def _on_ii_change(self, button, gparam):
         """
         Called when user clicks "Indirectly instantiated" check button.
         """
