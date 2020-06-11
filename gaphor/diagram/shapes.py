@@ -350,7 +350,7 @@ class EditableText(Text):
         text_align = style["text-align"]
         vertical_align = style["vertical-align"]
         x, y = focus_box_pos(text_box, self.text_size, text_align, vertical_align)
-        text_draw_focus_box(context, x, y, w, h)
+        text_draw_focus_box(context, x, y, *self.text_size)
         self.bounding_box = Rectangle(x, y, width=w, height=h)
         return x, y, w, h
 
