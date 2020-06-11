@@ -13,8 +13,14 @@ def diagrams():
     return DiagramsStub()
 
 
+class DummyProperties(dict):
+    def set(self, key, val):
+        self[key] = val
+
+
 def test_reopen_of_window(event_manager, element_factory, diagrams):
-    editor = ElementEditor(event_manager, element_factory, diagrams, properties={})
+    properties = DummyProperties()
+    editor = ElementEditor(event_manager, element_factory, diagrams, properties)
 
     editor.open()
     editor.close()
