@@ -188,7 +188,7 @@ def build_launcher(
                     file_desc,
                     "launcher.ico",
                     product_name,
-                    product_version,
+                    file_version,
                     company_name,
                 )
             )

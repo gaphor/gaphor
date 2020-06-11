@@ -55,7 +55,7 @@ class Writer:
                 self.add_classdef(g)
                 if s:
                     s += ", "
-                s = s + g["name"]
+                s += g["name"]
             override = self.overrides.get_override(clazz["name"])
             if override:
                 self.classdefs[clazz["name"]] = [override]

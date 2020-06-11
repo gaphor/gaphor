@@ -85,8 +85,7 @@ class TestCase(unittest.TestCase):
         If port is not provided, then first port is used.
         """
         canvas = line.canvas
-        assert line.canvas is item.canvas
-
+        assert canvas is item.canvas
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
 

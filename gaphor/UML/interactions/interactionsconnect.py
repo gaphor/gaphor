@@ -121,7 +121,7 @@ def disconnect_lifelines(line, send, received):
 
     # one is disconnected and one is about to be disconnected,
     # so destroy the message
-    if not send or not received:
+    if not (send and received):
         # Both ends are disconnected:
         message = line.subject
         del line.subject

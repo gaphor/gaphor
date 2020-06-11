@@ -41,10 +41,7 @@ class Preferences(Service, ActionProvider):
     def hand_drawn_style(self, active):
         """Toggle between straight diagrams and "hand drawn" diagram style."""
 
-        if active:
-            sloppiness = 0.5
-        else:
-            sloppiness = 0.0
+        sloppiness = 0.5 if active else 0.0
         self.properties.set("diagram.sloppiness", sloppiness)
 
     @action(

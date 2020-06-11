@@ -11,7 +11,8 @@ from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.shapes import DrawContext, combined_style, stroke
+from gaphor.diagram.shapes import DrawContext, stroke
+from gaphor.diagram.style import combined_style
 
 
 class Line(Presentation, _Line):
@@ -29,20 +30,20 @@ class Line(Presentation, _Line):
         save_func("points", points)
 
     def load(self, name, value):
-        if name == "matrix":
+        if name == "horizontal":
+            self.horizontal = ast.literal_eval(value)
+        elif name == "matrix":
             self.matrix = ast.literal_eval(value)
+        elif name == "orthogonal":
+            self._load_orthogonal = ast.literal_eval(value)
         elif name == "points":
             points = ast.literal_eval(value)
-            for x in range(len(points) - 2):
+            for _ in range(len(points) - 2):
                 h = self._create_handle((0, 0))
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
             self._update_ports()
-        elif name == "horizontal":
-            self.horizontal = ast.literal_eval(value)
-        elif name == "orthogonal":
-            self._load_orthogonal = ast.literal_eval(value)
 
     def postload(self):
         if hasattr(self, "_load_orthogonal"):

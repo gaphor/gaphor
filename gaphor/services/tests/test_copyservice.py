@@ -64,7 +64,7 @@ class CopyServiceTestCase(TestCase):
 
         all_items = list(self.diagram.canvas.get_all_items())
 
-        assert 6 == len(all_items)
+        assert len(all_items) == 6
         assert not orphan_references(self.element_factory)
 
         assert all_items[0].subject is all_items[3].subject
@@ -75,5 +75,5 @@ class CopyServiceTestCase(TestCase):
 
         undo_manager.undo_transaction()
 
-        assert 3 == len(self.diagram.canvas.get_all_items())
+        assert len(self.diagram.canvas.get_all_items()) == 3
         assert not orphan_references(self.element_factory)

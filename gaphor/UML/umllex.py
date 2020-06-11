@@ -34,12 +34,12 @@ derived_subpat = r"\s*(?P<derived>/)?"
 # name (required) ::= name
 name_subpat = r"\s*(?P<name>[a-zA-Z_]\w*)"
 
-# Multiplicity (added to type_subpat) ::= '[' [mult_l ..] mult_u ']'
+# Multiplicity ::= '[' [mult_l ..] mult_u ']'
 mult_subpat = r"\s*(\[\s*((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\s*\])?"
 multa_subpat = r"\s*(\[?((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\]?)?"
 
-# Type and multiplicity (optional) ::= ':' type [mult]
-type_subpat = r"\s*(:\s*(?P<type>\w+)\s*" + mult_subpat + r")?"
+# Type and multiplicity (optional) ::= ':' type
+type_subpat = r"\s*(:\s*(?P<type>\w+))?"
 
 # default value (optional) ::= '=' default
 default_subpat = r"\s*(=\s*(?P<default>\S+))?"
@@ -72,6 +72,7 @@ attribute_pat = compile(
     + derived_subpat
     + name_subpat
     + type_subpat
+    + mult_subpat
     + default_subpat
     + tags_subpat
     + garbage_subpat
@@ -85,6 +86,7 @@ association_end_name_pat = compile(
     + vis_subpat
     + derived_subpat
     + name_subpat
+    + type_subpat
     + mult_subpat
     + ")?"
     + tags_subpat
@@ -103,6 +105,7 @@ operation_pat = compile(
     + name_subpat
     + params_subpat
     + type_subpat
+    + mult_subpat
     + tags_subpat
     + garbage_subpat
 )
@@ -114,6 +117,7 @@ parameter_pat = compile(
     + dir_subpat
     + name_subpat
     + type_subpat
+    + mult_subpat
     + default_subpat
     + tags_subpat
     + rest_subpat
@@ -121,7 +125,7 @@ parameter_pat = compile(
 
 # Lifeline:
 #  [name] [: type]
-lifeline_pat = compile("^" + name_subpat + type_subpat + garbage_subpat)
+lifeline_pat = compile("^" + name_subpat + type_subpat + mult_subpat + garbage_subpat)
 
 
 def _set_visibility(el: uml.Feature, vis: str):
@@ -185,9 +189,8 @@ def parse_association_end(el: uml.Property, s: str) -> None:
 
     # clear also multiplicity if no characters in ``s``
     m = association_end_mult_pat.match(s)
-    if m and not m.group("mult_u"):
-        if el.upperValue:
-            el.upperValue = None
+    if m and not m.group("mult_u") and el.upperValue:
+        el.upperValue = None
 
     if m and m.group("mult_u") or m.group("tags"):
         g = m.group

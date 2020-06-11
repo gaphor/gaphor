@@ -51,7 +51,7 @@ def add(widget, index, parent_widget, resize=False, shrink=False):
         elif index == 1:
             parent_widget.pack2(child=widget, resize=resize, shrink=shrink)
     elif isinstance(parent_widget, Gtk.Box):
-        parent_widget.pack_start(widget, resize, resize, 2)
+        parent_widget.pack_start(widget, resize, resize, 0)
     else:
         parent_widget.add(widget)
 

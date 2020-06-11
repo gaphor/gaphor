@@ -27,33 +27,12 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.iconname import get_icon_name
+from gaphor.UML.umlfmt import format_attribute, format_operation
+from gaphor.UML.umllex import parse
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import ElementFactory
     from gaphor.core.eventmanager import EventManager
-
-# The following items will be shown in the treeview, although they
-# are UML.Namespace elements.
-_default_filter_list = (
-    UML.Class,
-    UML.Interface,
-    UML.Package,
-    UML.Component,
-    UML.Device,
-    UML.Node,
-    UML.Artifact,
-    UML.Interaction,
-    UML.UseCase,
-    UML.Actor,
-    Diagram,
-    UML.Profile,
-    UML.State,
-    UML.Stereotype,
-    UML.Property,
-    UML.Operation,
-    sysml.Block,
-    sysml.Requirement,
-)
 
 
 log = logging.getLogger(__name__)
@@ -124,10 +103,15 @@ class NamespaceView(Gtk.TreeView):
     def _set_pixbuf(self, column, cell, model, iter, data):
         element = model.get_value(iter, 0)
 
-        icon_name = get_icon_name(element)
+        if isinstance(element, (UML.Property, UML.Operation)):
+            cell.set_property("icon-name", None)
+            cell.set_property("visible", False)
+        else:
+            icon_name = get_icon_name(element)
+            cell.set_property("visible", True)
 
-        if icon_name:
-            cell.set_property("icon-name", icon_name)
+            if icon_name:
+                cell.set_property("icon-name", icon_name)
 
     def _set_text(self, column, cell, model, iter, data):
         """
@@ -142,6 +126,10 @@ class NamespaceView(Gtk.TreeView):
             isinstance(element, UML.Classifier) or isinstance(element, UML.Operation)
         ) and element.isAbstract:
             text = f"<i>{text}</i>"
+        elif isinstance(element, UML.Property):
+            text = format_attribute(element) or "&lt;None&gt;"
+        elif isinstance(element, UML.Operation):
+            text = format_operation(element)
 
         cell.set_property("markup", text)
 
@@ -156,7 +144,10 @@ class NamespaceView(Gtk.TreeView):
             model = self.get_property("model")
             iter = model.get_iter_from_string(path_str)
             element = model.get_value(iter, 0)
-            element.name = new_text
+            if isinstance(element, (UML.Property, UML.Operation)):
+                parse(element, new_text)
+            else:
+                element.name = new_text
         except Exception:
             log.error(f'Could not create path from string "{path_str}"')
 
@@ -217,7 +208,7 @@ class NamespaceView(Gtk.TreeView):
             element = self.element_factory.lookup(element_id)
             assert isinstance(
                 element, (Diagram, UML.Package, UML.Type)
-            ), f"Element with id {element_id} is not part of the model"
+            ), f"Element {element} can not be moved"
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)
@@ -263,7 +254,6 @@ class Namespace(UIComponent):
         self.element_factory = element_factory
         self._namespace: Optional[NamespaceView] = None
         self.model = Gtk.TreeStore.new([object])
-        self.toplevel_types = _default_filter_list
 
     def open(self):
         em = self.event_manager
@@ -410,10 +400,11 @@ class Namespace(UIComponent):
         return None
 
     def _visible(self, element):
-        # Special case: Non-navigable properties
-        return type(element) in self.toplevel_types and not (
-            isinstance(element, UML.Property) and element.namespace is None
-        )
+        """ Special case: Non-navigable properties. """
+        return (
+            (isinstance(element, UML.NamedElement) and element.namespace)
+            or isinstance(element, UML.PackageableElement)
+        ) and not isinstance(element, (UML.InstanceSpecification, UML.Relationship))
 
     def _add(self, element, iter=None):
         if self._visible(element):
@@ -435,13 +426,12 @@ class Namespace(UIComponent):
         self.model.clear()
 
         toplevel = self.element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement)
-            and type(e) in self.toplevel_types
-            and not e.namespace
+            lambda e: isinstance(e, UML.PackageableElement) and not e.namespace
         )
 
         for element in toplevel:
-            self._add(element)
+            if self._visible(element):
+                self._add(element)
 
         # Expand all root elements:
         if self._namespace:  # None for testing
@@ -462,7 +452,7 @@ class Namespace(UIComponent):
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
         element = event.element
-        if type(element) in self.toplevel_types:
+        if isinstance(element, UML.NamedElement):
             iter = self.iter_for_element(element)
             # iter should be here, unless we try to delete an element who's
             # parent element is already deleted, so let's be lenient.

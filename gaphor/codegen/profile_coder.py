@@ -155,7 +155,7 @@ def write_properties(
             if "Kind" in type_value:
                 enum = enumerations.get(type_value)
                 if enum:
-                    values = tuple([a.name for a in enum.attribute])
+                    values = tuple(a.name for a in enum.attribute)
                 f.write(
                     f'{cls.name}.{a.name} = enumeration("kind", {values}, "{values[0]}")\n'
                 )

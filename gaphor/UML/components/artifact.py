@@ -57,18 +57,18 @@ class ArtifactItem(ElementPresentation, Classified):
 def draw_artifact_icon(box, context, bounding_box):
     cr = context.cairo
 
-    w = 15
-    h = 20
-    ear = 5
-    icon_margin_x = 6
-    icon_margin_y = 12
-
-    ix = bounding_box.width - icon_margin_x - w
-    iy = icon_margin_y
-
     with cairo_state(context.cairo) as cr:
         cr.set_line_width(1.0)
+        ear = 5
+        w = 15
+        icon_margin_x = 6
+        ix = bounding_box.width - icon_margin_x - w
+        icon_margin_y = 12
+
+        iy = icon_margin_y
+
         cr.move_to(ix + w - ear, iy)
+        h = 20
         for x, y in (
             (ix + w - ear, iy + ear),
             (ix + w, iy + ear),
@@ -79,6 +79,6 @@ def draw_artifact_icon(box, context, bounding_box):
             (ix + w, iy + ear),
         ):
             cr.line_to(x, y)
-        stroke_color = context.style["color"] or (0, 0, 0, 1)
+        stroke_color = context.style["color"]
         cr.set_source_rgba(*stroke_color)
         cr.stroke()

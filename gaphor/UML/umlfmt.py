@@ -23,7 +23,7 @@ def format_property(el, *args, **kwargs):
     """
     Format property or an association end.
     """
-    if el.association and not (args or kwargs):
+    if el.association and not args and not kwargs:
         return format_association_end(el)
     else:
         return format_attribute(el, *args, **kwargs)
@@ -59,10 +59,8 @@ def format_attribute(
     will not give you the same result.
     """
     name = el.name
-    if not name:
-        return name
 
-    if no_render_pat.match(name):
+    if name and no_render_pat.match(name):
         return name
 
     # Render all fields if they all are set to False
@@ -71,14 +69,15 @@ def format_attribute(
 
     s = []
 
-    if visibility:
+    if name and visibility:
         s.append(vis_map[el.visibility])
         s.append(" ")
 
-    if is_derived and el.isDerived:
+    if name and is_derived and el.isDerived:
         s.append("/")
 
-    s.append(name)
+    if name:
+        s.append(name)
 
     if type and el.typeValue:
         s.append(f": {el.typeValue}")
@@ -109,14 +108,11 @@ def format_association_end(el):
         n.append(" ")
         if el.isDerived:
             n.append("/")
-        if el.name:
-            n.append(el.name)
+        n.append(el.name)
 
         name = "".join(n)
 
-    m = []
-    m.append(format_multiplicity(el, bare=True))
-
+    m = [format_multiplicity(el, bare=True)]
     slots = [format(slot) for slot in el.appliedStereotype[:].slot if slot]
     if slots:
         m.append(" { %s }" % ",\n".join(slots))

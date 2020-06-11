@@ -282,6 +282,15 @@
         "content",
         "bug"
       ]
+    },
+    {
+      "login": "seryafarma",
+      "name": "seryafarma",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3274071?v=4",
+      "profile": "https://github.com/seryafarma",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,

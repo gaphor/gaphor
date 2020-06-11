@@ -308,16 +308,16 @@ class UnaryRelationshipConnect(BaseConnector):
         Connect the items to each other. The model level relationship
         is created by create_subject()
         """
-        if super().connect(handle, port):
-            opposite = self.line.opposite(handle)
-            oct = self.get_connected(opposite)
-            if oct:
-                self.connect_subject(handle)
-                line = self.line
-                if line.subject:
-                    self.connect_connected_items()
-            return True
-        return False
+        if not super().connect(handle, port):
+            return False
+        opposite = self.line.opposite(handle)
+        oct = self.get_connected(opposite)
+        if oct:
+            self.connect_subject(handle)
+            line = self.line
+            if line.subject:
+                self.connect_connected_items()
+        return True
 
     def disconnect(self, handle: Handle) -> None:
         """
@@ -355,7 +355,8 @@ class RelationshipConnect(UnaryRelationshipConnect):
         # Same goes for subjects:
         if (
             connected_to
-            and (not (connected_to.subject or element.subject))
+            and not connected_to.subject
+            and not element.subject
             and connected_to.subject is element.subject
         ):
             return False

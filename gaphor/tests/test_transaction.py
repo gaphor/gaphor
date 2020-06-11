@@ -54,15 +54,15 @@ def test_transaction_commit(event_manager):
     tx = Transaction(event_manager)
 
     assert tx._stack, "Transaction has no stack"
-    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-    assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    assert len(begins) == 1, "Incorrect number of TrasactionBegin events"
+    assert len(commits) == 0, "Incorrect number of TransactionCommit events"
+    assert len(rollbacks) == 0, "Incorrect number of TransactionRollback events"
 
     tx.commit()
 
-    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-    assert 1 == len(commits), "Incorrect number of TransactionCommit events"
-    assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    assert len(begins) == 1, "Incorrect number of TrasactionBegin events"
+    assert len(commits) == 1, "Incorrect number of TransactionCommit events"
+    assert len(rollbacks) == 0, "Incorrect number of TransactionRollback events"
     assert not tx._stack, "Transaction stack is not empty"
 
     with pytest.raises(TransactionError):
@@ -75,15 +75,15 @@ def test_transaction_rollback(event_manager):
     tx = Transaction(event_manager)
 
     assert tx._stack, "Transaction has no stack"
-    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-    assert 0 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    assert len(begins) == 1, "Incorrect number of TrasactionBegin events"
+    assert len(commits) == 0, "Incorrect number of TransactionCommit events"
+    assert len(rollbacks) == 0, "Incorrect number of TransactionRollback events"
 
     tx.rollback()
 
-    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-    assert 1 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    assert len(begins) == 1, "Incorrect number of TrasactionBegin events"
+    assert len(commits) == 0, "Incorrect number of TransactionCommit events"
+    assert len(rollbacks) == 1, "Incorrect number of TransactionRollback events"
 
     assert not tx._stack, "Transaction stack is not empty"
 
@@ -98,9 +98,9 @@ def test_transaction_commit_after_rollback(event_manager):
     tx2.rollback()
     tx1.commit()
 
-    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-    assert 1 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    assert len(begins) == 1, "Incorrect number of TrasactionBegin events"
+    assert len(commits) == 0, "Incorrect number of TransactionCommit events"
+    assert len(rollbacks) == 1, "Incorrect number of TransactionRollback events"
 
 
 def test_transaction_rollback_after_commit(event_manager):
@@ -113,9 +113,9 @@ def test_transaction_rollback_after_commit(event_manager):
     tx2.commit()
     tx1.rollback()
 
-    assert 1 == len(begins), "Incorrect number of TrasactionBegin events"
-    assert 0 == len(commits), "Incorrect number of TransactionCommit events"
-    assert 1 == len(rollbacks), "Incorrect number of TransactionRollback events"
+    assert len(begins) == 1, "Incorrect number of TrasactionBegin events"
+    assert len(commits) == 0, "Incorrect number of TransactionCommit events"
+    assert len(rollbacks) == 1, "Incorrect number of TransactionRollback events"
 
 
 def test_transaction_stack(event_manager):

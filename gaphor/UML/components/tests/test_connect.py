@@ -390,6 +390,6 @@ class AssemblyConnectorTestCase(TestCase):
         assert conn1.subject is None
         assert conn2.subject is None
 
-        assert 0 == len(self.kindof(UML.Connector))
-        assert 0 == len(self.kindof(UML.ConnectorEnd))
-        assert 0 == len(self.kindof(UML.Port))
+        assert len(self.kindof(UML.Connector)) == 0
+        assert len(self.kindof(UML.ConnectorEnd)) == 0
+        assert len(self.kindof(UML.Port)) == 0

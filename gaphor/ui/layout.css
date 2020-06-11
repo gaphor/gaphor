@@ -13,10 +13,6 @@ toolitemgroup:first-child > button {
     border-width: 0px;
 }
 
-#no-item-selected {
-    padding: 12px;
-}
-
 #diagrams {
     border-top-width: 0px;
 }

@@ -30,8 +30,8 @@ class TestProperties(TestCase):
         event = self.events[0]
         assert "test1" == event.key
         assert None is event.old_value
-        assert 2 == event.new_value
-        assert 2 == prop("test1")
+        assert event.new_value == 2
+        assert prop("test1") == 2
 
         prop.set("test1", 2)
         assert len(self.events) == 1
@@ -40,12 +40,12 @@ class TestProperties(TestCase):
         assert len(self.events) == 2
         event = self.events[1]
         assert "test1" == event.key
-        assert 2 == event.old_value
+        assert event.old_value == 2
         assert "foo" == event.new_value
         assert "foo" == prop("test1")
 
-        assert 3 == prop("test2", 3)
-        assert 3 == prop("test2", 4)
+        assert prop("test2", 3) == 3
+        assert prop("test2", 4) == 3
 
 
 def test_config_dir():

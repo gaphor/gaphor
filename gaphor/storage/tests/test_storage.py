@@ -166,7 +166,7 @@ class StorageTestCase(TestCase):
         a = self.diagram.create(AssociationItem)
         a.handles()[0].pos = (10, 20)
         a.handles()[1].pos = (50, 60)
-        assert 10 == a.handles()[0].pos.x, a.handles()[0].pos
+        assert a.handles()[0].pos.x == 10, a.handles()[0].pos
         assert a.handles()[0].pos.y == 20, a.handles()[0].pos
         assert tuple(a.handles()[1].pos) == (50, 60), a.handles()[1].pos
 
@@ -227,7 +227,7 @@ class StorageTestCase(TestCase):
         fd.close()
 
         diagrams = list(self.kindof(UML.Diagram))
-        assert 1 == len(diagrams)
+        assert len(diagrams) == 1
         d = diagrams[0]
         a = d.canvas.select(lambda e: isinstance(e, AssociationItem))[0]
         assert a.subject is not None

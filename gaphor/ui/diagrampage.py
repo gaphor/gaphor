@@ -1,3 +1,4 @@
+import functools
 import importlib
 import logging
 from typing import Dict, Optional, Sequence, Tuple
@@ -15,8 +16,8 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.core.modeling import Presentation
-from gaphor.core.modeling.event import ElementDeleted
+from gaphor.core.modeling import Presentation, StyleSheet
+from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtools import (
     DefaultTool,
@@ -45,6 +46,15 @@ with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
     PLACEMENT_BASE = GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
 
 _placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
+
+
+_upper_offset = ord("A") - ord("a")
+
+
+@functools.lru_cache(maxsize=None)
+def parse_shortcut(shortcut):
+    key, mod = Gtk.accelerator_parse(shortcut)
+    return (key, key + _upper_offset), mod
 
 
 def get_placement_cursor(display, icon_name):
@@ -81,6 +91,7 @@ class DiagramPage:
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
         self.event_manager.subscribe(self._on_element_delete)
+        self.event_manager.subscribe(self._on_style_sheet_updated)
         self.event_manager.subscribe(self._on_sloppy_lines)
         self.event_manager.subscribe(self._on_diagram_item_placed)
 
@@ -130,16 +141,7 @@ class DiagramPage:
 
         self.widget.action_group = create_action_group(self, "diagram")
 
-        shortcuts = self.get_toolbox_shortcuts()
-
-        def shortcut_action(widget, event):
-            action_name = shortcuts.get((event.keyval, event.state))
-            if action_name:
-                widget.get_toplevel().get_action_group("diagram").lookup_action(
-                    "select-tool"
-                ).change_state(GLib.Variant.new_string(action_name))
-
-        self.widget.connect("key-press-event", shortcut_action)
+        self.widget.connect_after("key-press-event", self._on_shortcut_action)
         self._on_sloppy_lines()
         self.select_tool("toolbox-pointer")
 
@@ -177,20 +179,6 @@ class DiagramPage:
             if t.id == tool_name
         ).icon_name
 
-    def get_toolbox_shortcuts(self):
-        shortcuts = {}
-        # accelerator keys are lower case. Since we handle them in a key-press event
-        # handler, we'll need the upper-case versions as well in case Shift is pressed.
-        upper_offset = ord("A") - ord("a")
-        for title, items in self.modeling_language.toolbox_definition:
-            for action_name, label, icon_name, shortcut, *rest in items:
-                if shortcut:
-                    key, mod = Gtk.accelerator_parse(shortcut)
-                    shortcuts[key, mod] = action_name
-                    shortcuts[key + upper_offset, mod] = action_name
-
-        return shortcuts
-
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
         if event.element is self.diagram:
@@ -201,6 +189,13 @@ class DiagramPage:
         if not event or event.key == "diagram.sloppiness":
             self.set_drawing_style(event and event.new_value or 0.0)
 
+    @event_handler(AttributeUpdated)
+    def _on_style_sheet_updated(self, event: AttributeUpdated):
+        if event.property is StyleSheet.styleSheet:
+            canvas = self.diagram.canvas
+            for item in canvas.get_all_items():
+                canvas.request_update(item)
+
     def close(self):
         """
         Tab is destroyed. Do the same thing that would
@@ -209,6 +204,7 @@ class DiagramPage:
         assert self.widget
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
+        self.event_manager.unsubscribe(self._on_style_sheet_updated)
         self.event_manager.unsubscribe(self._on_sloppy_lines)
         self.event_manager.unsubscribe(self._on_diagram_item_placed)
         self.view = None
@@ -363,6 +359,19 @@ class DiagramPage:
             )
         ):
             self.delete_selected_items()
+
+    def _on_shortcut_action(self, widget, event):
+        # accelerator keys are lower case. Since we handle them in a key-press event
+        # handler, we'll need the upper-case versions as well in case Shift is pressed.
+        for _title, items in self.modeling_language.toolbox_definition:
+            for action_name, _label, _icon_name, shortcut, *rest in items:
+                if not shortcut:
+                    continue
+                keys, mod = parse_shortcut(shortcut)
+                if event.state == mod and event.keyval in keys:
+                    widget.get_toplevel().get_action_group("diagram").lookup_action(
+                        "select-tool"
+                    ).change_state(GLib.Variant.new_string(action_name))
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.event_manager.handle(

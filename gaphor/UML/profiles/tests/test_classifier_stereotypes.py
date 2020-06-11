@@ -58,7 +58,7 @@ class StereotypesAttributesTestCase(TestCase):
         slot = UML.model.add_slot(instance_spec, self.st1.ownedAttribute[0])
         slot.value = "foo"
 
-        assert 1 == len(compartments(c))
+        assert len(compartments(c)) == 1
 
     def test_removing_last_slot(self):
         """Test removing last slot
@@ -93,8 +93,8 @@ class StereotypesAttributesTestCase(TestCase):
         assert len(c.subject.appliedStereotype) == 1
 
         self.ext1.unlink()
-        assert 0 == len(c.subject.appliedStereotype)
-        assert 0 == len(compartments(c))
+        assert len(c.subject.appliedStereotype) == 0
+        assert len(compartments(c)) == 0
 
     def test_deleting_stereotype(self):
         """Test if stereotype is removed when stereotype is deleteded
@@ -113,8 +113,8 @@ class StereotypesAttributesTestCase(TestCase):
         assert len(c.subject.appliedStereotype) == 1
 
         st1.unlink()
-        assert 0 == len(c.subject.appliedStereotype)
-        assert 0 == len(compartments(c))
+        assert len(c.subject.appliedStereotype) == 0
+        assert len(compartments(c)) == 0
 
     def test_removing_stereotype_attribute(self):
         """Test if stereotype instance specification is destroyed when stereotype attribute is removed
@@ -141,7 +141,7 @@ class StereotypesAttributesTestCase(TestCase):
         assert compartments(c)
 
         attr.unlink()
-        assert 0 == len(obj.slot)
+        assert len(obj.slot) == 0
         assert 0 == len(self.kindof(UML.Slot))
         assert not compartments(c)
 
@@ -164,7 +164,7 @@ class StereotypesAttributesTestCase(TestCase):
 
         item = self.diagram.canvas.select(ComponentItem)[0]
         assert item.show_stereotypes
-        assert 1 == len(compartments(c))
+        assert len(compartments(c)) == 1
 
     def test_saving_stereotype_attributes(self):
         """Test stereotype attributes saving
@@ -176,7 +176,7 @@ class StereotypesAttributesTestCase(TestCase):
         UML.model.apply_stereotype(c.subject, self.st1)
         UML.model.apply_stereotype(c.subject, self.st2)
 
-        assert 3 == len(self.st1.ownedAttribute)
+        assert len(self.st1.ownedAttribute) == 3
         attr1, attr2, attr3 = self.st1.ownedAttribute
         assert attr1.name == "st1_attr_1", attr1.name
         assert attr2.name == "st1_attr_2", attr2.name
@@ -193,7 +193,7 @@ class StereotypesAttributesTestCase(TestCase):
 
         item = self.diagram.canvas.select(ComponentItem)[0]
         el = item.subject
-        assert 2 == len(el.appliedStereotype)
+        assert len(el.appliedStereotype) == 2
 
         # check if stereotypes are properly applied
         names = sorted(obj.classifier[0].name for obj in el.appliedStereotype)
@@ -201,7 +201,7 @@ class StereotypesAttributesTestCase(TestCase):
 
         # two attributes were changed for stereotype st1, so 2 slots
         obj = el.appliedStereotype[0]
-        assert 2 == len(obj.slot)
+        assert len(obj.slot) == 2
         assert "st1_attr_1" == obj.slot[0].definingFeature.name
         assert "st1 test1" == obj.slot[0].value
         assert "st1_attr_2" == obj.slot[1].definingFeature.name
@@ -209,4 +209,4 @@ class StereotypesAttributesTestCase(TestCase):
 
         # no stereotype st2 attribute changes, no slots
         obj = el.appliedStereotype[1]
-        assert 0 == len(obj.slot)
+        assert len(obj.slot) == 0

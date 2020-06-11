@@ -74,8 +74,8 @@ class ImplementationTestCase(TestCase):
         self.connect(impl, impl.tail, c2)
 
         assert s is impl.subject
-        assert 1 == len(impl.subject.contract)
-        assert 1 == len(impl.subject.implementatingClassifier)
+        assert len(impl.subject.contract) == 1
+        assert len(impl.subject.implementatingClassifier) == 1
         assert iface.subject in impl.subject.contract
         assert c2.subject in impl.subject.implementatingClassifier
         assert (

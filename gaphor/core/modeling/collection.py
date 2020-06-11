@@ -122,11 +122,7 @@ class collection(Generic[T]):
         return not self.includes(o)
 
     def count(self, o):
-        c = 0
-        for x in self.items:
-            if x == o:
-                c = c + 1
-        return c
+        return self.items.count(o)
 
     def includesAll(self, c):
         for o in c:

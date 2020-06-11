@@ -46,7 +46,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         if start_tag and not self._in_start_tag:
             self._in_start_tag = True
             self._out.write("<")
-        elif start_tag and self._in_start_tag:
+        elif start_tag:
             self._out.write(">")
             self._out.write("\n")
             self._out.write("<")
@@ -55,7 +55,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
             self._in_start_tag = False
             self._next_newline = True
             return
-        elif not start_tag and self._in_start_tag:
+        elif self._in_start_tag:
             self._out.write(">")
             self._in_start_tag = False
         elif end_tag:
