@@ -246,14 +246,15 @@ class EditorStack:
 
         tips = builder.get_object("tips")
 
-        def on_show_tips_changed(checkbox):
+        def on_show_tips_changed(checkbox, gparam):
             active = checkbox.get_active()
             tips.show() if active else tips.hide()
             self.properties.set("show-tips", active)
 
         show_tips = builder.get_object("show-tips")
-        show_tips.connect("toggled", on_show_tips_changed)
+        show_tips.connect("notify::active", on_show_tips_changed)
         show_tips.set_active(self.properties.get("show-tips", True))
+        on_show_tips_changed(show_tips, None)
 
     @event_handler(AssociationUpdated)
     def _element_changed(self, event: AssociationUpdated):
