@@ -281,6 +281,7 @@ class SettingsStack:
 
         self._style_sheet_update = DelayedFunction(800, tx_update_style_sheet)
         self._in_update = 0
+        self.css = DEFAULT_STYLE_SHEET
 
     def open(self, builder):
         self.enable_style_sheet = builder.get_object("enable-style-sheet")
@@ -307,10 +308,11 @@ class SettingsStack:
         if active and not style_sheet:
             with Transaction(self.event_manager):
                 style_sheet = self.element_factory.create(StyleSheet)
-                style_sheet.styleSheet = DEFAULT_STYLE_SHEET
+                style_sheet.styleSheet = self.css
         elif not active and style_sheet:
             with Transaction(self.event_manager):
                 for style_sheet in self.element_factory.lselect(StyleSheet):
+                    self.css = style_sheet.styleSheet
                     # Resetting the style sheet will trigger an update on diagrams
                     style_sheet.styleSheet = ""
                     style_sheet.unlink()
