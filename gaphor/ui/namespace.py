@@ -22,6 +22,7 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
+from gaphor.SysML import sysml
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened

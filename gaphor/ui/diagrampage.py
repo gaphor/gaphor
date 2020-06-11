@@ -414,8 +414,7 @@ class DiagramPage:
 
             else:
                 log.warning(
-                    "No graphical representation for element %s"
-                    % type(element).__name__
+                    f"No graphical representation for element {type(element).__name__}"
                 )
             context.finish(True, False, time)
         else:

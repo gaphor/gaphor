@@ -10,6 +10,8 @@ ICONS=diagram \
 	comment \
 	comment-line \
 	class \
+	block \
+	proxyport \
 	package \
 	interface \
 	association \
@@ -69,7 +71,7 @@ verify: stensil.svg
 	@for icon in $(ICONS); do grep -q "id=\"$$icon\"" $< || { echo "ERROR: No layer named $$icon"; exit 1; }; done
 
 $(ICON_THEME)/gaphor-%-symbolic.svg: stensil.svg
-	$(INKSCAPE) --export-id=$* --export-id-only --export-text-to-path
+	$(INKSCAPE) --export-id=$* --export-id-only --export-text-to-path \
 		--export-plain-svg --export-overwrite --export-filename=.$*.svg $< && \
 	$(INKSCAPE) --with-gui --batch-process \
 		--verb="EditSelectAll;SelectionUnGroup;EditSelectAll;StrokeToPath;FileSave" \
