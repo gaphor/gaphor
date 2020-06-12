@@ -2,6 +2,95 @@
 <!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkBox" id="no-item-selected">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_top">18</property>
+        <property name="margin_bottom">12</property>
+        <property name="label" translatable="yes">No item selected</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_top">6</property>
+        <property name="margin_bottom">6</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Show Tips</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-tips">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="tips">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="no_show_all">True</property>
+        <property name="margin_left">4</property>
+        <property name="margin_right">4</property>
+        <property name="margin_top">12</property>
+        <property name="label" translatable="yes">Add a model element from the tool box to the diagram. Here you will see it's properties appear.
+
+This pane can be hidden by clicking the pensil icon in the header.
+
+&lt;b&gt;Tip:&lt;/b&gt; Most elements in the toolbox have a keyboard shortcut (e.g. "c" for Class).
+Tool selection only works from the diagram. If a tool does not get selected, click on the diagram once (so it's focused) and then hit the shortcut key.
+
+&lt;b&gt;Tip:&lt;/b&gt; To search for an element in the tree view, select an element in the tree view and start typing. A search box will automaticaly appear.
+</property>
+        <property name="use_markup">True</property>
+        <property name="wrap">True</property>
+        <property name="max_width_chars">20</property>
+        <property name="xalign">0</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+  </object>
+  <object class="GtkTextBuffer" id="style-sheet-buffer"/>
   <object class="GtkRevealer" id="elementeditor">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -154,6 +243,26 @@
                 <property name="position">1</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkToggleButton">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="action_name">win.show-settings</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">preferences-other</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -177,28 +286,130 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow">
+          <object class="GtkStack" id="editor-stack">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hscrollbar_policy">never</property>
+            <property name="can_focus">False</property>
+            <property name="transition_type">slide-left-right</property>
             <child>
-              <object class="GtkViewport">
+              <object class="GtkScrolledWindow">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="shadow_type">none</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">never</property>
                 <child>
-                  <object class="GtkBox" id="editors">
+                  <object class="GtkViewport">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">2</property>
-                    <property name="margin_right">2</property>
-                    <property name="orientation">vertical</property>
+                    <property name="shadow_type">none</property>
                     <child>
-                      <placeholder/>
+                      <object class="GtkBox" id="editors">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_left">6</property>
+                        <property name="margin_right">6</property>
+                        <property name="margin_top">6</property>
+                        <property name="margin_bottom">6</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </object>
                     </child>
                   </object>
                 </child>
               </object>
+              <packing>
+                <property name="name">editors</property>
+                <property name="title" translatable="yes">Editors</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">6</property>
+                <property name="margin_right">6</property>
+                <property name="margin_top">12</property>
+                <property name="margin_bottom">6</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Style sheet</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Enable style sheet</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSwitch" id="enable-style-sheet">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="action_name">win.enable-style-sheet</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="pack_type">end</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="shadow_type">in</property>
+                    <child>
+                      <object class="GtkTextView" id="style-sheet-view">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="buffer">style-sheet-buffer</property>
+                        <property name="monospace">True</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="name">settings</property>
+                <property name="title" translatable="yes">Settings</property>
+                <property name="position">1</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -208,72 +419,6 @@
           </packing>
         </child>
       </object>
-    </child>
-  </object>
-  <object class="GtkBox" id="no-item-selected">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="orientation">vertical</property>
-    <child>
-      <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">18</property>
-        <property name="margin_bottom">12</property>
-        <property name="label" translatable="yes">No item selected</property>
-        <attributes>
-          <attribute name="weight" value="bold"/>
-        </attributes>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkCheckButton" id="show-tips">
-        <property name="label" translatable="yes">Show tips</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">False</property>
-        <property name="margin_top">12</property>
-        <property name="active">True</property>
-        <property name="draw_indicator">True</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel" id="tips">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="no_show_all">True</property>
-        <property name="margin_left">4</property>
-        <property name="margin_right">4</property>
-        <property name="margin_top">12</property>
-        <property name="label" translatable="yes">Add a model element from the tool box to the diagram. Here you will see it's properties appear.
-
-This pane can be hidden by clicking the pensil icon in the header.
-
-&lt;b&gt;Tip:&lt;/b&gt; Most elements in the toolbox have a keyboard shortcut (e.g. "c" for Class).
-Tool selection only works from the diagram. If a tool does not get selected, click on the diagram once (so it's focused) and then hit the shortcut key.
-
-&lt;b&gt;Tip:&lt;/b&gt; To search for an element in the tree view, select an element in the tree view and start typing. A search box will automaticaly appear.
-</property>
-        <property name="use_markup">True</property>
-        <property name="wrap">True</property>
-        <property name="max_width_chars">20</property>
-        <property name="xalign">0</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">2</property>
-      </packing>
     </child>
   </object>
 </interface>

@@ -45,7 +45,9 @@ def parse_stylesheet(
     None,
     None,
 ]:
-    rules = tinycss2.parse_stylesheet(css, skip_comments=True, skip_whitespace=True)
+    rules = tinycss2.parse_stylesheet(
+        css or "", skip_comments=True, skip_whitespace=True
+    )
     for rule in rules:
         if rule.type == "error":
             yield ("error", rule)

@@ -236,12 +236,14 @@ class DiagramPage:
     )
     def select_all(self):
         assert self.view
-        self.view.select_all()
+        if self.view.has_focus():
+            self.view.select_all()
 
     @action(name="diagram.unselect-all", shortcut="<Primary><Shift>a")
     def unselect_all(self):
         assert self.view
-        self.view.unselect_all()
+        if self.view.has_focus():
+            self.view.unselect_all()
 
     @action(name="diagram.delete")
     @transactional

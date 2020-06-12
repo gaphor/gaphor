@@ -167,7 +167,7 @@ class ClassifierPropertyPage(PropertyPageBase):
         return builder.get_object("classifier-editor")
 
     @transactional
-    def _on_abstract_change(self, button):
+    def _on_abstract_change(self, button, gparam):
         self.subject.isAbstract = button.get_active()
 
 
@@ -197,7 +197,7 @@ class InterfacePropertyPage(PropertyPageBase):
         return builder.get_object("interface-editor")
 
     @transactional
-    def _on_fold_change(self, button):
+    def _on_fold_change(self, button, gparam):
         item = self.item
 
         fold = button.get_active()
@@ -264,7 +264,7 @@ class AttributesPage(PropertyPageBase):
         return page
 
     @transactional
-    def _on_show_attributes_change(self, button):
+    def _on_show_attributes_change(self, button, gparam):
         self.item.show_attributes = button.get_active()
         self.item.request_update()
 
@@ -338,7 +338,7 @@ class OperationsPage(PropertyPageBase):
         return builder.get_object("operations-editor")
 
     @transactional
-    def _on_show_operations_change(self, button):
+    def _on_show_operations_change(self, button, gparam):
         self.item.show_operations = button.get_active()
         self.item.request_update()
 
@@ -347,7 +347,7 @@ class OperationsPage(PropertyPageBase):
 class DependencyPropertyPage(PropertyPageBase):
     """Dependency item editor."""
 
-    order = 0
+    order = 20
 
     DEPENDENCY_TYPES = (
         (gettext("Dependency"), UML.Dependency),
@@ -410,8 +410,8 @@ class DependencyPropertyPage(PropertyPageBase):
             self.item.request_update()
 
     @transactional
-    def _on_auto_dependency_change(self, button):
-        self.item.auto_dependency = button.get_active()
+    def _on_auto_dependency_change(self, switch, gparam):
+        self.item.auto_dependency = switch.get_active()
         self.update()
 
 
@@ -524,7 +524,7 @@ class AssociationPropertyPage(PropertyPageBase):
         return builder.get_object("association-editor")
 
     @transactional
-    def _on_show_direction_change(self, button):
+    def _on_show_direction_change(self, button, gparam):
         self.item.show_direction = button.get_active()
 
     @transactional

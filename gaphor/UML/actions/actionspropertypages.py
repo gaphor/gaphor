@@ -57,7 +57,7 @@ class ObjectNodePropertyPage(PropertyPageBase):
         self.item.subject.ordering = value
 
     @transactional
-    def _on_ordering_show_change(self, button):
+    def _on_ordering_show_change(self, button, gparam):
         self.item.show_ordering = button.get_active()
 
 
@@ -79,7 +79,7 @@ class ForkNodePropertyPage(PropertyPageBase):
         return builder.get_object("fork-node-editor")
 
     @transactional
-    def _on_horizontal_change(self, button):
+    def _on_horizontal_change(self, button, gparam):
         if button.get_active():
             self.item.matrix.rotate(math.pi / 2)
         else:

@@ -62,7 +62,7 @@
 <val>100.0</val>
 </width>
 <height>
-<val>91.0</val>
+<val>92.0</val>
 </height>
 <show_attributes>
 <val>1</val>
@@ -82,10 +82,10 @@
 <val>(1.0, 0.0, 0.0, 1.0, 95.0, 218.5)</val>
 </matrix>
 <width>
-<val>112.0</val>
+<val>114.0</val>
 </width>
 <height>
-<val>74.0</val>
+<val>75.0</val>
 </height>
 <show_attributes>
 <val>1</val>
@@ -108,7 +108,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 240.0, 90.0)</val>
 </matrix>
 <width>
-<val>118.0</val>
+<val>120.0</val>
 </width>
 <height>
 <val>70.0</val>
@@ -330,7 +330,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 230.0, 531.5)</val>
 </matrix>
 <width>
-<val>94.0</val>
+<val>97.0</val>
 </width>
 <height>
 <val>30.0</val>
@@ -395,7 +395,7 @@
 <ref refid="0c9b68e6-8a25-11e9-94a9-784f435640ba"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 324.0, 544.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 327.0, 544.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -404,7 +404,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (31.0, -1.0)]</val>
+<val>[(0.0, 0.0), (28.0, -1.0)]</val>
 </points>
 <head-connection>
 <ref refid="007a1a30-8a25-11e9-94a9-784f435640ba"/>
@@ -460,7 +460,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 428.0, 531.5)</val>
 </matrix>
 <width>
-<val>133.0</val>
+<val>135.0</val>
 </width>
 <height>
 <val>50.0</val>
@@ -488,7 +488,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 255.0, 599.5)</val>
 </matrix>
 <width>
-<val>189.0</val>
+<val>192.0</val>
 </width>
 <height>
 <val>30.0</val>
@@ -502,7 +502,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 440.4522705078125, 599.5)</val>
 </matrix>
 <width>
-<val>197.0</val>
+<val>202.0</val>
 </width>
 <height>
 <val>30.0</val>
@@ -765,7 +765,7 @@
 <val>100.0</val>
 </width>
 <height>
-<val>57.0</val>
+<val>58.0</val>
 </height>
 <show_attributes>
 <val>1</val>
@@ -788,7 +788,7 @@
 <val>129.0</val>
 </width>
 <height>
-<val>74.0</val>
+<val>75.0</val>
 </height>
 <show_attributes>
 <val>1</val>
@@ -929,7 +929,7 @@
 <val>106.5</val>
 </width>
 <height>
-<val>58.0</val>
+<val>59.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -1512,9 +1512,9 @@
 <StyleSheet id="3b6a9420-9fe2-11ea-b537-dfaaecc5bf61">
 <styleSheet>
 <val>* {
-	font-family: DejaVu serif;
-	color: darkblue;
-	text-color: darkblue;
+ font-family: serif;
+ color: darkblue;
+ text-color: darkblue;
 }
 </val>
 </styleSheet>

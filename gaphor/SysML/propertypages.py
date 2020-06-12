@@ -111,11 +111,11 @@ class PartsAndReferencesPage(PropertyPageBase):
         return builder.get_object("parts-and-references-editor")
 
     @transactional
-    def _on_show_parts_change(self, button):
+    def _on_show_parts_change(self, button, gparam):
         self.item.show_parts = button.get_active()
         self.item.request_update()
 
     @transactional
-    def _on_show_references_change(self, button):
+    def _on_show_references_change(self, button, gparam):
         self.item.show_references = button.get_active()
         self.item.request_update()
