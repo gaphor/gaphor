@@ -22,6 +22,9 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
         self.watch("subject[Classifier].useCase", self.update_shapes)
+        self.watch(
+            "subject[Association].memberEnd[Property].aggregation", self.update_shapes
+        )
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
@@ -42,6 +45,9 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
                 "vertical-align": VerticalAlign.TOP
                 if self.canvas and self.canvas.get_children(self)
                 else VerticalAlign.MIDDLE,
+                "dash-style": (7.0, 5.0)
+                if self.subject and self.subject.aggregation != "composite"
+                else (),
             },
-            draw=draw_border
+            draw=draw_border,
         )
