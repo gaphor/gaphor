@@ -31,6 +31,16 @@ def metaclass_config(new_item):
     new_item.subject.name = "Class"
 
 
+def part_association_config(new_item):
+    new_item.head_end.aggregation = "composition"
+    new_item.head_end.navigability = True
+
+
+def shared_association_config(new_item):
+    new_item.head_end.aggregation = "shared"
+    new_item.head_end.navigability = True
+
+
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
 sysml_toolbox_actions: ToolboxDefinition = (
     (
@@ -109,6 +119,24 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 handle_index=SE,
             ),
             ToolDef(
+                "toolbox-part-association",
+                gettext("Part Association"),
+                "gaphor-part-association-symbolic",
+                "<Shift>A",
+                PlacementTool.new_item_factory(
+                    uml_items.AssociationItem, config_func=part_association_config
+                ),
+            ),
+            ToolDef(
+                "toolbox-shared-association",
+                gettext("Shared Association"),
+                "gaphor-shared-association-symbolic",
+                "<Shift>Q",
+                PlacementTool.new_item_factory(
+                    uml_items.AssociationItem, config_func=shared_association_config
+                ),
+            ),
+            ToolDef(
                 "toolbox-association",
                 gettext("Association"),
                 "gaphor-association-symbolic",
@@ -140,13 +168,6 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-proxyport-symbolic",
                 "<Shift>Y",
                 PlacementTool.new_item_factory(uml_items.ConnectorItem),
-            ),
-            ToolDef(
-                "toolbox-property",
-                gettext("Property"),
-                "gaphor-property-symbolic",
-                "<Shift>M",
-                PlacementTool.new_item_factory(sysml_items.PropertyItem),
             ),
         ),
     ),
