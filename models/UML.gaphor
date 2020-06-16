@@ -38419,6 +38419,12 @@ some elements to have a stereotype</val>
 <type>
 <ref refid="DCE:8BD30E4E-8352-11DD-8EDA-000D936B094A"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="DCE:89E367C0-8353-11DD-8EDA-000D936B094A">
 <aggregation>

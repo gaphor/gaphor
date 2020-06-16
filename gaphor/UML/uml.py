@@ -635,7 +635,7 @@ class FinalState(State):
 class Port(Property):
     isBehavior: attribute[int]
     isService: attribute[int]
-    encapsulatedClassifier: relation_many[EncapsulatedClassifer]
+    encapsulatedClassifier: relation_one[EncapsulatedClassifer]
 
 
 class Deployment(Dependency):
@@ -1205,7 +1205,7 @@ StateMachine.extendedStateMachine = association(
 )
 ConnectorEnd.partWithPort = association("partWithPort", Property, upper=1)
 Port.encapsulatedClassifier = association(
-    "encapsulatedClassifier", EncapsulatedClassifer, opposite="ownedPort"
+    "encapsulatedClassifier", EncapsulatedClassifer, upper=1, opposite="ownedPort"
 )
 EncapsulatedClassifer.ownedPort = association(
     "ownedPort", Port, composite=True, opposite="encapsulatedClassifier"

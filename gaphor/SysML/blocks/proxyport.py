@@ -1,7 +1,7 @@
 import ast
 
 from gaphas.connector import Handle, LinePort
-from gaphas.geometry import Rectangle
+from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import Item
 
 from gaphor.core.modeling import Presentation
@@ -24,9 +24,9 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        h1 = Handle()
+        h1 = Handle(connectable=True)
         self._handles.append(h1)
-        self._ports.append(LinePort(h1.pos, h1.pos))
+        # self._ports.append(LinePort(h1.pos, h1.pos))
 
         self.shape = IconBox(
             Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
@@ -44,7 +44,13 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
         else:
             super().load(name, value)
 
+    def dimensions(self):
+        return Rectangle(-8, -8, 16, 16)
+
+    def point(self, pos):
+        return distance_rectangle_point(self.dimensions(), pos)
+
     def draw(self, context):
         self.shape.draw(
-            DrawContext.from_context(context, self.style), Rectangle(-8, -8, 16, 16)
+            DrawContext.from_context(context, self.style), self.dimensions()
         )
