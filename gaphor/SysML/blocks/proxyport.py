@@ -11,6 +11,7 @@ from gaphor.diagram.shapes import (
     DrawContext,
     EditableText,
     IconBox,
+    SizeContext,
     Text,
     draw_border,
 )
@@ -28,6 +29,9 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
         self._handles.append(h1)
         # self._ports.append(LinePort(h1.pos, h1.pos))
 
+        self.update_shapes()
+
+    def update_shapes(self):
         self.shape = IconBox(
             Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
             Text(text=lambda: stereotypes_str(self.subject, ("proxy",))),
@@ -49,6 +53,9 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
 
     def point(self, pos):
         return distance_rectangle_point(self.dimensions(), pos)
+
+    def pre_update(self, context):
+        self.shape.size(SizeContext.from_context(context, self.style))
 
     def draw(self, context):
         self.shape.draw(
