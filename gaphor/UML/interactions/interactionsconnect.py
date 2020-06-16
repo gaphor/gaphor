@@ -10,22 +10,6 @@ from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.interactions.message import MessageItem
 
 
-def reparent(canvas, item, new_parent):
-    old_parent = canvas.get_parent(item)
-
-    if old_parent:
-        canvas.reparent(item, None)
-        m = canvas.get_matrix_i2c(old_parent)
-        item.matrix *= m
-        old_parent.request_update()
-
-    if new_parent:
-        canvas.reparent(item, new_parent)
-        m = canvas.get_matrix_c2i(new_parent)
-        item.matrix *= m
-        new_parent.request_update()
-
-
 def get_connected(item, handle) -> Optional[Presentation[Element]]:
     """
     Get item connected to a handle.
@@ -251,7 +235,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
         canvas = self.canvas
         if canvas.get_parent(self.line) is not self.element:
-            reparent(canvas, self.line, self.element)
+            canvas.reparent(self.line, self.element)
 
         for cinfo in canvas.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).connect(cinfo.handle, cinfo.port)
@@ -267,7 +251,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
         if canvas.get_parent(self.line) is self.element:
             new_parent = canvas.get_parent(self.element)
-            reparent(canvas, self.line, new_parent)
+            canvas.reparent(self.line, new_parent)
 
         for cinfo in canvas.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)
@@ -291,7 +275,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
         assert connected_item
         Connector(connected_item, self.line).connect(handle, None)
 
-        reparent(self.canvas, self.line, self.element)
+        self.canvas.reparent(self.line, self.element)
 
         return True
 

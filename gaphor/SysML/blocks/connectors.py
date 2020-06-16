@@ -27,11 +27,16 @@ class BlockProxyPortConnector:
             proxy_port.subject = proxy_port.model.create(sysml.ProxyPort)
         proxy_port.subject.encapsulatedClassifier = self.block.subject
 
+        # This raises the item in the item hierarchy
+        assert proxy_port.canvas
+        proxy_port.canvas.reparent(proxy_port, self.block)
+
         return True
 
     def disconnect(self, handle: Handle) -> None:
         proxy_port = self.proxy_port
-        if proxy_port.subject:
+        if proxy_port.subject and proxy_port.canvas:
             subject = proxy_port.subject
             del proxy_port.subject
+            proxy_port.canvas.reparent(proxy_port, None)
             subject.unlink()

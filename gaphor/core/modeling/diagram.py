@@ -69,6 +69,22 @@ class DiagramCanvas(gaphas.Canvas):
 
         return list(filter(expression, self.get_all_items()))
 
+    def reparent(self, item, parent):
+        """A more fancy version of the reparent method."""
+        old_parent = self.get_parent(item)
+
+        if old_parent:
+            super().reparent(item, None)
+            m = self.get_matrix_i2c(old_parent)
+            item.matrix *= m
+            old_parent.request_update()
+
+        if parent:
+            super().reparent(item, parent)
+            m = self.get_matrix_c2i(parent)
+            item.matrix *= m
+            parent.request_update()
+
 
 class Diagram(PackageableElement):
     """Diagrams may contain model elements and can be owned by a Package.
