@@ -1,10 +1,7 @@
 import pytest
 
-from gaphor.core.modeling import ElementFactory
-from gaphor.core.modeling.elementdispatcher import ElementDispatcher
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.SysML import sysml
-from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.SysML.requirements.relationships import (
     DeriveReqtItem,
     RefineItem,
@@ -13,28 +10,6 @@ from gaphor.SysML.requirements.relationships import (
     VerifyItem,
 )
 from gaphor.SysML.requirements.requirement import RequirementItem
-from gaphor.UML.modelinglanguage import UMLModelingLanguage
-
-
-class MockModelingLanguage:
-    def __init__(self):
-        self._modeling_languages = [UMLModelingLanguage(), SysMLModelingLanguage()]
-
-    def lookup_element(self, name):
-        return self.first(lambda provider: provider.lookup_element(name))
-
-    def first(self, predicate):
-        for provider in self._modeling_languages:
-            type = predicate(provider)
-            if type:
-                return type
-
-
-@pytest.fixture
-def element_factory(event_manager):
-    return ElementFactory(
-        event_manager, ElementDispatcher(event_manager, MockModelingLanguage())
-    )
 
 
 @pytest.mark.parametrize(
