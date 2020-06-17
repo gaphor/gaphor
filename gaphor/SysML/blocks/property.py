@@ -23,18 +23,17 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
         self.watch("subject.appliedStereotype.slot", self.update_shapes)
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
-        self.watch("subject[Classifier].useCase", self.update_shapes)
         self.watch("subject[Property].aggregation", self.update_shapes)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
-    def get_alignment(self) -> VerticalAlign:
+    def alignment(self) -> VerticalAlign:
         if self.canvas and self.canvas.get_children(self):
             return VerticalAlign.TOP
         else:
             return VerticalAlign.MIDDLE
 
-    def get_dash(self) -> Sequence[Union[int, float]]:
+    def dash(self) -> Sequence[Union[int, float]]:
         if self.subject and self.subject.aggregation != "composite":
             return (7.0, 5.0)
         else:
@@ -54,8 +53,8 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
             style={
                 "min-width": 100,
                 "min-height": 50,
-                "vertical-align": self.get_alignment(),
-                "dash-style": self.get_dash(),
+                "vertical-align": self.alignment(),
+                "dash-style": self.dash(),
             },
             draw=draw_border
         )
