@@ -120,6 +120,20 @@ uml_toolbox_actions: ToolboxDefinition = (
                 handle_index=SE,
             ),
             ToolDef(
+                "toolbox-part-association",
+                gettext("Part Association"),
+                "gaphor-part-association-symbolic",
+                "<Shift>Z",
+                PlacementTool.new_item_factory(diagramitems.AssociationItem),
+            ),
+            ToolDef(
+                "toolbox-shared-association",
+                gettext("Shared Association"),
+                "gaphor-shared-association-symbolic",
+                "<Shift>Q",
+                PlacementTool.new_item_factory(diagramitems.AssociationItem),
+            ),
+            ToolDef(
                 "toolbox-association",
                 gettext("Association"),
                 "gaphor-association-symbolic",

@@ -122,7 +122,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "toolbox-part-association",
                 gettext("Part Association"),
                 "gaphor-part-association-symbolic",
-                "<Shift>A",
+                "<Shift>Z",
                 PlacementTool.new_item_factory(
                     uml_items.AssociationItem, config_func=part_association_config
                 ),
