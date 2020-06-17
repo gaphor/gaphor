@@ -105,6 +105,7 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
     x, y, width, height = bounding_box
 
     cr.move_to(x, d)
+    cr.set_dash(context.style["dash-style"], 0)
     if d:
         x1 = width + x
         y1 = height + y
