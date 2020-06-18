@@ -249,6 +249,8 @@ class IconBox:
         w = bounding_box.width - padding_right - padding_left
         h = bounding_box.height - padding_top - padding_bottom
         self.icon.draw(new_context, Rectangle(x, y, w, h))
+
+        # TODO: Change X and initial Y, based on placement. Also change X text-alignment  (left/right/center)
         y = y + bounding_box.height + vertical_spacing
         for c, (cw, ch) in zip(self.children, self.sizes):
             mw = max(w, cw)
