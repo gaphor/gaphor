@@ -57,7 +57,10 @@ class DiagramItemConnector(ItemConnector):
                 # reconnect only constraint - leave model intact
                 log.debug("performing reconnect constraint")
                 constraint = sink.port.constraint(item.canvas, item, handle, sink.item)
-                item.canvas.reconnect_item(item, handle, constraint=constraint)
+                item.canvas.reconnect_item(
+                    item, handle, sink.port, constraint=constraint
+                )
+                item.request_update()
             elif cinfo:
                 # first disconnect but disable disconnection handle as
                 # reconnection is going to happen

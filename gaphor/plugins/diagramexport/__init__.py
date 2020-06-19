@@ -66,11 +66,9 @@ class DiagramExport(Service, ActionProvider):
 
         if sloppiness:
             view.painter = FreeHandPainter(ItemPainter(), sloppiness)
-            view.bounding_box_painter = FreeHandPainter(
-                BoundingBoxPainter(), sloppiness
-            )
         else:
             view.painter = ItemPainter()
+        view.bounding_box_painter = BoundingBoxPainter(view.painter)
 
     def render(self, canvas, new_surface):
         view = View(canvas)

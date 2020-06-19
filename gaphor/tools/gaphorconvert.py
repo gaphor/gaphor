@@ -128,7 +128,7 @@ def main(argv=sys.argv[1:]):
 
             view = View(diagram.canvas)
             view.painter = ItemPainter()
-            view.bounding_box_painter = BoundingBoxPainter()
+            view.bounding_box_painter = BoundingBoxPainter(view.painter)
 
             tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
             tmpcr = cairo.Context(tmpsurface)
