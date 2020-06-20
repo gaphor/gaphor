@@ -2,7 +2,14 @@ import cairo
 import pytest
 from gaphas.geometry import Rectangle
 
-from gaphor.diagram.shapes import Box, DrawContext, IconBox, Text
+from gaphor.diagram.shapes import (
+    Box,
+    DrawContext,
+    IconBox,
+    Text,
+    TextAlign,
+    VerticalAlign,
+)
 
 
 @pytest.fixture
@@ -69,6 +76,21 @@ def test_draw_icon_box(context):
     shape.draw(context, bounding_box)
 
     assert box_drawn == bounding_box
+
+
+def test_icon_box_child_placement(context):
+    text = Text(text="some text")
+    shape = IconBox(Box(), text,)
+    shape.size(context)
+
+    w, h = shape.sizes[0]
+    style = {"text-align": TextAlign.CENTER, "vertical-align": VerticalAlign.BOTTOM}
+    bounding_box = Rectangle(0, 0, 10, 20)
+
+    x, y, w, h = shape.child_pos(style, bounding_box)
+
+    assert x == (bounding_box.width - w) / 2
+    assert y == bounding_box.height
 
 
 def test_text_has_width(context, fixed_text_size):
