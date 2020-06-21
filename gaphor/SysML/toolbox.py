@@ -9,13 +9,7 @@ from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
 from gaphor.diagram.diagramtools import PlacementTool
 from gaphor.SysML import sysml
-
-
-def namespace_config(new_item):
-    subject = new_item.subject
-    diagram = new_item.canvas.diagram
-    subject.package = diagram.namespace
-    subject.name = f"New{type(subject).__name__}"
+from gaphor.UML.toolbox import namespace_config
 
 
 def initial_pseudostate_config(new_item):
@@ -31,33 +25,31 @@ def metaclass_config(new_item):
     new_item.subject.name = "Class"
 
 
-def part_association_config(new_item):
-    p1 = new_item.model.create(UML.Property)
-    c1 = new_item.model.create(UML.Class)
-    p1.subject = c1
-    head_type = p1.subject
-    p2 = new_item.model.create(UML.Property)
-    c2 = new_item.model.create(UML.Class)
-    p2.subject = c2
-    tail_type = p2.subject
-    assoc = UML.model.create_association(head_type, tail_type)
-    assoc.package = new_item.canvas.diagram.namespace
+def create_association(
+    assoc_item: uml_items.AssociationItem, part_association: bool
+) -> None:
+    assoc = assoc_item.model.create(UML.Association)
+    assoc.memberEnd = assoc_item.model.create(UML.Property)
+    assoc.memberEnd = assoc_item.model.create(UML.Property)
 
-    new_item.head_end.subject = assoc.memberEnd[0]
-    new_item.tail_end.subject = assoc.memberEnd[1]
+    assoc_item.head_end.subject = assoc.memberEnd[0]
+    assoc_item.tail_end.subject = assoc.memberEnd[1]
 
-    UML.model.set_navigability(assoc, new_item.head_end.subject, True)
-    new_item.head_end.subject.aggregation = "composite"
+    UML.model.set_navigability(assoc, assoc_item.head_end.subject, True)
+    if part_association:
+        assoc_item.head_end.subject.aggregation = "composite"
+    else:
+        assoc_item.head_end.subject.aggregation = "shared"
 
-    new_item.subject = assoc
+    assoc_item.subject = assoc
 
 
-def shared_association_config(new_item):
-    prop = new_item.model.create(UML.Property)
-    prop.name = ""
-    new_item.head_end.subject = prop
-    print(prop.type)
-    UML.model.set_navigability(new_item.subject, new_item.head_end.subject, True)
+def part_association_config(assoc_item: uml_items.AssociationItem) -> None:
+    create_association(assoc_item, True)
+
+
+def shared_association_config(assoc_item: uml_items.AssociationItem) -> None:
+    create_association(assoc_item, False)
 
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
