@@ -28,9 +28,9 @@ def metaclass_config(new_item):
 def create_association(
     assoc_item: uml_items.AssociationItem, part_association: bool
 ) -> None:
-    assoc = assoc_item.model.create(UML.Association)
-    assoc.memberEnd = assoc_item.model.create(UML.Property)
-    assoc.memberEnd = assoc_item.model.create(UML.Property)
+    assoc = assoc_item.subject
+    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
+    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
 
     assoc_item.head_end.subject = assoc.memberEnd[0]
     assoc_item.tail_end.subject = assoc.memberEnd[1]
@@ -40,8 +40,6 @@ def create_association(
         assoc_item.head_end.subject.aggregation = "composite"
     else:
         assoc_item.head_end.subject.aggregation = "shared"
-
-    assoc_item.subject = assoc
 
 
 def part_association_config(assoc_item: uml_items.AssociationItem) -> None:
