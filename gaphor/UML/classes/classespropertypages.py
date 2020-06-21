@@ -438,7 +438,8 @@ class AssociationPropertyPage(PropertyPageBase):
     def construct_end(self, builder, end_name, end):
         subject = end.subject
         title = builder.get_object(f"{end_name}-title")
-        title.set_text(f"{end_name.title()} (: {subject.type.name})")
+        if subject.type:
+            title.set_text(f"{end_name.title()} (: {subject.type.name})")
 
         self.update_end_name(builder, end_name, subject)
 
