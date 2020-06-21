@@ -93,6 +93,8 @@ class AssociationItem(LinePresentation, Named):
             "subject[Association].ownedEnd"
         ).watch(
             "subject[Association].navigableOwnedEnd"
+        ).watch(
+            "subject[Association]", self.on_association_end_value
         )
 
     def set_show_direction(self, dir):

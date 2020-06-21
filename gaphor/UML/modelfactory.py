@@ -259,9 +259,6 @@ def create_association(type_a, type_b):
     assoc.memberEnd = end_b
     end_a.type = type_a
     end_b.type = type_b
-    # set default navigability (unknown)
-    set_navigability(assoc, end_a, None)
-    set_navigability(assoc, end_b, None)
     return assoc
 
 
@@ -269,17 +266,12 @@ def set_navigability(assoc, end, nav):
     """
     Set navigability of an association end (property).
 
-    There are three possible values for ``nav`` parameter
+    There are three possible values for ``nav`` parameter:
+    1. True - association end is navigable
+    2. False - association end is not navigable
+    3. None - association end navigability is unknown
 
-     True
-        association end is navigable
-     False
-        association end is not navigable
-     None
-        association end navigability is unknown
-
-    There are two ways of specifying that an end is navigable
-
+    There are two ways of specifying that an end is navigable:
     - an end is in Association.navigableOwnedEnd collection
     - an end is class (interface) attribute (stored in Class.ownedAttribute
       collection)
@@ -291,7 +283,7 @@ def set_navigability(assoc, end, nav):
 
     There two association ends A.x and B.y, A.x is navigable.
 
-    Therefore navigable association ends are constructed in following way
+    Therefore, we construct navigable association ends in the following way:
 
     - if A is a class or an interface, then A.x is an attribute owned by A
     - if A is other classifier, then association is more general
@@ -302,7 +294,7 @@ def set_navigability(assoc, end, nav):
       - when A and B are instances of Node class, then it is a
         communication path
 
-    Therefore navigable association end may be stored as one of
+    Therefore, we store the navigable association end as one of the following:
     - {Class,Interface}.ownedAttribute due to their capabilities of
       editing owned members
     - Association.navigableOwnedEnd
