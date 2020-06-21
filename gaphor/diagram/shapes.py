@@ -21,13 +21,6 @@ from gaphor.diagram.text import (
 )
 
 
-class Padding:  # Enum
-    TOP = 0
-    RIGHT = 1
-    BOTTOM = 2
-    LEFT = 3
-
-
 @dataclass(frozen=True)
 class SizeContext:
     @classmethod
@@ -179,19 +172,13 @@ class Box:
         style: Style = combined_style(context.style, self._inline_style)
         min_width = style["min-width"]
         min_height = style["min-height"]
-        padding = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         self.sizes = sizes = [c.size(context) for c in self.children]
         if sizes:
             widths, heights = list(zip(*sizes))
             return (
-                max(
-                    min_width,
-                    max(widths) + padding[Padding.RIGHT] + padding[Padding.LEFT],
-                ),
-                max(
-                    min_height,
-                    sum(heights) + padding[Padding.TOP] + padding[Padding.BOTTOM],
-                ),
+                max(min_width, max(widths) + padding_right + padding_left,),
+                max(min_height, sum(heights) + padding_top + padding_bottom,),
             )
         else:
             return min_width, min_height
@@ -199,24 +186,24 @@ class Box:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style: Style = combined_style(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        padding = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         valign = style["vertical-align"]
         height = sum(h for _w, h in self.sizes)
 
         if self._draw_border:
             self._draw_border(self, new_context, bounding_box)
-        x = bounding_box.x + padding[Padding.LEFT]
+        x = bounding_box.x + padding_left
         if valign is VerticalAlign.MIDDLE:
             y = (
                 bounding_box.y
-                + padding[Padding.TOP]
-                + (max(height, bounding_box.height - padding[Padding.TOP]) - height) / 2
+                + padding_top
+                + (max(height, bounding_box.height - padding_top) - height) / 2
             )
         elif valign is VerticalAlign.BOTTOM:
-            y = bounding_box.y + bounding_box.height - height - padding[Padding.BOTTOM]
+            y = bounding_box.y + bounding_box.height - height - padding_bottom
         else:
-            y = bounding_box.y + padding[Padding.TOP]
-        w = bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT]
+            y = bounding_box.y + padding_top
+        w = bounding_box.width - padding_right - padding_left
         for c, (_w, h) in zip(self.children, self.sizes):
             c.draw(context, Rectangle(x, y, w, h))
             y += h
@@ -244,23 +231,23 @@ class IconBox:
         style = combined_style(context.style, self._inline_style)
         min_width = style["min-width"]
         min_height = style["min-height"]
-        padding = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         self.sizes = [c.size(context) for c in self.children]
         width, height = self.icon.size(context)
         return (
-            max(min_width, width + padding[Padding.RIGHT] + padding[Padding.LEFT]),
-            max(min_height, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
+            max(min_width, width + padding_right + padding_left),
+            max(min_height, height + padding_top + padding_bottom),
         )
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = combined_style(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        padding = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         vertical_spacing = style["vertical-spacing"]
-        x = bounding_box.x + padding[Padding.LEFT]
-        y = bounding_box.y + padding[Padding.TOP]
-        w = bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT]
-        h = bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM]
+        x = bounding_box.x + padding_left
+        y = bounding_box.y + padding_top
+        w = bounding_box.width - padding_right - padding_left
+        h = bounding_box.height - padding_top - padding_bottom
         self.icon.draw(new_context, Rectangle(x, y, w, h))
         y = y + bounding_box.height + vertical_spacing
         for c, (cw, ch) in zip(self.children, self.sizes):
@@ -285,22 +272,22 @@ class Text:
         style = combined_style(context.style, self._inline_style)
         min_w = style["min-width"]
         min_h = style["min-height"]
-        padding = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
 
         width, height = text_size(context.cairo, self.text(), style, self.width())  # type: ignore[type-var]
         return (
-            max(min_w, width + padding[Padding.RIGHT] + padding[Padding.LEFT]),
-            max(min_h, height + padding[Padding.TOP] + padding[Padding.BOTTOM]),
+            max(min_w, width + padding_right + padding_left),
+            max(min_h, height + padding_top + padding_bottom),
         )
 
     def text_box(self, style: Style, bounding_box: Rectangle) -> Rectangle:
         """Add padding to a bounding box."""
-        padding = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         return Rectangle(
-            bounding_box.x + padding[Padding.LEFT],
-            bounding_box.y + padding[Padding.TOP],
-            bounding_box.width - padding[Padding.RIGHT] - padding[Padding.LEFT],
-            bounding_box.height - padding[Padding.TOP] - padding[Padding.BOTTOM],
+            bounding_box.x + padding_left,
+            bounding_box.y + padding_top,
+            bounding_box.width - padding_right - padding_left,
+            bounding_box.height - padding_top - padding_bottom,
         )
 
     def draw(
