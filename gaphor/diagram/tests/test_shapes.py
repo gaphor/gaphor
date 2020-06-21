@@ -78,19 +78,68 @@ def test_draw_icon_box(context):
     assert box_drawn == bounding_box
 
 
-def test_icon_box_child_placement(context):
+def test_icon_box_child_placement_center_bottom(context):
+    style = {"text-align": TextAlign.CENTER, "vertical-align": VerticalAlign.BOTTOM}
+
     text = Text(text="some text")
     shape = IconBox(Box(), text,)
     shape.size(context)
 
     w, h = shape.sizes[0]
-    style = {"text-align": TextAlign.CENTER, "vertical-align": VerticalAlign.BOTTOM}
     bounding_box = Rectangle(0, 0, 10, 20)
 
-    x, y, w, h = shape.child_pos(style, bounding_box)
+    x, y, _, _ = shape.child_pos(style, bounding_box)
 
     assert x == (bounding_box.width - w) / 2
     assert y == bounding_box.height
+
+
+def test_icon_box_child_placement_right_middle(context):
+    style = {"text-align": TextAlign.RIGHT, "vertical-align": VerticalAlign.MIDDLE}
+
+    text = Text(text="some text")
+    shape = IconBox(Box(), text,)
+    shape.size(context)
+
+    w, h = shape.sizes[0]
+    bounding_box = Rectangle(0, 0, 10, 20)
+
+    x, y, _, _ = shape.child_pos(style, bounding_box)
+
+    assert x == bounding_box.width
+    assert y == (bounding_box.height - h) / 2
+
+
+def test_icon_box_child_placement_left_middle(context):
+    style = {"text-align": TextAlign.LEFT, "vertical-align": VerticalAlign.MIDDLE}
+
+    text = Text(text="some text")
+    shape = IconBox(Box(), text,)
+    shape.size(context)
+
+    w, h = shape.sizes[0]
+    bounding_box = Rectangle(0, 0, 10, 20)
+
+    x, y, _, _ = shape.child_pos(style, bounding_box)
+
+    assert x == -w
+    assert y == (bounding_box.height - h) / 2
+
+
+def test_icon_box_child_placement_center_top(context):
+    style = {"text-align": TextAlign.CENTER, "vertical-align": VerticalAlign.TOP}
+
+    text = Text(text="some text")
+    shape = IconBox(Box(), text,)
+    shape.size(context)
+
+    w, h = shape.sizes[0]
+    bounding_box = Rectangle(0, 0, 10, 20)
+
+    x, y, _, _ = shape.child_pos(style, bounding_box)
+
+    assert x == (bounding_box.width - w) / 2
+    assert y == -h
 
 
 def test_text_has_width(context, fixed_text_size):

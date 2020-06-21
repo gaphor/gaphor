@@ -243,18 +243,28 @@ class IconBox:
         if not self.sizes:
             return Rectangle()
 
+        text_align = style.get("text-align", TextAlign.CENTER)
+        vertical_align = style.get("vertical-align", VerticalAlign.BOTTOM)
         vertical_spacing = style.get("vertical-spacing", 0)  # should be margin?
 
         ws, hs = list(zip(*self.sizes))
         max_w = max(ws)
         total_h = sum(hs)
 
-        return Rectangle(
-            bounding_box.x + (bounding_box.width - max_w) / 2,
-            bounding_box.y + bounding_box.height + vertical_spacing,
-            max_w,
-            total_h,
-        )
+        if text_align == TextAlign.CENTER:
+            x = bounding_box.x + (bounding_box.width - max_w) / 2
+        elif text_align == TextAlign.LEFT:
+            x = bounding_box.x - max_w - vertical_spacing
+        elif text_align == TextAlign.RIGHT:
+            x = bounding_box.x + bounding_box.width + vertical_spacing
+
+        if vertical_align == VerticalAlign.BOTTOM:
+            y = bounding_box.y + bounding_box.height + vertical_spacing
+        elif vertical_align == VerticalAlign.MIDDLE:
+            y = bounding_box.y + (bounding_box.height - total_h) / 2
+        elif vertical_align == VerticalAlign.TOP:
+            y = bounding_box.y - total_h - vertical_spacing
+        return Rectangle(x, y, max_w, total_h,)
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = combined_style(context.style, self._inline_style)

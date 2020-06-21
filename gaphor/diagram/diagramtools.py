@@ -60,7 +60,6 @@ class DiagramItemConnector(ItemConnector):
                 item.canvas.reconnect_item(
                     item, handle, sink.port, constraint=constraint
                 )
-                item.request_update()
             elif cinfo:
                 # first disconnect but disable disconnection handle as
                 # reconnection is going to happen

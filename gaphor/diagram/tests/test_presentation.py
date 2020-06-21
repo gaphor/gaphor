@@ -29,6 +29,17 @@ def test_creation(diagram):
     assert p.subject is None
 
 
+def test_element_sides(diagram):
+    p = diagram.create(StubElement)
+
+    port_top, port_right, port_bottom, port_left = p.ports()
+
+    assert p.port_side(port_top) == "top"
+    assert p.port_side(port_right) == "right"
+    assert p.port_side(port_bottom) == "bottom"
+    assert p.port_side(port_left) == "left"
+
+
 def test_element_saving(element_factory, diagram):
     subject = element_factory.create(UML.Class)
     p = diagram.create(StubElement, subject=subject)
