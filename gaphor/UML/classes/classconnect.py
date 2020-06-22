@@ -121,6 +121,11 @@ class AssociationConnect(UnaryRelationshipConnect):
                     end2.type is head_type and end1.type is tail_type
                 ):
                     return
+                else:
+                    head_nav = end1.navigability
+                    head_agg = end1.aggregation
+                    tail_nav = end2.navigability
+                    tail_agg = end2.aggregation
 
             # Create new association
             relation = UML.model.create_association(head_type, tail_type)
@@ -129,14 +134,8 @@ class AssociationConnect(UnaryRelationshipConnect):
             line.tail_end.subject = relation.memberEnd[1]
 
             if line.subject:
-                head_nav = end1.navigability
-                head_agg = end1.aggregation
-                tail_nav = end2.navigability
-                tail_agg = end2.aggregation
-
                 UML.model.set_navigability(relation, line.head_end.subject, head_nav)
                 line.head_end.subject.aggregation = head_agg
-
                 UML.model.set_navigability(relation, line.tail_end.subject, tail_nav)
                 line.tail_end.subject.aggregation = tail_agg
 
@@ -144,7 +143,6 @@ class AssociationConnect(UnaryRelationshipConnect):
             line.subject = relation
 
     def reconnect(self, handle, port):
-        print("reconnect")
         line = self.line
         c = self.get_connected(handle)
         assert c

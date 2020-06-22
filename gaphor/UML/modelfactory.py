@@ -259,6 +259,9 @@ def create_association(type_a, type_b):
     assoc.memberEnd = end_b
     end_a.type = type_a
     end_b.type = type_b
+    # set default navigability (unknown)
+    set_navigability(assoc, end_a, None)
+    set_navigability(assoc, end_b, None)
     return assoc
 
 
