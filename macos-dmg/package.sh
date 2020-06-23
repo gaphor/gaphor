@@ -22,13 +22,12 @@ function log() {
   echo "$*" >&2
 }
 
-rm -rf Gaphor.app Gaphor-*.dmg Gaphor-*-macos.zip
+rm -rf Gaphor.app Gaphor-*.dmg
 
 
 # Make a virtual env, so we are not bothered with site-packages installed on the host system
 
 python3 -m venv --copies --prompt Gaphor.app "${APPHOME}"
-source "${APPHOME}/bin/activate"
 
 VERSION="$(poetry version | cut -d' ' -f2)"
 PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
@@ -96,7 +95,7 @@ rm -r "${INSTALLDIR}/Frameworks/Python.framework/Versions/${PYVER}/share"
 
 log "Installing Gaphor in ${INSTALLDIR}..."
 
-pip3 install --no-warn-script-location ../dist/gaphor-${VERSION}-py3-none-any.whl
+"${APPHOME}/bin/pip3" install --no-warn-script-location ../dist/gaphor-${VERSION}-py3-none-any.whl
 
 
 echo "Fixing dynamic link dependencies..."
@@ -167,6 +166,6 @@ glib-compile-schemas ${INSTALLDIR}/share/glib-2.0/schemas
 
 log "Building Gaphor-$VERSION.dmg..."
 
-hdiutil create -srcfolder $APP Gaphor-$VERSION.dmg
+dmgbuild -s dmgbuild-settings.py "Gaphor-$VERSION" "Gaphor-$VERSION.dmg"
 
 log "Done!"

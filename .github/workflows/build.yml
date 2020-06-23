@@ -184,6 +184,7 @@ jobs:
         run: pytest
       - name: Create macOS Application
         run: |
+          pip3 install dmgbuild
           make dist
           cd macos-dmg
           ./package.sh
