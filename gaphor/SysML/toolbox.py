@@ -42,7 +42,7 @@ def create_association(
         assoc_item.head_end.subject.aggregation = "shared"
 
 
-def part_association_config(assoc_item: uml_items.AssociationItem) -> None:
+def composite_association_config(assoc_item: uml_items.AssociationItem) -> None:
     create_association(assoc_item, True)
 
 
@@ -128,14 +128,14 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 handle_index=SE,
             ),
             ToolDef(
-                "toolbox-part-association",
-                gettext("Part Association"),
-                "gaphor-part-association-symbolic",
+                "toolbox-composite-association",
+                gettext("Composite Association"),
+                "gaphor-composite-association-symbolic",
                 "<Shift>Z",
                 PlacementTool.new_item_factory(
                     uml_items.AssociationItem,
                     UML.Association,
-                    config_func=part_association_config,
+                    config_func=composite_association_config,
                 ),
             ),
             ToolDef(
