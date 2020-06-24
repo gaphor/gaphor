@@ -1,5 +1,7 @@
 """Classes related (dependency, implementation) adapter connections."""
 
+from gaphas import Handle
+
 from gaphor import UML
 from gaphor.diagram.connectors import (
     Connector,
@@ -162,24 +164,18 @@ class AssociationConnect(UnaryRelationshipConnect):
         oend.subject.type = c.subject
         UML.model.set_navigability(line.subject, oend.subject, nav)
 
-    def disconnect_subject(self, handle):
-        """
-        Disconnect model element.
-        Disconnect property (memberEnd) too, in case of end of life for
-        Extension
+    def disconnect_subject(self, handle: Handle) -> None:
+        """Disconnect model element.
+
+        Disconnect property (memberEnd) in case of end of life for connection.
         """
         opposite = self.line.opposite(handle)
         c1 = self.get_connected(handle)
         c2 = self.get_connected(opposite)
-        if c1 and c2:
-            old: UML.Association = self.line.subject
-            del self.line.subject
-            del self.line.head_end.subject
-            del self.line.tail_end.subject
-            if old and len(old.presentation) == 0:
-                for e in list(old.memberEnd):
-                    e.unlink()
-                old.unlink()
+        if c1 and c2 and self.line.subject and len(self.line.subject.presentation) == 0:
+            for e in list(self.line.subject.memberEnd):
+                e.unlink()
+            self.line.subject.unlink()
 
 
 @Connector.register(Named, ImplementationItem)
