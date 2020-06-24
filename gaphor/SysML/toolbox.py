@@ -43,10 +43,7 @@ def create_association(
     assoc_item.tail_end.subject = assoc.memberEnd[1]
 
     UML.model.set_navigability(assoc, assoc_item.head_end.subject, True)
-    if association_type == AssociationType.COMPOSITE:
-        assoc_item.head_end.subject.aggregation = AssociationType.COMPOSITE.value
-    else:
-        assoc_item.head_end.subject.aggregation = AssociationType.SHARED.value
+    assoc_item.head_end.subject.aggregation = association_type.value
 
 
 def composite_association_config(assoc_item: uml_items.AssociationItem) -> None:
