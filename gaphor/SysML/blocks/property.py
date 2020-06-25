@@ -1,5 +1,7 @@
 """Property item."""
 
+from typing import Sequence, Union
+
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
@@ -21,9 +23,21 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
         self.watch("subject.appliedStereotype.slot", self.update_shapes)
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
-        self.watch("subject[Classifier].useCase", self.update_shapes)
+        self.watch("subject[Property].aggregation", self.update_shapes)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
+
+    def alignment(self) -> VerticalAlign:
+        if self.canvas and self.canvas.get_children(self):
+            return VerticalAlign.TOP
+        else:
+            return VerticalAlign.MIDDLE
+
+    def dash(self) -> Sequence[Union[int, float]]:
+        if self.subject and self.subject.aggregation != "composite":
+            return (7.0, 5.0)
+        else:
+            return ()
 
     def update_shapes(self, event=None):
         self.shape = Box(
@@ -39,9 +53,8 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
             style={
                 "min-width": 100,
                 "min-height": 50,
-                "vertical-align": VerticalAlign.TOP
-                if self.canvas and self.canvas.get_children(self)
-                else VerticalAlign.MIDDLE,
+                "vertical-align": self.alignment(),
+                "dash-style": self.dash(),
             },
             draw=draw_border
         )
