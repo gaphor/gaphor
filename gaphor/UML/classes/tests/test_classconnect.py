@@ -348,6 +348,6 @@ class AssociationConnectorTestCase(TestCase):
         assert asc.subject is not None
 
         self.disconnect(asc, asc.head)
-
-        # after disconnection: one diagram and two classes
-        self.assertEqual(3, len(list(self.element_factory.select())))
+        self.disconnect(asc, asc.tail)
+        assert c1 is not self.get_connected(asc.head)
+        assert c2 is not self.get_connected(asc.tail)
