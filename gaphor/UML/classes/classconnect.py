@@ -165,17 +165,12 @@ class AssociationConnect(UnaryRelationshipConnect):
         UML.model.set_navigability(line.subject, oend.subject, nav)
 
     def disconnect_subject(self, handle: Handle) -> None:
-        """Disconnect model element.
+        """Don't disconnect association.
 
-        Disconnect property (memberEnd) in case of end of life for connection.
+        Associations require the subject and memberEnds in order to store
+        navigability and aggregation. We take No action on disconnect.
         """
-        opposite = self.line.opposite(handle)
-        c1 = self.get_connected(handle)
-        c2 = self.get_connected(opposite)
-        if c1 and c2 and self.line.subject and len(self.line.subject.presentation) == 0:
-            for e in list(self.line.subject.memberEnd):
-                e.unlink()
-            self.line.subject.unlink()
+        pass
 
 
 @Connector.register(Named, ImplementationItem)
