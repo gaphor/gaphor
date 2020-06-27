@@ -111,38 +111,37 @@ class AssociationConnect(UnaryRelationshipConnect):
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         if c1 and c2:
-            head_type = c1.subject
-            tail_type = c2.subject
 
-            # First check if we do not already contain the right subject:
-            if line.subject:
+            if not line.subject:
+                relation = UML.model.create_association(c1.subject, c2.subject)
+                relation.package = element.canvas.diagram.namespace
+                line.head_end.subject = relation.memberEnd[0]
+                line.tail_end.subject = relation.memberEnd[1]
+
+                # Set subject last so that event handlers can trigger
+                line.subject = relation
+
+            else:
                 assert isinstance(line.subject, UML.Association)
                 end1 = line.subject.memberEnd[0]
                 end2 = line.subject.memberEnd[1]
-                if (end1.type is head_type and end2.type is tail_type) or (
-                    end2.type is head_type and end1.type is tail_type
+                if (end1.type is c1.subject and end2.type is c2.subject) or (
+                    end2.type is c1.subject and end1.type is c2.subject
                 ):
                     return
-                else:
-                    head_nav = end1.navigability
-                    head_agg = end1.aggregation
-                    tail_nav = end2.navigability
-                    tail_agg = end2.aggregation
 
-            # Create new association
-            relation = UML.model.create_association(head_type, tail_type)
-            relation.package = element.canvas.diagram.namespace
-            line.head_end.subject = relation.memberEnd[0]
-            line.tail_end.subject = relation.memberEnd[1]
-
-            if line.subject:
-                UML.model.set_navigability(relation, line.head_end.subject, head_nav)
-                line.head_end.subject.aggregation = head_agg
-                UML.model.set_navigability(relation, line.tail_end.subject, tail_nav)
-                line.tail_end.subject.aggregation = tail_agg
-
-            # Do subject itself last, so event handlers can trigger
-            line.subject = relation
+            UML.model.set_navigability(
+                line.subject,
+                line.head_end.subject,
+                line.subject.memberEnd[0].navigability,
+            )
+            line.head_end.subject.aggregation = line.subject.memberEnd[0].aggregation
+            UML.model.set_navigability(
+                line.subject,
+                line.tail_end.subject,
+                line.subject.memberEnd[1].navigability,
+            )
+            line.tail_end.subject.aggregation = line.subject.memberEnd[1].aggregation
 
     def reconnect(self, handle, port):
         line = self.line
