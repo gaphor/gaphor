@@ -130,6 +130,8 @@ class AssociationConnect(UnaryRelationshipConnect):
                 ):
                     return
 
+            line.subject.memberEnd[0].type = c1.subject
+            line.subject.memberEnd[1].type = c2.subject
             UML.model.set_navigability(
                 line.subject,
                 line.head_end.subject,
@@ -164,12 +166,13 @@ class AssociationConnect(UnaryRelationshipConnect):
         UML.model.set_navigability(line.subject, oend.subject, nav)
 
     def disconnect_subject(self, handle: Handle) -> None:
-        """Don't disconnect association.
+        """Disconnect the type of each member end.
 
-        Associations require the subject and memberEnds in order to store
-        navigability and aggregation. We take No action on disconnect.
+        On connect, we pair association member ends with the element they
+        connect to. On disconnect, we remove this relation.
         """
-        pass
+        for e in list(self.line.subject.memberEnd):
+            e.type = None
 
 
 @Connector.register(Named, ImplementationItem)
