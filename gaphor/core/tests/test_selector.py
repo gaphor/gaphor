@@ -1,4 +1,4 @@
-from gaphor.core.styling import parse_stylesheet
+from gaphor.core.styling import parse_style_sheet
 
 
 class SelectorProperties:
@@ -15,7 +15,7 @@ class SelectorProperties:
 def test_select_all():
     css = "* {}"
 
-    (selector, specificity), payload = next(parse_stylesheet(css))
+    (selector, specificity), payload = next(parse_style_sheet(css))
 
     print(selector)
     assert selector("any")
@@ -24,7 +24,7 @@ def test_select_all():
 def test_select_name():
     css = "classitem {}"
 
-    (selector, specificity), payload = next(parse_stylesheet(css))
+    (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(SelectorProperties("classitem"))
     assert not selector(SelectorProperties("packageitem"))
@@ -33,7 +33,7 @@ def test_select_name():
 def test_select_inside_combinator():
     css = "classitem nested {}"
 
-    (selector, specificity), payload = next(parse_stylesheet(css))
+    (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(
         SelectorProperties("nested", parent=SelectorProperties("classitem"))
@@ -51,7 +51,7 @@ def test_select_inside_combinator():
 def test_select_parent_combinator():
     css = "classitem > nested {}"
 
-    (selector, specificity), payload = next(parse_stylesheet(css))
+    (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(
         SelectorProperties("nested", parent=SelectorProperties("classitem"))

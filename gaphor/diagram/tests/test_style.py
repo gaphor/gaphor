@@ -1,12 +1,12 @@
 import pytest
 
 import gaphor.diagram.style
-from gaphor.core.styling import parse_stylesheet
+from gaphor.core.styling import parse_style_sheet
 from gaphor.diagram.text import FontWeight
 
 
 def first_decl_block(css):
-    prop, value = next(parse_stylesheet(css))
+    prop, value = next(parse_style_sheet(css))
     return value
 
 

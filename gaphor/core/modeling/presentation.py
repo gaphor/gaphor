@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import association, attribute, relation_one
-from gaphor.core.styling import parse_stylesheet
+from gaphor.core.styling import parse_style_sheet
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
@@ -38,7 +38,7 @@ class StyleSheet(Element):
         self.compile_style_sheet(event.new_value)
 
     def compile_style_sheet(self, css):
-        for selector, style in parse_stylesheet(css):
+        for selector, style in parse_style_sheet(css):
             if selector != "error":
                 self._style = style
                 return

@@ -36,12 +36,14 @@ class _StyleDeclarations:
 StyleDeclarations = _StyleDeclarations()
 
 
-def parse_stylesheet(
+def parse_style_sheet(
     css,
 ) -> Generator[
     Union[
         Tuple[Tuple[Callable[[object], bool], Tuple[int, int, int]], Dict[str, object]],
-        Tuple[str, object],  # Literal["error"]
+        Tuple[
+            str, Union[tinycss2.ast.ParseError, parser.SelectorError]
+        ],  # Literal["error"]
     ],
     None,
     None,
