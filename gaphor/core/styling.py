@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import re
+from functools import singledispatch
 from typing import Callable, Dict, Generator, List, Optional, Tuple, Union
 
 import tinycss2
-from cssselect2.compiler import CompiledSelector, compile_selector_list
-from cssselect2.parser import SelectorError
-from typing_extensions import Literal
+from cssselect2 import parser
+from webencodings import ascii_lower
 
 
 class _StyleDeclarations:
@@ -39,8 +40,8 @@ def parse_stylesheet(
     css,
 ) -> Generator[
     Union[
-        Tuple[CompiledSelector, Dict[str, object]],
-        Tuple[Literal["error"], Union[tinycss2.ast.ParseError, SelectorError]],
+        Tuple[Tuple[Callable[[object], bool], Tuple[int, int, int]], Dict[str, object]],
+        Tuple[str, object],  # Literal["error"]
     ],
     None,
     None,
@@ -54,21 +55,20 @@ def parse_stylesheet(
             continue
         try:
             selectors = compile_selector_list(rule.prelude)
-        except SelectorError as e:
+        except parser.SelectorError as e:
             yield ("error", e)
             continue
 
-        yield (
-            selectors,
-            {
-                prop: value
-                for prop, value in (
-                    (prop, StyleDeclarations(prop, value))
-                    for prop, value in parse_declarations(rule)
-                )
-                if value is not None
-            },
-        )
+        declaration = {
+            prop: value
+            for prop, value in (
+                (prop, StyleDeclarations(prop, value))
+                for prop, value in parse_declarations(rule)
+            )
+            if value is not None
+        }
+
+        yield from ((selector, declaration) for selector in selectors)
 
 
 def parse_declarations(rule):
@@ -112,3 +112,63 @@ def parse_declarations(rule):
 
     if state == VALUE and value:
         yield (name, value[0] if len(value) == 1 else tuple(value))
+
+
+# http://dev.w3.org/csswg/selectors/#whitespace
+split_whitespace = re.compile("[^ \t\r\n\f]+").findall
+
+
+def compile_selector_list(input):
+    """
+    Compile a (comma-separated) list of selectors.
+
+    Based on cssselect2.compiler.compile_selector_list().
+
+    Returns a list of compiled selectors.
+    """
+    return [
+        (compile_node(selector.parsed_tree), selector.specificity)
+        for selector in parser.parse(input)
+    ]
+
+
+@singledispatch
+def compile_node(selector):
+    """
+    Dynamic dispatch selector nodes.
+
+    Default behavior is a deny (no match).
+    """
+    print("selector", type(selector))
+    return lambda el: False
+
+
+@compile_node.register
+def compile_compound_selector(selector: parser.CompoundSelector):
+    sub_expressions = [compile_node(sel) for sel in selector.simple_selectors]
+    return lambda el: all(expr(el) for expr in sub_expressions)
+
+
+@compile_node.register
+def compile_local_name_selector(selector: parser.LocalNameSelector):
+    return lambda el: el.local_name == selector.lower_local_name
+
+
+@compile_node.register
+def compile_combined_selector(selector: parser.CombinedSelector):
+    left_inside = compile_node(selector.left)
+    if selector.combinator == " ":
+
+        def left(el):
+            return any(left_inside(e) for e in el.ancestors())
+
+    elif selector.combinator == ">":
+
+        def left(el):
+            return next(e is not None and (left_inside(e)) for e in [el.parent])
+
+    else:
+        raise parser.SelectorError("Unknown combinator", selector.combinator)
+
+    right = compile_node(selector.right)
+    return lambda el: right(el) and left(el)
