@@ -2,7 +2,8 @@ import cssselect2
 import pytest
 import tinycss2
 
-from gaphor.core.styling import StyleDeclarations, parse_style_sheet
+from gaphor.core.styling import CompiledStyleSheet, StyleDeclarations, parse_style_sheet
+from gaphor.core.tests.test_selector import SelectorProperties
 
 
 def first_decl_block(css):
@@ -142,3 +143,32 @@ def test_css_multiple_declarations_without_semicolumns():
 
     assert props.get("test-font-family") == "sans"
     assert props.get("test-font-size") == 42
+
+
+def test_compiled_style_sheet():
+    css = """
+    * {
+        test-font-size: 42
+        test-font-family: overridden
+    }
+    mytype {
+        test-font-family: sans
+    }
+    """
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(SelectorProperties("mytype"))
+
+    assert props.get("test-font-family") == "sans"
+    assert props.get("test-font-size") == 42
+
+
+def test_empty_compiled_style_sheet():
+    css = ""
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(SelectorProperties("mytype"))
+
+    assert props == {}

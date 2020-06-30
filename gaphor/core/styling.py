@@ -1,12 +1,43 @@
 from __future__ import annotations
 
+import operator
 import re
-from functools import singledispatch
-from typing import Callable, Dict, Generator, List, Optional, Tuple, Union
+from functools import reduce, singledispatch
+from typing import Any, Callable, Dict, Generator, List, Optional, Tuple, Union
 
 import tinycss2
 from cssselect2 import parser
+from typing_extensions import Literal
 from webencodings import ascii_lower
+
+MATCH_SORT_KEY = operator.itemgetter(0, 1)
+
+
+def merge_styles(styles) -> Dict[str, object]:
+    style = {}
+    for s in styles:
+        style.update(s)
+    return style
+
+
+class CompiledStyleSheet:
+    def __init__(self, css):
+        self.selectors = [
+            (selspec[0], selspec[1], order, declarations)
+            for order, (selspec, declarations) in enumerate(parse_style_sheet(css))
+            if selspec != "error"
+        ]
+
+    def match(self, element) -> Dict[str, object]:
+        results = sorted(
+            (
+                (specificity, order, declarations)
+                for pred, specificity, order, declarations in self.selectors
+                if pred(element)
+            ),
+            key=MATCH_SORT_KEY,
+        )
+        return merge_styles(decl for _, _, decl in results)
 
 
 class _StyleDeclarations:
@@ -41,9 +72,7 @@ def parse_style_sheet(
 ) -> Generator[
     Union[
         Tuple[Tuple[Callable[[object], bool], Tuple[int, int, int]], Dict[str, object]],
-        Tuple[
-            str, Union[tinycss2.ast.ParseError, parser.SelectorError]
-        ],  # Literal["error"]
+        Tuple[Literal["error"], Union[tinycss2.ast.ParseError, parser.SelectorError]],
     ],
     None,
     None,
@@ -53,12 +82,13 @@ def parse_style_sheet(
     )
     for rule in rules:
         if rule.type == "error":
-            yield ("error", rule)
+            assert isinstance(rule, tinycss2.ast.ParseError)
+            yield ("error", rule)  # type: ignore[misc]
             continue
         try:
             selectors = compile_selector_list(rule.prelude)
         except parser.SelectorError as e:
-            yield ("error", e)
+            yield ("error", e)  # type: ignore[misc]
             continue
 
         declaration = {
@@ -153,7 +183,7 @@ def compile_compound_selector(selector: parser.CompoundSelector):
 
 @compile_node.register
 def compile_local_name_selector(selector: parser.LocalNameSelector):
-    return lambda el: el.local_name == selector.lower_local_name
+    return lambda el: el.local_name() == selector.lower_local_name
 
 
 @compile_node.register
@@ -167,7 +197,8 @@ def compile_combined_selector(selector: parser.CombinedSelector):
     elif selector.combinator == ">":
 
         def left(el):
-            return next(e is not None and (left_inside(e)) for e in [el.parent])
+            p = el.parent()
+            return p is not None and left_inside(p)
 
     else:
         raise parser.SelectorError("Unknown combinator", selector.combinator)
