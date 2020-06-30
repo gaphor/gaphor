@@ -200,13 +200,13 @@ class AssociationItem(LinePresentation, Named):
             self.draw_tail = draw_default_tail
 
         # update relationship after self.set calls to avoid circural updates
-        super().post_update(context)
+        size_context = super().post_update(context)
 
         # Calculate alignment of the head name and multiplicity
-        self._head_end.post_update(context, handles[0].pos, handles[1].pos)
+        self._head_end.post_update(size_context, handles[0].pos, handles[1].pos)
 
         # Calculate alignment of the tail name and multiplicity
-        self._tail_end.post_update(context, handles[-1].pos, handles[-2].pos)
+        self._tail_end.post_update(size_context, handles[-1].pos, handles[-2].pos)
 
     def point(self, pos):
         """
@@ -217,8 +217,7 @@ class AssociationItem(LinePresentation, Named):
         )
 
     def draw(self, context):
-        draw_context = DrawContext.from_context(context, self.style)
-        super().draw(draw_context)
+        draw_context = super().draw(context)
         self._head_end.draw(draw_context)
         self._tail_end.draw(draw_context)
         if self._show_direction:
@@ -379,7 +378,7 @@ class AssociationEnd(Presentation):
 
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
-        self.font = "sans 10"
+        self._inline_style = {"font-size": 10}
 
     name_bounds = property(lambda s: s._name_bounds)
 
@@ -415,6 +414,7 @@ class AssociationEnd(Presentation):
         but one point of the line.
         """
         cr = context.cairo
+        style = {**context.style, **self._inline_style}
         ofs = 5
 
         name_dx = 0.0
@@ -430,8 +430,8 @@ class AssociationEnd(Presentation):
             w2, h2 = size2
             return (max(w1, w2), max(h1, h2))
 
-        name_w, name_h = max_text_size(text_size(cr, self._name, self.font), (10, 10))
-        mult_w, mult_h = max_text_size(text_size(cr, self._mult, self.font), (10, 10))
+        name_w, name_h = max_text_size(text_size(cr, self._name, style), (10, 10))
+        mult_w, mult_h = max_text_size(text_size(cr, self._mult, style), (10, 10))
 
         if dy == 0:
             rc = 1000.0  # quite a lot...
@@ -509,6 +509,7 @@ class AssociationEnd(Presentation):
             return
 
         cr = context.cairo
+        style = {**context.style, **self._inline_style}
         text_color = context.style.get("text-color")
         if text_color:
             cr.set_source_rgba(*text_color)
@@ -516,13 +517,13 @@ class AssociationEnd(Presentation):
         text_draw(
             cr,
             self._name,
-            self.font,
+            style,
             lambda w, h: (self._name_bounds.x, self._name_bounds.y),
         )
         text_draw(
             cr,
             self._mult,
-            self.font,
+            style,
             lambda w, h: (self._mult_bounds.x, self._mult_bounds.y),
         )
 
