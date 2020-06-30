@@ -3,7 +3,7 @@ import pytest
 import tinycss2
 
 from gaphor.core.styling import CompiledStyleSheet, StyleDeclarations, parse_style_sheet
-from gaphor.core.tests.test_selector import SelectorProperties
+from gaphor.core.styling.tests.test_selector import Node
 
 
 def first_decl_block(css):
@@ -158,7 +158,7 @@ def test_compiled_style_sheet():
 
     compiled_style_sheet = CompiledStyleSheet(css)
 
-    props = compiled_style_sheet.match(SelectorProperties("mytype"))
+    props = compiled_style_sheet.match(Node("mytype"))
 
     assert props.get("test-font-family") == "sans"
     assert props.get("test-font-size") == 42
@@ -169,6 +169,6 @@ def test_empty_compiled_style_sheet():
 
     compiled_style_sheet = CompiledStyleSheet(css)
 
-    props = compiled_style_sheet.match(SelectorProperties("mytype"))
+    props = compiled_style_sheet.match(Node("mytype"))
 
     assert props == {}
