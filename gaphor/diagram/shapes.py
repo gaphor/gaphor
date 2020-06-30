@@ -239,21 +239,47 @@ class IconBox:
             max(min_height, height + padding_top + padding_bottom),
         )
 
+    def child_pos(self, style: Style, bounding_box: Rectangle) -> Rectangle:
+        if not self.sizes:
+            return Rectangle()
+
+        text_align = style.get("text-align", TextAlign.CENTER)
+        vertical_align = style.get("vertical-align", VerticalAlign.BOTTOM)
+        vertical_spacing = style.get("vertical-spacing", 0)  # should be margin?
+
+        ws, hs = list(zip(*self.sizes))
+        max_w = max(ws)
+        total_h = sum(hs)
+
+        if text_align == TextAlign.CENTER:
+            x = bounding_box.x + (bounding_box.width - max_w) / 2
+        elif text_align == TextAlign.LEFT:
+            x = bounding_box.x - max_w - vertical_spacing
+        elif text_align == TextAlign.RIGHT:
+            x = bounding_box.x + bounding_box.width + vertical_spacing
+
+        if vertical_align == VerticalAlign.BOTTOM:
+            y = bounding_box.y + bounding_box.height + vertical_spacing
+        elif vertical_align == VerticalAlign.MIDDLE:
+            y = bounding_box.y + (bounding_box.height - total_h) / 2
+        elif vertical_align == VerticalAlign.TOP:
+            y = bounding_box.y - total_h - vertical_spacing
+        return Rectangle(x, y, max_w, total_h,)
+
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = combined_style(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        vertical_spacing = style["vertical-spacing"]
         x = bounding_box.x + padding_left
         y = bounding_box.y + padding_top
         w = bounding_box.width - padding_right - padding_left
         h = bounding_box.height - padding_top - padding_bottom
         self.icon.draw(new_context, Rectangle(x, y, w, h))
-        y = y + bounding_box.height + vertical_spacing
+
+        cx, cy, max_w, total_h = self.child_pos(style, bounding_box)
         for c, (cw, ch) in zip(self.children, self.sizes):
-            mw = max(w, cw)
-            c.draw(context, Rectangle(x - (mw - w) / 2, y, mw, ch))
-            y += ch
+            c.draw(context, Rectangle(cx + (max_w - cw) / 2, cy, cw, ch))
+            cy += ch
 
 
 class Text:

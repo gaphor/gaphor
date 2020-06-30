@@ -135,11 +135,11 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 PlacementTool.new_item_factory(uml_items.ConnectorItem),
             ),
             ToolDef(
-                "toolbox-connector",
+                "toolbox-proxy-port",
                 gettext("Proxy Port"),
                 "gaphor-proxyport-symbolic",
                 "<Shift>Y",
-                PlacementTool.new_item_factory(uml_items.ConnectorItem),
+                PlacementTool.new_item_factory(sysml_items.ProxyPortItem),
             ),
             ToolDef(
                 "toolbox-property",
