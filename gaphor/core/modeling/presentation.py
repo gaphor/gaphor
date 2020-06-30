@@ -40,12 +40,6 @@ class ItemWrapper:
         parent = self.canvas.get_parent(self.item)
         return ItemWrapper(parent) if parent else None
 
-    def ancestors(self) -> Generator[ItemWrapper, None, None]:
-        parent = self.parent()
-        if parent:
-            yield parent
-            yield from parent.ancestors()
-
 
 class StyleSheet(Element):
     def __init__(self, id=None, model=None):

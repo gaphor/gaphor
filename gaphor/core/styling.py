@@ -186,13 +186,26 @@ def compile_local_name_selector(selector: parser.LocalNameSelector):
     return lambda el: el.local_name() == selector.lower_local_name
 
 
+def ancestors(el):
+    p = el.parent()
+    if p:
+        yield p
+        yield from ancestors(p)
+
+
+def descendants(el):
+    for c in el.children():
+        yield c
+        yield from descendants(c)
+
+
 @compile_node.register
 def compile_combined_selector(selector: parser.CombinedSelector):
     left_inside = compile_node(selector.left)
     if selector.combinator == " ":
 
         def left(el):
-            return any(left_inside(e) for e in el.ancestors())
+            return any(left_inside(e) for e in ancestors(el))
 
     elif selector.combinator == ">":
 
@@ -213,11 +226,6 @@ def compile_functional_pseudo_class_selector(
 ):
     if selector.name == "has":
         embedded_selectors = compile_selector_list(selector.arguments)
-
-        def descendants(el):
-            for c in el.children():
-                yield c
-                yield from c.children()
 
         return lambda el: any(
             any(sel(c) for sel, _ in embedded_selectors) for c in descendants(el)
