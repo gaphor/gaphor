@@ -232,3 +232,32 @@ def compile_functional_pseudo_class_selector(
         )
     else:
         raise parser.SelectorError("Unknown pseudo-class", selector.name)
+
+
+@compile_node.register
+def compile_attribute_selector(selector: parser.AttributeSelector):
+    name = selector.name
+    operator = selector.operator
+    value = selector.value
+
+    if operator is None:
+        return lambda el: bool(el.attribute(name))
+    elif operator == "=":
+        return lambda el: el.attribute(name) == value
+    elif operator == "~=":
+        return lambda el: value in split_whitespace(el.attribute(name))
+    elif selector.operator == "|=":
+
+        def pipe_equal_matcher(el):
+            v = el.attribute(name)
+            return v == value or (v and v.startswith(value + "-"))
+
+        return pipe_equal_matcher
+    elif selector.operator == "^=":
+        return lambda el: value and el.attribute(name).startswith(value)
+    elif selector.operator == "$=":
+        return lambda el: value and el.attribute(name).endswith(value)
+    elif selector.operator == "*=":
+        return lambda el: value and value in el.attribute(name)
+    else:
+        raise parser.SelectorError("Unknown attribute operator", selector.operator)
