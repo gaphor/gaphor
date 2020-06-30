@@ -221,7 +221,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
         cr = context.cairo
         style = combined_style(self.style)
         draw_context = DrawContext.from_context(context, style)
-        cr.set_line_width(style["line-width"])
+        self.line_width = style["line-width"]
         cr.set_dash(style["dash-style"] or (), 0)
         stroke = style["color"]
         if stroke:

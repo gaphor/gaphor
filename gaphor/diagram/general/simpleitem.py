@@ -53,9 +53,9 @@ class Line(Presentation, _Line):
     def draw(self, context):
         cr = context.cairo
         style = combined_style(self.style)
+        self.line_width = style["line-width"]
         if style["color"]:
             cr.set_source_rgba(*style["color"])
-        cr.set_line_width(style["line-width"])
         super().draw(context)
 
 
