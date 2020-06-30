@@ -205,3 +205,22 @@ def compile_combined_selector(selector: parser.CombinedSelector):
 
     right = compile_node(selector.right)
     return lambda el: right(el) and left(el)
+
+
+@compile_node.register
+def compile_functional_pseudo_class_selector(
+    selector: parser.FunctionalPseudoClassSelector,
+):
+    if selector.name == "has":
+        embedded_selectors = compile_selector_list(selector.arguments)
+
+        def descendants(el):
+            for c in el.children():
+                yield c
+                yield from c.children()
+
+        return lambda el: any(
+            any(sel(c) for sel, _ in embedded_selectors) for c in descendants(el)
+        )
+    else:
+        raise parser.SelectorError("Unknown pseudo-class", selector.name)
