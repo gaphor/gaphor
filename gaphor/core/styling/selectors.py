@@ -126,21 +126,16 @@ def compile_functional_pseudo_class_selector(
     selector: parser.FunctionalPseudoClassSelector,
 ):
     name = selector.name
+    if name not in ("has", "is", "not"):
+        raise parser.SelectorError("Unknown pseudo-class", name)
+
+    sub_selectors = compile_selector_list(selector.arguments)
+    selector.specificity = max(spec for _, spec in sub_selectors)
     if name == "has":
-        sub_selectors = compile_selector_list(selector.arguments)
-        selector.specificity = max(spec for _, spec in sub_selectors)
         return lambda el: any(
             any(sel(c) for sel, _ in sub_selectors) for c in descendants(el)
         )
     elif name == "is":
-        sub_selectors = compile_selector_list(selector.arguments)
-        selector.specificity = max(spec for _, spec in sub_selectors)
         return lambda el: any(sel(el) for sel, _ in sub_selectors)
-    else:
-        raise parser.SelectorError("Unknown pseudo-class", name)
-
-
-@compile_node.register
-def compile_negation_selector(selector: parser.NegationSelector):
-    sel = compile_compound_selector(selector)  # type: ignore[arg-type]
-    return lambda el: not sel(el)
+    elif name == "not":
+        return lambda el: not any(sel(el) for sel, _ in sub_selectors)

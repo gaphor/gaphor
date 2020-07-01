@@ -44,15 +44,13 @@ def parse_selector(tokens, namespaces):
         if pseudo_element is not None:
             return Selector(result, pseudo_element)
         peek = tokens.peek()
-        if peek is None or peek == ",":
-            return Selector(result, pseudo_element)
-        elif peek in (">", "+", "~"):
+        if peek in (">", "+", "~"):
             combinator = peek.value
             tokens.next()
-        elif has_whitespace:
-            combinator = " "
-        else:
+        elif peek is None or peek == "," or not has_whitespace:
             return Selector(result, pseudo_element)
+        else:
+            combinator = " "
         compound, pseudo_element = parse_compound_selector(tokens, namespaces)
         result = CombinedSelector(result, combinator, compound)
 
@@ -91,7 +89,7 @@ def parse_type_selector(tokens, namespaces):
     return simple_selectors
 
 
-def parse_simple_selector(tokens, namespaces, in_negation=False):
+def parse_simple_selector(tokens, namespaces):
     peek = tokens.peek()
     if peek is None:
         return None, None
@@ -125,33 +123,14 @@ def parse_simple_selector(tokens, namespaces, in_negation=False):
             else:
                 return PseudoClassSelector(name), None
         elif next is not None and next.type == "function":
-            name = next.lower_name
-            if name == "not":
-                if in_negation:
-                    raise SelectorError(next, "nested :not()")
-                return parse_negation(next, namespaces), None
-            else:
-                return (FunctionalPseudoClassSelector(name, next.arguments), None)
+            return (
+                FunctionalPseudoClassSelector(next.lower_name, next.arguments),
+                None,
+            )
         else:
             raise SelectorError(next, "unexpected %s token." % next)
     else:
         return None, None
-
-
-def parse_negation(negation_token, namespaces):
-    tokens = TokenStream(negation_token.arguments)
-    type_selectors = parse_type_selector(tokens, namespaces)
-    if type_selectors is not None:
-        return NegationSelector(type_selectors)
-
-    simple_selector, pseudo_element = parse_simple_selector(
-        tokens, namespaces, in_negation=True
-    )
-    tokens.skip_whitespace()
-    if pseudo_element is None and tokens.next() is None:
-        return NegationSelector([simple_selector])
-    else:
-        raise SelectorError(negation_token, ":not() only accepts a simple selector")
 
 
 def parse_attribute_selector(tokens, namespaces):
@@ -277,12 +256,11 @@ class TokenStream(object):
 class Selector(object):
     def __init__(self, tree, pseudo_element=None):
         self.parsed_tree = tree
+        self.pseudo_element = pseudo_element
         if pseudo_element is None:
-            self.pseudo_element = pseudo_element
             #: Tuple of 3 integers: http://www.w3.org/TR/selectors/#specificity
             self.specificity = tree.specificity
         else:
-            self.pseudo_element = pseudo_element
             a, b, c = tree.specificity
             self.specificity = a, b, c + 1
 
@@ -413,8 +391,3 @@ class FunctionalPseudoClassSelector(object):
 
     def __repr__(self):
         return ":%s%r" % (self.name, tuple(self.arguments))
-
-
-class NegationSelector(CompoundSelector):
-    def __repr__(self):
-        return ":not(%r)" % CompoundSelector.__repr__(self)
