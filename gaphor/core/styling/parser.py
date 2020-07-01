@@ -117,11 +117,7 @@ def parse_simple_selector(tokens, namespaces):
                 )
             return None, next.lower_value
         elif next is not None and next.type == "ident":
-            name = next.lower_value
-            if name in ("before", "after", "first-line", "first-letter"):
-                return None, name
-            else:
-                return PseudoClassSelector(name), None
+            return PseudoClassSelector(next.lower_value), None
         elif next is not None and next.type == "function":
             return (
                 FunctionalPseudoClassSelector(next.lower_name, next.arguments),
