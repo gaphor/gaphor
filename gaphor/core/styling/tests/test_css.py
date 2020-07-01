@@ -1,4 +1,3 @@
-import cssselect2
 import pytest
 import tinycss2
 

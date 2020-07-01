@@ -1,8 +1,12 @@
+"""
+Compiler for CSS selectors, based on cssselect2.compiler, written by
+Simon Sapin and Guillaume Ayoub.
+"""
+
 import re
 from functools import singledispatch
 
-from cssselect2 import parser
-from cssselect2.parser import SelectorError
+from gaphor.core.styling import parser
 
 # http://dev.w3.org/csswg/selectors/#whitespace
 split_whitespace = re.compile("[^ \t\r\n\f]+").findall
@@ -138,5 +142,5 @@ def compile_functional_pseudo_class_selector(
 
 @compile_node.register
 def compile_negation_selector(selector: parser.NegationSelector):
-    sel = compile_compound_selector(selector)
+    sel = compile_compound_selector(selector)  # type: ignore[arg-type]
     return lambda el: not sel(el)

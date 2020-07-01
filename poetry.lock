@@ -156,23 +156,6 @@ version = "5.1"
 toml = ["toml"]
 
 [[package]]
-category = "main"
-description = "CSS selectors for Python ElementTree"
-name = "cssselect2"
-optional = false
-python-versions = ">=3.5"
-version = "0.3.0"
-
-[package.dependencies]
-setuptools = ">=39.2.0"
-tinycss2 = "*"
-webencodings = "*"
-
-[package.extras]
-doc = ["sphinx", "sphinx-rtd-theme"]
-test = ["pytest-runner", "pytest-cov", "pytest-flake8", "pytest-isort"]
-
-[[package]]
 category = "dev"
 description = "Distribution utilities"
 name = "distlib"
@@ -828,7 +811,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "b60202d9973479414f124cab4dddfc4b438b227ac132278e00ac178b3de26fc8"
+content-hash = "2f54fbf35ad70a64772e28ce2e02349dde95bdfcaf00e0e0cc84ae5ae500cf3f"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -919,10 +902,6 @@ coverage = [
     {file = "coverage-5.1-cp39-cp39-win32.whl", hash = "sha256:a82b92b04a23d3c8a581fc049228bafde988abacba397d57ce95fe95e0338ab4"},
     {file = "coverage-5.1-cp39-cp39-win_amd64.whl", hash = "sha256:bb28a7245de68bf29f6fb199545d072d1036a1917dca17a1e75bbb919e14ee8e"},
     {file = "coverage-5.1.tar.gz", hash = "sha256:f90bfc4ad18450c80b024036eaf91e4a246ae287701aaa88eaebebf150868052"},
-]
-cssselect2 = [
-    {file = "cssselect2-0.3.0-py3-none-any.whl", hash = "sha256:97d7d4234f846f9996d838964d38e13b45541c18143bc55cf00e4bc1281ace76"},
-    {file = "cssselect2-0.3.0.tar.gz", hash = "sha256:5c2716f06b5de93f701d5755a9666f2ee22cbcd8b4da8adddfc30095ffea3abc"},
 ]
 distlib = [
     {file = "distlib-0.3.0.zip", hash = "sha256:2e166e231a26b36d6dfe35a48c4464346620f8645ed0ace01ee31822b288de21"},
