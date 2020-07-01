@@ -83,7 +83,7 @@ def compile_combined_selector(selector: parser.CombinedSelector):
 
 @compile_node.register
 def compile_attribute_selector(selector: parser.AttributeSelector):
-    name = selector.name
+    name = selector.lower_name
     operator = selector.operator
     value = selector.value
 

@@ -137,6 +137,24 @@ def parse_attribute_selector(tokens, namespaces):
         raise SelectorError(next, "expected attribute name, got %s" % next)
     namespace, local_name = qualified_name
 
+    # Allow syntax like "subject.ownedAttribute"
+    if local_name:
+        name, lower_name = local_name
+        while 1:
+            peek = tokens.peek()
+            if peek == ".":
+                next = tokens.next()
+                name += next.value
+                lower_name += next.value
+            elif peek and peek.type == "ident":
+                next = tokens.next()
+                name += next.value
+                lower_name += next.lower_value
+            else:
+                break
+
+        local_name = name, lower_name
+
     tokens.skip_whitespace()
     peek = tokens.peek()
     if peek is None:

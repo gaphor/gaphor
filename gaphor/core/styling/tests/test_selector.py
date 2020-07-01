@@ -161,14 +161,20 @@ def test_attribute_contains():
     assert not selector(Node("classitem", attributes={"subject": "fobic"}))
 
 
-# TODO: customize parser to allow "." and "/" in attribute names
 def test_attributes_with_dots():
-    # NB. Dots do not works, nor do slashes or columns.
-    css = "classitem[subject-ownedAttribute] {}"
+    css = "classitem[subject.members] {}"
 
     (selector, specificity), payload = next(parse_style_sheet(css))
 
-    assert selector(Node("classitem", attributes={"subject-ownedAttribute": "foo"}))
+    assert selector(Node("classitem", attributes={"subject.members": "foo"}))
+
+
+def test_attributes_are_lower_case():
+    css = "ClassItem[MixedCase] {}"
+
+    (selector, specificity), payload = next(parse_style_sheet(css))
+
+    assert selector(Node("classitem", attributes={"mixedcase": "foo"}))
 
 
 def test_empty_pseudo_selector():
@@ -271,3 +277,15 @@ def test_has_pseudo_selector_with_combinator_is_not_supported():
     error, payload = next(parse_style_sheet(css))
 
     assert error == "error"
+
+
+def test_has_and_is_selector():
+    css = "node:has(:is(:hovered)) {}"
+
+    (selector, specificity), payload = next(parse_style_sheet(css))
+
+    assert selector(
+        Node(
+            "node", children=[Node("foo", children=[Node("bar", state=("hovered",))])],
+        )
+    )
