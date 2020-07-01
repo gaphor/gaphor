@@ -78,22 +78,6 @@ def compile_combined_selector(selector: parser.CombinedSelector):
 
 
 @compile_node.register
-def compile_functional_pseudo_class_selector(
-    selector: parser.FunctionalPseudoClassSelector,
-):
-    if selector.name == "has":
-        embedded_selectors = compile_selector_list(selector.arguments)
-        selector.specificity = max(spec for _, spec in embedded_selectors)
-        print("selector", selector.specificity)
-        print("class", type(selector).specificity)
-        return lambda el: any(
-            any(sel(c) for sel, _ in embedded_selectors) for c in descendants(el)
-        )
-    else:
-        raise parser.SelectorError("Unknown pseudo-class", selector.name)
-
-
-@compile_node.register
 def compile_attribute_selector(selector: parser.AttributeSelector):
     name = selector.name
     operator = selector.operator
@@ -130,4 +114,29 @@ def compile_pseudo_class_selector(selector: parser.PseudoClassSelector):
     elif name in ("root", "hovered", "active", "drop"):
         return lambda el: name in el.state()
     else:
-        raise parser.SelectorError("Unknown pseudo class name", name)
+        raise parser.SelectorError("Unknown pseudo-class", name)
+
+
+@compile_node.register
+def compile_functional_pseudo_class_selector(
+    selector: parser.FunctionalPseudoClassSelector,
+):
+    name = selector.name
+    if name == "has":
+        sub_selectors = compile_selector_list(selector.arguments)
+        selector.specificity = max(spec for _, spec in sub_selectors)
+        return lambda el: any(
+            any(sel(c) for sel, _ in sub_selectors) for c in descendants(el)
+        )
+    elif name == "is":
+        sub_selectors = compile_selector_list(selector.arguments)
+        selector.specificity = max(spec for _, spec in sub_selectors)
+        return lambda el: any(sel(el) for sel, _ in sub_selectors)
+    else:
+        raise parser.SelectorError("Unknown pseudo-class", name)
+
+
+@compile_node.register
+def compile_negation_selector(selector: parser.NegationSelector):
+    sel = compile_compound_selector(selector)
+    return lambda el: not sel(el)
