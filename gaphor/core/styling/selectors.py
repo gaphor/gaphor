@@ -21,7 +21,7 @@ def compile_selector_list(input):
     Returns a list of compiled selectors.
     """
     return [
-        (compile_node(selector.parsed_tree), selector.parsed_tree.specificity)
+        (compile_node(selector), selector.specificity)
         for selector in parser.parse(input)
     ]
 

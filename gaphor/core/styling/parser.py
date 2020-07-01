@@ -36,22 +36,20 @@ def parse(input, namespaces=None):
 
 
 def parse_selector(tokens, namespaces):
-    result, pseudo_element = parse_compound_selector(tokens, namespaces)
+    result = parse_compound_selector(tokens, namespaces)
     while 1:
         has_whitespace = tokens.skip_whitespace()
         while tokens.skip_comment():
             has_whitespace = tokens.skip_whitespace() or has_whitespace
-        if pseudo_element is not None:
-            return Selector(result, pseudo_element)
         peek = tokens.peek()
         if peek in (">", "+", "~"):
             combinator = peek.value
             tokens.next()
         elif peek is None or peek == "," or not has_whitespace:
-            return Selector(result, pseudo_element)
+            return result
         else:
             combinator = " "
-        compound, pseudo_element = parse_compound_selector(tokens, namespaces)
+        compound = parse_compound_selector(tokens, namespaces)
         result = CombinedSelector(result, combinator, compound)
 
 
@@ -59,13 +57,13 @@ def parse_compound_selector(tokens, namespaces):
     type_selectors = parse_type_selector(tokens, namespaces)
     simple_selectors = type_selectors if type_selectors is not None else []
     while 1:
-        simple_selector, pseudo_element = parse_simple_selector(tokens, namespaces)
-        if pseudo_element is not None or simple_selector is None:
+        simple_selector = parse_simple_selector(tokens, namespaces)
+        if simple_selector is None:
             break
         simple_selectors.append(simple_selector)
 
-    if simple_selectors or type_selectors is not None or pseudo_element is not None:
-        return CompoundSelector(simple_selectors), pseudo_element
+    if simple_selectors or type_selectors is not None:
+        return CompoundSelector(simple_selectors)
     else:
         peek = tokens.peek()
         raise SelectorError(
@@ -92,20 +90,19 @@ def parse_type_selector(tokens, namespaces):
 def parse_simple_selector(tokens, namespaces):
     peek = tokens.peek()
     if peek is None:
-        return None, None
+        return None
     if peek.type == "hash" and peek.is_identifier:
         tokens.next()
-        return IDSelector(peek.value), None
+        return IDSelector(peek.value)
     elif peek == ".":
         tokens.next()
         next = tokens.next()
         if next is None or next.type != "ident":
             raise SelectorError(next, "Expected a class name, got %s" % next)
-        return ClassSelector(next.value), None
+        return ClassSelector(next.value)
     elif peek.type == "[] block":
         tokens.next()
-        attr = parse_attribute_selector(TokenStream(peek.content), namespaces)
-        return attr, None
+        return parse_attribute_selector(TokenStream(peek.content), namespaces)
     elif peek == ":":
         tokens.next()
         next = tokens.next()
@@ -115,18 +112,15 @@ def parse_simple_selector(tokens, namespaces):
                 raise SelectorError(
                     next, "Expected a pseudo-element name, got %s" % next
                 )
-            return None, next.lower_value
+            return PseudoElementSelector(next.lower_value)
         elif next is not None and next.type == "ident":
-            return PseudoClassSelector(next.lower_value), None
+            return PseudoClassSelector(next.lower_value)
         elif next is not None and next.type == "function":
-            return (
-                FunctionalPseudoClassSelector(next.lower_name, next.arguments),
-                None,
-            )
+            return FunctionalPseudoClassSelector(next.lower_name, next.arguments)
         else:
             raise SelectorError(next, "unexpected %s token." % next)
     else:
-        return None, None
+        return None
 
 
 def parse_attribute_selector(tokens, namespaces):
@@ -267,24 +261,6 @@ class TokenStream(object):
         return self.skip(["comment", "whitespace"])
 
 
-class Selector(object):
-    def __init__(self, tree, pseudo_element=None):
-        self.parsed_tree = tree
-        self.pseudo_element = pseudo_element
-        if pseudo_element is None:
-            #: Tuple of 3 integers: http://www.w3.org/TR/selectors/#specificity
-            self.specificity = tree.specificity
-        else:
-            a, b, c = tree.specificity
-            self.specificity = a, b, c + 1
-
-    def __repr__(self):
-        if self.pseudo_element is None:
-            return repr(self.parsed_tree)
-        else:
-            return "%r::%s" % (self.parsed_tree, self.pseudo_element)
-
-
 class CombinedSelector(object):
     def __init__(self, left, combinator, right):
         #: Combined or compound selector
@@ -386,7 +362,7 @@ class AttributeSelector(object):
         return "[%s%s%s%r]" % (namespace, self.name, self.operator, self.value)
 
 
-class PseudoClassSelector(object):
+class PseudoClassSelector:
     specificity = 0, 1, 0
 
     def __init__(self, name):
@@ -394,6 +370,16 @@ class PseudoClassSelector(object):
 
     def __repr__(self):
         return ":" + self.name
+
+
+class PseudoElementSelector:
+    specificity = 0, 0, 1
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return "::" + self.name
 
 
 class FunctionalPseudoClassSelector(object):
