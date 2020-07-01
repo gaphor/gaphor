@@ -1,12 +1,15 @@
+import pytest
+
 from gaphor.core.styling import parse_style_sheet
 
 
 class Node:
-    def __init__(self, local_name, parent=None, children=None, attributes={}):
+    def __init__(self, local_name, parent=None, children=None, attributes={}, state=()):
         self._local_name = local_name
         self._parent = parent
         self._children = children or []
         self._attributes = attributes
+        self._state = state
 
         if parent:
             parent._children.append(self)
@@ -24,6 +27,9 @@ class Node:
 
     def attribute(self, name):
         return self._attributes.get(name, "")
+
+    def state(self):
+        return self._state
 
 
 def test_node_test_object_parent_child():
@@ -200,8 +206,58 @@ def test_attributes_with_dots():
     # NB. Dots do not works, nor do slashes or columns.
     css = "classitem[subject-ownedAttribute] {}"
 
-    out = next(parse_style_sheet(css))
-    print(out)
-    (selector, specificity), payload = out
+    (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(Node("classitem", attributes={"subject-ownedAttribute": "foo"}))
+
+
+def test_empty_pseudo_selector():
+    css = ":empty {}"
+
+    (selector, specificity), payload = next(parse_style_sheet(css))
+
+    assert selector(Node("node"))
+    assert specificity == (0, 1, 0)
+    assert not selector(Node("node", children=[Node("child")]))
+
+
+def test_empty_pseudo_selector_with_name():
+    css = "node:empty {}"
+
+    (selector, specificity), payload = next(parse_style_sheet(css))
+
+    assert selector(Node("node"))
+    assert not selector(Node("node", children=[Node("child")]))
+    assert specificity == (0, 1, 1)
+
+
+def test_root_pseudo_selector():
+    """:root is used to change styling on the diagram (mainly background).
+    """
+
+    css = ":root {}"
+
+    (selector, specificity), payload = next(parse_style_sheet(css))
+
+    assert selector(Node("classitem", state=("root")))
+    assert not selector(Node("classitem", state=()))
+
+
+@pytest.mark.parametrize(
+    "state", ["root", "hovered", "active", "drop"],
+)
+def test_hovered_pseudo_selector(state):
+
+    css = f":{state} {{}}"
+
+    (selector, specificity), payload = next(parse_style_sheet(css))
+
+    assert selector(Node("node", state=(state)))
+    assert selector(Node("node", state=(state, "other-state")))
+    assert not selector(Node("node", state=()))
+
+
+# TODO: test pseudo selectors: :empty, :hovered, :active, :drop, :root (for diagram)
+# TODO: implement :is() and :not()
+# TODO: customize parser to allow "." and "/" in attribute names
+# TODO: customize parser to allow expressions like ":has(> nested)"

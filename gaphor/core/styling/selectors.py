@@ -29,8 +29,7 @@ def compile_node(selector):
 
     Default behavior is a deny (no match).
     """
-    print("selector", type(selector))
-    return lambda el: False
+    parser.SelectorError("Unknown selector", selector)
 
 
 @compile_node.register
@@ -104,18 +103,29 @@ def compile_attribute_selector(selector: parser.AttributeSelector):
         return lambda el: el.attribute(name) == value
     elif operator == "~=":
         return lambda el: value in split_whitespace(el.attribute(name))
-    elif selector.operator == "|=":
+    elif operator == "^=":
+        return lambda el: value and el.attribute(name).startswith(value)
+    elif operator == "$=":
+        return lambda el: value and el.attribute(name).endswith(value)
+    elif operator == "*=":
+        return lambda el: value and value in el.attribute(name)
+    elif operator == "|=":
 
         def pipe_equal_matcher(el):
             v = el.attribute(name)
             return v == value or (v and v.startswith(value + "-"))
 
         return pipe_equal_matcher
-    elif selector.operator == "^=":
-        return lambda el: value and el.attribute(name).startswith(value)
-    elif selector.operator == "$=":
-        return lambda el: value and el.attribute(name).endswith(value)
-    elif selector.operator == "*=":
-        return lambda el: value and value in el.attribute(name)
     else:
-        raise parser.SelectorError("Unknown attribute operator", selector.operator)
+        raise parser.SelectorError("Unknown attribute operator", operator)
+
+
+@compile_node.register
+def compile_pseudo_class_selector(selector: parser.PseudoClassSelector):
+    name = selector.name
+    if name == "empty":
+        return lambda el: not next(el.children(), 0)
+    elif name in ("root", "hovered", "active", "drop"):
+        return lambda el: name in el.state()
+    else:
+        raise parser.SelectorError("Unknown pseudo class name", name)
