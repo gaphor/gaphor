@@ -17,7 +17,7 @@ def compile_selector_list(input):
     Returns a list of compiled selectors.
     """
     return [
-        (compile_node(selector.parsed_tree), selector.specificity)
+        (compile_node(selector.parsed_tree), selector.parsed_tree.specificity)
         for selector in parser.parse(input)
     ]
 
@@ -83,7 +83,9 @@ def compile_functional_pseudo_class_selector(
 ):
     if selector.name == "has":
         embedded_selectors = compile_selector_list(selector.arguments)
-
+        selector.specificity = max(spec for _, spec in embedded_selectors)
+        print("selector", selector.specificity)
+        print("class", type(selector).specificity)
         return lambda el: any(
             any(sel(c) for sel, _ in embedded_selectors) for c in descendants(el)
         )

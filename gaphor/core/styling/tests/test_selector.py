@@ -98,6 +98,7 @@ def test_has_pseudo_selector():
     (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(Node("classitem", children=[Node("nested")]))
+    assert specificity == (0, 0, 2)
     assert selector(
         Node("classitem", children=[Node("middle", children=[Node("nested")])])
     )
@@ -112,6 +113,7 @@ def test_has_pseudo_selector_with_complex_selector():
     assert selector(
         Node("classitem", children=[Node("middle", children=[Node("nested")])])
     )
+    assert specificity == (0, 0, 3)
     assert not selector(Node("classitem", children=[Node("nested")]))
     assert not selector(
         Node(
