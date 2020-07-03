@@ -321,9 +321,7 @@ class Text:
             bounding_box.height - padding_top - padding_bottom,
         )
 
-    def draw(
-        self, context: DrawContext, bounding_box: Rectangle
-    ) -> Tuple[int, int, int, int]:
+    def draw(self, context: DrawContext, bounding_box: Rectangle) -> Tuple[int, int]:
         """Draw the text, return the location and size."""
         style = combined_style(context.style, self._inline_style)
         min_w = max(style["min-width"], bounding_box.width)
@@ -337,14 +335,9 @@ class Text:
 
             layout = self._layout
             cr.move_to(text_box.x, text_box.y)
-            layout.set(text=self.text(), font=style, width=self.width())
-            x, y, w, h = layout.show_layout(
-                cr,
-                lambda w, h: (bounding_box.x, bounding_box.y),
-                width=bounding_box.width,
-                default_size=(min_w, min_h),
-            )
-        return x, y, w, h
+            layout.set(font=style)
+            w, h = layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
+        return w, h
 
 
 class EditableText(Text):
@@ -358,19 +351,17 @@ class EditableText(Text):
         self.text_size = s
         return s
 
-    def draw(
-        self, context: DrawContext, bounding_box: Rectangle
-    ) -> Tuple[int, int, int, int]:
+    def draw(self, context: DrawContext, bounding_box: Rectangle) -> Tuple[int, int]:
         """Draw the editable text."""
         style = combined_style(context.style, self._inline_style)
-        x, y, w, h = super().draw(context, bounding_box)
+        w, h = super().draw(context, bounding_box)
         text_box = self.text_box(style, bounding_box)
         text_align = style["text-align"]
         vertical_align = style["vertical-align"]
         x, y = focus_box_pos(text_box, self.text_size, text_align, vertical_align)
         text_draw_focus_box(context, x, y, *self.text_size)
         self.bounding_box = Rectangle(x, y, width=w, height=h)
-        return x, y, w, h
+        return w, h
 
 
 def draw_default_head(context: DrawContext):

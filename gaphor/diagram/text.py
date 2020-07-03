@@ -49,25 +49,19 @@ class TextDecoration(Enum):
 
 class Layout:
     def __init__(
-        self,
-        text,
-        font=None,
-        width=-1,
-        text_align=TextAlign.CENTER,
-        default_size=(0, 0),
+        self, text, font=None, text_align=TextAlign.CENTER, default_size=(0, 0),
     ):
         self.layout = PangoCairo.create_layout(instant_cairo_context())
         self.underline = False
         self.font_id = None
-        self.text = text
-        self.width = width
+        self.text = ""
+        self.width = -1
         self.default_size = default_size
 
         if font:
             self.set_font(font)
         if text:
             self.set_text(text)
-        self.set_width(width)
         self.set_alignment(text_align)
 
     def set(self, text=None, font=None, width=None, text_align=None):
@@ -106,32 +100,38 @@ class Layout:
             fd.set_style(getattr(Pango.Style, font_style.name))
 
         self.layout.set_font_description(fd)
+
         underline = (
             font.get("text-decoration", TextDecoration.NONE) == TextDecoration.UNDERLINE
         )
 
         if self.underline != underline:
-            self.set_text(self.text)
+            self.underline = underline
+            self.update_text()
 
     def set_text(self, text: str):
-        if text == self.text:
-            return
+        if text != self.text:
+            self.text = text
+            self.update_text()
 
-        self.text = text
+    def update_text(self):
         if self.underline:
             # TODO: can this be done via Pango attributes instead?
-            self.layout.set_markup(f"<u>{GLib.markup_escape_text(text)}</u>", length=-1)
+            self.layout.set_markup(
+                f"<u>{GLib.markup_escape_text(self.text)}</u>", length=-1
+            )
         else:
-            self.layout.set_text(text, length=-1)
+            self.layout.set_text(self.text, length=-1)
 
     def set_width(self, width: int):
-        self.layout.set_width(int(width * Pango.SCALE))
+        self.width = width
+        if width == -1:
+            self.layout.set_width(-1)
+        else:
+            self.layout.set_width(int(width * Pango.SCALE))
 
     def set_alignment(self, text_align: TextAlign):
         self.layout.set_alignment(getattr(Pango.Alignment, text_align.name))
-
-    # def update_context(self, pango_context):
-    #     self.layout.update_context(pango_context)
 
     def size(self):
         if not self.text:
@@ -140,27 +140,25 @@ class Layout:
         return self.layout.get_pixel_size()
 
     # Maybe use x, y here?
-    def show_layout(self, cr, calculate_pos, width=None, default_size=None):
+    def show_layout(self, cr, width=None, default_size=None):
         layout = self.layout
-        if width is not None:
-            layout.set_width(width)
-        w, h = self.size() if self.text else (default_size or self.default_size)
+        if not self.text:
+            return default_size or self.default_size
+        w, h = self.size()
 
-        x, y = calculate_pos(w, h)
-        # cr.move_to(x, y)
+        if width is not None:
+            layout.set_width(int(width * Pango.SCALE))
 
         if isinstance(cr, FreeHandCairoContext):
-            # PangoCairo.update_layout(cr.cr, layout)
             PangoCairo.show_layout(cr.cr, layout)
         elif isinstance(cr, CairoBoundingBoxContext):
             w, h = layout.get_pixel_size()
             cr.rel_line_to(w, h)
             cr.stroke()
         else:
-            # PangoCairo.update_layout(cr, layout)
             PangoCairo.show_layout(cr, layout)
 
-        return (x, y, w, h)
+        return (w, h)
 
 
 def focus_box_pos(

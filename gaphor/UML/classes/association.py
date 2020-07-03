@@ -525,13 +525,9 @@ class AssociationEnd(Presentation):
             cr.set_source_rgba(*text_color)
 
         cr.move_to(self._name_bounds.x, self._name_bounds.y)
-        self._name_layout.show_layout(
-            cr, lambda w, h: (self._name_bounds.x, self._name_bounds.y),
-        )
-        cr.move_to(self._name_bounds.x, self._name_bounds.y)
-        self._mult_layout.show_layout(
-            cr, lambda w, h: (self._mult_bounds.x, self._mult_bounds.y),
-        )
+        self._name_layout.show_layout(cr)
+        cr.move_to(self._mult_bounds.x, self._mult_bounds.y)
+        self._mult_layout.show_layout(cr)
 
         for b in (self._name_bounds, self._mult_bounds):
             text_draw_focus_box(context, b.x, b.y, b.width, b.height)
