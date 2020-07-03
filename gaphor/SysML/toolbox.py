@@ -1,5 +1,7 @@
 """The action definition for the SysML toolbox."""
 
+from enum import Enum
+
 from gaphas.item import SE
 
 import gaphor.SysML.diagramitems as sysml_items
@@ -9,13 +11,12 @@ from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
 from gaphor.diagram.diagramtools import PlacementTool
 from gaphor.SysML import sysml
+from gaphor.UML.toolbox import namespace_config
 
 
-def namespace_config(new_item):
-    subject = new_item.subject
-    diagram = new_item.canvas.diagram
-    subject.package = diagram.namespace
-    subject.name = f"New{type(subject).__name__}"
+class AssociationType(Enum):
+    COMPOSITE = "composite"
+    SHARED = "shared"
 
 
 def initial_pseudostate_config(new_item):
@@ -29,6 +30,28 @@ def history_pseudostate_config(new_item):
 def metaclass_config(new_item):
     namespace_config(new_item)
     new_item.subject.name = "Class"
+
+
+def create_association(
+    assoc_item: uml_items.AssociationItem, association_type: AssociationType
+) -> None:
+    assoc = assoc_item.subject
+    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
+    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
+
+    assoc_item.head_end.subject = assoc.memberEnd[0]
+    assoc_item.tail_end.subject = assoc.memberEnd[1]
+
+    UML.model.set_navigability(assoc, assoc_item.head_end.subject, True)
+    assoc_item.head_end.subject.aggregation = association_type.value
+
+
+def composite_association_config(assoc_item: uml_items.AssociationItem) -> None:
+    create_association(assoc_item, AssociationType.COMPOSITE)
+
+
+def shared_association_config(assoc_item: uml_items.AssociationItem) -> None:
+    create_association(assoc_item, AssociationType.SHARED)
 
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
@@ -109,6 +132,28 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 handle_index=SE,
             ),
             ToolDef(
+                "toolbox-composite-association",
+                gettext("Composite Association"),
+                "gaphor-composite-association-symbolic",
+                "<Shift>Z",
+                PlacementTool.new_item_factory(
+                    uml_items.AssociationItem,
+                    UML.Association,
+                    config_func=composite_association_config,
+                ),
+            ),
+            ToolDef(
+                "toolbox-shared-association",
+                gettext("Shared Association"),
+                "gaphor-shared-association-symbolic",
+                "<Shift>Q",
+                PlacementTool.new_item_factory(
+                    uml_items.AssociationItem,
+                    UML.Association,
+                    config_func=shared_association_config,
+                ),
+            ),
+            ToolDef(
                 "toolbox-association",
                 gettext("Association"),
                 "gaphor-association-symbolic",
@@ -135,18 +180,11 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 PlacementTool.new_item_factory(uml_items.ConnectorItem),
             ),
             ToolDef(
-                "toolbox-connector",
+                "toolbox-proxy-port",
                 gettext("Proxy Port"),
                 "gaphor-proxyport-symbolic",
                 "<Shift>Y",
-                PlacementTool.new_item_factory(uml_items.ConnectorItem),
-            ),
-            ToolDef(
-                "toolbox-property",
-                gettext("Property"),
-                "gaphor-property-symbolic",
-                "<Shift>M",
-                PlacementTool.new_item_factory(sysml_items.PropertyItem),
+                PlacementTool.new_item_factory(sysml_items.ProxyPortItem),
             ),
         ),
     ),

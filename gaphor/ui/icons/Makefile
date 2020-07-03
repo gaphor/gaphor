@@ -15,6 +15,8 @@ ICONS=diagram \
 	package \
 	interface \
 	association \
+	composite-association \
+	shared-association \
 	generalization \
 	dependency \
 	implementation \

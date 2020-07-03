@@ -1,5 +1,7 @@
 """Classes related (dependency, implementation) adapter connections."""
 
+from gaphas import Handle
+
 from gaphor import UML
 from gaphor.diagram.connectors import (
     Connector,
@@ -109,28 +111,39 @@ class AssociationConnect(UnaryRelationshipConnect):
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         if c1 and c2:
-            head_type = c1.subject
-            tail_type = c2.subject
 
-            # First check if we do not already contain the right subject:
-            if line.subject:
+            if not line.subject:
+                relation = UML.model.create_association(c1.subject, c2.subject)
+                relation.package = element.canvas.diagram.namespace
+                line.head_end.subject = relation.memberEnd[0]
+                line.tail_end.subject = relation.memberEnd[1]
+
+                # Set subject last so that event handlers can trigger
+                line.subject = relation
+
+            else:
                 assert isinstance(line.subject, UML.Association)
                 end1 = line.subject.memberEnd[0]
                 end2 = line.subject.memberEnd[1]
-                if (end1.type is head_type and end2.type is tail_type) or (
-                    end2.type is head_type and end1.type is tail_type
+                if (end1.type is c1.subject and end2.type is c2.subject) or (
+                    end2.type is c1.subject and end1.type is c2.subject
                 ):
                     return
 
-            # Create new association
-            relation = UML.model.create_association(head_type, tail_type)
-            relation.package = element.canvas.diagram.namespace
-
-            line.head_end.subject = relation.memberEnd[0]
-            line.tail_end.subject = relation.memberEnd[1]
-
-            # Do subject itself last, so event handlers can trigger
-            line.subject = relation
+            line.subject.memberEnd[0].type = c1.subject
+            line.subject.memberEnd[1].type = c2.subject
+            UML.model.set_navigability(
+                line.subject,
+                line.head_end.subject,
+                line.subject.memberEnd[0].navigability,
+            )
+            line.head_end.subject.aggregation = line.subject.memberEnd[0].aggregation
+            UML.model.set_navigability(
+                line.subject,
+                line.tail_end.subject,
+                line.subject.memberEnd[1].navigability,
+            )
+            line.tail_end.subject.aggregation = line.subject.memberEnd[1].aggregation
 
     def reconnect(self, handle, port):
         line = self.line
@@ -152,24 +165,14 @@ class AssociationConnect(UnaryRelationshipConnect):
         oend.subject.type = c.subject
         UML.model.set_navigability(line.subject, oend.subject, nav)
 
-    def disconnect_subject(self, handle):
+    def disconnect_subject(self, handle: Handle) -> None:
+        """Disconnect the type of each member end.
+
+        On connect, we pair association member ends with the element they
+        connect to. On disconnect, we remove this relation.
         """
-        Disconnect model element.
-        Disconnect property (memberEnd) too, in case of end of life for
-        Extension
-        """
-        opposite = self.line.opposite(handle)
-        c1 = self.get_connected(handle)
-        c2 = self.get_connected(opposite)
-        if c1 and c2:
-            old: UML.Association = self.line.subject
-            del self.line.subject
-            del self.line.head_end.subject
-            del self.line.tail_end.subject
-            if old and len(old.presentation) == 0:
-                for e in list(old.memberEnd):
-                    e.unlink()
-                old.unlink()
+        for e in list(self.line.subject.memberEnd):
+            e.type = None
 
 
 @Connector.register(Named, ImplementationItem)

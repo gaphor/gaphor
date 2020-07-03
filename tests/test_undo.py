@@ -59,10 +59,10 @@ def test_class_association_undo_redo(element_factory, undo_manager):
     assert 0 == len(diagram.canvas.solver.constraints)
 
     ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    assert 2 == len(diagram.canvas.solver.constraints)
+    assert 6 == len(diagram.canvas.solver.constraints)
 
     ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    assert 4 == len(diagram.canvas.solver.constraints)
+    assert 12 == len(diagram.canvas.solver.constraints)
 
     a = diagram.create(AssociationItem)
 
@@ -71,7 +71,7 @@ def test_class_association_undo_redo(element_factory, undo_manager):
 
     # Diagram, Association, 2x Class, Property, LiteralSpecification
     assert 6 == len(element_factory.lselect())
-    assert 6 == len(diagram.canvas.solver.constraints)
+    assert 14 == len(diagram.canvas.solver.constraints)
 
     @transactional
     def delete_class():
@@ -97,11 +97,11 @@ def test_class_association_undo_redo(element_factory, undo_manager):
     assert None is get_connected(a.tail)
 
     for i in range(3):
-        assert 3 == len(diagram.canvas.solver.constraints)
+        assert 7 == len(diagram.canvas.solver.constraints)
 
         undo_manager.undo_transaction()
 
-        assert 6 == len(diagram.canvas.solver.constraints)
+        assert 14 == len(diagram.canvas.solver.constraints)
 
         assert ci1 == get_connected(a.head)
         assert ci2 == get_connected(a.tail)

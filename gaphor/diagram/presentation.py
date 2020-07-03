@@ -91,9 +91,14 @@ class ElementPresentation(Presentation[S], gaphas.Element):
     width: int
     height: int
 
+    _port_sides = ("top", "right", "bottom", "left")
+
     def __init__(self, id=None, model=None, shape=None):
         super().__init__(id, model)
         self._shape = shape
+
+    def port_side(self, port):
+        return self._port_sides[self._ports.index(port)]
 
     def _set_shape(self, shape):
         self._shape = shape
