@@ -32,7 +32,7 @@ from gaphor.diagram.shapes import (
     text_draw_focus_box,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import middle_segment, text_draw, text_size
+from gaphor.diagram.text import Layout, middle_segment
 from gaphor.UML.modelfactory import stereotypes_str
 
 
@@ -378,6 +378,10 @@ class AssociationEnd(Presentation):
 
         self._name_bounds = Rectangle()
         self._mult_bounds = Rectangle()
+
+        self._name_layout = Layout("")
+        self._mult_layout = Layout("")
+
         self._inline_style = {"font-size": 10}
 
     name_bounds = property(lambda s: s._name_bounds)
@@ -413,7 +417,6 @@ class AssociationEnd(Presentation):
         multiplicity label. p1 is the line end and p2 is the last
         but one point of the line.
         """
-        cr = context.cairo
         style = {**context.style, **self._inline_style}
         ofs = 5
 
@@ -430,8 +433,15 @@ class AssociationEnd(Presentation):
             w2, h2 = size2
             return (max(w1, w2), max(h1, h2))
 
-        name_w, name_h = max_text_size(text_size(cr, self._name, style), (10, 10))
-        mult_w, mult_h = max_text_size(text_size(cr, self._mult, style), (10, 10))
+        name_layout = self._name_layout
+        name_layout.set_text(self._name)
+        name_layout.set_font(style)
+        name_w, name_h = max_text_size(name_layout.size(), (10, 10))
+
+        mult_layout = self._mult_layout
+        mult_layout.set_text(self._mult)
+        mult_layout.set_font(style)
+        mult_w, mult_h = max_text_size(mult_layout.size(), (10, 10))
 
         if dy == 0:
             rc = 1000.0  # quite a lot...
@@ -509,22 +519,18 @@ class AssociationEnd(Presentation):
             return
 
         cr = context.cairo
-        style = {**context.style, **self._inline_style}
+        # style = {**context.style, **self._inline_style}
         text_color = context.style.get("text-color")
         if text_color:
             cr.set_source_rgba(*text_color)
 
-        text_draw(
-            cr,
-            self._name,
-            style,
-            lambda w, h: (self._name_bounds.x, self._name_bounds.y),
+        cr.move_to(self._name_bounds.x, self._name_bounds.y)
+        self._name_layout.show_layout(
+            cr, lambda w, h: (self._name_bounds.x, self._name_bounds.y),
         )
-        text_draw(
-            cr,
-            self._mult,
-            style,
-            lambda w, h: (self._mult_bounds.x, self._mult_bounds.y),
+        cr.move_to(self._name_bounds.x, self._name_bounds.y)
+        self._mult_layout.show_layout(
+            cr, lambda w, h: (self._mult_bounds.x, self._mult_bounds.y),
         )
 
         for b in (self._name_bounds, self._mult_bounds):
