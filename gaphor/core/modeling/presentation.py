@@ -12,6 +12,7 @@ from typing import (
     Generic,
     List,
     Optional,
+    Sequence,
     TypeVar,
 )
 
@@ -39,6 +40,12 @@ class ItemWrapper:
     def parent(self) -> Optional[ItemWrapper]:
         parent = self.canvas.get_parent(self.item)
         return ItemWrapper(parent) if parent else None
+
+    def attribute(self, name: str) -> str:
+        return ""
+
+    def state(self) -> Sequence[str]:
+        return ()
 
 
 class StyleSheet(Element):
