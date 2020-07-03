@@ -1,11 +1,4 @@
-from __future__ import annotations
-
-from typing import Callable, Dict, Generator, List, Optional, Tuple, Union
-
-import tinycss2
-from cssselect2.compiler import CompiledSelector, compile_selector_list
-from cssselect2.parser import SelectorError
-from typing_extensions import Literal
+from typing import Callable, List, Optional, Tuple, Union
 
 
 class _StyleDeclarations:
@@ -33,42 +26,6 @@ class _StyleDeclarations:
 
 
 StyleDeclarations = _StyleDeclarations()
-
-
-def parse_stylesheet(
-    css,
-) -> Generator[
-    Union[
-        Tuple[CompiledSelector, Dict[str, object]],
-        Tuple[Literal["error"], Union[tinycss2.ast.ParseError, SelectorError]],
-    ],
-    None,
-    None,
-]:
-    rules = tinycss2.parse_stylesheet(
-        css or "", skip_comments=True, skip_whitespace=True
-    )
-    for rule in rules:
-        if rule.type == "error":
-            yield ("error", rule)
-            continue
-        try:
-            selectors = compile_selector_list(rule.prelude)
-        except SelectorError as e:
-            yield ("error", e)
-            continue
-
-        yield (
-            selectors,
-            {
-                prop: value
-                for prop, value in (
-                    (prop, StyleDeclarations(prop, value))
-                    for prop, value in parse_declarations(rule)
-                )
-                if value is not None
-            },
-        )
 
 
 def parse_declarations(rule):

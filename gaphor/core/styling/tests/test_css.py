@@ -1,12 +1,12 @@
-import cssselect2
 import pytest
 import tinycss2
 
-from gaphor.core.styling import StyleDeclarations, parse_stylesheet
+from gaphor.core.styling import CompiledStyleSheet, StyleDeclarations, parse_style_sheet
+from gaphor.core.styling.tests.test_selector import Node
 
 
 def first_decl_block(css):
-    _, value = next(parse_stylesheet(css))
+    _, value = next(parse_style_sheet(css))
     return value
 
 
@@ -17,7 +17,7 @@ def dummy_style_declaration(prop, value):
 
 def test_empty_css():
     css = ""
-    rules = list(parse_stylesheet(css))
+    rules = list(parse_style_sheet(css))
 
     assert rules == []
 
@@ -72,7 +72,7 @@ def test_multiple_rules():
     item {}
     """
 
-    rules = list(parse_stylesheet(css))
+    rules = list(parse_style_sheet(css))
 
     assert len(rules) == 2
 
@@ -81,7 +81,7 @@ def test_selectors():
     css = """
     foo, bar {}
     """
-    selector, declarations = next(parse_stylesheet(css))
+    selector, declarations = next(parse_style_sheet(css))
 
     assert len(selector) == 2
 
@@ -90,7 +90,7 @@ def test_invalid_css_syntax():
     css = """
     foo/bar ;
     """
-    rules = list(parse_stylesheet(css))
+    rules = list(parse_style_sheet(css))
     selector, _ = rules[0]
 
     assert len(rules) == 1
@@ -101,7 +101,7 @@ def test_invalid_css_syntax_in_declarations():
     css = """
     foo { foo : bar : baz }
     """
-    rules = list(parse_stylesheet(css))
+    rules = list(parse_style_sheet(css))
     _, decls = rules[0]
 
     assert len(rules) == 1
@@ -113,7 +113,7 @@ def test_invalid_selector():
     foo/bar {}
     good {}
     """
-    rules = list(parse_stylesheet(css))
+    rules = list(parse_style_sheet(css))
     selector, _ = rules[0]
 
     assert len(rules) == 2
@@ -142,3 +142,32 @@ def test_css_multiple_declarations_without_semicolumns():
 
     assert props.get("test-font-family") == "sans"
     assert props.get("test-font-size") == 42
+
+
+def test_compiled_style_sheet():
+    css = """
+    * {
+        test-font-size: 42
+        test-font-family: overridden
+    }
+    mytype {
+        test-font-family: sans
+    }
+    """
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(Node("mytype"))
+
+    assert props.get("test-font-family") == "sans"
+    assert props.get("test-font-size") == 42
+
+
+def test_empty_compiled_style_sheet():
+    css = ""
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(Node("mytype"))
+
+    assert props == {}

@@ -189,8 +189,9 @@ class LinePresentation(Presentation[S], gaphas.Line):
         doc="""A line, contrary to an element, has some styling of it's own.""",
     )
 
-    def post_update(self, context):
-        size_context = SizeContext.from_context(context, self.style)
+    def post_update(self, context) -> SizeContext:
+        style = combined_style(self.style)
+        size_context = SizeContext.from_context(context, style)
 
         def shape_bounds(shape, align):
             if shape:
@@ -203,6 +204,8 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
         self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
+
+        return size_context
 
     def point(self, pos):
         """Given a point (x, y) return the distance to the canvas item.
@@ -219,17 +222,17 @@ class LinePresentation(Presentation[S], gaphas.Line):
         ]
         return min(d0, *ds) if ds else d0
 
-    def draw(self, context):
+    def draw(self, context) -> DrawContext:
         cr = context.cairo
-        style = combined_style(self.style, self._inline_style)
-        new_context = DrawContext.from_context(context, style)
-        cr.set_line_width(style["line-width"])
+        style = combined_style(self.style)
+        draw_context = DrawContext.from_context(context, style)
+        self.line_width = style["line-width"]
         cr.set_dash(style["dash-style"] or (), 0)
         stroke = style["color"]
         if stroke:
             cr.set_source_rgba(*stroke)
 
-        super().draw(new_context)
+        super().draw(draw_context)
 
         for shape, rect in (
             (self.shape_head, self._shape_head_rect),
@@ -237,7 +240,9 @@ class LinePresentation(Presentation[S], gaphas.Line):
             (self.shape_tail, self._shape_tail_rect),
         ):
             if shape:
-                shape.draw(new_context, rect)
+                shape.draw(draw_context, rect)
+
+        return draw_context
 
     def setup_canvas(self):
         super().setup_canvas()

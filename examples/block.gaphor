@@ -35,7 +35,7 @@
 <val>120.1683349609375</val>
 </width>
 <height>
-<val>62.246826171875</val>
+<val>72.0</val>
 </height>
 <subject>
 <ref refid="901c67be-a27b-11ea-b537-dfaaecc5bf61"/>
@@ -49,7 +49,7 @@
 <val>133.9542236328125</val>
 </width>
 <height>
-<val>71.71490478515625</val>
+<val>72.0</val>
 </height>
 <subject>
 <ref refid="917f8c8a-a27b-11ea-b537-dfaaecc5bf61"/>
@@ -60,7 +60,7 @@
 <ref refid="95b85e80-a27b-11ea-b537-dfaaecc5bf61"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 315.25099590599535, 335.1947021484375)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 315.25099590599535, 344.9478759765625)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -69,7 +69,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-0.696064265370353, 131.971923828125)]</val>
+<val>[(0.0, 0.0), (-0.696064265370353, 122.21875)]</val>
 </points>
 <head-connection>
 <ref refid="901c67bf-a27b-11ea-b537-dfaaecc5bf61"/>
@@ -95,7 +95,7 @@
 <val>171.0</val>
 </width>
 <height>
-<val>70.0245361328125</val>
+<val>72.0</val>
 </height>
 <subject>
 <ref refid="99659d92-a283-11ea-b537-dfaaecc5bf61"/>
@@ -106,7 +106,7 @@
 <ref refid="d889291c-a283-11ea-b537-dfaaecc5bf61"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 353.75286865234375, 335.1947021484375)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 353.75286865234375, 344.9478759765625)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -115,7 +115,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 50.6640625), (142.3321500890395, 50.6640625), (142.3321500890395, 131.971923828125)]</val>
+<val>[(0.0, 0.0), (0.0, 40.910888671875), (142.3321500890395, 40.910888671875), (142.3321500890395, 122.21875)]</val>
 </points>
 <head-connection>
 <ref refid="901c67bf-a27b-11ea-b537-dfaaecc5bf61"/>
@@ -138,10 +138,10 @@
 <val>(1.0, 0.0, 0.0, 1.0, 261.21807861328125, 74.24952697753906)</val>
 </matrix>
 <width>
-<val>120.1683349609375</val>
+<val>247.0</val>
 </width>
 <height>
-<val>142.0</val>
+<val>180.0</val>
 </height>
 <show_parts>
 <val>1</val>
@@ -320,4 +320,48 @@
 <val>1</val>
 </upperValue>
 </Property>
+<StyleSheet id="4dea8aa8-bade-11ea-8f1c-ff74c5b58427">
+<styleSheet>
+<val>* {
+  font-family: purisa
+}
+
+/****
+ Here you can edit the
+ style of the model.
+ Gaphor supports a
+ subset of CSS3.
+
+ The following proper-
+ ties are supported:
+
+ * padding: Padding
+ * min-width: Number
+ * min-height: Number
+ * line-width: Number
+ * vertical-spacing: Number
+ * border-radius: Number
+ * background-color: Color
+ * font-family: Text
+ * font-size: Number
+ * font-style: normal|italic
+ * font-weight: normal|bold
+ * text-decoration: none|underline
+ * text-align: left|center|right
+ * text-color: Color
+ * color: Color
+ * vertical-align: top|middle|bottom
+ * dash-style: Sequence[Number]
+ * highlight-color: Color
+
+ Color can be a CSS3 color name,
+ a rgb(r, g, b), rgba(r, g, b, a)
+ or hex code (#ff00ff).
+
+ Have fun!
+
+****/
+</val>
+</styleSheet>
+</StyleSheet>
 </gaphor>

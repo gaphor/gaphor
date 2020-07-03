@@ -4,18 +4,41 @@ Base code for presentation elements
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
+from typing import (
+    TYPE_CHECKING,
+    Callable,
+    Dict,
+    Generator,
+    Generic,
+    List,
+    Optional,
+    TypeVar,
+)
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import association, attribute, relation_one
-from gaphor.core.styling import parse_stylesheet
+from gaphor.core.styling import CompiledStyleSheet
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
     from gaphas.connector import Handle  # noqa
+    from gaphas.item import Item  # noqa
     from gaphas.matrix import Matrix  # noqa
 
 S = TypeVar("S", bound=Element)
+
+
+class ItemWrapper:
+    def __init__(self, item: Item):
+        self.item = item
+        self.canvas = item.canvas
+
+    def local_name(self) -> str:
+        return type(self.item).__name__.lower()
+
+    def parent(self) -> Optional[ItemWrapper]:
+        parent = self.canvas.get_parent(self.item)
+        return ItemWrapper(parent) if parent else None
 
 
 class StyleSheet(Element):
@@ -25,7 +48,7 @@ class StyleSheet(Element):
         self._watcher.watch("styleSheet", self.update_style_sheet)
         self._watcher.subscribe_all()
 
-        self._style = {}
+        self._compiled_style_sheet = CompiledStyleSheet("")
 
     styleSheet: attribute[str] = attribute("styleSheet", str)
 
@@ -37,14 +60,11 @@ class StyleSheet(Element):
     def update_style_sheet(self, event):
         self.compile_style_sheet(event.new_value)
 
-    def compile_style_sheet(self, css):
-        for selector, style in parse_stylesheet(css):
-            if selector != "error":
-                self._style = style
-                return
+    def compile_style_sheet(self, css: str) -> None:
+        self._compiled_style_sheet = CompiledStyleSheet(css)
 
-    def item_style(self, item):
-        return self._style
+    def item_style(self, item: Item) -> Dict[str, object]:
+        return self._compiled_style_sheet.match(ItemWrapper(item))
 
     def unlink(self):
         self._watcher.unsubscribe_all()
