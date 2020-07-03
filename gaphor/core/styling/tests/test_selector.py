@@ -57,7 +57,6 @@ def test_select_all():
 
     (selector, specificity), payload = next(parse_style_sheet(css))
 
-    print(selector)
     assert selector("any")
 
 
