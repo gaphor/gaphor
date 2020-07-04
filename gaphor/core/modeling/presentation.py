@@ -9,6 +9,7 @@ from typing import (
     Callable,
     Dict,
     Generic,
+    Iterator,
     List,
     Optional,
     Sequence,
@@ -23,27 +24,45 @@ if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
     from gaphas.connector import Handle  # noqa
     from gaphas.item import Item  # noqa
+    from gaphas.view import View  # noqa
     from gaphas.matrix import Matrix  # noqa
 
 S = TypeVar("S", bound=Element)
 
 
 class ItemWrapper:
-    def __init__(self, item: Item):
+    def __init__(self, item: Item, view: Optional[View] = None):
+        # I think I need the view here, cause I also need to know the states
+        # of other items
         self.item = item
         self.canvas = item.canvas
+        self.view = view
 
     def local_name(self) -> str:
         return type(self.item).__name__.lower()
 
     def parent(self) -> Optional[ItemWrapper]:
         parent = self.canvas.get_parent(self.item)
-        return ItemWrapper(parent) if parent else None
+        return ItemWrapper(parent, self.view) if parent else None
+
+    def children(self) -> Iterator[ItemWrapper]:
+        children = self.canvas.get_children(self.item)
+        view = self.view
+        return (ItemWrapper(child, view) for child in children)
 
     def attribute(self, name: str) -> str:
         return ""
 
     def state(self) -> Sequence[str]:
+        view = self.view
+        if view:
+            item = self.item
+            return (
+                "active" if item in view.selected_items else "",
+                "focused" if item is view.focused_item else "",
+                "hovered" if item is view.hovered_item else "",
+                "drop" if item is view.dropzone_item else "",
+            )
         return ()
 
 
@@ -69,8 +88,8 @@ class StyleSheet(Element):
     def compile_style_sheet(self, css: str) -> None:
         self._compiled_style_sheet = CompiledStyleSheet(css)
 
-    def item_style(self, item: Item) -> Dict[str, object]:
-        return self._compiled_style_sheet.match(ItemWrapper(item))
+    def item_style(self, item: Item, view=None) -> Dict[str, object]:
+        return self._compiled_style_sheet.match(ItemWrapper(item, view))
 
     def unlink(self):
         self._watcher.unsubscribe_all()
