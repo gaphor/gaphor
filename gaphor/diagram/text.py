@@ -49,7 +49,7 @@ class TextDecoration(Enum):
 
 class Layout:
     def __init__(
-        self, text, font=None, text_align=TextAlign.CENTER, default_size=(0, 0),
+        self, text="", font=None, text_align=TextAlign.CENTER, default_size=(0, 0),
     ):
         self.layout = PangoCairo.create_layout(instant_cairo_context())
         self.underline = False
@@ -139,13 +139,10 @@ class Layout:
         self.set_width(self.width)
         return self.layout.get_pixel_size()
 
-    # Maybe use x, y here?
     def show_layout(self, cr, width=None, default_size=None):
         layout = self.layout
         if not self.text:
             return default_size or self.default_size
-        w, h = self.size()
-
         if width is not None:
             layout.set_width(int(width * Pango.SCALE))
 
@@ -157,8 +154,6 @@ class Layout:
             cr.stroke()
         else:
             PangoCairo.show_layout(cr, layout)
-
-        return (w, h)
 
 
 def focus_box_pos(

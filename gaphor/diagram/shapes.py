@@ -277,7 +277,7 @@ class Text:
         self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
         self._inline_style = style
-        self._layout = Layout("")
+        self._layout = Layout()
 
     def text(self):
         try:
@@ -312,7 +312,7 @@ class Text:
             bounding_box.height - padding_top - padding_bottom,
         )
 
-    def draw(self, context: DrawContext, bounding_box: Rectangle) -> Tuple[int, int]:
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
         """Draw the text, return the location and size."""
         style = combined_style(context.style, self._inline_style)
         min_w = max(style["min-width"], bounding_box.width)
@@ -327,32 +327,42 @@ class Text:
             layout = self._layout
             cr.move_to(text_box.x, text_box.y)
             layout.set(font=style)
-            w, h = layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
-        return w, h
+            layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
+        return style
 
 
 class EditableText(Text):
     def __init__(self, text=lambda: "", width=lambda: -1, style: Style = {}):
         super().__init__(text, width, {"min-width": 30, "min-height": 14, **style})  # type: ignore[misc]
-        self.bounding_box = Rectangle()
-        self.text_size = (0, 0)
+        self.focus_box = Rectangle()
 
-    def size(self, cr):
-        s = super().size(cr)
-        self.text_size = s
-        return s
+    @property
+    def bounding_box(self):
+        """Bounding box is used by the inline editor."""
+        return self.focus_box
 
-    def draw(self, context: DrawContext, bounding_box: Rectangle) -> Tuple[int, int]:
+    def size(self, context: SizeContext):
+        text_size = super().size(context)
+        w, h = text_size
+        self.focus_box.width = w
+        self.focus_box.height = h
+        return text_size
+
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
         """Draw the editable text."""
-        style = combined_style(context.style, self._inline_style)
-        w, h = super().draw(context, bounding_box)
+        style = super().draw(context, bounding_box)
+
         text_box = self.text_box(style, bounding_box)
         text_align = style["text-align"]
         vertical_align = style["vertical-align"]
-        x, y = focus_box_pos(text_box, self.text_size, text_align, vertical_align)
-        text_draw_focus_box(context, x, y, *self.text_size)
-        self.bounding_box = Rectangle(x, y, width=w, height=h)
-        return w, h
+        focus_box = self.focus_box
+        x, y = focus_box_pos(
+            text_box, (focus_box.width, focus_box.height), text_align, vertical_align
+        )
+        focus_box.x = x
+        focus_box.y = y
+
+        text_draw_focus_box(context, *focus_box)
 
 
 def draw_default_head(context: DrawContext):
