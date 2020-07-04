@@ -23,7 +23,7 @@ class Node:
         return self._parent
 
     def children(self):
-        yield from self._children
+        return iter(self._children)
 
     def attribute(self, name):
         return self._attributes.get(name, "")
@@ -197,7 +197,7 @@ def test_empty_pseudo_selector_with_name():
 
 
 @pytest.mark.parametrize(
-    "state", ["root", "hovered", "active", "drop"],
+    "state", ["root", "hovered", "focused", "active", "drop"],
 )
 def test_hovered_pseudo_selector(state):
 
