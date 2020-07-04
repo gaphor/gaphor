@@ -1,7 +1,7 @@
 import ast
 from typing import Optional
 
-from gaphas.connector import Handle, LinePort
+from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import Item
 

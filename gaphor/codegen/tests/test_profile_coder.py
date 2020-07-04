@@ -1,10 +1,9 @@
-from typing import Dict, List, Type
+from typing import Dict, List
 
 import pytest
 
 from gaphor.application import distribution
 from gaphor.codegen.profile_coder import (
-    create_class_trees,
     create_referenced,
     filter_uml_classes,
     find_enumerations,
@@ -15,7 +14,6 @@ from gaphor.codegen.profile_coder import (
     write_attributes,
     write_properties,
 )
-from gaphor.core.modeling.properties import attribute, derived
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import uml as UML
 from gaphor.UML.classes import ClassItem

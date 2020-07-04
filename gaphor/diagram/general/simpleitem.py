@@ -3,9 +3,7 @@ Trivial drawing aids (box, line, ellipse).
 """
 
 import ast
-from typing import Optional
 
-from gaphas.canvas import Canvas
 from gaphas.item import NW, Element
 from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse

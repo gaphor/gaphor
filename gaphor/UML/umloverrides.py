@@ -9,10 +9,10 @@ for normal properties.
 from __future__ import annotations
 
 import itertools
-from typing import List, Optional, Tuple, Union
+from typing import List, Optional, Union
 
 import gaphor.UML.umllex as umllex
-from gaphor.core.modeling.properties import association, derived
+from gaphor.core.modeling.properties import derived
 from gaphor.UML import uml
 
 

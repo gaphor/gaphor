@@ -1,5 +1,5 @@
 import gaphor.UML.uml as UML
-from gaphor.ui.iconname import get_default_icon_name, get_icon_name, to_kebab_case
+from gaphor.ui.iconname import get_default_icon_name, get_icon_name
 
 
 @get_icon_name.register(UML.Class)

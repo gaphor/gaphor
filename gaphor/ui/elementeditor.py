@@ -8,7 +8,7 @@ from typing import Optional
 from gi.repository import GLib, Gtk
 
 from gaphor.abc import ActionProvider
-from gaphor.core import Transaction, action, event_handler, gettext
+from gaphor.core import Transaction, action, event_handler
 from gaphor.core.modeling import Presentation, StyleSheet
 from gaphor.core.modeling.event import (
     AssociationUpdated,

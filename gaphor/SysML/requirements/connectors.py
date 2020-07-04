@@ -10,7 +10,6 @@ from gaphor.SysML.requirements.relationships import (
     VerifyItem,
 )
 from gaphor.SysML.sysml import (
-    Block,
     DeriveReqt,
     DirectedRelationshipPropertyPath,
     Refine,

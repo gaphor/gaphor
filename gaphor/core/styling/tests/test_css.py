@@ -1,6 +1,3 @@
-import pytest
-import tinycss2
-
 from gaphor.core.styling import CompiledStyleSheet, StyleDeclarations, parse_style_sheet
 from gaphor.core.styling.tests.test_selector import Node
 
