@@ -2,7 +2,7 @@ import gaphas
 import pytest
 
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory, Presentation
+from gaphor.core.modeling import ElementFactory, Presentation, StyleSheet
 from gaphor.UML import Diagram
 
 
@@ -56,3 +56,16 @@ def test_can_only_add_diagram_items(element_factory):
 
     with pytest.raises(TypeError):
         diagram.create(Diagram)
+
+
+def test_diagram_stylesheet(element_factory):
+    diagram = element_factory.create(Diagram)
+    styleSheet = element_factory.create(StyleSheet)
+
+    assert diagram.styleSheet is styleSheet
+
+
+def test_diagram_stylesheet_is_absent(element_factory):
+    diagram = element_factory.create(Diagram)
+
+    assert diagram.styleSheet is None

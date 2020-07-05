@@ -8,13 +8,22 @@ from typing_extensions import Literal
 
 from gaphor.core.styling.declarations import StyleDeclarations, parse_declarations
 from gaphor.core.styling.parser import SelectorError
+from gaphor.core.styling.properties import (
+    DEFAULT_STYLE,
+    FontStyle,
+    FontWeight,
+    Style,
+    TextAlign,
+    TextDecoration,
+    VerticalAlign,
+)
 from gaphor.core.styling.selectors import compile_selector_list
 
 MATCH_SORT_KEY = operator.itemgetter(0, 1)
 
 
-def merge_styles(styles) -> Dict[str, object]:
-    style = {}
+def merge_styles(styles) -> Style:
+    style: Style = {}
     for s in styles:
         style.update(s)
     return style
@@ -28,7 +37,7 @@ class CompiledStyleSheet:
             if selspec != "error"
         ]
 
-    def match(self, element) -> Dict[str, object]:
+    def match(self, element) -> Style:
         results = sorted(
             (
                 (specificity, order, declarations)

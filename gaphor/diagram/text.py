@@ -2,49 +2,27 @@
 Support classes for dealing with text.
 """
 
-from enum import Enum
-from typing import Dict, Tuple, TypeVar, Union
+from typing import Tuple, Union
 
-import cairo
 import gi
 from gaphas.canvas import instant_cairo_context
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.geometry import Rectangle
 from gaphas.painter import CairoBoundingBoxContext
 
+from gaphor.core.styling import (
+    FontStyle,
+    FontWeight,
+    Style,
+    TextAlign,
+    TextDecoration,
+    VerticalAlign,
+)
+
 # fmt: off
 gi.require_version('PangoCairo', '1.0')  # noqa: isort:skip
 from gi.repository import GLib, Pango, PangoCairo  # noqa: isort:skip
 # fmt: on
-
-Font = Dict[str, object]
-
-
-class TextAlign(Enum):
-    LEFT = "left"
-    CENTER = "center"
-    RIGHT = "right"
-
-
-class VerticalAlign(Enum):
-    TOP = "top"
-    MIDDLE = "middle"
-    BOTTOM = "bottom"
-
-
-class FontStyle(Enum):
-    NORMAL = "normal"
-    ITALIC = "italic"
-
-
-class FontWeight(Enum):
-    NORMAL = "normal"
-    BOLD = "bold"
-
-
-class TextDecoration(Enum):
-    NONE = "none"
-    UNDERLINE = "underline"
 
 
 class Layout:
@@ -74,7 +52,7 @@ class Layout:
         if text_align:
             self.set_alignment(text_align)
 
-    def set_font(self, font: Font):
+    def set_font(self, font: Style):
         font_family = font.get("font-family")
         font_size = font.get("font-size")
         font_weight = font.get("font-weight")

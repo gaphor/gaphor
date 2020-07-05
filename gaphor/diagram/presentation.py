@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+from dataclasses import replace
 from typing import Optional
 
 import gaphas
@@ -9,8 +10,8 @@ from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.core.modeling.presentation import Presentation, S
-from gaphor.diagram.shapes import DrawContext, SizeContext
-from gaphor.diagram.style import combined_style
+from gaphor.core.styling import Style
+from gaphor.diagram.shapes import combined_style
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -112,14 +113,11 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         """
 
     def pre_update(self, context):
-        self.min_width, self.min_height = self.shape.size(
-            SizeContext.from_context(context, self.style)
-        )
+        self.min_width, self.min_height = self.shape.size(context)
 
     def draw(self, context):
         self._shape.draw(
-            DrawContext.from_context(context, self.style),
-            Rectangle(0, 0, self.width, self.height),
+            context, Rectangle(0, 0, self.width, self.height),
         )
 
     def setup_canvas(self):
@@ -156,15 +154,14 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self,
         id=None,
         model=None,
-        style={},
+        style: Style = {},
         shape_head=None,
         shape_middle=None,
         shape_tail=None,
     ):
         super().__init__(id, model)
 
-        self._inline_style = style
-
+        self.style = style
         self.shape_head = shape_head
         self.shape_middle = shape_middle
         self.shape_tail = shape_tail
@@ -179,22 +176,10 @@ class LinePresentation(Presentation[S], gaphas.Line):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
-    def _set_inline_style(self, style):
-        self._inline_style.update(style)
-
-    style = property(
-        lambda self: {**super().style, **self._inline_style},
-        _set_inline_style,
-        doc="""A line, contrary to an element, has some styling of it's own.""",
-    )
-
-    def post_update(self, context) -> SizeContext:
-        style = combined_style(self.style)
-        size_context = SizeContext.from_context(context, style)
-
+    def post_update(self, context):
         def shape_bounds(shape, align):
             if shape:
-                size = shape.size(size_context)
+                size = shape.size(context)
                 x, y = text_point_at_line(points, size, align)
                 return Rectangle(x, y, *size)
 
@@ -203,8 +188,6 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
         self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
-
-        return size_context
 
     def point(self, pos):
         """Given a point (x, y) return the distance to the canvas item.
@@ -221,17 +204,18 @@ class LinePresentation(Presentation[S], gaphas.Line):
         ]
         return min(d0, *ds) if ds else d0
 
-    def draw(self, context) -> DrawContext:
+    def draw(self, context):
+        style = combined_style(context.style, self.style)
+        context = replace(context, style=style)
+
         cr = context.cairo
-        style = combined_style(self.style)
-        draw_context = DrawContext.from_context(context, style)
         self.line_width = style["line-width"]
         cr.set_dash(style["dash-style"] or (), 0)
         stroke = style["color"]
         if stroke:
             cr.set_source_rgba(*stroke)
 
-        super().draw(draw_context)
+        super().draw(context)
 
         for shape, rect in (
             (self.shape_head, self._shape_head_rect),
@@ -239,9 +223,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
             (self.shape_tail, self._shape_tail_rect),
         ):
             if shape:
-                shape.draw(draw_context, rect)
-
-        return draw_context
+                shape.draw(context, rect)
 
     def setup_canvas(self):
         super().setup_canvas()

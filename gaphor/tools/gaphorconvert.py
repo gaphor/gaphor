@@ -6,11 +6,12 @@ import re
 import sys
 
 import cairo
-from gaphas.painter import BoundingBoxPainter, ItemPainter
+from gaphas.painter import BoundingBoxPainter
 from gaphas.view import Context, View
 
 from gaphor.application import Session
 from gaphor.core.modeling import Diagram
+from gaphor.diagram.painter import ItemPainter
 from gaphor.storage import storage
 
 

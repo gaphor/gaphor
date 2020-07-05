@@ -1,5 +1,4 @@
 import pytest
-from gaphas.canvas import instant_cairo_context
 
 from gaphor.diagram.text import (
     FontStyle,

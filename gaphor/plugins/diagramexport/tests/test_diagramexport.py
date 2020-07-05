@@ -5,6 +5,7 @@ import gaphas.examples
 import pytest
 
 import gaphor.ui.menufragment
+from gaphor.core.modeling.diagram import Diagram
 from gaphor.plugins.diagramexport import DiagramExport
 
 
@@ -18,7 +19,8 @@ def diagram_export():
 
 @pytest.fixture
 def canvas():
-    c = gaphas.Canvas()
+    d = Diagram()
+    c = d.canvas
     c.add(gaphas.examples.Box())
     return c
 

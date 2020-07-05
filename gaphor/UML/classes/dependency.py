@@ -92,9 +92,9 @@ class DependencyItem(LinePresentation, Named):
     def post_update(self, context):
         super().post_update(context)
         if self.connected_to_folded_interface():
-            self.style = {"dash-style": ()}
+            self.style["dash-style"] = ()
         else:
-            self.style = {"dash-style": (7.0, 5.0)}
+            self.style["dash-style"] = (7.0, 5.0)
 
     def set_dependency_type(self, dependency_type):
         self._dependency_type = dependency_type

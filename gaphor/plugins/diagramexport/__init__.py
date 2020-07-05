@@ -5,11 +5,12 @@ import os
 
 import cairo
 from gaphas.freehand import FreeHandPainter
-from gaphas.painter import BoundingBoxPainter, ItemPainter
+from gaphas.painter import BoundingBoxPainter
 from gaphas.view import Context, View
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
+from gaphor.diagram.painter import ItemPainter
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 

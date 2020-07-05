@@ -1,51 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import replace
 from math import pi
 from typing import Callable, List, Optional, Tuple
 
-from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
 
-from gaphor.diagram.style import Style, combined_style
+from gaphor.core.modeling import DrawContext, UpdateContext
+from gaphor.core.styling import Style
 from gaphor.diagram.text import Layout, TextAlign, VerticalAlign, focus_box_pos
-
-
-@dataclass(frozen=True)
-class SizeContext:
-    @classmethod
-    def from_context(cls, context, style) -> SizeContext:
-        return SizeContext(cairo=context.cairo, style=style)
-
-    cairo: CairoContext
-    style: Style
-
-
-@dataclass(frozen=True)
-class DrawContext:
-    """
-    Special context for draw()'ing the item. The draw-context contains
-    stuff like the cairo context and flags like selected and
-    focused.
-    """
-
-    @classmethod
-    def from_context(cls, context, style) -> DrawContext:
-        return DrawContext(
-            cairo=context.cairo,
-            style=style,
-            selected=context.selected,
-            focused=context.focused,
-            hovered=context.hovered,
-            dropzone=context.dropzone,
-        )
-
-    cairo: CairoContext
-    style: Style
-    selected: bool
-    focused: bool
-    hovered: bool
-    dropzone: bool
 
 
 class cairo_state:
@@ -58,6 +21,13 @@ class cairo_state:
 
     def __exit__(self, _type, _value, _traceback):
         self._cr.restore()
+
+
+def combined_style(item_style: Style, inline_style: Style = {}) -> Style:
+    """
+    Combine context style and inline styles into one style.
+    """
+    return {**item_style, **inline_style}  # type: ignore[misc]
 
 
 def stroke(context: DrawContext, fill=True, highlight=False):
@@ -158,7 +128,7 @@ class Box:
     def __getitem__(self, index):
         return self.children[index]
 
-    def size(self, context: SizeContext):
+    def size(self, context: UpdateContext):
         style: Style = combined_style(context.style, self._inline_style)
         min_width = style["min-width"]
         min_height = style["min-height"]
@@ -217,7 +187,7 @@ class IconBox:
         self.sizes: List[Tuple[int, int]] = []
         self._inline_style = style
 
-    def size(self, context: SizeContext):
+    def size(self, context: UpdateContext):
         style = combined_style(context.style, self._inline_style)
         min_width = style["min-width"]
         min_height = style["min-height"]
@@ -285,7 +255,7 @@ class Text:
         except AttributeError:
             return ""
 
-    def size(self, context: SizeContext):
+    def size(self, context: UpdateContext):
         style = combined_style(context.style, self._inline_style)
         min_w = style["min-width"]
         min_h = style["min-height"]
@@ -328,7 +298,6 @@ class Text:
             cr.move_to(text_box.x, text_box.y)
             layout.set(font=style)
             layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
-        return style
 
 
 class EditableText(Text):
@@ -341,7 +310,7 @@ class EditableText(Text):
         """Bounding box is used by the inline editor."""
         return self.focus_box
 
-    def size(self, context: SizeContext):
+    def size(self, context: UpdateContext):
         text_size = super().size(context)
         w, h = text_size
         self.focus_box.width = w
@@ -350,7 +319,8 @@ class EditableText(Text):
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         """Draw the editable text."""
-        style = super().draw(context, bounding_box)
+        super().draw(context, bounding_box)
+        style = combined_style(context.style, self._inline_style)
 
         text_box = self.text_box(style, bounding_box)
         text_align = style["text-align"]

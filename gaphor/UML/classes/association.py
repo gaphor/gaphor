@@ -20,12 +20,14 @@ from gaphas.state import reversible_property
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
+from gaphor.core.styling import Style
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
     EditableText,
     Text,
     cairo_state,
+    combined_style,
     draw_default_head,
     draw_default_tail,
     text_draw_focus_box,
@@ -199,13 +201,13 @@ class AssociationItem(LinePresentation, Named):
             self.draw_tail = draw_default_tail
 
         # update relationship after self.set calls to avoid circural updates
-        size_context = super().post_update(context)
+        super().post_update(context)
 
         # Calculate alignment of the head name and multiplicity
-        self._head_end.post_update(size_context, handles[0].pos, handles[1].pos)
+        self._head_end.post_update(context, handles[0].pos, handles[1].pos)
 
         # Calculate alignment of the tail name and multiplicity
-        self._tail_end.post_update(size_context, handles[-1].pos, handles[-2].pos)
+        self._tail_end.post_update(context, handles[-1].pos, handles[-2].pos)
 
     def point(self, pos):
         """
@@ -216,11 +218,11 @@ class AssociationItem(LinePresentation, Named):
         )
 
     def draw(self, context):
-        draw_context = super().draw(context)
-        self._head_end.draw(draw_context)
-        self._tail_end.draw(draw_context)
+        super().draw(context)
+        self._head_end.draw(context)
+        self._tail_end.draw(context)
         if self._show_direction:
-            with cairo_state(draw_context.cairo) as cr:
+            with cairo_state(context.cairo) as cr:
                 cr.translate(*self._dir_pos)
                 cr.rotate(self._dir_angle)
                 cr.move_to(0, 0)
@@ -381,7 +383,7 @@ class AssociationEnd(Presentation):
         self._name_layout = Layout("")
         self._mult_layout = Layout("")
 
-        self._inline_style = {"font-size": 10}
+        self._inline_style: Style = {"font-size": 10}
 
     name_bounds = property(lambda s: s._name_bounds)
 
@@ -416,7 +418,7 @@ class AssociationEnd(Presentation):
         multiplicity label. p1 is the line end and p2 is the last
         but one point of the line.
         """
-        style = {**context.style, **self._inline_style}
+        style = combined_style(context.style, self._inline_style)
         ofs = 5
 
         name_dx = 0.0

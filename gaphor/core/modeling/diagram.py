@@ -7,18 +7,51 @@ from __future__ import annotations
 
 import logging
 import uuid
-from typing import TYPE_CHECKING
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Optional
 
 import gaphas
 
 from gaphor.core.modeling.coremodel import PackageableElement
+from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
+from gaphor.core.modeling.stylesheet import StyleSheet
+from gaphor.core.styling.properties import DEFAULT_STYLE, Style
 
 if TYPE_CHECKING:
+    from cairo import Context as CairoContext
     from gaphor.core.modeling.properties import relation_one
     from gaphor.UML import Package
 
 log = logging.getLogger(__name__)
+
+
+@dataclass(frozen=True)
+class UpdateContext:
+    """
+    Context used when updating items (Presentation's).
+
+    Style contains the base style, no style alterations due to view state
+    (focused, hovered, etc.).
+    """
+
+    style: Style
+
+
+@dataclass(frozen=True)
+class DrawContext:
+    """
+    Special context for draw()'ing the item. The draw-context contains
+    stuff like the cairo context and flags like selected and
+    focused.
+    """
+
+    cairo: CairoContext
+    style: Style
+    selected: bool
+    focused: bool
+    hovered: bool
+    dropzone: bool
 
 
 class DiagramCanvas(gaphas.Canvas):
@@ -27,11 +60,11 @@ class DiagramCanvas(gaphas.Canvas):
     function can be applied to all root canvas items.  Canvas items can be
     selected with an optional expression filter."""
 
-    def __init__(self, diagram):
+    def __init__(self, diagram, create_update_context):
         """Initialize the diagram canvas with the supplied diagram.  By default,
         updates are not blocked."""
 
-        super().__init__()
+        super().__init__(create_update_context)
         self._diagram = diagram
         self._block_updates = False
 
@@ -92,12 +125,29 @@ class Diagram(PackageableElement):
 
     package: relation_one[Package]
 
-    def __init__(self, id, model):
+    def __init__(
+        self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
+    ):
         """Initialize the diagram with an optional id and element model.
         The diagram also has a canvas."""
 
         super().__init__(id, model)
-        self.canvas = DiagramCanvas(self)
+        self.canvas = DiagramCanvas(self, self._create_update_context)
+
+    @property
+    def styleSheet(self) -> Optional[StyleSheet]:
+        return next(self._model.select(StyleSheet), None) if self._model else None
+
+    def item_style(self, item) -> Style:
+        styleSheet = self.styleSheet
+        return (
+            {**DEFAULT_STYLE, **styleSheet.item_style(item)}  # type: ignore[misc]
+            if styleSheet
+            else DEFAULT_STYLE
+        )
+
+    def _create_update_context(self, item):
+        return UpdateContext(style=self.item_style(item))
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
