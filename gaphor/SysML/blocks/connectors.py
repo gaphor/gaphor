@@ -1,6 +1,6 @@
 from gaphas.connector import Handle, Port
 
-from gaphor.diagram.connectors import BaseConnector, Connector
+from gaphor.diagram.connectors import Connector
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem

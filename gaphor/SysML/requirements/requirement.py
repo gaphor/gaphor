@@ -7,8 +7,6 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import (
     Box,
     EditableText,
-    FontStyle,
-    FontWeight,
     Text,
     TextAlign,
     VerticalAlign,
@@ -16,6 +14,7 @@ from gaphor.diagram.shapes import (
     draw_top_separator,
 )
 from gaphor.diagram.support import represents
+from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.SysML.sysml import Requirement
 from gaphor.UML.classes.klass import (
     attribute_watches,

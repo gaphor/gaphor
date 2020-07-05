@@ -1,6 +1,5 @@
 import pytest
 
-import gaphor.diagram.style
 from gaphor.core.styling import parse_style_sheet
 from gaphor.diagram.text import FontWeight
 

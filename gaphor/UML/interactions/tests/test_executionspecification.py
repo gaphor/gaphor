@@ -1,4 +1,4 @@
-from gaphas.canvas import Canvas, instant_cairo_context
+from gaphas.canvas import instant_cairo_context
 
 from gaphor import UML
 from gaphor.diagram.shapes import DrawContext

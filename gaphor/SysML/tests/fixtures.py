@@ -2,7 +2,7 @@ import pytest
 
 from gaphor.core.modeling import ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher
-from gaphor.diagram.tests.fixtures import diagram, event_manager
+from gaphor.diagram.tests.fixtures import diagram, event_manager  # noqa F401
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 

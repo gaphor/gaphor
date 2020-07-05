@@ -1,5 +1,4 @@
 from gaphor import UML
-from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 

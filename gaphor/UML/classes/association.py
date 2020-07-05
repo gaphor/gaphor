@@ -23,7 +23,6 @@ from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
-    DrawContext,
     EditableText,
     Text,
     cairo_state,

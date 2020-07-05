@@ -9,7 +9,6 @@ the actions bound to the toolbuttons should change as well.
 from typing import Callable, NamedTuple, Optional, Sequence, Tuple
 
 from gaphor.core.modeling import Diagram, Presentation
-from gaphor.diagram.diagramtools import PlacementTool
 
 ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
 

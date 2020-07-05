@@ -30,11 +30,10 @@ import importlib
 from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
-from gaphas.decorators import AsyncIO
 from gaphas.segment import Segment
-from gi.repository import Gdk, GObject, Gtk
+from gi.repository import Gdk, Gtk
 
-from gaphor.core import gettext, transactional
+from gaphor.core import transactional
 from gaphor.core.modeling import Element
 
 

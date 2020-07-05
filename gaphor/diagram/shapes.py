@@ -2,22 +2,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from math import pi
-from typing import Callable, List, Optional, Sequence, Tuple, Union
+from typing import Callable, List, Optional, Tuple
 
 from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
-from typing_extensions import TypedDict
 
 from gaphor.diagram.style import Style, combined_style
-from gaphor.diagram.text import (
-    FontStyle,
-    FontWeight,
-    Layout,
-    TextAlign,
-    TextDecoration,
-    VerticalAlign,
-    focus_box_pos,
-)
+from gaphor.diagram.text import Layout, TextAlign, VerticalAlign, focus_box_pos
 
 
 @dataclass(frozen=True)
