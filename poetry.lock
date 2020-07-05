@@ -198,17 +198,21 @@ version = "*"
 
 [[package]]
 category = "main"
-description = "Gaphas is a GTK+ based diagramming widget"
+description = ""
 name = "gaphas"
 optional = false
-python-versions = ">=3.6,<4.0"
-version = "2.1.0"
+python-versions = "^3.6"
+version = "2.1.1"
 
 [package.dependencies]
-PyGObject = ">=3.20.0,<4.0.0"
-importlib_metadata = ">=1.3.0,<2.0.0"
-pycairo = ">=1.13.0,<2.0.0"
+PyGObject = "^3.20.0"
+importlib_metadata = "^1.3.0"
+pycairo = "^1.13.0"
 
+[package.source]
+reference = "de0a8c69dc7161e2cc3d48527a4dc25d22fc4b5b"
+type = "git"
+url = "https://github.com/gaphor/gaphas.git"
 [[package]]
 category = "main"
 description = "Generic programming library for Python"
@@ -811,7 +815,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "beb0328261be935dca8d8f166d039a438181dd5ad9f46eaf340c51f76997c269"
+content-hash = "d9bbd3fbb967af42b02ae33ad23aa43aa1f8cc3cd42f3afad9605491e9407665"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -919,10 +923,7 @@ flake8 = [
     {file = "flake8-3.8.3-py2.py3-none-any.whl", hash = "sha256:15e351d19611c887e482fb960eae4d44845013cc142d42896e9862f775d8cf5c"},
     {file = "flake8-3.8.3.tar.gz", hash = "sha256:f04b9fcbac03b0a3e58c0ab3a0ecc462e023a9faf046d57794184028123aa208"},
 ]
-gaphas = [
-    {file = "gaphas-2.1.0-py3-none-any.whl", hash = "sha256:18ab25c540d5f58339b912d4df26f8fa8a09a0ac6ea22d6d2e8bbeb53658e644"},
-    {file = "gaphas-2.1.0.tar.gz", hash = "sha256:e34181b2bb8c2e1b265c97cce35f18e5e22794af4fd781ed2117a2338a01d6db"},
-]
+gaphas = []
 generic = [
     {file = "generic-1.0.0-py3-none-any.whl", hash = "sha256:a8dbb3133929223149272fcc70a95967cf3b24e3fa12601f91c67fb61efe29d4"},
     {file = "generic-1.0.0.tar.gz", hash = "sha256:c7651fb460feae762065b4a29afbfe2a346b2b18dccd4a8495a7e978498f66bc"},
@@ -979,6 +980,11 @@ markupsafe = [
     {file = "MarkupSafe-1.1.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:ba59edeaa2fc6114428f1637ffff42da1e311e29382d81b339c1817d37ec93c6"},
     {file = "MarkupSafe-1.1.1-cp37-cp37m-win32.whl", hash = "sha256:b00c1de48212e4cc9603895652c5c410df699856a2853135b3967591e4beebc2"},
     {file = "MarkupSafe-1.1.1-cp37-cp37m-win_amd64.whl", hash = "sha256:9bf40443012702a1d2070043cb6291650a0841ece432556f784f004937f0f32c"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:6788b695d50a51edb699cb55e35487e430fa21f1ed838122d722e0ff0ac5ba15"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-manylinux1_i686.whl", hash = "sha256:cdb132fc825c38e1aeec2c8aa9338310d29d337bebbd7baa06889d09a60a1fa2"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:13d3144e1e340870b25e7b10b98d779608c02016d5184cfb9927a9f10c689f42"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-win32.whl", hash = "sha256:596510de112c685489095da617b5bcbbac7dd6384aeebeda4df6025d0256a81b"},
+    {file = "MarkupSafe-1.1.1-cp38-cp38-win_amd64.whl", hash = "sha256:e8313f01ba26fbbe36c7be1966a7b7424942f670f38e666995b88d012765b9be"},
     {file = "MarkupSafe-1.1.1.tar.gz", hash = "sha256:29872e92839765e546828bb7754a68c418d927cd064fd4708fab9fe9c8bb116b"},
 ]
 mccabe = [
