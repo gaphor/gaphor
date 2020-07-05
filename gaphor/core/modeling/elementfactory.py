@@ -15,6 +15,7 @@ from typing import (
     Type,
     TypeVar,
     Union,
+    overload,
 )
 
 from gaphor.abc import Service
@@ -100,9 +101,19 @@ class ElementFactory(Service):
         assert isinstance(element.id, str)
         return self.lookup(element.id) is element
 
-    def select(
-        self, expression: Union[Callable[[Element], bool], Type[T], None] = None
-    ) -> Iterator[Element]:
+    @overload
+    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]:
+        ...
+
+    @overload
+    def select(self, expression: Type[T]) -> Iterator[T]:
+        ...
+
+    @overload
+    def select(self, expression: None) -> Iterator[Element]:
+        ...
+
+    def select(self, expression=None):
         """
         Iterate elements that comply with expression.
         """
