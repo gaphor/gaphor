@@ -19,7 +19,7 @@ def fixed_text_size(monkeypatch):
     def text_size(*args):
         return size
 
-    monkeypatch.setattr("gaphor.diagram.shapes.text_size", text_size)
+    monkeypatch.setattr("gaphor.diagram.text.Layout.size", text_size)
     return size
 
 

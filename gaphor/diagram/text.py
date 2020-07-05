@@ -7,6 +7,7 @@ from typing import Dict, Tuple, TypeVar, Union
 
 import cairo
 import gi
+from gaphas.canvas import instant_cairo_context
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.geometry import Rectangle
 from gaphas.painter import CairoBoundingBoxContext
@@ -16,7 +17,7 @@ gi.require_version('PangoCairo', '1.0')  # noqa: isort:skip
 from gi.repository import GLib, Pango, PangoCairo  # noqa: isort:skip
 # fmt: on
 
-Font = TypeVar("Font", Dict[str, object], str)
+Font = Dict[str, object]
 
 
 class TextAlign(Enum):
@@ -46,112 +47,118 @@ class TextDecoration(Enum):
     UNDERLINE = "underline"
 
 
-def text_size(
-    cr, text: str, font: Font, width=-1, default_size: Tuple[int, int] = (0, 0)
-) -> Tuple[int, int]:
-    if not text:
-        return default_size
+class Layout:
+    def __init__(
+        self, text, font=None, text_align=TextAlign.CENTER, default_size=(0, 0),
+    ):
+        self.layout = PangoCairo.create_layout(instant_cairo_context())
+        self.underline = False
+        self.font_id = None
+        self.text = ""
+        self.width = -1
+        self.default_size = default_size
 
-    layout = _text_layout(cr, text, font, width)
-    return layout.get_pixel_size()  # type: ignore[no-any-return] # noqa: F723
+        if font:
+            self.set_font(font)
+        if text:
+            self.set_text(text)
+        self.set_alignment(text_align)
 
+    def set(self, text=None, font=None, width=None, text_align=None):
+        if text:
+            self.set_text(text)
+        if font:
+            self.set_font(font)
+        if width:
+            self.set_width(width)
+        if text_align:
+            self.set_alignment(text_align)
 
-def text_draw(
-    cr,
-    text,
-    font,
-    calculate_pos,
-    width=-1,
-    default_size=(0, 0),
-    text_align=TextAlign.CENTER,
-):
-    """
-    Draw text relative to (x, y).
-    text - text to print (utf8)
-    font - The font to render in, either a string, or a dict with "font", and optional "font-style" and "text-decoration"
-    calculate_pos - callback for text positioning
-    default_size - default text size, when no text is provided
-    """
-
-    if text:
-        layout = _text_layout(cr, text, font, width, text_align)
-        w, h = layout.get_pixel_size()
-    else:
-        layout = None
-        w, h = default_size
-
-    x, y = calculate_pos(w, h)
-
-    cr.move_to(x, y)
-
-    if layout:
-        _pango_cairo_show_layout(cr, layout)
-
-    return (x, y, w, h)
-
-
-def _text_layout(cr, text, font, width, text_align=TextAlign.CENTER):
-    underline = False
-    layout = _pango_cairo_create_layout(cr)
-
-    if isinstance(font, dict):
-        fd = Pango.FontDescription.new()
+    def set_font(self, font: Font):
         font_family = font.get("font-family")
         font_size = font.get("font-size")
+        font_weight = font.get("font-weight")
+        font_style = font.get("font-style")
         assert font_family, "Font family should be set"
         assert font_size, "Font size should be set"
+
+        font_id = (font_family, font_size, font_weight, font_style)
+        if font_id == self.font_id:
+            return
+
+        self.font_id = font_id
+
+        fd = Pango.FontDescription.new()
         fd.set_family(font_family)
         fd.set_absolute_size(font_size * Pango.SCALE)
 
-        font_weight = font.get("font-weight")
-        font_style = font.get("font-style")
         if font_weight:
+            assert isinstance(font_weight, FontWeight)
             fd.set_weight(getattr(Pango.Weight, font_weight.name))
         if font_style:
+            assert isinstance(font_style, FontStyle)
             fd.set_style(getattr(Pango.Style, font_style.name))
 
-        layout.set_font_description(fd)
+        self.layout.set_font_description(fd)
+
         underline = (
             font.get("text-decoration", TextDecoration.NONE) == TextDecoration.UNDERLINE
         )
-    else:
-        layout.set_font_description(Pango.FontDescription.from_string(font))
 
-    if underline:
-        # TODO: can this be done via Pango attributes instead?
-        layout.set_markup(f"<u>{GLib.markup_escape_text(text)}</u>", length=-1)
-    else:
-        layout.set_text(text, length=-1)
-    layout.set_width(int(width * Pango.SCALE))
-    layout.set_alignment(getattr(Pango.Alignment, text_align.name))
-    return layout
+        if self.underline != underline:
+            self.underline = underline
+            self.update_text()
 
+    def set_text(self, text: str):
+        if text != self.text:
+            self.text = text
+            self.update_text()
 
-def _pango_cairo_create_layout(cr):
-    """
-    Deal with different types of contexts that are passed down,
-    namely FreeHandCairoContext and CairoBoundingBoxContext.
-    PangoCairo expects a true cairo.Context.
-    """
-    if isinstance(cr, CairoBoundingBoxContext):
-        cr = cr._cairo
-    if isinstance(cr, FreeHandCairoContext):
-        cr = cr.cr
+    def update_text(self):
+        if self.underline:
+            # TODO: can this be done via Pango attributes instead?
+            self.layout.set_markup(
+                f"<u>{GLib.markup_escape_text(self.text)}</u>", length=-1
+            )
+        else:
+            self.layout.set_text(self.text, length=-1)
 
-    assert isinstance(cr, cairo.Context), f"cr should be a true Cairo.Context, not {cr}"
+    def set_width(self, width: int):
+        self.width = width
+        if width == -1:
+            self.layout.set_width(-1)
+        else:
+            self.layout.set_width(int(width * Pango.SCALE))
 
-    return PangoCairo.create_layout(cr)
+    def set_alignment(self, text_align: TextAlign):
+        self.layout.set_alignment(getattr(Pango.Alignment, text_align.name))
 
+    def size(self):
+        if not self.text:
+            return self.default_size
+        self.set_width(self.width)
+        return self.layout.get_pixel_size()
 
-def _pango_cairo_show_layout(cr, layout):
-    if isinstance(cr, FreeHandCairoContext):
-        PangoCairo.show_layout(cr.cr, layout)
-    elif isinstance(cr, CairoBoundingBoxContext):
-        w, h = layout.get_pixel_size()
-        cr.rel_line_to(w, h)
-        cr.stroke()
-    else:
-        PangoCairo.show_layout(cr, layout)
+    # Maybe use x, y here?
+    def show_layout(self, cr, width=None, default_size=None):
+        layout = self.layout
+        if not self.text:
+            return default_size or self.default_size
+        w, h = self.size()
+
+        if width is not None:
+            layout.set_width(int(width * Pango.SCALE))
+
+        if isinstance(cr, FreeHandCairoContext):
+            PangoCairo.show_layout(cr.cr, layout)
+        elif isinstance(cr, CairoBoundingBoxContext):
+            w, h = layout.get_pixel_size()
+            cr.rel_line_to(w, h)
+            cr.stroke()
+        else:
+            PangoCairo.show_layout(cr, layout)
+
+        return (w, h)
 
 
 def focus_box_pos(

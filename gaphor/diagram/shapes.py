@@ -12,12 +12,11 @@ from gaphor.diagram.style import Style, combined_style
 from gaphor.diagram.text import (
     FontStyle,
     FontWeight,
+    Layout,
     TextAlign,
     TextDecoration,
     VerticalAlign,
     focus_box_pos,
-    text_draw,
-    text_size,
 )
 
 
@@ -287,6 +286,7 @@ class Text:
         self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
         self._inline_style = style
+        self._layout = Layout("")
 
     def text(self):
         try:
@@ -298,9 +298,14 @@ class Text:
         style = combined_style(context.style, self._inline_style)
         min_w = style["min-width"]
         min_h = style["min-height"]
+        text_align = style["text-align"]
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
 
-        width, height = text_size(context.cairo, self.text(), style, self.width())  # type: ignore[type-var]
+        layout = self._layout
+        layout.set(
+            text=self.text(), font=style, width=self.width(), text_align=text_align
+        )
+        width, height = layout.size()
         return (
             max(min_w, width + padding_right + padding_left),
             max(min_h, height + padding_top + padding_bottom),
@@ -316,14 +321,11 @@ class Text:
             bounding_box.height - padding_top - padding_bottom,
         )
 
-    def draw(
-        self, context: DrawContext, bounding_box: Rectangle
-    ) -> Tuple[int, int, int, int]:
+    def draw(self, context: DrawContext, bounding_box: Rectangle) -> Tuple[int, int]:
         """Draw the text, return the location and size."""
         style = combined_style(context.style, self._inline_style)
         min_w = max(style["min-width"], bounding_box.width)
         min_h = max(style["min-height"], bounding_box.height)
-        text_align = style["text-align"]
         text_box = self.text_box(style, bounding_box)
 
         with cairo_state(context.cairo) as cr:
@@ -331,16 +333,11 @@ class Text:
             if text_color:
                 cr.set_source_rgba(*text_color)
 
-            x, y, w, h = text_draw(
-                cr,
-                self.text(),
-                style,
-                lambda w, h: (bounding_box.x, bounding_box.y),
-                width=text_box.width,
-                default_size=(min_w, min_h),
-                text_align=text_align,
-            )
-        return x, y, w, h
+            layout = self._layout
+            cr.move_to(text_box.x, text_box.y)
+            layout.set(font=style)
+            w, h = layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
+        return w, h
 
 
 class EditableText(Text):
@@ -354,19 +351,17 @@ class EditableText(Text):
         self.text_size = s
         return s
 
-    def draw(
-        self, context: DrawContext, bounding_box: Rectangle
-    ) -> Tuple[int, int, int, int]:
+    def draw(self, context: DrawContext, bounding_box: Rectangle) -> Tuple[int, int]:
         """Draw the editable text."""
         style = combined_style(context.style, self._inline_style)
-        x, y, w, h = super().draw(context, bounding_box)
+        w, h = super().draw(context, bounding_box)
         text_box = self.text_box(style, bounding_box)
         text_align = style["text-align"]
         vertical_align = style["vertical-align"]
         x, y = focus_box_pos(text_box, self.text_size, text_align, vertical_align)
         text_draw_focus_box(context, x, y, *self.text_size)
         self.bounding_box = Rectangle(x, y, width=w, height=h)
-        return x, y, w, h
+        return w, h
 
 
 def draw_default_head(context: DrawContext):

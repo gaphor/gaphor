@@ -4,10 +4,10 @@ from gaphas.canvas import instant_cairo_context
 from gaphor.diagram.text import (
     FontStyle,
     FontWeight,
+    Layout,
     TextAlign,
     TextDecoration,
     text_point_at_line,
-    text_size,
 )
 
 
@@ -70,20 +70,8 @@ def test_point_at_center_bottom(points, point_at_line):
     assert y == pytest.approx(point_at_line[1])
 
 
-@pytest.fixture
-def cr():
-    return instant_cairo_context()
-
-
-def test_text_with_font_as_string(cr):
-    w, h = text_size(cr, "Example", "sans 10")
-    assert w
-    assert h
-
-
-def test_text_with_font_as_dict(cr):
-    w, h = text_size(
-        cr,
+def test_text_with_font_as_dict():
+    w, h = Layout(
         "Example",
         {
             "font-family": "sans",
@@ -92,14 +80,13 @@ def test_text_with_font_as_dict(cr):
             "font-weight": FontWeight.BOLD,
             "text-decoration": TextDecoration.UNDERLINE,
         },
-    )
+    ).size()
     assert w
     assert h
 
 
-def test_text_with_font_as_dict_with_values_set_to_none(cr):
-    w, h = text_size(
-        cr,
+def test_text_with_font_as_dict_with_values_set_to_none():
+    w, h = Layout(
         "Example",
         {
             "font-family": "sans",
@@ -108,12 +95,12 @@ def test_text_with_font_as_dict_with_values_set_to_none(cr):
             "font-weight": FontWeight.BOLD,
             "text-decoration": TextDecoration.NONE,
         },
-    )
+    ).size()
     assert w
     assert h
 
 
-def test_text_with_just_font_as_dict(cr):
-    w, h = text_size(cr, "Example", {"font-family": "sans", "font-size": 10})
+def test_text_with_just_font_as_dict():
+    w, h = Layout("Example", {"font-family": "sans", "font-size": 10}).size()
     assert w
     assert h
