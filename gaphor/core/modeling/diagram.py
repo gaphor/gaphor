@@ -16,7 +16,7 @@ from gaphor.core.modeling.coremodel import PackageableElement
 from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling.properties import DEFAULT_STYLE, Style
+from gaphor.core.styling import DEFAULT_STYLE, Style, StyleNode
 
 if TYPE_CHECKING:
     from cairo import Context as CairoContext
@@ -137,6 +137,14 @@ class Diagram(PackageableElement):
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
         return next(self._model.select(StyleSheet), None) if self._model else None
+
+    def match(self, item: StyleNode) -> Style:
+        styleSheet = self.styleSheet
+        return (
+            styleSheet.item_style(item)  # type: ignore[misc]
+            if styleSheet
+            else DEFAULT_STYLE
+        )
 
     def item_style(self, item) -> Style:
         styleSheet = self.styleSheet

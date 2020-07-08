@@ -3,8 +3,9 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Iterator, Optional, Sequence
 
 from gaphor.core.modeling import Element
+from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import CompiledStyleSheet, Style
+from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
 
 if TYPE_CHECKING:
     from gaphas.item import Item  # noqa
@@ -46,30 +47,30 @@ class ItemWrapper:
 
 
 class StyleSheet(Element):
+    _compiled_style_sheet: CompiledStyleSheet
+
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self._watcher = self.watcher()
-        self._watcher.watch("styleSheet", self.update_style_sheet)
-        self._watcher.subscribe_all()
 
-        self._compiled_style_sheet = CompiledStyleSheet("")
+        self.compile_style_sheet()
 
-    styleSheet: attribute[str] = attribute("styleSheet", str)
+    styleSheet: attribute[str] = attribute("styleSheet", str, "")
 
-    def postload(self):
-        super().postload()
-        if self.styleSheet:
-            self.compile_style_sheet(self.styleSheet)
+    def compile_style_sheet(self) -> None:
+        self._compiled_style_sheet = CompiledStyleSheet(self.styleSheet)
 
-    def update_style_sheet(self, event):
-        self.compile_style_sheet(event.new_value)
-
-    def compile_style_sheet(self, css: str) -> None:
-        self._compiled_style_sheet = CompiledStyleSheet(css)
+    def match(self, node: StyleNode) -> Style:
+        return self._compiled_style_sheet.match(node)
 
     def item_style(self, item: Item, view=None) -> Style:
-        return self._compiled_style_sheet.match(ItemWrapper(item, view))
+        return self.match(ItemWrapper(item, view))
 
-    def unlink(self):
-        self._watcher.unsubscribe_all()
-        super().unlink()
+    def handle(self, event):
+        # Ensure compiled style sheet is always up to date:
+        if (
+            isinstance(event, AttributeUpdated)
+            and event.property is StyleSheet.styleSheet
+        ):
+            self.compile_style_sheet()
+
+        super().handle(event)
