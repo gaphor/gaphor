@@ -45,9 +45,7 @@ def from_package_str(item):
     if parent and parent.subject and parent.subject.namespace is not namespace:
         return False
 
-    return (
-        f"(from {namespace.name})" if namespace is not canvas.diagram.namespace else ""
-    )
+    return f"(from {namespace.name})" if namespace is not item.diagram.namespace else ""
 
 
 def _get_sink(item, handle, target):

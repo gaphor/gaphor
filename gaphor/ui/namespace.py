@@ -357,7 +357,7 @@ class Namespace(UIComponent):
 
         part = Gio.Menu.new()
         for presentation in element.presentation:
-            diagram = presentation.canvas.diagram
+            diagram = presentation.diagram
             menu_item = Gio.MenuItem.new(
                 gettext('Show in "{diagram}"').format(diagram=diagram.name),
                 "tree-view.show-in-diagram",

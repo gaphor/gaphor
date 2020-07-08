@@ -43,6 +43,11 @@ class Presentation(Element, Generic[S]):
 
     matrix: Matrix
 
+    @property
+    def diagram(self):
+        canvas = self.canvas
+        return canvas.diagram if canvas else None
+
     def watch(self, path, handler=None):
         """
         Watch a certain path of elements starting with the DiagramItem.

@@ -12,7 +12,7 @@ from gaphor.diagram.diagramtools import PlacementTool
 
 def namespace_config(new_item):
     subject = new_item.subject
-    diagram = new_item.canvas.diagram
+    diagram = new_item.diagram
     subject.package = diagram.namespace
     subject.name = f"New{type(subject).__name__}"
 
