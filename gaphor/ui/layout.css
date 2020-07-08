@@ -17,6 +17,6 @@ toolitemgroup:first-child > button {
     border-top-width: 0px;
 }
 
-#diagram-tab {
+diagramview {
     background: white;
 }

@@ -45,6 +45,8 @@ def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
 with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
     PLACEMENT_BASE = GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
 
+GtkView.set_css_name("diagramview")
+
 _placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
 
 
@@ -115,10 +117,6 @@ class DiagramPage:
         assert self.diagram
 
         view = GtkView(canvas=self.diagram.canvas)
-        try:
-            view.set_css_name("diagramview")
-        except AttributeError:
-            pass  # Gtk.Widget.set_css_name() is added in 3.20
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,

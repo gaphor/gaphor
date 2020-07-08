@@ -476,7 +476,6 @@ class Diagrams(UIComponent, ActionProvider):
             self.modeling_language,
         )
         widget = page.construct()
-        widget.set_name("diagram-tab")
         widget.diagram_page = page
 
         self.create_tab(diagram.name, widget)
