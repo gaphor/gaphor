@@ -141,7 +141,7 @@ class Diagram(PackageableElement):
     def item_style(self, item) -> Style:
         styleSheet = self.styleSheet
         return (
-            {**DEFAULT_STYLE, **styleSheet.item_style(item)}  # type: ignore[misc]
+            styleSheet.item_style(item)  # type: ignore[misc]
             if styleSheet
             else DEFAULT_STYLE
         )

@@ -1,4 +1,9 @@
-from gaphor.core.styling import CompiledStyleSheet, StyleDeclarations, parse_style_sheet
+from gaphor.core.styling import (
+    DEFAULT_STYLE,
+    CompiledStyleSheet,
+    StyleDeclarations,
+    parse_style_sheet,
+)
 from gaphor.core.styling.tests.test_selector import Node
 
 
@@ -167,4 +172,4 @@ def test_empty_compiled_style_sheet():
 
     props = compiled_style_sheet.match(Node("mytype"))
 
-    assert props == {}
+    assert props == DEFAULT_STYLE
