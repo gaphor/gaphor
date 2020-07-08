@@ -1,11 +1,10 @@
 from typing import Dict
 
-import gaphas
-import gaphas.examples
 import pytest
 
 import gaphor.ui.menufragment
 from gaphor.core.modeling.diagram import Diagram
+from gaphor.diagram.general import Box
 from gaphor.plugins.diagramexport import DiagramExport
 
 
@@ -21,7 +20,7 @@ def diagram_export():
 def canvas():
     d = Diagram()
     c = d.canvas
-    c.add(gaphas.examples.Box())
+    c.add(Box())
     return c
 
 

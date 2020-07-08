@@ -8,7 +8,7 @@ from __future__ import annotations
 import logging
 import uuid
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Iterator, Optional, Sequence
 
 import gaphas
 
@@ -54,17 +54,60 @@ class DrawContext:
     dropzone: bool
 
 
+class StyledItem:
+    """
+    Wrapper to allow style information to be retrieved.
+
+    For convenience, a view can be added. The view will provide
+    pseudo-classes for the item (focused, hovered, etc.)
+    """
+
+    def __init__(self, item: gaphas.Item, view: Optional[gaphas.View] = None):
+        self.item = item
+        self.canvas = item.canvas
+        self.view = view
+
+    def local_name(self) -> str:
+        return type(self.item).__name__.lower()
+
+    def parent(self) -> Optional[StyledItem]:
+        parent = self.canvas.get_parent(self.item)
+        return StyledItem(parent, self.view) if parent else None
+
+    def children(self) -> Iterator[StyledItem]:
+        children = self.canvas.get_children(self.item)
+        view = self.view
+        return (StyledItem(child, view) for child in children)
+
+    def attribute(self, name: str) -> str:
+        return ""
+
+    def state(self) -> Sequence[str]:
+        view = self.view
+        if view:
+            item = self.item
+            return (
+                "active" if item in view.selected_items else "",
+                "focused" if item is view.focused_item else "",
+                "hovered" if item is view.hovered_item else "",
+                "drop" if item is view.dropzone_item else "",
+            )
+        return ()
+
+
 class DiagramCanvas(gaphas.Canvas):
     """DiagramCanvas extends the gaphas.Canvas class.  Updates to the canvas
     can be blocked by setting the block_updates property to true.  A save
     function can be applied to all root canvas items.  Canvas items can be
     selected with an optional expression filter."""
 
-    def __init__(self, diagram, create_update_context):
+    def __init__(self, diagram: Diagram):
         """Initialize the diagram canvas with the supplied diagram.  By default,
         updates are not blocked."""
 
-        super().__init__(create_update_context)
+        super().__init__(
+            lambda item: UpdateContext(style=diagram.style(StyledItem(item)))
+        )
         self._diagram = diagram
         self._block_updates = False
 
@@ -132,30 +175,15 @@ class Diagram(PackageableElement):
         The diagram also has a canvas."""
 
         super().__init__(id, model)
-        self.canvas = DiagramCanvas(self, self._create_update_context)
+        self.canvas = DiagramCanvas(self)
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
         return next(self._model.select(StyleSheet), None) if self._model else None
 
-    def match(self, item: StyleNode) -> Style:
+    def style(self, node: StyleNode) -> Style:
         styleSheet = self.styleSheet
-        return (
-            styleSheet.item_style(item)  # type: ignore[misc]
-            if styleSheet
-            else DEFAULT_STYLE
-        )
-
-    def item_style(self, item) -> Style:
-        styleSheet = self.styleSheet
-        return (
-            styleSheet.item_style(item)  # type: ignore[misc]
-            if styleSheet
-            else DEFAULT_STYLE
-        )
-
-    def _create_update_context(self, item):
-        return UpdateContext(style=self.item_style(item))
+        return styleSheet.match(node) if styleSheet else DEFAULT_STYLE
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""

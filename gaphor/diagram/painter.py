@@ -6,10 +6,13 @@ Painters can be swapped in and out.
 Each painter takes care of a layer in the canvas (such as grid, items
 and handles).
 """
+
+from __future__ import annotations
+
 from cairo import LINE_JOIN_ROUND
 from gaphas.painter import Painter
 
-from gaphor.core.modeling import DrawContext
+from gaphor.core.modeling.diagram import DrawContext, StyledItem
 
 DEBUG_DRAW_BOUNDING_BOX = False
 
@@ -21,7 +24,7 @@ TOLERANCE = 0.8
 class ItemPainter(Painter):
     def draw_item(self, item, cairo):
         view = self.view
-        diagram = view.canvas.diagram
+        diagram = item.diagram
         cairo.save()
         try:
             cairo.set_matrix(view.matrix)
@@ -30,7 +33,7 @@ class ItemPainter(Painter):
             item.draw(
                 DrawContext(
                     cairo=cairo,
-                    style=diagram.item_style(item),
+                    style=diagram.style(StyledItem(item, view)),
                     selected=(item in view.selected_items),
                     focused=(item is view.focused_item),
                     hovered=(item is view.hovered_item),
