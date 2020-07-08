@@ -32,7 +32,7 @@ class UpdateContext:
     Context used when updating items (Presentation's).
 
     Style contains the base style, no style alterations due to view state
-    (focused, hovered, etc.).
+    (focus, hover, etc.).
     """
 
     style: Style
@@ -59,7 +59,7 @@ class StyledItem:
     Wrapper to allow style information to be retrieved.
 
     For convenience, a view can be added. The view will provide
-    pseudo-classes for the item (focused, hovered, etc.)
+    pseudo-classes for the item (focus, hover, etc.)
     """
 
     def __init__(self, item: gaphas.Item, view: Optional[gaphas.View] = None):
@@ -88,8 +88,8 @@ class StyledItem:
             item = self.item
             return (
                 "active" if item in view.selected_items else "",
-                "focused" if item is view.focused_item else "",
-                "hovered" if item is view.hovered_item else "",
+                "focus" if item is view.focused_item else "",
+                "hover" if item is view.hovered_item else "",
                 "drop" if item is view.dropzone_item else "",
             )
         return ()

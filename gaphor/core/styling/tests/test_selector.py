@@ -197,7 +197,7 @@ def test_empty_pseudo_selector_with_name():
 
 
 @pytest.mark.parametrize(
-    "state", ["root", "hovered", "focused", "active", "drop"],
+    "state", ["root", "hover", "focus", "active", "drop"],
 )
 def test_hovered_pseudo_selector(state):
 
@@ -211,27 +211,27 @@ def test_hovered_pseudo_selector(state):
 
 
 def test_is_pseudo_selector():
-    css = "classitem:is(:hovered, :active) {}"
+    css = "classitem:is(:hover, :active) {}"
 
     (selector, specificity), payload = next(parse_style_sheet(css))
 
-    assert selector(Node("classitem", state=("hovered",)))
+    assert selector(Node("classitem", state=("hover",)))
     assert selector(Node("classitem", state=("active",)))
-    assert selector(Node("classitem", state=("hovered", "active")))
+    assert selector(Node("classitem", state=("hover", "active")))
     assert specificity == (0, 1, 1)
     assert not selector(Node("classitem"))
 
 
 def test_not_pseudo_selector():
-    css = "classitem:not(:hovered) {}"
+    css = "classitem:not(:hover) {}"
 
     (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(Node("classitem"))
     assert selector(Node("classitem", state=("active")))
     assert specificity == (0, 1, 1)
-    assert not selector(Node("classitem", state=("hovered",)))
-    assert not selector(Node("classitem", state=("hovered", "active")))
+    assert not selector(Node("classitem", state=("hover",)))
+    assert not selector(Node("classitem", state=("hover", "active")))
 
 
 def test_has_pseudo_selector():
@@ -279,12 +279,10 @@ def test_has_pseudo_selector_with_combinator_is_not_supported():
 
 
 def test_has_and_is_selector():
-    css = "node:has(:is(:hovered)) {}"
+    css = "node:has(:is(:hover)) {}"
 
     (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(
-        Node(
-            "node", children=[Node("foo", children=[Node("bar", state=("hovered",))])],
-        )
+        Node("node", children=[Node("foo", children=[Node("bar", state=("hover",))])],)
     )
