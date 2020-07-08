@@ -92,6 +92,7 @@ class DiagramPage:
         self.modeling_language = modeling_language
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
+
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_style_sheet_updated)
         self.event_manager.subscribe(self._on_sloppy_lines)
@@ -104,9 +105,6 @@ class DiagramPage:
 
     def get_view(self):
         return self.view
-
-    def get_canvas(self):
-        return self.diagram.canvas
 
     def construct(self):
         """
@@ -306,44 +304,6 @@ class DiagramPage:
         view.bounding_box_painter = box_painter
 
         view.queue_draw_refresh()
-
-    def may_remove_from_model(self, view):
-        """
-        Check if there are items which will be deleted from the model
-        (when their last views are deleted). If so request user
-        confirmation before deletion.
-        """
-        assert self.view
-        items = self.view.selected_items
-        last_in_model = [
-            i for i in items if i.subject and len(i.subject.presentation) == 1
-        ]
-        log.debug("Last in model: %s" % str(last_in_model))
-        if last_in_model:
-            return self.confirm_deletion_of_items(last_in_model)
-        return True
-
-    def confirm_deletion_of_items(self, last_in_model):
-        """
-        Request user confirmation on deleting the item from the model.
-        """
-        assert self.widget
-        s = ""
-        for item in last_in_model:
-            s += "%s\n" % str(item)
-
-        dialog = Gtk.MessageDialog(
-            None,
-            Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-            Gtk.MessageType.WARNING,
-            Gtk.ButtonsType.YES_NO,
-            "This will remove the following selected items from the model:\n%s\nAre you sure?"
-            % s,
-        )
-        dialog.set_transient_for(self.widget.get_toplevel())
-        value = dialog.run()
-        dialog.destroy()
-        return value == Gtk.ResponseType.YES
 
     def _on_key_press_event(self, view, event):
         """
