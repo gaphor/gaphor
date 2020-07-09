@@ -15,7 +15,7 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.core.modeling import Presentation, StyleSheet
+from gaphor.core.modeling import Diagram, Presentation, StyleSheet
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtools import (
@@ -92,6 +92,7 @@ class DiagramPage:
         self.modeling_language = modeling_language
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
+        self.diagram_css: Optional[Gtk.CssProvider] = None
 
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_style_sheet_updated)
@@ -119,6 +120,10 @@ class DiagramPage:
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+        )
+        self.diagram_css = Gtk.CssProvider.new()
+        view.get_style_context().add_provider(
+            self.diagram_css, Gtk.STYLE_PROVIDER_PRIORITY_USER
         )
 
         scrolled_window = Gtk.ScrolledWindow()
@@ -188,6 +193,17 @@ class DiagramPage:
     @event_handler(AttributeUpdated)
     def _on_style_sheet_updated(self, event: AttributeUpdated):
         if event.property is StyleSheet.styleSheet:
+            style = self.diagram.style(StyledDiagram(self.diagram))
+
+            if self.diagram_css and self.view:
+                bg = style.get("background-color")
+                self.diagram_css.load_from_data(
+                    f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}) }}".encode()
+                    if bg
+                    else "".encode()
+                )
+                self.view.queue_draw_refresh()
+
             canvas = self.diagram.canvas
             for item in canvas.get_all_items():
                 canvas.request_update(item)
@@ -379,3 +395,23 @@ class DiagramPage:
             context.finish(True, False, time)
         else:
             context.finish(False, False, time)
+
+
+class StyledDiagram:
+    def __init__(self, diagram: Diagram):
+        self.diagram = diagram
+
+    def local_name(self) -> str:
+        return "diagram"
+
+    def parent(self):
+        return None
+
+    def children(self):
+        return iter([])
+
+    def attribute(self, name: str) -> str:
+        return ""
+
+    def state(self):
+        return ()
