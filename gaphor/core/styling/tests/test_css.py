@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor.core.styling import CompiledStyleSheet, parse_style_sheet
 from gaphor.core.styling.tests.test_selector import Node
 
@@ -183,3 +185,24 @@ def test_color_typing_in_progress():
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props.get("color") is None
+
+
+@pytest.mark.parametrize(
+    "css_value,result",
+    [
+        ["normal", 0.0],
+        ["sloppy", 0.5],
+        ["sloppy 0.3", 0.3],
+        ["sloppy -0.1", 0.0],
+        ["sloppy 2.1", 2.0],
+        ["sloppy wrong", 0.5],
+    ],
+)
+def test_line_style(css_value, result):
+    css = f"mytype {{ line-style: {css_value} }}"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(Node("mytype"))
+
+    assert props.get("line-style") == result

@@ -62,6 +62,7 @@ Style = TypedDict(
         "vertical-align": VerticalAlign,
         "dash-style": Sequence[Number],
         "highlight-color": Color,
+        "line-style": Number,
     },
     total=False,
 )

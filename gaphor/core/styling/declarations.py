@@ -167,3 +167,22 @@ enum_styles: Dict[str, Dict[str, object]] = {
 @StyleDeclarations.register(*enum_styles.keys())
 def parse_enum(prop, value):
     return enum_styles[prop].get(value)
+
+
+@StyleDeclarations.register("line-style")
+def parse_line_style(prop, value) -> float:
+    if value == "sloppy":
+        return 0.5
+    elif isinstance(value, tuple):
+        style, factor = value
+        if style == "sloppy":
+            if not isinstance(factor, number):
+                return 0.5
+            if factor < 0.0:
+                return 0.0
+            elif factor > 2.0:
+                return 2.0
+            else:
+                return float(factor)
+    # "normal" value:
+    return 0.0
