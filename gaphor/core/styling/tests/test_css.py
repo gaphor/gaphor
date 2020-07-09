@@ -193,8 +193,9 @@ def test_color_typing_in_progress():
         ["normal", 0.0],
         ["sloppy", 0.5],
         ["sloppy 0.3", 0.3],
-        ["sloppy -0.1", 0.0],
+        ["sloppy -0.1", -0.1],
         ["sloppy 2.1", 2.0],
+        ["sloppy -2.1", -2.0],
         ["sloppy wrong", 0.5],
     ],
 )

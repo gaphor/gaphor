@@ -178,8 +178,8 @@ def parse_line_style(prop, value) -> float:
         if style == "sloppy":
             if not isinstance(factor, number):
                 return 0.5
-            if factor < 0.0:
-                return 0.0
+            if factor < -2.0:
+                return -2.0
             elif factor > 2.0:
                 return 2.0
             else:
