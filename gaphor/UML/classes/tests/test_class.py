@@ -4,7 +4,7 @@ Test classes.
 
 from gaphor import UML
 from gaphor.core.modeling import UpdateContext
-from gaphor.core.styling import DEFAULT_STYLE
+from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.classes.klass import ClassItem
 
@@ -14,7 +14,7 @@ def compartments(item):
 
 
 def context():
-    return UpdateContext(style=DEFAULT_STYLE)
+    return UpdateContext(style=FALLBACK_STYLE)
 
 
 class ClassTestCase(TestCase):

@@ -16,7 +16,7 @@ from gaphor.core.modeling.coremodel import PackageableElement
 from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import DEFAULT_STYLE, Style, StyleNode
+from gaphor.core.styling import FontStyle, Style, StyleNode, TextAlign, VerticalAlign
 
 if TYPE_CHECKING:
     from cairo import Context as CairoContext
@@ -24,6 +24,27 @@ if TYPE_CHECKING:
     from gaphor.UML import Package
 
 log = logging.getLogger(__name__)
+
+
+# Not all styles are requires: "background-color", "font-weight",
+# "text-color", and "text-decoration" are optional (can default to None)
+FALLBACK_STYLE: Style = {
+    "min-width": 0,
+    "min-height": 0,
+    "padding": (0, 0, 0, 0),
+    "vertical-align": VerticalAlign.MIDDLE,
+    "vertical-spacing": 4,
+    "border-radius": 0,
+    "padding": (0, 0, 0, 0),
+    "line-width": 2,
+    "dash-style": [],
+    "color": (0, 0, 0, 1),
+    "font-family": "sans",
+    "font-size": 14,
+    "font-style": FontStyle.NORMAL,
+    "text-align": TextAlign.CENTER,
+    "highlight-color": (0, 0, 1, 0.4),
+}
 
 
 @dataclass(frozen=True)
@@ -183,7 +204,14 @@ class Diagram(PackageableElement):
 
     def style(self, node: StyleNode) -> Style:
         styleSheet = self.styleSheet
-        return styleSheet.match(node) if styleSheet else DEFAULT_STYLE
+        return (
+            {
+                **FALLBACK_STYLE,  # type: ignore[misc]
+                **styleSheet.match(node),
+            }
+            if styleSheet
+            else FALLBACK_STYLE
+        )
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""

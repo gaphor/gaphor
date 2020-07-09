@@ -2,7 +2,7 @@ from gaphas.canvas import instant_cairo_context
 
 import gaphor.UML as UML
 from gaphor.core.modeling import DrawContext
-from gaphor.core.styling import DEFAULT_STYLE
+from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.actions.flow import FlowItem
 
@@ -42,7 +42,7 @@ class FlowTestCase(TestCase):
         flow = self.create(FlowItem, UML.ControlFlow)
         context = DrawContext(
             cairo=instant_cairo_context(),
-            style=DEFAULT_STYLE,
+            style=FALLBACK_STYLE,
             hovered=True,
             focused=True,
             selected=True,

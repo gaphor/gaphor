@@ -19,7 +19,6 @@ from typing_extensions import Literal, Protocol
 from gaphor.core.styling.declarations import StyleDeclarations, parse_declarations
 from gaphor.core.styling.parser import SelectorError
 from gaphor.core.styling.properties import (
-    DEFAULT_STYLE,
     FontStyle,
     FontWeight,
     Style,
@@ -71,7 +70,7 @@ class CompiledStyleSheet:
             ),
             key=MATCH_SORT_KEY,
         )
-        return {**DEFAULT_STYLE, **merge_styles(decl for _, _, decl in results)}  # type: ignore[misc]
+        return merge_styles(decl for _, _, decl in results)
 
 
 def parse_style_sheet(

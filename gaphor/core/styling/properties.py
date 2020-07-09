@@ -65,23 +65,3 @@ Style = TypedDict(
     },
     total=False,
 )
-
-# Not all styles are requires: "background-color", "font-weight",
-# "text-color", and "text-decoration" are optional (can default to None)
-DEFAULT_STYLE: Style = {
-    "min-width": 0,
-    "min-height": 0,
-    "padding": (0, 0, 0, 0),
-    "vertical-align": VerticalAlign.MIDDLE,
-    "vertical-spacing": 4,
-    "border-radius": 0,
-    "padding": (0, 0, 0, 0),
-    "line-width": 2,
-    "dash-style": [],
-    "color": (0, 0, 0, 1),
-    "font-family": "sans",
-    "font-size": 14,
-    "font-style": FontStyle.NORMAL,
-    "text-align": TextAlign.CENTER,
-    "highlight-color": (0, 0, 1, 0.4),
-}

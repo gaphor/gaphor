@@ -2,7 +2,7 @@ import cairo
 import pytest
 from gaphas.geometry import Rectangle
 
-from gaphor.core.styling import DEFAULT_STYLE
+from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.diagram.shapes import (
     Box,
     DrawContext,
@@ -30,7 +30,7 @@ def context():
     cr = cairo.Context(surface)
     return DrawContext(
         cairo=cr,
-        style=DEFAULT_STYLE,
+        style=FALLBACK_STYLE,
         selected=False,
         focused=False,
         hovered=False,

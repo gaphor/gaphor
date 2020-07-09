@@ -77,9 +77,7 @@ def parse_declarations(rule):
             assert state == VALUE
             value.append(token)
         else:
-            raise ValueError(
-                f"Can not handle node type {token.type} and value {token.value}"
-            )
+            value.append(token.serialize())
 
     if state == VALUE and value:
         yield (name, value[0] if len(value) == 1 else tuple(value))

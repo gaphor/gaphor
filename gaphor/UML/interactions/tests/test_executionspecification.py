@@ -2,7 +2,7 @@ from gaphas.canvas import instant_cairo_context
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
-from gaphor.core.styling import DEFAULT_STYLE
+from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -26,7 +26,7 @@ def test_draw_on_canvas(diagram):
     exec_spec.draw(
         DrawContext(
             cairo=cr,
-            style=DEFAULT_STYLE,
+            style=FALLBACK_STYLE,
             selected=False,
             focused=False,
             hovered=False,
