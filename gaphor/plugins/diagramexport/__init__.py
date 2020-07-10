@@ -26,14 +26,15 @@ class DiagramExport(Service, ActionProvider):
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
 
-    def __init__(self, diagrams, properties, export_menu):
+    def __init__(self, diagrams=None, export_menu=None):
         self.diagrams = diagrams
-        self.properties = properties
         self.export_menu = export_menu
-        export_menu.add_actions(self)
+        if export_menu:
+            export_menu.add_actions(self)
 
     def shutdown(self):
-        self.export_menu.remove_actions(self)
+        if self.export_menu:
+            self.export_menu.remove_actions(self)
 
     def save_dialog(self, diagram, title, ext):
 

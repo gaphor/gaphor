@@ -1,18 +1,12 @@
-from typing import Dict
-
 import pytest
 
-import gaphor.ui.menufragment
 from gaphor.diagram.general import Box
 from gaphor.plugins.diagramexport import DiagramExport
 
 
 @pytest.fixture
 def diagram_export():
-    properties: Dict[str, str] = {}
-    export_menu = gaphor.ui.menufragment.MenuFragment()
-
-    return DiagramExport(diagrams=None, properties=properties, export_menu=export_menu)
+    return DiagramExport(diagrams=None)
 
 
 @pytest.fixture

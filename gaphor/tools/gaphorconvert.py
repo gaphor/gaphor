@@ -5,13 +5,8 @@ import os
 import re
 import sys
 
-import cairo
-from gaphas.painter import BoundingBoxPainter
-from gaphas.view import Context, View
-
 from gaphor.application import Session
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.painter import ItemPainter
 from gaphor.storage import storage
 
 
@@ -26,17 +21,7 @@ def pkg2dir(package):
     return "/".join(name)
 
 
-def paint(view, cr):
-    view.painter.paint(Context(cairo=cr, items=view.canvas.get_all_items(), area=None))
-
-
-def main(argv=sys.argv[1:]):
-    def message(msg):
-        """
-        Print message if user set verbose mode.
-        """
-        if options.verbose:
-            print(msg, file=sys.stderr)
+def parse_options(argv):
 
     usage = "usage: %prog [options] file1 file2..."
 
@@ -73,10 +58,21 @@ def main(argv=sys.argv[1:]):
         " name includes package name; regular expressions are case insensitive",
     )
 
-    (options, args) = parser.parse_args(argv)
+    options, args = parser.parse_args(argv)
 
     if not args:
         parser.print_help()
+
+    return options, args
+
+
+def main(argv=sys.argv[1:]):
+
+    options, args = parse_options(argv)
+
+    def message(msg):
+        if options.verbose:
+            print(msg, file=sys.stderr)
 
     session = Session(
         services=[
@@ -85,10 +81,12 @@ def main(argv=sys.argv[1:]):
             "element_factory",
             "element_dispatcher",
             "modeling_language",
+            "diagram_export",
         ]
     )
     factory = session.get_service("element_factory")
     modeling_language = session.get_service("modeling_language")
+    diagram_export = session.get_service("diagram_export")
 
     name_re = None
     if options.regex:
@@ -127,34 +125,11 @@ def main(argv=sys.argv[1:]):
 
             message(f"rendering: {pname} -> {outfilename}...")
 
-            view = View(diagram.canvas)
-            view.painter = ItemPainter()
-            view.bounding_box_painter = BoundingBoxPainter(view.painter)
-
-            tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
-            tmpcr = cairo.Context(tmpsurface)
-            view.update_bounding_box(tmpcr)
-            tmpcr.show_page()
-            tmpsurface.flush()
-
-            w, h = view.bounding_box.width, view.bounding_box.height
             if options.format == "pdf":
-                surface = cairo.PDFSurface(outfilename, w, h)
+                diagram_export.save_pdf(outfilename, diagram)
             elif options.format == "svg":
-                surface = cairo.SVGSurface(outfilename, w, h)
+                diagram_export.save_svg(outfilename, diagram)
             elif options.format == "png":
-                surface = cairo.ImageSurface(
-                    cairo.FORMAT_ARGB32, int(w + 1), int(h + 1)
-                )
+                diagram_export.save_png(outfilename, diagram)
             else:
-                assert False, f"unknown format {options.format}"
-            cr = cairo.Context(surface)
-            view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
-            paint(view, cr)
-            cr.show_page()
-
-            if options.format == "png":
-                surface.write_to_png(outfilename)
-
-            surface.flush()
-            surface.finish()
+                raise RuntimeError(f"Unknown file format: {options.format}")

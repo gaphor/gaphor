@@ -52,7 +52,7 @@ def init_entrypoints(
                 if depcls:
                     kwargs[dep] = init(dep, depcls)
                 else:
-                    logger.info(
+                    logger.debug(
                         f"Entrypont {name} parameter {dep} does not reference a resolved dependency"
                     )
             else:
