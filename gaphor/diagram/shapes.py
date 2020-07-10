@@ -54,7 +54,7 @@ def stroke(context: DrawContext, fill=True, highlight=False):
 
 def draw_border(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
-    d = context.style["border-radius"]
+    d = context.style.get("border-radius", 0)
     x, y, width, height = bounding_box
 
     cr.move_to(x, d)

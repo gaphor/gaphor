@@ -29,7 +29,6 @@ log = logging.getLogger(__name__)
 # Not all styles are requires: "background-color", "font-weight",
 # "text-color", and "text-decoration" are optional (can default to None)
 FALLBACK_STYLE: Style = {
-    "border-radius": 0,
     "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
