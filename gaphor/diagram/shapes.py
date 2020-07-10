@@ -130,8 +130,8 @@ class Box:
 
     def size(self, context: UpdateContext):
         style: Style = combined_style(context.style, self._inline_style)
-        min_width = style["min-width"]
-        min_height = style["min-height"]
+        min_width = style.get("min-width", 0)
+        min_height = style.get("min-height", 0)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         self.sizes = sizes = [c.size(context) for c in self.children]
         if sizes:
@@ -189,8 +189,8 @@ class IconBox:
 
     def size(self, context: UpdateContext):
         style = combined_style(context.style, self._inline_style)
-        min_width = style["min-width"]
-        min_height = style["min-height"]
+        min_width = style.get("min-width", 0)
+        min_height = style.get("min-height", 0)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         self.sizes = [c.size(context) for c in self.children]
         width, height = self.icon.size(context)
@@ -257,8 +257,8 @@ class Text:
 
     def size(self, context: UpdateContext):
         style = combined_style(context.style, self._inline_style)
-        min_w = style["min-width"]
-        min_h = style["min-height"]
+        min_w = style.get("min-width", 0)
+        min_h = style.get("min-height", 0)
         text_align = style["text-align"]
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
 
@@ -285,8 +285,8 @@ class Text:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         """Draw the text, return the location and size."""
         style = combined_style(context.style, self._inline_style)
-        min_w = max(style["min-width"], bounding_box.width)
-        min_h = max(style["min-height"], bounding_box.height)
+        min_w = max(style.get("min-width", 0), bounding_box.width)
+        min_h = max(style.get("min-height", 0), bounding_box.height)
         text_box = self.text_box(style, bounding_box)
 
         with cairo_state(context.cairo) as cr:
