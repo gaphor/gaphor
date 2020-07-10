@@ -11,9 +11,8 @@ from __future__ import annotations
 import itertools
 from typing import List, Optional, Union
 
-import gaphor.UML.umllex as umllex
 from gaphor.core.modeling.properties import derived
-from gaphor.UML import uml
+from gaphor.UML import uml, umllex
 
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271

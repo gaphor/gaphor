@@ -30,8 +30,8 @@ from gaphor.UML.umlfmt import format_attribute, format_operation
 from gaphor.UML.umllex import parse
 
 if TYPE_CHECKING:
-    from gaphor.core.modeling import ElementFactory
     from gaphor.core.eventmanager import EventManager
+    from gaphor.core.modeling import ElementFactory
 
 
 log = logging.getLogger(__name__)

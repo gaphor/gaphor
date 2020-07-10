@@ -1,3 +1,10 @@
+from gaphor.UML.actions import (
+    actionseditors,
+    actionsgrouping,
+    actionspropertypages,
+    flowconnect,
+    partitionpage,
+)
 from gaphor.UML.actions.action import (
     AcceptEventActionItem,
     ActionItem,
@@ -14,15 +21,6 @@ from gaphor.UML.actions.activitynodes import (
 from gaphor.UML.actions.flow import FlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 from gaphor.UML.actions.partition import PartitionItem
-
-
-from gaphor.UML.actions import (
-    actionsgrouping,
-    flowconnect,
-    partitionpage,
-    actionseditors,
-    actionspropertypages,
-)
 
 __all__ = [
     "AcceptEventActionItem",

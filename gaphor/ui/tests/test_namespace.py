@@ -1,7 +1,7 @@
 import pytest
 
 import gaphor.core.eventmanager
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor.core.modeling import ElementFactory
 from gaphor.ui.namespace import Namespace
 

@@ -1,6 +1,6 @@
 from gaphas.canvas import instant_cairo_context
 
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.tests.testcase import TestCase

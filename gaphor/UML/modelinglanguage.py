@@ -3,11 +3,10 @@ The UML Modeling Language module is the entrypoint for
 UML related assets.
 """
 
-import gaphor.UML.diagramitems as diagramitems
-import gaphor.UML.uml as uml
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
+from gaphor.UML import diagramitems, uml
 from gaphor.UML.toolbox import uml_toolbox_actions
 
 

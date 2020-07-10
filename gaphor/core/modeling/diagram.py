@@ -20,6 +20,7 @@ from gaphor.core.styling import FontStyle, Style, StyleNode, TextAlign
 
 if TYPE_CHECKING:
     from cairo import Context as CairoContext
+
     from gaphor.core.modeling.properties import relation_one
     from gaphor.UML import Package
 

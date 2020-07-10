@@ -24,8 +24,8 @@ from gaphor.core.modeling.event import ElementUpdated
 from gaphor.core.modeling.properties import relation_many, relation_one, umlproperty
 
 if TYPE_CHECKING:
-    from gaphor.core.modeling.presentation import Presentation
     from gaphor.core.modeling.coremodel import Comment
+    from gaphor.core.modeling.presentation import Presentation
 
 __all__ = ["Element"]
 
