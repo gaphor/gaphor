@@ -8,7 +8,7 @@ from __future__ import annotations
 import logging
 import uuid
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Iterator, Optional, Sequence
+from typing import TYPE_CHECKING, Iterator, Optional, Sequence, Union
 
 import gaphas
 
@@ -75,6 +75,28 @@ class DrawContext:
     dropzone: bool
 
 
+class StyledDiagram:
+    def __init__(self, diagram: Diagram, view: Optional[gaphas.View] = None):
+        self.diagram = diagram
+        self.view = view
+
+    def local_name(self) -> str:
+        return "diagram"
+
+    def parent(self):
+        return None
+
+    def children(self) -> Iterator[StyledItem]:
+        view = self.view
+        return (StyledItem(item, view) for item in self.diagram.canvas.get_root_items())
+
+    def attribute(self, name: str) -> str:
+        return ""
+
+    def state(self):
+        return ()
+
+
 class StyledItem:
     """
     Wrapper to allow style information to be retrieved.
@@ -91,9 +113,13 @@ class StyledItem:
     def local_name(self) -> str:
         return type(self.item).__name__.lower()
 
-    def parent(self) -> Optional[StyledItem]:
+    def parent(self) -> Union[StyledItem, StyledDiagram]:
         parent = self.canvas.get_parent(self.item)
-        return StyledItem(parent, self.view) if parent else None
+        return (
+            StyledItem(parent, self.view)
+            if parent
+            else StyledDiagram(self.item.diagram, self.view)
+        )
 
     def children(self) -> Iterator[StyledItem]:
         children = self.canvas.get_children(self.item)

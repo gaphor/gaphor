@@ -15,7 +15,8 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.core.modeling import Diagram, Presentation, StyleSheet
+from gaphor.core.modeling import Presentation, StyleSheet
+from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtools import (
@@ -280,7 +281,7 @@ class DiagramPage:
         assert self.view
         assert self.diagram_css
 
-        style = self.diagram.style(StyledDiagram(self.diagram))
+        style = self.diagram.style(StyledDiagram(self.diagram, self.view))
 
         bg = style.get("background-color")
         self.diagram_css.load_from_data(
@@ -383,23 +384,3 @@ class DiagramPage:
             context.finish(True, False, time)
         else:
             context.finish(False, False, time)
-
-
-class StyledDiagram:
-    def __init__(self, diagram: Diagram):
-        self.diagram = diagram
-
-    def local_name(self) -> str:
-        return "diagram"
-
-    def parent(self):
-        return None
-
-    def children(self):
-        return iter([])
-
-    def attribute(self, name: str) -> str:
-        return ""
-
-    def state(self):
-        return ()
