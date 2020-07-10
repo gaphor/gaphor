@@ -7,8 +7,8 @@ from typing import Callable, List, Optional, Tuple
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling import DrawContext, UpdateContext
-from gaphor.core.styling import Style
-from gaphor.diagram.text import Layout, TextAlign, VerticalAlign, focus_box_pos
+from gaphor.core.styling import Style, TextAlign, VerticalAlign
+from gaphor.diagram.text import Layout, focus_box_pos
 
 
 class cairo_state:
@@ -147,7 +147,7 @@ class Box:
         style: Style = combined_style(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        valign = style["vertical-align"]
+        valign = style.get("vertical-align", VerticalAlign.MIDDLE)
         height = sum(h for _w, h in self.sizes)
 
         if self._draw_border:
@@ -324,11 +324,8 @@ class EditableText(Text):
 
         text_box = self.text_box(style, bounding_box)
         text_align = style["text-align"]
-        vertical_align = style["vertical-align"]
         focus_box = self.focus_box
-        x, y = focus_box_pos(
-            text_box, (focus_box.width, focus_box.height), text_align, vertical_align
-        )
+        x, y = focus_box_pos(text_box, (focus_box.width, focus_box.height), text_align)
         focus_box.x = x
         focus_box.y = y
 

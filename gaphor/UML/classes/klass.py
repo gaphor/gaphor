@@ -2,6 +2,13 @@ import logging
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
+from gaphor.core.styling import (
+    FontStyle,
+    FontWeight,
+    TextAlign,
+    TextDecoration,
+    VerticalAlign,
+)
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
@@ -15,13 +22,6 @@ from gaphor.diagram.shapes import (
     draw_top_separator,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import (
-    FontStyle,
-    FontWeight,
-    TextAlign,
-    TextDecoration,
-    VerticalAlign,
-)
 from gaphor.UML.classes.stereotype import stereotype_compartments
 
 log = logging.getLogger(__name__)

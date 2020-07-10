@@ -16,7 +16,7 @@ from gaphor.core.modeling.coremodel import PackageableElement
 from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import FontStyle, Style, StyleNode, TextAlign, VerticalAlign
+from gaphor.core.styling import FontStyle, Style, StyleNode, TextAlign
 
 if TYPE_CHECKING:
     from cairo import Context as CairoContext
@@ -37,8 +37,6 @@ FALLBACK_STYLE: Style = {
     "line-width": 2,
     "padding": (0, 0, 0, 0),
     "text-align": TextAlign.CENTER,
-    "vertical-align": VerticalAlign.MIDDLE,
-    "vertical-spacing": 4,
 }
 
 

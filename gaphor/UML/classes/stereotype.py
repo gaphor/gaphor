@@ -3,8 +3,8 @@ Support code for dealing with stereotypes in diagrams.
 """
 
 from gaphor import UML
+from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.shapes import Box, Text, draw_top_separator
-from gaphor.diagram.text import TextAlign, VerticalAlign
 
 
 def stereotype_compartments(subject):

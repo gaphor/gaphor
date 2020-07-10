@@ -10,14 +10,7 @@ from gaphas.freehand import FreeHandCairoContext
 from gaphas.geometry import Rectangle
 from gaphas.painter import CairoBoundingBoxContext
 
-from gaphor.core.styling import (
-    FontStyle,
-    FontWeight,
-    Style,
-    TextAlign,
-    TextDecoration,
-    VerticalAlign,
-)
+from gaphor.core.styling import FontStyle, FontWeight, Style, TextAlign, TextDecoration
 
 # fmt: off
 gi.require_version('PangoCairo', '1.0')  # noqa: isort:skip
@@ -138,7 +131,6 @@ def focus_box_pos(
     bounding_box: Rectangle,
     text_size: Tuple[Union[float, int], Union[float, int]],
     text_align: TextAlign,
-    vertical_align: VerticalAlign,
 ) -> Tuple[int, int]:
     """Calculate the focus box position based on alignment style."""
     x, y, width, height = bounding_box
@@ -149,10 +141,7 @@ def focus_box_pos(
     elif text_align is TextAlign.RIGHT:
         x += width - w
 
-    if vertical_align is VerticalAlign.MIDDLE:
-        y += (height - h) / 2
-    elif vertical_align is VerticalAlign.BOTTOM:
-        y += height
+    y += (height - h) / 2
 
     return x, y
 
