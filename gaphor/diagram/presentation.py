@@ -208,7 +208,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
 
         cr = context.cairo
         self.line_width = style["line-width"]
-        cr.set_dash(style["dash-style"] or (), 0)
+        cr.set_dash(style.get("dash-style", ()), 0)
         stroke = style["color"]
         if stroke:
             cr.set_source_rgba(*stroke)

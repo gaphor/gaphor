@@ -37,7 +37,6 @@ FALLBACK_STYLE: Style = {
     "border-radius": 0,
     "padding": (0, 0, 0, 0),
     "line-width": 2,
-    "dash-style": [],
     "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
