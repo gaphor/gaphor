@@ -16,7 +16,7 @@ from typing import (
 import tinycss2
 from typing_extensions import Literal, Protocol
 
-from gaphor.core.styling.declarations import StyleDeclarations, parse_declarations
+from gaphor.core.styling.declarations import parse_declarations
 from gaphor.core.styling.parser import SelectorError
 from gaphor.core.styling.properties import (
     FontStyle,
@@ -88,9 +88,12 @@ def parse_style_sheet(
     )
     for rule in rules:
         if rule.type == "error":
-            assert isinstance(rule, tinycss2.ast.ParseError)
             yield ("error", rule)  # type: ignore[misc]
             continue
+
+        if rule.type != "qualified-rule":
+            continue
+
         try:
             selectors = compile_selector_list(rule.prelude)
         except SelectorError as e:
@@ -99,11 +102,8 @@ def parse_style_sheet(
 
         declaration = {
             prop: value
-            for prop, value in (
-                (prop, StyleDeclarations(prop, value))
-                for prop, value in parse_declarations(rule)
-            )
-            if value is not None
+            for prop, value in parse_declarations(rule.content)
+            if prop != "error" and value is not None
         }
 
         yield from ((selector, declaration) for selector in selectors)

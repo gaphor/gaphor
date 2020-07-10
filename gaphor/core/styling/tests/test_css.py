@@ -128,7 +128,7 @@ def test_css_declaration_without_semicolumn():
 def test_css_multiple_declarations_without_semicolumns():
     css = """
     * {
-        font-family: sans
+        font-family: sans;
         font-size: 42
     }
     """
@@ -141,7 +141,7 @@ def test_css_multiple_declarations_without_semicolumns():
 def test_compiled_style_sheet():
     css = """
     * {
-        font-size: 42
+        font-size: 42;
         font-family: overridden
     }
     mytype {
