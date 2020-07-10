@@ -210,7 +210,7 @@ importlib_metadata = "^1.3.0"
 pycairo = "^1.13.0"
 
 [package.source]
-reference = "de0a8c69dc7161e2cc3d48527a4dc25d22fc4b5b"
+reference = "4f089f1789c0a15cc57838c1b8fe7847533a2368"
 type = "git"
 url = "https://github.com/gaphor/gaphas.git"
 [[package]]

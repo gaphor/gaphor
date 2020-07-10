@@ -219,7 +219,8 @@ class Diagram(PackageableElement):
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
-        return next(self._model.select(StyleSheet), None) if self._model else None
+        model = self.model
+        return next(model.select(StyleSheet), None)
 
     def style(self, node: StyleNode) -> Style:
         styleSheet = self.styleSheet

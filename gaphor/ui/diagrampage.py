@@ -295,7 +295,6 @@ class DiagramPage:
         item_painter = ItemPainter()
 
         view = self.view
-        view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
         if sloppiness:
             item_painter = FreeHandPainter(ItemPainter(), sloppiness=sloppiness)
@@ -307,6 +306,7 @@ class DiagramPage:
             .append(FocusedItemPainter())
             .append(ToolPainter())
         )
+        view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
         view.queue_draw_refresh()
 
