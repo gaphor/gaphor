@@ -22,6 +22,10 @@ class StyleSheet(Element):
     def match(self, node: StyleNode) -> Style:
         return self._compiled_style_sheet.match(node)
 
+    def postload(self):
+        super().postload()
+        self.compile_style_sheet()
+
     def handle(self, event):
         # Ensure compiled style sheet is always up to date:
         if (

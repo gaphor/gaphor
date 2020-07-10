@@ -224,13 +224,13 @@ class Diagram(PackageableElement):
         return next(model.select(StyleSheet), None)
 
     def style(self, node: StyleNode) -> Style:
-        styleSheet = self.styleSheet
+        style_sheet = self.styleSheet
         return (
             {
                 **FALLBACK_STYLE,  # type: ignore[misc]
-                **styleSheet.match(node),
+                **style_sheet.match(node),
             }
-            if styleSheet
+            if style_sheet
             else FALLBACK_STYLE
         )
 
