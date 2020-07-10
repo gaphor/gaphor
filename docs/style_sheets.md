@@ -47,68 +47,98 @@ CSS. For example: we do not provide ID's for diagram items, so the CSS syntax
 for id's (`#some-id`) is not used. Same for the class syntax (`.some-class`).
 
 ```eval_rst
-======================= ============================
-node component          Any component item which is a decendant of a node.
-node > component        A component item which is a child of a node.
-generaliation[subject]  A generalization item with a subject present.
-class[name=Foo]         A class with name "Foo".
-diagram[name^=draft]    A diagram with a name starting with "draft".
+=========================== ============================
+``node component``          Any component item which is a decendant of a node.
+``node > component``        A component item which is a child of a node.
+``generaliation[subject]``  A generalization item with a subject present.
+``class[name=Foo]``         A class with name "Foo".
+``diagram[name^=draft]``    A diagram with a name starting with "draft".
 
-                        Other operators include "~=", "$=", "\|=" and "\*=".
-\*:focus                The focused item. Other pseudo classes are:
+                            Other operators include ``~=``, ``$=``, ``\|=`` and ``\*=``.
+``\*:focus``                The focused item. Other pseudo classes are:
 
-                        - ":active" selected items;
-                        - ":hover" for the item under the mouse;
-                        - ":drop" if an item is draggen and can be dropped on this item.
-node:empty              A node containing no child nodes in the diagram.
-:root                   An item is at the top level of the diagram (most items are).
-:has()                  ...
-:is()                   ...
-:not()                  ...
-======================= ============================
+                            - ``:active`` selected items;
+                            - ``:hover`` for the item under the mouse;
+                            - ``:drop`` if an item is draggen and can be dropped on this item.
+``node:empty``              A node containing no child nodes in the diagram.
+``:root``                   An item is at the top level of the diagram (most items are).
+``:has()``                  ...
+``:is()``                   ...
+``:not()``                  ...
+=========================== ============================
 ```
 
 ## Style properties
 
 Gaphor supports a subset of CSS properties and some Gaphor specific properties.
 The style sheet interpreter is relatively straight forward.
+All widths, heights and sizes are measured in pixels.
+No complex style declarations are supported,
+like the `font` property in HTML/CSS which can contain font family, size, weight.
 
+### Colors
 
 ```eval_rst
-=================== =================== ================
-Property            Type                Note
-=================== =================== ================
-padding             Padding             CSS style padding
-min-width           Number
-min-height          Number
-line-width          Number
-vertical-spacing    Number
-border-radius       Number
-background-color    Color
-font-family         str                 A single font name
-font-size           Number
-font-style          FontStyle           normal|italic
-font-weight         FontWeight          normal|bold
-text-decoration     TextDecoration      none|underline
-text-align          TextAlign           left|center|right
-text-color          Color
-color               Color
-vertical-align      VerticalAlign       top|middle|bottom
-dash-style          Sequence[Number]
-highlight-color     Color
-line-style          LineStyle           normal|sloppy [factor]
-=================== =================== ================
+.. |br| raw:: html
+
+   <br />
+
+======================= =======================================
+``background-color``    Examples: |br|
+                        ``background-color: azure;`` |br|
+                        ``background-color: rgb(255, 255, 255);`` |br|
+                        ``background-color: hsl(130, 95%, 10%);``
+``color``               Color used for lines
+``highlight-color``     Color used for highlight, e.g. when dragging
+                        an item over another item.
+``text-color``          Color for text
+======================= =======================================
 ```
 
-Notes:
-
-* `padding` is defined by 1 to 4 numbers. No unit (px, pt, em) needs to be
-  used. All values are in pixel distance.
 * A color can be any [CSS3 color code](https://www.w3.org/TR/2018/REC-css-color-3-20180619/),
   as described in the CSS documentation. Be it `rgb()`, `rgba()`, Hex code
   (`#ffffff`) or color names.
+
+### Text and fonts
+
+```eval_rst
+======================= =======================================
+``font-family``         A single font name (e.g. ``sans``, ``serif``, ``courier``)
+``font-size``           Font size: ``font-size: 14``.
+``font-style``          Either ``normal`` or ``italic``
+``font-weight``         Either ``normal`` or ``bold``
+``text-align``          Either ``left``, ``center``, ``right``
+``text-decoration``     Either ``none`` or ``underline``
+``vertical-align``      Vertical alignment for text.
+
+                        Either ``top``, ``middle`` or ``bottom``.
+``vertical-spacing``    Set vertical spacing for icon-like items (actors, start state).
+
+                        Example: ``vertical-spacing: 4``
+======================= =======================================
+```
+
 * `font-family` can be only one font name, not a list of (fallback) names, as
   is used for HTML.
+
+### Drawing and spacing
+
+```eval_rst
+======================= =======================================
+``border-radius``       Radius for rectangles: ``border-radius: 4``.
+``dash-style``          Style for dashed lines: ``dash-style: 7 5``.
+``line-style``          Either ``normal`` or ``sloppy [factor]``.
+``line-width``          Set the width for lines: ``line-width: 2``.
+``min-height``          Set minimal height for an item: ``min-height: 50``.
+``min-width``           Set minimal width for an item: ``min-width: 100``.
+``padding``             CSS style padding (top, right, bottom, left).
+
+                        Example: ``padding: 3 4``
+======================= =======================================
+```
+
+* `padding` is defined by 1 to 4 numbers. No unit (px, pt, em) needs to be
+  used. All values are in pixel distance.
 * `dash-style` is a list of numbers (line, gap)
 * `line-style` has only effect when defined on a `diagram`. A sloppiness factor
   can be provided, somewhere between -2 and 2.
