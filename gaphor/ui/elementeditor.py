@@ -34,7 +34,7 @@ def new_builder(*object_ids):
 
 DEFAULT_STYLE_SHEET = textwrap.dedent(
     """\
-    * {
+    diagram * {
      background-color: beige;
     }
 
