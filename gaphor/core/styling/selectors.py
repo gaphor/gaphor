@@ -43,8 +43,8 @@ def compile_compound_selector(selector: parser.CompoundSelector):
 
 
 @compile_node.register
-def compile_local_name_selector(selector: parser.LocalNameSelector):
-    return lambda el: el.local_name() == selector.lower_local_name
+def compile_name_selector(selector: parser.LocalNameSelector):
+    return lambda el: el.name() == selector.lower_local_name
 
 
 def ancestors(el):

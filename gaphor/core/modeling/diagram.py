@@ -15,6 +15,7 @@ import gaphas
 from gaphor.core.modeling.coremodel import PackageableElement
 from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
+from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.core.styling import FontStyle, Style, StyleNode, TextAlign
 
@@ -69,12 +70,21 @@ class DrawContext:
     dropzone: bool
 
 
+# From https://www.python.org/dev/peps/pep-0616/
+def removesuffix(self: str, suffix: str, /) -> str:
+    # suffix='' should not call self[:-0].
+    if suffix and self.endswith(suffix):
+        return self[: -len(suffix)]
+    else:
+        return self[:]
+
+
 class StyledDiagram:
     def __init__(self, diagram: Diagram, view: Optional[gaphas.View] = None):
         self.diagram = diagram
         self.view = view
 
-    def local_name(self) -> str:
+    def name(self) -> str:
         return "diagram"
 
     def parent(self):
@@ -99,13 +109,14 @@ class StyledItem:
     pseudo-classes for the item (focus, hover, etc.)
     """
 
-    def __init__(self, item: gaphas.Item, view: Optional[gaphas.View] = None):
+    def __init__(self, item: Presentation, view: Optional[gaphas.View] = None):
+        assert item.canvas
         self.item = item
         self.canvas = item.canvas
         self.view = view
 
-    def local_name(self) -> str:
-        return type(self.item).__name__.lower()
+    def name(self) -> str:
+        return removesuffix(type(self.item).__name__, "Item").lower()
 
     def parent(self) -> Union[StyledItem, StyledDiagram]:
         parent = self.canvas.get_parent(self.item)
@@ -254,7 +265,9 @@ class Diagram(PackageableElement):
         return self.create_as(type, str(uuid.uuid1()), parent, subject)
 
     def create_as(self, type, id, parent=None, subject=None):
-        if not (type and issubclass(type, gaphas.Item)):
+        if not (
+            type and issubclass(type, gaphas.Item) and issubclass(type, Presentation)
+        ):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )

@@ -30,7 +30,7 @@ from gaphor.core.styling.selectors import compile_selector_list
 
 
 class StyleNode(Protocol):
-    def local_name(self) -> str:
+    def name(self) -> str:
         ...
 
     def parent(self) -> Optional[StyleNode]:
