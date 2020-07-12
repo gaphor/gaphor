@@ -100,8 +100,8 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_undo_attribute(self):
-        from gaphor.core.modeling.properties import attribute
         from gaphor.core.modeling import Element
+        from gaphor.core.modeling.properties import attribute
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
@@ -127,8 +127,8 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_undo_association_1_x(self):
-        from gaphor.core.modeling.properties import association
         from gaphor.core.modeling import Element
+        from gaphor.core.modeling.properties import association
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
@@ -180,8 +180,8 @@ class TestUndoManager(TestCase):
         undo_manager.shutdown()
 
     def test_undo_association_1_n(self):
-        from gaphor.core.modeling.properties import association
         from gaphor.core.modeling import Element
+        from gaphor.core.modeling.properties import association
 
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)

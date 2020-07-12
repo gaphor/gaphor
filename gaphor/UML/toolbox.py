@@ -3,16 +3,16 @@
 
 from gaphas.item import SE
 
-import gaphor.UML.diagramitems as diagramitems
 from gaphor import UML, diagram
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
 from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.UML import diagramitems
 
 
 def namespace_config(new_item):
     subject = new_item.subject
-    diagram = new_item.canvas.diagram
+    diagram = new_item.diagram
     subject.package = diagram.namespace
     subject.name = f"New{type(subject).__name__}"
 

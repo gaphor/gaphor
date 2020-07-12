@@ -1,7 +1,20 @@
-from typing import Callable, List, Optional, Tuple, Union
+from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
+
+import tinycss2.color3
+from tinycss2.parser import parse_declaration_list
+
+from gaphor.core.styling.properties import (
+    FontStyle,
+    FontWeight,
+    Number,
+    Padding,
+    TextAlign,
+    TextDecoration,
+    VerticalAlign,
+)
 
 
-class _StyleDeclarations:
+class _Declarations:
     """
     Convert raw CSS declarations into Gaphor styling declarations.
     """
@@ -25,47 +38,142 @@ class _StyleDeclarations:
                 return func(property, value)
 
 
-StyleDeclarations = _StyleDeclarations()
+declarations = _Declarations()
 
 
-def parse_declarations(rule):
-    NAME = 0
-    VALUE = 1
+def parse_declarations(declaration_list):
 
-    if rule.type != "qualified-rule":
-        return
+    for decl in parse_declaration_list(
+        declaration_list, skip_comments=True, skip_whitespace=True
+    ):
+        if decl.type == "declaration":
+            name = decl.lower_name
+            yield (
+                name,
+                declarations(name, parse_value(decl.value)),
+            )
+        elif decl.type == "error":
+            yield "error", decl
 
-    state = NAME
-    name: Optional[str] = None
-    value: List[Union[str, float]] = []
-    for token in rule.content:
-        if token.type == "literal" and token.value == ":":
-            state = VALUE
-        elif (token.type == "literal" and token.value == ";") or (
-            name and value and token.type == "whitespace" and "\n" in token.value
-        ):
-            yield (name, value[0] if len(value) == 1 else tuple(value))
-            state = NAME
-            name = None
-            value = []
-        elif token.type in ("whitespace", "comment"):
+
+def parse_value(tokens):
+    value = []
+
+    for token in tokens:
+        if token.type in ("whitespace", "comment"):
             pass
         elif token.type in ("ident", "string"):
-            if state == NAME:
-                name = token.value
-            elif state == VALUE:
-                value.append(token.value)
+            value.append(token.value)
         elif token.type in ("dimension", "number"):
-            assert state == VALUE
             value.append(token.int_value if token.is_integer else token.value)
         elif token.type == "hash":
-            assert state == VALUE
             value.append("#" + token.value)
         elif token.type == "function":
-            assert state == VALUE
             value.append(token)
         else:
-            raise ValueError(f"Can not handle node type {token.type}")
+            value.append(token.serialize())
 
-    if state == VALUE and value:
-        yield (name, value[0] if len(value) == 1 else tuple(value))
+    return value[0] if len(value) == 1 else tuple(value)
+
+
+number = (int, float)
+
+
+def _clip_color(c):
+    if c < 0:
+        return 0
+    if c > 1:
+        return 1
+    return c
+
+
+@declarations.register("background-color", "color", "highlight-color", "text-color")
+def parse_color(prop, value):
+    try:
+        color = tinycss2.color3.parse_color(value)
+    except AttributeError:
+        return None
+    return tuple(_clip_color(v) for v in color) if color else None
+
+
+@declarations.register(
+    "min-width",
+    "min-height",
+    "line-width",
+    "vertical-spacing",
+    "border-radius",
+    "font-size",
+)
+def parse_positive_number(prop, value) -> Optional[Number]:
+    if isinstance(value, number) and value > 0:
+        return value
+    return None
+
+
+@declarations.register("font-family")
+def parse_string(prop, value) -> Optional[str]:
+    if isinstance(value, str):
+        return value
+    elif value:
+        return " ".join(str(v) for v in value)
+    return None
+
+
+@declarations.register("padding")
+def parse_padding(prop, value) -> Optional[Padding]:
+    if isinstance(value, number):
+        return (value, value, value, value)
+    n = len(value)
+    if not n or any(not isinstance(v, number) for v in value):
+        return None
+
+    return (
+        value[0],
+        value[1],
+        value[2] if n > 2 else value[0],
+        value[3] if n > 3 else value[1],
+    )
+
+
+@declarations.register("dash-style")
+def parse_sequence_numbers(
+    prop, value: Union[Number, Sequence[Number]]
+) -> Optional[Sequence[Number]]:
+    if isinstance(value, number):
+        return (value, value)
+    elif all(isinstance(v, (int, float)) for v in value):
+        return value
+    return None
+
+
+enum_styles: Dict[str, Dict[str, object]] = {
+    "font-style": {e.value: e for e in FontStyle},
+    "font-weight": {e.value: e for e in FontWeight},
+    "text-decoration": {e.value: e for e in TextDecoration},
+    "text-align": {e.value: e for e in TextAlign},
+    "vertical-align": {e.value: e for e in VerticalAlign},
+}
+
+
+@declarations.register(*enum_styles.keys())
+def parse_enum(prop, value):
+    return enum_styles[prop].get(value)
+
+
+@declarations.register("line-style")
+def parse_line_style(prop, value) -> float:
+    if value == "sloppy":
+        return 0.5
+    elif isinstance(value, tuple):
+        style, factor = value
+        if style == "sloppy":
+            if not isinstance(factor, number):
+                return 0.5
+            if factor < -2.0:
+                return -2.0
+            elif factor > 2.0:
+                return 2.0
+            else:
+                return float(factor)
+    # "normal" value:
+    return 0.0

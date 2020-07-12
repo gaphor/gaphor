@@ -7,18 +7,144 @@ from __future__ import annotations
 
 import logging
 import uuid
-from typing import TYPE_CHECKING
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Iterator, Optional, Sequence, Union
 
 import gaphas
 
 from gaphor.core.modeling.coremodel import PackageableElement
+from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
+from gaphor.core.modeling.presentation import Presentation
+from gaphor.core.modeling.stylesheet import StyleSheet
+from gaphor.core.styling import FontStyle, Style, StyleNode, TextAlign
 
 if TYPE_CHECKING:
+    from cairo import Context as CairoContext
+
     from gaphor.core.modeling.properties import relation_one
     from gaphor.UML import Package
 
 log = logging.getLogger(__name__)
+
+
+# Not all styles are requires: "background-color", "font-weight",
+# "text-color", and "text-decoration" are optional (can default to None)
+FALLBACK_STYLE: Style = {
+    "color": (0, 0, 0, 1),
+    "font-family": "sans",
+    "font-size": 14,
+    "font-style": FontStyle.NORMAL,
+    "highlight-color": (0, 0, 1, 0.4),
+    "line-width": 2,
+    "padding": (0, 0, 0, 0),
+    "text-align": TextAlign.CENTER,
+}
+
+
+@dataclass(frozen=True)
+class UpdateContext:
+    """
+    Context used when updating items (Presentation's).
+
+    Style contains the base style, no style alterations due to view state
+    (focus, hover, etc.).
+    """
+
+    style: Style
+
+
+@dataclass(frozen=True)
+class DrawContext:
+    """
+    Special context for draw()'ing the item. The draw-context contains
+    stuff like the cairo context and flags like selected and
+    focused.
+    """
+
+    cairo: CairoContext
+    style: Style
+    selected: bool
+    focused: bool
+    hovered: bool
+    dropzone: bool
+
+
+# From https://www.python.org/dev/peps/pep-0616/
+def removesuffix(self: str, suffix: str, /) -> str:
+    # suffix='' should not call self[:-0].
+    if suffix and self.endswith(suffix):
+        return self[: -len(suffix)]
+    else:
+        return self[:]
+
+
+class StyledDiagram:
+    def __init__(self, diagram: Diagram, view: Optional[gaphas.View] = None):
+        self.diagram = diagram
+        self.view = view
+
+    def name(self) -> str:
+        return "diagram"
+
+    def parent(self):
+        return None
+
+    def children(self) -> Iterator[StyledItem]:
+        view = self.view
+        return (StyledItem(item, view) for item in self.diagram.canvas.get_root_items())
+
+    def attribute(self, name: str) -> str:
+        return ""
+
+    def state(self):
+        return ()
+
+
+class StyledItem:
+    """
+    Wrapper to allow style information to be retrieved.
+
+    For convenience, a view can be added. The view will provide
+    pseudo-classes for the item (focus, hover, etc.)
+    """
+
+    def __init__(self, item: Presentation, view: Optional[gaphas.View] = None):
+        assert item.canvas
+        self.item = item
+        self.canvas = item.canvas
+        self.view = view
+
+    def name(self) -> str:
+        return removesuffix(type(self.item).__name__, "Item").lower()
+
+    def parent(self) -> Union[StyledItem, StyledDiagram]:
+        parent = self.canvas.get_parent(self.item)
+        return (
+            StyledItem(parent, self.view)
+            if parent
+            else StyledDiagram(self.item.diagram, self.view)
+        )
+
+    def children(self) -> Iterator[StyledItem]:
+        children = self.canvas.get_children(self.item)
+        view = self.view
+        return (StyledItem(child, view) for child in children)
+
+    def attribute(self, name: str) -> str:
+        return ""
+
+    def state(self) -> Sequence[str]:
+        view = self.view
+        if view:
+            item = self.item
+            return (
+                "active" if item in view.selected_items else "",
+                "focus" if item is view.focused_item else "",
+                "hover" if item is view.hovered_item else "",
+                "drop" if item is view.dropzone_item else "",
+            )
+        return ()
 
 
 class DiagramCanvas(gaphas.Canvas):
@@ -27,11 +153,13 @@ class DiagramCanvas(gaphas.Canvas):
     function can be applied to all root canvas items.  Canvas items can be
     selected with an optional expression filter."""
 
-    def __init__(self, diagram):
+    def __init__(self, diagram: Diagram):
         """Initialize the diagram canvas with the supplied diagram.  By default,
         updates are not blocked."""
 
-        super().__init__()
+        super().__init__(
+            lambda item: UpdateContext(style=diagram.style(StyledItem(item)))
+        )
         self._diagram = diagram
         self._block_updates = False
 
@@ -92,12 +220,30 @@ class Diagram(PackageableElement):
 
     package: relation_one[Package]
 
-    def __init__(self, id, model):
+    def __init__(
+        self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
+    ):
         """Initialize the diagram with an optional id and element model.
         The diagram also has a canvas."""
 
         super().__init__(id, model)
         self.canvas = DiagramCanvas(self)
+
+    @property
+    def styleSheet(self) -> Optional[StyleSheet]:
+        model = self.model
+        return next(model.select(StyleSheet), None)
+
+    def style(self, node: StyleNode) -> Style:
+        style_sheet = self.styleSheet
+        return (
+            {
+                **FALLBACK_STYLE,  # type: ignore[misc]
+                **style_sheet.match(node),
+            }
+            if style_sheet
+            else FALLBACK_STYLE
+        )
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
@@ -119,7 +265,9 @@ class Diagram(PackageableElement):
         return self.create_as(type, str(uuid.uuid1()), parent, subject)
 
     def create_as(self, type, id, parent=None, subject=None):
-        if not (type and issubclass(type, gaphas.Item)):
+        if not (
+            type and issubclass(type, gaphas.Item) and issubclass(type, Presentation)
+        ):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )

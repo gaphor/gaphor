@@ -7,7 +7,16 @@ from __future__ import annotations
 
 import logging
 import uuid
-from typing import TYPE_CHECKING, Callable, Iterator, Optional, Type, TypeVar, Union
+from typing import (
+    TYPE_CHECKING,
+    Callable,
+    Iterator,
+    Optional,
+    Type,
+    TypeVar,
+    Union,
+    overload,
+)
 
 from typing_extensions import Protocol
 
@@ -15,8 +24,8 @@ from gaphor.core.modeling.event import ElementUpdated
 from gaphor.core.modeling.properties import relation_many, relation_one, umlproperty
 
 if TYPE_CHECKING:
-    from gaphor.core.modeling.presentation import Presentation
     from gaphor.core.modeling.coremodel import Comment
+    from gaphor.core.modeling.presentation import Presentation
 
 __all__ = ["Element"]
 
@@ -194,9 +203,16 @@ class RepositoryProtocol(Protocol):
     def create_as(self, type: Type[T], id: str) -> T:
         ...
 
-    def select(
-        self, expression: Union[Callable[[Element], bool], Type[T], None] = None
-    ) -> Iterator[Element]:
+    @overload
+    def select(self, expression: Callable[[Element], bool]) -> Iterator[Element]:
+        ...
+
+    @overload
+    def select(self, expression: Type[T]) -> Iterator[T]:
+        ...
+
+    @overload
+    def select(self, expression: None) -> Iterator[Element]:
         ...
 
     def watcher(

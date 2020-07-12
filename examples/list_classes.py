@@ -7,7 +7,7 @@ with Gaphor.
 import optparse
 import sys
 
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor.application import Session
 
 # Setup command line options.

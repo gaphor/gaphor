@@ -2,10 +2,9 @@
 Test classes.
 """
 
-from gaphas.canvas import instant_cairo_context
-
 from gaphor import UML
-from gaphor.diagram.shapes import SizeContext
+from gaphor.core.modeling import UpdateContext
+from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.classes.klass import ClassItem
 
@@ -15,7 +14,7 @@ def compartments(item):
 
 
 def context():
-    return SizeContext(cairo=instant_cairo_context(), style={})
+    return UpdateContext(style=FALLBACK_STYLE)
 
 
 class ClassTestCase(TestCase):

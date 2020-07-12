@@ -34,7 +34,12 @@ def new_builder(*object_ids):
 
 DEFAULT_STYLE_SHEET = textwrap.dedent(
     """\
-    * {
+    diagram {
+     background-color: white;
+     line-style: normal;
+     /* line-style: sloppy 0.3; */
+    }
+    diagram * {
      background-color: beige;
     }
 
@@ -67,7 +72,8 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
      * highlight-color: Color
 
      Color can be a CSS3 color name,
-     a rgb(r, g, b), rgba(r, g, b, a)
+     a rgb(r, g, b), rgba(r, g, b, a),
+     hsl(h, s%, l%), hsla(h, s%, l%, a),
      or hex code (#ff00ff).
 
      Have fun!

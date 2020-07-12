@@ -1,8 +1,8 @@
 import pytest
 
-import gaphor.UML.diagramitems as diagramitems
 from gaphor.storage.parser import canvas, canvasitem, element
 from gaphor.storage.storage import load_elements
+from gaphor.UML import diagramitems
 
 
 @pytest.fixture

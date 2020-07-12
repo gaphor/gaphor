@@ -1,39 +1,72 @@
 from __future__ import annotations
 
 import operator
-from typing import Callable, Dict, Generator, List, Tuple, Union
+from typing import (
+    Callable,
+    Dict,
+    Generator,
+    Iterator,
+    List,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import tinycss2
-from typing_extensions import Literal
+from typing_extensions import Literal, Protocol
 
-from gaphor.core.styling.declarations import StyleDeclarations, parse_declarations
+from gaphor.core.styling.declarations import parse_declarations
 from gaphor.core.styling.parser import SelectorError
+from gaphor.core.styling.properties import (
+    FontStyle,
+    FontWeight,
+    Style,
+    TextAlign,
+    TextDecoration,
+    VerticalAlign,
+)
 from gaphor.core.styling.selectors import compile_selector_list
 
-MATCH_SORT_KEY = operator.itemgetter(0, 1)
+
+class StyleNode(Protocol):
+    def name(self) -> str:
+        ...
+
+    def parent(self) -> Optional[StyleNode]:
+        ...
+
+    def children(self) -> Iterator[StyleNode]:
+        ...
+
+    def attribute(self, name: str) -> str:
+        ...
+
+    def state(self) -> Sequence[str]:
+        ...
 
 
-def merge_styles(styles) -> Dict[str, object]:
-    style = {}
+def merge_styles(styles) -> Style:
+    style: Style = {}
     for s in styles:
         style.update(s)
     return style
 
 
 class CompiledStyleSheet:
-    def __init__(self, css):
+    def __init__(self, css: str):
         self.selectors = [
             (selspec[0], selspec[1], order, declarations)
             for order, (selspec, declarations) in enumerate(parse_style_sheet(css))
             if selspec != "error"
         ]
 
-    def match(self, element) -> Dict[str, object]:
+    def match(self, node: StyleNode) -> Style:
         results = sorted(
             (
                 (specificity, order, declarations)
                 for pred, specificity, order, declarations in self.selectors
-                if pred(element)
+                if pred(node)
             ),
             key=MATCH_SORT_KEY,
         )
@@ -55,9 +88,12 @@ def parse_style_sheet(
     )
     for rule in rules:
         if rule.type == "error":
-            assert isinstance(rule, tinycss2.ast.ParseError)
             yield ("error", rule)  # type: ignore[misc]
             continue
+
+        if rule.type != "qualified-rule":
+            continue
+
         try:
             selectors = compile_selector_list(rule.prelude)
         except SelectorError as e:
@@ -66,11 +102,11 @@ def parse_style_sheet(
 
         declaration = {
             prop: value
-            for prop, value in (
-                (prop, StyleDeclarations(prop, value))
-                for prop, value in parse_declarations(rule)
-            )
-            if value is not None
+            for prop, value in parse_declarations(rule.content)
+            if prop != "error" and value is not None
         }
 
         yield from ((selector, declaration) for selector in selectors)
+
+
+MATCH_SORT_KEY = operator.itemgetter(0, 1)

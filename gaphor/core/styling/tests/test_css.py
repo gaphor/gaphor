@@ -1,14 +1,11 @@
-from gaphor.core.styling import CompiledStyleSheet, StyleDeclarations, parse_style_sheet
+import pytest
+
+from gaphor.core.styling import CompiledStyleSheet, parse_style_sheet
 from gaphor.core.styling.tests.test_selector import Node
 
 
 def first_decl_block(css):
     _, value = next(parse_style_sheet(css))
-    return value
-
-
-@StyleDeclarations.register("test-padding", "test-font-size", "test-font-family")
-def dummy_style_declaration(prop, value):
     return value
 
 
@@ -22,45 +19,45 @@ def test_empty_css():
 def test_css_content_for_integer():
     css = """
     * {
-        test-font-size: 42;
+        font-size: 42;
     }
     """
     props = first_decl_block(css)
 
-    assert props["test-font-size"] == 42
+    assert props["font-size"] == 42
 
 
 def test_css_content_for_string():
     css = """
     * {
-        test-font-family: 'sans';
+        font-family: 'sans';
     }
     """
     props = first_decl_block(css)
 
-    assert props["test-font-family"] == "sans"
+    assert props["font-family"] == "sans"
 
 
 def test_css_content_for_ident():
     css = """
     * {
-        test-font-family: sans;
+        font-family: sans;
     }
     """
     props = first_decl_block(css)
 
-    assert props["test-font-family"] == "sans"
+    assert props["font-family"] == "sans"
 
 
 def test_css_content_for_tuple():
     css = """
     * {
-        test-padding: 1 2 3 4;
+        padding: 1 2 3 4;
     }
     """
     props = first_decl_block(css)
 
-    assert props["test-padding"] == (1.0, 2.0, 3.0, 4.0)
+    assert props["padding"] == (1.0, 2.0, 3.0, 4.0)
 
 
 def test_multiple_rules():
@@ -120,35 +117,35 @@ def test_invalid_selector():
 def test_css_declaration_without_semicolumn():
     css = """
     * {
-        test-font-family: 'sans'
+        font-family: 'sans'
     }
     """
     props = first_decl_block(css)
 
-    assert props.get("test-font-family") == "sans"
+    assert props.get("font-family") == "sans"
 
 
 def test_css_multiple_declarations_without_semicolumns():
     css = """
     * {
-        test-font-family: sans
-        test-font-size: 42
+        font-family: sans;
+        font-size: 42
     }
     """
     props = first_decl_block(css)
 
-    assert props.get("test-font-family") == "sans"
-    assert props.get("test-font-size") == 42
+    assert props.get("font-family") == "sans"
+    assert props.get("font-size") == 42
 
 
 def test_compiled_style_sheet():
     css = """
     * {
-        test-font-size: 42
-        test-font-family: overridden
+        font-size: 42;
+        font-family: overridden
     }
     mytype {
-        test-font-family: sans
+        font-family: sans
     }
     """
 
@@ -156,8 +153,8 @@ def test_compiled_style_sheet():
 
     props = compiled_style_sheet.match(Node("mytype"))
 
-    assert props.get("test-font-family") == "sans"
-    assert props.get("test-font-size") == 42
+    assert props.get("font-family") == "sans"
+    assert props.get("font-size") == 42
 
 
 def test_empty_compiled_style_sheet():
@@ -168,3 +165,45 @@ def test_empty_compiled_style_sheet():
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props == {}
+
+
+def test_color():
+    css = "mytype { color: #00ff00 }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(Node("mytype"))
+
+    assert props.get("color") == (0, 1, 0, 1)
+
+
+def test_color_typing_in_progress():
+    css = "mytype { color: # }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(Node("mytype"))
+
+    assert props.get("color") is None
+
+
+@pytest.mark.parametrize(
+    "css_value,result",
+    [
+        ["normal", 0.0],
+        ["sloppy", 0.5],
+        ["sloppy 0.3", 0.3],
+        ["sloppy -0.1", -0.1],
+        ["sloppy 2.1", 2.0],
+        ["sloppy -2.1", -2.0],
+        ["sloppy wrong", 0.5],
+    ],
+)
+def test_line_style(css_value, result):
+    css = f"mytype {{ line-style: {css_value} }}"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(Node("mytype"))
+
+    assert props.get("line-style") == result

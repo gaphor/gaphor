@@ -4,10 +4,10 @@ CommentItem diagram item
 
 
 from gaphor.core.modeling import Comment
+from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import TextAlign, VerticalAlign
 
 
 @represents(Comment)

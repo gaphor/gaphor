@@ -4,10 +4,10 @@ from typing import Sequence, Union
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
+from gaphor.core.styling import FontWeight, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontWeight, VerticalAlign
 from gaphor.UML.classes.stereotype import stereotype_compartments
 
 

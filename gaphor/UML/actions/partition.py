@@ -10,17 +10,10 @@ TODO: partition can be resized only horizontally or vertically, therefore
 from typing import List
 
 from gaphor import UML
+from gaphor.core.styling import VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import (
-    Box,
-    SizeContext,
-    Text,
-    cairo_state,
-    draw_highlight,
-    stroke,
-)
+from gaphor.diagram.shapes import Box, Text, cairo_state, draw_highlight, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import VerticalAlign
 from gaphor.UML.modelfactory import stereotypes_str
 
 
@@ -63,9 +56,7 @@ class PartitionItem(ElementPresentation, Named):
     def pre_update(self, context):
         assert self.canvas
 
-        self._header_size = self.shape.size(
-            SizeContext.from_context(context, self.style)
-        )
+        self._header_size = self.shape.size(context)
 
         # get subpartitions
         children: List[PartitionItem] = [

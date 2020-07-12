@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from typing import Optional, Type
+
     from gaphor.core.modeling import Element, Presentation
     from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 

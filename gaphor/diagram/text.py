@@ -2,54 +2,25 @@
 Support classes for dealing with text.
 """
 
-from enum import Enum
-from typing import Dict, Tuple, TypeVar, Union
+from typing import Tuple, Union
 
-import cairo
 import gi
 from gaphas.canvas import instant_cairo_context
 from gaphas.freehand import FreeHandCairoContext
 from gaphas.geometry import Rectangle
 from gaphas.painter import CairoBoundingBoxContext
 
+from gaphor.core.styling import FontStyle, FontWeight, Style, TextAlign, TextDecoration
+
 # fmt: off
 gi.require_version('PangoCairo', '1.0')  # noqa: isort:skip
 from gi.repository import GLib, Pango, PangoCairo  # noqa: isort:skip
 # fmt: on
 
-Font = Dict[str, object]
-
-
-class TextAlign(Enum):
-    LEFT = "left"
-    CENTER = "center"
-    RIGHT = "right"
-
-
-class VerticalAlign(Enum):
-    TOP = "top"
-    MIDDLE = "middle"
-    BOTTOM = "bottom"
-
-
-class FontStyle(Enum):
-    NORMAL = "normal"
-    ITALIC = "italic"
-
-
-class FontWeight(Enum):
-    NORMAL = "normal"
-    BOLD = "bold"
-
-
-class TextDecoration(Enum):
-    NONE = "none"
-    UNDERLINE = "underline"
-
 
 class Layout:
     def __init__(
-        self, text, font=None, text_align=TextAlign.CENTER, default_size=(0, 0),
+        self, text="", font=None, text_align=TextAlign.CENTER, default_size=(0, 0),
     ):
         self.layout = PangoCairo.create_layout(instant_cairo_context())
         self.underline = False
@@ -74,7 +45,7 @@ class Layout:
         if text_align:
             self.set_alignment(text_align)
 
-    def set_font(self, font: Font):
+    def set_font(self, font: Style):
         font_family = font.get("font-family")
         font_size = font.get("font-size")
         font_weight = font.get("font-weight")
@@ -139,13 +110,10 @@ class Layout:
         self.set_width(self.width)
         return self.layout.get_pixel_size()
 
-    # Maybe use x, y here?
     def show_layout(self, cr, width=None, default_size=None):
         layout = self.layout
         if not self.text:
             return default_size or self.default_size
-        w, h = self.size()
-
         if width is not None:
             layout.set_width(int(width * Pango.SCALE))
 
@@ -158,14 +126,11 @@ class Layout:
         else:
             PangoCairo.show_layout(cr, layout)
 
-        return (w, h)
-
 
 def focus_box_pos(
     bounding_box: Rectangle,
     text_size: Tuple[Union[float, int], Union[float, int]],
     text_align: TextAlign,
-    vertical_align: VerticalAlign,
 ) -> Tuple[int, int]:
     """Calculate the focus box position based on alignment style."""
     x, y, width, height = bounding_box
@@ -176,10 +141,7 @@ def focus_box_pos(
     elif text_align is TextAlign.RIGHT:
         x += width - w
 
-    if vertical_align is VerticalAlign.MIDDLE:
-        y += (height - h) / 2
-    elif vertical_align is VerticalAlign.BOTTOM:
-        y += height
+    y += (height - h) / 2
 
     return x, y
 

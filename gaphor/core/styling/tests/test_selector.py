@@ -4,8 +4,8 @@ from gaphor.core.styling import parse_style_sheet
 
 
 class Node:
-    def __init__(self, local_name, parent=None, children=None, attributes={}, state=()):
-        self._local_name = local_name
+    def __init__(self, name, parent=None, children=None, attributes={}, state=()):
+        self._name = name
         self._parent = parent
         self._children = children or []
         self._attributes = attributes
@@ -16,14 +16,14 @@ class Node:
         for c in self._children:
             c._parent = self
 
-    def local_name(self):
-        return self._local_name
+    def name(self):
+        return self._name
 
     def parent(self):
         return self._parent
 
     def children(self):
-        yield from self._children
+        return iter(self._children)
 
     def attribute(self, name):
         return self._attributes.get(name, "")
@@ -36,8 +36,8 @@ def test_node_test_object_parent_child():
     c = Node("child")
     p = Node("parent", children=[c])
 
-    assert c.local_name() == "child"
-    assert p.local_name() == "parent"
+    assert c.name() == "child"
+    assert p.name() == "parent"
     assert c.parent() is p
     assert c in p.children()
 
@@ -46,8 +46,8 @@ def test_node_test_object_child_parent():
     p = Node("parent")
     c = Node("child", parent=p)
 
-    assert c.local_name() == "child"
-    assert p.local_name() == "parent"
+    assert c.name() == "child"
+    assert p.name() == "parent"
     assert c.parent() is p
     assert c in p.children()
 
@@ -197,7 +197,7 @@ def test_empty_pseudo_selector_with_name():
 
 
 @pytest.mark.parametrize(
-    "state", ["root", "hovered", "active", "drop"],
+    "state", ["root", "hover", "focus", "active", "drop"],
 )
 def test_hovered_pseudo_selector(state):
 
@@ -211,27 +211,27 @@ def test_hovered_pseudo_selector(state):
 
 
 def test_is_pseudo_selector():
-    css = "classitem:is(:hovered, :active) {}"
+    css = "classitem:is(:hover, :active) {}"
 
     (selector, specificity), payload = next(parse_style_sheet(css))
 
-    assert selector(Node("classitem", state=("hovered",)))
+    assert selector(Node("classitem", state=("hover",)))
     assert selector(Node("classitem", state=("active",)))
-    assert selector(Node("classitem", state=("hovered", "active")))
+    assert selector(Node("classitem", state=("hover", "active")))
     assert specificity == (0, 1, 1)
     assert not selector(Node("classitem"))
 
 
 def test_not_pseudo_selector():
-    css = "classitem:not(:hovered) {}"
+    css = "classitem:not(:hover) {}"
 
     (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(Node("classitem"))
     assert selector(Node("classitem", state=("active")))
     assert specificity == (0, 1, 1)
-    assert not selector(Node("classitem", state=("hovered",)))
-    assert not selector(Node("classitem", state=("hovered", "active")))
+    assert not selector(Node("classitem", state=("hover",)))
+    assert not selector(Node("classitem", state=("hover", "active")))
 
 
 def test_has_pseudo_selector():
@@ -279,12 +279,10 @@ def test_has_pseudo_selector_with_combinator_is_not_supported():
 
 
 def test_has_and_is_selector():
-    css = "node:has(:is(:hovered)) {}"
+    css = "node:has(:is(:hover)) {}"
 
     (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(
-        Node(
-            "node", children=[Node("foo", children=[Node("bar", state=("hovered",))])],
-        )
+        Node("node", children=[Node("foo", children=[Node("bar", state=("hover",))])],)
     )

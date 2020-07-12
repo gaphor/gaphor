@@ -9,10 +9,8 @@ from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import Named, postload_connect
 from gaphor.diagram.shapes import (
     Box,
-    DrawContext,
     EditableText,
     IconBox,
-    SizeContext,
     Text,
     TextAlign,
     VerticalAlign,
@@ -111,9 +109,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
             self._last_connected_side = side
             self.update_shapes()
 
-        self.shape.size(SizeContext.from_context(context, self.style))
+        self.shape.size(context)
 
     def draw(self, context):
-        self.shape.draw(
-            DrawContext.from_context(context, self.style), self.dimensions()
-        )
+        self.shape.draw(context, self.dimensions())

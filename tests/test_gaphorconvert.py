@@ -1,6 +1,6 @@
 import pytest
 
-import gaphor.tools.gaphorconvert as gaphorconvert
+from gaphor.plugins.diagramexport import gaphorconvert
 
 
 def test_help_output(capsys):

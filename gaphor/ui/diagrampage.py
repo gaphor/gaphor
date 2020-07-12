@@ -8,7 +8,6 @@ from gaphas.painter import (
     BoundingBoxPainter,
     FocusedItemPainter,
     HandlePainter,
-    ItemPainter,
     PainterChain,
     ToolPainter,
 )
@@ -17,6 +16,7 @@ from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
 from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.core.modeling import Presentation, StyleSheet
+from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtools import (
@@ -25,8 +25,8 @@ from gaphor.diagram.diagramtools import (
     TransactionalToolChain,
 )
 from gaphor.diagram.event import DiagramItemPlaced
+from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.support import get_diagram_item
-from gaphor.services.properties import PropertyChanged
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramSelectionChanged
@@ -44,6 +44,8 @@ def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
 
 with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
     PLACEMENT_BASE = GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
+
+GtkView.set_css_name("diagramview")
 
 _placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
 
@@ -88,11 +90,13 @@ class DiagramPage:
         self.properties = properties
         self.diagram = diagram
         self.modeling_language = modeling_language
+
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
+        self.diagram_css: Optional[Gtk.CssProvider] = None
+
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_style_sheet_updated)
-        self.event_manager.subscribe(self._on_sloppy_lines)
         self.event_manager.subscribe(self._on_diagram_item_placed)
 
     title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
@@ -103,9 +107,6 @@ class DiagramPage:
     def get_view(self):
         return self.view
 
-    def get_canvas(self):
-        return self.diagram.canvas
-
     def construct(self):
         """
         Create the widget.
@@ -115,14 +116,14 @@ class DiagramPage:
         assert self.diagram
 
         view = GtkView(canvas=self.diagram.canvas)
-        try:
-            view.set_css_name("diagramview")
-        except AttributeError:
-            pass  # Gtk.Widget.set_css_name() is added in 3.20
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+        )
+        self.diagram_css = Gtk.CssProvider.new()
+        view.get_style_context().add_provider(
+            self.diagram_css, Gtk.STYLE_PROVIDER_PRIORITY_USER
         )
 
         scrolled_window = Gtk.ScrolledWindow()
@@ -142,10 +143,9 @@ class DiagramPage:
         self.widget.action_group = create_action_group(self, "diagram")
 
         self.widget.connect_after("key-press-event", self._on_shortcut_action)
-        self._on_sloppy_lines()
         self.select_tool("toolbox-pointer")
 
-        self.set_drawing_style(self.properties.get("diagram.sloppiness", 0))
+        self.set_drawing_style()
 
         return self.widget
 
@@ -184,14 +184,11 @@ class DiagramPage:
         if event.element is self.diagram:
             self.close()
 
-    @event_handler(PropertyChanged)
-    def _on_sloppy_lines(self, event: PropertyChanged = None):
-        if not event or event.key == "diagram.sloppiness":
-            self.set_drawing_style(event and event.new_value or 0.0)
-
     @event_handler(AttributeUpdated)
     def _on_style_sheet_updated(self, event: AttributeUpdated):
         if event.property is StyleSheet.styleSheet:
+            self.set_drawing_style()
+
             canvas = self.diagram.canvas
             for item in canvas.get_all_items():
                 canvas.request_update(item)
@@ -205,7 +202,6 @@ class DiagramPage:
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_style_sheet_updated)
-        self.event_manager.unsubscribe(self._on_sloppy_lines)
         self.event_manager.unsubscribe(self._on_diagram_item_placed)
         self.view = None
 
@@ -278,24 +274,30 @@ class DiagramPage:
                 GLib.Variant.new_string("toolbox-pointer")
             )
 
-    def set_drawing_style(self, sloppiness=0.0):
+    def set_drawing_style(self):
         """
-        Set the drawing style for the diagram. 0.0 is straight,
-        2.0 is very sloppy.  If the sloppiness is set to be anything
-        greater than 0.0, the FreeHandPainter instances will be used
-        for both the item painter and the box painter.  Otherwise, by
-        default, the ItemPainter is used for the item and
-        BoundingBoxPainter for the box.
+        Set the drawing style for the diagram based on the active style sheet.
         """
         assert self.view
+        assert self.diagram_css
+
+        style = self.diagram.style(StyledDiagram(self.diagram, self.view))
+
+        bg = style.get("background-color")
+        self.diagram_css.load_from_data(
+            f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}) }}".encode()
+            if bg
+            else "".encode()
+        )
+
+        sloppiness = style.get("line-style", 0.0)
+
+        item_painter = ItemPainter()
+
         view = self.view
 
         if sloppiness:
             item_painter = FreeHandPainter(ItemPainter(), sloppiness=sloppiness)
-        else:
-            item_painter = ItemPainter()
-
-        box_painter = BoundingBoxPainter(item_painter)
 
         view.painter = (
             PainterChain()
@@ -304,48 +306,9 @@ class DiagramPage:
             .append(FocusedItemPainter())
             .append(ToolPainter())
         )
-
-        view.bounding_box_painter = box_painter
+        view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
         view.queue_draw_refresh()
-
-    def may_remove_from_model(self, view):
-        """
-        Check if there are items which will be deleted from the model
-        (when their last views are deleted). If so request user
-        confirmation before deletion.
-        """
-        assert self.view
-        items = self.view.selected_items
-        last_in_model = [
-            i for i in items if i.subject and len(i.subject.presentation) == 1
-        ]
-        log.debug("Last in model: %s" % str(last_in_model))
-        if last_in_model:
-            return self.confirm_deletion_of_items(last_in_model)
-        return True
-
-    def confirm_deletion_of_items(self, last_in_model):
-        """
-        Request user confirmation on deleting the item from the model.
-        """
-        assert self.widget
-        s = ""
-        for item in last_in_model:
-            s += "%s\n" % str(item)
-
-        dialog = Gtk.MessageDialog(
-            None,
-            Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-            Gtk.MessageType.WARNING,
-            Gtk.ButtonsType.YES_NO,
-            "This will remove the following selected items from the model:\n%s\nAre you sure?"
-            % s,
-        )
-        dialog.set_transient_for(self.widget.get_toplevel())
-        value = dialog.run()
-        dialog.destroy()
-        return value == Gtk.ResponseType.YES
 
     def _on_key_press_event(self, view, event):
         """

@@ -43,8 +43,8 @@ def compile_compound_selector(selector: parser.CompoundSelector):
 
 
 @compile_node.register
-def compile_local_name_selector(selector: parser.LocalNameSelector):
-    return lambda el: el.local_name() == selector.lower_local_name
+def compile_name_selector(selector: parser.LocalNameSelector):
+    return lambda el: el.name() == selector.lower_local_name
 
 
 def ancestors(el):
@@ -115,7 +115,7 @@ def compile_pseudo_class_selector(selector: parser.PseudoClassSelector):
     name = selector.name
     if name == "empty":
         return lambda el: not next(el.children(), 0)
-    elif name in ("root", "hovered", "active", "drop"):
+    elif name in ("root", "hover", "focus", "active", "drop"):
         return lambda el: name in el.state()
     else:
         raise parser.SelectorError("Unknown pseudo-class", name)

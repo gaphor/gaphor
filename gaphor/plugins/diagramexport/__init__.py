@@ -5,11 +5,12 @@ import os
 
 import cairo
 from gaphas.freehand import FreeHandPainter
-from gaphas.painter import BoundingBoxPainter, ItemPainter
+from gaphas.painter import BoundingBoxPainter
 from gaphas.view import Context, View
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
+from gaphor.diagram.painter import ItemPainter
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
 
@@ -25,14 +26,15 @@ class DiagramExport(Service, ActionProvider):
     Service for exporting diagrams as images (SVG, PNG, PDF).
     """
 
-    def __init__(self, diagrams, properties, export_menu):
+    def __init__(self, diagrams=None, export_menu=None):
         self.diagrams = diagrams
-        self.properties = properties
         self.export_menu = export_menu
-        export_menu.add_actions(self)
+        if export_menu:
+            export_menu.add_actions(self)
 
     def shutdown(self):
-        self.export_menu.remove_actions(self)
+        if self.export_menu:
+            self.export_menu.remove_actions(self)
 
     def save_dialog(self, diagram, title, ext):
 
@@ -61,8 +63,10 @@ class DiagramExport(Service, ActionProvider):
         if save and filename:
             return filename
 
-    def update_painters(self, view):
-        sloppiness = self.properties.get("diagram.sloppiness", 0)
+    def update_painters(self, view, diagram):
+        style = diagram.style(diagram)
+
+        sloppiness = style.get("line-style", 0.0)
 
         if sloppiness:
             view.painter = FreeHandPainter(ItemPainter(), sloppiness)
@@ -70,10 +74,11 @@ class DiagramExport(Service, ActionProvider):
             view.painter = ItemPainter()
         view.bounding_box_painter = BoundingBoxPainter(view.painter)
 
-    def render(self, canvas, new_surface):
+    def render(self, diagram, new_surface):
+        canvas = diagram.canvas
         view = View(canvas)
 
-        self.update_painters(view)
+        self.update_painters(view, diagram)
 
         # Update bounding boxes with a temporary CairoContext
         # (used for stuff like calculating font metrics)
@@ -91,22 +96,22 @@ class DiagramExport(Service, ActionProvider):
         cr.show_page()
         return surface
 
-    def save_svg(self, filename, canvas):
-        surface = self.render(canvas, lambda w, h: cairo.SVGSurface(filename, w, h))
+    def save_svg(self, filename, diagram):
+        surface = self.render(diagram, lambda w, h: cairo.SVGSurface(filename, w, h))
         surface.flush()
         surface.finish()
 
-    def save_png(self, filename, canvas):
+    def save_png(self, filename, diagram):
         surface = self.render(
-            canvas,
+            diagram,
             lambda w, h: cairo.ImageSurface(
                 cairo.FORMAT_ARGB32, int(w + 1), int(h + 1)
             ),
         )
         surface.write_to_png(filename)
 
-    def save_pdf(self, filename, canvas):
-        surface = self.render(canvas, lambda w, h: cairo.PDFSurface(filename, w, h))
+    def save_pdf(self, filename, diagram):
+        surface = self.render(diagram, lambda w, h: cairo.PDFSurface(filename, w, h))
         surface.flush()
         surface.finish()
 
@@ -121,7 +126,7 @@ class DiagramExport(Service, ActionProvider):
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
-            self.save_svg(filename, diagram.canvas)
+            self.save_svg(filename, diagram)
 
     @action(
         name="file-export-png",
@@ -134,7 +139,7 @@ class DiagramExport(Service, ActionProvider):
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
-            self.save_png(filename, diagram.canvas)
+            self.save_png(filename, diagram)
 
     @action(
         name="file-export-pdf",
@@ -147,4 +152,4 @@ class DiagramExport(Service, ActionProvider):
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(diagram, title, ext)
         if filename:
-            self.save_pdf(filename, diagram.canvas)
+            self.save_pdf(filename, diagram)

@@ -3,10 +3,10 @@ Interaction diagram item.
 """
 
 from gaphor import UML
+from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import TextAlign, VerticalAlign
 from gaphor.UML.modelfactory import stereotypes_str
 
 

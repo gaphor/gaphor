@@ -5,6 +5,7 @@ Implementation of interface.
 import gaphas
 
 from gaphor import UML
+from gaphor.core.styling import Style
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text
 from gaphor.diagram.support import represents
@@ -23,6 +24,7 @@ class ImplementationItem(LinePresentation, Named):
         )
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self._inline_style: Style = {}
 
     def connected_to_folded_interface(self):
         assert isinstance(self.canvas, gaphas.Canvas)
@@ -36,9 +38,9 @@ class ImplementationItem(LinePresentation, Named):
     def post_update(self, context):
         super().post_update(context)
         if self.connected_to_folded_interface():
-            self.style = {"dash-style": ()}
+            self.style["dash-style"] = ()
         else:
-            self.style = {"dash-style": (7.0, 5.0)}
+            self.style["dash-style"] = (7.0, 5.0)
 
     def draw_head(self, context):
         cr = context.cairo

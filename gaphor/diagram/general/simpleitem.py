@@ -9,8 +9,7 @@ from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.shapes import DrawContext, stroke
-from gaphor.diagram.style import combined_style
+from gaphor.diagram.shapes import stroke
 
 
 class Line(Presentation, _Line):
@@ -50,7 +49,7 @@ class Line(Presentation, _Line):
 
     def draw(self, context):
         cr = context.cairo
-        style = combined_style(self.style)
+        style = context.style
         self.line_width = style["line-width"]
         if style["color"]:
             cr.set_source_rgba(*style["color"])
@@ -88,7 +87,7 @@ class Box(Presentation, Element):
         cr = context.cairo
         nw = self._handles[NW]
         cr.rectangle(nw.pos.x, nw.pos.y, self.width, self.height)
-        stroke(DrawContext.from_context(context, self.style))
+        stroke(context)
 
 
 class Ellipse(Presentation, Element):
@@ -122,4 +121,4 @@ class Ellipse(Presentation, Element):
 
         cr.move_to(self.width, ry)
         path_ellipse(cr, rx, ry, self.width, self.height)
-        stroke(DrawContext.from_context(context, self.style))
+        stroke(context)

@@ -1,4 +1,4 @@
-import gaphor.UML as UML
+from gaphor import UML
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 

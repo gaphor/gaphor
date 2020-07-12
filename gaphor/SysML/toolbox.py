@@ -4,13 +4,13 @@ from enum import Enum
 
 from gaphas.item import SE
 
-import gaphor.SysML.diagramitems as sysml_items
-import gaphor.UML.diagramitems as uml_items
 from gaphor import UML, diagram
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
 from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML import sysml
+from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.toolbox import namespace_config
 
 

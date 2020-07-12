@@ -32,6 +32,7 @@ platforms:
    service_oriented
    event_system
    modeling_language
+   style_sheets
    transaction
    items
 
