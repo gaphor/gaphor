@@ -66,8 +66,8 @@ def test_class_association_undo_redo(element_factory, undo_manager):
     connect(a, a.head, ci1)
     connect(a, a.tail, ci2)
 
-    # Diagram, Association, 2x Class, Property, LiteralSpecification
-    assert 6 == len(element_factory.lselect())
+    # Diagram, Association, 2x Class, Property, LiteralSpecification, StyleSheet
+    assert 7 == len(element_factory.lselect())
     assert 14 == len(diagram.canvas.solver.constraints)
 
     @transactional

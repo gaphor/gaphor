@@ -306,8 +306,8 @@ class AssociationConnectorTestCase(TestCase):
         self.connect(asc, asc.tail, c2)
         assert asc.subject is not None
 
-        # Diagram, Class *2, Property *2, Association
-        self.assertEqual(6, len(list(self.element_factory.select())))
+        # Diagram, Class *2, Property *2, Association, StyleSheet
+        self.assertEqual(7, len(list(self.element_factory.select())))
         assert asc.head_end.subject is not None
         assert asc.tail_end.subject is not None
 
