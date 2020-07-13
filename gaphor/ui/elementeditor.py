@@ -2,7 +2,6 @@
 
 import importlib.resources
 import logging
-import textwrap
 from typing import Optional
 
 from gi.repository import GLib, Gtk
@@ -14,7 +13,6 @@ from gaphor.core.modeling.event import (
     AssociationUpdated,
     AttributeUpdated,
     ElementCreated,
-    ElementDeleted,
     ModelReady,
 )
 from gaphor.diagram.propertypages import PropertyPages
@@ -30,57 +28,6 @@ def new_builder(*object_ids):
     with importlib.resources.path("gaphor.ui", "elementeditor.glade") as glade_file:
         builder.add_objects_from_file(str(glade_file), object_ids)
     return builder
-
-
-DEFAULT_STYLE_SHEET = textwrap.dedent(
-    """\
-    diagram {
-     background-color: white;
-     line-style: normal;
-     /* line-style: sloppy 0.3; */
-    }
-    diagram * {
-     background-color: beige;
-    }
-
-    /****
-     Here you can edit the
-     style of the model.
-     Gaphor supports a
-     subset of CSS3.
-
-     The following proper-
-     ties are supported:
-
-     * padding: Padding
-     * min-width: Number
-     * min-height: Number
-     * line-width: Number
-     * vertical-spacing: Number
-     * border-radius: Number
-     * background-color: Color
-     * font-family: Text
-     * font-size: Number
-     * font-style: normal|italic
-     * font-weight: normal|bold
-     * text-decoration: none|underline
-     * text-align: left|center|right
-     * text-color: Color
-     * color: Color
-     * vertical-align: top|middle|bottom
-     * dash-style: Sequence[Number]
-     * highlight-color: Color
-
-     Color can be a CSS3 color name,
-     a rgb(r, g, b), rgba(r, g, b, a),
-     hsl(h, s%, l%), hsla(h, s%, l%, a),
-     or hex code (#ff00ff).
-
-     Have fun!
-
-    ****/
-    """
-)
 
 
 class DelayedFunction:
@@ -141,10 +88,6 @@ class ElementEditor(UIComponent, ActionProvider):
     @action(name="show-settings", state=False)
     def toggle_editor_settings(self, active):
         self.editor_stack.set_visible_child_name("settings" if active else "editors")
-
-    @action(name="enable-style-sheet", state=False)
-    def toggle_enable_style_sheet(self, active):
-        self.settings.toggle_enable_style_sheet(active)
 
 
 class EditorStack:
@@ -287,41 +230,24 @@ class SettingsStack:
 
         self._style_sheet_update = DelayedFunction(800, tx_update_style_sheet)
         self._in_update = 0
-        self.css = DEFAULT_STYLE_SHEET
 
     def open(self, builder):
-        self.enable_style_sheet = builder.get_object("enable-style-sheet")
         self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
         self.style_sheet_view = builder.get_object("style-sheet-view")
 
         self.event_manager.subscribe(self._model_ready)
+        self.event_manager.subscribe(self._style_sheet_created)
         self.event_manager.subscribe(self._style_sheet_changed)
-        self.event_manager.subscribe(self._style_sheet_created_or_deleted)
         self.style_sheet_buffer.connect("changed", self.on_style_sheet_changed)
 
     def close(self):
         self.event_manager.unsubscribe(self._model_ready)
         self.event_manager.unsubscribe(self._style_sheet_changed)
-        self.event_manager.unsubscribe(self._style_sheet_created_or_deleted)
+        self.event_manager.unsubscribe(self._style_sheet_created)
 
     @property
     def style_sheet(self):
-        style_sheets = self.element_factory.lselect(StyleSheet)
-        return style_sheets[0] if style_sheets else None
-
-    def toggle_enable_style_sheet(self, active):
-        style_sheet = self.style_sheet
-        if active and not style_sheet:
-            with Transaction(self.event_manager):
-                style_sheet = self.element_factory.create(StyleSheet)
-                style_sheet.styleSheet = self.css
-        elif not active and style_sheet:
-            with Transaction(self.event_manager):
-                for style_sheet in self.element_factory.lselect(StyleSheet):
-                    self.css = style_sheet.styleSheet
-                    # Resetting the style sheet will trigger an update on diagrams
-                    style_sheet.styleSheet = ""
-                    style_sheet.unlink()
+        return next(self.element_factory.select(StyleSheet), None)
 
     def on_style_sheet_changed(self, buffer):
         style_sheet = self.style_sheet
@@ -332,29 +258,25 @@ class SettingsStack:
 
             self._style_sheet_update(style_sheet, text)
 
-    @event_handler(ModelReady)
-    def _model_ready(self, event):
-        style_sheet = self.style_sheet
-
-        self.enable_style_sheet.set_active(bool(style_sheet))
-
-        self._in_update = 1
-        self.style_sheet_buffer.set_text(style_sheet.styleSheet if style_sheet else "")
-        self._in_update = 0
-
-    @event_handler(AttributeUpdated)
-    def _style_sheet_changed(self, event):
+    def update_text(self):
         style_sheet = self.style_sheet
         if not style_sheet or self._in_update:
             return
 
         self._in_update = 1
-        self.style_sheet_buffer.set_text(
-            (style_sheet.styleSheet or "") if style_sheet else ""
-        )
+        self.style_sheet_buffer.set_text(style_sheet.styleSheet or "")
         self._in_update = 0
 
-    @event_handler(ElementCreated, ElementDeleted)
-    def _style_sheet_created_or_deleted(self, event: ElementDeleted):
+    @event_handler(ModelReady)
+    def _model_ready(self, event):
+        self.update_text()
+
+    @event_handler(ElementCreated)
+    def _style_sheet_created(self, event):
         if isinstance(event.element, StyleSheet):
-            self.enable_style_sheet.set_active(bool(self.style_sheet))
+            self.update_text()
+
+    @event_handler(AttributeUpdated)
+    def _style_sheet_changed(self, event):
+        if event.property is StyleSheet.styleSheet:
+            self.update_text()

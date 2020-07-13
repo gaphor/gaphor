@@ -6,6 +6,7 @@ The DiagramCanvas class extends the gaphas.Canvas class.
 from __future__ import annotations
 
 import logging
+import textwrap
 import uuid
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Iterator, Optional, Sequence, Union
@@ -17,7 +18,7 @@ from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.core.styling import FontStyle, Style, StyleNode, TextAlign
+from gaphor.core.styling import Style, StyleNode
 
 if TYPE_CHECKING:
     from cairo import Context as CairoContext
@@ -34,12 +35,31 @@ FALLBACK_STYLE: Style = {
     "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
-    "font-style": FontStyle.NORMAL,
     "highlight-color": (0, 0, 1, 0.4),
     "line-width": 2,
     "padding": (0, 0, 0, 0),
-    "text-align": TextAlign.CENTER,
 }
+
+
+DEFAULT_STYLE_SHEET = textwrap.dedent(
+    """\
+    diagram {
+     background-color: white;
+     line-style: normal;
+     /* line-style: sloppy 0.3; */
+    }
+
+    diagram * {
+     background-color: transparent;
+     color: black;
+     font-family: sans;
+     font-size: 14;
+     highlight-color: rgba(0, 0, 255, 0.4);
+     line-width: 2;
+     padding: 0;
+    }
+    """
+)
 
 
 @dataclass(frozen=True)
@@ -232,18 +252,18 @@ class Diagram(PackageableElement):
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
         model = self.model
-        return next(model.select(StyleSheet), None)
+        style_sheet = next(model.select(StyleSheet), None)
+        if not style_sheet:
+            style_sheet = self.model.create(StyleSheet)
+            style_sheet.styleSheet = DEFAULT_STYLE_SHEET
+        return style_sheet
 
     def style(self, node: StyleNode) -> Style:
         style_sheet = self.styleSheet
-        return (
-            {
-                **FALLBACK_STYLE,  # type: ignore[misc]
-                **style_sheet.match(node),
-            }
-            if style_sheet
-            else FALLBACK_STYLE
-        )
+        return {
+            **FALLBACK_STYLE,  # type: ignore[misc]
+            **style_sheet.match(node),
+        }
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""

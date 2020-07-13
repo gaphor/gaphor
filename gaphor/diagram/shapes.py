@@ -259,7 +259,7 @@ class Text:
         style = combined_style(context.style, self._inline_style)
         min_w = style.get("min-width", 0)
         min_h = style.get("min-height", 0)
-        text_align = style["text-align"]
+        text_align = style.get("text-align", TextAlign.CENTER)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
 
         layout = self._layout
@@ -323,7 +323,7 @@ class EditableText(Text):
         style = combined_style(context.style, self._inline_style)
 
         text_box = self.text_box(style, bounding_box)
-        text_align = style["text-align"]
+        text_align = style.get("text-align", TextAlign.CENTER)
         focus_box = self.focus_box
         x, y = focus_box_pos(text_box, (focus_box.width, focus_box.height), text_align)
         focus_box.x = x
