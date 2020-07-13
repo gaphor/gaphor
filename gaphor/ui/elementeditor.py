@@ -56,6 +56,7 @@ class ElementEditor(UIComponent, ActionProvider):
         """Constructor. Build the action group for the element editor window.
         This will place a button for opening the window in the toolbar.
         The widget attribute is a PropertyEditor."""
+        self.properties = properties
         self.editors = EditorStack(event_manager, diagrams, properties)
         self.settings = SettingsStack(event_manager, element_factory)
 
@@ -88,6 +89,13 @@ class ElementEditor(UIComponent, ActionProvider):
     @action(name="show-settings", state=False)
     def toggle_editor_settings(self, active):
         self.editor_stack.set_visible_child_name("settings" if active else "editors")
+
+    @action(
+        name="reset-tool-after-create",
+        state=lambda self: self.properties.get("reset-tool-after-create", True),
+    )
+    def reset_tool_after_create(self, active):
+        self.properties.set("reset-tool-after-create", active)
 
 
 class EditorStack:

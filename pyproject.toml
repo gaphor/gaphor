@@ -77,7 +77,6 @@ gaphorconvert = 'gaphor.plugins.diagramexport.gaphorconvert:main'
 "file_manager" = "gaphor.ui.filemanager:FileManager"
 "recent_files" = "gaphor.ui.recentfiles:RecentFiles"
 "main_window" = "gaphor.ui.mainwindow:MainWindow"
-"preferences" = "gaphor.ui.preferences:Preferences"
 "export_menu" = "gaphor.ui.menufragment:MenuFragment"
 "tools_menu" = "gaphor.ui.menufragment:MenuFragment"
 "copy" = "gaphor.services.copyservice:CopyService"
