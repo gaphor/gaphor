@@ -10,6 +10,7 @@ from gaphas.view import Context, View
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
+from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.diagram.painter import ItemPainter
 from gaphor.ui.filedialog import FileDialog
 from gaphor.ui.questiondialog import QuestionDialog
@@ -64,7 +65,7 @@ class DiagramExport(Service, ActionProvider):
             return filename
 
     def update_painters(self, view, diagram):
-        style = diagram.style(diagram)
+        style = diagram.style(StyledDiagram(diagram))
 
         sloppiness = style.get("line-style", 0.0)
 

@@ -329,14 +329,14 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                 <property name="margin_left">6</property>
                 <property name="margin_right">6</property>
                 <property name="margin_top">12</property>
-                <property name="margin_bottom">6</property>
+                <property name="margin_bottom">12</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Style sheet</property>
+                    <property name="label" translatable="yes">Preferences</property>
                     <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
@@ -356,24 +356,24 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Enable style sheet</property>
+                        <property name="label" translatable="yes">Reset tool automatically</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
+                        <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSwitch" id="enable-style-sheet">
+                      <object class="GtkSwitch">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="action_name">win.enable-style-sheet</property>
+                        <property name="action_name">win.reset-tool-after-create</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="pack_type">end</property>
+                        <property name="fill">False</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
@@ -382,6 +382,23 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">6</property>
+                    <property name="label" translatable="yes">Style sheet</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -401,7 +418,23 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">🔗 &lt;a href="https://gaphor.readthedocs.io/en/latest/style_sheets.html"&gt;Style sheets in Gaphor&lt;/a&gt;</property>
+                    <property name="use_markup">True</property>
+                    <property name="wrap">True</property>
+                    <property name="max_width_chars">28</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>

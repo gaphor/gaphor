@@ -110,7 +110,7 @@ class StorageTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        assert len(self.element_factory.lselect()) == 5
+        assert len(self.element_factory.lselect()) == 6
         assert len(self.element_factory.lselect(UML.Package)) == 1
         assert len(self.element_factory.lselect(UML.Diagram)) == 1
         d = self.element_factory.lselect(UML.Diagram)[0]
@@ -173,7 +173,7 @@ class StorageTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        assert len(self.element_factory.lselect()) == 4
+        assert len(self.element_factory.lselect()) == 5
         assert len(self.element_factory.lselect(UML.Package)) == 1
         assert len(self.element_factory.lselect(UML.Diagram)) == 1
         d = self.element_factory.lselect(UML.Diagram)[0]

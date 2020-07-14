@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="0.17.2">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.3.0">
 <Package id="DCE:658E43CC-3A1D-11DC-8B61-000D93868322">
 <name>
 <val>New model</val>
@@ -56,4 +56,24 @@
 </item>
 </canvas>
 </Diagram>
+<StyleSheet id="d8c43f36-c545-11ea-9af2-f5ca580d221e">
+<styleSheet>
+<val>diagram {
+ background-color: white;
+ line-style: normal;
+ /* line-style: sloppy 0.3; */
+}
+
+diagram * {
+ background-color: transparent;
+ color: black;
+ font-family: sans;
+ font-size: 14;
+ highlight-color: rgba(0, 0, 255, 0.4);
+ line-width: 2;
+ padding: 0;
+}
+</val>
+</styleSheet>
+</StyleSheet>
 </gaphor>
