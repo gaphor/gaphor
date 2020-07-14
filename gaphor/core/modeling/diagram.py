@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, Iterator, Optional, Sequence, Union
 
 import gaphas
 
-from gaphor.core.modeling.coremodel import PackageableElement
+from gaphor.core.modeling.coremodel import Element, PackageableElement
 from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
 from gaphor.core.modeling.presentation import Presentation
@@ -79,6 +79,37 @@ def removesuffix(self: str, suffix: str, /) -> str:
         return self[:]
 
 
+def rgetattr(obj, attrs, default=None):
+    a, *tail = attrs
+    v = getattr(obj, a, None)
+    print("")
+    if isinstance(v, (list, tuple)):
+        if tail:
+            for m in v:
+                yield from rgetattr(m, tail)
+        else:
+            yield from v
+    else:
+        if tail:
+            yield from rgetattr(v, tail)
+        elif v is not None:
+            yield v
+
+
+def attrstr(obj):
+    """Returns lower-case string representation of an attribute."""
+    if isinstance(obj, str):
+        return obj.lower()
+    elif isinstance(obj, (bool, int)):
+        return "true" if obj else ""
+    elif isinstance(obj, Element):
+        return obj.__class__.__name__.lower()
+    log.warn(
+        f'Can not make a string out of {obj}, returning "". Please raise an issue.'
+    )
+    return ""
+
+
 class StyledDiagram:
     def __init__(self, diagram: Diagram, view: Optional[gaphas.View] = None):
         self.diagram = diagram
@@ -95,7 +126,8 @@ class StyledDiagram:
         return (StyledItem(item, view) for item in self.diagram.canvas.get_root_items())
 
     def attribute(self, name: str) -> str:
-        return ""
+        fields = name.split(".")
+        return " ".join(map(attrstr, rgetattr(self.diagram, fields))).strip()
 
     def state(self):
         return ()
@@ -132,7 +164,11 @@ class StyledItem:
         return (StyledItem(child, view) for child in children)
 
     def attribute(self, name: str) -> str:
-        return ""
+        fields = name.split(".")
+        a = " ".join(map(attrstr, rgetattr(self.item, fields))).strip()
+        if (not a) and self.item.subject:
+            a = " ".join(map(attrstr, rgetattr(self.item.subject, fields))).strip()
+        return a
 
     def state(self) -> Sequence[str]:
         view = self.view
