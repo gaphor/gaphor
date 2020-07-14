@@ -85,7 +85,7 @@ def compile_combined_selector(selector: parser.CombinedSelector):
 def compile_attribute_selector(selector: parser.AttributeSelector):
     name = selector.lower_name
     operator = selector.operator
-    value = selector.value
+    value = selector.value and selector.value.lower()
 
     if operator is None:
         return lambda el: bool(el.attribute(name))

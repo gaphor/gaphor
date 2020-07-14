@@ -43,13 +43,7 @@ FALLBACK_STYLE: Style = {
 
 DEFAULT_STYLE_SHEET = textwrap.dedent(
     """\
-    diagram {
-     background-color: white;
-     line-style: normal;
-     /* line-style: sloppy 0.3; */
-    }
-
-    diagram * {
+    * {
      background-color: transparent;
      color: black;
      font-family: sans;
@@ -57,6 +51,12 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
      highlight-color: rgba(0, 0, 255, 0.4);
      line-width: 2;
      padding: 0;
+    }
+
+    diagram {
+     background-color: white;
+     line-style: normal;
+     /* line-style: sloppy 0.3; */
     }
     """
 )
@@ -102,7 +102,6 @@ def removesuffix(self: str, suffix: str, /) -> str:
 def rgetattr(obj, attrs, default=None):
     a, *tail = attrs
     v = getattr(obj, a, None)
-    print("")
     if isinstance(v, (list, tuple)):
         if tail:
             for m in v:
