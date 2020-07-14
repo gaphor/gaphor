@@ -9,10 +9,12 @@ import logging
 import textwrap
 import uuid
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import TYPE_CHECKING, Iterator, Optional, Sequence, Union
 
 import gaphas
 
+from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.coremodel import Element, PackageableElement
 from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
@@ -99,10 +101,20 @@ def removesuffix(self: str, suffix: str, /) -> str:
         return self[:]
 
 
-def rgetattr(obj, attrs, default=None):
-    a, *tail = attrs
-    v = getattr(obj, a, None)
-    if isinstance(v, (list, tuple)):
+@lru_cache()
+def attrname(obj, lower_name):
+    """Look up a real attribute name based on a lower case (normalized) name."""
+    for name in dir(obj):
+        if name.lower() == lower_name:
+            return name
+    return lower_name
+
+
+def rgetattr(obj, names):
+    """Recursively het a name, based on a list of names."""
+    name, *tail = names
+    v = getattr(obj, attrname(obj, name), None)
+    if isinstance(v, (collection, list, tuple)):
         if tail:
             for m in v:
                 yield from rgetattr(m, tail)

@@ -71,3 +71,16 @@ def test_multiple_nested_attribute_of_subject(diagram, element_factory):
     assert node.attribute("attribute") == "property property"
     assert node.attribute("attribute.name") in ("first second", "second first")
     assert node.attribute("attribute.notAnAttribute") == ""
+
+
+def test_mixed_case_attributes(diagram, element_factory):
+    class_ = element_factory.create(UML.Class)
+    attr1 = element_factory.create(UML.Property)
+    class_.ownedAttribute = attr1
+    classitem = diagram.create(ClassItem, subject=class_)
+
+    attr1.name = "first"
+    node = StyledItem(classitem)
+
+    assert node.attribute("ownedattribute") == "property"
+    assert node.attribute("ownedattribute.name") == "first"
