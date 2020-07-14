@@ -11,7 +11,7 @@ On the [W3C CSS home page](https://www.w3.org/Style/CSS/Overview.en.html), CSS i
 It's application goes well beyond web documents, though.
 Gaphor uses CSS to provide style elements to items in diagrams.
 CSS allows us, users of Gaphor, to change the visual appearance of our diagrams.
-Color and line styles can be changed to make it easier to grasp the diagrams.
+Color and line styles can be changed to make it easier to read the diagrams.
 
 Since we're dealing with a diagram, and not a HTML document, some CSS features have been left out.
 
@@ -30,7 +30,7 @@ Or change the color of a component, only when it's nested in a node:
 
 ``` css
 node component {
-  background-color: ...
+  background-color: skyblue
 }
 ```
 
