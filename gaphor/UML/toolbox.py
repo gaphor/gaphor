@@ -210,13 +210,6 @@ uml_toolbox_actions: ToolboxDefinition = (
                 ),
                 handle_index=SE,
             ),
-            ToolDef(
-                "toolbox-connector",
-                gettext("Connector"),
-                "gaphor-connector-symbolic",
-                "<Shift>C",
-                PlacementTool.new_item_factory(diagramitems.ConnectorItem),
-            ),
         ),
     ),
     (
