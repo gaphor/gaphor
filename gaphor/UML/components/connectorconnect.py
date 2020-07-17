@@ -18,6 +18,11 @@ from gaphor.UML.components.connector import ConnectorItem
 @Connector.register(ComponentItem, ConnectorItem)
 @Connector.register(InterfaceItem, ConnectorItem)
 class ConnectorConnectBase(BaseConnector):
+    """
+    This connector is left as is, mainly for backwards compatibility.
+    The Connector item has been removed from the Components tool
+    palette.
+    """
 
     element: Union[ComponentItem, InterfaceItem]
     line: ConnectorItem

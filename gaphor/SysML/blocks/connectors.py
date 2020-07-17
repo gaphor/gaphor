@@ -1,9 +1,11 @@
 from gaphas.connector import Handle, Port
 
-from gaphor.diagram.connectors import Connector
+from gaphor import UML
+from gaphor.diagram.connectors import Connector, UnaryRelationshipConnect
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
+from gaphor.UML.components import ConnectorItem
 
 
 @Connector.register(BlockItem, ProxyPortItem)
@@ -40,3 +42,35 @@ class BlockProxyPortConnector:
             del proxy_port.subject
             proxy_port.canvas.reparent(proxy_port, None)
             subject.unlink()
+
+
+@Connector.register(ProxyPortItem, ConnectorItem)
+class PropertyConnectorConnector(UnaryRelationshipConnect):
+    """Connect a Connector to a Port."""
+
+    line: ConnectorItem
+
+    def allow(self, handle, port):
+        element = self.element
+
+        # Element should be connected -> have a subject
+        if not isinstance(element.subject, UML.Port):
+            return None
+
+        return super().allow(handle, port)
+
+    def connect_subject(self, handle):
+        element = self.element
+        line = self.line
+
+        assert element.canvas
+
+        c1 = self.get_connected(line.head)
+        c2 = self.get_connected(line.tail)
+        if c1 and c2:
+
+            if not line.subject:
+                assert isinstance(c1.subject, UML.ConnectableElement)
+                assert isinstance(c2.subject, UML.ConnectableElement)
+                relation = UML.model.create_connector(c1.subject, c2.subject)
+                line.subject = relation

@@ -38,7 +38,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.Association)
-class AssociationItem(LinePresentation, Named):
+class AssociationItem(LinePresentation[UML.Association], Named):
     """
     AssociationItem represents associations.
     An AssociationItem has two AssociationEnd items. Each AssociationEnd item

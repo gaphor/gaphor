@@ -1,7 +1,7 @@
 import ast
 from typing import Optional
 
-from gaphas.connector import Handle
+from gaphas.connector import Handle, LinePort, Position
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import Item
 
@@ -39,7 +39,16 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
 
         h1 = Handle(connectable=True)
         self._handles.append(h1)
-        # self._ports.append(LinePort(h1.pos, h1.pos))
+
+        d = self.dimensions()
+        top_left = Position((d.x, d.y))
+        top_right = Position((d.x1, d.y))
+        bottom_right = Position((d.x1, d.y1))
+        bottom_left = Position((d.x, d.y1))
+        self._ports.append(LinePort(top_left, top_right))
+        self._ports.append(LinePort(top_right, bottom_right))
+        self._ports.append(LinePort(bottom_right, bottom_left))
+        self._ports.append(LinePort(bottom_left, top_left))
 
         self._last_connected_side = None
         self.watch("subject[NamedElement].name")

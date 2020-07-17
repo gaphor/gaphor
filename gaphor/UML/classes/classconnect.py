@@ -130,8 +130,8 @@ class AssociationConnect(UnaryRelationshipConnect):
                 ):
                     return
 
-            line.subject.memberEnd[0].type = c1.subject
-            line.subject.memberEnd[1].type = c2.subject
+            line.subject.memberEnd[0].type = c1.subject  # type: ignore[assignment]
+            line.subject.memberEnd[1].type = c2.subject  # type: ignore[assignment]
             UML.model.set_navigability(
                 line.subject,
                 line.head_end.subject,
