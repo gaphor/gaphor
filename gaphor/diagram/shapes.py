@@ -74,6 +74,8 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
 
     cr.close_path()
 
+    draw_highlight(context)
+
     stroke(context)
 
 
