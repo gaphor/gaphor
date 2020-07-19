@@ -192,7 +192,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "toolbox-proxy-port",
                 gettext("Proxy Port"),
                 "gaphor-proxyport-symbolic",
-                "<Shift>Y",
+                "x",
                 PlacementTool.new_item_factory(sysml_items.ProxyPortItem),
             ),
         ),
@@ -230,7 +230,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "toolbox-trace-dependency",
                 gettext("Trace"),
                 "gaphor-trace-symbolic",
-                "<Shift>C",
+                "<Shift>E",
                 PlacementTool.new_item_factory(sysml_items.TraceItem),
             ),
             ToolDef(
