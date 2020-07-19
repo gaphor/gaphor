@@ -193,8 +193,6 @@ class PlacementTool(_PlacementTool):
             if parent and adapter.can_contain():
                 canvas = diagram.canvas
                 canvas.reparent(item, parent=parent)
-                m = canvas.get_matrix_c2i(parent)
-                item.matrix *= m
                 adapter.group()
 
             return item
@@ -335,8 +333,6 @@ class DropZoneInMotion(GuidedItemInMotion):
 
             if old_parent:
                 canvas.reparent(item, None)
-                m = canvas.get_matrix_i2c(old_parent)
-                item.matrix *= m
 
                 adapter = Group(old_parent, item)
                 if adapter:
@@ -346,8 +342,6 @@ class DropZoneInMotion(GuidedItemInMotion):
 
             if new_parent:
                 canvas.reparent(item, new_parent)
-                m = canvas.get_matrix_c2i(new_parent)
-                item.matrix *= m
 
                 adapter = Group(new_parent, item)
                 if adapter and adapter.can_contain():
