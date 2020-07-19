@@ -119,3 +119,32 @@ class PartsAndReferencesPage(PropertyPageBase):
     def _on_show_references_change(self, button, gparam):
         self.item.show_references = button.get_active()
         self.item.request_update()
+
+
+@PropertyPages.register(sysml.Property)
+class PropertyPropertyPage(PropertyPageBase):
+    """An editor for Properties (a.k.a. attributes)."""
+
+    order = 30
+
+    AGGREGATION = ("none", "shared", "composite")
+
+    def __init__(self, subject: sysml.Property):
+        super().__init__()
+        self.subject = subject
+
+    def construct(self):
+        if not self.subject:
+            return
+
+        builder = new_builder("property-editor")
+
+        aggregation = builder.get_object("aggregation")
+        aggregation.set_active(self.AGGREGATION.index(self.subject.aggregation))
+
+        builder.connect_signals({"aggregation-changed": (self._on_aggregation_change,)})
+        return builder.get_object("property-editor")
+
+    @transactional
+    def _on_aggregation_change(self, combo):
+        self.subject.aggregation = self.AGGREGATION[combo.get_active()]
