@@ -16,20 +16,6 @@
    width="793.70081">
   <defs
      id="defs4262">
-    <marker
-       inkscape:stockid="DiamondL"
-       orient="auto"
-       refY="0.0"
-       refX="0.0"
-       id="DiamondL"
-       style="overflow:visible"
-       inkscape:isstock="true">
-      <path
-         id="path1602"
-         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.8)" />
-    </marker>
     <inkscape:perspective
        id="perspective3756"
        inkscape:persp3d-origin="105 : 99 : 1"
@@ -42,16 +28,16 @@
      inkscape:document-rotation="0"
      showborder="false"
      inkscape:window-maximized="1"
-     inkscape:window-y="27"
-     inkscape:window-x="72"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
      inkscape:window-height="1016"
-     inkscape:window-width="1848"
+     inkscape:window-width="1920"
      units="px"
      showgrid="true"
-     inkscape:current-layer="composite-association"
+     inkscape:current-layer="decision-node"
      inkscape:document-units="px"
-     inkscape:cy="36.596519"
-     inkscape:cx="296.50292"
+     inkscape:cy="46.102996"
+     inkscape:cx="284.96115"
      inkscape:zoom="12.359994"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -997,11 +983,11 @@
        d="m 70.025569,19.074788 v 0.529167 h 1.323951 v 3.176033 h -1.323951 v 0.5271 h 1.5875 a 0.26460981,0.26460981 0 0 0 0.263549,-0.26355 v -3.7052 a 0.26460981,0.26460981 0 0 0 -0.263549,-0.26355 z" />
   </g>
   <g
+     sodipodi:insensitive="true"
      style="display:inline"
      inkscape:label="shared-association"
      id="shared-association"
-     inkscape:groupmode="layer"
-     sodipodi:insensitive="true">
+     inkscape:groupmode="layer">
     <path
        style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 79.853356,8.2316196 77.993088,8.73125 78.551657,6.8878217"
@@ -1020,6 +1006,7 @@
        sodipodi:nodetypes="ccccc" />
   </g>
   <g
+     sodipodi:insensitive="true"
      style="display:inline"
      inkscape:label="composite-association"
      id="composite-association"
@@ -1353,21 +1340,24 @@
      id="property"
      inkscape:groupmode="layer">
     <rect
-       ry="1.8860769e-06"
-       y="39.031242"
-       x="35.71875"
-       height="4.2333331"
-       width="4.2333331"
-       id="rect1294"
-       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <rect
-       ry="1.886076e-06"
-       y="40.354156"
-       x="36.777084"
-       height="1.8520852"
-       width="1.8520824"
-       id="rect1290"
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+       ry="0"
+       y="19.314583"
+       x="78.052078"
+       height="3.7041669"
+       width="3.7041667"
+       id="rect4893-7-3"
+       style="display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       id="text84-8-6"
+       y="22.397989"
+       x="78.682823"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         y="22.397989"
+         x="78.682823"
+         id="tspan456-7"
+         sodipodi:role="line"
+         style="stroke-width:0.264583">P</tspan></text>
   </g>
   <g
      sodipodi:insensitive="true"
@@ -1425,7 +1415,8 @@
      style="display:inline"
      inkscape:label="box"
      id="box"
-     inkscape:groupmode="layer">
+     inkscape:groupmode="layer"
+     sodipodi:insensitive="true">
     <path
        inkscape:connector-curvature="0"
        id="path908"
@@ -1540,11 +1531,11 @@
        style="fill:none;stroke:#000000;stroke-width:0.370417;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <g
-     sodipodi:insensitive="true"
      inkscape:groupmode="layer"
      id="block"
      inkscape:label="block"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <rect
        style="display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4893-7"
@@ -1843,6 +1834,7 @@
        style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <g
+     sodipodi:insensitive="true"
      style="display:inline"
      inkscape:label="decision-node"
      id="decision-node"
