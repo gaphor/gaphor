@@ -5,7 +5,7 @@ from gaphor.diagram.connectors import Connector
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
-from gaphor.SysML.blocks.connectors import BlockProxyPortConnector
+from gaphor.SysML.blocks.connectors import BlockProperyProxyPortConnector
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.UML.components import ConnectorItem
 
@@ -53,7 +53,7 @@ def connector_item(diagram):
 def test_connection_is_allowed(diagram, block_item, proxy_port_item):
     connector = Connector(block_item, proxy_port_item)
 
-    assert isinstance(connector, BlockProxyPortConnector)
+    assert isinstance(connector, BlockProperyProxyPortConnector)
     assert connector.allow(proxy_port_item.handles()[0], block_item.ports()[0])
 
 

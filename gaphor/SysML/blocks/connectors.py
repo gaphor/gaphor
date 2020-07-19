@@ -1,16 +1,22 @@
+from typing import Union
+
 from gaphas.connector import Handle, Port
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector, UnaryRelationshipConnect
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
+from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.UML.components import ConnectorItem
 
 
 @Connector.register(BlockItem, ProxyPortItem)
-class BlockProxyPortConnector:
-    def __init__(self, block: BlockItem, proxy_port: ProxyPortItem,) -> None:
+@Connector.register(PropertyItem, ProxyPortItem)
+class BlockProperyProxyPortConnector:
+    def __init__(
+        self, block: Union[BlockItem, PropertyItem], proxy_port: ProxyPortItem,
+    ) -> None:
         assert block.canvas is proxy_port.canvas
         self.block = block
         self.proxy_port = proxy_port
@@ -27,7 +33,8 @@ class BlockProxyPortConnector:
         proxy_port = self.proxy_port
         if not proxy_port.subject:
             proxy_port.subject = proxy_port.model.create(sysml.ProxyPort)
-        proxy_port.subject.encapsulatedClassifier = self.block.subject
+        if isinstance(self.block.subject, UML.EncapsulatedClassifer):
+            proxy_port.subject.encapsulatedClassifier = self.block.subject
 
         # This raises the item in the item hierarchy
         assert proxy_port.canvas
