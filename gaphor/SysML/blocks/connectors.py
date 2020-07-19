@@ -52,16 +52,18 @@ class BlockProperyProxyPortConnector:
 
 
 @Connector.register(ProxyPortItem, ConnectorItem)
+@Connector.register(PropertyItem, ConnectorItem)
 class PropertyConnectorConnector(UnaryRelationshipConnect):
-    """Connect a Connector to a Port."""
+    """Connect a Connector to a Port or Property."""
 
     line: ConnectorItem
+    element: Union[PropertyItem, ProxyPortItem]
 
     def allow(self, handle, port):
         element = self.element
 
         # Element should be connected -> have a subject
-        if not isinstance(element.subject, UML.Port):
+        if not isinstance(element.subject, (UML.Port, UML.Property)):
             return None
 
         return super().allow(handle, port)
