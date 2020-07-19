@@ -341,7 +341,7 @@ def set_navigability(assoc, end, nav):
     # remove "navigable" and "unspecified" navigation indicators first
     if isinstance(end.type, (Class, Interface)):
         owner = end.opposite.type
-        if end in owner.ownedAttribute:
+        if owner and end in owner.ownedAttribute:
             owner.ownedAttribute.remove(end)
     if end in assoc.ownedEnd:
         assoc.ownedEnd.remove(end)
