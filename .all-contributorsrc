@@ -291,6 +291,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "dlagg",
+      "name": "Jorge DLG",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/44321931?v=4",
+      "profile": "https://github.com/dlagg",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
