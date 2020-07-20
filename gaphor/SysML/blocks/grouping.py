@@ -4,9 +4,9 @@ from gaphor.SysML.blocks.property import PropertyItem
 
 
 @Group.register(BlockItem, PropertyItem)
-class NodeGroup(AbstractGroup):
+class PropertyGroup(AbstractGroup):
     """
-    Add node to another node.
+    Add Property to a Block.
     """
 
     def group(self):
