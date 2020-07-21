@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.0.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="1.3.0">
 <Package id="b0ad3658-8963-11de-bd33-00508de79d8e">
 <name>
 <val>LADI session handler</val>
@@ -419,40 +419,37 @@
 </package>
 <canvas>
 <item id="8ee4b5a4-8973-11de-8bcf-00508de79d8e" type="InterfaceItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>1</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 705.0, 13.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 772.5, 54.5)</val>
 </matrix>
 <width>
-<val>158.0</val>
+<val>166.0</val>
 </width>
 <height>
-<val>106.0</val>
+<val>117.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>1</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="ddbbd988-8968-11de-9e8b-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
+<folded>
 <val>0</val>
-</show_stereotypes_attrs>
+</folded>
 </item>
 <item id="913eee0a-8973-11de-8bcf-00508de79d8e" type="ImplementationItem">
 <subject>
 <ref refid="521ce416-8978-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 778.4883720930233, 119.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 849.7093023255813, 171.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -461,7 +458,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-13.488372093023258, -10.0), (-11.488372093023258, 138.0)]</val>
+<val>[(0.0, 0.0), (4.790697674418652, 229.5)]</val>
 </points>
 <head-connection>
 <ref refid="8ee4b5a4-8973-11de-8bcf-00508de79d8e"/>
@@ -471,17 +468,8 @@
 </tail-connection>
 </item>
 <item id="17a7878c-8978-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 718.0, 257.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 805.5, 401.0)</val>
 </matrix>
 <width>
 <val>100.0</val>
@@ -489,126 +477,129 @@
 <height>
 <val>50.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="17a7483a-8978-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="737b7b3a-8979-11de-8bcf-00508de79d8e" type="InterfaceItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>1</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 18.0, 10.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 10.5, 53.5)</val>
 </matrix>
 <width>
-<val>161.0</val>
+<val>174.0</val>
 </width>
 <height>
-<val>154.0</val>
+<val>168.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>1</val>
+</show_operations>
+<show_stereotypes>
+<val>1</val>
+</show_stereotypes>
 <subject>
 <ref refid="2d3ced3a-8964-11de-bd33-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>1</val>
-</show_stereotypes_attrs>
+<folded>
+<val>0</val>
+</folded>
 </item>
 <item id="746aba2e-8979-11de-8bcf-00508de79d8e" type="InterfaceItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>1</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 176.0, 15.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 194.5, 53.5)</val>
 </matrix>
 <width>
-<val>158.0</val>
+<val>166.0</val>
 </width>
 <height>
-<val>90.0</val>
+<val>100.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>1</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="0f7edd4e-8969-11de-9e8b-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
+<folded>
 <val>0</val>
-</show_stereotypes_attrs>
+</folded>
 </item>
 <item id="7ab3b098-8979-11de-8bcf-00508de79d8e" type="InterfaceItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>1</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 320.0, 13.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 385.0, 54.5)</val>
 </matrix>
 <width>
-<val>159.0</val>
+<val>170.0</val>
 </width>
 <height>
-<val>138.0</val>
+<val>151.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>1</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="fd3f109a-8968-11de-9e8b-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
+<folded>
 <val>0</val>
-</show_stereotypes_attrs>
+</folded>
 </item>
 <item id="8ee3d8cc-8979-11de-8bcf-00508de79d8e" type="InterfaceItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>1</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 491.0, 11.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 575.5, 54.5)</val>
 </matrix>
 <width>
 <val>185.0</val>
 </width>
 <height>
-<val>234.0</val>
+<val>253.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>1</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="1ac921aa-8969-11de-9e8b-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
+<folded>
 <val>0</val>
-</show_stereotypes_attrs>
+</folded>
 </item>
 <item id="9aaeeb24-8979-11de-8bcf-00508de79d8e" type="ImplementationItem">
 <subject>
 <ref refid="a003694c-8979-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 676.0, 245.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 712.5, 307.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -617,7 +608,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (42.0, 13.0)]</val>
+<val>[(0.0, 0.0), (93.0, 94.5)]</val>
 </points>
 <head-connection>
 <ref refid="8ee3d8cc-8979-11de-8bcf-00508de79d8e"/>
@@ -630,11 +621,8 @@
 <subject>
 <ref refid="b6777ee8-8979-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 428.30434782608694, 151.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 500.7971014492754, 205.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -643,7 +631,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (63.13565217391306, 104.0)]</val>
+<val>[(0.0, 0.0), (52.14289855072468, 195.0)]</val>
 </points>
 <head-connection>
 <ref refid="7ab3b098-8979-11de-8bcf-00508de79d8e"/>
@@ -653,17 +641,8 @@
 </tail-connection>
 </item>
 <item id="b0ae3d76-8979-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 363.0, 255.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 424.5, 400.5)</val>
 </matrix>
 <width>
 <val>247.0</val>
@@ -671,22 +650,25 @@
 <height>
 <val>51.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="b0adf8d4-8979-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="bb1a41f6-8979-11de-8bcf-00508de79d8e" type="ImplementationItem">
 <subject>
 <ref refid="bc1cde7e-8979-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 548.0, 245.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 632.5, 307.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -695,7 +677,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (1.0, 10.0)]</val>
+<val>[(0.0, 0.0), (-22.0, 93.0)]</val>
 </points>
 <head-connection>
 <ref refid="8ee3d8cc-8979-11de-8bcf-00508de79d8e"/>
@@ -705,17 +687,8 @@
 </tail-connection>
 </item>
 <item id="d793cfdc-8979-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 184.0, 279.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 224.5, 401.0)</val>
 </matrix>
 <width>
 <val>110.0</val>
@@ -723,31 +696,34 @@
 <height>
 <val>50.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="d7938b80-8979-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="e16de90c-8979-11de-8bcf-00508de79d8e" type="ImplementationItem">
 <subject>
 <ref refid="e27a87a6-8979-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 255.6124031007752, 105.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 278.14341085271315, 153.5)</val>
 </matrix>
 <orthogonal>
-<val>1</val>
+<val>0</val>
 </orthogonal>
 <horizontal>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 174.0), (-15.512403100775202, 174.0)]</val>
+<val>[(0.0, 0.0), (-3.6434108527131457, 247.5)]</val>
 </points>
 <head-connection>
 <ref refid="746aba2e-8979-11de-8bcf-00508de79d8e"/>
@@ -757,17 +733,8 @@
 </tail-connection>
 </item>
 <item id="d391b934-897a-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 23.0, 218.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 27.5, 400.0)</val>
 </matrix>
 <width>
 <val>100.0</val>
@@ -775,22 +742,25 @@
 <height>
 <val>50.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="d3916740-897a-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="dc85283c-897a-11de-8bcf-00508de79d8e" type="ImplementationItem">
 <subject>
 <ref refid="dd7f2ac6-897a-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 80.20454545454545, 164.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 77.72727272727272, 221.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -799,7 +769,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-9.204545454545453, 54.0)]</val>
+<val>[(0.0, 0.0), (-2.2272727272727195, 178.5)]</val>
 </points>
 <head-connection>
 <ref refid="737b7b3a-8979-11de-8bcf-00508de79d8e"/>
@@ -809,17 +779,8 @@
 </tail-connection>
 </item>
 <item id="2ee77440-8980-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 885.0, 192.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 957.0, 400.0)</val>
 </matrix>
 <width>
 <val>100.0</val>
@@ -827,48 +788,51 @@
 <height>
 <val>51.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="2ee670e0-8980-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="1cc56dde-8981-11de-8bcf-00508de79d8e" type="InterfaceItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>1</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 888.0, 19.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 953.0, 54.5)</val>
 </matrix>
 <width>
-<val>103.0</val>
+<val>108.0</val>
 </width>
 <height>
-<val>74.0</val>
+<val>83.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>1</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="1cc51820-8981-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
+<folded>
 <val>0</val>
-</show_stereotypes_attrs>
+</folded>
 </item>
 <item id="39bc2a7c-8981-11de-8bcf-00508de79d8e" type="ImplementationItem">
 <subject>
 <ref refid="3aa6f5de-8981-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 937.0, 93.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1004.3786407766991, 137.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -877,7 +841,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 99.0)]</val>
+<val>[(0.0, 0.0), (4.621359223300942, 262.5)]</val>
 </points>
 <head-connection>
 <ref refid="1cc56dde-8981-11de-8bcf-00508de79d8e"/>
@@ -888,27 +852,21 @@
 </item>
 <item id="a11cda04-8981-11de-8bcf-00508de79d8e" type="CommentItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 262.0, 178.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 334.5, 245.5)</val>
 </matrix>
 <width>
 <val>121.0</val>
 </width>
 <height>
-<val>50.0</val>
+<val>112.0</val>
 </height>
 <subject>
 <ref refid="a11cc794-8981-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="a62aeedc-8981-11de-8bcf-00508de79d8e" type="CommentLineItem">
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 335.0, 228.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 403.5, 357.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -917,7 +875,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (5.8770614692654135, 137.0)]</val>
+<val>[(0.0, 0.0), (-3.2901049475261743, 152.5)]</val>
 </points>
 <head-connection>
 <ref refid="a11cda04-8981-11de-8bcf-00508de79d8e"/>
@@ -930,11 +888,8 @@
 <subject>
 <ref refid="21bea958-8982-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 925.0, 243.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 997.0, 451.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -943,7 +898,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 122.0), (-666.0, 122.0), (-666.0, 86.0)]</val>
+<val>[(0.0, 0.0), (-74.5, 59.0), (-670.0, 57.00000000000006), (-697.5, 0.0)]</val>
 </points>
 <head-connection>
 <ref refid="2ee77440-8980-11de-8bcf-00508de79d8e"/>
@@ -956,66 +911,57 @@
 </auto_dependency>
 </item>
 <item id="320700c6-8982-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 173.0, 677.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 235.5, 835.0)</val>
 </matrix>
 <width>
-<val>150.0</val>
+<val>164.0</val>
 </width>
 <height>
 <val>50.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="3206a158-8982-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="547259f8-8982-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 344.0, 674.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 532.0, 835.0)</val>
 </matrix>
 <width>
-<val>153.0</val>
+<val>168.0</val>
 </width>
 <height>
 <val>50.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="547210ba-8982-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="e16d0542-8982-11de-8bcf-00508de79d8e" type="GeneralizationItem">
 <subject>
 <ref refid="b8601152-8983-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 252.0, 782.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 379.5, 944.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1024,7 +970,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (12.860465116279045, -55.0)]</val>
+<val>[(0.0, 0.0), (-52.139534883720955, -59.5)]</val>
 </points>
 <head-connection>
 <ref refid="a7e1e7f6-8983-11de-8bcf-00508de79d8e"/>
@@ -1037,11 +983,8 @@
 <subject>
 <ref refid="bae5d736-8983-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 392.0, 782.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 519.5, 944.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1050,7 +993,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (7.218045112781965, -58.0)]</val>
+<val>[(0.0, 0.0), (67.71804511278197, -59.5)]</val>
 </points>
 <head-connection>
 <ref refid="a7e1e7f6-8983-11de-8bcf-00508de79d8e"/>
@@ -1060,17 +1003,8 @@
 </tail-connection>
 </item>
 <item id="a7e1e7f6-8983-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 171.0, 782.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 298.5, 944.5)</val>
 </matrix>
 <width>
 <val>293.0</val>
@@ -1078,22 +1012,25 @@
 <height>
 <val>50.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="a7e19800-8983-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="276097a2-8984-11de-8bcf-00508de79d8e" type="DependencyItem">
 <subject>
 <ref refid="0ea7560c-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 71.0, 268.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 75.5, 450.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1102,7 +1039,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-1.0, 270.0)]</val>
+<val>[(0.0, 0.0), (9.88392857142857, 248.5)]</val>
 </points>
 <head-connection>
 <ref refid="d391b934-897a-11de-8bcf-00508de79d8e"/>
@@ -1118,11 +1055,8 @@
 <subject>
 <ref refid="148ff128-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 229.0, 329.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 269.5, 451.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1131,7 +1065,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-4.0, 209.0)]</val>
+<val>[(0.0, 0.0), (-21.27380952380952, 247.5)]</val>
 </points>
 <head-connection>
 <ref refid="d793cfdc-8979-11de-8bcf-00508de79d8e"/>
@@ -1147,11 +1081,8 @@
 <subject>
 <ref refid="1a3a1bd0-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 395.11, 306.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 456.61, 451.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1160,7 +1091,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-143.04023255813954, 371.0)]</val>
+<val>[(0.0, 0.0), (-142.04023255813956, 383.5)]</val>
 </points>
 <head-connection>
 <ref refid="b0ae3d76-8979-11de-8bcf-00508de79d8e"/>
@@ -1176,11 +1107,8 @@
 <subject>
 <ref refid="255dbabc-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 439.57000000000005, 306.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 501.07000000000005, 451.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1189,7 +1117,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-46.103834586466235, 368.0)]</val>
+<val>[(0.0, 0.0), (80.39616541353382, 383.5)]</val>
 </points>
 <head-connection>
 <ref refid="b0ae3d76-8979-11de-8bcf-00508de79d8e"/>
@@ -1205,11 +1133,8 @@
 <subject>
 <ref refid="7103b588-8984-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 294.0, 305.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 334.5, 427.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1218,7 +1143,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (69.0, -20.420000000000016)]</val>
+<val>[(0.0, 0.0), (90.0, 3.079999999999984)]</val>
 </points>
 <head-connection>
 <ref refid="d793cfdc-8979-11de-8bcf-00508de79d8e"/>
@@ -1231,11 +1156,8 @@
 </auto_dependency>
 </item>
 <item id="7a43dc0e-8984-11de-8bcf-00508de79d8e" type="CommentLineItem">
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 318.5290984415072, 297.74080883803515)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 366.49447622805286, 428.09492207536005)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1244,7 +1166,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (5.4709015584928125, -69.74080883803515)]</val>
+<val>[(0.0, 0.0), (-3.4944762280528607, -70.59492207536005)]</val>
 </points>
 <head-connection>
 <ref refid="6e73c754-8984-11de-8bcf-00508de79d8e"/>
@@ -1254,40 +1176,34 @@
 </tail-connection>
 </item>
 <item id="d9caf68a-8984-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 13.0, 538.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 25.5, 698.5)</val>
 </matrix>
 <width>
-<val>1008.0</val>
+<val>1059.0</val>
 </width>
 <height>
-<val>63.0</val>
+<val>66.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="d9caaf54-8984-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="e0d027fc-8984-11de-8bcf-00508de79d8e" type="GeneralizationItem">
 <subject>
 <ref refid="e1cb83ea-8984-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 205.0, 677.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 267.5, 835.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1296,7 +1212,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, -76.0)]</val>
+<val>[(0.0, 0.0), (1.0, -70.5)]</val>
 </points>
 <head-connection>
 <ref refid="320700c6-8982-11de-8bcf-00508de79d8e"/>
@@ -1309,11 +1225,8 @@
 <subject>
 <ref refid="e6ce431e-8984-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 419.0, 674.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 607.0, 835.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1322,7 +1235,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, -73.0)]</val>
+<val>[(0.0, 0.0), (-0.5, -70.5)]</val>
 </points>
 <head-connection>
 <ref refid="547259f8-8982-11de-8bcf-00508de79d8e"/>
@@ -1335,11 +1248,8 @@
 <subject>
 <ref refid="f8289d2c-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 773.0, 307.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 859.0, 451.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1348,7 +1258,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 231.0)]</val>
+<val>[(0.0, 0.0), (-35.04761904761904, 247.5)]</val>
 </points>
 <head-connection>
 <ref refid="17a7878c-8978-11de-8bcf-00508de79d8e"/>
@@ -1364,11 +1274,8 @@
 <subject>
 <ref refid="fe679300-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 957.0, 243.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1017.5, 451.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1377,7 +1284,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 295.0)]</val>
+<val>[(0.0, 0.0), (-0.23809523809518396, 247.5)]</val>
 </points>
 <head-connection>
 <ref refid="2ee77440-8980-11de-8bcf-00508de79d8e"/>
@@ -1390,43 +1297,31 @@
 </auto_dependency>
 </item>
 <item id="0ff93daa-8987-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 462.0, 442.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 552.0, 570.5)</val>
 </matrix>
 <width>
-<val>108.0</val>
+<val>116.0</val>
 </width>
 <height>
 <val>50.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="0ff8fdae-8987-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="1b2eeaee-8987-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 600.0, 440.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 708.0, 570.5)</val>
 </matrix>
 <width>
 <val>100.0</val>
@@ -1434,22 +1329,25 @@
 <height>
 <val>50.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="1b2e9e22-8987-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="2a6ab132-8987-11de-8bcf-00508de79d8e" type="DependencyItem">
 <subject>
 <ref refid="392f03e8-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 649.0, 490.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 757.0, 620.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1458,7 +1356,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-198.0, 184.0)]</val>
+<val>[(0.0, 0.0), (-118.0, 214.5)]</val>
 </points>
 <head-connection>
 <ref refid="1b2eeaee-8987-11de-8bcf-00508de79d8e"/>
@@ -1474,11 +1372,8 @@
 <subject>
 <ref refid="34ab665e-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 516.0, 492.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 606.0, 620.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1487,7 +1382,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-239.0, 185.0)]</val>
+<val>[(0.0, 0.0), (-266.5, 214.5)]</val>
 </points>
 <head-connection>
 <ref refid="0ff93daa-8987-11de-8bcf-00508de79d8e"/>
@@ -1503,11 +1398,8 @@
 <subject>
 <ref refid="37a41a28-8987-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 718.0, 307.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 805.5, 451.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1516,7 +1408,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-167.44000000000005, 135.0)]</val>
+<val>[(0.0, 0.0), (-164.94000000000005, 119.5)]</val>
 </points>
 <head-connection>
 <ref refid="17a7878c-8978-11de-8bcf-00508de79d8e"/>
@@ -1529,11 +1421,8 @@
 <subject>
 <ref refid="3a842044-8987-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 743.0, 307.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 830.5, 451.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1542,7 +1431,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-56.0, 133.0)]</val>
+<val>[(0.0, 0.0), (-35.5, 119.5)]</val>
 </points>
 <head-connection>
 <ref refid="17a7878c-8978-11de-8bcf-00508de79d8e"/>
@@ -1555,11 +1444,8 @@
 <subject>
 <ref refid="56079896-8987-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 510.6, 442.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 600.6, 570.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1568,7 +1454,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (24.399999999999977, -136.0)]</val>
+<val>[(0.0, 0.0), (-4.100000000000023, -119.0)]</val>
 </points>
 <head-connection>
 <ref refid="0ff93daa-8987-11de-8bcf-00508de79d8e"/>
@@ -1590,11 +1476,8 @@
 <subject>
 <ref refid="59422f98-8988-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 586.0, 306.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 647.5, 451.5)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1603,7 +1486,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (29.0, 134.0)]</val>
+<val>[(0.0, 0.0), (75.5, 119.0)]</val>
 </points>
 <head-connection>
 <ref refid="b0ae3d76-8979-11de-8bcf-00508de79d8e"/>
@@ -1622,40 +1505,34 @@
 </tail-subject>
 </item>
 <item id="94d3dc2e-8987-11de-8bcf-00508de79d8e" type="ClassItem">
-<show-attributes>
-<val>0</val>
-</show-attributes>
-<show-operations>
-<val>0</val>
-</show-operations>
-<drawing-style>
-<val>1</val>
-</drawing-style>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 800.0, 417.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 855.5, 570.5)</val>
 </matrix>
 <width>
-<val>117.0</val>
+<val>126.0</val>
 </width>
 <height>
 <val>51.0</val>
 </height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<show_stereotypes>
+<val>0</val>
+</show_stereotypes>
 <subject>
 <ref refid="94d39548-8987-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 </item>
 <item id="9d25b37a-8987-11de-8bcf-00508de79d8e" type="AssociationItem">
 <subject>
 <ref refid="9e85ac48-8987-11de-8bcf-00508de79d8e"/>
 </subject>
-<show_stereotypes_attrs>
-<val>0</val>
-</show_stereotypes_attrs>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 817.0, 307.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 904.5, 451.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -1664,7 +1541,7 @@
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (35.64999999999998, 110.0)]</val>
+<val>[(0.0, 0.0), (3.6499999999999773, 119.5)]</val>
 </points>
 <head-connection>
 <ref refid="17a7878c-8978-11de-8bcf-00508de79d8e"/>
@@ -1970,8 +1847,8 @@
 <Comment id="a11cc794-8981-11de-8bcf-00508de79d8e">
 <annotatedElement>
 <reflist>
-<ref refid="21bea958-8982-11de-8bcf-00508de79d8e"/>
 <ref refid="7103b588-8984-11de-8bcf-00508de79d8e"/>
+<ref refid="21bea958-8982-11de-8bcf-00508de79d8e"/>
 </reflist>
 </annotatedElement>
 <body>
@@ -2283,6 +2160,9 @@ Studio Request </val>
 <upperValue>
 <val>*</val>
 </upperValue>
+<upperValue>
+<val>*</val>
+</upperValue>
 </Property>
 <Property id="560842a0-8987-11de-8bcf-00508de79d8e">
 <association>
@@ -2297,6 +2177,9 @@ Studio Request </val>
 <type>
 <ref refid="b0adf8d4-8979-11de-8bcf-00508de79d8e"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -2351,6 +2234,9 @@ Studio Request </val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="9e866e12-8987-11de-8bcf-00508de79d8e">
 <association>
@@ -2365,6 +2251,9 @@ Studio Request </val>
 <type>
 <ref refid="94d39548-8987-11de-8bcf-00508de79d8e"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
 <upperValue>
 <val>1</val>
 </upperValue>
@@ -2503,6 +2392,9 @@ Studio Request </val>
 <upperValue>
 <val>1</val>
 </upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Property id="594351b6-8988-11de-8bcf-00508de79d8e">
 <association>
@@ -2517,6 +2409,9 @@ Studio Request </val>
 <type>
 <ref refid="1b2e9e22-8987-11de-8bcf-00508de79d8e"/>
 </type>
+<upperValue>
+<val>*</val>
+</upperValue>
 <upperValue>
 <val>*</val>
 </upperValue>
@@ -2555,4 +2450,24 @@ Studio Request </val>
 </reflist>
 </supplier>
 </Dependency>
+<StyleSheet id="26cd8850-cb26-11ea-9af2-f5ca580d221e">
+<styleSheet>
+<val>* {
+ background-color: transparent;
+ color: black;
+ font-family: sans;
+ font-size: 14;
+ highlight-color: rgba(0, 0, 255, 0.4);
+ line-width: 2;
+ padding: 0;
+}
+
+diagram {
+ background-color: white;
+ line-style: normal;
+ /* line-style: sloppy 0.3; */
+}
+</val>
+</styleSheet>
+</StyleSheet>
 </gaphor>
