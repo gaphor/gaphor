@@ -9,6 +9,7 @@ from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.umlfmt import format_attribute
 
 
 @represents(UML.Property)
@@ -17,7 +18,10 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
         super().__init__(id, model)
 
         self.watch("show_stereotypes", self.update_shapes)
-        self.watch("subject[NamedElement].name")
+        self.watch("subject[Property].name")
+        self.watch("subject[Property].type.name")
+        self.watch("subject[Property].lowerValue")
+        self.watch("subject[Property].upperValue")
         self.watch("subject.appliedStereotype", self.update_shapes)
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject.appliedStereotype.slot", self.update_shapes)
@@ -44,7 +48,10 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
             Box(
                 Text(text=lambda: UML.model.stereotypes_str(self.subject),),
                 EditableText(
-                    text=lambda: self.subject.name or "",
+                    text=lambda: format_attribute(
+                        self.subject, type=True, multiplicity=True
+                    )
+                    or "",
                     style={"font-weight": FontWeight.BOLD},
                 ),
                 style={"padding": (12, 4, 12, 4), "min-height": 44},
