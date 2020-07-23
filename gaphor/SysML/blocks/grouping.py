@@ -16,7 +16,7 @@ class PropertyGroup(AbstractGroup):
         )
 
     def group(self):
-        if not not self.item.subject.association:
+        if self.item.subject.association:
             self.parent.subject.ownedAttribute = self.item.subject
 
     def ungroup(self):
