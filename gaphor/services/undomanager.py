@@ -249,9 +249,9 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
         self.event_manager.handle(UndoManagerStateChanged(self))
 
-    ##
-    ## Undo Handlers
-    ##
+    #
+    # Undo Handlers
+    #
 
     def _gaphas_undo_handler(self, event):
         self.add_undo_action(lambda: state.saveapply(*event))
