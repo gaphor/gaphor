@@ -16,6 +16,9 @@ from gaphor.UML.uml import (
     Class,
     Classifier,
     Component,
+    ConnectableElement,
+    Connector,
+    ConnectorEnd,
     Dependency,
     Element,
     Extension,
@@ -26,6 +29,7 @@ from gaphor.UML.uml import (
     Interface,
     Message,
     MessageOccurrenceSpecification,
+    Port,
     Property,
     Realization,
     Slot,
@@ -265,6 +269,33 @@ def create_association(type_a, type_b):
     return assoc
 
 
+def create_connector(type_a: ConnectableElement, type_b: ConnectableElement):
+    """
+    Create a connector between two items.
+    Depending on the ends, the connector kind may be "assembly" or "delegation".
+    """
+    assert type_a.model is type_b.model, "Head and Tail end are from different models"
+    model = type_a.model
+    conn = model.create(Connector)
+    end_a = model.create(ConnectorEnd)
+    end_b = model.create(ConnectorEnd)
+
+    conn.end = end_a
+    conn.end = end_b
+
+    end_a.role = type_a
+    end_b.role = type_b
+
+    if (isinstance(end_a, Port) and isinstance(end_b, Property)) or (
+        isinstance(end_a, Property) and isinstance(end_b, Port)
+    ):
+        conn.kind = "delegation"
+    else:
+        conn.kind = "assembly"
+
+    return conn
+
+
 def set_navigability(assoc, end, nav):
     """
     Set navigability of an association end (property).
@@ -310,7 +341,7 @@ def set_navigability(assoc, end, nav):
     # remove "navigable" and "unspecified" navigation indicators first
     if isinstance(end.type, (Class, Interface)):
         owner = end.opposite.type
-        if end in owner.ownedAttribute:
+        if owner and end in owner.ownedAttribute:
             owner.ownedAttribute.remove(end)
     if end in assoc.ownedEnd:
         assoc.ownedEnd.remove(end)

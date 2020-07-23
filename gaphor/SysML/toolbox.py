@@ -115,7 +115,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "toolbox-block",
                 gettext("Block"),
                 "gaphor-block-symbolic",
-                "b",
+                "l",
                 item_factory=PlacementTool.new_item_factory(
                     sysml_items.BlockItem, sysml.Block, config_func=namespace_config
                 ),
@@ -180,10 +180,19 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 PlacementTool.new_item_factory(uml_items.ConnectorItem),
             ),
             ToolDef(
+                "toolbox-property",
+                gettext("Property"),
+                "gaphor-property-symbolic",
+                "o",
+                PlacementTool.new_item_factory(
+                    sysml_items.PropertyItem, UML.Property, config_func=namespace_config
+                ),
+            ),
+            ToolDef(
                 "toolbox-proxy-port",
                 gettext("Proxy Port"),
                 "gaphor-proxyport-symbolic",
-                "<Shift>Y",
+                "x",
                 PlacementTool.new_item_factory(sysml_items.ProxyPortItem),
             ),
         ),
@@ -221,7 +230,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "toolbox-trace-dependency",
                 gettext("Trace"),
                 "gaphor-trace-symbolic",
-                "<Shift>C",
+                "<Shift>E",
                 PlacementTool.new_item_factory(sysml_items.TraceItem),
             ),
             ToolDef(
