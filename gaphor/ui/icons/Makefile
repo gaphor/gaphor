@@ -60,7 +60,8 @@ ICONS=diagram \
 	derive \
 	trace \
 	refine \
-	verify
+	verify \
+	view-editor
 
 ICON_THEME=hicolor/scalable/actions
 
