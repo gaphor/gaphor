@@ -6,6 +6,6 @@ diagram).
 
 import gi
 
-import gaphor.diagram.general
+# import gaphor.diagram.general
 
 gi.require_version("PangoCairo", "1.0")

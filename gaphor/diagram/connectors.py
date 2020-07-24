@@ -41,22 +41,21 @@ class BaseConnector:
 
     Line item ``line`` connects with a handle to a connectable item ``element``.
 
-    Attributes:
-
-    - line: connecting item
-    - element: connectable item
+    :param line: connecting item
+    :type line: Presentation
+    :param element: connectable item
+    :type element: Presentation
 
     The following methods are required to make this work:
 
-    - `allow()`: is the connection allowed at all (during mouse movement for example).
-    - `connect()`: Establish a connection between element and line. Also takes care of
+    - ``allow()``: is the connection allowed at all (during mouse movement for example).
+    - ``connect()``: Establish a connection between element and line. Also takes care of
       disconnects, if required (e.g. 1:1 relationships)
-    - `disconnect()`: Break connection, called when dropping a handle on a
-       point where it can not connect.
-    - `reconnect()`: Connect to another item (only used if present)
+    - ``disconnect()``: Break connection, called when dropping a handle on a
+      point where it can not connect.
+    - ``reconnect()`` (*Optional*): Connect to another item (only used if present)
 
     By convention the adapters are registered by (element, line) -- in that order.
-
     """
 
     def __init__(

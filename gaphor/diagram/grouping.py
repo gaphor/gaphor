@@ -32,11 +32,10 @@ class AbstractGroup(metaclass=abc.ABCMeta):
     Base class for grouping model elements, i.e.
     interactions contain lifelines and components contain classes objects.
 
-    :Attributes:
-     parent
-        Parent item, which groups other items.
-     item
-        Item to be grouped.
+    :param parent: Parent item, which groups other items.
+    :type parent: Presentation
+    :param item: Item to be grouped.
+    :type item: Presentation
     """
 
     def __init__(self, parent: Presentation, item: Presentation) -> None:
