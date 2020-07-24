@@ -12,12 +12,12 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-24-orange.svg?style=flat-square)](#contributors)
 
 
-> Gaphor is the simple modeling tool for UML.
+> Gaphor is the simple modeling tool for UML and SysML.
 
 ![Gaphor Demo](docs/images/gaphor-demo.gif)
 
-Gaphor is a simple and easy to use modeling tool for UML. It is aimed at
-beginning modelers who want a simple and fast tool so that they can focus on
+Gaphor is a simple and easy to use modeling tool for UML and SysML. It is aimed
+at beginning modelers who want a simple and fast tool so that they can focus on
 learning modeling of software and systems. It is not a full featured enterprise
 tool.
 
@@ -31,15 +31,15 @@ tool.
 
 ## :scroll: Background
 
-Gaphor is a UML modeling application written in Python. It is designed to be
-easy to use, while still being powerful. Gaphor implements a fully-compliant UML
-2 data model, so it is much more than a picture drawing tool. You can use Gaphor
-to quickly visualize different aspects of a system as well as create complete,
-highly complex models.
+Gaphor is a UML and SysML modeling application written in Python. We designed
+it to be easy to use, while still being powerful. Gaphor implements a
+fully-compliant UML 2 data model, so it is much more than a picture drawing
+tool. You can use Gaphor to quickly visualize different aspects of a system as
+well as create complete, highly complex models.
 
 Gaphor is designed around the following principles:
 
-- Simplicity: The application should be easy to use. Only some basic knowledge of UML is required.
+- Simplicity: The application should be easy to use. Only some basic knowledge of UML or SysML is required.
 - Consistency: UML is a graphical modeling language, so all modeling is done in a diagram.
 - Workability: The application should not bother the user every time they do something non-UML-ish.
 

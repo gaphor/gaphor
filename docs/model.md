@@ -1,8 +1,8 @@
-# UML Data Model
+# UML and SysML Data Model
 
-Gaphor uses the UML Specification as a guideline for its own data storage.
-The Python data model is generated from a Gaphor model file that describes
-the relationships between the supported UML elements.
+Gaphor uses the UML and SysML Specifications as guidelines for its own data
+storage. The Python data model is generated from a Gaphor model file that
+describes the relationships between the supported UML elements.
 
 The model is built using smart properties (descriptors). These properties
 emit events when they're changed. This allows the rest of the application,

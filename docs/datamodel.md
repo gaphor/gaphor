@@ -1,6 +1,6 @@
 # Data Model
 
-Gaphor is an UML tool. In order to keep as close as possible to the UML
+Gaphor is a UML and SysML tool. In order to keep as close as possible to the UML
 specification the Gaphor data model is based on the UML Metamodel. The Object
 Management Group (OMG), the not-for-profit technology standards consortium that
 governs UML, has a XML Metadata Interchange (XMI) file describing the
