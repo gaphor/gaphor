@@ -1,3 +1,28 @@
+2.0.0
+-----
+- Add initial support for SysML
+- Add support for styling using CSS
+- Translate to Italian
+- Improve dmg for macOS
+- Improve Copy/Paste for nested items
+- Add new modeling language service
+- Show the element editor by default
+- Create completely new data model code generator
+- Add part and shared associations to tool palette
+- Remove unused imports, enable flake8 checks
+- Update App icons
+- Update animation gif in README
+- Fix Windows Build Errors caused by Missing ZST Archives
+- Fix installation on Windows
+- Add extra diagram item tests
+- Fix macOS Python version problem
+- Place UML model and diagram items closer together
+- Refactor Code Generator to New Module and add CLI
+- Fix MSYS2 package names and disable system update
+- Remove CI workaround for console plugin
+- Move core modelling concepts to a separate package
+- Convert Some Profile Tests to Pytest
+
 1.2.0
 -----
 - Improved support for Sequence Diagrams
