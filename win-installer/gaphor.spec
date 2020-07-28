@@ -19,7 +19,7 @@ a = Analysis(['gaphor-script.py'],
 		       ('../gaphor/locale/*', 'gaphor/locale')
 		     ]+copy_metadata('gaphor')+copy_metadata('gaphas'),
              hiddenimports=[],
-             hookspath=[],
+             hookspath=['hooks'],
              runtime_hooks=[],
              excludes=['lib2to3', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter'],
              win_no_prefer_redirects=False,
