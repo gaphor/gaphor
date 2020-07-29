@@ -114,7 +114,7 @@ class Box:
         self,
         *children,
         style: Style = {},
-        draw: Optional[Callable[[Box, DrawContext, Rectangle], None]] = None
+        draw: Optional[Callable[[Box, DrawContext, Rectangle], None]] = None,
     ):
         self.children = children
         self.sizes: List[Tuple[int, int]] = []
