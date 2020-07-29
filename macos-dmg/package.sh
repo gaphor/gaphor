@@ -166,6 +166,7 @@ glib-compile-schemas ${INSTALLDIR}/share/glib-2.0/schemas
 
 log "Building Gaphor-$VERSION.dmg..."
 
-dmgbuild -s dmgbuild-settings.py "Gaphor-$VERSION" "Gaphor-$VERSION.dmg"
+hdiutil create -srcfolder $APP Gaphor-$VERSION.dmg
+# dmgbuild -s dmgbuild-settings.py "Gaphor-$VERSION" "Gaphor-$VERSION.dmg"
 
 log "Done!"
