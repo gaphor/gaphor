@@ -9,7 +9,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Optional
 
-from gi.repository import Gdk, Gio, GLib, GObject, Gtk
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
@@ -117,20 +117,23 @@ class NamespaceView(Gtk.TreeView):
         Set font and of model elements in tree view.
         """
         element = model.get_value(iter, 0)
-        text = element and (element.name or "").replace("\n", " ") or "&lt;None&gt;"
 
         if isinstance(element, Diagram):
-            text = f"<b>{text}</b>"
-        elif (
-            isinstance(element, UML.Classifier) or isinstance(element, UML.Operation)
-        ) and element.isAbstract:
-            text = f"<i>{text}</i>"
-        elif isinstance(element, UML.Property):
-            text = format_attribute(element) or "&lt;None&gt;"
+            cell.set_property("weight", Pango.Weight.BOLD)
+        elif isinstance(element, (UML.Classifier, UML.Operation)):
+            cell.set_property(
+                "style",
+                Pango.Style.ITALIC if element.isAbstract else Pango.Style.NORMAL,
+            )
+
+        if isinstance(element, UML.Property):
+            text = format_attribute(element) or "<None>"
         elif isinstance(element, UML.Operation):
             text = format_operation(element)
+        else:
+            text = element and (element.name or "").replace("\n", " ") or "<None>"
 
-        cell.set_property("markup", text)
+        cell.set_property("text", text)
 
     @transactional
     def _text_edited(self, cell, path_str, new_text):
