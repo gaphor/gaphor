@@ -128,9 +128,6 @@ class NamespaceView(Gtk.TreeView):
             )
         elif isinstance(element, UML.Property):
             text = format_attribute(element) or "<None>"
-        elif isinstance(element, UML.Operation):
-            text = format_operation(element)
-
         cell.set_property("text", text)
 
     @transactional
