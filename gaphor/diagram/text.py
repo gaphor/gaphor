@@ -36,11 +36,11 @@ class Layout:
         self.set_alignment(text_align)
 
     def set(self, text=None, font=None, width=None, text_align=None):
-        if text:
+        if text is not None:
             self.set_text(text)
-        if font:
+        if font is not None:
             self.set_font(font)
-        if width:
+        if width is not None:
             self.set_width(width)
         if text_align:
             self.set_alignment(text_align)
