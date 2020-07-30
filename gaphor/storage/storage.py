@@ -34,10 +34,47 @@ def save(writer=None, factory=None, status_queue=None):
             status_queue(status)
 
 
-def save_generator(writer, factory):  # noqa: C901
+def save_generator(writer, factory):
     """
     Save the current model using @writer, which is a
     gaphor.storage.xmlwriter.XMLWriter instance.
+    """
+
+    writer.startDocument()
+    writer.startPrefixMapping("", NAMESPACE_MODEL)
+    writer.startElementNS(
+        (NAMESPACE_MODEL, "gaphor"),
+        None,
+        {
+            (NAMESPACE_MODEL, "version"): FILE_FORMAT_VERSION,
+            (NAMESPACE_MODEL, "gaphor-version"): application.distribution().version,
+        },
+    )
+
+    size = factory.size()
+    n = 0
+    for e in list(factory.values()):
+        clazz = e.__class__.__name__
+        assert e.id
+        writer.startElement(clazz, {"id": str(e.id)})
+        e.save(lambda name, value: save_element(name, value, writer))
+        writer.endElement(clazz)
+
+        n += 1
+        if n % 25 == 0:
+            yield (n * 100) / size
+
+    writer.endElementNS((NAMESPACE_MODEL, "gaphor"), None)
+    writer.endPrefixMapping("")
+    writer.endDocument()
+
+
+def save_element(name, value, writer):
+    """
+    Save attributes and references from items in the gaphor.UML module.
+    A value may be a primitive (string, int), a gaphor.core.modeling.collection
+    (which contains a list of references to other UML elements) or a
+    gaphas.Canvas (which contains canvas items).
     """
 
     def save_reference(name, value):
@@ -55,7 +92,7 @@ def save_generator(writer, factory):  # noqa: C901
         """
         Save a list of references.
         """
-        if len(value) > 0:
+        if value:
             writer.startElement(name, {})
             writer.startElement("reflist", {})
             for v in value:
@@ -72,33 +109,13 @@ def save_generator(writer, factory):  # noqa: C901
         if value is not None:
             writer.startElement(name, {})
             writer.startElement("val", {})
-            if isinstance(value, str):
-                writer.characters(value)
-            elif isinstance(value, bool):
+            if isinstance(value, bool):
                 # Write booleans as 0/1.
                 writer.characters(str(int(value)))
             else:
                 writer.characters(str(value))
             writer.endElement("val")
             writer.endElement(name)
-
-    def save_element(name, value):
-        """
-        Save attributes and references from items in the gaphor.UML module.
-        A value may be a primitive (string, int), a gaphor.core.modeling.collection
-        (which contains a list of references to other UML elements) or a
-        gaphas.Canvas (which contains canvas items).
-        """
-        if isinstance(value, (Element, gaphas.Item)):
-            save_reference(name, value)
-        elif isinstance(value, collection):
-            save_collection(name, value)
-        elif isinstance(value, gaphas.Canvas):
-            writer.startElement("canvas", {})
-            value.save(save_canvas)
-            writer.endElement("canvas")
-        else:
-            save_value(name, value)
 
     def save_canvas(value):
         """
@@ -126,33 +143,16 @@ def save_generator(writer, factory):  # noqa: C901
         else:
             save_value(name, value)
 
-    writer.startDocument()
-    writer.startPrefixMapping("", NAMESPACE_MODEL)
-    writer.startElementNS(
-        (NAMESPACE_MODEL, "gaphor"),
-        None,
-        {
-            (NAMESPACE_MODEL, "version"): FILE_FORMAT_VERSION,
-            (NAMESPACE_MODEL, "gaphor-version"): application.distribution().version,
-        },
-    )
-
-    size = factory.size()
-    n = 0
-    for e in list(factory.values()):
-        clazz = e.__class__.__name__
-        assert e.id
-        writer.startElement(clazz, {"id": str(e.id)})
-        e.save(save_element)
-        writer.endElement(clazz)
-
-        n += 1
-        if n % 25 == 0:
-            yield (n * 100) / size
-
-    writer.endElementNS((NAMESPACE_MODEL, "gaphor"), None)
-    writer.endPrefixMapping("")
-    writer.endDocument()
+    if isinstance(value, (Element, gaphas.Item)):
+        save_reference(name, value)
+    elif isinstance(value, collection):
+        save_collection(name, value)
+    elif isinstance(value, gaphas.Canvas):
+        writer.startElement("canvas", {})
+        value.save(save_canvas)
+        writer.endElement("canvas")
+    else:
+        save_value(name, value)
 
 
 def load_elements(elements, factory, modeling_language, gaphor_version="1.0.0"):
