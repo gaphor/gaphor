@@ -300,6 +300,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "abjurstrom-torch",
+      "name": "Adam Bjurstrom",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/62608984?v=4",
+      "profile": "https://github.com/abjurstrom-torch",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
