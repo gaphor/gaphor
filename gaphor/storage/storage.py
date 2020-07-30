@@ -14,6 +14,7 @@ import io
 import logging
 import os.path
 import uuid
+from functools import partial
 
 import gaphas
 
@@ -57,7 +58,7 @@ def save_generator(writer, factory):
         clazz = e.__class__.__name__
         assert e.id
         writer.startElement(clazz, {"id": str(e.id)})
-        e.save(lambda name, value: save_element(name, value, writer))
+        e.save(partial(save_element, writer=writer))
         writer.endElement(clazz)
 
         n += 1
