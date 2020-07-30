@@ -168,14 +168,15 @@ log "Building Gaphor-$VERSION.dmg..."
 
 create-dmg \
   --volname "Gaphor $VERSION" \
+  --background "background.png" \
   --window-pos 200 120 \
-  --window-size 600 400 \
+  --window-size 700 400 \
   --icon-size 100 \
-  --icon "Gaphor.app" 200 250 \
+  --icon "Gaphor.app" 200 240 \
   --hide-extension "Gaphor.app" \
-  --app-drop-link 400 250 \
+  --app-drop-link 500 240 \
   "Gaphor-$VERSION.dmg" \
   "Gaphor.app"
 
-  #--background "installer_background.png" \
+
 log "Done!"
