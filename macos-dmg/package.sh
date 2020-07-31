@@ -166,6 +166,17 @@ glib-compile-schemas ${INSTALLDIR}/share/glib-2.0/schemas
 
 log "Building Gaphor-$VERSION.dmg..."
 
-dmgbuild -s dmgbuild-settings.py "Gaphor-$VERSION" "Gaphor-$VERSION.dmg"
+create-dmg \
+  --volname "Gaphor $VERSION" \
+  --background "background.png" \
+  --window-pos 200 120 \
+  --window-size 700 400 \
+  --icon-size 100 \
+  --icon "Gaphor.app" 200 240 \
+  --hide-extension "Gaphor.app" \
+  --app-drop-link 500 240 \
+  "Gaphor-$VERSION.dmg" \
+  "Gaphor.app"
+
 
 log "Done!"
