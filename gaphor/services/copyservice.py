@@ -4,6 +4,8 @@ Copy / Paste functionality
 
 from typing import Set
 
+from gi.repository import Gdk, Gtk
+
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action, event_handler
 from gaphor.core.modeling import Presentation
@@ -35,9 +37,21 @@ class CopyService(Service, ActionProvider):
 
         event_manager.subscribe(self._update)
 
+        self.clipboard = Gtk.Clipboard.get_default(Gdk.Display.get_default())
+        self.clipboard.connect("owner_change", self.on_clipboard_owner_change)
+        self.clipboard_semaphore = 0
+
     def shutdown(self):
         self.copy_buffer = set()
         self.event_manager.unsubscribe(self._update)
+
+    def on_clipboard_owner_change(self, clipboard, event):
+        if self.clipboard_semaphore > 0:
+            self.clipboard_semaphore -= 1
+        else:
+            self.copy_buffer = set()
+            view = self.diagrams.get_current_view()
+            self.update_paste_state(view)
 
     @event_handler(DiagramSelectionChanged)
     def _update(self, event):
@@ -86,6 +100,8 @@ class CopyService(Service, ActionProvider):
     def copy_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
+            self.clipboard_semaphore += 1
+            self.clipboard.set_text("", -1)
             items = view.selected_items
             self.copy(items)
         self.update_paste_state(view)
@@ -94,6 +110,8 @@ class CopyService(Service, ActionProvider):
     def cut_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
+            self.clipboard_semaphore += 1
+            self.clipboard.set_text("", -1)
             items = view.selected_items
             self.copy(items)
             for i in list(items):
@@ -104,7 +122,7 @@ class CopyService(Service, ActionProvider):
     def paste_action(self):
         view = self.diagrams.get_current_view()
         diagram = self.diagrams.get_current_diagram()
-        if not view:
+        if not (view and view.is_focus()):
             return
 
         if not self.copy_buffer:
