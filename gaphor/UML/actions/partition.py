@@ -49,6 +49,9 @@ class PartitionItem(ElementPresentation, Named):
         self.min_width = 100
         self.min_height = 300
 
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+
     @property
     def toplevel(self):
         return self._toplevel
