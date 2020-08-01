@@ -70,18 +70,16 @@ jobs:
           make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v2
-        if: matrix.py_ver == '3.7'
         with:
           name: gaphor-${{ steps.meta.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.meta.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
         uses: actions/upload-artifact@v2
-        if: matrix.py_ver == '3.7'
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
       - name: Publish to PyPI
-        if: github.event_name == 'release' && matrix.py_ver == '3.7'
+        if: github.event_name == 'release'
         run: |
           poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
