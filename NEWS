@@ -20,8 +20,12 @@
 - Refactor Code Generator to New Module and add CLI
 - Fix MSYS2 package names and disable system update
 - Remove CI workaround for console plugin
-- Move core modelling concepts to a separate package
+- Move core modeling concepts to a separate package
 - Convert Some Profile Tests to Pytest
+- Speed up text rendering
+- Fix tree view text to allow names with angle brackets
+- Clear the clipboard when diagram items are copied
+- Fix name change for activity partitions
 
 1.2.0
 -----
