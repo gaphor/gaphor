@@ -164,7 +164,7 @@ def parse_enum(prop, value):
 def parse_line_style(prop, value) -> float:
     if value == "sloppy":
         return 0.5
-    elif isinstance(value, tuple):
+    elif isinstance(value, tuple) and len(value) == 2:
         style, factor = value
         if style == "sloppy":
             if not isinstance(factor, number):

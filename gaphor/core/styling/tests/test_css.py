@@ -207,3 +207,13 @@ def test_line_style(css_value, result):
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props.get("line-style") == result
+
+
+def test_broken_line_style():
+    # diagram css is missing the closing bracket
+    css = "diagram { line-style: sloppy * { }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+
+    props = compiled_style_sheet.match(Node("mytype"))
+    assert props.get("line-style") is None
