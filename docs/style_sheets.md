@@ -30,7 +30,7 @@ class {
 }
 ```
 
-![background beige example](style-sheets/class.png)
+![background beige](style-sheets/class.png)
 
 Or change the color of a component, only when it's nested in a node:
 
@@ -40,7 +40,7 @@ node component {
 }
 ```
 
-![background beige example](style-sheets/node-component.png)
+![nested component](style-sheets/node-component.png)
 
 The diagram itself is also expressed as a CSS node. It's pretty easy to define
 a "dark" style:
