@@ -26,17 +26,21 @@ Here is a simple example of how to change the background color of a class:
 
 ``` css
 class {
-  background-color: beige
+  background-color: beige;
 }
 ```
+
+![background beige example](style-sheets/class.png)
 
 Or change the color of a component, only when it's nested in a node:
 
 ``` css
 node component {
-  background-color: skyblue
+  background-color: skyblue;
 }
 ```
+
+![background beige example](style-sheets/node-component.png)
 
 The diagram itself is also expressed as a CSS node. It's pretty easy to define
 a "dark" style:
@@ -47,10 +51,16 @@ diagram {
 }
 
 * {
-  color: white
-  text-color: white
+  color: white;
+  text-color: white;
 }
 ```
+
+<p>
+ <span style="display: inline-block; background-color: black; padding: 16px">
+  <img alt="dark style" src="_images/dark.png"/>
+ </span>
+</p>
 
 Here you already see the first custom attribute: `text-color`. This property
 allows you to control the color of the text drawn in an item. `color` is used
@@ -205,7 +215,13 @@ All diagrams in the package "Drafts" should be drawn using sloppy lines:
 diagram[namespace.name=drafts] {
   line-style: sloppy 0.3;
 }
+
+diagram[name=draft] * {
+  font-family: Purisa; /* Or use some other font that's installed on your system */
+}
 ```
+
+![draft style](style-sheets/draft.png)
 
 ### Unconnected relationships
 
@@ -222,6 +238,8 @@ never have a backing model element.
 }
 ```
 
+![unconnected relationship](style-sheets/unconnected.png)
+
 ### Navigable associations
 
 An example of how to apply a style to a navigable association is to color an
@@ -235,3 +253,5 @@ association:not([memberEnd.navigability*=true]) {
  color: blue;
 }
 ```
+
+![navigable association](style-sheets/navigable-association.png)
