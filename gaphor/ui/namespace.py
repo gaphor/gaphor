@@ -118,9 +118,12 @@ class NamespaceView(Gtk.TreeView):
         """
         element = model.get_value(iter, 0)
 
-        if isinstance(element, Diagram):
-            cell.set_property("weight", Pango.Weight.BOLD)
-        elif isinstance(element, (UML.Classifier, UML.Operation)):
+        cell.set_property(
+            "weight",
+            Pango.Weight.BOLD if isinstance(element, Diagram) else Pango.Weight.NORMAL,
+        )
+
+        if isinstance(element, (UML.Classifier, UML.Operation)):
             cell.set_property(
                 "style",
                 Pango.Style.ITALIC if element.isAbstract else Pango.Style.NORMAL,
