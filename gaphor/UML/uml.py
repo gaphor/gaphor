@@ -5,10 +5,19 @@ from __future__ import annotations
 import uuid
 from typing import TYPE_CHECKING, Callable, List, Optional
 
+# 17: override Comment
+# 32: override Diagram
 # 29: override PackageableElement
 # 26: override NamedElement
 # 14: override Element
-from gaphor.core.modeling import Element, NamedElement, PackageableElement
+from gaphor.core.modeling import (
+    Comment,
+    Diagram,
+    Element,
+    NamedElement,
+    PackageableElement,
+    StyleSheet,
+)
 from gaphor.core.modeling.properties import (
     association,
     attribute,
@@ -352,10 +361,6 @@ class Stereotype(Class):
     pass
 
 
-# 32: override Diagram
-from gaphor.core.modeling import Diagram, StyleSheet
-
-
 class DeployedArtifact(NamedElement):
     pass
 
@@ -466,10 +471,6 @@ class Action(ExecutableNode):
     output: relation_many[OutputPin]
     context_: relation_one[Classifier]
     input: relation_many[InputPin]
-
-
-# 17: override Comment
-from gaphor.core.modeling import Comment
 
 
 class ExecutionEnvironment(Node):
@@ -1640,75 +1641,57 @@ ExecutionSpecification.finish = derived(
 # 82: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
-ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, 1, Property.type)
+ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
 ActivityNode.redefinedElement = redefine(
-    ActivityNode,
-    "redefinedElement",
-    ActivityNode,
-    "*",
-    RedefinableElement.redefinedElement,
+    ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
 )
 Implementation.contract = redefine(
-    Implementation, "contract", Interface, "*", Dependency.supplier
+    Implementation, "contract", Interface, Dependency.supplier
 )
 BehavioredClassifier.implementation = redefine(
     BehavioredClassifier,
     "implementation",
     Implementation,
-    "*",
     NamedElement.clientDependency,
 )
 Implementation.implementatingClassifier = redefine(
-    Implementation,
-    "implementatingClassifier",
-    BehavioredClassifier,
-    "*",
-    Dependency.client,
+    Implementation, "implementatingClassifier", BehavioredClassifier, Dependency.client
 )
 Parameter.operation = redefine(
-    Parameter, "operation", Operation, 1, Parameter.ownerFormalParam
+    Parameter, "operation", Operation, Parameter.ownerFormalParam
 )
 Operation.formalParameter = redefine(
-    Operation, "formalParameter", Parameter, "*", BehavioralFeature.formalParameter
+    Operation, "formalParameter", Parameter, BehavioralFeature.formalParameter
 )
 ActivityEdge.redefinedElement = redefine(
-    ActivityEdge,
-    "redefinedElement",
-    ActivityEdge,
-    "*",
-    RedefinableElement.redefinedElement,
+    ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement
 )
 Package.ownedMember = redefine(
-    Package, "ownedMember", PackageableElement, "*", Namespace.ownedMember
+    Package, "ownedMember", PackageableElement, Namespace.ownedMember
 )
 Component.ownedMember = redefine(
-    Component, "ownedMember", PackageableElement, "*", Namespace.ownedMember
+    Component, "ownedMember", PackageableElement, Namespace.ownedMember
 )
 Transition.redefinitionContext = redefine(
     Transition,
     "redefinitionContext",
     Classifier,
-    "*",
     RedefinableElement.redefinitionContext,
 )
 Region.extendedRegion = redefine(
-    Region, "extendedRegion", Region, "*", RedefinableElement.redefinedElement
+    Region, "extendedRegion", Region, RedefinableElement.redefinedElement
 )
 State.redefinedState = redefine(
-    State, "redefinedState", State, "*", RedefinableElement.redefinedElement
+    State, "redefinedState", State, RedefinableElement.redefinedElement
 )
 Transition.redefinedTransition = redefine(
-    Transition,
-    "redefinedTransition",
-    Transition,
-    "*",
-    RedefinableElement.redefinedElement,
+    Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
 )
 StateInvariant.covered = redefine(
-    StateInvariant, "covered", Lifeline, 1, InteractionFragment.covered
+    StateInvariant, "covered", Lifeline, InteractionFragment.covered
 )
 OccurrenceSpecification.covered = redefine(
-    OccurrenceSpecification, "covered", Lifeline, 1, InteractionFragment.covered
+    OccurrenceSpecification, "covered", Lifeline, InteractionFragment.covered
 )
 # 103: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py

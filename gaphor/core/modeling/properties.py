@@ -820,20 +820,12 @@ class redefine(umlproperty):
     """
 
     def __init__(
-        self,
-        decl_class: Type[E],
-        name: str,
-        type: Type[T],
-        upper: Upper,
-        original: relation,
+        self, decl_class: Type[E], name: str, type: Type[T], original: relation,
     ):
         super().__init__(name)
         assert isinstance(
             original, (association, derived)
         ), f"expected association or derived, got {original}"
-        assert (
-            upper == original.upper
-        ), f"Multiplicity of {decl_class}.{name} and {original} differ: {upper} != {original.upper}"
         self.decl_class = decl_class
         self.type = type
         self.original: Union[association, derived] = original
