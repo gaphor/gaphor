@@ -835,8 +835,6 @@ class redefine(umlproperty):
             upper == original.upper
         ), f"Multiplicity of {decl_class}.{name} and {original} differ: {upper} != {original.upper}"
         self.decl_class = decl_class
-        self.name = name
-        self._name = "_" + name
         self.type = type
         self.original: Union[association, derived] = original
         self.upper = original.upper
