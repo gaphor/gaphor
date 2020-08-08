@@ -227,9 +227,8 @@ class Writer:
             self.add_property(
                 d.class_name,
                 d.name,
-                "derivedunion(%s, '%s', %s, %s, %s, %s)"
+                "derivedunion('%s', %s, %s, %s, %s)"
                 % (
-                    d.class_name,
                     d.name,
                     d.opposite_class_name,
                     d.lower,
@@ -248,9 +247,8 @@ class Writer:
             self.add_property(
                 d.class_name,
                 d.name,
-                "derivedunion(%s, '%s', %s, %s, %s)"
+                "derivedunion('%s', %s, %s, %s)"
                 % (
-                    d.class_name,
                     d.name,
                     d.opposite_class_name,
                     d.lower,

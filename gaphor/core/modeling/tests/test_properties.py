@@ -398,7 +398,7 @@ def test_derived():
     class A(Element):
         a: relation_many[A]
 
-    A.a = derived(A, "a", str, 0, "*", lambda self: ["a", "b", "c"])
+    A.a = derived("a", str, 0, "*", lambda self: ["a", "b", "c"])
 
     a = A()
 
@@ -414,7 +414,7 @@ def test_derivedunion():
 
     A.a = association("a", A)
     A.b = association("b", A, 0, 1)
-    A.u = derivedunion(A, "u", object, 0, "*", A.a, A.b)
+    A.u = derivedunion("u", object, 0, "*", A.a, A.b)
 
     a = A()
     assert len(a.a) == 0, f"a.a = {a.a}"
@@ -454,7 +454,7 @@ def test_derivedunion_notify_for_single_derived_property():
                 self.notified = True
 
     E.a = association("a", A)
-    E.u = derivedunion(E, "u", A, 0, "*", E.a)
+    E.u = derivedunion("u", A, 0, "*", E.a)
 
     e = E()
     e.a = A()
@@ -479,7 +479,7 @@ def test_derivedunion_notify_for_multiple_derived_properties():
 
     E.a = association("a", A)
     E.aa = association("aa", A)
-    E.u = derivedunion(E, "u", A, 0, "*", E.a, E.aa)
+    E.u = derivedunion("u", A, 0, "*", E.a, E.aa)
 
     e = E()
     e.a = A()
@@ -496,7 +496,7 @@ def test_derivedunion_listmixins():
 
     A.a = association("a", A)
     A.b = association("b", A)
-    A.u = derivedunion(A, "u", A, 0, "*", A.a, A.b)
+    A.u = derivedunion("u", A, 0, "*", A.a, A.b)
     A.name = attribute("name", str, "default")
 
     a = A()

@@ -310,8 +310,8 @@ class TestUndoManager(TestCase):
         A.b2 = association("b2", A, upper="*")
         A.b3 = association("b3", A, upper=1)
 
-        A.derived_a = derivedunion(A, "derived_a", 0, 1, A.a1, A.a2)
-        A.derived_b = derivedunion(A, "derived_b", 0, "*", A.b1, A.b2, A.b3)
+        A.derived_a = derivedunion("derived_a", A, 0, 1, A.a1, A.a2)
+        A.derived_b = derivedunion("derived_b", A, 0, "*", A.b1, A.b2, A.b3)
 
         events = []
 
@@ -328,15 +328,17 @@ class TestUndoManager(TestCase):
             a.a1 = element_factory.create(A)
             undo_manager.commit_transaction()
 
-            assert len(events) == 1, events
+            assert (
+                len(events) == 2
+            ), events  # both  AssociationSet and DerivedSet events
             assert events[0].property is A.a1
             assert undo_manager.can_undo()
 
             undo_manager.undo_transaction()
             assert not undo_manager.can_undo()
             assert undo_manager.can_redo()
-            assert len(events) == 2, events
-            assert events[1].property is A.a1
+            assert len(events) == 4, events
+            assert events[2].property is A.a1
 
         finally:
             event_manager.unsubscribe(handler)

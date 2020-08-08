@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import logging
 from typing import (
+    Any,
     Callable,
     Generic,
     List,
@@ -581,14 +582,13 @@ class derived(umlproperty, Generic[T]):
 
     opposite = None
 
-    def __init__(
+    def __init__(  # type: ignore[misc]
         self,
-        decl_class: Type[E],
         name: str,
         type: Type[T],
         lower: Lower,
         upper: Upper,
-        filter: Callable[[E], List[Optional[T]]],
+        filter: Callable[[Any], List[Optional[T]]],
         *subsets: relation,
     ) -> None:
         super().__init__(name)
@@ -722,15 +722,9 @@ class derivedunion(derived[T]):
     """
 
     def __init__(
-        self,
-        decl_class: Type[E],
-        name: str,
-        type: Type[T],
-        lower: Lower,
-        upper: Upper,
-        *subsets: relation,
+        self, name: str, type: Type[T], lower: Lower, upper: Upper, *subsets: relation,
     ):
-        super().__init__(decl_class, name, type, lower, upper, self._union, *subsets)
+        super().__init__(name, type, lower, upper, self._union, *subsets)
 
     def _union(self, obj, exclude=None):
         """

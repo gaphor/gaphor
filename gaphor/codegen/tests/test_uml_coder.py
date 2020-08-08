@@ -76,7 +76,7 @@ SubClass.concrete = association('concrete', D, opposite='subbase')
 D.name3 = association('name3', SubClass, opposite='name4')
 # 'SubClass.value' is a simple attribute
 SubClass.value = attribute('value', str)
-SubClass.abstract = derivedunion(SubClass, 'abstract', C, 0, '*', SubClass.concrete)
+SubClass.abstract = derivedunion('abstract', C, 0, '*', SubClass.concrete)
 SubClass.name4 = redefine(SubClass, 'name4', D, '*', SubClass.name2)
 """
 
