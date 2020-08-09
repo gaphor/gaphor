@@ -93,6 +93,24 @@ gaphorconvert = 'gaphor.plugins.diagramexport.gaphorconvert:main'
 "UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
 "SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
 
+[tool.pytest.ini_options]
+testpaths = [
+    "gaphor",
+    "tests",
+    "docs",
+]
+doctest-extension= ".rst"
+python_files = "test_*.py"
+# for coverage: --cov=gaphor/
+
+# Doctests are failing on GitHub Actions CI (seg fault)
+# addopts = "--doctest-modules"
+
+# Console tests are failing the GitHub Actions CI (seg fault)
+norecursedirs = "gaphor/plugins/console/tests"
+junit_family = "xunit1"
+markers = "slow: marks tests as slow (deselect with '-m \"not slow\"')"
+
 [tool.isort]
 multi_line_output = 3
 include_trailing_comma = true
