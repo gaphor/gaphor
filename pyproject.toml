@@ -99,7 +99,6 @@ testpaths = [
     "tests",
     "docs",
 ]
-doctest-extension= ".rst"
 python_files = "test_*.py"
 # for coverage: --cov=gaphor/
 
