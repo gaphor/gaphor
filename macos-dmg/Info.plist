@@ -31,6 +31,30 @@
 	<string>10.13</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+
+	<key>PyMainFileNames</key>
+	<array>
+		<string>__boot__</string>
+	</array>
+	<key>PyResourcePackages</key>
+	<array>
+		<string>@executable_path/../../Frameworks/Python.framework/Versions/3.8/lib/python3.8</string>
+		<string>@executable_path/../../Frameworks/Python.framework/Versions/3.8/lib/python3.8/lib-dynload</string>
+		<string>@executable_path/../lib/python3.8/site-packages</string>
+	</array>
+	<key>PyRuntimeLocations</key>
+	<array>
+		<string>@executable_path/../Frameworks/Python.framework/Versions/3.8/Python</string>
+	</array>
+	<key>PythonInfoDict</key>
+	<dict>
+		<key>PythonLongVersion</key>
+		<string>3.8.2 (default, Mar 10 2020, 15:43:33)
+[Clang 11.0.0 (clang-1100.0.33.17)]</string>
+		<key>PythonShortVersion</key>
+		<string>3.8</string>
+	</dict>
+
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
