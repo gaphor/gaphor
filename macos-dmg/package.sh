@@ -87,20 +87,27 @@ find "${RESOURCESDIR}" -type f -exec chmod u+w {} \;
 # that we don't want to use. We need the executable in Resources/Python.app.
 cp "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app/Contents/MacOS/Python" "${MACOSDIR}/python"
 
+log "Installing Gaphor in ${RESOURCESDIR}..."
+
+"${RESOURCESDIR}/bin/pip3" install --no-warn-script-location ../dist/gaphor-${VERSION}-py3-none-any.whl
+
+log "Cleaning unneeded resources..."
+
 rm "${RESOURCESDIR}"/lib/*.a
+rm "${RESOURCESDIR}/lib/libgtkmacintegration-gtk2.2.dylib"
+rm -r "${RESOURCESDIR}/lib/cairo"
+rm -r "${RESOURCESDIR}/lib/cmake"
+rm -r "${RESOURCESDIR}/lib/gettext"
+rm -r "${RESOURCESDIR}/lib/glib-2.0"
 rm -r "${RESOURCESDIR}/lib/gobject-introspection"
+rm -r "${RESOURCESDIR}/lib/pkgconfig"
 
 rm -r "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app"
 rm -r "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/bin"
 rm -r "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/include"
 rm -r "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/share"
 
-log "Installing Gaphor in ${RESOURCESDIR}..."
-
-"${RESOURCESDIR}/bin/pip3" install --no-warn-script-location ../dist/gaphor-${VERSION}-py3-none-any.whl
-
-
-echo "Fixing dynamic link dependencies..."
+log "Fixing dynamic link dependencies..."
 
 function map {
   local fun=$1
@@ -153,9 +160,10 @@ function fix_paths {
   echo ${MACOSDIR}/python
 } | map fix_paths
 
+log "Compiling .gir files..."
+
 function compile_gir {
   local gir="$1"
-  log "Compiling $gir"
   local outfile="$(basename $gir | sed 's/gir$/typelib/')"
   sed -i "" 's#/usr/local/Cellar/[^/]*/[^/]*#@executable_path/../Resources#g' "${gir}"
   g-ir-compiler --output="${RESOURCESDIR}/lib/girepository-1.0/${outfile}" "${gir}"
@@ -163,7 +171,8 @@ function compile_gir {
 
 find "${RESOURCESDIR}" -type f -name '*.gir' | map compile_gir
 
-log "Compiling schemas"
+log "Compiling schemas..."
+
 glib-compile-schemas ${RESOURCESDIR}/share/glib-2.0/schemas
 
 log "Building Gaphor-$VERSION.dmg..."
@@ -179,6 +188,5 @@ create-dmg \
   --app-drop-link 500 240 \
   "Gaphor-$VERSION.dmg" \
   "Gaphor.app"
-
 
 log "Done!"
