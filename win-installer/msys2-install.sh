@@ -21,5 +21,5 @@ pacman --noconfirm -S --needed \
     mingw-w64-"$MSYS2_ARCH"-python-pip \
 
 source "$DIR"/../venv
-pip install pyinstaller
+pip install pyinstaller==3.6.0
 make translations
