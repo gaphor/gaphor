@@ -72,8 +72,6 @@ static CFMutableArrayRef py2app_pool;
 /* ApplicationServices */
 USES(LSOpenFSRef);
 USES(LSFindApplicationForInfo);
-USES(GetCurrentProcess);
-USES(SetFrontProcess);
 /* CoreFoundation */
 USES(CFArrayRemoveValueAtIndex);
 USES(CFStringCreateFromExternalRepresentation);
@@ -168,8 +166,6 @@ static int bind_objc_Cocoa_ApplicationServices(void) {
         RTLD_LAZY);
     if (!cf_dylib) return -1;
 
-    LOOKUP(GetCurrentProcess);
-    LOOKUP(SetFrontProcess);
     LOOKUP(LSOpenFSRef);
     LOOKUP(LSFindApplicationForInfo);
 #undef LOOKUP
@@ -296,9 +292,6 @@ static void ensureGUI(void) {
     id app = ((id(*)(id, SEL))py2app_objc_msgSend)(py2app_objc_getClass("NSApplication"), py2app_sel_getUid("sharedApplication"));
     py2app_NSApplicationLoad();
     ((void(*)(id, SEL, BOOL))py2app_objc_msgSend)(app, py2app_sel_getUid("activateIgnoringOtherApps:"), 1);
-    if (py2app_GetCurrentProcess(&psn) == noErr) {
-        py2app_SetFrontProcess(&psn);
-    }
 }
 
 static int report_error(const char *error) {
