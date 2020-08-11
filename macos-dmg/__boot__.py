@@ -1,6 +1,5 @@
 import os
 import pathlib
-import pprint
 import sys
 
 PYVER = "3.7"
@@ -9,6 +8,10 @@ resources = os.environ["RESOURCEPATH"]
 cache = pathlib.Path.home() / ".cache" / "gaphor"
 
 print(f"App contents folder is {resources}, cache is {cache}")
+
+
+while sys.path[0] == resources:
+    del sys.path[0]
 
 
 os.environ["DYLD_LIBRARY_PATH"] = f"{resources}/lib"
@@ -27,12 +30,6 @@ os.environ["GDK_PIXBUF_MODULEDIR"] = f"{resources}/lib/gdk-pixbuf-2.0/2.10.0/loa
 os.environ["GDK_PIXBUF_MODULE_FILE"] = f"{cache}/gdk-pixbuf-2.0-loaders.cache"
 
 os.environ["GTK_IM_MODULE_FILE"] = f"{cache}/immodules.cache"
-
-while sys.path[0] == resources:
-    del sys.path[0]
-
-
-pprint.pprint(sys.path)
 
 os.system(f'"{resources}/bin/gdk-pixbuf-query-loaders" --update-cache')
 os.system(f'"{resources}/bin/gtk-query-immodules-3.0" --update-cache')

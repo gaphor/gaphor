@@ -108,8 +108,9 @@ class Application(Service, ActionProvider):
             event_manager.handle(SessionShutdownRequested(self))
             if self.active_session == session:
                 logger.info("Window not closed, abort quit operation")
-                return
+                return False
         self.shutdown()
+        return True
 
     def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
         return (

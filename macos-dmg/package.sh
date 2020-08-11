@@ -54,6 +54,7 @@ function rel_path {
   brew deps gobject-introspection
   echo adwaita-icon-theme
   brew deps adwaita-icon-theme
+  echo gtk-mac-integration
 } | sort -u |\
 while read dep
 do
