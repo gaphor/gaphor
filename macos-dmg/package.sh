@@ -38,8 +38,8 @@ mkdir -p "${RESOURCESDIR}"
 
 cp PkgInfo "${CONTENTSDIR}"
 cp gaphor.icns "${RESOURCESDIR}"
-cat __boot__.py | sed 's#3.7#'${PYVER}'#' >"${RESOURCESDIR}/__boot__.py"
-cat Info.plist | sed 's#VERSION#'${VERSION}'#g' > "${CONTENTSDIR}/Info.plist"
+cat __boot__.py | sed 's#3\.7#'${PYVER}'#' >"${RESOURCESDIR}/__boot__.py"
+cat Info.plist | sed 's#VERSION#'${VERSION}'#g' | sed 's#3\.7#'${PYVER}'#g' > "${CONTENTSDIR}/Info.plist"
 
 cc -o "${MACOSDIR}/gaphor" main.c -DREDIRECT_ASL -framework Cocoa
 
