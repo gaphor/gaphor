@@ -25,7 +25,7 @@ class PseudostateItem(ElementPresentation, VertexItem):
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[Pseudostate].kind", self.update_shapes)
 
-    def update_shapes(self):
+    def update_shapes(self, event=None):
         self.shape = IconBox(
             Box(
                 draw=draw_history_pseudostate

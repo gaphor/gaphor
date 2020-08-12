@@ -42,20 +42,20 @@ generic = "^1.0.0"
 tinycss2 = "^1.0.2"
 
 [tool.poetry.dev-dependencies]
-tomlkit = "^0.5"
-pytest = "^5.0"
+tomlkit = "^0.7"
+pytest = "^6.0"
 pytest-cov = "^2.5"
-pytest-runner = "^4.2"
+pytest-runner = "^5.2"
 black = { version = "^19.10b0", python = "^3.6" }
-mypy = "0.770"
-pre-commit = "^1.12"
-sphinx = "^2.2"
-recommonmark = "^0.6.0"
-sphinx-rtd-theme = "^0.4.3"
+mypy = "0.782"
+pre-commit = "^2.6"
+sphinx = "^3.2"
+recommonmark = "^0.6"
+sphinx-rtd-theme = "^0.5"
 babel = "^2.7.0"
-babelgladeextractor = "^0.6.0"
-flake8 = { version = "^3.8.0a2", allow-prereleases = true }
-isort = "^4.3.21"
+babelgladeextractor = "^0.7"
+flake8 = "^3.8"
+isort = "^5.3"
 
 [tool.poetry.scripts]
 gaphor = 'gaphor.ui:main'
@@ -92,6 +92,28 @@ gaphorconvert = 'gaphor.plugins.diagramexport.gaphorconvert:main'
 [tool.poetry.plugins."gaphor.modelinglanguages"]
 "UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
 "SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "gaphor",
+    "tests",
+    "docs",
+]
+python_files = "test_*.py"
+# for coverage: --cov=gaphor/
+
+# Doctests are failing on GitHub Actions CI (seg fault)
+# addopts = "--doctest-modules"
+
+# Console tests are failing the GitHub Actions CI (seg fault)
+norecursedirs = "gaphor/plugins/console/tests"
+junit_family = "xunit1"
+markers = "slow: marks tests as slow (deselect with '-m \"not slow\"')"
+
+[tool.coverage.run]
+omit = [
+    "*tests*",
+]
 
 [tool.isort]
 multi_line_output = 3
