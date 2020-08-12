@@ -19,6 +19,8 @@ from gaphor.ui.actiongroup import apply_application_actions
 gi.require_version("Gtk", "3.0")  # noqa: isort:skip
 gi.require_version("Gdk", "3.0")  # noqa: isort:skip
 from gi.repository import GLib, Gdk, Gio, Gtk  # noqa: isort:skip
+from gaphor.ui.macosshim import macos_init
+
 # fmt: on
 
 
@@ -101,6 +103,8 @@ def run(args):
         try:
             application = Application()
             apply_application_actions(application, gtk_app)
+            if macos_init:
+                macos_init(application, gtk_app)
         except Exception:
             gtk_app.quit()
             raise

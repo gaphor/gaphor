@@ -161,7 +161,7 @@ jobs:
       - name: Install macOS Dependencies
         run: |
           brew list
-          brew install gobject-introspection gtk+3 adwaita-icon-theme create-dmg
+          brew install gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration create-dmg
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.3
         with:
