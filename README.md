@@ -114,17 +114,7 @@ mingw-w64-x86_64-pkg-config mingw-w64-x86_64-cairo \
 mingw-w64-x86_64-gobject-introspection mingw-w64-x86_64-python \
 mingw-w64-x86_64-python-gobject mingw-w64-x86_64-python-cairo \
 mingw-w64-x86_64-python-pip
-```
-
-Ensure `/mingw64/bin` is added to your `PATH`:
-```bash
-$ export PATH=/mingw64/bin:$PATH
-```
-
-[Clone the
-repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
-
-```bash
+$ git clone https://github.com/gaphor/gaphor.git
 $ cd gaphor
 $ source ./venv -S
 $ poetry run gaphor
