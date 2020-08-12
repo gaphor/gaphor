@@ -408,10 +408,9 @@ class Namespace(UIComponent):
 
     def _visible(self, element):
         """ Special case: Non-navigable properties. """
-        return (
-            (isinstance(element, UML.NamedElement) and element.namespace)
-            or isinstance(element, UML.PackageableElement)
-        ) and not isinstance(element, (UML.InstanceSpecification, UML.Relationship))
+        return (isinstance(element, UML.NamedElement)) and not isinstance(
+            element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
+        )
 
     def _add(self, element, iter=None):
         if self._visible(element):
@@ -433,7 +432,7 @@ class Namespace(UIComponent):
         self.model.clear()
 
         toplevel = self.element_factory.select(
-            lambda e: isinstance(e, UML.PackageableElement) and not e.namespace
+            lambda e: isinstance(e, UML.NamedElement) and not e.namespace
         )
 
         for element in toplevel:
