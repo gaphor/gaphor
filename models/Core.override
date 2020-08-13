@@ -29,7 +29,6 @@ def _namedelement_qualifiedname(self) -> List[str]:
         return [self.name]
 
 NamedElement.qualifiedName = derived(
-    NamedElement,
     "qualifiedName",
     List[str],
     0,

@@ -51,9 +51,7 @@ def property_opposite(self: uml.Property) -> List[Optional[uml.Property]]:
     return [None]
 
 
-uml.Property.opposite = derived(
-    uml.Property, "opposite", uml.Property, 0, 1, property_opposite
-)
+uml.Property.opposite = derived("opposite", uml.Property, 0, 1, property_opposite)
 
 
 def property_navigability(self: uml.Property) -> List[Optional[bool]]:
@@ -79,9 +77,7 @@ def property_navigability(self: uml.Property) -> List[Optional[bool]]:
         return [False]
 
 
-uml.Property.navigability = derived(
-    uml.Property, "navigability", bool, 0, 1, property_navigability
-)
+uml.Property.navigability = derived("navigability", bool, 0, 1, property_navigability)
 
 
 def _pr_interface_deps(classifier, dep_type):

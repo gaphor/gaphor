@@ -77,7 +77,7 @@ def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Cla
     for cls in classes:
         base_classes = [base_cls for base_cls in cls.general]
         meta_classes = [meta_cls for meta_cls in get_class_extensions(cls)]
-        trees[cls] = base_classes + meta_classes
+        trees[cls] = sorted(base_classes + meta_classes, key=lambda e: e.name)
     return trees
 
 

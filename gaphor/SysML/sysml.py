@@ -57,7 +57,7 @@ class ElementPropertyPath(Element):
 
 
 class AddFlowPropertyValueOnNestedPortAction(
-    ElementPropertyPath, AddStructuralFeatureValueAction
+    AddStructuralFeatureValueAction, ElementPropertyPath
 ):
     pass
 
@@ -67,13 +67,13 @@ class AdjuntProperty(Property):
 
 
 class DirectedRelationshipPropertyPath(DirectedRelationship):
+    targetContext: relation_one[Classifier]
+    targetPropertyPath: relation_many[Property]
     sourceContext: relation_one[Classifier]
     sourcePropertyPath: relation_many[Property]
-    targetPropertyPath: relation_many[Property]
-    targetContext: relation_one[Classifier]
 
 
-class Allocate(DirectedRelationshipPropertyPath, Abstraction):
+class Allocate(Abstraction, DirectedRelationshipPropertyPath):
     pass
 
 
@@ -178,7 +178,7 @@ class InvocationOnNestedPortAction(ElementPropertyPath, InvocationAction):
     onNestedPort: relation_many[Port]
 
 
-class NestedConnectorEnd(ElementPropertyPath, ConnectorEnd):
+class NestedConnectorEnd(ConnectorEnd, ElementPropertyPath):
     pass
 
 
@@ -279,7 +279,7 @@ ChangeSructuralFeatureEvent.structuralFeature = association(
 )
 ConnectorProperty.connector = association("connector", Connector, upper=1)
 DirectedFeature.featureDirection = enumeration(
-    "kind", ("required", "providedRequired", "provided"), "required"
+    "kind", ("providedRequired", "provided", "required"), "providedRequired"
 )
 DirectedRelationshipPropertyPath.sourceContext = association(
     "sourceContext", Classifier, upper=1
@@ -296,7 +296,7 @@ DirectedRelationshipPropertyPath.targetPropertyPath = association(
 ElementGroup.name = attribute("name", str)
 ElementGroup.orderedMember = association("orderedMember", Element)
 ElementPropertyPath.propertyPath = association("propertyPath", Property, lower=1)
-FlowProperty.direction = enumeration("kind", ("out", "inout", "in"), "out")
+FlowProperty.direction = enumeration("kind", ("inout", "in", "out"), "inout")
 InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, lower=1)
 ParticipantProperty.end_ = association("end_", Property, upper=1)
 Probability.probability = attribute("probability", str)

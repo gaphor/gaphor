@@ -1291,14 +1291,13 @@ MultiplicityElement.upper = MultiplicityElement.upperValue
 
 # 91: override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived(
-    Property, "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
+    "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
 )
 
 # 97: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
 # defined in umloverrides.py
 
 RedefinableElement.redefinedElement = derivedunion(
-    RedefinableElement,
     "redefinedElement",
     RedefinableElement,
     0,
@@ -1311,7 +1310,6 @@ RedefinableElement.redefinedElement = derivedunion(
     Connector.redefinedConnector,
 )
 Classifier.attribute = derivedunion(
-    Classifier,
     "attribute",
     Property,
     0,
@@ -1324,7 +1322,6 @@ Classifier.attribute = derivedunion(
     Signal.ownedAttribute,
 )
 Classifier.feature = derivedunion(
-    Classifier,
     "feature",
     Feature,
     0,
@@ -1340,7 +1337,6 @@ Classifier.feature = derivedunion(
     Interface.ownedReception,
 )
 Feature.featuringClassifier = derivedunion(
-    Feature,
     "featuringClassifier",
     Classifier,
     1,
@@ -1356,7 +1352,6 @@ Feature.featuringClassifier = derivedunion(
 # defined in umloverrides.py
 
 BehavioralFeature.parameter = derivedunion(
-    BehavioralFeature,
     "parameter",
     Parameter,
     0,
@@ -1364,9 +1359,8 @@ BehavioralFeature.parameter = derivedunion(
     BehavioralFeature.returnResult,
     BehavioralFeature.formalParameter,
 )
-Action.output = derivedunion(Action, "output", OutputPin, 0, "*")
+Action.output = derivedunion("output", OutputPin, 0, "*")
 RedefinableElement.redefinitionContext = derivedunion(
-    RedefinableElement,
     "redefinitionContext",
     Classifier,
     0,
@@ -1377,7 +1371,6 @@ RedefinableElement.redefinitionContext = derivedunion(
     Port.encapsulatedClassifier,
 )
 NamedElement.namespace = derivedunion(
-    NamedElement,
     "namespace",
     Namespace,
     0,
@@ -1408,7 +1401,6 @@ NamedElement.namespace = derivedunion(
     ConnectionPointReference.state,
 )
 Namespace.ownedMember = derivedunion(
-    Namespace,
     "ownedMember",
     NamedElement,
     0,
@@ -1450,12 +1442,7 @@ Namespace.ownedMember = derivedunion(
 )
 # 79: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived(
-    Classifier,
-    "general",
-    Classifier,
-    0,
-    "*",
-    lambda self: [g.general for g in self.generalization],
+    "general", Classifier, 0, "*", lambda self: [g.general for g in self.generalization]
 )
 
 # 53: override Association.endType(Association.memberEnd, Property.type): derived[Type]
@@ -1464,20 +1451,15 @@ Classifier.general = derived(
 # association.
 
 Association.endType = derived(
-    Association,
-    "endType",
-    Type,
-    0,
-    "*",
-    lambda self: [end.type for end in self.memberEnd if end],
+    "endType", Type, 0, "*", lambda self: [end.type for end in self.memberEnd if end]
 )
 
 
 # 94: override Constraint.context: derivedunion[Namespace]
-Constraint.context = derivedunion(Constraint, "context", Namespace, 0, 1)
+Constraint.context = derivedunion("context", Namespace, 0, 1)
 
 # 100: override Operation.type: derivedunion[DataType]
-Operation.type = derivedunion(Operation, "type", DataType, 0, 1)
+Operation.type = derivedunion("type", DataType, 0, 1)
 
 # 73: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # defined in umloverrides.py
@@ -1487,7 +1469,7 @@ Operation.type = derivedunion(Operation, "type", DataType, 0, 1)
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
 # TODO: use those as soon as Extension.metaclass can be used.
-# Class.extension = derived(Class, 'extension', Extension, 0, '*', class_extension, Extension.metaclass)
+# Class.extension = derived('extension', Extension, 0, '*', class_extension, Extension.metaclass)
 
 Class.extension = property(
     lambda self: self.model.lselect(
@@ -1499,7 +1481,6 @@ are typed by the Class.""",
 )
 
 DirectedRelationship.target = derivedunion(
-    DirectedRelationship,
     "target",
     Element,
     1,
@@ -1514,7 +1495,6 @@ DirectedRelationship.target = derivedunion(
     Substitution.contract,
 )
 DirectedRelationship.source = derivedunion(
-    DirectedRelationship,
     "source",
     Element,
     1,
@@ -1528,9 +1508,8 @@ DirectedRelationship.source = derivedunion(
     PackageImport.importingNamespace,
     PackageMerge.mergingPackage,
 )
-Action.context_ = derivedunion(Action, "context_", Classifier, 0, 1)
+Action.context_ = derivedunion("context_", Classifier, 0, 1)
 Relationship.relatedElement = derivedunion(
-    Relationship,
     "relatedElement",
     Element,
     1,
@@ -1538,19 +1517,14 @@ Relationship.relatedElement = derivedunion(
     DirectedRelationship.target,
     DirectedRelationship.source,
 )
-ActivityGroup.superGroup = derivedunion(
-    ActivityGroup, "superGroup", ActivityGroup, 0, 1
-)
+ActivityGroup.superGroup = derivedunion("superGroup", ActivityGroup, 0, 1)
 ActivityGroup.subgroup = derivedunion(
-    ActivityGroup, "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
+    "subgroup", ActivityGroup, 0, "*", ActivityPartition.subpartition
 )
 # 76: override Classifier.inheritedMember: derivedunion[NamedElement]
-Classifier.inheritedMember = derivedunion(
-    Classifier, "inheritedMember", NamedElement, 0, "*"
-)
+Classifier.inheritedMember = derivedunion("inheritedMember", NamedElement, 0, "*")
 
 StructuredClassifier.role = derivedunion(
-    StructuredClassifier,
     "role",
     ConnectableElement,
     0,
@@ -1559,7 +1533,6 @@ StructuredClassifier.role = derivedunion(
     Collaboration.collaborationRole,
 )
 Namespace.member = derivedunion(
-    Namespace,
     "member",
     NamedElement,
     0,
@@ -1574,16 +1547,13 @@ Namespace.member = derivedunion(
 # defined in umloverrides.py
 
 # 85: override Namespace.importedMember: derivedunion[PackageableElement]
-Namespace.importedMember = derivedunion(
-    Namespace, "importedMember", PackageableElement, 0, "*"
-)
+Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
 
-Action.input = derivedunion(Action, "input", InputPin, 0, "*", SendSignalAction.target)
+Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
 # 109: override Component.provided: property
 # defined in umloverrides.py
 
 Element.owner = derivedunion(
-    Element,
     "owner",
     Element,
     0,
@@ -1605,7 +1575,6 @@ Element.owner = derivedunion(
     Constraint.parameterSet,
 )
 Element.ownedElement = derivedunion(
-    Element,
     "ownedElement",
     Element,
     0,
@@ -1638,7 +1607,7 @@ Element.ownedElement = derivedunion(
     InteractionFragment.generalOrdering,
     ParameterSet.condition,
 )
-ConnectorEnd.definingEnd = derivedunion(ConnectorEnd, "definingEnd", Property, 0, 1)
+ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
 # 118: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
     lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
@@ -1649,7 +1618,6 @@ StructuredClassifier.part = property(
 
 # 123: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.start = derived(
-    ExecutionSpecification,
     "start",
     OccurrenceSpecification,
     0,
@@ -1661,7 +1629,6 @@ ExecutionSpecification.start = derived(
 
 # 127: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.finish = derived(
-    ExecutionSpecification,
     "finish",
     OccurrenceSpecification,
     0,
@@ -1674,75 +1641,57 @@ ExecutionSpecification.finish = derived(
 # 82: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
-ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, 1, Property.type)
+ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
 ActivityNode.redefinedElement = redefine(
-    ActivityNode,
-    "redefinedElement",
-    ActivityNode,
-    "*",
-    RedefinableElement.redefinedElement,
+    ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
 )
 Implementation.contract = redefine(
-    Implementation, "contract", Interface, "*", Dependency.supplier
+    Implementation, "contract", Interface, Dependency.supplier
 )
 BehavioredClassifier.implementation = redefine(
     BehavioredClassifier,
     "implementation",
     Implementation,
-    "*",
     NamedElement.clientDependency,
 )
 Implementation.implementatingClassifier = redefine(
-    Implementation,
-    "implementatingClassifier",
-    BehavioredClassifier,
-    "*",
-    Dependency.client,
+    Implementation, "implementatingClassifier", BehavioredClassifier, Dependency.client
 )
 Parameter.operation = redefine(
-    Parameter, "operation", Operation, 1, Parameter.ownerFormalParam
+    Parameter, "operation", Operation, Parameter.ownerFormalParam
 )
 Operation.formalParameter = redefine(
-    Operation, "formalParameter", Parameter, "*", BehavioralFeature.formalParameter
+    Operation, "formalParameter", Parameter, BehavioralFeature.formalParameter
 )
 ActivityEdge.redefinedElement = redefine(
-    ActivityEdge,
-    "redefinedElement",
-    ActivityEdge,
-    "*",
-    RedefinableElement.redefinedElement,
+    ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement
 )
 Package.ownedMember = redefine(
-    Package, "ownedMember", PackageableElement, "*", Namespace.ownedMember
+    Package, "ownedMember", PackageableElement, Namespace.ownedMember
 )
 Component.ownedMember = redefine(
-    Component, "ownedMember", PackageableElement, "*", Namespace.ownedMember
+    Component, "ownedMember", PackageableElement, Namespace.ownedMember
 )
 Transition.redefinitionContext = redefine(
     Transition,
     "redefinitionContext",
     Classifier,
-    "*",
     RedefinableElement.redefinitionContext,
 )
 Region.extendedRegion = redefine(
-    Region, "extendedRegion", Region, "*", RedefinableElement.redefinedElement
+    Region, "extendedRegion", Region, RedefinableElement.redefinedElement
 )
 State.redefinedState = redefine(
-    State, "redefinedState", State, "*", RedefinableElement.redefinedElement
+    State, "redefinedState", State, RedefinableElement.redefinedElement
 )
 Transition.redefinedTransition = redefine(
-    Transition,
-    "redefinedTransition",
-    Transition,
-    "*",
-    RedefinableElement.redefinedElement,
+    Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
 )
 StateInvariant.covered = redefine(
-    StateInvariant, "covered", Lifeline, 1, InteractionFragment.covered
+    StateInvariant, "covered", Lifeline, InteractionFragment.covered
 )
 OccurrenceSpecification.covered = redefine(
-    OccurrenceSpecification, "covered", Lifeline, 1, InteractionFragment.covered
+    OccurrenceSpecification, "covered", Lifeline, InteractionFragment.covered
 )
 # 103: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
