@@ -36,10 +36,10 @@ def test_root_element(namespace, element_factory):
     assert namespace.model.iter_n_children(None) == 1
 
 
-def test_should_not_add_non_namespace_element(namespace, element_factory):
+def test_should_add_all_named_elements(namespace, element_factory):
     element_factory.create(UML.Action)
 
-    assert namespace.model.iter_n_children(None) == 0
+    assert namespace.model.iter_n_children(None) == 1
 
 
 def test_multiple_root_elements(namespace, element_factory):

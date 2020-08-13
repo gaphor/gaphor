@@ -255,7 +255,7 @@ class Namespace(UIComponent):
     def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self._namespace: Optional[NamespaceView] = None
+        self._view: Optional[NamespaceView] = None
         self.model = Gtk.TreeStore.new([object])
 
     def open(self):
@@ -270,9 +270,9 @@ class Namespace(UIComponent):
         return self.construct()
 
     def close(self):
-        if self._namespace:
-            self._namespace.destroy()
-            self._namespace = None
+        if self._view:
+            self._view.destroy()
+            self._view = None
 
         em = self.event_manager
         em.unsubscribe(self._on_element_create)
@@ -334,13 +334,13 @@ class Namespace(UIComponent):
         view.connect("row-activated", self._on_view_row_activated)
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
-        self._namespace = view
+        self._view = view
         self._on_model_ready()
 
         return scrolled_window
 
     def namespace_popup_model(self):
-        assert self._namespace
+        assert self._view
         model = Gio.Menu.new()
 
         part = Gio.Menu.new()
@@ -357,7 +357,7 @@ class Namespace(UIComponent):
         part.append(gettext("De_lete"), "tree-view.delete")
         model.append_section(None, part)
 
-        element = self._namespace.get_selected_element()
+        element = self._view.get_selected_element()
 
         part = Gio.Menu.new()
         for presentation in element.presentation:
@@ -377,21 +377,21 @@ class Namespace(UIComponent):
             model.append_section(None, part)
         return model
 
-    def iter_for_element(self, element, old_namespace=0):
+    def iter_for_element(self, element, old_owner=0):
         """Get the Gtk.TreeIter for an element in the Namespace.
 
         Args:
             element: The element contained in the in the Namespace.
-            old_namespace: The old namespace containing the element, optional.
+            old_owner: The old owner containing the element, optional.
 
         Returns: Gtk.TreeIter object of the model (not the sorted one!)
         """
 
         # Using `0` as sentinel
-        if old_namespace != 0:
-            parent_iter = self.iter_for_element(old_namespace)
-        elif element and element.namespace:
-            parent_iter = self.iter_for_element(element.namespace)
+        if old_owner != 0:
+            parent_iter = self.iter_for_element(old_owner)
+        elif element and element.owner:
+            parent_iter = self.iter_for_element(element.owner)
         else:
             parent_iter = None
 
@@ -411,12 +411,11 @@ class Namespace(UIComponent):
     def _add(self, element, iter=None):
         if self._visible(element):
             child_iter = self.model.append(iter, [element])
-            if isinstance(element, UML.Namespace):
-                for e in element.ownedMember:
-                    # check if owned member is indeed within parent's namespace
-                    # the check is important in case on Node classes
-                    if element is e.namespace:
-                        self._add(e, child_iter)
+            for e in element.ownedElement:
+                # check if owned element is indeed within parent's owner
+                # the check is important in case on Node classes
+                if element is e.owner:
+                    self._add(e, child_iter)
 
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
@@ -426,7 +425,7 @@ class Namespace(UIComponent):
         self.model.clear()
 
         toplevel = self.element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement) and not e.namespace
+            lambda e: isinstance(e, UML.NamedElement) and not e.owner
         )
 
         for element in toplevel:
@@ -434,9 +433,9 @@ class Namespace(UIComponent):
                 self._add(element)
 
         # Expand all root elements:
-        if self._namespace:  # None for testing
-            self._namespace.expand_root_nodes()
-            self._on_view_cursor_changed(self._namespace)
+        if self._view:  # None for testing
+            self._view.expand_root_nodes()
+            self._on_view_cursor_changed(self._view)
 
     @event_handler(ModelFlushed)
     def _on_flush_factory(self, event):
@@ -446,7 +445,7 @@ class Namespace(UIComponent):
     def _on_element_create(self, event: ElementCreated):
         element = event.element
         if self._visible(element) and not self.iter_for_element(element):
-            iter = self.iter_for_element(element.namespace)
+            iter = self.iter_for_element(element.owner)
             self.model.append(iter, [element])
 
     @event_handler(ElementDeleted)
@@ -462,12 +461,12 @@ class Namespace(UIComponent):
     @event_handler(DerivedSet)
     def _on_association_set(self, event: DerivedSet):
 
-        if event.property is not UML.NamedElement.namespace:
+        if event.property is not UML.Element.owner:
             return
         old_value, new_value = event.old_value, event.new_value
 
         element = event.element
-        old_iter = self.iter_for_element(element, old_namespace=old_value)
+        old_iter = self.iter_for_element(element, old_owner=old_value)
         if old_iter:
             self.model.remove(old_iter)
 
@@ -536,9 +535,9 @@ class Namespace(UIComponent):
         such as OpenModelElement, which will try to open the element (if
         it's a Diagram).
         """
-        assert self._namespace
+        assert self._view
 
-        model = self._namespace.get_model()
+        model = self._view.get_model()
         child_iter = self.iter_for_element(element)
         ok, tree_iter = model.convert_child_iter_to_iter(child_iter)
         assert ok, "Could not convert model iterator to view"
@@ -548,16 +547,16 @@ class Namespace(UIComponent):
         # Expand the parent row
         if len(path_indices) > 1:
             parent_path = Gtk.TreePath.new_from_indices(path_indices[:-1])
-            self._namespace.expand_row(path=parent_path, open_all=False)
+            self._view.expand_row(path=parent_path, open_all=False)
 
-        selection = self._namespace.get_selection()
+        selection = self._view.get_selection()
         selection.select_path(path)
-        self._on_view_cursor_changed(self._namespace)
+        self._on_view_cursor_changed(self._view)
 
     @action(name="tree-view.open")
     def tree_view_open_selected(self):
-        assert self._namespace
-        element = self._namespace.get_selected_element()
+        assert self._view
+        element = self._view.get_selected_element()
         # TODO: Candidate for adapter?
         if isinstance(element, Diagram):
             self.event_manager.handle(DiagramOpened(element))
@@ -571,8 +570,8 @@ class Namespace(UIComponent):
 
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
-        assert self._namespace
-        view = self._namespace
+        assert self._view
+        view = self._view
         element = view.get_selected_element()
         if element is not None:
             selection = view.get_selection()
@@ -588,8 +587,8 @@ class Namespace(UIComponent):
     @action(name="tree-view.create-diagram")
     @transactional
     def tree_view_create_diagram(self):
-        assert self._namespace
-        element = self._namespace.get_selected_element()
+        assert self._view
+        element = self._view.get_selected_element()
         while not isinstance(element, UML.Package):
             element = element.namespace
         diagram = self.element_factory.create(Diagram)
@@ -603,8 +602,8 @@ class Namespace(UIComponent):
     @action(name="tree-view.create-package")
     @transactional
     def tree_view_create_package(self):
-        assert self._namespace
-        element = self._namespace.get_selected_element()
+        assert self._view
+        element = self._view.get_selected_element()
         package = self.element_factory.create(UML.Package)
         package.package = element
 
@@ -615,8 +614,8 @@ class Namespace(UIComponent):
     @action(name="tree-view.delete")
     @transactional
     def tree_view_delete(self):
-        assert self._namespace
-        element = self._namespace.get_selected_element()
+        assert self._view
+        element = self._view.get_selected_element()
         if isinstance(element, UML.Package):
             element.unlink()
         elif isinstance(element, Diagram):
