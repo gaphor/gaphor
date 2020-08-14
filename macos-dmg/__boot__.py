@@ -14,7 +14,6 @@ while sys.path[0] == resources:
     del sys.path[0]
 
 
-os.environ["DYLD_LIBRARY_PATH"] = f"{resources}/lib"
 os.environ["FONTCONFIG_SYSROOT"] = f"{resources}"
 os.environ["GTK_DATA_PREFIX"] = f"{resources}"
 os.environ["GI_TYPELIB_PATH"] = f"{resources}/lib/girepository-1.0"
