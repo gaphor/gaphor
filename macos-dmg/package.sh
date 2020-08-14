@@ -41,7 +41,7 @@ cp gaphor.icns "${RESOURCESDIR}"
 cat __boot__.py | sed 's#3\.7#'${PYVER}'#' >"${RESOURCESDIR}/__boot__.py"
 cat Info.plist | sed 's#VERSION#'${VERSION}'#g' | sed 's#3\.7#'${PYVER}'#g' > "${CONTENTSDIR}/Info.plist"
 
-cc -o "${MACOSDIR}/gaphor" main.c -DREDIRECT_ASL -framework Cocoa
+cc -o "${MACOSDIR}/gaphor" -Wl,-rpath,@executable_path/../Resources/lib main.c -DREDIRECT_ASL -framework Cocoa
 
 function rel_path {
   echo $1 | sed 's#/usr/local/Cellar/[^/]*/[^/]*/##'
