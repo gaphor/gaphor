@@ -17,6 +17,7 @@ ARCH="x86_64"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${DIR}"
+mkdir -p output
 source ../venv
 
 MISC="${DIR}"/misc
@@ -51,11 +52,11 @@ function build_installer {
     cp "${DIR}"/misc/gaphor.ico "${DIST_LOCATION}"
     (cd "${DIST_LOCATION}" && makensis -NOCD -DVERSION="$VERSION" "${MISC}"/win_installer.nsi)
 
-    mv "${DIST_LOCATION}/gaphor-LATEST.exe" "$DIR/gaphor-$VERSION-installer.exe"
+    mv "${DIST_LOCATION}/gaphor-LATEST.exe" "$DIR/output/gaphor-$VERSION-installer.exe"
 }
 
 function build_portable_installer {
-    local PORTABLE="$DIR/gaphor-$VERSION-portable"
+    local PORTABLE="$DIR/output/gaphor-$VERSION-portable"
 
     rm -rf "$PORTABLE"
     mkdir "$PORTABLE"

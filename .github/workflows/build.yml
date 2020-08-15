@@ -133,22 +133,22 @@ jobs:
           certificate: '${{ secrets.BASE64_ENCODED_PFX }}'
           password: '${{ secrets.CERTPASSWORD }}'
           certificatesha1: '${{ secrets.CERTHASH }}'
-          folder: 'win-installer'
+          folder: 'win-installer/output'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-installer.exe
-          path: win-installer/gaphor-${{ steps.meta.outputs.version }}-installer.exe
+          path: win-installer/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-portable.exe
         uses: actions/upload-artifact@v2
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-portable.exe
-          path: win-installer/gaphor-${{ steps.meta.outputs.version }}-portable.exe
+          path: win-installer/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe
       - name: Upload Assets
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
         with:
-          files: 'win-installer/*.exe'
+          files: 'win-installer/output/*.exe'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
 
