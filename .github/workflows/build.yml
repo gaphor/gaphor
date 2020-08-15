@@ -93,6 +93,7 @@ jobs:
       MSYS2_ARCH: x86_64
       CHERE_INVOKING: yes
       PY_IGNORE_IMPORTMISMATCH: yes
+      SigningCertificate: SigningCertificate.pfx
     steps:
       - uses: actions/checkout@v2
       - name: Install MSYS2
@@ -127,6 +128,11 @@ jobs:
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
           C:\tools\msys64\usr\bin\bash -lc "win-installer/build-installer.sh"
+      - name: Sign exectables
+        uses: dlemstra/code-sign-action@v1
+        with:
+          certificate: '${{ secrets.BASE64_ENCODED_PFX }}'
+          folder: 'win-installer'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
         with:
