@@ -138,10 +138,10 @@ jobs:
       - name: Sign executables
         env:
           password: '${{ secrets.CERTPASSWORD }}'
-          timestampUrl: 'http://timestamp.digicert.com'
+          timestampUrl: http://timestamp.digicert.com
           installer: 'win-installer/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe'
           portable: 'win-installer/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe'
-        run: signtool.exe sign /f 'certificate.pfx' /tr $timestampUrl /td sha256 /fd sha256 /p $password $installer $portable
+        run: signtool.exe sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
       - name: Remove certificate
         run: Remove-Item 'certificate.pfx'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
