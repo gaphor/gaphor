@@ -141,7 +141,7 @@ jobs:
           timestampUrl: 'http://timestamp.digicert.com'
           installer: 'win-installer/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe'
           portable: 'win-installer/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe'
-        run: signtool.exe sign /f 'certificate.pfx' /tr ${timestampUrl} /td sha256 /fd sha256 /p ${password} ${installer} ${portable}
+        run: signtool.exe sign /f 'certificate.pfx' /tr $timestampUrl /td sha256 /fd sha256 /p $password $installer $portable
       - name: Remove certificate
         run: Remove-Item 'certificate.pfx'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
