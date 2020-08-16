@@ -127,12 +127,23 @@ jobs:
         run: |
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
           C:\tools\msys64\usr\bin\bash -lc "win-installer/build-installer.sh"
-      - name: Sign exectables
-        uses: PazerOP/code-sign-action@v3
-        with:
-          certificate: '${{ secrets.BASE64_ENCODED_PFX }}'
+      - name: Decode the certificate
+        run: |
+          $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+          $currentDirectory = Get-Location
+          $certificatePath = Join-Path -Path $currentDirectory -ChildPath 'certificate.pfx'
+          [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+      - name: Add SignTool to Path
+        run: echo "::add-path::C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86"
+      - name: Sign executables
+        env:
           password: '${{ secrets.CERTPASSWORD }}'
-          folder: 'win-installer/output'
+          timestampUrl: 'http://timestamp.digicert.com'
+          installer: 'win-installer/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe'
+          portable: 'win-installer/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe'
+        run: signtool.exe sign /f 'certificate.pfx' /tr ${timestampUrl} /td sha256 /fd sha256 /p ${password} ${installer} ${portable}
+      - name: Remove certificate
+        run: Remove-Item 'certificate.pfx'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
         with:
