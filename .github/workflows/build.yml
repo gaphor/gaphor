@@ -128,11 +128,10 @@ jobs:
           $env:PATH = "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem"
           C:\tools\msys64\usr\bin\bash -lc "win-installer/build-installer.sh"
       - name: Sign exectables
-        uses: DanaBear/code-sign-action@v4
+        uses: PazerOP/code-sign-action@v3
         with:
           certificate: '${{ secrets.BASE64_ENCODED_PFX }}'
           password: '${{ secrets.CERTPASSWORD }}'
-          certificatesha1: '${{ secrets.CERTHASH }}'
           folder: 'win-installer/output'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
