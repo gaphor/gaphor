@@ -87,12 +87,12 @@ class Element:
         ), "You can not retrieve the model since it's not set on construction"
         return self._model
 
-    def umlproperties(self):
+    @classmethod
+    def umlproperties(class_):
         """
         Iterate over all properties
         """
         umlprop = umlproperty
-        class_ = type(self)
         for propname in dir(class_):
             if not propname.startswith("_"):
                 prop = getattr(class_, propname)
