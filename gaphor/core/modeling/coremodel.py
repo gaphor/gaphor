@@ -65,10 +65,8 @@ Comment.body = attribute("body", str)
 # 48: override Element.presentation
 # defined in gaphor.core.modeling.presentation
 
-Comment.annotatedElement = association(
-    "annotatedElement", Element, opposite="ownedComment"
-)
-Element.ownedComment = association("ownedComment", Comment, opposite="annotatedElement")
+Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
+Element.comment = association("comment", Comment, opposite="annotatedElement")
 # 20: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 
