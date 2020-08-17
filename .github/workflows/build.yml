@@ -25,7 +25,7 @@ jobs:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Lint with Pre-commit
-        uses: pre-commit/action@v1.0.1
+        uses: pre-commit/action@v2.0.0
 
   linux:
     needs: lint
