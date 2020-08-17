@@ -123,11 +123,13 @@ class NamespaceView(Gtk.TreeView):
             Pango.Weight.BOLD if isinstance(element, Diagram) else Pango.Weight.NORMAL,
         )
 
-        if isinstance(element, (UML.Classifier, UML.Operation)):
-            cell.set_property(
-                "style",
-                Pango.Style.ITALIC if element.isAbstract else Pango.Style.NORMAL,
-            )
+        cell.set_property(
+            "style",
+            Pango.Style.ITALIC
+            if isinstance(element, (UML.Classifier, UML.BehavioralFeature))
+            and element.isAbstract
+            else Pango.Style.NORMAL,
+        )
 
         if isinstance(element, UML.Property):
             text = format_attribute(element) or "<None>"
