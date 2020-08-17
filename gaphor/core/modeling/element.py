@@ -50,7 +50,7 @@ class Element:
 
     appliedStereotype: relation_many[Element]
     owner: relation_one[Element]
-    ownedComment: relation_many[Comment]
+    comment: relation_many[Comment]
     ownedElement: relation_many[Element]
     presentation: relation_many[Presentation]
 

@@ -6,10 +6,10 @@ implemented in Python property classes. These classes are simply instantiated
 like this:
     class Class(Element): pass
     class Comment(Element): pass
-    Class.ownedComment = association('ownedComment', Comment,
+    Class.comment = association('comment', Comment,
                                      0, '*', 'annotatedElement')
     Comment.annotatedElement = association('annotatedElement', Element,
-                                           0, '*', 'ownedComment')
+                                           0, '*', 'comment')
 
 Same for attributes and enumerations.
 

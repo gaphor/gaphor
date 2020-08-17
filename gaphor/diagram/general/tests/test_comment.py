@@ -156,7 +156,7 @@ def test_commentline_relationship_disconnect(create):
     connect(line, line.tail, gen)
 
     assert gen.subject in comment.subject.annotatedElement
-    assert comment.subject in gen.subject.ownedComment
+    assert comment.subject in gen.subject.comment
 
     disconnect(gen, gen.head)
 
@@ -174,7 +174,7 @@ def test_commentline_unlink(create):
     connect(line, line.head, comment)
     connect(line, line.tail, clazz)
     assert clazz.subject in comment.subject.annotatedElement
-    assert comment.subject in clazz.subject.ownedComment
+    assert comment.subject in clazz.subject.comment
 
     assert line.canvas
 
@@ -185,9 +185,9 @@ def test_commentline_unlink(create):
 
     assert not line.canvas
     assert clazz.subject not in comment.subject.annotatedElement
-    assert comment.subject not in clazz.subject.ownedComment
+    assert comment.subject not in clazz.subject.comment
     assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
-    assert len(clazz.subject.ownedComment) == 0, clazz.subject.ownedComment
+    assert len(clazz.subject.comment) == 0, clazz.subject.comment
 
 
 def test_commentline_element_unlink(create):
@@ -200,7 +200,7 @@ def test_commentline_element_unlink(create):
     connect(line, line.head, comment)
     connect(line, line.tail, clazz)
     assert clazz.subject in comment.subject.annotatedElement
-    assert comment.subject in clazz.subject.ownedComment
+    assert comment.subject in clazz.subject.comment
 
     assert line.canvas
 
@@ -214,7 +214,7 @@ def test_commentline_element_unlink(create):
     assert not clazz.canvas
     assert line.canvas
     assert not comment.subject.annotatedElement
-    assert len(clazz_subject.ownedComment) == 0
+    assert len(clazz_subject.comment) == 0
 
 
 def test_commentline_relationship_unlink(create):
@@ -238,7 +238,7 @@ def test_commentline_relationship_unlink(create):
     connect(line, line.tail, gen)
 
     assert gen.subject in comment.subject.annotatedElement
-    assert comment.subject in gen.subject.ownedComment
+    assert comment.subject in gen.subject.comment
 
     gen.unlink()
 
@@ -259,7 +259,7 @@ def test_commentline_linked_to_same_element_twice(create):
     connect(line1, line1.tail, clazz)
 
     assert clazz.subject in comment.subject.annotatedElement
-    assert comment.subject in clazz.subject.ownedComment
+    assert comment.subject in clazz.subject.comment
 
     # Now add another line
 

@@ -12,16 +12,7 @@ comment
   wrt inheritance is done.
 %%
 override Element
-from gaphor.core.modeling import Element
-%%
-override Comment
-from gaphor.core.modeling import Comment
-%%
-override Element.ownedComment
-# Defined in Core model
-%%
-override Comment.annotatedElement
-# Defined in Core model
+from gaphor.core.modeling import Comment, Element
 %%
 override NamedElement
 from gaphor.core.modeling import NamedElement
