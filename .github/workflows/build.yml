@@ -20,7 +20,7 @@ jobs:
           python-version: 3.8
       - name: set PY
         run: echo "::set-env name=PY::$(python --version --version | sha256sum | cut -d' ' -f1)"
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2.1.0
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: 3.8
       - name: Use Python Dependency Cache
-        uses: actions/cache@v1.0.3
+        uses: actions/cache@v2.1.0
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -107,7 +107,7 @@ jobs:
           C:\tools\msys64\usr\bin\pacman --noconfirm -Syyuu
           C:\tools\msys64\usr\bin\pacman --noconfirm -Syuu
       - name: Use Python Dependency Cache
-        uses: actions/cache@v1.0.3
+        uses: actions/cache@v2.1.0
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -170,7 +170,7 @@ jobs:
         id: meta
         run: .github/scripts/metadata.sh
       - name: Use Python Dependency Cache
-        uses: actions/cache@v1.0.3
+        uses: actions/cache@v2.1.0
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
