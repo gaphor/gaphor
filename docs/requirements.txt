@@ -4,7 +4,7 @@ Pygments==2.6.1
 recommonmark==0.6.0
 Sphinx==3.1.2
 sphinx-rtd-theme==0.5.0
-sphinxcontrib-websupport==1.2.3
+sphinxcontrib-websupport==1.2.4
 tomlkit==0.5.11
 generic==1.0.0
 typing_extensions==3.7.4
