@@ -1,7 +1,5 @@
 """The action definition for the SysML toolbox."""
 
-from enum import Enum
-
 from gaphas.item import SE
 
 from gaphor import UML, diagram
@@ -11,48 +9,13 @@ from gaphor.diagram.diagramtools import PlacementTool
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML import sysml
 from gaphor.UML import diagramitems as uml_items
-from gaphor.UML.toolbox import namespace_config
-
-
-class AssociationType(Enum):
-    COMPOSITE = "composite"
-    SHARED = "shared"
-
-
-def initial_pseudostate_config(new_item):
-    new_item.subject.kind = "initial"
-
-
-def history_pseudostate_config(new_item):
-    new_item.subject.kind = "shallowHistory"
-
-
-def metaclass_config(new_item):
-    namespace_config(new_item)
-    new_item.subject.name = "Class"
-
-
-def create_association(
-    assoc_item: uml_items.AssociationItem, association_type: AssociationType
-) -> None:
-    assoc = assoc_item.subject
-    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
-    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
-
-    assoc_item.head_end.subject = assoc.memberEnd[0]
-    assoc_item.tail_end.subject = assoc.memberEnd[1]
-
-    UML.model.set_navigability(assoc, assoc_item.head_end.subject, True)
-    assoc_item.head_end.subject.aggregation = association_type.value
-
-
-def composite_association_config(assoc_item: uml_items.AssociationItem) -> None:
-    create_association(assoc_item, AssociationType.COMPOSITE)
-
-
-def shared_association_config(assoc_item: uml_items.AssociationItem) -> None:
-    create_association(assoc_item, AssociationType.SHARED)
-
+from gaphor.UML.toolbox import (
+    composite_association_config,
+    history_pseudostate_config,
+    initial_pseudostate_config,
+    namespace_config,
+    shared_association_config,
+)
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
 sysml_toolbox_actions: ToolboxDefinition = (
