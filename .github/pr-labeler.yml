@@ -1,0 +1,4 @@
+feature: ['feature/*', 'feat/*']
+fix: fix/*
+chore: chore/*
+skip-changelog: ['sourcery/*', 'dependabot/*']
