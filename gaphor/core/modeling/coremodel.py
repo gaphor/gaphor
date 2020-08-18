@@ -28,6 +28,7 @@ if TYPE_CHECKING:
 class NamedElement(Element):
     name: attribute[str]
     qualifiedName: derived[List[str]]
+    visibility: enumeration
     namespace: relation_one[Namespace]
     clientDependency: relation_many[Dependency]
     supplierDependency: relation_many[Dependency]
@@ -37,11 +38,11 @@ class PackageableElement(NamedElement):
     pass
 
 
-# 54: override Diagram
+# 55: override Diagram
 # defined in gaphor.core.modeling.diagram
 
 
-# 45: override Presentation
+# 46: override Presentation
 # defined in gaphor.core.modeling.presentation
 
 
@@ -50,24 +51,24 @@ class Comment(Element):
     annotatedElement: relation_many[Element]
 
 
-# 39: override StyleSheet
+# 40: override StyleSheet
 # defined in gaphor.core.modeling.presentation
 
 
 NamedElement.name = attribute("name", str)
 Comment.body = attribute("body", str)
-# 42: override StyleSheet.styleSheet
+# 43: override StyleSheet.styleSheet
 # defined in gaphor.core.modeling.presentation
 
-# 51: override Presentation.subject
+# 52: override Presentation.subject
 # defined in gaphor.core.modeling.presentation
 
-# 48: override Element.presentation
+# 49: override Element.presentation
 # defined in gaphor.core.modeling.presentation
 
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
 Element.comment = association("comment", Comment, opposite="annotatedElement")
-# 20: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+# 21: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 
 def _namedelement_qualifiedname(self) -> List[str]:

@@ -190,10 +190,14 @@ class GaphorLoader(handler.ContentHandler):
     def start_element(self, state, name, attrs):
         # Read an element class. The name of the tag is the class name:
         if state == GAPHOR:
+            if "id" not in attrs:
+                log.exception(f"File corrupt: Element {name} has no id")
             id = attrs["id"]
             e = element(id, name)
             if id in self.elements.keys():
-                log.exception(f"File corrupted, remove element {id} and try again")
+                log.exception(
+                    f"File corrupt: duplicate element. Remove element {name} with id {id} and try again"
+                )
             self.elements[id] = e
             self.push(e, name == "Diagram" and DIAGRAM or ELEMENT)
             return True
