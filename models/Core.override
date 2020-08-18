@@ -13,6 +13,7 @@ override NamedElement
 class NamedElement(Element):
     name: attribute[str]
     qualifiedName: derived[List[str]]
+    visibility: enumeration
     namespace: relation_one[Namespace]
     clientDependency: relation_many[Dependency]
     supplierDependency: relation_many[Dependency]
