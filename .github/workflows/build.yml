@@ -16,14 +16,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2.1.2
-        with:
-          python-version: 3.8
-      - name: set PY
-        run: echo "::set-env name=PY::$(python --version --version | sha256sum | cut -d' ' -f1)"
-      - uses: actions/cache@v2.1.0
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Lint with Pre-commit
         uses: pre-commit/action@v2.0.0
 
@@ -35,8 +27,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2.1.2
-        with:
-          python-version: 3.8
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.0
         with:
@@ -156,8 +146,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2.1.2
-        with:
-          python-version: 3.8
       - name: Install macOS Dependencies
         run: |
           brew list
