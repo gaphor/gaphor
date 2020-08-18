@@ -87,6 +87,8 @@ def get_association_ends(a, properties, classes):
     ends = []
     for end in a.memberEnd:
         end = properties[end]
+        if not end.get("type"):
+            print(f"No type for association end {end['name']}")
         end.type = classes[end["type"]]
         end.class_ = classes[end["class_"]] if end.get("class_") else None
         end.is_simple_attribute = False
