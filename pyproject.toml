@@ -44,7 +44,7 @@ tinycss2 = "^1.0.2"
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.7"
 pytest = "^6.0"
-pytest-cov = "^2.5"
+pytest-cov = "^2.10"
 pytest-runner = "^5.2"
 black = { version = "^19.10b0", python = "^3.6" }
 mypy = "0.782"
