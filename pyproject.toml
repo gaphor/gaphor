@@ -55,7 +55,7 @@ sphinx-rtd-theme = "^0.5"
 babel = "^2.7.0"
 babelgladeextractor = "^0.7"
 flake8 = "^3.8"
-isort = "^5.3"
+isort = "^5.4"
 
 [tool.poetry.scripts]
 gaphor = 'gaphor.ui:main'
