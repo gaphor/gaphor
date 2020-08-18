@@ -32,17 +32,18 @@ class NamedElement(Element):
     namespace: relation_one[Namespace]
     clientDependency: relation_many[Dependency]
     supplierDependency: relation_many[Dependency]
+    memberNamespace: relation_many[Namespace]
 
 
 class PackageableElement(NamedElement):
     pass
 
 
-# 55: override Diagram
+# 56: override Diagram
 # defined in gaphor.core.modeling.diagram
 
 
-# 46: override Presentation
+# 47: override Presentation
 # defined in gaphor.core.modeling.presentation
 
 
@@ -51,24 +52,24 @@ class Comment(Element):
     annotatedElement: relation_many[Element]
 
 
-# 40: override StyleSheet
+# 41: override StyleSheet
 # defined in gaphor.core.modeling.presentation
 
 
 NamedElement.name = attribute("name", str)
 Comment.body = attribute("body", str)
-# 43: override StyleSheet.styleSheet
+# 44: override StyleSheet.styleSheet
 # defined in gaphor.core.modeling.presentation
 
-# 52: override Presentation.subject
+# 53: override Presentation.subject
 # defined in gaphor.core.modeling.presentation
 
-# 49: override Element.presentation
+# 50: override Element.presentation
 # defined in gaphor.core.modeling.presentation
 
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
 Element.comment = association("comment", Comment, opposite="annotatedElement")
-# 21: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+# 22: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 
 def _namedelement_qualifiedname(self) -> List[str]:

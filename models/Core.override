@@ -17,6 +17,7 @@ class NamedElement(Element):
     namespace: relation_one[Namespace]
     clientDependency: relation_many[Dependency]
     supplierDependency: relation_many[Dependency]
+    memberNamespace: relation_many[Namespace]
 %%
 override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 

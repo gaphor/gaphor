@@ -47,7 +47,7 @@ class PackageMerge(DirectedRelationship):
 
 
 class Namespace(NamedElement):
-    ownedRule: relation_many[Constraint]
+    context: relation_one[Constraint]
     elementImport: relation_many[ElementImport]
     packageImport: relation_many[PackageImport]
     ownedMember: relation_many[NamedElement]
@@ -72,7 +72,6 @@ class Classifier(Namespace, Type, RedefinableElement):
     generalization: relation_many[Generalization]
     useCase: relation_many[UseCase]
     redefinedClassifier: relation_many[Classifier]
-    substitution: relation_many[Substitution]
     attribute: relation_many[Property]
     feature: relation_many[Feature]
     general: derived[Classifier]
@@ -146,10 +145,6 @@ class CommunicationPath(Association):
 class Dependency(DirectedRelationship, PackageableElement):
     client: relation_many[NamedElement]
     supplier: relation_many[NamedElement]
-
-
-class Permission(Dependency):
-    pass
 
 
 class Abstraction(Dependency):
@@ -395,7 +390,7 @@ class Profile(Package):
 class Behavior(Class):
     isReentrant: attribute[int]
     redefinedBehavior: relation_many[Behavior]
-    context: relation_one[BehavioredClassifier]
+    context2: relation_one[BehavioredClassifier]
 
 
 class Activity(Behavior):
@@ -447,11 +442,6 @@ class ControlFlow(ActivityEdge):
     pass
 
 
-class Substitution(Realization):
-    contract: relation_one[Classifier]
-    substitutingClassifier: relation_one[Classifier]
-
-
 class OutputPin(Pin):
     pass
 
@@ -489,11 +479,11 @@ class ActivityGroup(Element):
 
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
+    ownedRule: relation_many[Namespace]
     specification: attribute[str]
     stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
     parameterSet: relation_one[ParameterSet]
-    context: derivedunion[Namespace]
 
 
 class InteractionFragment(NamedElement):
@@ -757,6 +747,9 @@ ObjectNode.ordering = enumeration(
 )
 ObjectNode.isControlType = attribute("isControlType", int, default=False)
 StructuralFeature.isReadOnly = attribute("isReadOnly", int, default=False)
+NamedElement.visibility = enumeration(
+    "visibility", ("public", "private", "package", "protected"), "public"
+)
 Component.isIndirectlyInstantiated = attribute(
     "isIndirectlyInstantiated", int, default=True
 )
@@ -844,7 +837,6 @@ Dependency.client = association(
 DecisionNode.decisionInput = association("decisionInput", Behavior, upper=1)
 Activity.edge = association("edge", ActivityEdge, composite=True, opposite="activity")
 ActivityEdge.activity = association("activity", Activity, upper=1, opposite="edge")
-Substitution.contract = association("contract", Classifier, lower=1, upper=1)
 Operation.bodyCondition = association(
     "bodyCondition", Constraint, upper=1, composite=True
 )
@@ -945,7 +937,10 @@ Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute
 Extend.extendedCase = association("extendedCase", UseCase, lower=1, upper=1)
 # 'Property.defaultValue' is a simple attribute
 Property.defaultValue = attribute("defaultValue", str)
-Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
+Constraint.ownedRule = association(
+    "ownedRule", Namespace, composite=True, opposite="context"
+)
+Namespace.context = association("context", Constraint, upper=1, opposite="ownedRule")
 Property.association = association(
     "association", Association, upper=1, opposite="memberEnd"
 )
@@ -1042,12 +1037,6 @@ BehavioralFeature.returnResult = association(
     "returnResult", Parameter, composite=True, opposite="ownerReturnParam"
 )
 Classifier.redefinedClassifier = association("redefinedClassifier", Classifier)
-Substitution.substitutingClassifier = association(
-    "substitutingClassifier", Classifier, lower=1, upper=1, opposite="substitution"
-)
-Classifier.substitution = association(
-    "substitution", Substitution, composite=True, opposite="substitutingClassifier"
-)
 Operation.raisedException = association("raisedException", Type)
 PackageImport.importedPackage = association(
     "importedPackage", Package, lower=1, upper=1
@@ -1079,11 +1068,11 @@ PackageImport.importingNamespace = association(
     "importingNamespace", Namespace, upper=1, opposite="packageImport"
 )
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
-Behavior.context = association(
-    "context", BehavioredClassifier, upper=1, opposite="ownedBehavior"
+Behavior.context2 = association(
+    "context2", BehavioredClassifier, upper=1, opposite="ownedBehavior"
 )
 BehavioredClassifier.ownedBehavior = association(
-    "ownedBehavior", Behavior, composite=True, opposite="context"
+    "ownedBehavior", Behavior, composite=True, opposite="context2"
 )
 ActivityGroup.nodeContents = association(
     "nodeContents", ActivityNode, opposite="inGroup"
@@ -1365,6 +1354,7 @@ NamedElement.namespace = derivedunion(
     0,
     1,
     Parameter.ownerReturnParam,
+    Namespace.context,
     Property.interface_,
     Property.class_,
     Property.owningAssociation,
@@ -1397,7 +1387,7 @@ Namespace.ownedMember = derivedunion(
     Interface.ownedOperation,
     Enumeration.literal,
     Package.ownedDiagram,
-    Namespace.ownedRule,
+    Constraint.ownedRule,
     UseCase.extensionPoint,
     DataType.ownedOperation,
     Operation.precondition,
@@ -1444,9 +1434,6 @@ Association.endType = derived(
 )
 
 
-# 85: override Constraint.context: derivedunion[Namespace]
-Constraint.context = derivedunion("context", Namespace, 0, 1)
-
 # 91: override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion("type", DataType, 0, 1)
 
@@ -1481,7 +1468,6 @@ DirectedRelationship.target = derivedunion(
     Extend.extendedCase,
     Realization.realizingClassifier,
     ElementImport.importedElement,
-    Substitution.contract,
 )
 DirectedRelationship.source = derivedunion(
     "source",
@@ -1490,7 +1476,6 @@ DirectedRelationship.source = derivedunion(
     "*",
     Extend.extension,
     Realization.abstraction,
-    Substitution.substitutingClassifier,
     Include.includingCase,
     ElementImport.importingNamespace,
     Generalization.specific,
@@ -1531,6 +1516,9 @@ Namespace.member = derivedunion(
     Association.memberEnd,
     Classifier.inheritedMember,
     StructuredClassifier.role,
+)
+NamedElement.memberNamespace = derivedunion(
+    "memberNamespace", Namespace, 0, "*", NamedElement.namespace
 )
 # 103: override Component.required: property
 # defined in umloverrides.py
@@ -1577,7 +1565,6 @@ Element.ownedElement = derivedunion(
     Component.realization,
     Namespace.packageImport,
     Package.packageExtension,
-    Substitution.contract,
     ActivityGroup.subgroup,
     Activity.edge,
     Activity.node,
