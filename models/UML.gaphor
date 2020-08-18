@@ -345,7 +345,7 @@
 </reflist>
 </ownedAttribute>
 <package>
-<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+<ref refid="DCE:EA5E3982-97B9-11D8-9E36-00C00C03A405"/>
 </package>
 <presentation>
 <reflist>
@@ -1479,7 +1479,6 @@
 <ref refid="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:C9A0DCAA-509E-11D7-9F0D-F80F4B06507D"/>
 <ref refid="DCE:A3BC67B6-4A88-11D7-B08C-133D836EF880"/>
-<ref refid="DCE:160F54C8-50A3-11D7-807A-302CB4EF44FD"/>
 <ref refid="DCE:7E6CF516-50A3-11D7-807A-302CB4EF44FD"/>
 <ref refid="DCE:E085CF12-4B57-11D7-A5E6-6257AF3C5118"/>
 <ref refid="DCE:5C68DFBE-45D1-11D7-B5CA-613352B2821F"/>
@@ -1514,7 +1513,6 @@
 <ref refid="DCE:A4EDB020-4B37-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:A70EBFBA-4695-11D7-B567-379CA7034986"/>
 <ref refid="DCE:AB14F544-4B3A-11D7-B391-02BBFE4396CE"/>
-<ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 <ref refid="DCE:BDC038A2-4A88-11D7-B08D-133D836EF880"/>
 <ref refid="DCE:BE828126-509B-11D7-811E-AF5893A6470D"/>
 <ref refid="DCE:CAD8A604-4B33-11D7-B391-02BBFE4396CE"/>
@@ -1603,7 +1601,6 @@
 <reflist>
 <ref refid="DCE:DD80D3EC-4A86-11D7-B086-133D836EF880"/>
 <ref refid="DCE:039A7C82-4B32-11D7-B391-02BBFE4396CE"/>
-<ref refid="DCE:2817DA5A-50A1-11D7-9F0D-F80F4B06507D"/>
 <ref refid="DCE:33061A3A-4A88-11D7-B08B-133D836EF880"/>
 <ref refid="DCE:34764E0C-4A89-11D7-B08E-133D836EF880"/>
 <ref refid="DCE:5198F474-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -5439,7 +5436,7 @@ BehavioredClassifier.</val>
 </ownedDiagram>
 <presentation>
 <reflist>
-<ref refid="DCE:3B439934-379E-11D9-9FA4-00C00C03A405"/>
+<ref refid="a6a1acf8-e18a-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
 </Package>
@@ -7548,7 +7545,6 @@ BehavioredClassifier.</val>
 </ownedDiagram>
 <presentation>
 <reflist>
-<ref refid="DCE:3DB094C0-379E-11D9-9FA4-00C00C03A405"/>
 <ref refid="606ab27c-e183-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
@@ -9701,16 +9697,20 @@ BehavioredClassifier.</val>
 <ref refid="DCE:D2803262-97BA-11D8-9E38-00C00C03A405"/>
 <ref refid="DCE:526679C6-97BB-11D8-9E39-00C00C03A405"/>
 <ref refid="DCE:74410A38-97BB-11D8-9E39-00C00C03A405"/>
+<ref refid="DCE:160F54C8-50A3-11D7-807A-302CB4EF44FD"/>
+<ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </reflist>
 </ownedClassifier>
 <ownedDiagram>
 <reflist>
 <ref refid="DCE:F4CAA7BA-97B9-11D8-9E36-00C00C03A405"/>
+<ref refid="DCE:2817DA5A-50A1-11D7-9F0D-F80F4B06507D"/>
 </reflist>
 </ownedDiagram>
 <presentation>
 <reflist>
 <ref refid="DCE:FAD677C0-379D-11D9-9FA4-00C00C03A405"/>
+<ref refid="7687536a-e18a-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
 </Package>
@@ -19480,7 +19480,7 @@ BehavioredClassifier.</val>
 <val>Packages</val>
 </name>
 <package>
-<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+<ref refid="DCE:EA5E3982-97B9-11D8-9E36-00C00C03A405"/>
 </package>
 <canvas>
 <item id="DCE:A8A3E260-50A1-11D7-807A-302CB4EF44FD" type="ClassItem">
@@ -21929,7 +21929,7 @@ specially for Gaphor</val>
 </reflist>
 </ownedAttribute>
 <package>
-<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+<ref refid="DCE:EA5E3982-97B9-11D8-9E36-00C00C03A405"/>
 </package>
 <presentation>
 <reflist>
@@ -22734,7 +22734,7 @@ specially for Gaphor</val>
 <val>124.0</val>
 </width>
 <height>
-<val>50.0</val>
+<val>54.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -26679,48 +26679,6 @@ some elements to have a stereotype</val>
 <ref refid="DCE:DA01D45A-45CE-11D7-B5CA-613352B2821F"/>
 </package>
 <canvas>
-<item id="DCE:5990CD9C-379C-11D9-9FA4-00C00C03A405" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 197.0, 265.0)</val>
-</matrix>
-<width>
-<val>210.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="DCE:599504CC-379C-11D9-9FA4-00C00C03A405"/>
-</subject>
-</item>
-<item id="DCE:3566137C-379D-11D9-9FA4-00C00C03A405" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 197.0, 160.0)</val>
-</matrix>
-<width>
-<val>210.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="DCE:3569DA10-379D-11D9-9FA4-00C00C03A405"/>
-</subject>
-</item>
-<item id="DCE:9714B49A-379D-11D9-9FA4-00C00C03A405" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 437.0, 160.0)</val>
-</matrix>
-<width>
-<val>132.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="DCE:971866A8-379D-11D9-9FA4-00C00C03A405"/>
-</subject>
-</item>
 <item id="DCE:3926A8FE-379E-11D9-9FA4-00C00C03A405" type="PackageItem">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 197.0, 62.0)</val>
@@ -26733,34 +26691,6 @@ some elements to have a stereotype</val>
 </height>
 <subject>
 <ref refid="DCE:3C0EAA64-A419-11D8-B4C8-00061BC22919"/>
-</subject>
-</item>
-<item id="DCE:3B439934-379E-11D9-9FA4-00C00C03A405" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 437.0, 62.0)</val>
-</matrix>
-<width>
-<val>163.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="DCE:C480ADC2-A41A-11D8-A88E-00061BC22919"/>
-</subject>
-</item>
-<item id="DCE:3DB094C0-379E-11D9-9FA4-00C00C03A405" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 39.5, 155.0)</val>
-</matrix>
-<width>
-<val>138.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="DCE:5573D924-6690-11D7-A84E-6C8643AD0CA4"/>
 </subject>
 </item>
 <item id="DCE:C08BBCE8-3B89-11D9-96AF-B1C16A765BD4" type="PackageItem">
@@ -26777,53 +26707,11 @@ some elements to have a stereotype</val>
 <ref refid="DCE:C08EFEC6-3B89-11D9-96AF-B1C16A765BD4"/>
 </subject>
 </item>
-<item id="DCE:A1A57530-4586-11DA-A04F-00123FE76EBE" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 437.0, 372.0)</val>
-</matrix>
-<width>
-<val>170.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="DCE:A1A5A3A2-4586-11DA-A04F-00123FE76EBE"/>
-</subject>
-</item>
-<item id="a3b55504-3801-11e0-87bf-0021e9e5a3cd" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 307.0, 372.0)</val>
-</matrix>
-<width>
-<val>109.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="a3b505ae-3801-11e0-87bf-0021e9e5a3cd"/>
-</subject>
-</item>
-<item id="e1c063d0-5560-11ea-8c7d-fd01dce16f0a" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 437.0, 265.0)</val>
-</matrix>
-<width>
-<val>251.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="DCE:2AF6FCEA-3B13-11D9-83CE-A0BAF22E8A12"/>
-</subject>
-</item>
 </canvas>
 </Diagram>
 <Package id="DCE:599504CC-379C-11D9-9FA4-00C00C03A405">
 <name>
-<val>A. AuxilaryConstructs</val>
+<val>A. Auxilary Constructs</val>
 </name>
 <ownedClassifier>
 <reflist>
@@ -26841,7 +26729,7 @@ some elements to have a stereotype</val>
 </ownedDiagram>
 <presentation>
 <reflist>
-<ref refid="DCE:5990CD9C-379C-11D9-9FA4-00C00C03A405"/>
+<ref refid="ab32854e-e18a-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
 </Package>
@@ -26862,7 +26750,7 @@ some elements to have a stereotype</val>
 </ownedDiagram>
 <presentation>
 <reflist>
-<ref refid="DCE:3566137C-379D-11D9-9FA4-00C00C03A405"/>
+<ref refid="809328ac-e18a-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
 </Package>
@@ -26956,7 +26844,7 @@ some elements to have a stereotype</val>
 </ownedDiagram>
 <presentation>
 <reflist>
-<ref refid="DCE:9714B49A-379D-11D9-9FA4-00C00C03A405"/>
+<ref refid="8ea34b5c-e18a-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
 </Package>
@@ -27014,12 +26902,12 @@ some elements to have a stereotype</val>
 </Diagram>
 <Diagram id="DCE:CBCB3DDA-379D-11D9-9FA4-00C00C03A405">
 <name>
-<val>Overview</val>
+<val>00. Overview</val>
 </name>
 <canvas>
 <item id="DCE:D56F0876-379D-11D9-9FA4-00C00C03A405" type="PackageItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 54.5, 453.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 54.5, 413.0)</val>
 </matrix>
 <width>
 <val>200.0</val>
@@ -27047,7 +26935,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="cbd2729e-e182-11ea-b7ab-f5b4c130f24e" type="PackageItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 54.5, 573.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 600.0, 84.0)</val>
 </matrix>
 <width>
 <val>200.0</val>
@@ -27061,7 +26949,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="606ab27c-e183-11ea-b7ab-f5b4c130f24e" type="PackageItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 54.5, 698.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 600.0, 189.0)</val>
 </matrix>
 <width>
 <val>200.0</val>
@@ -27071,6 +26959,160 @@ some elements to have a stereotype</val>
 </height>
 <subject>
 <ref refid="DCE:5573D924-6690-11D7-A84E-6C8643AD0CA4"/>
+</subject>
+</item>
+<item id="459006e4-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 54.5, 189.0)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="38ce781e-e18a-11ea-b7ab-f5b4c130f24e"/>
+</subject>
+</item>
+<item id="4b38edd8-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 54.5, 301.5)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="4b38edd7-e18a-11ea-b7ab-f5b4c130f24e"/>
+</subject>
+</item>
+<item id="639ff019-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 54.5, 529.0)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="639ff018-e18a-11ea-b7ab-f5b4c130f24e"/>
+</subject>
+</item>
+<item id="7687536a-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 330.5, 84.0)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="DCE:EA5E3982-97B9-11D8-9E36-00C00C03A405"/>
+</subject>
+</item>
+<item id="809328ac-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 330.5, 189.0)</val>
+</matrix>
+<width>
+<val>203.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="DCE:3569DA10-379D-11D9-9FA4-00C00C03A405"/>
+</subject>
+</item>
+<item id="87bbe308-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 330.5, 301.5)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="DCE:A1A5A3A2-4586-11DA-A04F-00123FE76EBE"/>
+</subject>
+</item>
+<item id="8ea34b5c-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 330.5, 413.0)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="DCE:971866A8-379D-11D9-9FA4-00C00C03A405"/>
+</subject>
+</item>
+<item id="996ffa8a-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 330.5, 529.0)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="a3b505ae-3801-11e0-87bf-0021e9e5a3cd"/>
+</subject>
+</item>
+<item id="a6a1acf8-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 600.0, 301.5)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="DCE:C480ADC2-A41A-11D8-A88E-00061BC22919"/>
+</subject>
+</item>
+<item id="ab32854e-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 868.5, 84.0)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>70.0</val>
+</height>
+<subject>
+<ref refid="DCE:599504CC-379C-11D9-9FA4-00C00C03A405"/>
+</subject>
+</item>
+<item id="c07a207e-e18a-11ea-b7ab-f5b4c130f24e" type="PackageItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 868.5, 189.0)</val>
+</matrix>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>77.0</val>
+</height>
+<subject>
+<ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
 </subject>
 </item>
 </canvas>
@@ -27152,7 +27194,6 @@ some elements to have a stereotype</val>
 </ownedDiagram>
 <presentation>
 <reflist>
-<ref refid="e1c063d0-5560-11ea-8c7d-fd01dce16f0a"/>
 <ref refid="cbd2729e-e182-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
@@ -32517,7 +32558,7 @@ some elements to have a stereotype</val>
 </ownedDiagram>
 <presentation>
 <reflist>
-<ref refid="DCE:A1A57530-4586-11DA-A04F-00123FE76EBE"/>
+<ref refid="87bbe308-e18a-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
 </Package>
@@ -37145,48 +37186,9 @@ some elements to have a stereotype</val>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
 </Property>
-<Package id="76a964f2-3fe1-11de-8375-00224128e79d">
-<name>
-<val>Profiles</val>
-</name>
-<nestedPackage>
-<reflist>
-<ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
-</reflist>
-</nestedPackage>
-<ownedDiagram>
-<reflist>
-<ref refid="83d007f8-3fe1-11de-8375-00224128e79d"/>
-</reflist>
-</ownedDiagram>
-</Package>
-<Diagram id="83d007f8-3fe1-11de-8375-00224128e79d">
-<name>
-<val>Profiles diagram</val>
-</name>
-<package>
-<ref refid="76a964f2-3fe1-11de-8375-00224128e79d"/>
-</package>
-<canvas>
-<item id="88ce697a-3fe1-11de-8375-00224128e79d" type="PackageItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 76.0, 49.0)</val>
-</matrix>
-<width>
-<val>105.0</val>
-</width>
-<height>
-<val>70.0</val>
-</height>
-<subject>
-<ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
-</subject>
-</item>
-</canvas>
-</Diagram>
 <Profile id="88ce1e8e-3fe1-11de-8375-00224128e79d">
 <name>
-<val>Gaphor</val>
+<val>B. Gaphor Profile</val>
 </name>
 <ownedClassifier>
 <reflist>
@@ -37203,12 +37205,9 @@ some elements to have a stereotype</val>
 <ref refid="9ab5c2dc-3fe1-11de-8375-00224128e79d"/>
 </reflist>
 </ownedDiagram>
-<package>
-<ref refid="76a964f2-3fe1-11de-8375-00224128e79d"/>
-</package>
 <presentation>
 <reflist>
-<ref refid="88ce697a-3fe1-11de-8375-00224128e79d"/>
+<ref refid="c07a207e-e18a-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
 </Profile>
@@ -45944,7 +45943,7 @@ to accomodate simpleAttribute</val>
 </ownedDiagram>
 <presentation>
 <reflist>
-<ref refid="a3b55504-3801-11e0-87bf-0021e9e5a3cd"/>
+<ref refid="996ffa8a-e18a-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </presentation>
 </Package>
@@ -51701,4 +51700,34 @@ diagram {
 <val>owner</val>
 </value>
 </Slot>
+<Package id="38ce781e-e18a-11ea-b7ab-f5b4c130f24e">
+<name>
+<val>02. Values</val>
+</name>
+<presentation>
+<reflist>
+<ref refid="459006e4-e18a-11ea-b7ab-f5b4c130f24e"/>
+</reflist>
+</presentation>
+</Package>
+<Package id="4b38edd7-e18a-11ea-b7ab-f5b4c130f24e">
+<name>
+<val>03. Classification</val>
+</name>
+<presentation>
+<reflist>
+<ref refid="4b38edd8-e18a-11ea-b7ab-f5b4c130f24e"/>
+</reflist>
+</presentation>
+</Package>
+<Package id="639ff018-e18a-11ea-b7ab-f5b4c130f24e">
+<name>
+<val>05. Simple Classifiers</val>
+</name>
+<presentation>
+<reflist>
+<ref refid="639ff019-e18a-11ea-b7ab-f5b4c130f24e"/>
+</reflist>
+</presentation>
+</Package>
 </gaphor>
