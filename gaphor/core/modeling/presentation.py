@@ -7,6 +7,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
 
 from gaphor.core.modeling import Element
+from gaphor.core.modeling.event import DiagramItemDeleted
 from gaphor.core.modeling.properties import association, relation_one
 
 if TYPE_CHECKING:
@@ -20,6 +21,11 @@ S = TypeVar("S", bound=Element)
 class Presentation(Element, Generic[S]):
     """
     This presentation is used to link the behaviors of `gaphor.core.modeling` and `gaphas.Item`.
+
+    Note that Presentations are not managed by the Element Factory. Instead, Presentation
+    objects are owned by Diagram.
+    As a result they do not emit ElementCreated and ElementDeleted events. Presentations have their own
+    create and delete events: DiagramItemCreated and DiagramItemDeleted.
     """
 
     def __init__(self, id=None, model=None):
@@ -79,8 +85,10 @@ class Presentation(Element, Generic[S]):
         Remove the item from the canvas and set subject to None.
         """
         if self.canvas:
+            diagram = self.diagram
             self.canvas.remove(self)
-        super().unlink()
+            super().unlink()
+            self.handle(DiagramItemDeleted(diagram, self))
 
 
 Element.presentation = association(

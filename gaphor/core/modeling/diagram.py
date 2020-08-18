@@ -342,7 +342,7 @@ class Diagram(PackageableElement):
         if subject:
             item.subject = subject
         self.canvas.add(item, parent)
-        self.model.handle(DiagramItemCreated(self.model, item))
+        self.model.handle(DiagramItemCreated(self, item))
         return item
 
     def lookup(self, id):

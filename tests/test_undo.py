@@ -3,7 +3,7 @@ from gaphas.aspect import ConnectionSink, Connector
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.core import transactional
+from gaphor.core import Transaction
 from gaphor.UML.classes import AssociationItem, ClassItem
 
 
@@ -17,6 +17,11 @@ def application():
 @pytest.fixture
 def session(application):
     return application.new_session()
+
+
+@pytest.fixture
+def event_manager(session):
+    return session.get_service("event_manager")
 
 
 @pytest.fixture
@@ -50,7 +55,7 @@ def connect(line, handle, item, port=None):
     assert cinfo.port is port
 
 
-def test_class_association_undo_redo(element_factory, undo_manager):
+def test_class_association_undo_redo(event_manager, element_factory, undo_manager):
     diagram = element_factory.create(UML.Diagram)
 
     assert 0 == len(diagram.canvas.solver.constraints)
@@ -70,14 +75,11 @@ def test_class_association_undo_redo(element_factory, undo_manager):
     assert 7 == len(element_factory.lselect())
     assert 14 == len(diagram.canvas.solver.constraints)
 
-    @transactional
-    def delete_class():
-        ci2.unlink()
-
     undo_manager.clear_undo_stack()
     assert not undo_manager.can_undo()
 
-    delete_class()
+    with Transaction(event_manager):
+        ci2.unlink()
 
     assert undo_manager.can_undo()
 
@@ -104,3 +106,35 @@ def test_class_association_undo_redo(element_factory, undo_manager):
         assert ci2 == get_connected(a.tail)
 
         undo_manager.redo_transaction()
+
+
+def test_diagram_item_should_not_end_up_in_element_factory(
+    event_manager, element_factory, undo_manager
+):
+    diagram = element_factory.create(UML.Diagram)
+
+    with Transaction(event_manager):
+        cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    undo_manager.undo_transaction()
+    undo_manager.redo_transaction()
+
+    assert cls not in element_factory.lselect(), element_factory.lselect()
+
+
+def test_deleted_diagram_item_should_not_end_up_in_element_factory(
+    event_manager, element_factory, undo_manager
+):
+    diagram = element_factory.create(UML.Diagram)
+    cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    with Transaction(event_manager):
+        cls.unlink()
+
+    undo_manager.undo_transaction()
+
+    assert cls not in element_factory.lselect(), element_factory.lselect()
+
+    undo_manager.redo_transaction()
+
+    assert cls not in element_factory.lselect(), element_factory.lselect()
