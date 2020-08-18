@@ -1,5 +1,6 @@
 """The action definition for the UML toolbox."""
 
+from enum import Enum
 
 from gaphas.item import SE
 
@@ -8,6 +9,11 @@ from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition, ToolDef
 from gaphor.diagram.diagramtools import PlacementTool
 from gaphor.UML import diagramitems
+
+
+class AssociationType(Enum):
+    COMPOSITE = "composite"
+    SHARED = "shared"
 
 
 def namespace_config(new_item):
@@ -28,6 +34,28 @@ def history_pseudostate_config(new_item):
 def metaclass_config(new_item):
     namespace_config(new_item)
     new_item.subject.name = "Class"
+
+
+def create_association(
+    assoc_item: diagramitems.AssociationItem, association_type: AssociationType
+) -> None:
+    assoc = assoc_item.subject
+    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
+    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
+
+    assoc_item.head_end.subject = assoc.memberEnd[0]
+    assoc_item.tail_end.subject = assoc.memberEnd[1]
+
+    UML.model.set_navigability(assoc, assoc_item.head_end.subject, True)
+    assoc_item.head_end.subject.aggregation = association_type.value
+
+
+def composite_association_config(assoc_item: diagramitems.AssociationItem) -> None:
+    create_association(assoc_item, AssociationType.COMPOSITE)
+
+
+def shared_association_config(assoc_item: diagramitems.AssociationItem) -> None:
+    create_association(assoc_item, AssociationType.SHARED)
 
 
 # Actions: ((section (name, label, icon_name, shortcut)), ...)
@@ -124,14 +152,22 @@ uml_toolbox_actions: ToolboxDefinition = (
                 gettext("Composite Association"),
                 "gaphor-composite-association-symbolic",
                 "<Shift>Z",
-                PlacementTool.new_item_factory(diagramitems.AssociationItem),
+                PlacementTool.new_item_factory(
+                    diagramitems.AssociationItem,
+                    UML.Association,
+                    config_func=composite_association_config,
+                ),
             ),
             ToolDef(
                 "toolbox-shared-association",
                 gettext("Shared Association"),
                 "gaphor-shared-association-symbolic",
                 "<Shift>Q",
-                PlacementTool.new_item_factory(diagramitems.AssociationItem),
+                PlacementTool.new_item_factory(
+                    diagramitems.AssociationItem,
+                    UML.Association,
+                    config_func=shared_association_config,
+                ),
             ),
             ToolDef(
                 "toolbox-association",
