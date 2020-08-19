@@ -726,7 +726,6 @@ class ParameterSet(NamedElement):
 
 
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
-# class 'InstanceValue' has been stereotyped as 'SimpleAttribute' too
 # class 'Expression' has been stereotyped as 'SimpleAttribute' too
 # class 'LiteralSpecification' has been stereotyped as 'SimpleAttribute' too
 # class 'LiteralUnlimitedNatural' has been stereotyped as 'SimpleAttribute' too
