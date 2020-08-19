@@ -1050,7 +1050,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 544.0, 197.5)</val>
 </matrix>
 <width>
-<val>154.0</val>
+<val>165.0</val>
 </width>
 <height>
 <val>62.0</val>
@@ -1105,7 +1105,7 @@
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (3.6764179104477535, 47.5)]</val>
+<val>[(0.0, 0.0), (9.06641791044774, 47.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:724DDE10-AE12-11D8-9F3C-00C00C03A405"/>
@@ -1502,7 +1502,6 @@
 <ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
 <ref refid="DCE:6C0E7FCE-4695-11D7-B567-379CA7034986"/>
-<ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:6D987F90-464D-11D7-AA08-1B85D5275D8A"/>
 <ref refid="DCE:73E17466-4B38-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:7BA7B042-509D-11D7-811E-AF5893A6470D"/>
@@ -1931,7 +1930,7 @@
 </Class>
 <Diagram id="DCE:4A9E3AF4-A419-11D8-B4C8-00061BC22919">
 <name>
-<val>Components</val>
+<val>5. Components</val>
 </name>
 <package>
 <ref refid="639ff018-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -3589,7 +3588,7 @@ BehavioredClassifier.</val>
 </Association>
 <Diagram id="DCE:5198F474-4B3D-11D7-B391-02BBFE4396CE">
 <name>
-<val>zClasses</val>
+<val>4. Properties</val>
 </name>
 <package>
 <ref refid="4b38edd7-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -3623,7 +3622,7 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 167.20883178710938, 155.6118927001953)</val>
 </matrix>
 <width>
-<val>100.0</val>
+<val>165.0</val>
 </width>
 <height>
 <val>264.0</val>
@@ -3675,7 +3674,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-1.7053025658242404e-13, 66.0)]</val>
+<val>[(0.0, 0.0), (33.79999999999973, 66.0)]</val>
 </points>
 <tail-connection>
 <ref refid="DCE:6C8E65AC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -3709,7 +3708,7 @@ BehavioredClassifier.</val>
 <ref refid="DCE:3A8414B0-4B53-11D7-A5E6-6257AF3C5118"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 267.2088317871094, 181.6118927001953)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 332.2088317871094, 181.6118927001953)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -3718,7 +3717,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (397.1782531738281, 0.0), (397.1782531738281, 24.892837524414062), (528.7911682128906, 24.892837524414062)]</val>
+<val>[(0.0, 0.0), (332.1782531738281, 0.0), (332.1782531738281, 24.892837524414062), (463.7911682128906, 24.892837524414062)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:6C8E65AC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -3787,7 +3786,7 @@ BehavioredClassifier.</val>
 <ref refid="DCE:8A3CEA88-4B53-11D7-A5E6-6257AF3C5118"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 267.2088317871094, 243.6118927001953)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 332.2088317871094, 243.6118927001953)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -3796,7 +3795,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (204.98410034179688, 0.0), (204.98410034179688, 50.0), (0.0, 50.0)]</val>
+<val>[(0.0, 0.0), (139.98410034179688, 0.0), (139.98410034179688, 50.0), (0.0, 50.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:6C8E65AC-4B3D-11D7-B391-02BBFE4396CE"/>
@@ -5875,7 +5874,7 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 507.0, 75.0)</val>
 </matrix>
 <width>
-<val>154.0</val>
+<val>165.0</val>
 </width>
 <height>
 <val>62.0</val>
@@ -5921,7 +5920,7 @@ BehavioredClassifier.</val>
 <ref refid="DCE:71CB8F24-8320-11D8-BEC8-00C00C03A405"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 580.9199999999998, 137.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 586.1999999999998, 137.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -5930,7 +5929,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (104.87507389162579, 56.0)]</val>
+<val>[(0.0, 0.0), (99.59507389162582, 56.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:3D64F61C-8320-11D8-BEC8-00C00C03A405"/>
@@ -7807,7 +7806,7 @@ BehavioredClassifier.</val>
 </Property>
 <Diagram id="DCE:539997D4-4B37-11D7-B391-02BBFE4396CE">
 <name>
-<val>Features</val>
+<val>3. Features</val>
 </name>
 <package>
 <ref refid="4b38edd7-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -9043,7 +9042,7 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 545.0, 120.0)</val>
 </matrix>
 <width>
-<val>154.0</val>
+<val>165.0</val>
 </width>
 <height>
 <val>62.0</val>
@@ -9222,7 +9221,7 @@ BehavioredClassifier.</val>
 <ref refid="DCE:DF981078-97BA-11D8-9E38-00C00C03A405"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 615.8400000000001, 182.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 620.9000000000002, 182.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -9231,7 +9230,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-25.100000000000364, 164.0)]</val>
+<val>[(0.0, 0.0), (-30.160000000000423, 164.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:33965FE4-97BA-11D8-9E36-00C00C03A405"/>
@@ -9291,7 +9290,7 @@ BehavioredClassifier.</val>
 <ref refid="DCE:16034FB0-97BB-11D8-9E38-00C00C03A405"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 699.0, 151.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 710.0, 151.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -9300,7 +9299,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (292.29296875, -2.0)]</val>
+<val>[(0.0, 0.0), (281.29296875, -2.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:33965FE4-97BA-11D8-9E36-00C00C03A405"/>
@@ -14225,7 +14224,7 @@ BehavioredClassifier.</val>
 </Property>
 <Diagram id="DCE:9661A9EE-509B-11D7-811E-AF5893A6470D">
 <name>
-<val>zDataTypes</val>
+<val>1. Data Types</val>
 </name>
 <package>
 <ref refid="DCE:740CE396-50A4-11D7-807A-302CB4EF44FD"/>
@@ -15493,7 +15492,7 @@ BehavioredClassifier.</val>
 </Class>
 <Diagram id="DCE:94ED9700-4B3A-11D7-B391-02BBFE4396CE">
 <name>
-<val>Operations</val>
+<val>5. Operations</val>
 </name>
 <package>
 <ref refid="4b38edd7-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -18017,7 +18016,7 @@ BehavioredClassifier.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 217.0, 57.0)</val>
 </matrix>
 <width>
-<val>154.0</val>
+<val>165.0</val>
 </width>
 <height>
 <val>62.0</val>
@@ -18063,7 +18062,7 @@ BehavioredClassifier.</val>
 <ref refid="DCE:D554F76E-A41C-11D8-B0B1-00061BC22919"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 284.7599999999999, 119.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 289.59999999999985, 119.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -18072,7 +18071,7 @@ BehavioredClassifier.</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-23.759999999999877, 91.0)]</val>
+<val>[(0.0, 0.0), (-28.599999999999852, 91.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:CA53F57E-A41C-11D8-B0B1-00061BC22919"/>
@@ -18861,7 +18860,7 @@ BehavioredClassifier.</val>
 </Property>
 <Diagram id="DCE:2D47DA48-50A5-11D7-807A-302CB4EF44FD">
 <name>
-<val>Interfaces</val>
+<val>3. Interfaces</val>
 </name>
 <package>
 <ref refid="DCE:740CE396-50A4-11D7-807A-302CB4EF44FD"/>
@@ -19355,7 +19354,7 @@ BehavioredClassifier.</val>
 </reflist>
 </ownedAttribute>
 <package>
-<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
+<ref refid="639ff018-e18a-11ea-b7ab-f5b4c130f24e"/>
 </package>
 <presentation>
 <reflist>
@@ -20534,7 +20533,7 @@ specially for Gaphor</val>
 </Property>
 <Diagram id="DCE:039A7C82-4B32-11D7-B391-02BBFE4396CE">
 <name>
-<val>Instances</val>
+<val>7. Instances</val>
 </name>
 <package>
 <ref refid="4b38edd7-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -25183,7 +25182,7 @@ specially for Gaphor</val>
 </Association>
 <Diagram id="DCE:90F60210-4B33-11D7-B391-02BBFE4396CE">
 <name>
-<val>zClassifiers</val>
+<val>1. Classifiers</val>
 </name>
 <package>
 <ref refid="4b38edd7-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -29637,7 +29636,7 @@ some elements to have a stereotype</val>
 </Parameter>
 <Diagram id="DCE:3B936BE0-5FD2-11D9-89DE-0050040A5923">
 <name>
-<val>StructuredClassifer</val>
+<val>1. Structured Classifers</val>
 </name>
 <package>
 <ref refid="639ff018-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -36375,7 +36374,7 @@ some elements to have a stereotype</val>
 </Property>
 <Diagram id="DCE:647E10B2-8352-11DD-8EDA-000D936B094A">
 <name>
-<val>Ports</val>
+<val>2. Encapsulated Classifiers</val>
 </name>
 <package>
 <ref refid="639ff018-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -36979,16 +36978,16 @@ some elements to have a stereotype</val>
 <val>(1.0, 0.0, 0.0, 1.0, 110.0, 44.0)</val>
 </matrix>
 <width>
-<val>131.0</val>
+<val>135.0</val>
 </width>
 <height>
-<val>74.0</val>
+<val>73.0</val>
 </height>
 <show_attributes>
-<val>1</val>
+<val>0</val>
 </show_attributes>
 <show_operations>
-<val>1</val>
+<val>0</val>
 </show_operations>
 <show_stereotypes>
 <val>0</val>
@@ -36999,13 +36998,13 @@ some elements to have a stereotype</val>
 </item>
 <item id="a38b172c-3fe1-11de-8375-00224128e79d" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 17.5, 215.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 110.0, 203.0)</val>
 </matrix>
 <width>
-<val>141.0</val>
+<val>135.0</val>
 </width>
 <height>
-<val>66.0</val>
+<val>68.0</val>
 </height>
 <show_attributes>
 <val>1</val>
@@ -37025,7 +37024,7 @@ some elements to have a stereotype</val>
 <ref refid="a987f3a2-3fe1-11de-8375-00224128e79d"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 157.0, 118.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 177.0, 117.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -37034,7 +37033,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-69.0, 97.0)]</val>
+<val>[(0.0, 0.0), (0.5, 86.0)]</val>
 </points>
 <head-connection>
 <ref refid="a055b2b0-3fe1-11de-8375-00224128e79d"/>
@@ -37077,10 +37076,10 @@ some elements to have a stereotype</val>
 <val>74.0</val>
 </height>
 <show_attributes>
-<val>1</val>
+<val>0</val>
 </show_attributes>
 <show_operations>
-<val>1</val>
+<val>0</val>
 </show_operations>
 <show_stereotypes>
 <val>0</val>
@@ -37094,7 +37093,7 @@ some elements to have a stereotype</val>
 <ref refid="16f75630-fa90-11de-bd51-00224128e79d"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 477.0, 129.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 481.0, 129.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -37103,7 +37102,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (1.0, 74.0)]</val>
+<val>[(0.0, 0.0), (-0.5, 74.0)]</val>
 </points>
 <head-connection>
 <ref refid="9834f482-fa90-11de-bd51-00224128e79d"/>
@@ -37300,13 +37299,13 @@ some elements to have a stereotype</val>
 </item>
 <item id="fa46d930-b123-11de-abbf-000d93868322" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 249.0, 279.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 243.0, 288.5)</val>
 </matrix>
 <width>
 <val>154.0</val>
 </width>
 <height>
-<val>54.0</val>
+<val>425.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -37335,7 +37334,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (5.727887323943605, 54.0)]</val>
+<val>[(0.0, 0.0), (-0.2721126760563948, 63.5)]</val>
 </points>
 <head-connection>
 <ref refid="e7cee324-b123-11de-abbf-000d93868322"/>
@@ -47307,7 +47306,7 @@ to accomodate simpleAttribute</val>
 </Slot>
 <Diagram id="e48f0fae-4065-11e0-b382-0019d2b28af0">
 <name>
-<val>Collaboration</val>
+<val>6. Collaborations</val>
 </name>
 <package>
 <ref refid="639ff018-e18a-11ea-b7ab-f5b4c130f24e"/>
@@ -51471,6 +51470,7 @@ diagram {
 <ref refid="DCE:89DBA954-8353-11DD-8EDA-000D936B094A"/>
 <ref refid="DCE:8BD30E4E-8352-11DD-8EDA-000D936B094A"/>
 <ref refid="DCE:3C5BB4C6-8353-11DD-8EDA-000D936B094A"/>
+<ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 </reflist>
 </ownedClassifier>
 <ownedDiagram>
