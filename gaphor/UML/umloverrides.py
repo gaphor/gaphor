@@ -71,6 +71,8 @@ def property_navigability(self: uml.Property) -> List[Optional[bool]]:
         or self in assoc.navigableOwnedEnd
     ):
         return [True]
+    elif isinstance(assoc.ownedEnd, uml.ExtensionEnd):
+        return [self is assoc.ownedEnd]
     elif self in assoc.ownedEnd:
         return [None]
     else:
