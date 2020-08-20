@@ -28,7 +28,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.1.2
       - name: Use Python Dependency Cache
-        uses: actions/cache@v2.1.0
+        uses: actions/cache@v2.1.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -97,7 +97,7 @@ jobs:
           C:\tools\msys64\usr\bin\pacman --noconfirm -Syyuu
           C:\tools\msys64\usr\bin\pacman --noconfirm -Syuu
       - name: Use Python Dependency Cache
-        uses: actions/cache@v2.1.0
+        uses: actions/cache@v2.1.1
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -175,7 +175,7 @@ jobs:
         id: meta
         run: .github/scripts/metadata.sh
       - name: Use Python Dependency Cache
-        uses: actions/cache@v2.1.0
+        uses: actions/cache@v2.1.1
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
