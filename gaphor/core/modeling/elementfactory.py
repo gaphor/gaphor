@@ -195,17 +195,12 @@ class ElementFactory(Service):
         Handle events coming from elements.
         """
         if isinstance(event, UnlinkEvent):
-            self._unlink_element(event.element)
+            element = event.element
+            assert isinstance(element.id, str)
+            try:
+                del self._elements[element.id]
+            except KeyError:
+                return
             event = ElementDeleted(self, event.element)
         if self.event_manager and not self._block_events:
             self.event_manager.handle(event)
-
-    def _unlink_element(self, element: Element) -> None:
-        """
-        NOTE: Invoked from Element.unlink() to perform an element unlink.
-        """
-        try:
-            assert isinstance(element.id, str)
-            del self._elements[element.id]
-        except KeyError:
-            pass

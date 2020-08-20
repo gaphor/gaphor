@@ -157,14 +157,6 @@ class ElementCreated(ServiceEvent):
         self.element = element
 
 
-class DiagramItemCreated(ElementCreated):
-    """A diagram item has been created."""
-
-    def __init__(self, service, element):
-        """Constructor.  The element parameter is the element being created."""
-        super().__init__(service, element)
-
-
 class ElementDeleted(ServiceEvent):
     """An element has been deleted."""
 
@@ -173,6 +165,22 @@ class ElementDeleted(ServiceEvent):
         deleting the element.  The element parameter is the element being
         deleted."""
         super().__init__(service)
+        self.element = element
+
+
+class DiagramItemCreated:
+    """A diagram item has been created."""
+
+    def __init__(self, diagram, element):
+        self.diagram = diagram
+        self.element = element
+
+
+class DiagramItemDeleted:
+    """A diagram item has been deleted."""
+
+    def __init__(self, diagram, element):
+        self.diagram = diagram
         self.element = element
 
 

@@ -146,7 +146,6 @@ class UndoManager(Service, ActionProvider):
         assert self._current_transaction
 
         if self._current_transaction.can_execute():
-            # Here:
             self.clear_redo_stack()
             self._undo_stack.append(self._current_transaction)
             while len(self._undo_stack) > self._stack_depth:
@@ -291,9 +290,6 @@ class UndoManager(Service, ActionProvider):
     @event_handler(ElementCreated)
     def undo_create_event(self, event):
         factory = event.service
-        # A factory is not always present, e.g. for DiagramItems
-        if not factory:
-            return
         element = event.element
 
         def _undo_create_event():
@@ -308,11 +304,7 @@ class UndoManager(Service, ActionProvider):
     @event_handler(ElementDeleted)
     def undo_delete_event(self, event):
         factory = event.service
-        # A factory is not always present, e.g. for DiagramItems
-        if not factory:
-            return
         element = event.element
-        assert factory, f"No factory defined for {element} ({factory})"
 
         def _undo_delete_event():
             factory._elements[element.id] = element
