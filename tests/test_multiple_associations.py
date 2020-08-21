@@ -2,13 +2,17 @@
 Test issues where associations are copied and pasted, deleted, etc.
 
 Scenario's:
-* Class and association are pasted in a new diagramg
+* Class and association are pasted in a new diagram
 * Class and association are pasted in a new diagram and original association is deleted
 * Class and association are pasted in a new diagram and new association is deleted
 * Association is pasted in a new diagram and reconnected to the class (same subject as original)
 * Association is pasted and directly deleted
 * Class and association are pasted in a new diagram and one end is connected to a different class
 
+What's the behavior we're looking for?
+
+* If an association has >1 presentations, it can only connect to those same types ()
+* If an association has ==1 presentation, it can reconnect to another type, association is updated
 """
 
 import pytest

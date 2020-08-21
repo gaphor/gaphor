@@ -4,7 +4,6 @@ Classes related adapter connection tests.
 
 from gaphor import UML
 from gaphor.tests import TestCase
-from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.generalization import GeneralizationItem
 from gaphor.UML.classes.interface import InterfaceItem
@@ -271,83 +270,3 @@ class GeneralizationTestCase(TestCase):
         assert c1.subject is gen.subject.general
         assert c3.subject is gen.subject.specific
         assert c2.subject is not gen.subject.specific
-
-
-class AssociationConnectorTestCase(TestCase):
-    """
-    Association item connection adapters tests.
-    """
-
-    def test_glue(self):
-        """Test association item glue
-        """
-        asc = self.create(AssociationItem)
-        c1 = self.create(ClassItem, UML.Class)
-        c2 = self.create(ClassItem, UML.Class)
-
-        glued = self.allow(asc, asc.head, c1)
-        assert glued
-
-        self.connect(asc, asc.head, c1)
-
-        glued = self.allow(asc, asc.tail, c2)
-        assert glued
-
-    def test_connect(self):
-        """Test association item connection
-        """
-        asc = self.create(AssociationItem)
-        c1 = self.create(ClassItem, UML.Class)
-        c2 = self.create(ClassItem, UML.Class)
-
-        self.connect(asc, asc.head, c1)
-        assert asc.subject is None  # no UML metaclass yet
-
-        self.connect(asc, asc.tail, c2)
-        assert asc.subject is not None
-
-        # Diagram, Class *2, Property *2, Association, StyleSheet
-        self.assertEqual(7, len(list(self.element_factory.select())))
-        assert asc.head_end.subject is not None
-        assert asc.tail_end.subject is not None
-
-    def test_reconnect(self):
-        """Test association item reconnection
-        """
-        asc = self.create(AssociationItem)
-        c1 = self.create(ClassItem, UML.Class)
-        c2 = self.create(ClassItem, UML.Class)
-        c3 = self.create(ClassItem, UML.Class)
-
-        self.connect(asc, asc.head, c1)
-        self.connect(asc, asc.tail, c2)
-        UML.model.set_navigability(asc.subject, asc.tail_end.subject, True)
-
-        a = asc.subject
-
-        self.connect(asc, asc.tail, c3)
-
-        assert a is asc.subject
-        ends = [p.type for p in asc.subject.memberEnd]
-        assert c1.subject in ends
-        assert c3.subject in ends
-        assert c2.subject not in ends
-        assert asc.tail_end.subject.navigability
-
-    def test_disconnect(self):
-        """Test association item disconnection
-        """
-        asc = self.create(AssociationItem)
-        c1 = self.create(ClassItem, UML.Class)
-        c2 = self.create(ClassItem, UML.Class)
-
-        self.connect(asc, asc.head, c1)
-        assert asc.subject is None  # no UML metaclass yet
-
-        self.connect(asc, asc.tail, c2)
-        assert asc.subject is not None
-
-        self.disconnect(asc, asc.head)
-        self.disconnect(asc, asc.tail)
-        assert c1 is not self.get_connected(asc.head)
-        assert c2 is not self.get_connected(asc.tail)
