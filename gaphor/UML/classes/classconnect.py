@@ -100,7 +100,23 @@ class AssociationConnect(UnaryRelationshipConnect):
         if not isinstance(element.subject, UML.Classifier):
             return None
 
-        return super().allow(handle, port)
+        if not self.line.subject:
+            return True
+
+        line = self.line
+        is_head = handle is line.head
+        end = line.head_end if is_head else line.tail_end
+        assert end.subject
+
+        def is_connection_allowed(h):
+            if h is handle:
+                return True
+            connected = self.get_connected(h)
+            return (not connected) or connected.subject is element.subject
+
+        return all(
+            is_connection_allowed(p.owner_handle) for p in end.subject.presentation
+        )
 
     def connect_subject(self, handle):
         element = self.element
@@ -121,29 +137,8 @@ class AssociationConnect(UnaryRelationshipConnect):
                 # Set subject last so that event handlers can trigger
                 line.subject = relation
 
-            else:
-                assert isinstance(line.subject, UML.Association)
-                end1 = line.subject.memberEnd[0]
-                end2 = line.subject.memberEnd[1]
-                if (end1.type is c1.subject and end2.type is c2.subject) or (
-                    end2.type is c1.subject and end1.type is c2.subject
-                ):
-                    return
-
-            line.subject.memberEnd[0].type = c1.subject  # type: ignore[assignment]
-            line.subject.memberEnd[1].type = c2.subject  # type: ignore[assignment]
-            UML.model.set_navigability(
-                line.subject,
-                line.head_end.subject,
-                line.subject.memberEnd[0].navigability,
-            )
-            line.head_end.subject.aggregation = line.subject.memberEnd[0].aggregation
-            UML.model.set_navigability(
-                line.subject,
-                line.tail_end.subject,
-                line.subject.memberEnd[1].navigability,
-            )
-            line.tail_end.subject.aggregation = line.subject.memberEnd[1].aggregation
+            line.head_end.subject.type = c1.subject  # type: ignore[assignment]
+            line.tail_end.subject.type = c2.subject  # type: ignore[assignment]
 
     def reconnect(self, handle, port):
         line = self.line
@@ -171,8 +166,10 @@ class AssociationConnect(UnaryRelationshipConnect):
         On connect, we pair association member ends with the element they
         connect to. On disconnect, we remove this relation.
         """
-        for e in list(self.line.subject.memberEnd):
-            e.type = None
+        association = self.line.subject
+        if len(association.presentation) <= 1:
+            for e in list(association.memberEnd):
+                e.type = None
 
 
 @Connector.register(Named, ImplementationItem)
