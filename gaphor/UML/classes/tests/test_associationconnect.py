@@ -115,7 +115,24 @@ def test_disconnect_of_second_association(connected_association, clone):
     assert new.subject is asc.subject
 
 
-# test allow connect on 1st association item, where one association is already connected (reconnect)
+def test_disconnect_of_navigable_end(connected_association):
+    asc, c1, c2 = connected_association
+
+    UML.model.set_navigability(asc.subject, asc.head_end.subject, True)
+
+    assert asc.head_end.subject in c2.subject.ownedAttribute
+
+    disconnect(asc, asc.head)
+
+    assert asc.subject
+    assert len(asc.subject.memberEnd) == 2
+    assert asc.subject.memberEnd[0].type is None
+    assert asc.head_end.subject not in c2.subject.ownedAttribute
+    assert asc.tail_end.subject not in c1.subject.ownedAttribute
+    assert asc.head_end.subject.type is None
+    assert asc.tail_end.subject.type is None
+
+
 def test_allow_reconnect(connected_association, create):
     asc, c1, c2 = connected_association
     c3 = create(ClassItem, UML.Class)
@@ -161,15 +178,21 @@ def test_disallow_reconnect_if_multiple_connected_presentations(
     asc, c1, c2 = connected_association
     new = clone(asc)
     connect(new, new.head, c1)
-    connect(new, new.head, c1)
 
     c3 = create(ClassItem, UML.Class)
 
     assert not allow(asc, asc.head, c3)
 
 
-# test with both ends connected to the same class
+def test_allow_both_ends_connected_to_the_same_class(create, clone):
+    asc = create(AssociationItem)
+    c1 = create(ClassItem, UML.Class)
+    connect(asc, asc.head, c1)
+    connect(asc, asc.tail, c1)
 
-# test with navigable association ends
-# test with non-navigable association ends
-# Test with "inverted" direction (head_end.subject == memberEnd[1])
+    new = clone(asc)
+    c2 = create(ClassItem, UML.Class)
+    assert allow(new, new.head, c1)
+    assert allow(new, new.tail, c1)
+    assert not allow(new, new.head, c2)
+    assert not allow(new, new.tail, c2)

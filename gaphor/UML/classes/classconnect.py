@@ -167,7 +167,9 @@ class AssociationConnect(UnaryRelationshipConnect):
         connect to. On disconnect, we remove this relation.
         """
         association = self.line.subject
-        if len(association.presentation) <= 1:
+        if association and len(association.presentation) <= 1:
+            for e in list(association.memberEnd):
+                UML.model.set_navigability(association, e, None)
             for e in list(association.memberEnd):
                 e.type = None
 
