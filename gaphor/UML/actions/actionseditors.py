@@ -10,14 +10,16 @@ def fork_node_item_inline_editor(item, view, pos=None) -> bool:
     @transactional
     def update_text(text):
         item.subject.joinSpec = text
-        popover.popdown()
         return True
+
+    def done():
+        popover.popdown()
 
     subject = item.subject
     if not subject:
         return False
 
     box = view.get_item_bounding_box(view.hovered_item)
-    entry = popup_entry(subject.joinSpec or "", update_text)
+    entry = popup_entry(subject.joinSpec or "", update_text, done)
     popover = show_popover(entry, view, box)
     return True

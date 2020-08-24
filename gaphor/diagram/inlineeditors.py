@@ -31,8 +31,11 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     @transactional
     def update_text(text):
         item.subject.name = text
-        popover.popdown()
+        # popover.popdown()
         return True
+
+    def done():
+        popover.popdown()
 
     subject = item.subject
     if not subject:
@@ -41,17 +44,18 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     box = editable_text_box(view, view.hovered_item)
     if not box:
         box = view.get_item_bounding_box(view.hovered_item)
-    entry = popup_entry(subject.name or "", update_text)
+    entry = popup_entry(subject.name or "", update_text, done)
     popover = show_popover(entry, view, box)
     return True
 
 
-def popup_entry(text, update_text):
+def popup_entry(text, update_text, done):
     buffer = Gtk.EntryBuffer()
     buffer.set_text(text, -1)
     entry = Gtk.Entry.new_with_buffer(buffer)
     entry.set_activates_default(True)
-    entry.connect("activate", lambda entry: update_text(entry.get_buffer().get_text()))
+    entry.connect("changed", lambda entry: update_text(entry.get_buffer().get_text()))
+    entry.connect("activate", lambda _: done())
     entry.show()
     return entry
 
