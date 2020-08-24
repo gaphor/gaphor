@@ -48,7 +48,7 @@ pytest-cov = "^2.10"
 pytest-runner = "^5.2"
 black = { version = "^19.10b0", python = "^3.6" }
 mypy = "0.782"
-pre-commit = "^2.6"
+pre-commit = "^2.7"
 sphinx = "^3.2"
 recommonmark = "^0.6"
 sphinx-rtd-theme = "^0.5"
