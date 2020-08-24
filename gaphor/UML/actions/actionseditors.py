@@ -12,9 +12,6 @@ def fork_node_item_inline_editor(item, view, pos=None) -> bool:
         item.subject.joinSpec = text
         return True
 
-    def done():
-        popover.popdown()
-
     def escape():
         item.subject.joinSpec = join_spec
 
@@ -24,6 +21,6 @@ def fork_node_item_inline_editor(item, view, pos=None) -> bool:
 
     join_spec = subject.joinSpec or ""
     box = view.get_item_bounding_box(view.hovered_item)
-    entry = popup_entry(join_spec, update_text, done)
-    popover = show_popover(entry, view, box, escape)
+    entry = popup_entry(join_spec, update_text)
+    show_popover(entry, view, box, escape)
     return True

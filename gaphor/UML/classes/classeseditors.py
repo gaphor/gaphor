@@ -26,9 +26,6 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
         UML.parse(end_item.subject, text)
         return True
 
-    def done():
-        popover.popdown()
-
     subject = item.subject
     if not subject:
         return False
@@ -56,7 +53,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
             assert end_item
             UML.parse(end_item.subject, text)
 
-        entry = popup_entry(text, update_end_text, done)
+        entry = popup_entry(text, update_end_text)
         bb = end_item.name_bounds
         x, y = view.get_matrix_i2v(item).transform_point(bb.x, bb.y)
         box = Rectangle(x, y, 10, 10)
@@ -66,8 +63,8 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
         def escape():
             item.subject.name = text
 
-        entry = popup_entry(text, update_text, done)
+        entry = popup_entry(text, update_text)
         box = editable_text_box(view, view.hovered_item)
 
-    popover = show_popover(entry, view, box, escape)
+    show_popover(entry, view, box, escape)
     return True

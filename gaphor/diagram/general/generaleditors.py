@@ -1,4 +1,4 @@
-from gi.repository import Gdk, Gtk
+from gi.repository import Gtk
 
 from gaphor.core import transactional
 from gaphor.diagram.general.comment import CommentItem
@@ -14,13 +14,6 @@ def CommentItemInlineEditor(item, view, pos=None) -> bool:
         )
         item.subject.body = text
         return True
-
-    def on_key_press_event(widget, event):
-        if event.keyval == Gdk.KEY_Return and not event.get_state() & (
-            Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
-        ):
-            popover.popdown()
-            return True
 
     def escape():
         subject.body = body
@@ -39,7 +32,6 @@ def CommentItemInlineEditor(item, view, pos=None) -> bool:
     buffer.connect("changed", lambda _: update_text())
 
     text_view = Gtk.TextView.new_with_buffer(buffer)
-    text_view.connect("key-press-event", on_key_press_event)
     box = view.get_item_bounding_box(view.hovered_item)
 
     frame = Gtk.Frame()
@@ -48,5 +40,5 @@ def CommentItemInlineEditor(item, view, pos=None) -> bool:
     text_view.show()
     frame.show()
 
-    popover = show_popover(frame, view, box, escape)
+    show_popover(frame, view, box, escape)
     return True
