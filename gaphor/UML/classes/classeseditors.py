@@ -51,14 +51,23 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
             )
             or ""
         )
+
+        def escape():
+            assert end_item
+            UML.parse(end_item.subject, text)
+
         entry = popup_entry(text, update_end_text, done)
         bb = end_item.name_bounds
         x, y = view.get_matrix_i2v(item).transform_point(bb.x, bb.y)
         box = Rectangle(x, y, 10, 10)
     else:
         text = item.subject.name or ""
+
+        def escape():
+            item.subject.name = text
+
         entry = popup_entry(text, update_text, done)
         box = editable_text_box(view, view.hovered_item)
 
-    popover = show_popover(entry, view, box)
+    popover = show_popover(entry, view, box, escape)
     return True
