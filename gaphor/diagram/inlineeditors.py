@@ -31,7 +31,6 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     @transactional
     def update_text(text):
         item.subject.name = text
-        popover.popdown()
         return True
 
     subject = item.subject
@@ -41,22 +40,27 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     box = editable_text_box(view, view.hovered_item)
     if not box:
         box = view.get_item_bounding_box(view.hovered_item)
-    entry = popup_entry(subject.name or "", update_text)
-    popover = show_popover(entry, view, box)
+    name = subject.name or ""
+    entry = popup_entry(name, update_text)
+
+    def escape():
+        subject.name = name
+
+    show_popover(entry, view, box, escape)
+
     return True
 
 
-def popup_entry(text, update_text):
+def popup_entry(text, update_text, done=None):
     buffer = Gtk.EntryBuffer()
     buffer.set_text(text, -1)
     entry = Gtk.Entry.new_with_buffer(buffer)
-    entry.set_activates_default(True)
-    entry.connect("activate", lambda entry: update_text(entry.get_buffer().get_text()))
+    entry.connect("changed", lambda entry: update_text(entry.get_buffer().get_text()))
     entry.show()
     return entry
 
 
-def show_popover(widget, view, box):
+def show_popover(widget, view, box, escape=None):
     popover = Gtk.Popover.new()
     popover.add(widget)
     popover.set_relative_to(view)
@@ -66,6 +70,17 @@ def show_popover(widget, view, box):
     gdk_rect.width = box.width
     gdk_rect.height = box.height
     popover.set_pointing_to(gdk_rect)
+
+    def on_escape(popover, event):
+        if event.keyval == Gdk.KEY_Return and not event.get_state() & (
+            Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
+        ):
+            popover.popdown()
+            return True
+        elif event.keyval == Gdk.KEY_Escape and escape:
+            escape()
+
+    popover.connect("key-press-event", on_escape)
     popover.popup()
     return popover
 
