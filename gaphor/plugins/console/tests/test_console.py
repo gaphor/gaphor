@@ -20,15 +20,6 @@ def test_help():
     assert help() == "Usage: help(object)"
 
 
-def test_help_on_object(capsys):
-    help = Help()
-
-    help(str)
-    captured = capsys.readouterr()
-
-    assert "|" in captured.out
-
-
 def console_text(console):
     buffer = console.text.get_buffer()
     return buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), False)
