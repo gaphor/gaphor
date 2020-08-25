@@ -49,15 +49,13 @@ jobs:
         run: poetry install
       - name: Test with Pytest
         run: xvfb-run pytest --cov=gaphor/
-      - name: Code Climate Coverage Action
-        uses: paambaati/codeclimate-action@v2.6.0
-        env:
-          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
-        with:
-          coverageCommand: coverage xml
       - name: Build
+        run: make dist
+      - name: Upload to CodeCov.io
         run: |
-          make dist
+          export CODECOV_TOKEN="cacd3be1-66f3-4110-b81e-2233ebf81783"
+          coverage xml
+          bash <(curl -s https://codecov.io/bash)
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v2
         with:
