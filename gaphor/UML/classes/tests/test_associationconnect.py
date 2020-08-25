@@ -90,7 +90,7 @@ def test_association_item_reconnect(connected_association, create):
     assert asc.tail_end.subject.navigability is True
 
 
-def test_disconnect(connected_association):
+def test_disconnect_should_disconnect_model(connected_association):
     asc, c1, c2 = connected_association
 
     disconnect(asc, asc.head)
@@ -104,8 +104,9 @@ def test_disconnect(connected_association):
     assert asc.subject.memberEnd[1].type is None
 
 
-# test disconnect with 2 associations -> model should trmain in tact
-def test_disconnect_of_second_association(connected_association, clone):
+def test_disconnect_of_second_association_should_leave_model_in_tact(
+    connected_association, clone
+):
     asc, c1, c2 = connected_association
     new = clone(asc)
 
@@ -115,7 +116,9 @@ def test_disconnect_of_second_association(connected_association, clone):
     assert new.subject is asc.subject
 
 
-def test_disconnect_of_navigable_end(connected_association):
+def test_disconnect_of_navigable_end_should_remove_owner_relationship(
+    connected_association,
+):
     asc, c1, c2 = connected_association
 
     UML.model.set_navigability(asc.subject, asc.head_end.subject, True)
@@ -133,7 +136,7 @@ def test_disconnect_of_navigable_end(connected_association):
     assert asc.tail_end.subject.type is None
 
 
-def test_allow_reconnect(connected_association, create):
+def test_allow_reconnect_for_single_presentation(connected_association, create):
     asc, c1, c2 = connected_association
     c3 = create(ClassItem, UML.Class)
 
