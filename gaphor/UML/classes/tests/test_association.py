@@ -30,19 +30,24 @@ class AssociationItemTestCase(TestCase):
         self.assoc.show_direction = True
         assert self.assoc.show_direction
 
-    def test_invert_direction(self):
+    def test_direction(self):
         """Test association direction inverting
         """
         self.connect(self.assoc, self.assoc.head, self.class1)
         self.connect(self.assoc, self.assoc.tail, self.class2)
 
-        head_subject = self.assoc.subject.memberEnd[0]
-        tail_subject = self.assoc.subject.memberEnd[1]
+        assert self.assoc.head_end.subject is self.assoc.subject.memberEnd[0]
+        assert self.assoc.tail_end.subject is self.assoc.subject.memberEnd[1]
+
+    def test_invert_direction(self):
+        self.connect(self.assoc, self.assoc.head, self.class1)
+        self.connect(self.assoc, self.assoc.tail, self.class2)
 
         self.assoc.invert_direction()
 
-        assert head_subject is self.assoc.subject.memberEnd[1]
-        assert tail_subject is self.assoc.subject.memberEnd[0]
+        assert self.assoc.subject.memberEnd
+        assert self.assoc.head_end.subject is self.assoc.subject.memberEnd[1]
+        assert self.assoc.tail_end.subject is self.assoc.subject.memberEnd[0]
 
     def test_association_end_updates(self):
         """Test association end navigability connected to a class"""
@@ -89,3 +94,7 @@ class AssociationItemTestCase(TestCase):
             pass  # Expected, hanve only 2 handles, need 3 or more
         else:
             assert False, "Can not set line to orthogonal with less than 3 handles"
+
+    def test_association_end_owner_handles(self):
+        assert self.assoc.head_end.owner_handle is self.assoc.head
+        assert self.assoc.tail_end.owner_handle is self.assoc.tail

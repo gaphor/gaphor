@@ -91,6 +91,8 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         ).watch(
             f"{base}.appliedStereotype.classifier", self.on_association_end_value
         ).watch(
+            "subject[Association].memberEnd"
+        ).watch(
             "subject[Association].ownedEnd"
         ).watch(
             "subject[Association].navigableOwnedEnd"
@@ -386,6 +388,16 @@ class AssociationEnd(Presentation):
         self._inline_style: Style = {"font-size": 10}
 
     name_bounds = property(lambda s: s._name_bounds)
+
+    @property
+    def owner(self):
+        """ Override Element.owner. """
+        return self._owner
+
+    @property
+    def owner_handle(self):
+        # handle(event) is the event handler method
+        return self._owner.head if self is self._owner.head_end else self._owner.tail
 
     def request_update(self):
         self._owner.request_update()

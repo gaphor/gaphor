@@ -493,17 +493,24 @@ class AssociationPropertyPage(PropertyPageBase):
         head_signal_handlers = self.construct_end(builder, "head", head)
         tail_signal_handlers = self.construct_end(builder, "tail", tail)
 
-        def handler(event):
+        def name_handler(event):
             end_name = "head" if event.element is head.subject else "tail"
             self.update_end_name(builder, end_name, event.element)
 
+        def restore_nav_handler(event):
+            prop = event.element
+            if prop.type and prop.opposite and prop.opposite.type:
+                for end_name, end in (("head", head), ("tail", tail)):
+                    combo = builder.get_object(f"{end_name}-navigation")
+                    self._on_end_navigability_change(combo, end)
+
         # Watch on association end:
-        self.watcher.watch("memberEnd[Property].name", handler).watch(
-            "memberEnd[Property].aggregation", handler
-        ).watch("memberEnd[Property].visibility", handler).watch(
-            "memberEnd[Property].lowerValue", handler
+        self.watcher.watch("memberEnd[Property].name", name_handler).watch(
+            "memberEnd[Property].visibility", name_handler
+        ).watch("memberEnd[Property].lowerValue", name_handler).watch(
+            "memberEnd[Property].upperValue", name_handler
         ).watch(
-            "memberEnd[Property].upperValue", handler
+            "memberEnd[Property].type", restore_nav_handler,
         ).subscribe_all()
 
         builder.connect_signals(
