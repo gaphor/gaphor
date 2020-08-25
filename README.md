@@ -1,25 +1,24 @@
 # Gaphor <img src="logos/org.gaphor.Gaphor.svg" width="48">
 
 [![Build state](https://github.com/gaphor/gaphor/workflows/Build/badge.svg)](https://github.com/gaphor/gaphor/actions)
-[![Maintainability](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/maintainability)](https://codeclimate.com/github/gaphor/gaphor/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/test_coverage)](https://codeclimate.com/github/gaphor/gaphor/test_coverage)
 [![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://gaphor.readthedocs.io)
 [![PyPI](https://img.shields.io/pypi/v/gaphor.svg)](https://pypi.org/project/gaphor)
 [![Downloads](https://pepy.tech/badge/gaphor)](https://pepy.tech/project/gaphor)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat)](https://github.com/RichardLitt/standard-readme)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Gaphor/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![All Contributors](https://img.shields.io/badge/all_contributors-24-orange.svg?style=flat-square)](#contributors)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/maintainability)](https://codeclimate.com/github/gaphor/gaphor/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f00974f5d7fe69fe4ecd/test_coverage)](https://codeclimate.com/github/gaphor/gaphor/test_coverage)
+[![Sourcery](https://img.shields.io/badge/Sourcery-enabled-brightgreen)](https://sourcery.ai)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
+[![All Contributors](https://img.shields.io/badge/all_contributors-32-brightgreen.svg)](#contributors)
 
 
-> Gaphor is the simple modeling tool for UML and SysML.
+Gaphor is a UML and SysML modeling application written in Python.
+
+It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool. You can use Gaphor to quickly visualize different aspects of a system as well as create complete, highly complex models.
 
 ![Gaphor Demo](docs/images/gaphor-demo.gif)
-
-Gaphor is a simple and easy to use modeling tool for UML and SysML. It is aimed
-at beginning modelers who want a simple and fast tool so that they can focus on
-learning modeling of software and systems. It is not a full featured enterprise
-tool.
 
 ## :bookmark_tabs: Table of Contents
 
