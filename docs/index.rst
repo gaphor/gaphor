@@ -1,4 +1,4 @@
-The Gaphor Technical Documentation
+Gaphor -- Technical Documentation
 ==================================
 
 This documentation is aimed at those who would be interested in making
