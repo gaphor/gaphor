@@ -47,7 +47,7 @@ def save_generator(writer, factory):
     )
 
     size = factory.size()
-    for n, e in enumerate(list(factory.values()), start=1):
+    for n, e in enumerate(factory.values(), start=1):
         clazz = e.__class__.__name__
         assert e.id
         writer.startElement(clazz, {"id": str(e.id)})
