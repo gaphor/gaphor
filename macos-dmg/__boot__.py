@@ -6,15 +6,14 @@ PYVER = "3.7"
 
 resources = os.environ["RESOURCEPATH"]
 cache = pathlib.Path.home() / ".cache" / "gaphor"
-if not cache.exists():
-    cache.mkdir()
 
 print(f"App contents folder is {resources}, cache is {cache}")
 
+if not cache.exists():
+    cache.mkdir()
 
 while sys.path[0] == resources:
     del sys.path[0]
-
 
 os.environ["FONTCONFIG_SYSROOT"] = f"{resources}"
 os.environ["GTK_DATA_PREFIX"] = f"{resources}"
