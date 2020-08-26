@@ -42,134 +42,21 @@ Gaphor is designed around the following principles:
 - Consistency: UML is a graphical modeling language, so all modeling is done in a diagram.
 - Workability: The application should not bother the user every time they do something non-UML-ish.
 
-Gaphor is built on [Gaphas](https://github.com/gaphor/gaphas), which provides
-the foundational diagramming library. It is a GUI application that is built on
-GTK and cairo, [PyGObject](https://pygobject.readthedocs.io/) provides access
-to the GUI toolkit, and [PyCairo](https://pycairo.readthedocs.io/) to the 2D
-graphics library.
+Gaphor is a GUI application that is built on
+[GTK](https://gtk.org) and [Cairo](https://www.cairographics.org/). [PyGObject](https://pygobject.readthedocs.io/) and [PyCairo](https://pycairo.readthedocs.io/) provide Python bindings for those libraries.
+[Gaphas](https://github.com/gaphor/gaphas) provides
+the foundational diagramming functionality.
 
 ## :floppy_disk: Install
 
-### Windows
-To install Gaphor on Windows you an use the [latest Gaphor.exe installer](https://github.com/gaphor/gaphor/releases).
-There are two versions:
-1. Full Windows installation
-2. Portable installation
+You can find [the latest version](https://gaphor.org/download) on the [gaphor.org website](https://gaphor.org/download).
+Gaphor ships installers for macOS and Windows. Those can be found there.
+The Python package is also [available on PyPI](https://pypi.org/project/gaphor/).
 
-### Linux
-To install Gaphor in Linux use Flatpak:
-1. [Install Flatpak](https://flatpak.org/setup)
-1. `flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
-1. `flatpak install --user flathub org.gaphor.Gaphor`
+All releases are available on
+[GitHub](https://github.com/gaphor/gaphor/releases/).
 
-#### Arch Linux
-
-Can be installed from [AUR package](https://aur.archlinux.org/packages/python-gaphor/).
-
-### macOS
-We are still working on packaging GTK with Gaphor and it is currently an
-installation pre-requisite.
-1. Install [homebrew](https://brew.sh)
-1. Open a terminal and execute:
-```bash
-$ brew install gobject-introspection gtk+3
-```
-
-Then install Gaphor on macOS using the [latest gaphor-macOS.dmg
-installer](https://github.com/gaphor/gaphor/releases).
-
-
-Note: Sometimes launching the app the first time after installation fails due
-to macOS security settings, please attempt to launch it a 2nd time if this
-happens.
-
-### PyPI
-If you have the latest stable version of Python installed and the Gaphor
-dependencies installed, you can also install Gaphor using a wheel from PyPI.
-
-If you don't have the latest stable version of Python and the Gaphor dependencies
-installed, follow the development environment setup instructions in the next
-section and instead of cloning the repository, create a
-[virtual environment](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments),
-and then execute the following:
-
-```bash
-$ pip install gaphor
-$ gaphor
-```
-
-### Development
-
-#### Windows
-
-To setup a development environment in Windows:
-1) Go to http://www.msys2.org/ and download the x86_64 installer
-1) Follow the instructions on the page for setting up the basic environment
-1) Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
-```bash
-$ pacman -Suy
-$ pacman -S git mingw-w64-x86_64-gcc mingw-w64-x86_64-gtk3 \
-mingw-w64-x86_64-pkg-config mingw-w64-x86_64-cairo \
-mingw-w64-x86_64-gobject-introspection mingw-w64-x86_64-python \
-mingw-w64-x86_64-python-gobject mingw-w64-x86_64-python-cairo \
-mingw-w64-x86_64-python-pip
-$ git clone https://github.com/gaphor/gaphor.git
-$ cd gaphor
-$ source ./venv -S
-$ poetry run gaphor
-```
-
-#### Linux
-To setup a development environment with Linux, you first need the latest
-stable version of Python. In order to get the latest stable version, we
-recommend that you install [pyenv](https://github.com/pyenv/pyenv).
-Install the pyenv
-[prerequisites](https://github.com/pyenv/pyenv/wiki/Common-build-problems#prerequisites)
-first, and then install pyenv:
-
-```bash
-$ curl https://pyenv.run | bash
-```
-
-Make sure you follow the instruction at the end of the installation script
-to install the commands in your shell's rc file. Finally install the latest
-version of Python by executing:
-
-```bash
-$ pyenv install 3.x.x
-```
-Where 3.x.x is replaced by the latest stable version of Python.
-
-Next install the Gaphor prerequisites by installing the gobject introspection
-and cairo build dependencies, for example, in Ubuntu execute:
-
-```bash
-$ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
-    gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
-```
-[Clone the
-repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
-
-```
-$ cd gaphor
-$ source ./venv
-$ poetry run gaphor
-```
-
-#### macOS
-To setup a development environment with macOS:
-1. Install [homebrew](https://brew.sh)
-1. Open a terminal and execute:
-```bash
-$ brew install python3 gobject-introspection gtk+3
-```
-[Clone the
-repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
-```
-$ cd gaphor
-$ source ./venv
-$ poetry run gaphor
-```
+If you want to start developing on Gaphor, have a look at the [Installation section of our Tech docs](https://gaphor.readthedocs.io/en/latest/).
 
 ## :flashlight: Usage
 ### Creating models
