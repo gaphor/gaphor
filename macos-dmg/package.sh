@@ -75,17 +75,18 @@ do
 done
 
 mv "${RESOURCESDIR}/Frameworks" "${CONTENTSDIR}"
-
+mv "${RESOURCESDIR}/bin/gdk-pixbuf-query-loaders" "${MACOSDIR}"
+mv "${RESOURCESDIR}/bin/gtk-query-immodules-3.0" "${MACOSDIR}"
 mkdir -p "${RESOURCESDIR}/etc"
 cp -r "${LOCALDIR}/etc/fonts" "${RESOURCESDIR}/etc"
-
-# Somehow files are writen with mode 444
-find "${RESOURCESDIR}" -type f -exec chmod u+w {} \;
 
 # (from py2app/build_app.py:1458)
 # When we're using a python framework bin/python refers to a stub executable
 # that we don't want to use. We need the executable in Resources/Python.app.
-cp "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app/Contents/MacOS/Python" "${MACOSDIR}/python"
+mv "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app/Contents/MacOS/Python" "${MACOSDIR}/python"
+
+# Somehow files are writen with mode 444
+find "${RESOURCESDIR}" -type f -exec chmod u+w {} \;
 
 log "Installing Gaphor in ${RESOURCESDIR}..."
 
@@ -93,6 +94,7 @@ log "Installing Gaphor in ${RESOURCESDIR}..."
 
 log "Cleaning unneeded resources..."
 
+rm -r "${RESOURCESDIR}"/bin
 rm "${RESOURCESDIR}"/lib/*.a
 rm "${RESOURCESDIR}/lib/libgtkmacintegration-gtk2.2.dylib"
 rm -r "${RESOURCESDIR}/lib/cairo"
