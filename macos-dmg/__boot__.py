@@ -6,7 +6,8 @@ PYVER = "3.7"
 
 resources = os.environ["RESOURCEPATH"]
 cache = pathlib.Path.home() / ".cache" / "gaphor"
-cache.mkdir()
+if not cache.exists():
+    cache.mkdir()
 
 print(f"App contents folder is {resources}, cache is {cache}")
 
