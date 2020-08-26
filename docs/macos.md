@@ -6,7 +6,7 @@ To setup a development environment with macOS:
 1. Install [homebrew](https://brew.sh)
 1. Open a terminal and execute:
 ```bash
-$ brew install python3 gobject-introspection gtk+3
+$ brew install python3 gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration
 ```
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
@@ -26,5 +26,5 @@ link references.
 1. Open a terminal and execute the following from the repository directory:
 ```bash
 $ cd macos-dmg
-$ source package.sh
+$ source package-local.sh
 ```
