@@ -85,8 +85,8 @@ cp -r "${LOCALDIR}/etc/fonts" "${RESOURCESDIR}/etc"
 # that we don't want to use. We need the executable in Resources/Python.app.
 mv "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/Resources/Python.app/Contents/MacOS/Python" "${MACOSDIR}/python"
 
-# Somehow files are writen with mode 444
-find "${RESOURCESDIR}" -type f -exec chmod u+w {} \;
+# Homebrew executables are writen with mode 555
+find "${CONTENTSDIR}" -type f -exec chmod u+w {} \;
 
 log "Installing Gaphor in ${RESOURCESDIR}..."
 
@@ -146,7 +146,7 @@ function fix_paths {
       log "Library ${MACOSDIR}/$relname not found, using $(basename $fullname) instead"
       relname="$(dirname $relname)/$(basename $fullname)"
     }
-    # @executable_path is /path/to/Gaphor.app/MacOS
+    # @executable_path is /path/to/Gaphor.app/Contents/MacOS
     log "  $dep -> @executable_path/$relname"
     install_name_tool -change $dep @executable_path/$relname $lib
   done
@@ -158,8 +158,7 @@ function fix_paths {
   find ${CONTENTSDIR} -type f -name '*.dylib'
   echo ${CONTENTSDIR}/Frameworks/Python.framework/Versions/*/Python
   # Binaries
-  file ${RESOURCESDIR}/bin/* | grep Mach-O | cut -f1 -d:
-  echo ${MACOSDIR}/python
+  find ${MACOSDIR} -type f
 } | map fix_paths
 
 log "Compiling .gir files..."
