@@ -1,20 +1,21 @@
 Gaphor -- Technical Documentation
 ==================================
 
-This documentation is aimed at those who would be interested in making
-contributions to Gaphor. For tutorials and how-to information, please visit the
-`Gaphor Website <https://gaphor.org>`_.
+Gaphor is a UML and SysML modeling application written in Python.
+It is designed to be easy to use, while still being powerful.
+Gaphor implements a fully-compliant UML 2 data model,
+so it is much more than a picture drawing tool.
+You can use Gaphor to quickly visualize different aspects of a system
+as well as create complete, highly complex models.
 
-In the future, we would like to split the documentation in to sections that
-focus on **explanation** (understanding-oriented) and **reference**
-(information-oriented). For now, this information is all together.
+This documentation is aimed at those who would be interested in making
+contributions to Gaphor. For download instructions, tutorials and how-to's, please visit the
+`Gaphor Website <https://gaphor.org>`_.
 
 If you're into writing plug-ins for Gaphor you should have a look at our
 fabulous `Hello world <https://github.com/gaphor/gaphor.plugins.helloworld>`_
 plug-in.
 
-Setting up a development environment, and packaging Gaphor on different
-platforms:
 
 .. toctree::
    :caption: Installation

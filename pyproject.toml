@@ -9,7 +9,7 @@ authors = [
 
 readme = "README.md"
 
-homepage = "https://gaphor.readthedocs.io/"
+homepage = "https://gaphor.org/"
 repository = "https://github.com/gaphor/gaphor"
 documentation = "https://gaphor.readthedocs.io/"
 
