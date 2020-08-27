@@ -9,16 +9,16 @@ repos:
   hooks:
   - id: mypy
 - repo: https://gitlab.com/pycqa/flake8
-  rev: 3.8.0a2
+  rev: 3.8.3
   hooks:
   - id: flake8
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.4.0
+  rev: v3.2.0
   hooks:
   - id: check-toml
   - id: check-yaml
 - repo: https://github.com/pre-commit/mirrors-isort
-  rev: v5.0.7
+  rev: v5.4.2
   hooks:
   - id: isort
     additional_dependencies: [toml]
