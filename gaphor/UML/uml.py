@@ -536,14 +536,14 @@ class GeneralOrdering(NamedElement):
 class Connector(Feature):
     kind: enumeration
     redefinedConnector: relation_many[Connector]
-    type: relation_one[Association]
     end: relation_many[ConnectorEnd]
+    type: relation_one[Association]
     contract: relation_many[Behavior]
 
 
 class ConnectorEnd(MultiplicityElement):
-    role: relation_one[ConnectableElement]
     partWithPort: relation_one[Property]
+    role: relation_one[ConnectableElement]
     definingEnd: relation_one[Property]
 
 
@@ -1129,11 +1129,6 @@ StructuredClassifier.ownedConnector = association(
     "ownedConnector", Connector, composite=True
 )
 Connector.redefinedConnector = association("redefinedConnector", Connector)
-Connector.type = association("type", Association, upper=1)
-Connector.end = association("end", ConnectorEnd, lower=2, composite=True)
-Connector.contract = association("contract", Behavior)
-ConnectorEnd.role = association("role", ConnectableElement, upper=1, opposite="end")
-ConnectableElement.end = association("end", ConnectorEnd, opposite="role")
 StructuredClassifier.ownedAttribute = association(
     "ownedAttribute", Property, composite=True
 )
@@ -1258,6 +1253,11 @@ Constraint.parameterSet = association(
 ParameterSet.condition = association(
     "condition", Constraint, composite=True, opposite="parameterSet"
 )
+Connector.end = association("end", ConnectorEnd, lower=2, composite=True)
+ConnectorEnd.role = association("role", ConnectableElement, upper=1, opposite="end")
+ConnectableElement.end = association("end", ConnectorEnd, opposite="role")
+Connector.type = association("type", Association, upper=1)
+Connector.contract = association("contract", Behavior)
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1567,7 +1567,6 @@ Element.ownedElement = derivedunion(
     Activity.node,
     Action.output,
     StateInvariant.invariant,
-    Connector.end,
     State.entry,
     State.exit,
     State.doActivity,
@@ -1578,8 +1577,8 @@ Element.ownedElement = derivedunion(
     Interaction.action,
     InteractionFragment.generalOrdering,
     ParameterSet.condition,
+    Connector.end,
 )
-ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
 # 109: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
     lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
@@ -1610,6 +1609,7 @@ ExecutionSpecification.finish = derived(
     ],
 )
 
+ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
 # 73: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
