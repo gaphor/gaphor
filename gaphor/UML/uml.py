@@ -47,7 +47,6 @@ class PackageMerge(DirectedRelationship):
 
 
 class Namespace(NamedElement):
-    ownedRule: relation_many[Constraint]
     context: relation_one[Namespace]
     elementImport: relation_many[ElementImport]
     packageImport: relation_many[PackageImport]
@@ -260,7 +259,7 @@ class ConnectableElement(TypedElement):
 class Interface(Classifier, ConnectableElement):
     ownedAttribute: relation_many[Property]
     redefinedInterface: relation_many[Interface]
-    nestedInterface: relation_many[Interface]
+    nestedClassifier: relation_many[Classifier]
     ownedOperation: relation_many[Operation]
     ownedReception: relation_many[Reception]
 
@@ -326,7 +325,7 @@ class DataType(Classifier):
 
 
 class Enumeration(DataType):
-    literal: relation_many[EnumerationLiteral]
+    ownedLiteral: relation_many[EnumerationLiteral]
 
 
 class Slot(Element):
@@ -479,6 +478,7 @@ class ActivityGroup(Element):
 
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
+    ownedRule: relation_many[Constraint]
     specification: attribute[str]
     stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
@@ -877,11 +877,11 @@ Class.ownedOperation = association(
     "ownedOperation", Operation, composite=True, opposite="class_"
 )
 Operation.class_ = association("class_", Class, upper=1, opposite="ownedOperation")
-Enumeration.literal = association(
-    "literal", EnumerationLiteral, composite=True, opposite="enumeration"
+Enumeration.ownedLiteral = association(
+    "ownedLiteral", EnumerationLiteral, composite=True, opposite="enumeration"
 )
 EnumerationLiteral.enumeration = association(
-    "enumeration", Enumeration, upper=1, opposite="literal"
+    "enumeration", Enumeration, upper=1, opposite="ownedLiteral"
 )
 ActivityEdge.source = association(
     "source", ActivityNode, lower=1, upper=1, opposite="outgoing"
@@ -934,7 +934,7 @@ Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute
 Extend.extendedCase = association("extendedCase", UseCase, lower=1, upper=1)
 # 'Property.defaultValue' is a simple attribute
 Property.defaultValue = attribute("defaultValue", str)
-Namespace.ownedRule = association(
+Constraint.ownedRule = association(
     "ownedRule", Constraint, composite=True, opposite="context"
 )
 Namespace.context = association("context", Namespace, upper=1, opposite="ownedRule")
@@ -1016,7 +1016,7 @@ ElementImport.importingNamespace = association(
 )
 # 'MultiplicityElement.lowerValue' is a simple attribute
 MultiplicityElement.lowerValue = attribute("lowerValue", str)
-Interface.nestedInterface = association("nestedInterface", Interface, composite=True)
+Interface.nestedClassifier = association("nestedClassifier", Classifier, composite=True)
 InstanceSpecification.classifier = association("classifier", Classifier)
 Interface.ownedOperation = association(
     "ownedOperation", Operation, composite=True, opposite="interface_"
@@ -1382,9 +1382,10 @@ Namespace.ownedMember = derivedunion(
     0,
     "*",
     Interface.ownedOperation,
-    Enumeration.literal,
+    Enumeration.ownedLiteral,
+    Interface.nestedClassifier,
     Package.ownedDiagram,
-    Namespace.ownedRule,
+    Constraint.ownedRule,
     UseCase.extensionPoint,
     DataType.ownedOperation,
     Operation.precondition,
