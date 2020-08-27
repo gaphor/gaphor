@@ -90,7 +90,7 @@ pygments_style = None
 #
 html_theme = "sphinx_rtd_theme"
 html_favicon = "../logos/gaphor-24x24.png"
-
+html_title = ""
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
