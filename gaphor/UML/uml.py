@@ -47,7 +47,8 @@ class PackageMerge(DirectedRelationship):
 
 
 class Namespace(NamedElement):
-    context: relation_one[Constraint]
+    ownedRule: relation_many[Constraint]
+    context: relation_one[Namespace]
     elementImport: relation_many[ElementImport]
     packageImport: relation_many[PackageImport]
     ownedMember: relation_many[NamedElement]
@@ -407,7 +408,7 @@ class Implementation(Realization):
     implementatingClassifier: relation_many[BehavioredClassifier]  # type: ignore[assignment]
 
 
-class Parameter(TypedElement, MultiplicityElement):
+class Parameter(ConnectableElement, MultiplicityElement):
     direction: enumeration
     defaultValue: attribute[str]
     ownerFormalParam: relation_one[BehavioralFeature]
@@ -479,7 +480,6 @@ class ActivityGroup(Element):
 
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
-    ownedRule: relation_many[Namespace]
     specification: attribute[str]
     stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
@@ -936,10 +936,10 @@ Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute
 Extend.extendedCase = association("extendedCase", UseCase, lower=1, upper=1)
 # 'Property.defaultValue' is a simple attribute
 Property.defaultValue = attribute("defaultValue", str)
-Constraint.ownedRule = association(
-    "ownedRule", Namespace, composite=True, opposite="context"
+Namespace.ownedRule = association(
+    "ownedRule", Constraint, composite=True, opposite="context"
 )
-Namespace.context = association("context", Constraint, upper=1, opposite="ownedRule")
+Namespace.context = association("context", Namespace, upper=1, opposite="ownedRule")
 Property.association = association(
     "association", Association, upper=1, opposite="memberEnd"
 )
@@ -1386,7 +1386,7 @@ Namespace.ownedMember = derivedunion(
     Interface.ownedOperation,
     Enumeration.literal,
     Package.ownedDiagram,
-    Constraint.ownedRule,
+    Namespace.ownedRule,
     UseCase.extensionPoint,
     DataType.ownedOperation,
     Operation.precondition,
