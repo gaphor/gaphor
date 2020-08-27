@@ -197,7 +197,6 @@ class EncapsulatedClassifer(StructuredClassifier):
 
 class Class(BehavioredClassifier, EncapsulatedClassifer):
     ownedOperation: relation_many[Operation]
-    nestedClassifier: relation_many[Classifier]
     ownedAttribute: relation_many[Property]
     ownedReception: relation_many[Reception]
     extension: property
@@ -912,7 +911,6 @@ Package.appliedProfile = association(
 Activity.node = association("node", ActivityNode, composite=True)
 # 'Parameter.defaultValue' is a simple attribute
 Parameter.defaultValue = attribute("defaultValue", str)
-Class.nestedClassifier = association("nestedClassifier", Classifier, composite=True)
 # 'Slot.value' is a simple attribute
 Slot.value = attribute("value", str)
 Include.addition = association("addition", UseCase, lower=1, upper=1)
@@ -1392,7 +1390,6 @@ Namespace.ownedMember = derivedunion(
     Operation.precondition,
     BehavioralFeature.returnResult,
     Profile.ownedStereotype,
-    Class.nestedClassifier,
     Class.ownedAttribute,
     BehavioralFeature.formalParameter,
     Classifier.ownedUseCase,
