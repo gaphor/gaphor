@@ -29,3 +29,5 @@ replacers:
     replace: ''
   - search: '/(?:and )?@allcontributors(?:\[bot\])?,?/g'
     replace: ''
+  - search: ', !'
+    replace: '!'
