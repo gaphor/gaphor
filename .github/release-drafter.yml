@@ -23,9 +23,9 @@ template: |
   Thanks again to $CONTRIBUTORS! 🎉
 no-changes-template: 'Changes are coming soon 😎'
 replacers:
-  - search: '(?:and )?@dependabot(?:\[bot\])?,?'
+  - search: '/(?:and )?@dependabot(?:\[bot\])?,?/g'
     replace: ''
-  - search: '(?:and )?@sourcery-ai-bot(?:\[bot\])?,?'
+  - search: '/(?:and )?@sourcery-ai-bot(?:\[bot\])?,?/g'
     replace: ''
-  - search: '(?:and )?@allcontributors(?:\[bot\])?,?'
+  - search: '/(?:and )?@allcontributors(?:\[bot\])?,?/g'
     replace: ''
