@@ -47,7 +47,6 @@ class PackageMerge(DirectedRelationship):
 
 
 class Namespace(NamedElement):
-    ownedRule: relation_many[Constraint]
     context: relation_one[Namespace]
     elementImport: relation_many[ElementImport]
     packageImport: relation_many[PackageImport]
@@ -273,14 +272,8 @@ class Include(DirectedRelationship):
     includingCase: relation_one[UseCase]
 
 
-class PackageImport(DirectedRelationship):
-    visibility: enumeration
-    importedPackage: relation_one[Package]
-    importingNamespace: relation_one[Namespace]
-
-
-class ProfileApplication(PackageImport):
-    importedProfile: relation_one[Profile]
+class ProfileApplication(DirectedRelationship):
+    appliedProfile: relation_one[Profile]
 
 
 class ExtensionPoint(RedefinableElement):
@@ -347,7 +340,8 @@ class InitialNode(ControlNode):
 
 
 class Stereotype(Class):
-    pass
+    icon: relation_many[Image]
+    profile: relation_one[Profile]
 
 
 # 23: override Diagram
@@ -379,14 +373,13 @@ class Package(Namespace, PackageableElement):
     nestedPackage: relation_many[Package]
     package: relation_one[Package]
     ownedClassifier: relation_many[Type]
-    packageExtension: relation_many[PackageMerge]
+    packageMerge: relation_many[PackageMerge]
     appliedProfile: relation_many[ProfileApplication]
-    ownedMember: relation_many[PackageableElement]  # type: ignore[assignment]
+    packagedElement: relation_many[PackageableElement]
 
 
 class Profile(Package):
     metamodelReference: relation_many[PackageImport]
-    ownedStereotype: relation_many[Stereotype]
     metaclassReference: relation_many[ElementImport]
 
 
@@ -482,10 +475,17 @@ class ActivityGroup(Element):
 
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
+    ownedRule: relation_many[Constraint]
     specification: attribute[str]
     stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
     parameterSet: relation_one[ParameterSet]
+
+
+class PackageImport(DirectedRelationship):
+    visibility: enumeration
+    importedPackage: relation_one[Package]
+    importingNamespace: relation_one[Namespace]
 
 
 class InteractionFragment(NamedElement):
@@ -727,6 +727,11 @@ class ParameterSet(NamedElement):
     condition: relation_many[Constraint]
 
 
+class Image(Element):
+    content: attribute[str]
+    format: attribute[str]
+
+
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
 # class 'Expression' has been stereotyped as 'SimpleAttribute' too
 # class 'LiteralSpecification' has been stereotyped as 'SimpleAttribute' too
@@ -821,6 +826,8 @@ AcceptEventAction.isUnmarshall = attribute("isUnmarshall", int, default=False)
 AddStructuralFeatureValueAction.isReplaceAll = attribute(
     "isReplaceAll", int, default=False
 )
+Image.content = attribute("content", str)
+Image.format = attribute("format", str)
 Operation.precondition = association("precondition", Constraint, composite=True)
 Package.ownedDiagram = association(
     "ownedDiagram", Diagram, composite=True, opposite="package"
@@ -891,7 +898,6 @@ ActivityEdge.source = association(
     "source", ActivityNode, lower=1, upper=1, opposite="outgoing"
 )
 ActivityNode.outgoing = association("outgoing", ActivityEdge, opposite="source")
-Profile.ownedStereotype = association("ownedStereotype", Stereotype, composite=True)
 Property.redefinedProperty = association("redefinedProperty", Property)
 DataType.ownedOperation = association(
     "ownedOperation", Operation, composite=True, opposite="datatype"
@@ -904,10 +910,10 @@ Classifier.ownedUseCase = association("ownedUseCase", UseCase, composite=True)
 # 'MultiplicityElement.upperValue' is a simple attribute
 MultiplicityElement.upperValue = attribute("upperValue", str)
 PackageMerge.mergingPackage = association(
-    "mergingPackage", Package, lower=1, upper=1, opposite="packageExtension"
+    "mergingPackage", Package, lower=1, upper=1, opposite="packageMerge"
 )
-Package.packageExtension = association(
-    "packageExtension", PackageMerge, composite=True, opposite="mergingPackage"
+Package.packageMerge = association(
+    "packageMerge", PackageMerge, composite=True, opposite="mergingPackage"
 )
 Package.appliedProfile = association(
     "appliedProfile", ProfileApplication, composite=True
@@ -938,7 +944,7 @@ Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute
 Extend.extendedCase = association("extendedCase", UseCase, lower=1, upper=1)
 # 'Property.defaultValue' is a simple attribute
 Property.defaultValue = attribute("defaultValue", str)
-Namespace.ownedRule = association(
+Constraint.ownedRule = association(
     "ownedRule", Constraint, composite=True, opposite="context"
 )
 Namespace.context = association("context", Namespace, upper=1, opposite="ownedRule")
@@ -1058,9 +1064,12 @@ Extend.extension = association(
     "extension", UseCase, lower=1, upper=1, opposite="extend"
 )
 UseCase.extend = association("extend", Extend, composite=True, opposite="extension")
+Package.packagedElement = association(
+    "packagedElement", PackageableElement, composite=True
+)
 Extend.constraint = association("constraint", Constraint, upper=1, composite=True)
-ProfileApplication.importedProfile = association(
-    "importedProfile", Profile, lower=1, upper=1
+ProfileApplication.appliedProfile = association(
+    "appliedProfile", Profile, lower=1, upper=1
 )
 Namespace.packageImport = association(
     "packageImport", PackageImport, composite=True, opposite="importingNamespace"
@@ -1268,6 +1277,7 @@ Classifier.nestingClass = association(
 Class.nestedClassifier = association(
     "nestedClassifier", Classifier, composite=True, opposite="nestingClass"
 )
+Stereotype.icon = association("icon", Image, composite=True)
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1397,12 +1407,11 @@ Namespace.ownedMember = derivedunion(
     Enumeration.ownedLiteral,
     Interface.nestedClassifier,
     Package.ownedDiagram,
-    Namespace.ownedRule,
+    Constraint.ownedRule,
     UseCase.extensionPoint,
     DataType.ownedOperation,
     Operation.precondition,
     BehavioralFeature.returnResult,
-    Profile.ownedStereotype,
     Class.ownedAttribute,
     BehavioralFeature.formalParameter,
     Classifier.ownedUseCase,
@@ -1427,6 +1436,7 @@ Namespace.ownedMember = derivedunion(
     Signal.ownedAttribute,
     Class.ownedReception,
     Interface.ownedReception,
+    Stereotype.icon,
 )
 # 70: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived(
@@ -1446,6 +1456,7 @@ Association.endType = derived(
 # 91: override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion("type", DataType, 0, 1)
 
+Stereotype.profile = derivedunion("profile", Profile, 1, 1)
 # 64: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # defined in umloverrides.py
 
@@ -1573,7 +1584,8 @@ Element.ownedElement = derivedunion(
     Activity.group,
     Component.realization,
     Namespace.packageImport,
-    Package.packageExtension,
+    Package.packageMerge,
+    Package.appliedProfile,
     ActivityGroup.subgroup,
     Activity.edge,
     Activity.node,
@@ -1649,9 +1661,6 @@ Operation.formalParameter = redefine(
 )
 ActivityEdge.redefinedElement = redefine(
     ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement
-)
-Package.ownedMember = redefine(
-    Package, "ownedMember", PackageableElement, Namespace.ownedMember
 )
 Component.ownedMember = redefine(
     Component, "ownedMember", PackageableElement, Namespace.ownedMember
