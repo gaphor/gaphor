@@ -47,6 +47,7 @@ class PackageMerge(DirectedRelationship):
 
 
 class Namespace(NamedElement):
+    ownedRule: relation_many[Constraint]
     context: relation_one[Namespace]
     elementImport: relation_many[ElementImport]
     packageImport: relation_many[PackageImport]
@@ -72,6 +73,7 @@ class Classifier(Namespace, Type, RedefinableElement):
     generalization: relation_many[Generalization]
     useCase: relation_many[UseCase]
     redefinedClassifier: relation_many[Classifier]
+    nestingClass: relation_one[Class]
     attribute: relation_many[Property]
     feature: relation_many[Feature]
     general: derived[Classifier]
@@ -195,9 +197,11 @@ class EncapsulatedClassifer(StructuredClassifier):
 
 
 class Class(BehavioredClassifier, EncapsulatedClassifer):
+    isActive: attribute[int]
     ownedOperation: relation_many[Operation]
     ownedAttribute: relation_many[Property]
     ownedReception: relation_many[Reception]
+    nestedClassifier: relation_many[Classifier]
     extension: property
     superClass: derived[Classifier]
 
@@ -478,7 +482,6 @@ class ActivityGroup(Element):
 
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
-    ownedRule: relation_many[Constraint]
     specification: attribute[str]
     stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
@@ -761,6 +764,7 @@ MultiplicityElement.isOrdered = attribute("isOrdered", int, default=True)
 Activity.body = attribute("body", str)
 Activity.language = attribute("language", str)
 Classifier.isAbstract = attribute("isAbstract", int, default=False)
+Class.isActive = attribute("isActive", int, default=False)
 Parameter.direction = enumeration("direction", ("inout", "in", "out", "return"), "in")
 Operation.isQuery = attribute("isQuery", int, default=False)
 Property.aggregation = enumeration(
@@ -934,7 +938,7 @@ Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute
 Extend.extendedCase = association("extendedCase", UseCase, lower=1, upper=1)
 # 'Property.defaultValue' is a simple attribute
 Property.defaultValue = attribute("defaultValue", str)
-Constraint.ownedRule = association(
+Namespace.ownedRule = association(
     "ownedRule", Constraint, composite=True, opposite="context"
 )
 Namespace.context = association("context", Namespace, upper=1, opposite="ownedRule")
@@ -1258,6 +1262,12 @@ ConnectorEnd.role = association("role", ConnectableElement, upper=1, opposite="e
 ConnectableElement.end = association("end", ConnectorEnd, opposite="role")
 Connector.type = association("type", Association, upper=1)
 Connector.contract = association("contract", Behavior)
+Classifier.nestingClass = association(
+    "nestingClass", Class, upper=1, opposite="nestedClassifier"
+)
+Class.nestedClassifier = association(
+    "nestedClassifier", Classifier, composite=True, opposite="nestingClass"
+)
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1344,6 +1354,7 @@ RedefinableElement.redefinitionContext = derivedunion(
     Property.classifier,
     Operation.datatype,
     Port.encapsulatedClassifier,
+    Classifier.nestingClass,
 )
 NamedElement.namespace = derivedunion(
     "namespace",
@@ -1375,6 +1386,7 @@ NamedElement.namespace = derivedunion(
     Pseudostate.stateMachine,
     Region.state,
     ConnectionPointReference.state,
+    Classifier.nestingClass,
 )
 Namespace.ownedMember = derivedunion(
     "ownedMember",
@@ -1385,7 +1397,7 @@ Namespace.ownedMember = derivedunion(
     Enumeration.ownedLiteral,
     Interface.nestedClassifier,
     Package.ownedDiagram,
-    Constraint.ownedRule,
+    Namespace.ownedRule,
     UseCase.extensionPoint,
     DataType.ownedOperation,
     Operation.precondition,
