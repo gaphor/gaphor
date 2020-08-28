@@ -102,6 +102,7 @@ class ActivityNode(RedefinableElement):
     incoming: relation_many[ActivityEdge]
     inGroup: relation_many[ActivityGroup]
     inPartition: relation_many[ActivityPartition]
+    activity: relation_one[Activity]
     redefinedElement: relation_many[ActivityNode]  # type: ignore[assignment]
 
 
@@ -394,8 +395,8 @@ class Activity(Behavior):
     language: attribute[str]
     edge: relation_many[ActivityEdge]
     group: relation_many[ActivityGroup]
-    node: relation_many[ActivityNode]
     action: relation_many[Action]
+    node: relation_many[ActivityNode]
 
 
 class Implementation(Realization):
@@ -674,6 +675,7 @@ class Collaboration(StructuredClassifier, BehavioredClassifier):
 
 class Trigger(NamedElement):
     event: relation_one[Event]
+    port: relation_many[Port]
 
 
 class Event(PackageableElement):
@@ -917,7 +919,6 @@ Package.packageMerge = association(
 Package.appliedProfile = association(
     "appliedProfile", ProfileApplication, composite=True
 )
-Activity.node = association("node", ActivityNode, composite=True)
 # 'Parameter.defaultValue' is a simple attribute
 Parameter.defaultValue = attribute("defaultValue", str)
 # 'Slot.value' is a simple attribute
@@ -1274,6 +1275,9 @@ Class.nestedClassifier = association(
 )
 Stereotype.icon = association("icon", Image, composite=True)
 Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
+Trigger.port = association("port", Port)
+ActivityNode.activity = association("activity", Activity, upper=1, opposite="node")
+Activity.node = association("node", ActivityNode, composite=True, opposite="activity")
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1565,6 +1569,7 @@ Element.owner = derivedunion(
     Action.interaction,
     GeneralOrdering.interactionFragment,
     Constraint.parameterSet,
+    ActivityNode.activity,
 )
 Element.ownedElement = derivedunion(
     "ownedElement",
@@ -1583,7 +1588,6 @@ Element.ownedElement = derivedunion(
     Package.appliedProfile,
     ActivityGroup.subgroup,
     Activity.edge,
-    Activity.node,
     Action.output,
     StateInvariant.invariant,
     State.entry,
@@ -1597,6 +1601,7 @@ Element.ownedElement = derivedunion(
     InteractionFragment.generalOrdering,
     ParameterSet.condition,
     Connector.end,
+    Activity.node,
 )
 # 109: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
