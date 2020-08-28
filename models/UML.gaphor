@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.0.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.0.1">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -3059,11 +3059,6 @@
 </visibility>
 </Property>
 <Class id="DCE:BDC038A2-4A88-11D7-B08D-133D836EF880">
-<comment>
-<reflist>
-<ref refid="DCE:7515C0FA-83DF-11D7-ADE2-4B1972AF3391"/>
-</reflist>
-</comment>
 <generalization>
 <reflist>
 <ref refid="DCE:E5BD5AF6-4A88-11D7-B08E-133D836EF880"/>
@@ -3077,6 +3072,11 @@
 <ref refid="DCE:231C5FB2-83DC-11D7-ADE2-4B1972AF3391"/>
 </reflist>
 </ownedAttribute>
+<ownedComment>
+<reflist>
+<ref refid="DCE:7515C0FA-83DF-11D7-ADE2-4B1972AF3391"/>
+</reflist>
+</ownedComment>
 <package>
 <ref refid="38ce781e-e18a-11ea-b7ab-f5b4c130f24e"/>
 </package>
@@ -3477,11 +3477,6 @@
 </presentation>
 </Association>
 <Class id="DCE:FA7C37C2-A41C-11D8-B0B1-00061BC22919">
-<comment>
-<reflist>
-<ref refid="DCE:091092E0-A41D-11D8-B0B1-00061BC22919"/>
-</reflist>
-</comment>
 <generalization>
 <reflist>
 <ref refid="DCE:04A9AC5C-A41D-11D8-B0B1-00061BC22919"/>
@@ -3490,6 +3485,11 @@
 <name>
 <val>CommunicationPath</val>
 </name>
+<ownedComment>
+<reflist>
+<ref refid="DCE:091092E0-A41D-11D8-B0B1-00061BC22919"/>
+</reflist>
+</ownedComment>
 <package>
 <ref refid="DCE:C480ADC2-A41A-11D8-A88E-00061BC22919"/>
 </package>
@@ -7063,7 +7063,7 @@
 <generalization>
 <reflist>
 <ref refid="DCE:4A9BD768-A35C-11D8-9D85-00C00C03A405"/>
-<ref refid="DCE:8E811EFA-3507-11DA-842A-000D936B094A"/>
+<ref refid="9845a6ba-e95e-11ea-87d1-cbf2d1fcaed0"/>
 </reflist>
 </generalization>
 <name>
@@ -7088,7 +7088,6 @@
 <ref refid="b67d0882-e899-11ea-96dc-bf74f1f80424"/>
 <ref refid="DCE:3B61B1FA-A35C-11D8-9D85-00C00C03A405"/>
 <ref refid="176e5bb4-e89a-11ea-96dc-bf74f1f80424"/>
-<ref refid="3eab594f-e89e-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
 </Class>
@@ -10222,17 +10221,17 @@
 </presentation>
 </Class>
 <Association id="DCE:52EE3722-863A-11D7-8239-5A25B8C2F569">
-<comment>
-<reflist>
-<ref refid="DCE:9125AC98-863B-11D7-8239-5A25B8C2F569"/>
-</reflist>
-</comment>
 <memberEnd>
 <reflist>
 <ref refid="DCE:52EEA14C-863A-11D7-8239-5A25B8C2F569"/>
 <ref refid="DCE:52EE6FA6-863A-11D7-8239-5A25B8C2F569"/>
 </reflist>
 </memberEnd>
+<ownedComment>
+<reflist>
+<ref refid="DCE:9125AC98-863B-11D7-8239-5A25B8C2F569"/>
+</reflist>
+</ownedComment>
 <ownedEnd>
 <reflist>
 <ref refid="DCE:52EE6FA6-863A-11D7-8239-5A25B8C2F569"/>
@@ -13285,11 +13284,6 @@
 </presentation>
 </Class>
 <Class id="DCE:F440F088-7650-11D7-8271-9A319BBF187B">
-<comment>
-<reflist>
-<ref refid="DCE:0393B4B4-7651-11D7-8271-9A319BBF187B"/>
-</reflist>
-</comment>
 <name>
 <val>Diagram</val>
 </name>
@@ -13298,6 +13292,11 @@
 <ref refid="DCE:6CEA8314-7653-11D7-8271-9A319BBF187B"/>
 </reflist>
 </ownedAttribute>
+<ownedComment>
+<reflist>
+<ref refid="DCE:0393B4B4-7651-11D7-8271-9A319BBF187B"/>
+</reflist>
+</ownedComment>
 <package>
 <ref refid="DCE:599504CC-379C-11D9-9FA4-00C00C03A405"/>
 </package>
@@ -18687,6 +18686,83 @@
 <ref refid="DCE:7A01F8CC-AE13-11D8-9F3C-00C00C03A405"/>
 </subject>
 </item>
+<item id="92207e4a-e95e-11ea-87d1-cbf2d1fcaed0" type="ClassItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 248.60546875, 47.263888888888914)</val>
+</matrix>
+<width>
+<val>173.7265625</val>
+</width>
+<height>
+<val>56.700954861111086</val>
+</height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="DCE:812B6CD0-5FD3-11D9-89DE-0050040A5923"/>
+</subject>
+</item>
+<item id="96ea2548-e95e-11ea-87d1-cbf2d1fcaed0" type="GeneralizationItem">
+<subject>
+<ref refid="9845a6ba-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 376.06615672392, 103.96484375)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (107.64087452607998, 69.03515625)]</val>
+</points>
+<head-connection>
+<ref refid="92207e4a-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</head-connection>
+<tail-connection>
+<ref refid="DCE:3B61B1FA-A35C-11D8-9D85-00C00C03A405"/>
+</tail-connection>
+</item>
+<item id="9c52ec0e-e95e-11ea-87d1-cbf2d1fcaed0" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 94.34375, 90.34375)</val>
+</matrix>
+<width>
+<val>132.0</val>
+</width>
+<height>
+<val>61.0</val>
+</height>
+<subject>
+<ref refid="9c52d08e-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</subject>
+</item>
+<item id="a7cf06d0-e95e-11ea-87d1-cbf2d1fcaed0" type="CommentLineItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 226.34375, 125.30859375)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (209.1771951297141, 16.787402552186165)]</val>
+</points>
+<head-connection>
+<ref refid="9c52ec0e-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</head-connection>
+<tail-connection>
+<ref refid="96ea2548-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</tail-connection>
+</item>
 </canvas>
 </Diagram>
 <Class id="DCE:882D4230-A35C-11D8-9D85-00C00C03A405">
@@ -19578,10 +19654,8 @@
 <ref refid="DCE:DF21F1A6-CFD7-11D8-8513-996A34E468FA"/>
 <ref refid="DCE:F09A6860-CFD7-11D8-8513-996A34E468FA"/>
 <ref refid="DCE:ECB27A04-3508-11DA-8668-000D936B094A"/>
-<ref refid="DCE:CA82A210-8352-11DD-8EDA-000D936B094A"/>
 <ref refid="DCE:3A818718-8353-11DD-8EDA-000D936B094A"/>
 <ref refid="9ffea2f9-e896-11ea-96dc-bf74f1f80424"/>
-<ref refid="3eab5954-e89e-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
 </Class>
@@ -20519,17 +20593,17 @@ specially for Gaphor</val>
 </presentation>
 </Class>
 <Association id="DCE:3A818386-4B3E-11D7-B391-02BBFE4396CE">
-<comment>
-<reflist>
-<ref refid="89968efa-1cae-11df-b8ca-00224128e79d"/>
-</reflist>
-</comment>
 <memberEnd>
 <reflist>
 <ref refid="DCE:3A81BC34-4B3E-11D7-B391-02BBFE4396CE"/>
 <ref refid="DCE:3A81EE0C-4B3E-11D7-B391-02BBFE4396CE"/>
 </reflist>
 </memberEnd>
+<ownedComment>
+<reflist>
+<ref refid="89968efa-1cae-11df-b8ca-00224128e79d"/>
+</reflist>
+</ownedComment>
 <package>
 <ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
 </package>
@@ -27785,11 +27859,6 @@ some elements to have a stereotype</val>
 </canvas>
 </Diagram>
 <Class id="DCE:FF9F4292-3B14-11D9-83CE-A0BAF22E8A12">
-<comment>
-<reflist>
-<ref refid="DCE:E39B1C38-3B16-11D9-83CE-A0BAF22E8A12"/>
-</reflist>
-</comment>
 <generalization>
 <reflist>
 <ref refid="DCE:5B1ADE52-3B16-11D9-83CE-A0BAF22E8A12"/>
@@ -27804,6 +27873,11 @@ some elements to have a stereotype</val>
 <ref refid="DCE:7A18AFBC-3B15-11D9-83CE-A0BAF22E8A12"/>
 </reflist>
 </ownedAttribute>
+<ownedComment>
+<reflist>
+<ref refid="DCE:E39B1C38-3B16-11D9-83CE-A0BAF22E8A12"/>
+</reflist>
+</ownedComment>
 <ownedOperation>
 <reflist>
 <ref refid="DCE:661940B0-5C8F-11D9-A349-00306EB655C9"/>
@@ -28570,17 +28644,17 @@ some elements to have a stereotype</val>
 </typeValue>
 </Property>
 <Association id="DCE:8389D414-3B17-11D9-83CE-A0BAF22E8A12">
-<comment>
-<reflist>
-<ref refid="c3ccb4d0-3488-11e0-b5fb-0021e9e5a3cd"/>
-</reflist>
-</comment>
 <memberEnd>
 <reflist>
 <ref refid="DCE:838F5C2E-3B17-11D9-83CE-A0BAF22E8A12"/>
 <ref refid="DCE:839A4824-3B17-11D9-83CE-A0BAF22E8A12"/>
 </reflist>
 </memberEnd>
+<ownedComment>
+<reflist>
+<ref refid="c3ccb4d0-3488-11e0-b5fb-0021e9e5a3cd"/>
+</reflist>
+</ownedComment>
 <ownedEnd>
 <reflist>
 <ref refid="DCE:839A4824-3B17-11D9-83CE-A0BAF22E8A12"/>
@@ -29212,7 +29286,7 @@ some elements to have a stereotype</val>
 <canvas>
 <item id="DCE:61A95C22-5FD2-11D9-89DE-0050040A5923" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -126.99662780761719, 63.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 145.7650909423828, 61.87109375)</val>
 </matrix>
 <width>
 <val>156.0</val>
@@ -29235,7 +29309,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:99E767C0-5FD2-11D9-89DE-0050040A5923" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -140.9970245361328, 177.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 131.7646942138672, 175.87109375)</val>
 </matrix>
 <width>
 <val>189.0</val>
@@ -29261,7 +29335,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:A4BDBBD4-5FD2-11D9-89DE-0050040A5923"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -46.72478314742301, 135.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 226.036935602577, 133.87109375)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29281,7 +29355,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:812AEDBC-5FD3-11D9-89DE-0050040A5923" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 650.5, 189.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 923.26171875, 188.37109375)</val>
 </matrix>
 <width>
 <val>196.0</val>
@@ -29302,35 +29376,12 @@ some elements to have a stereotype</val>
 <ref refid="DCE:812B6CD0-5FD3-11D9-89DE-0050040A5923"/>
 </subject>
 </item>
-<item id="DCE:9D4C0028-5FD3-11D9-89DE-0050040A5923" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 663.4680000000001, 471.0)</val>
-</matrix>
-<width>
-<val>165.0</val>
-</width>
-<height>
-<val>62.0</val>
-</height>
-<show_attributes>
-<val>0</val>
-</show_attributes>
-<show_operations>
-<val>1</val>
-</show_operations>
-<show_stereotypes>
-<val>0</val>
-</show_stereotypes>
-<subject>
-<ref refid="DCE:9D4C814A-5FD3-11D9-89DE-0050040A5923"/>
-</subject>
-</item>
 <item id="DCE:BB96C974-5FD3-11D9-89DE-0050040A5923" type="GeneralizationItem">
 <subject>
 <ref refid="DCE:648EFE3E-3508-11DA-842A-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 742.5570149253731, 140.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1015.3187336753731, 138.87109375)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29353,7 +29404,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:D5656242-5FD6-11D9-89DE-0050040A5923"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 48.00297546386719, 235.2281494140625)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 320.7646942138672, 234.0992431640625)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29385,7 +29436,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:0CA3AB76-3509-11DA-8668-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 48.00297546386719, 308.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 320.7646942138672, 306.87109375)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29417,7 +29468,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:10D0457E-3509-11DA-8668-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 48.00297546386719, 398.22174072265625)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 320.7646942138672, 397.09283447265625)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29449,19 +29500,19 @@ some elements to have a stereotype</val>
 <ref refid="DCE:03A7EBCA-5FD7-11D9-89DE-0050040A5923"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 663.4680000000001, 496.017543859649)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 941.7297187500001, 600.6508024218934)</val>
 </matrix>
 <orthogonal>
-<val>0</val>
+<val>1</val>
 </orthogonal>
 <horizontal>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-170.46800000000007, -2.017543859648981), (-170.46800000000007, -38.01754385964898), (-615.4650245361329, -38.01754385964898)]</val>
+<val>[(0.0, 0.0), (-175.96800000000007, 0.0), (-175.96800000000007, -143.77970867189345), (-620.9650245361329, -143.77970867189345)]</val>
 </points>
 <head-connection>
-<ref refid="DCE:9D4C0028-5FD3-11D9-89DE-0050040A5923"/>
+<ref refid="3eab5946-e89e-11ea-96dc-bf74f1f80424"/>
 </head-connection>
 <tail-connection>
 <ref refid="DCE:99E767C0-5FD2-11D9-89DE-0050040A5923"/>
@@ -29481,7 +29532,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:E2202BAA-5FDF-11D9-BE08-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 828.4680000000001, 524.2982456140351)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 941.7297187500001, 660.3117107180052)</val>
 </matrix>
 <orthogonal>
 <val>1</val>
@@ -29490,13 +29541,13 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (132.53199999999993, 0.0), (132.53199999999993, -45.68421052631595), (0.0, -45.68421052631595)]</val>
+<val>[(0.0, 0.0), (-120.90040070812825, 0.0), (-120.90040070812825, -27.2023357180052), (0.0, -27.2023357180052)]</val>
 </points>
 <head-connection>
-<ref refid="DCE:9D4C0028-5FD3-11D9-89DE-0050040A5923"/>
+<ref refid="3eab5946-e89e-11ea-96dc-bf74f1f80424"/>
 </head-connection>
 <tail-connection>
-<ref refid="DCE:9D4C0028-5FD3-11D9-89DE-0050040A5923"/>
+<ref refid="3eab5946-e89e-11ea-96dc-bf74f1f80424"/>
 </tail-connection>
 <show-direction>
 <val>0</val>
@@ -29510,7 +29561,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:54ED2C82-3508-11DA-842A-000D936B094A" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 668.9680000000001, 76.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 941.7297187500001, 74.87109375)</val>
 </matrix>
 <width>
 <val>154.0</val>
@@ -29533,7 +29584,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:ECB27A04-3508-11DA-8668-000D936B094A" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 637.2215576171875, 299.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 909.9832763671875, 297.87109375)</val>
 </matrix>
 <width>
 <val>234.7784423828125</val>
@@ -29559,7 +29610,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:1AA46684-3509-11DA-8668-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 737.5, 251.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1010.26171875, 250.37109375)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29582,7 +29633,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:3B1AB012-61DF-11D9-A154-0050040A5923"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 359.0, 746.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1338.12890625, 607.10546875)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29591,7 +29642,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (218.68383454899538, 0.0)]</val>
+<val>[(0.0, 0.0), (-226.75640869140625, 0.19921875)]</val>
 </points>
 <head-connection>
 <ref refid="3eab5945-e89e-11ea-96dc-bf74f1f80424"/>
@@ -29611,10 +29662,10 @@ some elements to have a stereotype</val>
 </item>
 <item id="3eab5945-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 194.0, 698.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1338.12890625, 562.00390625)</val>
 </matrix>
 <width>
-<val>165.0</val>
+<val>167.0</val>
 </width>
 <height>
 <val>74.0</val>
@@ -29634,19 +29685,19 @@ some elements to have a stereotype</val>
 </item>
 <item id="3eab5946-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 577.6838345489954, 702.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 941.7297187500001, 579.5077048270933)</val>
 </matrix>
 <width>
-<val>469.3161654510046</val>
+<val>169.64277880859368</val>
 </width>
 <height>
-<val>124.0</val>
+<val>101.02354517290667</val>
 </height>
 <show_attributes>
 <val>1</val>
 </show_attributes>
 <show_operations>
-<val>1</val>
+<val>0</val>
 </show_operations>
 <show_stereotypes>
 <val>0</val>
@@ -29660,7 +29711,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:06EA7796-5FE6-11D9-A512-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 768.0, 657.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1021.9724975585938, 535.87109375)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29669,7 +29720,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.732893051174301, 45.5)]</val>
+<val>[(0.0, 0.0), (0.40157165527341476, 43.636611077093335)]</val>
 </points>
 <head-connection>
 <ref refid="3eab5948-e89e-11ea-96dc-bf74f1f80424"/>
@@ -29680,13 +29731,13 @@ some elements to have a stereotype</val>
 </item>
 <item id="3eab5948-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 688.0, 585.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 964.3724975585938, 481.87109375)</val>
 </matrix>
 <width>
-<val>175.0</val>
+<val>126.0</val>
 </width>
 <height>
-<val>72.0</val>
+<val>54.0</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -29706,19 +29757,19 @@ some elements to have a stereotype</val>
 <ref refid="DCE:203459A0-34CE-11DA-B939-00306EB655C9"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 62.90092879256966, 737.3928571428571)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1119.26171875, 217.97265625)</val>
 </matrix>
 <orthogonal>
-<val>0</val>
+<val>1</val>
 </orthogonal>
 <horizontal>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (131.09907120743034, -4.892857142857224)]</val>
+<val>[(0.0, 0.0), (339.3076629638672, 0.0), (339.3076629638672, 344.03125)]</val>
 </points>
 <head-connection>
-<ref refid="3eab594a-e89e-11ea-96dc-bf74f1f80424"/>
+<ref refid="DCE:812AEDBC-5FD3-11D9-89DE-0050040A5923"/>
 </head-connection>
 <tail-connection>
 <ref refid="3eab5945-e89e-11ea-96dc-bf74f1f80424"/>
@@ -29733,35 +29784,12 @@ some elements to have a stereotype</val>
 <ref refid="DCE:203459A0-34CE-11DA-B93C-00306EB655C9"/>
 </tail-subject>
 </item>
-<item id="3eab594a-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -118.09907120743034, 707.5)</val>
-</matrix>
-<width>
-<val>181.0</val>
-</width>
-<height>
-<val>62.0</val>
-</height>
-<show_attributes>
-<val>1</val>
-</show_attributes>
-<show_operations>
-<val>0</val>
-</show_operations>
-<show_stereotypes>
-<val>0</val>
-</show_stereotypes>
-<subject>
-<ref refid="DCE:812B6CD0-5FD3-11D9-89DE-0050040A5923"/>
-</subject>
-</item>
 <item id="3eab594b-e89e-11ea-96dc-bf74f1f80424" type="AssociationItem">
 <subject>
 <ref refid="DCE:0BAE4600-5FE6-11D9-A512-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 781.1926142578383, 826.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1015.2916316847001, 680.53125)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29770,7 +29798,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (1.8103612060289151, 64.5)]</val>
+<val>[(0.0, 0.0), (-21.136312470832877, 62.74609375)]</val>
 </points>
 <head-connection>
 <ref refid="3eab5946-e89e-11ea-96dc-bf74f1f80424"/>
@@ -29790,7 +29818,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="3eab594c-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 682.0, 891.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 893.15234375, 743.27734375)</val>
 </matrix>
 <width>
 <val>190.0</val>
@@ -29813,13 +29841,13 @@ some elements to have a stereotype</val>
 </item>
 <item id="3eab594d-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1189.0246305418718, 706.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1095.72971875, 743.27734375)</val>
 </matrix>
 <width>
-<val>161.0</val>
+<val>157.63866179187175</val>
 </width>
 <height>
-<val>72.0</val>
+<val>69.5</val>
 </height>
 <show_attributes>
 <val>0</val>
@@ -29834,58 +29862,12 @@ some elements to have a stereotype</val>
 <ref refid="DCE:4B2A095E-8320-11D8-BEC8-00C00C03A405"/>
 </subject>
 </item>
-<item id="3eab594e-e89e-11ea-96dc-bf74f1f80424" type="GeneralizationItem">
-<subject>
-<ref refid="DCE:8E811EFA-3507-11DA-842A-000D936B094A"/>
-</subject>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -17.0, 769.5)</val>
-</matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>1</val>
-</horizontal>
-<points>
-<val>[(0.0, 0.0), (19.32110091743118, 60.0)]</val>
-</points>
-<head-connection>
-<ref refid="3eab594a-e89e-11ea-96dc-bf74f1f80424"/>
-</head-connection>
-<tail-connection>
-<ref refid="3eab594f-e89e-11ea-96dc-bf74f1f80424"/>
-</tail-connection>
-</item>
-<item id="3eab594f-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, -71.0, 829.5)</val>
-</matrix>
-<width>
-<val>148.0</val>
-</width>
-<height>
-<val>62.0</val>
-</height>
-<show_attributes>
-<val>0</val>
-</show_attributes>
-<show_operations>
-<val>0</val>
-</show_operations>
-<show_stereotypes>
-<val>0</val>
-</show_stereotypes>
-<subject>
-<ref refid="DCE:3B6508EE-A35C-11D8-9D85-00C00C03A405"/>
-</subject>
-</item>
 <item id="3eab5950-e89e-11ea-96dc-bf74f1f80424" type="AssociationItem">
 <subject>
 <ref refid="DCE:72AC4FE6-1FCF-11DA-A6C3-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1047.0, 732.6621621621622)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1087.7543533197165, 680.53125)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29894,7 +29876,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (142.02463054187183, -1.2390852390852842)]</val>
+<val>[(0.0, 0.0), (45.281448192267135, 62.74609375)]</val>
 </points>
 <head-connection>
 <ref refid="3eab5946-e89e-11ea-96dc-bf74f1f80424"/>
@@ -29914,7 +29896,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="3eab5951-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 177.5, 573.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1338.12890625, 714.37109375)</val>
 </matrix>
 <width>
 <val>167.0</val>
@@ -29937,7 +29919,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="3eab5952-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 889.0, 848.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 550.8828125, 672.12109375)</val>
 </matrix>
 <width>
 <val>125.0</val>
@@ -29963,7 +29945,7 @@ some elements to have a stereotype</val>
 <ref refid="DCE:35002014-5FE6-11D9-A512-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 259.1022727272727, 627.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1418.1752034631604, 714.37109375)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -29972,7 +29954,7 @@ some elements to have a stereotype</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (6.93998079385409, 71.0)]</val>
+<val>[(0.0, 0.0), (0.16015625, -78.3671875)]</val>
 </points>
 <head-connection>
 <ref refid="3eab5951-e89e-11ea-96dc-bf74f1f80424"/>
@@ -29981,50 +29963,27 @@ some elements to have a stereotype</val>
 <ref refid="3eab5945-e89e-11ea-96dc-bf74f1f80424"/>
 </tail-connection>
 </item>
-<item id="3eab5954-e89e-11ea-96dc-bf74f1f80424" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 214.0, 867.0)</val>
-</matrix>
-<width>
-<val>154.0</val>
-</width>
-<height>
-<val>54.0</val>
-</height>
-<show_attributes>
-<val>0</val>
-</show_attributes>
-<show_operations>
-<val>0</val>
-</show_operations>
-<show_stereotypes>
-<val>0</val>
-</show_stereotypes>
-<subject>
-<ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
-</subject>
-</item>
 <item id="3eab5955-e89e-11ea-96dc-bf74f1f80424" type="AssociationItem">
 <subject>
 <ref refid="DCE:DB97402A-3507-11DA-842A-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 286.5029754638672, 772.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1366.2082242918718, 562.00390625)</val>
 </matrix>
 <orthogonal>
-<val>0</val>
+<val>1</val>
 </orthogonal>
 <horizontal>
-<val>1</val>
+<val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (1.197024536132858, 94.5)]</val>
+<val>[(0.0, 0.0), (0.0, -212.3828125), (-221.44650554187183, -212.3828125)]</val>
 </points>
 <head-connection>
 <ref refid="3eab5945-e89e-11ea-96dc-bf74f1f80424"/>
 </head-connection>
 <tail-connection>
-<ref refid="3eab5954-e89e-11ea-96dc-bf74f1f80424"/>
+<ref refid="DCE:ECB27A04-3508-11DA-8668-000D936B094A"/>
 </tail-connection>
 <show-direction>
 <val>0</val>
@@ -30053,9 +30012,9 @@ some elements to have a stereotype</val>
 <ownedAttribute>
 <reflist>
 <ref refid="DCE:D56902FA-5FD6-11D9-89DE-0050040A5923"/>
-<ref refid="DCE:03A91174-5FD7-11D9-89DE-0050040A5923"/>
 <ref refid="DCE:0CA69B9C-3509-11DA-8668-000D936B094A"/>
 <ref refid="DCE:10D3F714-3509-11DA-8668-000D936B094A"/>
+<ref refid="DCE:03A91174-5FD7-11D9-89DE-0050040A5923"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -30105,8 +30064,8 @@ some elements to have a stereotype</val>
 <presentation>
 <reflist>
 <ref refid="2951eac8-e898-11ea-96dc-bf74f1f80424"/>
+<ref refid="92207e4a-e95e-11ea-87d1-cbf2d1fcaed0"/>
 <ref refid="DCE:812AEDBC-5FD3-11D9-89DE-0050040A5923"/>
-<ref refid="3eab594a-e89e-11ea-96dc-bf74f1f80424"/>
 <ref refid="65c6b270-4066-11e0-b382-0019d2b28af0"/>
 </reflist>
 </presentation>
@@ -30122,11 +30081,11 @@ some elements to have a stereotype</val>
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="DCE:E2214F62-5FDF-11D9-BE08-000D936B094A"/>
 <ref refid="DCE:5DDDE4C4-1FCF-11DA-A6C3-000D936B094A"/>
 <ref refid="DCE:3B1BE0C8-61DF-11D9-A154-0050040A5923"/>
 <ref refid="DCE:0BB33806-5FE6-11D9-A512-000D936B094A"/>
 <ref refid="DCE:72B0655C-1FCF-11DA-A6C3-000D936B094A"/>
+<ref refid="DCE:E2214F62-5FDF-11D9-BE08-000D936B094A"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -30134,7 +30093,6 @@ some elements to have a stereotype</val>
 </package>
 <presentation>
 <reflist>
-<ref refid="DCE:9D4C0028-5FD3-11D9-89DE-0050040A5923"/>
 <ref refid="3eab5946-e89e-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
@@ -30387,9 +30345,9 @@ some elements to have a stereotype</val>
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="DCE:F891A7C6-8352-11DD-8EDA-000D936B094A"/>
-<ref refid="DCE:203459A0-34CE-11DA-B93A-00306EB655C9"/>
 <ref refid="DCE:DB9AD2F6-3507-11DA-842A-000D936B094A"/>
+<ref refid="DCE:203459A0-34CE-11DA-B93A-00306EB655C9"/>
+<ref refid="DCE:F891A7C6-8352-11DD-8EDA-000D936B094A"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -35534,7 +35492,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:A51B9220-8352-11DD-8EDA-000D936B094A" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 30.0, 34.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1061.83203125, 51.05859375)</val>
 </matrix>
 <width>
 <val>165.0</val>
@@ -35555,35 +35513,12 @@ some elements to have a stereotype</val>
 <ref refid="DCE:27678C1E-5FE6-11D9-A512-000D936B094A"/>
 </subject>
 </item>
-<item id="DCE:CA82A210-8352-11DD-8EDA-000D936B094A" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 53.0, 176.84999999999997)</val>
-</matrix>
-<width>
-<val>154.0</val>
-</width>
-<height>
-<val>54.0</val>
-</height>
-<show_attributes>
-<val>0</val>
-</show_attributes>
-<show_operations>
-<val>0</val>
-</show_operations>
-<show_stereotypes>
-<val>0</val>
-</show_stereotypes>
-<subject>
-<ref refid="DCE:7DDD179A-4B3D-11D7-B391-02BBFE4396CE"/>
-</subject>
-</item>
 <item id="DCE:F7A171CC-8352-11DD-8EDA-000D936B094A" type="AssociationItem">
 <subject>
 <ref refid="DCE:F8852E08-8352-11DD-8EDA-000D936B094A"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 113.875, 88.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1061.83203125, 78.8984375)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -35592,13 +35527,13 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (20.40277777777777, 88.84999999999997)]</val>
+<val>[(0.0, 0.0), (-250.33203125, -0.515625)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:A51B9220-8352-11DD-8EDA-000D936B094A"/>
 </head-connection>
 <tail-connection>
-<ref refid="DCE:CA82A210-8352-11DD-8EDA-000D936B094A"/>
+<ref refid="DCE:3A818718-8353-11DD-8EDA-000D936B094A"/>
 </tail-connection>
 <show-direction>
 <val>0</val>
@@ -35635,7 +35570,7 @@ some elements to have a stereotype</val>
 </item>
 <item id="DCE:3C5DB88E-8353-11DD-8EDA-000D936B094A" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 594.5, 139.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 620.25, 160.6015625)</val>
 </matrix>
 <width>
 <val>228.50000000000006</val>
@@ -35670,7 +35605,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-24.29713592232997, 30.0)]</val>
+<val>[(0.0, 0.0), (1.4528640776700286, 51.1015625)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:3A818718-8353-11DD-8EDA-000D936B094A"/>
@@ -35693,7 +35628,7 @@ some elements to have a stereotype</val>
 <val>0</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, -78.80000000000004), (251.171875, -78.80000000000004)]</val>
+<val>[(0.0, 0.0), (0.0, -57.69843750000004), (276.921875, -57.69843750000004)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:8BD522E0-8352-11DD-8EDA-000D936B094A"/>
@@ -35951,12 +35886,6 @@ some elements to have a stereotype</val>
 <class_>
 <ref refid="DCE:8BD30E4E-8352-11DD-8EDA-000D936B094A"/>
 </class_>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
 <name>
 <val>ownedPort</val>
 </name>
@@ -38027,7 +37956,6 @@ swimlanes</val>
 <ref refid="1778e3a8-fa90-11de-bd51-00224128e79d"/>
 <ref refid="1779801a-fa90-11de-bd51-00224128e79d"/>
 <ref refid="177b37a2-fa90-11de-bd51-00224128e79d"/>
-<ref refid="177e679c-fa90-11de-bd51-00224128e79d"/>
 <ref refid="177f3f28-fa90-11de-bd51-00224128e79d"/>
 <ref refid="1780418e-fa90-11de-bd51-00224128e79d"/>
 <ref refid="1783d290-fa90-11de-bd51-00224128e79d"/>
@@ -38337,7 +38265,6 @@ swimlanes</val>
 <ref refid="174b05fa-fa90-11de-bd51-00224128e79d"/>
 <ref refid="177ad5d2-fa90-11de-bd51-00224128e79d"/>
 <ref refid="177d5a14-fa90-11de-bd51-00224128e79d"/>
-<ref refid="177dfffa-fa90-11de-bd51-00224128e79d"/>
 <ref refid="177fd8d4-fa90-11de-bd51-00224128e79d"/>
 <ref refid="0e711764-40fb-11e0-ad29-0019d2b28af0"/>
 <ref refid="8a58e462-611a-11ea-b792-718e3bcfaa5c"/>
@@ -43349,46 +43276,6 @@ swimlanes</val>
 </owningInstance>
 <value>
 <val>true</val>
-</value>
-</Slot>
-<InstanceSpecification id="177db950-fa90-11de-bd51-00224128e79d">
-<classifier>
-<reflist>
-<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
-</reflist>
-</classifier>
-<extended>
-<reflist>
-<ref refid="DCE:DB98C6FC-3507-11DA-842A-000D936B094A"/>
-</reflist>
-</extended>
-<slot>
-<reflist>
-<ref refid="177dfffa-fa90-11de-bd51-00224128e79d"/>
-<ref refid="177e679c-fa90-11de-bd51-00224128e79d"/>
-</reflist>
-</slot>
-</InstanceSpecification>
-<Slot id="177dfffa-fa90-11de-bd51-00224128e79d">
-<definingFeature>
-<ref refid="16fec320-fa90-11de-bd51-00224128e79d"/>
-</definingFeature>
-<owningInstance>
-<ref refid="177db950-fa90-11de-bd51-00224128e79d"/>
-</owningInstance>
-<value>
-<val>true</val>
-</value>
-</Slot>
-<Slot id="177e679c-fa90-11de-bd51-00224128e79d">
-<definingFeature>
-<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
-</definingFeature>
-<owningInstance>
-<ref refid="177db950-fa90-11de-bd51-00224128e79d"/>
-</owningInstance>
-<value>
-<val>ownedElement</val>
 </value>
 </Slot>
 <InstanceSpecification id="177ec002-fa90-11de-bd51-00224128e79d">
@@ -51294,12 +51181,6 @@ diagram {
 <type>
 <ref refid="DCE:9D4C814A-5FD3-11D9-89DE-0050040A5923"/>
 </type>
-<upperValue>
-<val>1</val>
-</upperValue>
-<upperValue>
-<val>1</val>
-</upperValue>
 </Property>
 <Association id="DCE:3B1AB012-61DF-11D9-A154-0050040A5923">
 <memberEnd>
@@ -51488,19 +51369,6 @@ diagram {
 </reflist>
 </presentation>
 </Association>
-<Generalization id="DCE:8E811EFA-3507-11DA-842A-000D936B094A">
-<general>
-<ref refid="DCE:812B6CD0-5FD3-11D9-89DE-0050040A5923"/>
-</general>
-<presentation>
-<reflist>
-<ref refid="3eab594e-e89e-11ea-96dc-bf74f1f80424"/>
-</reflist>
-</presentation>
-<specific>
-<ref refid="DCE:3B6508EE-A35C-11D8-9D85-00C00C03A405"/>
-</specific>
-</Generalization>
 <Property id="DCE:72AD9F5A-1FCF-11DA-A6C3-000D936B094A">
 <appliedStereotype>
 <reflist>
@@ -51634,11 +51502,6 @@ diagram {
 </specific>
 </Generalization>
 <Property id="DCE:DB98C6FC-3507-11DA-842A-000D936B094A">
-<appliedStereotype>
-<reflist>
-<ref refid="177db950-fa90-11de-bd51-00224128e79d"/>
-</reflist>
-</appliedStereotype>
 <association>
 <ref refid="DCE:DB97402A-3507-11DA-842A-000D936B094A"/>
 </association>
@@ -51716,4 +51579,37 @@ diagram {
 </reflist>
 </presentation>
 </Association>
+<Generalization id="9845a6ba-e95e-11ea-87d1-cbf2d1fcaed0">
+<general>
+<ref refid="DCE:812B6CD0-5FD3-11D9-89DE-0050040A5923"/>
+</general>
+<ownedComment>
+<reflist>
+<ref refid="9c52d08e-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</reflist>
+</ownedComment>
+<presentation>
+<reflist>
+<ref refid="96ea2548-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="DCE:3B6508EE-A35C-11D8-9D85-00C00C03A405"/>
+</specific>
+</Generalization>
+<Comment id="9c52d08e-e95e-11ea-87d1-cbf2d1fcaed0">
+<annotatedElement>
+<reflist>
+<ref refid="9845a6ba-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</reflist>
+</annotatedElement>
+<body>
+<val>!! Is this generalization valid?</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="9c52ec0e-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>
