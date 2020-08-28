@@ -1,3 +1,12 @@
+2.0.1
+-----
+- Fix Gaphor fails to launch in macOS
+- Use certificate to sign Windows binaries
+- Fix copy/paste issue that causes association ends to be removed
+- Improve editing for inline editors (popovers)
+- Fix undo on diagram items corrupts the model
+- Fix UML composite and shared association tools
+
 2.0.0
 -----
 - Add initial support for SysML
