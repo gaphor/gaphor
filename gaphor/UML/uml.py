@@ -47,9 +47,9 @@ class PackageMerge(DirectedRelationship):
 
 
 class Namespace(NamedElement):
-    context: relation_one[Namespace]
     elementImport: relation_many[ElementImport]
     packageImport: relation_many[PackageImport]
+    ownedRule: relation_many[Constraint]
     ownedMember: relation_many[NamedElement]
     member: relation_many[NamedElement]
     importedMember: derivedunion[PackageableElement]
@@ -475,7 +475,6 @@ class ActivityGroup(Element):
 
 class Constraint(PackageableElement):
     constrainedElement: relation_many[Element]
-    ownedRule: relation_many[Constraint]
     specification: attribute[str]
     stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
@@ -944,10 +943,6 @@ Property.class_ = association("class_", Class, upper=1, opposite="ownedAttribute
 Extend.extendedCase = association("extendedCase", UseCase, lower=1, upper=1)
 # 'Property.defaultValue' is a simple attribute
 Property.defaultValue = attribute("defaultValue", str)
-Constraint.ownedRule = association(
-    "ownedRule", Constraint, composite=True, opposite="context"
-)
-Namespace.context = association("context", Namespace, upper=1, opposite="ownedRule")
 Property.association = association(
     "association", Association, upper=1, opposite="memberEnd"
 )
@@ -1278,6 +1273,7 @@ Class.nestedClassifier = association(
     "nestedClassifier", Classifier, composite=True, opposite="nestingClass"
 )
 Stereotype.icon = association("icon", Image, composite=True)
+Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1372,7 +1368,6 @@ NamedElement.namespace = derivedunion(
     0,
     1,
     Parameter.ownerReturnParam,
-    Namespace.context,
     Property.interface_,
     Property.class_,
     Property.owningAssociation,
@@ -1407,7 +1402,6 @@ Namespace.ownedMember = derivedunion(
     Enumeration.ownedLiteral,
     Interface.nestedClassifier,
     Package.ownedDiagram,
-    Constraint.ownedRule,
     UseCase.extensionPoint,
     DataType.ownedOperation,
     Operation.precondition,
@@ -1437,6 +1431,7 @@ Namespace.ownedMember = derivedunion(
     Class.ownedReception,
     Interface.ownedReception,
     Stereotype.icon,
+    Namespace.ownedRule,
 )
 # 70: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived(
