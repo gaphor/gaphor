@@ -123,5 +123,5 @@ skip = "flatpak,.venv,build,dist"
 skip_glob = "gaphor/diagram/general/__init__.py,gaphor/UML/__init__.py,gaphor/UML/*/__init__.py"
 
 [build-system]
-requires = ["poetry==1.0.0b7"]
+requires = ["poetry==1.0.10"]
 build-backend = "poetry.masonry.api"
