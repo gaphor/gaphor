@@ -170,8 +170,17 @@ class ObjectNode(TypedElement, ActivityNode):
     selection: relation_one[Behavior]
 
 
-class Pin(ObjectNode):
-    pass
+class MultiplicityElement(Element):
+    isUnique: attribute[int]
+    isOrdered: attribute[int]
+    upperValue: attribute[str]
+    lowerValue: attribute[str]
+    lower: attribute[str]
+    upper: attribute[str]
+
+
+class Pin(ObjectNode, MultiplicityElement):
+    isControl: attribute[int]
 
 
 class Generalization(DirectedRelationship):
@@ -216,15 +225,6 @@ class Node(Class, DeploymentTarget):
 
 class Device(Node):
     pass
-
-
-class MultiplicityElement(Element):
-    isUnique: attribute[int]
-    isOrdered: attribute[int]
-    upperValue: attribute[str]
-    lowerValue: attribute[str]
-    lower: attribute[str]
-    upper: attribute[str]
 
 
 class StructuralFeature(MultiplicityElement, TypedElement, Feature):
@@ -466,7 +466,7 @@ class Extend(DirectedRelationship):
     constraint: relation_one[Constraint]
 
 
-class ActivityGroup(Element):
+class ActivityGroup(NamedElement):
     activity: relation_one[Activity]
     edgeContents: relation_many[ActivityEdge]
     nodeContents: relation_many[ActivityNode]
@@ -629,7 +629,7 @@ class Deployment(Dependency):
     deployedArtifact: relation_many[DeployedArtifact]
 
 
-class ActivityPartition(ActivityGroup, NamedElement):
+class ActivityPartition(ActivityGroup):
     isDimension: attribute[int]
     isExternal: attribute[int]
     node: relation_many[ActivityNode]
@@ -748,6 +748,7 @@ RedefinableElement.isLeaf = attribute("isLeaf", int, default=True)
 RedefinableElement.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
+Pin.isControl = attribute("isControl", int, default=False)
 Generalization.isSubstitutable = attribute("isSubstitutable", int)
 ObjectNode.ordering = enumeration(
     "ordering", ("unordered", "ordered", "LIFO", "FIFO"), "FIFO"
