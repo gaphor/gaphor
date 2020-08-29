@@ -93,7 +93,12 @@ class Extension(Association):
     metaclass: property
 
 
-class Actor(Classifier):
+class BehavioredClassifier(Classifier):
+    ownedBehavior: relation_many[Behavior]
+    implementation: relation_many[Implementation]  # type: ignore[assignment]
+
+
+class Actor(BehavioredClassifier):
     ownedAttribute: relation_many[Property]
 
 
@@ -189,11 +194,6 @@ class Generalization(DirectedRelationship):
     specific: relation_one[Classifier]
 
 
-class BehavioredClassifier(Classifier):
-    ownedBehavior: relation_many[Behavior]
-    implementation: relation_many[Implementation]  # type: ignore[assignment]
-
-
 class StructuredClassifier(Classifier):
     ownedConnector: relation_many[Connector]
     ownedAttribute: relation_many[Property]
@@ -268,7 +268,7 @@ class Interface(Classifier, ConnectableElement):
     ownedReception: relation_many[Reception]
 
 
-class Include(DirectedRelationship):
+class Include(DirectedRelationship, NamedElement):
     addition: relation_one[UseCase]
     includingCase: relation_one[UseCase]
 
@@ -459,7 +459,7 @@ class ExecutionEnvironment(Node):
     pass
 
 
-class Extend(DirectedRelationship):
+class Extend(DirectedRelationship, NamedElement):
     extendedCase: relation_one[UseCase]
     extensionLocation: relation_many[ExtensionPoint]
     extension: relation_one[UseCase]
@@ -1372,8 +1372,10 @@ NamedElement.namespace = derivedunion(
     Namespace,
     0,
     1,
+    Extend.extension,
     Parameter.ownerReturnParam,
     Property.interface_,
+    Include.includingCase,
     Property.class_,
     Property.owningAssociation,
     Operation.class_,
@@ -1420,7 +1422,9 @@ Namespace.ownedMember = derivedunion(
     Association.ownedEnd,
     Package.ownedClassifier,
     Interface.ownedAttribute,
+    UseCase.include,
     Operation.bodyCondition,
+    UseCase.extend,
     Extend.constraint,
     Package.nestedPackage,
     BehavioredClassifier.ownedBehavior,
