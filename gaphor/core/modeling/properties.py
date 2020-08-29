@@ -144,6 +144,9 @@ class umlproperty:
     def __delete__(self, obj, value=None) -> None:
         self._del(obj, value)
 
+    def __repr__(self):
+        return str(self)
+
     def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
             save_func(self.name, self._get(obj))
@@ -551,7 +554,8 @@ class associationstub(umlproperty):
 class unioncache:
     """Small cache helper object for derivedunions."""
 
-    def __init__(self, data: object, version: int) -> None:
+    def __init__(self, owner: object, data: object, version: int) -> None:
+        self.owner = owner
         self.data = data
         self.version = version
 
@@ -624,9 +628,9 @@ class derived(umlproperty, Generic[T]):
             assert (
                 len(u) <= 1
             ), f"Derived union {self.name} of item {obj.id} should have length 1 {tuple(u)}"
-            uc = unioncache(u[0] if u else None, self.version)
+            uc = unioncache(self, u[0] if u else None, self.version)
         else:
-            uc = unioncache(collectionlist(u), self.version)
+            uc = unioncache(self, collectionlist(u), self.version)
         setattr(obj, self._name, uc)
         return uc
 
@@ -636,6 +640,7 @@ class derived(umlproperty, Generic[T]):
                 uc = getattr(obj, self._name)
                 if uc.version != self.version:
                     uc = self._update(obj)
+                assert self is uc.owner
             except AttributeError:
                 uc = self._update(obj)
         else:
@@ -703,6 +708,13 @@ class derived(umlproperty, Generic[T]):
                 )
 
 
+def object_has_property(obj, prop):
+    found = getattr(type(obj), prop.name, None)
+    while isinstance(found, redefine):
+        found = found.original
+    return prop is found
+
+
 class derivedunion(derived[T]):
     """Derived union.
 
@@ -720,8 +732,9 @@ class derivedunion(derived[T]):
         """Returns a union of all values as a set."""
         u: Set[T] = set()
         for s in self.subsets:
-            if s is exclude:
+            if s is exclude or not object_has_property(obj, s):
                 continue
+
             tmp = s.__get__(obj)
             if tmp:
                 try:
