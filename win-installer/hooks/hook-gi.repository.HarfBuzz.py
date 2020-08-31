@@ -7,5 +7,4 @@ Both this file and the pre_safe import hook are required.
 
 from PyInstaller.utils.hooks import get_gi_typelibs
 
-binaries, datas, hiddenimports = get_gi_typelibs('HarfBuzz', '0.0')
-
+binaries, datas, hiddenimports = get_gi_typelibs("HarfBuzz", "0.0")
