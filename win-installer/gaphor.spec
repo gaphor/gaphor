@@ -18,7 +18,8 @@ a = Analysis(['gaphor-script.py'],
 		       ('../LICENSE.txt', 'gaphor'),
 		       ('../gaphor/locale/*', 'gaphor/locale')
 		     ]+copy_metadata('gaphor')+copy_metadata('gaphas'),
-             hiddenimports=[],
+             # Fixes issue with setuptools https://github.com/pypa/setuptools/issues/1963 
+             hiddenimports=['pkg_resources.py2_warn'],
              hookspath=['hooks'],
              runtime_hooks=[],
              excludes=['lib2to3', 'tcl', 'tk', '_tkinter', 'tkinter', 'Tkinter'],
