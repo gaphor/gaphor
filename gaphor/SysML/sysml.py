@@ -67,10 +67,10 @@ class AdjuntProperty(Property):
 
 
 class DirectedRelationshipPropertyPath(DirectedRelationship):
+    sourcePropertyPath: relation_many[Property]
     targetContext: relation_one[Classifier]
     targetPropertyPath: relation_many[Property]
     sourceContext: relation_one[Classifier]
-    sourcePropertyPath: relation_many[Property]
 
 
 class Allocate(Abstraction, DirectedRelationshipPropertyPath):
@@ -129,7 +129,7 @@ class ControlOperator(Behavior):
     pass
 
 
-class Trace(DirectedRelationshipPropertyPath):
+class Trace(Dependency, DirectedRelationshipPropertyPath):
     pass
 
 
@@ -214,7 +214,7 @@ class Rationale(Comment):
     pass
 
 
-class Refine(DirectedRelationshipPropertyPath):
+class Refine(Dependency, DirectedRelationshipPropertyPath):
     pass
 
 
@@ -263,10 +263,6 @@ class Viewpoint(Class):
     presentation: attribute[str]
     purpose: attribute[str]
     stakeholder: relation_many[Stakeholder]
-
-
-class _Refine:
-    pass
 
 
 AbstractRequirement.externalId = attribute("externalId", str)
