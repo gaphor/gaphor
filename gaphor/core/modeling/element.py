@@ -44,10 +44,12 @@ class Element:
     """Base class for all model data classes."""
 
     appliedStereotype: relation_many[Element]
-    owner: relation_one[Element]
     comment: relation_many[Comment]
+    directedRelationship: relation_many[Presentation]
     ownedElement: relation_many[Element]
+    owner: relation_one[Element]
     presentation: relation_many[Presentation]
+    relationship: relation_many[Presentation]
 
     def __init__(
         self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None

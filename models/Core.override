@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from gaphor.core.modeling.element import Element
 
 if TYPE_CHECKING:
-    from gaphor.UML import Dependency, Namespace
+    from gaphor.UML import Dependency, Namespace, Package
 %%
 override Element
 # defined above
@@ -37,6 +37,10 @@ NamedElement.qualifiedName = derived(
     1,
     lambda obj: [_namedelement_qualifiedname(obj)],
 )
+%%
+override PackageableElement
+class PackageableElement(NamedElement):
+    owningPackage: relation_one[Package]
 %%
 override StyleSheet
 # defined in gaphor.core.modeling.presentation

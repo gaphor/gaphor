@@ -735,6 +735,8 @@ class Image(Element):
     format: attribute[str]
 
 
+# class 'Expression' has been stereotyped as 'SimpleAttribute'
+# class 'OpaqueExpression' has been stereotyped as 'SimpleAttribute'
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
 # class 'Expression' has been stereotyped as 'SimpleAttribute' too
 # class 'LiteralSpecification' has been stereotyped as 'SimpleAttribute' too
@@ -1064,7 +1066,10 @@ Extend.extension = association(
 )
 UseCase.extend = association("extend", Extend, composite=True, opposite="extension")
 Package.packagedElement = association(
-    "packagedElement", PackageableElement, composite=True
+    "packagedElement", PackageableElement, composite=True, opposite="owningPackage"
+)
+PackageableElement.owningPackage = association(
+    "owningPackage", Package, upper=1, opposite="packagedElement"
 )
 Extend.constraint = association("constraint", Constraint, upper=1, composite=True)
 ProfileApplication.appliedProfile = association(
@@ -1389,6 +1394,7 @@ NamedElement.namespace = derivedunion(
     Operation.class_,
     EnumerationLiteral.enumeration,
     Diagram.package,
+    PackageableElement.owningPackage,
     Operation.datatype,
     Type.package,
     Property.datatype,
@@ -1503,6 +1509,14 @@ DirectedRelationship.target = derivedunion(
     Realization.realizingClassifier,
     ElementImport.importedElement,
 )
+Element.directedRelationship = derivedunion(
+    "directedRelationship",
+    DirectedRelationship,
+    0,
+    "*",
+    UseCase.include,
+    UseCase.extend,
+)
 DirectedRelationship.source = derivedunion(
     "source",
     Element,
@@ -1517,6 +1531,9 @@ DirectedRelationship.source = derivedunion(
     PackageMerge.mergingPackage,
 )
 Action.context_ = derivedunion("context_", Classifier, 0, 1)
+Element.relationship = derivedunion(
+    "relationship", Relationship, 0, "*", Element.directedRelationship
+)
 Relationship.relatedElement = derivedunion(
     "relatedElement",
     Element,

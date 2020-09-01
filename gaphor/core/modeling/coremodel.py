@@ -18,7 +18,7 @@ from gaphor.core.modeling.properties import (
 )
 
 if TYPE_CHECKING:
-    from gaphor.UML import Dependency, Namespace
+    from gaphor.UML import Dependency, Namespace, Package
 # 8: override Element
 # defined above
 
@@ -35,15 +35,16 @@ class NamedElement(Element):
     memberNamespace: relation_many[Namespace]
 
 
+# 41: override PackageableElement
 class PackageableElement(NamedElement):
-    pass
+    owningPackage: relation_one[Package]
 
 
-# 56: override Diagram
+# 60: override Diagram
 # defined in gaphor.core.modeling.diagram
 
 
-# 47: override Presentation
+# 51: override Presentation
 # defined in gaphor.core.modeling.presentation
 
 
@@ -52,19 +53,19 @@ class Comment(Element):
     annotatedElement: relation_many[Element]
 
 
-# 41: override StyleSheet
+# 45: override StyleSheet
 # defined in gaphor.core.modeling.presentation
 
 
 NamedElement.name = attribute("name", str)
 Comment.body = attribute("body", str)
-# 44: override StyleSheet.styleSheet
+# 48: override StyleSheet.styleSheet
 # defined in gaphor.core.modeling.presentation
 
-# 53: override Presentation.subject
+# 57: override Presentation.subject
 # defined in gaphor.core.modeling.presentation
 
-# 50: override Element.presentation
+# 54: override Element.presentation
 # defined in gaphor.core.modeling.presentation
 
 Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
