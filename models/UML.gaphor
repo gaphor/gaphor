@@ -30420,6 +30420,7 @@ directly in a model.</val>
 <ref refid="DCE:0BB33806-5FE6-11D9-A512-000D936B094A"/>
 <ref refid="DCE:72B0655C-1FCF-11DA-A6C3-000D936B094A"/>
 <ref refid="DCE:E2214F62-5FDF-11D9-BE08-000D936B094A"/>
+<ref refid="DCE:03AC58E2-5FD7-11D9-89DE-0050040A5923"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -30515,11 +30516,6 @@ directly in a model.</val>
 <ref refid="DCE:03AC58E2-5FD7-11D9-89DE-0050040A5923"/>
 </reflist>
 </memberEnd>
-<ownedEnd>
-<reflist>
-<ref refid="DCE:03AC58E2-5FD7-11D9-89DE-0050040A5923"/>
-</reflist>
-</ownedEnd>
 <package>
 <ref refid="639ff018-e18a-11ea-b7ab-f5b4c130f24e"/>
 </package>
@@ -30569,15 +30565,18 @@ directly in a model.</val>
 <association>
 <ref refid="DCE:03A7EBCA-5FD7-11D9-89DE-0050040A5923"/>
 </association>
+<class_>
+<ref refid="DCE:9D4C814A-5FD3-11D9-89DE-0050040A5923"/>
+</class_>
 <lowerValue>
 <val>0</val>
 </lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
-<owningAssociation>
-<ref refid="DCE:03A7EBCA-5FD7-11D9-89DE-0050040A5923"/>
-</owningAssociation>
+<name>
+<val>structuredClassifier</val>
+</name>
 <presentation>
 <reflist/>
 </presentation>
@@ -37985,6 +37984,7 @@ swimlanes</val>
 <ref refid="5768b71c-ec84-11ea-96dc-bf74f1f80424"/>
 <ref refid="5bbd170e-ec84-11ea-96dc-bf74f1f80424"/>
 <ref refid="cde17862-ec88-11ea-96dc-bf74f1f80424"/>
+<ref refid="b28c3610-ec8d-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </slot>
 <typeValue>
@@ -42951,7 +42951,7 @@ swimlanes</val>
 <ref refid="1777fbfa-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>feature, subsets ownedMember</val>
+<val>ownedMember, feature, redefinableElement</val>
 </value>
 </Slot>
 <InstanceSpecification id="17789e8e-fa90-11de-bd51-00224128e79d">
@@ -42979,7 +42979,7 @@ swimlanes</val>
 <ref refid="17789e8e-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>redefinitionContext</val>
+<val>namespace, redefinitionContext</val>
 </value>
 </Slot>
 <InstanceSpecification id="17793be6-fa90-11de-bd51-00224128e79d">
@@ -43097,6 +43097,11 @@ swimlanes</val>
 <ref refid="DCE:3B1E96DC-61DF-11D9-A154-0050040A5923"/>
 </reflist>
 </extended>
+<slot>
+<reflist>
+<ref refid="b28c3610-ec8d-11ea-96dc-bf74f1f80424"/>
+</reflist>
+</slot>
 </InstanceSpecification>
 <InstanceSpecification id="177bd3a6-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -43223,7 +43228,7 @@ swimlanes</val>
 <ref refid="177efc02-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>classifier</val>
+<val>classifier, namespace</val>
 </value>
 </Slot>
 <InstanceSpecification id="177f990a-fa90-11de-bd51-00224128e79d">
@@ -43263,7 +43268,7 @@ swimlanes</val>
 <ref refid="177f990a-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>role, subsets attribute, subsets ownedMember</val>
+<val>role, attribute, ownedMember</val>
 </value>
 </Slot>
 <InstanceSpecification id="17809b48-fa90-11de-bd51-00224128e79d">
@@ -51083,6 +51088,9 @@ association:not([memberEnd.navigability*=true]) {
 <association>
 <ref refid="DCE:3B1AB012-61DF-11D9-A154-0050040A5923"/>
 </association>
+<name>
+<val>connector</val>
+</name>
 <owningAssociation>
 <ref refid="DCE:3B1AB012-61DF-11D9-A154-0050040A5923"/>
 </owningAssociation>
@@ -51092,6 +51100,12 @@ association:not([memberEnd.navigability*=true]) {
 <type>
 <ref refid="DCE:9D4C814A-5FD3-11D9-89DE-0050040A5923"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 <Association id="DCE:3B1AB012-61DF-11D9-A154-0050040A5923">
 <memberEnd>
@@ -53217,4 +53231,15 @@ have an opposite end.
 </reflist>
 </presentation>
 </Comment>
+<Slot id="b28c3610-ec8d-11ea-96dc-bf74f1f80424">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="177b8ec8-fa90-11de-bd51-00224128e79d"/>
+</owningInstance>
+<value>
+<val>owner</val>
+</value>
+</Slot>
 </gaphor>

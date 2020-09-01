@@ -540,6 +540,7 @@ class GeneralOrdering(NamedElement):
 
 class Connector(Feature):
     kind: enumeration
+    structuredClassifier: relation_one[StructuredClassifier]
     redefinedConnector: relation_many[Connector]
     end: relation_many[ConnectorEnd]
     type: relation_one[Association]
@@ -1143,7 +1144,10 @@ Interaction.message = association(
     "message", Message, composite=True, opposite="interaction"
 )
 StructuredClassifier.ownedConnector = association(
-    "ownedConnector", Connector, composite=True
+    "ownedConnector", Connector, composite=True, opposite="structuredClassifier"
+)
+Connector.structuredClassifier = association(
+    "structuredClassifier", StructuredClassifier, upper=1, opposite="ownedConnector"
 )
 Connector.redefinedConnector = association("redefinedConnector", Connector)
 StructuredClassifier.ownedAttribute = association(
@@ -1328,6 +1332,7 @@ Classifier.attribute = derivedunion(
     Interface.ownedAttribute,
     UseCase.ownedAttribute,
     Actor.ownedAttribute,
+    StructuredClassifier.ownedAttribute,
     Signal.ownedAttribute,
 )
 Classifier.feature = derivedunion(
@@ -1377,6 +1382,7 @@ RedefinableElement.redefinitionContext = derivedunion(
     Operation.class_,
     Property.classifier,
     Operation.datatype,
+    Connector.structuredClassifier,
     Port.encapsulatedClassifier,
     Classifier.nestingClass,
 )
@@ -1406,6 +1412,7 @@ NamedElement.namespace = derivedunion(
     InteractionFragment.enclosingInteraction,
     Lifeline.interaction,
     Message.interaction,
+    Connector.structuredClassifier,
     Region.stateMachine,
     Transition.container,
     Vertex.container,
@@ -1448,6 +1455,8 @@ Namespace.ownedMember = derivedunion(
     Interaction.fragment,
     Interaction.lifeline,
     Interaction.message,
+    StructuredClassifier.ownedConnector,
+    StructuredClassifier.ownedAttribute,
     StateMachine.region,
     Region.subvertex,
     Node.nestedNode,
