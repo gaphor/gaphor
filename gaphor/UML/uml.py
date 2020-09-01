@@ -219,7 +219,11 @@ class DeploymentTarget(NamedElement):
     deployment: relation_many[Deployment]
 
 
-class Node(Class, DeploymentTarget):
+class DeployedArtifact(NamedElement):
+    pass
+
+
+class Node(Class, DeploymentTarget, DeployedArtifact):
     nestedNode: relation_many[Node]
 
 
@@ -349,12 +353,10 @@ class Stereotype(Class):
 from gaphor.core.modeling import Diagram, StyleSheet
 
 
-class DeployedArtifact(NamedElement):
-    pass
-
-
 class Artifact(Classifier, DeployedArtifact):
     manifestation: relation_many[Manifestation]
+    nestedArtifact: relation_many[Artifact]
+    artifact: relation_one[Artifact]
 
 
 class ActivityParameterNode(ObjectNode):
@@ -1279,6 +1281,12 @@ Namespace.ownedRule = association("ownedRule", Constraint, composite=True)
 Trigger.port = association("port", Port)
 ActivityNode.activity = association("activity", Activity, upper=1, opposite="node")
 Activity.node = association("node", ActivityNode, composite=True, opposite="activity")
+Artifact.nestedArtifact = association(
+    "nestedArtifact", Artifact, composite=True, opposite="artifact"
+)
+Artifact.artifact = association(
+    "artifact", Artifact, upper=1, opposite="nestedArtifact"
+)
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1399,6 +1407,7 @@ NamedElement.namespace = derivedunion(
     Region.state,
     ConnectionPointReference.state,
     Classifier.nestingClass,
+    Artifact.artifact,
 )
 Namespace.ownedMember = derivedunion(
     "ownedMember",
@@ -1441,6 +1450,7 @@ Namespace.ownedMember = derivedunion(
     Interface.ownedReception,
     Stereotype.icon,
     Namespace.ownedRule,
+    Artifact.nestedArtifact,
 )
 # 70: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived(
