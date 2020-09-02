@@ -21,7 +21,15 @@ from gaphor.core.modeling.properties import (
 )
 
 
-class InstanceSpecification(PackageableElement):
+class DeployedArtifact(NamedElement):
+    pass
+
+
+class DeploymentTarget(NamedElement):
+    deployment: relation_many[Deployment]
+
+
+class InstanceSpecification(PackageableElement, DeployedArtifact, DeploymentTarget):
     specification: attribute[str]
     slot: relation_many[Slot]
     classifier: relation_many[Classifier]
@@ -214,14 +222,6 @@ class Class(BehavioredClassifier, EncapsulatedClassifer):
     nestedClassifier: relation_many[Classifier]
     extension: property
     superClass: derived[Classifier]
-
-
-class DeploymentTarget(NamedElement):
-    deployment: relation_many[Deployment]
-
-
-class DeployedArtifact(NamedElement):
-    pass
 
 
 class Node(Class, DeploymentTarget, DeployedArtifact):
@@ -1628,6 +1628,7 @@ Element.ownedElement = derivedunion(
     "*",
     Artifact.manifestation,
     Action.input,
+    InstanceSpecification.slot,
     Classifier.generalization,
     Namespace.ownedMember,
     Namespace.elementImport,

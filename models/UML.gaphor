@@ -11518,6 +11518,8 @@
 <generalization>
 <reflist>
 <ref refid="DCE:68CAA7BA-4B32-11D7-B391-02BBFE4396CE"/>
+<ref refid="7f013c08-ed57-11ea-96dc-bf74f1f80424"/>
+<ref refid="823b98a0-ed57-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </generalization>
 <name>
@@ -20577,7 +20579,7 @@ specially for Gaphor</val>
 <canvas>
 <item id="DCE:12941E9E-4B32-11D7-B391-02BBFE4396CE" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 83.0, 72.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 83.0, 33.0)</val>
 </matrix>
 <width>
 <val>195.0</val>
@@ -20658,7 +20660,7 @@ specially for Gaphor</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (151.5, 0.0), (151.5, -9.5), (273.0, -9.5)]</val>
+<val>[(0.0, 0.0), (97.0, 0.0), (97.0, -9.5), (273.0, -9.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:22B2E60E-4B32-11D7-B391-02BBFE4396CE"/>
@@ -20681,7 +20683,7 @@ specially for Gaphor</val>
 <ref refid="DCE:68CAA7BA-4B32-11D7-B391-02BBFE4396CE"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 178.5, 134.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 178.5, 95.0)</val>
 </matrix>
 <orthogonal>
 <val>0</val>
@@ -20690,7 +20692,7 @@ specially for Gaphor</val>
 <val>1</val>
 </horizontal>
 <points>
-<val>[(0.0, 0.0), (-0.5, 86.5)]</val>
+<val>[(0.0, 0.0), (-0.5, 125.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:12941E9E-4B32-11D7-B391-02BBFE4396CE"/>
@@ -20974,6 +20976,92 @@ specially for Gaphor</val>
 </head-connection>
 <tail-connection>
 <ref refid="8996d432-1cae-11df-b8ca-00224128e79d"/>
+</tail-connection>
+</item>
+<item id="62c1394e-ed57-11ea-96dc-bf74f1f80424" type="ClassItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -74.0, 33.0)</val>
+</matrix>
+<width>
+<val>142.0</val>
+</width>
+<height>
+<val>62.0</val>
+</height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="0c0c0680-b13e-11de-9fae-000d93868322"/>
+</subject>
+</item>
+<item id="73b53dea-ed57-11ea-96dc-bf74f1f80424" type="ClassItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 311.5, 33.0)</val>
+</matrix>
+<width>
+<val>154.0</val>
+</width>
+<height>
+<val>62.0</val>
+</height>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="7c575eda-b13e-11de-9fae-000d93868322"/>
+</subject>
+</item>
+<item id="7db0425e-ed57-11ea-96dc-bf74f1f80424" type="GeneralizationItem">
+<subject>
+<ref refid="7f013c08-ed57-11ea-96dc-bf74f1f80424"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -9.0, 95.0)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (148.0, 125.5)]</val>
+</points>
+<head-connection>
+<ref refid="62c1394e-ed57-11ea-96dc-bf74f1f80424"/>
+</head-connection>
+<tail-connection>
+<ref refid="DCE:22B2E60E-4B32-11D7-B391-02BBFE4396CE"/>
+</tail-connection>
+</item>
+<item id="80a61486-ed57-11ea-96dc-bf74f1f80424" type="GeneralizationItem">
+<subject>
+<ref refid="823b98a0-ed57-11ea-96dc-bf74f1f80424"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 388.5, 95.0)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, 0.0), (-168.5, 125.5)]</val>
+</points>
+<head-connection>
+<ref refid="73b53dea-ed57-11ea-96dc-bf74f1f80424"/>
+</head-connection>
+<tail-connection>
+<ref refid="DCE:22B2E60E-4B32-11D7-B391-02BBFE4396CE"/>
 </tail-connection>
 </item>
 </canvas>
@@ -21963,9 +22051,9 @@ specially for Gaphor</val>
 <reflist>
 <ref refid="DCE:0D9DCE64-97BA-11D8-9E36-00C00C03A405"/>
 <ref refid="DCE:C4730890-50A1-11D7-807A-302CB4EF44FD"/>
+<ref refid="25bc10f4-ecfe-11ea-96dc-bf74f1f80424"/>
 <ref refid="DCE:B4456442-4695-11D7-B567-379CA7034986"/>
 <ref refid="DCE:4FC7F7C4-7653-11D7-8271-9A319BBF187B"/>
-<ref refid="25bc10f4-ecfe-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
 </Class>
@@ -37096,6 +37184,7 @@ directly in a model.</val>
 <ref refid="9fb5736c-ec83-11ea-96dc-bf74f1f80424"/>
 <ref refid="19398ff2-ec84-11ea-96dc-bf74f1f80424"/>
 <ref refid="0c0d9a18-b13e-11de-9fae-000d93868322"/>
+<ref refid="62c1394e-ed57-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
 </Class>
@@ -37158,6 +37247,7 @@ directly in a model.</val>
 <presentation>
 <reflist>
 <ref refid="7c58e976-b13e-11de-9fae-000d93868322"/>
+<ref refid="73b53dea-ed57-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </presentation>
 </Class>
@@ -38046,6 +38136,7 @@ swimlanes</val>
 <ref refid="b28c3610-ec8d-11ea-96dc-bf74f1f80424"/>
 <ref refid="481541c0-ecfe-11ea-96dc-bf74f1f80424"/>
 <ref refid="4c984e0e-ecfe-11ea-96dc-bf74f1f80424"/>
+<ref refid="691fc6bc-ed56-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </slot>
 <typeValue>
@@ -38939,6 +39030,11 @@ swimlanes</val>
 <ref refid="DCE:DF527520-4B32-11D7-B391-02BBFE4396CE"/>
 </reflist>
 </extended>
+<slot>
+<reflist>
+<ref refid="691fc6bc-ed56-11ea-96dc-bf74f1f80424"/>
+</reflist>
+</slot>
 </InstanceSpecification>
 <InstanceSpecification id="170ea36c-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -53431,4 +53527,41 @@ have an opposite end.
 <val>owningPackage</val>
 </value>
 </Slot>
+<Slot id="691fc6bc-ed56-11ea-96dc-bf74f1f80424">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="170e6910-fa90-11de-bd51-00224128e79d"/>
+</owningInstance>
+<value>
+<val>ownedElement</val>
+</value>
+</Slot>
+<Generalization id="7f013c08-ed57-11ea-96dc-bf74f1f80424">
+<general>
+<ref refid="0c0c0680-b13e-11de-9fae-000d93868322"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="7db0425e-ed57-11ea-96dc-bf74f1f80424"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="DCE:22B3AA56-4B32-11D7-B391-02BBFE4396CE"/>
+</specific>
+</Generalization>
+<Generalization id="823b98a0-ed57-11ea-96dc-bf74f1f80424">
+<general>
+<ref refid="7c575eda-b13e-11de-9fae-000d93868322"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="80a61486-ed57-11ea-96dc-bf74f1f80424"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="DCE:22B3AA56-4B32-11D7-B391-02BBFE4396CE"/>
+</specific>
+</Generalization>
 </gaphor>
