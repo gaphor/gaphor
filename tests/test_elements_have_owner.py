@@ -3,6 +3,8 @@ For all relevant model elements, check if there is at least one "owner"
 ("owner" is a derived union).
 
 This is needed to display all elements in the tree view.
+
+NOTE: Comment does not have an owner. In the model it does, though.
 """
 
 import itertools
@@ -29,7 +31,8 @@ def all_presented_elements(module):
     return (
         get_model_element(getattr(module, name))
         for name in dir(module)
-        if not name.startswith("_") and get_model_element(getattr(module, name))
+        if not name.startswith("_")
+        and get_model_element(getattr(module, name) not in (None, UML.Comment))
     )
 
 
@@ -40,7 +43,6 @@ def all_presented_uml_and_sysml_elements():
         [
             UML.ExecutionOccurrenceSpecification,
             UML.ExtensionEnd,
-            UML.InstanceSpecification,
             UML.MessageOccurrenceSpecification,
         ],
     )
