@@ -152,6 +152,7 @@ class CommunicationPath(Association):
 class Dependency(DirectedRelationship, PackageableElement):
     client: relation_many[NamedElement]
     supplier: relation_many[NamedElement]
+    package: relation_one[Package]
 
 
 class Abstraction(Dependency):
@@ -378,6 +379,7 @@ class Package(Namespace, PackageableElement):
     ownedClassifier: relation_many[Type]
     packageMerge: relation_many[PackageMerge]
     appliedProfile: relation_many[ProfileApplication]
+    ownedDependency: relation_many[Dependency]
     packagedElement: relation_many[PackageableElement]
 
 
@@ -1066,12 +1068,6 @@ Extend.extension = association(
     "extension", UseCase, lower=1, upper=1, opposite="extend"
 )
 UseCase.extend = association("extend", Extend, composite=True, opposite="extension")
-Package.packagedElement = association(
-    "packagedElement", PackageableElement, composite=True, opposite="owningPackage"
-)
-PackageableElement.owningPackage = association(
-    "owningPackage", Package, upper=1, opposite="packagedElement"
-)
 Extend.constraint = association("constraint", Constraint, upper=1, composite=True)
 ProfileApplication.appliedProfile = association(
     "appliedProfile", Profile, lower=1, upper=1
@@ -1296,6 +1292,10 @@ Artifact.nestedArtifact = association(
 Artifact.artifact = association(
     "artifact", Artifact, upper=1, opposite="nestedArtifact"
 )
+Package.ownedDependency = association("ownedDependency", Dependency, opposite="package")
+Dependency.package = association(
+    "package", Package, lower=1, upper=1, opposite="ownedDependency"
+)
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1386,6 +1386,9 @@ RedefinableElement.redefinitionContext = derivedunion(
     Port.encapsulatedClassifier,
     Classifier.nestingClass,
 )
+PackageableElement.owningPackage = derivedunion(
+    "owningPackage", Package, 0, 1, Type.package, Dependency.package
+)
 NamedElement.namespace = derivedunion(
     "namespace",
     Namespace,
@@ -1402,7 +1405,6 @@ NamedElement.namespace = derivedunion(
     Diagram.package,
     PackageableElement.owningPackage,
     Operation.datatype,
-    Type.package,
     Property.datatype,
     Operation.interface_,
     Package.package,
@@ -1442,7 +1444,6 @@ Namespace.ownedMember = derivedunion(
     Class.ownedOperation,
     Operation.postcondition,
     Association.ownedEnd,
-    Package.ownedClassifier,
     Interface.ownedAttribute,
     UseCase.include,
     Operation.bodyCondition,
@@ -1590,6 +1591,14 @@ Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
 # 100: override Component.provided: property
 # defined in umloverrides.py
 
+Package.packagedElement = derivedunion(
+    "packagedElement",
+    PackageableElement,
+    0,
+    "*",
+    Package.ownedClassifier,
+    Package.ownedDependency,
+)
 Element.owner = derivedunion(
     "owner",
     Element,
