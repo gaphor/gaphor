@@ -51,7 +51,8 @@ class CopyService(Service, ActionProvider):
         else:
             self.copy_buffer = set()
             view = self.diagrams.get_current_view()
-            self.update_paste_state(view)
+            if view:
+                self.update_paste_state(view)
 
     @event_handler(DiagramSelectionChanged)
     def _update(self, event):
