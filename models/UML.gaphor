@@ -52174,7 +52174,7 @@ association:not([memberEnd.navigability*=true]) {
 <ref refid="1711013e-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>ownedmember</val>
+<val>ownedMember</val>
 </value>
 </Slot>
 <Slot id="8378f158-e966-11ea-96dc-bf74f1f80424">

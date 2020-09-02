@@ -1424,6 +1424,14 @@ NamedElement.namespace = derivedunion(
     Classifier.nestingClass,
     Artifact.artifact,
 )
+Package.packagedElement = derivedunion(
+    "packagedElement",
+    PackageableElement,
+    0,
+    "*",
+    Package.ownedClassifier,
+    Package.ownedDependency,
+)
 Namespace.ownedMember = derivedunion(
     "ownedMember",
     NamedElement,
@@ -1434,6 +1442,7 @@ Namespace.ownedMember = derivedunion(
     Interface.nestedClassifier,
     Package.ownedDiagram,
     UseCase.extensionPoint,
+    Package.packagedElement,
     DataType.ownedOperation,
     Operation.precondition,
     BehavioralFeature.returnResult,
@@ -1591,14 +1600,6 @@ Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
 # 100: override Component.provided: property
 # defined in umloverrides.py
 
-Package.packagedElement = derivedunion(
-    "packagedElement",
-    PackageableElement,
-    0,
-    "*",
-    Package.ownedClassifier,
-    Package.ownedDependency,
-)
 Element.owner = derivedunion(
     "owner",
     Element,
