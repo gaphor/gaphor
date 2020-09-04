@@ -13,42 +13,48 @@ from gaphor.application import Session
 # Setup command line options.
 usage = "usage: %prog [options] file.gaphor"
 
-parser = optparse.OptionParser(usage=usage)
 
-parser.add_option(
-    "-a",
-    "--attributes",
-    dest="attrs",
-    action="store_true",
-    help="Print class attributes",
-)
+def main():
+    parser = optparse.OptionParser(usage=usage)
 
-(options, args) = parser.parse_args()
+    parser.add_option(
+        "-a",
+        "--attributes",
+        dest="attrs",
+        action="store_true",
+        help="Print class attributes",
+    )
 
-if len(args) != 1:
-    parser.print_help()
-    sys.exit(1)
+    (options, args) = parser.parse_args()
 
-# The model file to load.
-model = args[0]
+    if len(args) != 1:
+        parser.print_help()
+        sys.exit(1)
 
-# Create the Gaphor application object.
-session = Session()
+    # The model file to load.
+    model = args[0]
 
-# Get services we need.
-element_factory = session.get_service("element_factory")
-file_manager = session.get_service("file_manager")
+    # Create the Gaphor application object.
+    session = Session()
 
-# Load model from file.
-file_manager.load(model)
+    # Get services we need.
+    element_factory = session.get_service("element_factory")
+    file_manager = session.get_service("file_manager")
 
-# Find all classes using factory select.
-for cls in element_factory.select(UML.Class):
+    # Load model from file.
+    file_manager.load(model)
 
-    print(f"Found class {cls.name}")
+    # Find all classes using factory select.
+    for cls in element_factory.select(UML.Class):
 
-    if options.attrs:
+        print(f"Found class {cls.name}")
 
-        for attr in cls.ownedAttribute:
+        if options.attrs:
 
-            print(f" Attribute: {attr.name}")
+            for attr in cls.ownedAttribute:
+
+                print(f" Attribute: {attr.name}")
+
+
+if __name__ == "__main__":
+    main()
