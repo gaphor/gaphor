@@ -3,7 +3,7 @@ import pytest
 import gaphor.core.eventmanager
 from gaphor import UML
 from gaphor.core.modeling import ElementFactory
-from gaphor.ui.namespace import Namespace
+from gaphor.ui.namespace import RELATIONSHIPS, Namespace
 
 
 @pytest.fixture
@@ -149,3 +149,12 @@ def test_element_factory_flush(namespace, element_factory):
     element_factory.flush()
 
     assert namespace.model.get_iter_first() is None
+
+
+def test_relationships_in_separate_node(namespace, element_factory):
+    a = element_factory.create(UML.Association)
+    iter = namespace.model.iter_children(None)
+    rel_iter = namespace.model.iter_children(iter)
+
+    assert namespace.model.get_value(iter, 0) is RELATIONSHIPS
+    assert namespace.model.get_value(rel_iter, 0) is a

@@ -38,6 +38,32 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
+class RELATIONSHIPS:
+    name = "0"
+    owner = None
+
+
+def relationship_iter(model, iter):
+    child_iter = model.iter_children(iter)
+    while child_iter:
+        maybe_relationships = model.get_value(child_iter, 0)
+        if maybe_relationships is RELATIONSHIPS:
+            return child_iter
+        child_iter = model.iter_next(child_iter)
+    return model.append(iter, [RELATIONSHIPS])
+
+
+def relationship_iter_parent(model, iter):
+    while model.get_value(iter, 0) is RELATIONSHIPS:
+        iter = model.iter_parent(iter)
+    return iter
+
+
+def relationship_parent(model, iter):
+    parent_iter = relationship_iter_parent(model, iter)
+    return model.get_value(parent_iter, 0)
+
+
 class NamespaceView(Gtk.TreeView):
 
     TARGET_STRING = 0
@@ -103,7 +129,10 @@ class NamespaceView(Gtk.TreeView):
     def _set_pixbuf(self, column, cell, model, iter, data):
         element = model.get_value(iter, 0)
 
-        if isinstance(element, (UML.Property, UML.Operation)):
+        if element is RELATIONSHIPS:
+            cell.set_property("icon-name", None)
+            cell.set_property("visible", False)
+        elif isinstance(element, (UML.Property, UML.Operation)):
             cell.set_property("icon-name", None)
             cell.set_property("visible", False)
         else:
@@ -130,13 +159,16 @@ class NamespaceView(Gtk.TreeView):
             else Pango.Style.NORMAL,
         )
 
-        if isinstance(element, UML.Property):
+        if element is RELATIONSHIPS:
+            text = gettext("Relationships")
+        elif isinstance(element, UML.Property):
             text = format_attribute(element) or "<None>"
         elif isinstance(element, UML.Operation):
             text = format_operation(element)
-        else:
+        elif isinstance(element, UML.NamedElement):
             text = element and (element.name or "").replace("\n", " ") or "<None>"
-
+        else:
+            text = element.__class__.__name__
         cell.set_property("text", text)
 
     @transactional
@@ -216,6 +248,10 @@ class NamespaceView(Gtk.TreeView):
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)
             assert dest_element
+            if dest_element is RELATIONSHIPS:
+                iter = relationship_iter_parent(model, iter)
+                dest_element = model.get_value(iter, 0)
+
             # Add the item to the parent if it is dropped on the same level,
             # else add it to the item.
             if position in (
@@ -395,6 +431,9 @@ class Namespace(UIComponent):
         else:
             parent_iter = None
 
+        if isinstance(element, UML.Relationship):
+            parent_iter = relationship_iter(self.model, parent_iter)
+
         child_iter = self.model.iter_children(parent_iter)
         while child_iter:
             if self.model.get_value(child_iter, 0) is element:
@@ -404,18 +443,35 @@ class Namespace(UIComponent):
 
     def _visible(self, element):
         """Special case: Non-navigable properties."""
-        return (isinstance(element, UML.NamedElement)) and not isinstance(
+        return isinstance(
+            element, (UML.Relationship, UML.NamedElement)
+        ) and not isinstance(
             element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
         )
 
     def _add(self, element, iter=None):
         if self._visible(element):
+            if isinstance(element, UML.Relationship) and (
+                element.owner is None or isinstance(element.owner, UML.Package)
+            ):
+                iter = relationship_iter(self.model, iter)
             child_iter = self.model.append(iter, [element])
             for e in element.ownedElement:
                 # check if owned element is indeed within parent's owner
-                # the check is important in case on Node classes
+                # This is important since we should be able to traverse this relation both ways
                 if element is e.owner:
                     self._add(e, child_iter)
+
+    def _remove(self, iter):
+        if iter:
+            parent_iter = self.model.iter_parent(iter)
+            self.model.remove(iter)
+            if (
+                parent_iter
+                and not self.model.iter_has_child(parent_iter)
+                and self.model.get_value(parent_iter, 0) is RELATIONSHIPS
+            ):
+                self.model.remove(parent_iter)
 
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
@@ -446,17 +502,14 @@ class Namespace(UIComponent):
         element = event.element
         if self._visible(element) and not self.iter_for_element(element):
             iter = self.iter_for_element(element.owner)
-            self.model.append(iter, [element])
+            self._add(element, iter)
 
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
         element = event.element
         if isinstance(element, UML.NamedElement):
             iter = self.iter_for_element(element)
-            # iter should be here, unless we try to delete an element who's
-            # parent element is already deleted, so let's be lenient.
-            if iter:
-                self.model.remove(iter)
+            self._remove(iter)
 
     @event_handler(DerivedSet)
     def _on_association_set(self, event: DerivedSet):
@@ -467,8 +520,7 @@ class Namespace(UIComponent):
 
         element = event.element
         old_iter = self.iter_for_element(element, old_owner=old_value)
-        if old_iter:
-            self.model.remove(old_iter)
+        self._remove(old_iter)
 
         if self._visible(element):
             new_iter = self.iter_for_element(new_value)
@@ -508,6 +560,13 @@ class Namespace(UIComponent):
         """Another row is selected, toggle action sensitivity."""
         element = view.get_selected_element()
         action_group = view.get_action_group("tree-view")
+        if element is RELATIONSHIPS:
+            action_group.lookup_action("create-diagram").set_enabled(True)
+            action_group.lookup_action("create-package").set_enabled(True)
+            action_group.lookup_action("delete").set_enabled(False)
+            action_group.lookup_action("rename").set_enabled(False)
+            return
+
         action_group.lookup_action("open").set_enabled(isinstance(element, Diagram))
         action_group.lookup_action("create-diagram").set_enabled(
             isinstance(element, UML.Package)
@@ -519,6 +578,9 @@ class Namespace(UIComponent):
         action_group.lookup_action("delete").set_enabled(
             isinstance(element, Diagram)
             or (isinstance(element, UML.Package) and not element.presentation)
+        )
+        action_group.lookup_action("rename").set_enabled(
+            isinstance(element, UML.NamedElement)
         )
 
     def _on_view_destroyed(self, widget):
