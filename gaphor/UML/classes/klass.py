@@ -1,6 +1,7 @@
 import logging
 
 from gaphor import UML
+from gaphor.core.format import format
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import (
     FontStyle,
@@ -177,7 +178,7 @@ def attributes_compartment(subject):
     # We need to fix the attribute value, since the for loop changes it.
     def lazy_format(attribute):
         # str(), so we never ever get an error on a property part of an association
-        return lambda: (UML.format(attribute))
+        return lambda: (format(attribute))
 
     return Box(
         *(
@@ -200,7 +201,7 @@ def attributes_compartment(subject):
 
 def operations_compartment(subject):
     def lazy_format(operation):
-        return lambda: UML.format(
+        return lambda: format(
             operation, visibility=True, type=True, multiplicity=True, default=True
         )
 

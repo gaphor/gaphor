@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core.format import format, parse
 from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
 from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 
@@ -6,7 +7,7 @@ from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 def test_class_with_attributes(diagram, element_factory):
     cls = element_factory.create(UML.Class)
     attr = element_factory.create(UML.Property)
-    UML.parse(attr, "- attr: str")
+    parse(attr, "- attr: str")
     cls.ownedAttribute = attr
 
     cls_item = diagram.create(ClassItem, subject=cls)
@@ -15,13 +16,13 @@ def test_class_with_attributes(diagram, element_factory):
     new_cls_item = new_items.pop()
 
     assert isinstance(new_cls_item, ClassItem)
-    assert UML.format(new_cls_item.subject.ownedAttribute[0]) == "- attr: str"
+    assert format(new_cls_item.subject.ownedAttribute[0]) == "- attr: str"
 
 
 def test_class_with_operation(diagram, element_factory):
     cls = element_factory.create(UML.Class)
     oper = element_factory.create(UML.Operation)
-    UML.parse(oper, "- oper(inout param: str): str")
+    parse(oper, "- oper(inout param: str): str")
     cls.ownedOperation = oper
 
     cls_item = diagram.create(ClassItem, subject=cls)
@@ -31,7 +32,7 @@ def test_class_with_operation(diagram, element_factory):
 
     assert isinstance(new_cls_item, ClassItem)
     assert (
-        UML.format(new_cls_item.subject.ownedOperation[0])
+        format(new_cls_item.subject.ownedOperation[0])
         == "- oper(inout param: str): str"
     )
 
@@ -40,11 +41,11 @@ def test_interface_with_attributes_and_operation(diagram, element_factory):
     iface = element_factory.create(UML.Interface)
 
     attr = element_factory.create(UML.Property)
-    UML.parse(attr, "- attr: str")
+    parse(attr, "- attr: str")
     iface.ownedAttribute = attr
 
     oper = element_factory.create(UML.Operation)
-    UML.parse(oper, "- oper(inout param: str): str")
+    parse(oper, "- oper(inout param: str): str")
     iface.ownedOperation = oper
 
     iface_item = diagram.create(InterfaceItem, subject=iface)
@@ -53,9 +54,9 @@ def test_interface_with_attributes_and_operation(diagram, element_factory):
     new_iface_item = new_items.pop()
 
     assert isinstance(new_iface_item, InterfaceItem)
-    assert UML.format(new_iface_item.subject.ownedAttribute[0]) == "- attr: str"
+    assert format(new_iface_item.subject.ownedAttribute[0]) == "- attr: str"
     assert (
-        UML.format(new_iface_item.subject.ownedOperation[0])
+        format(new_iface_item.subject.ownedOperation[0])
         == "- oper(inout param: str): str"
     )
 

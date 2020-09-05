@@ -2,6 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.core.eventmanager import EventManager
+from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
 
 
@@ -301,7 +302,7 @@ def test_operation_parameter_deletion(factory):
     c.name = "Class"
     o = factory.create(UML.Operation)
     c.ownedOperation = o
-    UML.parse(o, "a(x: int, y: int)")
+    parse(o, "a(x: int, y: int)")
 
     c.unlink()
 

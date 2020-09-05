@@ -4,6 +4,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
+from gaphor.core.format import format, parse
 from gaphor.core.modeling import NamedElement
 from gaphor.diagram.propertypages import (
     ComboModel,
@@ -31,7 +32,7 @@ class ClassAttributes(EditableTreeModel):
     def _get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
-                yield [UML.format(attr), attr.isStatic, attr]
+                yield [format(attr), attr.isStatic, attr]
 
     def _create_object(self):
         attr = self._item.model.create(UML.Property)
@@ -42,14 +43,14 @@ class ClassAttributes(EditableTreeModel):
     def _set_object_value(self, row, col, value):
         attr = row[-1]
         if col == 0:
-            UML.parse(attr, value)
-            row[0] = UML.format(attr)
+            parse(attr, value)
+            row[0] = format(attr)
         elif col == 1:
             attr.isStatic = not attr.isStatic
             row[1] = attr.isStatic
         elif col == 2:
             # Value in attribute object changed:
-            row[0] = UML.format(attr)
+            row[0] = format(attr)
             row[1] = attr.isStatic
 
     def _swap_objects(self, o1, o2):
@@ -62,7 +63,7 @@ class ClassOperations(EditableTreeModel):
     def _get_rows(self):
         for operation in self._item.subject.ownedOperation:
             yield [
-                UML.format(operation),
+                format(operation),
                 operation.isAbstract,
                 operation.isStatic,
                 operation,
@@ -77,8 +78,8 @@ class ClassOperations(EditableTreeModel):
     def _set_object_value(self, row, col, value):
         operation = row[-1]
         if col == 0:
-            UML.parse(operation, value)
-            row[0] = UML.format(operation)
+            parse(operation, value)
+            row[0] = format(operation)
         elif col == 1:
             operation.isAbstract = not operation.isAbstract
             row[1] = operation.isAbstract
@@ -86,7 +87,7 @@ class ClassOperations(EditableTreeModel):
             operation.isStatic = not operation.isStatic
             row[2] = operation.isStatic
         elif col == 3:
-            row[0] = UML.format(operation)
+            row[0] = format(operation)
             row[1] = operation.isAbstract
             row[2] = operation.isStatic
 
@@ -236,7 +237,7 @@ class AttributesPage(PropertyPageBase):
             attribute = event.element
             for row in self.model:
                 if row[-1] is attribute:
-                    row[:] = [UML.format(attribute), attribute.isStatic, attribute]
+                    row[:] = [format(attribute), attribute.isStatic, attribute]
 
         self.watcher.watch("ownedAttribute.name", handler).watch(
             "ownedAttribute.isDerived", handler
@@ -300,7 +301,7 @@ class OperationsPage(PropertyPageBase):
             for row in self.model:
                 if row[-1] is operation:
                     row[:] = [
-                        UML.format(operation),
+                        format(operation),
                         operation.isAbstract,
                         operation.isStatic,
                         operation,
@@ -467,8 +468,7 @@ class AssociationPropertyPage(PropertyPageBase):
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
         new_name = (
-            UML.format(subject, visibility=True, is_derived=True, multiplicity=True,)
-            or ""
+            format(subject, visibility=True, is_derived=True, multiplicity=True,) or ""
         )
         if not (name.is_focus() or self.semaphore):
             self.semaphore += 1
@@ -541,7 +541,7 @@ class AssociationPropertyPage(PropertyPageBase):
     def _on_end_name_change(self, entry, end):
         if not self.semaphore:
             self.semaphore += 1
-            UML.parse(end.subject, entry.get_text())
+            parse(end.subject, entry.get_text())
             self.semaphore -= 1
 
     @transactional

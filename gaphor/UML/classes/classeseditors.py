@@ -1,7 +1,7 @@
 from gaphas.geometry import Rectangle, distance_point_point_fast
 
-from gaphor import UML
 from gaphor.core import transactional
+from gaphor.core.format import format, parse
 from gaphor.diagram.inlineeditors import (
     InlineEditor,
     editable_text_box,
@@ -23,7 +23,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
     @transactional
     def update_end_text(text):
         assert end_item
-        UML.parse(end_item.subject, text)
+        parse(end_item.subject, text)
         return True
 
     subject = item.subject
@@ -38,7 +38,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
 
     if end_item:
         text = (
-            UML.format(
+            format(
                 end_item.subject,
                 visibility=True,
                 is_derived=True,
@@ -51,7 +51,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
 
         def escape():
             assert end_item
-            UML.parse(end_item.subject, text)
+            parse(end_item.subject, text)
 
         entry = popup_entry(text, update_end_text)
         bb = end_item.name_bounds

@@ -92,7 +92,6 @@ class NamespaceView(Gtk.TreeView):
 
         # Second cell if for the name of the object...
         cell = Gtk.CellRendererText()
-        # cell.set_property ('editable', 1)
         cell.connect("edited", self._text_edited)
         column.pack_start(cell, 0)
         column.set_cell_data_func(cell, self._set_text, None)
@@ -164,7 +163,7 @@ class NamespaceView(Gtk.TreeView):
         elif isinstance(element, UML.Property):
             text = format_attribute(element) or "<None>"
         elif isinstance(element, UML.Operation):
-            text = format_operation(element)
+            text = format_operation(element) or "<None>"
         elif isinstance(element, UML.NamedElement):
             text = element and (element.name or "").replace("\n", " ") or "<None>"
         else:
@@ -320,6 +319,8 @@ class Namespace(UIComponent):
 
     def construct(self):
         sorted_model = Gtk.TreeModelSort(model=self.model)
+
+        # TODO: Fix sort and search, should be able to deal with Relationships
 
         def sort_func(model, iter_a, iter_b, userdata):
             a = (model.get_value(iter_a, 0).name or "").lower()
@@ -638,7 +639,6 @@ class Namespace(UIComponent):
             column = view.get_column(0)
             cell = column.get_cells()[1]
             cell.set_property("editable", 1)
-            cell.set_property("text", element.name)
             view.set_cursor(path, column, True)
             cell.set_property("editable", 0)
 

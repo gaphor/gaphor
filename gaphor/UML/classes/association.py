@@ -19,6 +19,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.state import reversible_property
 
 from gaphor import UML
+from gaphor.core.format import format
 from gaphor.core.modeling import Presentation
 from gaphor.core.styling import Style
 from gaphor.diagram.presentation import LinePresentation, Named
@@ -380,7 +381,7 @@ class AssociationEnd(Presentation):
         """Set the text on the association end."""
         if self.subject:
             try:
-                n, m = UML.format(self.subject)
+                n, m = format(self.subject)
             except ValueError:
                 # need more than 0 values to unpack: property was rendered as
                 # attribute while in a UNDO action for example.
