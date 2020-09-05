@@ -10,7 +10,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Optional
 
-from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
+from gi.repository import Gdk, Gio, GLib, Gtk, Pango
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
@@ -75,7 +75,7 @@ class NamespaceView(Gtk.TreeView):
     ]
 
     def __init__(self, model: Gtk.TreeModel, element_factory: ElementFactory):
-        GObject.GObject.__init__(self)
+        Gtk.TreeView.__init__(self)
         self.set_model(model)
         self.element_factory = element_factory
 
