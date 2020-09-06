@@ -6,26 +6,13 @@ from typing import Tuple
 from gaphor.core.format import format
 from gaphor.UML import uml as UML
 
-
-@format.register(UML.Property)
-def format_property(el, *args, **kwargs):
-    """Format property or an association end."""
-    if el.association and not args and not kwargs:
-        return format_association_end(el)
-    else:
-        return format_attribute(el, *args, **kwargs)
-
-
-def compile(regex):
-    return re.compile(regex, re.MULTILINE | re.S)
-
-
 # Do not render if the name still contains a visibility element
-no_render_pat = compile(r"^\s*[+#-]")
+no_render_pat = re.compile(r"^\s*[+#-]", re.MULTILINE | re.S)
 vis_map = {"public": "+", "protected": "#", "package": "~", "private": "-"}
 
 
-def format_attribute(
+@format.register(UML.Property)
+def format_property(
     el,
     visibility=False,
     is_derived=False,

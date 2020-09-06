@@ -11,7 +11,7 @@ from gaphor.core.modeling import Element
 
 
 @singledispatch
-def format(el: Element):
+def format(el: Element) -> str:
     """
     Format an element.
     """

@@ -27,7 +27,7 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.iconname import get_icon_name
-from gaphor.UML.umlfmt import format_attribute, format_operation
+from gaphor.UML.umlfmt import format_operation, format_property
 from gaphor.UML.umllex import parse
 
 if TYPE_CHECKING:
@@ -161,7 +161,7 @@ class NamespaceView(Gtk.TreeView):
         if element is RELATIONSHIPS:
             text = gettext("Relationships")
         elif isinstance(element, UML.Property):
-            text = format_attribute(element) or "<None>"
+            text = format_property(element) or "<None>"
         elif isinstance(element, UML.Operation):
             text = format_operation(element) or "<None>"
         elif isinstance(element, UML.NamedElement):
