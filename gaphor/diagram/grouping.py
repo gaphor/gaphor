@@ -1,8 +1,8 @@
-"""Grouping functionality allows to nest one item within another item (parent
+"""Grouping functionality allows nesting of one item within another item (parent
 item). This is useful in several use cases.
 
 - artifact deployed within a node
-- a class within a package or a component
+- a class within a package, or a component
 - composite structures (i.e. component within a node)
 
 The grouping adapters has to implement three methods, see `AbstractGroup`
@@ -10,8 +10,8 @@ class.
 
 It is important to note, that grouping adapters can be queried before
 instance of an item to be grouped is created. This happens when item
-is about to be created. Therefore `AbstractGroup.can_contain` has
-to be aware that `AbstractGroup.item` can be null.
+is about to be created. Therefore, `AbstractGroup.can_contain` has
+to be aware `AbstractGroup.item` can be null.
 """
 
 from __future__ import annotations
