@@ -14,6 +14,7 @@ from gi.repository import Gdk, Gio, GLib, Gtk, Pango
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
+from gaphor.core.format import format, parse
 from gaphor.core.modeling import (
     AttributeUpdated,
     DerivedSet,
@@ -27,8 +28,6 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.iconname import get_icon_name
-from gaphor.UML.umlfmt import format_operation, format_property
-from gaphor.UML.umllex import parse
 
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager
@@ -159,15 +158,9 @@ class NamespaceView(Gtk.TreeView):
         )
 
         if element is RELATIONSHIPS:
-            text = gettext("Relationships")
-        elif isinstance(element, UML.Property):
-            text = format_property(element) or "<None>"
-        elif isinstance(element, UML.Operation):
-            text = format_operation(element) or "<None>"
-        elif isinstance(element, UML.NamedElement):
-            text = element and (element.name or "").replace("\n", " ") or "<None>"
+            text = gettext("<Relationships>")
         else:
-            text = element.__class__.__name__
+            text = format(element) or "<None>"
         cell.set_property("text", text)
 
     @transactional
@@ -178,16 +171,13 @@ class NamespaceView(Gtk.TreeView):
         string where the fields are separated by colons ':', like this:
         '0:1:1'. We first turn them into a tuple.
         """
+        model = self.get_property("model")
+        iter = model.get_iter_from_string(path_str)
+        element = model.get_value(iter, 0)
         try:
-            model = self.get_property("model")
-            iter = model.get_iter_from_string(path_str)
-            element = model.get_value(iter, 0)
-            if isinstance(element, (UML.Property, UML.Operation)):
-                parse(element, new_text)
-            else:
-                element.name = new_text
-        except Exception:
-            log.error(f'Could not create path from string "{path_str}"')
+            parse(element, new_text)
+        except TypeError:
+            log.debug(f"No parser for {element}")
 
     def on_drag_begin(self, context):
         return True
@@ -323,8 +313,17 @@ class Namespace(UIComponent):
         # TODO: Fix sort and search, should be able to deal with Relationships
 
         def sort_func(model, iter_a, iter_b, userdata):
-            a = (model.get_value(iter_a, 0).name or "").lower()
-            b = (model.get_value(iter_b, 0).name or "").lower()
+            va = model.get_value(iter_a, 0)
+            vb = model.get_value(iter_b, 0)
+
+            # Put Relationships pseudo-node at top
+            if va is RELATIONSHIPS:
+                return -1
+            if vb is RELATIONSHIPS:
+                return 1
+
+            a = (format(va) or "").lower()
+            b = (format(vb) or "").lower()
             if a == b:
                 return 0
             if a > b:
@@ -345,7 +344,8 @@ class Namespace(UIComponent):
                     matched = True
 
             element = list(row)[column]
-            if element.name and key.lower() in element.name.lower():
+            s = format(element)
+            if s and key.lower() in s.lower():
                 matched = True
             elif not matched:
                 view.collapse_row(row.path)
@@ -482,7 +482,7 @@ class Namespace(UIComponent):
         self.model.clear()
 
         toplevel = self.element_factory.select(
-            lambda e: isinstance(e, UML.NamedElement) and not e.owner
+            lambda e: self._visible(e) and not e.owner
         )
 
         for element in toplevel:
@@ -508,13 +508,11 @@ class Namespace(UIComponent):
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
         element = event.element
-        if isinstance(element, UML.NamedElement):
-            iter = self.iter_for_element(element)
-            self._remove(iter)
+        iter = self.iter_for_element(element)
+        self._remove(iter)
 
     @event_handler(DerivedSet)
     def _on_association_set(self, event: DerivedSet):
-
         if event.property is not UML.Element.owner:
             return
         old_value, new_value = event.old_value, event.new_value

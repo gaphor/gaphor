@@ -15,9 +15,7 @@ def format(el: Element) -> str:
     """
     Format an element.
     """
-    raise NotImplementedError(
-        "Format routine for type %s not implemented yet" % type(el)
-    )
+    raise TypeError("Format routine for type %s not implemented yet" % type(el))
 
 
 @singledispatch
@@ -25,6 +23,4 @@ def parse(el: Element, text: str) -> None:
     """
     Parse text and update `el` accordingly.
     """
-    raise NotImplementedError(
-        "Parsing routine for type %s not implemented yet" % type(el)
-    )
+    raise TypeError("Parsing routine for type %s not implemented yet" % type(el))

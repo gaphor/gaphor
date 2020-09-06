@@ -184,3 +184,13 @@ def format_multiplicity(el, bare=False):
     if el.upperValue:
         m = f"{el.lowerValue}..{el.upperValue}" if el.lowerValue else f"{el.upperValue}"
     return f"[{m}]" if m and not bare else m
+
+
+@format.register(UML.Relationship)
+def format_relationship(el):
+    return el.__class__.__name__
+
+
+@format.register(UML.Generalization)
+def format_generalization(el):
+    return f"general: {el.general.name}"

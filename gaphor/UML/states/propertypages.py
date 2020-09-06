@@ -30,7 +30,7 @@ class TransitionPropertyPage(PropertyPageBase):
 
         guard = builder.get_object("guard")
         if subject.guard:
-            guard.set_text(subject.guard.specification)
+            guard.set_text(subject.guard.specification or "")
 
         def handler(event):
             if event.element is subject.guard:
