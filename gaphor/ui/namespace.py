@@ -310,8 +310,6 @@ class Namespace(UIComponent):
     def construct(self):
         sorted_model = Gtk.TreeModelSort(model=self.model)
 
-        # TODO: Fix sort and search, should be able to deal with Relationships
-
         def sort_func(model, iter_a, iter_b, userdata):
             va = model.get_value(iter_a, 0)
             vb = model.get_value(iter_b, 0)
@@ -614,7 +612,6 @@ class Namespace(UIComponent):
     def tree_view_open_selected(self):
         assert self._view
         element = self._view.get_selected_element()
-        # TODO: Candidate for adapter?
         if isinstance(element, Diagram):
             self.event_manager.handle(DiagramOpened(element))
         else:
@@ -630,7 +627,7 @@ class Namespace(UIComponent):
         assert self._view
         view = self._view
         element = view.get_selected_element()
-        if element is not None:
+        if element not in (None, RELATIONSHIPS):
             selection = view.get_selection()
             model, iter = selection.get_selected()
             path = model.get_path(iter)
