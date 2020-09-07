@@ -47,15 +47,13 @@ def save_generator(writer, factory):
     )
 
     size = factory.size()
-    n = 0
-    for e in list(factory.values()):
+    for n, e in enumerate(list(factory.values()), start=1):
         clazz = e.__class__.__name__
         assert e.id
         writer.startElement(clazz, {"id": str(e.id)})
         e.save(partial(save_element, writer=writer))
         writer.endElement(clazz)
 
-        n += 1
         if n % 25 == 0:
             yield (n * 100) / size
 
