@@ -46,7 +46,7 @@ class GIdleThread:
     >>> main = GLib.main_context_default()
     >>> t.is_alive()
     True
-    >>> main.iteration(False) # doctest: +ELLIPSIS
+    >>> main.iteration(False)  # doctest: +ELLIPSIS
     True
     """
 

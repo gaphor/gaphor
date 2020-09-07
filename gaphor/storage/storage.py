@@ -318,7 +318,7 @@ def load_generator(filename, factory, modeling_language):
 def version_lower_than(gaphor_version, version):
     """Only major and minor versions are checked.
 
-    >>> version_lower_than('0.3.0', (0, 15, 0))
+    >>> version_lower_than("0.3.0", (0, 15, 0))
     True
     """
     parts = gaphor_version.split(".")

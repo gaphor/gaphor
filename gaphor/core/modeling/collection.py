@@ -11,9 +11,9 @@ T = TypeVar("T")
 class collectionlist(recursemixin, querymixin, List[T]):  # type: ignore[misc]
     """
     >>> c = collectionlist()
-    >>> c.append('a')
-    >>> c.append('b')
-    >>> c.append('c')
+    >>> c.append("a")
+    >>> c.append("b")
+    >>> c.append("c")
     >>> c
     ['a', 'b', 'c']
 
@@ -22,20 +22,20 @@ class collectionlist(recursemixin, querymixin, List[T]):  # type: ignore[misc]
     >>> from gaphor.UML import *
     >>> c = Class()
     >>> c.ownedOperation = Operation()
-    >>> c.ownedOperation   # doctest: +ELLIPSIS
+    >>> c.ownedOperation  # doctest: +ELLIPSIS
     [<gaphor.UML.uml.Operation element ...>]
-    >>> c.ownedOperation[0]   # doctest: +ELLIPSIS
+    >>> c.ownedOperation[0]  # doctest: +ELLIPSIS
     <gaphor.UML.uml.Operation element ...>
     >>> c.ownedOperation = Operation()
     >>> c.ownedOperation[0].formalParameter = Parameter()
     >>> c.ownedOperation[0].formalParameter = Parameter()
-    >>> c.ownedOperation[0].formalParameter[0].name = 'foo'
+    >>> c.ownedOperation[0].formalParameter[0].name = "foo"
     >>> c.ownedOperation[0].formalParameter[0].name
     'foo'
-    >>> c.ownedOperation[0].formalParameter[1].name = 'bar'
+    >>> c.ownedOperation[0].formalParameter[1].name = "bar"
     >>> list(c.ownedOperation[0].formalParameter[:].name)
     ['foo', 'bar']
-    >>> c.ownedOperation[:].formalParameter.name   # doctest: +ELLIPSIS
+    >>> c.ownedOperation[:].formalParameter.name  # doctest: +ELLIPSIS
     <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
     >>> list(c.ownedOperation[:].formalParameter.name)
     ['foo', 'bar']

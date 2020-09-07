@@ -10,7 +10,7 @@ class action:
     >>> class A:
     ...     @action(name="my_action", label="my action")
     ...     def myaction(self):
-    ...         print('action called')
+    ...         print("action called")
     >>> a = A()
     >>> a.myaction()
     action called

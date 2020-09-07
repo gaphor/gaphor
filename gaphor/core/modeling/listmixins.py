@@ -25,14 +25,15 @@ def matcher(expr) -> Callable[[T], bool]:
     Given a class:
 
     >>> class A:
-    ...     def __init__(self, name): self.name = name
+    ...     def __init__(self, name):
+    ...         self.name = name
 
     We can create a path for each object:
 
-    >>> a = A('root')
-    >>> a.a = A('level1')
-    >>> a.b = A('b')
-    >>> a.a.text = 'help'
+    >>> a = A("root")
+    >>> a.a = A("level1")
+    >>> a.b = A("b")
+    >>> a.a.text = "help"
 
     If we want to match, ``it`` is used to refer to the subjected object:
 
@@ -67,19 +68,20 @@ class querymixin:
     Given a class:
 
     >>> class A:
-    ...     def __init__(self, name): self.name = name
+    ...     def __init__(self, name):
+    ...         self.name = name
 
     We can do nice things with this list:
 
     >>> class MList(querymixin, list):
     ...     pass
     >>> m = MList()
-    >>> m.append(A('one'))
-    >>> m.append(A('two'))
-    >>> m.append(A('three'))
+    >>> m.append(A("one"))
+    >>> m.append(A("two"))
+    >>> m.append(A("three"))
     >>> m[1].name
     'two'
-    >>> m['it.name=="one"'] # doctest: +ELLIPSIS
+    >>> m['it.name=="one"']  # doctest: +ELLIPSIS
     [<gaphor.core.modeling.listmixins.A object at 0x...>]
     >>> m['it.name=="two"', 0].name
     'two'
@@ -112,7 +114,7 @@ def issafeiterable(obj):
     True
     >>> issafeiterable(1)
     False
-    >>> issafeiterable('text')
+    >>> issafeiterable("text")
     False
     """
     try:
@@ -173,14 +175,16 @@ class recursemixin(Generic[T]):
     ...     def __init__(self, name, *children):
     ...         self.name = name
     ...         self.children = list(children)
+    ...
     ...     def dump(self, level=0):
-    ...         print(' ' * level, self.name)
-    ...         for c in self.children: c.dump(level+1)
+    ...         print(" " * level, self.name)
+    ...         for c in self.children:
+    ...             c.dump(level + 1)
 
     Now if we make a (complex) structure out of it:
 
-    >>> a = A('root', A('a', A('b'), A('c'), A('d')), A('e', A('one'), A('two')))
-    >>> a.dump()   # doctest: +ELLIPSIS
+    >>> a = A("root", A("a", A("b"), A("c"), A("d")), A("e", A("one"), A("two")))
+    >>> a.dump()  # doctest: +ELLIPSIS
      root
       a
        b
@@ -207,31 +211,33 @@ class recursemixin(Generic[T]):
     ...     def __init__(self, name, *children):
     ...         self.name = name
     ...         self.children = rlist(children)
+    ...
     ...     def dump(self, level=0):
-    ...         print(' ' * level, self.name)
-    ...         for c in self.children: c.dump(level+1)
+    ...         print(" " * level, self.name)
+    ...         for c in self.children:
+    ...             c.dump(level + 1)
 
-    >>> a = A('root', A('a', A('b'), A('c'), A('d')), A('e', A('one'), A('two')))
+    >>> a = A("root", A("a", A("b"), A("c"), A("d")), A("e", A("one"), A("two")))
     >>> a.children[1].name
     'e'
 
     Invoking ``a.children[:]`` should now return a recurseproxy object:
 
-    >>> a.children[:]                                       # doctest: +ELLIPSIS
+    >>> a.children[:]  # doctest: +ELLIPSIS
     <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
-    >>> list(a.children[:].name)                            # doctest: +ELLIPSIS
+    >>> list(a.children[:].name)  # doctest: +ELLIPSIS
     ['a', 'e']
 
     Now calling a child on the list will return a list of all children:
 
-    >>> a.children[:].children                              # doctest: +ELLIPSIS
+    >>> a.children[:].children  # doctest: +ELLIPSIS
     <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
-    >>> list(a.children[:].children)                        # doctest: +ELLIPSIS
+    >>> list(a.children[:].children)  # doctest: +ELLIPSIS
     [<gaphor.core.modeling.listmixins.A object at 0x...>, <gaphor.core.modeling.listmixins.A object at 0x...>, <gaphor.core.modeling.listmixins.A object at 0x...>, <gaphor.core.modeling.listmixins.A object at 0x...>, <gaphor.core.modeling.listmixins.A object at 0x...>]
 
     And of course we're interested in the names:
 
-    >>> a.children[:].children.name                         # doctest: +ELLIPSIS
+    >>> a.children[:].children.name  # doctest: +ELLIPSIS
     <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
     >>> list(a.children[:].children.name)
     ['b', 'c', 'd', 'one', 'two']
