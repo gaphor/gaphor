@@ -60,10 +60,10 @@ class Toolbox(UIComponent, ActionProvider):
         """Creates a tool button for the toolbox.
 
         Args:
-            action_name (String): The action for the button.
-            icon_name (String): The button icon.
-            label (String): The label for the button.
-            shortcut (String): The button shortcut.
+            action_name (str): The action for the button.
+            icon_name (str): The button icon.
+            label (str): The label for the button.
+            shortcut (str): The optional button shortcut.
 
         Returns: The Gtk.ToggleToolButton.
         """

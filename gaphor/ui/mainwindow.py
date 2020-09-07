@@ -5,6 +5,7 @@ import logging
 from pathlib import Path
 from typing import List, Tuple
 
+from generic.event import Event
 from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
@@ -470,13 +471,9 @@ class Diagrams(UIComponent, ActionProvider):
         return page
 
     @event_handler(DiagramClosed)
-    def _on_close_diagram(self, event):
-        """Callback to close the tab and remove the notebook page.
+    def _on_close_diagram(self, event: Event) -> None:
+        """Callback to close the tab and remove the notebook page."""
 
-        Args:
-            button (Gtk.Button): The button the callback is from.
-            widget (Gtk.Widget): The child widget of the tab.
-        """
         diagram = event.diagram
 
         for page_num, widget in self.get_widgets_on_pages():
