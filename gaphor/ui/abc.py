@@ -5,9 +5,7 @@ from gaphor.abc import Service
 
 
 class UIComponent(Service):
-    """
-    A user interface component.
-    """
+    """A user interface component."""
 
     ui_name: str  # "The UIComponent name, provided by the loader"
 
@@ -17,19 +15,18 @@ class UIComponent(Service):
 
     @abc.abstractmethod
     def open(self):
-        """
-        Create and display the UI components (windows).
-        """
+        """Create and display the UI components (windows)."""
 
     @abc.abstractmethod
     def close(self):
-        """
-        Close the UI component. The component can decide to hide or destroy the UI
-        components.
+        """Close the UI component.
+
+        The component can decide to hide or destroy the UI components.
         """
 
     def shutdown(self):
-        """
-        Shut down this component. It's not supposed to be opened again.
+        """Shut down this component.
+
+        It's not supposed to be opened again.
         """
         self.close()

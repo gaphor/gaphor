@@ -11,8 +11,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.Extension)
 class ExtensionItem(LinePresentation, Named):
-    """
-    ExtensionItem represents associations.
+    """ExtensionItem represents associations.
+
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item
     represents a Property (with Property.association == my association).
     """

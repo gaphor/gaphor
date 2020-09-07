@@ -1,5 +1,4 @@
-"""
-Common dependencies like dependency, usage, implementation and realization.
+"""Common dependencies like dependency, usage, implementation and realization.
 
 Dependency Type
 ===============
@@ -29,8 +28,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.Dependency)
 class DependencyItem(LinePresentation, Named):
-    """
-    Dependency item represents several types of dependencies, i.e. normal
+    """Dependency item represents several types of dependencies, i.e. normal
     dependency or usage.
 
     Usually a dependency looks like a dashed line with an arrow head.

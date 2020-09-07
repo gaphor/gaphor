@@ -1,6 +1,4 @@
-"""
-Base code for presentation elements
-"""
+"""Base code for presentation elements."""
 
 from __future__ import annotations
 
@@ -19,13 +17,14 @@ S = TypeVar("S", bound=Element)
 
 
 class Presentation(Element, Generic[S]):
-    """
-    This presentation is used to link the behaviors of `gaphor.core.modeling` and `gaphas.Item`.
+    """This presentation is used to link the behaviors of
+    `gaphor.core.modeling` and `gaphas.Item`.
 
-    Note that Presentations are not managed by the Element Factory. Instead, Presentation
-    objects are owned by Diagram.
-    As a result they do not emit ElementCreated and ElementDeleted events. Presentations have their own
-    create and delete events: DiagramItemCreated and DiagramItemDeleted.
+    Note that Presentations are not managed by the Element Factory.
+    Instead, Presentation objects are owned by Diagram. As a result they
+    do not emit ElementCreated and ElementDeleted events. Presentations
+    have their own create and delete events: DiagramItemCreated and
+    DiagramItemDeleted.
     """
 
     def __init__(self, id=None, model=None):
@@ -55,10 +54,8 @@ class Presentation(Element, Generic[S]):
         return canvas.diagram if canvas else None
 
     def watch(self, path, handler=None):
-        """
-        Watch a certain path of elements starting with the DiagramItem.
-        The handler is optional and will default to a simple
-        self.request_update().
+        """Watch a certain path of elements starting with the DiagramItem. The
+        handler is optional and will default to a simple self.request_update().
 
         Watches should be set in the constructor, so they can be registered
         and unregistered in one shot.
@@ -69,21 +66,15 @@ class Presentation(Element, Generic[S]):
         return self
 
     def subscribe_all(self):
-        """
-        Subscribe all watched paths, as defined through `watch()`.
-        """
+        """Subscribe all watched paths, as defined through `watch()`."""
         self._watcher.subscribe_all()
 
     def unsubscribe_all(self):
-        """
-        Unsubscribe all watched paths, as defined through `watch()`.
-        """
+        """Unsubscribe all watched paths, as defined through `watch()`."""
         self._watcher.unsubscribe_all()
 
     def unlink(self):
-        """
-        Remove the item from the canvas and set subject to None.
-        """
+        """Remove the item from the canvas and set subject to None."""
         if self.canvas:
             diagram = self.diagram
             self.canvas.remove(self)

@@ -1,6 +1,4 @@
-"""
-Test include item connections.
-"""
+"""Test include item connections."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -19,8 +17,7 @@ class IncludeItemTestCase(TestCase):
         assert glued
 
     def test_use_case_connect(self):
-        """Test connecting "include" to use cases
-        """
+        """Test connecting "include" to use cases."""
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
         include = self.create(IncludeItem)
@@ -32,8 +29,7 @@ class IncludeItemTestCase(TestCase):
         assert self.get_connected(include.tail), uc2
 
     def test_use_case_reconnect(self):
-        """Test reconnecting use cases with "include"
-        """
+        """Test reconnecting use cases with "include"."""
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
         uc3 = self.create(UseCaseItem, UML.UseCase)
@@ -52,8 +48,7 @@ class IncludeItemTestCase(TestCase):
         assert include.subject.includingCase is uc3.subject
 
     def test_use_case_disconnect(self):
-        """Test disconnecting "include" from use cases
-        """
+        """Test disconnecting "include" from use cases."""
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
         include = self.create(IncludeItem)

@@ -1,8 +1,8 @@
 """A generic way to handle errors in GUI applications.
 
-This module also contains a ErrorHandlerAspect, which can be easily attached
-to a class' method and will raise the error dialog when the method exits with
-an exception.
+This module also contains a ErrorHandlerAspect, which can be easily
+attached to a class' method and will raise the error dialog when the
+method exits with an exception.
 """
 
 import pdb

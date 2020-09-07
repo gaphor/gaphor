@@ -1,7 +1,4 @@
-"""
-Definitions (types) for style sheets.
-
-"""
+"""Definitions (types) for style sheets."""
 from enum import Enum
 from typing import Sequence, Tuple, Union
 

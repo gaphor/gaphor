@@ -30,11 +30,12 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         self._next_newline = False
 
     def _write(self, text, start_tag=False, end_tag=False):
-        """
-        Write data. Tags should not be escaped. They should be marked
-        by setting either ``start_tag`` or ``end_tag`` to ``True``.
-        Only the tag should be marked this way. Other stuff, such as
-        namespaces and attributes can be written directly to the file.
+        """Write data.
+
+        Tags should not be escaped. They should be marked by setting
+        either ``start_tag`` or ``end_tag`` to ``True``. Only the tag
+        should be marked this way. Other stuff, such as namespaces and
+        attributes can be written directly to the file.
         """
         if not isinstance(text, str):
             text = text.decode(self._encoding, _error_handling)
@@ -69,7 +70,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
         self._out.write(text)
 
     def _qname(self, name):
-        """Builds a qualified name from a (ns_url, localname) pair"""
+        """Builds a qualified name from a (ns_url, localname) pair."""
         if name[0]:
             # The name is in a non-empty namespace
             prefix = self._current_context[name[0]]

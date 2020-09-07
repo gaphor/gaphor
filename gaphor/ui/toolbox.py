@@ -66,7 +66,6 @@ class Toolbox(UIComponent, ActionProvider):
             shortcut (String): The button shortcut.
 
         Returns: The Gtk.ToggleToolButton.
-
         """
         button = Gtk.ToggleToolButton.new()
         icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
@@ -133,7 +132,6 @@ class Toolbox(UIComponent, ActionProvider):
             toolbox: The Gtk.ToolPalette to add.
 
         Returns: The Gtk.ScrolledWindow.
-
         """
         toolbox_container = Gtk.ScrolledWindow()
         toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
@@ -147,7 +145,6 @@ class Toolbox(UIComponent, ActionProvider):
 
         Args:
             event: The ModelingLanguageChanged event.
-
         """
         toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         if self._toolbox_container:
@@ -172,6 +169,5 @@ class Toolbox(UIComponent, ActionProvider):
             info (int): The info that has been registered with the target in
                 the Gtk.TargetList
             time (int): The timestamp at which the data was received.
-
         """
         data.set(type=data.get_target(), format=8, data=action_name.encode())

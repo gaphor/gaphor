@@ -1,9 +1,8 @@
-"""
-Special methods (overrides) that add behavior to the model
-that cannot simply be generated.
+"""Special methods (overrides) that add behavior to the model that cannot
+simply be generated.
 
-Derived methods always return a list. Note this is not the case
-for normal properties.
+Derived methods always return a list. Note this is not the case for
+normal properties.
 """
 
 from __future__ import annotations
@@ -17,10 +16,10 @@ from gaphor.UML import uml, umllex
 
 # See https://www.omg.org/spec/UML/2.5/PDF, section 12.4.1.5, page 271
 def extension_metaclass(self):
-    """
-    References the Class that is extended through an Extension. The
-    property is derived from the type of the memberEnd that is not the
-    ownedEnd.
+    """References the Class that is extended through an Extension.
+
+    The property is derived from the type of the memberEnd that is not
+    the ownedEnd.
     """
     ownedEnd = self.ownedEnd
     metaend = [e for e in self.memberEnd if e is not ownedEnd]
@@ -35,8 +34,7 @@ uml.Extension.metaclass = property(extension_metaclass, doc=extension_metaclass.
 
 
 def property_opposite(self: uml.Property) -> List[Optional[uml.Property]]:
-    """
-    In the case where the property is one navigable end of a binary
+    """In the case where the property is one navigable end of a binary
     association with both ends navigable, this gives the other end.
 
     For Gaphor the property on the other end is returned regardless the
@@ -55,10 +53,10 @@ uml.Property.opposite = derived("opposite", uml.Property, 0, 1, property_opposit
 
 
 def property_navigability(self: uml.Property) -> List[Optional[bool]]:
-    """
-    Get navigability of an association end.
-    If no association is related to the property, then unknown navigability
-    is assumed.
+    """Get navigability of an association end.
+
+    If no association is related to the property, then unknown
+    navigability is assumed.
     """
     assoc = self.association
     if not (assoc and self.opposite):
@@ -81,10 +79,8 @@ uml.Property.navigability = derived("navigability", bool, 0, 1, property_navigab
 
 
 def _pr_interface_deps(classifier, dep_type):
-    """
-    Return all interfaces, which are connected to a classifier with given
-    dependency type.
-    """
+    """Return all interfaces, which are connected to a classifier with given
+    dependency type."""
     return (
         dep.supplier[0]
         for dep in classifier.clientDependency
@@ -93,8 +89,7 @@ def _pr_interface_deps(classifier, dep_type):
 
 
 def _pr_rc_interface_deps(component, dep_type):
-    """
-    Return all interfaces, which are connected to realizing classifiers of
+    """Return all interfaces, which are connected to realizing classifiers of
     specified component. Returned interfaces are connected to realizing
     classifiers with given dependency type.
 
@@ -107,9 +102,7 @@ def _pr_rc_interface_deps(component, dep_type):
 
 
 def component_provided(self) -> List[Union[uml.Implementation, uml.Realization]]:
-    """
-    Interfaces provided to component environment.
-    """
+    """Interfaces provided to component environment."""
     implementations = (
         impl.contract[0]
         for impl in self.implementation
@@ -128,9 +121,7 @@ uml.Component.provided = property(component_provided, doc=component_provided.__d
 
 
 def component_required(self) -> List[uml.Usage]:
-    """
-    Interfaces required by component.
-    """
+    """Interfaces required by component."""
     usages = _pr_interface_deps(self, uml.Usage)
 
     # realizing classifiers usages
@@ -144,9 +135,7 @@ uml.Component.required = property(component_required, doc=component_required.__d
 
 
 def message_messageKind(self) -> str:
-    """
-    MessageKind
-    """
+    """MessageKind."""
     kind = "unknown"
     if self.sendEvent:
         kind = "lost"

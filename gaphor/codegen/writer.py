@@ -43,11 +43,11 @@ class Writer:
             out.close()
 
     def add_classdef(self, clazz):
-        """
-        Write a class definition (class xx(x): pass).
-        First the parent classes are examined. After that its own definition
-        is written. It is ensured that class definitions are only written
-        once.
+        """Write a class definition (class xx(x): pass).
+
+        First the parent classes are examined. After that its own
+        definition is written. It is ensured that class definitions are
+        only written once.
         """
         if not clazz.written:
             s = ""
@@ -71,10 +71,10 @@ class Writer:
         self.features.append(f"# {line}")
 
     def add_property(self, class_name, name, value, type):
-        """
-        Write a property to the file. If the property is overridden, use the
-        overridden value. value is
-        free format text.
+        """Write a property to the file.
+
+        If the property is overridden, use the overridden value. value
+        is free format text.
         """
         full_name = f"{class_name}.{name}"
         if self.overrides.has_override(full_name):
@@ -94,9 +94,10 @@ class Writer:
             self.features.append(impl)
 
     def add_attribute(self, a, enumerations={}):
-        """
-        Write a definition for attribute a. Enumerations may be a dict
-        of enumerations, indexed by ID. These are used to identify enums.
+        """Write a definition for attribute a.
+
+        Enumerations may be a dict of enumerations, indexed by ID. These
+        are used to identify enums.
         """
         params = {}
         type = a.typeValue
@@ -157,8 +158,8 @@ class Writer:
             msg(f"No override for operation {full_name}")
 
     def add_association(self, head, tail):
-        """
-        Write an association for head.
+        """Write an association for head.
+
         The association should not be a redefine or derived association.
         """
         if head.written:
@@ -209,12 +210,11 @@ class Writer:
         )
 
     def add_derivedunion(self, d):
-        """
-        Write a derived union. If there are no subsets a warning
-        is issued. The derivedunion is still created though.
+        """Write a derived union. If there are no subsets a warning is issued.
+        The derivedunion is still created though.
 
-        Derived unions may be created for associations that were returned
-        False by add_association().
+        Derived unions may be created for associations that were
+        returned False by add_association().
         """
         subs = ""
         for u in d.union:
@@ -261,10 +261,8 @@ class Writer:
         d.written = True
 
     def add_redefine(self, r):
-        """
-        Redefines may be created for associations that were returned
-        False by add_association().
-        """
+        """Redefines may be created for associations that were returned False
+        by add_association()."""
         self.add_property(
             r.class_name,
             r.name,

@@ -1,6 +1,4 @@
-"""
-Test classes.
-"""
+"""Test classes."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -9,14 +7,12 @@ from gaphor.UML.classes.interface import Folded, InterfaceItem
 
 class InterfaceTestCase(TestCase):
     def test_interface_creation(self):
-        """Test interface creation
-        """
+        """Test interface creation."""
         iface = self.create(InterfaceItem, UML.Interface)
         assert isinstance(iface.subject, UML.Interface)
 
     def test_folded_interface_persistence(self):
-        """Test folded interface saving/loading
-        """
+        """Test folded interface saving/loading."""
         iface = self.create(InterfaceItem, UML.Interface)
 
         # note: assembly folded mode..

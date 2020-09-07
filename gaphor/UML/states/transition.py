@@ -1,6 +1,4 @@
-"""
-State transition implementation.
-"""
+"""State transition implementation."""
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
@@ -11,9 +9,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.Transition)
 class TransitionItem(LinePresentation[UML.Transition], Named):
-    """
-    Representation of state transition.
-    """
+    """Representation of state transition."""
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)

@@ -8,9 +8,7 @@ from gaphor.UML.usecases import UseCaseItem
 
 @Group.register(NodeItem, NodeItem)
 class NodeGroup(AbstractGroup):
-    """
-    Add node to another node.
-    """
+    """Add node to another node."""
 
     def group(self):
         self.parent.subject.nestedNode = self.item.subject
@@ -21,9 +19,7 @@ class NodeGroup(AbstractGroup):
 
 @Group.register(NodeItem, ComponentItem)
 class NodeComponentGroup(AbstractGroup):
-    """
-    Add components to node using internal structures.
-    """
+    """Add components to node using internal structures."""
 
     def group(self):
         node = self.parent.subject
@@ -66,9 +62,7 @@ class NodeComponentGroup(AbstractGroup):
 
 @Group.register(NodeItem, ArtifactItem)
 class NodeArtifactGroup(AbstractGroup):
-    """
-    Deploy artifact on node.
-    """
+    """Deploy artifact on node."""
 
     def group(self):
         node = self.parent.subject
@@ -89,9 +83,7 @@ class NodeArtifactGroup(AbstractGroup):
 
 @Group.register(ComponentItem, UseCaseItem)
 class SubsystemUseCaseGroup(AbstractGroup):
-    """
-    Make subsystem a subject of an use case.
-    """
+    """Make subsystem a subject of an use case."""
 
     def group(self):
         component = self.parent.subject

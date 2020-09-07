@@ -1,5 +1,4 @@
-"""
-Connection between two state machine vertices (state, pseudostate) using
+"""Connection between two state machine vertices (state, pseudostate) using
 transition.
 
 To register connectors implemented in this module, it is imported in
@@ -14,9 +13,7 @@ from gaphor.UML.states.transition import TransitionItem
 
 
 class VertexConnect(RelationshipConnect):
-    """
-    Abstract relationship between two state vertices.
-    """
+    """Abstract relationship between two state vertices."""
 
     def reconnect(self, handle, port):
         self.reconnect_relationship(
@@ -37,9 +34,9 @@ class TransitionConnect(VertexConnect):
     """Connect two state vertices using transition item."""
 
     def allow(self, handle, port):
-        """
-        Glue transition handle and vertex item. Guard from connecting
-        transition's head with final state.
+        """Glue transition handle and vertex item.
+
+        Guard from connecting transition's head with final state.
         """
         line = self.line
         subject = self.element.subject
@@ -58,14 +55,11 @@ class TransitionConnect(VertexConnect):
 
 @Connector.register(PseudostateItem, TransitionItem)
 class PseudostateTransitionConnect(VertexConnect):
-    """Connect pseudostate using transition item.
-    """
+    """Connect pseudostate using transition item."""
 
     def allow(self, handle, port):
-        """
-        Glue to initial pseudostate with transition's head and when there are
-        no transitions connected.
-        """
+        """Glue to initial pseudostate with transition's head and when there
+        are no transitions connected."""
         element = self.element
         assert isinstance(element.subject, UML.Pseudostate)
 

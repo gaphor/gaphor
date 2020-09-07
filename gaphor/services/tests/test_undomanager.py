@@ -1,6 +1,4 @@
-"""
-Test the UndoManager.
-"""
+"""Test the UndoManager."""
 
 from gaphor.core import event_handler
 from gaphor.core.eventmanager import EventManager

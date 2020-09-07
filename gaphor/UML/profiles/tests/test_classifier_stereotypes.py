@@ -1,6 +1,4 @@
-"""
-Test classifier stereotypes attributes using component items.
-"""
+"""Test classifier stereotypes attributes using component items."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -13,10 +11,8 @@ def compartments(item):
 
 class StereotypesAttributesTestCase(TestCase):
     def setUp(self):
-        """
-        Create two stereotypes and extend component UML metaclass using
-        them.
-        """
+        """Create two stereotypes and extend component UML metaclass using
+        them."""
         super().setUp()
         factory = self.element_factory
         cls = factory.create(UML.Class)
@@ -45,8 +41,8 @@ class StereotypesAttributesTestCase(TestCase):
         del self.st2
 
     def test_adding_slot(self):
-        """Test if stereotype attribute information is added when slot is added
-        """
+        """Test if stereotype attribute information is added when slot is
+        added."""
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -61,8 +57,7 @@ class StereotypesAttributesTestCase(TestCase):
         assert len(compartments(c)) == 1
 
     def test_removing_last_slot(self):
-        """Test removing last slot
-        """
+        """Test removing last slot."""
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -78,8 +73,7 @@ class StereotypesAttributesTestCase(TestCase):
         assert not compartments(c)
 
     def test_deleting_extension(self):
-        """Test if stereotype is removed when extension is deleteded
-        """
+        """Test if stereotype is removed when extension is deleteded."""
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -97,8 +91,7 @@ class StereotypesAttributesTestCase(TestCase):
         assert len(compartments(c)) == 0
 
     def test_deleting_stereotype(self):
-        """Test if stereotype is removed when stereotype is deleteded
-        """
+        """Test if stereotype is removed when stereotype is deleteded."""
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -117,8 +110,8 @@ class StereotypesAttributesTestCase(TestCase):
         assert len(compartments(c)) == 0
 
     def test_removing_stereotype_attribute(self):
-        """Test if stereotype instance specification is destroyed when stereotype attribute is removed
-        """
+        """Test if stereotype instance specification is destroyed when
+        stereotype attribute is removed."""
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -146,8 +139,7 @@ class StereotypesAttributesTestCase(TestCase):
         assert not compartments(c)
 
     def test_stereotype_attributes_status_saving(self):
-        """Test stereotype attributes status saving
-        """
+        """Test stereotype attributes status saving."""
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
@@ -167,8 +159,7 @@ class StereotypesAttributesTestCase(TestCase):
         assert len(compartments(c)) == 1
 
     def test_saving_stereotype_attributes(self):
-        """Test stereotype attributes saving
-        """
+        """Test stereotype attributes saving."""
         c = self.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True

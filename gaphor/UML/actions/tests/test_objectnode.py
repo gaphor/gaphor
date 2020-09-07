@@ -8,9 +8,7 @@ class ObjectNodeTestCase(TestCase):
         self.create(ObjectNodeItem, UML.ObjectNode)
 
     def test_name(self):
-        """
-        Test updating of object node name
-        """
+        """Test updating of object node name."""
         node = self.create(ObjectNodeItem, UML.ObjectNode)
         name = node.shape.icon.children[1]
 
@@ -19,9 +17,7 @@ class ObjectNodeTestCase(TestCase):
         assert "Blah" == name.text()
 
     def test_ordering(self):
-        """
-        Test updating of ObjectNodeItem.ordering.
-        """
+        """Test updating of ObjectNodeItem.ordering."""
         node = self.create(ObjectNodeItem, UML.ObjectNode)
         ordering = node.shape.children[1]
 

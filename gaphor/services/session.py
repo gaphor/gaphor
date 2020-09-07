@@ -2,8 +2,9 @@ from gaphor.abc import Service
 
 
 class Session(Service):
-    """
-    Application service. Get the active session.
+    """Application service.
+
+    Get the active session.
     """
 
     def __init__(self, application):

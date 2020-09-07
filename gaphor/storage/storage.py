@@ -1,11 +1,7 @@
-"""
-Load and save Gaphor models to Gaphors own XML format.
+"""Load and save Gaphor models to Gaphors own XML format.
 
-Three functions are exported:
-load(filename)
-    load a model from a file
-save(filename)
-    store the current model in a file
+Three functions are exported: load(filename)     load a model from a
+file save(filename)     store the current model in a file
 """
 
 __all__ = ["load", "save"]
@@ -36,10 +32,8 @@ def save(writer=None, factory=None, status_queue=None):
 
 
 def save_generator(writer, factory):
-    """
-    Save the current model using @writer, which is a
-    gaphor.storage.xmlwriter.XMLWriter instance.
-    """
+    """Save the current model using @writer, which is a
+    gaphor.storage.xmlwriter.XMLWriter instance."""
 
     writer.startDocument()
     writer.startPrefixMapping("", NAMESPACE_MODEL)
@@ -71,16 +65,17 @@ def save_generator(writer, factory):
 
 
 def save_element(name, value, writer):
-    """
-    Save attributes and references from items in the gaphor.UML module.
-    A value may be a primitive (string, int), a gaphor.core.modeling.collection
-    (which contains a list of references to other UML elements) or a
-    gaphas.Canvas (which contains canvas items).
+    """Save attributes and references from items in the gaphor.UML module.
+
+    A value may be a primitive (string, int), a
+    gaphor.core.modeling.collection (which contains a list of references
+    to other UML elements) or a gaphas.Canvas (which contains canvas
+    items).
     """
 
     def save_reference(name, value):
-        """
-        Save a value as a reference to another element in the model.
+        """Save a value as a reference to another element in the model.
+
         This applies to both UML as well as canvas items.
         """
         if value.id:
@@ -90,9 +85,7 @@ def save_element(name, value, writer):
             writer.endElement(name)
 
     def save_collection(name, value):
-        """
-        Save a list of references.
-        """
+        """Save a list of references."""
         if value:
             writer.startElement(name, {})
             writer.startElement("reflist", {})
@@ -104,9 +97,7 @@ def save_element(name, value, writer):
             writer.endElement(name)
 
     def save_value(name, value):
-        """
-        Save a value (attribute).
-        """
+        """Save a value (attribute)."""
         if value is not None:
             writer.startElement(name, {})
             writer.startElement("val", {})
@@ -119,8 +110,8 @@ def save_element(name, value, writer):
             writer.endElement(name)
 
     def save_canvas(value):
-        """
-        Save attributes and references in a gaphor.diagram.* object.
+        """Save attributes and references in a gaphor.diagram.* object.
+
         The extra attribute reference can be used to force UML
         """
         assert isinstance(value, gaphas.Item)
@@ -133,8 +124,8 @@ def save_element(name, value, writer):
         writer.endElement("item")
 
     def save_canvas_item(name, value):
-        """
-        Save attributes and references in a gaphor.diagram.* object.
+        """Save attributes and references in a gaphor.diagram.* object.
+
         The extra attribute reference can be used to force UML
         """
         if isinstance(value, collection):
@@ -164,8 +155,8 @@ def load_elements(elements, factory, modeling_language, gaphor_version="1.0.0"):
 
 
 def load_elements_generator(elements, factory, modeling_language, gaphor_version):
-    """
-    Load a file and create a model if possible.
+    """Load a file and create a model if possible.
+
     Exceptions: IOError, ValueError.
     """
     log.debug(f"Loading {len(elements)} elements")
@@ -200,9 +191,8 @@ def _load_elements_and_canvasitems(
     elements, factory, modeling_language, gaphor_version, update_status_queue
 ):
     def create_canvasitems(diagram, canvasitems, parent=None):
-        """
-        Canvas is a read gaphas.Canvas, items is a list of parser.canvasitem's
-        """
+        """Canvas is a read gaphas.Canvas, items is a list of
+        parser.canvasitem's."""
         if version_lower_than(gaphor_version, (1, 1, 0)):
             new_canvasitems = upgrade_message_item_to_1_1_0(canvasitems)
             canvasitems.extend(new_canvasitems)
@@ -266,8 +256,8 @@ def _load_attributes_and_references(elements, update_status_queue):
 
 
 def load(filename, factory, modeling_language, status_queue=None):
-    """
-    Load a file and create a model if possible.
+    """Load a file and create a model if possible.
+
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
     """
@@ -277,8 +267,8 @@ def load(filename, factory, modeling_language, status_queue=None):
 
 
 def load_generator(filename, factory, modeling_language):
-    """
-    Load a file and create a model if possible.
+    """Load a file and create a model if possible.
+
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
     """
@@ -326,12 +316,10 @@ def load_generator(filename, factory, modeling_language):
 
 
 def version_lower_than(gaphor_version, version):
-    """
-    Only major and minor versions are checked.
+    """Only major and minor versions are checked.
 
     >>> version_lower_than('0.3.0', (0, 15, 0))
     True
-
     """
     parts = gaphor_version.split(".")
 
@@ -391,9 +379,7 @@ def clone_canvasitem(item, subject_id):
 
 
 def upgrade_message_item_to_1_1_0(canvasitems):
-    """
-    Create new MessageItem's for each `message` and `inverted` message.
-    """
+    """Create new MessageItem's for each `message` and `inverted` message."""
     new_canvasitems = []
     for item in canvasitems:
         # new_canvasitems.append(item)

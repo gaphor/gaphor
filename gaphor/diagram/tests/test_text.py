@@ -60,9 +60,7 @@ def test_point_at_right_top(points, point_at_line):
     ],
 )
 def test_point_at_center_bottom(points, point_at_line):
-    """
-    Test aligned at the line text position calculation, horizontal mode
-    """
+    """Test aligned at the line text position calculation, horizontal mode."""
     x, y = text_point_at_line(points, (10, 5), TextAlign.CENTER)
 
     assert x == pytest.approx(point_at_line[0])

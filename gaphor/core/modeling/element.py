@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-"""
-Base class for model elements.
-"""
+"""Base class for model elements."""
 
 from __future__ import annotations
 
@@ -33,8 +31,7 @@ log = logging.getLogger(__name__)
 
 
 class UnlinkEvent:
-    """Used to tell event handlers this element should be unlinked.
-    """
+    """Used to tell event handlers this element should be unlinked."""
 
     def __init__(self, element: Element):
         self.element = element
@@ -44,9 +41,7 @@ Id = Union[str, bool]
 
 
 class Element:
-    """
-    Base class for all model data classes.
-    """
+    """Base class for all model data classes."""
 
     appliedStereotype: relation_many[Element]
     owner: relation_one[Element]
@@ -57,8 +52,7 @@ class Element:
     def __init__(
         self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
     ):
-        """
-        Create an element. As optional parameters an id and model can be
+        """Create an element. As optional parameters an id and model can be
         given.
 
         Id is a serial number for the element. The default id is None and will
@@ -81,16 +75,14 @@ class Element:
 
     @property
     def model(self) -> RepositoryProtocol:
-        "The owning model, raises AssertionError when model is not set."
+        """The owning model, raises AssertionError when model is not set."""
         assert (
             self._model
         ), "You can not retrieve the model since it's not set on construction"
         return self._model
 
     def umlproperties(self):
-        """
-        Iterate over all properties
-        """
+        """Iterate over all properties."""
         umlprop = umlproperty
         class_ = type(self)
         for propname in dir(class_):
@@ -100,16 +92,14 @@ class Element:
                     yield prop
 
     def save(self, save_func):
-        """
-        Save the state by calling save_func(name, value).
-        """
+        """Save the state by calling save_func(name, value)."""
         for prop in self.umlproperties():
             prop.save(self, save_func)
 
     def load(self, name, value):
-        """
-        Loads value in name. Make sure that for every load postload()
-        should be called.
+        """Loads value in name.
+
+        Make sure that for every load postload() should be called.
         """
         try:
             prop = getattr(type(self), name)
@@ -124,18 +114,16 @@ class Element:
     __repr__ = __str__
 
     def postload(self):
-        """
-        Fix up the odds and ends.
-        """
+        """Fix up the odds and ends."""
         for prop in self.umlproperties():
             prop.postload(self)
 
     def unlink(self):
-        """
-        Unlink the element. All the elements references are destroyed.
+        """Unlink the element. All the elements references are destroyed.
 
-        The unlink lock is acquired while unlinking this elements properties
-        to avoid recursion problems."""
+        The unlink lock is acquired while unlinking this elements
+        properties to avoid recursion problems.
+        """
 
         if self._unlink_lock:
             return
@@ -151,9 +139,7 @@ class Element:
             self._unlink_lock -= 1
 
     def handle(self, event):
-        """
-        Propagate incoming events
-        """
+        """Propagate incoming events."""
         model = self._model
         if model:
             model.handle(event)
@@ -168,15 +154,11 @@ class Element:
     # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
 
     def isKindOf(self, class_: Type[Element]) -> bool:
-        """
-        Returns true if the object is an instance of `class_`.
-        """
+        """Returns true if the object is an instance of `class_`."""
         return isinstance(self, class_)
 
     def isTypeOf(self, other: Element) -> bool:
-        """
-        Returns true if the object is of the same type as other.
-        """
+        """Returns true if the object is of the same type as other."""
         return isinstance(self, type(other))
 
 

@@ -388,8 +388,7 @@ class DependencyPropertyPage(PropertyPageBase):
         self.update()
 
     def update(self):
-        """
-        Update dependency type combo box.
+        """Update dependency type combo box.
 
         Disallow dependency type when dependency is established.
         """
@@ -421,8 +420,7 @@ def _dummy_handler(*args):
 
 @PropertyPages.register(AssociationItem)
 class AssociationPropertyPage(PropertyPageBase):
-    """
-    """
+    """"""
 
     NAVIGABILITY = (None, False, True)
     AGGREGATION = ("none", "shared", "composite")

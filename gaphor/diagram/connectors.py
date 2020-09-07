@@ -1,5 +1,4 @@
-"""
-Connector adapters.
+"""Connector adapters.
 
 To register connectors implemented in this module, it is imported in
 gaphor.adapter package.
@@ -36,8 +35,7 @@ class ConnectorProtocol(Protocol):
 
 
 class BaseConnector:
-    """
-    Connection adapter for Gaphor diagram items.
+    """Connection adapter for Gaphor diagram items.
 
     Line item ``line`` connects with a handle to a connectable item ``element``.
 
@@ -67,33 +65,27 @@ class BaseConnector:
         self.canvas: Canvas = element.canvas
 
     def get_connection(self, handle: Handle) -> Optional[Connection]:
-        """
-        Get connection information
-        """
+        """Get connection information."""
         return self.canvas.get_connection(handle)
 
     def get_connected(self, handle: Handle) -> Optional[Presentation[Element]]:
-        """
-        Get item connected to a handle.
-        """
+        """Get item connected to a handle."""
         cinfo = self.canvas.get_connection(handle)
         if cinfo:
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
         return None
 
     def allow(self, handle: Handle, port: Port) -> bool:
-        """
-        Determine if items can be connected.
+        """Determine if items can be connected.
 
         Returns `True` if connection is allowed.
         """
         return True
 
     def connect(self, handle: Handle, port: Port) -> bool:
-        """
-        Connect to an element. Note that at this point the line may
-        be connected to some other, or the same element.
-        Also the connection at model level still exists.
+        """Connect to an element. Note that at this point the line may be
+        connected to some other, or the same element. Also the connection at
+        model level still exists.
 
         Returns `True` if a connection is established.
         """
@@ -125,8 +117,7 @@ Connector: FunctionDispatcher[Type[ConnectorProtocol]] = multidispatch(object, o
 
 
 class UnaryRelationshipConnect(BaseConnector):
-    """
-    Base class for relationship connections, such as associations,
+    """Base class for relationship connections, such as associations,
     dependencies and implementations.
 
     Unary relationships are allowed to connect both ends to the same element
@@ -142,10 +133,9 @@ class UnaryRelationshipConnect(BaseConnector):
     def relationship(
         self, required_type: Type[Element], head: relation, tail: relation
     ) -> Optional[Element]:
-        """
-        Find an existing relationship in the model that meets the
-        required type and is connected to the same model element the head
-        and tail of the line are connected to.
+        """Find an existing relationship in the model that meets the required
+        type and is connected to the same model element the head and tail of
+        the line are connected to.
 
         type - the type of relationship we're looking for
         head - tuple (association name on line, association name on element)
@@ -202,9 +192,7 @@ class UnaryRelationshipConnect(BaseConnector):
         return None
 
     def relationship_or_new(self, type: Type[T], head: relation, tail: relation) -> T:
-        """
-        Like relation(), but create a new instance if none was found.
-        """
+        """Like relation(), but create a new instance if none was found."""
         relation = self.relationship(type, head, tail)
         if not relation:
             line = self.line
@@ -221,8 +209,7 @@ class UnaryRelationshipConnect(BaseConnector):
     def reconnect_relationship(
         self, handle: Handle, head: relation, tail: relation
     ) -> None:
-        """
-        Reconnect relationship for given handle.
+        """Reconnect relationship for given handle.
 
         :Parameters:
          handle
@@ -245,10 +232,8 @@ class UnaryRelationshipConnect(BaseConnector):
             raise ValueError("Incorrect handle passed to adapter")
 
     def connect_connected_items(self, connections: None = None) -> None:
-        """
-        Cause items connected to ``line`` to reconnect, allowing them to
-        establish or destroy relationships at model level.
-        """
+        """Cause items connected to ``line`` to reconnect, allowing them to
+        establish or destroy relationships at model level."""
         line = self.line
         canvas = self.canvas
         solver = canvas.solver
@@ -265,12 +250,12 @@ class UnaryRelationshipConnect(BaseConnector):
             adapter.connect(cinfo.handle, cinfo.port)
 
     def disconnect_connected_items(self) -> List[Connection]:
-        """
-        Cause items connected to @line to be disconnected.
-        This is necessary if the subject of the @line is to be removed.
+        """Cause items connected to @line to be disconnected. This is necessary
+        if the subject of the @line is to be removed.
 
         Returns a list of (item, handle) pairs that were connected (this
-        list can be used to connect items again with connect_connected_items()).
+        list can be used to connect items again with
+        connect_connected_items()).
         """
         line = self.line
         canvas = self.canvas
@@ -285,16 +270,14 @@ class UnaryRelationshipConnect(BaseConnector):
         return connections
 
     def connect_subject(self, handle: Handle) -> bool:
-        """
-        Establish the relationship at model level.
-        """
+        """Establish the relationship at model level."""
         raise NotImplementedError("Implement connect_subject() in a subclass")
 
     def disconnect_subject(self, handle: Handle) -> None:
-        """
-        Disconnect the diagram item from its model element. If there are
-        no more presentations(diagram items) connected to the model element,
-        unlink() it too.
+        """Disconnect the diagram item from its model element.
+
+        If there are no more presentations(diagram items) connected to
+        the model element, unlink() it too.
         """
         line = self.line
         old = line.subject
@@ -303,9 +286,9 @@ class UnaryRelationshipConnect(BaseConnector):
             old.unlink()
 
     def connect(self, handle: Handle, port: Port) -> bool:
-        """
-        Connect the items to each other. The model level relationship
-        is created by create_subject()
+        """Connect the items to each other.
+
+        The model level relationship is created by create_subject()
         """
         if not super().connect(handle, port):
             return False
@@ -319,9 +302,7 @@ class UnaryRelationshipConnect(BaseConnector):
         return True
 
     def disconnect(self, handle: Handle) -> None:
-        """
-        Disconnect model element.
-        """
+        """Disconnect model element."""
         line = self.line
         opposite = line.opposite(handle)
         oct = self.get_connected(opposite)
@@ -339,9 +320,10 @@ class RelationshipConnect(UnaryRelationshipConnect):
     """Base for relationship connections between unique elements."""
 
     def allow(self, handle: Handle, port: Port) -> bool:
-        """
-        In addition to the normal check, both relationship ends may not be
-        connected to the same element. Same goes for subjects.
+        """In addition to the normal check, both relationship ends may not be
+        connected to the same element.
+
+        Same goes for subjects.
         """
         opposite = self.line.opposite(handle)
         element = self.element

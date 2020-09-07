@@ -12,9 +12,7 @@ class FlowTestCase(TestCase):
         self.create(FlowItem, UML.ControlFlow)
 
     def test_name(self):
-        """
-        Test updating of flow name text.
-        """
+        """Test updating of flow name text."""
         flow = self.create(FlowItem, UML.ControlFlow)
         name = flow.shape_tail.children[1]
 

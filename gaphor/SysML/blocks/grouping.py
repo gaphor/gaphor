@@ -5,9 +5,7 @@ from gaphor.SysML.blocks.property import PropertyItem
 
 @Group.register(BlockItem, PropertyItem)
 class PropertyGroup(AbstractGroup):
-    """
-    Add Property to a Block.
-    """
+    """Add Property to a Block."""
 
     def can_contain(self) -> bool:
         return (

@@ -49,13 +49,18 @@ class DelayedFunction:
 
 class ElementEditor(UIComponent, ActionProvider):
     """The ElementEditor class is a utility window used to edit UML elements.
-    It will display the properties of the currently selected element in the
-    diagram."""
+
+    It will display the properties of the currently selected element in
+    the diagram.
+    """
 
     def __init__(self, event_manager, element_factory, diagrams, properties):
-        """Constructor. Build the action group for the element editor window.
-        This will place a button for opening the window in the toolbar.
-        The widget attribute is a PropertyEditor."""
+        """Constructor.
+
+        Build the action group for the element editor window. This will
+        place a button for opening the window in the toolbar. The widget
+        attribute is a PropertyEditor.
+        """
         self.properties = properties
         self.editors = EditorStack(event_manager, diagrams, properties)
         self.settings = SettingsStack(event_manager, element_factory)
@@ -74,8 +79,10 @@ class ElementEditor(UIComponent, ActionProvider):
 
     def close(self, widget=None):
         """Hide the element editor window and deactivate the toolbar button.
+
         Both the widget and event parameters default to None and are
-        idempotent if set."""
+        idempotent if set.
+        """
 
         self.editors.close()
         self.settings.close()
@@ -126,9 +133,7 @@ class EditorStack:
         self._current_item = None
 
     def _get_adapters(self, item):
-        """
-        Return an ordered list of (order, name, adapter).
-        """
+        """Return an ordered list of (order, name, adapter)."""
         adaptermap = {}
         if isinstance(item, Presentation) and item.subject:
             for adapter in PropertyPages(item.subject):
@@ -139,9 +144,7 @@ class EditorStack:
         return sorted(adaptermap.items())
 
     def create_pages(self, item):
-        """
-        Load all tabs that can operate on the given item.
-        """
+        """Load all tabs that can operate on the given item."""
         assert self.vbox
         adapters = self._get_adapters(item)
 
@@ -160,9 +163,7 @@ class EditorStack:
                 )
 
     def clear_pages(self):
-        """
-        Remove all tabs from the notebook.
-        """
+        """Remove all tabs from the notebook."""
         assert self.vbox
         for page in self.vbox.get_children():
             page.destroy()
@@ -172,8 +173,7 @@ class EditorStack:
 
     @event_handler(DiagramSelectionChanged)
     def _selection_changed(self, event=None, focused_item=None):
-        """
-        Called when a diagram item receives focus.
+        """Called when a diagram item receives focus.
 
         This reloads all tabs based on the current selection.
         """
@@ -223,8 +223,7 @@ class EditorStack:
 
 
 class SettingsStack:
-    """ Support code for the Settings (cog) pane.
-    """
+    """Support code for the Settings (cog) pane."""
 
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager

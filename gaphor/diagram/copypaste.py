@@ -1,5 +1,4 @@
-"""
-Copy and paste data based on an element's `save()` and `load()` methods.
+"""Copy and paste data based on an element's `save()` and `load()` methods.
 
 The `copy()` function will return all values serialized, either as string
 values or reference id's.
@@ -36,19 +35,20 @@ T = TypeVar("T")
 
 @singledispatch
 def copy(obj: Element) -> T:
-    """
-    Create a copy of an element (or list of elements).
-    The returned type should be distinct, so the `paste()`
-    function can properly dispatch.
+    """Create a copy of an element (or list of elements).
+
+    The returned type should be distinct, so the `paste()` function can
+    properly dispatch.
     """
     raise ValueError(f"No copier for {obj}")
 
 
 @singledispatch
 def paste(copy_data: T, diagram: Diagram, lookup: Callable[[str], Element]):
-    """
-    Paste previously copied data. Based on the data type created in the
-    `copy()` function, try to duplicate the copied elements.
+    """Paste previously copied data.
+
+    Based on the data type created in the `copy()` function, try to
+    duplicate the copied elements.
     """
     raise ValueError(f"No paster for {copy_data}")
 

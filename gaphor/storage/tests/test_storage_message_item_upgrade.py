@@ -6,8 +6,7 @@ from gaphor.UML import diagramitems
 
 
 def test_message_item_upgrade(element_factory, modeling_language):
-    """
-    """
+    """"""
     path = distribution().locate_file("test-models/multiple-messages.gaphor")
 
     elements = parse(path)

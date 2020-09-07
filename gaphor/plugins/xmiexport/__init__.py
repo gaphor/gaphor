@@ -1,6 +1,4 @@
-"""
-This plugin extends Gaphor with XMI export functionality.
-"""
+"""This plugin extends Gaphor with XMI export functionality."""
 
 import logging
 

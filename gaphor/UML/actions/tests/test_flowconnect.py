@@ -1,6 +1,4 @@
-"""
-Flow item connection adapters tests.
-"""
+"""Flow item connection adapters tests."""
 
 from typing import Type
 
@@ -20,9 +18,7 @@ from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
 class FlowItemBasicNodesConnectionTestCase(TestCase):
-    """
-    Tests for flow item connecting to basic activity nodes.
-    """
+    """Tests for flow item connecting to basic activity nodes."""
 
     def test_initial_node_glue(self):
         """Test flow item gluing to initial node item."""
@@ -51,8 +47,7 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
         assert allowed
 
     def test_activity_final_node_glue(self):
-        """Test flow item gluing to activity final node item
-        """
+        """Test flow item gluing to activity final node item."""
         flow = self.create(FlowItem)
         node = self.create(ActivityFinalNodeItem, UML.ActivityFinalNode)
 
@@ -65,9 +60,7 @@ class FlowItemBasicNodesConnectionTestCase(TestCase):
 
 
 class FlowItemObjectNodeTestCase(TestCase):
-    """
-    Flow item connecting to object node item tests.
-    """
+    """Flow item connecting to object node item tests."""
 
     def test_glue_to_object_node(self):
         flow = self.create(FlowItem)
@@ -126,8 +119,7 @@ class FlowItemObjectNodeTestCase(TestCase):
         assert "tguard" == flow.subject.guard
 
     def test_control_flow_reconnection(self):
-        """Test control flow becoming object flow due to reconnection
-        """
+        """Test control flow becoming object flow due to reconnection."""
         flow = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
@@ -161,9 +153,7 @@ class FlowItemObjectNodeTestCase(TestCase):
 
 
 class FlowItemActionTestCase(TestCase):
-    """
-    Flow item connecting to action item tests.
-    """
+    """Flow item connecting to action item tests."""
 
     def test_glue(self):
         """Test flow item gluing to action items."""
@@ -201,8 +191,7 @@ class FlowItemActionTestCase(TestCase):
         assert flow.subject.target is a2.subject
 
     def test_disconnect_from_action_item(self):
-        """Test flow item disconnection from action items
-        """
+        """Test flow item disconnection from action items."""
         flow = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
@@ -218,8 +207,7 @@ class FlowItemActionTestCase(TestCase):
         assert len(a2.subject.outgoing) == 0
 
     def test_reconnect(self):
-        """Test flow item reconnection
-        """
+        """Test flow item reconnection."""
         flow = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
@@ -250,8 +238,7 @@ class FlowItemActionTestCase(TestCase):
         assert "tguard" == flow.subject.guard
 
     def test_object_flow_reconnection(self):
-        """Test object flow becoming control flow due to reconnection
-        """
+        """Test object flow becoming control flow due to reconnection."""
         flow = self.create(FlowItem)
         a1 = self.create(ActionItem, UML.Action)
         a2 = self.create(ActionItem, UML.Action)
@@ -285,8 +272,7 @@ class FlowItemActionTestCase(TestCase):
 
 
 class FlowItemDesisionAndForkNodes:
-    """
-    Base class for flow connecting to decision and fork nodes.
+    """Base class for flow connecting to decision and fork nodes.
 
     See `FlowItemDecisionNodeTestCase` and `FlowItemForkNodeTestCase` test
     cases.
@@ -304,8 +290,7 @@ class FlowItemDesisionAndForkNodes:
     join_node_cls: Type[UML.ControlNode]
 
     def test_glue(self):
-        """Test decision/fork nodes glue
-        """
+        """Test decision/fork nodes glue."""
         flow = self.create(FlowItem)
         action = self.create(ActionItem, UML.Action)
         node = self.create(self.item_cls, self.join_node_cls)
@@ -319,7 +304,7 @@ class FlowItemDesisionAndForkNodes:
         assert glued
 
     def test_node_class_change(self):
-        """ Test node incoming edges
+        """Test node incoming edges.
 
         Connection scheme is presented below::
 
@@ -353,8 +338,7 @@ class FlowItemDesisionAndForkNodes:
         self.assertTrue(isinstance(jn.subject, self.join_node_cls))
 
     def test_outgoing_edges(self):
-        """Test outgoing edges
-
+        """Test outgoing edges.
 
         Connection scheme is presented below::
 
@@ -392,7 +376,7 @@ class FlowItemDesisionAndForkNodes:
         assert isinstance(jn.subject, self.fork_node_cls), f"{jn.subject}"
 
     def test_combined_nodes_connection(self):
-        """Test combined nodes connection
+        """Test combined nodes connection.
 
         Connection scheme is presented below::
 
@@ -432,7 +416,7 @@ class FlowItemDesisionAndForkNodes:
         assert jn.subject.outgoing[0] is jn.combined.incoming[0]
 
     def test_combined_node_disconnection(self):
-        """Test combined nodes disconnection
+        """Test combined nodes disconnection.
 
         Connection scheme is presented below::
 

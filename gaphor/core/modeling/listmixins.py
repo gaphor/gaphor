@@ -1,5 +1,4 @@
-"""
-This module contains some support code for queries on lists.
+"""This module contains some support code for queries on lists.
 
 Two mixin classes are provided:
 
@@ -7,7 +6,6 @@ Two mixin classes are provided:
 2. ``recursemixin``
 
 See the documentation on the mixins.
-
 """
 
 from __future__ import annotations
@@ -21,9 +19,8 @@ T = TypeVar("T")
 
 
 def matcher(expr) -> Callable[[T], bool]:
-    """
-    Returns True if the expression returns True.
-    The context for the expression is the element.
+    """Returns True if the expression returns True. The context for the
+    expression is the element.
 
     Given a class:
 
@@ -65,8 +62,7 @@ def matcher(expr) -> Callable[[T], bool]:
 
 
 class querymixin:
-    """
-    Implementation of the matcher as a mixin for lists.
+    """Implementation of the matcher as a mixin for lists.
 
     Given a class:
 
@@ -106,8 +102,7 @@ class querymixin:
 
 
 def issafeiterable(obj):
-    """
-    Checks if the object is iterable, but not a string.
+    """Checks if the object is iterable, but not a string.
 
     >>> issafeiterable([])
     True
@@ -128,13 +123,12 @@ def issafeiterable(obj):
 
 
 class recurseproxy(Generic[T]):
-    """
-    Proxy object (helper) for the recusemixin.
+    """Proxy object (helper) for the recusemixin.
 
-    The proxy has limited capabilities compared to a real list (or set): it can
-    be iterated and a getitem can be performed.
-    On the other side, the type of the original sequence is maintained, so
-    getitem operations act as if they're executed on the original list.
+    The proxy has limited capabilities compared to a real list (or set):
+    it can be iterated and a getitem can be performed. On the other
+    side, the type of the original sequence is maintained, so getitem
+    operations act as if they're executed on the original list.
     """
 
     def __init__(self, sequence: Sequence[T]):
@@ -144,16 +138,15 @@ class recurseproxy(Generic[T]):
         return self.__sequence.__getitem__(key)
 
     def __iter__(self):
-        """
-        Iterate over the items. If there is some level of nesting, the parent
-        items are iterated as well.
+        """Iterate over the items.
+
+        If there is some level of nesting, the parent items are iterated
+        as well.
         """
         return iter(self.__sequence)
 
     def __getattr__(self, key) -> recurseproxy[T]:
-        """
-        Create a new proxy for the attribute.
-        """
+        """Create a new proxy for the attribute."""
 
         def mygetattr():
             for e in self.__sequence:
@@ -171,9 +164,8 @@ class recurseproxy(Generic[T]):
 
 
 class recursemixin(Generic[T]):
-    """
-    Mixin class for lists, sets, etc. If data is requested using ``[:]``,
-    a ``recurseproxy`` instance is created.
+    """Mixin class for lists, sets, etc. If data is requested using ``[:]``, a
+    ``recurseproxy`` instance is created.
 
     The basic idea is to have a class that can contain children:
 

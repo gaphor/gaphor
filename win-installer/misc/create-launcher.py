@@ -7,7 +7,7 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 
-"""Creates simple Python .exe launchers for gui and cli apps
+"""Creates simple Python .exe launchers for gui and cli apps.
 
 ./create-launcher.py "3.8.0" <target-dir>
 """
@@ -23,7 +23,7 @@ import tempfile
 
 
 def build_resource(rc_path, out_path):
-    """Raises subprocess.CalledProcessError"""
+    """Raises subprocess.CalledProcessError."""
 
     def is_64bit():
         return struct.calcsize("P") == 8

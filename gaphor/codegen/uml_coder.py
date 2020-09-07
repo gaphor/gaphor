@@ -98,18 +98,17 @@ def get_association_ends(a, properties, classes):
 
 
 def parse_association_end(head, tail):
-    """
-    The head association end is enriched with the following attributes:
+    """The head association end is enriched with the following attributes:
 
-        derived - association is a derived union or not
-        name - name of the association end (name of head is found on tail)
-        class_name - name of the class this association belongs to
-        opposite_class_name - name of the class at the other end of the assoc.
-        lower - lower multiplicity
-        upper - upper multiplicity
-        composite - if the association has a composite relation to the other end
-        subsets - derived unions that use the association
-        redefines - redefines existing associations
+    derived - association is a derived union or not
+    name - name of the association end (name of head is found on tail)
+    class_name - name of the class this association belongs to
+    opposite_class_name - name of the class at the other end of the assoc.
+    lower - lower multiplicity
+    upper - upper multiplicity
+    composite - if the association has a composite relation to the other end
+    subsets - derived unions that use the association
+    redefines - redefines existing associations
     """
     head.navigable = head.get("class_")
     if not head.navigable:
@@ -142,10 +141,8 @@ def parse_association_end(head, tail):
 
 
 def filter_out_metaclasses(classes, extensions, all_elements):
-    """
-    Remove metaclasses from classes dict
-    should check for Extension.memberEnd[Property].type
-    """
+    """Remove metaclasses from classes dict should check for
+    Extension.memberEnd[Property].type."""
     for e in extensions.values():
         ends = []
         for end in e.memberEnd:
@@ -213,8 +210,7 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
     writer = Writer(overrides)
 
     def resolve(val, attr):
-        """Resolve references.
-        """
+        """Resolve references."""
         try:
             refs = val.references[attr]
         except KeyError:

@@ -13,8 +13,8 @@ from gaphor.UML.interactions.message import MessageItem
 class MessagePropertyPage(PropertyPageBase):
     """Property page for editing message items.
 
-    When message is on communication diagram, then additional messages can
-    be added. On sequence diagram sort of message can be changed.
+    When message is on communication diagram, then additional messages
+    can be added. On sequence diagram sort of message can be changed.
     """
 
     order = 15

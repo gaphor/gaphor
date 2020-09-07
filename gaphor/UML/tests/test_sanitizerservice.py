@@ -17,9 +17,7 @@ def sanitizer(event_manager):
 @pytest.fixture
 def create_item(element_factory, diagram):
     def create(item_cls, subject_cls=None, subject=None):
-        """
-        Create an item with specified subject.
-        """
+        """Create an item with specified subject."""
         if subject_cls is not None:
             subject = element_factory.create(subject_cls)
         item = diagram.create(item_cls, subject=subject)
@@ -49,9 +47,7 @@ def test_connect_element_with_comments(create_item):
 
 
 def test_presentation_delete(create_item, element_factory):
-    """
-    Remove element if the last instance of an item is deleted.
-    """
+    """Remove element if the last instance of an item is deleted."""
     klassitem = create_item(ClassItem, UML.Class)
     klass = klassitem.subject
 
@@ -67,10 +63,8 @@ def test_presentation_delete(create_item, element_factory):
 
 
 def test_stereotype_attribute_delete(element_factory):
-    """
-    This test was applicable to the Sanitizer service, but is now resolved
-    by a tweak in the data model (Instances diagram).
-    """
+    """This test was applicable to the Sanitizer service, but is now resolved
+    by a tweak in the data model (Instances diagram)."""
     create = element_factory.create
     klass = create(UML.Class)
     stereotype = create(UML.Stereotype)

@@ -163,8 +163,8 @@ class AssociationConnect(UnaryRelationshipConnect):
     def disconnect_subject(self, handle: Handle) -> None:
         """Disconnect the type of each member end.
 
-        On connect, we pair association member ends with the element they
-        connect to. On disconnect, we remove this relation.
+        On connect, we pair association member ends with the element
+        they connect to. On disconnect, we remove this relation.
         """
         association = self.line.subject
         if association and len(association.presentation) <= 1:
@@ -211,9 +211,7 @@ class ImplementationConnect(RelationshipConnect):
         )
 
     def connect_subject(self, handle):
-        """
-        Perform implementation relationship connection.
-        """
+        """Perform implementation relationship connection."""
         relation = self.relationship_or_new(
             UML.Implementation,
             UML.Implementation.contract,

@@ -16,9 +16,7 @@ FILTERS = [
 
 
 class AppFileManager(Service, ActionProvider):
-    """
-    Handle application level file loading
-    """
+    """Handle application level file loading."""
 
     def __init__(self, session):
         self.session = session
@@ -41,10 +39,8 @@ class AppFileManager(Service, ActionProvider):
         self.application.open([], "__new__")
 
     def active_session_is_new(self):
-        """
-        If it's a new model, there is no state change (undo & redo)
-        and no file name is defined.
-        """
+        """If it's a new model, there is no state change (undo & redo) and no
+        file name is defined."""
         undo_manager = self.session.get_service("undo_manager")
         file_manager = self.session.get_service("file_manager")
 
@@ -71,8 +67,11 @@ class AppFileManager(Service, ActionProvider):
 
     @action(name="app.file-new", shortcut="<Primary>n")
     def action_new(self):
-        """The new model menu action.  This action will create a new
-        UML model.  This will trigger a FileManagerStateChange event."""
+        """The new model menu action.
+
+        This action will create a new UML model.  This will trigger a
+        FileManagerStateChange event.
+        """
 
         self.new()
 

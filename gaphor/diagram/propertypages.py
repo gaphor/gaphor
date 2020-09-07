@@ -1,5 +1,4 @@
-"""
-Adapters for the Property Editor.
+"""Adapters for the Property Editor.
 
 To register property pages implemented in this module, it is imported in
 gaphor.adapter package.
@@ -48,8 +47,7 @@ def new_builder(*object_ids):
 
 
 class _PropertyPages:
-    """
-    Generic handler for property pages.
+    """Generic handler for property pages.
 
     Property pages are collected on type.
     """
@@ -76,9 +74,7 @@ PropertyPages = _PropertyPages()
 
 
 class PropertyPageBase(metaclass=abc.ABCMeta):
-    """
-    A property page which can display itself in a notebook
-    """
+    """A property page which can display itself in a notebook."""
 
     order = 100  # Order number, used for ordered display
 
@@ -87,8 +83,7 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def construct(self):
-        """
-        Create the page (Gtk.Widget) that belongs to the Property page.
+        """Create the page (Gtk.Widget) that belongs to the Property page.
 
         Returns the page's toplevel widget (Gtk.Widget).
         """
@@ -137,27 +132,22 @@ class EditableTreeModel(Gtk.ListStore):
         raise NotImplementedError
 
     def _create_object(self):
-        """
-        Create new object.
-        """
+        """Create new object."""
         raise NotImplementedError
 
     def _set_object_value(self, row, col, value):
-        """
-        Update row's column with a value.
-        """
+        """Update row's column with a value."""
         raise NotImplementedError
 
     def _swap_objects(self, o1, o2):
-        """
-        Swap two objects. If objects are swapped, then return ``True``.
+        """Swap two objects.
+
+        If objects are swapped, then return ``True``.
         """
         raise NotImplementedError
 
     def _get_object(self, iter):
-        """
-        Get object from ``iter``.
-        """
+        """Get object from ``iter``."""
         path = self.get_path(iter)
         return self[path][-1]
 
@@ -177,9 +167,7 @@ class EditableTreeModel(Gtk.ListStore):
             super().swap(a, b)
 
     def _add_empty(self):
-        """
-        Add empty row to the end of the model.
-        """
+        """Add empty row to the end of the model."""
         self.append([None] * self.get_n_columns())
 
     @transactional
@@ -201,9 +189,7 @@ class EditableTreeModel(Gtk.ListStore):
             self._set_object_value(row, col, value)
 
     def remove(self, iter):
-        """
-        Remove object from GTK model and destroy it.
-        """
+        """Remove object from GTK model and destroy it."""
         obj = self._get_object(iter)
         if obj:
             obj.unlink()
@@ -277,15 +263,11 @@ class ComboModel(Gtk.ListStore):
             self._indices[value] = i
 
     def get_index(self, value):
-        """
-        Return index of a ``value``.
-        """
+        """Return index of a ``value``."""
         return self._indices[value]
 
     def get_value(self, index):
-        """
-        Get value for given ``index``.
-        """
+        """Get value for given ``index``."""
         return self._data[index][1]
 
 

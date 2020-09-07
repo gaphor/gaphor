@@ -1,6 +1,4 @@
-"""
-Classes related adapter connection tests.
-"""
+"""Classes related adapter connection tests."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -12,13 +10,10 @@ from gaphor.UML.usecases.actor import ActorItem
 
 
 class DependencyTestCase(TestCase):
-    """
-    Dependency item connection adapter tests.
-    """
+    """Dependency item connection adapter tests."""
 
     def test_dependency_glue(self):
-        """Test dependency glue to two actor items
-        """
+        """Test dependency glue to two actor items."""
         actor1 = self.create(ActorItem, UML.Actor)
         actor2 = self.create(ActorItem, UML.Actor)
         dep = self.create(DependencyItem)
@@ -32,8 +27,7 @@ class DependencyTestCase(TestCase):
         assert glued
 
     def test_dependency_connect(self):
-        """Test dependency connecting to two actor items
-        """
+        """Test dependency connecting to two actor items."""
         actor1 = self.create(ActorItem, UML.Actor)
         actor2 = self.create(ActorItem, UML.Actor)
         dep = self.create(DependencyItem)
@@ -54,8 +48,7 @@ class DependencyTestCase(TestCase):
         assert actor2.subject in dep.subject.client
 
     def test_dependency_reconnection(self):
-        """Test dependency reconnection
-        """
+        """Test dependency reconnection."""
         a1 = self.create(ActorItem, UML.Actor)
         a2 = self.create(ActorItem, UML.Actor)
         a3 = self.create(ActorItem, UML.Actor)
@@ -78,8 +71,7 @@ class DependencyTestCase(TestCase):
         assert a2.subject not in dep.subject.client, dep.subject.client
 
     def test_dependency_disconnect(self):
-        """Test dependency disconnecting using two actor items
-        """
+        """Test dependency disconnecting using two actor items."""
         actor1 = self.create(ActorItem, UML.Actor)
         actor2 = self.create(ActorItem, UML.Actor)
         dep = self.create(DependencyItem)
@@ -97,8 +89,7 @@ class DependencyTestCase(TestCase):
         assert dep_subj not in actor2.subject.clientDependency
 
     def test_dependency_reconnect(self):
-        """Test dependency reconnection using two actor items
-        """
+        """Test dependency reconnection using two actor items."""
         actor1 = self.create(ActorItem, UML.Actor)
         actor2 = self.create(ActorItem, UML.Actor)
         dep = self.create(DependencyItem)
@@ -120,7 +111,7 @@ class DependencyTestCase(TestCase):
         # TODO: test with multiple diagrams (should reuse existing relationships first)
 
     def test_multi_dependency(self):
-        """Test multiple dependencies
+        """Test multiple dependencies.
 
         Dependency should appear in a new diagram, bound on a new
         dependency item.
@@ -161,8 +152,7 @@ class DependencyTestCase(TestCase):
         assert dep.subject is dep2.subject
 
     def test_dependency_type_auto(self):
-        """Test dependency type automatic determination
-        """
+        """Test dependency type automatic determination."""
         cls = self.create(ClassItem, UML.Class)
         iface = self.create(InterfaceItem, UML.Interface)
         dep = self.create(DependencyItem)
@@ -178,9 +168,7 @@ class DependencyTestCase(TestCase):
 
 
 class GeneralizationTestCase(TestCase):
-    """
-    Generalization item connection adapter tests.
-    """
+    """Generalization item connection adapter tests."""
 
     def test_glue(self):
         """Test generalization item gluing using two classes."""
@@ -200,8 +188,7 @@ class GeneralizationTestCase(TestCase):
         assert glued
 
     def test_connection(self):
-        """Test generalization item connection using two classes
-        """
+        """Test generalization item connection using two classes."""
         gen = self.create(GeneralizationItem)
         c1 = self.create(ClassItem, UML.Class)
         c2 = self.create(ClassItem, UML.Class)
@@ -215,7 +202,7 @@ class GeneralizationTestCase(TestCase):
         assert gen.subject.specific is c1.subject
 
     def test_reconnection(self):
-        """Test generalization item connection using two classes
+        """Test generalization item connection using two classes.
 
         On reconnection a new Generalization is created.
         """
@@ -250,8 +237,7 @@ class GeneralizationTestCase(TestCase):
         # self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
     def test_reconnection2(self):
-        """Test reconnection of generalization
-        """
+        """Test reconnection of generalization."""
         c1 = self.create(ClassItem, UML.Class)
         c2 = self.create(ClassItem, UML.Class)
         c3 = self.create(ClassItem, UML.Class)

@@ -1,6 +1,4 @@
-"""
-Flow item adapter connections.
-"""
+"""Flow item adapter connections."""
 
 from typing import Type, Union
 
@@ -21,9 +19,7 @@ from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
 class FlowConnect(UnaryRelationshipConnect):
-    """
-    Connect FlowItem and Action/ObjectNode, initial/final nodes.
-    """
+    """Connect FlowItem and Action/ObjectNode, initial/final nodes."""
 
     line: FlowItem
 
@@ -95,10 +91,8 @@ Connector.register(AcceptEventActionItem, FlowItem)(FlowConnect)
 
 
 class FlowForkDecisionNodeConnect(FlowConnect):
-    """
-    Abstract class with common behaviour for Fork/Join node and
-    Decision/Merge node.
-    """
+    """Abstract class with common behaviour for Fork/Join node and
+    Decision/Merge node."""
 
     element: Union[ForkNodeItem, DecisionNodeItem]
     fork_node_cls: Type[UML.ControlNode]
@@ -124,9 +118,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         return super().allow(handle, port)
 
     def combine_nodes(self):
-        """
-        Combine join/fork or decision/merge nodes into one diagram item.
-        """
+        """Combine join/fork or decision/merge nodes into one diagram item."""
         fork_node_cls = self.fork_node_cls
         join_node_cls = self.join_node_cls
         element = self.element
@@ -161,9 +153,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             element.combined = fork_node
 
     def decombine_nodes(self):
-        """
-        Decombine join/fork or decision/merge nodes.
-        """
+        """Decombine join/fork or decision/merge nodes."""
         element = self.element
         if element.combined:
             join_node = element.subject
@@ -189,9 +179,9 @@ class FlowForkDecisionNodeConnect(FlowConnect):
                 element.combined = None
 
     def connect_subject(self, handle):
-        """
-        In addition to a subject connect, the subject of the element may
-        be changed.
+        """In addition to a subject connect, the subject of the element may be
+        changed.
+
         For readability, parameters are named after the classes used by
         Join/Fork nodes.
         """

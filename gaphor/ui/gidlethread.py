@@ -48,7 +48,6 @@ class GIdleThread:
     True
     >>> main.iteration(False) # doctest: +ELLIPSIS
     True
-
     """
 
     def __init__(self, generator, queue=None):
@@ -61,8 +60,10 @@ class GIdleThread:
         self._exc: Optional[BaseException] = None
 
     def start(self, priority=GLib.PRIORITY_LOW):
-        """Start the generator. Default priority is low, so screen updates
-        will be allowed to happen.
+        """Start the generator.
+
+        Default priority is low, so screen updates will be allowed to
+        happen.
         """
         idle_id = GLib.idle_add(self.__generator_executer, priority=priority)
         self._idle_id = idle_id
@@ -90,15 +91,13 @@ class GIdleThread:
         return False
 
     def interrupt(self):
-        """Force the generator to stop running.
-        """
+        """Force the generator to stop running."""
         if self.is_alive():
             GLib.source_remove(self._idle_id)
             self._idle_id = 0
 
     def is_alive(self):
-        """Returns True if the generator is still running.
-        """
+        """Returns True if the generator is still running."""
         return self._idle_id != 0
 
     error = property(
@@ -108,8 +107,8 @@ class GIdleThread:
     )
 
     def reraise(self):
-        """Rethrow the error that occurred during execution of the idle process.
-        """
+        """Rethrow the error that occurred during execution of the idle
+        process."""
         exc = self._exc
 
         if exc:
@@ -137,19 +136,19 @@ class GIdleThread:
 
 class QueueEmpty(Exception):
     """Exception raised whenever the queue is empty and someone tries to fetch
-    a value.
-    """
+    a value."""
 
 
 class QueueFull(Exception):
     """Exception raised when the queue is full and the oldest item may not be
-    disposed.
-    """
+    disposed."""
 
 
 class Queue:
-    """A FIFO queue. If the queue has a max size, the oldest item on the
-    queue is dropped if that size id exceeded.
+    """A FIFO queue.
+
+    If the queue has a max size, the oldest item on the queue is dropped
+    if that size id exceeded.
     """
 
     def __init__(self, size=0, dispose_oldest=True):
@@ -158,7 +157,9 @@ class Queue:
         self._dispose_oldest = dispose_oldest
 
     def put(self, item):
-        """Put item on the queue. If the queue size is limited ...
+        """Put item on the queue.
+
+        If the queue size is limited ...
         """
         if self._size > 0 and len(self._queue) >= self._size:
             if self._dispose_oldest:
@@ -170,6 +171,7 @@ class Queue:
 
     def get(self):
         """Get the oldest item off the queue.
+
         QueueEmpty is raised if no items are left on the queue.
         """
         try:

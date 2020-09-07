@@ -1,6 +1,4 @@
-"""
-Test connector item connectors.
-"""
+"""Test connector item connectors."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -12,9 +10,7 @@ from gaphor.UML.components.connectorconnect import ConnectorConnectBase
 
 
 class ComponentConnectTestCase(TestCase):
-    """
-    Test connection of connector item to a component.
-    """
+    """Test connection of connector item to a component."""
 
     def test_glue(self):
         """Test gluing connector to component."""
@@ -26,8 +22,7 @@ class ComponentConnectTestCase(TestCase):
         assert glued
 
     def test_connection(self):
-        """Test connecting connector to a component
-        """
+        """Test connecting connector to a component."""
         component = self.create(ComponentItem, UML.Component)
         line = self.create(ConnectorItem)
 
@@ -48,9 +43,7 @@ class ComponentConnectTestCase(TestCase):
 
 
 class InterfaceConnectTestCase(TestCase):
-    """
-    Test connection with interface acting as assembly connector.
-    """
+    """Test connection with interface acting as assembly connector."""
 
     def test_non_folded_glue(self):
         """Test non-folded interface gluing."""
@@ -115,8 +108,7 @@ class InterfaceConnectTestCase(TestCase):
         assert glued
 
     def test_simple_connection(self):
-        """Test simple connection to an interface
-        """
+        """Test simple connection to an interface."""
         iface = self.create(InterfaceItem, UML.Interface)
         comp = self.create(ComponentItem, UML.Component)
         line = self.create(ConnectorItem)
@@ -135,8 +127,7 @@ class InterfaceConnectTestCase(TestCase):
         assert line.subject
 
     def test_simple_disconnection(self):
-        """Test disconnection of simple connection to an interface
-        """
+        """Test disconnection of simple connection to an interface."""
         iface = self.create(InterfaceItem, UML.Component)
         line = self.create(ConnectorItem)
 
@@ -153,14 +144,14 @@ class InterfaceConnectTestCase(TestCase):
 
 
 class AssemblyConnectorTestCase(TestCase):
-    """
-    Test assembly connector. It is assumed that interface and component
-    connection tests defined above are working correctly.
+    """Test assembly connector.
+
+    It is assumed that interface and component connection tests defined
+    above are working correctly.
     """
 
     def create_interfaces(self, *args):
-        """
-        Generate interfaces with names specified by arguments.
+        """Generate interfaces with names specified by arguments.
 
         :Parameters:
          args
@@ -172,24 +163,19 @@ class AssemblyConnectorTestCase(TestCase):
             yield interface
 
     def provide(self, component, interface):
-        """
-        Change component's data so it implements interfaces.
-        """
+        """Change component's data so it implements interfaces."""
         impl = self.element_factory.create(UML.Implementation)
         component.implementation = impl
         impl.contract = interface
 
     def require(self, component, interface):
-        """
-        Change component's data so it requires interface.
-        """
+        """Change component's data so it requires interface."""
         usage = self.element_factory.create(UML.Usage)
         component.clientDependency = usage
         usage.supplier = interface
 
     def test_getting_component(self):
-        """Test getting component
-        """
+        """Test getting component."""
         conn1 = self.create(ConnectorItem)
         conn2 = self.create(ConnectorItem)
 
@@ -204,8 +190,7 @@ class AssemblyConnectorTestCase(TestCase):
         assert c2 is ConnectorConnectBase.get_component(conn2)
 
     def test_connection(self):
-        """Test basic assembly connection
-        """
+        """Test basic assembly connection."""
         conn1 = self.create(ConnectorItem)
         conn2 = self.create(ConnectorItem)
 
@@ -285,8 +270,7 @@ class AssemblyConnectorTestCase(TestCase):
         assert glued
 
     def test_connection_order(self):
-        """Test connection order of assembly connection
-        """
+        """Test connection order of assembly connection."""
         conn1 = self.create(ConnectorItem)
         conn2 = self.create(ConnectorItem)
 
@@ -312,8 +296,7 @@ class AssemblyConnectorTestCase(TestCase):
         assert conn2.subject
 
     def test_addtional_connections(self):
-        """Test additional connections to assembly connection
-        """
+        """Test additional connections to assembly connection."""
         conn1 = self.create(ConnectorItem)
         conn2 = self.create(ConnectorItem)
         conn3 = self.create(ConnectorItem)
@@ -356,8 +339,7 @@ class AssemblyConnectorTestCase(TestCase):
         assert 3 == len(assembly.end)
 
     def test_disconnection(self):
-        """Test assembly connector disconnection
-        """
+        """Test assembly connector disconnection."""
         conn1 = self.create(ConnectorItem)
         conn2 = self.create(ConnectorItem)
 

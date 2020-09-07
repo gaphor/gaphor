@@ -1,6 +1,4 @@
-"""
-Implementation of interface.
-"""
+"""Implementation of interface."""
 
 import gaphas
 

@@ -1,6 +1,4 @@
-"""
-Unnit tests for AssociationItem.
-"""
+"""Unnit tests for AssociationItem."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -16,8 +14,7 @@ class AssociationItemTestCase(TestCase):
         self.class2 = self.create(ClassItem, UML.Class)
 
     def test_create(self):
-        """Test association creation and its basic properties
-        """
+        """Test association creation and its basic properties."""
         self.connect(self.assoc, self.assoc.head, self.class1)
         self.connect(self.assoc, self.assoc.tail, self.class2)
 
@@ -31,8 +28,7 @@ class AssociationItemTestCase(TestCase):
         assert self.assoc.show_direction
 
     def test_direction(self):
-        """Test association direction inverting
-        """
+        """Test association direction inverting."""
         self.connect(self.assoc, self.assoc.head, self.class1)
         self.connect(self.assoc, self.assoc.tail, self.class2)
 
@@ -50,7 +46,7 @@ class AssociationItemTestCase(TestCase):
         assert self.assoc.tail_end.subject is self.assoc.subject.memberEnd[0]
 
     def test_association_end_updates(self):
-        """Test association end navigability connected to a class"""
+        """Test association end navigability connected to a class."""
         c1 = self.create(ClassItem, UML.Class)
         c2 = self.create(ClassItem, UML.Class)
         a = self.create(AssociationItem)

@@ -1,6 +1,4 @@
-"""
-The main application window.
-"""
+"""The main application window."""
 
 import importlib.resources
 import logging
@@ -84,8 +82,8 @@ def create_modeling_language_model(modeling_language):
 
 
 class MainWindow(Service, ActionProvider):
-    """
-    The main window for the application.
+    """The main window for the application.
+
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
 
@@ -144,8 +142,7 @@ class MainWindow(Service, ActionProvider):
         return self.component_registry.get(UIComponent, name)
 
     def open(self, gtk_app=None):
-        """Open the main window.
-        """
+        """Open the main window."""
 
         builder = new_builder()
         self.window = builder.get_object("main-window")
@@ -207,15 +204,11 @@ class MainWindow(Service, ActionProvider):
         em.subscribe(self._on_modeling_language_selection_changed)
 
     def open_welcome_page(self):
-        """
-        Create a new tab with a textual welcome page, a sort of 101 for
-        Gaphor.
-        """
+        """Create a new tab with a textual welcome page, a sort of 101 for
+        Gaphor."""
 
     def set_title(self):
-        """
-        Sets the window title.
-        """
+        """Sets the window title."""
         if not self.window:
             return
 
@@ -235,9 +228,7 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(ModelReady)
     def _new_model_content(self, event):
-        """
-        Open the toplevel element and load toplevel diagrams.
-        """
+        """Open the toplevel element and load toplevel diagrams."""
         # TODO: Make handlers for ModelReady from within the GUI obj
         for diagram in self.element_factory.select(
             lambda e: e.isKindOf(Diagram)
@@ -253,8 +244,7 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
-        """
-        """
+        """"""
         undo_manager = event.service
         if self.model_changed != undo_manager.can_undo():
             self.model_changed = undo_manager.can_undo()
@@ -283,9 +273,7 @@ class MainWindow(Service, ActionProvider):
         return True
 
     def _on_window_size_allocate(self, window, allocation):
-        """
-        Store the window size in a property.
-        """
+        """Store the window size in a property."""
         width, height = window.get_size()
         self.properties.set("ui.window-size", (width, height))
 
@@ -506,9 +494,7 @@ class Diagrams(UIComponent, ActionProvider):
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
-        """
-        Close all tabs.
-        """
+        """Close all tabs."""
         while self._notebook.get_n_pages():
             self._notebook.remove_page(0)
 

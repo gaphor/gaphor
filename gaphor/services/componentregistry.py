@@ -1,6 +1,4 @@
-"""
-A registry for components (e.g. services) and event handling.
-"""
+"""A registry for components (e.g. services) and event handling."""
 
 from typing import Iterator, Set, Tuple, Type, TypeVar
 
@@ -14,9 +12,8 @@ class ComponentLookupError(LookupError):
 
 
 class ComponentRegistry(Service):
-    """
-    The ComponentRegistry provides a home for application wide components.
-    """
+    """The ComponentRegistry provides a home for application wide
+    components."""
 
     def __init__(self) -> None:
         self._comp: Set[Tuple[str, object]] = set()
@@ -26,6 +23,7 @@ class ComponentRegistry(Service):
 
     def get_service(self, name: str) -> Service:
         """Obtain a service used by Gaphor by name.
+
         E.g. service("element_factory")
         """
         return self.get(Service, name)  # type: ignore[misc] # noqa: F821

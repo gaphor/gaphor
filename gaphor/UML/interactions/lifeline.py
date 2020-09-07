@@ -1,5 +1,4 @@
-"""
-Lifeline diagram item.
+"""Lifeline diagram item.
 
 Implementation Details
 ======================
@@ -41,10 +40,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 class LifetimePort(LinePort):
     def constraint(self, canvas, item, handle, glue_item):
-        """
-        Create connection line constraint between item's handle and the
-        port.
-        """
+        """Create connection line constraint between item's handle and the
+        port."""
         line = canvas.project(glue_item, self.start, self.end)
         point = canvas.project(item, handle.pos)
 
@@ -64,8 +61,7 @@ class LifetimePort(LinePort):
 
 
 class LifetimeItem:
-    """
-    Lifeline's lifetime object.
+    """Lifeline's lifetime object.
 
     Provides basic properties of lifeline's lifetime.
 
@@ -102,9 +98,7 @@ class LifetimeItem:
         self._c_min_length = None  # to be set by lifeline item
 
     def _set_length(self, length):
-        """
-        Set lifeline's lifetime length.
-        """
+        """Set lifeline's lifetime length."""
         self.bottom.pos.y = self.top.pos.y + length
 
     length = property(lambda s: s.bottom.pos.y - s.top.pos.y, _set_length)
@@ -125,9 +119,7 @@ class LifetimeItem:
         return self.length > self.MIN_LENGTH
 
     def _set_visible(self, visible):
-        """
-        Set lifetime visibility.
-        """
+        """Set lifetime visibility."""
         if visible:
             self.bottom.pos.y = self.top.pos.y + 3 * self.MIN_LENGTH
         else:
@@ -138,8 +130,7 @@ class LifetimeItem:
 
 @represents(UML.Lifeline)
 class LifelineItem(ElementPresentation[UML.Lifeline], Named):
-    """
-    Lifeline item.
+    """Lifeline item.
 
     The item represents head of lifeline. Lifeline's lifetime is
     represented by `lifetime` instance.
@@ -219,8 +210,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
             super().load(name, value)
 
     def draw_lifeline(self, box, context, bounding_box):
-        """
-        Draw lifeline.
+        """Draw lifeline.
 
         Lifeline's head is always drawn.
 
@@ -251,11 +241,10 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
                 cr.stroke()
 
     def point(self, pos):
-        """
-        Find distance to lifeline item.
+        """Find distance to lifeline item.
 
-        Distance to lifeline's head and lifeline's lifetime is calculated
-        and minimum is returned.
+        Distance to lifeline's head and lifeline's lifetime is
+        calculated and minimum is returned.
         """
         d1 = super().point(pos)
         top = self.lifetime.top

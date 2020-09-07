@@ -1,7 +1,5 @@
-"""
-Compiler for CSS selectors, based on cssselect2.compiler, written by
-Simon Sapin and Guillaume Ayoub.
-"""
+"""Compiler for CSS selectors, based on cssselect2.compiler, written by Simon
+Sapin and Guillaume Ayoub."""
 
 import re
 from functools import singledispatch
@@ -13,8 +11,7 @@ split_whitespace = re.compile("[^ \t\r\n\f]+").findall
 
 
 def compile_selector_list(input):
-    """
-    Compile a (comma-separated) list of selectors.
+    """Compile a (comma-separated) list of selectors.
 
     Based on cssselect2.compiler.compile_selector_list().
 
@@ -28,8 +25,7 @@ def compile_selector_list(input):
 
 @singledispatch
 def compile_node(selector):
-    """
-    Dynamic dispatch selector nodes.
+    """Dynamic dispatch selector nodes.
 
     Default behavior is a deny (no match).
     """

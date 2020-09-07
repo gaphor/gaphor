@@ -1,5 +1,4 @@
-"""
-Interface item implementation. There are several notations supported
+"""Interface item implementation. There are several notations supported.
 
 - class box with interface stereotype
 - folded interface
@@ -115,8 +114,7 @@ class Side(Enum):
 
 
 class InterfacePort(LinePort):
-    """
-    Interface connection port.
+    """Interface connection port.
 
     It is simple line port, which changes glue behaviour depending on
     interface folded state. If interface is folded, then
@@ -137,10 +135,8 @@ class InterfacePort(LinePort):
         self.side = side
 
     def glue(self, pos):
-        """
-        Behaves like simple line port, but for folded interface suggests
-        connection to the middle point of a port.
-        """
+        """Behaves like simple line port, but for folded interface suggests
+        connection to the middle point of a port."""
         if self.is_folded():
             px = (self.start.x + self.end.x) / 2
             py = (self.start.y + self.end.y) / 2
@@ -153,8 +149,7 @@ class InterfacePort(LinePort):
 
 @represents(UML.Interface)
 class InterfaceItem(ElementPresentation, Classified):
-    """
-    Interface item supporting class box, folded notations and assembly
+    """Interface item supporting class box, folded notations and assembly
     connector icon mode.
 
     When in folded mode, provided (ball) notation is used by default.
@@ -224,8 +219,7 @@ class InterfaceItem(ElementPresentation, Classified):
         save_func("folded", self._folded.value)
 
     def _set_folded(self, folded):
-        """
-        Set folded notation.
+        """Set folded notation.
 
         :param folded: Folded state, see Folded.* enum.
         """

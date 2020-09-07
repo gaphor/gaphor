@@ -1,5 +1,4 @@
-"""
-Implementation of connector from Composite Structures and Components.
+"""Implementation of connector from Composite Structures and Components.
 
 Only assembly connector (see chapter Components in UML specification) is
 supported at the moment. The implementation is based on `ConnectorItem`
@@ -109,8 +108,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.Connector)
 class ConnectorItem(LinePresentation[UML.Connector], Named):
-    """
-    Connector item line.
+    """Connector item line.
 
     Represents Connector UML metaclass. If connected to interface item in
     assembly connector mode, then `Connector.end` attribute represents

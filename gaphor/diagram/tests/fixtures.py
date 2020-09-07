@@ -41,9 +41,7 @@ def diagram(element_factory):
 @pytest.fixture
 def saver(element_factory):
     def save():
-        """
-        Save diagram into string.
-        """
+        """Save diagram into string."""
 
         f = StringIO()
         storage.save(XMLWriter(f), element_factory)
@@ -58,9 +56,7 @@ def saver(element_factory):
 @pytest.fixture
 def loader(element_factory, modeling_language):
     def load(data):
-        """
-        Load data from specified string.
-        """
+        """Load data from specified string."""
         element_factory.flush()
         assert not list(element_factory.select())
 
@@ -80,8 +76,7 @@ def allow(line, handle, item, port=None) -> bool:
 
 
 def connect(line, handle, item, port=None):
-    """
-    Connect line's handle to an item.
+    """Connect line's handle to an item.
 
     If port is not provided, then first port is used.
     """
@@ -101,9 +96,7 @@ def connect(line, handle, item, port=None):
 
 
 def disconnect(line, handle):
-    """
-    Disconnect line's handle.
-    """
+    """Disconnect line's handle."""
     canvas = line.canvas
 
     canvas.disconnect_item(line, handle)
@@ -111,9 +104,7 @@ def disconnect(line, handle):
 
 
 def clear_model(diagram, element_factory, retain=[]):
-    """
-    Clear the model and diagram, leaving only an empty diagram.
-    """
+    """Clear the model and diagram, leaving only an empty diagram."""
     for element in list(element_factory.values()):
         if element is not diagram and element not in retain:
             element.unlink()

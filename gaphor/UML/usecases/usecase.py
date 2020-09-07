@@ -1,6 +1,4 @@
-"""
-Use case diagram item.
-"""
+"""Use case diagram item."""
 
 from gaphas.util import path_ellipse
 
@@ -14,9 +12,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.UseCase)
 class UseCaseItem(ElementPresentation, Classified):
-    """
-    Presentation of gaphor.UML.UseCase.
-    """
+    """Presentation of gaphor.UML.UseCase."""
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)

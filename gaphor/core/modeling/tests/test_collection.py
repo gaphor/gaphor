@@ -1,6 +1,4 @@
-"""
-Test if the collection's list supports all trickery.
-"""
+"""Test if the collection's list supports all trickery."""
 
 import pytest
 

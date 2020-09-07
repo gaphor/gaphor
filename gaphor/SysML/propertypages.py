@@ -123,7 +123,10 @@ class PartsAndReferencesPage(PropertyPageBase):
 
 @PropertyPages.register(sysml.Property)
 class PropertyPropertyPage(PropertyPageBase):
-    """An editor for Properties (a.k.a. attributes)."""
+    """An editor for Properties (a.k.a.
+
+    attributes).
+    """
 
     order = 30
 

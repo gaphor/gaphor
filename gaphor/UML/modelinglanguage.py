@@ -1,7 +1,5 @@
-"""
-The UML Modeling Language module is the entrypoint for
-UML related assets.
-"""
+"""The UML Modeling Language module is the entrypoint for UML related
+assets."""
 
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext

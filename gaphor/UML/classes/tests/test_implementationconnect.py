@@ -1,6 +1,4 @@
-"""
-Test implementation (interface realization) item connectors.
-"""
+"""Test implementation (interface realization) item connectors."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -21,8 +19,7 @@ class ImplementationTestCase(TestCase):
         self.assertFalse(glued)
 
     def test_interface_glue(self):
-        """Test interface gluing with implementation
-        """
+        """Test interface gluing with implementation."""
         iface = self.create(InterfaceItem, UML.Interface)
         impl = self.create(ImplementationItem)
 
@@ -30,8 +27,7 @@ class ImplementationTestCase(TestCase):
         assert glued
 
     def test_classifier_glue(self):
-        """Test classifier gluing with implementation
-        """
+        """Test classifier gluing with implementation."""
         impl = self.create(ImplementationItem)
         clazz = self.create(ClassItem, UML.Class)
 
@@ -39,8 +35,7 @@ class ImplementationTestCase(TestCase):
         assert glued
 
     def test_connection(self):
-        """Test connection of class and interface with implementation
-        """
+        """Test connection of class and interface with implementation."""
         iface = self.create(InterfaceItem, UML.Interface)
         impl = self.create(ImplementationItem)
         clazz = self.create(ClassItem, UML.Class)
@@ -57,8 +52,7 @@ class ImplementationTestCase(TestCase):
         assert impl.subject.implementatingClassifier[0] is clazz.subject
 
     def test_reconnection(self):
-        """Test reconnection of class and interface with implementation
-        """
+        """Test reconnection of class and interface with implementation."""
         iface = self.create(InterfaceItem, UML.Interface)
         c1 = self.create(ClassItem, UML.Class)
         c2 = self.create(ClassItem, UML.Class)

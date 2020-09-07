@@ -14,9 +14,7 @@ def initialize(scope, services=None, **known_services: T) -> Dict[str, T]:
 
 
 def load_entrypoints(scope, services=None) -> Dict[str, Type[T]]:
-    """
-    Load services from resources.
-    """
+    """Load services from resources."""
     uninitialized_services = {}
     for ep in importlib_metadata.entry_points()[scope]:
         cls = ep.load()
@@ -29,12 +27,11 @@ def load_entrypoints(scope, services=None) -> Dict[str, Type[T]]:
 def init_entrypoints(
     uninitialized_services: Dict[str, Type[T]], **known_services: T
 ) -> Dict[str, T]:
-    """
-    Instantiate service definitions, taking into account dependencies
+    """Instantiate service definitions, taking into account dependencies
     defined in the constructor.
 
-    Given a dictionary `{name: service-class}`,
-    return a map `{name: service-instance}`.
+    Given a dictionary `{name: service-class}`, return a map `{name:
+    service-instance}`.
     """
     ready: Dict[str, T] = dict(known_services)
 

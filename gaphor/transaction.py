@@ -1,6 +1,4 @@
-"""
-Transaction support for Gaphor
-"""
+"""Transaction support for Gaphor."""
 
 import logging
 from typing import Callable, List, Set
@@ -14,13 +12,13 @@ subscribers: Set[Callable[[object], None]] = set()
 
 
 def transactional(func):
-    """
-    The transactional decorator makes a function transactional.
-    Events are emitted through the (global) `subscribers` set.
+    """The transactional decorator makes a function transactional. Events are
+    emitted through the (global) `subscribers` set.
 
-    It is preferred to use the `Transaction` context manager. The context manager
-    emits events in the context of the session in scope, whereas the `@transactional`
-    decorator emits a global event which is sent to the active session.
+    It is preferred to use the `Transaction` context manager. The
+    context manager emits events in the context of the session in scope,
+    whereas the `@transactional` decorator emits a global event which is
+    sent to the active session.
     """
 
     def _transactional(*args, **kwargs):
@@ -34,14 +32,11 @@ def transactional(func):
 
 
 class TransactionError(Exception):
-    """
-    Errors related to the transaction module.
-    """
+    """Errors related to the transaction module."""
 
 
 class Transaction:
-    """
-    The transaction. On start and end of a transaction an event is emitted.
+    """The transaction. On start and end of a transaction an event is emitted.
 
     >>> import gaphor.core.eventmanager
     >>> event_manager = gaphor.core.eventmanager.EventManager()
@@ -69,8 +64,11 @@ class Transaction:
     _stack: List = []
 
     def __init__(self, event_manager):
-        """Initialize the transaction.  If this is the first transaction in
-        the stack, a TransactionBegin event is emitted."""
+        """Initialize the transaction.
+
+        If this is the first transaction in the stack, a
+        TransactionBegin event is emitted.
+        """
         self.event_manager = event_manager
 
         self._need_rollback = False
@@ -79,9 +77,12 @@ class Transaction:
         self._stack.append(self)
 
     def commit(self):
-        """Commit the transaction.  First, the transaction is closed.
-        If it needs to be rolled-back, a TransactionRollback event is emitted.
-        Otherwise, a TransactionCommit event is emitted."""
+        """Commit the transaction.
+
+        First, the transaction is closed. If it needs to be rolled-back,
+        a TransactionRollback event is emitted. Otherwise, a
+        TransactionCommit event is emitted.
+        """
 
         self._close()
         if not self._stack:
@@ -91,9 +92,12 @@ class Transaction:
                 self._handle(TransactionCommit())
 
     def rollback(self):
-        """Roll-back the transaction.  First, the transaction is closed.
-        Every transaction on the stack is then marked for roll-back.  If
-        the stack is empty, a TransactionRollback event is emitted."""
+        """Roll-back the transaction.
+
+        First, the transaction is closed. Every transaction on the stack
+        is then marked for roll-back.  If the stack is empty, a
+        TransactionRollback event is emitted.
+        """
 
         self._close()
         for tx in self._stack:
@@ -103,9 +107,12 @@ class Transaction:
                 self._handle(TransactionRollback())
 
     def _close(self):
-        """Close the transaction.  If the stack is empty, a TransactionError
-        is raised.  If the last transaction on the stack isn't this transaction,
-        a Transaction error is raised."""
+        """Close the transaction.
+
+        If the stack is empty, a TransactionError is raised.  If the
+        last transaction on the stack isn't this transaction, a
+        Transaction error is raised.
+        """
 
         try:
             last = self._stack.pop()
@@ -125,8 +132,11 @@ class Transaction:
         return self
 
     def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
-        """Provide with-statement transaction support.  If an error occurred,
-        the transaction is rolled back.  Otherwise, it is committed."""
+        """Provide with-statement transaction support.
+
+        If an error occurred, the transaction is rolled back. Otherwise,
+        it is committed.
+        """
 
         if exc_type:
             log.error(

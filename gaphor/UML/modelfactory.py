@@ -1,11 +1,9 @@
-"""
-UML model support functions.
+"""UML model support functions.
 
 Functions collected in this module allow to
 
 - create more complex UML model structures
 - perform specific searches and manipulations
-
 """
 
 import itertools
@@ -39,8 +37,7 @@ from gaphor.UML.uml import (
 
 
 def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
-    """
-    Identify stereotypes of an UML metamodel instance and return coma
+    """Identify stereotypes of an UML metamodel instance and return coma
     separated stereotypes as string.
 
     :Parameters:
@@ -64,8 +61,7 @@ def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
 
 
 def stereotype_name(stereotype):
-    """
-    Return stereotype name suggested by UML specification. First will be
+    """Return stereotype name suggested by UML specification. First will be
     character lowercase unless the second character is uppercase.
 
     :Parameters:
@@ -82,8 +78,7 @@ def stereotype_name(stereotype):
 
 
 def apply_stereotype(element, stereotype):
-    """
-    Apply a stereotype to an element.
+    """Apply a stereotype to an element.
 
     :Parameters:
      element
@@ -102,9 +97,7 @@ def apply_stereotype(element, stereotype):
 
 
 def find_instances(element):
-    """
-    Find instance specification which extend classifier `element`.
-    """
+    """Find instance specification which extend classifier `element`."""
     model = element.model
     return model.select(
         lambda e: e.isKindOf(InstanceSpecification)
@@ -114,8 +107,7 @@ def find_instances(element):
 
 
 def remove_stereotype(element, stereotype):
-    """
-    Remove a stereotype from an element.
+    """Remove a stereotype from an element.
 
     :Parameters:
      element
@@ -131,9 +123,7 @@ def remove_stereotype(element, stereotype):
 
 
 def get_stereotypes(element):
-    """
-    Get sorted collection of possible stereotypes for specified element.
-    """
+    """Get sorted collection of possible stereotypes for specified element."""
     model = element.model
     # UML specs does not allow to extend stereotypes with stereotypes
     if isinstance(element, Stereotype):
@@ -152,16 +142,12 @@ def get_stereotypes(element):
 
 
 def get_applied_stereotypes(element):
-    """
-    Get collection of applied stereotypes to an element.
-    """
+    """Get collection of applied stereotypes to an element."""
     return element.appliedStereotype[:].classifier
 
 
 def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
-    """
-    Create an Extension association between a metaclass and a stereotype.
-    """
+    """Create an Extension association between a metaclass and a stereotype."""
     assert (
         metaclass.model is stereotype.model
     ), "Metaclass and Stereotype are from different models"
@@ -193,9 +179,7 @@ def is_metaclass(element):
 
 
 def add_slot(instance, definingFeature):
-    """
-    Add slot to instance specification for an attribute.
-    """
+    """Add slot to instance specification for an attribute."""
     assert (
         instance.model is definingFeature.model
     ), "Instance and Defining feature are from different models"
@@ -251,9 +235,7 @@ def create_implementation(contract, implementatingClassifier):
 
 
 def create_association(type_a, type_b):
-    """
-    Create an association between two items.
-    """
+    """Create an association between two items."""
     assert type_a.model is type_b.model, "Head and Tail end are from different models"
     model = type_a.model
     assoc = model.create(Association)
@@ -270,9 +252,10 @@ def create_association(type_a, type_b):
 
 
 def create_connector(type_a: ConnectableElement, type_b: ConnectableElement):
-    """
-    Create a connector between two items.
-    Depending on the ends, the connector kind may be "assembly" or "delegation".
+    """Create a connector between two items.
+
+    Depending on the ends, the connector kind may be "assembly" or
+    "delegation".
     """
     assert type_a.model is type_b.model, "Head and Tail end are from different models"
     model = type_a.model
@@ -297,8 +280,7 @@ def create_connector(type_a: ConnectableElement, type_b: ConnectableElement):
 
 
 def set_navigability(assoc, end, nav):
-    """
-    Set navigability of an association end (property).
+    """Set navigability of an association end (property).
 
     There are three possible values for ``nav`` parameter:
     1. True - association end is navigable
@@ -362,8 +344,7 @@ def set_navigability(assoc, end, nav):
 
 
 def dependency_type(client, supplier):
-    """
-    Determine dependency type between client (tail) and supplier
+    """Determine dependency type between client (tail) and supplier
     (arrowhead).
 
     There can be different dependencies detected automatically
@@ -385,8 +366,7 @@ def dependency_type(client, supplier):
 
 
 def clone_message(msg, inverted=False):
-    """
-    Create new message based on specified message.
+    """Create new message based on specified message.
 
     If inverted is set to True, then inverted message is created.
     """
@@ -414,11 +394,9 @@ def clone_message(msg, inverted=False):
 
 
 def swap_element(element, new_class):
-    """
-    A "trick" to swap the element type.
+    """A "trick" to swap the element type.
 
-    Used in certain cases where the underlying element type
-    may change.
+    Used in certain cases where the underlying element type may change.
     """
     if element.__class__ is not new_class:
         element.__class__ = new_class

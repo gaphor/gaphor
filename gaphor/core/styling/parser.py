@@ -1,10 +1,8 @@
-"""
-Parser for CSS selectors, based on the tinycss2 tokenizer.
+"""Parser for CSS selectors, based on the tinycss2 tokenizer.
 
 Original module: cssselect2.parser
 :copyright: (c) 2012 by Simon Sapin, 2017 by Guillaume Ayoub.
 :license: BSD, see LICENSE for more details.
-
 """
 
 from tinycss2 import parse_component_value_list
@@ -17,7 +15,6 @@ def parse(input, namespaces=None):
 
     :param input:
         A string, or an iterable of tinycss2 component values.
-
     """
     if isinstance(input, str):
         input = parse_component_value_list(input)
@@ -179,7 +176,6 @@ def parse_qualified_name(tokens, namespaces, is_attribute=False):
     Can also return ``None`` for a wildcard.
 
     The empty string for ``namespace`` means "no namespace".
-
     """
     peek = tokens.peek()
     if peek is None:
@@ -281,7 +277,10 @@ class CombinedSelector(object):
 
 
 class CompoundSelector(object):
-    """Aka. sequence of simple selectors, in Level 3."""
+    """Aka.
+
+    sequence of simple selectors, in Level 3.
+    """
 
     def __init__(self, simple_selectors):
         self.simple_selectors = simple_selectors

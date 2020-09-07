@@ -1,6 +1,4 @@
-"""
-Interaction diagram item.
-"""
+"""Interaction diagram item."""
 
 from gaphor import UML
 from gaphor.core.styling import TextAlign, VerticalAlign

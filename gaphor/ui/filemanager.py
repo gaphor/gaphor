@@ -1,6 +1,4 @@
-"""
-The file service is responsible for loading and saving the user data.
-"""
+"""The file service is responsible for loading and saving the user data."""
 
 import logging
 
@@ -26,12 +24,13 @@ log = logging.getLogger(__name__)
 
 
 class FileManager(Service, ActionProvider):
-    """
-    The file service, responsible for loading and saving Gaphor models.
-    """
+    """The file service, responsible for loading and saving Gaphor models."""
 
     def __init__(self, event_manager, element_factory, modeling_language, main_window):
-        """File manager constructor.  There is no current filename yet."""
+        """File manager constructor.
+
+        There is no current filename yet.
+        """
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.modeling_language = modeling_language
@@ -45,14 +44,18 @@ class FileManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self._on_session_shutdown_request)
 
     def get_filename(self):
-        """Return the current file name.  This method is used by the filename
-        property."""
+        """Return the current file name.
+
+        This method is used by the filename property.
+        """
         return self._filename
 
     def set_filename(self, filename):
-        """Sets the current file name.  This method is used by the filename
-        property. Setting the current filename will update the recent file
-        list."""
+        """Sets the current file name.
+
+        This method is used by the filename property. Setting the
+        current filename will update the recent file list.
+        """
 
         if filename != self._filename:
             self._filename = filename
@@ -72,10 +75,13 @@ class FileManager(Service, ActionProvider):
         element_factory.model_ready()
 
     def load(self, filename):
-        """Load the Gaphor model from the supplied file name.  A status window
-        displays the loading progress.  The load generator updates the progress
-        queue.  The loader is passed to a GIdleThread which executes the load
-        generator.  If loading is successful, the filename is set."""
+        """Load the Gaphor model from the supplied file name.
+
+        A status window displays the loading progress.  The load
+        generator updates the progress queue.  The loader is passed to a
+        GIdleThread which executes the load generator.  If loading is
+        successful, the filename is set.
+        """
 
         queue = Queue()
         status_window = StatusWindow(
@@ -112,10 +118,12 @@ class FileManager(Service, ActionProvider):
             status_window.destroy()
 
     def verify_orphans(self):
-        """Verify that no orphaned elements are saved.  This method checks
-        of there are any orphan references in the element factory.  If orphans
-        are found, a dialog is displayed asking the user if it is OK to
-        unlink them."""
+        """Verify that no orphaned elements are saved.
+
+        This method checks of there are any orphan references in the
+        element factory.  If orphans are found, a dialog is displayed
+        asking the user if it is OK to unlink them.
+        """
 
         orphans = verify.orphan_references(self.element_factory)
 
@@ -138,8 +146,10 @@ class FileManager(Service, ActionProvider):
 
     def verify_filename(self, filename):
         """Verify that the supplied filename is using the proper default
-        extension.  If not, the extension is added to the filename
-        and returned."""
+        extension.
+
+        If not, the extension is added to the filename and returned.
+        """
 
         if not filename.endswith(DEFAULT_EXT):
             filename = filename + DEFAULT_EXT
@@ -147,11 +157,13 @@ class FileManager(Service, ActionProvider):
         return filename
 
     def save(self, filename):
-        """Save the current UML model to the specified file name.  Before
-        writing the model file, this will verify that there are no orphan
-        references.  It will also verify that the filename has the correct
-        extension.  A status window is displayed while the GIdleThread
-        is executed.  This thread actually saves the model."""
+        """Save the current UML model to the specified file name.
+
+        Before writing the model file, this will verify that there are
+        no orphan references.  It will also verify that the filename has
+        the correct extension.  A status window is displayed while the
+        GIdleThread is executed.  This thread actually saves the model.
+        """
 
         if not (filename and len(filename)):
             return
@@ -193,8 +205,7 @@ class FileManager(Service, ActionProvider):
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
-        """
-        Save the file. Depending on if there is a file name, either perform
+        """Save the file. Depending on if there is a file name, either perform
         the save directly or present the user with a save dialog box.
 
         Returns True if the saving actually succeeded.
@@ -210,9 +221,8 @@ class FileManager(Service, ActionProvider):
 
     @action(name="file-save-as", shortcut="<Primary><Shift>s")
     def action_save_as(self):
-        """
-        Save the model in the element_factory by allowing the
-        user to select a file name.
+        """Save the model in the element_factory by allowing the user to select
+        a file name.
 
         Returns True if the saving actually happened.
         """
@@ -233,8 +243,8 @@ class FileManager(Service, ActionProvider):
 
     @event_handler(SessionShutdownRequested)
     def _on_session_shutdown_request(self, event):
-        """
-        Ask user to close window if the model has changed.
+        """Ask user to close window if the model has changed.
+
         The user is asked to either discard the changes, keep the
         application running or save the model and quit afterwards.
         """

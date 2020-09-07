@@ -1,6 +1,4 @@
-"""
-Formatting of UML model elements into text tests.
-"""
+"""Formatting of UML model elements into text tests."""
 
 import pytest
 
@@ -43,8 +41,7 @@ def add_tag_is_foo_metadata_field(e, factory):
     ],
 )
 def test_attribute(factory, text, formatted_text):
-    """Test simple attribute formatting
-    """
+    """Test simple attribute formatting."""
     a = factory.create(UML.Property)
     parse(a, text)
 
@@ -70,8 +67,7 @@ def test_attribute_with_applied_stereotype(factory):
     ],
 )
 def test_association_end(factory, text, name_part, mult_part):
-    """Test simple attribute formatting
-    """
+    """Test simple attribute formatting."""
     a = factory.create(UML.Property)
     a.association = factory.create(UML.Association)
     parse(a, text)
@@ -80,8 +76,7 @@ def test_association_end(factory, text, name_part, mult_part):
 
 
 def test_attribute_with_type(factory):
-    """Test simple attribute formatting
-    """
+    """Test simple attribute formatting."""
     a = factory.create(UML.Property)
     a.type = factory.create(UML.Class)
     a.name = "attr"
@@ -117,8 +112,7 @@ def test_association_end_with_applied_stereotype(factory):
     ],
 )
 def test_operation(factory, text, formatted_text):
-    """Test simple operation formatting
-    """
+    """Test simple operation formatting."""
     o = factory.create(UML.Operation)
     parse(o, text)
 

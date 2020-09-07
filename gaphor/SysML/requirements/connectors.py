@@ -20,7 +20,8 @@ from gaphor.SysML.sysml import (
 
 
 class DirectedRelationshipPropertyPathConnect(RelationshipConnect):
-    """Connect Classifiers with a DirectedRelationshipPropertyPath relationship."""
+    """Connect Classifiers with a DirectedRelationshipPropertyPath
+    relationship."""
 
     relation_type: Type[DirectedRelationshipPropertyPath]
 

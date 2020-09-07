@@ -72,8 +72,8 @@ class ExtensionConnect(RelationshipConnect):
                 line.subject = relation
 
     def disconnect_subject(self, handle):
-        """
-        Disconnect model element.
+        """Disconnect model element.
+
         Disconnect property (memberEnd) too, in case of end of life for
         Extension.
         """

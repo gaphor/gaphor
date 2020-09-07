@@ -1,5 +1,4 @@
-"""
-Package gaphor.UML.states implements diagram items for UML state machines.
+"""Package gaphor.UML.states implements diagram items for UML state machines.
 
 Pseudostates
 ============

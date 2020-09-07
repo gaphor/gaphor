@@ -32,8 +32,8 @@ log = logging.getLogger(__name__)
 class ClassItem(ElementPresentation[UML.Class], Classified):
     """This item visualizes a Class instance.
 
-    A ClassItem contains two compartments: one for attributes and one for
-    operations.
+    A ClassItem contains two compartments: one for attributes and one
+    for operations.
     """
 
     def __init__(self, id=None, model=None):

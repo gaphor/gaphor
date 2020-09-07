@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """The Gaphor code generator CLI.
 
-Provides the CLI for the code generator which transforms a Gaphor models (with
-.gaphor file extension) in to a data model in Python.
+Provides the CLI for the code generator which transforms a Gaphor models
+(with .gaphor file extension) in to a data model in Python.
 """
 
 import argparse

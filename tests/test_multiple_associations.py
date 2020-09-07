@@ -1,5 +1,4 @@
-"""
-Test issues where associations are copied and pasted, deleted, etc.
+"""Test issues where associations are copied and pasted, deleted, etc.
 
 Scenario's:
 * Class and association are pasted in a new diagram

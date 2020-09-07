@@ -1,9 +1,8 @@
-"""
-Interface item related connections.
+"""Interface item related connections.
 
-The connectors implemented in this module check if connection is possible
-to folded interface, see `gaphor.diagram.classes.interface` documentation
-for details.
+The connectors implemented in this module check if connection is
+possible to folded interface, see `gaphor.diagram.classes.interface`
+documentation for details.
 """
 
 
@@ -17,23 +16,18 @@ from gaphor.UML.classes.interface import InterfaceItem
 @Connector.register(InterfaceItem, ImplementationItem)
 class ImplementationInterfaceConnect(ImplementationConnect):
     """Connect interface item and a behaviored classifier using an
-    implementation.
-    """
+    implementation."""
 
     def connect(self, handle, port):
-        """
-        Implementation item can be changed to draw in solid mode, when
-        connected to folded interface.
-        """
+        """Implementation item can be changed to draw in solid mode, when
+        connected to folded interface."""
         super().connect(handle, port)
         if handle is self.line.head:
             self.line.request_update()
 
     def disconnect(self, handle):
-        """
-        If implementation item is no longer connected to an interface, then
-        draw it in non-solid mode.
-        """
+        """If implementation item is no longer connected to an interface, then
+        draw it in non-solid mode."""
         super().disconnect(handle)
         if handle is self.line.head:
             self.line.request_update()
@@ -44,10 +38,8 @@ class DependencyInterfaceConnect(DependencyConnect):
     """Connect interface item with dependency item."""
 
     def connect(self, handle, port):
-        """
-        Dependency item is changed to draw in solid mode, when connected to
-        folded interface.
-        """
+        """Dependency item is changed to draw in solid mode, when connected to
+        folded interface."""
         super().connect(handle, port)
         line = self.line
         # connecting to the interface, which is supplier - assuming usage
@@ -61,10 +53,10 @@ class DependencyInterfaceConnect(DependencyConnect):
             self.line.request_update()
 
     def disconnect(self, handle):
-        """
-        If dependency item is no longer connected to an interface, then
-        draw it in non-solid mode. Interface's folded mode changes to
-        provided (ball) notation.
+        """If dependency item is no longer connected to an interface, then draw
+        it in non-solid mode.
+
+        Interface's folded mode changes to provided (ball) notation.
         """
         super().disconnect(handle)
         if handle is self.line.head:

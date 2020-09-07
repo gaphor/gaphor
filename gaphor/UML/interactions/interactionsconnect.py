@@ -11,9 +11,7 @@ from gaphor.UML.interactions.message import MessageItem
 
 
 def get_connected(item, handle) -> Optional[Presentation[Element]]:
-    """
-    Get item connected to a handle.
-    """
+    """Get item connected to a handle."""
     cinfo = item.canvas.get_connection(handle)
     if cinfo:
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
@@ -56,9 +54,7 @@ def order_lifeline_covered_by(lifeline):
 
 
 def connect_lifelines(line, send, received):
-    """
-    Always create a new Message with two EventOccurrence instances.
-    """
+    """Always create a new Message with two EventOccurrence instances."""
 
     def get_subject():
         if not line.subject:
@@ -85,10 +81,10 @@ def connect_lifelines(line, send, received):
 
 
 def disconnect_lifelines(line, send, received):
-    """
-    Disconnect lifeline and set appropriate kind of message item. If
-    there are no lifelines connected on both ends, then remove the message
-    from the data model.
+    """Disconnect lifeline and set appropriate kind of message item.
+
+    If there are no lifelines connected on both ends, then remove the
+    message from the data model.
     """
     if not line.subject:
         return
@@ -117,9 +113,9 @@ def disconnect_lifelines(line, send, received):
 class MessageLifelineConnect(BaseConnector):
     """Connect lifeline with a message.
 
-    A message can connect to both the lifeline's head (the rectangle)
-    or the lifetime line. In case it's added to the head, the message
-    is considered to be part of a communication diagram. If the message is
+    A message can connect to both the lifeline's head (the rectangle) or
+    the lifetime line. In case it's added to the head, the message is
+    considered to be part of a communication diagram. If the message is
     added to a lifetime line, it's considered a sequence diagram.
     """
 
@@ -127,9 +123,10 @@ class MessageLifelineConnect(BaseConnector):
     line: MessageItem
 
     def allow(self, handle, port):
-        """
-        Glue to lifeline's head or lifetime. If lifeline's lifetime is
-        visible then disallow connection to lifeline's head.
+        """Glue to lifeline's head or lifetime.
+
+        If lifeline's lifetime is visible then disallow connection to
+        lifeline's head.
         """
         element = self.element
         lifetime = element.lifetime

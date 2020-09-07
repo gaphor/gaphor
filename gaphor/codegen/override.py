@@ -23,13 +23,11 @@ class Overrides:
                 self.read_overrides(fp)
 
     def read_overrides(self, fp):
-        """Read a file and return a dictionary of overridden properties
-        and their implementation.
+        """Read a file and return a dictionary of overridden properties and
+        their implementation.
 
-        An override file ahs the form:
-        override <property>
-        <implementation>
-        %%
+        An override file ahs the form: override <property>
+        <implementation> %%
         """
         # read all the components of the file ...
         # bufs contains a list of (lines, line_number) pairs.

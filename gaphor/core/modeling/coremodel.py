@@ -73,9 +73,7 @@ Element.ownedComment = association("ownedComment", Comment, opposite="annotatedE
 
 
 def _namedelement_qualifiedname(self) -> List[str]:
-    """
-    Returns the qualified name of the element as a tuple
-    """
+    """Returns the qualified name of the element as a tuple."""
     if self.namespace:
         return _namedelement_qualifiedname(self.namespace) + [self.name]
     else:

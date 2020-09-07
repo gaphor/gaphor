@@ -1,6 +1,4 @@
-"""
-Message connection adapter tests.
-"""
+"""Message connection adapter tests."""
 
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
@@ -10,8 +8,7 @@ from gaphor.UML.interactions.message import MessageItem
 
 
 def test_head_glue(diagram):
-    """Test message head glue
-    """
+    """Test message head glue."""
     ll = diagram.create(LifelineItem)
     msg = diagram.create(MessageItem)
 
@@ -22,8 +19,7 @@ def test_head_glue(diagram):
 
 
 def test_invisible_lifetime_glue(diagram):
-    """Test message to invisible lifetime glue
-    """
+    """Test message to invisible lifetime glue."""
     ll = diagram.create(LifelineItem)
     msg = diagram.create(MessageItem)
 
@@ -34,8 +30,7 @@ def test_invisible_lifetime_glue(diagram):
 
 
 def test_visible_lifetime_glue(diagram):
-    """Test message to visible lifetime glue
-    """
+    """Test message to visible lifetime glue."""
     ll = diagram.create(LifelineItem)
     msg = diagram.create(MessageItem)
 
@@ -46,8 +41,7 @@ def test_visible_lifetime_glue(diagram):
 
 
 def test_lost_message_connection(diagram, element_factory):
-    """Test lost message connection
-    """
+    """Test lost message connection."""
     ll = diagram.create(LifelineItem)
     msg = diagram.create(MessageItem)
 
@@ -69,8 +63,7 @@ def test_lost_message_connection(diagram, element_factory):
 
 
 def test_found_message_connection(diagram, element_factory):
-    """Test found message connection
-    """
+    """Test found message connection."""
     ll = diagram.create(LifelineItem)
     msg = diagram.create(MessageItem)
 
@@ -92,8 +85,7 @@ def test_found_message_connection(diagram, element_factory):
 
 
 def test_complete_message_connection(diagram, element_factory):
-    """Test complete message connection
-    """
+    """Test complete message connection."""
     ll1 = diagram.create(LifelineItem)
     ll2 = diagram.create(LifelineItem)
     msg = diagram.create(MessageItem)
@@ -118,8 +110,7 @@ def test_complete_message_connection(diagram, element_factory):
 
 
 def test_lifetime_connection(diagram):
-    """Test messages' lifetimes connection
-    """
+    """Test messages' lifetimes connection."""
     msg = diagram.create(MessageItem)
     ll1 = diagram.create(LifelineItem)
     ll2 = diagram.create(LifelineItem)
@@ -138,8 +129,7 @@ def test_lifetime_connection(diagram):
 
 
 def test_disconnection(diagram):
-    """Test message disconnection
-    """
+    """Test message disconnection."""
     ll1 = diagram.create(LifelineItem)
     ll2 = diagram.create(LifelineItem)
     msg = diagram.create(MessageItem)
@@ -157,8 +147,7 @@ def test_disconnection(diagram):
 
 
 def test_lifetime_connectivity_on_head(diagram, element_factory):
-    """Test lifeline's lifetime connectivity change on head connection
-    """
+    """Test lifeline's lifetime connectivity change on head connection."""
     ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
     msg = diagram.create(MessageItem)
 
@@ -176,8 +165,7 @@ def test_lifetime_connectivity_on_head(diagram, element_factory):
 
 
 def test_lifetime_connectivity_on_lifetime(diagram, element_factory):
-    """Test lifeline's lifetime connectivity change on lifetime connection
-    """
+    """Test lifeline's lifetime connectivity change on lifetime connection."""
     ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
     msg = diagram.create(MessageItem)
 
@@ -236,8 +224,7 @@ def test_message_glue_sd(diagram):
 
 
 def test_messages_disconnect_cd(diagram, element_factory):
-    """Test disconnecting messages on communication diagram
-    """
+    """Test disconnecting messages on communication diagram."""
     ll1 = diagram.create(LifelineItem)
     ll2 = diagram.create(LifelineItem)
     msg = diagram.create(MessageItem)

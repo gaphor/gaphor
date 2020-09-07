@@ -1,14 +1,11 @@
-"""Support for actions in generic files.
-
-"""
+"""Support for actions in generic files."""
 
 from typing import get_type_hints
 
 
 class action:
-    """
-    Decorator. Turns a regular function (/method) into a full blown
-    Action class.
+    """Decorator. Turns a regular function (/method) into a full blown Action
+    class.
 
     >>> class A:
     ...     @action(name="my_action", label="my action")

@@ -1,6 +1,4 @@
-"""
-Component item.
-"""
+"""Component item."""
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute

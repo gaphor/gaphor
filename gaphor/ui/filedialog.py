@@ -1,5 +1,5 @@
-"""This module has a generic FileDialog class that is used to open
-or save files."""
+"""This module has a generic FileDialog class that is used to open or save
+files."""
 
 from gi.repository import Gtk
 
@@ -16,14 +16,17 @@ class FileDialog:
         multiple=False,
         filters=[],
     ):
-        """Initialize the file dialog.  The title parameter is the title
-        displayed in the dialog.  The filename parameter will set the current
-        file name in the dialog.  The action is either open or save and changes
-        the buttons displayed.  If the parent window parameter is supplied,
-        the file dialog is set to be transient for that window.  The multiple
-        parameter should be set to true if multiple files can be opened at once.
-        This means that a list of filenames instead of a single filename string
-        will be returned by the selection property."""
+        """Initialize the file dialog.
+
+        The title parameter is the title displayed in the dialog.  The
+        filename parameter will set the current file name in the dialog.
+        The action is either open or save and changes the buttons
+        displayed.  If the parent window parameter is supplied, the file
+        dialog is set to be transient for that window.  The multiple
+        parameter should be set to true if multiple files can be opened
+        at once. This means that a list of filenames instead of a single
+        filename string will be returned by the selection property.
+        """
 
         self.multiple = multiple
 
@@ -42,8 +45,10 @@ class FileDialog:
 
     @property
     def selection(self):
-        """Return the selected file or files from the dialog.  This is used
-        by the selection property."""
+        """Return the selected file or files from the dialog.
+
+        This is used by the selection property.
+        """
 
         response = self.dialog.run()
 

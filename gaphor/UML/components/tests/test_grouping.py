@@ -5,13 +5,10 @@ from gaphor.UML.usecases import UseCaseItem
 
 
 class NodesGroupTestCase(TestCase):
-    """
-    Nodes grouping tests.
-    """
+    """Nodes grouping tests."""
 
     def test_grouping(self):
-        """Test node within another node composition
-        """
+        """Test node within another node composition."""
         n1 = self.create(NodeItem, UML.Node)
         n2 = self.create(NodeItem, UML.Node)
 
@@ -21,8 +18,7 @@ class NodesGroupTestCase(TestCase):
         assert n1.subject not in n2.subject.nestedNode
 
     def test_ungrouping(self):
-        """Test decomposition of component from node
-        """
+        """Test decomposition of component from node."""
         n1 = self.create(NodeItem, UML.Node)
         n2 = self.create(NodeItem, UML.Node)
 
@@ -35,8 +31,7 @@ class NodesGroupTestCase(TestCase):
 
 class NodeComponentGroupTestCase(TestCase):
     def test_grouping(self):
-        """Test component within node composition
-        """
+        """Test component within node composition."""
         n = self.create(NodeItem, UML.Node)
         c = self.create(ComponentItem, UML.Component)
 
@@ -58,8 +53,7 @@ class NodeComponentGroupTestCase(TestCase):
         assert connector.end[1].role is a2
 
     def test_ungrouping(self):
-        """Test decomposition of component from node
-        """
+        """Test decomposition of component from node."""
         n = self.create(NodeItem, UML.Node)
         c = self.create(ComponentItem, UML.Component)
 
@@ -75,8 +69,7 @@ class NodeComponentGroupTestCase(TestCase):
 
 class NodeArtifactGroupTestCase(TestCase):
     def test_grouping(self):
-        """Test artifact within node deployment
-        """
+        """Test artifact within node deployment."""
         n = self.create(NodeItem, UML.Node)
         a = self.create(ArtifactItem, UML.Artifact)
 
@@ -86,8 +79,7 @@ class NodeArtifactGroupTestCase(TestCase):
         assert n.subject.deployment[0].deployedArtifact[0] is a.subject
 
     def test_ungrouping(self):
-        """Test removal of artifact from node
-        """
+        """Test removal of artifact from node."""
         n = self.create(NodeItem, UML.Node)
         a = self.create(ArtifactItem, UML.Artifact)
 
@@ -100,8 +92,7 @@ class NodeArtifactGroupTestCase(TestCase):
 
 class SubsystemUseCaseGroupTestCase(TestCase):
     def test_grouping(self):
-        """Test adding an use case to a subsystem
-        """
+        """Test adding an use case to a subsystem."""
         s = self.create(ComponentItem, UML.Component)
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
@@ -114,8 +105,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         self.assertEqual(2, len(s.subject.useCase))
 
     def test_grouping_with_namespace(self):
-        """Test adding an use case to a subsystem (with namespace)
-        """
+        """Test adding an use case to a subsystem (with namespace)"""
         s = self.create(ComponentItem, UML.Component)
         uc = self.create(UseCaseItem, UML.UseCase)
 
@@ -124,8 +114,7 @@ class SubsystemUseCaseGroupTestCase(TestCase):
         assert s.subject in uc.subject.subject
 
     def test_ungrouping(self):
-        """Test removal of use case from subsystem
-        """
+        """Test removal of use case from subsystem."""
         s = self.create(ComponentItem, UML.Component)
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)

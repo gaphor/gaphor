@@ -1,6 +1,4 @@
-"""
-Test connections to folded interface.
-"""
+"""Test connections to folded interface."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -17,8 +15,7 @@ class ImplementationTestCase(TestCase):
         assert impl.style["dash-style"]
 
     def test_folded_interface_connection(self):
-        """Test connecting implementation to folded interface
-        """
+        """Test connecting implementation to folded interface."""
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.PROVIDED
         impl = self.create(ImplementationItem)
@@ -28,8 +25,7 @@ class ImplementationTestCase(TestCase):
         assert not impl.style["dash-style"]
 
     def test_folded_interface_disconnection(self):
-        """Test disconnection implementation from folded interface
-        """
+        """Test disconnection implementation from folded interface."""
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.PROVIDED
         impl = self.create(ImplementationItem)
@@ -48,8 +44,7 @@ class DependencyTestCase(TestCase):
         assert dep.style["dash-style"]
 
     def test_folded_interface_connection(self):
-        """Test connecting dependency to folded interface
-        """
+        """Test connecting dependency to folded interface."""
         clazz = self.create(ClassItem, UML.Class)
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.PROVIDED
@@ -65,8 +60,7 @@ class DependencyTestCase(TestCase):
         assert iface.folded == Folded.REQUIRED
 
     def test_folded_interface_disconnection(self):
-        """Test disconnection dependency from folded interface
-        """
+        """Test disconnection dependency from folded interface."""
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.PROVIDED
         dep = self.create(DependencyItem)
@@ -79,8 +73,7 @@ class DependencyTestCase(TestCase):
         assert iface.folded == Folded.PROVIDED
 
     def test_unfolded_interface_connection(self):
-        """Test disconnection dependency from unfolded interface
-        """
+        """Test disconnection dependency from unfolded interface."""
         iface = self.create(InterfaceItem, UML.Interface)
         dep = self.create(DependencyItem)
 

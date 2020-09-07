@@ -1,8 +1,7 @@
-"""
-The lexical analyzer for attributes and operations.
+"""The lexical analyzer for attributes and operations.
 
-In this module some parse functions are added for attributes and operations.
-The regular expressions are constructed based on a series of
+In this module some parse functions are added for attributes and
+operations. The regular expressions are constructed based on a series of
 "sub-patterns". This makes it easy to identify the autonomy of an
 attribute/operation.
 """
@@ -17,9 +16,7 @@ from gaphor.UML import uml
 
 @singledispatch
 def parse(el, text):
-    """
-    Parser for an UML element.
-    """
+    """Parser for an UML element."""
     raise NotImplementedError(
         "Parsing routine for type %s not implemented yet" % type(el)
     )
@@ -145,9 +142,10 @@ def _set_visibility(el: uml.Feature, vis: str):
 
 
 def parse_attribute(el: uml.Property, s: str) -> None:
-    """
-    Parse string s in the property. Tagged values, multiplicity and stuff
-    like that is altered to reflect the data in the property string.
+    """Parse string s in the property.
+
+    Tagged values, multiplicity and stuff like that is altered to
+    reflect the data in the property string.
     """
     m = attribute_pat.match(s)
     if not m or m.group("garbage"):
@@ -174,10 +172,10 @@ def parse_attribute(el: uml.Property, s: str) -> None:
 
 
 def parse_association_end(el: uml.Property, s: str) -> None:
-    """
-    Parse the text at one end of an association. The association end holds
-    two strings. It is automatically figured out which string is fed to the
-    parser.
+    """Parse the text at one end of an association.
+
+    The association end holds two strings. It is automatically figured
+    out which string is fed to the parser.
     """
     el.model.create
 
@@ -227,9 +225,10 @@ def parse_property(el: uml.Property, s: str) -> None:
 
 @parse.register(uml.Operation)
 def parse_operation(el: uml.Operation, s: str) -> None:
-    """
-    Parse string s in the operation. Tagged values, parameters and
-    visibility is altered to reflect the data in the operation string.
+    """Parse string s in the operation.
+
+    Tagged values, parameters and visibility is altered to reflect the
+    data in the operation string.
     """
     m = operation_pat.match(s)
     if not m or m.group("garbage"):
@@ -279,10 +278,10 @@ def parse_operation(el: uml.Operation, s: str) -> None:
 
 
 def parse_lifeline(el: uml.Lifeline, s: str) -> None:
-    """
-    Parse string s in a lifeline. If a class is defined and can be found
-    in the datamodel, then a class is connected to the lifelines 'represents'
-    property.
+    """Parse string s in a lifeline.
+
+    If a class is defined and can be found in the datamodel, then a
+    class is connected to the lifelines 'represents' property.
     """
     m = lifeline_pat.match(s)
     g = m.group
@@ -298,14 +297,11 @@ def parse_lifeline(el: uml.Lifeline, s: str) -> None:
 
 
 def render_lifeline(el: uml.Lifeline) -> str:
-    """
-    """
+    """"""
     return el.name or ""
 
 
 @parse.register(uml.NamedElement)
 def parse_namedelement(el: uml.NamedElement, text: str) -> None:
-    """
-    Parse named element by simply assigning text to its name.
-    """
+    """Parse named element by simply assigning text to its name."""
     el.name = text

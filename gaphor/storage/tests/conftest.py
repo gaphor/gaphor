@@ -15,9 +15,7 @@ def modeling_language():
 @pytest.fixture
 def loader(element_factory, modeling_language):  # noqa: F811
     def load(data):
-        """
-        Load data from specified string.
-        """
+        """Load data from specified string."""
         element_factory.flush()
         assert not list(element_factory.select())
 

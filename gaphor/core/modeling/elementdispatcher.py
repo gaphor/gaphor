@@ -1,5 +1,4 @@
-"""
-"""
+""""""
 
 from __future__ import annotations
 
@@ -20,9 +19,7 @@ from gaphor.core.modeling.properties import umlproperty
 
 
 class EventWatcher:
-    """
-    A helper for easy registering and unregistering event handlers.
-    """
+    """A helper for easy registering and unregistering event handlers."""
 
     def __init__(
         self,
@@ -36,9 +33,8 @@ class EventWatcher:
         self._watched_paths: Dict[str, Handler] = dict()
 
     def watch(self, path: str, handler: Optional[Handler] = None) -> EventWatcher:
-        """
-        Watch a certain path of elements starting with the DiagramItem.
-        The handler is optional and will default the default provided at
+        """Watch a certain path of elements starting with the DiagramItem. The
+        handler is optional and will default the default provided at
         construction time.
 
         Watches should be set in the constructor, so they can be registered
@@ -64,9 +60,10 @@ class EventWatcher:
             dispatcher.subscribe(handler, element, path)
 
     def unsubscribe_all(self, *_args):
-        """
-        Unregister handlers. Extra arguments are ignored (makes connecting to
-        destroy signals much easier though).
+        """Unregister handlers.
+
+        Extra arguments are ignored (makes connecting to destroy signals
+        much easier though).
         """
         dispatcher = self.element_dispatcher
         if not dispatcher:
@@ -77,10 +74,9 @@ class EventWatcher:
 
 
 class ElementDispatcher(Service):
-    """
-    The Element based Dispatcher allows handlers to receive only events
-    related to certain elements. Those elements should be registered too.
-    A path should be provided, that is used to find those changes.
+    """The Element based Dispatcher allows handlers to receive only events
+    related to certain elements. Those elements should be registered too. A
+    path should be provided, that is used to find those changes.
 
     The handlers are registered on their property attribute. This avoids
     subclass lookups and is pretty specific. As a result this dispatcher is
@@ -125,10 +121,8 @@ class ElementDispatcher(Service):
         self.event_manager.unsubscribe(self.on_model_loaded)
 
     def _path_to_properties(self, element, path):
-        """
-        Given a start element and a path, return a tuple of properties
-        (association, attribute, etc.) representing the path.
-        """
+        """Given a start element and a path, return a tuple of properties
+        (association, attribute, etc.) representing the path."""
         c = type(element)
         tpath = []
         for attr in path.split("."):
@@ -149,10 +143,8 @@ class ElementDispatcher(Service):
         return tuple(tpath)
 
     def _add_handlers(self, element, props, handler):
-        """
-        Provided an element and a path of properties (props), register the
-        handler for each property.
-        """
+        """Provided an element and a path of properties (props), register the
+        handler for each property."""
         property, remainder = props[0], props[1:]
         key = (element, property)
 
@@ -191,9 +183,7 @@ class ElementDispatcher(Service):
                     self._add_handlers(e, remainder, handler)
 
     def _remove_handlers(self, element, property, handler):
-        """
-        Remove the handler of the path of elements.
-        """
+        """Remove the handler of the path of elements."""
         key = element, property
         handlers = self._handlers.get(key)
         if not handlers:
@@ -224,9 +214,7 @@ class ElementDispatcher(Service):
         self._add_handlers(element, props, handler)
 
     def unsubscribe(self, handler):
-        """
-        Unregister a handler from the registry.
-        """
+        """Unregister a handler from the registry."""
         try:
             reverse = reversed(self._reverse[handler])
         except KeyError:

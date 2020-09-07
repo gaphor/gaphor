@@ -1,5 +1,4 @@
-"""
-Pseudostate diagram items.
+"""Pseudostate diagram items.
 
 See also gaphor.UML.states package description.
 """
@@ -38,9 +37,7 @@ class PseudostateItem(ElementPresentation, VertexItem):
 
 
 def draw_initial_pseudostate(box, context, bounding_box):
-    """
-    Draw initial pseudostate symbol.
-    """
+    """Draw initial pseudostate symbol."""
     cr = context.cairo
     stroke = context.style["color"]
     if stroke:

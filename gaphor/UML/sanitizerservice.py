@@ -1,7 +1,5 @@
-"""
-The Sanitize module is dedicated to adapters (stuff) that keeps
-the model clean and in sync with diagrams.
-"""
+"""The Sanitize module is dedicated to adapters (stuff) that keeps the model
+clean and in sync with diagrams."""
 
 
 from gaphor import UML
@@ -13,10 +11,8 @@ from gaphor.diagram.general import CommentLineItem
 
 
 class SanitizerService(Service):
-    """
-    Does some background cleanup jobs, such as removing elements from the
-    model that have no presentations (and should have some).
-    """
+    """Does some background cleanup jobs, such as removing elements from the
+    model that have no presentations (and should have some)."""
 
     def __init__(self, event_manager):
         self.event_manager = event_manager
@@ -37,10 +33,9 @@ class SanitizerService(Service):
 
     @event_handler(AssociationDeleted)
     def _unlink_on_presentation_delete(self, event):
-        """
-        Unlink the model element if no more presentations link to the `item`'s
-        subject or the deleted item was the only item currently linked.
-        """
+        """Unlink the model element if no more presentations link to the
+        `item`'s subject or the deleted item was the only item currently
+        linked."""
         if event.property is UML.Element.presentation:
             old_presentation = event.old_value
             if old_presentation and not event.element.presentation:
@@ -48,10 +43,8 @@ class SanitizerService(Service):
 
     @event_handler(AssociationSet)
     def update_annotated_element_link(self, event):
-        """
-        Link comment and element if a comment line is present, but comment
-        and element subject are not connected yet.
-        """
+        """Link comment and element if a comment line is present, but comment
+        and element subject are not connected yet."""
         if event.property is not Presentation.subject:  # type: ignore[misc]
             return
 
@@ -82,9 +75,7 @@ class SanitizerService(Service):
 
     @event_handler(AssociationDeleted)
     def _unlink_on_extension_delete(self, event):
-        """
-        Remove applied stereotypes when extension is deleted.
-        """
+        """Remove applied stereotypes when extension is deleted."""
         if (
             isinstance(event.element, UML.Extension)
             and event.property is UML.Association.memberEnd
@@ -113,9 +104,7 @@ class SanitizerService(Service):
 
     @event_handler(AssociationDeleted)
     def _unlink_on_stereotype_delete(self, event):
-        """
-        Remove applied stereotypes when stereotype is deleted.
-        """
+        """Remove applied stereotypes when stereotype is deleted."""
         if event.property is UML.InstanceSpecification.classifier and isinstance(
             event.old_value, UML.Stereotype
         ):

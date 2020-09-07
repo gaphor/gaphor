@@ -68,10 +68,10 @@ def get_class_extensions(cls: UML.Class):
 def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Class]]:
     """Create a tree of UML.Class elements.
 
-    The relationship between the classes is a generalization. Since the opposite
-    relationship, `cls.specific` is not currently stored, only the children
-    know who their parents are, the parents don't know the children.
-
+    The relationship between the classes is a generalization. Since the
+    opposite relationship, `cls.specific` is not currently stored, only
+    the children know who their parents are, the parents don't know the
+    children.
     """
     trees = {}
     for cls in classes:
@@ -86,7 +86,6 @@ def create_referenced(classes: List[UML.Class]) -> Set[UML.Class]:
 
     We consider a UML.Class referenced when its child UML.Class has a
     generalization relationship to it.
-
     """
     referenced = set()
     for cls in classes:
@@ -181,10 +180,9 @@ def generate(
 ) -> None:
     """Generates the Python data model.
 
-    Opens the Gaphor model, generates the list of classes using the element
-    factory, and then creates a new Python data model using a relationship
-    search tree.
-
+    Opens the Gaphor model, generates the list of classes using the
+    element factory, and then creates a new Python data model using a
+    relationship search tree.
     """
     element_factory = ElementFactory()
     modeling_language = UMLModelingLanguage()

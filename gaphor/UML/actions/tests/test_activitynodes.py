@@ -5,18 +5,15 @@ from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 
 class ActivityNodesTestCase(TestCase):
     def test_decision_node(self):
-        """Test creation of decision node
-        """
+        """Test creation of decision node."""
         self.create(DecisionNodeItem, UML.DecisionNode)
 
     def test_fork_node(self):
-        """Test creation of fork node
-        """
+        """Test creation of fork node."""
         self.create(ForkNodeItem, UML.ForkNode)
 
     def test_decision_node_persistence(self):
-        """Test saving/loading of decision node
-        """
+        """Test saving/loading of decision node."""
         factory = self.element_factory
         item = self.create(DecisionNodeItem, UML.DecisionNode)
 
@@ -36,8 +33,7 @@ class ActivityNodesTestCase(TestCase):
         assert isinstance(item.combined, UML.MergeNode)
 
     def test_fork_node_persistence(self):
-        """Test saving/loading of fork node
-        """
+        """Test saving/loading of fork node."""
         factory = self.element_factory
         item = self.create(ForkNodeItem, UML.ForkNode)
 

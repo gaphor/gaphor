@@ -35,8 +35,7 @@ def undo_manager(session):
 
 
 def connect(line, handle, item, port=None):
-    """
-    Connect line's handle to an item.
+    """Connect line's handle to an item.
 
     If port is not provided, then first port is used.
     """
@@ -84,9 +83,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
     assert undo_manager.can_undo()
 
     def get_connected(handle):
-        """
-        Get item connected to line via handle.
-        """
+        """Get item connected to line via handle."""
         cinfo = diagram.canvas.get_connection(handle)
         if cinfo:
             return cinfo.connected

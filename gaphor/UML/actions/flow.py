@@ -1,7 +1,7 @@
-"""
-Control flow and object flow implementation.
+"""Control flow and object flow implementation.
 
-Contains also implementation to split flows using activity edge connectors.
+Contains also implementation to split flows using activity edge
+connectors.
 """
 
 
@@ -14,9 +14,10 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.ControlFlow)
 class FlowItem(LinePresentation, Named):
-    """
-    Representation of control flow and object flow. Flow item has name and
-    guard. It can be split into two flows with activity edge connectors.
+    """Representation of control flow and object flow.
+
+    Flow item has name and guard. It can be split into two flows with
+    activity edge connectors.
     """
 
     def __init__(self, id=None, model=None):

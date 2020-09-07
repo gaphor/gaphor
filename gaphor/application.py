@@ -1,9 +1,7 @@
-"""
-The Application object. One application should be available.
+"""The Application object. One application should be available.
 
-An application can host multiple sessions. From a user point of
-view a session is represented as a window in which a diagram
-can be edited.
+An application can host multiple sessions. From a user point of view a
+session is represented as a window in which a diagram can be edited.
 """
 
 from __future__ import annotations
@@ -32,9 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 def distribution():
-    """
-    The PkgResources distribution for Gaphor
-    """
+    """The PkgResources distribution for Gaphor."""
     return importlib_metadata.distribution("gaphor")
 
 
@@ -43,8 +39,7 @@ class NotInitializedError(Exception):
 
 
 class Application(Service, ActionProvider):
-    """
-    The Gaphor application is started from the gaphor.ui module.
+    """The Gaphor application is started from the gaphor.ui module.
 
     This application instance is used to maintain application wide references
     to services and sessions (opened models). It behaves like a singleton in many ways.
@@ -62,9 +57,7 @@ class Application(Service, ActionProvider):
         transaction.subscribers.add(self._transaction_proxy)
 
     def new_session(self, services=None):
-        """
-        Initialize an application session.
-        """
+        """Initialize an application session."""
         session = Session()
         self.sessions.add(session)
         self.active_session = session
@@ -82,8 +75,7 @@ class Application(Service, ActionProvider):
             self.active_session = None
 
     def shutdown(self):
-        """
-        Forcibly shut down all sessions. No questions asked.
+        """Forcibly shut down all sessions. No questions asked.
 
         This is mainly for testing purposes.
         """
@@ -99,9 +91,7 @@ class Application(Service, ActionProvider):
 
     @action(name="app.quit", shortcut="<Primary>q")
     def quit(self):
-        """
-        The user's application Quit command.
-        """
+        """The user's application Quit command."""
         for session in list(self.sessions):
             self.active_session = session
             event_manager = session.get_service("event_manager")
@@ -123,15 +113,11 @@ class Application(Service, ActionProvider):
 
 
 class Session:
-    """
-    A user context is a set of services (including UI services)
-    that define a window with loaded model.
-    """
+    """A user context is a set of services (including UI services) that define
+    a window with loaded model."""
 
     def __init__(self, services=None):
-        """
-        Initialize the application.
-        """
+        """Initialize the application."""
         services_by_name: Dict[str, Service] = initialize("gaphor.services", services)
 
         self.event_manager: EventManager = cast(

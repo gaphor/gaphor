@@ -1,4 +1,7 @@
-"""About and help services. (help browser anyone?)"""
+"""About and help services.
+
+(help browser anyone?)
+"""
 
 
 import importlib

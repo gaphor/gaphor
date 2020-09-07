@@ -1,6 +1,4 @@
-"""
-1:n and n:m relations in the data model are saved using a collection.
-"""
+"""1:n and n:m relations in the data model are saved using a collection."""
 
 from typing import Generic, List, Type, TypeVar, Union, overload
 
@@ -49,9 +47,7 @@ class collectionlist(recursemixin, querymixin, List[T]):  # type: ignore[misc]
 
 
 class collection(Generic[T]):
-    """
-    Collection (set-like) for model elements' 1:n and n:m relationships.
-    """
+    """Collection (set-like) for model elements' 1:n and n:m relationships."""
 
     def __init__(self, property, object, type: Type[T]):
         self.property = property
@@ -104,10 +100,8 @@ class collection(Generic[T]):
             self.property.__delete__(self.object, value)
 
     def index(self, key: T) -> int:
-        """
-        Given an object, return the position of that object in the
-        collection.
-        """
+        """Given an object, return the position of that object in the
+        collection."""
         return self.items.index(key)
 
     # OCL members (from SMW by Ivan Porres, http://www.abo.fi/~iporres/smw)
@@ -152,8 +146,9 @@ class collection(Generic[T]):
         return not self.isEmpty()
 
     def swap(self, item1, item2):
-        """
-        Swap two elements. Return true if swap was successful.
+        """Swap two elements.
+
+        Return true if swap was successful.
         """
         try:
             i1 = self.items.index(item1)

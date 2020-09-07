@@ -1,6 +1,4 @@
-"""
-Unittest the storage and parser modules
-"""
+"""Unittest the storage and parser modules."""
 
 import re
 from io import StringIO
@@ -45,8 +43,7 @@ class StorageTestCase(TestCase):
         assert not version_lower_than("1.2.0rc2-dev0+7fad31a0", (0, 17, 0))
 
     def test_save_uml(self):
-        """Saving gaphor.UML model elements.
-        """
+        """Saving gaphor.UML model elements."""
         self.element_factory.create(UML.Package)
         self.element_factory.create(UML.Diagram)
         self.element_factory.create(UML.Comment)
@@ -62,8 +59,7 @@ class StorageTestCase(TestCase):
         assert "<Class " in out.data
 
     def test_save_item(self):
-        """Save a diagranm item too.
-        """
+        """Save a diagranm item too."""
         diagram = self.element_factory.create(UML.Diagram)
         diagram.create(CommentItem, subject=self.element_factory.create(UML.Comment))
 
@@ -77,9 +73,7 @@ class StorageTestCase(TestCase):
         assert ' type="CommentItem"' in out.data, out.data
 
     def test_load_uml(self):
-        """
-        Test loading of a freshly saved model.
-        """
+        """Test loading of a freshly saved model."""
         self.element_factory.create(UML.Package)
         # diagram is created in TestCase.setUp
         # self.element_factory.create(UML.Diagram)
@@ -97,9 +91,7 @@ class StorageTestCase(TestCase):
         assert len(self.element_factory.lselect(UML.Class)) == 1
 
     def test_load_uml_2(self):
-        """
-        Test loading of a freshly saved model.
-        """
+        """Test loading of a freshly saved model."""
         self.element_factory.create(UML.Package)
         self.create(CommentItem, UML.Comment)
         self.create(ClassItem, UML.Class)
