@@ -45,7 +45,7 @@ class PartitionItem(ElementPresentation, Named):
             },
             draw=self.draw_partition,
         )
-        self.min_width = 100
+        self.min_width = 150
         self.min_height = 300
 
         self.watch("subject[NamedElement].name")
@@ -118,8 +118,10 @@ class PartitionItem(ElementPresentation, Named):
         cr.set_line_width(context.style["line-width"])
 
         if self.subject and not self.subject.isDimension and self._toplevel:
-            cr.move_to(0, 0)
+            cr.move_to(0, bounding_box.height)
+            cr.line_to(0, 0)
             cr.line_to(bounding_box.width, 0)
+            cr.line_to(bounding_box.width, bounding_box.height)
 
         h = self._header_size[1]
 
@@ -131,7 +133,7 @@ class PartitionItem(ElementPresentation, Named):
             cr.line_to(bounding_box.width, bounding_box.height)
 
         if self._subpart:
-            # header line for all subparitions
+            # header line for all subpartitions
             hd = h + self._hdmax
             cr.move_to(0, hd)
             cr.line_to(bounding_box.width, hd)
