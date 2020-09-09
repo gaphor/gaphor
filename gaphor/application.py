@@ -16,11 +16,14 @@ import importlib_metadata
 from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
+from gaphor.core import event_handler
 from gaphor.core.eventmanager import EventManager
 from gaphor.entrypoint import initialize
 from gaphor.event import (
+    ActiveSessionChanged,
     ServiceInitializedEvent,
     ServiceShutdownEvent,
+    SessionShutdown,
     SessionShutdownRequested,
 )
 from gaphor.services.componentregistry import ComponentRegistry
@@ -53,33 +56,54 @@ class Application(Service, ActionProvider):
     are registered in the "component_registry" service.
     """
 
-    def __init__(self):
-        self.active_session: Optional[Session] = None
+    def __init__(self, on_quit=None):
+        self._on_quit = on_quit
+
+        self._active_session: Optional[Session] = None
         self.sessions: Set[Session] = set()
 
         self._services_by_name = initialize("gaphor.appservices", application=self)
 
         transaction.subscribers.add(self._transaction_proxy)
 
+    @property
+    def active_session(self):
+        return self._active_session
+
     def new_session(self, services=None):
         """
         Initialize an application session.
         """
         session = Session()
+
+        @event_handler(ActiveSessionChanged)
+        def on__active_session_changed(event):
+            self._active_session = session
+
+        @event_handler(SessionShutdown)
+        def on_session_shutdown(event):
+            self.shutdown_session(session)
+            if not self.sessions:
+                self.quit()
+
+        event_manager = session.get_service("event_manager")
+        event_manager.subscribe(on__active_session_changed)
+        event_manager.subscribe(on_session_shutdown)
+
         self.sessions.add(session)
-        self.active_session = session
+        self._active_session = session
 
         return session
 
     def has_sessions(self):
-        return bool(self.active_session)
+        return bool(self._active_session)
 
     def shutdown_session(self, session):
         assert session
         session.shutdown()
         self.sessions.discard(session)
-        if session is self.active_session:
-            self.active_session = None
+        if session is self._active_session:
+            self._active_session = None
 
     def shutdown(self):
         """
@@ -103,13 +127,15 @@ class Application(Service, ActionProvider):
         The user's application Quit command.
         """
         for session in list(self.sessions):
-            self.active_session = session
+            self._active_session = session
             event_manager = session.get_service("event_manager")
             event_manager.handle(SessionShutdownRequested(self))
-            if self.active_session == session:
+            if self._active_session == session:
                 logger.info("Window not closed, abort quit operation")
                 return False
         self.shutdown()
+        if self._on_quit:
+            self._on_quit()
         return True
 
     def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
@@ -118,8 +144,8 @@ class Application(Service, ActionProvider):
         )
 
     def _transaction_proxy(self, event):
-        if self.active_session:
-            self.active_session.event_manager.handle(event)
+        if self._active_session:
+            self._active_session.event_manager.handle(event)
 
 
 class Session:

@@ -12,7 +12,6 @@ import gi
 
 from gaphor.application import Application
 from gaphor.core import event_handler
-from gaphor.event import ActiveSessionChanged, SessionShutdown
 from gaphor.ui.actiongroup import apply_application_actions
 
 # fmt: off
@@ -69,29 +68,12 @@ def main(argv=sys.argv):
         run(argv)
 
 
-def subscribe_to_lifecycle_events(session, application, gtk_app):
-    @event_handler(ActiveSessionChanged)
-    def on_active_session_changed(event):
-        application.active_session = session
-
-    @event_handler(SessionShutdown)
-    def on_session_shutdown(event):
-        application.shutdown_session(session)
-        if not application.sessions:
-            gtk_app.quit()
-
-    event_manager = session.get_service("event_manager")
-    event_manager.subscribe(on_active_session_changed)
-    event_manager.subscribe(on_session_shutdown)
-
-
 def run(args):
     application: Optional[Application] = None
 
     def new_session():
         assert application
         session = application.new_session()
-        subscribe_to_lifecycle_events(session, application, gtk_app)
 
         main_window = session.get_service("main_window")
         main_window.open(gtk_app)
@@ -101,7 +83,7 @@ def run(args):
     def app_startup(gtk_app):
         nonlocal application
         try:
-            application = Application()
+            application = Application(on_quit=gtk_app.quit)
             apply_application_actions(application, gtk_app)
             if macos_init:
                 macos_init(application, gtk_app)

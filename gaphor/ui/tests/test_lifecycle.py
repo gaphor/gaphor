@@ -2,7 +2,6 @@ import pytest
 
 from gaphor.application import Application
 from gaphor.event import ActiveSessionChanged, SessionShutdown
-from gaphor.ui import subscribe_to_lifecycle_events
 
 
 class GtkApplicationStub:
@@ -14,18 +13,21 @@ class GtkApplicationStub:
 
 
 @pytest.fixture
-def application():
-    application = Application()
+def gtk_app():
+    return GtkApplicationStub()
+
+
+@pytest.fixture
+def application(gtk_app):
+    application = Application(on_quit=gtk_app.quit)
     yield application
     application.shutdown()
 
 
 def two_sessions(application, gtk_app=GtkApplicationStub()):
     session1 = application.new_session(["event_manager"])
-    subscribe_to_lifecycle_events(session1, application, gtk_app)
 
     session2 = application.new_session(["event_manager"])
-    subscribe_to_lifecycle_events(session2, application, gtk_app)
 
     return session1, session2
 
@@ -53,8 +55,7 @@ def test_session_shutdown(application):
     assert session1 in application.sessions
 
 
-def test_all_sessions_shut_down(application):
-    gtk_app = GtkApplicationStub()
+def test_all_sessions_shut_down(gtk_app, application):
     session1, session2 = two_sessions(application, gtk_app)
 
     session1.get_service("event_manager").handle(SessionShutdown(None))
