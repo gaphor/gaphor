@@ -1,30 +1,18 @@
 import pytest
 
 from gaphor.application import Application
-from gaphor.event import ActiveSessionChanged, SessionShutdown
-
-
-class GtkApplicationStub:
-    def __init__(self):
-        self.has_quit = False
-
-    def quit(self):
-        self.has_quit = True
+from gaphor.core import event_handler
+from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionShutdown
 
 
 @pytest.fixture
-def gtk_app():
-    return GtkApplicationStub()
-
-
-@pytest.fixture
-def application(gtk_app):
-    application = Application(on_quit=gtk_app.quit)
+def application():
+    application = Application()
     yield application
     application.shutdown()
 
 
-def two_sessions(application, gtk_app=GtkApplicationStub()):
+def two_sessions(application):
     session1 = application.new_session(["event_manager"])
 
     session2 = application.new_session(["event_manager"])
@@ -55,11 +43,20 @@ def test_session_shutdown(application):
     assert session1 in application.sessions
 
 
-def test_all_sessions_shut_down(gtk_app, application):
-    session1, session2 = two_sessions(application, gtk_app)
+def test_all_sessions_shut_down(application):
+    quit_events = []
+
+    @event_handler(ApplicationShutdown)
+    def on_quit(event):
+        quit_events.append(event)
+
+    application.event_manager.subscribe(on_quit)
+
+    session1, session2 = two_sessions(application)
 
     session1.get_service("event_manager").handle(SessionShutdown(None))
     session2.get_service("event_manager").handle(SessionShutdown(None))
 
     assert len(application.sessions) == 0
-    assert gtk_app.has_quit
+    assert quit_events
+    assert quit_events[0].service is application

@@ -12,6 +12,7 @@ import gi
 
 from gaphor.application import Application
 from gaphor.core import event_handler
+from gaphor.event import ApplicationShutdown, SessionCreated
 from gaphor.ui.actiongroup import apply_application_actions
 
 # fmt: off
@@ -71,22 +72,25 @@ def main(argv=sys.argv):
 def run(args):
     application: Optional[Application] = None
 
-    def new_session():
-        assert application
-        session = application.new_session()
-
-        main_window = session.get_service("main_window")
-        main_window.open(gtk_app)
-
-        return session
-
     def app_startup(gtk_app):
         nonlocal application
+
+        @event_handler(SessionCreated)
+        def on_session_created(event):
+            main_window = event.session.get_service("main_window")
+            main_window.open(gtk_app)
+
+        @event_handler(ApplicationShutdown)
+        def on_quit(event):
+            gtk_app.quit()
+
         try:
-            application = Application(on_quit=gtk_app.quit)
+            application = Application()
             apply_application_actions(application, gtk_app)
             if macos_init:
                 macos_init(application, gtk_app)
+            application.event_manager.subscribe(on_session_created)
+            application.event_manager.subscribe(on_quit)
         except Exception:
             gtk_app.quit()
             raise
@@ -94,10 +98,12 @@ def run(args):
     def app_activate(gtk_app):
         assert application
         if not application.has_sessions():
-            gtk_app.open([], "__new__")
+            application.new_session()
 
     def app_open(gtk_app, files, n_files, hint):
-        session = new_session()
+        # appfilemanager should take care of this:
+        assert application
+        session = application.new_session()
         file_manager = session.get_service("file_manager")
         if hint == "__new__":
             file_manager.new()

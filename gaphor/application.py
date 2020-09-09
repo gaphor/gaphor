@@ -21,8 +21,10 @@ from gaphor.core.eventmanager import EventManager
 from gaphor.entrypoint import initialize
 from gaphor.event import (
     ActiveSessionChanged,
+    ApplicationShutdown,
     ServiceInitializedEvent,
     ServiceShutdownEvent,
+    SessionCreated,
     SessionShutdown,
     SessionShutdownRequested,
 )
@@ -56,13 +58,15 @@ class Application(Service, ActionProvider):
     are registered in the "component_registry" service.
     """
 
-    def __init__(self, on_quit=None):
-        self._on_quit = on_quit
-
+    def __init__(self):
         self._active_session: Optional[Session] = None
         self.sessions: Set[Session] = set()
 
         self._services_by_name = initialize("gaphor.appservices", application=self)
+
+        self.event_manager: EventManager = cast(
+            EventManager, self._services_by_name["event_manager"]
+        )
 
         transaction.subscribers.add(self._transaction_proxy)
 
@@ -70,7 +74,7 @@ class Application(Service, ActionProvider):
     def active_session(self):
         return self._active_session
 
-    def new_session(self, services=None):
+    def new_session(self, services=None, with_ui=False):
         """
         Initialize an application session.
         """
@@ -93,6 +97,7 @@ class Application(Service, ActionProvider):
         self.sessions.add(session)
         self._active_session = session
 
+        self.event_manager.handle(SessionCreated(self, session))
         return session
 
     def has_sessions(self):
@@ -116,6 +121,8 @@ class Application(Service, ActionProvider):
         while self.sessions:
             self.shutdown_session(self.sessions.pop())
 
+        self.event_manager.handle(ApplicationShutdown(self))
+
         for c in self._services_by_name.values():
             if c is not self:
                 c.shutdown()
@@ -134,8 +141,6 @@ class Application(Service, ActionProvider):
                 logger.info("Window not closed, abort quit operation")
                 return False
         self.shutdown()
-        if self._on_quit:
-            self._on_quit()
         return True
 
     def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
@@ -148,7 +153,7 @@ class Application(Service, ActionProvider):
             self._active_session.event_manager.handle(event)
 
 
-class Session:
+class Session(Service):
     """
     A user context is a set of services (including UI services)
     that define a window with loaded model.
@@ -156,7 +161,7 @@ class Session:
 
     def __init__(self, services=None):
         """
-        Initialize the application.
+        Initialize the application session.
         """
         services_by_name: Dict[str, Service] = initialize("gaphor.services", services)
 
@@ -179,6 +184,7 @@ class Session:
         return self.component_registry.get_service(name)
 
     def shutdown(self):
+
         if self.component_registry:
             for name, srv in self.component_registry.all(Service):  # type: ignore[misc]
                 self.shutdown_service(name, srv)

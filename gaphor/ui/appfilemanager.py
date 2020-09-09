@@ -1,7 +1,5 @@
 import logging
 
-from gi.repository import Gio
-
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.ui.filedialog import FileDialog
@@ -20,25 +18,24 @@ class AppFileManager(Service, ActionProvider):
     Handle application level file loading
     """
 
-    def __init__(self, session):
+    def __init__(self, application, session):
+        self.application = application
         self.session = session
 
     def shutdown(self):
         pass
 
-    @property
-    def application(self):
-        return Gio.Application.get_default()
-
     def load(self, filename):
         if self.active_session_is_new():
-            file_manager = self.session.get_service("file_manager")
-            file_manager.load(filename)
+            session = self.session
         else:
-            self.application.open([Gio.File.new_for_path(filename)], "")
+            session = self.application.new_session()
+
+        file_manager = session.get_service("file_manager")
+        file_manager.load(filename)
 
     def new(self):
-        self.application.open([], "__new__")
+        self.application.new_session()
 
     def active_session_is_new(self):
         """
