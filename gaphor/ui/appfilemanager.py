@@ -31,6 +31,10 @@ class AppFileManager(Service, ActionProvider):
         else:
             session = self.application.new_session()
 
+        main_window = session.get_service("main_window")
+        if main_window.window:
+            main_window.window.present()
+
         file_manager = session.get_service("file_manager")
         file_manager.load(filename)
 
@@ -42,6 +46,9 @@ class AppFileManager(Service, ActionProvider):
         If it's a new model, there is no state change (undo & redo)
         and no file name is defined.
         """
+        if not self.application.active_session:
+            return False
+
         undo_manager = self.session.get_service("undo_manager")
         file_manager = self.session.get_service("file_manager")
 

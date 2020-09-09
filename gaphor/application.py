@@ -70,6 +70,12 @@ class Application(Service, ActionProvider):
 
         transaction.subscribers.add(self._transaction_proxy)
 
+    def get_service(self, name):
+        if not self._services_by_name:
+            raise NotInitializedError("Session is no longer alive")
+
+        return self._services_by_name[name]
+
     @property
     def active_session(self):
         return self._active_session

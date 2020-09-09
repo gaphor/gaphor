@@ -89,8 +89,9 @@ def run(args):
             apply_application_actions(application, gtk_app)
             if macos_init:
                 macos_init(application, gtk_app)
-            application.event_manager.subscribe(on_session_created)
-            application.event_manager.subscribe(on_quit)
+            event_manager = application.get_service("event_manager")
+            event_manager.subscribe(on_session_created)
+            event_manager.subscribe(on_quit)
         except Exception:
             gtk_app.quit()
             raise
@@ -103,14 +104,13 @@ def run(args):
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:
         assert application
-        session = application.new_session()
-        file_manager = session.get_service("file_manager")
+        app_file_manager = application.get_service("app_file_manager")
         if hint == "__new__":
-            file_manager.new()
+            app_file_manager.new()
         else:
             assert n_files == 1
             for file in files:
-                file_manager.load(file.get_path())
+                app_file_manager.load(file.get_path())
 
     gtk_app = Gtk.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
