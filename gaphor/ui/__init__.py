@@ -99,7 +99,8 @@ def run(args):
     def app_activate(gtk_app):
         assert application
         if not application.has_sessions():
-            application.new_session()
+            app_file_manager = application.get_service("app_file_manager")
+            app_file_manager.new()
 
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:

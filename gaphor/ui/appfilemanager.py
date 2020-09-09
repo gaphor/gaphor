@@ -1,5 +1,6 @@
 import logging
 
+from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.ui.filedialog import FileDialog
@@ -11,6 +12,18 @@ FILTERS = [
     {"name": gettext("Gaphor Models"), "pattern": "*.gaphor"},
     {"name": gettext("All Files"), "pattern": "*"},
 ]
+
+
+def load_default_model(session):
+    element_factory = session.get_service("element_factory")
+    element_factory.flush()
+    with element_factory.block_events():
+        model = element_factory.create(UML.Package)
+        model.name = gettext("New model")
+        diagram = element_factory.create(UML.Diagram)
+        diagram.package = model
+        diagram.name = gettext("main")
+    element_factory.model_ready()
 
 
 class AppFileManager(Service, ActionProvider):
@@ -36,10 +49,14 @@ class AppFileManager(Service, ActionProvider):
             main_window.window.present()
 
         file_manager = session.get_service("file_manager")
-        file_manager.load(filename)
+        try:
+            file_manager.load(filename)
+        except Exception:
+            load_default_model(session)
 
     def new(self):
-        self.application.new_session()
+        session = self.application.new_session()
+        load_default_model(session)
 
     def active_session_is_new(self):
         """
