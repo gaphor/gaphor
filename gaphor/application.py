@@ -16,11 +16,16 @@ import importlib_metadata
 from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
+from gaphor.core import event_handler
 from gaphor.core.eventmanager import EventManager
 from gaphor.entrypoint import initialize
 from gaphor.event import (
+    ActiveSessionChanged,
+    ApplicationShutdown,
     ServiceInitializedEvent,
     ServiceShutdownEvent,
+    SessionCreated,
+    SessionShutdown,
     SessionShutdownRequested,
 )
 from gaphor.services.componentregistry import ComponentRegistry
@@ -54,32 +59,62 @@ class Application(Service, ActionProvider):
     """
 
     def __init__(self):
-        self.active_session: Optional[Session] = None
+        self._active_session: Optional[Session] = None
         self.sessions: Set[Session] = set()
 
         self._services_by_name = initialize("gaphor.appservices", application=self)
 
+        self.event_manager: EventManager = cast(
+            EventManager, self._services_by_name["event_manager"]
+        )
+
         transaction.subscribers.add(self._transaction_proxy)
+
+    def get_service(self, name):
+        if not self._services_by_name:
+            raise NotInitializedError("Session is no longer alive")
+
+        return self._services_by_name[name]
+
+    @property
+    def active_session(self):
+        return self._active_session
 
     def new_session(self, services=None):
         """
         Initialize an application session.
         """
         session = Session()
-        self.sessions.add(session)
-        self.active_session = session
 
+        @event_handler(ActiveSessionChanged)
+        def on__active_session_changed(event):
+            self._active_session = session
+
+        @event_handler(SessionShutdown)
+        def on_session_shutdown(event):
+            self.shutdown_session(session)
+            if not self.sessions:
+                self.quit()
+
+        event_manager = session.get_service("event_manager")
+        event_manager.subscribe(on__active_session_changed)
+        event_manager.subscribe(on_session_shutdown)
+
+        self.sessions.add(session)
+        self._active_session = session
+
+        self.event_manager.handle(SessionCreated(self, session))
         return session
 
     def has_sessions(self):
-        return bool(self.active_session)
+        return bool(self._active_session)
 
     def shutdown_session(self, session):
         assert session
         session.shutdown()
         self.sessions.discard(session)
-        if session is self.active_session:
-            self.active_session = None
+        if session is self._active_session:
+            self._active_session = None
 
     def shutdown(self):
         """
@@ -92,6 +127,8 @@ class Application(Service, ActionProvider):
         while self.sessions:
             self.shutdown_session(self.sessions.pop())
 
+        self.event_manager.handle(ApplicationShutdown(self))
+
         for c in self._services_by_name.values():
             if c is not self:
                 c.shutdown()
@@ -103,10 +140,10 @@ class Application(Service, ActionProvider):
         The user's application Quit command.
         """
         for session in list(self.sessions):
-            self.active_session = session
+            self._active_session = session
             event_manager = session.get_service("event_manager")
             event_manager.handle(SessionShutdownRequested(self))
-            if self.active_session == session:
+            if self._active_session == session:
                 logger.info("Window not closed, abort quit operation")
                 return False
         self.shutdown()
@@ -118,11 +155,11 @@ class Application(Service, ActionProvider):
         )
 
     def _transaction_proxy(self, event):
-        if self.active_session:
-            self.active_session.event_manager.handle(event)
+        if self._active_session:
+            self._active_session.event_manager.handle(event)
 
 
-class Session:
+class Session(Service):
     """
     A user context is a set of services (including UI services)
     that define a window with loaded model.
@@ -130,7 +167,7 @@ class Session:
 
     def __init__(self, services=None):
         """
-        Initialize the application.
+        Initialize the application session.
         """
         services_by_name: Dict[str, Service] = initialize("gaphor.services", services)
 
@@ -153,6 +190,7 @@ class Session:
         return self.component_registry.get_service(name)
 
     def shutdown(self):
+
         if self.component_registry:
             for name, srv in self.component_registry.all(Service):  # type: ignore[misc]
                 self.shutdown_service(name, srv)

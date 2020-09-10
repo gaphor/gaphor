@@ -6,7 +6,6 @@ import logging
 
 from gi.repository import Gtk
 
-from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
 from gaphor.event import SessionShutdown, SessionShutdownRequested
@@ -59,18 +58,6 @@ class FileManager(Service, ActionProvider):
 
     filename = property(get_filename, set_filename)
 
-    def new(self):
-        element_factory = self.element_factory
-        element_factory.flush()
-        with element_factory.block_events():
-            model = element_factory.create(UML.Package)
-            model.name = gettext("New model")
-            diagram = element_factory.create(UML.Diagram)
-            diagram.package = model
-            diagram.name = gettext("main")
-        self.filename = None
-        element_factory.model_ready()
-
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.  A status window
         displays the loading progress.  The load generator updates the progress
@@ -106,7 +93,6 @@ class FileManager(Service, ActionProvider):
                 ).format(filename=filename),
                 window=self.main_window.window,
             )
-            self.new()
             raise
         finally:
             status_window.destroy()
@@ -186,7 +172,6 @@ class FileManager(Service, ActionProvider):
                 ),
                 window=self.main_window.window,
             )
-            self.new()
             raise
         finally:
             status_window.destroy()

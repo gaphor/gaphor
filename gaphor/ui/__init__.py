@@ -12,7 +12,7 @@ import gi
 
 from gaphor.application import Application
 from gaphor.core import event_handler
-from gaphor.event import ActiveSessionChanged, SessionShutdown
+from gaphor.event import ApplicationShutdown, SessionCreated
 from gaphor.ui.actiongroup import apply_application_actions
 
 # fmt: off
@@ -69,42 +69,29 @@ def main(argv=sys.argv):
         run(argv)
 
 
-def subscribe_to_lifecycle_events(session, application, gtk_app):
-    @event_handler(ActiveSessionChanged)
-    def on_active_session_changed(event):
-        application.active_session = session
-
-    @event_handler(SessionShutdown)
-    def on_session_shutdown(event):
-        application.shutdown_session(session)
-        if not application.sessions:
-            gtk_app.quit()
-
-    event_manager = session.get_service("event_manager")
-    event_manager.subscribe(on_active_session_changed)
-    event_manager.subscribe(on_session_shutdown)
-
-
 def run(args):
     application: Optional[Application] = None
 
-    def new_session():
-        assert application
-        session = application.new_session()
-        subscribe_to_lifecycle_events(session, application, gtk_app)
-
-        main_window = session.get_service("main_window")
-        main_window.open(gtk_app)
-
-        return session
-
     def app_startup(gtk_app):
         nonlocal application
+
+        @event_handler(SessionCreated)
+        def on_session_created(event):
+            main_window = event.session.get_service("main_window")
+            main_window.open(gtk_app)
+
+        @event_handler(ApplicationShutdown)
+        def on_quit(event):
+            gtk_app.quit()
+
         try:
             application = Application()
             apply_application_actions(application, gtk_app)
             if macos_init:
-                macos_init(application, gtk_app)
+                macos_init(application)
+            event_manager = application.get_service("event_manager")
+            event_manager.subscribe(on_session_created)
+            event_manager.subscribe(on_quit)
         except Exception:
             gtk_app.quit()
             raise
@@ -112,17 +99,19 @@ def run(args):
     def app_activate(gtk_app):
         assert application
         if not application.has_sessions():
-            gtk_app.open([], "__new__")
+            app_file_manager = application.get_service("app_file_manager")
+            app_file_manager.new()
 
     def app_open(gtk_app, files, n_files, hint):
-        session = new_session()
-        file_manager = session.get_service("file_manager")
+        # appfilemanager should take care of this:
+        assert application
+        app_file_manager = application.get_service("app_file_manager")
         if hint == "__new__":
-            file_manager.new()
+            app_file_manager.new()
         else:
             assert n_files == 1
             for file in files:
-                file_manager.load(file.get_path())
+                app_file_manager.load(file.get_path())
 
     gtk_app = Gtk.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
