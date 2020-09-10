@@ -35,9 +35,7 @@ log = logging.getLogger(__name__)
 
 
 def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
-    """
-    Iterate toolbox items, regardless of section headers
-    """
+    """Iterate toolbox items, regardless of section headers."""
     for name, section in toolbox_actions:
         yield from section
 
@@ -108,8 +106,7 @@ class DiagramPage:
         return self.view
 
     def construct(self):
-        """
-        Create the widget.
+        """Create the widget.
 
         Returns: the newly created widget.
         """
@@ -150,9 +147,7 @@ class DiagramPage:
         return self.widget
 
     def get_tool(self, tool_name):
-        """
-        Return a tool associated with an id (action name).
-        """
+        """Return a tool associated with an id (action name)."""
         if tool_name == "toolbox-pointer":
             return DefaultTool(self.event_manager)
 
@@ -194,9 +189,9 @@ class DiagramPage:
                 canvas.request_update(item)
 
     def close(self):
-        """
-        Tab is destroyed. Do the same thing that would
-        be done if Close was pressed.
+        """Tab is destroyed.
+
+        Do the same thing that would be done if Close was pressed.
         """
         assert self.widget
         self.widget.destroy()
@@ -275,9 +270,8 @@ class DiagramPage:
             )
 
     def set_drawing_style(self):
-        """
-        Set the drawing style for the diagram based on the active style sheet.
-        """
+        """Set the drawing style for the diagram based on the active style
+        sheet."""
         assert self.view
         assert self.diagram_css
 
@@ -311,10 +305,10 @@ class DiagramPage:
         view.queue_draw_refresh()
 
     def _on_key_press_event(self, view, event):
-        """
-        Handle the 'Delete' key. This can not be handled directly (through
-        GTK's accelerators), otherwise this key will confuse the text
-        edit stuff.
+        """Handle the 'Delete' key.
+
+        This can not be handled directly (through GTK's accelerators),
+        otherwise this key will confuse the text edit stuff.
         """
         if (
             view.is_focus()
@@ -344,9 +338,7 @@ class DiagramPage:
         )
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
-        """
-        Handle data dropped on the canvas.
-        """
+        """Handle data dropped on the canvas."""
         if (
             data
             and data.get_format() == 8

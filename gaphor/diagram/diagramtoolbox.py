@@ -1,9 +1,8 @@
-"""
-This module contains the actions used in the Toolbox (lower left section
-of the main window.
+"""This module contains the actions used in the Toolbox (lower left section of
+the main window.
 
-The Toolbox is bound to a diagram. When a diagram page (tab) is switched,
-the actions bound to the toolbuttons should change as well.
+The Toolbox is bound to a diagram. When a diagram page (tab) is
+switched, the actions bound to the toolbuttons should change as well.
 """
 
 from typing import Callable, NamedTuple, Optional, Sequence, Tuple

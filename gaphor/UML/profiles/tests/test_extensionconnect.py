@@ -37,8 +37,8 @@ def test_class_glue(element_factory, diagram):
 def test_stereotype_glue(element_factory, diagram):
     """Test extension item gluing to a stereotype.
 
-    Connecting a Stereotype should work because it is derived from the UML
-    Class.
+    Connecting a Stereotype should work because it is derived from the
+    UML Class.
     """
 
     ext = diagram.create(ExtensionItem)

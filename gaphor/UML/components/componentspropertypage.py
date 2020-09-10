@@ -31,9 +31,7 @@ class ComponentPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_ii_change(self, button, gparam):
-        """
-        Called when user clicks "Indirectly instantiated" check button.
-        """
+        """Called when user clicks "Indirectly instantiated" check button."""
         subject = self.subject
         if subject:
             subject.isIndirectlyInstantiated = button.get_active()

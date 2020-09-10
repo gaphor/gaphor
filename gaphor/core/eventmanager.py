@@ -1,6 +1,4 @@
-"""
-Event Manager.
-"""
+"""Event Manager."""
 
 
 from generic.event import Event, Handler
@@ -10,9 +8,8 @@ from gaphor.abc import Service
 
 
 def event_handler(*event_types):
-    """
-    Mark a function/method as an event handler for a particular type of event.
-    """
+    """Mark a function/method as an event handler for a particular type of
+    event."""
 
     def wrapper(func):
         func.__event_types__ = event_types
@@ -22,9 +19,7 @@ def event_handler(*event_types):
 
 
 class EventManager(Service):
-    """
-    The Event Manager.
-    """
+    """The Event Manager."""
 
     def __init__(self) -> None:
         self._events = _Manager()
@@ -33,9 +28,10 @@ class EventManager(Service):
         pass
 
     def subscribe(self, handler: Handler) -> None:
-        """
-        Register a handler. Handlers are triggered (executed) when specific
-        events are emitted through the handle() method.
+        """Register a handler.
+
+        Handlers are triggered (executed) when specific events are
+        emitted through the handle() method.
         """
         event_types = getattr(handler, "__event_types__", None)
         if not event_types:
@@ -45,9 +41,7 @@ class EventManager(Service):
             self._events.subscribe(handler, et)
 
     def unsubscribe(self, handler: Handler) -> None:
-        """
-        Unregister a previously registered handler.
-        """
+        """Unregister a previously registered handler."""
         event_types = getattr(handler, "__event_types__", None)
         if not event_types:
             raise Exception(f"No event types provided for function {handler}")
@@ -56,8 +50,6 @@ class EventManager(Service):
             self._events.unsubscribe(handler, et)
 
     def handle(self, *events: Event) -> None:
-        """
-        Send event notifications to registered handlers.
-        """
+        """Send event notifications to registered handlers."""
         for e in events:
             self._events.handle(e)

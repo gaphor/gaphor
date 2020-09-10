@@ -1,6 +1,4 @@
-"""
-Parsing of UML model elements from string tests.
-"""
+"""Parsing of UML model elements from string tests."""
 
 import pytest
 
@@ -45,8 +43,7 @@ def factory():
 
 
 def test_parse_property_simple(factory):
-    """Test simple property parsing
-    """
+    """Test simple property parsing."""
     a = factory.create(UML.Property)
     UML.parse(a, "myattr")
     assert not a.isDerived
@@ -58,8 +55,7 @@ def test_parse_property_simple(factory):
 
 
 def test_parse_property_complex(factory):
-    """Test complex property parsing
-    """
+    """Test complex property parsing."""
     a = factory.create(UML.Property)
 
     UML.parse(a, '+ / name : str[0..*] = "aap" { static }')
@@ -73,8 +69,7 @@ def test_parse_property_complex(factory):
 
 
 def test_parse_property_invalid(factory):
-    """Test parsing property with invalid syntax
-    """
+    """Test parsing property with invalid syntax."""
     a = factory.create(UML.Property)
 
     UML.parse(a, '+ name = str[*] = "aap" { static }')
@@ -87,8 +82,7 @@ def test_parse_property_invalid(factory):
 
 
 def test_parse_association_end(factory):
-    """Test parsing of association end
-    """
+    """Test parsing of association end."""
     a = factory.create(UML.Association)
     p = factory.create(UML.Property)
     p.association = a
@@ -102,8 +96,7 @@ def test_parse_association_end(factory):
 
 
 def test_parse_association_end_multiplicity(factory):
-    """Test parsing of multiplicity
-    """
+    """Test parsing of multiplicity."""
     a = factory.create(UML.Association)
     p = factory.create(UML.Property)
     p.association = a
@@ -116,8 +109,7 @@ def test_parse_association_end_multiplicity(factory):
 
 
 def test_parse_association_end_multiplicity2(factory):
-    """Test parsing of multiplicity with multiline constraints
-    """
+    """Test parsing of multiplicity with multiline constraints."""
     a = factory.create(UML.Association)
     p = factory.create(UML.Property)
     p.association = a
@@ -130,8 +122,7 @@ def test_parse_association_end_multiplicity2(factory):
 
 
 def test_parse_association_end_derived_end(factory):
-    """Test parsing derived association end
-    """
+    """Test parsing derived association end."""
     a = factory.create(UML.Association)
     p = factory.create(UML.Property)
     p.association = a
@@ -146,8 +137,7 @@ def test_parse_association_end_derived_end(factory):
 
 
 def test_parse_association_end_with_type(factory):
-    """Test parsing of association end, type is ignored
-    """
+    """Test parsing of association end, type is ignored."""
     a = factory.create(UML.Association)
     p = factory.create(UML.Property)
     p.association = a
@@ -161,8 +151,7 @@ def test_parse_association_end_with_type(factory):
 
 
 def test_parse_operation(factory):
-    """Test parsing simple operation
-    """
+    """Test parsing simple operation."""
     o = factory.create(UML.Operation)
     UML.parse(o, "myfunc()")
     assert "myfunc" == o.name
@@ -171,8 +160,7 @@ def test_parse_operation(factory):
 
 
 def test_parse_operation_return(factory):
-    """Test parsing operation with return value
-    """
+    """Test parsing operation with return value."""
     o = factory.create(UML.Operation)
     UML.parse(o, "+ myfunc(): int")
     assert "myfunc" == o.name
@@ -182,8 +170,7 @@ def test_parse_operation_return(factory):
 
 
 def test_parse_operation_2_params(factory):
-    """Test parsing of operation with two parameters
-    """
+    """Test parsing of operation with two parameters."""
     o = factory.create(UML.Operation)
     UML.parse(o, "# myfunc2 (a: str, b: int = 3 {  static}): float")
     assert "myfunc2" == o.name
@@ -199,8 +186,7 @@ def test_parse_operation_2_params(factory):
 
 
 def test_parse_operation_1_param(factory):
-    """Test parsing of operation with one parameter
-    """
+    """Test parsing of operation with one parameter."""
     o = factory.create(UML.Operation)
     UML.parse(o, "- myfunc2 (a: node): double")
     assert "myfunc2" == o.name
@@ -213,8 +199,7 @@ def test_parse_operation_1_param(factory):
 
 
 def test_parse_operation_invalid_syntax(factory):
-    """Test operation parsing with invalid syntax
-    """
+    """Test operation parsing with invalid syntax."""
     o = factory.create(UML.Operation)
     UML.parse(o, "- myfunc2: myType2")
     assert "- myfunc2: myType2" == o.name

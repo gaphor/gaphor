@@ -1,6 +1,4 @@
-"""
-Stereotype property page.
-"""
+"""Stereotype property page."""
 
 from gi.repository import Gtk
 
@@ -147,8 +145,7 @@ def _toggle_stereotype(renderer, path, subject, model):
 
 @transactional
 def _set_value(renderer, path, value, model):
-    """
-    Set value of stereotype property applied to an UML element.
+    """Set value of stereotype property applied to an UML element.
 
     Slot is created if instance Create valuChange value of instance spe
     """

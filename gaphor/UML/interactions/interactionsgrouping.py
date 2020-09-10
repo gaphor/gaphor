@@ -5,9 +5,7 @@ from gaphor.UML.interactions.lifeline import LifelineItem
 
 @Group.register(InteractionItem, LifelineItem)
 class InteractionLifelineGroup(AbstractGroup):
-    """
-    Add lifeline to interaction.
-    """
+    """Add lifeline to interaction."""
 
     def group(self):
         assert self.parent.canvas

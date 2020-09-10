@@ -5,10 +5,9 @@ from gaphor.ui.actiongroup import iter_actions
 
 
 class MenuFragment(Service):
-    """
-    Menu fragments are used as extension points for
-    plugins. Now they have some place to make themselves
-    accessible to the user.
+    """Menu fragments are used as extension points for plugins.
+
+    Now they have some place to make themselves accessible to the user.
     """
 
     def __init__(self):

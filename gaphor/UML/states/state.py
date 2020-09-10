@@ -1,6 +1,4 @@
-"""
-State diagram item.
-"""
+"""State diagram item."""
 
 
 from gaphor import UML
@@ -12,9 +10,10 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 
 class VertexItem(Named):
-    """
-    Abstract class for all vertices. All state, pseudostate items derive
-    from VertexItem, which simplifies transition connection adapters.
+    """Abstract class for all vertices.
+
+    All state, pseudostate items derive from VertexItem, which
+    simplifies transition connection adapters.
     """
 
 

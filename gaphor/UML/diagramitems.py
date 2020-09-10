@@ -1,6 +1,6 @@
-"""
-All Item's defined in the diagram package. This module
-makes it easier to load a diagram item.
+"""All Item's defined in the diagram package.
+
+This module makes it easier to load a diagram item.
 """
 
 from gaphor.diagram.general import *

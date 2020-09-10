@@ -24,9 +24,7 @@ class cairo_state:
 
 
 def combined_style(item_style: Style, inline_style: Style = {}) -> Style:
-    """
-    Combine context style and inline styles into one style.
-    """
+    """Combine context style and inline styles into one style."""
     return {**item_style, **inline_style}  # type: ignore[misc]
 
 
@@ -99,8 +97,7 @@ def draw_highlight(context: DrawContext):
 
 
 class Box:
-    """
-    A box like shape.
+    """A box like shape.
 
     Style properties:
     - min-height
@@ -172,9 +169,8 @@ class Box:
 
 
 class IconBox:
-    """
-    A special type of box: the icon element is given the full width/height and
-    all other shapes are drawn below the main icon shape.
+    """A special type of box: the icon element is given the full width/height
+    and all other shapes are drawn below the main icon shape.
 
     Style properties:
     - min-height
@@ -335,16 +331,12 @@ class EditableText(Text):
 
 
 def draw_default_head(context: DrawContext):
-    """
-    Default head drawer: move cursor to the first handle.
-    """
+    """Default head drawer: move cursor to the first handle."""
     context.cairo.move_to(0, 0)
 
 
 def draw_default_tail(context: DrawContext):
-    """
-    Default tail drawer: draw line to the last handle.
-    """
+    """Default tail drawer: draw line to the last handle."""
     context.cairo.line_to(0, 0)
 
 

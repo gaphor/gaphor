@@ -11,9 +11,8 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     DEFAULT_LANGUAGE = "UML"
 
     def __init__(self, event_manager, properties={}):
-        """
-        Create a new Model Provider. It will provide all models defined
-        as entrypoints under `[gaphor.modelinglanguages]`.
+        """Create a new Model Provider. It will provide all models defined as
+        entrypoints under `[gaphor.modelinglanguages]`.
 
         The `properties` argument is optional, in which case the service
         will default to UML.
@@ -30,9 +29,7 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
 
     @property
     def modeling_languages(self):
-        """
-        A Generator, returns tuples (id, localized name).
-        """
+        """A Generator, returns tuples (id, localized name)."""
         for id, provider in self._modeling_languages.items():
             yield id, provider.name
 

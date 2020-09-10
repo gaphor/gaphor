@@ -1,6 +1,4 @@
-"""
-Copy / Paste functionality
-"""
+"""Copy / Paste functionality."""
 
 from typing import Set
 
@@ -14,8 +12,7 @@ from gaphor.ui.event import DiagramSelectionChanged
 
 
 class CopyService(Service, ActionProvider):
-    """
-    Copy/Cut/Paste functionality required a lot of thinking:
+    """Copy/Cut/Paste functionality required a lot of thinking:
 
     Store a list of DiagramItems that have to be copied in a global
     'copy-buffer'.
@@ -68,9 +65,7 @@ class CopyService(Service, ActionProvider):
             self.copy_buffer = copy(items)
 
     def paste(self, diagram):
-        """
-        Paste items in the copy-buffer to the diagram
-        """
+        """Paste items in the copy-buffer to the diagram."""
         canvas = diagram.canvas
 
         with Transaction(self.event_manager):

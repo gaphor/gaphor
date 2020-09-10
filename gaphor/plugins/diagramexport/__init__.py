@@ -23,9 +23,7 @@ def paint(view, cr):
 
 
 class DiagramExport(Service, ActionProvider):
-    """
-    Service for exporting diagrams as images (SVG, PNG, PDF).
-    """
+    """Service for exporting diagrams as images (SVG, PNG, PDF)."""
 
     def __init__(self, diagrams=None, export_menu=None):
         self.diagrams = diagrams

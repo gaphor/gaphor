@@ -1,7 +1,5 @@
-"""
-The SysML Modeling Language module is the entrypoint for
-SysML related assets.
-"""
+"""The SysML Modeling Language module is the entrypoint for SysML related
+assets."""
 
 import gaphor.SysML.propertypages  # noqa
 from gaphor.abc import ModelingLanguage

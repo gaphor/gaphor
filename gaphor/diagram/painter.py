@@ -1,5 +1,4 @@
-"""
-The painter module provides different painters for parts of the canvas.
+"""The painter module provides different painters for parts of the canvas.
 
 Painters can be swapped in and out.
 
@@ -45,9 +44,7 @@ class ItemPainter(Painter):
             cairo.restore()
 
     def draw_items(self, items, cairo):
-        """
-        Draw the items.
-        """
+        """Draw the items."""
         for item in items:
             self.draw_item(item, cairo)
             if DEBUG_DRAW_BOUNDING_BOX:

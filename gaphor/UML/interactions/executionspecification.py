@@ -1,7 +1,5 @@
-"""
-An ExecutionSpecification is defined by a white recrange overlaying the lifeline
-
-
+"""An ExecutionSpecification is defined by a white recrange overlaying the
+lifeline.
 
   ,----------.
   | lifeline |
@@ -38,9 +36,7 @@ from gaphor.diagram.support import represents
 
 @represents(UML.ExecutionSpecification)
 class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item):
-    """
-    Representation of interaction execution specification.
-    """
+    """Representation of interaction execution specification."""
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)

@@ -1,6 +1,5 @@
-"""
-Grouping functionality allows to nest one item within another item (parent
-item). This is useful in several use cases
+"""Grouping functionality allows to nest one item within another item (parent
+item). This is useful in several use cases.
 
 - artifact deployed within a node
 - a class within a package or a component
@@ -28,9 +27,8 @@ from gaphor.core.modeling import Presentation
 # TODO: I think this should have been called Namespacing or something similar,
 #   since that's the modeling concept.
 class AbstractGroup(metaclass=abc.ABCMeta):
-    """
-    Base class for grouping model elements, i.e.
-    interactions contain lifelines and components contain classes objects.
+    """Base class for grouping model elements, i.e. interactions contain
+    lifelines and components contain classes objects.
 
     :param parent: Parent item, which groups other items.
     :type parent: Presentation
@@ -43,22 +41,16 @@ class AbstractGroup(metaclass=abc.ABCMeta):
         self.item = item
 
     def can_contain(self) -> bool:
-        """
-        Determine if parent can contain item.
-        """
+        """Determine if parent can contain item."""
         return True
 
     @abc.abstractmethod
     def group(self) -> None:
-        """
-        Perform grouping of items.
-        """
+        """Perform grouping of items."""
 
     @abc.abstractmethod
     def ungroup(self) -> None:
-        """
-        Perform ungrouping of items.
-        """
+        """Perform ungrouping of items."""
 
 
 # Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)

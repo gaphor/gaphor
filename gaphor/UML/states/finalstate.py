@@ -1,6 +1,4 @@
-"""
-Final state diagram item.
-"""
+"""Final state diagram item."""
 
 from gaphas.util import path_ellipse
 

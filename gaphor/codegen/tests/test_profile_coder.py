@@ -53,7 +53,6 @@ def nodes(element_factory) -> Dict[int, ClassItem]:
     |  |  |- 4
     |- 5  |
     |  |- |- 6
-
     """
     diagram = element_factory.create(UML.Diagram)
     nodes = {

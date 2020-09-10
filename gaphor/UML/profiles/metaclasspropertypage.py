@@ -15,6 +15,7 @@ def _issubclass(c, b):
 @PropertyPages.register(UML.Class)
 class MetaclassPropertyPage(PropertyPageBase):
     """Adapter which shows a property page for a class view.
+
     Also handles metaclasses.
     """
 

@@ -12,16 +12,13 @@ class SimpleItemTestCase(TestCase):
         self.view = View(self.diagram.canvas)
 
     def test_line(self):
-        """
-        """
+        """"""
         self.diagram.create(Line)
 
     def test_box(self):
-        """
-        """
+        """"""
         self.diagram.create(Line)
 
     def test_ellipse(self):
-        """
-        """
+        """"""
         self.diagram.create(Ellipse)

@@ -1,5 +1,4 @@
-"""
-Undo management for Gaphor.
+"""Undo management for Gaphor.
 
 Undoing and redoing actions is managed through the UndoManager.
 
@@ -42,12 +41,13 @@ logger = logging.getLogger(__name__)
 
 
 class ActionStack:
-    """
-    A transaction. Every action that is added between a begin_transaction()
-    and a commit_transaction() call is recorded in a transaction, so it can
-    be played back when a transaction is executed. This executing a
-    transaction has the effect of performing the actions recorded, which will
-    typically undo actions performed by the user.
+    """A transaction.
+
+    Every action that is added between a begin_transaction() and a
+    commit_transaction() call is recorded in a transaction, so it can be
+    played back when a transaction is executed. This executing a
+    transaction has the effect of performing the actions recorded, which
+    will typically undo actions performed by the user.
     """
 
     def __init__(self):
@@ -71,23 +71,21 @@ class ActionStack:
 
 
 class UndoManagerStateChanged(ServiceEvent):
-    """
-    Event class used to send state changes on the Undo Manager.
-    """
+    """Event class used to send state changes on the Undo Manager."""
 
     def __init__(self, service):
         self.service = service
 
 
 class UndoManager(Service, ActionProvider):
-    """
-    Simple transaction manager for Gaphor.
-    This transaction manager supports nested transactions.
+    """Simple transaction manager for Gaphor. This transaction manager supports
+    nested transactions.
 
-    The Undo manager sports an undo and a redo stack. Each stack contains
-    a set of actions that can be executed, just by calling them (e.i action())
-    If something is returned by an action, that is considered the callable
-    to be used to undo or redo the last performed action.
+    The Undo manager sports an undo and a redo stack. Each stack
+    contains a set of actions that can be executed, just by calling them
+    (e.i action()) If something is returned by an action, that is
+    considered the callable to be used to undo or redo the last
+    performed action.
     """
 
     def __init__(self, event_manager):
@@ -126,16 +124,12 @@ class UndoManager(Service, ActionProvider):
 
     @event_handler(TransactionBegin)
     def begin_transaction(self, event=None):
-        """
-        Add an action to the current transaction
-        """
+        """Add an action to the current transaction."""
         assert not self._current_transaction
         self._current_transaction = ActionStack()
 
     def add_undo_action(self, action):
-        """
-        Add an action to undo.
-        """
+        """Add an action to undo."""
         if self._current_transaction:
             self._current_transaction.add(action)
             # TODO: should this be placed here?
@@ -157,9 +151,7 @@ class UndoManager(Service, ActionProvider):
 
     @event_handler(TransactionRollback)
     def rollback_transaction(self, event=None):
-        """
-        Roll back the transaction we're in.
-        """
+        """Roll back the transaction we're in."""
         assert self._current_transaction
 
         # Store stacks

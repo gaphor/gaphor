@@ -1,6 +1,4 @@
-"""
-Support classes for dealing with text.
-"""
+"""Support classes for dealing with text."""
 
 from typing import Tuple, Union
 
@@ -148,8 +146,7 @@ def focus_box_pos(
 
 
 def text_point_at_line(points, size, text_align):
-    """
-    Provide a position (x, y) to draw a text close to a line.
+    """Provide a position (x, y) to draw a text close to a line.
 
     Parameters:
      - points:  the line points, a list of (x, y) points
@@ -173,18 +170,15 @@ def text_point_at_line(points, size, text_align):
 
 
 def middle_segment(points):
-    """
-    Get middle line segment.
-    """
+    """Get middle line segment."""
     m = len(points) // 2
     assert m >= 1 and m < len(points)
     return points[m - 1], points[m]
 
 
 def _text_point_at_line_end(size, p1, p2):
-    """
-    Calculate position of the text relative to a line defined by points
-    p1 and p2.
+    """Calculate position of the text relative to a line defined by points p1
+    and p2.
 
     Parameters:
      - size: text size, a (width, height) tuple
@@ -249,9 +243,8 @@ EPSILON = 1e-6
 
 
 def _text_point_at_line_center(size, p1, p2):
-    """
-    Calculate position of the text relative to a line defined by points
-    p1 and p2.
+    """Calculate position of the text relative to a line defined by points p1
+    and p2.
 
     Parameters:
      - size:    text size, a (width, height) tuple

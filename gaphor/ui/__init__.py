@@ -1,7 +1,5 @@
-"""
-This module contains user interface related code, such as the
-main screen and diagram windows.
-"""
+"""This module contains user interface related code, such as the main screen
+and diagram windows."""
 
 import importlib.resources
 import logging
@@ -39,9 +37,10 @@ def main(argv=sys.argv):
     parser for retrieving arguments and options from the command line.  This
     includes a Gaphor model to load.
 
-    The application is then initialized, passing along the option parser.  This
-    provides plugins and services with access to the command line options
-    and may add their own."""
+    The application is then initialized, passing along the option
+    parser.  This provides plugins and services with access to the
+    command line options and may add their own.
+    """
 
     def has_option(*options):
         return any(o in argv for o in options)
@@ -124,8 +123,8 @@ def run(args):
 
 
 def add_main_options(gtk_app):
-    """
-    These parameters are handled in `gaphor.ui.main()`.
+    """These parameters are handled in `gaphor.ui.main()`.
+
     Define them here, so they show up on `gaphor --help`.
     """
     gtk_app.add_main_option(

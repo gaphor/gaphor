@@ -1,5 +1,8 @@
-"""The properties module allows Gaphor properties to be saved to the local
-file system.  These are things like preferences."""
+"""The properties module allows Gaphor properties to be saved to the local file
+system.
+
+These are things like preferences.
+"""
 
 import ast
 import os
@@ -14,8 +17,10 @@ from gaphor.abc import Service
 
 
 def get_config_dir() -> str:
-    """Return the directory where the user's config is stored. This varies
-    depending on platform."""
+    """Return the directory where the user's config is stored.
+
+    This varies depending on platform.
+    """
 
     config_dir = os.path.join(GLib.get_user_config_dir(), "gaphor")
     os.makedirs(config_dir, exist_ok=True)
@@ -24,9 +29,10 @@ def get_config_dir() -> str:
 
 
 class PropertyChanged:
-    """
-    This event is triggered any time a property is changed.  This event
-    holds the property key, the current value, and the new value.
+    """This event is triggered any time a property is changed.
+
+    This event holds the property key, the current value, and the new
+    value.
     """
 
     def __init__(self, key, old_value, new_value):
@@ -41,26 +47,35 @@ _no_default = object()
 class Properties(Service):
     """The Properties class holds a collection of application wide properties.
 
-    Properties are persisted to the local file system."""
+    Properties are persisted to the local file system.
+    """
 
     def __init__(self, event_manager, backend=None):
-        """Constructor.  Initialize the Gaphor application object, the
-        dictionary for storing properties in memory, and the storage backend.
-        This defaults to FileBackend"""
+        """Constructor.
+
+        Initialize the Gaphor application object, the dictionary for
+        storing properties in memory, and the storage backend. This
+        defaults to FileBackend
+        """
         self.event_manager = event_manager
         self._resources: Dict[str, object] = {}
         self._backend = backend or FileBackend()
         self._backend.load(self._resources)
 
     def shutdown(self):
-        """Shutdown the properties service.  This will ensure that all
-        properties are saved."""
+        """Shutdown the properties service.
+
+        This will ensure that all properties are saved.
+        """
 
         self._backend.save(self._resources)
 
     def __call__(self, key, default=_no_default):
-        """Retrieve the specified property.  If the property doesn't exist,
-        the default parameter is returned.  This defaults to _no_default."""
+        """Retrieve the specified property.
+
+        If the property doesn't exist, the default parameter is
+        returned.  This defaults to _no_default.
+        """
 
         return self.get(key, default)
 
@@ -85,9 +100,10 @@ class Properties(Service):
     def get(self, key: str, default=_no_default):
         """Locate a property.
 
-        Resource should be the class of the resource to look for or a string. In
-        case of a string the resource will be looked up in the GConf
-        configuration."""
+        Resource should be the class of the resource to look for or a
+        string. In case of a string the resource will be looked up in
+        the GConf configuration.
+        """
 
         try:
             return self._resources[key]
@@ -102,7 +118,8 @@ class Properties(Service):
         """Set a property to a specific value.
 
         No smart things are done with classes and class names (like the
-        resource() method does)."""
+        resource() method does).
+        """
 
         resources = self._resources
         old_value = resources.get(key)
@@ -120,15 +137,19 @@ class FileBackend:
     RESOURCE_FILE = "resources"
 
     def __init__(self, datadir=get_config_dir()):
-        """Constructor.  Initialize the directory used for storing
-        properties."""
+        """Constructor.
+
+        Initialize the directory used for storing properties.
+        """
 
         self.datadir = datadir
 
     def get_filename(self, create=False):
-        """Return the current file used to store Gaphor properties.  If the
-        created parameter is set to True, the file is created if it doesn't
-        exist.  This defaults to False."""
+        """Return the current file used to store Gaphor properties.
+
+        If the created parameter is set to True, the file is created if
+        it doesn't exist.  This defaults to False.
+        """
 
         datadir = self.datadir
 
@@ -138,8 +159,10 @@ class FileBackend:
         return os.path.join(datadir, self.RESOURCE_FILE)
 
     def load(self, resource):
-        """Load resources from a file. Resources are saved like you do with
-        a dict()."""
+        """Load resources from a file.
+
+        Resources are saved like you do with a dict().
+        """
 
         filename = self.get_filename()
 
@@ -153,6 +176,7 @@ class FileBackend:
 
     def save(self, resource):
         """Save persist resources from the resources dictionary.
+
         @resource is the Resource instance
         @persistent is a list of persistent resource names.
         """

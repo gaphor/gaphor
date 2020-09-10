@@ -11,9 +11,7 @@ from gaphor.storage import storage
 
 
 def pkg2dir(package):
-    """
-    Return directory path from package class.
-    """
+    """Return directory path from package class."""
     name = []
     while package:
         name.insert(0, package.name)

@@ -8,9 +8,7 @@ from gaphor.UML.actions.partition import PartitionItem
 
 @Group.register(PartitionItem, PartitionItem)
 class ActivityPartitionsGroup(AbstractGroup):
-    """
-    Group activity partitions.
-    """
+    """Group activity partitions."""
 
     def can_contain(self):
         return not self.parent.subject or (
@@ -58,9 +56,7 @@ class ActivityPartitionsGroup(AbstractGroup):
 
 
 class ActivityNodePartitionGroup(AbstractGroup):
-    """
-    Group activity nodes within activity partition.
-    """
+    """Group activity nodes within activity partition."""
 
     def can_contain(self):
         return self.parent.subject and len(self.parent.subject.subpartition) == 0

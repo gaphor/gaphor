@@ -1,6 +1,4 @@
-"""
-Action diagram item.
-"""
+"""Action diagram item."""
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named

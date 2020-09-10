@@ -1,6 +1,4 @@
-"""
-CommentItem diagram item
-"""
+"""CommentItem diagram item."""
 
 
 from gaphor.core.modeling import Comment

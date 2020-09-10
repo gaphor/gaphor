@@ -1,6 +1,4 @@
-"""
-Test transition item and state vertices connections.
-"""
+"""Test transition item and state vertices connections."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -15,8 +13,7 @@ class TransitionConnectorTestCase(TestCase):
     services = TestCase.services
 
     def test_vertex_connect(self):
-        """Test transition to state vertex connection
-        """
+        """Test transition to state vertex connection."""
         v1 = self.create(StateItem, UML.State)
         v2 = self.create(StateItem, UML.State)
 
@@ -37,8 +34,7 @@ class TransitionConnectorTestCase(TestCase):
         assert t.subject.target == v2.subject
 
     def test_vertex_reconnect(self):
-        """Test transition to state vertex reconnection
-        """
+        """Test transition to state vertex reconnection."""
         v1 = self.create(StateItem, UML.State)
         v2 = self.create(StateItem, UML.State)
         v3 = self.create(StateItem, UML.State)
@@ -68,8 +64,7 @@ class TransitionConnectorTestCase(TestCase):
         assert len(v2.subject.outgoing) == 0
 
     def test_vertex_disconnect(self):
-        """Test transition and state vertices disconnection
-        """
+        """Test transition and state vertices disconnection."""
         t = self.create(TransitionItem)
         v1 = self.create(StateItem, UML.State)
         v2 = self.create(StateItem, UML.State)
@@ -91,8 +86,7 @@ class TransitionConnectorTestCase(TestCase):
         assert t.subject is None
 
     def test_initial_pseudostate_connect(self):
-        """Test transition and initial pseudostate connection
-        """
+        """Test transition and initial pseudostate connection."""
         v1 = self.create(PseudostateItem, UML.Pseudostate)
         v2 = self.create(StateItem, UML.State)
 
@@ -123,8 +117,7 @@ class TransitionConnectorTestCase(TestCase):
         assert self.get_connected(t2.head) is None
 
     def test_initial_pseudostate_disconnect(self):
-        """Test transition and initial pseudostate disconnection
-        """
+        """Test transition and initial pseudostate disconnection."""
         v1 = self.create(PseudostateItem, UML.Pseudostate)
         self.create(StateItem, UML.State)
 
@@ -151,8 +144,7 @@ class TransitionConnectorTestCase(TestCase):
         assert not glued
 
     def test_final_state_connect(self):
-        """Test transition to final state connection
-        """
+        """Test transition to final state connection."""
         v1 = self.create(StateItem, UML.State)
         v2 = self.create(FinalStateItem, UML.FinalState)
         t = self.create(TransitionItem)
@@ -175,8 +167,7 @@ class TransitionConnectorTestCase(TestCase):
         assert t.subject.target == v2.subject
 
     def test_final_state_head_glue(self):
-        """Test transition head to final state connection
-        """
+        """Test transition head to final state connection."""
         v = self.create(FinalStateItem, UML.FinalState)
         t = self.create(TransitionItem)
 

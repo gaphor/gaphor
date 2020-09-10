@@ -1,5 +1,4 @@
-"""
-Tools for handling items on the canvas.
+"""Tools for handling items on the canvas.
 
 Although Gaphas has quite a few useful tools, some tools need to be extended:
  - PlacementTool: should perform undo
@@ -30,12 +29,11 @@ log = logging.getLogger(__name__)
 
 @ConnectorAspect.register(Presentation)
 class DiagramItemConnector(ItemConnector):
-    """
-    Handle Tool (acts on item handles) that uses the Connector protocol
-    to connect items to one-another.
+    """Handle Tool (acts on item handles) that uses the Connector protocol to
+    connect items to one-another.
 
-    It also adds handles to lines when a line is grabbed on the middle of
-    a line segment (points are drawn by the LineSegmentPainter).
+    It also adds handles to lines when a line is grabbed on the middle
+    of a line segment (points are drawn by the LineSegmentPainter).
     """
 
     def allow(self, sink):
@@ -44,9 +42,7 @@ class DiagramItemConnector(ItemConnector):
 
     @transactional
     def connect(self, sink):
-        """
-        Create connection at handle level and at model level.
-        """
+        """Create connection at handle level and at model level."""
         handle = self.handle
         item = self.item
         cinfo = item.canvas.get_connection(handle)
@@ -91,8 +87,7 @@ class DiagramItemConnector(ItemConnector):
 
 
 class DisconnectHandle:
-    """
-    Callback for items disconnection using the adapters.
+    """Callback for items disconnection using the adapters.
 
     This is an object so disconnection data can be serialized/deserialized
     using pickle.
@@ -127,9 +122,10 @@ class DisconnectHandle:
 
 
 class TextEditTool(Tool):
-    """
-    Text edit tool. Allows for elements that can adapt to the
-    IEditable interface to be edited.
+    """Text edit tool.
+
+    Allows for elements that can adapt to the IEditable interface to be
+    edited.
     """
 
     def on_key_press(self, event):
@@ -153,14 +149,13 @@ class TextEditTool(Tool):
 
 
 class PlacementTool(_PlacementTool):
-    """
-    PlacementTool is used to place items on the canvas.
-    """
+    """PlacementTool is used to place items on the canvas."""
 
     def __init__(self, view, item_factory, event_manager, handle_index=-1):
-        """
-        item_factory is a callable. It is used to create a CanvasItem
-        that is displayed on the diagram.
+        """item_factory is a callable.
+
+        It is used to create a CanvasItem that is displayed on the
+        diagram.
         """
         _PlacementTool.__init__(
             self,
@@ -174,9 +169,8 @@ class PlacementTool(_PlacementTool):
 
     @classmethod
     def new_item_factory(_class, item_class, subject_class=None, config_func=None):
-        """
-        ``config_func`` may be a function accepting the newly created item.
-        """
+        """``config_func`` may be a function accepting the newly created
+        item."""
 
         def item_factory(diagram, parent=None):
             if subject_class:
@@ -202,9 +196,7 @@ class PlacementTool(_PlacementTool):
 
     @transactional
     def create_item(self, pos):
-        """
-        Create an item directly.
-        """
+        """Create an item directly."""
         return self._create_item(pos)
 
     def on_button_press(self, event):
@@ -238,10 +230,8 @@ class PlacementTool(_PlacementTool):
         return super().on_button_release(event)
 
     def on_motion_notify(self, event):
-        """
-        Change parent item to dropzone state if it can accept diagram item
-        object to be created.
-        """
+        """Change parent item to dropzone state if it can accept diagram item
+        object to be created."""
         if self.grabbed_handle:
             return self.handle_tool.on_motion_notify(event)
 
@@ -268,9 +258,7 @@ class PlacementTool(_PlacementTool):
             view.dropzone_item = None
 
     def _create_item(self, pos):
-        """
-        Create diagram item and place it within parent's boundaries.
-        """
+        """Create diagram item and place it within parent's boundaries."""
         parent = self._parent
         view = self.view
         diagram = view.canvas.diagram
@@ -285,8 +273,9 @@ class PlacementTool(_PlacementTool):
 @InMotionAspect.register(Presentation)
 class DropZoneInMotion(GuidedItemInMotion):
     def move(self, pos):
-        """
-        Move the item. x and y are in view coordinates.
+        """Move the item.
+
+        x and y are in view coordinates.
         """
         super().move(pos)
         item = self.item
@@ -315,9 +304,7 @@ class DropZoneInMotion(GuidedItemInMotion):
                 over_item.request_update(matrix=False)
 
     def stop_move(self):
-        """
-        Motion stops: drop!
-        """
+        """Motion stops: drop!"""
         super().stop_move()
         item = self.item
         view = self.view
@@ -353,10 +340,8 @@ class DropZoneInMotion(GuidedItemInMotion):
 
 
 class TransactionalToolChain(ToolChain):
-    """
-    In addition to a normal toolchain, this chain begins an undo-transaction
-    at button-press and commits the transaction at button-release.
-    """
+    """In addition to a normal toolchain, this chain begins an undo-transaction
+    at button-press and commits the transaction at button-release."""
 
     def __init__(self, event_manager, view=None):
         super().__init__(view)
@@ -382,9 +367,7 @@ class TransactionalToolChain(ToolChain):
 
 
 def DefaultTool(event_manager):
-    """
-    The default tool chain build from HoverTool, ItemTool and HandleTool.
-    """
+    """The default tool chain build from HoverTool, ItemTool and HandleTool."""
     chain = TransactionalToolChain(event_manager)
     chain.append(HoverTool())
     chain.append(ConnectHandleTool())

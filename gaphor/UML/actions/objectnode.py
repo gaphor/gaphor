@@ -1,6 +1,4 @@
-"""
-Object node item.
-"""
+"""Object node item."""
 
 import ast
 
@@ -17,9 +15,8 @@ DEFAULT_UPPER_BOUND = "*"
 
 @represents(UML.ObjectNode)
 class ObjectNodeItem(ElementPresentation, Named):
-    """
-    Representation of object node. Object node is ordered and has upper bound
-    specification.
+    """Representation of object node. Object node is ordered and has upper
+    bound specification.
 
     Ordering information can be hidden by user.
     """

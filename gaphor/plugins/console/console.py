@@ -43,10 +43,10 @@ class Help:
 
 
 class TextViewWriter:
-    """
-    A Multiplexing output stream.
-    It can replace another stream, and tee output to the original stream and too
-    a GTK textview.
+    """A Multiplexing output stream.
+
+    It can replace another stream, and tee output to the original stream
+    and too a GTK textview.
     """
 
     def __init__(self, name, view, style):
@@ -69,9 +69,9 @@ class TextViewWriter:
 
 
 class GTKInterpreterConsole(Gtk.ScrolledWindow):
-    """
-    An InteractiveConsole for GTK. It's an actual widget,
-    so it can be dropped in just about anywhere.
+    """An InteractiveConsole for GTK.
+
+    It's an actual widget, so it can be dropped in just about anywhere.
     """
 
     __gtype_name__ = "GTKInterpreterConsole"

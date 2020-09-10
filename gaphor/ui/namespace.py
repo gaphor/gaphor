@@ -1,7 +1,8 @@
-"""
-This is the TreeView that is most common (for example: it is used
-in Rational Rose). This is a tree based on namespace relationships. As
-a result only classifiers are shown here.
+"""This is the TreeView that is most common (for example: it is used in
+Rational Rose).
+
+This is a tree based on namespace relationships. As a result only
+classifiers are shown here.
 """
 
 from __future__ import annotations
@@ -113,9 +114,7 @@ class NamespaceView(Gtk.TreeView):
                 cell.set_property("icon-name", icon_name)
 
     def _set_text(self, column, cell, model, iter, data):
-        """
-        Set font and of model elements in tree view.
-        """
+        """Set font and of model elements in tree view."""
         element = model.get_value(iter, 0)
 
         cell.set_property(
@@ -142,10 +141,11 @@ class NamespaceView(Gtk.TreeView):
 
     @transactional
     def _text_edited(self, cell, path_str, new_text):
-        """
-        The text has been edited. This method updates the data object.
-        Note that 'path_str' is a string where the fields are separated by
-        colons ':', like this: '0:1:1'. We first turn them into a tuple.
+        """The text has been edited.
+
+        This method updates the data object. Note that 'path_str' is a
+        string where the fields are separated by colons ':', like this:
+        '0:1:1'. We first turn them into a tuple.
         """
         try:
             model = self.get_property("model")
@@ -162,8 +162,8 @@ class NamespaceView(Gtk.TreeView):
         return True
 
     def on_drag_data_get(self, context, selection_data, info, time):
-        """
-        Get the data to be dropped by on_drag_data_received().
+        """Get the data to be dropped by on_drag_data_received().
+
         We send the id of the dragged element.
         """
         selection = self.get_selection()
@@ -181,9 +181,7 @@ class NamespaceView(Gtk.TreeView):
         return True
 
     def on_drag_data_delete(self, context):
-        """
-        Delete data from original site, when `ACTION_MOVE` is used.
-        """
+        """Delete data from original site, when `ACTION_MOVE` is used."""
         self.emit_stop_by_name("drag-data-delete")
 
     # Drop
@@ -200,9 +198,7 @@ class NamespaceView(Gtk.TreeView):
 
     @transactional
     def on_drag_data_received(self, context, x, y, selection, info, time):
-        """
-        Drop the data send by on_drag_data_get().
-        """
+        """Drop the data send by on_drag_data_get()."""
         self.stop_emission_by_name("drag-data-received")
         if info == NamespaceView.TARGET_ELEMENT_ID:
             element_id = selection.get_data().decode()
@@ -407,7 +403,7 @@ class Namespace(UIComponent):
         return None
 
     def _visible(self, element):
-        """ Special case: Non-navigable properties. """
+        """Special case: Non-navigable properties."""
         return (
             (isinstance(element, UML.NamedElement) and element.namespace)
             or isinstance(element, UML.PackageableElement)
@@ -425,9 +421,7 @@ class Namespace(UIComponent):
 
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
-        """
-        Load a new model completely.
-        """
+        """Load a new model completely."""
         log.info("Rebuilding namespace model")
 
         self.model.clear()
@@ -486,9 +480,7 @@ class Namespace(UIComponent):
 
     @event_handler(AttributeUpdated)
     def _on_attribute_change(self, event: AttributeUpdated):
-        """
-        Element changed, update appropriate row.
-        """
+        """Element changed, update appropriate row."""
         if (
             event.property is UML.Classifier.isAbstract
             or event.property is UML.BehavioralFeature.isAbstract
@@ -502,9 +494,7 @@ class Namespace(UIComponent):
                 self.model.row_changed(path, iter)
 
     def _on_view_event(self, view, event):
-        """
-        Show a popup menu if button3 was pressed on the TreeView.
-        """
+        """Show a popup menu if button3 was pressed on the TreeView."""
         # handle mouse button 3:"
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button.button == 3:
             menu = Gtk.Menu.new_from_model(self.namespace_popup_model())
@@ -514,15 +504,11 @@ class Namespace(UIComponent):
             self.tree_view_rename_selected()
 
     def _on_view_row_activated(self, view, path, column):
-        """
-        Double click on an element in the tree view.
-        """
+        """Double click on an element in the tree view."""
         view.get_action_group("tree-view").lookup_action("open").activate()
 
     def _on_view_cursor_changed(self, view):
-        """
-        Another row is selected, toggle action sensitivity.
-        """
+        """Another row is selected, toggle action sensitivity."""
         element = view.get_selected_element()
         action_group = view.get_action_group("tree-view")
         action_group.lookup_action("open").set_enabled(isinstance(element, Diagram))
@@ -548,8 +534,8 @@ class Namespace(UIComponent):
         """Select an element from the Namespace view.
 
         The element is selected. After this an action may be executed,
-        such as OpenModelElement, which will try to open the element (if it's
-        a Diagram).
+        such as OpenModelElement, which will try to open the element (if
+        it's a Diagram).
         """
         assert self._namespace
 

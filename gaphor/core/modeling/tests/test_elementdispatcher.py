@@ -89,9 +89,7 @@ def test_register_handler(dispatcher, uml_class, uml_parameter, uml_operation, e
 def test_register_handler_twice(
     dispatcher, uml_class, uml_operation, uml_parameter, event
 ):
-    """
-    Multiple registrations have no effect.
-    """
+    """Multiple registrations have no effect."""
     # Add some properties:
     element = uml_class
     element.ownedOperation = uml_operation
@@ -135,9 +133,7 @@ def test_unregister_handler(dispatcher, uml_class, uml_operation, uml_parameter,
 def test_notification(
     dispatcher, uml_class, uml_operation, uml_parameter, event, element_factory
 ):
-    """
-    Test notifications with Class object.
-    """
+    """Test notifications with Class object."""
     element = uml_class
     o = element.ownedOperation = uml_operation
     p = element.ownedOperation[0].formalParameter = uml_parameter
@@ -160,9 +156,7 @@ def test_notification(
 def test_notification_2(
     dispatcher, uml_transition, uml_constraint, event, element_factory
 ):
-    """
-    Test notifications with Transition object.
-    """
+    """Test notifications with Transition object."""
     element = uml_transition
     g = element.guard = uml_constraint
     dispatcher.subscribe(event.handler, element, "guard.specification")
@@ -186,9 +180,7 @@ def test_notification_2(
 def test_notification_of_change(
     dispatcher, uml_transition, uml_constraint, event, element_factory
 ):
-    """
-    Test notifications with Transition object.
-    """
+    """Test notifications with Transition object."""
     element = uml_transition
     g = element.guard = uml_constraint
     dispatcher.subscribe(event.handler, element, "guard.specification")
@@ -205,8 +197,9 @@ def test_notification_of_change(
 def test_notification_with_composition(
     dispatcher, uml_class, uml_operation, uml_constraint, event
 ):
-    """
-    Test unregister with composition. Use Class.ownedOperation.precondition.
+    """Test unregister with composition.
+
+    Use Class.ownedOperation.precondition.
     """
     element = uml_class
     o = element.ownedOperation = uml_operation
@@ -223,8 +216,9 @@ def test_notification_with_composition(
 def test_notification_with_incompatible_elements(
     dispatcher, uml_transition, uml_constraint, event
 ):
-    """
-    Test unregister with composition. Use Class.ownedOperation.precondition.
+    """Test unregister with composition.
+
+    Use Class.ownedOperation.precondition.
     """
     element = uml_transition
     g = element.guard = uml_constraint
@@ -270,9 +264,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         self.events.append(event)
 
     def test_notification(self):
-        """
-        Test notifications with Class object.
-        """
+        """Test notifications with Class object."""
         dispatcher = self.dispatcher
         element = self.element_factory.create(UML.Class)
         o = element.ownedOperation = self.element_factory.create(UML.Operation)
@@ -295,8 +287,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(dispatcher._handlers) == 2
 
     def test_association_notification(self):
-        """
-        Test notifications with Class object.
+        """Test notifications with Class object.
 
         Tricky case where no events are fired.
         """
@@ -321,8 +312,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(self.events) == 2, self.events
 
     def test_association_notification_complex(self):
-        """
-        Test notifications with Class object.
+        """Test notifications with Class object.
 
         Tricky case where no events are fired.
         """
@@ -355,9 +345,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(self.events) == 2, self.events
 
     def test_diamond(self):
-        """
-        Test diamond shaped dependencies a -> b -> c, a -> b' -> c
-        """
+        """Test diamond shaped dependencies a -> b -> c, a -> b' -> c."""
         A = self.A
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
@@ -379,9 +367,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         watcher.unsubscribe_all()
 
     def test_big_diamond(self):
-        """
-        Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' -> d
-        """
+        """Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' ->
+        d."""
         A = self.A
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
@@ -405,9 +392,8 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(self.dispatcher._handlers) == 0
 
     def test_braking_big_diamond(self):
-        """
-        Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' -> d
-        """
+        """Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' ->
+        d."""
         A = self.A
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
@@ -433,9 +419,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(self.dispatcher._handlers) == 0
 
     def test_cyclic(self):
-        """
-        Test cyclic dependency a -> b -> c -> a.
-        """
+        """Test cyclic dependency a -> b -> c -> a."""
         A = self.A
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)

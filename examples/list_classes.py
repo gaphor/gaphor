@@ -1,8 +1,7 @@
 #!/usr/bin/python
 
 """This script lists classes and optionally attributes from UML model created
-with Gaphor.
-"""
+with Gaphor."""
 
 import optparse
 import sys

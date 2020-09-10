@@ -1,6 +1,4 @@
-"""
-Test transitions.
-"""
+"""Test transitions."""
 
 from gaphor import UML
 from gaphor.tests.testcase import TestCase
@@ -8,13 +6,10 @@ from gaphor.UML.states.transition import TransitionItem
 
 
 class TransitionTestCase(TestCase):
-    """
-    Test the working of transitions
-    """
+    """Test the working of transitions."""
 
     def test_transition_guard(self):
-        """Test events of transition.guard.
-        """
+        """Test events of transition.guard."""
         item = self.create(TransitionItem, UML.Transition)
         guard = item.shape_middle
         assert guard.text() == ""

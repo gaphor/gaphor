@@ -1,5 +1,4 @@
-"""
-Basic test case for Gaphor tests.
+"""Basic test case for Gaphor tests.
 
 Everything is about services so the TestCase can define it's required
 services and start off.
@@ -57,9 +56,7 @@ class TestCase(unittest.TestCase):
         return self.session.get_service(name)
 
     def create(self, item_cls: Type[T], subject_cls=None, subject=None) -> T:
-        """
-        Create an item with specified subject.
-        """
+        """Create an item with specified subject."""
         if subject_cls is not None:
             subject = self.element_factory.create(subject_cls)
         item = self.diagram.create(item_cls, subject=subject)
@@ -67,8 +64,7 @@ class TestCase(unittest.TestCase):
         return item
 
     def allow(self, line, handle, item, port=None):
-        """
-        Glue line's handle to an item.
+        """Glue line's handle to an item.
 
         If port is not provided, then first port is used.
         """
@@ -79,8 +75,7 @@ class TestCase(unittest.TestCase):
         return adapter.allow(handle, port)
 
     def connect(self, line, handle, item, port=None):
-        """
-        Connect line's handle to an item.
+        """Connect line's handle to an item.
 
         If port is not provided, then first port is used.
         """
@@ -99,9 +94,7 @@ class TestCase(unittest.TestCase):
         assert cinfo.port is port
 
     def disconnect(self, line, handle):
-        """
-        Disconnect line's handle.
-        """
+        """Disconnect line's handle."""
         canvas = self.diagram.canvas
         # disconnection on adapter level is performed due to callback, so
         # no adapter look up here
@@ -109,53 +102,39 @@ class TestCase(unittest.TestCase):
         assert not canvas.get_connection(handle)
 
     def get_connected(self, handle):
-        """
-        Get item connected to line via handle.
-        """
+        """Get item connected to line via handle."""
         cinfo = self.diagram.canvas.get_connection(handle)
         if cinfo:
             return cinfo.connected
         return None
 
     def get_connection(self, handle):
-        """
-        Get connection information.
-        """
+        """Get connection information."""
         return self.diagram.canvas.get_connection(handle)
 
     def can_group(self, parent, item):
-        """
-        Check if an item can be grouped by parent.
-        """
+        """Check if an item can be grouped by parent."""
         adapter = Group(parent, item)
         return adapter.can_contain()
 
     def group(self, parent, item):
-        """
-        Group item within a parent.
-        """
+        """Group item within a parent."""
         self.diagram.canvas.reparent(item, parent)
         adapter = Group(parent, item)
         adapter.group()
 
     def ungroup(self, parent, item):
-        """
-        Remove item from a parent.
-        """
+        """Remove item from a parent."""
         adapter = Group(parent, item)
         adapter.ungroup()
         self.diagram.canvas.reparent(item, None)
 
     def kindof(self, cls):
-        """
-        Find UML metaclass instances using element factory.
-        """
+        """Find UML metaclass instances using element factory."""
         return self.element_factory.lselect(cls)
 
     def save(self):
-        """
-        Save diagram into string.
-        """
+        """Save diagram into string."""
         from gaphor.storage import storage
         from gaphor.storage.xmlwriter import XMLWriter
 
@@ -170,9 +149,10 @@ class TestCase(unittest.TestCase):
         return data
 
     def load(self, data):
-        """
-        Load data from specified string. Update ``TestCase.diagram``
-        attribute to hold new loaded diagram.
+        """Load data from specified string.
+
+        Update ``TestCase.diagram`` attribute to hold new loaded
+        diagram.
         """
         from gaphor.storage import storage
 

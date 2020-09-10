@@ -39,9 +39,7 @@ class CopyServiceTestCase(TestCase):
         assert len(diagram.canvas.get_all_items()) == 2, diagram.canvas.get_all_items()
 
     def _skip_test_copy_paste_undo(self):
-        """
-        Test if copied data is undoable.
-        """
+        """Test if copied data is undoable."""
 
         service = self.service
 

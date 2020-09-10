@@ -1,7 +1,6 @@
 """Internationalization (i18n) support for Gaphor.
 
 Translate text in to your native language using the gettext() function.
-
 """
 __all__ = ["gettext"]
 

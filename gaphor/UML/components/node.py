@@ -1,5 +1,4 @@
-"""
-Node item may represent a node or a device UML metamodel classes.
+"""Node item may represent a node or a device UML metamodel classes.
 
 Grouping
 ========
@@ -34,9 +33,7 @@ from gaphor.UML.classes.stereotype import stereotype_compartments
 @represents(UML.Node)
 @represents(UML.Device)
 class NodeItem(ElementPresentation, Classified):
-    """
-    Representation of node or device from UML Deployment package.
-    """
+    """Representation of node or device from UML Deployment package."""
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)

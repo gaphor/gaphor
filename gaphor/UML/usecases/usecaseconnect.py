@@ -1,6 +1,4 @@
-"""
-Use cases related connection adapters.
-"""
+"""Use cases related connection adapters."""
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector, RelationshipConnect

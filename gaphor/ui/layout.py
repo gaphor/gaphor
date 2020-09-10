@@ -1,6 +1,4 @@
-"""
-Layout code from a simple XML description.
-"""
+"""Layout code from a simple XML description."""
 
 from typing import Callable, Dict
 from xml.etree.ElementTree import fromstring
@@ -11,10 +9,11 @@ widget_factory: Dict[str, Callable] = {}
 
 
 def deserialize(container, layoutstr, itemfactory, properties):
-    """
-    Return a new layout with it's attached frames. Frames that should be floating
-    already have their Gtk.Window attached (check frame.get_parent()). Transient settings
-    and such should be done by the invoking application.
+    """Return a new layout with it's attached frames.
+
+    Frames that should be floating already have their Gtk.Window
+    attached (check frame.get_parent()). Transient settings and such
+    should be done by the invoking application.
     """
 
     def _des(element, index, parent_widget=None):
@@ -57,9 +56,7 @@ def add(widget, index, parent_widget, resize=False, shrink=False):
 
 
 def factory(typename):
-    """
-    Simple decorator for populating the widget_factory dictionary.
-    """
+    """Simple decorator for populating the widget_factory dictionary."""
 
     def _factory(func):
         widget_factory[typename] = func

@@ -16,22 +16,16 @@ from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
 class Named:
-    """
-    Marker for any NamedElement presentations.
-    """
+    """Marker for any NamedElement presentations."""
 
 
 class Classified(Named):
-    """
-    Marker for Classifier presentations.
-    """
+    """Marker for Classifier presentations."""
 
 
 def from_package_str(item):
-    """
-    Display name space info when it is different, then diagram's or
-    parent's namespace.
-    """
+    """Display name space info when it is different, then diagram's or parent's
+    namespace."""
     subject = item.subject
     canvas = item.canvas
 
@@ -64,10 +58,11 @@ def _get_sink(item, handle, target):
 
 
 def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
-    """
-    Helper function: when loading a model, handles should be connected as
-    part of the `postload` step. This function finds a suitable spot on the
-    `target` item to connect the handle to.
+    """Helper function: when loading a model, handles should be connected as
+    part of the `postload` step.
+
+    This function finds a suitable spot on the `target` item to connect
+    the handle to.
     """
     connector = ConnectorAspect(item, handle)
     sink = _get_sink(item, handle, target)
@@ -78,12 +73,11 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
 
 
 class ElementPresentation(Presentation[S], gaphas.Element):
-    """
-    Presentation for Gaphas Element (box-like) items.
+    """Presentation for Gaphas Element (box-like) items.
 
-    To create a shape (boxes, text), assign a shape to `self.shape`. If the
-    shape can change, for example, because styling needs to change, implement
-    the method `update_shapes()` and set self.shape there.
+    To create a shape (boxes, text), assign a shape to `self.shape`. If
+    the shape can change, for example, because styling needs to change,
+    implement the method `update_shapes()` and set self.shape there.
     """
 
     width: int
@@ -105,10 +99,8 @@ class ElementPresentation(Presentation[S], gaphas.Element):
     shape = property(lambda s: s._shape, _set_shape)
 
     def update_shapes(self, event=None):
-        """
-        Updating the shape configuration, e.g. when extra elements have to
-        be drawn or when styling changes.
-        """
+        """Updating the shape configuration, e.g. when extra elements have to
+        be drawn or when styling changes."""
 
     def pre_update(self, context):
         self.min_width, self.min_height = self.shape.size(context)
@@ -188,8 +180,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
 
     def point(self, pos):
-        """Given a point (x, y) return the distance to the canvas item.
-        """
+        """Given a point (x, y) return the distance to the canvas item."""
         d0 = super().point(pos)
         ds = [
             distance_rectangle_point(shape, pos)

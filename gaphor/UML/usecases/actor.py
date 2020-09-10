@@ -1,6 +1,4 @@
-"""
-Actor item classes.
-"""
+"""Actor item classes."""
 
 from math import pi
 
@@ -19,10 +17,10 @@ BODY = 20
 
 @represents(UML.Actor)
 class ActorItem(ElementPresentation, Classified):
-    """
-    Actor item is a classifier in icon mode.
+    """Actor item is a classifier in icon mode.
 
-    Maybe it should be possible to switch to comparment mode in the future.
+    Maybe it should be possible to switch to comparment mode in the
+    future.
     """
 
     def __init__(self, id=None, model=None):
@@ -45,9 +43,7 @@ class ActorItem(ElementPresentation, Classified):
 
 
 def draw_actor(box, context, bounding_box):
-    """
-    Draw actor's icon creature.
-    """
+    """Draw actor's icon creature."""
     cr = context.cairo
 
     fx = bounding_box.width / (ARM * 2)

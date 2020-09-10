@@ -1,7 +1,6 @@
-"""Temporary hook to support HarfBuzz
+"""Temporary hook to support HarfBuzz.
 
 Work around for https://github.com/pyinstaller/pyinstaller/issues/5129
-
 """
 
 

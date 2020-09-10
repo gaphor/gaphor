@@ -1,6 +1,4 @@
-"""
-Connect comments.
-"""
+"""Connect comments."""
 
 import logging
 from typing import Union
@@ -23,10 +21,11 @@ class CommentLineElementConnect(BaseConnector):
     line: CommentLineItem
 
     def allow(self, handle, port):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        One of the ends should be connected to a Comment element.
+        """In addition to the normal check, both line ends may not be connected
+        to the same element.
+
+        Same goes for subjects. One of the ends should be connected to a
+        Comment element.
         """
         opposite = self.line.opposite(handle)
         connected_to = self.get_connected(opposite)
@@ -110,10 +109,11 @@ class CommentLineLineConnect(BaseConnector):
     line: CommentLineItem
 
     def allow(self, handle, port):
-        """
-        In addition to the normal check, both line ends may not be connected
-        to the same element. Same goes for subjects.
-        One of the ends should be connected to a Comment element.
+        """In addition to the normal check, both line ends may not be connected
+        to the same element.
+
+        Same goes for subjects. One of the ends should be connected to a
+        Comment element.
         """
         opposite = self.line.opposite(handle)
         element = self.element
@@ -162,10 +162,8 @@ class CommentLineLineConnect(BaseConnector):
 
 @Connector.register(CommentLineItem, LinePresentation)
 class InverseCommentLineLineConnect(CommentLineLineConnect):
-    """
-    In case a line is disconnected that contains a comment-line,
-    the comment line unlinking should happen in a correct way.
-    """
+    """In case a line is disconnected that contains a comment-line, the comment
+    line unlinking should happen in a correct way."""
 
     def __init__(self, line, element):
         super().__init__(element, line)

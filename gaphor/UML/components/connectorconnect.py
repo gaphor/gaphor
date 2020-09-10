@@ -1,5 +1,4 @@
-"""
-Connector connections.
+"""Connector connections.
 
 Implemented using interface item in assembly connector mode, see
 `gaphor.diagram.connector` module for details.
@@ -18,8 +17,8 @@ from gaphor.UML.components.connector import ConnectorItem
 @Connector.register(ComponentItem, ConnectorItem)
 @Connector.register(InterfaceItem, ConnectorItem)
 class ConnectorConnectBase(BaseConnector):
-    """
-    This connector is left as is, mainly for backwards compatibility.
+    """This connector is left as is, mainly for backwards compatibility.
+
     The Connector item has been removed from the Components tool
     palette.
     """
@@ -28,8 +27,7 @@ class ConnectorConnectBase(BaseConnector):
     line: ConnectorItem
 
     def _get_interfaces(self, c1, c2):
-        """
-        Return list of common interfaces provided by first component and
+        """Return list of common interfaces provided by first component and
         required by second component.
 
         :Parameters:
@@ -45,8 +43,7 @@ class ConnectorConnectBase(BaseConnector):
         return interfaces
 
     def get_connecting(self, iface, both=False):
-        """
-        Get items connecting to interface.
+        """Get items connecting to interface.
 
         :Parameters:
          iface
@@ -64,9 +61,7 @@ class ConnectorConnectBase(BaseConnector):
 
     @staticmethod
     def get_component(connector):
-        """
-        Get component connected by connector.
-        """
+        """Get component connected by connector."""
         canvas = connector.canvas
         c1 = canvas.get_connection(connector.head)
         c2 = canvas.get_connection(connector.tail)
@@ -78,9 +73,8 @@ class ConnectorConnectBase(BaseConnector):
         return component
 
     def create_uml(self, connector, component, assembly, iface):
-        """
-        Create assembly connector UML metamodel for given connector item
-        and component.
+        """Create assembly connector UML metamodel for given connector item and
+        component.
 
         :Parameters:
          connector
@@ -102,8 +96,7 @@ class ConnectorConnectBase(BaseConnector):
         component.subject.ownedPort = end.partWithPort
 
     def drop_uml(self, connector, component):
-        """
-        Destroy assembly connector UML metamodel existing between connector
+        """Destroy assembly connector UML metamodel existing between connector
         item and component item.
 
         :Parameters:

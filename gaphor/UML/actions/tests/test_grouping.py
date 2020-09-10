@@ -1,6 +1,4 @@
-"""
-Tests for grouping functionality in Gaphor.
-"""
+"""Tests for grouping functionality in Gaphor."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -9,8 +7,7 @@ from gaphor.UML.actions import ActionItem, PartitionItem
 
 class PartitionGroupTestCase(TestCase):
     def test_no_subpartition_when_nodes_in(self):
-        """Test adding subpartition when nodes added
-        """
+        """Test adding subpartition when nodes added."""
         p = self.create(PartitionItem)
         a1 = self.create(ActionItem, UML.Action)
         p1 = self.create(PartitionItem)
@@ -21,8 +18,7 @@ class PartitionGroupTestCase(TestCase):
         assert not self.can_group(p1, p2)
 
     def test_no_nodes_when_subpartition_in(self):
-        """Test adding nodes when subpartition added
-        """
+        """Test adding nodes when subpartition added."""
         p = self.create(PartitionItem)
         a1 = self.create(ActionItem, UML.Action)
         p1 = self.create(PartitionItem)
@@ -31,8 +27,7 @@ class PartitionGroupTestCase(TestCase):
         assert not self.can_group(p, a1)
 
     def test_action_grouping(self):
-        """Test adding action to partition
-        """
+        """Test adding action to partition."""
         p1 = self.create(PartitionItem)
         p2 = self.create(PartitionItem)
         a1 = self.create(ActionItem, UML.Action)
@@ -49,8 +44,7 @@ class PartitionGroupTestCase(TestCase):
         assert len(p2.subject.node) == 2
 
     def test_subpartition_grouping(self):
-        """Test adding subpartition to partition
-        """
+        """Test adding subpartition to partition."""
         p = self.create(PartitionItem)
         p1 = self.create(PartitionItem)
         p2 = self.create(PartitionItem)
@@ -64,8 +58,7 @@ class PartitionGroupTestCase(TestCase):
         assert p2.subject is not None
 
     def test_ungrouping(self):
-        """Test action and subpartition removal
-        """
+        """Test action and subpartition removal."""
         p1 = self.create(PartitionItem)
         p2 = self.create(PartitionItem)
         a1 = self.create(ActionItem, UML.Action)
@@ -88,8 +81,7 @@ class PartitionGroupTestCase(TestCase):
         assert len(self.kindof(UML.ActivityPartition)) == 0
 
     def test_ungrouping_with_actions(self):
-        """Test subpartition with actions removal
-        """
+        """Test subpartition with actions removal."""
         p1 = self.create(PartitionItem)
         p2 = self.create(PartitionItem)
         a1 = self.create(ActionItem, UML.Action)
@@ -112,8 +104,7 @@ class PartitionGroupTestCase(TestCase):
         assert len(partition.node) == 0
 
     def test_nested_subpartition_ungrouping(self):
-        """Test removal of subpartition with swimlanes
-        """
+        """Test removal of subpartition with swimlanes."""
         p1 = self.create(PartitionItem)
         p2 = self.create(PartitionItem)
         p3 = self.create(PartitionItem)
@@ -134,8 +125,7 @@ class PartitionGroupTestCase(TestCase):
         assert len(self.kindof(UML.ActivityPartition)) == 2
 
     def test_nested_subpartition_regrouping(self):
-        """Test regrouping of subpartition with swimlanes
-        """
+        """Test regrouping of subpartition with swimlanes."""
         p1 = self.create(PartitionItem)
         p2 = self.create(PartitionItem)
         p3 = self.create(PartitionItem)

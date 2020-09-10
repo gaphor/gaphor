@@ -1,6 +1,4 @@
-"""
-Test extend item connections.
-"""
+"""Test extend item connections."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -19,8 +17,7 @@ class ExtendItemTestCase(TestCase):
         assert glued
 
     def test_use_case_connect(self):
-        """Test connecting "extend" to use cases
-        """
+        """Test connecting "extend" to use cases."""
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
         extend = self.create(ExtendItem)
@@ -32,8 +29,7 @@ class ExtendItemTestCase(TestCase):
         assert self.get_connected(extend.tail), uc2
 
     def test_use_case_reconnect(self):
-        """Test reconnecting use cases with "extend"
-        """
+        """Test reconnecting use cases with "extend"."""
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
         uc3 = self.create(UseCaseItem, UML.UseCase)
@@ -52,8 +48,7 @@ class ExtendItemTestCase(TestCase):
         assert extend.subject.extension is uc3.subject
 
     def test_use_case_disconnect(self):
-        """Test disconnecting "extend" from use cases
-        """
+        """Test disconnecting "extend" from use cases."""
         uc1 = self.create(UseCaseItem, UML.UseCase)
         uc2 = self.create(UseCaseItem, UML.UseCase)
         extend = self.create(ExtendItem)

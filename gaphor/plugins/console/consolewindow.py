@@ -26,7 +26,10 @@ class ConsoleWindow(UIComponent, ActionProvider):
         self.window = None
 
     def load_console_py(self, console):
-        """Load default script for console. Saves some repetitive typing."""
+        """Load default script for console.
+
+        Saves some repetitive typing.
+        """
 
         console_py = os.path.join(get_config_dir(), "console.py")
         try:

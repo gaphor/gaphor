@@ -1,5 +1,4 @@
-"""
-Properties used to create the Gaphor data models.
+"""Properties used to create the Gaphor data models.
 
 The logic for creating and destroying connections between elements is
 implemented in Python property classes. These classes are simply instantiated
@@ -115,8 +114,7 @@ Upper = Union[Literal[1], Literal[2], Literal["*"]]
 
 
 class umlproperty:
-    """
-    Superclass for an attribute, enumeration, and association.
+    """Superclass for an attribute, enumeration, and association.
 
     The subclasses should define a ``name`` attribute that contains the name
     of the property. Derived properties (derivedunion and redefine) can be
@@ -157,9 +155,8 @@ class umlproperty:
         pass
 
     def unlink(self, obj):
-        """
-        This is called from the Element to denote the element is unlinking.
-        """
+        """This is called from the Element to denote the element is
+        unlinking."""
 
     def _get(self, obj) -> Union[Optional[T], collection[T]]:
         raise NotImplementedError()
@@ -177,8 +174,7 @@ class umlproperty:
 
 
 class attribute(umlproperty, Generic[T]):
-    """
-    Attribute.
+    """Attribute.
 
     Element.attr = attribute('attr', types.StringType, '')
     """
@@ -247,8 +243,7 @@ class attribute(umlproperty, Generic[T]):
 
 
 class enumeration(umlproperty):
-    """
-    Enumeration
+    """Enumeration.
 
       Element.enum = enumeration('enum', ('one', 'two', 'three'), 'one')
 
@@ -302,8 +297,7 @@ class enumeration(umlproperty):
 
 
 class association(umlproperty):
-    """
-    Association, both uni- and bi-directional.
+    """Association, both uni- and bi-directional.
 
     Element.assoc = association('assoc', Element, opposite='other')
 
@@ -375,8 +369,7 @@ class association(umlproperty):
         return v
 
     def _set(self, obj, value: Optional[T], from_opposite=False) -> None:
-        """
-        Set a new value for our attribute. If this is a collection, append
+        """Set a new value for our attribute. If this is a collection, append
         to the existing collection.
 
         This method is called from the opposite association property.
@@ -437,11 +430,8 @@ class association(umlproperty):
             self.stub._set(value, obj)
 
     def _del(self, obj, value, from_opposite=False, do_notify=True):
-        """
-        Delete is used for element deletion and for removal of
-        elements from a list.
-
-        """
+        """Delete is used for element deletion and for removal of elements from
+        a list."""
         if self.upper == 1:
             self._del_one(obj, value, from_opposite, do_notify)
         else:
@@ -509,11 +499,12 @@ class AssociationStubError(Exception):
 
 
 class associationstub(umlproperty):
-    """
-    An association stub is an internal thingy that ensures all associations
-    are always bi-directional. This helps the application when one end of
-    the association is unlinked. On unlink() of an element all `umlproperty`'s
-    are iterated and called by their unlink() method.
+    """An association stub is an internal thingy that ensures all associations
+    are always bi-directional.
+
+    This helps the application when one end of the association is
+    unlinked. On unlink() of an element all `umlproperty`'s are iterated
+    and called by their unlink() method.
     """
 
     def __init__(self, association: association):
@@ -558,9 +549,7 @@ class associationstub(umlproperty):
 
 
 class unioncache:
-    """
-    Small cache helper object for derivedunions.
-    """
+    """Small cache helper object for derivedunions."""
 
     def __init__(self, data: object, version: int) -> None:
         self.data = data
@@ -568,8 +557,7 @@ class unioncache:
 
 
 class derived(umlproperty, Generic[T]):
-    """
-    Base class for derived properties, both derived unions and custom
+    """Base class for derived properties, both derived unions and custom
     properties.
 
     Note that, although this derived property sends DerivedAdded,
@@ -622,8 +610,9 @@ class derived(umlproperty, Generic[T]):
         return f"<derived {self.name}: {self.type} {str(list(map(str, self.subsets)))[1:-1]}>"
 
     def _update(self, obj):
-        """
-        Update the list of items. Returns a unioncache instance.
+        """Update the list of items.
+
+        Returns a unioncache instance.
         """
         u = self.filter(obj)
         if self.upper == 1:
@@ -657,8 +646,7 @@ class derived(umlproperty, Generic[T]):
         raise AttributeError("Can not delete values on a union")
 
     def propagate(self, event):
-        """
-        Re-emit state change for the derived properties as Derived*Event's.
+        """Re-emit state change for the derived properties as Derived*Event's.
 
         TODO: We should fetch the old and new state of the namespace item in
         stead of the old and new values of the item that changed.
@@ -713,8 +701,7 @@ class derived(umlproperty, Generic[T]):
 
 
 class derivedunion(derived[T]):
-    """
-    Derived union
+    """Derived union.
 
       Element.union = derivedunion('union', subset1, subset2..subsetn)
 
@@ -727,9 +714,7 @@ class derivedunion(derived[T]):
         super().__init__(name, type, lower, upper, self._union, *subsets)
 
     def _union(self, obj, exclude=None):
-        """
-        Returns a union of all values as a set.
-        """
+        """Returns a union of all values as a set."""
         u: Set[T] = set()
         for s in self.subsets:
             if s is exclude:
@@ -744,8 +729,7 @@ class derivedunion(derived[T]):
         return collectionlist(u)
 
     def propagate(self, event):
-        """
-        Re-emit state change for the derived union (as Derived*Event's).
+        """Re-emit state change for the derived union (as Derived*Event's).
 
         TODO: We should fetch the old and new state of the namespace item in
         stead of the old and new values of the item that changed.
@@ -810,8 +794,7 @@ class derivedunion(derived[T]):
 
 
 class redefine(umlproperty):
-    """
-    Redefined association
+    """Redefined association.
 
       Element.redefine = redefine(Element, 'redefine', Class, Element.assoc)
 

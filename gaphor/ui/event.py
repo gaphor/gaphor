@@ -1,6 +1,4 @@
-"""
-UI related events.
-"""
+"""UI related events."""
 
 
 class DiagramOpened:

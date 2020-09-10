@@ -1,5 +1,5 @@
-"""This module contains a model element Diagram. Diagrams
-can be visualized and edited.
+"""This module contains a model element Diagram. Diagrams can be visualized and
+edited.
 
 The DiagramCanvas class extends the gaphas.Canvas class.
 """
@@ -66,11 +66,10 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
 
 @dataclass(frozen=True)
 class UpdateContext:
-    """
-    Context used when updating items (Presentation's).
+    """Context used when updating items (Presentation's).
 
-    Style contains the base style, no style alterations due to view state
-    (focus, hover, etc.).
+    Style contains the base style, no style alterations due to view
+    state (focus, hover, etc.).
     """
 
     style: Style
@@ -78,10 +77,10 @@ class UpdateContext:
 
 @dataclass(frozen=True)
 class DrawContext:
-    """
-    Special context for draw()'ing the item. The draw-context contains
-    stuff like the cairo context and flags like selected and
-    focused.
+    """Special context for draw()'ing the item.
+
+    The draw-context contains stuff like the cairo context and flags
+    like selected and focused.
     """
 
     cairo: CairoContext
@@ -103,7 +102,8 @@ def removesuffix(self: str, suffix: str) -> str:
 
 @lru_cache()
 def attrname(obj, lower_name):
-    """Look up a real attribute name based on a lower case (normalized) name."""
+    """Look up a real attribute name based on a lower case (normalized)
+    name."""
     for name in dir(obj):
         if name.lower() == lower_name:
             return name
@@ -165,11 +165,10 @@ class StyledDiagram:
 
 
 class StyledItem:
-    """
-    Wrapper to allow style information to be retrieved.
+    """Wrapper to allow style information to be retrieved.
 
-    For convenience, a view can be added. The view will provide
-    pseudo-classes for the item (focus, hover, etc.)
+    For convenience, a view can be added. The view will provide pseudo-
+    classes for the item (focus, hover, etc.)
     """
 
     def __init__(self, item: Presentation, view: Optional[gaphas.View] = None):
@@ -215,14 +214,19 @@ class StyledItem:
 
 
 class DiagramCanvas(gaphas.Canvas):
-    """DiagramCanvas extends the gaphas.Canvas class.  Updates to the canvas
-    can be blocked by setting the block_updates property to true.  A save
-    function can be applied to all root canvas items.  Canvas items can be
-    selected with an optional expression filter."""
+    """DiagramCanvas extends the gaphas.Canvas class.
+
+    Updates to the canvas can be blocked by setting the block_updates
+    property to true.  A save function can be applied to all root canvas
+    items.  Canvas items can be selected with an optional expression
+    filter.
+    """
 
     def __init__(self, diagram: Diagram):
-        """Initialize the diagram canvas with the supplied diagram.  By default,
-        updates are not blocked."""
+        """Initialize the diagram canvas with the supplied diagram.
+
+        By default, updates are not blocked.
+        """
 
         super().__init__(
             lambda item: UpdateContext(style=diagram.style(StyledItem(item)))
@@ -233,8 +237,10 @@ class DiagramCanvas(gaphas.Canvas):
     diagram = property(lambda s: s._diagram)
 
     def _set_block_updates(self, block):
-        """Sets the block_updates property.  If false, the diagram canvas is
-        updated immediately."""
+        """Sets the block_updates property.
+
+        If false, the diagram canvas is updated immediately.
+        """
 
         self._block_updates = block
         if not block:
@@ -256,7 +262,9 @@ class DiagramCanvas(gaphas.Canvas):
             save_func(item)
 
     def postload(self):
-        """Called after the diagram canvas has loaded.  Currently does nothing.
+        """Called after the diagram canvas has loaded.
+
+        Currently does nothing.
         """
 
     def select(self, expression=lambda e: True):
@@ -282,8 +290,7 @@ class DiagramCanvas(gaphas.Canvas):
 
 
 class Diagram(PackageableElement):
-    """Diagrams may contain model elements and can be owned by a Package.
-    """
+    """Diagrams may contain model elements and can be owned by a Package."""
 
     package: relation_one[Package]
 
@@ -291,7 +298,9 @@ class Diagram(PackageableElement):
         self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
     ):
         """Initialize the diagram with an optional id and element model.
-        The diagram also has a canvas."""
+
+        The diagram also has a canvas.
+        """
 
         super().__init__(id, model)
         self.canvas = DiagramCanvas(self)
@@ -324,10 +333,13 @@ class Diagram(PackageableElement):
         self.canvas.postload()
 
     def create(self, type, parent=None, subject=None):
-        """Create a new canvas item on the canvas. It is created with
-        a unique ID and it is attached to the diagram's root item.  The type
-        parameter is the element class to create.  The new element also has an
-        optional parent and subject."""
+        """Create a new canvas item on the canvas.
+
+        It is created with a unique ID and it is attached to the
+        diagram's root item.  The type parameter is the element class to
+        create.  The new element also has an optional parent and
+        subject.
+        """
 
         return self.create_as(type, str(uuid.uuid1()), parent, subject)
 

@@ -15,9 +15,7 @@ from gaphor.core.styling.properties import (
 
 
 class _Declarations:
-    """
-    Convert raw CSS declarations into Gaphor styling declarations.
-    """
+    """Convert raw CSS declarations into Gaphor styling declarations."""
 
     def __init__(self) -> None:
         self.declarations: List[

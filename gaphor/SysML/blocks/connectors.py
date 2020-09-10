@@ -25,8 +25,7 @@ class BlockProperyProxyPortConnector:
         return True
 
     def connect(self, handle: Handle, port: Port) -> bool:
-        """
-        Connect and reconnect at model level.
+        """Connect and reconnect at model level.
 
         Returns `True` if a connection is established.
         """

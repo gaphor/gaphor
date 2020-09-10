@@ -39,10 +39,11 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.Association)
 class AssociationItem(LinePresentation[UML.Association], Named):
-    """
-    AssociationItem represents associations.
-    An AssociationItem has two AssociationEnd items. Each AssociationEnd item
-    represents a Property (with Property.association == my association).
+    """AssociationItem represents associations.
+
+    An AssociationItem has two AssociationEnd items. Each AssociationEnd
+    item represents a Property (with Property.association == my
+    association).
     """
 
     def __init__(self, id=None, model=None):
@@ -140,10 +141,8 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         super().unlink()
 
     def invert_direction(self):
-        """
-        Invert the direction of the association, this is done by swapping
-        the head and tail-ends subjects.
-        """
+        """Invert the direction of the association, this is done by swapping
+        the head and tail-ends subjects."""
         if not self.subject:
             return
 
@@ -153,17 +152,13 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         self.request_update()
 
     def on_association_end_value(self, event):
-        """
-        Handle events and update text on association end.
-        """
+        """Handle events and update text on association end."""
         for end in (self._head_end, self._tail_end):
             end.set_text()
         self.request_update()
 
     def post_update(self, context):
-        """
-        Update the shapes and sub-items of the association.
-        """
+        """Update the shapes and sub-items of the association."""
 
         handles = self.handles()
 
@@ -212,9 +207,7 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         self._tail_end.post_update(context, handles[-1].pos, handles[-2].pos)
 
     def point(self, pos):
-        """
-        Returns the distance from the Association to the (mouse) cursor.
-        """
+        """Returns the distance from the Association to the (mouse) cursor."""
         return min(
             super().point(pos), self._head_end.point(pos), self._tail_end.point(pos)
         )
@@ -234,9 +227,9 @@ class AssociationItem(LinePresentation[UML.Association], Named):
 
 
 def get_center_pos(points, inverted=False):
-    """
-    Return position in the centre of middle segment of a line. Angle of
-    the middle segment is also returned.
+    """Return position in the centre of middle segment of a line.
+
+    Angle of the middle segment is also returned.
     """
     h0, h1 = middle_segment(points)
     pos = (h0.pos.x + h1.pos.x) / 2, (h0.pos.y + h1.pos.y) / 2
@@ -247,10 +240,8 @@ def get_center_pos(points, inverted=False):
 
 
 def draw_head_none(context):
-    """
-    Draw an 'x' on the line end to indicate no navigability at
-    association head.
-    """
+    """Draw an 'x' on the line end to indicate no navigability at association
+    head."""
     cr = context.cairo
     cr.move_to(6, -4)
     cr.rel_line_to(8, 8)
@@ -261,10 +252,8 @@ def draw_head_none(context):
 
 
 def draw_tail_none(context):
-    """
-    Draw an 'x' on the line end to indicate no navigability at
-    association tail.
-    """
+    """Draw an 'x' on the line end to indicate no navigability at association
+    tail."""
     cr = context.cairo
     cr.line_to(0, 0)
     cr.move_to(6, -4)
@@ -275,10 +264,8 @@ def draw_tail_none(context):
 
 
 def _draw_diamond(cr):
-    """
-    Helper function to draw diamond shape for shared and composite
-    aggregations.
-    """
+    """Helper function to draw diamond shape for shared and composite
+    aggregations."""
     cr.move_to(20, 0)
     cr.line_to(10, -6)
     cr.line_to(0, 0)
@@ -287,10 +274,8 @@ def _draw_diamond(cr):
 
 
 def draw_head_composite(context):
-    """
-    Draw a closed diamond on the line end to indicate composite
-    aggregation at association head.
-    """
+    """Draw a closed diamond on the line end to indicate composite aggregation
+    at association head."""
     cr = context.cairo
     _draw_diamond(cr)
     context.cairo.fill_preserve()
@@ -299,10 +284,8 @@ def draw_head_composite(context):
 
 
 def draw_tail_composite(context):
-    """
-    Draw a closed diamond on the line end to indicate composite
-    aggregation at association tail.
-    """
+    """Draw a closed diamond on the line end to indicate composite aggregation
+    at association tail."""
     cr = context.cairo
     cr.line_to(20, 0)
     cr.stroke()
@@ -312,20 +295,16 @@ def draw_tail_composite(context):
 
 
 def draw_head_shared(context):
-    """
-    Draw an open diamond on the line end to indicate shared aggregation
-    at association head.
-    """
+    """Draw an open diamond on the line end to indicate shared aggregation at
+    association head."""
     cr = context.cairo
     _draw_diamond(cr)
     cr.move_to(20, 0)
 
 
 def draw_tail_shared(context):
-    """
-    Draw an open diamond on the line end to indicate shared aggregation
-    at association tail.
-    """
+    """Draw an open diamond on the line end to indicate shared aggregation at
+    association tail."""
     cr = context.cairo
     cr.line_to(20, 0)
     cr.stroke()
@@ -334,10 +313,8 @@ def draw_tail_shared(context):
 
 
 def draw_head_navigable(context):
-    """
-    Draw a normal arrow to indicate association end navigability at
-    association head.
-    """
+    """Draw a normal arrow to indicate association end navigability at
+    association head."""
     cr = context.cairo
     cr.move_to(15, -6)
     cr.line_to(0, 0)
@@ -347,10 +324,8 @@ def draw_head_navigable(context):
 
 
 def draw_tail_navigable(context):
-    """
-    Draw a normal arrow to indicate association end navigability at
-    association tail.
-    """
+    """Draw a normal arrow to indicate association end navigability at
+    association tail."""
     cr = context.cairo
     cr.line_to(0, 0)
     cr.stroke()
@@ -360,13 +335,12 @@ def draw_tail_navigable(context):
 
 
 class AssociationEnd(Presentation):
-    """
-    An association end represents one end of an association. An association
-    has two ends. An association end has two labels: one for the name and
-    one for the multiplicity (and maybe one for tagged values in the future).
+    """An association end represents one end of an association. An association
+    has two ends. An association end has two labels: one for the name and one
+    for the multiplicity (and maybe one for tagged values in the future).
 
-    An AsociationEnd has no ID, hence it will not be stored, but it will be
-    recreated by the owning Association.
+    An AsociationEnd has no ID, hence it will not be stored, but it will
+    be recreated by the owning Association.
     """
 
     def __init__(self, owner, end=None):
@@ -391,7 +365,7 @@ class AssociationEnd(Presentation):
 
     @property
     def owner(self):
-        """ Override Element.owner. """
+        """Override Element.owner."""
         return self._owner
 
     @property
@@ -403,9 +377,7 @@ class AssociationEnd(Presentation):
         self._owner.request_update()
 
     def set_text(self):
-        """
-        Set the text on the association end.
-        """
+        """Set the text on the association end."""
         if self.subject:
             try:
                 n, m = UML.format(self.subject)
@@ -425,10 +397,10 @@ class AssociationEnd(Presentation):
         return self._mult
 
     def post_update(self, context, p1, p2):
-        """
-        Update label placement for association's name and
-        multiplicity label. p1 is the line end and p2 is the last
-        but one point of the line.
+        """Update label placement for association's name and multiplicity
+        label.
+
+        p1 is the line end and p2 is the last but one point of the line.
         """
         style = combined_style(context.style, self._inline_style)
         ofs = 5
@@ -517,8 +489,7 @@ class AssociationEnd(Presentation):
         )
 
     def point(self, pos):
-        """Given a point (x, y) return the distance to the canvas item.
-        """
+        """Given a point (x, y) return the distance to the canvas item."""
         drp = distance_rectangle_point
         d1 = drp(self._name_bounds, pos)
         d2 = drp(self._mult_bounds, pos)
@@ -526,8 +497,7 @@ class AssociationEnd(Presentation):
         return min(d1, d2, d3)
 
     def draw(self, context):
-        """Draw name and multiplicity of the line end.
-        """
+        """Draw name and multiplicity of the line end."""
         if not self.subject:
             return
 

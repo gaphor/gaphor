@@ -1,6 +1,4 @@
-"""
-Support code for dealing with stereotypes in diagrams.
-"""
+"""Support code for dealing with stereotypes in diagrams."""
 
 from gaphor import UML
 from gaphor.core.styling import TextAlign, VerticalAlign

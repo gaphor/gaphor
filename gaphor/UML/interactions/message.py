@@ -1,5 +1,4 @@
-"""
-Sequence and communication diagram messages.
+"""Sequence and communication diagram messages.
 
 Messages are implemented according to UML 2.1.1 specification.
 
@@ -61,8 +60,7 @@ PI_2 = pi / 2
 
 @represents(UML.Message)
 class MessageItem(LinePresentation[UML.Message], Named):
-    """
-    Message item is drawn on sequence and communication diagrams.
+    """Message item is drawn on sequence and communication diagrams.
 
     On communication diagram, message item is decorated with an arrow in
     the middle of a line.
@@ -94,17 +92,13 @@ class MessageItem(LinePresentation[UML.Message], Named):
         self.watch("subject.appliedStereotype.classifier.name")
 
     def pre_update(self, context):
-        """
-        Update communication diagram information.
-        """
+        """Update communication diagram information."""
         self._is_communication = self.is_communication()
 
         super().pre_update(context)
 
     def post_update(self, context):
-        """
-        Update communication diagram information.
-        """
+        """Update communication diagram information."""
         super().post_update(context)
 
         if self._is_communication:
@@ -113,9 +107,9 @@ class MessageItem(LinePresentation[UML.Message], Named):
             self._arrow_angle = angle
 
     def _get_center_pos(self):
-        """
-        Return position in the centre of middle segment of a line. Angle of
-        the middle segment is also returned.
+        """Return position in the centre of middle segment of a line.
+
+        Angle of the middle segment is also returned.
         """
         p0, p1 = middle_segment([h.pos for h in self.handles()])
         pos = (p0.x + p1.x) / 2, (p0.y + p1.y) / 2
@@ -123,9 +117,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
         return pos, angle
 
     def _draw_circle(self, cr):
-        """
-        Draw circle for lost/found messages.
-        """
+        """Draw circle for lost/found messages."""
         # method is called by draw_head or by draw_tail methods,
         # so draw in (0, 0))
         cr.set_line_width(0.01)
@@ -133,8 +125,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
         cr.fill()
 
     def _draw_arrow(self, cr, half=False, filled=True):
-        """
-        Draw an arrow.
+        """Draw an arrow.
 
         Parameters:
 
@@ -243,10 +234,8 @@ class MessageItem(LinePresentation[UML.Message], Named):
             self._draw_decorating_arrow(cr)
 
     def is_communication(self):
-        """
-        Check if message is connecting to lifelines on communication
-        diagram.
-        """
+        """Check if message is connecting to lifelines on communication
+        diagram."""
         assert self.canvas
 
         canvas = self.canvas

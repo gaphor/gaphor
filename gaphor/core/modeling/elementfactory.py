@@ -38,8 +38,7 @@ T = TypeVar("T", bound=Element)
 
 
 class ElementFactory(Service):
-    """
-    The ElementFactory is used to create elements and do lookups to
+    """The ElementFactory is used to create elements and do lookups to
     elements.
 
     Notifications are sent as arguments (name, element, `*user_data`).
@@ -64,18 +63,16 @@ class ElementFactory(Service):
         self.flush()
 
     def create(self, type: Type[T]) -> T:
-        """
-        Create a new model element of type ``type``.
-        """
+        """Create a new model element of type ``type``."""
         obj = self.create_as(type, str(uuid.uuid1()))
         self.handle(ElementCreated(self, obj))
         return obj
 
     def create_as(self, type: Type[T], id: str) -> T:
-        """
-        Create a new model element of type 'type' with 'id' as its ID.
-        This method should only be used when loading models, since it does
-        not emit an ElementCreated event.
+        """Create a new model element of type 'type' with 'id' as its ID.
+
+        This method should only be used when loading models, since it
+        does not emit an ElementCreated event.
         """
         if not type or not issubclass(type, Element) or issubclass(type, Presentation):
             raise TypeError(f"Type {type} is not a valid model element")
@@ -84,15 +81,11 @@ class ElementFactory(Service):
         return obj
 
     def size(self) -> int:
-        """
-        Return the amount of elements currently in the factory.
-        """
+        """Return the amount of elements currently in the factory."""
         return len(self._elements)
 
     def lookup(self, id: str) -> Optional[Element]:
-        """
-        Find element with a specific id.
-        """
+        """Find element with a specific id."""
         return self._elements.get(id)
 
     __getitem__ = lookup
@@ -114,9 +107,7 @@ class ElementFactory(Service):
         ...
 
     def select(self, expression=None):
-        """
-        Iterate elements that comply with expression.
-        """
+        """Iterate elements that comply with expression."""
         if expression is None:
             yield from self._elements.values()
         elif isinstance(expression, type):
@@ -127,27 +118,19 @@ class ElementFactory(Service):
     def lselect(
         self, expression: Union[Callable[[Element], bool], Type[T], None] = None
     ) -> List[Element]:
-        """
-        Like select(), but returns a list.
-        """
+        """Like select(), but returns a list."""
         return list(self.select(expression))
 
     def keys(self) -> Iterator[str]:
-        """
-        Return a list with all id's in the factory.
-        """
+        """Return a list with all id's in the factory."""
         return iter(self._elements.keys())
 
     def values(self) -> Iterator[Element]:
-        """
-        Return a list with all elements in the factory.
-        """
+        """Return a list with all elements in the factory."""
         return iter(self._elements.values())
 
     def is_empty(self) -> bool:
-        """
-        Returns True if the factory holds no elements.
-        """
+        """Returns True if the factory holds no elements."""
         return bool(self._elements)
 
     def watcher(self, element: Element, default_handler=None):
@@ -157,8 +140,8 @@ class ElementFactory(Service):
     def flush(self) -> None:
         """Flush all elements (remove them from the factory).
 
-        Diagram elements are flushed first.  This is so that canvas updates
-        are blocked.  The remaining elements are then flushed.
+        Diagram elements are flushed first.  This is so that canvas
+        updates are blocked.  The remaining elements are then flushed.
         """
         self.handle(ModelFlushed(self))
 
@@ -172,17 +155,13 @@ class ElementFactory(Service):
                 element.unlink()
 
     def model_ready(self) -> None:
-        """
-        Send notification that a new model has been loaded by means of the
-        ModelReady event from gaphor.core.modeling.event.
-        """
+        """Send notification that a new model has been loaded by means of the
+        ModelReady event from gaphor.core.modeling.event."""
         self.handle(ModelReady(self))
 
     @contextmanager
     def block_events(self):
-        """
-        Block events from being emitted.
-        """
+        """Block events from being emitted."""
         self._block_events += 1
 
         try:
@@ -191,9 +170,7 @@ class ElementFactory(Service):
             self._block_events -= 1
 
     def handle(self, event: object) -> None:
-        """
-        Handle events coming from elements.
-        """
+        """Handle events coming from elements."""
         if isinstance(event, UnlinkEvent):
             element = event.element
             assert isinstance(element.id, str)

@@ -1,6 +1,4 @@
-"""
-Formatting of UML elements like attributes, operations, stereotypes, etc.
-"""
+"""Formatting of UML elements like attributes, operations, stereotypes, etc."""
 
 import re
 from functools import singledispatch
@@ -10,9 +8,7 @@ from gaphor.UML import uml as UML
 
 @singledispatch
 def format(el):
-    """
-    Format an UML element.
-    """
+    """Format an UML element."""
     raise NotImplementedError(
         "Format routine for type %s not implemented yet" % type(el)
     )
@@ -20,9 +16,7 @@ def format(el):
 
 @format.register(UML.Property)
 def format_property(el, *args, **kwargs):
-    """
-    Format property or an association end.
-    """
+    """Format property or an association end."""
     if el.association and not args and not kwargs:
         return format_association_end(el)
     else:
@@ -47,10 +41,8 @@ def format_attribute(
     default=False,
     tags=False,
 ):
-    """
-    Create a OCL representation of the attribute,
-    Returns the attribute as a string.
-    If one or more of the parameters (visibility, is_derived, type,
+    """Create a OCL representation of the attribute, Returns the attribute as a
+    string. If one or more of the parameters (visibility, is_derived, type,
     multiplicity, default and/or tags) is set, only that field is rendered.
     Note that the name of the attribute is always rendered, so a parseable
     string is returned.
@@ -98,9 +90,7 @@ def format_attribute(
 
 
 def format_association_end(el):
-    """
-    Format association end.
-    """
+    """Format association end."""
     name = ""
     n = []
     if el.name:
@@ -132,10 +122,8 @@ def format_operation(
     tags=False,
     direction=False,
 ):
-    """
-    Create a OCL representation of the operation,
-    Returns the operation as a string.
-    """
+    """Create a OCL representation of the operation, Returns the operation as a
+    string."""
     name = el.name
     if not name:
         return ""
@@ -206,9 +194,7 @@ def format_slot(el):
 
 @format.register(UML.NamedElement)
 def format_namedelement(el, **kwargs):
-    """
-    Format named element.
-    """
+    """Format named element."""
     return el.name or ""
 
 

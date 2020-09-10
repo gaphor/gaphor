@@ -1,6 +1,4 @@
-"""
-Test classes.
-"""
+"""Test classes."""
 
 from gaphor import UML
 from gaphor.core.modeling import UpdateContext
@@ -19,9 +17,7 @@ def context():
 
 class ClassTestCase(TestCase):
     def test_compartments(self):
-        """
-        Test creation of classes and working of compartments
-        """
+        """Test creation of classes and working of compartments."""
         element_factory = self.element_factory
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))

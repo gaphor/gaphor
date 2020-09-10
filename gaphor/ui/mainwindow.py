@@ -1,12 +1,11 @@
-"""
-The main application window.
-"""
+"""The main application window."""
 
 import importlib.resources
 import logging
 from pathlib import Path
 from typing import List, Tuple
 
+from generic.event import Event
 from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
@@ -84,8 +83,8 @@ def create_modeling_language_model(modeling_language):
 
 
 class MainWindow(Service, ActionProvider):
-    """
-    The main window for the application.
+    """The main window for the application.
+
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
 
@@ -206,15 +205,11 @@ class MainWindow(Service, ActionProvider):
         em.subscribe(self._on_modeling_language_selection_changed)
 
     def open_welcome_page(self):
-        """
-        Create a new tab with a textual welcome page, a sort of 101 for
-        Gaphor.
-        """
+        """Create a new tab with a textual welcome page, a sort of 101 for
+        Gaphor."""
 
     def set_title(self):
-        """
-        Sets the window title.
-        """
+        """Sets the window title."""
         if not self.window:
             return
 
@@ -234,9 +229,7 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(ModelReady)
     def _new_model_content(self, event):
-        """
-        Open the toplevel element and load toplevel diagrams.
-        """
+        """Open the toplevel element and load toplevel diagrams."""
         # TODO: Make handlers for ModelReady from within the GUI obj
         for diagram in self.element_factory.select(
             lambda e: e.isKindOf(Diagram)
@@ -283,9 +276,7 @@ class MainWindow(Service, ActionProvider):
         return True
 
     def _on_window_size_allocate(self, window, allocation):
-        """
-        Store the window size in a property.
-        """
+        """Store the window size in a property."""
         width, height = window.get_size()
         self.properties.set("ui.window-size", (width, height))
 
@@ -482,13 +473,9 @@ class Diagrams(UIComponent, ActionProvider):
         return page
 
     @event_handler(DiagramClosed)
-    def _on_close_diagram(self, event):
-        """Callback to close the tab and remove the notebook page.
+    def _on_close_diagram(self, event: Event) -> None:
+        """Callback to close the tab and remove the notebook page."""
 
-        Args:
-            button (Gtk.Button): The button the callback is from.
-            widget (Gtk.Widget): The child widget of the tab.
-        """
         diagram = event.diagram
 
         for page_num, widget in self.get_widgets_on_pages():
@@ -506,9 +493,7 @@ class Diagrams(UIComponent, ActionProvider):
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
-        """
-        Close all tabs.
-        """
+        """Close all tabs."""
         while self._notebook.get_n_pages():
             self._notebook.remove_page(0)
 

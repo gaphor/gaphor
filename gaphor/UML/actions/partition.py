@@ -1,5 +1,4 @@
-"""
-Activity Partition item.
+"""Activity Partition item.
 
 TODO: partition can be resized only horizontally or vertically, therefore
 - define constraints for horizontal and vertical handles
@@ -109,8 +108,9 @@ class PartitionItem(ElementPresentation, Named):
                 dp += sl.width
 
     def draw_partition(self, box, context, bounding_box):
-        """
-        By default vertical partition is drawn. It is open on the bottom.
+        """By default vertical partition is drawn.
+
+        It is open on the bottom.
         """
         assert self.canvas
 

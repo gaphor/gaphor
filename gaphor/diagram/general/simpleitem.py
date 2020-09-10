@@ -1,6 +1,4 @@
-"""
-Trivial drawing aids (box, line, ellipse).
-"""
+"""Trivial drawing aids (box, line, ellipse)."""
 
 import ast
 
@@ -57,11 +55,9 @@ class Line(Presentation, _Line):
 
 
 class Box(Presentation, Element):
-    """
-    A Box has 4 handles (for a start)::
+    """A Box has 4 handles (for a start)::
 
-    NW +---+ NE
-    SW +---+ SE
+    NW +---+ NE SW +---+ SE
     """
 
     def __init__(self, id=None, model=None):
@@ -91,8 +87,7 @@ class Box(Presentation, Element):
 
 
 class Ellipse(Presentation, Element):
-    """
-    """
+    """"""
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)

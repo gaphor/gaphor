@@ -14,12 +14,11 @@ from gaphor.diagram.presentation import ElementPresentation, LinePresentation, N
 
 @singledispatch
 def InlineEditor(item: Item, view, pos: Optional[Tuple[int, int]] = None) -> bool:
-    """
-    Show a small editor popup in the diagram. Makes for
-    easy editing without resorting to the Element editor.
+    """Show a small editor popup in the diagram. Makes for easy editing without
+    resorting to the Element editor.
 
-    In case of a mouse press event, the mouse position
-    (relative to the element) are also provided.
+    In case of a mouse press event, the mouse position (relative to the
+    element) are also provided.
     """
     return False
 

@@ -1,6 +1,4 @@
-"""
-Test state items.
-"""
+"""Test state items."""
 
 from gaphor import UML
 from gaphor.tests.testcase import TestCase
@@ -9,13 +7,11 @@ from gaphor.UML.states.state import StateItem
 
 class StateTestCase(TestCase):
     def test_state(self):
-        """Test creation of states
-        """
+        """Test creation of states."""
         self.create(StateItem, UML.State)
 
     def test_activities_persistence(self):
-        """Test state activities saving/loading
-        """
+        """Test state activities saving/loading."""
         # all activities
         s1 = self.create(StateItem, UML.State)
         s1.subject.name = "s1"

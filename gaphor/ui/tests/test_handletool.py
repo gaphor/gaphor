@@ -1,6 +1,4 @@
-"""
-Test handle tool functionality.
-"""
+"""Test handle tool functionality."""
 
 import pytest
 from gaphas.aspect import ConnectionSink
@@ -68,9 +66,7 @@ def test_connect(diagram, comment, commentline):
 
 
 def current_diagram_view(diagrams):
-    """
-    Get a view for the current diagram.
-    """
+    """Get a view for the current diagram."""
     view = diagrams.get_current_view()
 
     # realize view, forces bounding box recalculation
@@ -81,10 +77,8 @@ def current_diagram_view(diagrams):
 
 
 def test_iconnect(event_manager, element_factory, diagrams):
-    """
-    Test basic glue functionality using CommentItem and CommentLine
-    items.
-    """
+    """Test basic glue functionality using CommentItem and CommentLine
+    items."""
     diagram = element_factory.create(UML.Diagram)
     event_manager.handle(DiagramOpened(diagram))
     comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
@@ -121,8 +115,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
 
 def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
-    """Test connect/disconnect on comment and actor using comment-line.
-    """
+    """Test connect/disconnect on comment and actor using comment-line."""
     diagram = element_factory.create(UML.Diagram)
     event_manager.handle(DiagramOpened(diagram))
     comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))

@@ -1,6 +1,4 @@
-"""
-Use case inclusion relationship.
-"""
+"""Use case inclusion relationship."""
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation
@@ -11,9 +9,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.Include)
 class IncludeItem(LinePresentation):
-    """
-    Use case inclusion relationship.
-    """
+    """Use case inclusion relationship."""
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model, style={"dash-style": (7.0, 5.0)})

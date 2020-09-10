@@ -1,6 +1,4 @@
-"""
-Test messages.
-"""
+"""Test messages."""
 
 from gaphor import UML
 from gaphor.UML.interactions.message import MessageItem

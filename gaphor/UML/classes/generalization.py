@@ -1,6 +1,4 @@
-"""
-Generalization --
-"""
+"""Generalization --"""
 
 
 from gaphor import UML

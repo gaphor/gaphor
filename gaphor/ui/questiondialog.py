@@ -1,5 +1,5 @@
-"""Defines a QuestionDialog class used to get a yes or no answer from the user.
-"""
+"""Defines a QuestionDialog class used to get a yes or no answer from the
+user."""
 
 from gi.repository import Gtk
 
@@ -9,9 +9,11 @@ class QuestionDialog:
     from the user."""
 
     def __init__(self, question, parent=None):
-        """Create the QuestionDialog.  The question parameter is a question
-        string to ask the user.  The parent parameter is the parent window
-        of the dialog."""
+        """Create the QuestionDialog.
+
+        The question parameter is a question string to ask the user. The
+        parent parameter is the parent window of the dialog.
+        """
 
         self.dialog = Gtk.MessageDialog(
             parent,
@@ -22,8 +24,10 @@ class QuestionDialog:
         )
 
     def get_answer(self):
-        """Return answer to the question by running the dialog.  The answer
-        is accessed via the answer attribute."""
+        """Return answer to the question by running the dialog.
+
+        The answer is accessed via the answer attribute.
+        """
 
         answer = self.dialog.run()
 

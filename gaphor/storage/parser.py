@@ -45,8 +45,7 @@ log = logging.getLogger(__name__)
 
 
 class base:
-    """Simple base class for element, canvas and canvasitem.
-    """
+    """Simple base class for element, canvas and canvasitem."""
 
     def __init__(self):
         self.values: Dict[str, str] = {}
@@ -121,9 +120,11 @@ State = int
 
 
 class GaphorLoader(handler.ContentHandler):
-    """Create a list of elements. an element may contain a canvas and a
-    canvas may contain canvas items. Each element can have values and
-    references to other elements.
+    """Create a list of elements.
+
+    an element may contain a canvas and a canvas may contain canvas
+    items. Each element can have values and references to other
+    elements.
     """
 
     def __init__(self):
@@ -132,32 +133,32 @@ class GaphorLoader(handler.ContentHandler):
         self.startDocument()
 
     def push(self, element, state):
-        """Add an element to the item stack.
-        """
+        """Add an element to the item stack."""
         self._stack.append((element, state))
 
     def pop(self):
-        """Return the last item on the stack. The item is removed from
-        the stack.
+        """Return the last item on the stack.
+
+        The item is removed from the stack.
         """
         return self._stack.pop()[0]
 
     def peek(self, depth=1):
-        """Return the last item on the stack. The item is not removed.
+        """Return the last item on the stack.
+
+        The item is not removed.
         """
         return self._stack[-1 * depth][0]
 
     def state(self):
-        """Return the current state of the parser.
-        """
+        """Return the current state of the parser."""
         try:
             return self._stack[-1][1]
         except IndexError:
             return ROOT
 
     def startDocument(self):
-        """Start of document: all our attributes are initialized.
-        """
+        """Start of document: all our attributes are initialized."""
         self.version = None
         self.gaphor_version = None
         self.elements: Dict[str, Union[element, canvasitem]] = OrderedDict()
@@ -298,8 +299,7 @@ class GaphorLoader(handler.ContentHandler):
 
 
 def parse(filename):
-    """Parse a file and return a dictionary ID:element/canvasitem.
-    """
+    """Parse a file and return a dictionary ID:element/canvasitem."""
     loader = GaphorLoader()
 
     for _ in parse_generator(filename, loader):
@@ -309,6 +309,7 @@ def parse(filename):
 
 def parse_generator(filename, loader):
     """The generator based version of parse().
+
     parses the file filename and load it with ContentHandler loader.
     """
     assert isinstance(loader, GaphorLoader), "loader should be a GaphorLoader"
@@ -324,15 +325,21 @@ def parse_generator(filename, loader):
 
 class ProgressGenerator:
     """A generator that yields the progress of taking from a file input object
-    and feeding it into an output object.  The supplied file object is neither
-    opened not closed by this generator.  The file object is assumed to
-    already be opened for reading and that it will be closed elsewhere."""
+    and feeding it into an output object.
+
+    The supplied file object is neither opened not closed by this
+    generator.  The file object is assumed to already be opened for
+    reading and that it will be closed elsewhere.
+    """
 
     def __init__(self, input, output, block_size=512):
-        """Initialize the progress generator.  The input parameter is a file
-        object.  The output parameter is usually a SAX parser but can be
-        anything that implements a feed() method.  The block size is the size
-        of each block that is read from the input."""
+        """Initialize the progress generator.
+
+        The input parameter is a file object.  The output parameter is
+        usually a SAX parser but can be anything that implements a
+        feed() method.  The block size is the size of each block that is
+        read from the input.
+        """
 
         self.input = input
         self.output = output
@@ -345,10 +352,12 @@ class ProgressGenerator:
             self.file_size = len(self.input)
 
     def __iter__(self):
-        """Return a generator that yields the progress of reading data
-        from the input and feeding it into the output.  The progress
-        yielded in each iteration is the percentage of data read, relative
-        to the to input file size."""
+        """Return a generator that yields the progress of reading data from the
+        input and feeding it into the output.
+
+        The progress yielded in each iteration is the percentage of data
+        read, relative to the to input file size.
+        """
 
         block = self.input.read(self.block_size)
         read_size = len(block)
@@ -361,10 +370,12 @@ class ProgressGenerator:
 
 
 def parse_file(filename, parser):
-    """Parse the supplied file using the supplied parser.  The parser parameter
-    should be a GaphorLoader instance.  The filename parameter can be an
-    open file descriptor instance or the name of a file.  The progress
-    percentage of the parser is yielded."""
+    """Parse the supplied file using the supplied parser.
+
+    The parser parameter should be a GaphorLoader instance.  The
+    filename parameter can be an open file descriptor instance or the
+    name of a file.  The progress percentage of the parser is yielded.
+    """
 
     is_fd = True
 

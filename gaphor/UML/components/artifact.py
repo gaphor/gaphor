@@ -1,6 +1,4 @@
-"""
-Artifact item.
-"""
+"""Artifact item."""
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute

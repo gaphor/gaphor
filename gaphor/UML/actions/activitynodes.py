@@ -1,6 +1,4 @@
-"""
-Activity control nodes.
-"""
+"""Activity control nodes."""
 
 import ast
 import math
@@ -27,15 +25,16 @@ def no_movable_handles(item):
 
 class ActivityNodeItem(Named):
     """Basic class for simple activity nodes.
+
     Simple activity node is not resizable.
     """
 
 
 @represents(UML.InitialNode)
 class InitialNodeItem(ElementPresentation, ActivityNodeItem):
-    """
-    Representation of initial node. Initial node has name which is put near
-    top-left side of node.
+    """Representation of initial node.
+
+    Initial node has name which is put near top-left side of node.
     """
 
     def __init__(self, id=None, model=None):
@@ -68,8 +67,10 @@ def draw_initial_node(_box, context, _bounding_box):
 
 @represents(UML.ActivityFinalNode)
 class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
-    """Representation of activity final node. Activity final node has name
-    which is put near right-bottom side of node.
+    """Representation of activity final node.
+
+    Activity final node has name which is put near right-bottom side of
+    node.
     """
 
     def __init__(self, id=None, model=None):
@@ -113,9 +114,10 @@ def draw_activity_final_node(_box, context, _bounding_box):
 
 @represents(UML.FlowFinalNode)
 class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
-    """
-    Representation of flow final node. Flow final node has name which is
-    put near right-bottom side of node.
+    """Representation of flow final node.
+
+    Flow final node has name which is put near right-bottom side of
+    node.
     """
 
     def __init__(self, id=None, model=None):
@@ -150,9 +152,7 @@ def draw_flow_final_node(_box, context, _bounding_box):
 
 @represents(UML.DecisionNode)
 class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
-    """
-    Representation of decision or merge node.
-    """
+    """Representation of decision or merge node."""
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
@@ -189,9 +189,7 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
 
 
 def draw_decision_node(_box, context, _bounding_box):
-    """
-    Draw diamond shape, which represents decision and merge nodes.
-    """
+    """Draw diamond shape, which represents decision and merge nodes."""
     cr = context.cairo
     r = 15
     r2 = r * 2 / 3
@@ -206,9 +204,7 @@ def draw_decision_node(_box, context, _bounding_box):
 
 @represents(UML.ForkNode)
 class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
-    """
-    Representation of fork and join node.
-    """
+    """Representation of fork and join node."""
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)

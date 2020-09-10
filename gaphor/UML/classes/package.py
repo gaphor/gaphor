@@ -1,6 +1,4 @@
-"""
-Package diagram item.
-"""
+"""Package diagram item."""
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named, from_package_str
