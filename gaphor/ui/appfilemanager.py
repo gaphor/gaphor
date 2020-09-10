@@ -44,10 +44,6 @@ class AppFileManager(Service, ActionProvider):
         else:
             session = self.application.new_session()
 
-        main_window = session.get_service("main_window")
-        if main_window.window:
-            main_window.window.present()
-
         file_manager = session.get_service("file_manager")
         try:
             file_manager.load(filename)
