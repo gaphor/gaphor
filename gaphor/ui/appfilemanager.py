@@ -1,7 +1,6 @@
 import logging
 
-from gi.repository import Gio
-
+from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.ui.filedialog import FileDialog
@@ -15,32 +14,50 @@ FILTERS = [
 ]
 
 
+def load_default_model(session):
+    element_factory = session.get_service("element_factory")
+    element_factory.flush()
+    with element_factory.block_events():
+        model = element_factory.create(UML.Package)
+        model.name = gettext("New model")
+        diagram = element_factory.create(UML.Diagram)
+        diagram.package = model
+        diagram.name = gettext("main")
+    element_factory.model_ready()
+
+
 class AppFileManager(Service, ActionProvider):
     """Handle application level file loading."""
 
-    def __init__(self, session):
+    def __init__(self, application, session):
+        self.application = application
         self.session = session
 
     def shutdown(self):
         pass
 
-    @property
-    def application(self):
-        return Gio.Application.get_default()
-
     def load(self, filename):
         if self.active_session_is_new():
-            file_manager = self.session.get_service("file_manager")
-            file_manager.load(filename)
+            session = self.session
         else:
-            self.application.open([Gio.File.new_for_path(filename)], "")
+            session = self.application.new_session()
+
+        file_manager = session.get_service("file_manager")
+        try:
+            file_manager.load(filename)
+        except Exception:
+            load_default_model(session)
 
     def new(self):
-        self.application.open([], "__new__")
+        session = self.application.new_session()
+        load_default_model(session)
 
     def active_session_is_new(self):
         """If it's a new model, there is no state change (undo & redo) and no
         file name is defined."""
+        if not self.application.active_session:
+            return False
+
         undo_manager = self.session.get_service("undo_manager")
         file_manager = self.session.get_service("file_manager")
 

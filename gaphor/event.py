@@ -14,16 +14,33 @@ class ServiceInitializedEvent(ServiceEvent):
     """This event is emitted every time a new service has been initialized."""
 
     def __init__(self, name: str, service: Service):
+        super().__init__(service)
         self.name = name
-        self.service = service
 
 
 class ServiceShutdownEvent(ServiceEvent):
     """This event is emitted every time a service has been shut down."""
 
     def __init__(self, name: str, service: Service):
+        super().__init__(service)
         self.name = name
-        self.service = service
+
+
+class ApplicationShutdown(ServiceEvent):
+    """
+    This event is emitted from the application when it has been shut down.
+    """
+
+
+class SessionCreated(ServiceEvent):
+    """
+    The session is emitting this event when it's ready to shut down.
+    """
+
+    def __init__(self, applicaton: Service, session: Service):
+        super().__init__(applicaton)
+        self.application = applicaton
+        self.session = session
 
 
 class ActiveSessionChanged(ServiceEvent):

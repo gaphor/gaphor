@@ -242,6 +242,8 @@ class MainWindow(Service, ActionProvider):
         self.model_changed = False
         self.filename = event.filename
         self.set_title()
+        if self.window:
+            self.window.present()
 
     @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
