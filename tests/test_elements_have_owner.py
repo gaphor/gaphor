@@ -1,5 +1,4 @@
-"""
-For all relevant model elements, check if there is at least one "owner"
+"""For all relevant model elements, check if there is at least one "owner"
 ("owner" is a derived union).
 
 This is needed to display all elements in the tree view.

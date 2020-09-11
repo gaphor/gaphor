@@ -1,5 +1,5 @@
-"""
-Every now and then I run into an issue where a derived union returns a unioncache.
+"""Every now and then I run into an issue where a derived union returns a
+unioncache.
 
 It looks like there is a unioncache packed in a unioncache.
 
