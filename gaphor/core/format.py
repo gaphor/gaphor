@@ -12,10 +12,10 @@ from gaphor.core.modeling import Element
 @singledispatch
 def format(el: Element) -> str:
     """Format an element."""
-    raise TypeError("Format routine for type %s not implemented yet" % type(el))
+    raise TypeError(f"Format routine for type {type(el)} not implemented yet")
 
 
 @singledispatch
 def parse(el: Element, text: str) -> None:
     """Parse text and update `el` accordingly."""
-    raise TypeError("Parsing routine for type %s not implemented yet" % type(el))
+    raise TypeError(f"Parsing routine for type {type(el)} not implemented yet")
