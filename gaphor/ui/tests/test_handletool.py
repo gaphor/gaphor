@@ -10,8 +10,8 @@ from gaphor.diagram.connectors import Connector
 from gaphor.diagram.diagramtools import ConnectHandleTool, DiagramItemConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
+from gaphor.ui.diagrams import Diagrams
 from gaphor.ui.event import DiagramOpened
-from gaphor.ui.mainwindow import Diagrams
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.usecases.actor import ActorItem
 
