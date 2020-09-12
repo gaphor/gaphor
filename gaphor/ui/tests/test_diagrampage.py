@@ -3,7 +3,7 @@ import pytest
 from gaphor.core.modeling import Comment, Diagram, StyleSheet
 from gaphor.diagram.general import Box
 from gaphor.diagram.general.comment import CommentItem
-from gaphor.ui.mainwindow import DiagramPage
+from gaphor.ui.diagrams import DiagramPage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
