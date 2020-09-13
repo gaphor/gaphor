@@ -69,43 +69,14 @@ class PartitionItem(ElementPresentation, Named):
         self._subpart = len(children) > 0
         self._bottom = not (self._toplevel or self._subpart)
 
-        if self._toplevel:
-            self._header_size = self._header_size[0], self.DELTA
+        self._header_size = self._header_size[0], self.DELTA
 
         handles = self.handles()
 
-        # toplevel partition controls the height
-        # partitions at the very bottom control the width
-        # middle partitions control nothing
         for h in handles:
-            h.movable = False
-            h.visible = False
-        if self._bottom:
-            h = handles[1]
-            h.visible = h.movable = True
-        if self._toplevel:
             h1, h2 = handles[2:4]
             h1.visible = h1.movable = True
             h2.visible = h2.movable = True
-
-        if self._subpart:
-            wsum: int = sum(sl.width for sl in children)
-            self._hdmax = max(sl._header_size[1] for sl in children)
-
-            # extend width of swimline due the children but keep the height
-            # untouched
-            self.width = wsum
-
-            dp = 0
-            for sl in self.canvas.get_children(self):
-                x, y = sl.matrix[4], sl.matrix[5]
-
-                x = dp - x
-                y = -y + self._header_size[1] + self._hdmax - sl._header_size[1]
-                sl.matrix.translate(x, y)
-
-                sl.height = sl.min_height = max(0, self.height - self._header_size[1])
-                dp += sl.width
 
     def draw_partition(self, box, context, bounding_box):
         """Draw a vertical partition.
@@ -117,33 +88,17 @@ class PartitionItem(ElementPresentation, Named):
         cr = context.cairo
         cr.set_line_width(context.style["line-width"])
 
-        if self.subject and not self.subject.isDimension and self._toplevel:
-            cr.move_to(0, bounding_box.height)
-            cr.line_to(0, 0)
-            cr.line_to(bounding_box.width, 0)
-            cr.line_to(bounding_box.width, bounding_box.height)
+        cr.move_to(0, bounding_box.height)
+        cr.line_to(0, 0)
+        cr.line_to(bounding_box.width, 0)
+        cr.line_to(bounding_box.width, bounding_box.height)
 
-        h = self._header_size[1]
+        h = self.shape.size(context)[1]
 
-        # draw outside lines if this item is toplevel partition
-        if self._toplevel:
-            cr.move_to(0, bounding_box.height)
-            cr.line_to(0, h)
-            cr.line_to(bounding_box.width, h)
-            cr.line_to(bounding_box.width, bounding_box.height)
-
-        if self._subpart:
-            # header line for all subpartitions
-            hd = h + self._hdmax
-            cr.move_to(0, hd)
-            cr.line_to(bounding_box.width, hd)
-
-            # draw inside lines for all children but last one
-            dp = 0
-            for sl in self.canvas.get_children(self)[:-1]:
-                dp += sl.width
-                cr.move_to(dp, h)
-                cr.line_to(dp, bounding_box.height)
+        cr.move_to(0, bounding_box.height)
+        cr.line_to(0, h)
+        cr.line_to(bounding_box.width, h)
+        cr.line_to(bounding_box.width, bounding_box.height)
 
         stroke(context)
 

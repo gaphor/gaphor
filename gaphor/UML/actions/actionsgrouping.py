@@ -16,19 +16,18 @@ class ActivityPartitionsGroup(AbstractGroup):
         )
 
     def group(self):
+        print("Grouping")
         assert self.item.canvas
 
-        p = self.parent.subject
         model = self.item.model
-        sp = model.create(UML.ActivityPartition)
-        self.item.subject = sp
-        sp.name = "Swimlane"
-        if p:
-            p.subpartition = sp
-        for k in self.item.canvas.get_children(self.item):
-            sp.subpartition = k.subject
+        parent = model.create(UML.ActivityPartition)
+        # parent.subpartition = self.item.subject
+        for child in self.item.canvas.get_children(self.item):
+            print(child)
+            parent.subpartition = child.subject
 
     def ungroup(self):
+        print("Ungrouping")
         assert self.item.canvas
 
         p = self.parent.subject
@@ -36,8 +35,9 @@ class ActivityPartitionsGroup(AbstractGroup):
         if p:
             p.subpartition.remove(sp)
         self.item.subject = None
-        for s in sp.subpartition:
-            sp.subpartition.remove(s)
+        if sp:
+            for s in sp.subpartition:
+                sp.subpartition.remove(s)
         assert len(sp.node) == 0
 
         # ungroup activity nodes
