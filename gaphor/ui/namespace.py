@@ -495,10 +495,14 @@ class Namespace(UIComponent):
         scrolled_window.insert_action_group(
             "tree-view", create_action_group(self, "tree-view")[0]
         )
-        view.connect_after("event-after", self._on_view_event)
         view.connect("row-activated", self._on_view_row_activated)
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
+
+        ctrl = Gtk.GestureMultiPress.new(view)
+        ctrl.set_button(Gdk.BUTTON_SECONDARY)
+        ctrl.connect("pressed", self._on_show_popup)
+        self.popup_ctrl = ctrl
 
         ctrl = Gtk.EventControllerKey.new(view)
         ctrl.connect("key-pressed", self._on_edit_pressed)
@@ -563,15 +567,12 @@ class Namespace(UIComponent):
             self.view.expand_root_nodes()
             self._on_view_cursor_changed(self.view)
 
-    def _on_view_event(self, view, event):
-        """Show a popup menu if button3 was pressed on the TreeView."""
-        if event.type == Gdk.EventType.BUTTON_PRESS and event.button.button == 3:
-            menu = Gtk.Menu.new_from_model(self.namespace_popup_model())
-            menu.attach_to_widget(view, None)
-            menu.popup_at_pointer(event)
+    def _on_show_popup(self, ctrl, n_press, x, y):
+        menu = Gtk.Menu.new_from_model(self.namespace_popup_model())
+        menu.attach_to_widget(self.view, None)
+        menu.popup_at_pointer(None)
 
     def _on_edit_pressed(self, ctrl, keyval, keycode, state):
-        print("key press", keyval, keycode)
         if keyval == Gdk.KEY_F2:
             self.tree_view_rename_selected()
             return True
