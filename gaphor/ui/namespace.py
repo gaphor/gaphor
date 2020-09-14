@@ -296,6 +296,33 @@ class NamespaceModel:
         em.unsubscribe(self._on_association_set)
         em.unsubscribe(self._on_attribute_change)
 
+    def sorted(self):
+        """Get a sorted version of this model."""
+        sorted_model = Gtk.TreeModelSort(model=self.model)
+
+        def sort_func(model, iter_a, iter_b, userdata):
+            va = model.get_value(iter_a, 0)
+            vb = model.get_value(iter_b, 0)
+
+            # Put Relationships pseudo-node at top
+            if va is RELATIONSHIPS:
+                return -1
+            if vb is RELATIONSHIPS:
+                return 1
+
+            a = (format(va) or "").lower()
+            b = (format(vb) or "").lower()
+            if a == b:
+                return 0
+            if a > b:
+                return 1
+            return -1
+
+        sorted_model.set_sort_func(0, sort_func, None)
+        sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
+
+        return sorted_model
+
     def iter_children(self, iter):
         return self.model.iter_children(iter)
 
@@ -443,25 +470,7 @@ class Namespace(UIComponent):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
         self.event_manager.subscribe(self._on_model_refreshed)
 
-        sorted_model = Gtk.TreeModelSort(model=self.model.model)
-
-        def sort_func(model, iter_a, iter_b, userdata):
-            va = model.get_value(iter_a, 0)
-            vb = model.get_value(iter_b, 0)
-
-            # Put Relationships pseudo-node at top
-            if va is RELATIONSHIPS:
-                return -1
-            if vb is RELATIONSHIPS:
-                return 1
-
-            a = (format(va) or "").lower()
-            b = (format(vb) or "").lower()
-            if a == b:
-                return 0
-            if a > b:
-                return 1
-            return -1
+        sorted_model = self.model.sorted()
 
         def search_func(model, column, key, rowiter):
             # Note that this function returns `False` for a match!
@@ -484,9 +493,6 @@ class Namespace(UIComponent):
                 view.collapse_row(row.path)
 
             return not matched  # False means match found!
-
-        sorted_model.set_sort_func(0, sort_func, None)
-        sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
 
         view = NamespaceView(sorted_model, self.element_factory)
         view.set_search_equal_func(search_func)
