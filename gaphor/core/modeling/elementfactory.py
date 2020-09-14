@@ -143,8 +143,6 @@ class ElementFactory(Service):
         Diagram elements are flushed first.  This is so that canvas
         updates are blocked.  The remaining elements are then flushed.
         """
-        self.handle(ModelFlushed(self))
-
         with self.block_events():
             for element in self.lselect(Diagram):
                 assert isinstance(element, Diagram)
@@ -153,6 +151,8 @@ class ElementFactory(Service):
 
             for element in self.lselect():
                 element.unlink()
+
+        self.handle(ModelFlushed(self))
 
     def model_ready(self) -> None:
         """Send notification that a new model has been loaded by means of the
