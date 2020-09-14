@@ -8,6 +8,8 @@ TODO: partition can be resized only horizontally or vertically, therefore
 
 from typing import List
 
+from gaphas.item import NE, NW
+
 from gaphor import UML
 from gaphor.core.styling import VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
@@ -18,11 +20,9 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.ActivityPartition)
 class PartitionItem(ElementPresentation, Named):
-
-    DELTA = 30
-
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
+        self.parent = None
         self._toplevel = False
         self._bottom = False
         self._subpart = False
@@ -58,8 +58,6 @@ class PartitionItem(ElementPresentation, Named):
     def pre_update(self, context):
         assert self.canvas
 
-        self._header_size = self.shape.size(context)
-
         # get subpartitions
         children: List[PartitionItem] = [
             k for k in self.canvas.get_children(self) if isinstance(k, PartitionItem)
@@ -69,14 +67,9 @@ class PartitionItem(ElementPresentation, Named):
         self._subpart = len(children) > 0
         self._bottom = not (self._toplevel or self._subpart)
 
-        self._header_size = self._header_size[0], self.DELTA
-
-        handles = self.handles()
-
-        for h in handles:
-            h1, h2 = handles[2:4]
-            h1.visible = h1.movable = True
-            h2.visible = h2.movable = True
+        h1, h2 = self.handles()[2:4]
+        h1.visible = h1.movable = True
+        h2.visible = h2.movable = True
 
     def draw_partition(self, box, context, bounding_box):
         """Draw a vertical partition.
@@ -88,14 +81,30 @@ class PartitionItem(ElementPresentation, Named):
         cr = context.cairo
         cr.set_line_width(context.style["line-width"])
 
+        if self.parent:
+            parent_handles = self.parent.handles()
+            parent_h_ne = parent_handles[NE]
+            x, y = self.canvas.get_matrix_i2c(self.parent).transform_point(
+                *parent_h_ne.pos
+            )
+            x, y = self.canvas.get_matrix_c2i(self).transform_point(x, y)
+
+            handles = self.handles()
+            h_nw = handles[NW]
+            h_ne = handles[NE]
+
+            h_nw.pos.x = x
+            h_ne.pos.y = y
+
+        # Header left, top, and right outline
         cr.move_to(0, bounding_box.height)
         cr.line_to(0, 0)
         cr.line_to(bounding_box.width, 0)
         cr.line_to(bounding_box.width, bounding_box.height)
 
-        h = self.shape.size(context)[1]
-
+        # Header bottom outline
         cr.move_to(0, bounding_box.height)
+        h = self.shape.size(context)[1]
         cr.line_to(0, h)
         cr.line_to(bounding_box.width, h)
         cr.line_to(bounding_box.width, bounding_box.height)

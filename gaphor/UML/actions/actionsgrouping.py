@@ -1,4 +1,3 @@
-from gaphor import UML
 from gaphor.diagram.grouping import AbstractGroup, Group
 from gaphor.UML.actions.action import ActionItem
 from gaphor.UML.actions.activitynodes import ActivityNodeItem, ForkNodeItem
@@ -16,43 +15,23 @@ class ActivityPartitionsGroup(AbstractGroup):
         )
 
     def group(self):
-        print("Grouping")
-        assert self.item.canvas
-
-        model = self.item.model
-        parent = model.create(UML.ActivityPartition)
-        # parent.subpartition = self.item.subject
-        for child in self.item.canvas.get_children(self.item):
-            print(child)
-            parent.subpartition = child.subject
+        # self.item.parent = self.parent
+        pass
 
     def ungroup(self):
-        print("Ungrouping")
-        assert self.item.canvas
-
-        p = self.parent.subject
-        sp = self.item.subject
-        if p:
-            p.subpartition.remove(sp)
-        self.item.subject = None
-        if sp:
-            for s in sp.subpartition:
-                sp.subpartition.remove(s)
-        assert len(sp.node) == 0
-
+        # self.item.parent = None
         # ungroup activity nodes
         canvas = self.item.canvas
-        nodes = [
-            n
-            for n in canvas.get_children(self.item)
-            if isinstance(
-                n, (ActivityNodeItem, ActionItem, ObjectNodeItem, ForkNodeItem)
-            )
-        ]
-        for n in nodes:
-            canvas.reparent(n, None)
-
-        sp.unlink()
+        if canvas:
+            nodes = [
+                n
+                for n in canvas.get_children(self.item)
+                if isinstance(
+                    n, (ActivityNodeItem, ActionItem, ObjectNodeItem, ForkNodeItem)
+                )
+            ]
+            for n in nodes:
+                canvas.reparent(n, None)
 
 
 class ActivityNodePartitionGroup(AbstractGroup):
