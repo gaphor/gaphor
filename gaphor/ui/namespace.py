@@ -437,7 +437,7 @@ class Namespace(UIComponent):
         self.element_factory = element_factory
 
         self.model: Optional[NamespaceModel] = None
-        self._view: Optional[NamespaceView] = None
+        self.view: Optional[NamespaceView] = None
 
     def open(self):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
@@ -504,22 +504,22 @@ class Namespace(UIComponent):
         view.connect("row-activated", self._on_view_row_activated)
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
-        self._view = view
+        self.view = view
         self.model.refresh()
 
         return scrolled_window
 
     def close(self):
-        if self._view:
-            self._view.destroy()
-            self._view = None
+        if self.view:
+            self.view.destroy()
+            self.view = None
         if self.model:
             self.model.shutdown()
             self.model = None
         self.event_manager.unsubscribe(self._on_model_refreshed)
 
     def namespace_popup_model(self):
-        assert self._view
+        assert self.view
         model = Gio.Menu.new()
 
         part = Gio.Menu.new()
@@ -536,7 +536,7 @@ class Namespace(UIComponent):
         part.append(gettext("De_lete"), "tree-view.delete")
         model.append_section(None, part)
 
-        element = self._view.get_selected_element()
+        element = self.view.get_selected_element()
 
         part = Gio.Menu.new()
         for presentation in element.presentation:
@@ -559,9 +559,9 @@ class Namespace(UIComponent):
     @event_handler(NamespaceModelRefreshed)
     def _on_model_refreshed(self, event):
         # Expand all root elements:
-        if self._view:
-            self._view.expand_root_nodes()
-            self._on_view_cursor_changed(self._view)
+        if self.view:
+            self.view.expand_root_nodes()
+            self._on_view_cursor_changed(self.view)
 
     def _on_view_event(self, view, event):
         """Show a popup menu if button3 was pressed on the TreeView."""
@@ -614,9 +614,9 @@ class Namespace(UIComponent):
         it's a Diagram).
         """
         assert self.model
-        assert self._view
+        assert self.view
 
-        model = self._view.get_model()
+        model = self.view.get_model()
         child_iter = self.model.iter_for_element(element)
         ok, tree_iter = model.convert_child_iter_to_iter(child_iter)
         assert ok, "Could not convert model iterator to view"
@@ -626,16 +626,16 @@ class Namespace(UIComponent):
         # Expand the parent row
         if len(path_indices) > 1:
             parent_path = Gtk.TreePath.new_from_indices(path_indices[:-1])
-            self._view.expand_row(path=parent_path, open_all=False)
+            self.view.expand_row(path=parent_path, open_all=False)
 
-        selection = self._view.get_selection()
+        selection = self.view.get_selection()
         selection.select_path(path)
-        self._on_view_cursor_changed(self._view)
+        self._on_view_cursor_changed(self.view)
 
     @action(name="tree-view.open")
     def tree_view_open_selected(self):
-        assert self._view
-        element = self._view.get_selected_element()
+        assert self.view
+        element = self.view.get_selected_element()
         if isinstance(element, Diagram):
             self.event_manager.handle(DiagramOpened(element))
         else:
@@ -648,8 +648,8 @@ class Namespace(UIComponent):
 
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
-        assert self._view
-        view = self._view
+        assert self.view
+        view = self.view
         element = view.get_selected_element()
         if element not in (None, RELATIONSHIPS):
             selection = view.get_selection()
@@ -664,8 +664,8 @@ class Namespace(UIComponent):
     @action(name="tree-view.create-diagram")
     @transactional
     def tree_view_create_diagram(self):
-        assert self._view
-        element = self._view.get_selected_element()
+        assert self.view
+        element = self.view.get_selected_element()
         while not isinstance(element, UML.Package):
             element = element.namespace
         diagram = self.element_factory.create(Diagram)
@@ -679,8 +679,8 @@ class Namespace(UIComponent):
     @action(name="tree-view.create-package")
     @transactional
     def tree_view_create_package(self):
-        assert self._view
-        element = self._view.get_selected_element()
+        assert self.view
+        element = self.view.get_selected_element()
         package = self.element_factory.create(UML.Package)
         package.package = element
 
@@ -691,8 +691,8 @@ class Namespace(UIComponent):
     @action(name="tree-view.delete")
     @transactional
     def tree_view_delete(self):
-        assert self._view
-        element = self._view.get_selected_element()
+        assert self.view
+        element = self.view.get_selected_element()
         if isinstance(element, UML.Package):
             element.unlink()
         elif isinstance(element, Diagram):
