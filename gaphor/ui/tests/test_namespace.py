@@ -3,7 +3,7 @@ import pytest
 import gaphor.core.eventmanager
 from gaphor import UML
 from gaphor.core.modeling import ElementFactory
-from gaphor.ui.namespace import RELATIONSHIPS, Namespace
+from gaphor.ui.namespace import RELATIONSHIPS, NamespaceModel
 
 
 @pytest.fixture
@@ -18,35 +18,32 @@ def element_factory(event_manager):
 
 @pytest.fixture
 def namespace(event_manager, element_factory):
-    namespace = Namespace(event_manager, element_factory)
-    widget = namespace.open()
-    assert widget
+    namespace = NamespaceModel(event_manager, element_factory)
     yield namespace
-    namespace.close()
+    namespace.shutdown()
 
 
 def test_new_model_is_empty(namespace):
-    assert namespace.model
-    assert namespace.model.iter_children(None) is None
+    assert namespace.iter_children(None) is None
 
 
 def test_root_element(namespace, element_factory):
     element_factory.create(UML.Package)
 
-    assert namespace.model.iter_n_children(None) == 1
+    assert namespace.iter_n_children(None) == 1
 
 
 def test_should_add_all_named_elements(namespace, element_factory):
     element_factory.create(UML.Action)
 
-    assert namespace.model.iter_n_children(None) == 1
+    assert namespace.iter_n_children(None) == 1
 
 
 def test_multiple_root_elements(namespace, element_factory):
     element_factory.create(UML.Package)
     element_factory.create(UML.Package)
 
-    assert namespace.model.iter_n_children(None) == 2
+    assert namespace.iter_n_children(None) == 2
 
 
 def dump_model(model):
@@ -65,11 +62,11 @@ def test_nested_elements(namespace, element_factory):
 
     assert p2.namespace == p1
 
-    iter = namespace.model.iter_for_element(p1)
-    child_iter = namespace.model.iter_children(iter)
+    iter = namespace.iter_for_element(p1)
+    child_iter = namespace.iter_children(iter)
 
-    assert p1 is namespace.model.get_element(iter)
-    assert p2 is namespace.model.get_element(child_iter)
+    assert p1 is namespace.get_element(iter)
+    assert p2 is namespace.get_element(child_iter)
 
 
 def test_delete_element(namespace, element_factory):
@@ -77,7 +74,7 @@ def test_delete_element(namespace, element_factory):
 
     p1.unlink()
 
-    assert namespace.model.iter_n_children(None) == 0
+    assert namespace.iter_n_children(None) == 0
 
 
 def test_element_should_not_be_added_if_parent_is_not_valid(namespace, element_factory):
@@ -90,9 +87,9 @@ def test_element_should_not_be_added_if_parent_is_not_valid(namespace, element_f
 
     assert p2.namespace == p1
 
-    iter = namespace.model.iter_for_element(p1)
-    assert namespace.model.iter_n_children(None) == 0
-    assert namespace.model.iter_n_children(iter) == 0
+    iter = namespace.iter_for_element(p1)
+    assert namespace.iter_n_children(None) == 0
+    assert namespace.iter_n_children(iter) == 0
 
 
 def test_change_element_name(namespace, element_factory):
@@ -103,7 +100,7 @@ def test_change_element_name(namespace, element_factory):
     def handle_row_changed(*args):
         events.append(args)
 
-    namespace.model.model.connect("row-changed", handle_row_changed)
+    namespace.model.connect("row-changed", handle_row_changed)
 
     p1.name = "pack"
 
@@ -118,12 +115,12 @@ def test_move_element_with_children(namespace, element_factory):
     cls.ownedAttribute = prp
     cls.package = pkg
 
-    pkg_iter = namespace.model.iter_for_element(pkg)
-    cls_iter = namespace.model.iter_for_element(cls)
+    pkg_iter = namespace.iter_for_element(pkg)
+    cls_iter = namespace.iter_for_element(cls)
 
-    assert namespace.model.iter_n_children(None) == 1
-    assert namespace.model.iter_n_children(pkg_iter) == 1
-    assert namespace.model.iter_n_children(cls_iter) == 1
+    assert namespace.iter_n_children(None) == 1
+    assert namespace.iter_n_children(pkg_iter) == 1
+    assert namespace.iter_n_children(cls_iter) == 1
 
 
 def test_element_model_ready(namespace, element_factory):
@@ -135,37 +132,37 @@ def test_element_model_ready(namespace, element_factory):
         p2.package = p1
     element_factory.model_ready()
 
-    iter = namespace.model.iter_for_element(p1)
-    assert namespace.model.iter_n_children(None) == 1
-    assert namespace.model.iter_n_children(iter) == 1
+    iter = namespace.iter_for_element(p1)
+    assert namespace.iter_n_children(None) == 1
+    assert namespace.iter_n_children(iter) == 1
 
 
 def test_element_factory_flush(namespace, element_factory):
     element_factory.create(UML.Package)
-    assert namespace.model.iter_children(None) is not None
+    assert namespace.iter_children(None) is not None
 
     element_factory.flush()
 
-    assert namespace.model.iter_children(None) is None
+    assert namespace.iter_children(None) is None
 
 
 def test_relationships_in_separate_node(namespace, element_factory):
     a = element_factory.create(UML.Association)
-    iter = namespace.model.iter_children(None)
-    rel_iter = namespace.model.iter_children(iter)
+    iter = namespace.iter_children(None)
+    rel_iter = namespace.iter_children(iter)
 
-    assert namespace.model.get_element(iter) is RELATIONSHIPS
-    assert namespace.model.get_element(rel_iter) is a
+    assert namespace.get_element(iter) is RELATIONSHIPS
+    assert namespace.get_element(rel_iter) is a
 
 
 def test_relationship__ini_non_package_element(namespace, element_factory):
     c = element_factory.create(UML.Class)
     g = element_factory.create(UML.Generalization)
-    iter = namespace.model.iter_for_element(c)
+    iter = namespace.iter_for_element(c)
 
     g.specific = c
 
     assert g.owner is c
-    assert namespace.model.iter_n_children(None) == 1
-    assert namespace.model.iter_n_children(iter) == 1
-    assert namespace.model.iter_for_element(g)
+    assert namespace.iter_n_children(None) == 1
+    assert namespace.iter_n_children(iter) == 1
+    assert namespace.iter_for_element(g)

@@ -101,7 +101,6 @@ class NamespaceView(Gtk.TreeView):
             NamespaceView.DND_TARGETS,
             Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
         )
-        self.connect("drag-begin", NamespaceView.on_drag_begin)
         self.connect("drag-data-get", NamespaceView.on_drag_data_get)
         self.connect("drag-data-delete", NamespaceView.on_drag_data_delete)
 
@@ -176,9 +175,6 @@ class NamespaceView(Gtk.TreeView):
             parse(element, new_text)
         except TypeError:
             log.debug(f"No parser for {element}")
-
-    def on_drag_begin(self, context):
-        return True
 
     def on_drag_data_get(self, context, selection_data, info, time):
         """Get the data to be dropped by on_drag_data_received().
