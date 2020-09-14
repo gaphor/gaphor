@@ -43,24 +43,22 @@ class RELATIONSHIPS:
 
 
 def relationship_iter(model, iter):
-    child_iter = model.iter_children(iter)
-    while child_iter:
-        maybe_relationships = model.get_value(child_iter, 0)
-        if maybe_relationships is RELATIONSHIPS:
-            return child_iter
-        child_iter = model.iter_next(child_iter)
-    return model.append(iter, [RELATIONSHIPS])
+    if iter is None or isinstance(model.get_value(iter, 0), UML.Package):
+        child_iter = model.iter_children(iter)
+        while child_iter:
+            maybe_relationships = model.get_value(child_iter, 0)
+            if maybe_relationships is RELATIONSHIPS:
+                return child_iter
+            child_iter = model.iter_next(child_iter)
+        return model.append(iter, [RELATIONSHIPS])
+    else:
+        return iter
 
 
 def relationship_iter_parent(model, iter):
     while model.get_value(iter, 0) is RELATIONSHIPS:
         iter = model.iter_parent(iter)
     return iter
-
-
-def relationship_parent(model, iter):
-    parent_iter = relationship_iter_parent(model, iter)
-    return model.get_value(parent_iter, 0)
 
 
 class NamespaceView(Gtk.TreeView):
@@ -450,9 +448,7 @@ class Namespace(UIComponent):
 
     def _add(self, element, iter=None):
         if self._visible(element):
-            if isinstance(element, UML.Relationship) and (
-                element.owner is None or isinstance(element.owner, UML.Package)
-            ):
+            if isinstance(element, UML.Relationship):
                 iter = relationship_iter(self.model, iter)
             child_iter = self.model.append(iter, [element])
             for e in element.ownedElement:

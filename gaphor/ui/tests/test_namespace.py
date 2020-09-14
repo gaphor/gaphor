@@ -158,3 +158,16 @@ def test_relationships_in_separate_node(namespace, element_factory):
 
     assert namespace.model.get_value(iter, 0) is RELATIONSHIPS
     assert namespace.model.get_value(rel_iter, 0) is a
+
+
+def test_relationship__ini_non_package_element(namespace, element_factory):
+    c = element_factory.create(UML.Class)
+    g = element_factory.create(UML.Generalization)
+    iter = namespace.iter_for_element(c)
+
+    g.specific = c
+
+    assert g.owner is c
+    assert namespace.model.iter_n_children(None) == 1
+    assert namespace.model.iter_n_children(iter) == 1
+    assert namespace.iter_for_element(g)
