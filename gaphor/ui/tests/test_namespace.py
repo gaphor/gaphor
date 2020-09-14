@@ -27,7 +27,7 @@ def namespace(event_manager, element_factory):
 
 def test_new_model_is_empty(namespace):
     assert namespace.model
-    assert namespace.model.get_iter_first() is None
+    assert namespace.model.iter_children(None) is None
 
 
 def test_root_element(namespace, element_factory):
@@ -55,7 +55,7 @@ def dump_model(model):
             dump(model.iter_children(i))
             i = model.iter_next(i)
 
-    dump(model.get_iter_first())
+    dump(model.iter_children(None))
 
 
 def test_nested_elements(namespace, element_factory):
@@ -66,12 +66,10 @@ def test_nested_elements(namespace, element_factory):
     assert p2.namespace == p1
 
     iter = namespace.model.iter_for_element(p1)
-    assert "0" == str(namespace.model.get_path(iter))
-    assert p1 is namespace.model.get_value(iter, 0)
+    child_iter = namespace.model.iter_children(iter)
 
-    iter = namespace.model.iter_for_element(p2)
-    assert "0:0" == str(namespace.model.get_path(iter))
-    assert p2 is namespace.model.get_value(iter, 0)
+    assert p1 is namespace.model.get_element(iter)
+    assert p2 is namespace.model.get_element(child_iter)
 
 
 def test_delete_element(namespace, element_factory):
@@ -144,11 +142,11 @@ def test_element_model_ready(namespace, element_factory):
 
 def test_element_factory_flush(namespace, element_factory):
     element_factory.create(UML.Package)
-    assert namespace.model.get_iter_first() is not None
+    assert namespace.model.iter_children(None) is not None
 
     element_factory.flush()
 
-    assert namespace.model.get_iter_first() is None
+    assert namespace.model.iter_children(None) is None
 
 
 def test_relationships_in_separate_node(namespace, element_factory):
@@ -156,8 +154,8 @@ def test_relationships_in_separate_node(namespace, element_factory):
     iter = namespace.model.iter_children(None)
     rel_iter = namespace.model.iter_children(iter)
 
-    assert namespace.model.get_value(iter, 0) is RELATIONSHIPS
-    assert namespace.model.get_value(rel_iter, 0) is a
+    assert namespace.model.get_element(iter) is RELATIONSHIPS
+    assert namespace.model.get_element(rel_iter) is a
 
 
 def test_relationship__ini_non_package_element(namespace, element_factory):

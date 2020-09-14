@@ -329,14 +329,8 @@ class NamespaceModel:
     def iter_n_children(self, iter):
         return self.model.iter_n_children(iter)
 
-    def get_iter_first(self):
-        return self.model.get_iter_first()
-
-    def get_path(self, iter):
-        return self.model.get_path(iter)
-
-    def get_value(self, iter, column):
-        return self.model.get_value(iter, column)
+    def get_element(self, iter):
+        return self.model.get_value(iter, 0)
 
     def iter_for_element(self, element, old_owner=0):
         """Get the Gtk.TreeIter for an element in the Namespace.
@@ -367,7 +361,6 @@ class NamespaceModel:
         return None
 
     def _visible(self, element):
-        """Special case: Non-navigable properties."""
         return isinstance(
             element, (UML.Relationship, UML.NamedElement)
         ) and not isinstance(
