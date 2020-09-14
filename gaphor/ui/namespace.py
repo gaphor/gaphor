@@ -499,6 +499,11 @@ class Namespace(UIComponent):
         view.connect("row-activated", self._on_view_row_activated)
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
+
+        ctrl = Gtk.EventControllerKey.new(view)
+        ctrl.connect("key-pressed", self._on_edit_pressed)
+        self.edit_ctrl = ctrl
+
         self.view = view
         self.model.refresh()
 
@@ -564,8 +569,13 @@ class Namespace(UIComponent):
             menu = Gtk.Menu.new_from_model(self.namespace_popup_model())
             menu.attach_to_widget(view, None)
             menu.popup_at_pointer(event)
-        elif event.type == Gdk.EventType.KEY_PRESS and event.key.keyval == Gdk.KEY_F2:
+
+    def _on_edit_pressed(self, ctrl, keyval, keycode, state):
+        print("key press", keyval, keycode)
+        if keyval == Gdk.KEY_F2:
             self.tree_view_rename_selected()
+            return True
+        return False
 
     def _on_view_row_activated(self, view, path, column):
         """Double click on an element in the tree view."""
