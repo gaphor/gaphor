@@ -575,12 +575,6 @@ class Namespace(UIComponent):
         """Another row is selected, toggle action sensitivity."""
         element = view.get_selected_element()
         action_group = view.get_action_group("tree-view")
-        if element is RELATIONSHIPS:
-            action_group.lookup_action("create-diagram").set_enabled(True)
-            action_group.lookup_action("create-package").set_enabled(True)
-            action_group.lookup_action("delete").set_enabled(False)
-            action_group.lookup_action("rename").set_enabled(False)
-            return
 
         action_group.lookup_action("open").set_enabled(isinstance(element, Diagram))
         action_group.lookup_action("create-diagram").set_enabled(
