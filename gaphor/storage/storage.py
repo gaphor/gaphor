@@ -47,7 +47,7 @@ def save_generator(writer, factory):
     )
 
     size = factory.size()
-    for n, e in enumerate(list(factory.values()), start=1):
+    for n, e in enumerate(factory.values(), start=1):
         clazz = e.__class__.__name__
         assert e.id
         writer.startElement(clazz, {"id": str(e.id)})
@@ -210,6 +210,9 @@ def _load_elements_and_canvasitems(
     for id, elem in list(elements.items()):
         yield from update_status_queue()
         if isinstance(elem, parser.element):
+            if version_lower_than(gaphor_version, (2, 1, 0)):
+                elem = upgrade_element_to_2_1_0(elem)
+
             cls = modeling_language.lookup_element(elem.type)
             assert cls, f"Type {elem.type} can not be loaded: no such element"
             elem.element = factory.create_as(cls, id)
@@ -332,12 +335,6 @@ def upgrade_canvas_item_to_1_0_2(item):
     return item
 
 
-def upgrade_canvas_item_to_1_3_0(item):
-    if item.type in ("InitialPseudostateItem", "HistoryPseudostateItem"):
-        item.type = "PseudostateItem"
-    return item
-
-
 def upgrade_presentation_item_to_1_1_0(item):
     if "show_stereotypes_attrs" in item.values:
         if item.type in (
@@ -403,3 +400,17 @@ def upgrade_message_item_to_1_1_0(canvasitems):
                     new_item.references["head-connection"],
                 )
     return new_canvasitems
+
+
+def upgrade_canvas_item_to_1_3_0(item):
+    if item.type in ("InitialPseudostateItem", "HistoryPseudostateItem"):
+        item.type = "PseudostateItem"
+    return item
+
+
+def upgrade_element_to_2_1_0(elem):
+    for name, refids in dict(elem.references).items():
+        if name == "ownedComment":
+            elem.references["comment"] = refids
+            del elem.references["ownedComment"]
+    return elem

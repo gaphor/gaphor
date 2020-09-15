@@ -23,7 +23,7 @@ from gaphor.UML.classes.klass import (
     stereotype_watches,
 )
 from gaphor.UML.modelfactory import stereotypes_str
-from gaphor.UML.umlfmt import format_attribute
+from gaphor.UML.umlfmt import format_property
 
 
 @represents(Block)
@@ -106,7 +106,7 @@ class BlockItem(ElementPresentation[Block], Classified):
     def block_compartment(self, name, predicate):
         # We need to fix the attribute value, since the for loop changes it.
         def lazy_format(attribute):
-            return lambda: format_attribute(attribute) or gettext("unnamed")
+            return lambda: format_property(attribute) or gettext("unnamed")
 
         return Box(
             Text(

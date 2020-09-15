@@ -16,6 +16,6 @@ def test_verifier():
 
     m = UML.Comment(id="acd123")
     m.annotatedElement = c
-    assert m in c.ownedComment
+    assert m in c.comment
 
     assert orphan_references(factory)

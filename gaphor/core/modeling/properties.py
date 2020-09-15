@@ -5,10 +5,10 @@ implemented in Python property classes. These classes are simply instantiated
 like this:
     class Class(Element): pass
     class Comment(Element): pass
-    Class.ownedComment = association('ownedComment', Comment,
+    Class.comment = association('comment', Comment,
                                      0, '*', 'annotatedElement')
     Comment.annotatedElement = association('annotatedElement', Element,
-                                           0, '*', 'ownedComment')
+                                           0, '*', 'comment')
 
 Same for attributes and enumerations.
 
@@ -143,6 +143,9 @@ class umlproperty:
 
     def __delete__(self, obj, value=None) -> None:
         self._del(obj, value)
+
+    def __repr__(self):
+        return str(self)
 
     def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
@@ -551,7 +554,8 @@ class associationstub(umlproperty):
 class unioncache:
     """Small cache helper object for derivedunions."""
 
-    def __init__(self, data: object, version: int) -> None:
+    def __init__(self, owner: object, data: object, version: int) -> None:
+        self.owner = owner
         self.data = data
         self.version = version
 
@@ -602,6 +606,11 @@ class derived(umlproperty, Generic[T]):
 
     def postload(self, obj):
         self.version += 1
+        if self.upper == 1:
+            u = self.filter(obj)
+            assert (
+                len(u) <= 1
+            ), f"Derived union {self.name} of item {obj.id} should have length 1 {tuple(u)}"
 
     def save(self, obj, save_func):
         pass
@@ -616,13 +625,12 @@ class derived(umlproperty, Generic[T]):
         """
         u = self.filter(obj)
         if self.upper == 1:
-            assert len(u) <= 1, (
-                "Derived union %s of item %s should have length 1 %s"
-                % (self.name, obj.id, tuple(u))
-            )
-            uc = unioncache(u[0] if u else None, self.version)
+            assert (
+                len(u) <= 1
+            ), f"Derived union {self.name} of item {obj.id} should have length 1 {tuple(u)}"
+            uc = unioncache(self, u[0] if u else None, self.version)
         else:
-            uc = unioncache(collectionlist(u), self.version)
+            uc = unioncache(self, collectionlist(u), self.version)
         setattr(obj, self._name, uc)
         return uc
 
@@ -632,11 +640,11 @@ class derived(umlproperty, Generic[T]):
                 uc = getattr(obj, self._name)
                 if uc.version != self.version:
                     uc = self._update(obj)
+                assert self is uc.owner
             except AttributeError:
                 uc = self._update(obj)
         else:
             uc = self._update(obj)
-
         return uc.data
 
     def _set(self, obj, value):
@@ -700,6 +708,13 @@ class derived(umlproperty, Generic[T]):
                 )
 
 
+def object_has_property(obj, prop):
+    found = getattr(type(obj), prop.name, None)
+    while isinstance(found, redefine):
+        found = found.original
+    return prop is found
+
+
 class derivedunion(derived[T]):
     """Derived union.
 
@@ -717,8 +732,9 @@ class derivedunion(derived[T]):
         """Returns a union of all values as a set."""
         u: Set[T] = set()
         for s in self.subsets:
-            if s is exclude:
+            if s is exclude or not object_has_property(obj, s):
                 continue
+
             tmp = s.__get__(obj)
             if tmp:
                 try:

@@ -14,6 +14,7 @@ from gaphas.painter import (
 from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
+from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.core.modeling import Presentation, StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
@@ -355,6 +356,15 @@ class DiagramPage:
             element_id = data.get_data().decode()
             element = self.element_factory.lookup(element_id)
             assert element
+
+            if not isinstance(
+                element, (UML.Classifier, UML.Package, UML.Property)
+            ) or isinstance(element, UML.Association):
+                log.warning(
+                    f"DnD is (temporarily) limited to Classifiers, Packages and Properties, not {type(element).__name__}"
+                )
+                context.finish(True, False, time)
+                return
 
             item_class = get_diagram_item(type(element))
             if item_class:

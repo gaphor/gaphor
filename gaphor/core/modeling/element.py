@@ -44,10 +44,12 @@ class Element:
     """Base class for all model data classes."""
 
     appliedStereotype: relation_many[Element]
-    owner: relation_one[Element]
-    ownedComment: relation_many[Comment]
+    comment: relation_many[Comment]
+    directedRelationship: relation_many[Presentation]
     ownedElement: relation_many[Element]
+    owner: relation_one[Element]
     presentation: relation_many[Presentation]
+    relationship: relation_many[Presentation]
 
     def __init__(
         self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
@@ -81,10 +83,10 @@ class Element:
         ), "You can not retrieve the model since it's not set on construction"
         return self._model
 
-    def umlproperties(self):
+    @classmethod
+    def umlproperties(class_):
         """Iterate over all properties."""
         umlprop = umlproperty
-        class_ = type(self)
         for propname in dir(class_):
             if not propname.startswith("_"):
                 prop = getattr(class_, propname)

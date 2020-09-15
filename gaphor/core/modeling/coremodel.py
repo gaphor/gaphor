@@ -18,7 +18,7 @@ from gaphor.core.modeling.properties import (
 )
 
 if TYPE_CHECKING:
-    from gaphor.UML import Dependency, Namespace
+    from gaphor.UML import Dependency, Namespace, Package
 # 8: override Element
 # defined above
 
@@ -28,20 +28,23 @@ if TYPE_CHECKING:
 class NamedElement(Element):
     name: attribute[str]
     qualifiedName: derived[List[str]]
+    visibility: enumeration
     namespace: relation_one[Namespace]
     clientDependency: relation_many[Dependency]
     supplierDependency: relation_many[Dependency]
+    memberNamespace: relation_many[Namespace]
 
 
+# 41: override PackageableElement
 class PackageableElement(NamedElement):
-    pass
+    owningPackage: relation_one[Package]
 
 
-# 54: override Diagram
+# 60: override Diagram
 # defined in gaphor.core.modeling.diagram
 
 
-# 45: override Presentation
+# 51: override Presentation
 # defined in gaphor.core.modeling.presentation
 
 
@@ -50,26 +53,24 @@ class Comment(Element):
     annotatedElement: relation_many[Element]
 
 
-# 39: override StyleSheet
+# 45: override StyleSheet
 # defined in gaphor.core.modeling.presentation
 
 
 NamedElement.name = attribute("name", str)
 Comment.body = attribute("body", str)
-# 42: override StyleSheet.styleSheet
+# 48: override StyleSheet.styleSheet
 # defined in gaphor.core.modeling.presentation
 
-# 51: override Presentation.subject
+# 57: override Presentation.subject
 # defined in gaphor.core.modeling.presentation
 
-# 48: override Element.presentation
+# 54: override Element.presentation
 # defined in gaphor.core.modeling.presentation
 
-Comment.annotatedElement = association(
-    "annotatedElement", Element, opposite="ownedComment"
-)
-Element.ownedComment = association("ownedComment", Comment, opposite="annotatedElement")
-# 20: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+Comment.annotatedElement = association("annotatedElement", Element, opposite="comment")
+Element.comment = association("comment", Comment, opposite="annotatedElement")
+# 22: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 
 def _namedelement_qualifiedname(self) -> List[str]:

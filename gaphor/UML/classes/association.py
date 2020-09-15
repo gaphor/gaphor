@@ -35,6 +35,7 @@ from gaphor.diagram.shapes import (
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout, middle_segment
 from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.umlfmt import format_association_end
 
 
 @represents(UML.Association)
@@ -380,7 +381,7 @@ class AssociationEnd(Presentation):
         """Set the text on the association end."""
         if self.subject:
             try:
-                n, m = UML.format(self.subject)
+                n, m = format_association_end(self.subject)
             except ValueError:
                 # need more than 0 values to unpack: property was rendered as
                 # attribute while in a UNDO action for example.

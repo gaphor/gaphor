@@ -9,7 +9,7 @@ from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
-from gaphor.UML.umlfmt import format_attribute
+from gaphor.UML.umlfmt import format_property
 
 
 @represents(UML.Property)
@@ -48,7 +48,7 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
             Box(
                 Text(text=lambda: UML.model.stereotypes_str(self.subject),),
                 EditableText(
-                    text=lambda: format_attribute(
+                    text=lambda: format_property(
                         self.subject, type=True, multiplicity=True
                     )
                     or "",

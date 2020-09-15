@@ -1,38 +1,18 @@
 """Formatting of UML elements like attributes, operations, stereotypes, etc."""
 
 import re
-from functools import singledispatch
+from typing import Tuple
 
+from gaphor.core.format import format
 from gaphor.UML import uml as UML
 
-
-@singledispatch
-def format(el):
-    """Format an UML element."""
-    raise NotImplementedError(
-        "Format routine for type %s not implemented yet" % type(el)
-    )
-
-
-@format.register(UML.Property)
-def format_property(el, *args, **kwargs):
-    """Format property or an association end."""
-    if el.association and not args and not kwargs:
-        return format_association_end(el)
-    else:
-        return format_attribute(el, *args, **kwargs)
-
-
-def compile(regex):
-    return re.compile(regex, re.MULTILINE | re.S)
-
-
 # Do not render if the name still contains a visibility element
-no_render_pat = compile(r"^\s*[+#-]")
+no_render_pat = re.compile(r"^\s*[+#-]", re.MULTILINE | re.S)
 vis_map = {"public": "+", "protected": "#", "package": "~", "private": "-"}
 
 
-def format_attribute(
+@format.register(UML.Property)
+def format_property(
     el,
     visibility=False,
     is_derived=False,
@@ -89,7 +69,7 @@ def format_attribute(
     return "".join(s)
 
 
-def format_association_end(el):
+def format_association_end(el) -> Tuple[str, str]:
     """Format association end."""
     name = ""
     n = []
@@ -198,8 +178,19 @@ def format_namedelement(el, **kwargs):
     return el.name or ""
 
 
+@format.register(UML.MultiplicityElement)
 def format_multiplicity(el, bare=False):
     m = ""
     if el.upperValue:
         m = f"{el.lowerValue}..{el.upperValue}" if el.lowerValue else f"{el.upperValue}"
     return f"[{m}]" if m and not bare else m
+
+
+@format.register(UML.Relationship)
+def format_relationship(el):
+    return el.__class__.__name__
+
+
+@format.register(UML.Generalization)
+def format_generalization(el):
+    return f"general: {el.general and el.general.name or ''}"
