@@ -361,7 +361,7 @@ class DiagramPage:
                 element, (UML.Classifier, UML.Package, UML.Property)
             ) or isinstance(element, UML.Association):
                 log.warning(
-                    f"DnD is (temprary) limited to Classifiers, Packages and Properties, not {type(element).__name__}"
+                    f"DnD is (temporarily) limited to Classifiers, Packages and Properties, not {type(element).__name__}"
                 )
                 context.finish(True, False, time)
                 return

@@ -177,8 +177,7 @@ def stereotype_watches(presentation):
 def attributes_compartment(subject):
     # We need to fix the attribute value, since the for loop changes it.
     def lazy_format(attribute):
-        # str(), so we never ever get an error on a property part of an association
-        return lambda: (format(attribute))
+        return lambda: format(attribute)
 
     return Box(
         *(

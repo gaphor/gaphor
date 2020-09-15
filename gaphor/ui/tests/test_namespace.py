@@ -155,7 +155,7 @@ def test_relationships_in_separate_node(namespace, element_factory):
     assert namespace.get_element(rel_iter) is a
 
 
-def test_relationship__ini_non_package_element(namespace, element_factory):
+def test_relationship__in_non_package_element(namespace, element_factory):
     c = element_factory.create(UML.Class)
     g = element_factory.create(UML.Generalization)
     iter = namespace.iter_for_element(c)

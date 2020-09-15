@@ -332,7 +332,7 @@ class NamespaceModel:
         """Get the Gtk.TreeIter for an element in the Namespace.
 
         Args:
-            element: The element contained in the in the Namespace.
+            element: The element contained in the Namespace.
             old_owner: The old owner containing the element, optional.
 
         Returns: Gtk.TreeIter object of the model (not the sorted one!)
