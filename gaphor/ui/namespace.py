@@ -8,7 +8,7 @@ classifiers are shown here.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Set
 
 from gi.repository import Gdk, Gio, GLib, Gtk, Pango
 
@@ -454,6 +454,7 @@ class Namespace(UIComponent):
 
         self.model: Optional[NamespaceModel] = None
         self.view: Optional[NamespaceView] = None
+        self.ctrl: Set[Gtk.EventController] = set()
 
     def open(self):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
@@ -502,11 +503,11 @@ class Namespace(UIComponent):
         ctrl = Gtk.GestureMultiPress.new(view)
         ctrl.set_button(Gdk.BUTTON_SECONDARY)
         ctrl.connect("pressed", self._on_show_popup)
-        self.popup_ctrl = ctrl
+        self.ctrl.add(ctrl)
 
         ctrl = Gtk.EventControllerKey.new(view)
         ctrl.connect("key-pressed", self._on_edit_pressed)
-        self.edit_ctrl = ctrl
+        self.ctrl.add(ctrl)
 
         self.view = view
         self.model.refresh()
@@ -514,6 +515,7 @@ class Namespace(UIComponent):
         return scrolled_window
 
     def close(self):
+        self.ctrl.clear()
         if self.view:
             self.view.destroy()
             self.view = None
@@ -642,8 +644,8 @@ class Namespace(UIComponent):
             log.debug(f"No action defined for element {type(element).__name__}")
 
     @action(name="tree-view.show-in-diagram")
-    def tree_view_show_in_diagram(self, diagam_id: str):
-        element = self.element_factory.lookup(diagam_id)
+    def tree_view_show_in_diagram(self, diagram_id: str):
+        element = self.element_factory.lookup(diagram_id)
         self.event_manager.handle(DiagramOpened(element))
 
     @action(name="tree-view.rename", shortcut="F2")
