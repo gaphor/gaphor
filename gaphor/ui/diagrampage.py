@@ -1,7 +1,7 @@
 import functools
 import importlib
 import logging
-from typing import Dict, Optional, Sequence, Tuple
+from typing import Dict, Optional, Sequence, Set, Tuple
 
 from gaphas.guide import GuidePainter
 from gaphas.painter import (
@@ -101,6 +101,7 @@ class DiagramPage:
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
         self.diagram_css: Optional[Gtk.CssProvider] = None
+        self.ctrl: Set[Gtk.EventController] = set()
 
         self.rubberband_state = RubberbandState()
 
@@ -142,14 +143,20 @@ class DiagramPage:
         self.widget = scrolled_window
 
         view.selection.add_handler(self._on_view_selection_changed)
-        view.connect_after("key-press-event", self._on_key_press_event)
         view.connect("drag-data-received", self._on_drag_data_received)
+
+        ctrl = Gtk.EventControllerKey.new(view)
+        ctrl.connect("key-pressed", self._on_delete_action)
+        self.ctrl.add(ctrl)
+
+        ctrl = Gtk.EventControllerKey.new(view)
+        ctrl.connect("key-pressed", self._on_shortcut_action)
+        self.ctrl.add(ctrl)
 
         self.view = view
 
         self.widget.action_group = create_action_group(self, "diagram")
 
-        self.widget.connect_after("key-press-event", self._on_shortcut_action)
         self.select_tool("toolbox-pointer")
 
         self.set_drawing_style()
@@ -209,6 +216,7 @@ class DiagramPage:
         Do the same thing that would be done if Close was pressed.
         """
         assert self.widget
+        self.ctrl.clear()
         self.widget.destroy()
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_style_sheet_updated)
@@ -321,22 +329,23 @@ class DiagramPage:
 
         view.queue_redraw()
 
-    def _on_key_press_event(self, view, event):
+    def _on_delete_action(self, ctrl, keyval, keycode, state):
         """Handle the 'Delete' key.
 
         This can not be handled directly (through GTK's accelerators),
         otherwise this key will confuse the text edit stuff.
         """
+        assert self.view
         if (
-            view.is_focus()
-            and event.keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace)
-            and (
-                event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
-            )
+            self.view.is_focus()
+            and keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace)
+            and (state == 0 or state & Gdk.ModifierType.MOD2_MASK)
         ):
             self.delete_selected_items()
+            return True
+        return False
 
-    def _on_shortcut_action(self, widget, event):
+    def _on_shortcut_action(self, ctrl, keyval, keycode, state):
         # accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         for _title, items in self.modeling_language.toolbox_definition:
@@ -344,10 +353,14 @@ class DiagramPage:
                 if not shortcut:
                     continue
                 keys, mod = parse_shortcut(shortcut)
-                if event.state == mod and event.keyval in keys:
-                    widget.get_toplevel().get_action_group("diagram").lookup_action(
-                        "select-tool"
-                    ).change_state(GLib.Variant.new_string(action_name))
+                if state == mod and keyval in keys:
+                    ctrl.get_widget().get_toplevel().get_action_group(
+                        "diagram"
+                    ).lookup_action("select-tool").change_state(
+                        GLib.Variant.new_string(action_name)
+                    )
+                    return True
+        return False
 
     def _on_view_selection_changed(self):
         view = self.view
