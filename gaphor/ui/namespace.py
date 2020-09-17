@@ -224,9 +224,9 @@ class NamespaceView(Gtk.TreeView):
         if drop_info:
             model = self.get_model()
             element = self.element_factory.lookup(element_id)
-            assert isinstance(
-                element, (Diagram, UML.Package, UML.Type)
-            ), f"Element {element} can not be moved"
+            if not isinstance(element, (Diagram, UML.Package, UML.Type)):
+                log.debug("Element {element} can not be dropped")
+                return context.finish(False, False, time)
             path, position = drop_info
             iter = model.get_iter(path)
             dest_element = model.get_value(iter, 0)
