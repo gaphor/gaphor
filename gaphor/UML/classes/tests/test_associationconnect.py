@@ -1,20 +1,9 @@
 import pytest
 
 from gaphor import UML
-from gaphor.diagram.tests.fixtures import allow, connect, disconnect
+from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.klass import ClassItem
-
-
-@pytest.fixture
-def create(diagram, element_factory):
-    def _create(item_class, element_class=None):
-        return diagram.create(
-            item_class,
-            subject=(element_factory.create(element_class) if element_class else None),
-        )
-
-    return _create
 
 
 @pytest.fixture
@@ -42,13 +31,6 @@ def clone(create):
         return new
 
     return _clone
-
-
-def get_connected(item, handle):
-    cinfo = item.canvas.get_connection(handle)
-    if cinfo:
-        return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
-    return None
 
 
 def test_glue_to_class(connected_association):

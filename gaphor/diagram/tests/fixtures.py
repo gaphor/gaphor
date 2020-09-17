@@ -103,6 +103,13 @@ def disconnect(line, handle):
     assert not canvas.get_connection(handle)
 
 
+def get_connected(item, handle):
+    cinfo = item.canvas.get_connection(handle)
+    if cinfo:
+        return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
+    return None
+
+
 def clear_model(diagram, element_factory, retain=[]):
     """Clear the model and diagram, leaving only an empty diagram."""
     for element in list(element_factory.values()):
