@@ -194,3 +194,8 @@ def format_relationship(el):
 @format.register(UML.Generalization)
 def format_generalization(el):
     return f"general: {el.general and el.general.name or ''}"
+
+
+@format.register(UML.Dependency)
+def format_dependency(el):
+    return f"supplier: {el.supplier and el.supplier.name or ''}"
