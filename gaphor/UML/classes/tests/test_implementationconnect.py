@@ -48,8 +48,8 @@ class ImplementationTestCase(TestCase):
         ct = self.get_connected(impl.head)
         assert ct is iface
         assert impl.subject is not None
-        assert impl.subject.contract[0] is iface.subject
-        assert impl.subject.implementatingClassifier[0] is clazz.subject
+        assert impl.subject.contract is iface.subject
+        assert impl.subject.implementatingClassifier is clazz.subject
 
     def test_reconnection(self):
         """Test reconnection of class and interface with implementation."""
@@ -68,10 +68,6 @@ class ImplementationTestCase(TestCase):
         self.connect(impl, impl.tail, c2)
 
         assert s is impl.subject
-        assert len(impl.subject.contract) == 1
-        assert len(impl.subject.implementatingClassifier) == 1
-        assert iface.subject in impl.subject.contract
-        assert c2.subject in impl.subject.implementatingClassifier
-        assert (
-            c1.subject not in impl.subject.implementatingClassifier
-        ), impl.subject.implementatingClassifier
+        assert iface.subject is impl.subject.contract
+        assert c2.subject is impl.subject.implementatingClassifier
+        assert c1.subject is not impl.subject.implementatingClassifier

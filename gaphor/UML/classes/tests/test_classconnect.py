@@ -42,8 +42,8 @@ def test_dependency_connect(create, element_factory):
     assert hct is actor1
     assert tct is actor2
 
-    assert actor1.subject in dep.subject.supplier
-    assert actor2.subject in dep.subject.client
+    assert actor1.subject is dep.subject.supplier
+    assert actor2.subject is dep.subject.client
 
 
 def test_dependency_reconnection(create):
@@ -63,11 +63,9 @@ def test_dependency_reconnection(create):
     connect(dep, dep.tail, a3)
 
     assert d is dep.subject
-    assert len(dep.subject.supplier) == 1
-    assert len(dep.subject.client) == 1
-    assert a1.subject in dep.subject.supplier
-    assert a3.subject in dep.subject.client
-    assert a2.subject not in dep.subject.client, dep.subject.client
+    assert a1.subject is dep.subject.supplier
+    assert a3.subject is dep.subject.client
+    assert a2.subject is not dep.subject.client, dep.subject.client
 
 
 def test_dependency_disconnect(create, element_factory):
