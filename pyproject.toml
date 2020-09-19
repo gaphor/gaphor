@@ -40,6 +40,7 @@ importlib_metadata = "^1.4"
 typing_extensions = "^3.7.4"
 generic = "^1.0.0"
 tinycss2 = "^1.0.2"
+distlib = "0.3.0" # Workaround for MSYS2 distlib error
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.7"
