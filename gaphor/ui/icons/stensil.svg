@@ -32,10 +32,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.9483843"
-     inkscape:cx="76.118862"
-     inkscape:cy="40.050614"
+     inkscape:cx="151.10697"
+     inkscape:cy="59.287845"
      inkscape:document-units="px"
-     inkscape:current-layer="realization"
+     inkscape:current-layer="new-diagram"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -1194,7 +1194,8 @@
      inkscape:groupmode="layer"
      id="state"
      inkscape:label="state"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <path
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="m 139,18.519531 c -2.216,0 -4,1.784 -4,4 v 6 c 0,2.216 1.784,4 4,4 h 8 c 2.216,0 4,-1.784 4,-4 v -6 c 0,-2.216 -1.784,-4 -4,-4 z m 0,2 h 8 c 1.108,0 2,0.892 2,2 v 6 c 0,1.108 -0.892,2 -2,2 h -8 c -1.108,0 -2,-0.892 -2,-2 v -6 c 0,-1.108 0.892,-2 2,-2 z"
@@ -1682,7 +1683,8 @@
   <g
      inkscape:groupmode="layer"
      id="usage"
-     inkscape:label="usage">
+     inkscape:label="usage"
+     sodipodi:insensitive="true">
     <path
        style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 27.244363,10.719485 1.852083,-0.529167 -0.529167,1.852084"
