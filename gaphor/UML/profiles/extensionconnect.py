@@ -69,6 +69,7 @@ class ExtensionConnect(RelationshipConnect):
             else:
                 # Create a new Extension relationship
                 relation = UML.model.create_extension(head_type, tail_type)
+                relation.package = element.diagram.namespace
                 line.subject = relation
 
     def disconnect_subject(self, handle):

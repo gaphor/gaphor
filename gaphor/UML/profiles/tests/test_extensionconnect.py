@@ -60,3 +60,17 @@ def test_connection(element_factory, diagram):
     connect(ext, ext.tail, st)
 
     connect(ext, ext.head, cls)
+
+
+def test_connection_namespace(element_factory, diagram):
+    """Test extension item connection."""
+    pkg = element_factory.create(UML.Package)
+    diagram.package = pkg
+    ext = diagram.create(ExtensionItem)
+    st = diagram.create(ClassItem, subject=element_factory.create(UML.Stereotype))
+    cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    connect(ext, ext.tail, st)
+    connect(ext, ext.head, cls)
+
+    assert ext.subject.package is pkg
