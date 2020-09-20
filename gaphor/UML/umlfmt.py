@@ -199,3 +199,13 @@ def format_generalization(el):
 @format.register(UML.Dependency)
 def format_dependency(el):
     return f"supplier: {el.supplier and el.supplier.name or ''}"
+
+
+@format.register(UML.Extend)
+def format_extend(el):
+    return f"extend: {el.extendedCase and el.extendedCase.name or ''}"
+
+
+@format.register(UML.Include)
+def format_include(el):
+    return f"include: {el.addition and el.addition.name or ''}"
