@@ -19,6 +19,8 @@ ICONS=diagram \
 	shared-association \
 	generalization \
 	dependency \
+	usage \
+	realization \
 	implementation \
 	component \
 	artifact \

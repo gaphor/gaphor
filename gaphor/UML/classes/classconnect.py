@@ -34,11 +34,9 @@ class DependencyConnect(RelationshipConnect):
         assert isinstance(dep, UML.Dependency)
         if dep:
             if handle is line.head:
-                for s in dep.supplier:
-                    del dep.supplier[s]
+                del dep.supplier
             elif handle is line.tail:
-                for c in dep.client:
-                    del dep.client[c]
+                del dep.client
         self.reconnect_relationship(
             handle, line.dependency_type.supplier, line.dependency_type.client
         )
@@ -202,8 +200,7 @@ class ImplementationConnect(RelationshipConnect):
             for s in impl.contract:
                 del impl.contract[s]
         elif handle is line.tail:
-            for c in impl.implementatingClassifier:
-                del impl.implementatingClassifier[c]
+            del impl.implementatingClassifier
         self.reconnect_relationship(
             handle,
             UML.Implementation.contract,

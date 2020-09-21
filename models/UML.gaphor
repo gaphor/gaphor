@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.0.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.0.1">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -1528,7 +1528,6 @@
 <ref refid="DCE:A3E40740-65CE-11D7-89A9-9C62884CFFDE"/>
 <ref refid="DCE:84BB9628-65CE-11D7-89A9-9C62884CFFDE"/>
 <ref refid="5d8d968c-e96c-11ea-96dc-bf74f1f80424"/>
-<ref refid="3002a1d6-ecfe-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </ownedClassifier>
 <ownedDiagram>
@@ -7523,7 +7522,6 @@
 <reflist>
 <ref refid="DCE:B71C181E-65C6-11D7-89A9-9C62884CFFDE"/>
 <ref refid="DCE:BAEAACB2-65C6-11D7-89A9-9C62884CFFDE"/>
-<ref refid="3002a1d8-ecfe-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -18552,10 +18550,10 @@
 <ref refid="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4"/>
 </type>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 </Property>
 <Class id="DCE:5BACF5C0-4A87-11D7-B089-133D836EF880">
@@ -18755,10 +18753,10 @@
 <ref refid="DCE:D733DED0-65C5-11D7-89A9-9C62884CFFDE"/>
 </class_>
 <lowerValue>
-<val>1</val>
+<val>0</val>
 </lowerValue>
 <lowerValue>
-<val>1</val>
+<val>0</val>
 </lowerValue>
 <name>
 <val>supplier</val>
@@ -18770,14 +18768,11 @@
 <ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
 </type>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
-<visibility>
-<val>public</val>
-</visibility>
 </Property>
 <Property id="DCE:4AAFA7DA-8402-11D8-82A2-7B88E55A3BEC">
 <association>
@@ -21706,58 +21701,6 @@ specially for Gaphor</val>
 <ref refid="DCE:9F22364E-83DA-11D7-ADE2-4B1972AF3391"/>
 </subject>
 </item>
-<item id="25bc10f4-ecfe-11ea-96dc-bf74f1f80424" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1202.5, 213.5)</val>
-</matrix>
-<width>
-<val>111.0</val>
-</width>
-<height>
-<val>54.0</val>
-</height>
-<show_attributes>
-<val>0</val>
-</show_attributes>
-<show_operations>
-<val>0</val>
-</show_operations>
-<subject>
-<ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
-</subject>
-</item>
-<item id="2de10a6e-ecfe-11ea-96dc-bf74f1f80424" type="AssociationItem">
-<subject>
-<ref refid="3002a1d6-ecfe-11ea-96dc-bf74f1f80424"/>
-</subject>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 844.0, 237.5)</val>
-</matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
-<points>
-<val>[(0.0, 0.0), (358.5, -0.5)]</val>
-</points>
-<head-connection>
-<ref refid="DCE:D7075AD6-65C5-11D7-89A9-9C62884CFFDE"/>
-</head-connection>
-<tail-connection>
-<ref refid="25bc10f4-ecfe-11ea-96dc-bf74f1f80424"/>
-</tail-connection>
-<show-direction>
-<val>0</val>
-</show-direction>
-<head-subject>
-<ref refid="3002a1d7-ecfe-11ea-96dc-bf74f1f80424"/>
-</head-subject>
-<tail-subject>
-<ref refid="3002a1d8-ecfe-11ea-96dc-bf74f1f80424"/>
-</tail-subject>
-</item>
 </canvas>
 </Diagram>
 <Generalization id="DCE:D554F76E-A41C-11D8-B0B1-00061BC22919">
@@ -22041,7 +21984,6 @@ specially for Gaphor</val>
 <ref refid="DCE:674AFBEE-97BA-11D8-9E37-00C00C03A405"/>
 <ref refid="DCE:7E6DB398-50A3-11D7-807A-302CB4EF44FD"/>
 <ref refid="DCE:7E6DE6B2-50A3-11D7-807A-302CB4EF44FD"/>
-<ref refid="3002a1d7-ecfe-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -22051,7 +21993,6 @@ specially for Gaphor</val>
 <reflist>
 <ref refid="DCE:0D9DCE64-97BA-11D8-9E36-00C00C03A405"/>
 <ref refid="DCE:C4730890-50A1-11D7-807A-302CB4EF44FD"/>
-<ref refid="25bc10f4-ecfe-11ea-96dc-bf74f1f80424"/>
 <ref refid="DCE:B4456442-4695-11D7-B567-379CA7034986"/>
 <ref refid="DCE:4FC7F7C4-7653-11D7-8271-9A319BBF187B"/>
 </reflist>
@@ -26194,10 +26135,10 @@ specially for Gaphor</val>
 <ref refid="DCE:D733DED0-65C5-11D7-89A9-9C62884CFFDE"/>
 </class_>
 <lowerValue>
-<val>1</val>
+<val>0</val>
 </lowerValue>
 <lowerValue>
-<val>1</val>
+<val>0</val>
 </lowerValue>
 <name>
 <val>client</val>
@@ -26209,14 +26150,11 @@ specially for Gaphor</val>
 <ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
 </type>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
-<visibility>
-<val>public</val>
-</visibility>
 </Property>
 <Generalization id="DCE:4E6DB742-45D1-11D7-B5CA-613352B2821F">
 <general>
@@ -37183,8 +37121,8 @@ directly in a model.</val>
 <reflist>
 <ref refid="9fb5736c-ec83-11ea-96dc-bf74f1f80424"/>
 <ref refid="19398ff2-ec84-11ea-96dc-bf74f1f80424"/>
-<ref refid="0c0d9a18-b13e-11de-9fae-000d93868322"/>
 <ref refid="62c1394e-ed57-11ea-96dc-bf74f1f80424"/>
+<ref refid="0c0d9a18-b13e-11de-9fae-000d93868322"/>
 </reflist>
 </presentation>
 </Class>
@@ -37246,8 +37184,8 @@ directly in a model.</val>
 </package>
 <presentation>
 <reflist>
-<ref refid="7c58e976-b13e-11de-9fae-000d93868322"/>
 <ref refid="73b53dea-ed57-11ea-96dc-bf74f1f80424"/>
+<ref refid="7c58e976-b13e-11de-9fae-000d93868322"/>
 </reflist>
 </presentation>
 </Class>
@@ -38137,6 +38075,8 @@ swimlanes</val>
 <ref refid="481541c0-ecfe-11ea-96dc-bf74f1f80424"/>
 <ref refid="4c984e0e-ecfe-11ea-96dc-bf74f1f80424"/>
 <ref refid="691fc6bc-ed56-11ea-96dc-bf74f1f80424"/>
+<ref refid="c84b3eee-f9d8-11ea-b854-fb98adcb9438"/>
+<ref refid="cb489f42-f9d8-11ea-b854-fb98adcb9438"/>
 </reflist>
 </slot>
 <typeValue>
@@ -40749,6 +40689,11 @@ swimlanes</val>
 <ref refid="DCE:BAEADF3E-65C6-11D7-89A9-9C62884CFFDE"/>
 </reflist>
 </extended>
+<slot>
+<reflist>
+<ref refid="c84b3eee-f9d8-11ea-b854-fb98adcb9438"/>
+</reflist>
+</slot>
 </InstanceSpecification>
 <InstanceSpecification id="17398e56-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -42497,6 +42442,11 @@ swimlanes</val>
 <ref refid="DCE:BAEAACB2-65C6-11D7-89A9-9C62884CFFDE"/>
 </reflist>
 </extended>
+<slot>
+<reflist>
+<ref refid="cb489f42-f9d8-11ea-b854-fb98adcb9438"/>
+</reflist>
+</slot>
 </InstanceSpecification>
 <InstanceSpecification id="1764c990-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -53399,89 +53349,12 @@ have an opposite end.
 <val>owner</val>
 </value>
 </Slot>
-<Association id="3002a1d6-ecfe-11ea-96dc-bf74f1f80424">
-<memberEnd>
-<reflist>
-<ref refid="3002a1d7-ecfe-11ea-96dc-bf74f1f80424"/>
-<ref refid="3002a1d8-ecfe-11ea-96dc-bf74f1f80424"/>
-</reflist>
-</memberEnd>
-<package>
-<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
-</package>
-<presentation>
-<reflist>
-<ref refid="2de10a6e-ecfe-11ea-96dc-bf74f1f80424"/>
-</reflist>
-</presentation>
-</Association>
-<Property id="3002a1d7-ecfe-11ea-96dc-bf74f1f80424">
-<appliedStereotype>
-<reflist>
-<ref refid="3c94f390-ecfe-11ea-96dc-bf74f1f80424"/>
-</reflist>
-</appliedStereotype>
-<association>
-<ref refid="3002a1d6-ecfe-11ea-96dc-bf74f1f80424"/>
-</association>
-<class_>
-<ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
-</class_>
-<name>
-<val>ownedDependency</val>
-</name>
-<presentation>
-<reflist/>
-</presentation>
-<type>
-<ref refid="DCE:D733DED0-65C5-11D7-89A9-9C62884CFFDE"/>
-</type>
-<upperValue>
-<val>*</val>
-</upperValue>
-<upperValue>
-<val>*</val>
-</upperValue>
-</Property>
-<Property id="3002a1d8-ecfe-11ea-96dc-bf74f1f80424">
-<appliedStereotype>
-<reflist>
-<ref refid="4a28731a-ecfe-11ea-96dc-bf74f1f80424"/>
-</reflist>
-</appliedStereotype>
-<association>
-<ref refid="3002a1d6-ecfe-11ea-96dc-bf74f1f80424"/>
-</association>
-<class_>
-<ref refid="DCE:D733DED0-65C5-11D7-89A9-9C62884CFFDE"/>
-</class_>
-<name>
-<val>package</val>
-</name>
-<presentation>
-<reflist/>
-</presentation>
-<type>
-<ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
-</type>
-<upperValue>
-<val>1</val>
-</upperValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-</Property>
 <InstanceSpecification id="3c94f390-ecfe-11ea-96dc-bf74f1f80424">
 <classifier>
 <reflist>
 <ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
 </reflist>
 </classifier>
-<extended>
-<reflist>
-<ref refid="3002a1d7-ecfe-11ea-96dc-bf74f1f80424"/>
-</reflist>
-</extended>
 <slot>
 <reflist>
 <ref refid="481541c0-ecfe-11ea-96dc-bf74f1f80424"/>
@@ -53505,11 +53378,6 @@ have an opposite end.
 <ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
 </reflist>
 </classifier>
-<extended>
-<reflist>
-<ref refid="3002a1d8-ecfe-11ea-96dc-bf74f1f80424"/>
-</reflist>
-</extended>
 <slot>
 <reflist>
 <ref refid="4c984e0e-ecfe-11ea-96dc-bf74f1f80424"/>
@@ -53564,4 +53432,26 @@ have an opposite end.
 <ref refid="DCE:22B3AA56-4B32-11D7-B391-02BBFE4396CE"/>
 </specific>
 </Generalization>
+<Slot id="c84b3eee-f9d8-11ea-b854-fb98adcb9438">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="17395364-fa90-11de-bd51-00224128e79d"/>
+</owningInstance>
+<value>
+<val>ownedElement</val>
+</value>
+</Slot>
+<Slot id="cb489f42-f9d8-11ea-b854-fb98adcb9438">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="176453e8-fa90-11de-bd51-00224128e79d"/>
+</owningInstance>
+<value>
+<val>owner</val>
+</value>
+</Slot>
 </gaphor>

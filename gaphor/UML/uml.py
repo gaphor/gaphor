@@ -158,8 +158,8 @@ class CommunicationPath(Association):
 
 
 class Dependency(DirectedRelationship, PackageableElement):
-    client: relation_many[NamedElement]
-    supplier: relation_many[NamedElement]
+    client: relation_one[NamedElement]
+    supplier: relation_one[NamedElement]
     package: relation_one[Package]
 
 
@@ -405,7 +405,7 @@ class Activity(Behavior):
 
 class Implementation(Realization):
     contract: relation_many[Interface]  # type: ignore[assignment]
-    implementatingClassifier: relation_many[BehavioredClassifier]  # type: ignore[assignment]
+    implementatingClassifier: relation_one[BehavioredClassifier]  # type: ignore[assignment]
 
 
 class Parameter(ConnectableElement, MultiplicityElement):
@@ -850,7 +850,7 @@ NamedElement.clientDependency = association(
     "clientDependency", Dependency, opposite="client"
 )
 Dependency.client = association(
-    "client", NamedElement, lower=1, opposite="clientDependency"
+    "client", NamedElement, upper=1, opposite="clientDependency"
 )
 DecisionNode.decisionInput = association("decisionInput", Behavior, upper=1)
 Activity.edge = association("edge", ActivityEdge, composite=True, opposite="activity")
@@ -870,7 +870,7 @@ DataType.ownedAttribute = association(
 TypedElement.type = association("type", Type, upper=1)
 ActivityParameterNode.parameter = association("parameter", Parameter, lower=1, upper=1)
 Dependency.supplier = association(
-    "supplier", NamedElement, lower=1, opposite="supplierDependency"
+    "supplier", NamedElement, upper=1, opposite="supplierDependency"
 )
 NamedElement.supplierDependency = association(
     "supplierDependency", Dependency, opposite="supplier"
@@ -1615,6 +1615,7 @@ Element.owner = derivedunion(
     PackageImport.importingNamespace,
     PackageMerge.mergingPackage,
     NamedElement.namespace,
+    Dependency.client,
     Constraint.stateInvariant,
     Pseudostate.state,
     Action.interaction,
@@ -1635,6 +1636,7 @@ Element.ownedElement = derivedunion(
     Namespace.elementImport,
     Activity.group,
     Component.realization,
+    NamedElement.clientDependency,
     Namespace.packageImport,
     Package.packageMerge,
     Package.appliedProfile,
