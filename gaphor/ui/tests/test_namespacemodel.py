@@ -3,7 +3,7 @@ import pytest
 import gaphor.core.eventmanager
 from gaphor import UML
 from gaphor.core.modeling import ElementFactory
-from gaphor.ui.namespace import RELATIONSHIPS, NamespaceModel
+from gaphor.ui.namespacemodel import RELATIONSHIPS, NamespaceModel
 
 
 @pytest.fixture
