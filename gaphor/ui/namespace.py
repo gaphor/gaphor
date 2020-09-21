@@ -123,12 +123,15 @@ class Namespace(UIComponent):
         part = Gio.Menu.new()
         for presentation in element.presentation:
             diagram = presentation.diagram
-            menu_item = Gio.MenuItem.new(
-                gettext('Show in "{diagram}"').format(diagram=diagram.name),
-                "tree-view.show-in-diagram",
-            )
-            menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))
-            part.append_item(menu_item)
+            if diagram:
+                menu_item = Gio.MenuItem.new(
+                    gettext('Show in "{diagram}"').format(diagram=diagram.name),
+                    "tree-view.show-in-diagram",
+                )
+                menu_item.set_attribute_value(
+                    "target", GLib.Variant.new_string(diagram.id)
+                )
+                part.append_item(menu_item)
 
             # Play it safe with an (arbitrary) upper bound
             if part.get_n_items() > 29:
