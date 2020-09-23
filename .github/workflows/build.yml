@@ -56,7 +56,7 @@ jobs:
       - name: Test with Pytest
         run: xvfb-run pytest --cov=gaphor/
       - name: Code Climate Coverage Action
-        uses: paambaati/codeclimate-action@v2.6.0
+        uses: paambaati/codeclimate-action@v2.7.1
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
