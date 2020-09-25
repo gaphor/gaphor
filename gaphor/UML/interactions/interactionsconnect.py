@@ -5,7 +5,9 @@ from typing import Optional
 from gaphor import UML
 from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
+from gaphor.diagram.grouping import Group
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
+from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.interactions.message import MessageItem
 
@@ -53,6 +55,12 @@ def order_lifeline_covered_by(lifeline):
     lifeline.subject.coveredBy.order(keys.get)
 
 
+def owner_for_message(line, lifeline):
+    maybe_interaction = lifeline.canvas.get_parent(lifeline)
+    if not line.subject.interaction and isinstance(maybe_interaction, InteractionItem):
+        Group(maybe_interaction, line).group()
+
+
 def connect_lifelines(line, send, received):
     """Always create a new Message with two EventOccurrence instances."""
 
@@ -70,6 +78,7 @@ def connect_lifelines(line, send, received):
             event.sendMessage = message
             event.covered = send.subject
             order_lifeline_covered_by(send)
+        owner_for_message(line, send)
 
     if received:
         message = get_subject()
@@ -78,6 +87,7 @@ def connect_lifelines(line, send, received):
             event.receiveMessage = message
             event.covered = received.subject
             order_lifeline_covered_by(received)
+        owner_for_message(line, received)
 
 
 def disconnect_lifelines(line, send, received):

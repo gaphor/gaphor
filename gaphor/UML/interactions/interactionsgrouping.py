@@ -1,6 +1,7 @@
 from gaphor.diagram.grouping import AbstractGroup, Group
 from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
+from gaphor.UML.interactions.message import MessageItem
 
 
 @Group.register(InteractionItem, LifelineItem)
@@ -14,3 +15,18 @@ class InteractionLifelineGroup(AbstractGroup):
 
     def ungroup(self):
         del self.parent.subject.lifeline[self.item.subject]
+
+
+@Group.register(InteractionItem, MessageItem)
+class InteractionMessageGroup(AbstractGroup):
+    """Add message to interaction."""
+
+    def group(self):
+        if not self.item.subject:
+            return
+        assert self.parent.canvas
+        self.parent.subject.message = self.item.subject
+        self.parent.canvas.reparent(self.item, self.parent)
+
+    def ungroup(self):
+        del self.parent.subject.message[self.item.subject]

@@ -1,8 +1,10 @@
 """Message connection adapter tests."""
 
 from gaphor import UML
+from gaphor.diagram.grouping import Group
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
+from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.interactions.message import MessageItem
 
@@ -126,6 +128,44 @@ def test_lifetime_connection(diagram):
 
     assert msg.subject is not None
     assert msg.subject.messageKind == "complete"
+
+
+def test_message_is_owned_by_interaction_connecting_to_head(diagram, element_factory):
+    """Test messages' lifetimes connection."""
+    interaction = diagram.create(
+        InteractionItem, subject=element_factory.create(UML.Interaction)
+    )
+    msg = diagram.create(MessageItem)
+    ll1 = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
+    ll2 = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
+
+    Group(interaction, ll1).group()
+
+    connect(msg, msg.head, ll1)
+    connect(msg, msg.tail, ll2)
+
+    assert msg.subject is not None
+    assert msg.subject.interaction is interaction.subject
+    assert msg.canvas.get_parent(msg) is interaction
+
+
+def test_message_is_owned_by_interaction_connecting_to_tail(diagram, element_factory):
+    """Test messages' lifetimes connection."""
+    interaction = diagram.create(
+        InteractionItem, subject=element_factory.create(UML.Interaction)
+    )
+    msg = diagram.create(MessageItem)
+    ll1 = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
+    ll2 = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
+
+    Group(interaction, ll2).group()
+
+    connect(msg, msg.head, ll1)
+    connect(msg, msg.tail, ll2)
+
+    assert msg.subject is not None
+    assert msg.subject.interaction is interaction.subject
+    assert msg.canvas.get_parent(msg) is interaction
 
 
 def test_disconnection(diagram):
