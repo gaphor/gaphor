@@ -35,6 +35,7 @@ from gaphor.diagram.support import represents
 
 
 @represents(UML.ExecutionSpecification)
+@represents(UML.BehaviorExecutionSpecification)
 class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item):
     """Representation of interaction execution specification."""
 

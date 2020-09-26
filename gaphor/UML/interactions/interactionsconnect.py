@@ -226,7 +226,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
     def connect(self, handle, port):
         lifeline = self.element.subject
-        exec_spec: UML.ExecutionSpecification = self.line.subject
+        exec_spec = self.line.subject
         model = self.element.model
         if not exec_spec:
             exec_spec = model.create(UML.BehaviorExecutionSpecification)
@@ -243,6 +243,9 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
             )
             finish_occurence.covered = lifeline
             finish_occurence.execution = exec_spec
+
+        if lifeline.interaction:
+            exec_spec.enclosingInteraction = lifeline.interaction
 
         canvas = self.canvas
         if canvas.get_parent(self.line) is not self.element:
