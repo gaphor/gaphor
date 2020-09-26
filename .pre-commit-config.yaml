@@ -1,11 +1,11 @@
 repos:
 - repo: https://github.com/ambv/black
-  rev: 19.10b0
+  rev: 20.8b1
   hooks:
   - id: black
     language_version: python3
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v0.770
+  rev: v0.782
   hooks:
   - id: mypy
 - repo: https://gitlab.com/pycqa/flake8
@@ -18,7 +18,7 @@ repos:
   - id: check-toml
   - id: check-yaml
 - repo: https://github.com/pre-commit/mirrors-isort
-  rev: v5.4.2
+  rev: v5.5.3
   hooks:
   - id: isort
     additional_dependencies: [toml]
