@@ -42,6 +42,7 @@ plug-in.
    :maxdepth: 1
 
    models/uml
+   models/sysml/Profiles/SysML
 
 .. toctree::
    :caption: Storage

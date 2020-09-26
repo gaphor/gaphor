@@ -2,40 +2,58 @@
 #
 # Generate documentation pages for a model
 
-H1="========================================"
-H2="----------------------------------------"
+M=$1
 
-cat > models/uml.rst << EOF
+H1="=================================================="
+H2="--------------------------------------------------"
+
+if test $M == "uml"
+then
+  cat > models/$M.rst << EOF
 Unified Modeling Language
 $H1
 
-.. image:: uml/00._Overview.svg
+.. image:: $M/00._Overview.svg
 
 .. toctree::
-   :caption: Packages
-   :maxdepth: 1
+  :caption: Packages
+  :maxdepth: 1
 
 EOF
+else
+  cat > models/$M.rst << EOF
+Systems Modeling Language
+$H1
 
-ls models/uml | while read PACKAGE
+.. image:: $(basename $M)/SysML.svg
+
+.. toctree::
+  :caption: Packages
+  :maxdepth: 1
+
+EOF
+fi
+
+ls models/$M | while read PACKAGE
 do
-  if test -d models/uml/$PACKAGE
+  if test -d models/$M/$PACKAGE
   then
-    echo "   uml/${PACKAGE}" >> models/uml.rst
+    echo "  $(basename $M)/${PACKAGE}" >> models/$M.rst
 
     {
       echo "${PACKAGE//_/ }"
       echo $H1
-      ls models/uml/${PACKAGE} | while read DIAGRAM
+      echo
+      ls models/$M/${PACKAGE} | while read DIAGRAM
       do
         name=${DIAGRAM%.svg}
         echo "${name//_/ }"
         echo $H2
         echo
         echo ".. thumbnail:: ${PACKAGE}/${DIAGRAM}"
-        echo "   :group: ${PACKAGE}"
+        echo "  :group: ${PACKAGE}"
         echo
       done
-    } > models/uml/${PACKAGE}.rst
+    } > models/$M/${PACKAGE}.rst
   fi
 done
