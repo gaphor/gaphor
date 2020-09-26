@@ -3,10 +3,12 @@ A. Gaphor Specific Constructs
 1. Presentations
 ----------------------------------------
 
-.. image:: A._Gaphor_Specific_Constructs/1._Presentations.svg
+.. thumbnail:: A._Gaphor_Specific_Constructs/1._Presentations.svg
+   :group: A._Gaphor_Specific_Constructs
 
 2. Stereotype Applications
 ----------------------------------------
 
-.. image:: A._Gaphor_Specific_Constructs/2._Stereotype_Applications.svg
+.. thumbnail:: A._Gaphor_Specific_Constructs/2._Stereotype_Applications.svg
+   :group: A._Gaphor_Specific_Constructs
 

@@ -32,7 +32,8 @@ do
         echo "${name//_/ }"
         echo $H2
         echo
-        echo ".. image:: ${PACKAGE}/${DIAGRAM}"
+        echo ".. thumbnail:: ${PACKAGE}/${DIAGRAM}"
+        echo "   :group: ${PACKAGE}"
         echo
       done
     } > models/uml/${PACKAGE}.rst

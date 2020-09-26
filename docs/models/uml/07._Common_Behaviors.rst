@@ -3,15 +3,18 @@
 1. Behaviors
 ----------------------------------------
 
-.. image:: 07._Common_Behaviors/1._Behaviors.svg
+.. thumbnail:: 07._Common_Behaviors/1._Behaviors.svg
+   :group: 07._Common_Behaviors
 
 2. Events
 ----------------------------------------
 
-.. image:: 07._Common_Behaviors/2._Events.svg
+.. thumbnail:: 07._Common_Behaviors/2._Events.svg
+   :group: 07._Common_Behaviors
 
 Reception
 ----------------------------------------
 
-.. image:: 07._Common_Behaviors/Reception.svg
+.. thumbnail:: 07._Common_Behaviors/Reception.svg
+   :group: 07._Common_Behaviors
 

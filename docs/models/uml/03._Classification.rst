@@ -3,25 +3,30 @@
 1. Classifiers
 ----------------------------------------
 
-.. image:: 03._Classification/1._Classifiers.svg
+.. thumbnail:: 03._Classification/1._Classifiers.svg
+   :group: 03._Classification
 
 3. Features
 ----------------------------------------
 
-.. image:: 03._Classification/3._Features.svg
+.. thumbnail:: 03._Classification/3._Features.svg
+   :group: 03._Classification
 
 4. Properties
 ----------------------------------------
 
-.. image:: 03._Classification/4._Properties.svg
+.. thumbnail:: 03._Classification/4._Properties.svg
+   :group: 03._Classification
 
 5. Operations
 ----------------------------------------
 
-.. image:: 03._Classification/5._Operations.svg
+.. thumbnail:: 03._Classification/5._Operations.svg
+   :group: 03._Classification
 
 7. Instances
 ----------------------------------------
 
-.. image:: 03._Classification/7._Instances.svg
+.. thumbnail:: 03._Classification/7._Instances.svg
+   :group: 03._Classification
 

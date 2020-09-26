@@ -3,10 +3,12 @@
 1. Packages
 ----------------------------------------
 
-.. image:: 06._Packaging/1._Packages.svg
+.. thumbnail:: 06._Packaging/1._Packages.svg
+   :group: 06._Packaging
 
 2. Profiles
 ----------------------------------------
 
-.. image:: 06._Packaging/2._Profiles.svg
+.. thumbnail:: 06._Packaging/2._Profiles.svg
+   :group: 06._Packaging
 

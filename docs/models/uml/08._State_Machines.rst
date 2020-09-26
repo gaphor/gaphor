@@ -3,10 +3,12 @@
 1. Behavior State Machines
 ----------------------------------------
 
-.. image:: 08._State_Machines/1._Behavior_State_Machines.svg
+.. thumbnail:: 08._State_Machines/1._Behavior_State_Machines.svg
+   :group: 08._State_Machines
 
 2. State Machine Redefinitions
 ----------------------------------------
 
-.. image:: 08._State_Machines/2._State_Machine_Redefinitions.svg
+.. thumbnail:: 08._State_Machines/2._State_Machine_Redefinitions.svg
+   :group: 08._State_Machines
 

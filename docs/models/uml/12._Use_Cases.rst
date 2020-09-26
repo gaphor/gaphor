@@ -3,10 +3,12 @@
 UseCases extra
 ----------------------------------------
 
-.. image:: 12._Use_Cases/UseCases_extra.svg
+.. thumbnail:: 12._Use_Cases/UseCases_extra.svg
+   :group: 12._Use_Cases
 
 UseCases
 ----------------------------------------
 
-.. image:: 12._Use_Cases/UseCases.svg
+.. thumbnail:: 12._Use_Cases/UseCases.svg
+   :group: 12._Use_Cases
 

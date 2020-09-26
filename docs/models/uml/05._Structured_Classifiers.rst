@@ -3,30 +3,36 @@
 1. Structured Classifers
 ----------------------------------------
 
-.. image:: 05._Structured_Classifiers/1._Structured_Classifers.svg
+.. thumbnail:: 05._Structured_Classifiers/1._Structured_Classifers.svg
+   :group: 05._Structured_Classifiers
 
 2. Encapsulated Classifiers
 ----------------------------------------
 
-.. image:: 05._Structured_Classifiers/2._Encapsulated_Classifiers.svg
+.. thumbnail:: 05._Structured_Classifiers/2._Encapsulated_Classifiers.svg
+   :group: 05._Structured_Classifiers
 
 3. Classes
 ----------------------------------------
 
-.. image:: 05._Structured_Classifiers/3._Classes.svg
+.. thumbnail:: 05._Structured_Classifiers/3._Classes.svg
+   :group: 05._Structured_Classifiers
 
 4. Associations
 ----------------------------------------
 
-.. image:: 05._Structured_Classifiers/4._Associations.svg
+.. thumbnail:: 05._Structured_Classifiers/4._Associations.svg
+   :group: 05._Structured_Classifiers
 
 5. Components
 ----------------------------------------
 
-.. image:: 05._Structured_Classifiers/5._Components.svg
+.. thumbnail:: 05._Structured_Classifiers/5._Components.svg
+   :group: 05._Structured_Classifiers
 
 6. Collaborations
 ----------------------------------------
 
-.. image:: 05._Structured_Classifiers/6._Collaborations.svg
+.. thumbnail:: 05._Structured_Classifiers/6._Collaborations.svg
+   :group: 05._Structured_Classifiers
 

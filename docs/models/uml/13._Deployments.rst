@@ -3,15 +3,18 @@
 1. Deployments
 ----------------------------------------
 
-.. image:: 13._Deployments/1._Deployments.svg
+.. thumbnail:: 13._Deployments/1._Deployments.svg
+   :group: 13._Deployments
 
 2. Artifacts
 ----------------------------------------
 
-.. image:: 13._Deployments/2._Artifacts.svg
+.. thumbnail:: 13._Deployments/2._Artifacts.svg
+   :group: 13._Deployments
 
 3. Nodes
 ----------------------------------------
 
-.. image:: 13._Deployments/3._Nodes.svg
+.. thumbnail:: 13._Deployments/3._Nodes.svg
+   :group: 13._Deployments
 

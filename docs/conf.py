@@ -48,6 +48,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.autosectionlabel",  # Auto-generate section labels.
     "recommonmark",  # Markdown Support
+    "sphinxcontrib.images",
 ]
 
 autodoc_mock_imports = ["gaphas", "gi", "tinycss2"]
@@ -82,6 +83,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
+images_config = {"default_image_width": "", "default_image_height": ""}
 
 # -- Options for HTML output -------------------------------------------------
 
