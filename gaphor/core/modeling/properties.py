@@ -724,7 +724,12 @@ class derivedunion(derived[T]):
     """
 
     def __init__(
-        self, name: str, type: Type[T], lower: Lower, upper: Upper, *subsets: relation,
+        self,
+        name: str,
+        type: Type[T],
+        lower: Lower,
+        upper: Upper,
+        *subsets: relation,
     ):
         super().__init__(name, type, lower, upper, self._union, *subsets)
 
@@ -819,7 +824,11 @@ class redefine(umlproperty):
     """
 
     def __init__(
-        self, decl_class: Type[E], name: str, type: Type[T], original: relation,
+        self,
+        decl_class: Type[E],
+        name: str,
+        type: Type[T],
+        original: relation,
     ):
         super().__init__(name)
         assert isinstance(

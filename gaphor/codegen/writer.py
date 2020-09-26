@@ -267,7 +267,12 @@ class Writer:
             r.class_name,
             r.name,
             "redefine(%s, '%s', %s, %s)"
-            % (r.class_name, r.name, r.opposite_class_name, r.redefines,),
+            % (
+                r.class_name,
+                r.name,
+                r.opposite_class_name,
+                r.redefines,
+            ),
             type=f"relation_one[{r.opposite_class_name}]  # type: ignore[assignment]"
             if r.upper == "1"
             else f"relation_many[{r.opposite_class_name}]  # type: ignore[assignment]",

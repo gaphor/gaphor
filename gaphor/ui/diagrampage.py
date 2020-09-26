@@ -65,7 +65,13 @@ def get_placement_cursor(display, icon_name):
         pixbuf = PLACEMENT_BASE.copy()
         icon = Gtk.IconTheme.get_default().load_icon(icon_name, 24, 0)
         icon.copy_area(
-            0, 0, icon.get_width(), icon.get_height(), pixbuf, 9, 15,
+            0,
+            0,
+            icon.get_width(),
+            icon.get_height(),
+            pixbuf,
+            9,
+            15,
         )
         _placement_pixbuf_map[icon_name] = pixbuf
     return Gdk.Cursor.new_from_pixbuf(display, pixbuf, 1, 1)
@@ -202,21 +208,24 @@ class DiagramPage:
         self.view = None
 
     @action(
-        name="diagram.zoom-in", shortcut="<Primary>plus",
+        name="diagram.zoom-in",
+        shortcut="<Primary>plus",
     )
     def zoom_in(self):
         assert self.view
         self.view.zoom(1.2)
 
     @action(
-        name="diagram.zoom-out", shortcut="<Primary>minus",
+        name="diagram.zoom-out",
+        shortcut="<Primary>minus",
     )
     def zoom_out(self):
         assert self.view
         self.view.zoom(1 / 1.2)
 
     @action(
-        name="diagram.zoom-100", shortcut="<Primary>0",
+        name="diagram.zoom-100",
+        shortcut="<Primary>0",
     )
     def zoom_100(self):
         assert self.view
@@ -224,7 +233,8 @@ class DiagramPage:
         self.view.zoom(1 / zx)
 
     @action(
-        name="diagram.select-all", shortcut="<Primary>a",
+        name="diagram.select-all",
+        shortcut="<Primary>a",
     )
     def select_all(self):
         assert self.view

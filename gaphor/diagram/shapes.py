@@ -136,8 +136,14 @@ class Box:
         if sizes:
             widths, heights = list(zip(*sizes))
             return (
-                max(min_width, max(widths) + padding_right + padding_left,),
-                max(min_height, sum(heights) + padding_top + padding_bottom,),
+                max(
+                    min_width,
+                    max(widths) + padding_right + padding_left,
+                ),
+                max(
+                    min_height,
+                    sum(heights) + padding_top + padding_bottom,
+                ),
             )
         else:
             return min_width, min_height
@@ -222,7 +228,12 @@ class IconBox:
             y = bounding_box.y + (bounding_box.height - total_h) / 2
         elif vertical_align == VerticalAlign.TOP:
             y = bounding_box.y - total_h - vertical_spacing
-        return Rectangle(x, y, max_w, total_h,)
+        return Rectangle(
+            x,
+            y,
+            max_w,
+            total_h,
+        )
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = combined_style(context.style, self._inline_style)

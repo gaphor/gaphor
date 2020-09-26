@@ -19,7 +19,9 @@ class FinalStateItem(ElementPresentation, VertexItem):
 
         self.shape = IconBox(
             Box(draw=draw_final_state),
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 

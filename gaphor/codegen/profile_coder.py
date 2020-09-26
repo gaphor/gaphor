@@ -176,7 +176,9 @@ def write_properties(
 
 
 def generate(
-    filename: PathLike, outfile: PathLike, overridesfile: Optional[PathLike] = None,
+    filename: PathLike,
+    outfile: PathLike,
+    overridesfile: Optional[PathLike] = None,
 ) -> None:
     """Generates the Python data model.
 
@@ -188,7 +190,9 @@ def generate(
     modeling_language = UMLModelingLanguage()
     with open(filename):
         storage.load(
-            filename, element_factory, modeling_language,
+            filename,
+            element_factory,
+            modeling_language,
         )
     with open(outfile, "w") as f:
         f.write(header)

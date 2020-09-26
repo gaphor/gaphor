@@ -21,7 +21,9 @@ class ExtensionItem(LinePresentation, Named):
         super().__init__(id, model)
 
         self.shape_middle = Box(
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject.name or ""),
         )
 

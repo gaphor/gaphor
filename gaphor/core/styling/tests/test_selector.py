@@ -75,7 +75,12 @@ def test_select_inside_combinator():
     (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(Node("nested", parent=Node("classitem")))
-    assert selector(Node("nested", parent=Node("other", parent=Node("classitem")),))
+    assert selector(
+        Node(
+            "nested",
+            parent=Node("other", parent=Node("classitem")),
+        )
+    )
     assert not selector(Node("nested"))
     assert not selector(Node("classitem"))
 
@@ -86,7 +91,12 @@ def test_select_parent_combinator():
     (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(Node("nested", parent=Node("classitem")))
-    assert not selector(Node("nested", parent=Node("other", parent=Node("classitem")),))
+    assert not selector(
+        Node(
+            "nested",
+            parent=Node("other", parent=Node("classitem")),
+        )
+    )
     assert not selector(Node("nested"))
     assert not selector(Node("classitem"))
 
@@ -197,7 +207,8 @@ def test_empty_pseudo_selector_with_name():
 
 
 @pytest.mark.parametrize(
-    "state", ["root", "hover", "focus", "active", "drop"],
+    "state",
+    ["root", "hover", "focus", "active", "drop"],
 )
 def test_hovered_pseudo_selector(state):
 
@@ -284,5 +295,8 @@ def test_has_and_is_selector():
     (selector, specificity), payload = next(parse_style_sheet(css))
 
     assert selector(
-        Node("node", children=[Node("foo", children=[Node("bar", state=("hover",))])],)
+        Node(
+            "node",
+            children=[Node("foo", children=[Node("bar", state=("hover",))])],
+        )
     )

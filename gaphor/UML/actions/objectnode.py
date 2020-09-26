@@ -28,7 +28,9 @@ class ObjectNodeItem(ElementPresentation, Named):
 
         self.shape = IconBox(
             Box(
-                Text(text=lambda: stereotypes_str(self.subject),),
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                ),
                 EditableText(text=lambda: self.subject.name or ""),
                 style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
                 draw=draw_border,

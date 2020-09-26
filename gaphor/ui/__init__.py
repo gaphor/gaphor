@@ -58,7 +58,10 @@ def main(argv=sys.argv):
         import pstats
 
         cProfile.runctx(
-            "run(argv)", globals(), locals(), filename="gaphor.prof",
+            "run(argv)",
+            globals(),
+            locals(),
+            filename="gaphor.prof",
         )
 
         profile_stats = pstats.Stats("gaphor.prof")

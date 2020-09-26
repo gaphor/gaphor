@@ -24,7 +24,9 @@ class FlowItem(LinePresentation, Named):
         super().__init__(id, model)
 
         self.shape_tail = Box(
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject.name or ""),
         )
 

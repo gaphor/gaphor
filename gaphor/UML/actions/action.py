@@ -13,7 +13,9 @@ class ActionItem(ElementPresentation, Named):
         super().__init__(id, model)
 
         self.shape = Box(
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject.name or ""),
             style={
                 "min-width": 50,
@@ -34,7 +36,9 @@ class SendSignalActionItem(ElementPresentation, Named):
         super().__init__(id, model)
 
         self.shape = Box(
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject.name or ""),
             style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
             draw=self.draw_border,
@@ -63,7 +67,9 @@ class AcceptEventActionItem(ElementPresentation, Named):
         super().__init__(id, model)
 
         self.shape = Box(
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject.name or ""),
             style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
             draw=self.draw_border,

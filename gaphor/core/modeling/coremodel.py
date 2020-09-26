@@ -82,5 +82,9 @@ def _namedelement_qualifiedname(self) -> List[str]:
 
 
 NamedElement.qualifiedName = derived(
-    "qualifiedName", List[str], 0, 1, lambda obj: [_namedelement_qualifiedname(obj)],
+    "qualifiedName",
+    List[str],
+    0,
+    1,
+    lambda obj: [_namedelement_qualifiedname(obj)],
 )

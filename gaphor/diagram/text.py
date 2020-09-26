@@ -18,7 +18,11 @@ from gi.repository import GLib, Pango, PangoCairo  # noqa: isort:skip
 
 class Layout:
     def __init__(
-        self, text="", font=None, text_align=TextAlign.CENTER, default_size=(0, 0),
+        self,
+        text="",
+        font=None,
+        text_align=TextAlign.CENTER,
+        default_size=(0, 0),
     ):
         self.layout = PangoCairo.create_layout(instant_cairo_context())
         self.underline = False

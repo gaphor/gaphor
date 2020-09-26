@@ -320,9 +320,12 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
             elif e1.derived or overrides.derives(
                 f"{e1.get('class_name')}.{e1.get('name')}"
             ):
-                assert not derivedunions.get(e1.name), (
-                    "%s.%s is already in derived union set in class %s"
-                    % (e1.class_name, e1.name, derivedunions.get(e1.name).class_name)  # type: ignore
+                assert not derivedunions.get(
+                    e1.name
+                ), "%s.%s is already in derived union set in class %s" % (
+                    e1.class_name,
+                    e1.name,
+                    derivedunions.get(e1.name).class_name,  # type: ignore[union-attr]
                 )
                 derivedunions[e1.name] = e1
                 e1.union = []

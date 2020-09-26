@@ -343,7 +343,9 @@ class InterfaceItem(ElementPresentation, Classified):
                 style={"min-width": self.min_width, "min-height": self.min_height},
                 draw=self.draw_interface_ball_and_socket,
             ),
-            Text(text=lambda: UML.model.stereotypes_str(self.subject),),
+            Text(
+                text=lambda: UML.model.stereotypes_str(self.subject),
+            ),
             EditableText(
                 text=lambda: self.subject.name or "",
                 style={

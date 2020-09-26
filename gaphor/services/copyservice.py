@@ -91,7 +91,8 @@ class CopyService(Service, ActionProvider):
             )
 
     @action(
-        name="edit-copy", shortcut="<Primary>c",
+        name="edit-copy",
+        shortcut="<Primary>c",
     )
     def copy_action(self):
         view = self.diagrams.get_current_view()

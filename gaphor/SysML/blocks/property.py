@@ -46,7 +46,9 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(text=lambda: UML.model.stereotypes_str(self.subject),),
+                Text(
+                    text=lambda: UML.model.stereotypes_str(self.subject),
+                ),
                 EditableText(
                     text=lambda: format_property(
                         self.subject, type=True, multiplicity=True
