@@ -90,7 +90,9 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-package-symbolic",
                 "p",
                 PlacementTool.new_item_factory(
-                    uml_items.PackageItem, UML.Package, config_func=namespace_config,
+                    uml_items.PackageItem,
+                    UML.Package,
+                    config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -221,7 +223,9 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-action-symbolic",
                 "a",
                 item_factory=PlacementTool.new_item_factory(
-                    uml_items.ActionItem, UML.Action, config_func=namespace_config,
+                    uml_items.ActionItem,
+                    UML.Action,
+                    config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -393,7 +397,9 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-use-case-symbolic",
                 "u",
                 item_factory=PlacementTool.new_item_factory(
-                    uml_items.UseCaseItem, UML.UseCase, config_func=namespace_config,
+                    uml_items.UseCaseItem,
+                    UML.UseCase,
+                    config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),
@@ -403,7 +409,9 @@ sysml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-actor-symbolic",
                 "t",
                 item_factory=PlacementTool.new_item_factory(
-                    uml_items.ActorItem, UML.Actor, config_func=namespace_config,
+                    uml_items.ActorItem,
+                    UML.Actor,
+                    config_func=namespace_config,
                 ),
                 handle_index=SE,
             ),

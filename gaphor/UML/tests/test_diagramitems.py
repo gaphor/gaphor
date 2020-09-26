@@ -39,7 +39,8 @@ NAMED_EXCLUSIONS = [
 
 
 @pytest.mark.parametrize(
-    "item_class,element_class", all_items_and_elements(),
+    "item_class,element_class",
+    all_items_and_elements(),
 )
 def test_all_named_elements_have_named_items(item_class, element_class):
     if item_class in NAMED_EXCLUSIONS:
@@ -60,7 +61,8 @@ CLASSIFIED_EXCLUSIONS = [
 
 
 @pytest.mark.parametrize(
-    "item_class,element_class", all_items_and_elements(),
+    "item_class,element_class",
+    all_items_and_elements(),
 )
 def test_all_classifier_elements_have_classified_items(item_class, element_class):
     if item_class in CLASSIFIED_EXCLUSIONS:

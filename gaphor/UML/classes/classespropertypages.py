@@ -468,7 +468,13 @@ class AssociationPropertyPage(PropertyPageBase):
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
         new_name = (
-            format(subject, visibility=True, is_derived=True, multiplicity=True,) or ""
+            format(
+                subject,
+                visibility=True,
+                is_derived=True,
+                multiplicity=True,
+            )
+            or ""
         )
         if not (name.is_focus() or self.semaphore):
             self.semaphore += 1
@@ -508,7 +514,8 @@ class AssociationPropertyPage(PropertyPageBase):
         ).watch("memberEnd[Property].lowerValue", name_handler).watch(
             "memberEnd[Property].upperValue", name_handler
         ).watch(
-            "memberEnd[Property].type", restore_nav_handler,
+            "memberEnd[Property].type",
+            restore_nav_handler,
         ).subscribe_all()
 
         builder.connect_signals(

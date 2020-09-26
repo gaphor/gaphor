@@ -83,7 +83,10 @@ def test_icon_box_child_placement_center_bottom(context):
     style = {"text-align": TextAlign.CENTER, "vertical-align": VerticalAlign.BOTTOM}
 
     text = Text(text="some text")
-    shape = IconBox(Box(), text,)
+    shape = IconBox(
+        Box(),
+        text,
+    )
     shape.size(context)
 
     w, h = shape.sizes[0]
@@ -99,7 +102,10 @@ def test_icon_box_child_placement_right_middle(context):
     style = {"text-align": TextAlign.RIGHT, "vertical-align": VerticalAlign.MIDDLE}
 
     text = Text(text="some text")
-    shape = IconBox(Box(), text,)
+    shape = IconBox(
+        Box(),
+        text,
+    )
     shape.size(context)
 
     w, h = shape.sizes[0]
@@ -115,7 +121,10 @@ def test_icon_box_child_placement_left_middle(context):
     style = {"text-align": TextAlign.LEFT, "vertical-align": VerticalAlign.MIDDLE}
 
     text = Text(text="some text")
-    shape = IconBox(Box(), text,)
+    shape = IconBox(
+        Box(),
+        text,
+    )
     shape.size(context)
 
     w, h = shape.sizes[0]
@@ -131,7 +140,10 @@ def test_icon_box_child_placement_center_top(context):
     style = {"text-align": TextAlign.CENTER, "vertical-align": VerticalAlign.TOP}
 
     text = Text(text="some text")
-    shape = IconBox(Box(), text,)
+    shape = IconBox(
+        Box(),
+        text,
+    )
     shape.size(context)
 
     w, h = shape.sizes[0]

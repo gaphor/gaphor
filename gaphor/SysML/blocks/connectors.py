@@ -15,7 +15,9 @@ from gaphor.UML.components import ConnectorItem
 @Connector.register(PropertyItem, ProxyPortItem)
 class BlockProperyProxyPortConnector:
     def __init__(
-        self, block: Union[BlockItem, PropertyItem], proxy_port: ProxyPortItem,
+        self,
+        block: Union[BlockItem, PropertyItem],
+        proxy_port: ProxyPortItem,
     ) -> None:
         assert block.canvas is proxy_port.canvas
         self.block = block

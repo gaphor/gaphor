@@ -21,7 +21,11 @@ T = TypeVar("T", bound=Element)
 
 
 class ConnectorProtocol(Protocol):
-    def __init__(self, element: object, line: object,) -> None:
+    def __init__(
+        self,
+        element: object,
+        line: object,
+    ) -> None:
         ...
 
     def allow(self, handle: Handle, port: Port) -> bool:
@@ -57,7 +61,9 @@ class BaseConnector:
     """
 
     def __init__(
-        self, element: Presentation[Element], line: Presentation[Element],
+        self,
+        element: Presentation[Element],
+        line: Presentation[Element],
     ) -> None:
         assert element.canvas is line.canvas
         self.element = element
@@ -96,7 +102,11 @@ class BaseConnector:
 
 
 class NoConnector:
-    def __init__(self, element, line,) -> None:
+    def __init__(
+        self,
+        element,
+        line,
+    ) -> None:
         pass
 
     def allow(self, handle: Handle, port: Port) -> bool:

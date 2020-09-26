@@ -17,7 +17,9 @@ class ImplementationItem(LinePresentation, Named):
         super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
 
         self.shape_middle = Box(
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject.name or ""),
         )
         self.watch("subject[NamedElement].name")

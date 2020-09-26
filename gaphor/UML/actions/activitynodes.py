@@ -44,7 +44,9 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
         self.shape = IconBox(
             Box(style={"min-width": 20, "min-height": 20}, draw=draw_initial_node),
             # Text should be left-top
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -82,7 +84,9 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
                 style={"min-width": 30, "min-height": 30}, draw=draw_activity_final_node
             ),
             # Text should be right-bottom
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -127,7 +131,9 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
         self.shape = IconBox(
             Box(style={"min-width": 20, "min-height": 20}, draw=draw_flow_final_node),
             # Text should be right-bottom
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -163,7 +169,9 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
         self.shape = IconBox(
             Box(style={"min-width": 20, "min-height": 30}, draw=draw_decision_node),
             # Text should be left-top
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
         )
 
@@ -218,7 +226,9 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
 
         self.shape = IconBox(
             Box(style={"min-width": 0, "min-height": 45}, draw=self.draw_fork_node),
-            Text(text=lambda: stereotypes_str(self.subject),),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
             EditableText(text=lambda: self.subject and self.subject.name or ""),
             Text(
                 text=lambda: isinstance(self.subject, UML.JoinNode)

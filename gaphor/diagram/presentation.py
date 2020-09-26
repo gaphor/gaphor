@@ -107,7 +107,8 @@ class ElementPresentation(Presentation[S], gaphas.Element):
 
     def draw(self, context):
         self._shape.draw(
-            context, Rectangle(0, 0, self.width, self.height),
+            context,
+            Rectangle(0, 0, self.width, self.height),
         )
 
     def setup_canvas(self):

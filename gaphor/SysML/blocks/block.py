@@ -79,7 +79,8 @@ class BlockItem(ElementPresentation[Block], Classified):
                 and self.subject
                 and [
                     self.block_compartment(
-                        gettext("parts"), lambda a: a.aggregation == "composite",
+                        gettext("parts"),
+                        lambda a: a.aggregation == "composite",
                     )
                 ]
                 or []
@@ -89,7 +90,8 @@ class BlockItem(ElementPresentation[Block], Classified):
                 and self.subject
                 and [
                     self.block_compartment(
-                        gettext("references"), lambda a: a.aggregation != "composite",
+                        gettext("references"),
+                        lambda a: a.aggregation != "composite",
                     )
                 ]
                 or []

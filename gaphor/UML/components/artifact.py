@@ -27,7 +27,9 @@ class ArtifactItem(ElementPresentation, Classified):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(text=lambda: UML.model.stereotypes_str(self.subject),),
+                Text(
+                    text=lambda: UML.model.stereotypes_str(self.subject),
+                ),
                 EditableText(
                     text=lambda: self.subject.name or "",
                     style={"font-weight": FontWeight.BOLD},
