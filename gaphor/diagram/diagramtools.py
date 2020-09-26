@@ -180,14 +180,15 @@ class PlacementTool(_PlacementTool):
                 subject = None
 
             item = diagram.create(item_class, subject=subject)
-            if config_func:
-                config_func(item)
 
             adapter = Group(parent, item)
             if parent and adapter.can_contain():
                 canvas = diagram.canvas
                 canvas.reparent(item, parent=parent)
                 adapter.group()
+
+            if config_func:
+                config_func(item)
 
             return item
 

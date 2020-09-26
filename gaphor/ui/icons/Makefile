@@ -39,6 +39,7 @@ ICONS=diagram \
 	send-signal-action \
 	accept-event-action \
 	lifeline \
+	behavior-execution-specification \
 	execution-specification \
 	message \
 	interaction \

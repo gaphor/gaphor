@@ -1,8 +1,12 @@
 """Message connection adapter tests."""
 
+import pytest
+
 from gaphor import UML
+from gaphor.diagram.grouping import Group
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
+from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.interactions.message import MessageItem
 
@@ -126,6 +130,42 @@ def test_lifetime_connection(diagram):
 
     assert msg.subject is not None
     assert msg.subject.messageKind == "complete"
+
+
+@pytest.mark.parametrize("end_name", ["head", "tail"])
+def test_message_is_owned_by_implicit_interaction_connecting_to_head(
+    diagram, element_factory, end_name
+):
+    """Test messages' lifetimes connection."""
+    interaction = element_factory.create(UML.Interaction)
+    msg = diagram.create(MessageItem)
+    ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
+    ll.subject.interaction = interaction
+
+    connect(msg, getattr(msg, end_name), ll)
+
+    assert msg.subject is not None
+    assert msg.subject.interaction is interaction
+    assert msg.canvas.get_parent(msg) is None
+
+
+@pytest.mark.parametrize("end_name", ["head", "tail"])
+def test_message_is_owned_by_interaction_item_connecting_to_one_end(
+    diagram, element_factory, end_name
+):
+    """Test messages' lifetimes connection."""
+    interaction = diagram.create(
+        InteractionItem, subject=element_factory.create(UML.Interaction)
+    )
+    ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
+    Group(interaction, ll).group()
+
+    msg = diagram.create(MessageItem)
+    connect(msg, getattr(msg, end_name), ll)
+
+    assert msg.subject is not None
+    assert msg.subject.interaction is interaction.subject
+    assert msg.canvas.get_parent(msg) is interaction
 
 
 def test_disconnection(diagram):
