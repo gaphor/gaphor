@@ -33,6 +33,7 @@ help:
 	@echo "  changes    to make an overview of all changed/added/deprecated items"
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
+	@echo "  models     to generate the model images"
 
 clean:
 	-rm -rf $(BUILDDIR)/*
@@ -129,3 +130,9 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
+
+models: models/uml.rst
+
+models/uml.rst: ../models/UML.gaphor
+	gaphorconvert --format=svg --dir=models/uml --use-underscores ../models/UML.gaphor && \
+	./modeldoc.sh

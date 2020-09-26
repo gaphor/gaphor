@@ -38,13 +38,10 @@ plug-in.
    items
 
 .. toctree::
-   :caption: UML and data model
+   :caption: Modeling languages
    :maxdepth: 1
 
-   model
-   stereotypes
-   datamodel
-   connect
+   models/uml
 
 .. toctree::
    :caption: Storage
@@ -58,6 +55,15 @@ plug-in.
    :maxdepth: 1
 
    undo
+
+.. toctree::
+   :caption: Data model internals
+   :maxdepth: 1
+
+   model
+   stereotypes
+   datamodel
+   connect
 
 External links
 --------------

@@ -1,0 +1,12 @@
+12. Use Cases
+========================================
+UseCases extra
+----------------------------------------
+
+.. image:: 12._Use_Cases/UseCases_extra.svg
+
+UseCases
+----------------------------------------
+
+.. image:: 12._Use_Cases/UseCases.svg
+

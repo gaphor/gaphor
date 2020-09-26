@@ -1,0 +1,17 @@
+13. Deployments
+========================================
+1. Deployments
+----------------------------------------
+
+.. image:: 13._Deployments/1._Deployments.svg
+
+2. Artifacts
+----------------------------------------
+
+.. image:: 13._Deployments/2._Artifacts.svg
+
+3. Nodes
+----------------------------------------
+
+.. image:: 13._Deployments/3._Nodes.svg
+

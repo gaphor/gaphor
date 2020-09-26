@@ -1,0 +1,27 @@
+03. Classification
+========================================
+1. Classifiers
+----------------------------------------
+
+.. image:: 03._Classification/1._Classifiers.svg
+
+3. Features
+----------------------------------------
+
+.. image:: 03._Classification/3._Features.svg
+
+4. Properties
+----------------------------------------
+
+.. image:: 03._Classification/4._Properties.svg
+
+5. Operations
+----------------------------------------
+
+.. image:: 03._Classification/5._Operations.svg
+
+7. Instances
+----------------------------------------
+
+.. image:: 03._Classification/7._Instances.svg
+

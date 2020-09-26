@@ -1,0 +1,27 @@
+01. Common Structure
+========================================
+1. Root
+----------------------------------------
+
+.. image:: 01._Common_Structure/1._Root.svg
+
+3. Namespaces
+----------------------------------------
+
+.. image:: 01._Common_Structure/3._Namespaces.svg
+
+4. Types and Multiplicity
+----------------------------------------
+
+.. image:: 01._Common_Structure/4._Types_and_Multiplicity.svg
+
+5. Constraints
+----------------------------------------
+
+.. image:: 01._Common_Structure/5._Constraints.svg
+
+6. Dependencies
+----------------------------------------
+
+.. image:: 01._Common_Structure/6._Dependencies.svg
+

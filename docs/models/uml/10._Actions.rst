@@ -1,0 +1,22 @@
+10. Actions
+========================================
+1. Actions
+----------------------------------------
+
+.. image:: 10._Actions/1._Actions.svg
+
+2. Invocation Actions
+----------------------------------------
+
+.. image:: 10._Actions/2._Invocation_Actions.svg
+
+7. Structural Feature Actions
+----------------------------------------
+
+.. image:: 10._Actions/7._Structural_Feature_Actions.svg
+
+9. Accept Event Actions
+----------------------------------------
+
+.. image:: 10._Actions/9._Accept_Event_Actions.svg
+

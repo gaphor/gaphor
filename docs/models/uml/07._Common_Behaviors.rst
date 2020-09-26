@@ -1,0 +1,17 @@
+07. Common Behaviors
+========================================
+1. Behaviors
+----------------------------------------
+
+.. image:: 07._Common_Behaviors/1._Behaviors.svg
+
+2. Events
+----------------------------------------
+
+.. image:: 07._Common_Behaviors/2._Events.svg
+
+Reception
+----------------------------------------
+
+.. image:: 07._Common_Behaviors/Reception.svg
+
