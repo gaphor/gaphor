@@ -57,8 +57,12 @@ def order_lifeline_covered_by(lifeline):
 
 def owner_for_message(line, lifeline):
     maybe_interaction = lifeline.canvas.get_parent(lifeline)
-    if not line.subject.interaction and isinstance(maybe_interaction, InteractionItem):
+    if line.subject.interaction:
+        return
+    elif isinstance(maybe_interaction, InteractionItem):
         Group(maybe_interaction, line).group()
+    elif lifeline.subject and lifeline.subject.interaction:
+        line.subject.interaction = lifeline.subject.interaction
 
 
 def connect_lifelines(line, send, received):

@@ -14,7 +14,10 @@ class InteractionLifelineGroup(AbstractGroup):
         self.parent.canvas.reparent(self.item, self.parent)
 
     def ungroup(self):
-        del self.parent.subject.lifeline[self.item.subject]
+        """Lifelines are not ungrouped on purpose.
+
+        They would be dangling without an owner.
+        """
 
 
 @Group.register(InteractionItem, MessageItem)
@@ -29,4 +32,7 @@ class InteractionMessageGroup(AbstractGroup):
         self.parent.canvas.reparent(self.item, self.parent)
 
     def ungroup(self):
-        del self.parent.subject.message[self.item.subject]
+        """Messages are not ungrouped on purpose.
+
+        They would be dangling without an owner.
+        """

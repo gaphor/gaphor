@@ -23,6 +23,29 @@ def namespace_config(new_item):
     subject.name = f"New{type(subject).__name__}"
 
 
+def interaction_config(new_item):
+    subject = new_item.subject
+    subject.name = f"New{type(subject).__name__}"
+    if subject.interaction:
+        return
+
+    diagram = new_item.diagram
+    package = diagram.namespace
+
+    interactions = (
+        [i for i in package.ownedClassifier if isinstance(i, UML.Interaction)]
+        if package
+        else []
+    )
+    if interactions:
+        subject.interaction = interactions[0]
+    else:
+        interaction = subject.model.create(UML.Interaction)
+        interaction.name = "Interaction"
+        interaction.package = package
+        subject.interaction = interaction
+
+
 def initial_pseudostate_config(new_item):
     new_item.subject.kind = "initial"
 
@@ -383,7 +406,7 @@ uml_toolbox_actions: ToolboxDefinition = (
                 item_factory=PlacementTool.new_item_factory(
                     diagramitems.LifelineItem,
                     UML.Lifeline,
-                    config_func=namespace_config,
+                    config_func=interaction_config,
                 ),
                 handle_index=SE,
             ),
