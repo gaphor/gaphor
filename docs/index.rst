@@ -41,6 +41,7 @@ plug-in.
    :caption: Modeling languages
    :maxdepth: 1
 
+   models/core
    models/uml
    models/sysml/Profiles/SysML
 

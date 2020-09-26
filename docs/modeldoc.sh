@@ -7,7 +7,17 @@ M=$1
 H1="=================================================="
 H2="--------------------------------------------------"
 
-if test $M == "uml"
+if test $M == "core"
+then
+  cat > models/$M.rst << EOF
+Modeling Language Core
+$H1
+
+.. image:: $M/Core/main.svg
+
+EOF
+exit
+elif test $M == "uml"
 then
   cat > models/$M.rst << EOF
 Unified Modeling Language
