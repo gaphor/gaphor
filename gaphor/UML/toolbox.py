@@ -399,6 +399,18 @@ uml_toolbox_actions: ToolboxDefinition = (
         gettext("Interactions"),
         (
             ToolDef(
+                "toolbox-interaction",
+                gettext("Interaction"),
+                "gaphor-interaction-symbolic",
+                "<Shift>N",
+                item_factory=PlacementTool.new_item_factory(
+                    diagramitems.InteractionItem,
+                    UML.Interaction,
+                    config_func=namespace_config,
+                ),
+                handle_index=SE,
+            ),
+            ToolDef(
                 "toolbox-lifeline",
                 gettext("Lifeline"),
                 "gaphor-lifeline-symbolic",
@@ -411,13 +423,6 @@ uml_toolbox_actions: ToolboxDefinition = (
                 handle_index=SE,
             ),
             ToolDef(
-                "toolbox-message",
-                gettext("Message"),
-                "gaphor-message-symbolic",
-                "M",
-                item_factory=PlacementTool.new_item_factory(diagramitems.MessageItem),
-            ),
-            ToolDef(
                 "toolbox-execution-specification",
                 gettext("Execution Specification"),
                 "gaphor-execution-specification-symbolic",
@@ -428,16 +433,11 @@ uml_toolbox_actions: ToolboxDefinition = (
                 handle_index=0,
             ),
             ToolDef(
-                "toolbox-interaction",
-                gettext("Interaction"),
-                "gaphor-interaction-symbolic",
-                "<Shift>N",
-                item_factory=PlacementTool.new_item_factory(
-                    diagramitems.InteractionItem,
-                    UML.Interaction,
-                    config_func=namespace_config,
-                ),
-                handle_index=SE,
+                "toolbox-message",
+                gettext("Message"),
+                "gaphor-message-symbolic",
+                "M",
+                item_factory=PlacementTool.new_item_factory(diagramitems.MessageItem),
             ),
         ),
     ),
