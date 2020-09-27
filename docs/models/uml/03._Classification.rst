@@ -1,0 +1,33 @@
+03. Classification
+==================================================
+
+1. Classifiers
+--------------------------------------------------
+
+.. thumbnail:: 03._Classification/1._Classifiers.svg
+  :group: 03._Classification
+
+3. Features
+--------------------------------------------------
+
+.. thumbnail:: 03._Classification/3._Features.svg
+  :group: 03._Classification
+
+4. Properties
+--------------------------------------------------
+
+.. thumbnail:: 03._Classification/4._Properties.svg
+  :group: 03._Classification
+
+5. Operations
+--------------------------------------------------
+
+.. thumbnail:: 03._Classification/5._Operations.svg
+  :group: 03._Classification
+
+7. Instances
+--------------------------------------------------
+
+.. thumbnail:: 03._Classification/7._Instances.svg
+  :group: 03._Classification
+

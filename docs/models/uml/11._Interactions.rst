@@ -1,0 +1,27 @@
+11. Interactions
+==================================================
+
+1. Interactions
+--------------------------------------------------
+
+.. thumbnail:: 11._Interactions/1._Interactions.svg
+  :group: 11._Interactions
+
+2. Lifelines
+--------------------------------------------------
+
+.. thumbnail:: 11._Interactions/2._Lifelines.svg
+  :group: 11._Interactions
+
+3. Messages
+--------------------------------------------------
+
+.. thumbnail:: 11._Interactions/3._Messages.svg
+  :group: 11._Interactions
+
+4. Occurences
+--------------------------------------------------
+
+.. thumbnail:: 11._Interactions/4._Occurences.svg
+  :group: 11._Interactions
+

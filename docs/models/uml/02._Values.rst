@@ -1,0 +1,15 @@
+02. Values
+==================================================
+
+1. Literals
+--------------------------------------------------
+
+.. thumbnail:: 02._Values/1._Literals.svg
+  :group: 02._Values
+
+2. Expressions
+--------------------------------------------------
+
+.. thumbnail:: 02._Values/2._Expressions.svg
+  :group: 02._Values
+

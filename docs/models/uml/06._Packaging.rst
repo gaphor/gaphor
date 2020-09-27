@@ -1,0 +1,15 @@
+06. Packaging
+==================================================
+
+1. Packages
+--------------------------------------------------
+
+.. thumbnail:: 06._Packaging/1._Packages.svg
+  :group: 06._Packaging
+
+2. Profiles
+--------------------------------------------------
+
+.. thumbnail:: 06._Packaging/2._Profiles.svg
+  :group: 06._Packaging
+

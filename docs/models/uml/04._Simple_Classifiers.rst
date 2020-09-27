@@ -1,0 +1,15 @@
+04. Simple Classifiers
+==================================================
+
+1. Data Types
+--------------------------------------------------
+
+.. thumbnail:: 04._Simple_Classifiers/1._Data_Types.svg
+  :group: 04._Simple_Classifiers
+
+3. Interfaces
+--------------------------------------------------
+
+.. thumbnail:: 04._Simple_Classifiers/3._Interfaces.svg
+  :group: 04._Simple_Classifiers
+

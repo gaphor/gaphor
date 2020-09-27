@@ -1,0 +1,21 @@
+13. Deployments
+==================================================
+
+1. Deployments
+--------------------------------------------------
+
+.. thumbnail:: 13._Deployments/1._Deployments.svg
+  :group: 13._Deployments
+
+2. Artifacts
+--------------------------------------------------
+
+.. thumbnail:: 13._Deployments/2._Artifacts.svg
+  :group: 13._Deployments
+
+3. Nodes
+--------------------------------------------------
+
+.. thumbnail:: 13._Deployments/3._Nodes.svg
+  :group: 13._Deployments
+
