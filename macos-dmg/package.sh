@@ -38,16 +38,17 @@ mkdir -p "${RESOURCESDIR}"
 
 cp PkgInfo "${CONTENTSDIR}"
 cp gaphor.icns "${RESOURCESDIR}"
-cat __boot__.py | sed 's#3\.7#'${PYVER}'#' >"${RESOURCESDIR}/__boot__.py"
-cat Info.plist | sed 's#VERSION#'${VERSION}'#g' | sed 's#3\.7#'${PYVER}'#g' > "${CONTENTSDIR}/Info.plist"
+sed 's#3\.7#'"${PYVER}"'#' __boot__.py > "${RESOURCESDIR}/__boot__.py"
+sed 's#VERSION#'"${VERSION}"'#g' Info.plist | sed 's#3\.7#'"${PYVER}"'#g' > "${CONTENTSDIR}/Info.plist"
 
 cc -o "${MACOSDIR}/gaphor" -Wl,-rpath,@executable_path/../Resources/lib main.c -DREDIRECT_ASL -framework Cocoa
 
 function rel_path {
-  echo $1 | sed 's#/usr/local/Cellar/[^/]*/[^/]*/##'
+  # shellcheck disable=SC2001
+  echo "$1" | sed 's#/usr/local/Cellar/[^/]*/[^/]*/##'
 }
 
-{
+ {
   echo gtk+3
   brew deps gtk+3
   echo gobject-introspection
@@ -56,22 +57,22 @@ function rel_path {
   brew deps adwaita-icon-theme
   echo gtk-mac-integration
 } | sort -u |\
-while read dep
+while read -r dep
 do
   log "Processing files for Homebrew formula $dep"
-  brew list -v $dep
+  brew list -v "$dep"
 done |\
 grep -v '^find ' |\
-while read f
+while read -r f
 do
-  echo "$(rel_path $f) $f"
+  echo "$(rel_path "$f") $f"
 done |\
 grep '^bin/gdk-pixbuf-query-loaders\|^bin/gtk-query-immodules-3.0\|^lib/\|^share/gir-1.0/\|^share/glib-2.0/schemas/\|^share/locale/\|^share/icons/\|^share/themes/\|^share/fontconfig/\|^Frameworks/' |\
-while read rf f
+while read -r rf f
 do
   # log "Adding ${RESOURCESDIR}/${rf}"
-  mkdir -p "${RESOURCESDIR}/$(dirname $rf)"
-  test -L "$f" || cp $f "${RESOURCESDIR}/${rf}"
+  mkdir -p "${RESOURCESDIR}/$(dirname "$rf")"
+  test -L "$f" || cp "$f" "${RESOURCESDIR}/${rf}"
 done
 
 mv "${RESOURCESDIR}/Frameworks" "${CONTENTSDIR}"
@@ -90,11 +91,11 @@ find "${CONTENTSDIR}" -type f -exec chmod u+w {} \;
 
 log "Installing Gaphor in ${RESOURCESDIR}..."
 
-"${RESOURCESDIR}/bin/pip3" install --no-warn-script-location ../dist/gaphor-${VERSION}-py3-none-any.whl
+"${RESOURCESDIR}/bin/pip3" install --no-warn-script-location ../dist/gaphor-"${VERSION}"-py3-none-any.whl
 
 log "Cleaning unneeded resources..."
 
-rm -r "${RESOURCESDIR}"/bin
+rm -r "${RESOURCESDIR:?}"/bin
 rm "${RESOURCESDIR}"/lib/*.a
 rm "${RESOURCESDIR}/lib/libgtkmacintegration-gtk2.2.dylib"
 rm -r "${RESOURCESDIR}/lib/cairo"
@@ -113,42 +114,44 @@ log "Fixing dynamic link dependencies..."
 
 function map {
   local fun=$1
-  while read arg
+  while read -r arg
   do
-    $fun $arg
+    $fun "$arg"
   done
 }
 
 function resolve_deps {
   local lib=$1
   local dep
-  otool -L $lib | grep -e "^.$LOCALDIR/" |\
-  while read dep _
+  otool -L "$lib" | grep -e "^.$LOCALDIR/" |\
+  while read -r dep _
   do
-    echo $dep
+    echo "$dep"
   done
 }
 
 function fix_paths {
   local lib="$1"
-  log Fixing $lib
-  for dep in $(resolve_deps $lib)
+  log Fixing "$lib"
+  for dep in $(resolve_deps "$lib")
   do
     local relname
     if [[ "$dep" =~ ^.*/Frameworks/.* ]]
     then
-      relname="../$(echo $dep | sed 's#^.*/\(Frameworks/.*$\)#\1#')"
+      # shellcheck disable=SC2001
+      relname="../$(echo "$dep" | sed 's#^.*/\(Frameworks/.*$\)#\1#')"
     else
-      relname="../Resources/lib/$(basename $dep)"
+      relname="../Resources/lib/$(basename "$dep")"
     fi
     test -f "${MACOSDIR}/$relname" || {
-      local fullname=$(eval echo ${MACOSDIR}/${relname//\.dylib/.*.dylib})
-      log "Library ${MACOSDIR}/$relname not found, using $(basename $fullname) instead"
-      relname="$(dirname $relname)/$(basename $fullname)"
+      local fullname
+      fullname=$(eval echo ${MACOSDIR}/"${relname//\.dylib/.*.dylib}")
+      log "Library ${MACOSDIR}/$relname not found, using $(basename "$fullname") instead"
+      relname="$(dirname "$relname")/$(basename "$fullname")"
     }
     # @executable_path is /path/to/Gaphor.app/Contents/MacOS
     log "  $dep -> @executable_path/$relname"
-    install_name_tool -change $dep @executable_path/$relname $lib
+    install_name_tool -change "$dep" @executable_path/"$relname" "$lib"
   done
 }
 
@@ -164,8 +167,10 @@ function fix_paths {
 log "Compiling .gir files..."
 
 function compile_gir {
-  local gir="$1"
-  local outfile="$(basename $gir | sed 's/gir$/typelib/')"
+  local gir
+  local outfile
+  gir="$1"
+  outfile="$(basename "$gir" | sed 's/gir$/typelib/')"
   sed -i "" 's#/usr/local/Cellar/[^/]*/[^/]*#@executable_path/../Resources#g' "${gir}"
   g-ir-compiler --output="${RESOURCESDIR}/lib/girepository-1.0/${outfile}" "${gir}"
 }

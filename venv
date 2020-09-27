@@ -27,14 +27,15 @@ uname -a | grep -q MSYS_NT && {
 	export PATH="/mingw64/bin:${PATH}"
 } || echo "No"
 
+# shellcheck source=.venv/bin/activate
 (
 	# Do the whole installation process in a sub-shell, so we can safely fail when
 	# this file is sourced in the parent shell.
 	set -euo pipefail
 
 	check() {
-		echo Checking: $@
-		$@ >/dev/null 2>&1
+		echo Checking: "$@"
+		"$@" >/dev/null 2>&1
 	}
 
 	NO_FORCE_INSTALL=true
@@ -49,7 +50,9 @@ uname -a | grep -q MSYS_NT && {
 					VENV_OPTS="--system-site-packages"
 					;;
 			h)		echo "Usage: $0 [-f] [-S] [-h]  # -f = force install, -S = Use system site packages, -h = this message"
-					exit 0
+					exit 0 ;;
+      *)    echo "usage: $0 [-f] [-S] [-h]" >&2
+          exit 1 ;;
 			esac
 	done
 
@@ -65,14 +68,15 @@ uname -a | grep -q MSYS_NT && {
 
 	PYTHON_VER="$(python3 --version | sed 's/^Python \([0-9]\.[0-9]\).[0-9]$/\1/')"
 
-	test -d $SCRIPT_DIR/.venv || {
+	test -d "$SCRIPT_DIR"/.venv || {
 		echo "Setting up a virtual env for Gaphor..."
-		python3 -m venv --prompt Gaphor ${VENV_OPTS:-} $SCRIPT_DIR/.venv
+		python3 -m venv --prompt Gaphor ${VENV_OPTS:-} "$SCRIPT_DIR"/.venv
 	}
 
-	source $SCRIPT_DIR/.venv/bin/activate
+  # shellcheck source=.venv/bin/activate
+	source "$SCRIPT_DIR"/.venv/bin/activate
 
-	{ ${NO_FORCE_INSTALL} && test -f $SCRIPT_DIR/.venv/lib/python${PYTHON_VER}/site-packages/gaphor.egg-link; } || {
+	{ ${NO_FORCE_INSTALL} && test -f "$SCRIPT_DIR"/.venv/lib/python"${PYTHON_VER}"/site-packages/gaphor.egg-link; } || {
 		echo "Installing Gaphor in the virtualenv..."
 
 		pip install --upgrade poetry==1.0.10
@@ -105,4 +109,4 @@ uname -a | grep -q MSYS_NT && {
 		"import gaphor.UML" \
 		"Gaphor was not installed properly. Please open an issue on GitHub."
 
-) && source $SCRIPT_DIR/.venv/bin/activate
+) && source "$SCRIPT_DIR"/.venv/bin/activate

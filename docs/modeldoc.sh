@@ -7,9 +7,9 @@ M=$1
 H1="=================================================="
 H2="--------------------------------------------------"
 
-if test $M == "core"
+if test "$M" == "core"
 then
-  cat > models/$M.rst << EOF
+  cat > models/"$M".rst << EOF
 Modeling Language Core
 $H1
 
@@ -17,9 +17,9 @@ $H1
 
 EOF
 exit
-elif test $M == "uml"
+elif test "$M" == "uml"
 then
-  cat > models/$M.rst << EOF
+  cat > models/"$M".rst << EOF
 Unified Modeling Language
 $H1
 
@@ -31,11 +31,11 @@ $H1
 
 EOF
 else
-  cat > models/$M.rst << EOF
+  cat > models/"$M".rst << EOF
 Systems Modeling Language
 $H1
 
-.. image:: $(basename $M)/SysML.svg
+.. image:: $(basename "$M")/SysML.svg
 
 .. toctree::
   :caption: Packages
@@ -44,17 +44,17 @@ $H1
 EOF
 fi
 
-ls models/$M | while read PACKAGE
+find models/"$M" | while read -r PACKAGE
 do
-  if test -d models/$M/$PACKAGE
+  if test -d models/"$M"/"$PACKAGE"
   then
-    echo "  $(basename $M)/${PACKAGE}" >> models/$M.rst
+    echo "  $(basename "$M")/${PACKAGE}" >> models/"$M".rst
 
     {
       echo "${PACKAGE//_/ }"
       echo $H1
       echo
-      ls models/$M/${PACKAGE} | while read DIAGRAM
+      find models/"$M"/"${PACKAGE}" | while read -r DIAGRAM
       do
         name=${DIAGRAM%.svg}
         echo "${name//_/ }"
@@ -64,6 +64,6 @@ do
         echo "  :group: ${PACKAGE}"
         echo
       done
-    } > models/$M/${PACKAGE}.rst
+    } > models/"$M"/"${PACKAGE}".rst
   fi
 done
