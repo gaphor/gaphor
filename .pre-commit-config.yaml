@@ -25,5 +25,10 @@ repos:
 - repo: https://github.com/myint/docformatter
   rev: v1.3.1
   hooks:
-    - id: docformatter
-      args: [--in-place]
+  - id: docformatter
+    args: [--in-place]
+- repo: git://github.com/detailyang/pre-commit-shell
+  rev: v1.0.6
+  hooks:
+  - id: shell-lint
+    args: [-x]

@@ -20,6 +20,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-"$MSYS2_ARCH"-python-cairo \
     mingw-w64-"$MSYS2_ARCH"-python-pip \
 
+# shellcheck source=venv
 source "$DIR"/../venv
 pip install pyinstaller==3.6.0
 make translations
