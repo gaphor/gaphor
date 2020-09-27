@@ -16,6 +16,9 @@ gaphor.prof
 .gpg
 pip-wheel-metadata
 
+# Gaphor test models in project root
+/*.gaphor
+
 # Virtual env stuff
 .env/
 .venv/
