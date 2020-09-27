@@ -68,6 +68,7 @@ ICONS=diagram \
 	trace \
 	refine \
 	verify \
+	constraint \
 	view-editor
 
 ICON_THEME=hicolor/scalable/actions
