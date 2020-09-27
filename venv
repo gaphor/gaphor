@@ -27,7 +27,7 @@ uname -a | grep -q MSYS_NT && {
 	export PATH="/mingw64/bin:${PATH}"
 } || echo "No"
 
-# shellcheck source=.venv/bin/activate
+# shellcheck disable=SC1091,SC1090
 (
 	# Do the whole installation process in a sub-shell, so we can safely fail when
 	# this file is sourced in the parent shell.
