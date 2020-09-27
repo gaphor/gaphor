@@ -1,5 +1,5 @@
-"""Grouping functionality allows nesting of one item within another item (parent
-item). This is useful in several use cases.
+"""Grouping functionality allows nesting of one item within another item
+(parent item). This is useful in several use cases.
 
 - artifact deployed within a node
 - a class within a package, or a component
