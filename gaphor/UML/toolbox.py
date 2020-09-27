@@ -23,6 +23,31 @@ def namespace_config(new_item):
     subject.name = f"New{type(subject).__name__}"
 
 
+def activity_config(new_item):
+    subject = new_item.subject
+    subject.name = f"New{type(subject).__name__}"
+    if subject.activity:
+        return
+
+    diagram = new_item.diagram
+    package = diagram.namespace
+
+    activities = (
+        [i for i in package.ownedClassifier if isinstance(i, UML.Activity)]
+        if package
+        else diagram.model.lselect(
+            lambda e: isinstance(e, UML.Activity) and e.package is None
+        )
+    )
+    if activities:
+        subject.activity = activities[0]
+    else:
+        activity = subject.model.create(UML.Activity)
+        activity.name = "Activity"
+        activity.package = package
+        subject.activity = activity
+
+
 def interaction_config(new_item):
     subject = new_item.subject
     subject.name = f"New{type(subject).__name__}"
@@ -288,7 +313,7 @@ uml_toolbox_actions: ToolboxDefinition = (
                 item_factory=PlacementTool.new_item_factory(
                     diagramitems.ActionItem,
                     UML.Action,
-                    config_func=namespace_config,
+                    config_func=activity_config,
                 ),
                 handle_index=SE,
             ),
@@ -298,7 +323,9 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-initial-node-symbolic",
                 "j",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.InitialNodeItem, UML.InitialNode
+                    diagramitems.InitialNodeItem,
+                    UML.InitialNode,
+                    config_func=activity_config,
                 ),
                 handle_index=SE,
             ),
@@ -308,7 +335,9 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-activity-final-node-symbolic",
                 "f",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.ActivityFinalNodeItem, UML.ActivityFinalNode
+                    diagramitems.ActivityFinalNodeItem,
+                    UML.ActivityFinalNode,
+                    config_func=activity_config,
                 ),
                 handle_index=SE,
             ),
@@ -318,7 +347,9 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-flow-final-node-symbolic",
                 "w",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.FlowFinalNodeItem, UML.FlowFinalNode
+                    diagramitems.FlowFinalNodeItem,
+                    UML.FlowFinalNode,
+                    config_func=activity_config,
                 ),
                 handle_index=SE,
             ),
@@ -328,7 +359,9 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-decision-node-symbolic",
                 "g",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.DecisionNodeItem, UML.DecisionNode
+                    diagramitems.DecisionNodeItem,
+                    UML.DecisionNode,
+                    config_func=activity_config,
                 ),
                 handle_index=SE,
             ),
@@ -338,7 +371,9 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-fork-node-symbolic",
                 "<Shift>R",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.ForkNodeItem, UML.JoinNode
+                    diagramitems.ForkNodeItem,
+                    UML.JoinNode,
+                    config_func=activity_config,
                 ),
                 handle_index=1,
             ),
@@ -350,7 +385,7 @@ uml_toolbox_actions: ToolboxDefinition = (
                 item_factory=PlacementTool.new_item_factory(
                     diagramitems.ObjectNodeItem,
                     UML.ObjectNode,
-                    config_func=namespace_config,
+                    config_func=activity_config,
                 ),
                 handle_index=SE,
             ),
@@ -377,7 +412,7 @@ uml_toolbox_actions: ToolboxDefinition = (
                 item_factory=PlacementTool.new_item_factory(
                     diagramitems.SendSignalActionItem,
                     UML.SendSignalAction,
-                    config_func=namespace_config,
+                    config_func=activity_config,
                 ),
                 handle_index=SE,
             ),
@@ -389,7 +424,7 @@ uml_toolbox_actions: ToolboxDefinition = (
                 item_factory=PlacementTool.new_item_factory(
                     diagramitems.AcceptEventActionItem,
                     UML.AcceptEventAction,
-                    config_func=namespace_config,
+                    config_func=activity_config,
                 ),
                 handle_index=SE,
             ),
