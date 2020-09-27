@@ -4,6 +4,7 @@ and diagram windows."""
 import importlib.resources
 import logging
 import sys
+from pathlib import Path
 from typing import Optional
 
 import gi
@@ -26,8 +27,12 @@ APPLICATION_ID = "org.gaphor.Gaphor"
 
 
 icon_theme = Gtk.IconTheme.get_default()
-with importlib.resources.path("gaphor.ui", "icons") as path:
+if sys.version_info >= (3, 9):
+    path: Path = importlib.resources.files("gaphor") / "ui" / "icons"
     icon_theme.append_search_path(str(path))
+else:
+    with importlib.resources.path("gaphor.ui", "icons") as path:
+        icon_theme.append_search_path(str(path))
 
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
