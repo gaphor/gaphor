@@ -160,7 +160,6 @@ class CommunicationPath(Association):
 class Dependency(DirectedRelationship, PackageableElement):
     client: relation_one[NamedElement]
     supplier: relation_one[NamedElement]
-    package: relation_one[Package]
 
 
 class Abstraction(Dependency):
@@ -379,7 +378,6 @@ class Package(Namespace, PackageableElement):
     ownedClassifier: relation_many[Type]
     packageMerge: relation_many[PackageMerge]
     appliedProfile: relation_many[ProfileApplication]
-    ownedDependency: relation_many[Dependency]
     packagedElement: relation_many[PackageableElement]
 
 
@@ -483,6 +481,7 @@ class Constraint(PackageableElement):
     specification: attribute[str]
     stateInvariant: relation_one[StateInvariant]
     owningState: relation_one[State]
+    transition: relation_one[Transition]
     parameterSet: relation_one[ParameterSet]
 
 
@@ -1185,7 +1184,10 @@ State.statevariant = association(
 Constraint.owningState = association(
     "owningState", State, upper=1, opposite="statevariant"
 )
-Transition.guard = association("guard", Constraint, upper=1, composite=True)
+Transition.guard = association(
+    "guard", Constraint, upper=1, composite=True, opposite="transition"
+)
+Constraint.transition = association("transition", Transition, upper=1, opposite="guard")
 State.submachine = association("submachine", StateMachine, upper=1)
 StateMachine.extendedStateMachine = association(
     "extendedStateMachine", StateMachine, upper=1
@@ -1292,10 +1294,6 @@ Artifact.nestedArtifact = association(
 Artifact.artifact = association(
     "artifact", Artifact, upper=1, opposite="nestedArtifact"
 )
-Package.ownedDependency = association("ownedDependency", Dependency, opposite="package")
-Dependency.package = association(
-    "package", Package, lower=1, upper=1, opposite="ownedDependency"
-)
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1387,7 +1385,7 @@ RedefinableElement.redefinitionContext = derivedunion(
     Classifier.nestingClass,
 )
 PackageableElement.owningPackage = derivedunion(
-    "owningPackage", Package, 0, 1, Type.package, Dependency.package
+    "owningPackage", Package, 0, 1, Type.package
 )
 NamedElement.namespace = derivedunion(
     "namespace",
@@ -1425,12 +1423,7 @@ NamedElement.namespace = derivedunion(
     Artifact.artifact,
 )
 Package.packagedElement = derivedunion(
-    "packagedElement",
-    PackageableElement,
-    0,
-    "*",
-    Package.ownedClassifier,
-    Package.ownedDependency,
+    "packagedElement", PackageableElement, 0, "*", Package.ownedClassifier
 )
 Namespace.ownedMember = derivedunion(
     "ownedMember",
@@ -1618,6 +1611,7 @@ Element.owner = derivedunion(
     Dependency.client,
     Constraint.stateInvariant,
     Pseudostate.state,
+    Constraint.transition,
     Action.interaction,
     GeneralOrdering.interactionFragment,
     Constraint.parameterSet,

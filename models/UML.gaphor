@@ -23597,6 +23597,7 @@ specially for Gaphor</val>
 <ref refid="DCE:F0F613D4-4663-11DA-A766-00123FE76EBE"/>
 <ref refid="DCE:AE69FD6C-3B14-11D9-83CE-A0BAF22E8A12"/>
 <ref refid="4b206270-909f-11ea-85c4-7f4489bdcce3"/>
+<ref refid="DCE:1A68075E-4664-11DA-A766-00123FE76EBE"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -34517,11 +34518,6 @@ directly in a model.</val>
 <ref refid="DCE:1A68075E-4664-11DA-A766-00123FE76EBE"/>
 </reflist>
 </memberEnd>
-<ownedEnd>
-<reflist>
-<ref refid="DCE:1A68075E-4664-11DA-A766-00123FE76EBE"/>
-</reflist>
-</ownedEnd>
 <package>
 <ref refid="DCE:A1A5A3A2-4586-11DA-A04F-00123FE76EBE"/>
 </package>
@@ -34569,18 +34565,26 @@ directly in a model.</val>
 </upperValue>
 </Property>
 <Property id="DCE:1A68075E-4664-11DA-A766-00123FE76EBE">
+<appliedStereotype>
+<reflist>
+<ref refid="1de265ac-00f1-11eb-8f71-7fd0147881a5"/>
+</reflist>
+</appliedStereotype>
 <association>
 <ref refid="DCE:1A671AEC-4664-11DA-A766-00123FE76EBE"/>
 </association>
+<class_>
+<ref refid="DCE:5C465FB0-4A89-11D7-B090-133D836EF880"/>
+</class_>
 <lowerValue>
 <val>0</val>
 </lowerValue>
 <lowerValue>
 <val>0</val>
 </lowerValue>
-<owningAssociation>
-<ref refid="DCE:1A671AEC-4664-11DA-A766-00123FE76EBE"/>
-</owningAssociation>
+<name>
+<val>transition</val>
+</name>
 <presentation>
 <reflist/>
 </presentation>
@@ -38077,6 +38081,7 @@ swimlanes</val>
 <ref refid="691fc6bc-ed56-11ea-96dc-bf74f1f80424"/>
 <ref refid="c84b3eee-f9d8-11ea-b854-fb98adcb9438"/>
 <ref refid="cb489f42-f9d8-11ea-b854-fb98adcb9438"/>
+<ref refid="2037295a-00f1-11eb-8f71-7fd0147881a5"/>
 </reflist>
 </slot>
 <typeValue>
@@ -53449,6 +53454,34 @@ have an opposite end.
 </definingFeature>
 <owningInstance>
 <ref refid="176453e8-fa90-11de-bd51-00224128e79d"/>
+</owningInstance>
+<value>
+<val>owner</val>
+</value>
+</Slot>
+<InstanceSpecification id="1de265ac-00f1-11eb-8f71-7fd0147881a5">
+<classifier>
+<reflist>
+<ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</classifier>
+<extended>
+<reflist>
+<ref refid="DCE:1A68075E-4664-11DA-A766-00123FE76EBE"/>
+</reflist>
+</extended>
+<slot>
+<reflist>
+<ref refid="2037295a-00f1-11eb-8f71-7fd0147881a5"/>
+</reflist>
+</slot>
+</InstanceSpecification>
+<Slot id="2037295a-00f1-11eb-8f71-7fd0147881a5">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="1de265ac-00f1-11eb-8f71-7fd0147881a5"/>
 </owningInstance>
 <value>
 <val>owner</val>
