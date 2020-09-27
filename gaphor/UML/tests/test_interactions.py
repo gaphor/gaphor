@@ -28,6 +28,15 @@ def test_create_lifeline_on_diagram_should_create_an_interaction(
     assert lifeline.subject.interaction
 
 
+def test_create_lifeline_on_diagram_should_use_existing_interaction(
+    diagram, lifeline_factory, element_factory
+):
+    interaction = element_factory.create(UML.Interaction)
+    lifeline = lifeline_factory(diagram)
+
+    assert lifeline.subject.interaction is interaction
+
+
 def test_create_lifeline_on_diagram_in_package_should_create_an_interaction(
     diagram, element_factory, lifeline_factory
 ):
