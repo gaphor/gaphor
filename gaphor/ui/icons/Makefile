@@ -33,6 +33,10 @@ ICONS=diagram \
 	flow-final-node \
 	decision-node \
 	fork-node \
+	join-node \
+	activity \
+	state-machine \
+	region \
 	object-node \
 	partition \
 	control-flow \
