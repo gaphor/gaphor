@@ -53,12 +53,18 @@ class FlowConnect(UnaryRelationshipConnect):
 
     def connect_subject(self, handle):
         line = self.line
+        assert line
 
         # TODO: connect opposite side again (in case it's a join/fork or
         #       decision/merge node)
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
-        if isinstance(c1, ObjectNodeItem) or isinstance(c2, ObjectNodeItem):
+        assert c1 and c2
+        assert isinstance(c1.subject, UML.ActivityNode)
+
+        if isinstance(c1.subject, UML.ObjectNode) or isinstance(
+            c2.subject, UML.ObjectNode
+        ):
             relation: UML.ActivityEdge = self.relationship_or_new(
                 UML.ObjectFlow, UML.ObjectFlow.source, UML.ObjectFlow.target
             )
@@ -67,6 +73,7 @@ class FlowConnect(UnaryRelationshipConnect):
                 UML.ControlFlow, UML.ControlFlow.source, UML.ControlFlow.target
             )
         line.subject = relation
+        relation.activity = c1.subject.activity
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
         if opposite and isinstance(otc, (ForkNodeItem, DecisionNodeItem)):
