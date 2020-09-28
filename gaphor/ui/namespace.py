@@ -215,6 +215,7 @@ class Namespace(UIComponent):
 
         selection = self.view.get_selection()
         selection.select_path(path)
+        self.view.scroll_to_cell(path, None, False, 0, 0)
         self._on_view_cursor_changed(self.view)
 
     @action(name="tree-view.open")
