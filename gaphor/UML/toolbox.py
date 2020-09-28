@@ -65,20 +65,57 @@ def interaction_config(new_item):
         )
     )
     if interactions:
-        subject.interaction = interactions[0]
+        interaction = interactions[0]
     else:
         interaction = subject.model.create(UML.Interaction)
         interaction.name = "Interaction"
         interaction.package = package
-        subject.interaction = interaction
+
+    subject.interaction = interaction
+
+
+def state_machine_config(new_item):
+    subject = new_item.subject
+    subject.name = f"New{type(subject).__name__}"
+    if subject.container:
+        return
+
+    diagram = new_item.diagram
+    package = diagram.namespace
+
+    state_machines = (
+        [i for i in package.ownedClassifier if isinstance(i, UML.StateMachine)]
+        if package
+        else diagram.model.lselect(
+            lambda e: isinstance(e, UML.StateMachine) and e.package is None
+        )
+    )
+
+    if state_machines:
+        state_machine = state_machines[0]
+    else:
+        state_machine = subject.model.create(UML.StateMachine)
+        state_machine.name = "StateMachine"
+        state_machine.package = package
+
+    if state_machine.region:
+        region = state_machine.region[0]
+    else:
+        region = subject.model.create(UML.Region)
+        region.name = "DefaultRegion"
+        region.stateMachine = state_machine
+
+    subject.container = region
 
 
 def initial_pseudostate_config(new_item):
     new_item.subject.kind = "initial"
+    state_machine_config(new_item)
 
 
 def history_pseudostate_config(new_item):
     new_item.subject.kind = "shallowHistory"
+    state_machine_config(new_item)
 
 
 def metaclass_config(new_item):
@@ -487,7 +524,7 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-state-symbolic",
                 "s",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.StateItem, UML.State, config_func=namespace_config
+                    diagramitems.StateItem, UML.State, config_func=state_machine_config
                 ),
                 handle_index=SE,
             ),
@@ -509,7 +546,9 @@ uml_toolbox_actions: ToolboxDefinition = (
                 "gaphor-final-state-symbolic",
                 "x",
                 item_factory=PlacementTool.new_item_factory(
-                    diagramitems.FinalStateItem, UML.FinalState
+                    diagramitems.FinalStateItem,
+                    UML.FinalState,
+                    config_func=state_machine_config,
                 ),
                 handle_index=SE,
             ),

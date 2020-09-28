@@ -24,6 +24,8 @@ class VertexConnect(RelationshipConnect):
         relation = self.relationship_or_new(
             UML.Transition, UML.Transition.source, UML.Transition.target
         )
+        region = self.get_connected(self.line.head).subject.container  # type: ignore[union-attr]
+        relation.container = region
         self.line.subject = relation
         if relation.guard is None:
             relation.guard = self.line.model.create(UML.Constraint)
