@@ -5,7 +5,7 @@ The Toolbox is bound to a diagram. When a diagram page (tab) is
 switched, the actions bound to the toolbuttons should change as well.
 """
 
-from typing import Callable, NamedTuple, Optional, Sequence, Tuple
+from typing import Callable, NamedTuple, Optional, Sequence
 
 from gaphor.core.modeling import Diagram, Presentation
 
@@ -21,4 +21,9 @@ class ToolDef(NamedTuple):
     handle_index: int = -1
 
 
-ToolboxDefinition = Sequence[Tuple[str, Sequence[ToolDef]]]
+class ToolSection(NamedTuple):
+    name: str
+    tools: Sequence[ToolDef]
+
+
+ToolboxDefinition = Sequence[ToolSection]
