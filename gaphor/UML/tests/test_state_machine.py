@@ -71,14 +71,16 @@ def test_create_state_should_add_to_existing_state_machine_and_region_in_package
     assert state.subject.container is region
 
 
-# @pytest.mark.parametrize("item_factory", activity_node_names, indirect=True)
-# def test_create_action_should_add_to_existing_activity_in_package(
-#     diagram, item_factory, element_factory
-# ):
-#     package = element_factory.create(UML.Package)
-#     diagram.package = package
-#     activity = element_factory.create(UML.Activity)
-#     activity.package = package
-#     action = item_factory(diagram)
+@pytest.mark.parametrize("item_factory", state_node_names, indirect=True)
+def test_create_state_should_add_to_existing_state_machine_in_package(
+    diagram, item_factory, element_factory
+):
+    state_machine = element_factory.create(UML.StateMachine)
 
-#     assert action.subject.activity is activity
+    package = element_factory.create(UML.Package)
+    diagram.package = package
+    state_machine.package = package
+
+    state = item_factory(diagram)
+
+    assert state.subject.container.stateMachine is state_machine
