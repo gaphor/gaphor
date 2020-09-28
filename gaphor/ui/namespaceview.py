@@ -74,9 +74,6 @@ class NamespaceView(Gtk.TreeView):
             return
         return model.get_value(iter, 0)
 
-    def expand_root_nodes(self):
-        self.expand_row(path=Gtk.TreePath.new_first(), open_all=False)
-
     def _set_pixbuf(self, column, cell, model, iter, data):
         element = model.get_value(iter, 0)
 

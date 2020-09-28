@@ -15,10 +15,10 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.core.format import format
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, Presentation
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramOpened
+from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.ui.namespacemodel import (
     RELATIONSHIPS,
     NamespaceModel,
@@ -45,6 +45,7 @@ class Namespace(UIComponent):
     def open(self):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
         self.event_manager.subscribe(self._on_model_refreshed)
+        self.event_manager.subscribe(self._on_diagram_selection_changed)
 
         sorted_model = self.model.sorted()
 
@@ -99,6 +100,7 @@ class Namespace(UIComponent):
             self.model.shutdown()
             self.model = None
         self.event_manager.unsubscribe(self._on_model_refreshed)
+        self.event_manager.unsubscribe(self._on_diagram_selection_changed)
 
     def namespace_popup_model(self):
         assert self.view
@@ -145,8 +147,14 @@ class Namespace(UIComponent):
     def _on_model_refreshed(self, event):
         # Expand all root elements:
         if self.view:
-            self.view.expand_root_nodes()
+            self.view.expand_row(path=Gtk.TreePath.new_first(), open_all=False)
             self._on_view_cursor_changed(self.view)
+
+    @event_handler(DiagramSelectionChanged)
+    def _on_diagram_selection_changed(self, event):
+        focused_item = event.focused_item
+        if isinstance(focused_item, Presentation) and focused_item.subject:
+            self.select_element(focused_item.subject)
 
     def _on_view_event(self, view, event):
         """Show a popup menu if button3 was pressed on the TreeView."""
