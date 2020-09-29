@@ -94,9 +94,12 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(FileLoaded(self, filename))
         except Exception:
             error_handler(
-                message=gettext(
-                    "Error while loading model from file {filename}"
-                ).format(filename=filename),
+                message=gettext("Unable to open model “{filename}”.").format(
+                    filename=filename
+                ),
+                secondary_message=gettext(
+                    "This file does not contain a valid Gaphor model."
+                ),
                 window=self.main_window.window,
             )
             raise
@@ -177,11 +180,14 @@ class FileManager(Service, ActionProvider):
 
             self.filename = filename
             self.event_manager.handle(FileSaved(self, filename))
-        except Exception:
+        except Exception as e:
             error_handler(
-                message=gettext("Error while saving model to file {filename}").format(
+                message=gettext("Unable to save model “{filename}”.").format(
                     filename=filename
                 ),
+                secondary_message=gettext(
+                    "The model can not be stored at this location:\n{exc}"
+                ).format(exc=str(e)),
                 window=self.main_window.window,
             )
             raise

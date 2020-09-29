@@ -13,37 +13,28 @@ from gi.repository import Gtk
 from gaphor.i18n import gettext
 
 
-def error_handler(message=None, exc_info=None, window=None):
-    exc_type, exc_value, exc_traceback = exc_info or sys.exc_info()
+def error_handler(message, secondary_message="", window=None):
+    exc_type, exc_value, exc_traceback = sys.exc_info()
 
-    if not exc_type:
-        return
-
-    if not message:
-        message = gettext("An error occurred.")
-
-    buttons = Gtk.ButtonsType.OK
-    message = (
-        f"{message}\n\n"
-        + gettext("Technical details:")
-        + f"\n\t{exc_type}\n\t{exc_value}"
-    )
-
-    if __debug__ and sys.stdin.isatty():
+    if __debug__ and exc_traceback and sys.stdin.isatty():
         buttons = Gtk.ButtonsType.YES_NO
-        message += "\n\n" + gettext(
-            "Do you want to debug?\n(Gaphor should have been started from the command line)"
+        secondary_message += ("\n\n" if secondary_message else "") + gettext(
+            "It looks like Gaphor is started from the command line.\nDo you want to open a debug session?"
         )
+    else:
+        buttons = Gtk.ButtonsType.OK
 
     dialog = Gtk.MessageDialog(
         None,
         Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
         Gtk.MessageType.ERROR,
         buttons,
-        message,
     )
+    dialog.props.text = message
+    dialog.props.secondary_text = secondary_message
     dialog.set_transient_for(window)
     answer = dialog.run()
     dialog.destroy()
-    if answer == Gtk.ResponseType.YES:
+
+    if exc_traceback and answer == Gtk.ResponseType.YES:
         pdb.post_mortem(exc_traceback)
