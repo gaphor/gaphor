@@ -80,7 +80,7 @@ class Application(Service, ActionProvider):
         session = Session()
 
         @event_handler(ActiveSessionChanged)
-        def on__active_session_changed(event):
+        def on_active_session_changed(event):
             self._active_session = session
 
         @event_handler(SessionShutdown)
@@ -90,7 +90,7 @@ class Application(Service, ActionProvider):
                 self.quit()
 
         event_manager = session.get_service("event_manager")
-        event_manager.subscribe(on__active_session_changed)
+        event_manager.subscribe(on_active_session_changed)
         event_manager.subscribe(on_session_shutdown)
 
         self.sessions.add(session)
