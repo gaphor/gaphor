@@ -5,7 +5,7 @@ from typing import Set
 from gi.repository import Gdk, Gtk
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import Transaction, action, event_handler
+from gaphor.core import Transaction, action
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.ui.event import DiagramSelectionChanged
@@ -33,18 +33,12 @@ class CopyService(Service, ActionProvider):
         self.element_factory = element_factory
         self.diagrams = diagrams
 
-        event_manager.subscribe(self._update)
-
         self.clipboard = Gtk.Clipboard.get_default(Gdk.Display.get_default())
         self.clipboard.connect("owner_change", self.on_clipboard_owner_change)
         self.clipboard_semaphore = 0
 
-        view = self.diagrams.get_current_view()
-        if view:
-            self.update_paste_state(view)
-
     def shutdown(self):
-        self.event_manager.unsubscribe(self._update)
+        pass
 
     def on_clipboard_owner_change(self, clipboard, event):
         if self.clipboard_semaphore > 0:
@@ -52,18 +46,6 @@ class CopyService(Service, ActionProvider):
         else:
             global copy_buffer
             copy_buffer = set()
-            view = self.diagrams.get_current_view()
-            if view:
-                self.update_paste_state(view)
-
-    @event_handler(DiagramSelectionChanged)
-    def _update(self, event):
-        diagram_view = event.diagram_view
-        win_action_group = diagram_view.get_action_group("win")
-        if win_action_group:
-            win_action_group.lookup_action("edit-copy").set_enabled(
-                bool(diagram_view.selected_items)
-            )
 
     def copy(self, items):
         global copy_buffer
@@ -89,11 +71,6 @@ class CopyService(Service, ActionProvider):
 
         return new_items
 
-    def update_paste_state(self, view):
-        win_action_group = view.get_action_group("win")
-        if win_action_group:
-            win_action_group.lookup_action("edit-paste").set_enabled(bool(copy_buffer))
-
     @action(
         name="edit-copy",
         shortcut="<Primary>c",
@@ -105,7 +82,6 @@ class CopyService(Service, ActionProvider):
             self.clipboard.set_text("", -1)
             items = view.selected_items
             self.copy(items)
-        self.update_paste_state(view)
 
     @action(name="edit-cut", shortcut="<Primary>x")
     def cut_action(self):
@@ -117,7 +93,6 @@ class CopyService(Service, ActionProvider):
             self.copy(items)
             for i in list(items):
                 i.unlink()
-        self.update_paste_state(view)
 
     @action(name="edit-paste", shortcut="<Primary>v")
     def paste_action(self):
