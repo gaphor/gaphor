@@ -15,10 +15,10 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.core.format import format
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, Presentation
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramOpened
+from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.ui.namespacemodel import (
     RELATIONSHIPS,
     NamespaceModel,
@@ -34,6 +34,45 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
+def popup_model(view):
+    model = Gio.Menu.new()
+
+    part = Gio.Menu.new()
+    part.append(gettext("_Open"), "tree-view.open")
+    part.append(gettext("_Rename"), "tree-view.rename")
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    part.append(gettext("New _Diagram"), "tree-view.create-diagram")
+    part.append(gettext("New _Package"), "tree-view.create-package")
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    part.append(gettext("De_lete"), "tree-view.delete")
+    model.append_section(None, part)
+
+    element = view.get_selected_element()
+
+    part = Gio.Menu.new()
+    for presentation in element.presentation:
+        diagram = presentation.diagram
+        if diagram:
+            menu_item = Gio.MenuItem.new(
+                gettext('Show in "{diagram}"').format(diagram=diagram.name),
+                "tree-view.show-in-diagram",
+            )
+            menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))
+            part.append_item(menu_item)
+
+        # Play it safe with an (arbitrary) upper bound
+        if part.get_n_items() > 29:
+            break
+
+    if part.get_n_items() > 0:
+        model.append_section(None, part)
+    return model
+
+
 class Namespace(UIComponent):
     def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         self.event_manager = event_manager
@@ -45,6 +84,7 @@ class Namespace(UIComponent):
     def open(self):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
         self.event_manager.subscribe(self._on_model_refreshed)
+        self.event_manager.subscribe(self._on_diagram_selection_changed)
 
         sorted_model = self.model.sorted()
 
@@ -99,59 +139,25 @@ class Namespace(UIComponent):
             self.model.shutdown()
             self.model = None
         self.event_manager.unsubscribe(self._on_model_refreshed)
-
-    def namespace_popup_model(self):
-        assert self.view
-        model = Gio.Menu.new()
-
-        part = Gio.Menu.new()
-        part.append(gettext("_Open"), "tree-view.open")
-        part.append(gettext("_Rename"), "tree-view.rename")
-        model.append_section(None, part)
-
-        part = Gio.Menu.new()
-        part.append(gettext("New _Diagram"), "tree-view.create-diagram")
-        part.append(gettext("New _Package"), "tree-view.create-package")
-        model.append_section(None, part)
-
-        part = Gio.Menu.new()
-        part.append(gettext("De_lete"), "tree-view.delete")
-        model.append_section(None, part)
-
-        element = self.view.get_selected_element()
-
-        part = Gio.Menu.new()
-        for presentation in element.presentation:
-            diagram = presentation.diagram
-            if diagram:
-                menu_item = Gio.MenuItem.new(
-                    gettext('Show in "{diagram}"').format(diagram=diagram.name),
-                    "tree-view.show-in-diagram",
-                )
-                menu_item.set_attribute_value(
-                    "target", GLib.Variant.new_string(diagram.id)
-                )
-                part.append_item(menu_item)
-
-            # Play it safe with an (arbitrary) upper bound
-            if part.get_n_items() > 29:
-                break
-
-        if part.get_n_items() > 0:
-            model.append_section(None, part)
-        return model
+        self.event_manager.unsubscribe(self._on_diagram_selection_changed)
 
     @event_handler(NamespaceModelRefreshed)
     def _on_model_refreshed(self, event):
         # Expand all root elements:
         if self.view:
-            self.view.expand_root_nodes()
+            self.view.expand_row(path=Gtk.TreePath.new_first(), open_all=False)
             self._on_view_cursor_changed(self.view)
+
+    @event_handler(DiagramSelectionChanged)
+    def _on_diagram_selection_changed(self, event):
+        focused_item = event.focused_item
+        if isinstance(focused_item, Presentation) and focused_item.subject:
+            self.select_element(focused_item.subject)
 
     def _on_view_event(self, view, event):
         """Show a popup menu if button3 was pressed on the TreeView."""
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button.button == 3:
-            menu = Gtk.Menu.new_from_model(self.namespace_popup_model())
+            menu = Gtk.Menu.new_from_model(popup_model(self.view))
             menu.attach_to_widget(view, None)
             menu.popup_at_pointer(event)
         elif event.type == Gdk.EventType.KEY_PRESS and event.key.keyval == Gdk.KEY_F2:
@@ -209,6 +215,7 @@ class Namespace(UIComponent):
 
         selection = self.view.get_selection()
         selection.select_path(path)
+        self.view.scroll_to_cell(path, None, False, 0, 0)
         self._on_view_cursor_changed(self.view)
 
     @action(name="tree-view.open")
