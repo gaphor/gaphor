@@ -5,8 +5,8 @@ clean and in sync with diagrams."""
 from gaphor import UML
 from gaphor.abc import Service
 from gaphor.core import event_handler
-from gaphor.core.modeling import Presentation
-from gaphor.core.modeling.event import AssociationDeleted, AssociationSet
+from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.core.modeling.event import AssociationDeleted, AssociationSet, DerivedSet
 from gaphor.diagram.general import CommentLineItem
 
 
@@ -22,6 +22,7 @@ class SanitizerService(Service):
         event_manager.subscribe(self._unlink_on_stereotype_delete)
         event_manager.subscribe(self._unlink_on_extension_delete)
         event_manager.subscribe(self._disconnect_extension_end)
+        event_manager.subscribe(self._redraw_diagram_on_move)
 
     def shutdown(self):
         event_manager = self.event_manager
@@ -30,6 +31,7 @@ class SanitizerService(Service):
         event_manager.unsubscribe(self._unlink_on_stereotype_delete)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
         event_manager.unsubscribe(self._disconnect_extension_end)
+        event_manager.unsubscribe(self._redraw_diagram_on_move)
 
     @event_handler(AssociationDeleted)
     def _unlink_on_presentation_delete(self, event):
@@ -109,3 +111,10 @@ class SanitizerService(Service):
             event.old_value, UML.Stereotype
         ):
             event.element.unlink()
+
+    @event_handler(DerivedSet)
+    def _redraw_diagram_on_move(self, event):
+        if event.property is Element.owner and isinstance(event.element, Diagram):
+            canvas = event.element.canvas
+            for item in canvas.get_all_items():
+                canvas.request_update(item)

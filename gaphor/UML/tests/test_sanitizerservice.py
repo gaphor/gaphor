@@ -1,3 +1,5 @@
+from unittest.mock import Mock
+
 import pytest
 
 from gaphor import UML
@@ -176,3 +178,14 @@ def test_stereotype_deletion(element_factory):
     stereotype.unlink()
 
     assert [] == list(klass.appliedStereotype)
+
+
+def test_diagram_move(element_factory):
+    diagram = element_factory.create(UML.Diagram)
+    diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
+    diagram.canvas.update = Mock()
+
+    package = element_factory.create(UML.Package)
+    diagram.package = package
+
+    diagram.canvas.update.assert_called()
