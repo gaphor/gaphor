@@ -47,6 +47,7 @@ class AppFileManager(Service, ActionProvider):
             file_manager.load(filename)
         except Exception:
             load_default_model(session)
+            raise
 
     def new(self):
         session = self.application.new_session()
