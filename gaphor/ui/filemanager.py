@@ -22,6 +22,24 @@ MAX_RECENT = 10
 log = logging.getLogger(__name__)
 
 
+def error_message(e):
+    if not isinstance(e, IOError):
+        return gettext(
+            "Gaphor was not able to store the model, probably due to an internal error:\n{exc}\nIf you think this is a bug, please contact the developers."
+        ).format(exc=str(e))
+    if e.errno == 13:
+        return gettext(
+            "You do not have the permissions necessary to save the model.\nPlease check that you typed the location correctly and try again."
+        )
+    elif e.errno == 28:
+        return gettext(
+            "You do not have enough free space on the device to save the model.\nPlease free up some disk space and try again or save it in a different location."
+        )
+    return gettext(
+        "The model can not be stored at this location:\n{exc}\nPlease check that you typed the location correctly and try again."
+    ).format(exc=str(e))
+
+
 class FileManager(Service, ActionProvider):
     """The file service, responsible for loading and saving Gaphor models."""
 
@@ -185,9 +203,7 @@ class FileManager(Service, ActionProvider):
                 message=gettext("Unable to save model “{filename}”.").format(
                     filename=filename
                 ),
-                secondary_message=gettext(
-                    "The model can not be stored at this location:\n{exc}"
-                ).format(exc=str(e)),
+                secondary_message=error_message(e),
                 window=self.main_window.window,
             )
             raise
