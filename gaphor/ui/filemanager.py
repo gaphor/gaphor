@@ -264,12 +264,12 @@ class FileManager(Service, ActionProvider):
                 self.main_window.window,
                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                 Gtk.MessageType.WARNING,
-                Gtk.ButtonsType.NONE,
-                gettext("Save changed to your model before closing?"),
             )
-            dialog.format_secondary_text(
-                gettext("If you close without saving, your changes will be discarded.")
+            dialog.props.text = gettext("Save changed to your model before closing?")
+            dialog.props.secondary_text = gettext(
+                "If you close without saving, your changes will be discarded."
             )
+
             dialog.add_buttons(
                 gettext("Close _without saving"),
                 Gtk.ResponseType.REJECT,
