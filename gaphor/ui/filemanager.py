@@ -1,6 +1,7 @@
 """The file service is responsible for loading and saving the user data."""
 
 import logging
+import pathlib
 
 from gi.repository import Gtk
 
@@ -238,11 +239,33 @@ class FileManager(Service, ActionProvider):
             gettext("Save Gaphor Model As"), action="save", filename=self.filename
         )
 
-        filename = file_dialog.selection
+        filename = self.verify_filename(file_dialog.selection)
 
         file_dialog.destroy()
 
         if filename:
+            file_path = pathlib.Path(filename)
+            if file_path.exists():
+                dialog = Gtk.MessageDialog(
+                    None,
+                    Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                    Gtk.MessageType.QUESTION,
+                )
+                dialog.props.text = gettext(
+                    "A file name “{filename}” already exists. Do you want to replace it?"
+                ).format(filename=file_path.name)
+                dialog.props.secondary_text = gettext(
+                    "The file already exists in “{dirname}”. Replacing it will overwrite its contents."
+                ).format(dirname=file_path.parent.name)
+                dialog.add_buttons(Gtk.STOCK_CANCEL, 1, gettext("Replace"), 0)
+
+                dialog.set_transient_for(self.main_window.window)
+                cancel = dialog.run()
+                dialog.destroy()
+
+                if cancel:
+                    return
+
             self.save(filename)
             return True
 
