@@ -27,11 +27,10 @@ def error_handler(message, secondary_message="", window=None):
         dialog.props.secondary_text = ("\n\n" if secondary_message else "") + gettext(
             "It looks like Gaphor is started from the command line.\nDo you want to open a debug session?"
         )
-        dialog.add_button(gettext("Close"), 0)
-        dialog.add_button(gettext("Start debug session"), 100)
+        dialog.add_buttons(Gtk.STOCK_CLOSE, 0, gettext("Start debug session"), 100)
     else:
         dialog.props.secondary_text = secondary_message
-        dialog.add_button(gettext("OK"), 0)
+        dialog.add_button(Gtk.STOCK_OK, 0)
 
     dialog.set_transient_for(window)
     answer = dialog.run()
