@@ -5,10 +5,12 @@ from typing import Set
 from gi.repository import Gdk, Gtk
 
 from gaphor.abc import ActionProvider, Service
-from gaphor.core import Transaction, action, event_handler
+from gaphor.core import Transaction, action
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.ui.event import DiagramSelectionChanged
+
+copy_buffer: object = None
 
 
 class CopyService(Service, ActionProvider):
@@ -30,39 +32,25 @@ class CopyService(Service, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.diagrams = diagrams
-        self.copy_buffer: object = None
-
-        event_manager.subscribe(self._update)
 
         self.clipboard = Gtk.Clipboard.get_default(Gdk.Display.get_default())
         self.clipboard.connect("owner_change", self.on_clipboard_owner_change)
         self.clipboard_semaphore = 0
 
     def shutdown(self):
-        self.copy_buffer = set()
-        self.event_manager.unsubscribe(self._update)
+        pass
 
     def on_clipboard_owner_change(self, clipboard, event):
         if self.clipboard_semaphore > 0:
             self.clipboard_semaphore -= 1
         else:
-            self.copy_buffer = set()
-            view = self.diagrams.get_current_view()
-            if view:
-                self.update_paste_state(view)
-
-    @event_handler(DiagramSelectionChanged)
-    def _update(self, event):
-        diagram_view = event.diagram_view
-        win_action_group = diagram_view.get_action_group("win")
-        if win_action_group:
-            win_action_group.lookup_action("edit-copy").set_enabled(
-                bool(diagram_view.selected_items)
-            )
+            global copy_buffer
+            copy_buffer = set()
 
     def copy(self, items):
+        global copy_buffer
         if items:
-            self.copy_buffer = copy(items)
+            copy_buffer = copy(items)
 
     def paste(self, diagram):
         """Paste items in the copy-buffer to the diagram."""
@@ -71,7 +59,7 @@ class CopyService(Service, ActionProvider):
         with Transaction(self.event_manager):
             # Create new id's that have to be used to create the items:
             new_items: Set[Presentation] = paste(
-                self.copy_buffer, diagram, self.element_factory.lookup
+                copy_buffer, diagram, self.element_factory.lookup
             )
 
             # move pasted items a bit, so user can see result of his action :)
@@ -82,13 +70,6 @@ class CopyService(Service, ActionProvider):
             canvas.update_matrices(new_items)
 
         return new_items
-
-    def update_paste_state(self, view):
-        win_action_group = view.get_action_group("win")
-        if win_action_group:
-            win_action_group.lookup_action("edit-paste").set_enabled(
-                bool(self.copy_buffer)
-            )
 
     @action(
         name="edit-copy",
@@ -101,7 +82,6 @@ class CopyService(Service, ActionProvider):
             self.clipboard.set_text("", -1)
             items = view.selected_items
             self.copy(items)
-        self.update_paste_state(view)
 
     @action(name="edit-cut", shortcut="<Primary>x")
     def cut_action(self):
@@ -113,7 +93,6 @@ class CopyService(Service, ActionProvider):
             self.copy(items)
             for i in list(items):
                 i.unlink()
-        self.update_paste_state(view)
 
     @action(name="edit-paste", shortcut="<Primary>v")
     def paste_action(self):
@@ -122,7 +101,7 @@ class CopyService(Service, ActionProvider):
         if not (view and view.is_focus()):
             return
 
-        if not self.copy_buffer:
+        if not copy_buffer:
             return
 
         new_items = self.paste(diagram)

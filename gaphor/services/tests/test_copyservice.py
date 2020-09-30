@@ -10,6 +10,7 @@ class CopyServiceTestCase(TestCase):
 
     services = TestCase.services + [
         "main_window",
+        "diagrams",
         "properties",
         "undo_manager",
         "export_menu",
@@ -21,7 +22,7 @@ class CopyServiceTestCase(TestCase):
         self.service = CopyService(
             self.get_service("event_manager"),
             self.get_service("element_factory"),
-            self.get_service("main_window"),
+            self.get_service("diagrams"),
         )
 
     def test_copy(self):
