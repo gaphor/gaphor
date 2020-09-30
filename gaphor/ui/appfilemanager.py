@@ -37,8 +37,10 @@ class AppFileManager(Service, ActionProvider):
         pass
 
     def load(self, filename):
-        if self.active_session_is_new():
-            session = self.session
+        reuse_session = self.session_is_new(self.application.active_session)
+        print("open model,", reuse_session)
+        if reuse_session:
+            session = self.application.active_session
         else:
             session = self.application.new_session()
 
@@ -46,21 +48,28 @@ class AppFileManager(Service, ActionProvider):
         try:
             file_manager.load(filename)
         except Exception:
-            load_default_model(session)
+            if reuse_session:
+                load_default_model(session)
+            else:
+                self.application.shutdown_session(session)
             raise
 
     def new(self):
         session = self.application.new_session()
         load_default_model(session)
 
-    def active_session_is_new(self):
+    def session_is_new(self, session):
         """If it's a new model, there is no state change (undo & redo) and no
         file name is defined."""
-        if not self.application.active_session:
+        if not session:
             return False
 
-        undo_manager = self.session.get_service("undo_manager")
-        file_manager = self.session.get_service("file_manager")
+        undo_manager = session.get_service("undo_manager")
+        file_manager = session.get_service("file_manager")
+
+        print(not undo_manager.can_undo())
+        print(not undo_manager.can_redo())
+        print(not file_manager.filename)
 
         return (
             not undo_manager.can_undo()
