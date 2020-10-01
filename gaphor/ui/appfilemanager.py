@@ -67,10 +67,6 @@ class AppFileManager(Service, ActionProvider):
         undo_manager = session.get_service("undo_manager")
         file_manager = session.get_service("file_manager")
 
-        print(not undo_manager.can_undo())
-        print(not undo_manager.can_redo())
-        print(not file_manager.filename)
-
         return (
             not undo_manager.can_undo()
             and not undo_manager.can_redo()

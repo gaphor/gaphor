@@ -25,7 +25,7 @@ def error_handler(message, secondary_message="", window=None):
 
     if __debug__ and exc_traceback and sys.stdin.isatty():
         dialog.props.secondary_text = ("\n\n" if secondary_message else "") + gettext(
-            "It looks like Gaphor is started from the command line.\nDo you want to open a debug session?"
+            "It looks like Gaphor is started from the command line. Do you want to open a debug session?"
         )
         dialog.add_buttons(Gtk.STOCK_CLOSE, 0, gettext("Start debug session"), 100)
     else:
