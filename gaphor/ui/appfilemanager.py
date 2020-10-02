@@ -3,14 +3,13 @@ import logging
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
-from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.filedialog import open_file_dialog
 
 log = logging.getLogger(__name__)
 
 
 FILTERS = [
-    {"name": gettext("Gaphor Models"), "pattern": "*.gaphor"},
-    {"name": gettext("All Files"), "pattern": "*"},
+    (gettext("All Gaphor Models"), "*.gaphor", "application/x-gaphor"),
 ]
 
 
@@ -38,7 +37,6 @@ class AppFileManager(Service, ActionProvider):
 
     def load(self, filename):
         reuse_session = self.session_is_new(self.application.active_session)
-        print("open model,", reuse_session)
         if reuse_session:
             session = self.application.active_session
         else:
@@ -77,17 +75,6 @@ class AppFileManager(Service, ActionProvider):
     def main_window(self):
         return self.session.get_service("main_window")
 
-    def file_dialog(self, title):
-        file_dialog = FileDialog(title, filters=FILTERS, parent=self.main_window.window)
-
-        filename = file_dialog.selection
-
-        file_dialog.destroy()
-
-        log.debug(filename)
-
-        return filename
-
     @action(name="app.file-new", shortcut="<Primary>n")
     def action_new(self):
         """The new model menu action.
@@ -102,8 +89,12 @@ class AppFileManager(Service, ActionProvider):
     def action_new_from_template(self):
         """This menu action opens the new model from template dialog."""
 
-        filename = self.file_dialog(gettext("New Gaphor Model From Template"))
-        if filename:
+        filenames = open_file_dialog(
+            gettext("New Gaphor Model From Template"),
+            parent=self.main_window.window,
+            filters=FILTERS,
+        )
+        for filename in filenames:
             self.load(filename)
             self.filename = None
 
@@ -111,9 +102,13 @@ class AppFileManager(Service, ActionProvider):
     def action_open(self):
         """This menu action opens the standard model open dialog."""
 
-        filename = self.file_dialog(gettext("Open Gaphor Model"))
+        filenames = open_file_dialog(
+            gettext("Open Gaphor Model"),
+            parent=self.main_window.window,
+            filters=FILTERS,
+        )
 
-        if filename:
+        for filename in filenames:
             self.load(filename)
 
     @action(name="app.file-open-recent")

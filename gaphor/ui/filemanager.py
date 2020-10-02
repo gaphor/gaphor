@@ -158,6 +158,8 @@ class FileManager(Service, ActionProvider):
 
         If not, the extension is added to the filename and returned.
         """
+        if not filename:
+            return filename
 
         if not filename.endswith(DEFAULT_EXT):
             filename = filename + DEFAULT_EXT
@@ -177,7 +179,6 @@ class FileManager(Service, ActionProvider):
             return
 
         self.verify_orphans()
-        filename = self.verify_filename(filename)
 
         main_window = self.main_window
         queue = Queue()
