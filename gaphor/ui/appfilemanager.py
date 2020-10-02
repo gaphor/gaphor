@@ -1,4 +1,5 @@
 import logging
+import os.path
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
@@ -31,6 +32,7 @@ class AppFileManager(Service, ActionProvider):
     def __init__(self, application, session):
         self.application = application
         self.session = session
+        self.last_dir = None
 
     def shutdown(self):
         pass
@@ -97,6 +99,7 @@ class AppFileManager(Service, ActionProvider):
         for filename in filenames:
             self.load(filename)
             self.filename = None
+            self.last_dir = os.path.dirname(filename)
 
     @action(name="app.file-open", shortcut="<Primary>o")
     def action_open(self):
@@ -105,11 +108,13 @@ class AppFileManager(Service, ActionProvider):
         filenames = open_file_dialog(
             gettext("Open Gaphor Model"),
             parent=self.main_window.window,
+            dirname=self.last_dir,
             filters=FILTERS,
         )
 
         for filename in filenames:
             self.load(filename)
+            self.last_dir = os.path.dirname(filename)
 
     @action(name="app.file-open-recent")
     def action_open_recent(self, filename: str):

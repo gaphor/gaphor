@@ -21,14 +21,11 @@ def new_filter(name, pattern, mime_type=None):
     return f
 
 
-def _file_dialog_with_filters(title, parent, action, filename, filters):
+def _file_dialog_with_filters(title, parent, action, filters):
     dialog = Gtk.FileChooserNative.new(title, parent, action, None, None)
 
     if parent:
         dialog.set_transient_for(parent)
-
-    if filename:
-        dialog.set_current_name(filename)
 
     for name, pattern, mime_type in filters:
         dialog.add_filter(new_filter(name, pattern, mime_type))
@@ -36,11 +33,13 @@ def _file_dialog_with_filters(title, parent, action, filename, filters):
     return dialog
 
 
-def open_file_dialog(title, parent=None, filename=None, filters=[]) -> Sequence[str]:
+def open_file_dialog(title, parent=None, dirname=None, filters=[]) -> Sequence[str]:
     dialog = _file_dialog_with_filters(
-        title, parent, Gtk.FileChooserAction.OPEN, filename, filters
+        title, parent, Gtk.FileChooserAction.OPEN, filters
     )
     dialog.set_select_multiple(True)
+    if dirname:
+        dialog.set_current_folder(dirname)
 
     response = dialog.run()
     dialog.destroy()
@@ -52,9 +51,11 @@ def save_file_dialog(
     title, parent=None, filename=None, extension=None, filters=[]
 ) -> Optional[str]:
     dialog = _file_dialog_with_filters(
-        title, parent, Gtk.FileChooserAction.SAVE, filename, filters
+        title, parent, Gtk.FileChooserAction.SAVE, filters
     )
     dialog.set_do_overwrite_confirmation(True)
+    if filename:
+        dialog.set_filename(filename)
 
     try:
         while dialog.run() == Gtk.ResponseType.ACCEPT:
