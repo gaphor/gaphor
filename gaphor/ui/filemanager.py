@@ -1,7 +1,6 @@
 """The file service is responsible for loading and saving the user data."""
 
 import logging
-import pathlib
 
 from gi.repository import Gtk
 
@@ -12,7 +11,7 @@ from gaphor.storage import storage, verify
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.event import FileLoaded, FileSaved
-from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
 from gaphor.ui.gidlethread import GIdleThread, Queue
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -236,13 +235,13 @@ class FileManager(Service, ActionProvider):
         Returns True if the saving actually happened.
         """
 
-        file_dialog = FileDialog(
-            gettext("Save Gaphor Model As"), action="save", filename=self.filename
+        filename = save_file_dialog(
+            gettext("Save Gaphor Model As"),
+            parent=self.main_window.window,
+            filename=self.filename,
+            extension=".gaphor",
+            filters=GAPHOR_FILTER,
         )
-
-        filename = self.verify_filename(file_dialog.selection)
-
-        file_dialog.destroy()
 
         if filename:
             self.save(filename)

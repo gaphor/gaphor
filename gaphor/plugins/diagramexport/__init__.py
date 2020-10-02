@@ -35,10 +35,17 @@ class DiagramExport(Service, ActionProvider):
         if self.export_menu:
             self.export_menu.remove_actions(self)
 
-    def save_dialog(self, diagram, title, ext):
-
-        filename = (diagram.name or "export") + ext
-        return save_file_dialog(title, filename=filename, extension=ext)
+    def save_dialog(self, diagram, title, ext, mime_type):
+        dot_ext = f".{ext}"
+        filename = (diagram.name or "export") + dot_ext
+        return save_file_dialog(
+            title,
+            filename=filename,
+            extension=ext,
+            filters=[
+                (gettext("All {ext} Files").format(ext=ext.upper()), dot_ext, mime_type)
+            ],
+        )
 
     def update_painters(self, view, diagram):
         style = diagram.style(StyledDiagram(diagram))
@@ -98,10 +105,10 @@ class DiagramExport(Service, ActionProvider):
         tooltip=gettext("Export diagram to SVG"),
     )
     def save_svg_action(self):
-        title = gettext("Export diagram to SVG")
-        ext = ".svg"
         diagram = self.diagrams.get_current_diagram()
-        filename = self.save_dialog(diagram, title, ext)
+        filename = self.save_dialog(
+            diagram, gettext("Export diagram to SVG"), "svg", "image/svg+xml"
+        )
         if filename:
             self.save_svg(filename, diagram)
 
@@ -111,10 +118,10 @@ class DiagramExport(Service, ActionProvider):
         tooltip=gettext("Export diagram to PNG"),
     )
     def save_png_action(self):
-        title = gettext("Export diagram to PNG")
-        ext = ".png"
         diagram = self.diagrams.get_current_diagram()
-        filename = self.save_dialog(diagram, title, ext)
+        filename = self.save_dialog(
+            diagram, gettext("Export diagram to PNG"), "png", "image/png"
+        )
         if filename:
             self.save_png(filename, diagram)
 
@@ -124,9 +131,9 @@ class DiagramExport(Service, ActionProvider):
         tooltip=gettext("Export diagram to PDF"),
     )
     def save_pdf_action(self):
-        title = gettext("Export diagram to PDF")
-        ext = ".pdf"
         diagram = self.diagrams.get_current_diagram()
-        filename = self.save_dialog(diagram, title, ext)
+        filename = self.save_dialog(
+            diagram, gettext("Export diagram to PDF"), "pdf", "application/pdf"
+        )
         if filename:
             self.save_pdf(filename, diagram)
