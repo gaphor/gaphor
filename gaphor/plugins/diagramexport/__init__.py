@@ -12,7 +12,7 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.diagram.painter import ItemPainter
-from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.filedialog import save_file_dialog
 from gaphor.ui.questiondialog import QuestionDialog
 
 logger = logging.getLogger(__name__)
@@ -38,29 +38,7 @@ class DiagramExport(Service, ActionProvider):
     def save_dialog(self, diagram, title, ext):
 
         filename = (diagram.name or "export") + ext
-        file_dialog = FileDialog(title, action="save", filename=filename)
-
-        save = False
-        while True:
-            filename = file_dialog.selection
-            if os.path.exists(filename):
-                question = gettext(
-                    "The file {filename} already exists. Do you want to replace it?"
-                ).format(filename=filename)
-                question_dialog = QuestionDialog(question)
-                answer = question_dialog.answer
-                question_dialog.destroy()
-                if answer:
-                    save = True
-                    break
-            else:
-                save = True
-                break
-
-        file_dialog.destroy()
-
-        if save and filename:
-            return filename
+        return save_file_dialog(title, filename=filename, extension=ext)
 
     def update_painters(self, view, diagram):
         style = diagram.style(StyledDiagram(diagram))

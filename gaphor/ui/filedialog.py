@@ -2,7 +2,8 @@
 """This module has a generic FileDialog class that is used to open or save
 files."""
 
-from typing import Sequence
+import pathlib
+from typing import Optional, Sequence
 
 from gi.repository import Gtk
 
@@ -16,9 +17,9 @@ class FileDialog:
         self,
         title,
         filename=None,
+        extension=".txt",
         action="open",
         parent=None,
-        multiple=False,
         filters=[],
     ):
         """Initialize the file dialog.
@@ -39,8 +40,6 @@ class FileDialog:
             action = Gtk.FileChooserAction.OPEN
         else:
             action = Gtk.FileChooserAction.SAVE
-
-        self.dialog = Gtk.FileChooserNative(title=title, action=action)
 
         if parent:
             self.dialog.set_transient_for(parent)
@@ -104,18 +103,32 @@ def open_file_dialog(title, parent=None, filename=None, filters=[]) -> Sequence[
     dialog.set_select_multiple(True)
 
     response = dialog.run()
+    dialog.destroy()
 
     return dialog.get_filenames() if response == Gtk.ResponseType.ACCEPT else []  # type: ignore[no-any-return]
 
 
-def save_file_dialog(title, parent=None, filename=None, filters=[], extension=None):
+def save_file_dialog(
+    title, parent=None, filename=None, extension=None, filters=[]
+) -> Optional[str]:
     dialog = _file_dialog_with_filters(
-        title, parent, Gtk.FileChooserAction.OPEN, filename, filters
+        title, parent, Gtk.FileChooserAction.SAVE, filename, filters
     )
+    dialog.set_do_overwrite_confirmation(True)
 
-    response = dialog.run()
+    try:
+        while dialog.run() == Gtk.ResponseType.ACCEPT:
+            filename = dialog.get_filename()
 
-    return dialog.get_filenames() if response == Gtk.ResponseType.ACCEPT else []  # type: ignore[no-any-return]
+            if extension and not filename.endswith(extension):
+                filename += extension
+                if pathlib.Path(filename).exists():
+                    dialog.set_filename(filename)
+                    continue
+            return filename  # type: ignore[no-any-return]
+    finally:
+        dialog.destroy()
+    return None
 
 
 if __name__ == "__main__":
@@ -123,8 +136,9 @@ if __name__ == "__main__":
 
     action = sys.argv[1]
 
-    files = open_file_dialog(
+    files = save_file_dialog(
         f"dialog test (action={action})",
+        extension=".gaphor",
         filters=[("All Gaphor Models", "*.gaphor", "application/x-gaphor")],
     )
 
