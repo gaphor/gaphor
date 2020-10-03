@@ -25,4 +25,4 @@ pacman --noconfirm -S --needed \
 # shellcheck source=venv
 source "$DIR"/../venv
 pip install pyinstaller==3.6.0
-make translations
+mingw32-make translations
