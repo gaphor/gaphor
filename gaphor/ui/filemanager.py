@@ -36,7 +36,7 @@ def error_message(e):
             "You do not have enough free space on the device to save the model.\nPlease free up some disk space and try again or save it in a different location."
         )
     return gettext(
-        "The model can not be stored at this location:\n{exc}\nPlease check that you typed the location correctly and try again."
+        "The model cannot be stored at this location:\n{exc}\nPlease check that you typed the location correctly and try again."
     ).format(exc=str(e))
 
 
