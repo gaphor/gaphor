@@ -11,16 +11,16 @@ rankmirrors -r mingw64 -n 3 -v /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/m
 pacman --noconfirm -Suy
 
 pacman --noconfirm -S --needed \
-    mingw-w64-"$MSYS2_ARCH"-make \
-    mingw-w64-"$MSYS2_ARCH"-gcc \
-    mingw-w64-"$MSYS2_ARCH"-gtk3 \
-    mingw-w64-"$MSYS2_ARCH"-pkg-config \
-    mingw-w64-"$MSYS2_ARCH"-cairo \
-    mingw-w64-"$MSYS2_ARCH"-gobject-introspection \
-    mingw-w64-"$MSYS2_ARCH"-python \
-    mingw-w64-"$MSYS2_ARCH"-python-gobject \
-    mingw-w64-"$MSYS2_ARCH"-python-cairo \
-    mingw-w64-"$MSYS2_ARCH"-python-pip \
+    mingw-w64-x86_64-make \
+    mingw-w64-x86_64-gcc \
+    mingw-w64-x86_64-gtk3 \
+    mingw-w64-x86_64-pkg-config \
+    mingw-w64-x86_64-cairo \
+    mingw-w64-x86_64-gobject-introspection \
+    mingw-w64-x86_64-python \
+    mingw-w64-x86_64-python-gobject \
+    mingw-w64-x86_64-python-cairo \
+    mingw-w64-x86_64-python-pip \
 
 # shellcheck source=venv
 source "$DIR"/../venv
