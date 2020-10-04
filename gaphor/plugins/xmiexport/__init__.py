@@ -5,7 +5,7 @@ import logging
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.plugins.xmiexport import exportmodel
-from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.filedialog import save_file_dialog
 
 logger = logging.getLogger(__name__)
 
@@ -27,11 +27,12 @@ class XMIExport(Service, ActionProvider):
     def execute(self):
         filename = self.file_manager.filename
         filename = filename.replace(".gaphor", ".xmi") if filename else "model.xmi"
-        file_dialog = FileDialog(
-            gettext("Export model to XMI file"), action="save", filename=filename
+        filename = save_file_dialog(
+            gettext("Export model to XMI file"),
+            filename=filename,
+            extension=".xmi",
+            filters=[(gettext("All XMI Files"), ".xmi", "text/xml")],
         )
-
-        filename = file_dialog.selection
 
         if filename and len(filename) > 0:
             logger.debug(f"Exporting XMI model to: {filename}")

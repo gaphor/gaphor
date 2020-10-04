@@ -11,7 +11,7 @@ from gaphor.storage import storage, verify
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.event import FileLoaded, FileSaved
-from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
 from gaphor.ui.gidlethread import GIdleThread, Queue
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -20,6 +20,24 @@ DEFAULT_EXT = ".gaphor"
 MAX_RECENT = 10
 
 log = logging.getLogger(__name__)
+
+
+def error_message(e):
+    if not isinstance(e, IOError):
+        return gettext(
+            "Gaphor was not able to store the model, probably due to an internal error:\n{exc}\nIf you think this is a bug, please contact the developers."
+        ).format(exc=str(e))
+    if e.errno == 13:
+        return gettext(
+            "You do not have the permissions necessary to save the model.\nPlease check that you typed the location correctly and try again."
+        )
+    elif e.errno == 28:
+        return gettext(
+            "You do not have enough free space on the device to save the model.\nPlease free up some disk space and try again or save it in a different location."
+        )
+    return gettext(
+        "The model cannot be stored at this location:\n{exc}\nPlease check that you typed the location correctly and try again."
+    ).format(exc=str(e))
 
 
 class FileManager(Service, ActionProvider):
@@ -94,9 +112,12 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(FileLoaded(self, filename))
         except Exception:
             error_handler(
-                message=gettext(
-                    "Error while loading model from file {filename}"
-                ).format(filename=filename),
+                message=gettext("Unable to open model “{filename}”.").format(
+                    filename=filename
+                ),
+                secondary_message=gettext(
+                    "This file does not contain a valid Gaphor model."
+                ),
                 window=self.main_window.window,
             )
             raise
@@ -136,6 +157,8 @@ class FileManager(Service, ActionProvider):
 
         If not, the extension is added to the filename and returned.
         """
+        if not filename:
+            return filename
 
         if not filename.endswith(DEFAULT_EXT):
             filename = filename + DEFAULT_EXT
@@ -155,7 +178,6 @@ class FileManager(Service, ActionProvider):
             return
 
         self.verify_orphans()
-        filename = self.verify_filename(filename)
 
         main_window = self.main_window
         queue = Queue()
@@ -177,11 +199,12 @@ class FileManager(Service, ActionProvider):
 
             self.filename = filename
             self.event_manager.handle(FileSaved(self, filename))
-        except Exception:
+        except Exception as e:
             error_handler(
-                message=gettext("Error while saving model to file {filename}").format(
+                message=gettext("Unable to save model “{filename}”.").format(
                     filename=filename
                 ),
+                secondary_message=error_message(e),
                 window=self.main_window.window,
             )
             raise
@@ -212,13 +235,13 @@ class FileManager(Service, ActionProvider):
         Returns True if the saving actually happened.
         """
 
-        file_dialog = FileDialog(
-            gettext("Save Gaphor Model As"), action="save", filename=self.filename
+        filename = save_file_dialog(
+            gettext("Save Gaphor Model As"),
+            parent=self.main_window.window,
+            filename=self.filename,
+            extension=".gaphor",
+            filters=GAPHOR_FILTER,
         )
-
-        filename = file_dialog.selection
-
-        file_dialog.destroy()
 
         if filename:
             self.save(filename)
@@ -242,12 +265,12 @@ class FileManager(Service, ActionProvider):
                 self.main_window.window,
                 Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                 Gtk.MessageType.WARNING,
-                Gtk.ButtonsType.NONE,
-                gettext("Save changed to your model before closing?"),
             )
-            dialog.format_secondary_text(
-                gettext("If you close without saving, your changes will be discarded.")
+            dialog.props.text = gettext("Save changed to your model before closing?")
+            dialog.props.secondary_text = gettext(
+                "If you close without saving, your changes will be discarded."
             )
+
             dialog.add_buttons(
                 gettext("Close _without saving"),
                 Gtk.ResponseType.REJECT,

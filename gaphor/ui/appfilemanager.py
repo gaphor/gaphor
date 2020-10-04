@@ -1,16 +1,16 @@
 import logging
+import os.path
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
-from gaphor.ui.filedialog import FileDialog
+from gaphor.ui.filedialog import open_file_dialog
 
 log = logging.getLogger(__name__)
 
 
 FILTERS = [
-    {"name": gettext("Gaphor Models"), "pattern": "*.gaphor"},
-    {"name": gettext("All Files"), "pattern": "*"},
+    (gettext("All Gaphor Models"), "*.gaphor", "application/x-gaphor"),
 ]
 
 
@@ -32,13 +32,15 @@ class AppFileManager(Service, ActionProvider):
     def __init__(self, application, session):
         self.application = application
         self.session = session
+        self.last_dir = None
 
     def shutdown(self):
         pass
 
     def load(self, filename):
-        if self.active_session_is_new():
-            session = self.session
+        reuse_session = self.session_is_new(self.application.active_session)
+        if reuse_session:
+            session = self.application.active_session
         else:
             session = self.application.new_session()
 
@@ -46,20 +48,24 @@ class AppFileManager(Service, ActionProvider):
         try:
             file_manager.load(filename)
         except Exception:
-            load_default_model(session)
+            if reuse_session:
+                load_default_model(session)
+            else:
+                self.application.shutdown_session(session)
+            raise
 
     def new(self):
         session = self.application.new_session()
         load_default_model(session)
 
-    def active_session_is_new(self):
+    def session_is_new(self, session):
         """If it's a new model, there is no state change (undo & redo) and no
         file name is defined."""
-        if not self.application.active_session:
+        if not session:
             return False
 
-        undo_manager = self.session.get_service("undo_manager")
-        file_manager = self.session.get_service("file_manager")
+        undo_manager = session.get_service("undo_manager")
+        file_manager = session.get_service("file_manager")
 
         return (
             not undo_manager.can_undo()
@@ -70,17 +76,6 @@ class AppFileManager(Service, ActionProvider):
     @property
     def main_window(self):
         return self.session.get_service("main_window")
-
-    def file_dialog(self, title):
-        file_dialog = FileDialog(title, filters=FILTERS, parent=self.main_window.window)
-
-        filename = file_dialog.selection
-
-        file_dialog.destroy()
-
-        log.debug(filename)
-
-        return filename
 
     @action(name="app.file-new", shortcut="<Primary>n")
     def action_new(self):
@@ -96,19 +91,30 @@ class AppFileManager(Service, ActionProvider):
     def action_new_from_template(self):
         """This menu action opens the new model from template dialog."""
 
-        filename = self.file_dialog(gettext("New Gaphor Model From Template"))
-        if filename:
+        filenames = open_file_dialog(
+            gettext("New Gaphor Model From Template"),
+            parent=self.main_window.window,
+            filters=FILTERS,
+        )
+        for filename in filenames:
             self.load(filename)
             self.filename = None
+            self.last_dir = os.path.dirname(filename)
 
     @action(name="app.file-open", shortcut="<Primary>o")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
 
-        filename = self.file_dialog(gettext("Open Gaphor Model"))
+        filenames = open_file_dialog(
+            gettext("Open Gaphor Model"),
+            parent=self.main_window.window,
+            dirname=self.last_dir,
+            filters=FILTERS,
+        )
 
-        if filename:
+        for filename in filenames:
             self.load(filename)
+            self.last_dir = os.path.dirname(filename)
 
     @action(name="app.file-open-recent")
     def action_open_recent(self, filename: str):
