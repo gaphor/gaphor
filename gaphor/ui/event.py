@@ -33,3 +33,8 @@ class FileSaved:
     def __init__(self, service, filename=None):
         self.service = service
         self.filename = filename
+
+
+class Notification:
+    def __init__(self, message):
+        self.message = message
