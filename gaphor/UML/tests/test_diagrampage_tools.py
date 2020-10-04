@@ -71,7 +71,6 @@ def test_pointer(tab):
     ],
 )
 def test_placement_action(tab, tool_name):
-    print(tool_name)
     tool = tab.get_tool(tool_name)
 
     # Ensure the factory is working
@@ -86,7 +85,7 @@ def test_placement_object_node(tab, element_factory):
 
 def test_placement_partition(tab, element_factory):
     test_placement_action(tab, "toolbox-partition")
-    assert len(element_factory.lselect(UML.ActivityPartition)) == 0
+    assert len(element_factory.lselect(UML.ActivityPartition)) == 1
 
 
 def test_uml_toolbox_actions_shortcut_unique():
