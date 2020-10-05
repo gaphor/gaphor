@@ -44,7 +44,7 @@ distlib = "0.3.0" # Workaround for MSYS2 distlib error
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.7"
-pytest = "^6.0"
+pytest = "^6.1"
 pytest-cov = "^2.10"
 pytest-runner = "^5.2"
 black = "^20.8b1"
