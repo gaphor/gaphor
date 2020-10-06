@@ -200,7 +200,7 @@ if __name__ == "__main__":
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
 
-    main = GLib.main_context_default()
+    GLib.main_context_default()
     c.start()
     s.start()
     s.wait(2)
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     c = GIdleThread(counter(23), queue)
     s = GIdleThread(shower(queue))
 
-    main = GLib.main_context_default()
+    GLib.main_context_default()
     c.start(priority=GLib.PRIORITY_DEFAULT)
     s.start()
     s.wait(3)
