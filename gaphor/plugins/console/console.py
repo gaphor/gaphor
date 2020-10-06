@@ -78,7 +78,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def __init__(self, locals: Dict[str, object], banner=banner):
         Gtk.ScrolledWindow.__init__(self)
-        self.locals = locals
+        self.locals = dict(locals)
         locals["help"] = Help()
 
         self.set_min_content_width(640)
