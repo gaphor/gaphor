@@ -189,8 +189,6 @@ def _text_point_at_line_end(size, p1, p2):
      - p1:      beginning of line segment
      - p2:      end of line segment
     """
-    name_dx = 0.0
-    name_dy = 0.0
     ofs = 5
 
     dx = float(p2[0]) - float(p1[0])

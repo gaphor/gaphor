@@ -73,9 +73,6 @@ class ActionStack:
 class UndoManagerStateChanged(ServiceEvent):
     """Event class used to send state changes on the Undo Manager."""
 
-    def __init__(self, service):
-        self.service = service
-
 
 class UndoManager(Service, ActionProvider):
     """Simple transaction manager for Gaphor. This transaction manager supports

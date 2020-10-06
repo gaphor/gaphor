@@ -100,11 +100,11 @@ class Transaction:
         """
 
         self._close()
-        for tx in self._stack:
-            tx._need_rollback = True
+        if not self._stack:
+            self._handle(TransactionRollback())
         else:
-            if not self._stack:
-                self._handle(TransactionRollback())
+            for tx in self._stack:
+                tx._need_rollback = True
 
     def _close(self):
         """Close the transaction.
@@ -131,7 +131,7 @@ class Transaction:
         """Provide with-statement transaction support."""
         return self
 
-    def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         """Provide with-statement transaction support.
 
         If an error occurred, the transaction is rolled back. Otherwise,

@@ -48,8 +48,6 @@ class ArtifactItem(ElementPresentation, Classified):
 
 
 def draw_artifact_icon(box, context, bounding_box):
-    cr = context.cairo
-
     with cairo_state(context.cairo) as cr:
         cr.set_line_width(1.0)
         ear = 5

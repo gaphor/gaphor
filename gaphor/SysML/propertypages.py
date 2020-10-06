@@ -36,10 +36,6 @@ class RequirementPropertyPage(PropertyPageBase):
         entry = builder.get_object("requirement-id")
         entry.set_text(subject.externalId or "")
 
-        def id_handler(event):
-            if event.element is subject and event.new_value is not None:
-                entry.set_text(event.new_value)
-
         text_view = builder.get_object("requirement-text")
 
         buffer = builder.get_object("requirement-text-buffer")

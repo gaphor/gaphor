@@ -108,7 +108,7 @@ class ParserException(Exception):
     GAPHOR,  # Expect UML classes (tag name is the UML class name)
     ELEMENT,  # Expect properties of UML object
     DIAGRAM,  # Expect properties of Diagram object + canvas
-    CANVAS,  # Expect canvas properties + <item> tags
+    CANVAS,  # Expect canvas properties + <item>
     ITEM,  # Expect item attributes and nested items
     ATTR,  # Reading contents of an attribute (such as a <val> or <ref>)
     VAL,  # Redaing contents of a <val> tag
@@ -239,8 +239,7 @@ class GaphorLoader(handler.ContentHandler):
         # Reference with multiplicity 1:
         elif state == ATTR and name == "ref":
             n = self.peek(1)
-            # Fetch the element instance from the stack
-            r = self.peek(2).references[n] = attrs["refid"]
+            self.peek(2).references[n] = attrs["refid"]
             self.push(None, REF)
             return True
 
