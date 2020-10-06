@@ -408,11 +408,6 @@ class AssociationEnd(Presentation):
         style = combined_style(context.style, self._inline_style)
         ofs = 5
 
-        name_dx = 0.0
-        name_dy = 0.0
-        mult_dx = 0.0
-        mult_dy = 0.0
-
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
 
