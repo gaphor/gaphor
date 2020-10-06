@@ -97,7 +97,7 @@ class collection(Generic[T]):
 
     def remove(self, value: T) -> None:
         if value in self.items:
-            self.property.__delete__(self.object, value)
+            self.property._del(self.object, value)
 
     def index(self, key: T) -> int:
         """Given an object, return the position of that object in the

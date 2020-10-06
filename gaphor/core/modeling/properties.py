@@ -82,7 +82,7 @@ class relation_one(Protocol[E]):
     def __set__(self, obj, value: E) -> None:
         ...
 
-    def __delete__(self, obj, value: E) -> None:
+    def __delete__(self, obj) -> None:
         ...
 
 
@@ -101,7 +101,7 @@ class relation_many(Protocol[E]):
     def __set__(self, obj, value: E) -> None:
         ...
 
-    def __delete__(self, obj, value: E) -> None:
+    def __delete__(self, obj) -> None:
         ...
 
 
@@ -141,8 +141,8 @@ class umlproperty:
     def __set__(self, obj, value) -> None:
         self._set(obj, value)
 
-    def __delete__(self, obj, value=None) -> None:
-        self._del(obj, value)
+    def __delete__(self, obj) -> None:
+        self._del(obj, None)
 
     def __repr__(self):
         return str(self)
@@ -492,7 +492,7 @@ class association(umlproperty):
 
             for value in list(values):
                 # TODO: make normal unlinking work through this method.
-                self.__delete__(obj, value)
+                self._del(obj, value)
                 if composite:
                     value.unlink()
 
@@ -522,7 +522,7 @@ class associationstub(umlproperty):
     def __set__(self, obj, value):
         raise AssociationStubError("setting values not allowed")
 
-    def __delete__(self, obj, value=None):
+    def __delete__(self, obj):
         raise AssociationStubError("deleting values not allowed")
 
     def save(self, obj, save_func):
@@ -534,7 +534,7 @@ class associationstub(umlproperty):
     def unlink(self, obj):
         values = getattr(obj, self._name, [])
         for value in set(values):
-            self.association.__delete__(value, obj)
+            self.association._del(value, obj)
 
     def _set(self, obj, value):
         try:
