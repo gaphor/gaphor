@@ -7,6 +7,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import event_handler
+from gaphor.core.format import format
 from gaphor.core.modeling import (
     AttributeUpdated,
     DerivedSet,
