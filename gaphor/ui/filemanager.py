@@ -151,20 +151,6 @@ class FileManager(Service, ActionProvider):
                 for orphan in orphans:
                     orphan.unlink()
 
-    def verify_filename(self, filename):
-        """Verify that the supplied filename is using the proper default
-        extension.
-
-        If not, the extension is added to the filename and returned.
-        """
-        if not filename:
-            return filename
-
-        if not filename.endswith(DEFAULT_EXT):
-            filename = filename + DEFAULT_EXT
-
-        return filename
-
     def save(self, filename):
         """Save the current UML model to the specified file name.
 
