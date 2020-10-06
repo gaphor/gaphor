@@ -100,11 +100,11 @@ class Transaction:
         """
 
         self._close()
-        for tx in self._stack:
-            tx._need_rollback = True
+        if not self._stack:
+            self._handle(TransactionRollback())
         else:
-            if not self._stack:
-                self._handle(TransactionRollback())
+            for tx in self._stack:
+                tx._need_rollback = True
 
     def _close(self):
         """Close the transaction.
