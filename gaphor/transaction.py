@@ -131,7 +131,7 @@ class Transaction:
         """Provide with-statement transaction support."""
         return self
 
-    def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         """Provide with-statement transaction support.
 
         If an error occurred, the transaction is rolled back. Otherwise,
