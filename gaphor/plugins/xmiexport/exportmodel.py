@@ -222,15 +222,18 @@ class XMIExport:
 
         for ownedAttribute in element.ownedAttribute:
             xmi.startElement("ownedAttribute", attrs=dict())
-            self.handle(ownedAttribute)
+            self.handle(xmi, ownedAttribute)
             xmi.endElement("ownedAttribute")
 
         for ownedOperation in element.ownedOperation:
             xmi.startElement("ownedOperation", attrs=dict())
-            self.handle(ownedOperation)
+            self.handle(xmi, ownedOperation)
             xmi.endElement("ownedOperation")
 
         xmi.endElement(f"{self.UML_PREFIX}:Interface")
+
+    def handleDiagram(self, xmi, element, idref=False):
+        pass
 
     def export(self, filename):
         out = open(filename, "w")
