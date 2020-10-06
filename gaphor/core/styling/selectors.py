@@ -29,7 +29,7 @@ def compile_node(selector):
 
     Default behavior is a deny (no match).
     """
-    parser.SelectorError("Unknown selector", selector)
+    raise parser.SelectorError("Unknown selector", selector)
 
 
 @compile_node.register
