@@ -160,10 +160,10 @@ class XMIExport:
 
         xmi.endElement(f"{self.UML_PREFIX}:Association")
 
-    def handleDependency(self, xmi, element, idref=False):
+    def handleDependency(self, xmi, element, idref=False, name="Dependency"):
 
         attributes = {f"{self.XMI_PREFIX}:id": element.id}
-        xmi.startElement(f"{self.UML_PREFIX}:Dependency", attrs=attributes)
+        xmi.startElement(f"{self.UML_PREFIX}:{name}", attrs=attributes)
 
         for client in element.client:
             xmi.startElement("client", attrs=dict())
@@ -175,7 +175,7 @@ class XMIExport:
             self.handle(xmi, supplier)
             xmi.endElement("supplier")
 
-        xmi.endElement(f"{self.UML_PREFIX}:Dependency")
+        xmi.endElement(f"{self.UML_PREFIX}:{name}")
 
     def handleGeneralization(self, xmi, element, idref=False):
 
@@ -199,21 +199,7 @@ class XMIExport:
         xmi.endElement(f"{self.UML_PREFIX}:Generalization")
 
     def handleRealization(self, xmi, element, idref=False):
-
-        attributes = {f"{self.XMI_PREFIX}:id": element.id}
-        xmi.startElement(f"{self.UML_PREFIX}:Realization", attrs=attributes)
-
-        for client in element.client:
-            xmi.startElement("client", attrs=dict())
-            self.handle(xmi, client)
-            xmi.endElement("client")
-
-        for supplier in element.supplier:
-            xmi.startElement("supplier", attrs=dict())
-            self.handle(xmi, supplier)
-            xmi.endElement("supplier")
-
-        xmi.endElement(f"{self.UML_PREFIX}:Realization")
+        self.handleDependency(xmi, element, idref, name="Realization")
 
     def handleInterface(self, xmi, element, idref=False):
 
