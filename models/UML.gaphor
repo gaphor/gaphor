@@ -36244,6 +36244,11 @@ directly in a model.</val>
 <name>
 <val>Class</val>
 </name>
+<ownedAttribute>
+<reflist>
+<ref refid="a9887944-3fe1-11de-8375-00224128e79d"/>
+</reflist>
+</ownedAttribute>
 <package>
 <ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
 </package>
@@ -36311,6 +36316,9 @@ directly in a model.</val>
 <association>
 <ref refid="a987f3a2-3fe1-11de-8375-00224128e79d"/>
 </association>
+<class_>
+<ref refid="a054df8e-3fe1-11de-8375-00224128e79d"/>
+</class_>
 <type>
 <ref refid="a38a6700-3fe1-11de-8375-00224128e79d"/>
 </type>
@@ -37799,6 +37807,11 @@ swimlanes</val>
 <name>
 <val>Property</val>
 </name>
+<ownedAttribute>
+<reflist>
+<ref refid="16f7a3b0-fa90-11de-bd51-00224128e79d"/>
+</reflist>
+</ownedAttribute>
 <package>
 <ref refid="88ce1e8e-3fe1-11de-8375-00224128e79d"/>
 </package>
@@ -37848,6 +37861,9 @@ swimlanes</val>
 <association>
 <ref refid="16f75630-fa90-11de-bd51-00224128e79d"/>
 </association>
+<class_>
+<ref refid="16f70b1c-fa90-11de-bd51-00224128e79d"/>
+</class_>
 <type>
 <ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
 </type>
