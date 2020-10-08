@@ -1,0 +1,14 @@
+name: Sync MSYS2 Mirror
+on:
+  schedule:
+    - cron: 0 2 * * *
+jobs:
+  rclone:
+    runs-on: ubuntu-latest
+    steps:
+    - name: rclone
+      uses: wei/rclone@v1
+      env:
+        RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      with:
+        args: sync -L --s3-no-check-bucket msys2: do-spaces:msys2
