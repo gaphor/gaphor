@@ -253,7 +253,7 @@ python-versions = "*"
 
 [[package]]
 name = "isort"
-version = "5.5.5"
+version = "5.6.1"
 description = "A Python utility / library to sort Python imports."
 category = "dev"
 optional = false
@@ -775,7 +775,7 @@ testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "da0732b90ea81aca370a5cff63bdc2859ce93480f99e807cae62e23e72afc540"
+content-hash = "faaa6fe1773ecd73206c2a426b1d6fcef66e8ac321db4713cb34a389b172498d"
 
 [metadata.files]
 alabaster = [
@@ -908,8 +908,8 @@ iniconfig = [
     {file = "iniconfig-1.0.1.tar.gz", hash = "sha256:e5f92f89355a67de0595932a6c6c02ab4afddc6fcdc0bfc5becd0d60884d3f69"},
 ]
 isort = [
-    {file = "isort-5.5.5-py3-none-any.whl", hash = "sha256:87355bbc3465bf096a8bf09c4dd949b6b9294958c478740442fd9fbd01b817f2"},
-    {file = "isort-5.5.5.tar.gz", hash = "sha256:47e0fdc03aed3a9ba507284f90e4b3b6f2a4725d919816a7b547675befc38ffb"},
+    {file = "isort-5.6.1-py3-none-any.whl", hash = "sha256:dd3211f513f4a92ec1ec1876fc1dc3c686649c349d49523f5b5adbb0814e5960"},
+    {file = "isort-5.6.1.tar.gz", hash = "sha256:2f510f34ae18a8d0958c53eec51ef84fd099f07c4c639676525acbcd7b5bd3ff"},
 ]
 jinja2 = [
     {file = "Jinja2-2.11.2-py2.py3-none-any.whl", hash = "sha256:f0a4641d3cf955324a89c04f3d94663aa4d638abe8f733ecd3582848e1c37035"},
