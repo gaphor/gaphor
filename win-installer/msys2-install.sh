@@ -7,6 +7,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cp /etc/pacman.d/mirrorlist.mingw64 /etc/pacman.d/mirrorlist.backup
 rankmirrors -r mingw64 -n 3 -v /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist.mingw64
+echo "$(cat /etc/pacman.d/mirrorlist.mingw64)"
 
 pacman --noconfirm -Suy
 
