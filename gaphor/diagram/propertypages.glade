@@ -1276,10 +1276,11 @@ Use -/= to move items up or down.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkSpinButton">
+          <object class="GtkSpinButton" id="num-partitions">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="numeric">True</property>
+            <signal name="value-changed" handler="partitions-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
