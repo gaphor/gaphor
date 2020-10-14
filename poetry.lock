@@ -59,6 +59,14 @@ python-versions = "*"
 Babel = "*"
 
 [[package]]
+name = "bacon"
+version = "0.2.0"
+description = "Bacon Game Engine"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "black"
 version = "20.8b1"
 description = "The uncompromising code formatter."
@@ -149,6 +157,9 @@ description = "Distribution utilities"
 category = "main"
 optional = false
 python-versions = "*"
+
+[package.dependencies]
+bacon = "<=0.2"
 
 [[package]]
 name = "docutils"
@@ -253,7 +264,7 @@ python-versions = "*"
 
 [[package]]
 name = "isort"
-version = "5.6.3"
+version = "5.6.4"
 description = "A Python utility / library to sort Python imports."
 category = "dev"
 optional = false
@@ -801,6 +812,9 @@ babel = [
 babelgladeextractor = [
     {file = "BabelGladeExtractor-0.7.0.tar.bz2", hash = "sha256:bcf805e28b4bb18c8b6909a65a7cf5c7c2bcbf4ae50b164878c9682d22271798"},
 ]
+bacon = [
+    {file = "bacon-0.2.0.zip", hash = "sha256:62bd99edd7a3d3e8fddbc7cd7e164313fc01cad6e84c4a010026aadc3129cc0f"},
+]
 black = [
     {file = "black-20.8b1.tar.gz", hash = "sha256:1c02557aa099101b9d21496f8a914e9ed2222ef70336404eeeac8edba836fbea"},
 ]
@@ -908,8 +922,8 @@ iniconfig = [
     {file = "iniconfig-1.0.1.tar.gz", hash = "sha256:e5f92f89355a67de0595932a6c6c02ab4afddc6fcdc0bfc5becd0d60884d3f69"},
 ]
 isort = [
-    {file = "isort-5.6.3-py3-none-any.whl", hash = "sha256:2c1d044a96c74367ab12188593d134c596747d97aec43b9cdb12eea83b6889d2"},
-    {file = "isort-5.6.3.tar.gz", hash = "sha256:3820dd92c3214290cda6351f2ae2cedd5170759bc434af600eaad4f7a82a6ade"},
+    {file = "isort-5.6.4-py3-none-any.whl", hash = "sha256:dcab1d98b469a12a1a624ead220584391648790275560e1a43e54c5dceae65e7"},
+    {file = "isort-5.6.4.tar.gz", hash = "sha256:dcaeec1b5f0eca77faea2a35ab790b4f3680ff75590bfcb7145986905aab2f58"},
 ]
 jinja2 = [
     {file = "Jinja2-2.11.2-py2.py3-none-any.whl", hash = "sha256:f0a4641d3cf955324a89c04f3d94663aa4d638abe8f733ecd3582848e1c37035"},
