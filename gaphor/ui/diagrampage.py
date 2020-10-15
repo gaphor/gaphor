@@ -30,7 +30,7 @@ from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.support import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramSelectionChanged
+from gaphor.ui.event import DiagramSelectionChanged, Notification
 
 log = logging.getLogger(__name__)
 
@@ -370,8 +370,12 @@ class DiagramPage:
             if not isinstance(
                 element, (UML.Classifier, UML.Package, UML.Property)
             ) or isinstance(element, UML.Association):
-                log.warning(
-                    f"DnD is (temporarily) limited to Classifiers, Packages and Properties, not {type(element).__name__}"
+                self.event_manager.handle(
+                    Notification(
+                        gettext(
+                            "Drag to diagram is (temporarily) limited to Classifiers, Packages and Properties, not {type}."
+                        ).format(type=type(element).__name__)
+                    )
                 )
                 context.finish(True, False, time)
                 return

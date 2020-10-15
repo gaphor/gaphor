@@ -20,6 +20,7 @@ from gaphor.ui.event import (
     ModelingLanguageChanged,
 )
 from gaphor.ui.layout import deserialize
+from gaphor.ui.notification import InAppNotifier
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
 
 log = logging.getLogger(__name__)
@@ -109,6 +110,7 @@ class MainWindow(Service, ActionProvider):
         self.model_changed = False
         self.layout = None
         self.modeling_language_name = None
+        self.in_app_notifier = None
 
         self.init_styling()
 
@@ -133,6 +135,9 @@ class MainWindow(Service, ActionProvider):
         em.unsubscribe(self._new_model_content)
         em.unsubscribe(self._on_action_enabled)
         em.unsubscribe(self._on_modeling_language_selection_changed)
+        if self.in_app_notifier:
+            em.unsubscribe(self.in_app_notifier.handle)
+            self.in_app_notifier = None
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
@@ -175,7 +180,8 @@ class MainWindow(Service, ActionProvider):
             return widget
 
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
-            self.layout = deserialize(self.window, f.read(), _factory, self.properties)
+            main_content = builder.get_object("main-content")
+            self.layout = deserialize(main_content, f.read(), _factory, self.properties)
 
         action_group, accel_group = window_action_group(self.component_registry)
         self.window.insert_action_group("win", action_group)
@@ -192,12 +198,14 @@ class MainWindow(Service, ActionProvider):
         self.window.set_resizable(True)
         self.window.connect("size-allocate", self._on_window_size_allocate)
 
+        self.in_app_notifier = InAppNotifier(builder)
         em = self.event_manager
         em.subscribe(self._on_file_manager_state_changed)
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._new_model_content)
         em.subscribe(self._on_action_enabled)
         em.subscribe(self._on_modeling_language_selection_changed)
+        em.subscribe(self.in_app_notifier.handle)
 
     def open_welcome_page(self):
         """Create a new tab with a textual welcome page, a sort of 101 for
