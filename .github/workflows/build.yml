@@ -48,17 +48,17 @@ jobs:
         id: meta
         run: .github/scripts/metadata.sh
       - name: Install Python Dependencies
-        run: poetry install
+        run: make install
       - name: Test with Pytest
-        run: xvfb-run poetry run pytest --cov=gaphor/
-      - name: Code Climate Coverage Action
+        run: xvfb-run make test-all
+      - name: Build
+        run: make dist
+      - name: Upload Code Coverage to Code Climate
         uses: paambaati/codeclimate-action@v2.7.4
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
           coverageCommand: poetry run coverage xml
-      - name: Build
-        run: make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v2
         with:
