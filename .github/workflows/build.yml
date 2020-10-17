@@ -167,9 +167,7 @@ jobs:
           brew list
           brew install gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration create-dmg
       - name: Install Poetry
-        uses: dschep/install-poetry-action@v1.3
-        with:
-          version: 1.0.3
+        run: pip install poetry==1.0.10
       - name: Collect Metadata
         id: meta
         run: .github/scripts/metadata.sh
@@ -183,7 +181,7 @@ jobs:
         run: |
           poetry install
       - name: Test with Pytest
-        run: pytest
+        run: make test-all
       - name: Create macOS Application
         run: |
           make dist
