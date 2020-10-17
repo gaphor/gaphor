@@ -119,7 +119,7 @@ jobs:
       - name: Run Tests
         shell: msys2 {0}
         run: |
-          poetry run ./win-installer/msys2-test.sh
+          make test-all
       - name: Build
         shell: msys2 {0}
         run: mingw32-make dist
