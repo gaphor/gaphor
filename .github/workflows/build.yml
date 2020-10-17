@@ -81,6 +81,9 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    defaults:
+      run:
+        shell: msys2 {0}
     env:
       MSYSTEM: MINGW64
       MSYS2_ARCH: x86_64
@@ -101,49 +104,38 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Dependencies
-        shell: msys2 {0}
         run: |
           ./win-installer/msys2-install.sh
       - name: Install Poetry
-        shell: msys2 {0}
         run: |
           pip install poetry==$POETRY_VERSION
           poetry config virtualenvs.create false
       - name: Collect Metadata
         id: meta
-        shell: msys2 {0}
         run: |
           .github/scripts/metadata.sh
       - name: Install Python Dependencies
-        shell: msys2 {0}
         run: mingw32-make install
       - name: Run Tests
-        shell: msys2 {0}
         run: mingw32-make test-all
-      - name: Build
-        shell: msys2 {0}
-        run: mingw32-make dist
-      - name: Create Windows Binaries
-        shell: msys2 {0}
+      - name: Create Windows Installers
         run: |
+          mingw32-make dist
           ./win-installer/build-installer.sh
-      - name: Decode the certificate
-        run: |
-          $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
-          $currentDirectory = Get-Location
-          $certificatePath = Join-Path -Path $currentDirectory -ChildPath 'certificate.pfx'
-          [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
-      - name: Add SignTool to Path
-        run: echo "::add-path::C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86"
       - name: Sign executables
         env:
           password: "${{ secrets.CERTPASSWORD }}"
           timestampUrl: http://timestamp.digicert.com
           installer: "win-installer/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe"
           portable: "win-installer/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe"
-        run: signtool.exe sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
-      - name: Remove certificate
-        run: Remove-Item 'certificate.pfx'
+        shell: powershell
+        run: |
+          $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+          $currentDirectory = Get-Location
+          $certificatePath = Join-Path -Path $currentDirectory -ChildPath 'certificate.pfx'
+          [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+          "C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe" sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
+          Remove-Item 'certificate.pfx'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
         with:
