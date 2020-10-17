@@ -42,17 +42,13 @@ jobs:
           sudo apt-get update -q && sudo apt-get install
           --no-install-recommends -y xvfb python3-dev python3-gi
           python3-gi-cairo gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
-      # - name: Install Poetry
-      #   uses: dschep/install-poetry-action@v1.3
-      #   with:
-      #     version: 1.0.3
+      - name: Install Poetry
+        run: pip install poetry==1.1.3
       - name: Collect Metadata
         id: meta
         run: .github/scripts/metadata.sh
       - name: Install Python Dependencies
-        run: |
-          pip install poetry==1.0.10
-          poetry install
+        run: poetry install
       - name: Test with Pytest
         run: xvfb-run poetry run pytest --cov=gaphor/
       - name: Code Climate Coverage Action
@@ -62,8 +58,7 @@ jobs:
         with:
           coverageCommand: poetry run coverage xml
       - name: Build
-        run: |
-          make dist
+        run: make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v2
         with:
