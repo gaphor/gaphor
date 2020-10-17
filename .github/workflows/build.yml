@@ -106,7 +106,9 @@ jobs:
           ./win-installer/msys2-install.sh
       - name: Install Poetry
         shell: msys2 {0}
-        run: pip install poetry==$POETRY_VERSION
+        run: |
+          pip install poetry==$POETRY_VERSION
+          poetry config virtualenvs.create false
       - name: Collect Metadata
         id: meta
         shell: msys2 {0}
@@ -124,7 +126,7 @@ jobs:
       - name: Create Windows Binaries
         shell: msys2 {0}
         run: |
-          poetry run bash ./win-installer/build-installer.sh
+          ./win-installer/build-installer.sh
       - name: Decode the certificate
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
