@@ -4,7 +4,6 @@ env:
   POETRY_VERSION: 1.0.10
 
 on:
-  pull_request:
   push:
   release:
     types: [created, edited, published, prereleased]
