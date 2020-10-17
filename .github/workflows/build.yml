@@ -56,9 +56,11 @@ jobs:
         id: meta
         run: .github/scripts/metadata.sh
       - name: Install Python Dependencies
-        run: poetry install
+        run: |
+          poetry install
+          echo "PYTHONPATH: '${PYTHONPATH}'"
       - name: Test with Pytest
-        run: xvfb-run pytest --cov=gaphor/
+        run: xvfb-run poetry run pytest --cov=gaphor/
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v2.7.4
         env:
@@ -194,7 +196,7 @@ jobs:
         run: |
           poetry install
       - name: Test with Pytest
-        run: pytest
+        run: poetry run pytest
       - name: Create macOS Application
         run: |
           make dist

@@ -7,7 +7,7 @@ dist: translations	## Build application distribution (requires Poetry)
 	poetry build
 
 test:		## Run all but slow tests (requires PyTest)
-	pytest -m "not slow"
+	poetry run pytest -m "not slow"
 
 docs:		## Generate documentation (requirss Sphinx)
 	$(MAKE) -C docs html
