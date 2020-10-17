@@ -57,6 +57,7 @@ babel = "^2.7.0"
 babelgladeextractor = "^0.7"
 flake8 = "^3.8"
 isort = "^5.6"
+pyinstaller = { version = "3.6.0", markers = "sys_platform == 'win32'" }
 
 [tool.poetry.scripts]
 gaphor = 'gaphor.ui:main'

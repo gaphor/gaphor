@@ -102,18 +102,28 @@ jobs:
         shell: msys2 {0}
         run: |
           ./win-installer/msys2-install.sh
+      - name: Install Poetry
+        shell: msys2 {0}
+        run: pip install poetry==1.0.10
       - name: Collect Metadata
         id: meta
         shell: msys2 {0}
         run: |
           .github/scripts/metadata.sh
+      - name: Install Python Dependencies
+        shell: msys2 {0}
+        run: mingw32-make install
       - name: Run Tests
+        shell: msys2 {0}
         run: |
-          ./win-installer/msys2-test.sh
+          poetry run ./win-installer/msys2-test.sh
+      - name: Build
+        shell: msys2 {0}
+        run: mingw32-make dist
       - name: Create Windows Binaries
         shell: msys2 {0}
         run: |
-          ./win-installer/build-installer.sh
+          poetry run ./win-installer/build-installer.sh
       - name: Decode the certificate
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
