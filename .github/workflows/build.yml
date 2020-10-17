@@ -58,7 +58,11 @@ jobs:
       - name: Install Python Dependencies
         run: |
           poetry install
+      - name: Debug
+        run: |
           echo "PYTHONPATH: '${PYTHONPATH}'"
+          pwd
+          python -c "import sys; print(sys.path)"
       - name: Test with Pytest
         run: xvfb-run poetry run pytest --cov=gaphor/
       - name: Code Climate Coverage Action
