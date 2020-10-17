@@ -23,4 +23,4 @@ jobs:
       env:
         RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
       with:
-        args: sync -L --s3-no-check-bucket msys2:mingw do-spaces:msys2/mingw  
+        args: sync -L --s3-no-check-bucket --tpslimit 50 msys2:mingw do-spaces:msys2/mingw  
