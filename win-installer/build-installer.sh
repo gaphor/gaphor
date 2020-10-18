@@ -18,8 +18,6 @@ ARCH="x86_64"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${DIR}"
 mkdir -p output
-# shellcheck source=venv
-source ../venv
 
 MISC="${DIR}"/misc
 if [ "${ARCH}" = "x86_64" ]; then
@@ -29,6 +27,11 @@ else
 fi
 
 VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
+
+python -m venv pyinstvenv
+
+pyinstvenv/bin/pip install "../dist/gaphor-${VERSION}-py3-none-any.whl"
+pyinstvenv/bin/pip install pyinstaller==3.6.0
 
 function set_build_root {
     DIST_LOCATION="$1"
@@ -46,7 +49,7 @@ function build_pyinstaller {
     echo "${DIR}"
     sed "s/__version__/$VERSION/g" "${DIR}"/file_version_info.txt.in > "${DIR}"/file_version_info.txt
     python make-script.py ../pyproject.toml > gaphor-script.py
-    pyinstaller -y gaphor.spec
+    pyinstvenv/bin/pyinstaller -y gaphor.spec
 }
 
 function build_installer {

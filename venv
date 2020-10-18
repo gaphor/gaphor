@@ -73,14 +73,13 @@ uname -a | grep -q MSYS_NT && {
 		python3 -m venv --prompt Gaphor ${VENV_OPTS:-} "$SCRIPT_DIR"/.venv
 	}
 
-  # shellcheck source=.venv/bin/activate
+	# shellcheck source=.venv/bin/activate
 	source "$SCRIPT_DIR"/.venv/bin/activate
 
 	{ ${NO_FORCE_INSTALL} && test -f "$SCRIPT_DIR"/.venv/lib/python"${PYTHON_VER}"/site-packages/gaphor.egg-link; } || {
 		echo "Installing Gaphor in the virtualenv..."
 
-		pip install --upgrade poetry==1.1.0
-		poetry config virtualenvs.create false
+		pip install --upgrade poetry==1.0.10
 		poetry install
 	}
 
