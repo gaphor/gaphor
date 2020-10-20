@@ -373,7 +373,7 @@ class DiagramPage:
                 self.event_manager.handle(
                     Notification(
                         gettext(
-                            "Drag to diagram is (temporarily) limited to Classifiers, Packages and Properties, not {type}."
+                            "Drag to diagram is (temporarily) limited to Classifiers, Packages, and Properties, not {type}."
                         ).format(type=type(element).__name__)
                     )
                 )
