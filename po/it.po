@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-05-26 08:26+0200\n"
-"PO-Revision-Date: 2020-03-28 08:30+0100\n"
+"PO-Revision-Date: 2020-10-25 08:30+0100\n"
 "Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
 "Language: it\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -49,7 +49,7 @@ msgstr ""
 
 #: ../gaphor/SysML/propertypages.glade
 msgid "Text"
-msgstr ""
+msgstr "Testo"
 
 #: ../gaphor/SysML/toolbox.py:37 ../gaphor/UML/toolbox.py:36
 msgid "General"
@@ -65,7 +65,7 @@ msgstr "Linea"
 
 #: ../gaphor/SysML/toolbox.py:55 ../gaphor/UML/toolbox.py:54
 msgid "Box"
-msgstr "Scatola"
+msgstr "Riquadro"
 
 #: ../gaphor/SysML/toolbox.py:63 ../gaphor/UML/toolbox.py:62
 msgid "Ellipse"
@@ -82,11 +82,11 @@ msgstr "Riga di commento"
 
 #: ../gaphor/SysML/toolbox.py:89
 msgid "Blocks"
-msgstr ""
+msgstr "Blocchi"
 
 #: ../gaphor/SysML/toolbox.py:93 ../gaphor/SysML/toolbox.py:132
 msgid "Block"
-msgstr ""
+msgstr "Blocco"
 
 #: ../gaphor/SysML/toolbox.py:103 ../gaphor/SysML/toolbox.py:142
 #: ../gaphor/UML/toolbox.py:114
@@ -104,35 +104,35 @@ msgstr "Generalizzazione"
 
 #: ../gaphor/SysML/toolbox.py:128
 msgid "Internal Blocks"
-msgstr ""
+msgstr "Blocchi Interni"
 
 #: ../gaphor/SysML/toolbox.py:153
 msgid "Requirements"
-msgstr ""
+msgstr "Requisiti"
 
 #: ../gaphor/SysML/toolbox.py:157
 msgid "Requirement"
-msgstr ""
+msgstr "Requisito"
 
 #: ../gaphor/SysML/toolbox.py:169
 msgid "Satisfy"
-msgstr ""
+msgstr "Soddisfa"
 
 #: ../gaphor/SysML/toolbox.py:176
 msgid "Derive Reqt"
-msgstr ""
+msgstr "Derivato Richiesto"
 
 #: ../gaphor/SysML/toolbox.py:183
 msgid "Trace"
-msgstr ""
+msgstr Traccia""
 
 #: ../gaphor/SysML/toolbox.py:190
 msgid "Refine"
-msgstr ""
+msgstr "Perfeziona"
 
 #: ../gaphor/SysML/toolbox.py:197
 msgid "Verify"
-msgstr ""
+msgstr "Verifica"
 
 #: ../gaphor/SysML/toolbox.py:205 ../gaphor/UML/toolbox.py:209
 msgid "Actions"
@@ -318,7 +318,7 @@ msgstr "Estensione"
 
 #: ../gaphor/UML/toolbox.py:520
 msgid "Import"
-msgstr ""
+msgstr "Importa"
 
 #: ../gaphor/UML/classes/classespropertypages.py:357
 msgid "Usage"
@@ -390,7 +390,7 @@ msgstr "titolo"
 
 #: ../gaphor/diagram/propertypages.glade
 msgid "Tail:"
-msgstr ""
+msgstr "Estremità:"
 
 #: ../gaphor/diagram/propertypages.glade
 msgid "Show Attributes"
@@ -700,7 +700,7 @@ msgstr "Copia"
 
 #: ../gaphor/services/helpservice/shortcuts.glade
 msgid "Paste"
-msgstr "ncolla"
+msgstr "Incolla"
 
 #: ../gaphor/services/helpservice/shortcuts.glade
 msgid "Delete"
@@ -867,7 +867,7 @@ msgstr "Modificati"
 
 #: ../gaphor/ui/mainwindow.py:272
 msgid "Profile: {}"
-msgstr ""
+msgstr "Profilo: {}"
 
 #: ../gaphor/ui/mockups.glade
 msgid "Sloppy lines"
