@@ -103,7 +103,7 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item)
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "points":
             points = ast.literal_eval(value)
             for h, p in zip(self.handles(), points):

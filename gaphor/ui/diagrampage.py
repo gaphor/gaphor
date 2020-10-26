@@ -245,13 +245,13 @@ class DiagramPage:
     def unselect_all(self):
         assert self.view
         if self.view.has_focus():
-            self.view.unselect_all()
+            self.view.selection.unselect_all()
 
     @action(name="diagram.delete")
     @transactional
     def delete_selected_items(self):
         assert self.view
-        items = self.view.selected_items
+        items = self.view.selection.selected_items
         for i in list(items):
             if isinstance(i, Presentation):
                 i.unlink()
@@ -313,7 +313,7 @@ class DiagramPage:
         )
         view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
-        view.queue_draw_refresh()
+        view.queue_redraw()
 
     def _on_key_press_event(self, view, event):
         """Handle the 'Delete' key.
@@ -345,7 +345,9 @@ class DiagramPage:
 
     def _on_view_selection_changed(self, view, selection_or_focus):
         self.event_manager.handle(
-            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
+            DiagramSelectionChanged(
+                view, view.selection.focused_item, view.selection.selected_items
+            )
         )
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
@@ -391,7 +393,7 @@ class DiagramPage:
                     item.subject = element
 
                 view.unselect_all()
-                view.focused_item = item
+                view.selection.focused_item = item
 
             else:
                 log.warning(

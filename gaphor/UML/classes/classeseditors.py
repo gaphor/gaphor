@@ -64,7 +64,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
             item.subject.name = text
 
         entry = popup_entry(text, update_text)
-        box = editable_text_box(view, view.hovered_item)
+        box = editable_text_box(view, view.selection.hovered_item)
 
     show_popover(entry, view, box, escape)
     return True

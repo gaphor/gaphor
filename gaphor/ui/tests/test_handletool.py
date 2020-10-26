@@ -85,7 +85,6 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
     actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
     actor.matrix.translate(200, 200)
-    diagram.canvas.update_matrix(actor)
 
     line = diagram.create(CommentLineItem)
 
@@ -105,7 +104,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
     tool.connect(line, handle, handle.pos)
     cinfo = diagram.canvas.get_connection(handle)
     assert cinfo.constraint is not None
-    assert cinfo.connected is actor, cinfo.connected
+    assert cinfo.connected is comment, cinfo.connected
 
     ConnectorAspect(line, handle).disconnect()
 

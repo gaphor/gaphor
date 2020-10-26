@@ -8,7 +8,8 @@ from __future__ import annotations
 
 from typing import List, Optional, Type, TypeVar, Union
 
-from gaphas.canvas import Canvas, Connection
+from gaphas.canvas import Canvas
+from gaphas.connections import Connection
 from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
 from typing_extensions import Protocol

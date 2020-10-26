@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from cairo import LINE_JOIN_ROUND
 from gaphas.painter import Painter
+from gaphas.view import GtkView, Selection
 
 from gaphor.core.modeling.diagram import DrawContext, StyledItem
 
@@ -26,17 +27,19 @@ class ItemPainter(Painter):
         diagram = item.diagram
         cairo.save()
         try:
-            cairo.set_matrix(view.matrix)
-            cairo.transform(view.canvas.get_matrix_i2c(item))
+            cairo.set_matrix(view.matrix.to_cairo())
+            cairo.transform(view.canvas.get_matrix_i2c(item).to_cairo())
+
+            selection = view.selection if isinstance(view, GtkView) else Selection()
 
             item.draw(
                 DrawContext(
                     cairo=cairo,
                     style=diagram.style(StyledItem(item, view)),
-                    selected=(item in view.selected_items),
-                    focused=(item is view.focused_item),
-                    hovered=(item is view.hovered_item),
-                    dropzone=(item is view.dropzone_item),
+                    selected=(item in selection.selected_items),
+                    focused=(item is selection.focused_item),
+                    hovered=(item is selection.hovered_item),
+                    dropzone=(item is selection.dropzone_item),
                 )
             )
 

@@ -120,7 +120,9 @@ class EditorStack:
         self.vbox = builder.get_object("editors")
 
         current_view = self.diagrams.get_current_view()
-        self._selection_changed(focused_item=current_view and current_view.focused_item)
+        self._selection_changed(
+            focused_item=current_view and current_view.selection.focused_item
+        )
 
         self.event_manager.subscribe(self._selection_changed)
         self.event_manager.subscribe(self._element_changed)

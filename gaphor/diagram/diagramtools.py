@@ -130,7 +130,7 @@ class TextEditTool(Tool):
 
     def on_key_press(self, event):
         view = self.view
-        item = view.hovered_item
+        item = view.selection.hovered_item
         if (
             item
             and event.type == Gdk.EventType.KEY_PRESS
@@ -141,7 +141,7 @@ class TextEditTool(Tool):
 
     def on_double_click(self, event):
         view = self.view
-        item = view.hovered_item
+        item = view.selection.hovered_item
         if item:
             x, y = view.get_matrix_v2i(item).transform_point(event.x, event.y)
             return InlineEditor(item, view, (x, y))
@@ -202,7 +202,7 @@ class PlacementTool(_PlacementTool):
 
     def on_button_press(self, event):
         view = self.view
-        view.unselect_all()
+        view.selection.unselect_all()
         if super().on_button_press(event):
             try:
                 opposite = self.new_item.opposite(
@@ -215,8 +215,7 @@ class PlacementTool(_PlacementTool):
                 # mechanisms
 
                 # First make sure all matrices are updated:
-                view.canvas.update_matrices([self.new_item])
-                view.update_matrix(self.new_item)
+                self.new_item.matrix_i2c.set(*view.canvas.get_matrix_i2c(self.new_item))
 
                 vpos = event.x, event.y
 
@@ -247,16 +246,16 @@ class PlacementTool(_PlacementTool):
             # create dummy adapter
             adapter = Group(parent, self._factory.item_class())
             if adapter and adapter.can_contain():
-                view.dropzone_item = parent
+                view.selection.set_dropzone_item(parent)
                 self._parent = parent
             else:
-                view.dropzone_item = None
+                view.selection.set_dropzone_item(None)
                 self._parent = None
             parent.request_update(matrix=False)
         else:
-            if view.dropzone_item:
-                view.dropzone_item.request_update(matrix=False)
-            view.dropzone_item = None
+            if view.selection.dropzone_item:
+                view.selection.dropzone_item.request_update(matrix=False)
+            view.selection.set_dropzone_item(None)
 
     def _create_item(self, pos):
         """Create diagram item and place it within parent's boundaries."""
@@ -267,7 +266,7 @@ class PlacementTool(_PlacementTool):
             item = super()._create_item(pos, diagram=diagram, parent=parent)
         finally:
             self._parent = None
-            view.dropzone_item = None
+            view.selection.set_dropzone_item(None)
         return item
 
 
@@ -287,21 +286,21 @@ class DropZoneInMotion(GuidedItemInMotion):
         over_item = view.get_item_at_point((x, y), selected=False)
 
         if not over_item:
-            view.dropzone_item = None
+            view.selection.set_dropzone_item(None)
             return
 
         if current_parent and not over_item:
             # are we going to remove from parent?
             group = Group(current_parent, item)
             if group:
-                view.dropzone_item = current_parent
+                view.selection.set_dropzone_item(current_parent)
                 current_parent.request_update(matrix=False)
 
         if over_item:
             # are we going to add to parent?
             group = Group(over_item, item)
             if group and group.can_contain():
-                view.dropzone_item = over_item
+                view.selection.set_dropzone_item(over_item)
                 over_item.request_update(matrix=False)
 
     def stop_move(self):
@@ -311,7 +310,7 @@ class DropZoneInMotion(GuidedItemInMotion):
         view = self.view
         canvas = view.canvas
         old_parent = view.canvas.get_parent(item)
-        new_parent = view.dropzone_item
+        new_parent = view.selection.dropzone_item
         try:
 
             if new_parent is old_parent:
@@ -337,7 +336,7 @@ class DropZoneInMotion(GuidedItemInMotion):
 
                 new_parent.request_update()
         finally:
-            view.dropzone_item = None
+            view.selection.set_dropzone_item(None)
 
 
 class TransactionalToolChain(ToolChain):

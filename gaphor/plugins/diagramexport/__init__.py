@@ -4,9 +4,10 @@ import logging
 import os
 
 import cairo
+from gaphas.canvas import Context
 from gaphas.freehand import FreeHandPainter
 from gaphas.painter import BoundingBoxPainter
-from gaphas.view import Context, View
+from gaphas.view import View
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
