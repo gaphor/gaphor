@@ -129,7 +129,7 @@ class ElementPresentation(Presentation[S], gaphas.Element):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name in ("width", "height"):
             setattr(self, name, ast.literal_eval(value))
         else:
@@ -242,7 +242,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "points":
             points = ast.literal_eval(value)
             for _ in range(len(points) - 2):

@@ -98,7 +98,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "connection":
             self._load_connection = value
         else:

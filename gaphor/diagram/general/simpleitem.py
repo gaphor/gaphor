@@ -28,7 +28,7 @@ class Line(Presentation, _Line):
         if name == "horizontal":
             self.horizontal = ast.literal_eval(value)
         elif name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "orthogonal":
             self._load_orthogonal = ast.literal_eval(value)
         elif name == "points":
@@ -70,7 +70,7 @@ class Box(Presentation, Element):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "width":
             self.width = ast.literal_eval(value)
         elif name == "height":
@@ -99,7 +99,7 @@ class Ellipse(Presentation, Element):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "width":
             self.width = ast.literal_eval(value)
         elif name == "height":

@@ -28,7 +28,8 @@ from gaphas.constraint import (
 )
 from gaphas.geometry import distance_line_point
 from gaphas.item import SE, SW
-from gaphas.solver import STRONG
+from gaphas.position import MatrixProjection
+from gaphas.solver import STRONG, MultiConstraint
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
@@ -42,11 +43,12 @@ class LifetimePort(LinePort):
     def constraint(self, canvas, item, handle, glue_item):
         """Create connection line constraint between item's handle and the
         port."""
-        line = canvas.project(glue_item, self.start, self.end)
-        point = canvas.project(item, handle.pos)
+        start = MatrixProjection(self.start, glue_item.matrix_i2c)
+        end = MatrixProjection(self.end, glue_item.matrix_i2c)
+        point = MatrixProjection(handle.pos, item.matrix_i2c)
 
         x, y = canvas.get_matrix_i2c(item).transform_point(*handle.pos)
-        x, y = canvas.get_matrix_c2i(glue_item).transform_point(x, y)
+        x, y = canvas.get_matrix_i2c(glue_item).inverse().transform_point(x, y)
 
         # keep message at the same distance from head or bottom of lifetime
         # line depending on situation
@@ -57,7 +59,8 @@ class LifetimePort(LinePort):
         else:
             delta = y - self.end.y
             align = 1
-        return LineAlignConstraint(line, point, align, delta)
+        line = LineAlignConstraint((start, end), point, align, delta)
+        return MultiConstraint(start, end, point, line)
 
 
 class LifetimeItem:

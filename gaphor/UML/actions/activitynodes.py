@@ -254,7 +254,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "height":
             self._handles[1].pos.y = ast.literal_eval(value)
         elif name == "combined":

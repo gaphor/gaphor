@@ -32,7 +32,7 @@ def CommentItemInlineEditor(item, view, pos=None) -> bool:
     buffer.connect("changed", lambda _: update_text())
 
     text_view = Gtk.TextView.new_with_buffer(buffer)
-    box = view.get_item_bounding_box(view.hovered_item)
+    box = view.get_item_bounding_box(view.selection.hovered_item)
 
     frame = Gtk.Frame()
     frame.add(text_view)

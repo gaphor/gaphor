@@ -205,10 +205,10 @@ class StyledItem:
         if view:
             item = self.item
             return (
-                "active" if item in view.selected_items else "",
-                "focus" if item is view.focused_item else "",
-                "hover" if item is view.hovered_item else "",
-                "drop" if item is view.dropzone_item else "",
+                "active" if item in view.selection.selected_items else "",
+                "focus" if item is view.selection.focused_item else "",
+                "hover" if item is view.selection.hovered_item else "",
+                "drop" if item is view.selection.dropzone_item else "",
             )
         return ()
 
@@ -279,13 +279,13 @@ class DiagramCanvas(gaphas.Canvas):
         if old_parent:
             super().reparent(item, None)
             m = self.get_matrix_i2c(old_parent)
-            item.matrix *= m
+            item.matrix.set(*item.matrix.multiply(m))
             old_parent.request_update()
 
         if parent:
             super().reparent(item, parent)
-            m = self.get_matrix_c2i(parent)
-            item.matrix *= m
+            m = self.get_matrix_i2c(parent).inverse()
+            item.matrix.set(*item.matrix.multiply(m))
             parent.request_update()
 
 

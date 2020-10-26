@@ -93,7 +93,9 @@ class Diagrams(UIComponent, ActionProvider):
 
         view = widget.diagram_page.view
         self.event_manager.handle(
-            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
+            DiagramSelectionChanged(
+                view, view.selection.focused_item, view.selection.selected_items
+            )
         )
 
     def tab_label(self, title, widget):
@@ -149,7 +151,9 @@ class Diagrams(UIComponent, ActionProvider):
         self._add_ui_settings(page)
         view = page.diagram_page.view
         self.event_manager.handle(
-            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
+            DiagramSelectionChanged(
+                view, view.selection.focused_item, view.selection.selected_items
+            )
         )
 
     def _add_ui_settings(self, page):
