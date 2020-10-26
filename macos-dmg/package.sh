@@ -23,13 +23,19 @@ function log() {
 rm -rf Gaphor.app Gaphor-*.dmg
 
 
-# Make a virtual env, so we are not bothered with site-packages installed on the host system
-
-python3 -m venv --copies --prompt Gaphor.app "${RESOURCESDIR}"
-
 VERSION="$(poetry version | cut -d' ' -f2)"
-PYVER="$(python3 -c 'import sys; print("{}.{}".format(*sys.version_info))')"
 
+# Obtain the Python version from the python dependency.
+PYVER="$(brew deps gobject-introspection | grep '^python@' | cut -d@ -f2)"
+
+test -n "${PYVER}" || { echo "Could not determine Python version!"; exit 1; }
+echo "Python version: ${PYVER}"
+
+export LDFLAGS="-L/usr/local/opt/python@${PYVER}/lib"
+export PKG_CONFIG_PATH="/usr/local/opt/python@${PYVER}/lib/pkgconfig"
+
+# Make a virtual env, so we are not bothered with site-packages installed on the host system
+"/usr/local/opt/python@${PYVER}/bin/python3" -m venv --copies --prompt Gaphor.app "${RESOURCESDIR}"
 
 # Copy all files in the application bundle:
 
