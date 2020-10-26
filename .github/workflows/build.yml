@@ -178,7 +178,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Python Dependencies
-        run: poetry install
+        run: make install
       - name: Test with Pytest
         run: make test-all
       - name: Create macOS Application
