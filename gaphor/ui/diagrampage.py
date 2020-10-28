@@ -3,10 +3,10 @@ import importlib
 import logging
 from typing import Dict, Optional, Sequence, Tuple
 
-from gaphas.freehand import FreeHandPainter
 from gaphas.painter import (
     BoundingBoxPainter,
     FocusedItemPainter,
+    FreeHandPainter,
     HandlePainter,
     PainterChain,
     ToolPainter,
@@ -137,8 +137,8 @@ class DiagramPage:
         scrolled_window.show_all()
         self.widget = scrolled_window
 
-        view.connect("focus-changed", self._on_view_selection_changed)
-        view.connect("selection-changed", self._on_view_selection_changed)
+        view.selection.connect("focus-changed", self._on_view_selection_changed)
+        view.selection.connect("selection-changed", self._on_view_selection_changed)
         view.connect_after("key-press-event", self._on_key_press_event)
         view.connect("drag-data-received", self._on_drag_data_received)
 
@@ -295,23 +295,22 @@ class DiagramPage:
             else "".encode()
         )
 
-        sloppiness = style.get("line-style", 0.0)
-
-        item_painter = ItemPainter()
-
         view = self.view
 
+        item_painter = ItemPainter(view)
+
+        sloppiness = style.get("line-style", 0.0)
         if sloppiness:
-            item_painter = FreeHandPainter(ItemPainter(), sloppiness=sloppiness)
+            item_painter = FreeHandPainter(item_painter, sloppiness=sloppiness)
 
         view.painter = (
             PainterChain()
             .append(item_painter)
-            .append(HandlePainter())
-            .append(FocusedItemPainter())
-            .append(ToolPainter())
+            .append(HandlePainter(view))
+            .append(FocusedItemPainter(view))
+            .append(ToolPainter(view))
         )
-        view.bounding_box_painter = BoundingBoxPainter(item_painter)
+        view.bounding_box_painter = BoundingBoxPainter(item_painter, view)
 
         view.queue_redraw()
 
@@ -343,10 +342,10 @@ class DiagramPage:
                         "select-tool"
                     ).change_state(GLib.Variant.new_string(action_name))
 
-    def _on_view_selection_changed(self, view, selection_or_focus):
+    def _on_view_selection_changed(self, selection, selection_or_focus):
         self.event_manager.handle(
             DiagramSelectionChanged(
-                view, view.selection.focused_item, view.selection.selected_items
+                self.view, selection.focused_item, selection.selected_items
             )
         )
 

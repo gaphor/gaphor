@@ -86,7 +86,7 @@ def connect(line, handle, item, port=None):
         port = item.ports()[0]
 
     sink = ConnectionSink(item, port)
-    connector = ConnectorAspect(line, handle)
+    connector = ConnectorAspect(line, handle, canvas.connections)
 
     connector.connect(sink)
 

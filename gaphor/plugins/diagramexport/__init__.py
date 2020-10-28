@@ -5,9 +5,8 @@ import os
 
 import cairo
 from gaphas.canvas import Context
-from gaphas.freehand import FreeHandPainter
-from gaphas.painter import BoundingBoxPainter
-from gaphas.view import View
+from gaphas.painter import BoundingBoxPainter, FreeHandPainter
+from gaphas.view import GtkView
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
@@ -20,7 +19,19 @@ logger = logging.getLogger(__name__)
 
 
 def paint(view, cr):
-    view.painter.paint(Context(cairo=cr, items=view.canvas.get_all_items(), area=None))
+    view.painter.paint(view.canvas.get_all_items(), cr)
+
+
+def update_painters(view, diagram):
+    style = diagram.style(StyledDiagram(diagram))
+
+    sloppiness = style.get("line-style", 0.0)
+
+    if sloppiness:
+        view.painter = FreeHandPainter(ItemPainter(view), sloppiness)
+    else:
+        view.painter = ItemPainter(view)
+    view.bounding_box_painter = BoundingBoxPainter(view.painter, view)
 
 
 class DiagramExport(Service, ActionProvider):
@@ -48,28 +59,18 @@ class DiagramExport(Service, ActionProvider):
             ],
         )
 
-    def update_painters(self, view, diagram):
-        style = diagram.style(StyledDiagram(diagram))
-
-        sloppiness = style.get("line-style", 0.0)
-
-        if sloppiness:
-            view.painter = FreeHandPainter(ItemPainter(), sloppiness)
-        else:
-            view.painter = ItemPainter()
-        view.bounding_box_painter = BoundingBoxPainter(view.painter)
-
     def render(self, diagram, new_surface):
         canvas = diagram.canvas
-        view = View(canvas)
+        view = GtkView()
 
-        self.update_painters(view, diagram)
+        update_painters(view, diagram)
+        view.canvas = canvas
 
         # Update bounding boxes with a temporary CairoContext
         # (used for stuff like calculating font metrics)
         tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
         tmpcr = cairo.Context(tmpsurface)
-        view.update_bounding_box(tmpcr)
+        # view.update_bounding_box(tmpcr)
         tmpcr.show_page()
         tmpsurface.flush()
 

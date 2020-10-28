@@ -4,9 +4,9 @@ from typing import Tuple, Union
 
 import gi
 from gaphas.canvas import instant_cairo_context
-from gaphas.freehand import FreeHandCairoContext
 from gaphas.geometry import Rectangle
-from gaphas.painter import CairoBoundingBoxContext
+from gaphas.painter.boundingboxpainter import CairoBoundingBoxContext
+from gaphas.painter.freehand import FreeHandCairoContext
 
 from gaphor.core.styling import FontStyle, FontWeight, Style, TextAlign, TextDecoration
 

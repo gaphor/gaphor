@@ -29,6 +29,11 @@ def diagrams(event_manager, element_factory, properties):
 
 
 @pytest.fixture
+def connections(diagram):
+    return diagram.canvas.connections
+
+
+@pytest.fixture
 def comment(element_factory, diagram):
     return diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
@@ -38,8 +43,8 @@ def commentline(diagram):
     return diagram.create(CommentLineItem)
 
 
-def test_aspect_type(commentline):
-    aspect = ConnectorAspect(commentline, commentline.handles()[0])
+def test_aspect_type(commentline, connections):
+    aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
     assert isinstance(aspect, DiagramItemConnector)
 
 
@@ -47,8 +52,8 @@ def test_query(comment, commentline):
     assert Connector(comment, commentline)
 
 
-def test_allow(commentline, comment):
-    aspect = ConnectorAspect(commentline, commentline.handles()[0])
+def test_allow(commentline, comment, connections):
+    aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
     assert aspect.item is commentline
     assert aspect.handle is commentline.handles()[0]
 
@@ -56,9 +61,9 @@ def test_allow(commentline, comment):
     assert aspect.allow(sink)
 
 
-def test_connect(diagram, comment, commentline):
+def test_connect(diagram, comment, commentline, connections):
     sink = ConnectionSink(comment, comment.ports()[0])
-    aspect = ConnectorAspect(commentline, commentline.handles()[0])
+    aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
     aspect.connect(sink)
     canvas = diagram.canvas
     cinfo = canvas.get_connection(commentline.handles()[0])
@@ -85,6 +90,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
     actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
     actor.matrix.translate(200, 200)
+    diagram.canvas.update_now((actor,))
 
     line = diagram.create(CommentLineItem)
 
@@ -106,7 +112,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
     assert cinfo.constraint is not None
     assert cinfo.connected is comment, cinfo.connected
 
-    ConnectorAspect(line, handle).disconnect()
+    ConnectorAspect(line, handle, diagram.canvas.connections).disconnect()
 
     cinfo = diagram.canvas.get_connection(handle)
 

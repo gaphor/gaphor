@@ -236,6 +236,7 @@ class PlacementTool(_PlacementTool):
             return self.handle_tool.on_motion_notify(event)
 
         view = self.view
+        canvas = view.canvas
 
         try:
             parent = view.get_item_at_point((event.x, event.y))
@@ -251,10 +252,10 @@ class PlacementTool(_PlacementTool):
             else:
                 view.selection.set_dropzone_item(None)
                 self._parent = None
-            parent.request_update(matrix=False)
+            canvas.request_update(parent, matrix=False)
         else:
             if view.selection.dropzone_item:
-                view.selection.dropzone_item.request_update(matrix=False)
+                canvas.request_update(view.selection.dropzone_item)
             view.selection.set_dropzone_item(None)
 
     def _create_item(self, pos):

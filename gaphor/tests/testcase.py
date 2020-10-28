@@ -11,6 +11,8 @@ from typing import Type, TypeVar
 
 from gaphas.aspect import ConnectionSink
 from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.painter import BoundingBoxPainter
+from gaphas.view import GtkView
 
 # For DiagramItemConnector aspect:
 import gaphor.diagram.diagramtools  # noqa
@@ -18,6 +20,7 @@ from gaphor import UML
 from gaphor.application import Session
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.grouping import Group
+from gaphor.diagram.painter import ItemPainter
 
 T = TypeVar("T")
 
@@ -44,6 +47,13 @@ class TestCase(unittest.TestCase):
             self.element_factory.select()
         )
         self.diagram = self.element_factory.create(UML.Diagram)
+
+        # We need to hook up a view for now, so updates are done instantly
+        self.view = GtkView(self.diagram.canvas)
+        self.view.painter = ItemPainter(self.view)
+        self.view.bounding_box_painter = BoundingBoxPainter(
+            self.view.painter, self.view
+        )
         assert len(list(self.element_factory.select())) == 1, list(
             self.element_factory.select()
         )
@@ -60,7 +70,7 @@ class TestCase(unittest.TestCase):
         if subject_cls is not None:
             subject = self.element_factory.create(subject_cls)
         item = self.diagram.create(item_cls, subject=subject)
-        self.diagram.canvas.update()
+        self.diagram.canvas.update_now((item,))
         return item
 
     def allow(self, line, handle, item, port=None):
@@ -85,7 +95,7 @@ class TestCase(unittest.TestCase):
             port = item.ports()[0]
 
         sink = ConnectionSink(item, port)
-        connector = ConnectorAspect(line, handle)
+        connector = ConnectorAspect(line, handle, canvas.connections)
 
         connector.connect(sink)
 

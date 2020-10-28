@@ -348,7 +348,7 @@ class AssociationEnd(Presentation):
 
     def __init__(self, owner, end=None):
         super().__init__(id=False)  # Transient object
-        self.canvas = None
+        self._canvas = None
         self._owner = owner
         self._end = end
 

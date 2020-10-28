@@ -24,5 +24,3 @@ class GaphasTest(TestCase):
         assert self.element_factory.lselect(UML.Association)[0] is a.subject
 
         c1.unlink()
-
-        self.diagram.canvas.update_now()

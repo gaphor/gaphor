@@ -66,8 +66,7 @@ class CopyService(Service, ActionProvider):
             for item in new_items:
                 if canvas.get_parent(item) not in new_items:
                     item.matrix.translate(10, 10)
-
-            canvas.update_matrices(new_items)
+                    # canvas.request_update(item)
 
         return new_items
 

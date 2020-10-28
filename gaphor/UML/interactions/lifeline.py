@@ -40,15 +40,15 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 
 class LifetimePort(LinePort):
-    def constraint(self, canvas, item, handle, glue_item):
+    def constraint(self, item, handle, glue_item):
         """Create connection line constraint between item's handle and the
         port."""
         start = MatrixProjection(self.start, glue_item.matrix_i2c)
         end = MatrixProjection(self.end, glue_item.matrix_i2c)
         point = MatrixProjection(handle.pos, item.matrix_i2c)
 
-        x, y = canvas.get_matrix_i2c(item).transform_point(*handle.pos)
-        x, y = canvas.get_matrix_i2c(glue_item).inverse().transform_point(x, y)
+        x, y = item.matrix_i2c.transform_point(*handle.pos)
+        x, y = glue_item.matrix_i2c.inverse().transform_point(x, y)
 
         # keep message at the same distance from head or bottom of lifetime
         # line depending on situation
