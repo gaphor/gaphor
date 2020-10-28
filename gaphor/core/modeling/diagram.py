@@ -243,17 +243,15 @@ class DiagramCanvas(gaphas.Canvas):
         """
 
         self._block_updates = block
-        if not block:
-            self.update_now()
 
     block_updates = property(lambda s: s._block_updates, _set_block_updates)
 
-    def update_now(self):
+    def update_now(self, dirty_items, dirty_matrix_items=()):
         """Update the diagram canvas, unless block_updates is true."""
 
         if self._block_updates:
             return
-        super().update_now()
+        super().update_now(dirty_items, dirty_matrix_items)
 
     def save(self, save_func):
         """Apply the supplied save function to all root diagram items."""
@@ -280,13 +278,13 @@ class DiagramCanvas(gaphas.Canvas):
             super().reparent(item, None)
             m = self.get_matrix_i2c(old_parent)
             item.matrix.set(*item.matrix.multiply(m))
-            old_parent.request_update()
+            self.request_update(old_parent)
 
         if parent:
             super().reparent(item, parent)
             m = self.get_matrix_i2c(parent).inverse()
             item.matrix.set(*item.matrix.multiply(m))
-            parent.request_update()
+            self.request_update(parent)
 
 
 class Diagram(PackageableElement):

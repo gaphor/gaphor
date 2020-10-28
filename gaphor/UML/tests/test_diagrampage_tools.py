@@ -75,7 +75,7 @@ def test_placement_action(tab, tool_name):
 
     # Ensure the factory is working
     tool.create_item((0, 0))
-    tab.diagram.canvas.update()
+    tab.view.update()
 
 
 def test_placement_object_node(tab, element_factory):

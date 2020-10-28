@@ -23,7 +23,7 @@ def create_item(element_factory, diagram):
         if subject_cls is not None:
             subject = element_factory.create(subject_cls)
         item = diagram.create(item_cls, subject=subject)
-        diagram.canvas.update()
+        # diagram.canvas.update()
         return item
 
     return create
@@ -183,9 +183,9 @@ def test_stereotype_deletion(element_factory):
 def test_diagram_move(element_factory):
     diagram = element_factory.create(UML.Diagram)
     diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-    diagram.canvas.update = Mock()
+    diagram.canvas.request_update = Mock()
 
     package = element_factory.create(UML.Package)
     diagram.package = package
 
-    diagram.canvas.update.assert_called()
+    diagram.canvas.request_update.assert_called()

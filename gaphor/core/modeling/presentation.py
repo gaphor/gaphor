@@ -31,7 +31,8 @@ class Presentation(Element, Generic[S]):
         super().__init__(id, model)
 
         def update(event):
-            self.request_update()
+            if self.canvas:
+                self.canvas.request_update(self)
 
         self._watcher = self.watcher(default_handler=update)
 
@@ -42,11 +43,15 @@ class Presentation(Element, Generic[S]):
     )
 
     handles: Callable[[Presentation], List[Handle]]
-    request_update: Callable[[Presentation], None]
 
-    canvas: Optional[Canvas]
+    _canvas: Optional[Canvas]
+    canvas = property(lambda s: s._canvas)
 
     matrix: Matrix
+
+    def request_update(self, matrix=True):
+        if self.canvas:
+            self.canvas.request_update(self, matrix=matrix)
 
     @property
     def diagram(self):

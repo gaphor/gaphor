@@ -46,5 +46,5 @@ class FlowTestCase(TestCase):
             selected=True,
             dropzone=False,
         )
-
+        self.diagram.canvas.update_now((flow,))
         flow.draw(context)

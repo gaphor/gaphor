@@ -9,7 +9,6 @@ and handles).
 from __future__ import annotations
 
 from cairo import LINE_JOIN_ROUND
-from gaphas.painter import Painter
 from gaphas.view import GtkView, Selection
 
 from gaphor.core.modeling.diagram import DrawContext, StyledItem
@@ -21,8 +20,11 @@ DEBUG_DRAW_BOUNDING_BOX = False
 TOLERANCE = 0.8
 
 
-class ItemPainter(Painter):
-    def draw_item(self, item, cairo):
+class ItemPainter:
+    def __init__(self, view):
+        self.view = view
+
+    def paint_item(self, item, cairo):
         view = self.view
         diagram = item.diagram
         cairo.save()
@@ -46,10 +48,12 @@ class ItemPainter(Painter):
         finally:
             cairo.restore()
 
-    def draw_items(self, items, cairo):
+    def paint(self, items, cairo):
         """Draw the items."""
+        cairo.set_tolerance(TOLERANCE)
+        cairo.set_line_join(LINE_JOIN_ROUND)
         for item in items:
-            self.draw_item(item, cairo)
+            self.paint_item(item, cairo)
             if DEBUG_DRAW_BOUNDING_BOX:
                 self._draw_bounds(item, cairo)
 
@@ -67,9 +71,3 @@ class ItemPainter(Painter):
             cairo.rectangle(*b)
             cairo.stroke()
             cairo.restore()
-
-    def paint(self, context):
-        cairo = context.cairo
-        cairo.set_tolerance(TOLERANCE)
-        cairo.set_line_join(LINE_JOIN_ROUND)
-        self.draw_items(context.items, cairo)

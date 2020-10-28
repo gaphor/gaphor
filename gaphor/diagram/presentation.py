@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import ast
 from dataclasses import replace
-from typing import Optional
 
 import gaphas
 from gaphas.aspect import ConnectionSink
 from gaphas.aspect import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
+from gaphas.item import matrix_i2i
 
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.styling import Style
@@ -45,7 +45,7 @@ def from_package_str(item):
 def _get_sink(item, handle, target):
     assert item.canvas
 
-    hpos = item.canvas.get_matrix_i2i(item, target).transform_point(*handle.pos)
+    hpos = matrix_i2i(item, target).transform_point(*handle.pos)
     port = None
     dist = 10e6
     for p in target.ports():
@@ -64,7 +64,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     This function finds a suitable spot on the `target` item to connect
     the handle to.
     """
-    connector = ConnectorAspect(item, handle)
+    connector = ConnectorAspect(item, handle, item.canvas.connections)
     sink = _get_sink(item, handle, target)
     connector.connect(sink)
 
@@ -161,8 +161,6 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self._shape_head_rect = None
         self._shape_middle_rect = None
         self._shape_tail_rect = None
-
-    canvas: Optional[gaphas.Canvas]
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])

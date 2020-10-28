@@ -168,7 +168,7 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             item.load(name, value)
-    item.canvas.update_matrices([item])
+    item.canvas.update_now((), [item])
     return item
 
 
