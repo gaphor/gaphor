@@ -45,15 +45,15 @@ class DiagramItemConnector(ItemConnector):
         """Create connection at handle level and at model level."""
         handle = self.handle
         item = self.item
-        cinfo = item.canvas.get_connection(handle)
+        cinfo = self.connections.get_connection(handle)
 
         try:
-            callback = DisconnectHandle(self.item, self.handle)
+            callback = DisconnectHandle(self.item, self.handle, self.connections)
             if cinfo and cinfo.connected is sink.item:
                 # reconnect only constraint - leave model intact
                 log.debug("performing reconnect constraint")
                 constraint = sink.port.constraint(item.canvas, item, handle, sink.item)
-                item.canvas.reconnect_item(
+                self.connections.reconnect_item(
                     item, handle, sink.port, constraint=constraint
                 )
             elif cinfo:
@@ -101,16 +101,17 @@ class DisconnectHandle:
         If set, then disconnection is disabled.
     """
 
-    def __init__(self, item, handle):
+    def __init__(self, item, handle, connections):
         self.item = item
         self.handle = handle
+        self.connections = connections
         self.disable = False
 
     def __call__(self):
         handle = self.handle
         item = self.item
-        canvas = self.item.canvas
-        cinfo = canvas.get_connection(handle)
+        connections = self.connections
+        cinfo = connections.get_connection(handle)
 
         if self.disable:
             log.debug(f"Not disconnecting {item}.{handle} (disabled)")

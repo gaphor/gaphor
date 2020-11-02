@@ -50,10 +50,8 @@ class TestCase(unittest.TestCase):
 
         # We need to hook up a view for now, so updates are done instantly
         self.view = GtkView(self.diagram.canvas)
-        self.view.painter = ItemPainter(self.view)
-        self.view.bounding_box_painter = BoundingBoxPainter(
-            self.view.painter, self.view
-        )
+        self.view.painter = ItemPainter(self.view.selection)
+        self.view.bounding_box_painter = BoundingBoxPainter(self.view.painter)
         assert len(list(self.element_factory.select())) == 1, list(
             self.element_factory.select()
         )

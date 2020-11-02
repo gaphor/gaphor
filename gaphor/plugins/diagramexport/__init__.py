@@ -18,20 +18,16 @@ from gaphor.ui.questiondialog import QuestionDialog
 logger = logging.getLogger(__name__)
 
 
-def paint(view, cr):
-    view.painter.paint(view.canvas.get_all_items(), cr)
-
-
-def update_painters(view, diagram):
+def new_painter(diagram):
     style = diagram.style(StyledDiagram(diagram))
 
     sloppiness = style.get("line-style", 0.0)
 
     if sloppiness:
-        view.painter = FreeHandPainter(ItemPainter(view), sloppiness)
+        painter = FreeHandPainter(ItemPainter(), sloppiness)
     else:
-        view.painter = ItemPainter(view)
-    view.bounding_box_painter = BoundingBoxPainter(view.painter, view)
+        painter = ItemPainter()
+    return painter
 
 
 class DiagramExport(Service, ActionProvider):
@@ -61,24 +57,25 @@ class DiagramExport(Service, ActionProvider):
 
     def render(self, diagram, new_surface):
         canvas = diagram.canvas
-        view = GtkView()
+        canvas.update_now(canvas.get_all_items())
 
-        update_painters(view, diagram)
-        view.canvas = canvas
+        painter = new_painter(diagram)
 
         # Update bounding boxes with a temporary CairoContext
         # (used for stuff like calculating font metrics)
         tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
         tmpcr = cairo.Context(tmpsurface)
-        # view.update_bounding_box(tmpcr)
+        bounding_box = BoundingBoxPainter(painter).bounding_box(
+            canvas.get_all_items(), tmpcr
+        )
         tmpcr.show_page()
         tmpsurface.flush()
 
-        w, h = view.bounding_box.width, view.bounding_box.height
+        w, h = bounding_box.width, bounding_box.height
         surface = new_surface(w, h)
         cr = cairo.Context(surface)
-        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
-        paint(view, cr)
+        cr.translate(-bounding_box.x, -bounding_box.y)
+        painter.paint(items=canvas.get_all_items(), cairo=cr)
         cr.show_page()
         return surface
 

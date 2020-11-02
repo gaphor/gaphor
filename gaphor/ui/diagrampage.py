@@ -297,7 +297,7 @@ class DiagramPage:
 
         view = self.view
 
-        item_painter = ItemPainter(view)
+        item_painter = ItemPainter(view.selection)
 
         sloppiness = style.get("line-style", 0.0)
         if sloppiness:
@@ -310,7 +310,7 @@ class DiagramPage:
             .append(FocusedItemPainter(view))
             .append(ToolPainter(view))
         )
-        view.bounding_box_painter = BoundingBoxPainter(item_painter, view)
+        view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
         view.queue_redraw()
 

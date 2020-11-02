@@ -142,9 +142,11 @@ def attrstr(obj):
 
 
 class StyledDiagram:
-    def __init__(self, diagram: Diagram, view: Optional[gaphas.View] = None):
+    def __init__(
+        self, diagram: Diagram, selection: Optional[gaphas.view.Selection] = None
+    ):
         self.diagram = diagram
-        self.view = view
+        self.selection = selection if selection else gaphas.view.Selection()
 
     def name(self) -> str:
         return "diagram"
@@ -153,8 +155,10 @@ class StyledDiagram:
         return None
 
     def children(self) -> Iterator[StyledItem]:
-        view = self.view
-        return (StyledItem(item, view) for item in self.diagram.canvas.get_root_items())
+        return (
+            StyledItem(item, self.selection)
+            for item in self.diagram.canvas.get_root_items()
+        )
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
@@ -171,11 +175,13 @@ class StyledItem:
     classes for the item (focus, hover, etc.)
     """
 
-    def __init__(self, item: Presentation, view: Optional[gaphas.View] = None):
+    def __init__(
+        self, item: Presentation, selection: Optional[gaphas.view.Selection] = None
+    ):
         assert item.canvas
         self.item = item
         self.canvas = item.canvas
-        self.view = view
+        self.selection = selection if selection else gaphas.view.Selection()
 
     def name(self) -> str:
         return removesuffix(type(self.item).__name__, "Item").lower()
@@ -183,15 +189,15 @@ class StyledItem:
     def parent(self) -> Union[StyledItem, StyledDiagram]:
         parent = self.canvas.get_parent(self.item)
         return (
-            StyledItem(parent, self.view)
+            StyledItem(parent, self.selection)
             if parent
-            else StyledDiagram(self.item.diagram, self.view)
+            else StyledDiagram(self.item.diagram, self.selection)
         )
 
     def children(self) -> Iterator[StyledItem]:
         children = self.canvas.get_children(self.item)
-        view = self.view
-        return (StyledItem(child, view) for child in children)
+        selection = self.selection
+        return (StyledItem(child, selection) for child in children)
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
@@ -201,15 +207,14 @@ class StyledItem:
         return a
 
     def state(self) -> Sequence[str]:
-        view = self.view
-        if view:
-            item = self.item
-            return (
-                "active" if item in view.selection.selected_items else "",
-                "focus" if item is view.selection.focused_item else "",
-                "hover" if item is view.selection.hovered_item else "",
-                "drop" if item is view.selection.dropzone_item else "",
-            )
+        item = self.item
+        selection = self.selection
+        return (
+            "active" if item in selection.selected_items else "",
+            "focus" if item is selection.focused_item else "",
+            "hover" if item is selection.hovered_item else "",
+            "drop" if item is selection.dropzone_item else "",
+        )
         return ()
 
 
