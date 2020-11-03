@@ -20,15 +20,15 @@ class PartitionPropertyPage(PropertyPageBase):
 
     def construct(self):
         item = self.item
-
-        if item.toplevel:
-            return
-
         builder = new_builder("partition-editor")
 
         num_partitions = builder.get_object("num-partitions")
         adjustment = Gtk.Adjustment(
-            value=2, lower=2, upper=10, step_increment=1, page_increment=5
+            value=item.num_partitions,
+            lower=2,
+            upper=10,
+            step_increment=1,
+            page_increment=5,
         )
         num_partitions.set_adjustment(adjustment)
 
