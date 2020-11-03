@@ -11,6 +11,7 @@ from typing import List
 from gaphas.item import NE, NW
 
 from gaphor import UML
+from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, cairo_state, draw_highlight, stroke
@@ -50,6 +51,9 @@ class PartitionItem(ElementPresentation, Named):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("num_partitions", self.update_shapes)
+
+    num_partitions: attribute[int] = attribute("num_partitions", int, default=2)
 
     @property
     def toplevel(self):
@@ -70,6 +74,9 @@ class PartitionItem(ElementPresentation, Named):
         h1, h2 = self.handles()[2:4]
         h1.visible = h1.movable = True
         h2.visible = h2.movable = True
+
+    def update_shapes(self, event=None):
+        print(f"The # of partitions: {self.num_partitions}")
 
     def draw_partition(self, box, context, bounding_box):
         """Draw a vertical partition.

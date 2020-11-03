@@ -13,8 +13,10 @@ class PartitionPropertyPage(PropertyPageBase):
 
     order = 15
 
-    def __init__(self, item):
+    def __init__(self, item: PartitionItem):
+        super().__init__()
         self.item = item
+        self.watcher = item.watcher()
 
     def construct(self):
         item = self.item
