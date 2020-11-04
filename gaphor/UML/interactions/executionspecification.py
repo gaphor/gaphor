@@ -92,8 +92,7 @@ class ExecutionSpecificationItem(Item, Presentation[UML.ExecutionSpecification])
 
     def save(self, save_func):
         def save_connection(name, handle):
-            assert self.canvas
-            c = self.canvas.connections.get_connection(handle)
+            c = self._connections.get_connection(handle)
             if c:
                 save_func(name, c.connected)
 

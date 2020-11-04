@@ -36,6 +36,7 @@ def text_position(position):
 class ProxyPortItem(Item, Presentation[sysml.ProxyPort], Named):
     def __init__(self, connections, id=None, model=None):
         super().__init__(id=id, model=model)
+        self._connections = connections
 
         h1 = Handle(connectable=True)
         self._handles.append(h1)
@@ -63,10 +64,7 @@ class ProxyPortItem(Item, Presentation[sysml.ProxyPort], Named):
         self.request_update()
 
     def connected_side(self) -> Optional[str]:
-        if not self.canvas:
-            return None
-
-        cinfo = self.canvas.connections.get_connection(self._handles[0])
+        cinfo = self._connections.get_connection(self._handles[0])
 
         return cinfo.connected.port_side(cinfo.port) if cinfo else None
 
@@ -89,8 +87,7 @@ class ProxyPortItem(Item, Presentation[sysml.ProxyPort], Named):
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
 
-        assert self.canvas
-        c = self.canvas.connections.get_connection(self.handles()[0])
+        c = self._connections.get_connection(self.handles()[0])
         if c:
             save_func("connection", c.connected)
 

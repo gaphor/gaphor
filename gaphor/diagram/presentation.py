@@ -222,7 +222,6 @@ class LinePresentation(gaphas.Line, Presentation[S]):
 
     def save(self, save_func):
         def save_connection(name, handle):
-            assert self.canvas
             c = self._connections.get_connection(handle)
             if c:
                 save_func(name, c.connected)
@@ -265,8 +264,6 @@ class LinePresentation(gaphas.Line, Presentation[S]):
             super().load(name, value)
 
     def postload(self):
-        assert self.canvas
-
         if hasattr(self, "_load_orthogonal"):
             # Ensure there are enough handles
             if self._load_orthogonal and len(self._handles) < 3:

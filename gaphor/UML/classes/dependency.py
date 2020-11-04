@@ -16,8 +16,6 @@ type of a dependency in automatic way.
 
 import ast
 
-import gaphas
-
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text
@@ -79,8 +77,7 @@ class DependencyItem(LinePresentation, Named):
         super().postload()
 
     def connected_to_folded_interface(self):
-        assert isinstance(self.canvas, gaphas.Canvas)
-        connection = self.canvas.connections.get_connection(self.head)
+        connection = self._connections.get_connection(self.head)
         return (
             connection
             and isinstance(connection.port, InterfacePort)

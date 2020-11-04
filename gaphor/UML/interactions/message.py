@@ -239,11 +239,8 @@ class MessageItem(LinePresentation[UML.Message], Named):
     def is_communication(self):
         """Check if message is connecting to lifelines on communication
         diagram."""
-        assert self.canvas
-
-        canvas = self.canvas
-        c1 = canvas.connections.get_connection(self.head)
-        c2 = canvas.connections.get_connection(self.tail)
+        c1 = self._connections.get_connection(self.head)
+        c2 = self._connections.get_connection(self.tail)
         return (
             isinstance(c1, LifelineItem)
             and not c1.connected.lifetime.visible

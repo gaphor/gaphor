@@ -12,11 +12,8 @@ class CommentLineItem(LinePresentation):
         super().__init__(connections, id, model, style={"dash-style": (7.0, 5.0)})
 
     def unlink(self):
-        assert self.canvas
-
-        canvas = self.canvas
-        c1 = canvas.connections.get_connection(self.head)
-        c2 = canvas.connections.get_connection(self.tail)
+        c1 = self._connections.get_connection(self.head)
+        c2 = self._connections.get_connection(self.tail)
         if c1 and c2:
             adapter = Connector(c1.connected, self)
             adapter.disconnect(self.head)

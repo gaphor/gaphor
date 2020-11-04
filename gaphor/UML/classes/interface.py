@@ -71,7 +71,6 @@ import ast
 from enum import Enum
 from math import pi
 
-from gaphas.canvas import Canvas
 from gaphas.connector import LinePort
 from gaphas.geometry import distance_line_point, distance_point_point
 from gaphas.item import NE, NW, SE, SW
@@ -260,7 +259,6 @@ class InterfaceItem(ElementPresentation, Classified):
     )
 
     def pre_update(self, context):
-        assert isinstance(self.canvas, Canvas)
         connected_items = [
             c.item for c in self._connections.get_connections(connected=self)
         ]
@@ -331,7 +329,6 @@ class InterfaceItem(ElementPresentation, Classified):
         )
 
     def ball_and_socket_shape(self, connectors=None):
-        assert self.canvas
         if connectors is None:
             # distinguish between None and []
             connected_items = [

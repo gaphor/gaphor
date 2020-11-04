@@ -1,6 +1,5 @@
 """Implementation of interface."""
 
-import gaphas
 
 from gaphor import UML
 from gaphor.core.styling import Style
@@ -27,8 +26,7 @@ class ImplementationItem(LinePresentation, Named):
         self._inline_style: Style = {}
 
     def connected_to_folded_interface(self):
-        assert isinstance(self.canvas, gaphas.Canvas)
-        connection = self.canvas.connections.get_connection(self.head)
+        connection = self._connections.get_connection(self.head)
         return (
             connection
             and isinstance(connection.port, InterfacePort)
