@@ -39,7 +39,7 @@ def test_connect_element_with_comments(create_item):
     connect(line, line.head, comment)
     connect(line, line.tail, gi)
 
-    assert line.canvas.get_connection(line.tail).connected is gi
+    assert line.canvas.connections.get_connection(line.tail).connected is gi
 
     # Now connect generaliztion ends.
     connect(gi, gi.head, clazz1)

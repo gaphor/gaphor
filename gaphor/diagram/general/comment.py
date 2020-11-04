@@ -12,8 +12,8 @@ from gaphor.diagram.support import represents
 class CommentItem(ElementPresentation):
     EAR = 15
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         OFFSET = 5
         ear = self.EAR
         self.min_width = ear + 2 * OFFSET

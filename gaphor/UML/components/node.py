@@ -35,8 +35,8 @@ from gaphor.UML.classes.stereotype import stereotype_compartments
 class NodeItem(ElementPresentation, Classified):
     """Representation of node or device from UML Deployment package."""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
 
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject[NamedElement].name")

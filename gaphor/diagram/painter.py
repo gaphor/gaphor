@@ -15,8 +15,6 @@ from gaphas.view import Selection
 
 from gaphor.core.modeling.diagram import DrawContext, StyledItem
 
-DEBUG_DRAW_BOUNDING_BOX = False
-
 # The tolerance for Cairo. Bigger values increase speed and reduce accuracy
 # (default: 0.1)
 TOLERANCE = 0.8

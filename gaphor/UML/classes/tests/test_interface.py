@@ -21,7 +21,7 @@ class InterfaceTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        interfaces = self.diagram.canvas.select(InterfaceItem)
+        interfaces = list(self.diagram.canvas.select(InterfaceItem))
         assert len(interfaces) == 1
         # ... gives provided folded mode on load;
         # correct folded mode is determined by connections, which will be

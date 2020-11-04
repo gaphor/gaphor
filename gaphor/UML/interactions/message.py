@@ -74,8 +74,9 @@ class MessageItem(LinePresentation[UML.Message], Named):
     - _arrow_angle: decorating arrow angle
     """
 
-    def __init__(self, id=None, model=None):
+    def __init__(self, connections, id=None, model=None):
         super().__init__(
+            connections,
             id,
             model,
             shape_middle=Box(
@@ -241,8 +242,8 @@ class MessageItem(LinePresentation[UML.Message], Named):
         assert self.canvas
 
         canvas = self.canvas
-        c1 = canvas.get_connection(self.head)
-        c2 = canvas.get_connection(self.tail)
+        c1 = canvas.connections.get_connection(self.head)
+        c2 = canvas.connections.get_connection(self.tail)
         return (
             isinstance(c1, LifelineItem)
             and not c1.connected.lifetime.visible

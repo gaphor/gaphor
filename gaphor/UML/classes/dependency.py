@@ -39,8 +39,8 @@ class DependencyItem(LinePresentation, Named):
     drawn as solid line without arrow head.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model, style={"dash-style": (7.0, 5.0)})
 
         self._dependency_type = UML.Dependency
         # auto_dependency is used by connection logic, not in this class itself
@@ -80,7 +80,7 @@ class DependencyItem(LinePresentation, Named):
 
     def connected_to_folded_interface(self):
         assert isinstance(self.canvas, gaphas.Canvas)
-        connection = self.canvas.get_connection(self.head)
+        connection = self.canvas.connections.get_connection(self.head)
         return (
             connection
             and isinstance(connection.port, InterfacePort)

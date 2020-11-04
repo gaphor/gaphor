@@ -11,8 +11,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 @represents(UML.Package)
 @represents(UML.Profile)
 class PackageItem(ElementPresentation, Named):
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
 
         self.shape = Box(
             Text(

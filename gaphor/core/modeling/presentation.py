@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
 
+from gaphas.state import observed, reversible_method
+
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.event import DiagramItemDeleted
 from gaphor.core.modeling.properties import association, relation_one
@@ -30,6 +32,8 @@ class Presentation(Element, Generic[S]):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
+        self._canvas: Optional[Canvas] = None
+
         def update(event):
             if self.canvas:
                 self.canvas.request_update(self)
@@ -44,10 +48,40 @@ class Presentation(Element, Generic[S]):
 
     handles: Callable[[Presentation], List[Handle]]
 
-    _canvas: Optional[Canvas]
-    canvas = property(lambda s: s._canvas)
-
     matrix: Matrix
+
+    @observed
+    def _set_canvas(self, canvas):
+        """Set the canvas.
+
+        Should only be called from Canvas.add and Canvas.remove().
+        """
+        assert not canvas or not self._canvas or self._canvas is canvas
+        if self._canvas:
+            self.teardown_canvas()
+        self._canvas = canvas
+        if canvas:
+            self.setup_canvas()
+
+    reversible_method(
+        _set_canvas, _set_canvas, bind={"canvas": lambda self, canvas: self._canvas}
+    )
+
+    def setup_canvas(self):
+        """Called when the canvas is set for the item.
+
+        This method can be used to create constraints.
+        """
+        pass
+
+    def teardown_canvas(self):
+        """Called when the canvas is unset for the item.
+
+        This method can be used to dispose constraints.
+        """
+        pass
+
+    canvas = property(lambda s: s._canvas, _set_canvas)
 
     def request_update(self, matrix=True):
         if self.canvas:

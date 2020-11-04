@@ -52,10 +52,12 @@ class ConnectorConnectBase(BaseConnector):
             If true, then filter out one-side connections.
         """
         canvas = iface.canvas
-        connected = canvas.get_connections(connected=iface)
+        connected = canvas.connections.get_connections(connected=iface)
         if both:
             connected = [
-                c for c in connected if canvas.get_connection(c.item.opposite(c.handle))
+                c
+                for c in connected
+                if canvas.connections.get_connection(c.item.opposite(c.handle))
             ]
         return connected
 
@@ -63,8 +65,8 @@ class ConnectorConnectBase(BaseConnector):
     def get_component(connector):
         """Get component connected by connector."""
         canvas = connector.canvas
-        c1 = canvas.get_connection(connector.head)
-        c2 = canvas.get_connection(connector.tail)
+        c1 = canvas.connections.get_connection(connector.head)
+        c2 = canvas.connections.get_connection(connector.tail)
         component = None
         if c1 and isinstance(c1.connected, ComponentItem):
             component = c1.connected

@@ -21,8 +21,8 @@ class PartitionItem(ElementPresentation, Named):
 
     DELTA = 30
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         self._toplevel = False
         self._bottom = False
         self._subpart = False

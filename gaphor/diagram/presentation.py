@@ -72,7 +72,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
 
 
-class ElementPresentation(Presentation[S], gaphas.Element):
+class ElementPresentation(gaphas.Element, Presentation[S]):
     """Presentation for Gaphas Element (box-like) items.
 
     To create a shape (boxes, text), assign a shape to `self.shape`. If
@@ -85,8 +85,8 @@ class ElementPresentation(Presentation[S], gaphas.Element):
 
     _port_sides = ("top", "right", "bottom", "left")
 
-    def __init__(self, id=None, model=None, shape=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None, shape=None):
+        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
         self._shape = shape
 
     def port_side(self, port):
@@ -112,14 +112,12 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         )
 
     def setup_canvas(self):
-        super().setup_canvas()
         self.subscribe_all()
         # Invoke here, since we do not receive events, unless we're attached to a canvas
         self.update_shapes()
 
     def teardown_canvas(self):
         self.unsubscribe_all()
-        super().teardown_canvas()
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -140,9 +138,10 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         self.update_shapes()
 
 
-class LinePresentation(Presentation[S], gaphas.Line):
+class LinePresentation(gaphas.Line, Presentation[S]):
     def __init__(
         self,
+        connections,
         id=None,
         model=None,
         style: Style = {},
@@ -150,7 +149,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
         shape_middle=None,
         shape_tail=None,
     ):
-        super().__init__(id, model)
+        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
 
         self.style = style
         self.shape_head = shape_head
@@ -224,7 +223,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
     def save(self, save_func):
         def save_connection(name, handle):
             assert self.canvas
-            c = self.canvas.get_connection(handle)
+            c = self._connections.get_connection(handle)
             if c:
                 save_func(name, c.connected)
 

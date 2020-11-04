@@ -49,7 +49,7 @@ def connect(line, handle, item, port=None):
 
     connector.connect(sink)
 
-    cinfo = canvas.get_connection(handle)
+    cinfo = canvas.connections.get_connection(handle)
     assert cinfo.connected is item
     assert cinfo.port is port
 
@@ -84,7 +84,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     def get_connected(handle):
         """Get item connected to line via handle."""
-        cinfo = diagram.canvas.get_connection(handle)
+        cinfo = diagram.canvas.connections.get_connection(handle)
         if cinfo:
             return cinfo.connected
         return None

@@ -3,6 +3,7 @@
 import ast
 import math
 
+from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_line_point
 from gaphas.item import Handle, Item, LinePort
 from gaphas.state import observed, reversible_property
@@ -37,8 +38,8 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
     Initial node has name which is put near top-left side of node.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -75,8 +76,8 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
     node.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -124,8 +125,8 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
     node.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -160,8 +161,8 @@ def draw_flow_final_node(_box, context, _bounding_box):
 class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
     """Representation of decision or merge node."""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         no_movable_handles(self)
 
         self._combined = None
@@ -211,11 +212,12 @@ def draw_decision_node(_box, context, _bounding_box):
 
 
 @represents(UML.ForkNode)
-class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
+class ForkNodeItem(Item, Presentation[UML.ForkNode], Named):
     """Representation of fork and join node."""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(id=id, model=model)
+        self._connections = connections
 
         h1, h2 = Handle(), Handle()
         self._handles.append(h1)
@@ -242,8 +244,8 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[JoinNode].joinSpec")
 
-        self.constraint(vertical=(h1.pos, h2.pos))
-        self.constraint(above=(h1.pos, h2.pos), delta=30)
+        connections.add_constraint(self, constraint(vertical=(h1.pos, h2.pos)))
+        connections.add_constraint(self, constraint(above=(h1.pos, h2.pos), delta=30))
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))

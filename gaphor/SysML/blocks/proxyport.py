@@ -33,18 +33,18 @@ def text_position(position):
 
 
 @represents(sysml.ProxyPort)
-class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+class ProxyPortItem(Item, Presentation[sysml.ProxyPort], Named):
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(id=id, model=model)
 
         h1 = Handle(connectable=True)
         self._handles.append(h1)
 
         d = self.dimensions()
-        top_left = Position((d.x, d.y))
-        top_right = Position((d.x1, d.y))
-        bottom_right = Position((d.x1, d.y1))
-        bottom_left = Position((d.x, d.y1))
+        top_left = Position(d.x, d.y)
+        top_right = Position(d.x1, d.y)
+        bottom_right = Position(d.x1, d.y1)
+        bottom_left = Position(d.x, d.y1)
         self._ports.append(LinePort(top_left, top_right))
         self._ports.append(LinePort(top_right, bottom_right))
         self._ports.append(LinePort(bottom_right, bottom_left))
@@ -66,7 +66,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
         if not self.canvas:
             return None
 
-        cinfo = self.canvas.get_connection(self._handles[0])
+        cinfo = self.canvas.connections.get_connection(self._handles[0])
 
         return cinfo.connected.port_side(cinfo.port) if cinfo else None
 
@@ -90,7 +90,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Item, Named):
         save_func("matrix", tuple(self.matrix))
 
         assert self.canvas
-        c = self.canvas.get_connection(self.handles()[0])
+        c = self.canvas.connections.get_connection(self.handles()[0])
         if c:
             save_func("connection", c.connected)
 

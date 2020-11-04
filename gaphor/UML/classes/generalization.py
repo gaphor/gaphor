@@ -10,8 +10,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.Generalization)
 class GeneralizationItem(LinePresentation):
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
 
         self.shape_middle = Box(
             Text(

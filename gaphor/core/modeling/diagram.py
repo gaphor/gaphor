@@ -241,6 +241,31 @@ class DiagramCanvas(gaphas.Canvas):
 
     diagram = property(lambda s: s._diagram)
 
+    @gaphas.state.observed
+    def add(self, item, parent=None, index=None):
+        assert item not in self._tree.nodes, f"Adding already added node {item}"
+        self._tree.add(item, parent, index)
+        item.canvas = self
+        self.request_update(item)
+
+    @gaphas.state.observed
+    def _remove(self, item):
+        """Remove is done in a separate, @observed, method so the undo system
+        can restore removed items in the right order."""
+        item.canvas = None
+        self._tree.remove(item)
+        self._connections.disconnect_item(self)
+        self._update_views(removed_items=(item,))
+
+    gaphas.state.reversible_pair(
+        add,
+        _remove,
+        bind1={
+            "parent": lambda self, item: self.get_parent(item),
+            "index": lambda self, item: self._tree.get_siblings(item).index(item),
+        },
+    )
+
     def _set_block_updates(self, block):
         """Sets the block_updates property.
 
@@ -359,7 +384,7 @@ class Diagram(PackageableElement):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
-        item = type(id, self.model)
+        item = type(connections=self.canvas.connections, id=id, model=self.model)
         if subject:
             item.subject = subject
         self.canvas.add(item, parent)

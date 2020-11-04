@@ -126,7 +126,7 @@ class StorageTestCase(TestCase):
         assert len(d.canvas.get_all_items()) == 3
         for item in d.canvas.get_all_items():
             assert item.subject, f"No subject for {item}"
-        d1 = d.canvas.select(lambda e: isinstance(e, ClassItem))[0]
+        d1 = next(d.canvas.select(lambda e: isinstance(e, ClassItem)))
         assert d1
 
     def test_load_with_whitespace_name(self):
@@ -183,7 +183,7 @@ class StorageTestCase(TestCase):
         assert aa
         assert list(map(float, aa.handles()[0].pos)) == [10, 20], aa.handles()[0].pos
         assert list(map(float, aa.handles()[1].pos)) == [50, 60], aa.handles()[1].pos
-        d1 = d.canvas.select(lambda e: isinstance(e, ClassItem))[0]
+        d1 = next(d.canvas.select(lambda e: isinstance(e, ClassItem)))
         assert d1
 
     def test_save_and_load_of_association_with_two_connected_classes(self):
@@ -224,12 +224,12 @@ class StorageTestCase(TestCase):
         diagrams = list(self.kindof(UML.Diagram))
         assert len(diagrams) == 1
         d = diagrams[0]
-        a = d.canvas.select(lambda e: isinstance(e, AssociationItem))[0]
+        a = next(d.canvas.select(lambda e: isinstance(e, AssociationItem)))
         assert a.subject is not None
         assert old_a_subject_id == a.subject.id
-        cinfo_head = a.canvas.get_connection(a.head)
+        cinfo_head = a.canvas.connections.get_connection(a.head)
         assert cinfo_head.connected is not None
-        cinfo_tail = a.canvas.get_connection(a.tail)
+        cinfo_tail = a.canvas.connections.get_connection(a.tail)
         assert cinfo_tail.connected is not None
         assert cinfo_head.connected is not cinfo_tail.connected
 
