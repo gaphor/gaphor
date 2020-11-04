@@ -146,7 +146,7 @@ class StyledDiagram:
         self, diagram: Diagram, selection: Optional[gaphas.view.Selection] = None
     ):
         self.diagram = diagram
-        self.selection = selection if selection else gaphas.view.Selection()
+        self.selection = selection or gaphas.view.Selection()
 
     def name(self) -> str:
         return "diagram"
@@ -181,7 +181,7 @@ class StyledItem:
         assert item.canvas
         self.item = item
         self.canvas = item.canvas
-        self.selection = selection if selection else gaphas.view.Selection()
+        self.selection = selection or gaphas.view.Selection()
 
     def name(self) -> str:
         return removesuffix(type(self.item).__name__, "Item").lower()
@@ -215,7 +215,6 @@ class StyledItem:
             "hover" if item is selection.hovered_item else "",
             "drop" if item is selection.dropzone_item else "",
         )
-        return ()
 
 
 class DiagramCanvas(gaphas.Canvas):

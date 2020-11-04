@@ -22,7 +22,7 @@ TOLERANCE = 0.8
 
 class ItemPainter:
     def __init__(self, selection: Optional[Selection] = None):
-        self.selection: Selection = selection if selection else Selection()
+        self.selection: Selection = selection or Selection()
 
     def paint_item(self, item, cairo):
         selection = self.selection
