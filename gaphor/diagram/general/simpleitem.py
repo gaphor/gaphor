@@ -10,9 +10,9 @@ from gaphor.core.modeling import Presentation
 from gaphor.diagram.shapes import stroke
 
 
-class Line(Presentation, _Line):
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+class Line(_Line, Presentation):
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
         self.fuzziness = 2
         self._handles[0].connectable = False
         self._handles[-1].connectable = False
@@ -54,14 +54,14 @@ class Line(Presentation, _Line):
         super().draw(context)
 
 
-class Box(Presentation, Element):
+class Box(Element, Presentation):
     """A Box has 4 handles (for a start)::
 
     NW +---+ NE SW +---+ SE
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -86,11 +86,11 @@ class Box(Presentation, Element):
         stroke(context)
 
 
-class Ellipse(Presentation, Element):
+class Ellipse(Element, Presentation):
     """"""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))

@@ -6,7 +6,7 @@ from gaphor.core.modeling import ElementFactory, Presentation, StyleSheet
 from gaphor.UML import Diagram
 
 
-class Example(Presentation, gaphas.Element):
+class Example(gaphas.Element, Presentation):
     def unlink(self):
         self.test_unlinked = True
         super().unlink()

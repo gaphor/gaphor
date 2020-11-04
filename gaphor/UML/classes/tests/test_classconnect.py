@@ -138,7 +138,7 @@ def test_multiple_dependencies(create, element_factory):
     dep2 = diagram2.create(DependencyItem)
 
     connect(dep2, dep2.head, actoritem3)
-    cinfo = diagram2.canvas.get_connection(dep2.head)
+    cinfo = diagram2.canvas.connections.get_connection(dep2.head)
     assert cinfo is not None
     assert cinfo.connected is actoritem3
     connect(dep2, dep2.tail, actoritem4)
@@ -224,7 +224,7 @@ def test_generalization_reconnection(create, element_factory):
     gen2 = diagram2.create(GeneralizationItem)
 
     connect(gen2, gen2.head, c3)
-    cinfo = diagram2.canvas.get_connection(gen2.head)
+    cinfo = diagram2.canvas.connections.get_connection(gen2.head)
     assert cinfo is not None
     assert cinfo.connected is c3
 

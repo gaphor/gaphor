@@ -80,10 +80,10 @@ def test_copy_item_with_connection(diagram, element_factory):
     new_items = paste(buffer, diagram, element_factory.lookup)
     new_gen_item = next(i for i in new_items if isinstance(i, GeneralizationItem))
 
-    new_cls_item1 = new_gen_item.canvas.get_connection(
+    new_cls_item1 = new_gen_item.canvas.connections.get_connection(
         new_gen_item.handles()[0]
     ).connected
-    new_cls_item2 = new_gen_item.canvas.get_connection(
+    new_cls_item2 = new_gen_item.canvas.connections.get_connection(
         new_gen_item.handles()[1]
     ).connected
 

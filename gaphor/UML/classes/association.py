@@ -47,8 +47,8 @@ class AssociationItem(LinePresentation[UML.Association], Named):
     association).
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
 
         # AssociationEnds are really inseparable from the AssociationItem.
         # We give them the same id as the association item.

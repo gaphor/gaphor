@@ -11,8 +11,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 class ExtendItem(LinePresentation, Named):
     """Use case extension relationship."""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model, style={"dash-style": (7.0, 5.0)})
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model, style={"dash-style": (7.0, 5.0)})
 
         self.shape_middle = Box(
             Text(text=lambda: stereotypes_str(self.subject, ("extend",))),

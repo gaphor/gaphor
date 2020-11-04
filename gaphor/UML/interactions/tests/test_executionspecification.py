@@ -225,4 +225,6 @@ def test_save_and_load(diagram, element_factory, saver, loader):
         )
         == 2
     )
-    assert loaded_exec_spec.canvas.get_connection(loaded_exec_spec.handles()[0])
+    assert loaded_exec_spec.canvas.connections.get_connection(
+        loaded_exec_spec.handles()[0]
+    )

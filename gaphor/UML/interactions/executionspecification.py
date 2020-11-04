@@ -24,6 +24,7 @@ import ast
 
 from gaphas import Handle, Item
 from gaphas.connector import LinePort, Position
+from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver import WEAK
 
@@ -36,11 +37,13 @@ from gaphor.diagram.support import represents
 
 @represents(UML.ExecutionSpecification)
 @represents(UML.BehaviorExecutionSpecification)
-class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item):
+class ExecutionSpecificationItem(Item, Presentation[UML.ExecutionSpecification]):
     """Representation of interaction execution specification."""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(id=id, model=model)
+        self._connections = connections
+
         self.bar_width = 12
 
         ht, hb = Handle(), Handle()
@@ -50,16 +53,16 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item)
         self._handles.append(ht)
         self._handles.append(hb)
 
-        self.constraint(vertical=(ht.pos, hb.pos))
+        connections.add_constraint(self, constraint(vertical=(ht.pos, hb.pos)))
 
         r = self.bar_width / 2
-        nw = Position((-r, 0), strength=WEAK)
-        ne = Position((r, 0), strength=WEAK)
-        se = Position((r, 0), strength=WEAK)
-        sw = Position((-r, 0), strength=WEAK)
+        nw = Position(-r, 0, strength=WEAK)
+        ne = Position(r, 0, strength=WEAK)
+        se = Position(r, 0, strength=WEAK)
+        sw = Position(-r, 0, strength=WEAK)
 
-        self.constraint(horizontal=(sw, hb.pos))
-        self.constraint(horizontal=(se, hb.pos))
+        connections.add_constraint(self, constraint(horizontal=(sw, hb.pos)))
+        connections.add_constraint(self, constraint(horizontal=(se, hb.pos)))
 
         self._ports.append(LinePort(nw, sw))
         self._ports.append(LinePort(ne, se))
@@ -90,7 +93,7 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification], Item)
     def save(self, save_func):
         def save_connection(name, handle):
             assert self.canvas
-            c = self.canvas.get_connection(handle)
+            c = self.canvas.connections.get_connection(handle)
             if c:
                 save_func(name, c.connected)
 
