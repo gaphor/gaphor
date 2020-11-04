@@ -272,8 +272,14 @@ class DiagramCanvas(gaphas.Canvas):
 
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression."""
+        if expression is None:
+            yield from self.get_all_items()
+        elif isinstance(expression, type):
+            yield from (e for e in self.get_all_items() if isinstance(e, expression))
+        else:
+            yield from (e for e in self.get_all_items() if expression(e))
 
-        return list(filter(expression, self.get_all_items()))
+            return list(filter(expression, self.get_all_items()))
 
     def reparent(self, item, parent):
         """A more fancy version of the reparent method."""
