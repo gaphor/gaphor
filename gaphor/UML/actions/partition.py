@@ -1,10 +1,4 @@
-"""Activity Partition item.
-
-TODO: partition can be resized only horizontally or vertically, therefore
-- define constraints for horizontal and vertical handles
-- reallocate handles in such way, so they clearly indicate horizontal
-  or vertical size change
-"""
+"""Activity Partition item."""
 
 from typing import List
 
@@ -22,7 +16,6 @@ class PartitionItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         self.children: List[UML.ActivityPartition] = []
-        self.parent = None
         self.min_width = 150
         self.min_height = 300
 
@@ -48,10 +41,6 @@ class PartitionItem(ElementPresentation, Named):
             partition = self.children[-1]
             partition.unlink()
             self.children.pop()
-
-        h1, h2 = self.handles()[2:4]
-        h1.visible = h1.movable = True
-        h2.visible = h2.movable = True
 
     def update_shapes(self, event=None):
         self.shape = Box(
