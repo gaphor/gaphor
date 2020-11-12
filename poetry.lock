@@ -38,7 +38,7 @@ tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>
 
 [[package]]
 name = "babel"
-version = "2.8.0"
+version = "2.8.1"
 description = "Internationalization utilities"
 category = "dev"
 optional = false
@@ -775,7 +775,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8b2ff64970d33cf217f1c631143a7e1c8de9eb27cf4b719022e21a752156b279"
+content-hash = "0b34afa4570970527a169a51b0240d310e660b24f06aecea5b7c00a9c88145be"
 
 [metadata.files]
 alabaster = [
@@ -795,8 +795,8 @@ attrs = [
     {file = "attrs-20.2.0.tar.gz", hash = "sha256:26b54ddbbb9ee1d34d5d3668dd37d6cf74990ab23c828c2888dccdceee395594"},
 ]
 babel = [
-    {file = "Babel-2.8.0-py2.py3-none-any.whl", hash = "sha256:d670ea0b10f8b723672d3a6abeb87b565b244da220d76b4dba1b66269ec152d4"},
-    {file = "Babel-2.8.0.tar.gz", hash = "sha256:1aac2ae2d0d8ea368fa90906567f5c08463d98ade155c0c4bfedd6a0f7160e38"},
+    {file = "Babel-2.8.1-py2.py3-none-any.whl", hash = "sha256:be432f50d6c38c705ea45a0c05a4bbb22a70742a93888fbae5e7948da1635d23"},
+    {file = "Babel-2.8.1.tar.gz", hash = "sha256:820c195271534e8a86f564ba9ef2c207f356cfeb7e94d2bdc6b57897c4233837"},
 ]
 babelgladeextractor = [
     {file = "BabelGladeExtractor-0.7.0.tar.bz2", hash = "sha256:bcf805e28b4bb18c8b6909a65a7cf5c7c2bcbf4ae50b164878c9682d22271798"},
