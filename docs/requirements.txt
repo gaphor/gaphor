@@ -2,7 +2,7 @@
 docutils==0.16
 Pygments==2.7.2
 recommonmark==0.6.0
-Sphinx==3.3.0
+Sphinx==3.3.1
 sphinx-rtd-theme==0.5.0
 sphinxcontrib-websupport==1.2.4
 sphinxcontrib-images==0.9.2
