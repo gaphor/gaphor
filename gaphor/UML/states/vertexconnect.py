@@ -65,18 +65,18 @@ class PseudostateTransitionConnect(VertexConnect):
         element = self.element
         assert isinstance(element.subject, UML.Pseudostate)
 
-        if element.subject.kind == "initial":
-            # Check if no other items are connected
-            connections = self.canvas.connections.get_connections(connected=element)
-            line = self.line
-            connected_items = [
-                c
-                for c in connections
-                if isinstance(c.item, TransitionItem) and c.item is not line
-            ]
-            if handle is line.head and not any(connected_items):
-                return super().allow(handle, port)
-            else:
-                return None
-        else:
+        if element.subject.kind != "initial":
             return super().allow(handle, port)
+
+        # Check if no other items are connected
+        connections = self.canvas.connections.get_connections(connected=element)
+        line = self.line
+        connected_items = [
+            c
+            for c in connections
+            if isinstance(c.item, TransitionItem) and c.item is not line
+        ]
+        if handle is line.head and not any(connected_items):
+            return super().allow(handle, port)
+        else:
+            return None
