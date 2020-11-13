@@ -24,10 +24,9 @@ def new_painter(diagram):
     sloppiness = style.get("line-style", 0.0)
 
     if sloppiness:
-        painter = FreeHandPainter(ItemPainter(), sloppiness)
+        return FreeHandPainter(ItemPainter(), sloppiness)
     else:
-        painter = ItemPainter()
-    return painter
+        return ItemPainter()
 
 
 class DiagramExport(Service, ActionProvider):
