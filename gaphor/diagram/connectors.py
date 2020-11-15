@@ -138,7 +138,7 @@ class UnaryRelationshipConnect(BaseConnector):
     on the canvas.
     """
 
-    element: ElementPresentation[Element]
+    element: Presentation
     line: LinePresentation[Element]
 
     def relationship(

@@ -111,7 +111,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     cls_item.unlink()
     cls.unlink()  # normally handled by the sanitizer service
 
-    assert len(diagram.canvas.get_all_items()) == 0
+    assert len(list(diagram.canvas.get_all_items())) == 0
     assert cls not in element_factory.select()
     assert not element_factory.lookup(orig_cls_id)
 

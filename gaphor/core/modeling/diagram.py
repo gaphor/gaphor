@@ -10,7 +10,15 @@ import textwrap
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import TYPE_CHECKING, Iterator, Optional, Sequence, Union
+from typing import (
+    TYPE_CHECKING,
+    Iterable,
+    Iterator,
+    Optional,
+    Reversible,
+    Sequence,
+    Union,
+)
 
 import gaphas
 
@@ -377,13 +385,14 @@ class Diagram(PackageableElement):
         return self.create_as(type, str(uuid.uuid1()), parent, subject)
 
     def create_as(self, type, id, parent=None, subject=None):
-        if not (
-            type and issubclass(type, gaphas.Item) and issubclass(type, Presentation)
-        ):
+        if not (type and issubclass(type, Presentation)):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
         item = type(connections=self.canvas.connections, id=id, model=self.model)
+        assert isinstance(
+            item, gaphas.Item
+        ), f"Type {type} does not comply with Item protocol"
         if subject:
             item.subject = subject
         self.canvas.add(item, parent)
@@ -405,3 +414,28 @@ class Diagram(PackageableElement):
                 pass
 
         super().unlink()
+
+    def get_all_items(self) -> Iterable[Presentation]:
+        return self.canvas.get_all_items()  # type: ignore[no-any-return]
+
+    def get_parent(self, item: Presentation) -> Optional[Presentation]:
+        return self.canvas.get_parent(item)  # type: ignore[no-any-return]
+
+    def get_children(self, item: Presentation) -> Iterable[Presentation]:
+        return self.canvas.get_children(item)  # type: ignore[no-any-return]
+
+    def sort(self, items: Sequence[Presentation]) -> Reversible[Presentation]:
+        return self.canvas.sort(items)  # type: ignore[no-any-return]
+
+    def update_now(
+        self,
+        dirty_items: Sequence[Presentation],
+        dirty_matrix_items: Sequence[Presentation],
+    ) -> None:
+        self.canvas.update_now(dirty_items, dirty_matrix_items)
+
+    def register_view(self, view: gaphas.view.model.View[Presentation]) -> None:
+        self.canvas.register_view(view)
+
+    def unregister_view(self, view: gaphas.view.model.View[Presentation]) -> None:
+        self.canvas.unregister_view(view)

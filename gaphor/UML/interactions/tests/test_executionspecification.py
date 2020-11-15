@@ -1,4 +1,5 @@
 from gaphas.canvas import instant_cairo_context
+from gaphas.item import Item
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
@@ -6,6 +7,12 @@ from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.lifeline import LifelineItem
+
+
+def test_execution_specification_implements_item_protocol(diagram):
+    exec_spec = diagram.create(ExecutionSpecificationItem)
+
+    assert isinstance(exec_spec, Item)
 
 
 def create_lifeline_with_execution_specification(diagram, element_factory):

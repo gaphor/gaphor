@@ -33,11 +33,13 @@ class CopyServiceTestCase(TestCase):
         ci = diagram.create(CommentItem, subject=ef.create(UML.Comment))
 
         service.copy({ci})
-        assert diagram.canvas.get_all_items() == [ci]
+        assert list(diagram.canvas.get_all_items()) == [ci]
 
         service.paste(diagram)
 
-        assert len(diagram.canvas.get_all_items()) == 2, diagram.canvas.get_all_items()
+        assert len(list(diagram.canvas.get_all_items())) == 2, list(
+            diagram.canvas.get_all_items()
+        )
 
     def _skip_test_copy_paste_undo(self):
         """Test if copied data is undoable."""

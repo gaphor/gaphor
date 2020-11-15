@@ -245,14 +245,14 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
                 cr.line_to(bottom.pos.x + d1, bottom.pos.y - d2)
                 cr.stroke()
 
-    def point(self, pos):
+    def point(self, x, y):
         """Find distance to lifeline item.
 
         Distance to lifeline's head and lifeline's lifetime is
         calculated and minimum is returned.
         """
-        d1 = super().point(pos)
+        d1 = super().point(x, y)
         top = self.lifetime.top
         bottom = self.lifetime.bottom
-        d2 = distance_line_point(top.pos, bottom.pos, pos)[0]
+        d2 = distance_line_point(top.pos, bottom.pos, (x, y))[0]
         return min(d1, d2)

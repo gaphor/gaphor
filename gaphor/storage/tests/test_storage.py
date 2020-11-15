@@ -123,7 +123,7 @@ class StorageTestCase(TestCase):
         )
 
         # Check load/save of other canvas items.
-        assert len(d.canvas.get_all_items()) == 3
+        assert len(list(d.canvas.get_all_items())) == 3
         for item in d.canvas.get_all_items():
             assert item.subject, f"No subject for {item}"
         d1 = next(d.canvas.select(lambda e: isinstance(e, ClassItem)))
@@ -174,7 +174,7 @@ class StorageTestCase(TestCase):
         assert len(self.element_factory.lselect(UML.Association)) == 0
 
         # Check load/save of other canvas items.
-        assert len(d.canvas.get_all_items()) == 3
+        assert len(list(d.canvas.get_all_items())) == 3
         aa = next(
             item
             for item in d.canvas.get_all_items()

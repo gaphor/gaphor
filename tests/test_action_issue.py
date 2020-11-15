@@ -28,7 +28,7 @@ class ActionIssueTestCase(TestCase):
         assert 1 == len(diagrams)
 
         canvas = diagrams[0].canvas
-        assert 9 == len(canvas.get_all_items())
+        assert 9 == len(list(canvas.get_all_items()))
         # Part, Part, Act, Act, Part, Act, Flow, Flow, Flow
 
         for e in actions + flows:

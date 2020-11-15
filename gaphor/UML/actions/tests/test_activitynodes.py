@@ -1,6 +1,14 @@
+from gaphas.item import Item
+
 from gaphor import UML
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
+
+
+def test_fork_node_item_implements_item_protocol(diagram):
+    fork_node_item = diagram.create(ForkNodeItem)
+
+    assert isinstance(fork_node_item, Item)
 
 
 class ActivityNodesTestCase(TestCase):

@@ -27,6 +27,12 @@ def test_canvas_is_set_up():
     assert diagram.canvas
 
 
+def test_diagram_can_be_used_as_gtkview_model():
+    diagram = Diagram("id", None)
+
+    assert isinstance(diagram, gaphas.view.model.Model)
+
+
 def test_canvas_is_saved():
     diagram = Diagram("id", None)
     saved_keys = []

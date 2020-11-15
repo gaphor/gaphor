@@ -37,6 +37,8 @@ class ImplementationInterfaceConnect(ImplementationConnect):
 class DependencyInterfaceConnect(DependencyConnect):
     """Connect interface item with dependency item."""
 
+    element: InterfaceItem
+
     def connect(self, handle, port):
         """Dependency item is changed to draw in solid mode, when connected to
         folded interface."""

@@ -162,7 +162,7 @@ class PlacementTool(_PlacementTool):
             self,
             view,
             factory=item_factory,
-            handle_tool=ConnectHandleTool(),
+            handle_tool=ConnectHandleTool(view),
             handle_index=handle_index,
         )
         self.event_manager = event_manager
@@ -345,7 +345,7 @@ class TransactionalToolChain(ToolChain):
     """In addition to a normal toolchain, this chain begins an undo-transaction
     at button-press and commits the transaction at button-release."""
 
-    def __init__(self, event_manager, view=None):
+    def __init__(self, view, event_manager):
         super().__init__(view)
         self.event_manager = event_manager
         self._tx = None
@@ -368,12 +368,12 @@ class TransactionalToolChain(ToolChain):
                 self._tx = None
 
 
-def DefaultTool(event_manager):
+def DefaultTool(view, event_manager):
     """The default tool chain build from HoverTool, ItemTool and HandleTool."""
-    chain = TransactionalToolChain(event_manager)
-    chain.append(HoverTool())
-    chain.append(ConnectHandleTool())
-    chain.append(ItemTool())
-    chain.append(TextEditTool())
-    chain.append(RubberbandTool())
+    chain = TransactionalToolChain(view, event_manager)
+    chain.append(HoverTool(view))
+    chain.append(ConnectHandleTool(view))
+    chain.append(ItemTool(view))
+    chain.append(TextEditTool(view))
+    chain.append(RubberbandTool(view))
     return chain

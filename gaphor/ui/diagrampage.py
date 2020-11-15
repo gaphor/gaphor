@@ -156,7 +156,7 @@ class DiagramPage:
     def get_tool(self, tool_name):
         """Return a tool associated with an id (action name)."""
         if tool_name == "toolbox-pointer":
-            return DefaultTool(self.event_manager)
+            return DefaultTool(self.view, self.event_manager)
 
         tool = next(
             t
@@ -262,7 +262,7 @@ class DiagramPage:
     @action(name="diagram.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
         if self.view:
-            tool = TransactionalToolChain(self.event_manager)
+            tool = TransactionalToolChain(self.view, self.event_manager)
             tool.append(self.get_tool(tool_name))
             self.view.tool = tool
             icon_name = self.get_tool_icon_name(tool_name)

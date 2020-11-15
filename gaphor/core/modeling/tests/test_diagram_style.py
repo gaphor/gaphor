@@ -23,9 +23,9 @@ def diagram(element_factory):
     diagram.unlink()
 
 
-class DemoItem(gaphas.Item, Presentation):
+class DemoItem(gaphas.Element, Presentation):
     def __init__(self, connections, id, model):
-        super().__init__(id=id, model=model)
+        super().__init__(connections, id=id, model=model)
 
 
 def test_name_does_not_have_item_suffix(diagram):

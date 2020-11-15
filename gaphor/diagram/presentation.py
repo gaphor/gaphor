@@ -177,11 +177,11 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
         self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
 
-    def point(self, pos):
+    def point(self, x, y):
         """Given a point (x, y) return the distance to the canvas item."""
-        d0 = super().point(pos)
+        d0 = super().point(x, y)
         ds = [
-            distance_rectangle_point(shape, pos)
+            distance_rectangle_point(shape, (x, y))
             for shape in (
                 self._shape_head_rect,
                 self._shape_middle_rect,

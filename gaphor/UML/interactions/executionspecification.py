@@ -22,10 +22,11 @@ behavior, whereas ActionExecutionSpecification has a [1] relation to action.
 """
 import ast
 
-from gaphas import Handle, Item
+from gaphas import Handle
 from gaphas.connector import LinePort, Position
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
+from gaphas.matrix import Matrix
 from gaphas.solver import WEAK
 
 from gaphor import UML
@@ -37,11 +38,13 @@ from gaphor.diagram.support import represents
 
 @represents(UML.ExecutionSpecification)
 @represents(UML.BehaviorExecutionSpecification)
-class ExecutionSpecificationItem(Item, Presentation[UML.ExecutionSpecification]):
+class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
     """Representation of interaction execution specification."""
 
     def __init__(self, connections, id=None, model=None):
         super().__init__(id=id, model=model)
+        self._matrix = Matrix()
+        self._matrix_i2c = Matrix()
         self._connections = connections
 
         self.bar_width = 12
@@ -49,9 +52,7 @@ class ExecutionSpecificationItem(Item, Presentation[UML.ExecutionSpecification])
         ht, hb = Handle(), Handle()
         ht.connectable = True
 
-        # TODO: need better interface for this!
-        self._handles.append(ht)
-        self._handles.append(hb)
+        self._handles = [ht, hb]
 
         connections.add_constraint(self, constraint(vertical=(ht.pos, hb.pos)))
 
@@ -64,12 +65,25 @@ class ExecutionSpecificationItem(Item, Presentation[UML.ExecutionSpecification])
         connections.add_constraint(self, constraint(horizontal=(sw, hb.pos)))
         connections.add_constraint(self, constraint(horizontal=(se, hb.pos)))
 
-        self._ports.append(LinePort(nw, sw))
-        self._ports.append(LinePort(ne, se))
+        self._ports = [LinePort(nw, sw), LinePort(ne, se)]
 
         self.shape = Box(
             style={"background-color": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border
         )
+
+    @property
+    def matrix(self) -> Matrix:
+        return self._matrix
+
+    @property
+    def matrix_i2c(self) -> Matrix:
+        return self._matrix_i2c
+
+    def handles(self):
+        return self._handles
+
+    def ports(self):
+        return self._ports
 
     @property
     def top(self):
@@ -84,11 +98,17 @@ class ExecutionSpecificationItem(Item, Presentation[UML.ExecutionSpecification])
         pt, pb = (h.pos for h in self._handles)
         return Rectangle(pt.x - d / 2, pt.y, d, y1=pb.y)
 
+    def pre_update(self, context):
+        pass
+
+    def post_update(self, context):
+        pass
+
     def draw(self, context):
         self.shape.draw(context, self.dimensions())
 
-    def point(self, pos):
-        return distance_rectangle_point(self.dimensions(), pos)
+    def point(self, x, y):
+        return distance_rectangle_point(self.dimensions(), (x, y))
 
     def save(self, save_func):
         def save_connection(name, handle):
