@@ -4,7 +4,7 @@ from typing import List
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import Style, VerticalAlign
+from gaphor.core.styling import Style, TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, cairo_state, draw_highlight, stroke
 from gaphor.diagram.support import represents
@@ -22,11 +22,10 @@ class PartitionItem(ElementPresentation, Named):
         self.style: Style = {
             "font-family": "sans",
             "font-size": 14,
-            "min-width": 0,
-            "min-height": 0,
             "line-width": 2.4,
-            "vertical-align": VerticalAlign.TOP,
             "padding": (2, 2, 2, 2),
+            "text-align": TextAlign.LEFT,
+            "vertical-align": VerticalAlign.TOP,
         }
 
         self.watch("subject[NamedElement].name")
@@ -53,6 +52,8 @@ class PartitionItem(ElementPresentation, Named):
             partition.unlink()
             self.children.pop()
 
+        self.min_width = 150 * self.num_partitions
+
     def update_shapes(self, event=None):
         self.shape = Box(
             Text(
@@ -63,12 +64,10 @@ class PartitionItem(ElementPresentation, Named):
             ),
             Text(text=lambda: self.subject.name or ""),
             style=self.style,
-            draw=self.draw_swim_lanes,
+            draw=self.draw_partitions,
         )
 
-    def draw_partition(
-        self, context, bounding_box, x_offset, child: UML.ActivityPartition = None
-    ):
+    def draw_partitions(self, box, context, bounding_box):
         """Draw a vertical partition.
 
         The partitions are open on the bottom.
@@ -79,30 +78,36 @@ class PartitionItem(ElementPresentation, Named):
         cr.set_line_width(context.style["line-width"])
         padding_top = context.style["padding"][0]
 
-        # Name of child partition
-        if child:
+        # Header left, top, and right outline
+        cr.move_to(0, bounding_box.height)
+        cr.line_to(0, 0)
+        cr.line_to(bounding_box.width, 0)
+        cr.line_to(bounding_box.width, bounding_box.height)
+
+        for num, child in enumerate(self.children, start=1):
+
+            # Draw partition separators
+            partition_width = bounding_box.width / self.num_partitions
+            cr.move_to(partition_width * num, 0)
+            cr.line_to(partition_width * num, bounding_box.height)
+
+            # Add the name to child partition
             layout = Layout()
             layout.set(text=child.name, font=self.style)
             padding_top = context.style["padding"][0]
-            cr.move_to(x_offset, padding_top * 3)
+            cr.move_to(0, padding_top * 3)
             layout.show_layout(
                 cr,
                 bounding_box.width,
                 default_size=(bounding_box.width, bounding_box.height),
             )
 
-        # Header left, top, and right outline
-        cr.move_to(x_offset, bounding_box.height)
-        cr.line_to(x_offset, 0)
-        cr.line_to(x_offset + bounding_box.width, 0)
-        cr.line_to(x_offset + bounding_box.width, bounding_box.height)
-
         # Header bottom outline
-        cr.move_to(x_offset, bounding_box.height)
+        cr.move_to(0, bounding_box.height)
         h = self.shape.size(context)[1]
-        cr.line_to(x_offset, h)
-        cr.line_to(x_offset + bounding_box.width, h)
-        cr.line_to(x_offset + bounding_box.width, bounding_box.height)
+        cr.line_to(0, h)
+        cr.line_to(0 + bounding_box.width, h)
+        cr.line_to(0 + bounding_box.width, bounding_box.height)
 
         stroke(context)
 
@@ -113,9 +118,3 @@ class PartitionItem(ElementPresentation, Named):
                 cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
                 draw_highlight(context)
                 cr.stroke()
-
-    def draw_swim_lanes(self, box, context, bounding_box):
-        """Draw the partitions in parallel swim lanes."""
-        self.draw_partition(context, bounding_box, 0)
-        for num, child in enumerate(self.children, start=1):
-            self.draw_partition(context, bounding_box, bounding_box.width * num, child)
