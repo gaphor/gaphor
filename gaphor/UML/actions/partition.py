@@ -4,10 +4,11 @@ from typing import List
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import VerticalAlign
+from gaphor.core.styling import Style, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, cairo_state, draw_highlight, stroke
 from gaphor.diagram.support import represents
+from gaphor.diagram.text import Layout
 from gaphor.UML.modelfactory import stereotypes_str
 
 
@@ -18,6 +19,15 @@ class PartitionItem(ElementPresentation, Named):
         self.children: List[UML.ActivityPartition] = []
         self.min_width = 150
         self.min_height = 300
+        self.style: Style = {
+            "font-family": "sans",
+            "font-size": 14,
+            "min-width": 0,
+            "min-height": 0,
+            "line-width": 2.4,
+            "vertical-align": VerticalAlign.TOP,
+            "padding": (2, 2, 2, 2),
+        }
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
@@ -31,6 +41,7 @@ class PartitionItem(ElementPresentation, Named):
         while (self.num_partitions - 1) > len(self.children):
             package = self.diagram.namespace
             partition = self.subject.model.create(UML.ActivityPartition)
+            partition.name = "NewActivityPartition"
 
             if isinstance(package.ownedClassifier[0], UML.Activity):
                 activity = package.ownedClassifier[0]
@@ -51,17 +62,13 @@ class PartitionItem(ElementPresentation, Named):
                 ),
             ),
             Text(text=lambda: self.subject.name or ""),
-            style={
-                "min-width": 0,
-                "min-height": 0,
-                "line-width": 2.4,
-                "vertical-align": VerticalAlign.TOP,
-                "padding": (2, 2, 2, 2),
-            },
+            style=self.style,
             draw=self.draw_swim_lanes,
         )
 
-    def draw_partition(self, context, bounding_box, x_offset):
+    def draw_partition(
+        self, context, bounding_box, x_offset, child: UML.ActivityPartition = None
+    ):
         """Draw a vertical partition.
 
         The partitions are open on the bottom.
@@ -70,6 +77,19 @@ class PartitionItem(ElementPresentation, Named):
 
         cr = context.cairo
         cr.set_line_width(context.style["line-width"])
+        padding_top = context.style["padding"][0]
+
+        # Name of child partition
+        if child:
+            layout = Layout()
+            layout.set(text=child.name, font=self.style)
+            padding_top = context.style["padding"][0]
+            cr.move_to(x_offset, padding_top * 3)
+            layout.show_layout(
+                cr,
+                bounding_box.width,
+                default_size=(bounding_box.width, bounding_box.height),
+            )
 
         # Header left, top, and right outline
         cr.move_to(x_offset, bounding_box.height)
@@ -97,5 +117,5 @@ class PartitionItem(ElementPresentation, Named):
     def draw_swim_lanes(self, box, context, bounding_box):
         """Draw the partitions in parallel swim lanes."""
         self.draw_partition(context, bounding_box, 0)
-        for num, _ in enumerate(self.children, start=1):
-            self.draw_partition(context, bounding_box, bounding_box.width * num)
+        for num, child in enumerate(self.children, start=1):
+            self.draw_partition(context, bounding_box, bounding_box.width * num, child)
