@@ -4,8 +4,8 @@ import ast
 from dataclasses import replace
 
 import gaphas
-from gaphas.aspect import ConnectionSink
-from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.aspect.connector import ConnectionSink
+from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import matrix_i2i
 

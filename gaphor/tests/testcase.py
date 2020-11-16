@@ -9,8 +9,8 @@ import unittest
 from io import StringIO
 from typing import Type, TypeVar
 
-from gaphas.aspect import ConnectionSink
-from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.aspect.connector import ConnectionSink
+from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.painter import BoundingBoxPainter
 from gaphas.view import GtkView
 

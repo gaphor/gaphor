@@ -1,5 +1,5 @@
 import pytest
-from gaphas.aspect import ConnectionSink, Connector
+from gaphas.aspect.connector import ConnectionSink, Connector
 
 from gaphor import UML
 from gaphor.application import Application

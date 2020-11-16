@@ -200,7 +200,7 @@ pycairo = "^1.13.0"
 typing-extensions = "^3.7.4"
 
 [package.source]
-reference = "ea518c72d1724600f2971806109d6aedf57d16e2"
+reference = "7d3b8fcec3f3a897ad895d9304419b1534cd54c3"
 type = "git"
 url = "https://github.com/gaphor/gaphas.git"
 [[package]]

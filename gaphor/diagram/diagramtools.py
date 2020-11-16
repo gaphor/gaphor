@@ -8,9 +8,10 @@ Although Gaphas has quite a few useful tools, some tools need to be extended:
 
 import logging
 
-from gaphas.aspect import Connector as ConnectorAspect
-from gaphas.aspect import InMotion as InMotionAspect
-from gaphas.aspect import ItemConnector
+from gaphas.aspect.connector import Connector as ConnectorAspect
+from gaphas.aspect.connector import ItemConnector
+from gaphas.aspect.finder import item_at_point
+from gaphas.aspect.inmotion import InMotion as InMotionAspect
 from gaphas.guide import GuidedItemInMotion
 from gaphas.tool import ConnectHandleTool, HoverTool, ItemTool
 from gaphas.tool import PlacementTool as _PlacementTool
@@ -240,7 +241,7 @@ class PlacementTool(_PlacementTool):
         canvas = view.canvas
 
         try:
-            parent = view.get_item_at_point((event.x, event.y))
+            parent = item_at_point(view, (event.x, event.y))
         except KeyError:
             parent = None
 
@@ -285,7 +286,7 @@ class DropZoneInMotion(GuidedItemInMotion):
         x, y = pos
 
         current_parent = view.canvas.get_parent(item)
-        over_item = view.get_item_at_point((x, y), selected=False)
+        over_item = item_at_point(view, (x, y), selected=False)
 
         if not over_item:
             view.selection.set_dropzone_item(None)

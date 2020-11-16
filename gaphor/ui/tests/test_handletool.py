@@ -1,8 +1,8 @@
 """Test handle tool functionality."""
 
 import pytest
-from gaphas.aspect import ConnectionSink
-from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.aspect.connector import ConnectionSink
+from gaphas.aspect.connector import Connector as ConnectorAspect
 from gi.repository import Gtk
 
 from gaphor import UML
