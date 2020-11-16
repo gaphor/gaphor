@@ -18,7 +18,7 @@ from gaphor.diagram.text import Layout
 class PartitionItem(ElementPresentation, Named):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self.children: List[UML.ActivityPartition] = []
+        self.partitions: List[UML.ActivityPartition] = []
         self.min_width = 150
         self.min_height = 300
         self.style: Style = {
@@ -37,8 +37,10 @@ class PartitionItem(ElementPresentation, Named):
 
     def pre_update(self, context):
         assert self.canvas
+        if not len(self.partitions):
+            self.partitions.append(self.subject)
 
-        while (self.num_partitions - 1) > len(self.children):
+        if self.num_partitions > len(self.partitions):
             package = self.diagram.namespace
             partition = self.subject.model.create(UML.ActivityPartition)
             partition.name = "NewActivityPartition"
@@ -46,12 +48,12 @@ class PartitionItem(ElementPresentation, Named):
             if isinstance(package.ownedClassifier[0], UML.Activity):
                 activity = package.ownedClassifier[0]
                 partition.activity = activity
-            self.children.append(partition)
+            self.partitions.append(partition)
 
-        while (self.num_partitions - 1) < len(self.children):
-            partition = self.children[-1]
+        elif self.num_partitions < len(self.partitions):
+            partition = self.partitions[-1]
             partition.unlink()
-            self.children.pop()
+            self.partitions.pop()
 
         self.min_width = 150 * self.num_partitions
 
@@ -59,26 +61,6 @@ class PartitionItem(ElementPresentation, Named):
         self.shape = Box(
             style=self.style,
             draw=self.draw_partitions,
-        )
-
-    def draw_partition_name(
-        self,
-        text: str,
-        context: DrawContext,
-        layout: Layout,
-        width: float,
-        height: float,
-        x_offset: float = 0,
-    ):
-        """Draw the name in the partition header."""
-        layout.set(text=text, font=self.style)
-        padding_top = context.style["padding"][0]
-        cr = context.cairo
-        cr.move_to(x_offset, padding_top * 3)
-        layout.show_layout(
-            cr,
-            width,
-            default_size=(width, height),
         )
 
     def draw_partitions(self, box: Box, context: DrawContext, bounding_box: Rectangle):
@@ -104,27 +86,25 @@ class PartitionItem(ElementPresentation, Named):
         cr.line_to(0 + bounding_box.width, header_h)
         cr.line_to(0 + bounding_box.width, bounding_box.height)
 
-        # Add the name to the main partition
         partition_width = bounding_box.width / self.num_partitions
         layout = Layout()
-        self.draw_partition_name(
-            self.subject.name, context, layout, partition_width, header_h, 0
-        )
 
-        for num, child in enumerate(self.children, start=1):
+        for num, partition in enumerate(self.partitions):
             # Draw partition separators
             cr.move_to(partition_width * num, 0)
             cr.line_to(partition_width * num, bounding_box.height)
 
-            # Add the name to child partition
-            self.draw_partition_name(
-                child.name,
-                context,
-                layout,
-                partition_width,
-                header_h,
-                partition_width * num,
-            )
+            if partition:
+                # Add the name to child partition
+                layout.set(text=partition.name, font=self.style)
+                padding_top = context.style["padding"][0]
+                cr = context.cairo
+                cr.move_to(partition_width * num, padding_top * 3)
+                layout.show_layout(
+                    cr,
+                    partition_width,
+                    default_size=(partition_width, header_h),
+                )
 
         stroke(context)
 

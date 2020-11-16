@@ -34,10 +34,6 @@ def activity_config(new_item):
         subject.activity = activity
 
 
-def partition_config(partition_item: diagramitems.PartitionItem) -> None:
-    partition_item.subject.name = "Partition"
-
-
 actions = ToolSection(
     gettext("Actions"),
     (
