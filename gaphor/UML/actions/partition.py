@@ -2,14 +2,16 @@
 
 from typing import List
 
+from gaphas.geometry import Rectangle
+
 from gaphor import UML
+from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import Style, TextAlign, VerticalAlign
+from gaphor.core.styling import Style, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, cairo_state, draw_highlight, stroke
+from gaphor.diagram.shapes import Box, cairo_state, draw_highlight, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
-from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(UML.ActivityPartition)
@@ -24,7 +26,6 @@ class PartitionItem(ElementPresentation, Named):
             "font-size": 14,
             "line-width": 2.4,
             "padding": (2, 2, 2, 2),
-            "text-align": TextAlign.LEFT,
             "vertical-align": VerticalAlign.TOP,
         }
 
@@ -56,18 +57,31 @@ class PartitionItem(ElementPresentation, Named):
 
     def update_shapes(self, event=None):
         self.shape = Box(
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject,
-                    self.subject and self.subject.isExternal and ("external",) or (),
-                ),
-            ),
-            Text(text=lambda: self.subject.name or ""),
             style=self.style,
             draw=self.draw_partitions,
         )
 
-    def draw_partitions(self, box, context, bounding_box):
+    def draw_partition_name(
+        self,
+        text: str,
+        context: DrawContext,
+        layout: Layout,
+        width: float,
+        height: float,
+        x_offset: float = 0,
+    ):
+        """Draw the name in the partition header."""
+        layout.set(text=text, font=self.style)
+        padding_top = context.style["padding"][0]
+        cr = context.cairo
+        cr.move_to(x_offset, padding_top * 3)
+        layout.show_layout(
+            cr,
+            width,
+            default_size=(width, height),
+        )
+
+    def draw_partitions(self, box: Box, context: DrawContext, bounding_box: Rectangle):
         """Draw a vertical partition.
 
         The partitions are open on the bottom.
@@ -76,7 +90,6 @@ class PartitionItem(ElementPresentation, Named):
 
         cr = context.cairo
         cr.set_line_width(context.style["line-width"])
-        padding_top = context.style["padding"][0]
 
         # Header left, top, and right outline
         cr.move_to(0, bounding_box.height)
@@ -84,30 +97,34 @@ class PartitionItem(ElementPresentation, Named):
         cr.line_to(bounding_box.width, 0)
         cr.line_to(bounding_box.width, bounding_box.height)
 
-        for num, child in enumerate(self.children, start=1):
+        # Header bottom outline
+        cr.move_to(0, bounding_box.height)
+        header_h = 29
+        cr.line_to(0, header_h)
+        cr.line_to(0 + bounding_box.width, header_h)
+        cr.line_to(0 + bounding_box.width, bounding_box.height)
 
+        # Add the name to the main partition
+        partition_width = bounding_box.width / self.num_partitions
+        layout = Layout()
+        self.draw_partition_name(
+            self.subject.name, context, layout, partition_width, header_h, 0
+        )
+
+        for num, child in enumerate(self.children, start=1):
             # Draw partition separators
-            partition_width = bounding_box.width / self.num_partitions
             cr.move_to(partition_width * num, 0)
             cr.line_to(partition_width * num, bounding_box.height)
 
             # Add the name to child partition
-            layout = Layout()
-            layout.set(text=child.name, font=self.style)
-            padding_top = context.style["padding"][0]
-            cr.move_to(0, padding_top * 3)
-            layout.show_layout(
-                cr,
-                bounding_box.width,
-                default_size=(bounding_box.width, bounding_box.height),
+            self.draw_partition_name(
+                child.name,
+                context,
+                layout,
+                partition_width,
+                header_h,
+                partition_width * num,
             )
-
-        # Header bottom outline
-        cr.move_to(0, bounding_box.height)
-        h = self.shape.size(context)[1]
-        cr.line_to(0, h)
-        cr.line_to(0 + bounding_box.width, h)
-        cr.line_to(0 + bounding_box.width, bounding_box.height)
 
         stroke(context)
 
