@@ -38,8 +38,10 @@ tests = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six
 tests_no_zope = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six"]
 
 [[package]]
-category = "dev"
+name = "babel"
+version = "2.9.0"
 description = "Internationalization utilities"
+category = "dev"
 name = "babel"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
@@ -576,6 +578,9 @@ python-versions = "*"
 version = "2.0.0"
 
 [[package]]
+name = "sphinx"
+version = "3.3.1"
+description = "Python documentation generator"
 category = "dev"
 description = "Python documentation generator"
 name = "sphinx"
@@ -795,9 +800,9 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "90c5daf4fc27d830438945987629004487b179a87b8dbb2ecaccb57ee16a4a0a"
 lock-version = "1.0"
 python-versions = "^3.7"
+content-hash = "9f022ac755c9248819005d541db2718f68526e49bf35b7b6234165ad26352397"
 
 [metadata.files]
 alabaster = [

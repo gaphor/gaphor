@@ -31,7 +31,7 @@ VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 python -m venv pyinstvenv
 
 pyinstvenv/bin/pip install "../dist/gaphor-${VERSION}-py3-none-any.whl"
-pyinstvenv/bin/pip install pyinstaller==3.6.0
+pyinstvenv/bin/pip install pyinstaller==4.1.0
 
 function set_build_root {
     DIST_LOCATION="$1"
