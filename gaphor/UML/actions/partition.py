@@ -13,6 +13,8 @@ from gaphor.diagram.shapes import Box, cairo_state, draw_highlight, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
 
+INIT_NUM_PARTITIONS: int = 2
+
 
 @represents(UML.ActivityPartition)
 class PartitionItem(ElementPresentation, Named):
@@ -34,34 +36,40 @@ class PartitionItem(ElementPresentation, Named):
         self.watch("num_partitions", self.update_shapes)
         self.watch("update_partition", self.update_shapes)
 
-    num_partitions: attribute[int] = attribute("num_partitions", int, default=2)
+    num_partitions: attribute[int] = attribute(
+        "num_partitions", int, default=INIT_NUM_PARTITIONS
+    )
     update_partition: attribute[bool] = attribute(
         "update_partition", bool, default=False
     )
 
     def pre_update(self, context):
-        assert self.canvas
+        self.update_partitions()
+        self.min_width = 150 * self.num_partitions
+
+    def post_update(self, context):
+        package = self.diagram.namespace
+        for partition in self.partitions:
+            if not partition.activity and isinstance(
+                package.ownedClassifier[0], UML.Activity
+            ):
+                partition.activity = package.ownedClassifier[0]
+
+    def update_partitions(self):
         if not len(self.partitions):
             self.partitions.append(self.subject)
 
         if self.num_partitions > len(self.partitions):
-            package = self.diagram.namespace
             partition = self.subject.model.create(UML.ActivityPartition)
             partition.name = "NewActivityPartition"
-
-            if isinstance(package.ownedClassifier[0], UML.Activity):
-                activity = package.ownedClassifier[0]
-                partition.activity = activity
             self.partitions.append(partition)
-
         elif self.num_partitions < len(self.partitions):
             partition = self.partitions[-1]
             partition.unlink()
             self.partitions.pop()
 
-        self.min_width = 150 * self.num_partitions
-
     def update_shapes(self, event=None):
+        self.update_partitions()
         self.shape = Box(
             style=self.style,
             draw=self.draw_partitions,

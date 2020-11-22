@@ -16,7 +16,6 @@ class PartitionPropertyPage(PropertyPageBase):
     def __init__(self, item: PartitionItem):
         super().__init__()
         self.item = item
-        self.watcher = item.watcher()
         self.list_store = Gtk.ListStore(int, str)
 
     def construct(self):
@@ -34,9 +33,6 @@ class PartitionPropertyPage(PropertyPageBase):
         num_partitions.set_adjustment(adjustment)
         builder.connect_signals({"partitions-changed": (self._on_partitions_changed,)})
 
-        for num, partition in enumerate(self.item.partitions):
-            self.list_store.append([num, partition.name])
-
         treeview = builder.get_object("partition-treeview")
         treeview.set_model(self.list_store)
 
@@ -44,21 +40,29 @@ class PartitionPropertyPage(PropertyPageBase):
         column_text = Gtk.TreeViewColumn(title="#", cell_renderer=renderer_text, text=0)
         treeview.append_column(column_text)
 
-        renderer_editabletext = Gtk.CellRendererText()
-        renderer_editabletext.set_property("editable", True)
+        renderer_editable_text = Gtk.CellRendererText()
+        renderer_editable_text.set_property("editable", True)
 
         column_editabletext = Gtk.TreeViewColumn(
-            title="Name", cell_renderer=renderer_editabletext, text=1
+            title="Name", cell_renderer=renderer_editable_text, text=1
         )
         treeview.append_column(column_editabletext)
 
-        renderer_editabletext.connect("edited", self._on_partition_name_changed)
+        renderer_editable_text.connect("edited", self._on_partition_name_changed)
+
+        self.update()
 
         return builder.get_object("partition-editor")
+
+    def update(self):
+        self.list_store.clear()
+        for num, partition in enumerate(self.item.partitions):
+            self.list_store.append([num, partition.name])
 
     @transactional
     def _on_partitions_changed(self, spin_button):
         self.item.num_partitions = spin_button.get_value_as_int()
+        self.update()
 
     @transactional
     def _on_partition_name_changed(self, widget, path, text):
