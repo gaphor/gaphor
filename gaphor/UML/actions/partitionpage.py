@@ -19,6 +19,7 @@ class PartitionPropertyPage(PropertyPageBase):
         self.list_store = Gtk.ListStore(int, str)
 
     def construct(self):
+        """Creates the Partition Property Page."""
         item = self.item
         builder = new_builder("partition-editor")
 
@@ -31,7 +32,9 @@ class PartitionPropertyPage(PropertyPageBase):
             page_increment=5,
         )
         num_partitions.set_adjustment(adjustment)
-        builder.connect_signals({"partitions-changed": (self._on_partitions_changed,)})
+        builder.connect_signals(
+            {"partitions-changed": (self._on_num_partitions_changed,)}
+        )
 
         treeview = builder.get_object("partition-treeview")
         treeview.set_model(self.list_store)
@@ -50,22 +53,25 @@ class PartitionPropertyPage(PropertyPageBase):
 
         renderer_editable_text.connect("edited", self._on_partition_name_changed)
 
-        self.update()
+        self._update_list_store()
 
         return builder.get_object("partition-editor")
 
-    def update(self):
+    def _update_list_store(self):
+        """Rebuilds the list of partitions."""
         self.list_store.clear()
-        for num, partition in enumerate(self.item.partitions):
+        for num, partition in enumerate(self.item.partitions, start=1):
             self.list_store.append([num, partition.name])
 
     @transactional
-    def _on_partitions_changed(self, spin_button):
+    def _on_num_partitions_changed(self, spin_button):
+        """Event handler for partition number spin button."""
         self.item.num_partitions = spin_button.get_value_as_int()
-        self.update()
+        self._update_list_store()
 
     @transactional
     def _on_partition_name_changed(self, widget, path, text):
+        """Event handler for editing partition names."""
         self.list_store[path][1] = text
         self.item.partitions[int(path)].name = text
-        self.item.update_partition = True
+        self.item.partitions_dirty = True

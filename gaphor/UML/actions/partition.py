@@ -3,6 +3,7 @@
 from typing import List
 
 from gaphas.geometry import Rectangle
+from generic.event import Event
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
@@ -34,28 +35,34 @@ class PartitionItem(ElementPresentation, Named):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("num_partitions", self.update_shapes)
-        self.watch("update_partition", self.update_shapes)
+        self.watch("partitions_dirty", self.update_shapes)
 
     num_partitions: attribute[int] = attribute(
         "num_partitions", int, default=INIT_NUM_PARTITIONS
     )
-    update_partition: attribute[bool] = attribute(
-        "update_partition", bool, default=False
+    partitions_dirty: attribute[bool] = attribute(
+        "partitions_dirty", bool, default=False
     )
 
-    def pre_update(self, context):
-        self.update_partitions()
+    def pre_update(self, context: DrawContext) -> None:
+        """Set the min width of all the swimlanes."""
         self.min_width = 150 * self.num_partitions
 
-    def post_update(self, context):
-        package = self.diagram.namespace
+    def post_update(self, context: DrawContext) -> None:
+        """Nest the Activity Partitions under the Activity.
+
+        This needs to be done after the update because the activity's
+        classifier doesn't always exist yet.
+        """
+        activity = self.diagram.namespace
         for partition in self.partitions:
             if not partition.activity and isinstance(
-                package.ownedClassifier[0], UML.Activity
+                activity.ownedClassifier[0], UML.Activity
             ):
-                partition.activity = package.ownedClassifier[0]
+                partition.activity = activity.ownedClassifier[0]
 
-    def update_partitions(self):
+    def update_partitions(self) -> None:
+        """Add and remove UML.ActivityPartitions."""
         if not len(self.partitions):
             self.partitions.append(self.subject)
 
@@ -68,18 +75,22 @@ class PartitionItem(ElementPresentation, Named):
             partition.unlink()
             self.partitions.pop()
 
-    def update_shapes(self, event=None):
+    def update_shapes(self, event: Event = None) -> None:
+        """Update the number of partitions and draw them."""
         self.update_partitions()
         self.shape = Box(
             style=self.style,
             draw=self.draw_partitions,
         )
-        self.update_partition = False
+        self.partitions_dirty = False
 
-    def draw_partitions(self, box: Box, context: DrawContext, bounding_box: Rectangle):
-        """Draw a vertical partition.
+    def draw_partitions(
+        self, box: Box, context: DrawContext, bounding_box: Rectangle
+    ) -> None:
+        """Draw the vertical partitions as connected swimlanes.
 
-        The partitions are open on the bottom.
+        The partitions are open on the bottom. We divide the total size
+        by the total number of partitions and space them evenly.
         """
         assert self.canvas
 
@@ -121,6 +132,7 @@ class PartitionItem(ElementPresentation, Named):
 
         stroke(context)
 
+        # Add dashed line on bottom of swimlanes when hovered
         if context.hovered or context.dropzone:
             with cairo_state(cr):
                 cr.set_dash((1.0, 5.0), 0)
