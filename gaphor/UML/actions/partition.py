@@ -32,8 +32,12 @@ class PartitionItem(ElementPresentation, Named):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("num_partitions", self.update_shapes)
+        self.watch("update_partition", self.update_shapes)
 
     num_partitions: attribute[int] = attribute("num_partitions", int, default=2)
+    update_partition: attribute[bool] = attribute(
+        "update_partition", bool, default=False
+    )
 
     def pre_update(self, context):
         assert self.canvas
@@ -62,6 +66,7 @@ class PartitionItem(ElementPresentation, Named):
             style=self.style,
             draw=self.draw_partitions,
         )
+        self.update_partition = False
 
     def draw_partitions(self, box: Box, context: DrawContext, bounding_box: Rectangle):
         """Draw a vertical partition.

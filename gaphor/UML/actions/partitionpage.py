@@ -17,12 +17,7 @@ class PartitionPropertyPage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.watcher = item.watcher()
-        self.liststore = Gtk.ListStore(int, str)
-
-    def text_edited(self, widget, path, text):
-        print("text edited")
-        self.liststore[path][1] = text
-        print(path)
+        self.list_store = Gtk.ListStore(int, str)
 
     def construct(self):
         item = self.item
@@ -39,12 +34,11 @@ class PartitionPropertyPage(PropertyPageBase):
         num_partitions.set_adjustment(adjustment)
         builder.connect_signals({"partitions-changed": (self._on_partitions_changed,)})
 
-        self.liststore.append([1, "Engine"])
-        self.liststore.append([2, "Transmission"])
-        self.liststore.append([3, "Wheel"])
+        for num, partition in enumerate(self.item.partitions):
+            self.list_store.append([num, partition.name])
 
         treeview = builder.get_object("partition-treeview")
-        treeview.set_model(self.liststore)
+        treeview.set_model(self.list_store)
 
         renderer_text = Gtk.CellRendererText()
         column_text = Gtk.TreeViewColumn(title="#", cell_renderer=renderer_text, text=0)
@@ -58,10 +52,16 @@ class PartitionPropertyPage(PropertyPageBase):
         )
         treeview.append_column(column_editabletext)
 
-        renderer_editabletext.connect("edited", self.text_edited)
+        renderer_editabletext.connect("edited", self._on_partition_name_changed)
 
         return builder.get_object("partition-editor")
 
     @transactional
     def _on_partitions_changed(self, spin_button):
         self.item.num_partitions = spin_button.get_value_as_int()
+
+    @transactional
+    def _on_partition_name_changed(self, widget, path, text):
+        self.list_store[path][1] = text
+        self.item.partitions[int(path)].name = text
+        self.item.update_partition = True
