@@ -2,6 +2,7 @@
 
 from typing import List
 
+from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
 from generic.event import Event
 
@@ -80,11 +81,11 @@ class PartitionItem(ElementPresentation, Named):
         self.update_partitions()
         self.shape = Box(
             style=self.style,
-            draw=self.draw_partitions,
+            draw=self.draw_swimlanes,
         )
         self.partitions_dirty = False
 
-    def draw_partitions(
+    def draw_swimlanes(
         self, box: Box, context: DrawContext, bounding_box: Rectangle
     ) -> None:
         """Draw the vertical partitions as connected swimlanes.
@@ -96,43 +97,14 @@ class PartitionItem(ElementPresentation, Named):
 
         cr = context.cairo
         cr.set_line_width(context.style["line-width"])
-
-        # Header left, top, and right outline
-        cr.move_to(0, bounding_box.height)
-        cr.line_to(0, 0)
-        cr.line_to(bounding_box.width, 0)
-        cr.line_to(bounding_box.width, bounding_box.height)
-
-        # Header bottom outline
-        cr.move_to(0, bounding_box.height)
-        header_h = 29
-        cr.line_to(0, header_h)
-        cr.line_to(0 + bounding_box.width, header_h)
-        cr.line_to(0 + bounding_box.width, bounding_box.height)
-
-        partition_width = bounding_box.width / self.num_partitions
-        layout = Layout()
-
-        for num, partition in enumerate(self.partitions):
-            # Draw partition separators
-            cr.move_to(partition_width * num, 0)
-            cr.line_to(partition_width * num, bounding_box.height)
-
-            if partition:
-                # Add the name to child partition
-                layout.set(text=partition.name, font=self.style)
-                padding_top = context.style["padding"][0]
-                cr = context.cairo
-                cr.move_to(partition_width * num, padding_top * 3)
-                layout.show_layout(
-                    cr,
-                    partition_width,
-                    default_size=(partition_width, header_h),
-                )
-
+        header_h = self.draw_outline(bounding_box, cr)
+        self.draw_partitions(bounding_box, context, header_h)
         stroke(context)
+        self.draw_hover(bounding_box, context)
 
-        # Add dashed line on bottom of swimlanes when hovered
+    def draw_hover(self, bounding_box: Rectangle, context: DrawContext):
+        """Add dashed line on bottom of swimlanes when hovered."""
+        cr = context.cairo
         if context.hovered or context.dropzone:
             with cairo_state(cr):
                 cr.set_dash((1.0, 5.0), 0)
@@ -140,3 +112,35 @@ class PartitionItem(ElementPresentation, Named):
                 cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
                 draw_highlight(context)
                 cr.stroke()
+
+    def draw_partitions(
+        self, bounding_box: Rectangle, context: DrawContext, header_h: int
+    ) -> None:
+        """Draw partition separators and add the name."""
+        cr = context.cairo
+        partition_width = bounding_box.width / self.num_partitions
+        layout = Layout()
+        for num, partition in enumerate(self.partitions):
+            cr.move_to(partition_width * num, 0)
+            cr.line_to(partition_width * num, bounding_box.height)
+            layout.set(text=partition.name, font=self.style)
+            padding_top = context.style["padding"][0]
+            cr.move_to(partition_width * num, padding_top * 3)
+            layout.show_layout(
+                cr,
+                partition_width,
+                default_size=(partition_width, header_h),
+            )
+
+    def draw_outline(self, bounding_box: Rectangle, cr: CairoContext) -> int:
+        """Draw the outline and header of the swimlanes."""
+        cr.move_to(0, bounding_box.height)
+        cr.line_to(0, 0)
+        cr.line_to(bounding_box.width, 0)
+        cr.line_to(bounding_box.width, bounding_box.height)
+        cr.move_to(0, bounding_box.height)
+        header_h = 29
+        cr.line_to(0, header_h)
+        cr.line_to(0 + bounding_box.width, header_h)
+        cr.line_to(0 + bounding_box.width, bounding_box.height)
+        return header_h
