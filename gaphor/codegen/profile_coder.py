@@ -77,7 +77,8 @@ def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Cla
     for cls in classes:
         base_classes = [base_cls for base_cls in cls.general]
         meta_classes = [meta_cls for meta_cls in get_class_extensions(cls)]
-        trees[cls] = sorted(base_classes + meta_classes, key=lambda e: e.name)
+        # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
+        trees[cls] = sorted(base_classes + meta_classes, key=lambda e: e.name)  # type: ignore
     return trees
 
 
@@ -199,8 +200,9 @@ def generate(
         classes: List = element_factory.lselect(UML.Class)
         classes, enumerations = find_enumerations(classes)
 
+        # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
         classes = sorted(
-            (cls for cls in classes if cls.name[0] != "~"), key=lambda c: c.name
+            (cls for cls in classes if cls.name[0] != "~"), key=lambda c: c.name  # type: ignore
         )
 
         trees = create_class_trees(classes)
