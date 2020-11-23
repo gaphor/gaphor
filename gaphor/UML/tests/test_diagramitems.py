@@ -35,6 +35,7 @@ def test_all_diagram_items_have_a_model_element_mapping(item_class):
 
 NAMED_EXCLUSIONS = [
     diagramitems.ExecutionSpecificationItem,
+    diagramitems.PartitionItem,
 ]
 
 

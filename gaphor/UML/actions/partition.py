@@ -10,7 +10,7 @@ from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, VerticalAlign
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, cairo_state, draw_highlight, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
@@ -20,7 +20,7 @@ HEADER_HEIGHT: int = 29
 
 
 @represents(UML.ActivityPartition)
-class PartitionItem(ElementPresentation, Named):
+class PartitionItem(ElementPresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         self.partitions: List[UML.ActivityPartition] = []
