@@ -67,9 +67,10 @@ class PartitionItem(ElementPresentation, Named):
 
     def update_partitions(self) -> None:
         """Add and remove UML.ActivityPartitions."""
+        if not self.subject:
+            return
         if not len(self.partitions):
             self.partitions.append(self.subject)
-
         if self.num_partitions > len(self.partitions):
             partition = self.subject.model.create(UML.ActivityPartition)
             partition.name = "NewActivityPartition"
@@ -107,7 +108,6 @@ class PartitionItem(ElementPresentation, Named):
 
     def draw_hover(self, bounding_box: Rectangle, context: DrawContext) -> None:
         """Add dashed line on bottom of swimlanes when hovered."""
-        cr = context.cairo
         if context.hovered or context.dropzone:
             cr = context.cairo
             with cairo_state(cr):
