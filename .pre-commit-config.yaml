@@ -27,8 +27,7 @@ repos:
   hooks:
   - id: docformatter
     args: [--in-place]
-- repo: git://github.com/detailyang/pre-commit-shell
-  rev: 1.0.5
+- repo: https://github.com/shellcheck-py/shellcheck-py
+  rev: v0.7.1.1
   hooks:
-  - id: shell-lint
-    args: [-x]
+  - id: shellcheck
