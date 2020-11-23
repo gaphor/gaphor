@@ -58,8 +58,10 @@ class PartitionItem(ElementPresentation, Named):
         """
         activity = self.diagram.namespace
         for partition in self.partitions:
-            if not partition.activity and isinstance(
-                activity.ownedClassifier[0], UML.Activity
+            if (
+                not partition.activity
+                and activity.ownedClassifier
+                and isinstance(activity.ownedClassifier[0], UML.Activity)
             ):
                 partition.activity = activity.ownedClassifier[0]
 
@@ -107,6 +109,7 @@ class PartitionItem(ElementPresentation, Named):
         """Add dashed line on bottom of swimlanes when hovered."""
         cr = context.cairo
         if context.hovered or context.dropzone:
+            cr = context.cairo
             with cairo_state(cr):
                 cr.set_dash((1.0, 5.0), 0)
                 cr.set_line_width(1.0)
@@ -119,11 +122,11 @@ class PartitionItem(ElementPresentation, Named):
         cr = context.cairo
         partition_width = bounding_box.width / self.num_partitions
         layout = Layout()
+        padding_top = context.style["padding"][0]
         for num, partition in enumerate(self.partitions):
             cr.move_to(partition_width * num, 0)
             cr.line_to(partition_width * num, bounding_box.height)
             layout.set(text=partition.name, font=self.style)
-            padding_top = context.style["padding"][0]
             cr.move_to(partition_width * num, padding_top * 3)
             layout.show_layout(
                 cr,

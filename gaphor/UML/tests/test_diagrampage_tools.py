@@ -3,6 +3,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.ui.diagrampage import DiagramPage
+from gaphor.UML.actions.partition import INIT_NUM_PARTITIONS
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.toolbox import uml_toolbox_actions
 
@@ -85,7 +86,7 @@ def test_placement_object_node(tab, element_factory):
 
 def test_placement_partition(tab, element_factory):
     test_placement_action(tab, "toolbox-partition")
-    assert len(element_factory.lselect(UML.ActivityPartition)) == 1
+    assert len(element_factory.lselect(UML.ActivityPartition)) == INIT_NUM_PARTITIONS
 
 
 def test_uml_toolbox_actions_shortcut_unique():
