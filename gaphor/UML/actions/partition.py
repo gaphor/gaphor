@@ -16,6 +16,7 @@ from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
 
 INIT_NUM_PARTITIONS: int = 2
+HEADER_HEIGHT: int = 29
 
 
 @represents(UML.ActivityPartition)
@@ -97,12 +98,12 @@ class PartitionItem(ElementPresentation, Named):
 
         cr = context.cairo
         cr.set_line_width(context.style["line-width"])
-        header_h = self.draw_outline(bounding_box, cr)
-        self.draw_partitions(bounding_box, context, header_h)
+        self.draw_outline(bounding_box, cr)
+        self.draw_partitions(bounding_box, context)
         stroke(context)
         self.draw_hover(bounding_box, context)
 
-    def draw_hover(self, bounding_box: Rectangle, context: DrawContext):
+    def draw_hover(self, bounding_box: Rectangle, context: DrawContext) -> None:
         """Add dashed line on bottom of swimlanes when hovered."""
         cr = context.cairo
         if context.hovered or context.dropzone:
@@ -113,9 +114,7 @@ class PartitionItem(ElementPresentation, Named):
                 draw_highlight(context)
                 cr.stroke()
 
-    def draw_partitions(
-        self, bounding_box: Rectangle, context: DrawContext, header_h: int
-    ) -> None:
+    def draw_partitions(self, bounding_box: Rectangle, context: DrawContext) -> None:
         """Draw partition separators and add the name."""
         cr = context.cairo
         partition_width = bounding_box.width / self.num_partitions
@@ -129,18 +128,16 @@ class PartitionItem(ElementPresentation, Named):
             layout.show_layout(
                 cr,
                 partition_width,
-                default_size=(partition_width, header_h),
+                default_size=(partition_width, HEADER_HEIGHT),
             )
 
-    def draw_outline(self, bounding_box: Rectangle, cr: CairoContext) -> int:
+    def draw_outline(self, bounding_box: Rectangle, cr: CairoContext) -> None:
         """Draw the outline and header of the swimlanes."""
         cr.move_to(0, bounding_box.height)
         cr.line_to(0, 0)
         cr.line_to(bounding_box.width, 0)
         cr.line_to(bounding_box.width, bounding_box.height)
         cr.move_to(0, bounding_box.height)
-        header_h = 29
-        cr.line_to(0, header_h)
-        cr.line_to(0 + bounding_box.width, header_h)
+        cr.line_to(0, HEADER_HEIGHT)
+        cr.line_to(0 + bounding_box.width, HEADER_HEIGHT)
         cr.line_to(0 + bounding_box.width, bounding_box.height)
-        return header_h
