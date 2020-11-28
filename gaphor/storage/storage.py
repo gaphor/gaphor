@@ -10,7 +10,7 @@ import io
 import logging
 import os.path
 import uuid
-from collections import Iterable
+from collections.abc import Iterable
 from functools import partial
 from typing import Optional
 
