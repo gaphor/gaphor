@@ -60,7 +60,7 @@ class PartitionPropertyPage(PropertyPageBase):
     def _update_list_store(self):
         """Rebuilds the list of partitions."""
         self.list_store.clear()
-        for num, partition in enumerate(self.item.partitions, start=1):
+        for num, partition in enumerate(self.item.partition, start=1):
             self.list_store.append([num, partition.name])
 
     @transactional
@@ -73,5 +73,4 @@ class PartitionPropertyPage(PropertyPageBase):
     def _on_partition_name_changed(self, widget, path, text):
         """Event handler for editing partition names."""
         self.list_store[path][1] = text
-        self.item.partitions[int(path)].name = text
-        self.item.partitions_dirty = True
+        self.item.partition[int(path)].name = text

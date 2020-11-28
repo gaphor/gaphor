@@ -1,14 +1,12 @@
 """Activity Partition item."""
 
-from typing import List
-
 from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
 from generic.event import Event
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
-from gaphor.core.modeling.properties import attribute
+from gaphor.core.modeling.properties import association, attribute
 from gaphor.core.styling import Style, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, cairo_state, draw_highlight, stroke
@@ -23,8 +21,6 @@ HEADER_HEIGHT: int = 29
 class PartitionItem(ElementPresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-        self.partitions: List[UML.ActivityPartition] = []
-        self.min_width = 150
         self.min_height = 300
         self.style: Style = {
             "font-family": "sans",
@@ -36,15 +32,14 @@ class PartitionItem(ElementPresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("partition.name", self.update_shapes)
         self.watch("num_partitions", self.update_shapes)
-        self.watch("partitions_dirty", self.update_shapes)
 
     num_partitions: attribute[int] = attribute(
         "num_partitions", int, default=INIT_NUM_PARTITIONS
     )
-    partitions_dirty: attribute[bool] = attribute(
-        "partitions_dirty", bool, default=False
-    )
+
+    partition = association("partition", UML.ActivityPartition, composite=True)
 
     def pre_update(self, context: DrawContext) -> None:
         """Set the min width of all the swimlanes."""
@@ -57,7 +52,7 @@ class PartitionItem(ElementPresentation):
         classifier doesn't always exist yet.
         """
         activity = self.diagram.namespace
-        for partition in self.partitions:
+        for partition in self.partition:
             if (
                 not partition.activity
                 and activity.ownedClassifier
@@ -69,16 +64,15 @@ class PartitionItem(ElementPresentation):
         """Add and remove UML.ActivityPartitions."""
         if not self.subject:
             return
-        if not len(self.partitions):
-            self.partitions.append(self.subject)
-        if self.num_partitions > len(self.partitions):
+        if not len(self.partition):
+            self.partition.append(self.subject)
+        if self.num_partitions > len(self.partition):
             partition = self.subject.model.create(UML.ActivityPartition)
             partition.name = "NewActivityPartition"
-            self.partitions.append(partition)
-        elif self.num_partitions < len(self.partitions):
-            partition = self.partitions[-1]
+            self.partition.append(partition)
+        elif self.num_partitions < len(self.partition):
+            partition = self.partition[-1]
             partition.unlink()
-            self.partitions.pop()
 
     def update_shapes(self, event: Event = None) -> None:
         """Update the number of partitions and draw them."""
@@ -87,7 +81,6 @@ class PartitionItem(ElementPresentation):
             style=self.style,
             draw=self.draw_swimlanes,
         )
-        self.partitions_dirty = False
 
     def draw_swimlanes(
         self, box: Box, context: DrawContext, bounding_box: Rectangle
@@ -123,7 +116,7 @@ class PartitionItem(ElementPresentation):
         partition_width = bounding_box.width / self.num_partitions
         layout = Layout()
         padding_top = context.style["padding"][0]
-        for num, partition in enumerate(self.partitions):
+        for num, partition in enumerate(self.partition):
             cr.move_to(partition_width * num, 0)
             cr.line_to(partition_width * num, bounding_box.height)
             layout.set(text=partition.name, font=self.style)
