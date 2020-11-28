@@ -10,9 +10,7 @@ import io
 import logging
 import os.path
 import uuid
-from collections.abc import Iterable
 from functools import partial
-from typing import Optional
 
 import gaphas
 
@@ -202,8 +200,6 @@ def _load_elements_and_canvasitems(
         for item in canvasitems:
             item = upgrade_canvas_item_to_1_0_2(item)
             item = upgrade_canvas_item_to_1_3_0(item)
-            if version_lower_than(gaphor_version, (2, 1, 0)):
-                item = upgrade_canvas_item_to_2_1_0(item)
             if version_lower_than(gaphor_version, (1, 1, 0)):
                 item = upgrade_presentation_item_to_1_1_0(item)
             cls = modeling_language.lookup_diagram_item(item.type)
@@ -418,21 +414,3 @@ def upgrade_element_to_2_1_0(elem):
             elem.references["comment"] = refids
             del elem.references["ownedComment"]
     return elem
-
-
-def flatten(items):
-    """Yield items from a nested iterable."""
-    for item in items:
-        if isinstance(item, Iterable):
-            yield from flatten(item)
-        else:
-            yield item
-
-
-def upgrade_canvas_item_to_2_1_0(item: gaphas.Item) -> Optional[gaphas.Item]:
-    if item.type == "PartitionItem" and item.canvasitems:
-        item.canvasitems = list(flatten(item.canvasitems))
-        item.canvasitems = [
-            item for _ in item.canvasitems if item.type != "PartitionItem"
-        ]
-    return item
