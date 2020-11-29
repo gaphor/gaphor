@@ -36,24 +36,14 @@ class PartitionItem(ElementPresentation):
 
     partition = association("partition", UML.ActivityPartition, composite=True)
 
+    def postload(self):
+        super().postload()
+        if self.subject and self.subject not in self.partition:
+            self.partition = self.subject
+
     def pre_update(self, context: DrawContext) -> None:
         """Set the min width of all the swimlanes."""
         self.min_width = 150 * len(self.partition)
-
-    def post_update(self, context: DrawContext) -> None:
-        """Nest the Activity Partitions under the Activity.
-
-        This needs to be done after the update because the activity's
-        classifier doesn't always exist yet.
-        """
-        activity = self.diagram.namespace
-        for partition in self.partition:
-            if (
-                not partition.activity
-                and activity.ownedClassifier
-                and isinstance(activity.ownedClassifier[0], UML.Activity)
-            ):
-                partition.activity = activity.ownedClassifier[0]
 
     def draw_swimlanes(
         self, box: Box, context: DrawContext, bounding_box: Rectangle

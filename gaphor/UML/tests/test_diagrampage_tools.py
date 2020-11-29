@@ -85,8 +85,8 @@ def test_placement_object_node(tab, element_factory):
 
 def test_placement_partition(tab, element_factory):
     test_placement_action(tab, "toolbox-partition")
-    # TODO: should this be 1 or 2?
-    assert len(element_factory.lselect(UML.ActivityPartition)) == 1
+
+    assert len(element_factory.lselect(UML.ActivityPartition)) == 2
 
 
 def test_uml_toolbox_actions_shortcut_unique():
