@@ -43,9 +43,7 @@ class RELATIONSHIPS:
 
 
 def relationship_iter(model, iter):
-    if iter is not None and not isinstance(
-        model.get_value(iter, 0), UML.Package
-    ):
+    if iter is not None and not isinstance(model.get_value(iter, 0), UML.Package):
         return iter
 
     child_iter = model.iter_children(iter)
