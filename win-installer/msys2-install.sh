@@ -5,7 +5,7 @@ set -euo pipefail
 export MSYS2_FC_CACHE_SKIP=1
 
 cp /etc/pacman.d/mirrorlist.mingw64 /etc/pacman.d/mirrorlist.backup
-rankmirrors -r mingw64 -n 3 -v /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist.mingw64
+rankmirrors -r mingw64 -v /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist.mingw64
 cat /etc/pacman.d/mirrorlist.mingw64
 
 pacman --noconfirm -Suy
