@@ -2,12 +2,11 @@
 
 from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
-from generic.event import Event
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.properties import association
-from gaphor.core.styling import Style, VerticalAlign
+from gaphor.core.styling import VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, cairo_state, draw_highlight, stroke
 from gaphor.diagram.support import represents
@@ -21,18 +20,19 @@ class PartitionItem(ElementPresentation):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
         self.min_height = 300
-        self.style: Style = {
-            "font-family": "sans",
-            "font-size": 14,
-            "line-width": 2.4,
-            "padding": (2, 2, 2, 2),
-            "vertical-align": VerticalAlign.TOP,
-        }
 
+        self.shape = Box(
+            style={
+                "line-width": 2.4,
+                "padding": (2, 2, 2, 2),
+                "vertical-align": VerticalAlign.TOP,
+            },
+            draw=self.draw_swimlanes,
+        )
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("partition.name", self.update_shapes)
-        self.watch("partition", self.update_shapes)
+        self.watch("partition.name")
+        self.watch("partition")
 
     partition = association("partition", UML.ActivityPartition, composite=True)
 
@@ -54,13 +54,6 @@ class PartitionItem(ElementPresentation):
                 and isinstance(activity.ownedClassifier[0], UML.Activity)
             ):
                 partition.activity = activity.ownedClassifier[0]
-
-    def update_shapes(self, event: Event = None) -> None:
-        """Update the number of partitions and draw them."""
-        self.shape = Box(
-            style=self.style,
-            draw=self.draw_swimlanes,
-        )
 
     def draw_swimlanes(
         self, box: Box, context: DrawContext, bounding_box: Rectangle
@@ -98,11 +91,12 @@ class PartitionItem(ElementPresentation):
         else:
             partition_width = bounding_box.width / 2
         layout = Layout()
+        style = context.style
         padding_top = context.style["padding"][0]
         for num, partition in enumerate(self.partition):
             cr.move_to(partition_width * num, 0)
             cr.line_to(partition_width * num, bounding_box.height)
-            layout.set(text=partition.name, font=self.style)
+            layout.set(text=partition.name, font=style)
             cr.move_to(partition_width * num, padding_top * 3)
             layout.show_layout(
                 cr,
