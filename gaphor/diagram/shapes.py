@@ -373,7 +373,6 @@ def draw_arrow_tail(context: DrawContext):
 def text_draw_focus_box(context, x, y, w, h):
     if context.hovered or context.focused:
         with cairo_state(context.cairo) as cr:
-            # cr.set_dash(() if context.focused else (2.0, 2.0), 0)
             cr.set_dash((), 0)
             if context.focused:
                 cr.set_source_rgb(0.6, 0.6, 0.6)

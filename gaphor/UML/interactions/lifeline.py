@@ -65,19 +65,11 @@ class LifetimeItem:
 
     Provides basic properties of lifeline's lifetime.
 
-    :Attributes:
-     top
-        Top handle.
-     bottom
-        Bottom handle.
-     port
-        Lifetime connection port.
-     visible
-        Determines port visibility.
-     min_length
-        Minimum length of lifetime.
-     length
-        Length of lifetime.
+    Attributes:
+        top: Top handle.
+        bottom: Bottom handle.
+        port: Lifetime connection port.
+        visible: Determines port visibility.
     """
 
     MIN_LENGTH = 10
@@ -132,14 +124,12 @@ class LifetimeItem:
 class LifelineItem(ElementPresentation[UML.Lifeline], Named):
     """Lifeline item.
 
-    The item represents head of lifeline. Lifeline's lifetime is
-    represented by `lifetime` instance.
+    The item represents the head of the lifeline. We represent the lifeline's
+    lifetime by `lifetime` instance.
 
-    :Attributes:
-     lifetime
-        Lifeline's lifetime part.
-     is_destroyed
-        Check if delete message is connected.
+    Attributes:
+        lifetime: Lifeline's lifetime part.
+        is_destroyed: Check if delete message is connected.
     """
 
     def __init__(self, id=None, model=None):
@@ -214,9 +204,8 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
     def draw_lifeline(self, box, context, bounding_box):
         """Draw lifeline.
 
-        Lifeline's head is always drawn.
-
-        Lifeline's lifetime is drawn when lifetime is visible.
+        We always draw the lifeline's head. We only draw the lifeline's
+        lifetime when the lifetime is visible.
         """
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
@@ -245,8 +234,8 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
     def point(self, pos):
         """Find distance to lifeline item.
 
-        Distance to lifeline's head and lifeline's lifetime is
-        calculated and minimum is returned.
+        We calculate the distance to the lifeline's head, and then we
+        calculate the lifetime. We return the minimum.
         """
         d1 = super().point(pos)
         top = self.lifetime.top

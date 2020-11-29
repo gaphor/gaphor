@@ -34,8 +34,15 @@ def activity_config(new_item):
         subject.activity = activity
 
 
-def partition_config(partition_item: diagramitems.PartitionItem) -> None:
-    partition_item.subject.name = "Partition"
+def partition_config(new_item):
+    activity_config(new_item)
+    subject = new_item.subject
+    new_item.partition = subject
+
+    partition = subject.model.create(UML.ActivityPartition)
+    partition.name = "NewActivityPartition"
+    partition.activity = subject.activity
+    new_item.partition = partition
 
 
 actions = ToolSection(
@@ -133,7 +140,7 @@ actions = ToolSection(
             item_factory=PlacementTool.new_item_factory(
                 diagramitems.PartitionItem,
                 UML.ActivityPartition,
-                config_func=activity_config,
+                config_func=partition_config,
             ),
             handle_index=SE,
         ),
