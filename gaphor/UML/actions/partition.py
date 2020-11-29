@@ -13,7 +13,6 @@ from gaphor.diagram.shapes import Box, cairo_state, draw_highlight, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
 
-INIT_NUM_PARTITIONS: int = 2
 HEADER_HEIGHT: int = 29
 
 

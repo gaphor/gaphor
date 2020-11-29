@@ -20,8 +20,7 @@ class ActionIssueTestCase(TestCase):
 
         # Actions live in partitions:
         partitions = ef.lselect(UML.ActivityPartition)
-        # TODO: Why are there 3 ActivityPartitions?
-        assert 3 == len(partitions)
+        assert 2 == len(partitions)
 
         # Okay, so far the data model is saved correctly. Now, how do the
         # handles behave?
