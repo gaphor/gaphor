@@ -6,7 +6,7 @@ from generic.event import Event
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
-from gaphor.core.modeling.properties import association, attribute
+from gaphor.core.modeling.properties import association
 from gaphor.core.styling import Style, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, cairo_state, draw_highlight, stroke
@@ -33,17 +33,13 @@ class PartitionItem(ElementPresentation):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("partition.name", self.update_shapes)
-        self.watch("num_partitions", self.update_shapes)
-
-    num_partitions: attribute[int] = attribute(
-        "num_partitions", int, default=INIT_NUM_PARTITIONS
-    )
+        self.watch("partition", self.update_shapes)
 
     partition = association("partition", UML.ActivityPartition, composite=True)
 
     def pre_update(self, context: DrawContext) -> None:
         """Set the min width of all the swimlanes."""
-        self.min_width = 150 * self.num_partitions
+        self.min_width = 150 * len(self.partition)
 
     def post_update(self, context: DrawContext) -> None:
         """Nest the Activity Partitions under the Activity.
@@ -60,23 +56,8 @@ class PartitionItem(ElementPresentation):
             ):
                 partition.activity = activity.ownedClassifier[0]
 
-    def update_partitions(self) -> None:
-        """Add and remove UML.ActivityPartitions."""
-        if not self.subject:
-            return
-        if not len(self.partition):
-            self.partition.append(self.subject)
-        if self.num_partitions > len(self.partition):
-            partition = self.subject.model.create(UML.ActivityPartition)
-            partition.name = "NewActivityPartition"
-            self.partition.append(partition)
-        elif self.num_partitions < len(self.partition):
-            partition = self.partition[-1]
-            partition.unlink()
-
     def update_shapes(self, event: Event = None) -> None:
         """Update the number of partitions and draw them."""
-        self.update_partitions()
         self.shape = Box(
             style=self.style,
             draw=self.draw_swimlanes,
@@ -113,7 +94,10 @@ class PartitionItem(ElementPresentation):
     def draw_partitions(self, bounding_box: Rectangle, context: DrawContext) -> None:
         """Draw partition separators and add the name."""
         cr = context.cairo
-        partition_width = bounding_box.width / self.num_partitions
+        if self.partition:
+            partition_width = bounding_box.width / len(self.partition)
+        else:
+            partition_width = bounding_box.width / 2
         layout = Layout()
         padding_top = context.style["padding"][0]
         for num, partition in enumerate(self.partition):
