@@ -35,16 +35,13 @@ class CopyService(Service, ActionProvider):
 
         self.clipboard = Gtk.Clipboard.get_default(Gdk.Display.get_default())
         self.clipboard.connect("owner_change", self.on_clipboard_owner_change)
-        self.clipboard_semaphore = 0
 
     def shutdown(self):
         pass
 
     def on_clipboard_owner_change(self, clipboard, event):
         view = self.diagrams.get_current_view()
-        if self.clipboard_semaphore > 0:
-            self.clipboard_semaphore -= 1
-        elif view and not view.is_focus():
+        if view and not view.is_focus():
             global copy_buffer
             copy_buffer = set()
 
@@ -79,7 +76,6 @@ class CopyService(Service, ActionProvider):
     def copy_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
-            self.clipboard_semaphore += 1
             self.clipboard.set_text("", -1)
             items = view.selected_items
             self.copy(items)
@@ -88,7 +84,6 @@ class CopyService(Service, ActionProvider):
     def cut_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
-            self.clipboard_semaphore += 1
             self.clipboard.set_text("", -1)
             items = view.selected_items
             self.copy(items)
