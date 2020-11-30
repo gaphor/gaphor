@@ -38,10 +38,8 @@ tests = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six
 tests_no_zope = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six"]
 
 [[package]]
-name = "babel"
-version = "2.9.0"
-description = "Internationalization utilities"
 category = "dev"
+description = "Internationalization utilities"
 name = "babel"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
@@ -192,7 +190,7 @@ category = "main"
 description = ""
 name = "gaphas"
 optional = false
-python-versions = "^3.6"
+python-versions = "^3.7"
 version = "3.0.0"
 
 [package.dependencies]
@@ -202,7 +200,7 @@ pycairo = "^1.13.0"
 typing-extensions = "^3.7.4"
 
 [package.source]
-reference = "7d3b8fcec3f3a897ad895d9304419b1534cd54c3"
+reference = "b8e92fc332e96caf278b1247d8ce220bd9f09fe4"
 type = "git"
 url = "https://github.com/gaphor/gaphas.git"
 [[package]]
@@ -219,7 +217,7 @@ description = "File identification library for Python"
 name = "identify"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-version = "1.5.9"
+version = "1.5.10"
 
 [package.extras]
 license = ["editdistance"]
@@ -344,11 +342,10 @@ description = "Core utilities for Python packages"
 name = "packaging"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "20.4"
+version = "20.7"
 
 [package.dependencies]
 pyparsing = ">=2.0.2"
-six = "*"
 
 [[package]]
 category = "dev"
@@ -380,7 +377,7 @@ description = "A framework for managing and maintaining multi-language pre-commi
 name = "pre-commit"
 optional = false
 python-versions = ">=3.6.1"
-version = "2.8.2"
+version = "2.9.2"
 
 [package.dependencies]
 cfgv = ">=2.0.0"
@@ -578,9 +575,6 @@ python-versions = "*"
 version = "2.0.0"
 
 [[package]]
-name = "sphinx"
-version = "3.3.1"
-description = "Python documentation generator"
 category = "dev"
 description = "Python documentation generator"
 name = "sphinx"
@@ -763,7 +757,7 @@ description = "Virtual Python Environment builder"
 name = "virtualenv"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-version = "20.1.0"
+version = "20.2.1"
 
 [package.dependencies]
 appdirs = ">=1.4.3,<2"
@@ -773,7 +767,7 @@ six = ">=1.9.0,<2"
 
 [package.dependencies.importlib-metadata]
 python = "<3.8"
-version = ">=0.12,<3"
+version = ">=0.12"
 
 [package.extras]
 docs = ["proselint (>=0.10.2)", "sphinx (>=3)", "sphinx-argparse (>=0.2.5)", "sphinx-rtd-theme (>=0.4.3)", "towncrier (>=19.9.0rc1)"]
@@ -800,9 +794,9 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
+content-hash = "775955ac926d9d56af3aa9f418898ae7390464f052f61a11606da833e8f407e6"
 lock-version = "1.0"
 python-versions = "^3.7"
-content-hash = "9f022ac755c9248819005d541db2718f68526e49bf35b7b6234165ad26352397"
 
 [metadata.files]
 alabaster = [
@@ -913,8 +907,8 @@ generic = [
     {file = "generic-1.0.0.tar.gz", hash = "sha256:c7651fb460feae762065b4a29afbfe2a346b2b18dccd4a8495a7e978498f66bc"},
 ]
 identify = [
-    {file = "identify-1.5.9-py2.py3-none-any.whl", hash = "sha256:5dd84ac64a9a115b8e0b27d1756b244b882ad264c3c423f42af8235a6e71ca12"},
-    {file = "identify-1.5.9.tar.gz", hash = "sha256:c9504ba6a043ee2db0a9d69e43246bc138034895f6338d5aed1b41e4a73b1513"},
+    {file = "identify-1.5.10-py2.py3-none-any.whl", hash = "sha256:cc86e6a9a390879dcc2976cef169dd9cc48843ed70b7380f321d1b118163c60e"},
+    {file = "identify-1.5.10.tar.gz", hash = "sha256:943cd299ac7f5715fcb3f684e2fc1594c1e0f22a90d15398e5888143bd4144b5"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
@@ -1004,8 +998,8 @@ nodeenv = [
     {file = "nodeenv-1.5.0.tar.gz", hash = "sha256:ab45090ae383b716c4ef89e690c41ff8c2b257b85b309f01f3654df3d084bd7c"},
 ]
 packaging = [
-    {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
-    {file = "packaging-20.4.tar.gz", hash = "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8"},
+    {file = "packaging-20.7-py2.py3-none-any.whl", hash = "sha256:eb41423378682dadb7166144a4926e443093863024de508ca5c9737d6bc08376"},
+    {file = "packaging-20.7.tar.gz", hash = "sha256:05af3bb85d320377db281cf254ab050e1a7ebcbf5410685a9a407e18a1f81236"},
 ]
 pathspec = [
     {file = "pathspec-0.8.1-py2.py3-none-any.whl", hash = "sha256:aa0cb481c4041bf52ffa7b0d8fa6cd3e88a2ca4879c533c9153882ee2556790d"},
@@ -1016,8 +1010,8 @@ pluggy = [
     {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
 ]
 pre-commit = [
-    {file = "pre_commit-2.8.2-py2.py3-none-any.whl", hash = "sha256:22e6aa3bd571debb01eb7d34483f11c01b65237be4eebbf30c3d4fb65762d315"},
-    {file = "pre_commit-2.8.2.tar.gz", hash = "sha256:905ebc9b534b991baec87e934431f2d0606ba27f2b90f7f652985f5a5b8b6ae6"},
+    {file = "pre_commit-2.9.2-py2.py3-none-any.whl", hash = "sha256:949b13efb7467ae27e2c8f9e83434dacf2682595124d8902554a4e18351e5781"},
+    {file = "pre_commit-2.9.2.tar.gz", hash = "sha256:e31c04bc23741194a7c0b983fe512801e151a0638c6001c49f2bd034f8a664a1"},
 ]
 py = [
     {file = "py-1.9.0-py2.py3-none-any.whl", hash = "sha256:366389d1db726cd2fcfc79732e75410e5fe4d31db13692115529d34069a043c2"},
@@ -1218,8 +1212,8 @@ urllib3 = [
     {file = "urllib3-1.26.2.tar.gz", hash = "sha256:19188f96923873c92ccb987120ec4acaa12f0461fa9ce5d3d0772bc965a39e08"},
 ]
 virtualenv = [
-    {file = "virtualenv-20.1.0-py2.py3-none-any.whl", hash = "sha256:b0011228208944ce71052987437d3843e05690b2f23d1c7da4263fde104c97a2"},
-    {file = "virtualenv-20.1.0.tar.gz", hash = "sha256:b8d6110f493af256a40d65e29846c69340a947669eec8ce784fcf3dd3af28380"},
+    {file = "virtualenv-20.2.1-py2.py3-none-any.whl", hash = "sha256:07cff122e9d343140366055f31be4dcd61fd598c69d11cd33a9d9c8df4546dd7"},
+    {file = "virtualenv-20.2.1.tar.gz", hash = "sha256:e0aac7525e880a429764cefd3aaaff54afb5d9f25c82627563603f5d7de5a6e5"},
 ]
 webencodings = [
     {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},

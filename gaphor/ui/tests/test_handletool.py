@@ -3,11 +3,12 @@
 import pytest
 from gaphas.aspect.connector import ConnectionSink
 from gaphas.aspect.connector import Connector as ConnectorAspect
+from gaphas.aspect.handlemove import HandleMove
 from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.diagramtools import ConnectHandleTool, DiagramItemConnector
+from gaphor.diagram.diagramtools import DiagramItemConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.ui.diagrams import Diagrams
@@ -100,14 +101,13 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
     # select handle:
     handle = line.handles()[-1]
-    tool = ConnectHandleTool(view=view)
 
-    tool.grab_handle(line, handle)
+    move = HandleMove(line, handle, view)
     handle.pos = (comment_bb.x, comment_bb.y)
-    item = tool.glue(line, handle, handle.pos)
+    item = move.glue(handle.pos)
     assert item is not None
 
-    tool.connect(line, handle, handle.pos)
+    move.connect(handle.pos)
     cinfo = diagram.canvas.connections.get_connection(handle)
     assert cinfo.constraint is not None
     assert cinfo.connected is comment, cinfo.connected
@@ -130,18 +130,15 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     view = current_diagram_view(diagrams)
     assert view, "View should be available here"
 
-    tool = ConnectHandleTool(view)
-
-    # Connect one end to the Comment:
     handle = line.handles()[0]
-    tool.grab_handle(line, handle)
+    move = HandleMove(line, handle, view)
 
     handle.pos = (0, 0)
-    sink = tool.glue(line, handle, handle.pos)
+    sink = move.glue(handle.pos)
     assert sink is not None
     assert sink.item is comment
 
-    tool.connect(line, handle, handle.pos)
+    move.connect(handle.pos)
     cinfo = diagram.canvas.connections.get_connection(handle)
     assert cinfo is not None, None
     assert cinfo.item is line
@@ -151,13 +148,13 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
 
     handle = line.handles()[-1]
-    tool.grab_handle(line, handle)
+    move = HandleMove(line, handle, view)
 
     handle.pos = (0, 0)
-    sink = tool.glue(line, handle, handle.pos)
+    sink = move.glue(handle.pos)
     assert sink, f"No sink at {handle.pos}"
     assert sink.item is actor
-    tool.connect(line, handle, handle.pos)
+    move.connect(handle.pos)
 
     cinfo = view.canvas.connections.get_connection(handle)
     assert cinfo.item is line
@@ -167,9 +164,9 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
     assert actor.subject in comment.subject.annotatedElement
 
-    sink = tool.glue(line, handle, (500, 500))
+    sink = move.glue((500, 500))
     assert sink is None, sink
-    tool.connect(line, handle, (500, 500))
+    move.connect((500, 500))
 
     cinfo = view.canvas.connections.get_connection(handle)
     assert cinfo is None

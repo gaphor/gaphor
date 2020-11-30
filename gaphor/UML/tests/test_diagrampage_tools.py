@@ -27,9 +27,10 @@ def tab(event_manager, element_factory, properties):
 
 
 def test_pointer(tab):
-    tool = tab.get_tool("toolbox-pointer")
+    tab.apply_tool_set("toolbox-pointer")
 
-    assert tool
+    # TODO: what's the observed behavior?
+    assert tab.view._controllers
 
 
 @pytest.mark.parametrize(
@@ -71,7 +72,7 @@ def test_pointer(tab):
     ],
 )
 def test_placement_action(tab, tool_name):
-    tool = tab.get_tool(tool_name)
+    tool = tab.apply_tool_set(tool_name)
 
     # Ensure the factory is working
     tool.create_item((0, 0))

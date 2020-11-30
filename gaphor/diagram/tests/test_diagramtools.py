@@ -62,7 +62,7 @@ class DiagramItemConnectorTestCase(TestCase):
             0,
         )
 
-        view.do_event(event)
+        view.event(event)
 
         assert the_association is a.subject
 
@@ -74,6 +74,6 @@ class DiagramItemConnectorTestCase(TestCase):
             0,
         )
 
-        view.do_event(event)
+        view.event(event)
 
         assert the_association is a.subject

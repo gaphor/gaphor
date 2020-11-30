@@ -10,12 +10,10 @@ import logging
 
 from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.aspect.connector import ItemConnector
-from gaphas.aspect.finder import item_at_point
-from gaphas.aspect.inmotion import InMotion as InMotionAspect
-from gaphas.guide import GuidedItemInMotion
-from gaphas.tool import ConnectHandleTool, HoverTool, ItemTool
-from gaphas.tool import PlacementTool as _PlacementTool
-from gaphas.tool import RubberbandTool, Tool, ToolChain
+from gaphas.aspect.move import Move as InMotionAspect
+from gaphas.guide import GuidedItemMove
+from gaphas.tool import hover_tool, item_tool, rubberband_tool
+from gaphas.tool.itemtool import item_at_point
 from gi.repository import Gdk
 
 from gaphor.core import Transaction, transactional
@@ -123,7 +121,7 @@ class DisconnectHandle:
                 adapter.disconnect(handle)
 
 
-class TextEditTool(Tool):
+class TextEditTool:
     """Text edit tool.
 
     Allows for elements that can adapt to the IEditable interface to be
@@ -150,7 +148,7 @@ class TextEditTool(Tool):
         return False
 
 
-class PlacementTool(_PlacementTool):
+class PlacementTool:
     """PlacementTool is used to place items on the canvas."""
 
     def __init__(self, view, item_factory, event_manager, handle_index=-1):
@@ -274,7 +272,7 @@ class PlacementTool(_PlacementTool):
 
 
 @InMotionAspect.register(Presentation)
-class DropZoneInMotion(GuidedItemInMotion):
+class DropZoneMove(GuidedItemMove):
     def move(self, pos):
         """Move the item.
 
@@ -342,39 +340,9 @@ class DropZoneInMotion(GuidedItemInMotion):
             view.selection.set_dropzone_item(None)
 
 
-class TransactionalToolChain(ToolChain):
-    """In addition to a normal toolchain, this chain begins an undo-transaction
-    at button-press and commits the transaction at button-release."""
-
-    def __init__(self, view, event_manager):
-        super().__init__(view)
-        self.event_manager = event_manager
-        self._tx = None
-
-    def handle(self, event):
-        # For double click: button_press, double_click, button_release
-        if self.EVENT_HANDLERS.get(event.type) in ("on_button_press",):
-            assert not self._tx
-            self._tx = Transaction(self.event_manager)
-
-        try:
-            return super().handle(event)
-        finally:
-            if self._tx and self.EVENT_HANDLERS.get(event.type) in (
-                "on_button_release",
-                "on_double_click",
-                "on_triple_click",
-            ):
-                self._tx.commit()
-                self._tx = None
-
-
-def DefaultTool(view, event_manager):
-    """The default tool chain build from HoverTool, ItemTool and HandleTool."""
-    chain = TransactionalToolChain(view, event_manager)
-    chain.append(HoverTool(view))
-    chain.append(ConnectHandleTool(view))
-    chain.append(ItemTool(view))
-    chain.append(TextEditTool(view))
-    chain.append(RubberbandTool(view))
-    return chain
+def apply_default_tool_set(view, event_manager, rubberband_state):
+    """The default tool set."""
+    view.add_controller(hover_tool(view))
+    view.add_controller(item_tool(view))
+    # chain.append(TextEditTool(view))
+    view.add_controller(rubberband_tool(view, rubberband_state))

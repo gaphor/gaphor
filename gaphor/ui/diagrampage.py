@@ -3,14 +3,15 @@ import importlib
 import logging
 from typing import Dict, Optional, Sequence, Tuple
 
+from gaphas.guide import GuidePainter
 from gaphas.painter import (
     BoundingBoxPainter,
-    FocusedItemPainter,
     FreeHandPainter,
     HandlePainter,
     PainterChain,
-    ToolPainter,
 )
+from gaphas.segment import LineSegmentPainter
+from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
@@ -20,11 +21,7 @@ from gaphor.core.modeling import Presentation, StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
-from gaphor.diagram.diagramtools import (
-    DefaultTool,
-    PlacementTool,
-    TransactionalToolChain,
-)
+from gaphor.diagram.diagramtools import PlacementTool, apply_default_tool_set
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.support import get_diagram_item
@@ -100,6 +97,8 @@ class DiagramPage:
         self.widget: Optional[Gtk.Widget] = None
         self.diagram_css: Optional[Gtk.CssProvider] = None
 
+        self.rubberband_state = RubberbandState()
+
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_style_sheet_updated)
         self.event_manager.subscribe(self._on_diagram_item_placed)
@@ -153,10 +152,12 @@ class DiagramPage:
 
         return self.widget
 
-    def get_tool(self, tool_name):
+    def apply_tool_set(self, tool_name):
         """Return a tool associated with an id (action name)."""
         if tool_name == "toolbox-pointer":
-            return DefaultTool(self.view, self.event_manager)
+            return apply_default_tool_set(
+                self.view, self.event_manager, self.rubberband_state
+            )
 
         tool = next(
             t
@@ -262,9 +263,7 @@ class DiagramPage:
     @action(name="diagram.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
         if self.view:
-            tool = TransactionalToolChain(self.view, self.event_manager)
-            tool.append(self.get_tool(tool_name))
-            self.view.tool = tool
+            tool = self.apply_tool_set(tool_name)
             icon_name = self.get_tool_icon_name(tool_name)
             window = self.view.get_window()
             if icon_name and window:
@@ -307,8 +306,9 @@ class DiagramPage:
             PainterChain()
             .append(item_painter)
             .append(HandlePainter(view))
-            .append(FocusedItemPainter(view))
-            .append(ToolPainter(view))
+            .append(LineSegmentPainter(view.selection))
+            .append(GuidePainter(view))
+            .append(RubberbandPainter(self.rubberband_state))
         )
         view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
@@ -356,7 +356,7 @@ class DiagramPage:
             and data.get_format() == 8
             and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
-            tool = self.get_tool(data.get_data().decode())
+            tool = self.apply_tool_set(data.get_data().decode())
             tool.create_item((x, y))
             context.finish(True, False, time)
         elif (
