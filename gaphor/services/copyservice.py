@@ -41,9 +41,10 @@ class CopyService(Service, ActionProvider):
         pass
 
     def on_clipboard_owner_change(self, clipboard, event):
+        view = self.diagrams.get_current_view()
         if self.clipboard_semaphore > 0:
             self.clipboard_semaphore -= 1
-        else:
+        elif view and not view.is_focus():
             global copy_buffer
             copy_buffer = set()
 
