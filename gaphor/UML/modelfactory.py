@@ -138,7 +138,8 @@ def get_stereotypes(element):
     classes = model.select(lambda e: e.isKindOf(Class) and e.name in names)
 
     stereotypes = {ext.ownedEnd.type for cls in classes for ext in cls.extension}
-    return sorted(stereotypes, key=lambda st: st.name)
+    # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
+    return sorted(stereotypes, key=lambda st: st.name)  # type: ignore
 
 
 def get_applied_stereotypes(element):
