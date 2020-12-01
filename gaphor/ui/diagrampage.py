@@ -41,8 +41,12 @@ def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
         yield from section
 
 
-with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
-    PLACEMENT_BASE = GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
+@functools.lru_cache(maxsize=1)
+def placement_icon_base():
+    with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
+        print(str(f))
+        return GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
+
 
 GtkView.set_css_name("diagramview")
 
@@ -62,7 +66,7 @@ def get_placement_cursor(display, icon_name):
     if icon_name in _placement_pixbuf_map:
         pixbuf = _placement_pixbuf_map[icon_name]
     else:
-        pixbuf = PLACEMENT_BASE.copy()
+        pixbuf = placement_icon_base().copy()
         icon = Gtk.IconTheme.get_default().load_icon(icon_name, 24, 0)
         icon.copy_area(
             0,
