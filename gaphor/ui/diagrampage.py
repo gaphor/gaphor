@@ -361,6 +361,7 @@ class DiagramPage:
             and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
             tool = self.apply_tool_set(data.get_data().decode())
+            # TODO: fix me! can no longer use Placement tool
             tool.create_item((x, y))
             context.finish(True, False, time)
         elif (
