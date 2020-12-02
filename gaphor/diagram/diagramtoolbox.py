@@ -13,7 +13,7 @@ from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling import Diagram, Presentation
 from gaphor.diagram import general
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 
 ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
 
@@ -57,14 +57,14 @@ general_tools = ToolSection(
             gettext("Line"),
             "gaphor-line-symbolic",
             "l",
-            PlacementTool.new_item_factory(general.Line),
+            new_item_factory(general.Line),
         ),
         ToolDef(
             "toolbox-box",
             gettext("Box"),
             "gaphor-box-symbolic",
             "b",
-            PlacementTool.new_item_factory(general.Box),
+            new_item_factory(general.Box),
             SE,
         ),
         ToolDef(
@@ -72,7 +72,7 @@ general_tools = ToolSection(
             gettext("Ellipse"),
             "gaphor-ellipse-symbolic",
             "e",
-            PlacementTool.new_item_factory(general.Ellipse),
+            new_item_factory(general.Ellipse),
             SE,
         ),
         ToolDef(
@@ -80,7 +80,7 @@ general_tools = ToolSection(
             gettext("Comment"),
             "gaphor-comment-symbolic",
             "k",
-            PlacementTool.new_item_factory(general.CommentItem, UML.Comment),
+            new_item_factory(general.CommentItem, UML.Comment),
             handle_index=SE,
         ),
         ToolDef(
@@ -88,7 +88,7 @@ general_tools = ToolSection(
             gettext("Comment line"),
             "gaphor-comment-line-symbolic",
             "<Shift>K",
-            PlacementTool.new_item_factory(general.CommentLineItem),
+            new_item_factory(general.CommentLineItem),
         ),
     ),
 )

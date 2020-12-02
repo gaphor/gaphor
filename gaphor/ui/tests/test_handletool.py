@@ -8,7 +8,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.diagramtools import DiagramItemConnector
+from gaphor.diagram.diagramtools.placement import PresentationConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.ui.diagrams import Diagrams
@@ -46,7 +46,7 @@ def commentline(diagram):
 
 def test_aspect_type(commentline, connections):
     aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
-    assert isinstance(aspect, DiagramItemConnector)
+    assert isinstance(aspect, PresentationConnector)
 
 
 def test_query(comment, commentline):

@@ -21,7 +21,7 @@ from gaphor.core.modeling import Presentation, StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
-from gaphor.diagram.diagramtools import PlacementTool, apply_default_tool_set
+from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_tool_set
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.support import get_diagram_item
@@ -41,7 +41,6 @@ def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
 @functools.lru_cache(maxsize=1)
 def placement_icon_base():
     with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
-        print(str(f))
         return GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
 
 
@@ -156,6 +155,13 @@ class DiagramPage:
 
         return self.widget
 
+    def get_tool_def(self, tool_name):
+        return next(
+            t
+            for t in tooliter(self.modeling_language.toolbox_definition)
+            if t.id == tool_name
+        )
+
     def apply_tool_set(self, tool_name):
         """Return a tool associated with an id (action name)."""
         if tool_name == "toolbox-pointer":
@@ -163,14 +169,10 @@ class DiagramPage:
                 self.view, self.event_manager, self.rubberband_state
             )
 
-        tool = next(
-            t
-            for t in tooliter(self.modeling_language.toolbox_definition)
-            if t.id == tool_name
-        )
-        item_factory = tool.item_factory
-        handle_index = tool.handle_index
-        return PlacementTool(
+        tool_def = self.get_tool_def(tool_name)
+        item_factory = tool_def.item_factory
+        handle_index = tool_def.handle_index
+        return apply_placement_tool_set(
             self.view,
             item_factory=item_factory,
             event_manager=self.event_manager,

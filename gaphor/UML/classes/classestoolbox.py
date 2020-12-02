@@ -7,7 +7,7 @@ from gaphas.item import SE
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.UML import diagramitems
 
 
@@ -46,7 +46,7 @@ classes = ToolSection(
             gettext("Class"),
             "gaphor-class-symbolic",
             "c",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.ClassItem, UML.Class, config_func=namespace_config
             ),
             handle_index=SE,
@@ -56,7 +56,7 @@ classes = ToolSection(
             gettext("Interface"),
             "gaphor-interface-symbolic",
             "i",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.InterfaceItem,
                 UML.Interface,
                 config_func=namespace_config,
@@ -68,7 +68,7 @@ classes = ToolSection(
             gettext("Package"),
             "gaphor-package-symbolic",
             "p",
-            PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.PackageItem,
                 UML.Package,
                 config_func=namespace_config,
@@ -80,7 +80,7 @@ classes = ToolSection(
             gettext("Composite Association"),
             "gaphor-composite-association-symbolic",
             "<Shift>Z",
-            PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.AssociationItem,
                 UML.Association,
                 config_func=composite_association_config,
@@ -91,7 +91,7 @@ classes = ToolSection(
             gettext("Shared Association"),
             "gaphor-shared-association-symbolic",
             "<Shift>Q",
-            PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.AssociationItem,
                 UML.Association,
                 config_func=shared_association_config,
@@ -102,28 +102,28 @@ classes = ToolSection(
             gettext("Association"),
             "gaphor-association-symbolic",
             "<Shift>A",
-            PlacementTool.new_item_factory(diagramitems.AssociationItem),
+            new_item_factory(diagramitems.AssociationItem),
         ),
         ToolDef(
             "toolbox-dependency",
             gettext("Dependency"),
             "gaphor-dependency-symbolic",
             "<Shift>D",
-            PlacementTool.new_item_factory(diagramitems.DependencyItem),
+            new_item_factory(diagramitems.DependencyItem),
         ),
         ToolDef(
             "toolbox-generalization",
             gettext("Generalization"),
             "gaphor-generalization-symbolic",
             "<Shift>G",
-            PlacementTool.new_item_factory(diagramitems.GeneralizationItem),
+            new_item_factory(diagramitems.GeneralizationItem),
         ),
         ToolDef(
             "toolbox-implementation",
             gettext("Implementation"),
             "gaphor-implementation-symbolic",
             "<Shift>I",
-            PlacementTool.new_item_factory(diagramitems.ImplementationItem),
+            new_item_factory(diagramitems.ImplementationItem),
         ),
     ),
 )

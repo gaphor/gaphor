@@ -5,7 +5,7 @@ from gaphas.item import SE
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.UML import diagramitems
 
 
@@ -22,7 +22,7 @@ profiles: ToolSection = ToolSection(
             gettext("Profile"),
             "gaphor-profile-symbolic",
             "r",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.PackageItem,
                 UML.Profile,
                 config_func=namespace_config,
@@ -34,7 +34,7 @@ profiles: ToolSection = ToolSection(
             gettext("Metaclass"),
             "gaphor-metaclass-symbolic",
             "m",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.ClassItem, UML.Class, config_func=metaclass_config
             ),
             handle_index=SE,
@@ -44,7 +44,7 @@ profiles: ToolSection = ToolSection(
             gettext("Stereotype"),
             "gaphor-stereotype-symbolic",
             "z",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.ClassItem,
                 UML.Stereotype,
                 config_func=namespace_config,
@@ -56,14 +56,14 @@ profiles: ToolSection = ToolSection(
             gettext("Extension"),
             "gaphor-extension-symbolic",
             "<Shift>E",
-            item_factory=PlacementTool.new_item_factory(diagramitems.ExtensionItem),
+            new_item_factory(diagramitems.ExtensionItem),
         ),
         ToolDef(
             "toolbox-import",
             gettext("Import"),
             "gaphor-import-symbolic",
             "<Shift>M",
-            item_factory=PlacementTool.new_item_factory(diagramitems.PackageImportItem),
+            new_item_factory(diagramitems.PackageImportItem),
         ),
     ),
 )

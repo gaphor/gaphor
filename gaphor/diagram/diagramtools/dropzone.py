@@ -1,9 +1,41 @@
 from gaphas.aspect.move import Move as InMotionAspect
+from gaphas.connections import Connections
 from gaphas.guide import GuidedItemMove
 from gaphas.tool.itemtool import item_at_point
+from gi.repository import Gtk
 
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.presentation import Presentation
+
+
+def drop_zone_tool(view, item_class):
+    ctrl = Gtk.EventControllerMotion.new(view)
+    ctrl.connect("motion", on_motion, item_class)
+    return ctrl
+
+
+def on_motion(controller, x, y, item_class):
+    view = controller.get_widget()
+    canvas = view.canvas
+
+    try:
+        parent = item_at_point(view, (x, y))
+    except KeyError:
+        parent = None
+
+    if parent:
+        # create dummy adapter
+        connections = Connections()
+        adapter = Group(parent, item_class(connections))
+        if adapter and adapter.can_contain():
+            view.selection.set_dropzone_item(parent)
+        else:
+            view.selection.set_dropzone_item(None)
+        canvas.request_update(parent, matrix=False)
+    else:
+        if view.selection.dropzone_item:
+            canvas.request_update(view.selection.dropzone_item)
+        view.selection.set_dropzone_item(None)
 
 
 @InMotionAspect.register(Presentation)

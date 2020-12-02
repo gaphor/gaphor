@@ -1,10 +1,15 @@
 import logging
+from typing import Callable, Optional, Type, TypeVar
 
 from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.aspect.connector import ItemConnector
-from gaphas.tool.itemtool import item_at_point
+from gaphas.aspect.handlemove import HandleMove
+from gaphas.tool.placement import PlacementState
+from gaphas.view import GtkView
+from gi.repository import Gtk
 
 from gaphor.core import transactional
+from gaphor.core.modeling import Diagram, Element
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
@@ -12,9 +17,105 @@ from gaphor.diagram.presentation import Presentation
 
 log = logging.getLogger(__name__)
 
+P = TypeVar("P", bound=Presentation, covariant=True)
+FactoryType = Callable[[Diagram, Optional[Presentation]], Presentation]
+ConfigFuncType = Callable[[P], None]
+
+
+def placement_tool(
+    view: GtkView, factory: FactoryType, event_manager, handle_index: int
+):
+    gesture = Gtk.GestureDrag.new(view)
+    placement_state = PlacementState(factory, handle_index)
+    gesture.connect("drag-begin", on_drag_begin, placement_state)
+    gesture.connect("drag-update", on_drag_update, placement_state)
+    gesture.connect("drag-end", on_drag_end, placement_state, event_manager)
+    return gesture
+
+
+def on_drag_begin(gesture, start_x, start_y, placement_state):
+    view = gesture.get_widget()
+    selection = view.selection
+    parent = selection.dropzone_item
+    item = placement_state.factory(view.canvas.diagram, parent)
+    x, y = view.get_matrix_v2i(item).transform_point(start_x, start_y)
+    item.matrix.translate(x, y)
+    selection.unselect_all()
+    view.selection.set_focused_item(item)
+
+    gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+
+    handle = item.handles()[placement_state.handle_index]
+    if handle.movable:
+        connect_opposite_handle(view, item, x, y, placement_state.handle_index)
+        placement_state.moving = HandleMove(item, handle, view)
+        placement_state.moving.start_move((start_x, start_y))
+
+    selection.set_dropzone_item(None)
+
+
+def connect_opposite_handle(view, new_item, x, y, handle_index):
+    try:
+        opposite = new_item.opposite(new_item.handles()[handle_index])
+    except (KeyError, AttributeError):
+        pass
+    else:
+        # First make sure all matrices are updated:
+        new_item.matrix_i2c.set(*view.canvas.get_matrix_i2c(new_item))
+
+        handle_move = HandleMove(new_item, opposite, view)
+        vpos = (x, y)
+
+        sink = handle_move.glue(vpos)
+        if sink:
+            handle_move.connect(vpos)
+
+
+def on_drag_update(gesture, offset_x, offset_y, placement_state):
+    if placement_state.moving:
+        _, x, y = gesture.get_start_point()
+        placement_state.moving.move((x + offset_x, y + offset_y))
+
+
+def on_drag_end(gesture, offset_x, offset_y, placement_state, event_manager):
+    if placement_state.moving:
+        _, x, y = gesture.get_start_point()
+        placement_state.moving.stop_move((x + offset_x, y + offset_y))
+        event_manager.handle(DiagramItemPlaced(placement_state.moving.item))
+
+
+def new_item_factory(
+    item_class: Type[Presentation],
+    subject_class: Optional[Type[Element]] = None,
+    config_func: Optional[ConfigFuncType] = None,
+):
+    """``config_func`` may be a function accepting the newly created item."""
+
+    def item_factory(diagram, parent=None):
+        if subject_class:
+            element_factory = diagram.model
+            subject = element_factory.create(subject_class)
+        else:
+            subject = None
+
+        item = diagram.create(item_class, subject=subject)
+
+        adapter = Group(parent, item)
+        if parent and adapter.can_contain():
+            canvas = diagram.canvas
+            canvas.reparent(item, parent=parent)
+            adapter.group()
+
+        if config_func:
+            config_func(item)
+
+        return item
+
+    return item_factory
+
 
 @ConnectorAspect.register(Presentation)
-class DiagramItemConnector(ItemConnector):
+class PresentationConnector(ItemConnector):
     """Handle Tool (acts on item handles) that uses the Connector protocol to
     connect items to one-another.
 
@@ -106,126 +207,3 @@ class DisconnectHandle:
             if cinfo:
                 adapter = Connector(cinfo.connected, item)
                 adapter.disconnect(handle)
-
-
-class PlacementTool:
-    """PlacementTool is used to place items on the canvas."""
-
-    def __init__(self, view, item_factory, event_manager, handle_index=-1):
-        """item_factory is a callable.
-
-        It is used to create a CanvasItem that is displayed on the
-        diagram.
-        """
-        _PlacementTool.__init__(
-            self,
-            view,
-            factory=item_factory,
-            handle_tool=ConnectHandleTool(view),
-            handle_index=handle_index,
-        )
-        self.event_manager = event_manager
-        self._parent = None
-
-    @classmethod
-    def new_item_factory(_class, item_class, subject_class=None, config_func=None):
-        """``config_func`` may be a function accepting the newly created
-        item."""
-
-        def item_factory(diagram, parent=None):
-            if subject_class:
-                element_factory = diagram.model
-                subject = element_factory.create(subject_class)
-            else:
-                subject = None
-
-            item = diagram.create(item_class, subject=subject)
-
-            adapter = Group(parent, item)
-            if parent and adapter.can_contain():
-                canvas = diagram.canvas
-                canvas.reparent(item, parent=parent)
-                adapter.group()
-
-            if config_func:
-                config_func(item)
-
-            return item
-
-        item_factory.item_class = item_class  # type: ignore[attr-defined] # noqa: F821
-        return item_factory
-
-    @transactional
-    def create_item(self, pos):
-        """Create an item directly."""
-        return self._create_item(pos)
-
-    def on_button_press(self, event):
-        view = self.view
-        view.selection.unselect_all()
-        if super().on_button_press(event):
-            try:
-                opposite = self.new_item.opposite(
-                    self.new_item.handles()[self._handle_index]
-                )
-            except (KeyError, AttributeError):
-                pass
-            else:
-                # Connect opposite handle first, using the HandleTool's
-                # mechanisms
-
-                # First make sure all matrices are updated:
-                self.new_item.matrix_i2c.set(*view.canvas.get_matrix_i2c(self.new_item))
-
-                vpos = event.x, event.y
-
-                item = self.handle_tool.glue(self.new_item, opposite, vpos)
-                if item:
-                    self.handle_tool.connect(self.new_item, opposite, vpos)
-            return True
-        return False
-
-    def on_button_release(self, event):
-        self.event_manager.handle(DiagramItemPlaced(self.new_item))
-        return super().on_button_release(event)
-
-    def on_motion_notify(self, event):
-        """Change parent item to dropzone state if it can accept diagram item
-        object to be created."""
-        if self.grabbed_handle:
-            return self.handle_tool.on_motion_notify(event)
-
-        view = self.view
-        canvas = view.canvas
-
-        try:
-            parent = item_at_point(view, (event.x, event.y))
-        except KeyError:
-            parent = None
-
-        if parent:
-            # create dummy adapter
-            adapter = Group(parent, self._factory.item_class())
-            if adapter and adapter.can_contain():
-                view.selection.set_dropzone_item(parent)
-                self._parent = parent
-            else:
-                view.selection.set_dropzone_item(None)
-                self._parent = None
-            canvas.request_update(parent, matrix=False)
-        else:
-            if view.selection.dropzone_item:
-                canvas.request_update(view.selection.dropzone_item)
-            view.selection.set_dropzone_item(None)
-
-    def _create_item(self, pos):
-        """Create diagram item and place it within parent's boundaries."""
-        parent = self._parent
-        view = self.view
-        diagram = view.canvas.diagram
-        try:
-            item = super()._create_item(pos, diagram=diagram, parent=parent)
-        finally:
-            self._parent = None
-            view.selection.set_dropzone_item(None)
-        return item

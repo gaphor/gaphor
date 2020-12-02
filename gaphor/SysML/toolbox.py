@@ -9,7 +9,7 @@ from gaphor.diagram.diagramtoolbox import (
     general_tools,
     namespace_config,
 )
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.requirements.requirementstoolbox import requirements
@@ -27,14 +27,14 @@ internal_blocks = ToolSection(
             gettext("Connector"),
             "gaphor-connector-symbolic",
             "<Shift>C",
-            PlacementTool.new_item_factory(uml_items.ConnectorItem),
+            new_item_factory(uml_items.ConnectorItem),
         ),
         ToolDef(
             "toolbox-property",
             gettext("Property"),
             "gaphor-property-symbolic",
             "o",
-            PlacementTool.new_item_factory(
+            new_item_factory(
                 sysml_items.PropertyItem, UML.Property, config_func=namespace_config
             ),
         ),
@@ -43,7 +43,7 @@ internal_blocks = ToolSection(
             gettext("Proxy Port"),
             "gaphor-proxyport-symbolic",
             "x",
-            PlacementTool.new_item_factory(sysml_items.ProxyPortItem),
+            new_item_factory(sysml_items.ProxyPortItem),
         ),
     ),
 )

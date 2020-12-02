@@ -5,7 +5,7 @@ from gaphas.item import SE
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.UML import diagramitems
 
 
@@ -53,7 +53,7 @@ actions = ToolSection(
             gettext("Action"),
             "gaphor-action-symbolic",
             "a",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.ActionItem,
                 UML.Action,
                 config_func=activity_config,
@@ -65,7 +65,7 @@ actions = ToolSection(
             gettext("Initial node"),
             "gaphor-initial-node-symbolic",
             "j",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.InitialNodeItem,
                 UML.InitialNode,
                 config_func=activity_config,
@@ -77,7 +77,7 @@ actions = ToolSection(
             gettext("Activity final node"),
             "gaphor-activity-final-node-symbolic",
             "f",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.ActivityFinalNodeItem,
                 UML.ActivityFinalNode,
                 config_func=activity_config,
@@ -89,7 +89,7 @@ actions = ToolSection(
             gettext("Flow final node"),
             "gaphor-flow-final-node-symbolic",
             "w",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.FlowFinalNodeItem,
                 UML.FlowFinalNode,
                 config_func=activity_config,
@@ -101,7 +101,7 @@ actions = ToolSection(
             gettext("Decision/merge node"),
             "gaphor-decision-node-symbolic",
             "g",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.DecisionNodeItem,
                 UML.DecisionNode,
                 config_func=activity_config,
@@ -113,7 +113,7 @@ actions = ToolSection(
             gettext("Fork/join node"),
             "gaphor-fork-node-symbolic",
             "<Shift>R",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.ForkNodeItem,
                 UML.JoinNode,
                 config_func=activity_config,
@@ -125,7 +125,7 @@ actions = ToolSection(
             gettext("Object node"),
             "gaphor-object-node-symbolic",
             "<Shift>O",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.ObjectNodeItem,
                 UML.ObjectNode,
                 config_func=activity_config,
@@ -137,7 +137,7 @@ actions = ToolSection(
             gettext("Partition"),
             "gaphor-partition-symbolic",
             "<Shift>P",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.PartitionItem,
                 UML.ActivityPartition,
                 config_func=partition_config,
@@ -149,14 +149,14 @@ actions = ToolSection(
             gettext("Control/object flow"),
             "gaphor-control-flow-symbolic",
             "<Shift>F",
-            item_factory=PlacementTool.new_item_factory(diagramitems.FlowItem),
+            new_item_factory(diagramitems.FlowItem),
         ),
         ToolDef(
             "toolbox-send-signal-action",
             gettext("Send signal action"),
             "gaphor-send-signal-action-symbolic",
             None,
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.SendSignalActionItem,
                 UML.SendSignalAction,
                 config_func=activity_config,
@@ -168,7 +168,7 @@ actions = ToolSection(
             gettext("Accept event action"),
             "gaphor-accept-event-action-symbolic",
             None,
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.AcceptEventActionItem,
                 UML.AcceptEventAction,
                 config_func=activity_config,
