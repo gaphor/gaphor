@@ -398,8 +398,8 @@ class DiagramPage:
                     item.matrix.translate(x, y)
                     item.subject = element
 
-                view.unselect_all()
-                view.selection.focused_item = item
+                view.selection.unselect_all()
+                view.selection.set_focused_item(item)
 
             else:
                 log.warning(
