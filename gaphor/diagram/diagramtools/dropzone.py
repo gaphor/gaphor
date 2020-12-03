@@ -1,11 +1,15 @@
-from gaphas.aspect.move import Move as InMotionAspect
+from gaphas.aspect.move import Move as MoveAspect
 from gaphas.connections import Connections
 from gaphas.guide import GuidedItemMove
 from gaphas.tool.itemtool import item_at_point
 from gi.repository import Gtk
 
 from gaphor.diagram.grouping import Group
-from gaphor.diagram.presentation import Presentation
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    LinePresentation,
+    Presentation,
+)
 
 
 def drop_zone_tool(view, item_class):
@@ -38,7 +42,9 @@ def on_motion(controller, x, y, item_class):
         view.selection.set_dropzone_item(None)
 
 
-@InMotionAspect.register(Presentation)
+@MoveAspect.register(ElementPresentation)
+@MoveAspect.register(LinePresentation)
+@MoveAspect.register(Presentation)
 class DropZoneMove(GuidedItemMove):
     def move(self, pos):
         """Move the item.
@@ -71,9 +77,9 @@ class DropZoneMove(GuidedItemMove):
                 view.selection.set_dropzone_item(over_item)
                 over_item.request_update(matrix=False)
 
-    def stop_move(self):
+    def stop_move(self, pos):
         """Motion stops: drop!"""
-        super().stop_move()
+        super().stop_move(pos)
         item = self.item
         view = self.view
         canvas = view.canvas

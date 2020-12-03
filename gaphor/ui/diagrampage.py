@@ -22,6 +22,7 @@ from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_tool_set
+from gaphor.diagram.diagramtools.placement import create_item
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.support import get_diagram_item
@@ -362,9 +363,8 @@ class DiagramPage:
             and data.get_format() == 8
             and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
-            tool = self.apply_tool_set(data.get_data().decode())
-            # TODO: fix me! can no longer use Placement tool
-            tool.create_item((x, y))
+            tool_def = self.get_tool_def(data.get_data().decode())
+            create_item(view, tool_def.item_factory, x, y)
             context.finish(True, False, time)
         elif (
             data

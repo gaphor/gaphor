@@ -6,7 +6,7 @@ from gaphor.diagram.diagramtools.txtool import TxData, on_begin, transactional_t
 from gaphor.transaction import TransactionBegin
 
 
-def test_start_tx_on_begin(view, event_manager):
+def xtest_start_tx_on_begin(view, event_manager):
     event_manager.handle = Mock()
     tx_data = TxData(event_manager)
     tool = transactional_tool(Gtk.GestureDrag.new(view), event_manager)

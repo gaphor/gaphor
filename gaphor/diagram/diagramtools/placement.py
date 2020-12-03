@@ -35,23 +35,29 @@ def placement_tool(
 
 def on_drag_begin(gesture, start_x, start_y, placement_state):
     view = gesture.get_widget()
-    selection = view.selection
-    parent = selection.dropzone_item
-    item = placement_state.factory(view.canvas.diagram, parent)
-    x, y = view.get_matrix_v2i(item).transform_point(start_x, start_y)
-    item.matrix.translate(x, y)
-    selection.unselect_all()
-    view.selection.set_focused_item(item)
+    item = create_item(view, placement_state.factory, start_x, start_y)
 
     gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
     handle = item.handles()[placement_state.handle_index]
     if handle.movable:
+        x, y = view.get_matrix_v2i(item).transform_point(start_x, start_y)
         connect_opposite_handle(view, item, x, y, placement_state.handle_index)
         placement_state.moving = HandleMove(item, handle, view)
         placement_state.moving.start_move((start_x, start_y))
 
-    selection.set_dropzone_item(None)
+    view.selection.set_dropzone_item(None)
+
+
+def create_item(view, factory, x, y):
+    selection = view.selection
+    parent = selection.dropzone_item
+    item = factory(view.canvas.diagram, parent)
+    x, y = view.get_matrix_v2i(item).transform_point(x, y)
+    item.matrix.translate(x, y)
+    selection.unselect_all()
+    view.selection.set_focused_item(item)
+    return item
 
 
 def connect_opposite_handle(view, new_item, x, y, handle_index):
