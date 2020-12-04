@@ -37,8 +37,7 @@ jobs:
         uses: actions/cache@v2.1.3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: ${{ runner.os }}-poetry-
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Install Dependencies
         run: >
           sudo apt-get update -q && sudo apt-get install
