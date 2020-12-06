@@ -48,6 +48,7 @@ function install_build_deps {
 function build_pyinstaller {
     echo "${DIR}"
     sed "s/__version__/$VERSION/g" "${DIR}"/file_version_info.txt.in > "${DIR}"/file_version_info.txt
+    sed "s/__version__/$VERSION/g" "${DIR}"/gaphor.spec.in > "${DIR}"/gaphor.spec
     python make-script.py ../pyproject.toml > gaphor-script.py
     pyinstvenv/bin/pyinstaller -y gaphor.spec
 }

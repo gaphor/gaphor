@@ -1,0 +1,30 @@
+import gaphor.core.eventmanager
+import gaphor.services.session
+import gaphor.services.helpservice
+import gaphor.ui.appfilemanager
+import gaphor.services.componentregistry
+import gaphor.core.eventmanager
+import gaphor.services.properties
+import gaphor.services.undomanager
+import gaphor.core.modeling
+import gaphor.core.modeling.elementdispatcher
+import gaphor.services.modelinglanguage
+import gaphor.ui.filemanager
+import gaphor.ui.recentfiles
+import gaphor.ui.mainwindow
+import gaphor.ui.menufragment
+import gaphor.ui.menufragment
+import gaphor.services.copyservice
+import gaphor.UML.sanitizerservice
+import gaphor.ui.namespace
+import gaphor.ui.toolbox
+import gaphor.ui.diagrams
+import gaphor.plugins.console
+import gaphor.ui.elementeditor
+import gaphor.plugins.diagramexport
+import gaphor.plugins.xmiexport
+import gaphor.UML.modelinglanguage
+import gaphor.SysML.modelinglanguage
+from gaphor.ui import main
+import sys
+main(sys.argv)

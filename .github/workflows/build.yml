@@ -102,7 +102,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Dependencies
-        run: ./win-installer/msys2-install.sh
+        run: ./packaging/msys2-install.sh
       - name: Install Poetry
         run: |
           pip install poetry==$POETRY_VERSION
@@ -117,13 +117,13 @@ jobs:
       - name: Create Windows Installers
         run: |
           mingw32-make dist
-          ./win-installer/build-installer.sh
+          ./packaging/build-win-installer.sh
       - name: Sign Executables
         env:
           password: "${{ secrets.CERTPASSWORD }}"
           timestampUrl: http://timestamp.digicert.com
-          installer: "win-installer/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe"
-          portable: "win-installer/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe"
+          installer: "packaging/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe"
+          portable: "packaging/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe"
         shell: powershell
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
@@ -136,17 +136,17 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-installer.exe
-          path: win-installer/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe
+          path: packaging/output/gaphor-${{ steps.meta.outputs.version }}-installer.exe
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-portable.exe
         uses: actions/upload-artifact@v2
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-portable.exe
-          path: win-installer/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe
+          path: packaging/output/gaphor-${{ steps.meta.outputs.version }}-portable.exe
       - name: Upload Assets (release only)
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
         with:
-          files: "win-installer/output/*.exe"
+          files: "packaging/output/*.exe"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   macos:
@@ -183,16 +183,16 @@ jobs:
       - name: Create macOS Application
         run: |
           make dist
-          cd macos-dmg
-          ./package.sh
+          cd packaging 
+          ./build-macos-installer.sh
       - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
         uses: actions/upload-artifact@v2
         with:
           name: Gaphor-${{ steps.meta.outputs.version }}.dmg
-          path: macos-dmg/Gaphor-${{ steps.meta.outputs.version }}.dmg
+          path: packaging/Gaphor-${{ steps.meta.outputs.version }}.dmg
       - name: Upload Assets (release only)
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
         with:
-          files: "macos-dmg/Gaphor-${{ steps.meta.outputs.version }}.dmg"
+          files: "packaging/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
