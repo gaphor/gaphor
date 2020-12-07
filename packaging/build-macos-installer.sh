@@ -1,19 +1,10 @@
 #!/usr/bin/env bash
 
-# Copyright 2016 Christoph Reiter, 2019-2020 Dan Yeaw
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-
 set -euo pipefail
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${DIR}"
 mkdir -p output
-
-MISC="${DIR}"/misc
 
 VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 
@@ -21,10 +12,6 @@ python -m venv pyinstvenv
 
 pyinstvenv/bin/pip install "../dist/gaphor-${VERSION}-py3-none-any.whl"
 pyinstvenv/bin/pip install pyinstaller==4.1.0
-
-function set_build_root {
-    DIST_LOCATION="$1"
-}
 
 set_build_root "${DIR}/dist/gaphor"
 
@@ -42,7 +29,7 @@ function sign_app {
 }
 
 function build_installer {
-    echo 'Building Gaphor-$VERSION.dmg...'
+    echo "Building Gaphor-$VERSION.dmg"
     
     create-dmg \
       --volname "Gaphor $VERSION" \
