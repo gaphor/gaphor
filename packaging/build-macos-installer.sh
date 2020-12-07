@@ -54,7 +54,7 @@ function build_installer {
       --hide-extension "Gaphor.app" \
       --app-drop-link 500 240 \
       "Gaphor-$VERSION.dmg" \
-      '"${DIR}"/Gaphor.app'
+      "${DIR}/dist/Gaphor.app"
     
 }
 
