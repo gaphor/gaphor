@@ -1,4 +1,4 @@
-<div align="center"><img src="https://github.com/gaphor/gaphor/blob/2.0.0/logos/org.gaphor.Gaphor.svg" alt="Gaphor logo" width="64" /></div>
+<div align="center"><img src="https://github.com/gaphor/gaphor/blob/master/logos/org.gaphor.Gaphor.svg?raw=true" alt="Gaphor logo" width="64" /></div>
 <h1 align="center">Gaphor</h1>
 
 [![Build state](https://github.com/gaphor/gaphor/workflows/Build/badge.svg)](https://github.com/gaphor/gaphor/actions)
@@ -20,7 +20,7 @@ It is designed to be easy to use, while still being powerful. Gaphor implements 
 
 <div align="center">
 <br/>
-<img src="https://github.com/gaphor/gaphor/blob/2.0.0/docs/images/gaphor-demo.gif" width="75%">
+<img src="https://github.com/gaphor/gaphor/blob/master/docs/images/gaphor-demo.gif?raw=true" width="75%">
 <br/><br/>
 </div>
 
