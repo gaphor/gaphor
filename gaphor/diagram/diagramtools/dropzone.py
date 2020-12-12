@@ -2,6 +2,7 @@ from gaphas.aspect.move import Move as MoveAspect
 from gaphas.connections import Connections
 from gaphas.guide import GuidedItemMove
 from gaphas.tool.itemtool import item_at_point
+from gaphas.view import GtkView
 from gi.repository import Gtk
 
 from gaphor.diagram.grouping import Group
@@ -19,8 +20,8 @@ def drop_zone_tool(view, item_class):
 
 
 def on_motion(controller, x, y, item_class):
-    view = controller.get_widget()
-    canvas = view.canvas
+    view: GtkView = controller.get_widget()
+    model = view.model
 
     try:
         parent = item_at_point(view, (x, y))
@@ -35,10 +36,10 @@ def on_motion(controller, x, y, item_class):
             view.selection.set_dropzone_item(parent)
         else:
             view.selection.set_dropzone_item(None)
-        canvas.request_update(parent, matrix=False)
+        model.request_update(parent, matrix=False)
     else:
         if view.selection.dropzone_item:
-            canvas.request_update(view.selection.dropzone_item)
+            model.request_update(view.selection.dropzone_item)
         view.selection.set_dropzone_item(None)
 
 
@@ -56,7 +57,7 @@ class DropZoneMove(GuidedItemMove):
         view = self.view
         x, y = pos
 
-        current_parent = view.canvas.get_parent(item)
+        current_parent = view.model.get_parent(item)
         over_item = item_at_point(view, (x, y), selected=False)
 
         if not over_item:
@@ -82,8 +83,8 @@ class DropZoneMove(GuidedItemMove):
         super().stop_move(pos)
         item = self.item
         view = self.view
-        canvas = view.canvas
-        old_parent = view.canvas.get_parent(item)
+        model = view.model
+        old_parent = model.get_parent(item)
         new_parent = view.selection.dropzone_item
         try:
 
@@ -93,7 +94,7 @@ class DropZoneMove(GuidedItemMove):
                 return
 
             if old_parent:
-                canvas.reparent(item, None)
+                model.reparent(item, None)
 
                 adapter = Group(old_parent, item)
                 if adapter:
@@ -102,7 +103,7 @@ class DropZoneMove(GuidedItemMove):
                 old_parent.request_update()
 
             if new_parent:
-                canvas.reparent(item, new_parent)
+                model.reparent(item, new_parent)
 
                 adapter = Group(new_parent, item)
                 if adapter and adapter.can_contain():

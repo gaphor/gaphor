@@ -122,7 +122,7 @@ class DiagramPage:
         """
         assert self.diagram
 
-        view = GtkView(canvas=self.diagram.canvas)
+        view = GtkView(model=self.diagram.canvas)
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,

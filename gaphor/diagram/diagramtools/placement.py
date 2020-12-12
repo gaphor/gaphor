@@ -52,7 +52,7 @@ def on_drag_begin(gesture, start_x, start_y, placement_state):
 def create_item(view, factory, x, y):
     selection = view.selection
     parent = selection.dropzone_item
-    item = factory(view.canvas.diagram, parent)
+    item = factory(view.model.diagram, parent)
     x, y = view.get_matrix_v2i(item).transform_point(x, y)
     item.matrix.translate(x, y)
     selection.unselect_all()
@@ -67,7 +67,7 @@ def connect_opposite_handle(view, new_item, x, y, handle_index):
         pass
     else:
         # First make sure all matrices are updated:
-        new_item.matrix_i2c.set(*view.canvas.get_matrix_i2c(new_item))
+        new_item.matrix_i2c.set(*view.model.get_matrix_i2c(new_item))
 
         handle_move = HandleMove(new_item, opposite, view)
         vpos = (x, y)
@@ -146,7 +146,7 @@ class PresentationConnector(ItemConnector):
             if cinfo and cinfo.connected is sink.item:
                 # reconnect only constraint - leave model intact
                 log.debug("performing reconnect constraint")
-                constraint = sink.port.constraint(item.canvas, item, handle, sink.item)
+                constraint = sink.port.constraint(item.model, item, handle, sink.item)
                 self.connections.reconnect_item(
                     item, handle, sink.port, constraint=constraint
                 )

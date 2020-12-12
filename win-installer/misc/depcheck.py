@@ -33,7 +33,7 @@ def _get_shared_libraries(q, namespace, version):
 def get_shared_libraries(namespace, version):
     # we have to start a new process because multiple versions can't be loaded
     # in the same process
-    q = Queue()
+    q: Queue = Queue()
     p = Process(target=_get_shared_libraries, args=(q, namespace, version))
     p.start()
     result = q.get()
@@ -62,8 +62,8 @@ def get_dependencies(filename):
     except subprocess.CalledProcessError:
         # can happen with wrong arch binaries
         return []
-    data = data.decode("utf-8")
-    for line in data.splitlines():
+    txt = data.decode("utf-8")
+    for line in txt.splitlines():
         line = line.strip()
         if line.startswith("DLL Name:"):
             deps.append(line.split(":", 1)[-1].strip().lower())

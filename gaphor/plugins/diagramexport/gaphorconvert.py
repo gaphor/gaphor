@@ -4,6 +4,7 @@ import optparse
 import os
 import re
 import sys
+from typing import List
 
 from gaphor.application import Session
 from gaphor.core.modeling import Diagram
@@ -12,7 +13,7 @@ from gaphor.storage import storage
 
 def pkg2dir(package):
     """Return directory path from package class."""
-    name = []
+    name: List[str] = []
     while package:
         name.insert(0, package.name)
         package = package.package

@@ -156,7 +156,7 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     assert sink.item is actor
     move.connect(handle.pos)
 
-    cinfo = view.canvas.connections.get_connection(handle)
+    cinfo = view.model.connections.get_connection(handle)
     assert cinfo.item is line
     assert cinfo.connected is actor
 
@@ -168,5 +168,5 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     assert sink is None, sink
     move.connect((500, 500))
 
-    cinfo = view.canvas.connections.get_connection(handle)
+    cinfo = view.model.connections.get_connection(handle)
     assert cinfo is None

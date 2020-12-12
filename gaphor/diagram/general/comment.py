@@ -37,6 +37,7 @@ class CommentItem(ElementPresentation):
         cr = context.cairo
         ear = self.EAR
         x, y, w, h = bounding_box
+        print(x, y, w, h)
         line_to = cr.line_to
         cr.move_to(w - ear, y)
         line_to(w - ear, y + ear)

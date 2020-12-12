@@ -107,6 +107,9 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
         self.min_width, self.min_height = self.shape.size(context)
 
     def draw(self, context):
+        x, y = self.handles()[0].pos
+        cairo = context.cairo
+        cairo.translate(x, y)
         self._shape.draw(
             context,
             Rectangle(0, 0, self.width, self.height),

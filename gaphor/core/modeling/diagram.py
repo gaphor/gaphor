@@ -415,6 +415,10 @@ class Diagram(PackageableElement):
 
         super().unlink()
 
+    @property
+    def connections(self) -> gaphas.connections.Connections:
+        return self.canvas.connections
+
     def get_all_items(self) -> Iterable[Presentation]:
         return self.canvas.get_all_items()  # type: ignore[no-any-return]
 
@@ -426,6 +430,11 @@ class Diagram(PackageableElement):
 
     def sort(self, items: Sequence[Presentation]) -> Reversible[Presentation]:
         return self.canvas.sort(items)  # type: ignore[no-any-return]
+
+    def request_update(
+        self, item: gaphas.item.Item, update: bool = True, matrix: bool = True
+    ) -> None:
+        self.canvas.request_update(item, update, matrix)
 
     def update_now(
         self,
