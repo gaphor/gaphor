@@ -240,9 +240,7 @@ class DiagramCanvas(gaphas.Canvas):
         By default, updates are not blocked.
         """
 
-        super().__init__(
-            lambda item: UpdateContext(style=diagram.style(StyledItem(item)))
-        )
+        super().__init__()
         self._diagram = diagram
         self._block_updates = False
 
@@ -283,12 +281,45 @@ class DiagramCanvas(gaphas.Canvas):
 
     block_updates = property(lambda s: s._block_updates, _set_block_updates)
 
+    @gaphas.decorators.nonrecursive
     def update_now(self, dirty_items, dirty_matrix_items=()):
         """Update the diagram canvas, unless block_updates is true."""
 
         if self._block_updates:
             return
+
+        sort = self.sort
+
+        def dirty_items_with_ancestors():
+            for item in set(dirty_items):
+                yield item
+                yield from self._tree.get_ancestors(item)
+
+        all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
+
+        contexts = self._pre_update_items(all_dirty_items)
+
         super().update_now(dirty_items, dirty_matrix_items)
+
+        self._post_update_items(all_dirty_items, contexts)
+
+    def _pre_update_items(self, items):
+        diagram = self.diagram
+
+        contexts = {}
+        for item in items:
+            context = UpdateContext(style=diagram.style(StyledItem(item)))
+            item.pre_update(context)
+            contexts[item] = context
+        return contexts
+
+    def _post_update_items(self, items, contexts):
+        create_update_context = self._create_update_context
+        for item in items:
+            context = contexts.get(item)
+            if not context:
+                context = create_update_context(item)
+            item.post_update(context)
 
     def save(self, save_func):
         """Apply the supplied save function to all root diagram items."""
