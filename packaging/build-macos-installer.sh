@@ -13,8 +13,6 @@ python -m venv pyinstvenv
 pyinstvenv/bin/pip install "../dist/gaphor-${VERSION}-py3-none-any.whl"
 pyinstvenv/bin/pip install pyinstaller==4.1.0
 
-set_build_root "${DIR}/dist/gaphor"
-
 function build_pyinstaller {
     echo "${DIR}"
     sed "s/__version__/$VERSION/g" "${DIR}"/file_version_info.txt.in > "${DIR}"/file_version_info.txt
@@ -25,7 +23,6 @@ function build_pyinstaller {
 
 function sign_app {
     echo 'Signing app'
-    
 }
 
 function build_installer {
