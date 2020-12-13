@@ -31,6 +31,8 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
 ]
 
+include = ["test-models/*.gaphor"]
+
 [tool.poetry.dependencies]
 python = "^3.7"
 pycairo = "^1.18"
