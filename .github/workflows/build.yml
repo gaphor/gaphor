@@ -164,7 +164,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.2.1
       - name: Install Dependencies
-        run: brew install gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration create-dmg
+        run: brew install gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration create-dmg upx
       - name: Install Poetry
         run: pip install poetry==$POETRY_VERSION
       - name: Collect Project Data
