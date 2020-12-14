@@ -47,6 +47,7 @@ function main {
     build_pyinstaller
     sign_app
     build_installer
+    rm -rf pyinstvenv output
     echo 'Done!'
 }
 

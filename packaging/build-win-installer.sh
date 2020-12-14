@@ -94,6 +94,7 @@ function main {
     build_installer
     echo "build portable installer"
     build_portable_installer
+    rm -rf pyinstvenv output
 }
 
 main "$@";
