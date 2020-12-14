@@ -189,12 +189,14 @@ jobs:
         run: echo 'to be implemented'
       - name: Create dmg
         run: >
+          cd packaging
+
           create-dmg --volname "Gaphor ${{ steps.meta.outputs.version }}"
           --background "background.png"
           --window-pos 200 120 --window-size 700 400 --icon-size 100
           --icon "Gaphor.app" 200 240 --hide-extension "Gaphor.app"
-          --app-drop-link 500 240 "packaging/Gaphor-${{ steps.meta.outputs.version }}.dmg"
-          "packaging/dist/Gaphor.app"
+          --app-drop-link 500 240 "Gaphor-${{ steps.meta.outputs.version }}.dmg"
+          "dist/Gaphor.app"
       - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
         uses: actions/upload-artifact@v2
         with:
