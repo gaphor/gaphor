@@ -146,7 +146,7 @@ class PresentationConnector(ItemConnector):
             if cinfo and cinfo.connected is sink.item:
                 # reconnect only constraint - leave model intact
                 log.debug("performing reconnect constraint")
-                constraint = sink.port.constraint(item.model, item, handle, sink.item)
+                constraint = sink.port.constraint(item, handle, sink.item)
                 self.connections.reconnect_item(
                     item, handle, sink.port, constraint=constraint
                 )

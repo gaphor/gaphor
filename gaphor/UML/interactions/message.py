@@ -94,16 +94,11 @@ class MessageItem(LinePresentation[UML.Message], Named):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-    def pre_update(self, context):
-        """Update communication diagram information."""
-        self._is_communication = self.is_communication()
-
-        super().pre_update(context)
-
     def post_update(self, context):
         """Update communication diagram information."""
         super().post_update(context)
 
+        self._is_communication = self.is_communication()
         if self._is_communication:
             pos, angle = self._get_center_pos()
             self._arrow_pos = pos
