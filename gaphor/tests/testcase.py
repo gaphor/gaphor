@@ -21,6 +21,7 @@ from gaphor.application import Session
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.painter import ItemPainter
+from gaphor.diagram.selection import Selection
 
 T = TypeVar("T")
 
@@ -49,7 +50,7 @@ class TestCase(unittest.TestCase):
         self.diagram = self.element_factory.create(UML.Diagram)
 
         # We need to hook up a view for now, so updates are done instantly
-        self.view = GtkView(self.diagram.canvas)
+        self.view = GtkView(self.diagram.canvas, selection=Selection())
         self.view.painter = ItemPainter(self.view.selection)
         self.view.bounding_box_painter = BoundingBoxPainter(self.view.painter)
         assert len(list(self.element_factory.select())) == 1, list(

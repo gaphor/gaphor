@@ -106,6 +106,9 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
     def pre_update(self, context):
         self.min_width, self.min_height = self.shape.size(context)
 
+    def post_update(self, context):
+        pass
+
     def draw(self, context):
         x, y = self.handles()[0].pos
         cairo = context.cairo
@@ -168,6 +171,9 @@ class LinePresentation(gaphas.Line, Presentation[S]):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
+    def pre_update(self, context):
+        pass
+
     def post_update(self, context):
         def shape_bounds(shape, align):
             if shape:
@@ -175,7 +181,6 @@ class LinePresentation(gaphas.Line, Presentation[S]):
                 x, y = text_point_at_line(points, size, align)
                 return Rectangle(x, y, *size)
 
-        super().post_update(context)
         points = [h.pos for h in self.handles()]
         self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)

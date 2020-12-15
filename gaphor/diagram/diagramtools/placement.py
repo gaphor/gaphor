@@ -46,7 +46,7 @@ def on_drag_begin(gesture, start_x, start_y, placement_state):
         placement_state.moving = HandleMove(item, handle, view)
         placement_state.moving.start_move((start_x, start_y))
 
-    view.selection.set_dropzone_item(None)
+    view.selection.dropzone_item = None
 
 
 def create_item(view, factory, x, y):
@@ -56,7 +56,7 @@ def create_item(view, factory, x, y):
     x, y = view.get_matrix_v2i(item).transform_point(x, y)
     item.matrix.translate(x, y)
     selection.unselect_all()
-    view.selection.set_focused_item(item)
+    view.selection.focused_item = item
     return item
 
 

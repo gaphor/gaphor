@@ -11,9 +11,9 @@ from __future__ import annotations
 from typing import Optional
 
 from cairo import LINE_JOIN_ROUND
-from gaphas.view import Selection
 
 from gaphor.core.modeling.diagram import DrawContext, StyledItem
+from gaphor.diagram.selection import Selection
 
 # The tolerance for Cairo. Bigger values increase speed and reduce accuracy
 # (default: 0.1)

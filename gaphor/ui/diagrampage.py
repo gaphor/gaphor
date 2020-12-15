@@ -25,6 +25,7 @@ from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_
 from gaphor.diagram.diagramtools.placement import create_item
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.painter import ItemPainter
+from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import create_action_group
@@ -122,7 +123,7 @@ class DiagramPage:
         """
         assert self.diagram
 
-        view = GtkView(model=self.diagram.canvas)
+        view = GtkView(model=self.diagram.canvas, selection=Selection())
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,
@@ -140,8 +141,7 @@ class DiagramPage:
         scrolled_window.show_all()
         self.widget = scrolled_window
 
-        view.selection.connect("focus-changed", self._on_view_selection_changed)
-        view.selection.connect("selection-changed", self._on_view_selection_changed)
+        view.selection.add_handler(self._on_view_selection_changed)
         view.connect_after("key-press-event", self._on_key_press_event)
         view.connect("drag-data-received", self._on_drag_data_received)
 
@@ -349,10 +349,13 @@ class DiagramPage:
                         "select-tool"
                     ).change_state(GLib.Variant.new_string(action_name))
 
-    def _on_view_selection_changed(self, selection, selection_or_focus):
+    def _on_view_selection_changed(self):
+        view = self.view
+        assert view
+        selection = view.selection
         self.event_manager.handle(
             DiagramSelectionChanged(
-                self.view, selection.focused_item, selection.selected_items
+                view, selection.focused_item, selection.selected_items
             )
         )
 
@@ -399,7 +402,7 @@ class DiagramPage:
                     item.subject = element
 
                 view.selection.unselect_all()
-                view.selection.set_focused_item(item)
+                view.selection.focused_item = item
 
             else:
                 log.warning(

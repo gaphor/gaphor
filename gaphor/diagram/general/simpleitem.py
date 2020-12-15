@@ -46,6 +46,12 @@ class Line(_Line, Presentation):
             self.orthogonal = self._load_orthogonal
             del self._load_orthogonal
 
+    def pre_update(self, context):
+        pass
+
+    def post_update(self, context):
+        pass
+
     def draw(self, context):
         cr = context.cairo
         style = context.style
@@ -80,6 +86,12 @@ class Box(Element, Presentation):
     def postload(self):
         pass
 
+    def pre_update(self, context):
+        pass
+
+    def post_update(self, context):
+        pass
+
     def draw(self, context):
         cr = context.cairo
         nw = self._handles[NW]
@@ -107,6 +119,12 @@ class Ellipse(Element, Presentation):
             self.height = ast.literal_eval(value)
 
     def postload(self):
+        pass
+
+    def pre_update(self, context):
+        pass
+
+    def post_update(self, context):
         pass
 
     def draw(self, context):

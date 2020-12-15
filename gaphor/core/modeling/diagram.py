@@ -314,11 +314,11 @@ class DiagramCanvas(gaphas.Canvas):
         return contexts
 
     def _post_update_items(self, items, contexts):
-        create_update_context = self._create_update_context
+        diagram = self.diagram
         for item in items:
             context = contexts.get(item)
             if not context:
-                context = create_update_context(item)
+                context = UpdateContext(style=diagram.style(StyledItem(item)))
             item.post_update(context)
 
     def save(self, save_func):

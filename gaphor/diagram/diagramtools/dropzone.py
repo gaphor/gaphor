@@ -33,14 +33,14 @@ def on_motion(controller, x, y, item_class):
         connections = Connections()
         adapter = Group(parent, item_class(connections))
         if adapter and adapter.can_contain():
-            view.selection.set_dropzone_item(parent)
+            view.selection.dropzone_item = parent
         else:
-            view.selection.set_dropzone_item(None)
+            view.selection.dropzone_item = None
         model.request_update(parent, matrix=False)
     else:
         if view.selection.dropzone_item:
             model.request_update(view.selection.dropzone_item)
-        view.selection.set_dropzone_item(None)
+        view.selection.dropzone_item = None
 
 
 @MoveAspect.register(ElementPresentation)
@@ -61,21 +61,21 @@ class DropZoneMove(GuidedItemMove):
         over_item = item_at_point(view, (x, y), selected=False)
 
         if not over_item:
-            view.selection.set_dropzone_item(None)
+            view.selection.dropzone_item = None
             return
 
         if current_parent and not over_item:
             # are we going to remove from parent?
             group = Group(current_parent, item)
             if group:
-                view.selection.set_dropzone_item(current_parent)
+                view.selection.dropzone_item = current_parent
                 current_parent.request_update(matrix=False)
 
         if over_item:
             # are we going to add to parent?
             group = Group(over_item, item)
             if group and group.can_contain():
-                view.selection.set_dropzone_item(over_item)
+                view.selection.dropzone_item = over_item
                 over_item.request_update(matrix=False)
 
     def stop_move(self, pos):
@@ -111,4 +111,4 @@ class DropZoneMove(GuidedItemMove):
 
                 new_parent.request_update()
         finally:
-            view.selection.set_dropzone_item(None)
+            view.selection.dropzone_item = None

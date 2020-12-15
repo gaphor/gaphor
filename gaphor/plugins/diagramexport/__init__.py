@@ -4,7 +4,6 @@ import logging
 import os
 
 import cairo
-from gaphas.canvas import Context
 from gaphas.painter import BoundingBoxPainter, FreeHandPainter
 from gaphas.view import GtkView
 
