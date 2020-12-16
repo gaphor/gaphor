@@ -247,7 +247,7 @@ class DiagramPage:
     def select_all(self):
         assert self.view
         if self.view.has_focus():
-            self.view.select_all()
+            self.view.selection.select_items(*self.view.model.get_all_items())
 
     @action(name="diagram.unselect-all", shortcut="<Primary><Shift>a")
     def unselect_all(self):

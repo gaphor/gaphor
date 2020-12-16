@@ -324,12 +324,6 @@ class DiagramCanvas(gaphas.Canvas):
         for item in self.get_root_items():
             save_func(item)
 
-    def postload(self):
-        """Called after the diagram canvas has loaded.
-
-        Currently does nothing.
-        """
-
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression."""
         if expression is None:
@@ -399,7 +393,6 @@ class Diagram(PackageableElement):
     def postload(self):
         """Handle post-load functionality for the diagram canvas."""
         super().postload()
-        self.canvas.postload()
 
     def create(self, type, parent=None, subject=None):
         """Create a new canvas item on the canvas.
