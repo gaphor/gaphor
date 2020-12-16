@@ -9,16 +9,16 @@ a = Analysis(
         binaries=[],
         datas=[
             ('../gaphor/diagram/*.glade', 'gaphor/diagram'),
-	   	    ('../gaphor/ui/layout.xml', 'gaphor/ui'),
-		    ('../gaphor/ui/layout.css', 'gaphor/ui'),
-		    ('../gaphor/ui/*.glade', 'gaphor/ui'),
-		    ('../gaphor/ui/*.png', 'gaphor/ui'),
-		    ('../gaphor/services/helpservice/*.svg', 'gaphor/services/helpservice'),
-		    ('../gaphor/services/helpservice/*.glade', 'gaphor/services/helpservice'),
-		    ('../gaphor/ui/icons/hicolor/scalable/actions/*.svg', 'gaphor/ui/icons/hicolor/scalable/actions'),
-		    ('../LICENSE.txt', 'gaphor'),
-		    ('../gaphor/locale/*', 'gaphor/locale')
-		]+copy_metadata('gaphor')+copy_metadata('gaphas'),
+	    ('../gaphor/ui/layout.xml', 'gaphor/ui'),
+	    ('../gaphor/ui/layout.css', 'gaphor/ui'),
+	    ('../gaphor/ui/*.glade', 'gaphor/ui'),
+	    ('../gaphor/ui/*.png', 'gaphor/ui'),
+	    ('../gaphor/services/helpservice/*.svg', 'gaphor/services/helpservice'),
+	    ('../gaphor/services/helpservice/*.glade', 'gaphor/services/helpservice'),
+	    ('../gaphor/ui/icons/hicolor/scalable/actions/*.svg', 'gaphor/ui/icons/hicolor/scalable/actions'),
+	    ('../LICENSE.txt', 'gaphor'),
+	    ('../gaphor/locale/*', 'gaphor/locale')
+	]+copy_metadata('gaphor')+copy_metadata('gaphas'),
         # Fixes issue with setuptools https://github.com/pypa/setuptools/issues/1963
         hiddenimports=['pkg_resources.py2_warn'],
         hookspath=['hooks'],
@@ -53,16 +53,54 @@ coll = COLLECT(
            upx=True,
            name='gaphor'
        )
-app = BUNDLE(coll,
-    name='Gaphor.app',
-    icon='misc/gaphor.icns',
-    bundle_identifier='org.gaphor.gaphor',
-    info_plist={
-        'CFBundleName': 'Gaphor',
-        'CFBundleDisplayName': 'Gaphor',
-        'CFBundleVersion': '__version__',
-        'CFBundlerShortVersionString': '__version__',
-        'NSRequiresAquaSystemAppearance': 'No',
-        'NSHighResolutionCapable': 'True',
-    },
-)
+app = BUNDLE(
+          coll,
+          name='Gaphor-__version__.app',
+          icon='misc/gaphor.icns',
+          bundle_identifier='org.gaphor.gaphor',
+          info_plist={
+              'CFBundleDevelopmentRegion': 'English',
+              'CFBundleExecutable': 'gaphor-exe',
+              'CFBundleName': 'Gaphor',
+              'CFBudlePackageType': 'APPL',
+              'CFBundleVersion': '__version__',
+              'CFBundlerShortVersionString': '__version__',
+              'CFBundleDisplayName': 'Gaphor',
+              'NSHumanReadableCopyright': 'Copyright 2001-__year__ Gaphor Developers, Apache 2 License.',
+              'LSMinimumSystemVersion': '10.13',
+              'NSHighResolutionCapable': True,
+              'LSApplicationCategoryType': 'public.app-category.developer-tools',
+              'NSPrincipalClass': 'NSApplication',
+              'CFBundleDocumentTypes': [
+                  {
+                      'CFBundleTypeExtensions': ['gaphor'],
+                      'CFBundleTypeIconFile': 'gaphor.icns',
+                      'CFBundleTypeMIMETypes': ['application/x-gaphor'],
+                      'CFBundleTypeName': 'Gaphor Model',
+                      'CFBundleTypeOSTypes': ['GAPHOR'],
+                      'CFBundleTypeRole': 'Editor',
+                      'LSIsAppleDefaultForType': True,
+                      'LSItemContentTypes': ['org.gaphor.model']
+                  }
+              ],
+              'UTExportedTypeDeclarations': [
+                  {
+                      'UTTypeIdentifier': 'org.gaphor.model',
+                      'UTTypeConformsTo': ['gaphor.model'],
+                      'UTTypeIconFile': 'gaphor.icns',
+                      'UTTypeReferenceURL': 'https://gaphor.org',
+                      'UTTypeTagSpecification': {
+                          'com.apple.ostype': 'GAPHOR',
+                          'public.filename-extension': ['gaphor'],
+                          'public.mime-type': ['application/x-gaphor']
+                      }
+                  }
+              ],
+              'NSDesktopFolderUsageDescription': 'Gaphor needs your permission to access the Desktop folder.',
+              'NSDocumentsFolderUsageDescription': 'Gaphor needs your permission to access the Documents folder.',
+              'NSDownloadsFolderUsageDescription': 'Gaphor needs your permission to access the Downloads folder.',
+              'NSNetworkVolumesUsageDescription': 'Gaphor needs your permission to access the network folder.',
+              'NSRequiresAquaSystemAppearance': 'No',
+              'NSAppleScriptEnabled': False,
+          },
+      )
