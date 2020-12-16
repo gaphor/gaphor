@@ -271,15 +271,17 @@ class DiagramCanvas(gaphas.Canvas):
         },
     )
 
-    def _set_block_updates(self, block):
+    @property
+    def block_updates(self) -> bool:
+        return self._block_updates
+
+    @block_updates.setter
+    def block_updates(self, block: bool) -> None:
         """Sets the block_updates property.
 
         If false, the diagram canvas is updated immediately.
         """
-
         self._block_updates = block
-
-    block_updates = property(lambda s: s._block_updates, _set_block_updates)
 
     @gaphas.decorators.nonrecursive
     def update_now(self, dirty_items, dirty_matrix_items=()):
