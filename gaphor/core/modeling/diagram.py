@@ -228,10 +228,8 @@ class StyledItem:
 class DiagramCanvas(gaphas.Canvas):
     """DiagramCanvas extends the gaphas.Canvas class.
 
-    Updates to the canvas can be blocked by setting the block_updates
-    property to true.  A save function can be applied to all root canvas
-    items.  Canvas items can be selected with an optional expression
-    filter.
+    A save function can be applied to all root canvas items. Canvas
+    items can be selected with an optional expression filter.
     """
 
     def __init__(self, diagram: Diagram):
@@ -242,7 +240,6 @@ class DiagramCanvas(gaphas.Canvas):
 
         super().__init__()
         self._diagram = diagram
-        self._block_updates = False
 
     diagram = property(lambda s: s._diagram)
 
@@ -271,24 +268,9 @@ class DiagramCanvas(gaphas.Canvas):
         },
     )
 
-    @property
-    def block_updates(self) -> bool:
-        return self._block_updates
-
-    @block_updates.setter
-    def block_updates(self, block: bool) -> None:
-        """Sets the block_updates property.
-
-        If false, the diagram canvas is updated immediately.
-        """
-        self._block_updates = block
-
     @gaphas.decorators.nonrecursive
     def update_now(self, dirty_items, dirty_matrix_items=()):
-        """Update the diagram canvas, unless block_updates is true."""
-
-        if self._block_updates:
-            return
+        """Update the diagram canvas."""
 
         sort = self.sort
 

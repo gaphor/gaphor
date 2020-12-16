@@ -178,7 +178,6 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
         canvas = d.canvas
         for item in canvas.get_all_items():
             item.matrix_i2c.set(*canvas.get_matrix_i2c(item))
-        canvas.block_updates = False
 
     for id, elem in list(elements.items()):
         yield from update_status_queue()
@@ -218,7 +217,6 @@ def _load_elements_and_canvasitems(
             elem.element = factory.create_as(cls, id)
             if isinstance(elem.element, Diagram):
                 assert elem.canvas
-                elem.element.canvas.block_updates = True
                 create_canvasitems(elem.element, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):
             raise ValueError(
