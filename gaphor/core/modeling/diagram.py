@@ -17,6 +17,7 @@ from typing import (
     Optional,
     Reversible,
     Sequence,
+    Set,
     Union,
 )
 
@@ -240,6 +241,9 @@ class DiagramCanvas(gaphas.Canvas):
 
         super().__init__()
         self._diagram = diagram
+        # Record all items changed during constraint solving,
+        # so their `post_update()` method can be called.
+        self._resolved_items: Set[gaphas.item.Item] = set()
 
     diagram = property(lambda s: s._diagram)
 
@@ -283,9 +287,12 @@ class DiagramCanvas(gaphas.Canvas):
 
         contexts = self._pre_update_items(all_dirty_items)
 
+        self._resolved_items.clear()
         super().update_now(dirty_items, dirty_matrix_items)
 
-        self._post_update_items(all_dirty_items, contexts)
+        all_dirty_items.extend(self._resolved_items)
+        all_post_dirty_items = reversed(list(sort(dirty_items_with_ancestors())))
+        self._post_update_items(all_post_dirty_items, contexts)
 
     def _pre_update_items(self, items):
         diagram = self.diagram
@@ -304,6 +311,12 @@ class DiagramCanvas(gaphas.Canvas):
             if not context:
                 context = UpdateContext(style=diagram.style(StyledItem(item)))
             item.post_update(context)
+
+    def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
+        super()._on_constraint_solved(cinfo)
+        self._resolved_items.add(cinfo.item)
+        if cinfo.connected:
+            self._resolved_items.add(cinfo.connected)
 
     def save(self, save_func):
         """Apply the supplied save function to all root diagram items."""
