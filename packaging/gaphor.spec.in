@@ -55,7 +55,7 @@ coll = COLLECT(
        )
 app = BUNDLE(
           coll,
-          name='Gaphor-__version__.app',
+          name='Gaphor.app',
           icon='misc/gaphor.icns',
           bundle_identifier='org.gaphor.gaphor',
           info_plist={

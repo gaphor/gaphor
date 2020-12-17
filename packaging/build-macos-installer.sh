@@ -18,7 +18,7 @@ sed "s/__version__/$VERSION/g" "${DIR}"/file_version_info.txt.in > "${DIR}"/file
 sed "s/__version__/$VERSION/g;s/__year__/$YEAR/g" "${DIR}"/gaphor.spec.in > "${DIR}"/gaphor.spec
 python make-script.py ../pyproject.toml > gaphor-script.py
 pyinstvenv/bin/pyinstaller -y gaphor.spec
-python fix-folder-names-for-codesign.py "${DIR}"/dist/Gaphor-"${VERSION}".app
+python fix-folder-names-for-codesign.py "${DIR}"/dist/Gaphor.app
 
 rm -rf pyinstvenv
 echo 'Done!'
