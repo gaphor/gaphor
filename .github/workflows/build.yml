@@ -185,8 +185,18 @@ jobs:
           make dist
           cd packaging 
           ./build-macos-installer.sh
+      - name: Import codesign certificate
+        uses: apple-actions/import-codesign-certs@v1
+        with: 
+          p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
+          p12-password: ${{ secrets.CERTPASSWORD_P12 }}
       - name: Sign app
-        run: echo 'to be implemented'
+        run: >
+          cd packaging
+
+          codesign --sign "Developer ID Application: Daniel Yeaw (Z7V37BLNR9)"
+          --verbose --deep --timestamp --entitlements entitlements.plist
+          -o runtime "dist/Gaphor-${{ steps.meta.outputs.version }}.app"
       - name: Create dmg
         run: >
           cd packaging
