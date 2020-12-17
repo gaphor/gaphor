@@ -223,6 +223,7 @@ jobs:
           product-path: "packaging/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
+          primary-bundle-id: org.gaphor.gaphor
       - name: Staple .dmg
         uses: devbotsxyz/xcode-staple@v1
         with:
