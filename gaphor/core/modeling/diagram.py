@@ -284,15 +284,13 @@ class DiagramCanvas(gaphas.Canvas):
                 yield from self._tree.get_ancestors(item)
 
         all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
-
         contexts = self._pre_update_items(all_dirty_items)
 
         self._resolved_items.clear()
         super().update_now(dirty_items, dirty_matrix_items)
 
         all_dirty_items.extend(self._resolved_items)
-        all_post_dirty_items = reversed(list(sort(dirty_items_with_ancestors())))
-        self._post_update_items(all_post_dirty_items, contexts)
+        self._post_update_items(reversed(list(sort(all_dirty_items))), contexts)
 
     def _pre_update_items(self, items):
         diagram = self.diagram
