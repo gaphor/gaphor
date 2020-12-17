@@ -318,6 +318,24 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "bertob",
+      "name": "Tobias Bernard",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1908896?v=4",
+      "profile": "http://tobiasbernard.com",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "freddii",
+      "name": "freddii",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7213207?v=4",
+      "profile": "https://github.com/freddii",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,

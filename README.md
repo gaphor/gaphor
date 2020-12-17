@@ -1,4 +1,4 @@
-<div align="center"><img src="https://github.com/gaphor/gaphor/blob/2.0.0/logos/org.gaphor.Gaphor.svg" alt="Gaphor logo" width="64" /></div>
+<div align="center"><img src="https://github.com/gaphor/gaphor/blob/master/logos/org.gaphor.Gaphor.svg?raw=true" alt="Gaphor logo" width="64" /></div>
 <h1 align="center">Gaphor</h1>
 
 [![Build state](https://github.com/gaphor/gaphor/workflows/Build/badge.svg)](https://github.com/gaphor/gaphor/actions)
@@ -20,7 +20,7 @@ It is designed to be easy to use, while still being powerful. Gaphor implements 
 
 <div align="center">
 <br/>
-<img src="https://github.com/gaphor/gaphor/blob/2.0.0/docs/images/gaphor-demo.gif" width="75%">
+<img src="https://github.com/gaphor/gaphor/blob/master/docs/images/gaphor-demo.gif?raw=true" width="75%">
 <br/><br/>
 </div>
 
@@ -153,6 +153,8 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://github.com/dlagg"><img src="https://avatars3.githubusercontent.com/u/44321931?v=4" width="100px;" alt=""/><br /><sub><b>Jorge DLG</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3Adlagg" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/abjurstrom-torch"><img src="https://avatars1.githubusercontent.com/u/62608984?v=4" width="100px;" alt=""/><br /><sub><b>Adam Bjurstrom</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3Aabjurstrom-torch" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/kellenmoura"><img src="https://avatars0.githubusercontent.com/u/69016459?v=4" width="100px;" alt=""/><br /><sub><b>kellenmoura</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3Akellenmoura" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://tobiasbernard.com"><img src="https://avatars3.githubusercontent.com/u/1908896?v=4" width="100px;" alt=""/><br /><sub><b>Tobias Bernard</b></sub></a><br /><a href="#design-bertob" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/freddii"><img src="https://avatars0.githubusercontent.com/u/7213207?v=4" width="100px;" alt=""/><br /><sub><b>freddii</b></sub></a><br /><a href="#ideas-freddii" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
