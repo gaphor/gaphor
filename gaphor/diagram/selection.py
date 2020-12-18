@@ -21,4 +21,3 @@ class Selection(_Selection):
     def dropzone_item(self, item: Optional[Item]) -> None:
         if item is not self._dropzone_item:
             self._dropzone_item = item
-            # self.notify()
