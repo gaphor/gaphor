@@ -4,7 +4,7 @@ from typing import Callable, Optional, Type, TypeVar
 from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.aspect.connector import ItemConnector
 from gaphas.aspect.handlemove import HandleMove
-from gaphas.tool.placement import PlacementState
+from gaphas.tool.itemtool import MoveType
 from gaphas.view import GtkView
 from gi.repository import Gtk
 
@@ -22,6 +22,13 @@ FactoryType = Callable[[Diagram, Optional[Presentation]], Presentation]
 ConfigFuncType = Callable[[P], None]
 
 
+class PlacementState:
+    def __init__(self, factory: FactoryType, handle_index: int):
+        self.factory = factory
+        self.handle_index = handle_index
+        self.moving: Optional[MoveType] = None
+
+
 def placement_tool(
     view: GtkView, factory: FactoryType, event_manager, handle_index: int
 ):
@@ -35,9 +42,9 @@ def placement_tool(
 
 def on_drag_begin(gesture, start_x, start_y, placement_state):
     view = gesture.get_widget()
-    item = create_item(view, placement_state.factory, start_x, start_y)
-
     gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+
+    item = create_item(view, placement_state.factory, start_x, start_y)
 
     handle = item.handles()[placement_state.handle_index]
     if handle.movable:
