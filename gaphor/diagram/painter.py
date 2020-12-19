@@ -27,8 +27,10 @@ class ItemPainter:
     def paint_item(self, item, cairo):
         selection = self.selection
         diagram = item.diagram
-        cairo.save()
+        style = diagram.style(StyledItem(item, selection))
+        cairo.push_group()
         try:
+            cairo.set_source_rgba(*style["color"])
             cairo.transform(item.matrix_i2c.to_cairo())
 
             selection = self.selection
@@ -36,7 +38,7 @@ class ItemPainter:
             item.draw(
                 DrawContext(
                     cairo=cairo,
-                    style=diagram.style(StyledItem(item, selection)),
+                    style=style,
                     selected=(item in selection.selected_items),
                     focused=(item is selection.focused_item),
                     hovered=(item is selection.hovered_item),
@@ -45,7 +47,8 @@ class ItemPainter:
             )
 
         finally:
-            cairo.restore()
+            cairo.pop_group_to_source()
+            cairo.paint_with_alpha(1.0)
 
     def paint(self, items, cairo):
         """Draw the items."""
