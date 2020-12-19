@@ -8,11 +8,12 @@ from gaphas.tool import hover_tool, item_tool, rubberband_tool, scroll_tool, zoo
 
 from gaphor.diagram.diagramtools.dropzone import drop_zone_tool
 from gaphor.diagram.diagramtools.placement import new_item_factory, placement_tool
+from gaphor.diagram.diagramtools.shortcut import shortcut_tool
 from gaphor.diagram.diagramtools.textedit import text_edit_tools
 from gaphor.diagram.diagramtools.txtool import transactional_tool
 
 
-def apply_default_tool_set(view, event_manager, rubberband_state):
+def apply_default_tool_set(view, modeling_language, event_manager, rubberband_state):
     """The default tool set."""
     view.remove_all_controllers()
     view.add_controller(hover_tool(view))
@@ -25,6 +26,7 @@ def apply_default_tool_set(view, event_manager, rubberband_state):
     view.add_controller(rubberband_tool(view, rubberband_state))
     view.add_controller(scroll_tool(view))
     view.add_controller(zoom_tool(view))
+    view.add_controller(shortcut_tool(view, modeling_language, event_manager))
 
 
 def apply_placement_tool_set(view, item_factory, event_manager, handle_index):
