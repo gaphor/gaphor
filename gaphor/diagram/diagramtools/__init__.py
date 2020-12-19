@@ -6,6 +6,7 @@ TODO: make tools transactional.
 from gaphas.segment import segment_tool
 from gaphas.tool import hover_tool, item_tool, rubberband_tool, scroll_tool, zoom_tool
 
+import gaphor.diagram.diagramtools.grayout
 from gaphor.diagram.diagramtools.dropzone import drop_zone_tool
 from gaphor.diagram.diagramtools.placement import new_item_factory, placement_tool
 from gaphor.diagram.diagramtools.textedit import text_edit_tools
