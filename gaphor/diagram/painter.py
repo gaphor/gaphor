@@ -33,8 +33,6 @@ class ItemPainter:
             cairo.set_source_rgba(*style["color"])
             cairo.transform(item.matrix_i2c.to_cairo())
 
-            selection = self.selection
-
             item.draw(
                 DrawContext(
                     cairo=cairo,
@@ -48,7 +46,7 @@ class ItemPainter:
 
         finally:
             cairo.pop_group_to_source()
-            cairo.paint_with_alpha(1.0)
+            cairo.paint_with_alpha(0.4 if item in selection.grayed_out_items else 1.0)
 
     def paint(self, items, cairo):
         """Draw the items."""
