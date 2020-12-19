@@ -10,7 +10,7 @@ import pprint
 import sys
 from typing import Dict
 
-from gaphas.decorators import AsyncIO
+from gaphas.decorators import g_async
 from gi.repository import GLib
 
 from gaphor.abc import Service
@@ -186,7 +186,7 @@ class FileBackend:
         with open(filename, "w") as ofile:
             pprint.pprint(resource, ofile)
 
-    @AsyncIO(single=True, timeout=500)
+    @g_async(single=True, timeout=500)
     def update(self, resource, key, value):
         """Update the properties file with any changes in the background."""
 

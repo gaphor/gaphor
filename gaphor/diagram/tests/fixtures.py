@@ -1,8 +1,8 @@
 from io import StringIO
 
 import pytest
-from gaphas.aspect import ConnectionSink
-from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.aspect.connector import ConnectionSink
+from gaphas.aspect.connector import Connector as ConnectorAspect
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -86,11 +86,11 @@ def connect(line, handle, item, port=None):
         port = item.ports()[0]
 
     sink = ConnectionSink(item, port)
-    connector = ConnectorAspect(line, handle)
+    connector = ConnectorAspect(line, handle, canvas.connections)
 
     connector.connect(sink)
 
-    cinfo = canvas.get_connection(handle)
+    cinfo = canvas.connections.get_connection(handle)
     assert cinfo.connected is item
     assert cinfo.port is port
 
@@ -99,12 +99,12 @@ def disconnect(line, handle):
     """Disconnect line's handle."""
     canvas = line.canvas
 
-    canvas.disconnect_item(line, handle)
-    assert not canvas.get_connection(handle)
+    canvas.connections.disconnect_item(line, handle)
+    assert not canvas.connections.get_connection(handle)
 
 
 def get_connected(item, handle):
-    cinfo = item.canvas.get_connection(handle)
+    cinfo = item.canvas.connections.get_connection(handle)
     if cinfo:
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
     return None

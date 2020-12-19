@@ -37,8 +37,8 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
     for operations.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id=id, model=model)
 
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes

@@ -55,12 +55,12 @@ class SanitizerService(Service):
         if not (element.canvas and subject):
             return
 
-        for cinfo in element.canvas.get_connections(connected=element):
+        for cinfo in element.canvas.connections.get_connections(connected=element):
             comment_line = cinfo.item
             if not isinstance(comment_line, CommentLineItem):
                 continue
             opposite = comment_line.opposite(cinfo.handle)
-            opposite_cinfo = element.canvas.get_connection(opposite)
+            opposite_cinfo = element.canvas.connections.get_connection(opposite)
             if not opposite_cinfo:
                 continue
             comment_item = opposite_cinfo.connected

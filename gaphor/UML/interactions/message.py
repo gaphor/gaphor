@@ -74,8 +74,9 @@ class MessageItem(LinePresentation[UML.Message], Named):
     - _arrow_angle: decorating arrow angle
     """
 
-    def __init__(self, id=None, model=None):
+    def __init__(self, connections, id=None, model=None):
         super().__init__(
+            connections,
             id,
             model,
             shape_middle=Box(
@@ -93,16 +94,11 @@ class MessageItem(LinePresentation[UML.Message], Named):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-    def pre_update(self, context):
-        """Update communication diagram information."""
-        self._is_communication = self.is_communication()
-
-        super().pre_update(context)
-
     def post_update(self, context):
         """Update communication diagram information."""
         super().post_update(context)
 
+        self._is_communication = self.is_communication()
         if self._is_communication:
             pos, angle = self._get_center_pos()
             self._arrow_pos = pos
@@ -238,11 +234,8 @@ class MessageItem(LinePresentation[UML.Message], Named):
     def is_communication(self):
         """Check if message is connecting to lifelines on communication
         diagram."""
-        assert self.canvas
-
-        canvas = self.canvas
-        c1 = canvas.get_connection(self.head)
-        c2 = canvas.get_connection(self.tail)
+        c1 = self._connections.get_connection(self.head)
+        c2 = self._connections.get_connection(self.tail)
         return (
             isinstance(c1, LifelineItem)
             and not c1.connected.lifetime.visible

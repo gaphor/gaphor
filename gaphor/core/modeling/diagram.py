@@ -10,7 +10,16 @@ import textwrap
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import TYPE_CHECKING, Iterator, Optional, Sequence, Union
+from typing import (
+    TYPE_CHECKING,
+    Iterable,
+    Iterator,
+    Optional,
+    Reversible,
+    Sequence,
+    Set,
+    Union,
+)
 
 import gaphas
 
@@ -142,9 +151,11 @@ def attrstr(obj):
 
 
 class StyledDiagram:
-    def __init__(self, diagram: Diagram, view: Optional[gaphas.View] = None):
+    def __init__(
+        self, diagram: Diagram, selection: Optional[gaphas.view.Selection] = None
+    ):
         self.diagram = diagram
-        self.view = view
+        self.selection = selection or gaphas.view.Selection()
 
     def name(self) -> str:
         return "diagram"
@@ -153,8 +164,10 @@ class StyledDiagram:
         return None
 
     def children(self) -> Iterator[StyledItem]:
-        view = self.view
-        return (StyledItem(item, view) for item in self.diagram.canvas.get_root_items())
+        return (
+            StyledItem(item, self.selection)
+            for item in self.diagram.canvas.get_root_items()
+        )
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
@@ -171,11 +184,13 @@ class StyledItem:
     classes for the item (focus, hover, etc.)
     """
 
-    def __init__(self, item: Presentation, view: Optional[gaphas.View] = None):
+    def __init__(
+        self, item: Presentation, selection: Optional[gaphas.view.Selection] = None
+    ):
         assert item.canvas
         self.item = item
         self.canvas = item.canvas
-        self.view = view
+        self.selection = selection or gaphas.view.Selection()
 
     def name(self) -> str:
         return removesuffix(type(self.item).__name__, "Item").lower()
@@ -183,15 +198,15 @@ class StyledItem:
     def parent(self) -> Union[StyledItem, StyledDiagram]:
         parent = self.canvas.get_parent(self.item)
         return (
-            StyledItem(parent, self.view)
+            StyledItem(parent, self.selection)
             if parent
-            else StyledDiagram(self.item.diagram, self.view)
+            else StyledDiagram(self.item.diagram, self.selection)
         )
 
     def children(self) -> Iterator[StyledItem]:
         children = self.canvas.get_children(self.item)
-        view = self.view
-        return (StyledItem(child, view) for child in children)
+        selection = self.selection
+        return (StyledItem(child, selection) for child in children)
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
@@ -201,25 +216,21 @@ class StyledItem:
         return a
 
     def state(self) -> Sequence[str]:
-        view = self.view
-        if view:
-            item = self.item
-            return (
-                "active" if item in view.selected_items else "",
-                "focus" if item is view.focused_item else "",
-                "hover" if item is view.hovered_item else "",
-                "drop" if item is view.dropzone_item else "",
-            )
-        return ()
+        item = self.item
+        selection = self.selection
+        return (
+            "active" if item in selection.selected_items else "",
+            "focus" if item is selection.focused_item else "",
+            "hover" if item is selection.hovered_item else "",
+            "drop" if item is selection.dropzone_item else "",
+        )
 
 
 class DiagramCanvas(gaphas.Canvas):
     """DiagramCanvas extends the gaphas.Canvas class.
 
-    Updates to the canvas can be blocked by setting the block_updates
-    property to true.  A save function can be applied to all root canvas
-    items.  Canvas items can be selected with an optional expression
-    filter.
+    A save function can be applied to all root canvas items. Canvas
+    items can be selected with an optional expression filter.
     """
 
     def __init__(self, diagram: Diagram):
@@ -228,32 +239,82 @@ class DiagramCanvas(gaphas.Canvas):
         By default, updates are not blocked.
         """
 
-        super().__init__(
-            lambda item: UpdateContext(style=diagram.style(StyledItem(item)))
-        )
+        super().__init__()
         self._diagram = diagram
-        self._block_updates = False
+        # Record all items changed during constraint solving,
+        # so their `post_update()` method can be called.
+        self._resolved_items: Set[gaphas.item.Item] = set()
 
     diagram = property(lambda s: s._diagram)
 
-    def _set_block_updates(self, block):
-        """Sets the block_updates property.
+    @gaphas.state.observed
+    def add(self, item, parent=None, index=None):
+        assert item not in self._tree.nodes, f"Adding already added node {item}"
+        self._tree.add(item, parent, index)
+        item.canvas = self
+        self.request_update(item)
 
-        If false, the diagram canvas is updated immediately.
-        """
+    @gaphas.state.observed
+    def _remove(self, item):
+        """Remove is done in a separate, @observed, method so the undo system
+        can restore removed items in the right order."""
+        item.canvas = None
+        self._tree.remove(item)
+        self._connections.disconnect_item(self)
+        self._update_views(removed_items=(item,))
 
-        self._block_updates = block
-        if not block:
-            self.update_now()
+    gaphas.state.reversible_pair(
+        add,
+        _remove,
+        bind1={
+            "parent": lambda self, item: self.get_parent(item),
+            "index": lambda self, item: self._tree.get_siblings(item).index(item),
+        },
+    )
 
-    block_updates = property(lambda s: s._block_updates, _set_block_updates)
+    @gaphas.decorators.nonrecursive
+    def update_now(self, dirty_items, dirty_matrix_items=()):
+        """Update the diagram canvas."""
 
-    def update_now(self):
-        """Update the diagram canvas, unless block_updates is true."""
+        sort = self.sort
 
-        if self._block_updates:
-            return
-        super().update_now()
+        def dirty_items_with_ancestors():
+            for item in set(dirty_items):
+                yield item
+                yield from self._tree.get_ancestors(item)
+
+        all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
+        contexts = self._pre_update_items(all_dirty_items)
+
+        self._resolved_items.clear()
+        super().update_now(dirty_items, dirty_matrix_items)
+
+        all_dirty_items.extend(self._resolved_items)
+        self._post_update_items(reversed(list(sort(all_dirty_items))), contexts)
+
+    def _pre_update_items(self, items):
+        diagram = self.diagram
+
+        contexts = {}
+        for item in items:
+            context = UpdateContext(style=diagram.style(StyledItem(item)))
+            item.pre_update(context)
+            contexts[item] = context
+        return contexts
+
+    def _post_update_items(self, items, contexts):
+        diagram = self.diagram
+        for item in items:
+            context = contexts.get(item)
+            if not context:
+                context = UpdateContext(style=diagram.style(StyledItem(item)))
+            item.post_update(context)
+
+    def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
+        super()._on_constraint_solved(cinfo)
+        self._resolved_items.add(cinfo.item)
+        if cinfo.connected:
+            self._resolved_items.add(cinfo.connected)
 
     def save(self, save_func):
         """Apply the supplied save function to all root diagram items."""
@@ -261,16 +322,16 @@ class DiagramCanvas(gaphas.Canvas):
         for item in self.get_root_items():
             save_func(item)
 
-    def postload(self):
-        """Called after the diagram canvas has loaded.
-
-        Currently does nothing.
-        """
-
     def select(self, expression=lambda e: True):
         """Return a list of all canvas items that match expression."""
+        if expression is None:
+            yield from self.get_all_items()
+        elif isinstance(expression, type):
+            yield from (e for e in self.get_all_items() if isinstance(e, expression))
+        else:
+            yield from (e for e in self.get_all_items() if expression(e))
 
-        return list(filter(expression, self.get_all_items()))
+            return list(filter(expression, self.get_all_items()))
 
     def reparent(self, item, parent):
         """A more fancy version of the reparent method."""
@@ -279,14 +340,14 @@ class DiagramCanvas(gaphas.Canvas):
         if old_parent:
             super().reparent(item, None)
             m = self.get_matrix_i2c(old_parent)
-            item.matrix *= m
-            old_parent.request_update()
+            item.matrix.set(*item.matrix.multiply(m))
+            self.request_update(old_parent)
 
         if parent:
             super().reparent(item, parent)
-            m = self.get_matrix_c2i(parent)
-            item.matrix *= m
-            parent.request_update()
+            m = self.get_matrix_i2c(parent).inverse()
+            item.matrix.set(*item.matrix.multiply(m))
+            self.request_update(parent)
 
 
 class Diagram(PackageableElement):
@@ -330,7 +391,6 @@ class Diagram(PackageableElement):
     def postload(self):
         """Handle post-load functionality for the diagram canvas."""
         super().postload()
-        self.canvas.postload()
 
     def create(self, type, parent=None, subject=None):
         """Create a new canvas item on the canvas.
@@ -344,13 +404,14 @@ class Diagram(PackageableElement):
         return self.create_as(type, str(uuid.uuid1()), parent, subject)
 
     def create_as(self, type, id, parent=None, subject=None):
-        if not (
-            type and issubclass(type, gaphas.Item) and issubclass(type, Presentation)
-        ):
+        if not (type and issubclass(type, Presentation)):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
-        item = type(id, self.model)
+        item = type(connections=self.canvas.connections, id=id, model=self.model)
+        assert isinstance(
+            item, gaphas.Item
+        ), f"Type {type} does not comply with Item protocol"
         if subject:
             item.subject = subject
         self.canvas.add(item, parent)
@@ -372,3 +433,37 @@ class Diagram(PackageableElement):
                 pass
 
         super().unlink()
+
+    @property
+    def connections(self) -> gaphas.connections.Connections:
+        return self.canvas.connections
+
+    def get_all_items(self) -> Iterable[Presentation]:
+        return self.canvas.get_all_items()  # type: ignore[no-any-return]
+
+    def get_parent(self, item: Presentation) -> Optional[Presentation]:
+        return self.canvas.get_parent(item)  # type: ignore[no-any-return]
+
+    def get_children(self, item: Presentation) -> Iterable[Presentation]:
+        return self.canvas.get_children(item)  # type: ignore[no-any-return]
+
+    def sort(self, items: Sequence[Presentation]) -> Reversible[Presentation]:
+        return self.canvas.sort(items)  # type: ignore[no-any-return]
+
+    def request_update(
+        self, item: gaphas.item.Item, update: bool = True, matrix: bool = True
+    ) -> None:
+        self.canvas.request_update(item, update, matrix)
+
+    def update_now(
+        self,
+        dirty_items: Sequence[Presentation],
+        dirty_matrix_items: Sequence[Presentation],
+    ) -> None:
+        self.canvas.update_now(dirty_items, dirty_matrix_items)
+
+    def register_view(self, view: gaphas.view.model.View[Presentation]) -> None:
+        self.canvas.register_view(view)
+
+    def unregister_view(self, view: gaphas.view.model.View[Presentation]) -> None:
+        self.canvas.unregister_view(view)

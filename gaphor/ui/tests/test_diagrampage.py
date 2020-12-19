@@ -14,7 +14,7 @@ def page(diagram, event_manager, element_factory, properties):
     )
     page.construct()
     assert page.diagram == diagram
-    assert page.view.canvas == diagram.canvas
+    assert page.view.model == diagram.canvas
     yield page
     page.close()
 

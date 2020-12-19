@@ -1,5 +1,5 @@
 import pytest
-from gaphas.aspect import ConnectionSink, Connector
+from gaphas.aspect.connector import ConnectionSink, Connector
 
 from gaphor import UML
 from gaphor.application import Application
@@ -45,11 +45,11 @@ def connect(line, handle, item, port=None):
         port = item.ports()[0]
 
     sink = ConnectionSink(item, port)
-    connector = Connector(line, handle)
+    connector = Connector(line, handle, canvas.connections)
 
     connector.connect(sink)
 
-    cinfo = canvas.get_connection(handle)
+    cinfo = canvas.connections.get_connection(handle)
     assert cinfo.connected is item
     assert cinfo.port is port
 
@@ -70,8 +70,8 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
     connect(a, a.head, ci1)
     connect(a, a.tail, ci2)
 
-    # Diagram, Association, 2x Class, Property, LiteralSpecification, StyleSheet
-    assert 7 == len(element_factory.lselect())
+    # Diagram, Association, 2x Class, Property, LiteralSpecification
+    assert 6 == len(element_factory.lselect())
     assert 14 == len(diagram.canvas.solver.constraints)
 
     undo_manager.clear_undo_stack()
@@ -84,7 +84,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     def get_connected(handle):
         """Get item connected to line via handle."""
-        cinfo = diagram.canvas.get_connection(handle)
+        cinfo = diagram.canvas.connections.get_connection(handle)
         if cinfo:
             return cinfo.connected
         return None

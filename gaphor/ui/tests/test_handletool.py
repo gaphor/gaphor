@@ -1,13 +1,14 @@
 """Test handle tool functionality."""
 
 import pytest
-from gaphas.aspect import ConnectionSink
-from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.aspect.connector import ConnectionSink
+from gaphas.aspect.connector import Connector as ConnectorAspect
+from gaphas.aspect.handlemove import HandleMove
 from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.diagramtools import ConnectHandleTool, DiagramItemConnector
+from gaphor.diagram.diagramtools.placement import PresentationConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.ui.diagrams import Diagrams
@@ -29,6 +30,11 @@ def diagrams(event_manager, element_factory, properties):
 
 
 @pytest.fixture
+def connections(diagram):
+    return diagram.canvas.connections
+
+
+@pytest.fixture
 def comment(element_factory, diagram):
     return diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
@@ -38,17 +44,17 @@ def commentline(diagram):
     return diagram.create(CommentLineItem)
 
 
-def test_aspect_type(commentline):
-    aspect = ConnectorAspect(commentline, commentline.handles()[0])
-    assert isinstance(aspect, DiagramItemConnector)
+def test_aspect_type(commentline, connections):
+    aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
+    assert isinstance(aspect, PresentationConnector)
 
 
 def test_query(comment, commentline):
     assert Connector(comment, commentline)
 
 
-def test_allow(commentline, comment):
-    aspect = ConnectorAspect(commentline, commentline.handles()[0])
+def test_allow(commentline, comment, connections):
+    aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
     assert aspect.item is commentline
     assert aspect.handle is commentline.handles()[0]
 
@@ -56,12 +62,12 @@ def test_allow(commentline, comment):
     assert aspect.allow(sink)
 
 
-def test_connect(diagram, comment, commentline):
+def test_connect(diagram, comment, commentline, connections):
     sink = ConnectionSink(comment, comment.ports()[0])
-    aspect = ConnectorAspect(commentline, commentline.handles()[0])
+    aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
     aspect.connect(sink)
     canvas = diagram.canvas
-    cinfo = canvas.get_connection(commentline.handles()[0])
+    cinfo = canvas.connections.get_connection(commentline.handles()[0])
     assert cinfo, cinfo
 
 
@@ -85,7 +91,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
     actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
     actor.matrix.translate(200, 200)
-    diagram.canvas.update_matrix(actor)
+    diagram.canvas.update_now((actor,))
 
     line = diagram.create(CommentLineItem)
 
@@ -95,21 +101,20 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
     # select handle:
     handle = line.handles()[-1]
-    tool = ConnectHandleTool(view=view)
 
-    tool.grab_handle(line, handle)
+    move = HandleMove(line, handle, view)
     handle.pos = (comment_bb.x, comment_bb.y)
-    item = tool.glue(line, handle, handle.pos)
+    item = move.glue(handle.pos)
     assert item is not None
 
-    tool.connect(line, handle, handle.pos)
-    cinfo = diagram.canvas.get_connection(handle)
+    move.connect(handle.pos)
+    cinfo = diagram.canvas.connections.get_connection(handle)
     assert cinfo.constraint is not None
-    assert cinfo.connected is actor, cinfo.connected
+    assert cinfo.connected is comment, cinfo.connected
 
-    ConnectorAspect(line, handle).disconnect()
+    ConnectorAspect(line, handle, diagram.canvas.connections).disconnect()
 
-    cinfo = diagram.canvas.get_connection(handle)
+    cinfo = diagram.canvas.connections.get_connection(handle)
 
     assert cinfo is None
 
@@ -125,19 +130,16 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     view = current_diagram_view(diagrams)
     assert view, "View should be available here"
 
-    tool = ConnectHandleTool(view)
-
-    # Connect one end to the Comment:
     handle = line.handles()[0]
-    tool.grab_handle(line, handle)
+    move = HandleMove(line, handle, view)
 
     handle.pos = (0, 0)
-    sink = tool.glue(line, handle, handle.pos)
+    sink = move.glue(handle.pos)
     assert sink is not None
     assert sink.item is comment
 
-    tool.connect(line, handle, handle.pos)
-    cinfo = diagram.canvas.get_connection(handle)
+    move.connect(handle.pos)
+    cinfo = diagram.canvas.connections.get_connection(handle)
     assert cinfo is not None, None
     assert cinfo.item is line
     assert cinfo.connected is comment
@@ -146,15 +148,15 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
 
     handle = line.handles()[-1]
-    tool.grab_handle(line, handle)
+    move = HandleMove(line, handle, view)
 
     handle.pos = (0, 0)
-    sink = tool.glue(line, handle, handle.pos)
+    sink = move.glue(handle.pos)
     assert sink, f"No sink at {handle.pos}"
     assert sink.item is actor
-    tool.connect(line, handle, handle.pos)
+    move.connect(handle.pos)
 
-    cinfo = view.canvas.get_connection(handle)
+    cinfo = view.model.connections.get_connection(handle)
     assert cinfo.item is line
     assert cinfo.connected is actor
 
@@ -162,9 +164,9 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     assert len(comment.subject.annotatedElement) == 1, comment.subject.annotatedElement
     assert actor.subject in comment.subject.annotatedElement
 
-    sink = tool.glue(line, handle, (500, 500))
+    sink = move.glue((500, 500))
     assert sink is None, sink
-    tool.connect(line, handle, (500, 500))
+    move.connect((500, 500))
 
-    cinfo = view.canvas.get_connection(handle)
+    cinfo = view.model.connections.get_connection(handle)
     assert cinfo is None

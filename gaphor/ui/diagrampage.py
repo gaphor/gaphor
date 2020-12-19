@@ -3,14 +3,15 @@ import importlib
 import logging
 from typing import Dict, Optional, Sequence, Tuple
 
-from gaphas.freehand import FreeHandPainter
+from gaphas.guide import GuidePainter
 from gaphas.painter import (
     BoundingBoxPainter,
-    FocusedItemPainter,
+    FreeHandPainter,
     HandlePainter,
     PainterChain,
-    ToolPainter,
 )
+from gaphas.segment import LineSegmentPainter
+from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
@@ -20,13 +21,11 @@ from gaphor.core.modeling import Presentation, StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
-from gaphor.diagram.diagramtools import (
-    DefaultTool,
-    PlacementTool,
-    TransactionalToolChain,
-)
+from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_tool_set
+from gaphor.diagram.diagramtools.placement import create_item
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.painter import ItemPainter
+from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import create_action_group
@@ -44,7 +43,6 @@ def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
 @functools.lru_cache(maxsize=1)
 def placement_icon_base():
     with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
-        print(str(f))
         return GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
 
 
@@ -104,6 +102,8 @@ class DiagramPage:
         self.widget: Optional[Gtk.Widget] = None
         self.diagram_css: Optional[Gtk.CssProvider] = None
 
+        self.rubberband_state = RubberbandState()
+
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_style_sheet_updated)
         self.event_manager.subscribe(self._on_diagram_item_placed)
@@ -123,7 +123,7 @@ class DiagramPage:
         """
         assert self.diagram
 
-        view = GtkView(canvas=self.diagram.canvas)
+        view = GtkView(model=self.diagram.canvas, selection=Selection())
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,
@@ -141,8 +141,7 @@ class DiagramPage:
         scrolled_window.show_all()
         self.widget = scrolled_window
 
-        view.connect("focus-changed", self._on_view_selection_changed)
-        view.connect("selection-changed", self._on_view_selection_changed)
+        view.selection.add_handler(self._on_view_selection_changed)
         view.connect_after("key-press-event", self._on_key_press_event)
         view.connect("drag-data-received", self._on_drag_data_received)
 
@@ -157,19 +156,24 @@ class DiagramPage:
 
         return self.widget
 
-    def get_tool(self, tool_name):
-        """Return a tool associated with an id (action name)."""
-        if tool_name == "toolbox-pointer":
-            return DefaultTool(self.event_manager)
-
-        tool = next(
+    def get_tool_def(self, tool_name):
+        return next(
             t
             for t in tooliter(self.modeling_language.toolbox_definition)
             if t.id == tool_name
         )
-        item_factory = tool.item_factory
-        handle_index = tool.handle_index
-        return PlacementTool(
+
+    def apply_tool_set(self, tool_name):
+        """Return a tool associated with an id (action name)."""
+        if tool_name == "toolbox-pointer":
+            return apply_default_tool_set(
+                self.view, self.event_manager, self.rubberband_state
+            )
+
+        tool_def = self.get_tool_def(tool_name)
+        item_factory = tool_def.item_factory
+        handle_index = tool_def.handle_index
+        return apply_placement_tool_set(
             self.view,
             item_factory=item_factory,
             event_manager=self.event_manager,
@@ -243,19 +247,19 @@ class DiagramPage:
     def select_all(self):
         assert self.view
         if self.view.has_focus():
-            self.view.select_all()
+            self.view.selection.select_items(*self.view.model.get_all_items())
 
     @action(name="diagram.unselect-all", shortcut="<Primary><Shift>a")
     def unselect_all(self):
         assert self.view
         if self.view.has_focus():
-            self.view.unselect_all()
+            self.view.selection.unselect_all()
 
     @action(name="diagram.delete")
     @transactional
     def delete_selected_items(self):
         assert self.view
-        items = self.view.selected_items
+        items = self.view.selection.selected_items
         for i in list(items):
             if isinstance(i, Presentation):
                 i.unlink()
@@ -266,9 +270,7 @@ class DiagramPage:
     @action(name="diagram.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
         if self.view:
-            tool = TransactionalToolChain(self.event_manager)
-            tool.append(self.get_tool(tool_name))
-            self.view.tool = tool
+            self.apply_tool_set(tool_name)
             icon_name = self.get_tool_icon_name(tool_name)
             window = self.view.get_window()
             if icon_name and window:
@@ -299,25 +301,25 @@ class DiagramPage:
             else "".encode()
         )
 
-        sloppiness = style.get("line-style", 0.0)
-
-        item_painter = ItemPainter()
-
         view = self.view
 
+        item_painter = ItemPainter(view.selection)
+
+        sloppiness = style.get("line-style", 0.0)
         if sloppiness:
-            item_painter = FreeHandPainter(ItemPainter(), sloppiness=sloppiness)
+            item_painter = FreeHandPainter(item_painter, sloppiness=sloppiness)
 
         view.painter = (
             PainterChain()
             .append(item_painter)
-            .append(HandlePainter())
-            .append(FocusedItemPainter())
-            .append(ToolPainter())
+            .append(HandlePainter(view))
+            .append(LineSegmentPainter(view.selection))
+            .append(GuidePainter(view))
+            .append(RubberbandPainter(self.rubberband_state))
         )
         view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
-        view.queue_draw_refresh()
+        view.queue_redraw()
 
     def _on_key_press_event(self, view, event):
         """Handle the 'Delete' key.
@@ -347,9 +349,14 @@ class DiagramPage:
                         "select-tool"
                     ).change_state(GLib.Variant.new_string(action_name))
 
-    def _on_view_selection_changed(self, view, selection_or_focus):
+    def _on_view_selection_changed(self):
+        view = self.view
+        assert view
+        selection = view.selection
         self.event_manager.handle(
-            DiagramSelectionChanged(view, view.focused_item, view.selected_items)
+            DiagramSelectionChanged(
+                view, selection.focused_item, selection.selected_items
+            )
         )
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
@@ -359,8 +366,8 @@ class DiagramPage:
             and data.get_format() == 8
             and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
-            tool = self.get_tool(data.get_data().decode())
-            tool.create_item((x, y))
+            tool_def = self.get_tool_def(data.get_data().decode())
+            create_item(view, tool_def.item_factory, x, y)
             context.finish(True, False, time)
         elif (
             data
@@ -394,8 +401,8 @@ class DiagramPage:
                     item.matrix.translate(x, y)
                     item.subject = element
 
-                view.unselect_all()
-                view.focused_item = item
+                view.selection.unselect_all()
+                view.selection.focused_item = item
 
             else:
                 log.warning(

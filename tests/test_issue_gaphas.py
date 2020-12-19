@@ -15,7 +15,7 @@ class GaphasTest(TestCase):
 
         a = self.create(AssociationItem)
 
-        assert len(self.diagram.canvas.get_all_items()) == 3
+        assert len(list(self.diagram.canvas.get_all_items())) == 3
 
         self.connect(a, a.head, c1)
         self.connect(a, a.tail, c2)
@@ -24,5 +24,3 @@ class GaphasTest(TestCase):
         assert self.element_factory.lselect(UML.Association)[0] is a.subject
 
         c1.unlink()
-
-        self.diagram.canvas.update_now()

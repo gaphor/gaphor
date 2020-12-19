@@ -21,8 +21,8 @@ class ObjectNodeItem(ElementPresentation, Named):
     Ordering information can be hidden by user.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
 
         self._show_ordering = False
 

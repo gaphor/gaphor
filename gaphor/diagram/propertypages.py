@@ -302,14 +302,14 @@ class LineStylePage(PropertyPageBase):
     @transactional
     def _on_orthogonal_change(self, button):
         if len(self.item.handles()) < 3:
-            line_segment = Segment(self.item, None)
+            line_segment = Segment(self.item, self.item.canvas)
             line_segment.split_segment(0)
         active = button.get_active()
         self.item.orthogonal = active
-        self.item.canvas.update_now()
+        self.item.canvas.update_now((self.item,))
         self.horizontal_button.set_sensitive(active)
 
     @transactional
     def _on_horizontal_change(self, button):
         self.item.horizontal = button.get_active()
-        self.item.canvas.update_now()
+        self.item.canvas.update_now((self.item,))

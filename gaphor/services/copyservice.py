@@ -65,8 +65,6 @@ class CopyService(Service, ActionProvider):
                 if canvas.get_parent(item) not in new_items:
                     item.matrix.translate(10, 10)
 
-            canvas.update_matrices(new_items)
-
         return new_items
 
     @action(
@@ -77,7 +75,7 @@ class CopyService(Service, ActionProvider):
         view = self.diagrams.get_current_view()
         if view.is_focus():
             self.clipboard.set_text("", -1)
-            items = view.selected_items
+            items = view.selection.selected_items
             self.copy(items)
 
     @action(name="edit-cut", shortcut="<Primary>x")
@@ -85,7 +83,7 @@ class CopyService(Service, ActionProvider):
         view = self.diagrams.get_current_view()
         if view.is_focus():
             self.clipboard.set_text("", -1)
-            items = view.selected_items
+            items = view.selection.selected_items
             self.copy(items)
             for i in list(items):
                 i.unlink()
@@ -102,7 +100,7 @@ class CopyService(Service, ActionProvider):
 
         new_items = self.paste(diagram)
 
-        view.unselect_all()
+        view.selection.unselect_all()
 
         for item in new_items:
             view.select_item(item)

@@ -8,65 +8,48 @@ and handles).
 
 from __future__ import annotations
 
+from typing import Optional
+
 from cairo import LINE_JOIN_ROUND
-from gaphas.painter import Painter
 
 from gaphor.core.modeling.diagram import DrawContext, StyledItem
-
-DEBUG_DRAW_BOUNDING_BOX = False
+from gaphor.diagram.selection import Selection
 
 # The tolerance for Cairo. Bigger values increase speed and reduce accuracy
 # (default: 0.1)
 TOLERANCE = 0.8
 
 
-class ItemPainter(Painter):
-    def draw_item(self, item, cairo):
-        view = self.view
+class ItemPainter:
+    def __init__(self, selection: Optional[Selection] = None):
+        self.selection: Selection = selection or Selection()
+
+    def paint_item(self, item, cairo):
+        selection = self.selection
         diagram = item.diagram
         cairo.save()
         try:
-            cairo.set_matrix(view.matrix)
-            cairo.transform(view.canvas.get_matrix_i2c(item))
+            cairo.transform(item.matrix_i2c.to_cairo())
+
+            selection = self.selection
 
             item.draw(
                 DrawContext(
                     cairo=cairo,
-                    style=diagram.style(StyledItem(item, view)),
-                    selected=(item in view.selected_items),
-                    focused=(item is view.focused_item),
-                    hovered=(item is view.hovered_item),
-                    dropzone=(item is view.dropzone_item),
+                    style=diagram.style(StyledItem(item, selection)),
+                    selected=(item in selection.selected_items),
+                    focused=(item is selection.focused_item),
+                    hovered=(item is selection.hovered_item),
+                    dropzone=(item is selection.dropzone_item),
                 )
             )
 
         finally:
             cairo.restore()
 
-    def draw_items(self, items, cairo):
+    def paint(self, items, cairo):
         """Draw the items."""
-        for item in items:
-            self.draw_item(item, cairo)
-            if DEBUG_DRAW_BOUNDING_BOX:
-                self._draw_bounds(item, cairo)
-
-    def _draw_bounds(self, item, cairo):
-        view = self.view
-        try:
-            b = view.get_item_bounding_box(item)
-        except KeyError:
-            pass  # No bounding box right now..
-        else:
-            cairo.save()
-            cairo.identity_matrix()
-            cairo.set_source_rgb(0.8, 0, 0)
-            cairo.set_line_width(1.0)
-            cairo.rectangle(*b)
-            cairo.stroke()
-            cairo.restore()
-
-    def paint(self, context):
-        cairo = context.cairo
         cairo.set_tolerance(TOLERANCE)
         cairo.set_line_join(LINE_JOIN_ROUND)
-        self.draw_items(context.items, cairo)
+        for item in items:
+            self.paint_item(item, cairo)

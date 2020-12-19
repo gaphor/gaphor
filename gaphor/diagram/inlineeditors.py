@@ -36,9 +36,9 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     if not subject:
         return False
 
-    box = editable_text_box(view, view.hovered_item)
+    box = editable_text_box(view, view.selection.hovered_item)
     if not box:
-        box = view.get_item_bounding_box(view.hovered_item)
+        box = view.get_item_bounding_box(view.selection.hovered_item)
     name = subject.name or ""
     entry = popup_entry(name, update_text)
 

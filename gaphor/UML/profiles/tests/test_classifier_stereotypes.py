@@ -154,7 +154,7 @@ class StereotypesAttributesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(ComponentItem)[0]
+        item = next(self.diagram.canvas.select(ComponentItem))
         assert item.show_stereotypes
         assert len(compartments(c)) == 1
 
@@ -182,7 +182,7 @@ class StereotypesAttributesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(ComponentItem)[0]
+        item = next(self.diagram.canvas.select(ComponentItem))
         el = item.subject
         assert len(el.appliedStereotype) == 2
 

@@ -6,7 +6,7 @@ from gaphor.core.modeling import ElementFactory, Presentation, StyleSheet
 from gaphor.UML import Diagram
 
 
-class Example(Presentation, gaphas.Element):
+class Example(gaphas.Element, Presentation):
     def unlink(self):
         self.test_unlinked = True
         super().unlink()
@@ -25,6 +25,12 @@ def test_canvas_is_set_up():
     diagram = Diagram("id", None)
 
     assert diagram.canvas
+
+
+def test_diagram_can_be_used_as_gtkview_model():
+    diagram = Diagram("id", None)
+
+    assert isinstance(diagram, gaphas.view.model.Model)
 
 
 def test_canvas_is_saved():

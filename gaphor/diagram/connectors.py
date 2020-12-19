@@ -8,7 +8,8 @@ from __future__ import annotations
 
 from typing import List, Optional, Type, TypeVar, Union
 
-from gaphas.canvas import Canvas, Connection
+from gaphas.canvas import Canvas
+from gaphas.connections import Connection
 from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
 from typing_extensions import Protocol
@@ -72,11 +73,11 @@ class BaseConnector:
 
     def get_connection(self, handle: Handle) -> Optional[Connection]:
         """Get connection information."""
-        return self.canvas.get_connection(handle)
+        return self.canvas.connections.get_connection(handle)
 
     def get_connected(self, handle: Handle) -> Optional[Presentation[Element]]:
         """Get item connected to a handle."""
-        cinfo = self.canvas.get_connection(handle)
+        cinfo = self.canvas.connections.get_connection(handle)
         if cinfo:
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
         return None
@@ -137,7 +138,7 @@ class UnaryRelationshipConnect(BaseConnector):
     on the canvas.
     """
 
-    element: ElementPresentation[Element]
+    element: Presentation
     line: LinePresentation[Element]
 
     def relationship(
@@ -250,7 +251,7 @@ class UnaryRelationshipConnect(BaseConnector):
 
         # First make sure coordinates match
         solver.solve()
-        for cinfo in connections or canvas.get_connections(connected=line):
+        for cinfo in connections or canvas.connections.get_connections(connected=line):
             if line is cinfo.connected:
                 continue
             adapter = Connector(line, cinfo.connected)
@@ -273,7 +274,7 @@ class UnaryRelationshipConnect(BaseConnector):
 
         # First make sure coordinates match
         solver.solve()
-        connections = list(canvas.get_connections(connected=line))
+        connections = list(canvas.connections.get_connections(connected=line))
         for cinfo in connections:
             adapter = Connector(cinfo.item, cinfo.connected)
             adapter.disconnect(cinfo.handle)

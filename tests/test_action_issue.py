@@ -28,7 +28,7 @@ class ActionIssueTestCase(TestCase):
         assert 1 == len(diagrams)
 
         canvas = diagrams[0].canvas
-        assert 7 == len(canvas.get_all_items())
+        assert 7 == len(list(canvas.get_all_items()))
         # Part, Act, Act, Act, Flow, Flow, Flow
 
         for e in actions + flows:
@@ -48,27 +48,39 @@ class ActionIssueTestCase(TestCase):
         assert actions[2].outgoing[0] is flows[2]
         assert not actions[0].incoming
 
-        (cinfo,) = canvas.get_connections(handle=flows[0].presentation[0].head)
+        (cinfo,) = canvas.connections.get_connections(
+            handle=flows[0].presentation[0].head
+        )
         assert cinfo.connected is actions[0].presentation[0]
-        (cinfo,) = canvas.get_connections(handle=flows[1].presentation[0].head)
+        (cinfo,) = canvas.connections.get_connections(
+            handle=flows[1].presentation[0].head
+        )
         assert cinfo.connected is actions[0].presentation[0]
 
         # Intermediate element:
         assert actions[2].incoming[0] is flows[1]
         assert actions[2].outgoing[0] is flows[2]
 
-        (cinfo,) = canvas.get_connections(handle=flows[1].presentation[0].tail)
+        (cinfo,) = canvas.connections.get_connections(
+            handle=flows[1].presentation[0].tail
+        )
         assert cinfo.connected is actions[2].presentation[0]
-        (cinfo,) = canvas.get_connections(handle=flows[2].presentation[0].head)
+        (cinfo,) = canvas.connections.get_connections(
+            handle=flows[2].presentation[0].head
+        )
         assert cinfo.connected is actions[2].presentation[0]
 
         # Final element:
         assert actions[1].incoming[0] is flows[0]
         assert actions[1].incoming[1] is flows[2]
 
-        (cinfo,) = canvas.get_connections(handle=flows[0].presentation[0].tail)
+        (cinfo,) = canvas.connections.get_connections(
+            handle=flows[0].presentation[0].tail
+        )
         assert cinfo.connected is actions[1].presentation[0]
-        (cinfo,) = canvas.get_connections(handle=flows[2].presentation[0].tail)
+        (cinfo,) = canvas.connections.get_connections(
+            handle=flows[2].presentation[0].tail
+        )
         assert cinfo.connected is actions[1].presentation[0]
 
         # Test the parent-child connectivity

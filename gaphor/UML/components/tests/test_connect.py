@@ -118,7 +118,7 @@ class InterfaceConnectTestCase(TestCase):
         self.connect(line, line.head, iface, rport)
         self.connect(line, line.tail, comp, pport)
         iface.request_update()
-        iface.canvas.update_now()
+        iface.canvas.update_now((iface, comp, line))
 
         # interface goes into assembly mode
         assert iface.folded == Folded.PROVIDED

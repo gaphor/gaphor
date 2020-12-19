@@ -5,7 +5,7 @@ from gaphas.item import SE
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.UML import diagramitems
 
 
@@ -43,7 +43,7 @@ interactions = ToolSection(
             gettext("Interaction"),
             "gaphor-interaction-symbolic",
             "<Shift>N",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.InteractionItem,
                 UML.Interaction,
                 config_func=namespace_config,
@@ -55,7 +55,7 @@ interactions = ToolSection(
             gettext("Lifeline"),
             "gaphor-lifeline-symbolic",
             "v",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.LifelineItem,
                 UML.Lifeline,
                 config_func=interaction_config,
@@ -67,9 +67,7 @@ interactions = ToolSection(
             gettext("Execution Specification"),
             "gaphor-execution-specification-symbolic",
             None,
-            item_factory=PlacementTool.new_item_factory(
-                diagramitems.ExecutionSpecificationItem
-            ),
+            new_item_factory(diagramitems.ExecutionSpecificationItem),
             handle_index=0,
         ),
         ToolDef(
@@ -77,7 +75,7 @@ interactions = ToolSection(
             gettext("Message"),
             "gaphor-message-symbolic",
             "M",
-            item_factory=PlacementTool.new_item_factory(diagramitems.MessageItem),
+            new_item_factory(diagramitems.MessageItem),
         ),
     ),
 )

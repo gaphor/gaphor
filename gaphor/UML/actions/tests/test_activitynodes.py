@@ -1,6 +1,14 @@
+from gaphas.item import Item
+
 from gaphor import UML
 from gaphor.tests.testcase import TestCase
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
+
+
+def test_fork_node_item_implements_item_protocol(diagram):
+    fork_node_item = diagram.create(ForkNodeItem)
+
+    assert isinstance(fork_node_item, Item)
 
 
 class ActivityNodesTestCase(TestCase):
@@ -20,7 +28,7 @@ class ActivityNodesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(DecisionNodeItem)[0]
+        item = next(self.diagram.canvas.select(DecisionNodeItem))
         assert item.combined is None, item.combined
 
         merge_node = factory.create(UML.MergeNode)
@@ -28,7 +36,7 @@ class ActivityNodesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(DecisionNodeItem)[0]
+        item = next(self.diagram.canvas.select(DecisionNodeItem))
         assert item.combined is not None, item.combined
         assert isinstance(item.combined, UML.MergeNode)
 
@@ -40,7 +48,7 @@ class ActivityNodesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(ForkNodeItem)[0]
+        item = next(self.diagram.canvas.select(ForkNodeItem))
         assert item.combined is None, item.combined
 
         merge_node = factory.create(UML.JoinNode)
@@ -48,6 +56,6 @@ class ActivityNodesTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        item = self.diagram.canvas.select(ForkNodeItem)[0]
+        item = next(self.diagram.canvas.select(ForkNodeItem))
         assert item.combined is not None, item.combined
         assert isinstance(item.combined, UML.JoinNode)

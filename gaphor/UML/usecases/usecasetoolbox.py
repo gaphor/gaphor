@@ -5,7 +5,7 @@ from gaphas.item import SE
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.UML import diagramitems
 
 use_cases = ToolSection(
@@ -16,7 +16,7 @@ use_cases = ToolSection(
             gettext("Use case"),
             "gaphor-use-case-symbolic",
             "u",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.UseCaseItem,
                 UML.UseCase,
                 config_func=namespace_config,
@@ -28,7 +28,7 @@ use_cases = ToolSection(
             gettext("Actor"),
             "gaphor-actor-symbolic",
             "t",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.ActorItem,
                 UML.Actor,
                 config_func=namespace_config,
@@ -40,21 +40,21 @@ use_cases = ToolSection(
             gettext("Association"),
             "gaphor-association-symbolic",
             "<Shift>B",
-            item_factory=PlacementTool.new_item_factory(diagramitems.AssociationItem),
+            new_item_factory(diagramitems.AssociationItem),
         ),
         ToolDef(
             "toolbox-include",
             gettext("Include"),
             "gaphor-include-symbolic",
             "<Shift>U",
-            item_factory=PlacementTool.new_item_factory(diagramitems.IncludeItem),
+            new_item_factory(diagramitems.IncludeItem),
         ),
         ToolDef(
             "toolbox-extend",
             gettext("Extend"),
             "gaphor-extend-symbolic",
             "<Shift>X",
-            item_factory=PlacementTool.new_item_factory(diagramitems.ExtendItem),
+            new_item_factory(diagramitems.ExtendItem),
         ),
     ),
 )

@@ -22,9 +22,7 @@ def create_item(element_factory, diagram):
         """Create an item with specified subject."""
         if subject_cls is not None:
             subject = element_factory.create(subject_cls)
-        item = diagram.create(item_cls, subject=subject)
-        diagram.canvas.update()
-        return item
+        return diagram.create(item_cls, subject=subject)
 
     return create
 
@@ -39,7 +37,7 @@ def test_connect_element_with_comments(create_item):
     connect(line, line.head, comment)
     connect(line, line.tail, gi)
 
-    assert line.canvas.get_connection(line.tail).connected is gi
+    assert line.canvas.connections.get_connection(line.tail).connected is gi
 
     # Now connect generaliztion ends.
     connect(gi, gi.head, clazz1)
@@ -183,9 +181,9 @@ def test_stereotype_deletion(element_factory):
 def test_diagram_move(element_factory):
     diagram = element_factory.create(UML.Diagram)
     diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-    diagram.canvas.update = Mock()
+    diagram.canvas.request_update = Mock()
 
     package = element_factory.create(UML.Package)
     diagram.package = package
 
-    diagram.canvas.update.assert_called()
+    diagram.canvas.request_update.assert_called()

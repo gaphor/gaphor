@@ -146,7 +146,6 @@ class ElementFactory(Service):
         with self.block_events():
             for element in self.lselect(Diagram):
                 assert isinstance(element, Diagram)
-                element.canvas.block_updates = True
                 element.unlink()
 
             for element in self.lselect():

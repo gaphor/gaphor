@@ -80,10 +80,10 @@ def test_copy_item_with_connection(diagram, element_factory):
     new_items = paste(buffer, diagram, element_factory.lookup)
     new_gen_item = next(i for i in new_items if isinstance(i, GeneralizationItem))
 
-    new_cls_item1 = new_gen_item.canvas.get_connection(
+    new_cls_item1 = new_gen_item.canvas.connections.get_connection(
         new_gen_item.handles()[0]
     ).connected
-    new_cls_item2 = new_gen_item.canvas.get_connection(
+    new_cls_item2 = new_gen_item.canvas.connections.get_connection(
         new_gen_item.handles()[1]
     ).connected
 
@@ -111,8 +111,8 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     cls_item.unlink()
     cls.unlink()  # normally handled by the sanitizer service
 
-    assert len(diagram.canvas.get_all_items()) == 0
-    assert len(element_factory.lselect()) == 3
+    assert len(list(diagram.canvas.get_all_items())) == 0
+    assert cls not in element_factory.select()
     assert not element_factory.lookup(orig_cls_id)
 
     print(buffer)

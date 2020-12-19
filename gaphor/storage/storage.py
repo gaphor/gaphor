@@ -176,10 +176,9 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
 
     for d in factory.lselect(Diagram):
         canvas = d.canvas
-        # update_now() is implicitly called when lock is released
-        canvas.block_updates = False
+        for item in canvas.get_all_items():
+            item.matrix_i2c.set(*canvas.get_matrix_i2c(item))
 
-    # do a postload:
     for id, elem in list(elements.items()):
         yield from update_status_queue()
         elem.element.postload()
@@ -218,7 +217,6 @@ def _load_elements_and_canvasitems(
             elem.element = factory.create_as(cls, id)
             if isinstance(elem.element, Diagram):
                 assert elem.canvas
-                elem.element.canvas.block_updates = True
                 create_canvasitems(elem.element, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):
             raise ValueError(

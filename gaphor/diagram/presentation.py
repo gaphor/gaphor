@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import ast
 from dataclasses import replace
-from typing import Optional
 
 import gaphas
-from gaphas.aspect import ConnectionSink
-from gaphas.aspect import Connector as ConnectorAspect
+from gaphas.aspect.connector import ConnectionSink
+from gaphas.aspect.connector import Connector as ConnectorAspect
+from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
+from gaphas.item import matrix_i2i
 
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.styling import Style
@@ -45,7 +46,7 @@ def from_package_str(item):
 def _get_sink(item, handle, target):
     assert item.canvas
 
-    hpos = item.canvas.get_matrix_i2i(item, target).transform_point(*handle.pos)
+    hpos = matrix_i2i(item, target).transform_point(*handle.pos)
     port = None
     dist = 10e6
     for p in target.ports():
@@ -64,7 +65,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     This function finds a suitable spot on the `target` item to connect
     the handle to.
     """
-    connector = ConnectorAspect(item, handle)
+    connector = ConnectorAspect(item, handle, item.canvas.connections)
     sink = _get_sink(item, handle, target)
     connector.connect(sink)
 
@@ -72,7 +73,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
 
 
-class ElementPresentation(Presentation[S], gaphas.Element):
+class ElementPresentation(gaphas.Element, Presentation[S]):
     """Presentation for Gaphas Element (box-like) items.
 
     To create a shape (boxes, text), assign a shape to `self.shape`. If
@@ -85,8 +86,8 @@ class ElementPresentation(Presentation[S], gaphas.Element):
 
     _port_sides = ("top", "right", "bottom", "left")
 
-    def __init__(self, id=None, model=None, shape=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None, shape=None):
+        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
         self._shape = shape
 
     def port_side(self, port):
@@ -105,21 +106,25 @@ class ElementPresentation(Presentation[S], gaphas.Element):
     def pre_update(self, context):
         self.min_width, self.min_height = self.shape.size(context)
 
+    def post_update(self, context):
+        pass
+
     def draw(self, context):
+        x, y = self.handles()[0].pos
+        cairo = context.cairo
+        cairo.translate(x, y)
         self._shape.draw(
             context,
             Rectangle(0, 0, self.width, self.height),
         )
 
     def setup_canvas(self):
-        super().setup_canvas()
         self.subscribe_all()
         # Invoke here, since we do not receive events, unless we're attached to a canvas
         self.update_shapes()
 
     def teardown_canvas(self):
         self.unsubscribe_all()
-        super().teardown_canvas()
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -129,7 +134,7 @@ class ElementPresentation(Presentation[S], gaphas.Element):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name in ("width", "height"):
             setattr(self, name, ast.literal_eval(value))
         else:
@@ -140,9 +145,10 @@ class ElementPresentation(Presentation[S], gaphas.Element):
         self.update_shapes()
 
 
-class LinePresentation(Presentation[S], gaphas.Line):
+class LinePresentation(gaphas.Line, Presentation[S]):
     def __init__(
         self,
+        connections,
         id=None,
         model=None,
         style: Style = {},
@@ -150,7 +156,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
         shape_middle=None,
         shape_tail=None,
     ):
-        super().__init__(id, model)
+        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
 
         self.style = style
         self.shape_head = shape_head
@@ -162,10 +168,11 @@ class LinePresentation(Presentation[S], gaphas.Line):
         self._shape_middle_rect = None
         self._shape_tail_rect = None
 
-    canvas: Optional[gaphas.Canvas]
-
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
+
+    def pre_update(self, context):
+        pass
 
     def post_update(self, context):
         def shape_bounds(shape, align):
@@ -174,17 +181,16 @@ class LinePresentation(Presentation[S], gaphas.Line):
                 x, y = text_point_at_line(points, size, align)
                 return Rectangle(x, y, *size)
 
-        super().post_update(context)
         points = [h.pos for h in self.handles()]
         self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
         self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
 
-    def point(self, pos):
+    def point(self, x, y):
         """Given a point (x, y) return the distance to the canvas item."""
-        d0 = super().point(pos)
+        d0 = super().point(x, y)
         ds = [
-            distance_rectangle_point(shape, pos)
+            distance_rectangle_point(shape, (x, y))
             for shape in (
                 self._shape_head_rect,
                 self._shape_middle_rect,
@@ -225,8 +231,7 @@ class LinePresentation(Presentation[S], gaphas.Line):
 
     def save(self, save_func):
         def save_connection(name, handle):
-            assert self.canvas
-            c = self.canvas.get_connection(handle)
+            c = self._connections.get_connection(handle)
             if c:
                 save_func(name, c.connected)
 
@@ -242,11 +247,11 @@ class LinePresentation(Presentation[S], gaphas.Line):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "points":
             points = ast.literal_eval(value)
             for _ in range(len(points) - 2):
-                h = self._create_handle((0, 0))
+                h = Handle((0, 0))
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
@@ -268,8 +273,6 @@ class LinePresentation(Presentation[S], gaphas.Line):
             super().load(name, value)
 
     def postload(self):
-        assert self.canvas
-
         if hasattr(self, "_load_orthogonal"):
             # Ensure there are enough handles
             if self._load_orthogonal and len(self._handles) < 3:

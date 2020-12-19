@@ -2,6 +2,7 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.diagram.diagramtools.placement import PlacementState, on_drag_begin
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.toolbox import uml_toolbox_actions
@@ -27,9 +28,10 @@ def tab(event_manager, element_factory, properties):
 
 
 def test_pointer(tab):
-    tool = tab.get_tool("toolbox-pointer")
+    tab.apply_tool_set("toolbox-pointer")
 
-    assert tool
+    # TODO: what's the observed behavior?
+    assert tab.view._controllers
 
 
 @pytest.mark.parametrize(
@@ -71,11 +73,11 @@ def test_pointer(tab):
     ],
 )
 def test_placement_action(tab, tool_name):
-    tool = tab.get_tool(tool_name)
-
-    # Ensure the factory is working
-    tool.create_item((0, 0))
-    tab.diagram.canvas.update()
+    tool_def = tab.get_tool_def(tool_name)
+    tool = Gtk.GestureDrag.new(tab.view)
+    placement_state = PlacementState(tool_def.item_factory, tool_def.handle_index)
+    on_drag_begin(tool, 0, 0, placement_state)
+    tab.view.update()
 
 
 def test_placement_object_node(tab, element_factory):

@@ -28,7 +28,8 @@ from gaphas.constraint import (
 )
 from gaphas.geometry import distance_line_point
 from gaphas.item import SE, SW
-from gaphas.solver import STRONG
+from gaphas.position import MatrixProjection
+from gaphas.solver import STRONG, MultiConstraint
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
@@ -39,14 +40,15 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 
 class LifetimePort(LinePort):
-    def constraint(self, canvas, item, handle, glue_item):
+    def constraint(self, item, handle, glue_item):
         """Create connection line constraint between item's handle and the
         port."""
-        line = canvas.project(glue_item, self.start, self.end)
-        point = canvas.project(item, handle.pos)
+        start = MatrixProjection(self.start, glue_item.matrix_i2c)
+        end = MatrixProjection(self.end, glue_item.matrix_i2c)
+        point = MatrixProjection(handle.pos, item.matrix_i2c)
 
-        x, y = canvas.get_matrix_i2c(item).transform_point(*handle.pos)
-        x, y = canvas.get_matrix_c2i(glue_item).transform_point(x, y)
+        x, y = item.matrix_i2c.transform_point(*handle.pos)
+        x, y = glue_item.matrix_i2c.inverse().transform_point(x, y)
 
         # keep message at the same distance from head or bottom of lifetime
         # line depending on situation
@@ -57,7 +59,8 @@ class LifetimePort(LinePort):
         else:
             delta = y - self.end.y
             align = 1
-        return LineAlignConstraint(line, point, align, delta)
+        line = LineAlignConstraint((start, end), point, align, delta)
+        return MultiConstraint(start, end, point, line)
 
 
 class LifetimeItem:
@@ -132,8 +135,8 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         is_destroyed: Check if delete message is connected.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
 
         self.is_destroyed = False
 
@@ -231,14 +234,14 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
                 cr.line_to(bottom.pos.x + d1, bottom.pos.y - d2)
                 cr.stroke()
 
-    def point(self, pos):
+    def point(self, x, y):
         """Find distance to lifeline item.
 
         We calculate the distance to the lifeline's head, and then we
         calculate the lifetime. We return the minimum.
         """
-        d1 = super().point(pos)
+        d1 = super().point(x, y)
         top = self.lifetime.top
         bottom = self.lifetime.bottom
-        d2 = distance_line_point(top.pos, bottom.pos, pos)[0]
+        d2 = distance_line_point(top.pos, bottom.pos, (x, y))[0]
         return min(d1, d2)

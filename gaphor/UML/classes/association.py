@@ -47,8 +47,8 @@ class AssociationItem(LinePresentation[UML.Association], Named):
     association).
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
 
         # AssociationEnds are really inseparable from the AssociationItem.
         # We give them the same id as the association item.
@@ -209,10 +209,10 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         # Calculate alignment of the tail name and multiplicity
         self._tail_end.post_update(context, handles[-1].pos, handles[-2].pos)
 
-    def point(self, pos):
+    def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor."""
         return min(
-            super().point(pos), self._head_end.point(pos), self._tail_end.point(pos)
+            super().point(x, y), self._head_end.point(x, y), self._tail_end.point(x, y)
         )
 
     def draw(self, context):
@@ -348,7 +348,7 @@ class AssociationEnd(Presentation):
 
     def __init__(self, owner, end=None):
         super().__init__(id=False)  # Transient object
-        self.canvas = None
+        self._canvas = None
         self._owner = owner
         self._end = end
 
@@ -486,9 +486,10 @@ class AssociationEnd(Presentation):
             p1[0] + mult_dx, p1[1] + mult_dy, width=mult_w, height=mult_h
         )
 
-    def point(self, pos):
+    def point(self, x, y):
         """Given a point (x, y) return the distance to the canvas item."""
         drp = distance_rectangle_point
+        pos = (x, y)
         d1 = drp(self._name_bounds, pos)
         d2 = drp(self._mult_bounds, pos)
         d3 = 1000.0

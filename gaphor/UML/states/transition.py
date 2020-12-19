@@ -11,8 +11,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 class TransitionItem(LinePresentation[UML.Transition], Named):
     """Representation of state transition."""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
 
         self.shape_tail = Box(
             Text(

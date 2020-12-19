@@ -4,7 +4,7 @@ from gaphas.item import SE
 
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML import sysml
 
@@ -16,7 +16,7 @@ requirements = ToolSection(
             gettext("Requirement"),
             "gaphor-requirement-symbolic",
             "r",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 sysml_items.RequirementItem,
                 sysml.Requirement,
                 config_func=namespace_config,
@@ -28,35 +28,35 @@ requirements = ToolSection(
             gettext("Satisfy"),
             "gaphor-satisfy-symbolic",
             "<Shift>I",
-            PlacementTool.new_item_factory(sysml_items.SatisfyItem),
+            new_item_factory(sysml_items.SatisfyItem),
         ),
         ToolDef(
             "toolbox-derive-reqt-dependency",
             gettext("Derive Reqt"),
             "gaphor-derive-symbolic",
             "<Shift>D",
-            PlacementTool.new_item_factory(sysml_items.DeriveReqtItem),
+            new_item_factory(sysml_items.DeriveReqtItem),
         ),
         ToolDef(
             "toolbox-trace-dependency",
             gettext("Trace"),
             "gaphor-trace-symbolic",
             "<Shift>E",
-            PlacementTool.new_item_factory(sysml_items.TraceItem),
+            new_item_factory(sysml_items.TraceItem),
         ),
         ToolDef(
             "toolbox-refine-dependency",
             gettext("Refine"),
             "gaphor-refine-symbolic",
             "<Shift>N",
-            PlacementTool.new_item_factory(sysml_items.RefineItem),
+            new_item_factory(sysml_items.RefineItem),
         ),
         ToolDef(
             "toolbox-verify-dependency",
             gettext("Verify"),
             "gaphor-verify-symbolic",
             "<Shift>V",
-            PlacementTool.new_item_factory(sysml_items.VerifyItem),
+            new_item_factory(sysml_items.VerifyItem),
         ),
     ),
 )

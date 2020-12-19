@@ -1,4 +1,5 @@
 from gaphas.canvas import instant_cairo_context
+from gaphas.item import Item
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
@@ -6,6 +7,12 @@ from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.lifeline import LifelineItem
+
+
+def test_execution_specification_implements_item_protocol(diagram):
+    exec_spec = diagram.create(ExecutionSpecificationItem)
+
+    assert isinstance(exec_spec, Item)
 
 
 def create_lifeline_with_execution_specification(diagram, element_factory):
@@ -205,7 +212,7 @@ def test_save_and_load(diagram, element_factory, saver, loader):
         diagram, element_factory
     )
 
-    diagram.canvas.update_now()
+    diagram.canvas.update_now((lifeline, exec_spec))
 
     saved_data = saver()
 
@@ -225,4 +232,6 @@ def test_save_and_load(diagram, element_factory, saver, loader):
         )
         == 2
     )
-    assert loaded_exec_spec.canvas.get_connection(loaded_exec_spec.handles()[0])
+    assert loaded_exec_spec.canvas.connections.get_connection(
+        loaded_exec_spec.handles()[0]
+    )

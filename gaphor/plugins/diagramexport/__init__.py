@@ -4,9 +4,8 @@ import logging
 import os
 
 import cairo
-from gaphas.freehand import FreeHandPainter
-from gaphas.painter import BoundingBoxPainter
-from gaphas.view import Context, View
+from gaphas.painter import BoundingBoxPainter, FreeHandPainter
+from gaphas.view import GtkView
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
@@ -18,8 +17,15 @@ from gaphor.ui.questiondialog import QuestionDialog
 logger = logging.getLogger(__name__)
 
 
-def paint(view, cr):
-    view.painter.paint(Context(cairo=cr, items=view.canvas.get_all_items(), area=None))
+def new_painter(diagram):
+    style = diagram.style(StyledDiagram(diagram))
+
+    sloppiness = style.get("line-style", 0.0)
+
+    if sloppiness:
+        return FreeHandPainter(ItemPainter(), sloppiness)
+    else:
+        return ItemPainter()
 
 
 class DiagramExport(Service, ActionProvider):
@@ -47,36 +53,27 @@ class DiagramExport(Service, ActionProvider):
             ],
         )
 
-    def update_painters(self, view, diagram):
-        style = diagram.style(StyledDiagram(diagram))
-
-        sloppiness = style.get("line-style", 0.0)
-
-        if sloppiness:
-            view.painter = FreeHandPainter(ItemPainter(), sloppiness)
-        else:
-            view.painter = ItemPainter()
-        view.bounding_box_painter = BoundingBoxPainter(view.painter)
-
     def render(self, diagram, new_surface):
         canvas = diagram.canvas
-        view = View(canvas)
+        canvas.update_now(canvas.get_all_items())
 
-        self.update_painters(view, diagram)
+        painter = new_painter(diagram)
 
         # Update bounding boxes with a temporary CairoContext
         # (used for stuff like calculating font metrics)
         tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
         tmpcr = cairo.Context(tmpsurface)
-        view.update_bounding_box(tmpcr)
+        bounding_box = BoundingBoxPainter(painter).bounding_box(
+            canvas.get_all_items(), tmpcr
+        )
         tmpcr.show_page()
         tmpsurface.flush()
 
-        w, h = view.bounding_box.width, view.bounding_box.height
+        w, h = bounding_box.width, bounding_box.height
         surface = new_surface(w, h)
         cr = cairo.Context(surface)
-        view.matrix.translate(-view.bounding_box.x, -view.bounding_box.y)
-        paint(view, cr)
+        cr.translate(-bounding_box.x, -bounding_box.y)
+        painter.paint(items=canvas.get_all_items(), cairo=cr)
         cr.show_page()
         return surface
 

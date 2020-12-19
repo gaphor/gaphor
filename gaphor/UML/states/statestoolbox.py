@@ -5,7 +5,7 @@ from gaphas.item import SE
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection
-from gaphor.diagram.diagramtools import PlacementTool
+from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.UML import diagramitems
 
 
@@ -61,7 +61,7 @@ states = ToolSection(
             gettext("State"),
             "gaphor-state-symbolic",
             "s",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.StateItem, UML.State, config_func=state_machine_config
             ),
             handle_index=SE,
@@ -71,7 +71,7 @@ states = ToolSection(
             gettext("Initial Pseudostate"),
             "gaphor-initial-pseudostate-symbolic",
             "<Shift>S",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.PseudostateItem,
                 UML.Pseudostate,
                 initial_pseudostate_config,
@@ -83,7 +83,7 @@ states = ToolSection(
             gettext("Final State"),
             "gaphor-final-state-symbolic",
             "x",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.FinalStateItem,
                 UML.FinalState,
                 config_func=state_machine_config,
@@ -95,7 +95,7 @@ states = ToolSection(
             gettext("History Pseudostate"),
             "gaphor-pseudostate-symbolic",
             "q",
-            item_factory=PlacementTool.new_item_factory(
+            new_item_factory(
                 diagramitems.PseudostateItem,
                 UML.Pseudostate,
                 history_pseudostate_config,
@@ -107,7 +107,7 @@ states = ToolSection(
             gettext("Transition"),
             "gaphor-transition-symbolic",
             "<Shift>T",
-            item_factory=PlacementTool.new_item_factory(diagramitems.TransitionItem),
+            new_item_factory(diagramitems.TransitionItem),
         ),
     ),
 )

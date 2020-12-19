@@ -3,8 +3,10 @@
 import ast
 import math
 
+from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_line_point
-from gaphas.item import Handle, Item, LinePort
+from gaphas.item import Handle, LinePort
+from gaphas.matrix import Matrix
 from gaphas.state import observed, reversible_property
 from gaphas.util import path_ellipse
 
@@ -37,8 +39,8 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
     Initial node has name which is put near top-left side of node.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -75,8 +77,8 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
     node.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -124,8 +126,8 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
     node.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -160,8 +162,8 @@ def draw_flow_final_node(_box, context, _bounding_box):
 class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
     """Representation of decision or merge node."""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(connections, id, model)
         no_movable_handles(self)
 
         self._combined = None
@@ -211,16 +213,18 @@ def draw_decision_node(_box, context, _bounding_box):
 
 
 @represents(UML.ForkNode)
-class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
+class ForkNodeItem(Presentation[UML.ForkNode], Named):
     """Representation of fork and join node."""
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, connections, id=None, model=None):
+        super().__init__(id=id, model=model)
+        self._matrix = Matrix()
+        self._matrix_i2c = Matrix()
+        self._connections = connections
 
         h1, h2 = Handle(), Handle()
-        self._handles.append(h1)
-        self._handles.append(h2)
-        self._ports.append(LinePort(h1.pos, h2.pos))
+        self._handles = [h1, h2]
+        self._ports = [LinePort(h1.pos, h2.pos)]
 
         self._combined = None
 
@@ -242,8 +246,28 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[JoinNode].joinSpec")
 
-        self.constraint(vertical=(h1.pos, h2.pos))
-        self.constraint(above=(h1.pos, h2.pos), delta=30)
+        connections.add_constraint(self, constraint(vertical=(h1.pos, h2.pos)))
+        connections.add_constraint(self, constraint(above=(h1.pos, h2.pos), delta=30))
+
+    @property
+    def matrix(self) -> Matrix:
+        return self._matrix
+
+    @property
+    def matrix_i2c(self) -> Matrix:
+        return self._matrix_i2c
+
+    def handles(self):
+        return self._handles
+
+    def ports(self):
+        return self._ports
+
+    def pre_update(self, context):
+        pass
+
+    def post_update(self, context):
+        pass
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -254,7 +278,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix = ast.literal_eval(value)
+            self.matrix.set(*ast.literal_eval(value))
         elif name == "height":
             self._handles[1].pos.y = ast.literal_eval(value)
         elif name == "combined":
@@ -287,8 +311,8 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
 
         stroke(context)
 
-    def point(self, pos):
+    def point(self, x, y):
         h1, h2 = self._handles
-        d, p = distance_line_point(h1.pos, h2.pos, pos)
+        d, p = distance_line_point(h1.pos, h2.pos, (x, y))
         # Subtract line_width / 2
         return d - 3
