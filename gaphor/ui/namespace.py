@@ -8,7 +8,7 @@ classifiers are shown here.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Set
 
 from gi.repository import Gdk, Gio, GLib, Gtk
 
@@ -80,6 +80,7 @@ class Namespace(UIComponent):
 
         self.model: Optional[NamespaceModel] = None
         self.view: Optional[NamespaceView] = None
+        self.ctrl: Set[Gtk.EventController] = set()
 
     def open(self):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
@@ -122,16 +123,26 @@ class Namespace(UIComponent):
         scrolled_window.insert_action_group(
             "tree-view", create_action_group(self, "tree-view")[0]
         )
-        view.connect_after("event-after", self._on_view_event)
         view.connect("row-activated", self._on_view_row_activated)
         view.connect_after("cursor-changed", self._on_view_cursor_changed)
         view.connect("destroy", self._on_view_destroyed)
+
+        ctrl = Gtk.GestureMultiPress.new(view)
+        ctrl.set_button(Gdk.BUTTON_SECONDARY)
+        ctrl.connect("pressed", self._on_show_popup)
+        self.ctrl.add(ctrl)
+
+        ctrl = Gtk.EventControllerKey.new(view)
+        ctrl.connect("key-pressed", self._on_edit_pressed)
+        self.ctrl.add(ctrl)
+
         self.view = view
         self.model.refresh()
 
         return scrolled_window
 
     def close(self):
+        self.ctrl.clear()
         if self.view:
             self.view.destroy()
             self.view = None
@@ -154,14 +165,16 @@ class Namespace(UIComponent):
         if isinstance(focused_item, Presentation) and focused_item.subject:
             self.select_element(focused_item.subject)
 
-    def _on_view_event(self, view, event):
-        """Show a popup menu if button3 was pressed on the TreeView."""
-        if event.type == Gdk.EventType.BUTTON_PRESS and event.button.button == 3:
-            menu = Gtk.Menu.new_from_model(popup_model(self.view))
-            menu.attach_to_widget(view, None)
-            menu.popup_at_pointer(event)
-        elif event.type == Gdk.EventType.KEY_PRESS and event.key.keyval == Gdk.KEY_F2:
+    def _on_show_popup(self, ctrl, n_press, x, y):
+        menu = Gtk.Menu.new_from_model(popup_model(self.view))
+        menu.attach_to_widget(self.view, None)
+        menu.popup_at_pointer(None)
+
+    def _on_edit_pressed(self, ctrl, keyval, keycode, state):
+        if keyval == Gdk.KEY_F2:
             self.tree_view_rename_selected()
+            return True
+        return False
 
     def _on_view_row_activated(self, view, path, column):
         """Double click on an element in the tree view."""
@@ -231,8 +244,8 @@ class Namespace(UIComponent):
             log.debug(f"No action defined for element {type(element).__name__}")
 
     @action(name="tree-view.show-in-diagram")
-    def tree_view_show_in_diagram(self, diagam_id: str):
-        element = self.element_factory.lookup(diagam_id)
+    def tree_view_show_in_diagram(self, diagram_id: str):
+        element = self.element_factory.lookup(diagram_id)
         self.event_manager.handle(DiagramOpened(element))
 
     @action(name="tree-view.rename", shortcut="F2")

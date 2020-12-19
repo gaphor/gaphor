@@ -16,8 +16,8 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
 
 from gaphor import UML
-from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.core.modeling import Presentation, StyleSheet
+from gaphor.core import action, event_handler, gettext
+from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import ToolDef
@@ -49,15 +49,6 @@ def placement_icon_base():
 GtkView.set_css_name("diagramview")
 
 _placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
-
-
-_upper_offset = ord("A") - ord("a")
-
-
-@functools.lru_cache(maxsize=None)
-def parse_shortcut(shortcut):
-    key, mod = Gtk.accelerator_parse(shortcut)
-    return (key, key + _upper_offset), mod
 
 
 def get_placement_cursor(display, icon_name):
@@ -142,14 +133,12 @@ class DiagramPage:
         self.widget = scrolled_window
 
         view.selection.add_handler(self._on_view_selection_changed)
-        view.connect_after("key-press-event", self._on_key_press_event)
         view.connect("drag-data-received", self._on_drag_data_received)
 
         self.view = view
 
         self.widget.action_group = create_action_group(self, "diagram")
 
-        self.widget.connect_after("key-press-event", self._on_shortcut_action)
         self.select_tool("toolbox-pointer")
 
         self.set_drawing_style()
@@ -167,7 +156,10 @@ class DiagramPage:
         """Return a tool associated with an id (action name)."""
         if tool_name == "toolbox-pointer":
             return apply_default_tool_set(
-                self.view, self.event_manager, self.rubberband_state
+                self.view,
+                self.modeling_language,
+                self.event_manager,
+                self.rubberband_state,
             )
 
         tool_def = self.get_tool_def(tool_name)
@@ -255,18 +247,6 @@ class DiagramPage:
         if self.view.has_focus():
             self.view.selection.unselect_all()
 
-    @action(name="diagram.delete")
-    @transactional
-    def delete_selected_items(self):
-        assert self.view
-        items = self.view.selection.selected_items
-        for i in list(items):
-            if isinstance(i, Presentation):
-                i.unlink()
-            else:
-                if i.canvas:
-                    i.canvas.remove(i)
-
     @action(name="diagram.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
         if self.view:
@@ -320,34 +300,6 @@ class DiagramPage:
         view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
         view.queue_redraw()
-
-    def _on_key_press_event(self, view, event):
-        """Handle the 'Delete' key.
-
-        This can not be handled directly (through GTK's accelerators),
-        otherwise this key will confuse the text edit stuff.
-        """
-        if (
-            view.is_focus()
-            and event.keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace)
-            and (
-                event.get_state() == 0 or event.get_state() & Gdk.ModifierType.MOD2_MASK
-            )
-        ):
-            self.delete_selected_items()
-
-    def _on_shortcut_action(self, widget, event):
-        # accelerator keys are lower case. Since we handle them in a key-press event
-        # handler, we'll need the upper-case versions as well in case Shift is pressed.
-        for _title, items in self.modeling_language.toolbox_definition:
-            for action_name, _label, _icon_name, shortcut, *rest in items:
-                if not shortcut:
-                    continue
-                keys, mod = parse_shortcut(shortcut)
-                if event.state == mod and event.keyval in keys:
-                    widget.get_toplevel().get_action_group("diagram").lookup_action(
-                        "select-tool"
-                    ).change_state(GLib.Variant.new_string(action_name))
 
     def _on_view_selection_changed(self):
         view = self.view
