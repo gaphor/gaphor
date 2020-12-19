@@ -26,5 +26,5 @@ class InterfaceTestCase(TestCase):
         # ... gives provided folded mode on load;
         # correct folded mode is determined by connections, which will be
         # recreated later, i.e. required folded mode will be set when
-        # implementation connects to the interface
-        # assert Folded.PROVIDED == interfaces[0].folded
+        # implementation connects to the interface and Folded.PROVIDED
+        # is equal to interfaces[0].folded

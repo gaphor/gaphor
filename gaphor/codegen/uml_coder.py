@@ -139,7 +139,6 @@ def parse_association_end(head, tail):
     head.composite = head.get("aggregation") == "composite"
     head.derived = int(head.isDerived or 0)
     head.redefines = redefines
-    # redefines.upper = upper
 
 
 def filter_out_metaclasses(classes, extensions, all_elements):

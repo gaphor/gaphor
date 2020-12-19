@@ -260,12 +260,10 @@ class ForkNodeItem(Presentation[UML.ForkNode], Item, Named):
         elif name == "combined":
             self._combined = value
         else:
-            # DiagramItem.load(self, name, value)
             super().load(name, value)
 
     @observed
     def _set_combined(self, value):
-        # self.preserve_property('combined')
         self._combined = value
 
     combined = reversible_property(lambda s: s._combined, _set_combined)

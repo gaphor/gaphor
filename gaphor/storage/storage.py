@@ -377,7 +377,6 @@ def upgrade_message_item_to_1_1_0(canvasitems):
     """Create new MessageItem's for each `message` and `inverted` message."""
     new_canvasitems = []
     for item in canvasitems:
-        # new_canvasitems.append(item)
         if item.type == "MessageItem" and item.references.get("subject"):
             messages = item.references.get("message", [])
             inverted = item.references.get("inverted", [])

@@ -500,7 +500,6 @@ class AssociationEnd(Presentation):
             return
 
         cr = context.cairo
-        # style = {**context.style, **self._inline_style}
         text_color = context.style.get("text-color")
         if text_color:
             cr.set_source_rgba(*text_color)

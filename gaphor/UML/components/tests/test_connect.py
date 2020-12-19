@@ -28,7 +28,6 @@ class ComponentConnectTestCase(TestCase):
 
         self.connect(line, line.head, component)
         assert line.subject is None
-        # self.assertTrue(line.end is None)
 
     def test_glue_both(self):
         """Test gluing connector to component when one is connected."""
@@ -225,24 +224,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         # there should be two connector ends
         self.assertEqual(2, len(assembly.end))
-        # interface is on both ends
-        # end1 = conn1.end
-        # end2 = conn2.end
-
-        # self.assertTrue(end1 in assembly.end,
-        #    '%s not in %s' % (end1, assembly.end))
-        # self.assertTrue(end2 in assembly.end,
-        #    '%s not in %s' % (end2, assembly.end))
-
-        # self.assertEqual(end1.role, iface.subject)
-        # self.assertEqual(end2.role, iface.subject)
-        # ends of connector point to components
-        # p1 = end1.partWithPort
-        # p2 = end2.partWithPort
-        # self.assertEqual(p1, c1.subject.ownedPort[0],
-        #    '%s != %s' % (p1, c1.subject.ownedPort))
-        # self.assertEqual(p2, c2.subject.ownedPort[0],
-        #    '%s != %s' % (p2, c2.subject.ownedPort))
 
     def test_required_port_glue(self):
         """Test if required port gluing works."""
@@ -332,7 +313,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         # test UML data model
         self.assertTrue(conn3.subject is conn1.subject)
-        # self.assertTrue(conn3.end is not None)
 
         assembly = conn1.subject
 

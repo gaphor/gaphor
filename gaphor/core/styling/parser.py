@@ -288,8 +288,6 @@ class CompoundSelector(object):
     @property
     def specificity(self):
         if self.simple_selectors:
-            # zip(*foo) turns [(a1, b1, c1), (a2, b2, c2), ...]
-            # into [(a1, a2, ...), (b1, b2, ...), (c1, c2, ...)]
             return tuple(
                 map(sum, zip(*(sel.specificity for sel in self.simple_selectors)))
             )

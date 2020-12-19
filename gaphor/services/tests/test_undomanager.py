@@ -16,28 +16,19 @@ class TestUndoManager(TestCase):
 
         assert not undo_manager._current_transaction
 
-        # undo_manager.begin_transaction()
         tx = Transaction(event_manager)
 
-        # assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction
 
         current = undo_manager._current_transaction
-        # undo_manager.begin_transaction()
         tx2 = Transaction(event_manager)
-        # assert undo_manager._transaction_depth == 2
-        # assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction is current
 
-        # undo_manager.commit_transaction()
         tx2.commit()
 
-        # assert undo_manager._transaction_depth == 1
         assert undo_manager._current_transaction is current
 
-        # undo_manager.commit_transaction()
         tx.commit()
-        # assert undo_manager._transaction_depth == 0
         assert undo_manager._current_transaction is None
 
         undo_manager.shutdown()
@@ -72,14 +63,12 @@ class TestUndoManager(TestCase):
         event_manager = EventManager()
         undo_manager = UndoManager(event_manager)
 
-        # undo_manager.begin_transaction()
         tx = Transaction(event_manager)
         undo_manager.add_undo_action(undo_action)
         assert undo_manager._current_transaction
         assert undo_manager.can_undo()
         assert len(undo_manager._current_transaction._actions) == 1
 
-        # undo_manager.commit_transaction()
         tx.commit()
 
         undo_manager.undo_transaction()
@@ -380,7 +369,6 @@ class TestUndoManager(TestCase):
         assert undo_manager.can_redo()
         assert 0 == len(undo_manager._undo_stack)
         assert 2 == len(undo_manager._redo_stack)
-        # assert element_factory.size() == 0
 
         undo_manager.redo_transaction()
         assert 1 == len(undo_manager._undo_stack)

@@ -160,10 +160,6 @@ def format_parameter(
 
     if default and el.defaultValue:
         s.append(f" = {el.defaultValue}")
-    # if p.taggedValue:
-    #     tvs = ', '.join(filter(None, map(getattr, p.taggedValue,
-    #                                      ['value'] * len(p.taggedValue))))
-    #     s.append(' { %s }' % tvs)
     return "".join(s)
 
 

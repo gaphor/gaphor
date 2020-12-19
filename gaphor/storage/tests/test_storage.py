@@ -76,7 +76,6 @@ class StorageTestCase(TestCase):
         """Test loading of a freshly saved model."""
         self.element_factory.create(UML.Package)
         # diagram is created in TestCase.setUp
-        # self.element_factory.create(UML.Diagram)
         self.element_factory.create(UML.Comment)
         self.element_factory.create(UML.Class)
 
@@ -113,7 +112,6 @@ class StorageTestCase(TestCase):
         c = self.element_factory.lselect(UML.Class)[0]
         assert c.presentation
         assert c.presentation[0].subject is c
-        # assert c.presentation[0].subject.name.startwith('Class')
 
         iface = self.element_factory.lselect(UML.Interface)[0]
         assert iface.name == "Circus"

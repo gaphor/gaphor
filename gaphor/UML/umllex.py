@@ -112,7 +112,7 @@ parameter_pat = compile(
 )
 
 # Lifeline:
-#  [name] [: type]
+#  [name] [: type]  # noqa: E800
 lifeline_pat = compile("^" + name_subpat + type_subpat + mult_subpat + garbage_subpat)
 
 
@@ -284,7 +284,7 @@ def parse_lifeline(el: uml.Lifeline, s: str) -> None:
         if t:
             el.name += ": " + t
         # In the near future the data model should be extended with
-        # Lifeline.represents: ConnectableElement
+        # Lifeline.represents: ConnectableElement  # noqa: E800
 
 
 def render_lifeline(el: uml.Lifeline) -> str:

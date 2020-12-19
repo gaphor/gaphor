@@ -178,9 +178,8 @@ def test_association_1_n():
 
 
 def test_association_n_n():
-    #
-    # n:n
-    #
+    """Test association n:n."""
+
     class A(Element):
         one: relation_many[B]
 
@@ -264,14 +263,7 @@ def test_association_swap():
     def handler(event, events=events):
         events.append(event)
 
-    #        Application.register_handler(handler)
-    #        try:
     a.one.swap(b1, b2)
-    #            assert len(events) == 1
-    #            assert events[0].property is A.one
-    #            assert events[0].element is a
-    #        finally:
-    #            Application.unregister_handler(handler)
 
     assert a.one.size() == 2
     assert a.one[0] is b2
@@ -279,9 +271,6 @@ def test_association_swap():
 
 
 def test_association_unlink_1():
-    #
-    # unlink
-    #
     class A(Element):
         one: relation_many[B]
 

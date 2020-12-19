@@ -49,7 +49,6 @@ class FlowConnect(UnaryRelationshipConnect):
             relation.name = name
             if guard_value:
                 relation.guard = guard_value
-            # old_flow.unlink()
 
     def connect_subject(self, handle):
         line = self.line

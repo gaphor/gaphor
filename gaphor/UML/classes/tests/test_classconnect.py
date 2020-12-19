@@ -232,8 +232,6 @@ def test_generalization_reconnection(create, element_factory):
     assert gen.subject is not gen2.subject
     assert len(c1.subject.generalization) == 1
     assert c1.subject.generalization[0] is gen.subject
-    # self.assertEqual(1, len(actor2.clientDependency))
-    # self.assertTrue(actor2.clientDependency[0] is dep.subject)
 
 
 def test_generalization_reconnection2(create):
