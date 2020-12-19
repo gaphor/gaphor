@@ -61,12 +61,11 @@ def parse_compound_selector(tokens, namespaces):
 
     if simple_selectors or type_selectors is not None:
         return CompoundSelector(simple_selectors)
-    else:
-        peek = tokens.peek()
-        raise SelectorError(
-            peek,
-            "expected a compound selector, got %s" % (peek.type if peek else "EOF"),
-        )
+    peek = tokens.peek()
+    raise SelectorError(
+        peek,
+        "expected a compound selector, got %s" % (peek.type if peek else "EOF"),
+    )
 
 
 def parse_type_selector(tokens, namespaces):
@@ -288,8 +287,6 @@ class CompoundSelector(object):
     @property
     def specificity(self):
         if self.simple_selectors:
-            # zip(*foo) turns [(a1, b1, c1), (a2, b2, c2), ...]
-            # into [(a1, a2, ...), (b1, b2, ...), (c1, c2, ...)]
             return tuple(
                 map(sum, zip(*(sel.specificity for sel in self.simple_selectors)))
             )

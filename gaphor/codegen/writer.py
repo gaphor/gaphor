@@ -181,7 +181,6 @@ class Writer:
         # Add the opposite property if the head itself is navigable:
         if tail.navigable:
             try:
-                # o_derived, o_name = parse_association_name(tail['name'])
                 o_name = tail.name
                 o_derived = tail.derived
             except KeyError:

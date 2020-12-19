@@ -12,9 +12,6 @@ from gaphor.tests import TestCase
 
 
 class CyclicDiagramTestCase(TestCase):
-
-    # services = TestCase.services + ['undo_manager']
-
     def setUp(self):
         super().setUp()
 

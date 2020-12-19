@@ -102,7 +102,6 @@ def test_commentline_element_reconnect(create, diagram):
     assert ac.subject in comment.subject.annotatedElement
 
     ac2 = create(ActorItem, UML.Actor)
-    # ac.canvas.disconnect_item(line, line.tail)
     disconnect(line, line.tail)
     connect(line, line.tail, ac2)
     assert diagram.canvas.get_connection(line.tail).connected is ac2

@@ -25,11 +25,9 @@ class ClassTestCase(TestCase):
         assert 2 == len(compartments(klass))
         assert 0 == len(compartments(klass)[0].children)
         assert 0 == len(compartments(klass)[1].children)
-        # assert (10, 10) == klass._compartments[0].get_size()
 
         diagram.canvas.update()
 
-        # assert (10, 10) == klass._compartments[0].get_size()
         assert 54 == float(klass.min_height)  # min_height
         assert 100 == float(klass.min_width)
 

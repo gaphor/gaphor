@@ -163,7 +163,6 @@ class EditableTreeModel(Gtk.ListStore):
         o1 = self[a][-1]
         o2 = self[b][-1]
         if o1 and o2 and self._swap_objects(o1, o2):
-            # self._item.request_update(matrix=False)
             super().swap(a, b)
 
     def _add_empty(self):
@@ -193,7 +192,6 @@ class EditableTreeModel(Gtk.ListStore):
         obj = self._get_object(iter)
         if obj:
             obj.unlink()
-            # self._item.request_update(matrix=False)
             return super().remove(iter)
         else:
             return iter

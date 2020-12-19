@@ -350,7 +350,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
-        # watcher.watch('one.one.one.one')
         watcher.subscribe_all()
 
         a.one = A()
@@ -373,7 +372,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
-        # watcher.watch('one.one.one.one')
         watcher.subscribe_all()
 
         a.one = A()
@@ -398,7 +396,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
-        # watcher.watch('one.one.one.one')
         watcher.subscribe_all()
 
         a.one = A()
@@ -413,7 +410,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert len(self.dispatcher._handlers) == 6
 
         del a.one.two[0].one
-        # a.unlink()
         watcher.unsubscribe_all()
         watcher.unsubscribe_all()
         assert len(self.dispatcher._handlers) == 0
@@ -424,7 +420,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
-        # watcher.watch('one.one.one.one')
         watcher.subscribe_all()
 
         a.one = A()
@@ -433,9 +428,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[0].one = a
 
         assert 4 == len(self.events)
-
-        # a.one.two[0].one.two = A()
-        # a.one.two[0].one.two = A()
 
         a.unlink()
         assert 1 == len(self.dispatcher._handlers)
