@@ -61,12 +61,11 @@ def parse_compound_selector(tokens, namespaces):
 
     if simple_selectors or type_selectors is not None:
         return CompoundSelector(simple_selectors)
-    else:
-        peek = tokens.peek()
-        raise SelectorError(
-            peek,
-            "expected a compound selector, got %s" % (peek.type if peek else "EOF"),
-        )
+    peek = tokens.peek()
+    raise SelectorError(
+        peek,
+        "expected a compound selector, got %s" % (peek.type if peek else "EOF"),
+    )
 
 
 def parse_type_selector(tokens, namespaces):
