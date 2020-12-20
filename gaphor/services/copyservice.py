@@ -100,9 +100,8 @@ class CopyService(Service, ActionProvider):
 
         new_items = self.paste(diagram)
 
-        view.selection.unselect_all()
-
-        for item in new_items:
-            view.select_item(item)
+        selection = view.selection
+        selection.unselect_all()
+        selection.select_items(*new_items)
 
         self.event_manager.handle(DiagramSelectionChanged(view, None, new_items))
