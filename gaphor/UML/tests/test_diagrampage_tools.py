@@ -72,21 +72,23 @@ def test_pointer(tab):
         "toolbox-extension",
     ],
 )
-def test_placement_action(tab, tool_name):
+def test_placement_action(tab, tool_name, event_manager):
     tool_def = tab.get_tool_def(tool_name)
     tool = Gtk.GestureDrag.new(tab.view)
-    placement_state = PlacementState(tool_def.item_factory, tool_def.handle_index)
+    placement_state = PlacementState(
+        tool_def.item_factory, event_manager, tool_def.handle_index
+    )
     on_drag_begin(tool, 0, 0, placement_state)
     tab.view.update()
 
 
-def test_placement_object_node(tab, element_factory):
-    test_placement_action(tab, "toolbox-object-node")
+def test_placement_object_node(tab, element_factory, event_manager):
+    test_placement_action(tab, "toolbox-object-node", event_manager)
     assert len(element_factory.lselect(UML.ObjectNode)) == 1
 
 
-def test_placement_partition(tab, element_factory):
-    test_placement_action(tab, "toolbox-partition")
+def test_placement_partition(tab, element_factory, event_manager):
+    test_placement_action(tab, "toolbox-partition", event_manager)
 
     assert len(element_factory.lselect(UML.ActivityPartition)) == 2
 

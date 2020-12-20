@@ -9,6 +9,7 @@ from gaphas.view import GtkView
 from gi.repository import Gtk
 
 from gaphor.core import transactional
+from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, Element
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.event import DiagramItemPlaced
@@ -23,8 +24,11 @@ ConfigFuncType = Callable[[P], None]
 
 
 class PlacementState:
-    def __init__(self, factory: FactoryType, handle_index: int):
+    def __init__(
+        self, factory: FactoryType, event_manager: EventManager, handle_index: int
+    ):
         self.factory = factory
+        self.event_manager = event_manager
         self.handle_index = handle_index
         self.moving: Optional[MoveType] = None
 
@@ -33,10 +37,10 @@ def placement_tool(
     view: GtkView, factory: FactoryType, event_manager, handle_index: int
 ):
     gesture = Gtk.GestureDrag.new(view)
-    placement_state = PlacementState(factory, handle_index)
+    placement_state = PlacementState(factory, event_manager, handle_index)
     gesture.connect("drag-begin", on_drag_begin, placement_state)
     gesture.connect("drag-update", on_drag_update, placement_state)
-    gesture.connect("drag-end", on_drag_end, placement_state, event_manager)
+    gesture.connect("drag-end", on_drag_end, placement_state)
     return gesture
 
 
@@ -52,6 +56,8 @@ def on_drag_begin(gesture, start_x, start_y, placement_state):
         connect_opposite_handle(view, item, x, y, placement_state.handle_index)
         placement_state.moving = HandleMove(item, handle, view)
         placement_state.moving.start_move((start_x, start_y))
+    else:
+        placement_state.event_manager.handle(DiagramItemPlaced(item))
 
     view.selection.dropzone_item = None
 
@@ -90,11 +96,13 @@ def on_drag_update(gesture, offset_x, offset_y, placement_state):
         placement_state.moving.move((x + offset_x, y + offset_y))
 
 
-def on_drag_end(gesture, offset_x, offset_y, placement_state, event_manager):
+def on_drag_end(gesture, offset_x, offset_y, placement_state):
     if placement_state.moving:
         _, x, y = gesture.get_start_point()
         placement_state.moving.stop_move((x + offset_x, y + offset_y))
-        event_manager.handle(DiagramItemPlaced(placement_state.moving.item))
+        placement_state.event_manager.handle(
+            DiagramItemPlaced(placement_state.moving.item)
+        )
 
 
 def new_item_factory(
