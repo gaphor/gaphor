@@ -168,6 +168,7 @@ class DiagramPage:
         return apply_placement_tool_set(
             self.view,
             item_factory=item_factory,
+            modeling_language=self.modeling_language,
             event_manager=self.event_manager,
             handle_index=handle_index,
         )

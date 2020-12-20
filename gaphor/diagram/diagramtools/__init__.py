@@ -37,8 +37,11 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     view.add_controller(shortcut_tool(view, modeling_language, event_manager))
 
 
-def apply_placement_tool_set(view, item_factory, event_manager, handle_index):
+def apply_placement_tool_set(
+    view, item_factory, modeling_language, event_manager, handle_index
+):
     view.remove_all_controllers()
+    view.add_controller(view_focus_tool(view))
     view.add_controller(
         *transactional_tool(
             placement_tool(view, item_factory, event_manager, handle_index),
@@ -48,4 +51,4 @@ def apply_placement_tool_set(view, item_factory, event_manager, handle_index):
     view.add_controller(drop_zone_tool(view, item_factory.item_class))
     view.add_controller(scroll_tool(view))
     view.add_controller(zoom_tool(view))
-    view.add_controller(view_focus_tool(view))
+    view.add_controller(shortcut_tool(view, modeling_language, event_manager))
