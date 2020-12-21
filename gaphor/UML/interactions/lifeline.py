@@ -187,12 +187,14 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         )
         self.__constraints = (c1, c2, c3, self.lifetime._c_min_length)
 
-        list(map(self.canvas.solver.add_constraint, self.__constraints))
+        for c in self.__constraints:
+            self._connections.add_constraint(self, c)
 
     def teardown_canvas(self):
         assert self.canvas
         super().teardown_canvas()
-        list(map(self.canvas.solver.remove_constraint, self.__constraints))
+        for c in self.__constraints:
+            self._connections.remove_constraint(self, c)
 
     def save(self, save_func):
         super().save(save_func)

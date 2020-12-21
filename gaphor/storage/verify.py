@@ -44,7 +44,7 @@ def orphan_references(factory):
     def verify_canvas(value):
         elements.add(value.id)
         value.save(verify_canvasitem)
-        for child in value.canvas.get_children(value):
+        for child in value.diagram.get_children(value):
             verify_canvas(child)
 
     def verify_canvasitem(name, value):
