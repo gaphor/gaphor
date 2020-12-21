@@ -322,7 +322,7 @@ class DiagramCanvas(gaphas.Canvas):
         for item in self.get_root_items():
             save_func(item)
 
-    def select(self, expression=lambda e: True):
+    def select(self, expression=None):
         """Return a list of all canvas items that match expression."""
         if expression is None:
             yield from self.get_all_items()
@@ -330,8 +330,6 @@ class DiagramCanvas(gaphas.Canvas):
             yield from (e for e in self.get_all_items() if isinstance(e, expression))
         else:
             yield from (e for e in self.get_all_items() if expression(e))
-
-            return list(filter(expression, self.get_all_items()))
 
     def reparent(self, item, parent):
         """A more fancy version of the reparent method."""
@@ -434,6 +432,9 @@ class Diagram(PackageableElement):
 
         super().unlink()
 
+    def select(self, expression=lambda e: True):
+        return self.canvas.select(expression)
+
     @property
     def connections(self) -> gaphas.connections.Connections:
         return self.canvas.connections
@@ -461,7 +462,7 @@ class Diagram(PackageableElement):
     def update_now(
         self,
         dirty_items: Sequence[Presentation],
-        dirty_matrix_items: Sequence[Presentation],
+        dirty_matrix_items: Sequence[Presentation] = (),
     ) -> None:
         self.canvas.update_now(dirty_items, dirty_matrix_items)
 

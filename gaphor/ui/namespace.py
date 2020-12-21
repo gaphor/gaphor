@@ -268,8 +268,9 @@ class Namespace(UIComponent):
     def tree_view_create_diagram(self):
         assert self.view
         element = self.view.get_selected_element()
+        assert element
         while not isinstance(element, UML.Package):
-            element = element.namespace
+            element = element.owner
         diagram = self.element_factory.create(Diagram)
         diagram.package = element
 
@@ -283,6 +284,7 @@ class Namespace(UIComponent):
     def tree_view_create_package(self):
         assert self.view
         element = self.view.get_selected_element()
+        assert isinstance(element, UML.Package)
         package = self.element_factory.create(UML.Package)
         package.package = element
 
@@ -308,7 +310,7 @@ class Namespace(UIComponent):
                 "that are not shown in other diagrams." % (element.name or "<None>"),
             )
             if m.run() == Gtk.ResponseType.YES:
-                for i in reversed(element.canvas.get_all_items()):
+                for i in reversed(list(element.get_all_items())):
                     s = i.subject
                     if s and len(s.presentation) == 1:
                         s.unlink()

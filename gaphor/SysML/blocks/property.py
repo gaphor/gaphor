@@ -32,7 +32,7 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
     def alignment(self) -> VerticalAlign:
-        if self.canvas and self.canvas.get_children(self):
+        if self.diagram and self.diagram.get_children(self):
             return VerticalAlign.TOP
         else:
             return VerticalAlign.MIDDLE
