@@ -23,7 +23,7 @@ def create(element_factory, diagram):
         if subject_cls:
             subject = element_factory.create(subject_cls)
         item = diagram.create(item_cls, subject=subject)
-        diagram.canvas.update_now((item,))
+        diagram.update_now((item,), ())
         return item
 
     return create

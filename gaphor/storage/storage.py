@@ -116,7 +116,7 @@ def save_element(name, value, writer):
         writer.startElement("item", {"id": value.id, "type": value.__class__.__name__})
         value.save(save_canvas_item)
 
-        for child in value.canvas.get_children(value):
+        for child in value.diagram.get_children(value):
             save_canvas(child)
 
         writer.endElement("item")
@@ -175,9 +175,8 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
     yield from _load_attributes_and_references(elements, update_status_queue)
 
     for d in factory.lselect(Diagram):
-        canvas = d.canvas
-        for item in canvas.get_all_items():
-            item.matrix_i2c.set(*canvas.get_matrix_i2c(item))
+        for item in d.get_all_items():
+            item.matrix_i2c.set(*d.get_matrix_i2c(item))
 
     for id, elem in list(elements.items()):
         yield from update_status_queue()
