@@ -65,7 +65,7 @@ def on_drag_begin(gesture, start_x, start_y, placement_state):
 def create_item(view, factory, x, y):
     selection = view.selection
     parent = selection.dropzone_item
-    item = factory(view.model.diagram, parent)
+    item = factory(view.model, parent)
     x, y = view.get_matrix_v2i(item).transform_point(x, y)
     item.matrix.translate(x, y)
     selection.unselect_all()

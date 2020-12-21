@@ -438,6 +438,9 @@ class Diagram(PackageableElement):
     def connections(self) -> gaphas.connections.Connections:
         return self.canvas.connections
 
+    def get_matrix_i2c(self, item: Presentation) -> gaphas.matrix.Matrix:
+        return self.canvas.get_matrix_i2c(item)
+
     def get_all_items(self) -> Iterable[Presentation]:
         return self.canvas.get_all_items()  # type: ignore[no-any-return]
 

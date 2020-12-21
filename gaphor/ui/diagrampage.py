@@ -114,7 +114,7 @@ class DiagramPage:
         """
         assert self.diagram
 
-        view = GtkView(model=self.diagram.canvas, selection=Selection())
+        view = GtkView(model=self.diagram, selection=Selection())
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,
@@ -192,9 +192,9 @@ class DiagramPage:
         if event.property is StyleSheet.styleSheet:
             self.set_drawing_style()
 
-            canvas = self.diagram.canvas
-            for item in canvas.get_all_items():
-                canvas.request_update(item)
+            diagram = self.diagram
+            for item in diagram.get_all_items():
+                diagram.request_update(item)
 
     def close(self):
         """Tab is destroyed.
@@ -313,7 +313,7 @@ class DiagramPage:
         )
 
     def _on_drag_data_received(self, view, context, x, y, data, info, time):
-        """Handle data dropped on the canvas."""
+        """Handle data dropped on the diagram."""
         if (
             data
             and data.get_format() == 8
