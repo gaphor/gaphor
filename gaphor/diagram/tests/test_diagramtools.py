@@ -50,7 +50,7 @@ class DiagramItemConnectorTestCase(TestCase):
         # The act: perform button press event and button release
         view = self.component_registry.get(UIComponent, "diagrams").get_current_view()
 
-        assert self.diagram.canvas is view.model
+        assert self.diagram is view.model
 
         p = view.get_matrix_i2v(a).transform_point(*a.head.pos)
 
