@@ -31,7 +31,7 @@ def diagrams(event_manager, element_factory, properties):
 
 @pytest.fixture
 def connections(diagram):
-    return diagram.canvas.connections
+    return diagram.connections
 
 
 @pytest.fixture
@@ -66,8 +66,7 @@ def test_connect(diagram, comment, commentline, connections):
     sink = ConnectionSink(comment, comment.ports()[0])
     aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
     aspect.connect(sink)
-    canvas = diagram.canvas
-    cinfo = canvas.connections.get_connection(commentline.handles()[0])
+    cinfo = diagram.connections.get_connection(commentline.handles()[0])
     assert cinfo, cinfo
 
 
@@ -91,7 +90,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
     actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
     actor.matrix.translate(200, 200)
-    diagram.canvas.update_now((actor,))
+    diagram.update_now((actor,))
 
     line = diagram.create(CommentLineItem)
 
@@ -108,13 +107,13 @@ def test_iconnect(event_manager, element_factory, diagrams):
     assert item is not None
 
     move.connect(handle.pos)
-    cinfo = diagram.canvas.connections.get_connection(handle)
+    cinfo = diagram.connections.get_connection(handle)
     assert cinfo.constraint is not None
     assert cinfo.connected is comment, cinfo.connected
 
-    ConnectorAspect(line, handle, diagram.canvas.connections).disconnect()
+    ConnectorAspect(line, handle, diagram.connections).disconnect()
 
-    cinfo = diagram.canvas.connections.get_connection(handle)
+    cinfo = diagram.connections.get_connection(handle)
 
     assert cinfo is None
 
@@ -139,7 +138,7 @@ def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     assert sink.item is comment
 
     move.connect(handle.pos)
-    cinfo = diagram.canvas.connections.get_connection(handle)
+    cinfo = diagram.connections.get_connection(handle)
     assert cinfo is not None, None
     assert cinfo.item is line
     assert cinfo.connected is comment
