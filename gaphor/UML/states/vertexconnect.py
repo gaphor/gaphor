@@ -69,7 +69,7 @@ class PseudostateTransitionConnect(VertexConnect):
             return super().allow(handle, port)
 
         # Check if no other items are connected
-        connections = self.canvas.connections.get_connections(connected=element)
+        connections = self.diagram.connections.get_connections(connected=element)
         line = self.line
         connected_items = [
             c

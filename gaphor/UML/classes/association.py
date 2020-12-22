@@ -487,7 +487,7 @@ class AssociationEnd(Presentation):
         )
 
     def point(self, x, y):
-        """Given a point (x, y) return the distance to the canvas item."""
+        """Given a point (x, y) return the distance to the diagram item."""
         drp = distance_rectangle_point
         pos = (x, y)
         d1 = drp(self._name_bounds, pos)

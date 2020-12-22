@@ -140,8 +140,8 @@ class ElementFactory(Service):
     def flush(self) -> None:
         """Flush all elements (remove them from the factory).
 
-        Diagram elements are flushed first.  This is so that canvas
-        updates are blocked.  The remaining elements are then flushed.
+        Diagram elements are flushed first. The remaining elements are
+        flushed next.
         """
         with self.block_events():
             for element in self.lselect(Diagram):

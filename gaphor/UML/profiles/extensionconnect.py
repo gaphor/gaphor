@@ -60,7 +60,7 @@ class ExtensionConnect(RelationshipConnect):
                     end2.type is head_type and end1.type is tail_type
                 ):
                     # check if this entry is not yet in the diagram
-                    # Return if the association is not (yet) on the canvas
+                    # Return if the association is not (yet) on the diagram
                     for item in ext.presentation:
                         if item.diagram is element.diagram:
                             break

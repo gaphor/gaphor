@@ -99,19 +99,14 @@ class EditableTreeModel(Gtk.ListStore):
 
     Last row is empty and contains no object to edit. It allows to enter
     new values.
-
-    When model is edited, then item is requested to be updated on canvas.
-
-    Attributes:
-    - _item: diagram item owning tree model
     """
 
     def __init__(self, item, cols=None):
         """Create new model.
 
-        Parameters:
-        - _item: diagram item owning tree model
-        - cols: model columns, defaults to [str, object]
+        Args:
+          item (Presentation): diagram item owning tree model
+          cols (tuple): model column types, defaults to [str, object]
         """
 
         if cols is None:

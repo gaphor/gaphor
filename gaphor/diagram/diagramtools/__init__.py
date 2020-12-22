@@ -1,7 +1,4 @@
-"""Tools for handling items on the canvas.
-
-TODO: make tools transactional.
-"""
+"""Tools for handling items on a diagram."""
 
 from gaphas.segment import segment_tool
 from gaphas.tool import (

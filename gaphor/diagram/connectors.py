@@ -8,13 +8,12 @@ from __future__ import annotations
 
 from typing import List, Optional, Type, TypeVar, Union
 
-from gaphas.canvas import Canvas
 from gaphas.connections import Connection
 from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
 from typing_extensions import Protocol
 
-from gaphor.core.modeling import Element, Presentation
+from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.properties import association, redefine, relation
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
@@ -66,18 +65,18 @@ class BaseConnector:
         element: Presentation[Element],
         line: Presentation[Element],
     ) -> None:
-        assert element.canvas is line.canvas
+        assert element.diagram and element.diagram is line.diagram
         self.element = element
         self.line = line
-        self.canvas: Canvas = element.canvas
+        self.diagram: Diagram = element.diagram
 
     def get_connection(self, handle: Handle) -> Optional[Connection]:
         """Get connection information."""
-        return self.canvas.connections.get_connection(handle)
+        return self.diagram.connections.get_connection(handle)
 
     def get_connected(self, handle: Handle) -> Optional[Presentation[Element]]:
         """Get item connected to a handle."""
-        cinfo = self.canvas.connections.get_connection(handle)
+        cinfo = self.diagram.connections.get_connection(handle)
         if cinfo:
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
         return None
@@ -135,7 +134,7 @@ class UnaryRelationshipConnect(BaseConnector):
 
     This class introduces a new method: relationship() which is used to
     find an existing relationship in the model that does not yet exist
-    on the canvas.
+    on the diagram.
     """
 
     element: Presentation
@@ -191,12 +190,12 @@ class UnaryRelationshipConnect(BaseConnector):
                 if gen_head is not head_subject:
                     continue
 
-            # Check for this entry on line.canvas
+            # Check for this entry on line.diagram
             item: Union[ElementPresentation, LinePresentation]
             for item in gen.presentation:
                 # Allow line to be returned. Avoids strange
                 # behaviour during loading
-                if item.canvas is line.canvas and item is not line:
+                if item.diagram is line.diagram and item is not line:
                     break
             else:
                 return gen
@@ -246,12 +245,11 @@ class UnaryRelationshipConnect(BaseConnector):
         """Cause items connected to ``line`` to reconnect, allowing them to
         establish or destroy relationships at model level."""
         line = self.line
-        canvas = self.canvas
-        solver = canvas.solver
+        diagram = self.diagram
 
         # First make sure coordinates match
-        solver.solve()
-        for cinfo in connections or canvas.connections.get_connections(connected=line):
+        diagram.connections.solver.solve()
+        for cinfo in connections or diagram.connections.get_connections(connected=line):
             if line is cinfo.connected:
                 continue
             adapter = Connector(line, cinfo.connected)
@@ -269,12 +267,11 @@ class UnaryRelationshipConnect(BaseConnector):
         connect_connected_items()).
         """
         line = self.line
-        canvas = self.canvas
-        solver = canvas.solver
+        diagram = self.diagram
 
         # First make sure coordinates match
-        solver.solve()
-        connections = list(canvas.connections.get_connections(connected=line))
+        diagram.connections.solver.solve()
+        connections = list(diagram.connections.get_connections(connected=line))
         for cinfo in connections:
             adapter = Connector(cinfo.item, cinfo.connected)
             adapter.disconnect(cinfo.handle)
