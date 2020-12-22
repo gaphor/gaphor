@@ -15,6 +15,8 @@ if TYPE_CHECKING:
     from gaphas.connector import Handle  # noqa
     from gaphas.matrix import Matrix  # noqa
 
+    from gaphor.core.modeling.diagram import Diagram
+
 S = TypeVar("S", bound=Element)
 
 
@@ -81,14 +83,20 @@ class Presentation(Element, Generic[S]):
         """
         pass
 
-    canvas = property(lambda s: s._canvas, _set_canvas)
+    @property
+    def canvas(self) -> Optional[Canvas]:
+        return self._canvas
+
+    @canvas.setter
+    def canvas(self, canvas: Optional[Canvas]) -> None:
+        self._set_canvas(canvas)
 
     def request_update(self, matrix=True):
         if self.canvas:
             self.canvas.request_update(self, matrix=matrix)
 
     @property
-    def diagram(self):
+    def diagram(self) -> Optional[Diagram]:
         canvas = self.canvas
         return canvas.diagram if canvas else None
 

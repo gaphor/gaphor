@@ -78,7 +78,7 @@ def test_disconnect_execution_specification_from_lifeline(diagram, element_facto
 
     assert lifeline.subject
     assert exec_spec.subject is None
-    assert exec_spec.canvas
+    assert exec_spec.diagram
     assert elements_of_kind(UML.ExecutionSpecification) == []
     assert elements_of_kind(UML.ExecutionOccurrenceSpecification) == []
 

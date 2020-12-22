@@ -166,7 +166,8 @@ class StyledDiagram:
     def children(self) -> Iterator[StyledItem]:
         return (
             StyledItem(item, self.selection)
-            for item in self.diagram.canvas.get_root_items()
+            for item in self.diagram.get_all_items()
+            if not self.diagram.get_parent(item)
         )
 
     def attribute(self, name: str) -> str:
@@ -187,24 +188,24 @@ class StyledItem:
     def __init__(
         self, item: Presentation, selection: Optional[gaphas.view.Selection] = None
     ):
-        assert item.canvas
+        assert item.diagram
         self.item = item
-        self.canvas = item.canvas
+        self.diagram = item.diagram
         self.selection = selection or gaphas.view.Selection()
 
     def name(self) -> str:
         return removesuffix(type(self.item).__name__, "Item").lower()
 
     def parent(self) -> Union[StyledItem, StyledDiagram]:
-        parent = self.canvas.get_parent(self.item)
+        parent = self.diagram.get_parent(self.item)
         return (
             StyledItem(parent, self.selection)
             if parent
-            else StyledDiagram(self.item.diagram, self.selection)
+            else StyledDiagram(self.diagram, self.selection)
         )
 
     def children(self) -> Iterator[StyledItem]:
-        children = self.canvas.get_children(self.item)
+        children = self.diagram.get_children(self.item)
         selection = self.selection
         return (StyledItem(child, selection) for child in children)
 

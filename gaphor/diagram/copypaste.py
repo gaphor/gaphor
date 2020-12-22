@@ -144,16 +144,18 @@ class PresentationCopy(NamedTuple):
 
 @copy.register
 def copy_presentation(item: Presentation) -> PresentationCopy:
-    assert item.canvas
+    assert item.diagram
     buffer = {}
 
     def save_func(name, value):
         buffer[name] = serialize(value)
 
     item.save(save_func)
-    parent = item.canvas.get_parent(item)
+    parent = item.diagram.get_parent(item)
     return PresentationCopy(
-        cls=item.__class__, data=buffer, parent=parent.id if parent else None
+        cls=item.__class__,
+        data=buffer,
+        parent=parent.id if parent and isinstance(parent.id, str) else None,
     )
 
 
@@ -164,11 +166,11 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     if parent:
         p = lookup(parent)
         if p:
-            diagram.canvas.reparent(item, p)
+            diagram.reparent(item, p)
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             item.load(name, value)
-    item.canvas.update_now((), [item])
+    diagram.update_now((), [item])
     return item
 
 

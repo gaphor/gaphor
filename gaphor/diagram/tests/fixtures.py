@@ -32,7 +32,7 @@ def modeling_language():
 
 
 @pytest.fixture
-def diagram(element_factory):
+def diagram(element_factory) -> Diagram:
     diagram = element_factory.create(Diagram)
     yield diagram
     diagram.unlink()

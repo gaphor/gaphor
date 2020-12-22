@@ -52,7 +52,7 @@ class SanitizerService(Service):
 
         element: Presentation = event.element
         subject = event.new_value
-        if not (element.canvas and subject):
+        if not (element.diagram and subject):
             return
 
         for cinfo in element.diagram.connections.get_connections(connected=element):
