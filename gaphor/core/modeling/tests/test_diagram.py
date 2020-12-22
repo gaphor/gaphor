@@ -21,12 +21,6 @@ def element_factory():
     event_manager.shutdown()
 
 
-def test_canvas_is_set_up():
-    diagram = Diagram("id", None)
-
-    assert diagram.canvas
-
-
 def test_diagram_can_be_used_as_gtkview_model():
     diagram = Diagram("id", None)
 
