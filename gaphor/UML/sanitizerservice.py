@@ -55,12 +55,12 @@ class SanitizerService(Service):
         if not (element.canvas and subject):
             return
 
-        for cinfo in element.canvas.connections.get_connections(connected=element):
+        for cinfo in element.diagram.connections.get_connections(connected=element):
             comment_line = cinfo.item
             if not isinstance(comment_line, CommentLineItem):
                 continue
             opposite = comment_line.opposite(cinfo.handle)
-            opposite_cinfo = element.canvas.connections.get_connection(opposite)
+            opposite_cinfo = element.diagram.connections.get_connection(opposite)
             if not opposite_cinfo:
                 continue
             comment_item = opposite_cinfo.connected
@@ -115,6 +115,6 @@ class SanitizerService(Service):
     @event_handler(DerivedSet)
     def _redraw_diagram_on_move(self, event):
         if event.property is Element.owner and isinstance(event.element, Diagram):
-            canvas = event.element.canvas
-            for item in canvas.get_all_items():
-                canvas.request_update(item)
+            diagram = event.element
+            for item in diagram.get_all_items():
+                diagram.request_update(item)

@@ -36,8 +36,8 @@ def delete_selected_items(view: GtkView, event_manager):
             if isinstance(i, Presentation):
                 i.unlink()
             else:
-                if i.canvas:
-                    i.canvas.remove(i)
+                if i.diagram:
+                    i.diagram.remove(i)
 
 
 def on_shortcut(ctrl, keyval, keycode, state, modeling_language):

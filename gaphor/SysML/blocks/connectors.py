@@ -38,8 +38,8 @@ class BlockProperyProxyPortConnector:
             proxy_port.subject.encapsulatedClassifier = self.block.subject
 
         # This raises the item in the item hierarchy
-        assert proxy_port.canvas
-        proxy_port.canvas.reparent(proxy_port, self.block)
+        assert proxy_port.diagram
+        proxy_port.diagram.reparent(proxy_port, self.block)
 
         return True
 
@@ -48,7 +48,7 @@ class BlockProperyProxyPortConnector:
         if proxy_port.subject and proxy_port.canvas:
             subject = proxy_port.subject
             del proxy_port.subject
-            proxy_port.canvas.reparent(proxy_port, None)
+            proxy_port.diagram.reparent(proxy_port, None)
             subject.unlink()
 
 

@@ -54,8 +54,7 @@ class DiagramExport(Service, ActionProvider):
         )
 
     def render(self, diagram, new_surface):
-        canvas = diagram.canvas
-        canvas.update_now(canvas.get_all_items())
+        diagram.update_now(diagram.get_all_items())
 
         painter = new_painter(diagram)
 
@@ -64,7 +63,7 @@ class DiagramExport(Service, ActionProvider):
         tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
         tmpcr = cairo.Context(tmpsurface)
         bounding_box = BoundingBoxPainter(painter).bounding_box(
-            canvas.get_all_items(), tmpcr
+            diagram.get_all_items(), tmpcr
         )
         tmpcr.show_page()
         tmpsurface.flush()
@@ -73,7 +72,7 @@ class DiagramExport(Service, ActionProvider):
         surface = new_surface(w, h)
         cr = cairo.Context(surface)
         cr.translate(-bounding_box.x, -bounding_box.y)
-        painter.paint(items=canvas.get_all_items(), cairo=cr)
+        painter.paint(items=diagram.get_all_items(), cairo=cr)
         cr.show_page()
         return surface
 
