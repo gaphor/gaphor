@@ -13,7 +13,7 @@ def test_copy_item_adds_new_item_to_the_diagram(diagram, element_factory):
 
     paste(buffer, diagram, element_factory.lookup)
 
-    assert len(diagram.canvas.get_root_items()) == 2
+    assert len(list(diagram.get_all_items())) == 2
 
 
 def test_copied_item_references_same_model_element(diagram, element_factory):
@@ -24,8 +24,8 @@ def test_copied_item_references_same_model_element(diagram, element_factory):
 
     paste(buffer, diagram, element_factory.lookup)
 
-    assert len(diagram.canvas.get_root_items()) == 2
-    item1, item2 = diagram.canvas.get_root_items()
+    assert len(list(diagram.get_all_items())) == 2
+    item1, item2 = diagram.get_all_items()
 
     assert item1.subject is item2.subject
 
@@ -39,7 +39,7 @@ def test_copy_multiple_items(diagram, element_factory):
 
     paste(buffer, diagram, element_factory.lookup)
 
-    assert len(diagram.canvas.get_root_items()) == 4
+    assert len(list(diagram.get_all_items())) == 4
     assert len(element_factory.lselect(UML.Class)) == 1
 
 
@@ -53,7 +53,7 @@ def test_copy_item_without_copying_connection(diagram, element_factory):
 
     new_items = paste(buffer, diagram, element_factory.lookup)
 
-    assert len(diagram.canvas.get_root_items()) == 3
+    assert len(list(diagram.get_all_items())) == 3
     assert len(element_factory.lselect(UML.Class)) == 1
     assert type(new_items) is set
     assert len(new_items) == 1
@@ -80,15 +80,15 @@ def test_copy_item_with_connection(diagram, element_factory):
     new_items = paste(buffer, diagram, element_factory.lookup)
     new_gen_item = next(i for i in new_items if isinstance(i, GeneralizationItem))
 
-    new_cls_item1 = new_gen_item.canvas.connections.get_connection(
+    new_cls_item1 = diagram.connections.get_connection(
         new_gen_item.handles()[0]
     ).connected
-    new_cls_item2 = new_gen_item.canvas.connections.get_connection(
+    new_cls_item2 = diagram.connections.get_connection(
         new_gen_item.handles()[1]
     ).connected
 
-    assert new_cls_item1 in diagram.canvas.get_root_items()
-    assert new_cls_item2 in diagram.canvas.get_root_items()
+    assert new_cls_item1 in diagram.get_all_items()
+    assert new_cls_item2 in diagram.get_all_items()
 
     assert len(new_items) == 3
     assert new_cls_item1 in new_items
@@ -111,7 +111,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     cls_item.unlink()
     cls.unlink()  # normally handled by the sanitizer service
 
-    assert len(list(diagram.canvas.get_all_items())) == 0
+    assert len(list(diagram.get_all_items())) == 0
     assert cls not in element_factory.select()
     assert not element_factory.lookup(orig_cls_id)
 
@@ -119,7 +119,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
 
     paste(buffer, diagram, element_factory.lookup)
     new_cls = element_factory.lselect(UML.Class)[0]
-    assert len(diagram.canvas.get_root_items()) == 1
+    assert len(list(diagram.get_all_items())) == 1
     assert new_cls.package is package
     assert element_factory.lookup(orig_cls_id) is new_cls
 

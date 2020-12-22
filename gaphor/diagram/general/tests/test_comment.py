@@ -41,7 +41,7 @@ def test_commentline_annotated_element(create, diagram):
 
     connect(line, line.head, comment)
     # connected, but no annotated element yet
-    assert diagram.canvas.connections.get_connection(line.head)
+    assert diagram.connections.get_connection(line.head)
     assert not comment.subject.annotatedElement
 
 
@@ -64,7 +64,7 @@ def test_commentline_element_connect(create, diagram):
 
     connect(line, line.head, comment)
     connect(line, line.tail, ac)
-    assert diagram.canvas.connections.get_connection(line.tail).connected is ac
+    assert diagram.connections.get_connection(line.tail).connected is ac
     assert len(comment.subject.annotatedElement) == 1
     assert ac.subject in comment.subject.annotatedElement
 
@@ -85,7 +85,7 @@ def test_commentline_item_with_no_subject_connect(create, diagram):
 
     connect(line, line.head, comment)
     connect(line, line.tail, gi)
-    assert diagram.canvas.connections.get_connection(line.tail).connected is gi
+    assert diagram.connections.get_connection(line.tail).connected is gi
     assert len(comment.subject.annotatedElement) == 0
 
 
@@ -97,14 +97,14 @@ def test_commentline_element_reconnect(create, diagram):
 
     connect(line, line.head, comment)
     connect(line, line.tail, ac)
-    assert diagram.canvas.connections.get_connection(line.tail).connected is ac
+    assert diagram.connections.get_connection(line.tail).connected is ac
     assert 1 == len(comment.subject.annotatedElement)
     assert ac.subject in comment.subject.annotatedElement
 
     ac2 = create(ActorItem, UML.Actor)
     disconnect(line, line.tail)
     connect(line, line.tail, ac2)
-    assert diagram.canvas.connections.get_connection(line.tail).connected is ac2
+    assert diagram.connections.get_connection(line.tail).connected is ac2
     assert len(comment.subject.annotatedElement) == 1
     assert ac2.subject in comment.subject.annotatedElement
 
@@ -118,10 +118,10 @@ def test_commentline_element_disconnect(create, diagram):
     connect(line, line.head, comment)
     connect(line, line.tail, ac)
 
-    assert diagram.canvas.connections.get_connection(line.tail).connected is ac
+    assert diagram.connections.get_connection(line.tail).connected is ac
 
     disconnect(line, line.tail)
-    assert not diagram.canvas.connections.get_connection(line.tail)
+    assert not diagram.connections.get_connection(line.tail)
 
 
 def test_commentline_relationship_disconnect(create):
@@ -164,14 +164,14 @@ def test_commentline_unlink(create):
     assert clazz.subject in comment.subject.annotatedElement
     assert comment.subject in clazz.subject.comment
 
-    assert line.canvas
+    assert line.diagram
 
     # FixMe: This should invoke the disconnect handler of the line's
     #  handles.
 
     line.unlink()
 
-    assert not line.canvas
+    assert not line.diagram
     assert clazz.subject not in comment.subject.annotatedElement
     assert comment.subject not in clazz.subject.comment
     assert len(comment.subject.annotatedElement) == 0, comment.subject.annotatedElement
@@ -189,7 +189,7 @@ def test_commentline_element_unlink(create):
     assert clazz.subject in comment.subject.annotatedElement
     assert comment.subject in clazz.subject.comment
 
-    assert line.canvas
+    assert line.diagram
 
     clazz_subject = clazz.subject
 
@@ -198,8 +198,8 @@ def test_commentline_element_unlink(create):
 
     clazz.unlink()
 
-    assert not clazz.canvas
-    assert line.canvas
+    assert not clazz.diagram
+    assert line.diagram
     assert not comment.subject.annotatedElement
     assert len(clazz_subject.comment) == 0
 

@@ -52,8 +52,6 @@ class CopyService(Service, ActionProvider):
 
     def paste(self, diagram):
         """Paste items in the copy-buffer to the diagram."""
-        canvas = diagram.canvas
-
         with Transaction(self.event_manager):
             # Create new id's that have to be used to create the items:
             new_items: Set[Presentation] = paste(
@@ -62,7 +60,7 @@ class CopyService(Service, ActionProvider):
 
             # move pasted items a bit, so user can see result of his action :)
             for item in new_items:
-                if canvas.get_parent(item) not in new_items:
+                if diagram.get_parent(item) not in new_items:
                     item.matrix.translate(10, 10)
 
         return new_items

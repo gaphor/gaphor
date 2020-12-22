@@ -123,8 +123,7 @@ def new_item_factory(
 
         adapter = Group(parent, item)
         if parent and adapter.can_contain():
-            canvas = diagram.canvas
-            canvas.reparent(item, parent=parent)
+            diagram.reparent(item, parent=parent)
             adapter.group()
 
         if config_func:
