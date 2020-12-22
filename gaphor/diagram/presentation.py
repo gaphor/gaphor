@@ -28,13 +28,13 @@ def from_package_str(item):
     """Display name space info when it is different, then diagram's or parent's
     namespace."""
     subject = item.subject
-    canvas = item.canvas
+    diagram = item.diagram
 
-    if not (subject and canvas):
+    if not (subject and diagram):
         return False
 
     namespace = subject.namespace
-    parent = canvas.get_parent(item)
+    parent = diagram.get_parent(item)
 
     # if there is a parent (i.e. interaction)
     if parent and parent.subject and parent.subject.namespace is not namespace:
@@ -44,7 +44,7 @@ def from_package_str(item):
 
 
 def _get_sink(item, handle, target):
-    assert item.canvas
+    assert item.diagram
 
     hpos = matrix_i2i(item, target).transform_point(*handle.pos)
     port = None
@@ -120,7 +120,7 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
 
     def setup_canvas(self):
         self.subscribe_all()
-        # Invoke here, since we do not receive events, unless we're attached to a canvas
+        # Invoke here, since we do not receive events, unless we're attached to a diagram
         self.update_shapes()
 
     def teardown_canvas(self):
@@ -187,7 +187,7 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
 
     def point(self, x, y):
-        """Given a point (x, y) return the distance to the canvas item."""
+        """Given a point (x, y) return the distance to the diagram item."""
         d0 = super().point(x, y)
         ds = [
             distance_rectangle_point(shape, (x, y))

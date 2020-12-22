@@ -19,7 +19,7 @@ class BlockProperyProxyPortConnector:
         block: Union[BlockItem, PropertyItem],
         proxy_port: ProxyPortItem,
     ) -> None:
-        assert block.canvas is proxy_port.canvas
+        assert block.diagram is proxy_port.diagram
         self.block = block
         self.proxy_port = proxy_port
 
@@ -70,10 +70,7 @@ class PropertyConnectorConnector(UnaryRelationshipConnect):
         return super().allow(handle, port)
 
     def connect_subject(self, handle):
-        element = self.element
         line = self.line
-
-        assert element.canvas
 
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
