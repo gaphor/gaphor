@@ -15,7 +15,7 @@ from functools import partial
 import gaphas
 
 from gaphor import application
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.storage import parser
 
@@ -112,7 +112,7 @@ def save_element(name, value, writer):
 
         The extra attribute reference can be used to force UML
         """
-        assert isinstance(value, gaphas.Item)
+        assert isinstance(value, Presentation) and value.diagram
         writer.startElement("item", {"id": value.id, "type": value.__class__.__name__})
         value.save(save_canvas_item)
 
@@ -128,12 +128,12 @@ def save_element(name, value, writer):
         """
         if isinstance(value, collection):
             save_collection(name, value)
-        elif isinstance(value, (Element, gaphas.Item)):
+        elif isinstance(value, Element):
             save_reference(name, value)
         else:
             save_value(name, value)
 
-    if isinstance(value, (Element, gaphas.Item)):
+    if isinstance(value, Element):
         save_reference(name, value)
     elif isinstance(value, collection):
         save_collection(name, value)
