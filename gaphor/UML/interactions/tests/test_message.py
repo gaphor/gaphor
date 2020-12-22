@@ -12,7 +12,7 @@ def test_message_persistence(diagram, element_factory, saver, loader):
     data = saver()
     loader(data)
     new_diagram = next(element_factory.select(UML.Diagram))
-    item = next(new_diagram.canvas.select(MessageItem))
+    item = next(new_diagram.select(MessageItem))
 
     assert item
 

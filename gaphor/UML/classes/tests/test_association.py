@@ -66,7 +66,7 @@ class AssociationItemTestCase(TestCase):
         assert a.subject.memberEnd[0].name is None
 
         a.subject.memberEnd[0].name = "blah"
-        self.diagram.canvas.update_now((a,))
+        self.diagram.update_now((a,))
 
         assert a.head_end._name == "+ blah", a.head_end.get_name()
 

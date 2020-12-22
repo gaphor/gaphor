@@ -27,13 +27,13 @@ class ActionIssueTestCase(TestCase):
         diagrams = ef.lselect(UML.Diagram)
         assert 1 == len(diagrams)
 
-        canvas = diagrams[0].canvas
-        assert 7 == len(list(canvas.get_all_items()))
+        diagram = diagrams[0]
+        assert 7 == len(list(diagram.get_all_items()))
         # Part, Act, Act, Act, Flow, Flow, Flow
 
         for e in actions + flows:
             assert 1 == len(e.presentation), e
-        for i in canvas.select(lambda e: isinstance(e, (FlowItem, ActionItem))):
+        for i in diagram.select(lambda e: isinstance(e, (FlowItem, ActionItem))):
             assert i.subject, i
 
         # Loaded as:
@@ -48,11 +48,11 @@ class ActionIssueTestCase(TestCase):
         assert actions[2].outgoing[0] is flows[2]
         assert not actions[0].incoming
 
-        (cinfo,) = canvas.connections.get_connections(
+        (cinfo,) = diagram.connections.get_connections(
             handle=flows[0].presentation[0].head
         )
         assert cinfo.connected is actions[0].presentation[0]
-        (cinfo,) = canvas.connections.get_connections(
+        (cinfo,) = diagram.connections.get_connections(
             handle=flows[1].presentation[0].head
         )
         assert cinfo.connected is actions[0].presentation[0]
@@ -61,11 +61,11 @@ class ActionIssueTestCase(TestCase):
         assert actions[2].incoming[0] is flows[1]
         assert actions[2].outgoing[0] is flows[2]
 
-        (cinfo,) = canvas.connections.get_connections(
+        (cinfo,) = diagram.connections.get_connections(
             handle=flows[1].presentation[0].tail
         )
         assert cinfo.connected is actions[2].presentation[0]
-        (cinfo,) = canvas.connections.get_connections(
+        (cinfo,) = diagram.connections.get_connections(
             handle=flows[2].presentation[0].head
         )
         assert cinfo.connected is actions[2].presentation[0]
@@ -74,11 +74,11 @@ class ActionIssueTestCase(TestCase):
         assert actions[1].incoming[0] is flows[0]
         assert actions[1].incoming[1] is flows[2]
 
-        (cinfo,) = canvas.connections.get_connections(
+        (cinfo,) = diagram.connections.get_connections(
             handle=flows[0].presentation[0].tail
         )
         assert cinfo.connected is actions[1].presentation[0]
-        (cinfo,) = canvas.connections.get_connections(
+        (cinfo,) = diagram.connections.get_connections(
             handle=flows[2].presentation[0].tail
         )
         assert cinfo.connected is actions[1].presentation[0]
@@ -87,5 +87,5 @@ class ActionIssueTestCase(TestCase):
         for a in actions:
             (p,) = a.inPartition
             assert p
-            assert canvas.get_parent(a.presentation[0])
-            assert canvas.get_parent(a.presentation[0]) is p.presentation[0]
+            assert diagram.get_parent(a.presentation[0])
+            assert diagram.get_parent(a.presentation[0]) is p.presentation[0]

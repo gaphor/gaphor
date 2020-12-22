@@ -212,7 +212,7 @@ def test_save_and_load(diagram, element_factory, saver, loader):
         diagram, element_factory
     )
 
-    diagram.canvas.update_now((lifeline, exec_spec))
+    diagram.update_now((lifeline, exec_spec))
 
     saved_data = saver()
 
@@ -232,6 +232,6 @@ def test_save_and_load(diagram, element_factory, saver, loader):
         )
         == 2
     )
-    assert loaded_exec_spec.canvas.connections.get_connection(
+    assert loaded_exec_spec.diagram.connections.get_connection(
         loaded_exec_spec.handles()[0]
     )

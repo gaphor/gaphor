@@ -26,7 +26,7 @@ class ClassTestCase(TestCase):
         assert 0 == len(compartments(klass)[0].children)
         assert 0 == len(compartments(klass)[1].children)
 
-        diagram.canvas.update_now((klass,))
+        diagram.update_now((klass,))
 
         assert 54 == float(klass.min_height)  # min_height
         assert 100 == float(klass.min_width)
@@ -35,7 +35,7 @@ class ClassTestCase(TestCase):
         attr.name = 4 * "x"  # about 44 pixels
         klass.subject.ownedAttribute = attr
 
-        diagram.canvas.update_now((klass,))
+        diagram.update_now((klass,))
 
         assert 1 == len(compartments(klass)[0])
         assert compartments(klass)[0].size(context()) > (44.0, 20.0)
@@ -48,7 +48,7 @@ class ClassTestCase(TestCase):
         oper.name = 6 * "x"  # about 66 pixels
         klass.subject.ownedOperation = oper
 
-        diagram.canvas.update_now((klass,))
+        diagram.update_now((klass,))
         assert 2 == len(compartments(klass)[1])
         assert compartments(klass)[1].size(context()) > (63.0, 34.0)
 
@@ -57,7 +57,7 @@ class ClassTestCase(TestCase):
         element_factory = self.element_factory
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-        diagram.canvas.update_now((klass,))
+        diagram.update_now((klass,))
 
         attr = element_factory.create(UML.Property)
         attr.name = "blah1"
@@ -83,7 +83,7 @@ class ClassTestCase(TestCase):
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
         klass.subject.name = "Class1"
 
-        diagram.canvas.update_now((klass,))
+        diagram.update_now((klass,))
 
         attr = element_factory.create(UML.Property)
         attr.name = "blah"
@@ -97,7 +97,7 @@ class ClassTestCase(TestCase):
 
         attr.name = "x" * 25
 
-        diagram.canvas.update_now((klass,))
+        diagram.update_now((klass,))
 
         width = klass.width
         assert width >= 170.0
