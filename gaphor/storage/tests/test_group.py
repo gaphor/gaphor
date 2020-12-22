@@ -17,9 +17,10 @@ def test_load_grouped_connected_items(element_factory, loader):
     loader(NODE_EXAMPLE_XML)
 
     diagram = element_factory.lselect()[0]
-    node_item, dep_item = list(
+    node_item, dep_item = [
         e for e in diagram.get_all_items() if not diagram.get_parent(e)
-    )
+    ]
+
     child_one, child_two = diagram.get_children(node_item)
 
     assert isinstance(node_item, NodeItem)
