@@ -70,7 +70,7 @@ class TestCase(unittest.TestCase):
             subject = self.element_factory.create(subject_cls)
         item = self.diagram.create(item_cls, subject=subject)
         item.canvas = self.diagram.canvas
-        self.diagram.canvas.update_now((item,))
+        self.diagram.update_now((item,))
         return item
 
     def allow(self, line, handle, item, port=None):
@@ -89,38 +89,38 @@ class TestCase(unittest.TestCase):
 
         If port is not provided, then first port is used.
         """
-        canvas = line.canvas
-        assert canvas is item.canvas
+        diagram = line.diagram
+        assert diagram is item.diagram
         if port is None and len(item.ports()) > 0:
             port = item.ports()[0]
 
         sink = ConnectionSink(item, port)
-        connector = ConnectorAspect(line, handle, canvas.connections)
+        connector = ConnectorAspect(line, handle, diagram.connections)
 
         connector.connect(sink)
 
-        cinfo = canvas.connections.get_connection(handle)
+        cinfo = diagram.connections.get_connection(handle)
         assert cinfo.connected is item
         assert cinfo.port is port
 
     def disconnect(self, line, handle):
         """Disconnect line's handle."""
-        canvas = self.diagram.canvas
+        diagram = self.diagram
         # disconnection on adapter level is performed due to callback, so
         # no adapter look up here
-        canvas.connections.disconnect_item(line, handle)
-        assert not canvas.connections.get_connection(handle)
+        diagram.connections.disconnect_item(line, handle)
+        assert not diagram.connections.get_connection(handle)
 
     def get_connected(self, handle):
         """Get item connected to line via handle."""
-        cinfo = self.diagram.canvas.connections.get_connection(handle)
+        cinfo = self.diagram.connections.get_connection(handle)
         if cinfo:
             return cinfo.connected
         return None
 
     def get_connection(self, handle):
         """Get connection information."""
-        return self.diagram.canvas.connections.get_connection(handle)
+        return self.diagram.connections.get_connection(handle)
 
     def can_group(self, parent, item):
         """Check if an item can be grouped by parent."""
@@ -129,7 +129,7 @@ class TestCase(unittest.TestCase):
 
     def group(self, parent, item):
         """Group item within a parent."""
-        self.diagram.canvas.reparent(item, parent)
+        self.diagram.reparent(item, parent)
         adapter = Group(parent, item)
         adapter.group()
 
@@ -137,7 +137,7 @@ class TestCase(unittest.TestCase):
         """Remove item from a parent."""
         adapter = Group(parent, item)
         adapter.ungroup()
-        self.diagram.canvas.reparent(item, None)
+        self.diagram.reparent(item, None)
 
     def kindof(self, cls):
         """Find UML metaclass instances using element factory."""
