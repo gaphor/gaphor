@@ -45,7 +45,7 @@ class BlockProperyProxyPortConnector:
 
     def disconnect(self, handle: Handle) -> None:
         proxy_port = self.proxy_port
-        if proxy_port.subject and proxy_port.canvas:
+        if proxy_port.subject and proxy_port.diagram:
             subject = proxy_port.subject
             del proxy_port.subject
             proxy_port.diagram.reparent(proxy_port, None)

@@ -9,7 +9,7 @@ from gaphor.diagram.tests.fixtures import diagram, element_factory, event_manage
 
 @pytest.fixture
 def view(diagram):
-    view = GtkView(model=diagram.canvas, selection=Selection())
+    view = GtkView(model=diagram, selection=Selection())
     view._qtree.resize((-100, -100, 400, 400))
     item_painter = ItemPainter(view.selection)
     view.painter = item_painter

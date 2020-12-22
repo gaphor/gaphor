@@ -9,9 +9,9 @@ class InteractionLifelineGroup(AbstractGroup):
     """Add lifeline to interaction."""
 
     def group(self):
-        assert self.parent.canvas
+        assert self.parent.diagram
         self.parent.subject.lifeline = self.item.subject
-        self.parent.canvas.reparent(self.item, self.parent)
+        self.parent.diagram.reparent(self.item, self.parent)
 
     def ungroup(self):
         """Lifelines are not ungrouped on purpose.
@@ -27,9 +27,9 @@ class InteractionMessageGroup(AbstractGroup):
     def group(self):
         if not self.item.subject:
             return
-        assert self.parent.canvas
+        assert self.parent.diagram
         self.parent.subject.message = self.item.subject
-        self.parent.canvas.reparent(self.item, self.parent)
+        self.parent.diagram.reparent(self.item, self.parent)
 
     def ungroup(self):
         """Messages are not ungrouped on purpose.

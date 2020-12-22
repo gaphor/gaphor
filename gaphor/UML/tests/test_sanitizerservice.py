@@ -52,13 +52,13 @@ def test_presentation_delete(create_item, element_factory):
     klass = klassitem.subject
 
     assert klassitem.subject.presentation[0] is klassitem
-    assert klassitem.canvas
+    assert klassitem.diagram
 
     # Delete presentation here:
 
     klassitem.unlink()
 
-    assert not klassitem.canvas
+    assert not klassitem.diagram
     assert klass not in element_factory
 
 

@@ -53,8 +53,6 @@ class PartitionItem(ElementPresentation):
         The partitions are open on the bottom. We divide the total size
         by the total number of partitions and space them evenly.
         """
-        assert self.canvas
-
         cr = context.cairo
         cr.set_line_width(context.style["line-width"])
         self.draw_outline(bounding_box, cr)

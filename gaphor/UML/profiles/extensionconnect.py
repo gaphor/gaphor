@@ -27,6 +27,7 @@ class ExtensionConnect(RelationshipConnect):
     def connect_subject(self, handle):
         element = self.element
         line = self.line
+        assert element.diagram
 
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
@@ -61,7 +62,7 @@ class ExtensionConnect(RelationshipConnect):
                     # check if this entry is not yet in the diagram
                     # Return if the association is not (yet) on the canvas
                     for item in ext.presentation:
-                        if item.canvas is element.canvas:
+                        if item.diagram is element.diagram:
                             break
                     else:
                         line.subject = ext
@@ -69,7 +70,7 @@ class ExtensionConnect(RelationshipConnect):
             else:
                 # Create a new Extension relationship
                 relation = UML.model.create_extension(head_type, tail_type)
-                relation.package = element.diagram.namespace
+                relation.package = element.diagram.package
                 line.subject = relation
 
     def disconnect_subject(self, handle):

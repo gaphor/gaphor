@@ -165,8 +165,6 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         self.watch("subject.appliedStereotype.classifier.name")
 
     def setup_canvas(self):
-        assert self.canvas
-
         super().setup_canvas()
 
         top = self.lifetime.top
@@ -191,7 +189,6 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
             self._connections.add_constraint(self, c)
 
     def teardown_canvas(self):
-        assert self.canvas
         super().teardown_canvas()
         for c in self.__constraints:
             self._connections.remove_constraint(self, c)
