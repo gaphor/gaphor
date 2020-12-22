@@ -69,7 +69,6 @@ class TestCase(unittest.TestCase):
         if subject_cls is not None:
             subject = self.element_factory.create(subject_cls)
         item = self.diagram.create(item_cls, subject=subject)
-        item.canvas = self.diagram.canvas
         self.diagram.update_now((item,))
         return item
 

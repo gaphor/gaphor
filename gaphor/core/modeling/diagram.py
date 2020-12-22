@@ -363,7 +363,7 @@ class Diagram(PackageableElement):
         """
 
         super().__init__(id, model)
-        self.canvas = DiagramCanvas(self)
+        self._canvas = DiagramCanvas(self)
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
@@ -385,7 +385,7 @@ class Diagram(PackageableElement):
         """Apply the supplied save function to this diagram and the canvas."""
 
         super().save(save_func)
-        save_func("canvas", self.canvas)
+        save_func("canvas", self._canvas)
 
     def postload(self):
         """Handle post-load functionality for the diagram canvas."""
@@ -407,25 +407,25 @@ class Diagram(PackageableElement):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
-        item = type(connections=self.canvas.connections, id=id, model=self.model)
+        item = type(connections=self._canvas.connections, id=id, model=self.model)
         assert isinstance(
             item, gaphas.Item
         ), f"Type {type} does not comply with Item protocol"
         if subject:
             item.subject = subject
-        self.canvas.add(item, parent)
+        self._canvas.add(item, parent)
         self.model.handle(DiagramItemCreated(self, item))
         return item
 
     def lookup(self, id):
-        for item in self.canvas.get_all_items():
+        for item in self._canvas.get_all_items():
             if item.id == id:
                 return item
 
     def unlink(self):
         """Unlink all canvas items then unlink this diagram."""
 
-        for item in self.canvas.get_all_items():
+        for item in self._canvas.get_all_items():
             try:
                 item.unlink()
             except (AttributeError, KeyError):
@@ -434,44 +434,44 @@ class Diagram(PackageableElement):
         super().unlink()
 
     def select(self, expression=lambda e: True):
-        return self.canvas.select(expression)
+        return self._canvas.select(expression)
 
     def reparent(self, item: Presentation, parent: Optional[Presentation]) -> None:
-        self.canvas.reparent(item, parent)
+        self._canvas.reparent(item, parent)
 
     @property
     def connections(self) -> gaphas.connections.Connections:
-        return self.canvas.connections
+        return self._canvas.connections
 
     def get_matrix_i2c(self, item: Presentation) -> gaphas.matrix.Matrix:
-        return self.canvas.get_matrix_i2c(item)
+        return self._canvas.get_matrix_i2c(item)
 
     def get_all_items(self) -> Iterable[Presentation]:
-        return self.canvas.get_all_items()  # type: ignore[no-any-return]
+        return self._canvas.get_all_items()  # type: ignore[no-any-return]
 
     def get_parent(self, item: Presentation) -> Optional[Presentation]:
-        return self.canvas.get_parent(item)  # type: ignore[no-any-return]
+        return self._canvas.get_parent(item)  # type: ignore[no-any-return]
 
     def get_children(self, item: Presentation) -> Iterable[Presentation]:
-        return self.canvas.get_children(item)  # type: ignore[no-any-return]
+        return self._canvas.get_children(item)  # type: ignore[no-any-return]
 
     def sort(self, items: Sequence[Presentation]) -> Reversible[Presentation]:
-        return self.canvas.sort(items)  # type: ignore[no-any-return]
+        return self._canvas.sort(items)  # type: ignore[no-any-return]
 
     def request_update(
         self, item: gaphas.item.Item, update: bool = True, matrix: bool = True
     ) -> None:
-        self.canvas.request_update(item, update, matrix)
+        self._canvas.request_update(item, update, matrix)
 
     def update_now(
         self,
         dirty_items: Sequence[Presentation],
         dirty_matrix_items: Sequence[Presentation] = (),
     ) -> None:
-        self.canvas.update_now(dirty_items, dirty_matrix_items)
+        self._canvas.update_now(dirty_items, dirty_matrix_items)
 
     def register_view(self, view: gaphas.view.model.View[Presentation]) -> None:
-        self.canvas.register_view(view)
+        self._canvas.register_view(view)
 
     def unregister_view(self, view: gaphas.view.model.View[Presentation]) -> None:
-        self.canvas.unregister_view(view)
+        self._canvas.unregister_view(view)
