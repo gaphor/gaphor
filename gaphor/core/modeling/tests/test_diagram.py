@@ -45,7 +45,7 @@ def test_canvas_item_is_created(element_factory):
     diagram = element_factory.create(Diagram)
     example = diagram.create(Example)
 
-    assert example in diagram.canvas.get_all_items()
+    assert example in diagram.get_all_items()
 
 
 def test_canvas_is_unlinked(element_factory):

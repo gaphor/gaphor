@@ -181,9 +181,9 @@ def test_stereotype_deletion(element_factory):
 def test_diagram_move(element_factory):
     diagram = element_factory.create(UML.Diagram)
     diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-    diagram.canvas.request_update = Mock()
+    diagram.request_update = Mock()
 
     package = element_factory.create(UML.Package)
     diagram.package = package
 
-    diagram.canvas.request_update.assert_called()
+    diagram.request_update.assert_called()

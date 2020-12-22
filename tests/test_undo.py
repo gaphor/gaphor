@@ -1,9 +1,9 @@
 import pytest
-from gaphas.aspect.connector import ConnectionSink, Connector
 
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.core import Transaction
+from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import AssociationItem, ClassItem
 
 
@@ -34,36 +34,16 @@ def undo_manager(session):
     return session.get_service("undo_manager")
 
 
-def connect(line, handle, item, port=None):
-    """Connect line's handle to an item.
-
-    If port is not provided, then first port is used.
-    """
-    canvas = line.canvas
-    assert canvas is item.canvas
-    if port is None and len(item.ports()) > 0:
-        port = item.ports()[0]
-
-    sink = ConnectionSink(item, port)
-    connector = Connector(line, handle, canvas.connections)
-
-    connector.connect(sink)
-
-    cinfo = canvas.connections.get_connection(handle)
-    assert cinfo.connected is item
-    assert cinfo.port is port
-
-
 def test_class_association_undo_redo(event_manager, element_factory, undo_manager):
     diagram = element_factory.create(UML.Diagram)
 
-    assert 0 == len(diagram.canvas.solver.constraints)
+    assert 0 == len(diagram.connections.solver.constraints)
 
     ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    assert 6 == len(diagram.canvas.solver.constraints)
+    assert 6 == len(diagram.connections.solver.constraints)
 
     ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    assert 12 == len(diagram.canvas.solver.constraints)
+    assert 12 == len(diagram.connections.solver.constraints)
 
     a = diagram.create(AssociationItem)
 
@@ -72,7 +52,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     # Diagram, Association, 2x Class, Property, LiteralSpecification
     assert 6 == len(element_factory.lselect())
-    assert 14 == len(diagram.canvas.solver.constraints)
+    assert 14 == len(diagram.connections.solver.constraints)
 
     undo_manager.clear_undo_stack()
     assert not undo_manager.can_undo()
@@ -84,7 +64,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     def get_connected(handle):
         """Get item connected to line via handle."""
-        cinfo = diagram.canvas.connections.get_connection(handle)
+        cinfo = diagram.connections.get_connection(handle)
         if cinfo:
             return cinfo.connected
         return None
@@ -93,11 +73,11 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
     assert None is get_connected(a.tail)
 
     for i in range(3):
-        assert 7 == len(diagram.canvas.solver.constraints)
+        assert 7 == len(diagram.connections.solver.constraints)
 
         undo_manager.undo_transaction()
 
-        assert 14 == len(diagram.canvas.solver.constraints)
+        assert 14 == len(diagram.connections.solver.constraints)
 
         assert ci1 == get_connected(a.head)
         assert ci2 == get_connected(a.tail)
