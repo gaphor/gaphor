@@ -148,7 +148,9 @@ def copy_presentation(item: Presentation) -> PresentationCopy:
     buffer = {}
 
     def save_func(name, value):
-        buffer[name] = serialize(value)
+        # Do not copy diagram, it's set when pasted
+        if name != "diagram":
+            buffer[name] = serialize(value)
 
     item.save(save_func)
     parent = item.diagram.get_parent(item)

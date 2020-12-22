@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
@@ -168,3 +169,16 @@ def test_copy_remove_paste_simple_items(diagram, element_factory):
     new_box = next(item for item in new_items if isinstance(item, Box))
 
     assert new_box
+
+
+def test_copy_to_new_diagram(diagram, element_factory):
+    new_diagram = element_factory.create(Diagram)
+    cls = element_factory.create(UML.Class)
+    cls_item = diagram.create(ClassItem, subject=cls)
+
+    buffer = copy({cls_item})
+
+    paste(buffer, new_diagram, element_factory.lookup)
+
+    assert len(list(new_diagram.get_all_items())) == 1
+    assert next(new_diagram.get_all_items()).diagram is new_diagram

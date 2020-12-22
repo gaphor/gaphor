@@ -8,7 +8,7 @@ from gaphas.state import observed, reversible_method
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.event import DiagramItemDeleted
-from gaphor.core.modeling.properties import association, relation_one
+from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
     from gaphas.canvas import Canvas  # noqa
@@ -47,6 +47,11 @@ class Presentation(Element, Generic[S]):
     subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
     )
+
+    diagram: relation_one[Diagram]
+
+    parent: relation_one[Presentation]
+    children: relation_many[Presentation]
 
     handles: Callable[[Presentation], List[Handle]]
 
@@ -95,11 +100,6 @@ class Presentation(Element, Generic[S]):
         if self.canvas:
             self.canvas.request_update(self, matrix=matrix)
 
-    @property
-    def diagram(self) -> Optional[Diagram]:
-        canvas = self.canvas
-        return canvas.diagram if canvas else None
-
     def watch(self, path, handler=None):
         """Watch a certain path of elements starting with the DiagramItem. The
         handler is optional and will default to a simple self.request_update().
@@ -132,3 +132,7 @@ class Presentation(Element, Generic[S]):
 Element.presentation = association(
     "presentation", Presentation, composite=True, opposite="subject"
 )
+Presentation.parent = association(
+    "parent", Presentation, upper=1, composite=True, opposite="children"
+)
+Presentation.children = association("children", Presentation, opposite="parent")

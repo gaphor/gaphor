@@ -28,13 +28,13 @@ from gaphor.core.modeling.coremodel import Element, PackageableElement
 from gaphor.core.modeling.element import Id, RepositoryProtocol
 from gaphor.core.modeling.event import DiagramItemCreated
 from gaphor.core.modeling.presentation import Presentation
+from gaphor.core.modeling.properties import association, relation_many, relation_one
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.core.styling import Style, StyleNode
 
 if TYPE_CHECKING:
     from cairo import Context as CairoContext
 
-    from gaphor.core.modeling.properties import relation_one
     from gaphor.UML import Package
 
 log = logging.getLogger(__name__)
@@ -252,6 +252,7 @@ class DiagramCanvas(gaphas.Canvas):
     def add(self, item, parent=None, index=None):
         assert item not in self._tree.nodes, f"Adding already added node {item}"
         self._tree.add(item, parent, index)
+        item.diagram = self.diagram
         item.canvas = self
         self.request_update(item)
 
@@ -260,6 +261,7 @@ class DiagramCanvas(gaphas.Canvas):
         """Remove is done in a separate, @observed, method so the undo system
         can restore removed items in the right order."""
         item.canvas = None
+        del item.diagram
         self._tree.remove(item)
         self._connections.disconnect_item(self)
         self._update_views(removed_items=(item,))
@@ -364,6 +366,10 @@ class Diagram(PackageableElement):
 
         super().__init__(id, model)
         self._canvas = DiagramCanvas(self)
+
+    ownedPresentation: relation_many[Presentation] = association(
+        "ownedPresentation", Presentation, composite=True, opposite="diagram"
+    )
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
@@ -475,3 +481,8 @@ class Diagram(PackageableElement):
 
     def unregister_view(self, view: gaphas.view.model.View[Presentation]) -> None:
         self._canvas.unregister_view(view)
+
+
+Presentation.diagram = association(
+    "diagram", Diagram, upper=1, opposite="ownedPresentation"
+)
