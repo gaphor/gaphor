@@ -21,7 +21,7 @@ class ImplementationTestCase(TestCase):
         impl = self.create(ImplementationItem)
 
         self.connect(impl, impl.head, iface, iface.ports()[0])
-        self.diagram.canvas.update_now((iface, impl))
+        self.diagram.update_now((iface, impl))
 
         assert not impl.style["dash-style"]
 
@@ -54,7 +54,7 @@ class DependencyTestCase(TestCase):
         self.connect(dep, dep.head, iface, iface.ports()[0])
         self.connect(dep, dep.tail, clazz, clazz.ports()[0])
         iface.request_update()
-        iface.canvas.update_now((clazz, iface, dep))
+        self.diagram.update_now((clazz, iface, dep))
 
         assert dep.subject
         assert not dep.style["dash-style"]

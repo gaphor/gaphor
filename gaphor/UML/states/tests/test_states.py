@@ -25,7 +25,7 @@ class StateTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        s1 = next(self.diagram.canvas.select(StateItem))
+        s1 = next(self.diagram.select(StateItem))
         assert "test 1 entry" == s1.subject.entry.name
         assert "test 1 exit" == s1.subject.exit.name
         assert "test 1 do" == s1.subject.doActivity.name

@@ -43,7 +43,7 @@ class ComponentItem(ElementPresentation, Classified):
                 "min-width": 100,
                 "min-height": 50,
                 "vertical-align": VerticalAlign.TOP
-                if self.canvas and self.canvas.get_children(self)
+                if self.diagram and self.diagram.get_children(self)
                 else VerticalAlign.MIDDLE,
             },
             draw=draw_border

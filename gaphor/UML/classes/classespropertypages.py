@@ -186,7 +186,7 @@ class InterfacePropertyPage(PropertyPageBase):
         item = self.item
 
         connected_items = [
-            c.item for c in item.canvas.connections.get_connections(connected=item)
+            c.item for c in item.diagram.connections.get_connections(connected=item)
         ]
         disallowed = (ConnectorItem,)
         can_fold = not any(map(lambda i: isinstance(i, disallowed), connected_items))
