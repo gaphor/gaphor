@@ -435,6 +435,9 @@ class Diagram(PackageableElement):
     def select(self, expression=lambda e: True):
         return self.canvas.select(expression)
 
+    def reparent(self, item: Presentation, parent: Optional[Presentation]) -> None:
+        self.canvas.reparent(item, parent)
+
     @property
     def connections(self) -> gaphas.connections.Connections:
         return self.canvas.connections
