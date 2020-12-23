@@ -163,10 +163,12 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.setup_constraints()
 
     def setup_canvas(self):
         super().setup_canvas()
 
+    def setup_constraints(self):
         top = self.lifetime.top
         bottom = self.lifetime.bottom
 

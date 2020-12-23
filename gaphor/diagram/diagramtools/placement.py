@@ -79,7 +79,6 @@ def connect_opposite_handle(view, new_item, x, y, handle_index):
     except (KeyError, AttributeError):
         pass
     else:
-        # First make sure all matrices are updated:
         new_item.matrix_i2c.set(*view.model.get_matrix_i2c(new_item))
 
         handle_move = HandleMove(new_item, opposite, view)

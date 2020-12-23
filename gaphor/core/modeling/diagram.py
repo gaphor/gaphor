@@ -1,7 +1,6 @@
-"""This module contains a model element Diagram. Diagrams can be visualized and
-edited.
+"""This module contains a model element Diagram.
 
-The DiagramCanvas class extends the gaphas.Canvas class.
+Diagrams can be visualized and edited.
 """
 from __future__ import annotations
 
@@ -10,16 +9,7 @@ import textwrap
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import (
-    TYPE_CHECKING,
-    Iterable,
-    Iterator,
-    Optional,
-    Reversible,
-    Sequence,
-    Set,
-    Union,
-)
+from typing import TYPE_CHECKING, Iterable, Iterator, Optional, Sequence, Set, Union
 
 import gaphas
 
@@ -227,103 +217,16 @@ class StyledItem:
         )
 
 
-class DiagramCanvas(gaphas.Canvas):
-    """DiagramCanvas extends the gaphas.Canvas class.
-
-    A save function can be applied to all root canvas items. Canvas
-    items can be selected with an optional expression filter.
-    """
+class PseudoCanvas:
+    """A "pseudo" canvas implementation, for storing items."""
 
     def __init__(self, diagram: Diagram):
-        """Initialize the diagram canvas with the supplied diagram.
-
-        By default, updates are not blocked.
-        """
-
-        super().__init__()
-        self._diagram = diagram
-        # Record all items changed during constraint solving,
-        # so their `post_update()` method can be called.
-        self._resolved_items: Set[gaphas.item.Item] = set()
-
-    diagram = property(lambda s: s._diagram)
-
-    @gaphas.state.observed
-    def add(self, item, parent=None, index=None):
-        assert item not in self._tree.nodes, f"Adding already added node {item}"
-        self._tree.add(item, parent, index)
-        item.diagram = self.diagram
-        item.canvas = self
-        self.request_update(item)
-
-    @gaphas.state.observed
-    def _remove(self, item):
-        """Remove is done in a separate, @observed, method so the undo system
-        can restore removed items in the right order."""
-        item.canvas = None
-        del item.diagram
-        self._tree.remove(item)
-        self._connections.disconnect_item(self)
-        self._update_views(removed_items=(item,))
-
-    gaphas.state.reversible_pair(
-        add,
-        _remove,
-        bind1={
-            "parent": lambda self, item: self.get_parent(item),
-            "index": lambda self, item: self._tree.get_siblings(item).index(item),
-        },
-    )
-
-    @gaphas.decorators.nonrecursive
-    def update_now(self, dirty_items, dirty_matrix_items=()):
-        """Update the diagram canvas."""
-
-        sort = self.sort
-
-        def dirty_items_with_ancestors():
-            for item in set(dirty_items):
-                yield item
-                yield from self._tree.get_ancestors(item)
-
-        all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
-        contexts = self._pre_update_items(all_dirty_items)
-
-        self._resolved_items.clear()
-        super().update_now(dirty_items, dirty_matrix_items)
-
-        all_dirty_items.extend(self._resolved_items)
-        self._post_update_items(reversed(list(sort(all_dirty_items))), contexts)
-
-    def _pre_update_items(self, items):
-        diagram = self.diagram
-
-        contexts = {}
-        for item in items:
-            context = UpdateContext(style=diagram.style(StyledItem(item)))
-            item.pre_update(context)
-            contexts[item] = context
-        return contexts
-
-    def _post_update_items(self, items, contexts):
-        diagram = self.diagram
-        for item in items:
-            context = contexts.get(item)
-            if not context:
-                context = UpdateContext(style=diagram.style(StyledItem(item)))
-            item.post_update(context)
-
-    def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
-        super()._on_constraint_solved(cinfo)
-        self._resolved_items.add(cinfo.item)
-        if cinfo.connected:
-            self._resolved_items.add(cinfo.connected)
+        self.diagram = diagram
 
     def save(self, save_func):
-        """Apply the supplied save function to all root diagram items."""
-
-        for item in self.get_root_items():
-            save_func(item)
+        for item in self.diagram.ownedPresentation:
+            if not item.parent:
+                save_func(item)
 
 
 class Diagram(PackageableElement):
@@ -340,7 +243,14 @@ class Diagram(PackageableElement):
         """
 
         super().__init__(id, model)
-        self._canvas = DiagramCanvas(self)
+        self._connections = gaphas.connections.Connections()
+        self._connections.add_handler(self._on_constraint_solved)
+
+        self._registered_views: Set[gaphas.view.model.View] = set()
+
+        # Record all items changed during constraint solving,
+        # so their `post_update()` method can be called.
+        self._resolved_items: Set[gaphas.item.Item] = set()
 
     ownedPresentation: relation_many[Presentation] = association(
         "ownedPresentation", Presentation, composite=True, opposite="diagram"
@@ -366,7 +276,7 @@ class Diagram(PackageableElement):
         """Apply the supplied save function to this diagram and the canvas."""
 
         super().save(save_func)
-        save_func("canvas", self._canvas)
+        save_func("canvas", PseudoCanvas(self))
 
     def postload(self):
         """Handle post-load functionality for the diagram."""
@@ -388,29 +298,29 @@ class Diagram(PackageableElement):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
-        item = type(connections=self._canvas.connections, id=id, model=self.model)
+        item = type(connections=self._connections, id=id, model=self.model)
         assert isinstance(
             item, gaphas.Item
         ), f"Type {type} does not comply with Item protocol"
+        item.diagram = self
         if subject:
             item.subject = subject
-        self._canvas.add(item, parent)
+        if parent:
+            item.parent = parent
         self.model.handle(DiagramItemCreated(self, item))
+        self.request_update(item)
         return item
 
     def lookup(self, id):
-        for item in self._canvas.get_all_items():
+        for item in self.get_all_items():
             if item.id == id:
                 return item
 
     def unlink(self):
         """Unlink all canvas items then unlink this diagram."""
-
-        for item in self._canvas.get_all_items():
-            try:
-                item.unlink()
-            except (AttributeError, KeyError):
-                pass
+        log.debug("unlinking %s", self)
+        for item in self.ownedPresentation:
+            self.connections.remove_connections_to_item(item)
 
         super().unlink()
 
@@ -425,56 +335,129 @@ class Diagram(PackageableElement):
 
     def reparent(self, item, parent):
         """A more fancy version of the reparent method."""
-        old_parent = self.get_parent(item)
+        old_parent = item.parent
 
         if old_parent:
-            self._canvas.reparent(item, None)
+            item.parent = None
             m = self.get_matrix_i2c(old_parent)
             item.matrix.set(*item.matrix.multiply(m))
             self.request_update(old_parent)
 
         if parent:
-            self._canvas.reparent(item, parent)
+            item.parent = parent
             m = self.get_matrix_i2c(parent).inverse()
             item.matrix.set(*item.matrix.multiply(m))
             self.request_update(parent)
 
     @property
     def connections(self) -> gaphas.connections.Connections:
-        return self._canvas.connections
+        return self._connections
 
     def get_matrix_i2c(self, item: Presentation) -> gaphas.matrix.Matrix:
-        return self._canvas.get_matrix_i2c(item)
+        if item.parent:
+            return item.matrix * self.get_matrix_i2c(item.parent)
+        else:
+            return item.matrix
 
     def get_all_items(self) -> Iterable[Presentation]:
-        return self._canvas.get_all_items()  # type: ignore[no-any-return]
+        """Get all items owned by this diagram, ordered depth-first."""
+
+        def iter_children(item):
+            for child in item.children:
+                yield child
+                yield from iter_children(child)
+
+        for root in self.ownedPresentation:
+            if not root.parent:
+                yield root
+                yield from iter_children(root)
 
     def get_parent(self, item: Presentation) -> Optional[Presentation]:
-        return self._canvas.get_parent(item)  # type: ignore[no-any-return]
+        return item.parent
 
     def get_children(self, item: Presentation) -> Iterable[Presentation]:
-        return self._canvas.get_children(item)  # type: ignore[no-any-return]
+        return iter(item.children)
 
-    def sort(self, items: Sequence[Presentation]) -> Reversible[Presentation]:
-        return self._canvas.sort(items)  # type: ignore[no-any-return]
+    def sort(self, items: Sequence[Presentation]) -> Iterable[Presentation]:
+        items_set = set(items)
+        return (n for n in self.get_all_items() if n in items_set)
 
     def request_update(
         self, item: gaphas.item.Item, update: bool = True, matrix: bool = True
     ) -> None:
-        self._canvas.request_update(item, update, matrix)
+        if update and matrix:
+            self._update_views(dirty_items=(item,), dirty_matrix_items=(item,))
+        elif update:
+            self._update_views(dirty_items=(item,))
+        elif matrix:
+            self._update_views(dirty_matrix_items=(item,))
 
+    def _update_views(self, dirty_items=(), dirty_matrix_items=(), removed_items=()):
+        """Send an update notification to all registered views."""
+        for v in self._registered_views:
+            v.request_update(dirty_items, dirty_matrix_items, removed_items)
+
+    @gaphas.decorators.nonrecursive
     def update_now(
         self,
         dirty_items: Sequence[Presentation],
         dirty_matrix_items: Sequence[Presentation] = (),
     ) -> None:
-        self._canvas.update_now(dirty_items, dirty_matrix_items)
+        """Update the diagram canvas."""
+
+        sort = self.sort
+
+        def dirty_items_with_ancestors():
+            for item in set(dirty_items):
+                yield item
+                yield from gaphas.canvas.ancestors(self, item)
+
+        all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
+        contexts = self._pre_update_items(all_dirty_items)
+
+        self._resolved_items.clear()
+        for d in dirty_items:
+            d.matrix_i2c.set(*self.get_matrix_i2c(d))
+        for d in dirty_matrix_items:
+            d.matrix_i2c.set(*self.get_matrix_i2c(d))
+
+        # solve all constraints
+        self._connections.solve()
+
+        all_dirty_items.extend(self._resolved_items)
+        self._post_update_items(reversed(list(sort(all_dirty_items))), contexts)
+
+    def _pre_update_items(self, items):
+        contexts = {}
+        for item in items:
+            context = UpdateContext(style=self.style(StyledItem(item)))
+            item.pre_update(context)
+            contexts[item] = context
+        return contexts
+
+    def _post_update_items(self, items, contexts):
+        for item in items:
+            context = contexts.get(item)
+            if not context:
+                context = UpdateContext(style=self.style(StyledItem(item)))
+            item.post_update(context)
+
+    def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
+        dirty_items = set()
+        if cinfo.item:
+            dirty_items.add(cinfo.item)
+            self._resolved_items.add(cinfo.item)
+        if cinfo.connected:
+            dirty_items.add(cinfo.connected)
+            self._resolved_items.add(cinfo.connected)
+        if dirty_items:
+            self._update_views(dirty_items)
 
     def register_view(self, view: gaphas.view.model.View[Presentation]) -> None:
-        self._canvas.register_view(view)
+        self._registered_views.add(view)
 
     def unregister_view(self, view: gaphas.view.model.View[Presentation]) -> None:
-        self._canvas.unregister_view(view)
+        self._registered_views.discard(view)
 
 
 Presentation.diagram = association(

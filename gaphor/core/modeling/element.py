@@ -130,6 +130,8 @@ class Element:
         if self._unlink_lock:
             return
 
+        log.debug("unlinking %s", self)
+
         try:
             self._unlink_lock += 1
 

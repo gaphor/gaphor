@@ -12,11 +12,11 @@ import os.path
 import uuid
 from functools import partial
 
-import gaphas
-
 from gaphor import application
-from gaphor.core.modeling import Diagram, Element
 from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling.diagram import Diagram, PseudoCanvas
+from gaphor.core.modeling.element import Element
+from gaphor.core.modeling.presentation import Presentation
 from gaphor.storage import parser
 
 FILE_FORMAT_VERSION = "3.0"
@@ -67,8 +67,7 @@ def save_element(name, value, writer):
 
     A value may be a primitive (string, int), a
     gaphor.core.modeling.collection (which contains a list of references
-    to other UML elements) or a gaphas.Canvas (which contains canvas
-    items).
+    to other UML elements) or a Diagram (which contains canvas items).
     """
 
     def save_reference(name, value):
@@ -112,7 +111,7 @@ def save_element(name, value, writer):
 
         The extra attribute reference can be used to force UML
         """
-        assert isinstance(value, gaphas.Item)
+        assert isinstance(value, Presentation)
         writer.startElement("item", {"id": value.id, "type": value.__class__.__name__})
         value.save(save_canvas_item)
 
@@ -128,16 +127,16 @@ def save_element(name, value, writer):
         """
         if isinstance(value, collection):
             save_collection(name, value)
-        elif isinstance(value, (Element, gaphas.Item)):
+        elif isinstance(value, Element):
             save_reference(name, value)
         else:
             save_value(name, value)
 
-    if isinstance(value, (Element, gaphas.Item)):
+    if isinstance(value, Element):
         save_reference(name, value)
     elif isinstance(value, collection):
         save_collection(name, value)
-    elif isinstance(value, gaphas.Canvas):
+    elif isinstance(value, PseudoCanvas):
         writer.startElement("canvas", {})
         value.save(save_canvas)
         writer.endElement("canvas")
@@ -187,7 +186,7 @@ def _load_elements_and_canvasitems(
     elements, factory, modeling_language, gaphor_version, update_status_queue
 ):
     def create_canvasitems(diagram, canvasitems, parent=None):
-        """Canvas is a read gaphas.Canvas, items is a list of
+        """Diagram is a Core Diagram, items is a list of
         parser.canvasitem's."""
         if version_lower_than(gaphor_version, (1, 1, 0)):
             new_canvasitems = upgrade_message_item_to_1_1_0(canvasitems)

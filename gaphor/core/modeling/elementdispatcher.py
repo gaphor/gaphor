@@ -29,7 +29,7 @@ class EventWatcher:
     ):
         self.element = element
         self.element_dispatcher = element_dispatcher
-        self.default_handler = default_handler
+        self.default_handler: Optional[Handler] = default_handler
         self._watched_paths: Dict[str, Handler] = dict()
 
     def watch(self, path: str, handler: Optional[Handler] = None) -> EventWatcher:
@@ -48,16 +48,14 @@ class EventWatcher:
             self._watched_paths[path] = self.default_handler
         else:
             raise ValueError("No handler provided for path " + path)
+
+        dispatcher = self.element_dispatcher
+        if dispatcher:
+            dispatcher.subscribe(self._watched_paths[path], self.element, path)
         return self
 
     def subscribe_all(self):
-        dispatcher = self.element_dispatcher
-        if not dispatcher:
-            return
-        element = self.element
-
-        for path, handler in self._watched_paths.items():
-            dispatcher.subscribe(handler, element, path)
+        pass
 
     def unsubscribe_all(self, *_args):
         """Unregister handlers.
@@ -237,11 +235,13 @@ class ElementDispatcher(Service):
     def on_element_change_event(self, event):
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
-            for handler in handlers.keys():
+            for handler in set(handlers.keys()):
                 try:
                     handler(event)
-                except Exception as e:
-                    self.logger.error(f"Problem executing handler {handler}", e)
+                except Exception:
+                    self.logger.error(
+                        f"Problem executing handler {handler}", exc_info=True
+                    )
 
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties

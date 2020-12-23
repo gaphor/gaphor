@@ -32,7 +32,7 @@ def order_lifeline_covered_by(lifeline):
 
     def y_and_occurence(connected):
         for conn in diagram.connections.get_connections(connected=connected):
-            m = diagram.get_matrix_i2c(conn.item)
+            m = conn.item.matrix_i2c
             if isinstance(conn.item, ExecutionSpecificationItem):
                 yield (
                     m.transform_point(*conn.handle.pos)[1],

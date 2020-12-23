@@ -149,7 +149,7 @@ def copy_presentation(item: Presentation) -> PresentationCopy:
 
     def save_func(name, value):
         # Do not copy diagram, it's set when pasted
-        if name != "diagram":
+        if name not in ("diagram", "parent", "children"):
             buffer[name] = serialize(value)
 
     item.save(save_func)

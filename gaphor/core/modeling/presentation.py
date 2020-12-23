@@ -2,22 +2,23 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
-
-from gaphas.state import observed, reversible_method
+import logging
+from typing import TYPE_CHECKING, Callable, Generic, List, TypeVar
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.event import DiagramItemDeleted
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
-    from gaphas.canvas import Canvas  # noqa
     from gaphas.connector import Handle  # noqa
     from gaphas.matrix import Matrix  # noqa
 
     from gaphor.core.modeling.diagram import Diagram
 
 S = TypeVar("S", bound=Element)
+
+
+log = logging.getLogger(__name__)
 
 
 class Presentation(Element, Generic[S]):
@@ -34,14 +35,12 @@ class Presentation(Element, Generic[S]):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self._canvas: Optional[Canvas] = None
-
         def update(event):
-            if self.canvas:
-                self.canvas.request_update(self)
+            if self.diagram:
+                self.diagram.request_update(self)
 
         self._watcher = self.watcher(default_handler=update)
-
+        self.watch("diagram", self.on_diagram_changed)
         self.watch("subject")
 
     subject: relation_one[S] = association(
@@ -56,49 +55,32 @@ class Presentation(Element, Generic[S]):
     handles: Callable[[Presentation], List[Handle]]
 
     matrix: Matrix
+    matrix_i2c: Matrix
 
-    @observed
-    def _set_canvas(self, canvas):
-        """Set the canvas.
-
-        Should only be called from Canvas.add and Canvas.remove().
-        """
-        assert not canvas or not self._canvas or self._canvas is canvas
-        if self._canvas:
+    def on_diagram_changed(self, event):
+        log.debug("diagram change %s, %s", event.old_value, event.new_value)
+        if event.old_value:
             self.teardown_canvas()
-        self._canvas = canvas
-        if canvas:
+        if event.new_value:
             self.setup_canvas()
 
-    reversible_method(
-        _set_canvas, _set_canvas, bind={"canvas": lambda self, canvas: self._canvas}
-    )
-
     def setup_canvas(self):
-        """Called when the canvas is set for the item.
+        """Called when the diagram is set for the item.
 
         This method can be used to create constraints.
         """
         pass
 
     def teardown_canvas(self):
-        """Called when the canvas is unset for the item.
+        """Called when the diagram is unset for the item.
 
         This method can be used to dispose constraints.
         """
         pass
 
-    @property
-    def canvas(self) -> Optional[Canvas]:
-        return self._canvas
-
-    @canvas.setter
-    def canvas(self, canvas: Optional[Canvas]) -> None:
-        self._set_canvas(canvas)
-
     def request_update(self, matrix=True):
-        if self.canvas:
-            self.canvas.request_update(self, matrix=matrix)
+        if self.diagram:
+            self.diagram.request_update(self, matrix=matrix)
 
     def watch(self, path, handler=None):
         """Watch a certain path of elements starting with the DiagramItem. The
@@ -121,11 +103,13 @@ class Presentation(Element, Generic[S]):
         self._watcher.unsubscribe_all()
 
     def unlink(self):
-        """Remove the item from the canvas and set subject to None."""
-        if self.canvas:
-            diagram = self.diagram
-            self.canvas.remove(self)
-            super().unlink()
+        """Remove the item from the diagram and set subject to None."""
+        diagram = self.diagram
+        self.unsubscribe_all()
+        if diagram:
+            diagram.connections.remove_connections_to_item(self)
+        super().unlink()
+        if diagram:
             self.handle(DiagramItemDeleted(diagram, self))
 
 

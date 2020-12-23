@@ -65,7 +65,9 @@ class BaseConnector:
         element: Presentation[Element],
         line: Presentation[Element],
     ) -> None:
-        assert element.diagram and element.diagram is line.diagram
+        assert (
+            element.diagram and element.diagram is line.diagram
+        ), f"Connector without diagram ({element}: {element.diagram}, {line}: {line.diagram})"
         self.element = element
         self.line = line
         self.diagram: Diagram = element.diagram

@@ -178,7 +178,7 @@ def test_commentline_unlink(create):
     assert len(clazz.subject.comment) == 0, clazz.subject.comment
 
 
-def test_commentline_element_unlink(create):
+def test_commentline_element_unlink(create, diagram):
     """Test comment line unlinking using a class item."""
     clazz = create(ClassItem, UML.Class)
     comment = create(CommentItem, Comment)
@@ -193,11 +193,9 @@ def test_commentline_element_unlink(create):
 
     clazz_subject = clazz.subject
 
-    # FixMe: This should invoke the disconnect handler of the line's
-    #  handles.
-
     clazz.unlink()
 
+    assert clazz not in diagram.ownedPresentation
     assert not clazz.diagram
     assert line.diagram
     assert not comment.subject.annotatedElement
