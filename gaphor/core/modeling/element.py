@@ -153,8 +153,6 @@ class Element:
         else:
             return DummyEventWatcher()
 
-    # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
-
     def isKindOf(self, class_: Type[Element]) -> bool:
         """Returns true if the object is an instance of `class_`."""
         return isinstance(self, class_)

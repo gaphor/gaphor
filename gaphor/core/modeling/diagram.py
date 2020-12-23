@@ -325,31 +325,6 @@ class DiagramCanvas(gaphas.Canvas):
         for item in self.get_root_items():
             save_func(item)
 
-    def select(self, expression=None):
-        """Return a list of all canvas items that match expression."""
-        if expression is None:
-            yield from self.get_all_items()
-        elif isinstance(expression, type):
-            yield from (e for e in self.get_all_items() if isinstance(e, expression))
-        else:
-            yield from (e for e in self.get_all_items() if expression(e))
-
-    def reparent(self, item, parent):
-        """A more fancy version of the reparent method."""
-        old_parent = self.get_parent(item)
-
-        if old_parent:
-            super().reparent(item, None)
-            m = self.get_matrix_i2c(old_parent)
-            item.matrix.set(*item.matrix.multiply(m))
-            self.request_update(old_parent)
-
-        if parent:
-            super().reparent(item, parent)
-            m = self.get_matrix_i2c(parent).inverse()
-            item.matrix.set(*item.matrix.multiply(m))
-            self.request_update(parent)
-
 
 class Diagram(PackageableElement):
     """Diagrams may contain model elements and can be owned by a Package."""
@@ -394,11 +369,11 @@ class Diagram(PackageableElement):
         save_func("canvas", self._canvas)
 
     def postload(self):
-        """Handle post-load functionality for the diagram canvas."""
+        """Handle post-load functionality for the diagram."""
         super().postload()
 
     def create(self, type, parent=None, subject=None):
-        """Create a new canvas item on the canvas.
+        """Create a new diagram item on the diagram.
 
         It is created with a unique ID and it is attached to the
         diagram's root item.  The type parameter is the element class to
@@ -439,11 +414,30 @@ class Diagram(PackageableElement):
 
         super().unlink()
 
-    def select(self, expression=lambda e: True):
-        return self._canvas.select(expression)
+    def select(self, expression=None):
+        """Return a list of all canvas items that match expression."""
+        if expression is None:
+            yield from self.get_all_items()
+        elif isinstance(expression, type):
+            yield from (e for e in self.get_all_items() if isinstance(e, expression))
+        else:
+            yield from (e for e in self.get_all_items() if expression(e))
 
-    def reparent(self, item: Presentation, parent: Optional[Presentation]) -> None:
-        self._canvas.reparent(item, parent)
+    def reparent(self, item, parent):
+        """A more fancy version of the reparent method."""
+        old_parent = self.get_parent(item)
+
+        if old_parent:
+            self._canvas.reparent(item, None)
+            m = self.get_matrix_i2c(old_parent)
+            item.matrix.set(*item.matrix.multiply(m))
+            self.request_update(old_parent)
+
+        if parent:
+            self._canvas.reparent(item, parent)
+            m = self.get_matrix_i2c(parent).inverse()
+            item.matrix.set(*item.matrix.multiply(m))
+            self.request_update(parent)
 
     @property
     def connections(self) -> gaphas.connections.Connections:
