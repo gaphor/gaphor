@@ -16,7 +16,7 @@ import gaphas
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.coremodel import Element, PackageableElement
 from gaphor.core.modeling.element import Id, RepositoryProtocol
-from gaphor.core.modeling.event import DiagramItemCreated
+from gaphor.core.modeling.event import AssociationDeleted, DiagramItemCreated
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 from gaphor.core.modeling.stylesheet import StyleSheet
@@ -248,6 +248,9 @@ class Diagram(PackageableElement):
 
         self._registered_views: Set[gaphas.view.model.View] = set()
 
+        self._watcher = self.watcher()
+        self._watcher.watch("ownedPresentation", self._presentation_removed)
+
         # Record all items changed during constraint solving,
         # so their `post_update()` method can be called.
         self._resolved_items: Set[gaphas.item.Item] = set()
@@ -255,6 +258,10 @@ class Diagram(PackageableElement):
     ownedPresentation: relation_many[Presentation] = association(
         "ownedPresentation", Presentation, composite=True, opposite="diagram"
     )
+
+    def _presentation_removed(self, event):
+        if isinstance(event, AssociationDeleted) and event.old_value:
+            self._update_views(removed_items=(event.old_value,))
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
@@ -321,7 +328,7 @@ class Diagram(PackageableElement):
         log.debug("unlinking %s", self)
         for item in self.ownedPresentation:
             self.connections.remove_connections_to_item(item)
-
+        self._watcher.unsubscribe_all()
         super().unlink()
 
     def select(self, expression=None):
