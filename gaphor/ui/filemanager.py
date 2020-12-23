@@ -135,6 +135,7 @@ class FileManager(Service, ActionProvider):
         orphans = verify.orphan_references(self.element_factory)
 
         if orphans:
+            log.info("Found orphan references %s", orphans)
             main_window = self.main_window
 
             dialog = QuestionDialog(

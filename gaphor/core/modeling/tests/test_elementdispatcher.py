@@ -273,18 +273,18 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         )
         p.name = "func"
         dispatcher.subscribe(self._handler, element, "ownedOperation.parameter.name")
-        assert len(dispatcher._handlers) == 3
+        assert len(dispatcher._handlers) == 4
         assert not self.events
 
         element.ownedOperation = self.element_factory.create(UML.Operation)
         assert len(self.events) == 1, self.events
-        assert len(dispatcher._handlers) == 4
+        assert len(dispatcher._handlers) == 5
 
         p.name = "othername"
         assert len(self.events) == 2, self.events
 
         del element.ownedOperation[o]
-        assert len(dispatcher._handlers) == 2
+        assert len(dispatcher._handlers) == 3
 
     def test_association_notification(self):
         """Test notifications with Class object.
@@ -298,12 +298,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
 
         assert len(element.memberEnd) == 2
         dispatcher.subscribe(self._handler, element, "memberEnd.name")
-        assert len(dispatcher._handlers) == 3, len(dispatcher._handlers)
+        assert len(dispatcher._handlers) == 4, len(dispatcher._handlers)
         assert not self.events
 
         p1.name = "foo"
         assert len(self.events) == 1, (self.events, dispatcher._handlers)
-        assert len(dispatcher._handlers) == 3
+        assert len(dispatcher._handlers) == 4
 
         p1.name = "othername"
         assert len(self.events) == 2, self.events
@@ -334,12 +334,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         dispatcher.subscribe(self._handler, element, base + "lowerValue")
         dispatcher.subscribe(self._handler, element, base + "upperValue")
 
-        assert len(dispatcher._handlers) == 11, len(dispatcher._handlers)
+        assert len(dispatcher._handlers) == 12, len(dispatcher._handlers)
         assert not self.events
 
         p1.name = "foo"
         assert len(self.events) == 1, (self.events, dispatcher._handlers)
-        assert len(dispatcher._handlers) == 11
+        assert len(dispatcher._handlers) == 12
 
         p1.name = "othername"
         assert len(self.events) == 2, self.events
@@ -387,7 +387,7 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.unlink()
         watcher.unsubscribe_all()
         watcher.unsubscribe_all()
-        assert len(self.dispatcher._handlers) == 0
+        assert len(self.dispatcher._handlers) == 1
 
     def test_braking_big_diamond(self):
         """Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' ->
@@ -407,12 +407,12 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a.one.two[1].one.two = a.one.two[0].one.two[0]
 
         assert len(self.events) == 7
-        assert len(self.dispatcher._handlers) == 6
+        assert len(self.dispatcher._handlers) == 7
 
         del a.one.two[0].one
         watcher.unsubscribe_all()
         watcher.unsubscribe_all()
-        assert len(self.dispatcher._handlers) == 0
+        assert len(self.dispatcher._handlers) == 1
 
     def test_cyclic(self):
         """Test cyclic dependency a -> b -> c -> a."""
@@ -430,4 +430,4 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         assert 4 == len(self.events)
 
         a.unlink()
-        assert 1 == len(self.dispatcher._handlers)
+        assert 2 == len(self.dispatcher._handlers)
