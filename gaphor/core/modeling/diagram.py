@@ -195,9 +195,8 @@ class StyledItem:
         )
 
     def children(self) -> Iterator[StyledItem]:
-        children = self.diagram.get_children(self.item)
         selection = self.selection
-        return (StyledItem(child, selection) for child in children)
+        return (StyledItem(child, selection) for child in self.item.children)
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")

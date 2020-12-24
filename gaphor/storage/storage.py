@@ -115,7 +115,7 @@ def save_element(name, value, writer):
         writer.startElement("item", {"id": value.id, "type": value.__class__.__name__})
         value.save(save_canvas_item)
 
-        for child in value.diagram.get_children(value):
+        for child in value.children:
             save_canvas(child)
 
         writer.endElement("item")

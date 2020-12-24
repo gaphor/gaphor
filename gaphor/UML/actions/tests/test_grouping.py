@@ -61,7 +61,7 @@ class PartitionGroupTestCase(TestCase):
 
         partition = p.subject
         assert len(partition.node) == 2, partition.node
-        assert len(p.children) == 2, p.diagram.get_children(p)
+        assert len(p.children) == 2, p.children
 
         self.ungroup(p, a1)
         self.ungroup(p, a2)

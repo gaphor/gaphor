@@ -21,7 +21,7 @@ def test_load_grouped_connected_items(element_factory, loader):
         e for e in diagram.get_all_items() if not diagram.get_parent(e)
     ]
 
-    child_one, child_two = diagram.get_children(node_item)
+    child_one, child_two = node_item.children
 
     assert isinstance(node_item, NodeItem)
     assert isinstance(dep_item, DependencyItem)
