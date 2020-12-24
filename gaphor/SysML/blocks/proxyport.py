@@ -57,6 +57,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Named):
 
         self._last_connected_side = None
         self.watch("subject[NamedElement].name")
+        self.update_shapes()
 
     @property
     def matrix(self) -> Matrix:
@@ -91,10 +92,6 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Named):
 
     def point(self, x, y):
         return distance_rectangle_point(self.dimensions(), (x, y))
-
-    def setup_canvas(self):
-        # Invoke here, since we do not receive events, unless we're attached to a diagram
-        self.update_shapes()
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))

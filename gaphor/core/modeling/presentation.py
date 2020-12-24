@@ -40,7 +40,6 @@ class Presentation(Element, Generic[S]):
                 self.diagram.request_update(self)
 
         self._watcher = self.watcher(default_handler=update)
-        self.watch("diagram", self.on_diagram_changed)
         self.watch("subject")
 
     subject: relation_one[S] = association(
@@ -56,18 +55,6 @@ class Presentation(Element, Generic[S]):
 
     matrix: Matrix
     matrix_i2c: Matrix
-
-    def on_diagram_changed(self, event):
-        log.debug("diagram change %s, %s", event.old_value, event.new_value)
-        if event.new_value:
-            self.setup_canvas()
-
-    def setup_canvas(self):
-        """Called when the diagram is set for the item.
-
-        This method can be used to create constraints.
-        """
-        pass
 
     def request_update(self, matrix=True):
         if self.diagram:
