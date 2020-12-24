@@ -168,9 +168,6 @@ class DummyEventWatcher:
     def watch(self, path: str, handler: Optional[Handler] = None) -> DummyEventWatcher:
         return self
 
-    def subscribe_all(self) -> None:
-        pass
-
     def unsubscribe_all(self) -> None:
         pass
 
@@ -212,9 +209,6 @@ class EventWatcherProtocol(Protocol):
     def watch(
         self, path: str, handler: Optional[Handler] = None
     ) -> EventWatcherProtocol:
-        ...
-
-    def subscribe_all(self) -> None:
         ...
 
     def unsubscribe_all(self) -> None:

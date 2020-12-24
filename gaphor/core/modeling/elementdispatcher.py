@@ -54,9 +54,6 @@ class EventWatcher:
             dispatcher.subscribe(self._watched_paths[path], self.element, path)
         return self
 
-    def subscribe_all(self):
-        pass
-
     def unsubscribe_all(self, *_args):
         """Unregister handlers.
 

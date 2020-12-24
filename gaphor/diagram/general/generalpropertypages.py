@@ -35,7 +35,7 @@ class CommentItemPropertyPage(PropertyPageBase):
                 buffer.set_text(event.new_value)
                 buffer.handler_unblock(changed_id)
 
-        self.watcher.watch("body", handler).subscribe_all()
+        self.watcher.watch("body", handler)
         text_view.connect("destroy", self.watcher.unsubscribe_all)
 
         return builder.get_object("comment-editor")

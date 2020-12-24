@@ -94,7 +94,6 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Named):
 
     def setup_canvas(self):
         super().setup_canvas()
-        self.subscribe_all()
         # Invoke here, since we do not receive events, unless we're attached to a diagram
         self.update_shapes()
 

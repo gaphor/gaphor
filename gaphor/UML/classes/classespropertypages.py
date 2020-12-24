@@ -131,7 +131,7 @@ class NamedElementPropertyPage(PropertyPageBase):
             if event.element is subject and event.new_value is not None:
                 entry.set_text(event.new_value)
 
-        self.watcher.watch("name", handler).subscribe_all()
+        self.watcher.watch("name", handler)
 
         builder.connect_signals(
             {
@@ -253,7 +253,7 @@ class AttributesPage(PropertyPageBase):
             "ownedAttribute.defaultValue", handler
         ).watch(
             "ownedAttribute.typeValue", handler
-        ).subscribe_all()
+        )
 
         builder.connect_signals(
             {
@@ -325,7 +325,7 @@ class OperationsPage(PropertyPageBase):
             "ownedOperation.formalParameter.typeValue", handler
         ).watch(
             "ownedOperation.formalParameter.defaultValue", handler
-        ).subscribe_all()
+        )
 
         builder.connect_signals(
             {
@@ -375,7 +375,7 @@ class DependencyPropertyPage(PropertyPageBase):
 
         self.update()
 
-        self.watcher.watch("subject", self._on_subject_change).subscribe_all()
+        self.watcher.watch("subject", self._on_subject_change)
 
         self.builder.connect_signals(
             {
@@ -518,7 +518,7 @@ class AssociationPropertyPage(PropertyPageBase):
         ).watch(
             "memberEnd[Property].type",
             restore_nav_handler,
-        ).subscribe_all()
+        )
 
         builder.connect_signals(
             {

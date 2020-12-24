@@ -119,7 +119,6 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
         )
 
     def setup_canvas(self):
-        self.subscribe_all()
         # Invoke here, since we do not receive events, unless we're attached to a diagram
         self.update_shapes()
 
@@ -220,10 +219,6 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         ):
             if shape:
                 shape.draw(context, rect)
-
-    def setup_canvas(self):
-        super().setup_canvas()
-        self.subscribe_all()
 
     def teardown_canvas(self):
         self.unsubscribe_all()

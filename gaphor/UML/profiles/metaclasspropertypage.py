@@ -59,7 +59,7 @@ class MetaclassPropertyPage(PropertyPageBase):
             if event.element is self.subject and event.new_value is not None:
                 entry.set_text(event.new_value)
 
-        self.watcher.watch("name", handler).subscribe_all()
+        self.watcher.watch("name", handler)
 
         builder.connect_signals(
             {

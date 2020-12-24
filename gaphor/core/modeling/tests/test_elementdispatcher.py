@@ -350,7 +350,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
-        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -372,7 +371,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
-        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -396,7 +394,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
-        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()
@@ -420,7 +417,6 @@ class ElementDispatcherAsServiceTestCase(TestCase):
         a = A()
         watcher = EventWatcher(a, self.dispatcher, self._handler)
         watcher.watch("one.two.one.two")
-        watcher.subscribe_all()
 
         a.one = A()
         a.one.two = A()

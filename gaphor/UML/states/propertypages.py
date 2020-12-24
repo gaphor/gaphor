@@ -36,7 +36,7 @@ class TransitionPropertyPage(PropertyPageBase):
             if event.element is subject.guard:
                 guard.set_text(event.new_value or "")
 
-        self.watcher.watch("guard[Constraint].specification", handler).subscribe_all()
+        self.watcher.watch("guard[Constraint].specification", handler)
 
         builder.connect_signals(
             {

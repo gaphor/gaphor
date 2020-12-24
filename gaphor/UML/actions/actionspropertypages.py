@@ -145,7 +145,7 @@ class FlowPropertyPageAbstract(PropertyPageBase):
             v = event.new_value
             guard.set_text(v if v else "")
 
-        self.watcher.watch("guard", handler).subscribe_all()
+        self.watcher.watch("guard", handler)
 
         builder.connect_signals(
             {

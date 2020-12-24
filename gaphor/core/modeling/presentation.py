@@ -94,10 +94,6 @@ class Presentation(Element, Generic[S]):
         self._watcher.watch(path, handler)
         return self
 
-    def subscribe_all(self):
-        """Subscribe all watched paths, as defined through `watch()`."""
-        self._watcher.subscribe_all()
-
     def unsubscribe_all(self):
         """Unsubscribe all watched paths, as defined through `watch()`."""
         self._watcher.unsubscribe_all()
