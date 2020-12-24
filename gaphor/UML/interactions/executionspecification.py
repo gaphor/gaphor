@@ -62,8 +62,17 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
         se = Position(r, 0, strength=WEAK)
         sw = Position(-r, 0, strength=WEAK)
 
-        connections.add_constraint(self, constraint(horizontal=(sw, hb.pos)))
-        connections.add_constraint(self, constraint(horizontal=(se, hb.pos)))
+        for c in (
+            constraint(horizontal=(nw, ht.pos)),
+            constraint(horizontal=(ne, ht.pos)),
+            constraint(horizontal=(sw, hb.pos)),
+            constraint(horizontal=(se, hb.pos)),
+            constraint(vertical=(nw, ht.pos), delta=-r),
+            constraint(vertical=(ne, ht.pos), delta=r),
+            constraint(vertical=(sw, hb.pos), delta=-r),
+            constraint(vertical=(se, hb.pos), delta=r),
+        ):
+            connections.add_constraint(self, c)
 
         self._ports = [LinePort(nw, sw), LinePort(ne, se)]
 
