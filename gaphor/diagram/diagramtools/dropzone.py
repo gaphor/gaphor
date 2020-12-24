@@ -94,7 +94,7 @@ class DropZoneMove(GuidedItemMove):
                 return
 
             if old_parent:
-                model.reparent(item, None)
+                item.parent = None
 
                 adapter = Group(old_parent, item)
                 if adapter:
@@ -103,7 +103,7 @@ class DropZoneMove(GuidedItemMove):
                 old_parent.request_update()
 
             if new_parent:
-                model.reparent(item, new_parent)
+                item.parent = new_parent
 
                 adapter = Group(new_parent, item)
                 if adapter and adapter.can_contain():

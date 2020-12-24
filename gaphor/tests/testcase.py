@@ -128,7 +128,7 @@ class TestCase(unittest.TestCase):
 
     def group(self, parent, item):
         """Group item within a parent."""
-        self.diagram.reparent(item, parent)
+        item.parent = parent
         adapter = Group(parent, item)
         adapter.group()
 
@@ -136,7 +136,7 @@ class TestCase(unittest.TestCase):
         """Remove item from a parent."""
         adapter = Group(parent, item)
         adapter.ungroup()
-        self.diagram.reparent(item, None)
+        item.parent = None
 
     def kindof(self, cls):
         """Find UML metaclass instances using element factory."""

@@ -168,7 +168,7 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     if parent:
         p = lookup(parent)
         if p:
-            diagram.reparent(item, p)
+            item.parent = p
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             item.load(name, value)

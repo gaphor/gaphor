@@ -116,7 +116,7 @@ class Presentation(Element, Generic[S]):
 Element.presentation = association(
     "presentation", Presentation, composite=True, opposite="subject"
 )
-Presentation.parent = association(
-    "parent", Presentation, upper=1, composite=True, opposite="children"
+Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
+Presentation.children = association(
+    "children", Presentation, composite=True, opposite="parent"
 )
-Presentation.children = association("children", Presentation, opposite="parent")

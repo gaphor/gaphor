@@ -250,6 +250,7 @@ class Diagram(PackageableElement):
 
         self._watcher = self.watcher()
         self._watcher.watch("ownedPresentation", self._presentation_removed)
+        self._watcher.watch("ownedPresentation.parent", self._presentation_reparent)
 
         # Record all items changed during constraint solving,
         # so their `post_update()` method can be called.
@@ -262,6 +263,25 @@ class Diagram(PackageableElement):
     def _presentation_removed(self, event):
         if isinstance(event, AssociationDeleted) and event.old_value:
             self._update_views(removed_items=(event.old_value,))
+
+    def _presentation_reparent(self, event):
+        """A more fancy version of the reparent method."""
+        if event.property is not Presentation.parent:
+            return
+
+        item = event.element
+        old_parent = event.old_value
+
+        if old_parent:
+            m = self.get_matrix_i2c(old_parent)
+            item.matrix.set(*item.matrix.multiply(m))
+            self.request_update(old_parent)
+
+        new_parent = event.new_value
+        if new_parent:
+            m = self.get_matrix_i2c(new_parent).inverse()
+            item.matrix.set(*item.matrix.multiply(m))
+            self.request_update(new_parent)
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
@@ -339,22 +359,6 @@ class Diagram(PackageableElement):
             yield from (e for e in self.get_all_items() if isinstance(e, expression))
         else:
             yield from (e for e in self.get_all_items() if expression(e))
-
-    def reparent(self, item, parent):
-        """A more fancy version of the reparent method."""
-        old_parent = item.parent
-
-        if old_parent:
-            item.parent = None
-            m = self.get_matrix_i2c(old_parent)
-            item.matrix.set(*item.matrix.multiply(m))
-            self.request_update(old_parent)
-
-        if parent:
-            item.parent = parent
-            m = self.get_matrix_i2c(parent).inverse()
-            item.matrix.set(*item.matrix.multiply(m))
-            self.request_update(parent)
 
     @property
     def connections(self) -> gaphas.connections.Connections:

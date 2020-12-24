@@ -197,7 +197,15 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
         child_exec_spec.ports()[0],
     )
 
+    print("parent", parent_exec_spec.subject)
+    print("child", child_exec_spec.subject)
+
+    assert child_exec_spec.parent is parent_exec_spec
+
     disconnect(parent_exec_spec, parent_exec_spec.handles()[0])
+
+    print("parent", parent_exec_spec.subject)
+    print("child", child_exec_spec.subject)
 
     assert lifeline.subject
     assert parent_exec_spec.subject is None

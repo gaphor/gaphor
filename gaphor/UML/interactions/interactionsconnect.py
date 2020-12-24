@@ -249,7 +249,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
         diagram = self.diagram
         if diagram.get_parent(self.line) is not self.element:
-            diagram.reparent(self.line, self.element)
+            self.line.parent = self.element
 
         for cinfo in diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).connect(cinfo.handle, cinfo.port)
@@ -265,7 +265,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
         if diagram.get_parent(self.line) is self.element:
             new_parent = diagram.get_parent(self.element)
-            diagram.reparent(self.line, new_parent)
+            self.line.parent = new_parent  # type: ignore[assignment]
 
         for cinfo in diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)
@@ -289,7 +289,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
         assert connected_item
         Connector(connected_item, self.line).connect(handle, None)
 
-        self.diagram.reparent(self.line, self.element)
+        self.line.parent = self.element
 
         return True
 
