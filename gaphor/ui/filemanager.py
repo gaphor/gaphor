@@ -208,11 +208,11 @@ class FileManager(Service, ActionProvider):
 
         filename = self.filename
 
-        if filename:
-            self.save(filename)
-            return True
-        else:
+        if not filename:
             return self.action_save_as()
+
+        self.save(filename)
+        return True
 
     @action(name="file-save-as", shortcut="<Primary><Shift>s")
     def action_save_as(self):
