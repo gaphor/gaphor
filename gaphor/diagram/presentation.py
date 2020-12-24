@@ -122,9 +122,6 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
         # Invoke here, since we do not receive events, unless we're attached to a diagram
         self.update_shapes()
 
-    def teardown_canvas(self):
-        self.unsubscribe_all()
-
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
         for prop in ("width", "height"):
@@ -219,10 +216,6 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         ):
             if shape:
                 shape.draw(context, rect)
-
-    def teardown_canvas(self):
-        self.unsubscribe_all()
-        super().teardown_canvas()
 
     def save(self, save_func):
         def save_connection(name, handle):

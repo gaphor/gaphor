@@ -93,13 +93,8 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Named):
         return distance_rectangle_point(self.dimensions(), (x, y))
 
     def setup_canvas(self):
-        super().setup_canvas()
         # Invoke here, since we do not receive events, unless we're attached to a diagram
         self.update_shapes()
-
-    def teardown_canvas(self):
-        self.unsubscribe_all()
-        super().teardown_canvas()
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))

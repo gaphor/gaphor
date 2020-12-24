@@ -165,9 +165,6 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         self.watch("subject.appliedStereotype.classifier.name")
         self.setup_constraints()
 
-    def setup_canvas(self):
-        super().setup_canvas()
-
     def setup_constraints(self):
         top = self.lifetime.top
         bottom = self.lifetime.bottom
@@ -185,15 +182,9 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         self.lifetime._c_min_length = LessThanConstraint(
             top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH
         )
-        self.__constraints = (c1, c2, c3, self.lifetime._c_min_length)
 
-        for c in self.__constraints:
+        for c in [c1, c2, c3, self.lifetime._c_min_length]:
             self._connections.add_constraint(self, c)
-
-    def teardown_canvas(self):
-        super().teardown_canvas()
-        for c in self.__constraints:
-            self._connections.remove_constraint(self, c)
 
     def save(self, save_func):
         super().save(save_func)

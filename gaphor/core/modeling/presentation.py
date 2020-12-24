@@ -59,8 +59,6 @@ class Presentation(Element, Generic[S]):
 
     def on_diagram_changed(self, event):
         log.debug("diagram change %s, %s", event.old_value, event.new_value)
-        if event.old_value:
-            self.teardown_canvas()
         if event.new_value:
             self.setup_canvas()
 
@@ -68,13 +66,6 @@ class Presentation(Element, Generic[S]):
         """Called when the diagram is set for the item.
 
         This method can be used to create constraints.
-        """
-        pass
-
-    def teardown_canvas(self):
-        """Called when the diagram is unset for the item.
-
-        This method can be used to dispose constraints.
         """
         pass
 
@@ -101,7 +92,7 @@ class Presentation(Element, Generic[S]):
     def unlink(self):
         """Remove the item from the diagram and set subject to None."""
         diagram = self.diagram
-        self.unsubscribe_all()
+        self._watcher.unsubscribe_all()
         if diagram:
             diagram.connections.remove_connections_to_item(self)
         super().unlink()
