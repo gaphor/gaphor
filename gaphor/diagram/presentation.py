@@ -34,7 +34,7 @@ def from_package_str(item):
         return False
 
     namespace = subject.namespace
-    parent = diagram.get_parent(item)
+    parent = item.parent
 
     # if there is a parent (i.e. interaction)
     if parent and parent.subject and parent.subject.namespace is not namespace:

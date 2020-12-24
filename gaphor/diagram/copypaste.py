@@ -153,7 +153,7 @@ def copy_presentation(item: Presentation) -> PresentationCopy:
             buffer[name] = serialize(value)
 
     item.save(save_func)
-    parent = item.diagram.get_parent(item)
+    parent = item.parent
     return PresentationCopy(
         cls=item.__class__,
         data=buffer,

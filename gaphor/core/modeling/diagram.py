@@ -157,7 +157,7 @@ class StyledDiagram:
         return (
             StyledItem(item, self.selection)
             for item in self.diagram.get_all_items()
-            if not self.diagram.get_parent(item)
+            if not item.parent
         )
 
     def attribute(self, name: str) -> str:
@@ -187,7 +187,7 @@ class StyledItem:
         return removesuffix(type(self.item).__name__, "Item").lower()
 
     def parent(self) -> Union[StyledItem, StyledDiagram]:
-        parent = self.diagram.get_parent(self.item)
+        parent = self.item.parent
         return (
             StyledItem(parent, self.selection)
             if parent

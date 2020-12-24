@@ -17,7 +17,7 @@ def node_with_component(diagram, element_factory):
     Group(node_item, comp_item).group()
     comp_item.parent = node_item
 
-    assert diagram.get_parent(comp_item) is node_item
+    assert comp_item.parent is node_item
 
     return node_item, comp_item
 
@@ -29,7 +29,7 @@ def test_copy_paste_of_nested_item(diagram, element_factory, node_with_component
 
     (new_comp_item,) = paste(buffer, diagram, element_factory.lookup)
 
-    assert diagram.get_parent(new_comp_item) is node_item
+    assert new_comp_item.parent is node_item
 
 
 def test_copy_paste_of_item_with_nested_item(
@@ -44,7 +44,7 @@ def test_copy_paste_of_item_with_nested_item(
     new_node_item = next(i for i in new_items if isinstance(i, NodeItem))
     new_comp_item = next(i for i in new_items if isinstance(i, ComponentItem))
 
-    assert diagram.get_parent(new_comp_item) is new_node_item
+    assert new_comp_item.parent is new_node_item
 
 
 def test_copy_remove_paste_of_item_with_nested_item(
@@ -56,4 +56,4 @@ def test_copy_remove_paste_of_item_with_nested_item(
     new_node_item = next(i for i in new_items if isinstance(i, NodeItem))
     new_comp_item = next(i for i in new_items if isinstance(i, ComponentItem))
 
-    assert diagram.get_parent(new_comp_item) is new_node_item
+    assert new_comp_item.parent is new_node_item

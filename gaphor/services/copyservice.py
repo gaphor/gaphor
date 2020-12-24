@@ -60,7 +60,7 @@ class CopyService(Service, ActionProvider):
 
             # move pasted items a bit, so user can see result of his action :)
             for item in new_items:
-                if diagram.get_parent(item) not in new_items:
+                if item.parent not in new_items:
                     item.matrix.translate(10, 10)
 
         return new_items

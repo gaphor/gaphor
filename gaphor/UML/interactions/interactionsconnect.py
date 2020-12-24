@@ -56,7 +56,7 @@ def order_lifeline_covered_by(lifeline):
 
 
 def owner_for_message(line, lifeline):
-    maybe_interaction = lifeline.diagram.get_parent(lifeline)
+    maybe_interaction = lifeline.parent
     if line.subject.interaction:
         return
     elif isinstance(maybe_interaction, InteractionItem):
@@ -248,7 +248,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
             exec_spec.enclosingInteraction = lifeline.interaction
 
         diagram = self.diagram
-        if diagram.get_parent(self.line) is not self.element:
+        if self.line.parent is not self.element:
             self.line.parent = self.element
 
         for cinfo in diagram.connections.get_connections(connected=self.line):
@@ -263,8 +263,8 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
         diagram = self.diagram
 
-        if diagram.get_parent(self.line) is self.element:
-            new_parent = diagram.get_parent(self.element)
+        if self.line.parent is self.element:
+            new_parent = self.element.parent
             self.line.parent = new_parent  # type: ignore[assignment]
 
         for cinfo in diagram.connections.get_connections(connected=self.line):

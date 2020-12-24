@@ -146,7 +146,7 @@ def test_message_is_owned_by_implicit_interaction_connecting_to_head(
 
     assert msg.subject is not None
     assert msg.subject.interaction is interaction
-    assert diagram.get_parent(msg) is None
+    assert msg.parent is None
 
 
 @pytest.mark.parametrize("end_name", ["head", "tail"])
@@ -165,7 +165,7 @@ def test_message_is_owned_by_interaction_item_connecting_to_one_end(
 
     assert msg.subject is not None
     assert msg.subject.interaction is interaction.subject
-    assert diagram.get_parent(msg) is interaction
+    assert msg.parent is interaction
 
 
 def test_disconnection(diagram):

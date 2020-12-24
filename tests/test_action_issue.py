@@ -87,5 +87,5 @@ class ActionIssueTestCase(TestCase):
         for a in actions:
             (p,) = a.inPartition
             assert p
-            assert diagram.get_parent(a.presentation[0])
-            assert diagram.get_parent(a.presentation[0]) is p.presentation[0]
+            assert a.presentation[0].parent
+            assert a.presentation[0].parent is p.presentation[0]
