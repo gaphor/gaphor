@@ -67,7 +67,7 @@ def save_element(name, value, writer):
 
     A value may be a primitive (string, int), a
     gaphor.core.modeling.collection (which contains a list of references
-    to other UML elements) or a Diagram (which contains canvas items).
+    to other UML elements) or a Diagram (which contains diagram items).
     """
 
     def save_reference(name, value):
@@ -106,21 +106,21 @@ def save_element(name, value, writer):
             writer.endElement("val")
             writer.endElement(name)
 
-    def save_canvas(value):
+    def save_diagram(value):
         """Save attributes and references in a gaphor.diagram.* object.
 
         The extra attribute reference can be used to force UML
         """
         assert isinstance(value, Presentation)
         writer.startElement("item", {"id": value.id, "type": value.__class__.__name__})
-        value.save(save_canvas_item)
+        value.save(save_diagram_item)
 
         for child in value.children:
-            save_canvas(child)
+            save_diagram(child)
 
         writer.endElement("item")
 
-    def save_canvas_item(name, value):
+    def save_diagram_item(name, value):
         """Save attributes and references in a gaphor.diagram.* object.
 
         The extra attribute reference can be used to force UML
@@ -138,7 +138,7 @@ def save_element(name, value, writer):
         save_collection(name, value)
     elif isinstance(value, PseudoCanvas):
         writer.startElement("canvas", {})
-        value.save(save_canvas)
+        value.save(save_diagram)
         writer.endElement("canvas")
     else:
         save_value(name, value)
