@@ -89,7 +89,6 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
     def __init__(self, connections, id=None, model=None, shape=None):
         super().__init__(connections, id=id, model=model)  # type: ignore[misc]
         self._shape = shape
-        self.update_shapes()
 
     def port_side(self, port):
         return self._port_sides[self._ports.index(port)]

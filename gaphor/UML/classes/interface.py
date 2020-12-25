@@ -158,8 +158,8 @@ class InterfaceItem(ElementPresentation, Classified):
     RADIUS_REQUIRED = 14
 
     def __init__(self, connections, id=None, model=None):
-        self._folded = Folded.NONE
         super().__init__(connections, id, model)
+        self._folded = Folded.NONE
         self.side = Side.N
 
         handles = self.handles()
