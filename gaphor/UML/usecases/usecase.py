@@ -14,8 +14,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 class UseCaseItem(ElementPresentation, Classified):
     """Presentation of gaphor.UML.UseCase."""
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
         self.shape = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),

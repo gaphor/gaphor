@@ -324,7 +324,7 @@ class Diagram(PackageableElement):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
-        item = type(diagram=self, id=id, model=self.model)
+        item = type(diagram=self, id=id)
         assert isinstance(
             item, gaphas.Item
         ), f"Type {type} does not comply with Item protocol"

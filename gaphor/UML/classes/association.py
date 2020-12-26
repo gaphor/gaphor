@@ -19,7 +19,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.state import reversible_property
 
 from gaphor import UML
-from gaphor.core.modeling import Presentation
+from gaphor.core.modeling.presentation import Presentation, Transient
 from gaphor.core.styling import Style
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
@@ -47,8 +47,8 @@ class AssociationItem(LinePresentation[UML.Association], Named):
     association).
     """
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
 
         # AssociationEnds are really inseparable from the AssociationItem.
         # We give them the same id as the association item.
@@ -347,7 +347,7 @@ class AssociationEnd(Presentation[UML.Property]):
     """
 
     def __init__(self, owner, end=None):
-        super().__init__(diagram=owner.diagram, id=False)  # Transient object
+        super().__init__(diagram=owner.diagram, id=Transient)
         self._canvas = None
         self._owner = owner
         self._end = end

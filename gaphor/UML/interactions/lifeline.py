@@ -135,8 +135,8 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         is_destroyed: Check if delete message is connected.
     """
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
 
         self.is_destroyed = False
 

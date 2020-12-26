@@ -12,8 +12,8 @@ from gaphor.diagram.shapes import stroke
 
 
 class Line(_Line, Presentation):
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id, model=model)  # type: ignore[call-arg]
+    def __init__(self, diagram, id=None):
+        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
         self.fuzziness = 2
         self._handles[0].connectable = False
         self._handles[-1].connectable = False
@@ -67,8 +67,8 @@ class Box(Element, Presentation):
     NW +---+ NE SW +---+ SE
     """
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id, model=model)  # type: ignore[call-arg]
+    def __init__(self, diagram, id=None):
+        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -102,8 +102,8 @@ class Box(Element, Presentation):
 class Ellipse(Element, Presentation):
     """"""
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id, model=model)  # type: ignore[call-arg]
+    def __init__(self, diagram, id=None):
+        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))

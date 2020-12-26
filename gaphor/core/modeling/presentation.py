@@ -20,6 +20,8 @@ S = TypeVar("S", bound=Element)
 
 log = logging.getLogger(__name__)
 
+Transient = False
+
 
 class Presentation(Element, Generic[S]):
     """This presentation is used to link the behaviors of
@@ -32,11 +34,11 @@ class Presentation(Element, Generic[S]):
     DiagramItemDeleted.
     """
 
-    def __init__(self, diagram: Diagram, id=None, model=None):
-        super().__init__(id, model)
-
-        if self.id:
-            # Do not set diagram for transient objects
+    def __init__(self, diagram: Diagram, id=None):
+        if id is Transient:
+            super().__init__(id)
+        else:
+            super().__init__(id, diagram.model)
             self.diagram = diagram
 
         def update(event):

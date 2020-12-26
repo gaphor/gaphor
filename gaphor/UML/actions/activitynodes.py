@@ -39,8 +39,8 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
     Initial node has name which is put near top-left side of node.
     """
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -77,8 +77,8 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
     node.
     """
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -126,8 +126,8 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
     node.
     """
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -162,8 +162,8 @@ def draw_flow_final_node(_box, context, _bounding_box):
 class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
     """Representation of decision or merge node."""
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
         no_movable_handles(self)
 
         self._combined = None
@@ -216,8 +216,8 @@ def draw_decision_node(_box, context, _bounding_box):
 class ForkNodeItem(Presentation[UML.ForkNode], Named):
     """Representation of fork and join node."""
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id=id, model=model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id=id)
         self._matrix = Matrix()
         self._matrix_i2c = Matrix()
 

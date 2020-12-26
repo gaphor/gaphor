@@ -87,10 +87,8 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
 
     _port_sides = ("top", "right", "bottom", "left")
 
-    def __init__(self, diagram: Diagram, id=None, model=None, shape=None):
-        super().__init__(  # type: ignore[call-arg]
-            connections=diagram.connections, diagram=diagram, id=id, model=model
-        )
+    def __init__(self, diagram: Diagram, id=None, shape=None):
+        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
         self._shape = shape
 
     def port_side(self, port):
@@ -145,15 +143,12 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         self,
         diagram: Diagram,
         id=None,
-        model=None,
         style: Style = {},
         shape_head=None,
         shape_middle=None,
         shape_tail=None,
     ):
-        super().__init__(  # type: ignore[call-arg]
-            connections=diagram.connections, diagram=diagram, id=id, model=model
-        )
+        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
         self.style = style
         self.shape_head = shape_head

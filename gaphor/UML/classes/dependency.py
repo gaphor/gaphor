@@ -37,8 +37,8 @@ class DependencyItem(LinePresentation, Named):
     drawn as solid line without arrow head.
     """
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model, style={"dash-style": (7.0, 5.0)})
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
 
         self._dependency_type = UML.Dependency
         # auto_dependency is used by connection logic, not in this class itself

@@ -41,8 +41,8 @@ from gaphor.diagram.support import represents
 class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
     """Representation of interaction execution specification."""
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id=id, model=model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id=id)
         self._matrix = Matrix()
         self._matrix_i2c = Matrix()
         self._connections = diagram.connections

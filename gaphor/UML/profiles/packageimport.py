@@ -11,8 +11,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 class PackageImportItem(LinePresentation):
     """Profile Import dependency relationship."""
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model, style={"dash-style": (7.0, 5.0)})
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
 
         self.shape_middle = Text(
             text=lambda: stereotypes_str(self.subject, ("import",)),

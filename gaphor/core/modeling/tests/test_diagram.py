@@ -8,10 +8,8 @@ from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 class Example(gaphas.Element, Presentation):
-    def __init__(self, diagram, id, model):
-        super().__init__(
-            connections=diagram.connections, diagram=diagram, id=id, model=model
-        )
+    def __init__(self, diagram, id):
+        super().__init__(connections=diagram.connections, diagram=diagram, id=id)
 
     def unlink(self):
         self.test_unlinked = True

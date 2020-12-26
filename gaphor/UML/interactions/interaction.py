@@ -10,8 +10,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(UML.Interaction)
 class InteractionItem(ElementPresentation, Named):
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
 
         self.shape = Box(
             Box(

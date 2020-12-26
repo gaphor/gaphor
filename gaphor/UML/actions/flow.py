@@ -20,8 +20,8 @@ class FlowItem(LinePresentation, Named):
     activity edge connectors.
     """
 
-    def __init__(self, diagram, id=None, model=None):
-        super().__init__(diagram, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
 
         self.shape_tail = Box(
             Text(
