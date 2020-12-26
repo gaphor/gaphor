@@ -1,5 +1,6 @@
+from typing import Type
+
 from gaphas.aspect.move import Move as MoveAspect
-from gaphas.connections import Connections
 from gaphas.guide import GuidedItemMove
 from gaphas.tool.itemtool import item_at_point
 from gaphas.view import GtkView
@@ -13,13 +14,15 @@ from gaphor.diagram.presentation import (
 )
 
 
-def drop_zone_tool(view, item_class):
+def drop_zone_tool(
+    view: GtkView, item_class: Type[Presentation]
+) -> Gtk.EventController:
     ctrl = Gtk.EventControllerMotion.new(view)
     ctrl.connect("motion", on_motion, item_class)
     return ctrl
 
 
-def on_motion(controller, x, y, item_class):
+def on_motion(controller, x, y, item_class: Type[Presentation]):
     view: GtkView = controller.get_widget()
     model = view.model
 
@@ -29,10 +32,10 @@ def on_motion(controller, x, y, item_class):
         parent = None
 
     if parent:
-        # create dummy adapter
-        connections = Connections()
-        adapter = Group(parent, item_class(connections))
-        if adapter and adapter.can_contain():
+        adapter_type = Group.registry.get_registration(type(parent), item_class)
+        # Do not do in depth check id we can actually connect.
+        # We can do that only when we have and item_class instance.
+        if adapter_type:
             view.selection.dropzone_item = parent
         else:
             view.selection.dropzone_item = None
