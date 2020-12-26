@@ -47,6 +47,7 @@ class Presentation(Element, Generic[S]):
 
         self._watcher = self.watcher(default_handler=update)
         self.watch("subject")
+        self.watch("diagram", self._on_diagram_changed)
 
     subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
@@ -91,6 +92,16 @@ class Presentation(Element, Generic[S]):
         super().unlink()
         if diagram:
             self.handle(DiagramItemDeleted(diagram, self))
+
+    def _on_diagram_changed(self, event):
+        log.debug("Diagram changed. Unlinking %s.", self)
+        diagram = event.old_value
+        if diagram:
+            diagram.connections.remove_connections_to_item(self)
+            self.unlink()
+            self.handle(DiagramItemDeleted(diagram, self))
+        if event.new_value:
+            raise ValueError("Can not change diagram for a presentation")
 
 
 Element.presentation = association(
