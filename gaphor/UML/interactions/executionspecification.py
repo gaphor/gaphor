@@ -26,7 +26,6 @@ from gaphas import Handle
 from gaphas.connector import LinePort, Position
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
-from gaphas.matrix import Matrix
 from gaphas.solver import WEAK
 
 from gaphor import UML
@@ -43,8 +42,6 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
 
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id=id)
-        self._matrix = Matrix()
-        self._matrix_i2c = Matrix()
         self._connections = diagram.connections
 
         self.bar_width = 12
@@ -79,14 +76,6 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
         self.shape = Box(
             style={"background-color": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border
         )
-
-    @property
-    def matrix(self) -> Matrix:
-        return self._matrix
-
-    @property
-    def matrix_i2c(self) -> Matrix:
-        return self._matrix_i2c
 
     def handles(self):
         return self._handles

@@ -3,16 +3,15 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Callable, Generic, List, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
+
+from gaphas.item import Matrices
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.event import DiagramItemDeleted
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
-    from gaphas.connector import Handle  # noqa
-    from gaphas.matrix import Matrix  # noqa
-
     from gaphor.core.modeling.diagram import Diagram
 
 S = TypeVar("S", bound=Element)
@@ -23,7 +22,7 @@ log = logging.getLogger(__name__)
 Transient = False
 
 
-class Presentation(Element, Generic[S]):
+class Presentation(Matrices, Element, Generic[S]):
     """This presentation is used to link the behaviors of
     `gaphor.core.modeling` and `gaphas.Item`.
 
@@ -36,9 +35,9 @@ class Presentation(Element, Generic[S]):
 
     def __init__(self, diagram: Diagram, id=None):
         if id is Transient:
-            super().__init__(id)
+            super().__init__(id=id)
         else:
-            super().__init__(id, diagram.model)
+            super().__init__(id=id, model=diagram.model)
             self.diagram = diagram
 
         def update(event):
@@ -57,11 +56,6 @@ class Presentation(Element, Generic[S]):
 
     parent: relation_one[Presentation]
     children: relation_many[Presentation]
-
-    handles: Callable[[Presentation], List[Handle]]
-
-    matrix: Matrix
-    matrix_i2c: Matrix
 
     def request_update(self, matrix=True):
         if self.diagram:

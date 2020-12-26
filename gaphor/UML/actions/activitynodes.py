@@ -6,7 +6,6 @@ import math
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_line_point
 from gaphas.item import Handle, LinePort
-from gaphas.matrix import Matrix
 from gaphas.state import observed, reversible_property
 from gaphas.util import path_ellipse
 
@@ -218,8 +217,6 @@ class ForkNodeItem(Presentation[UML.ForkNode], Named):
 
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id=id)
-        self._matrix = Matrix()
-        self._matrix_i2c = Matrix()
 
         h1, h2 = Handle(), Handle()
         self._handles = [h1, h2]
@@ -249,14 +246,6 @@ class ForkNodeItem(Presentation[UML.ForkNode], Named):
         diagram.connections.add_constraint(
             self, constraint(above=(h1.pos, h2.pos), delta=30)
         )
-
-    @property
-    def matrix(self) -> Matrix:
-        return self._matrix
-
-    @property
-    def matrix_i2c(self) -> Matrix:
-        return self._matrix_i2c
 
     def handles(self):
         return self._handles

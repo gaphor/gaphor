@@ -3,7 +3,6 @@ from typing import Optional
 
 from gaphas.connector import Handle, LinePort, Position
 from gaphas.geometry import Rectangle, distance_rectangle_point
-from gaphas.matrix import Matrix
 
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import Named, postload_connect
@@ -36,8 +35,6 @@ def text_position(position):
 class ProxyPortItem(Presentation[sysml.ProxyPort], Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
-        self._matrix = Matrix()
-        self._matrix_i2c = Matrix()
         self._connections = diagram.connections
 
         h1 = Handle(connectable=True)
@@ -58,14 +55,6 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], Named):
         self._last_connected_side = None
         self.watch("subject[NamedElement].name")
         self.update_shapes()
-
-    @property
-    def matrix(self) -> Matrix:
-        return self._matrix
-
-    @property
-    def matrix_i2c(self) -> Matrix:
-        return self._matrix_i2c
 
     def handles(self):
         return self._handles

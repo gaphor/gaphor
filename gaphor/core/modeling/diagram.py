@@ -343,7 +343,6 @@ class Diagram(PackageableElement):
 
     def unlink(self):
         """Unlink all canvas items then unlink this diagram."""
-        log.debug("unlinking %s", self)
         for item in self.ownedPresentation:
             self.connections.remove_connections_to_item(item)
         self._watcher.unsubscribe_all()
