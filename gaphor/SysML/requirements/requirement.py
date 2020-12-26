@@ -29,8 +29,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 @represents(Requirement)
 class RequirementItem(ElementPresentation[Requirement], Classified):
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
 
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_attributes", self.update_shapes

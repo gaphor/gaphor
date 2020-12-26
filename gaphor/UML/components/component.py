@@ -11,8 +11,8 @@ from gaphor.UML.classes.stereotype import stereotype_compartments
 
 @represents(UML.Component)
 class ComponentItem(ElementPresentation, Classified):
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
 
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject[NamedElement].name")

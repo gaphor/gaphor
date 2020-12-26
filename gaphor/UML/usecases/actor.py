@@ -23,8 +23,8 @@ class ActorItem(ElementPresentation, Classified):
     future.
     """
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
 
         self.shape = IconBox(
             Box(

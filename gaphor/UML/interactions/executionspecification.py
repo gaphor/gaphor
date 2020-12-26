@@ -26,7 +26,6 @@ from gaphas import Handle
 from gaphas.connector import LinePort, Position
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
-from gaphas.matrix import Matrix
 from gaphas.solver import WEAK
 
 from gaphor import UML
@@ -41,11 +40,9 @@ from gaphor.diagram.support import represents
 class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
     """Representation of interaction execution specification."""
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(id=id, model=model)
-        self._matrix = Matrix()
-        self._matrix_i2c = Matrix()
-        self._connections = connections
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id=id)
+        self._connections = diagram.connections
 
         self.bar_width = 12
 
@@ -54,7 +51,7 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
 
         self._handles = [ht, hb]
 
-        connections.add_constraint(self, constraint(vertical=(ht.pos, hb.pos)))
+        self._connections.add_constraint(self, constraint(vertical=(ht.pos, hb.pos)))
 
         r = self.bar_width / 2
         nw = Position(-r, 0, strength=WEAK)
@@ -72,21 +69,13 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
             constraint(vertical=(sw, hb.pos), delta=-r),
             constraint(vertical=(se, hb.pos), delta=r),
         ):
-            connections.add_constraint(self, c)
+            self._connections.add_constraint(self, c)
 
         self._ports = [LinePort(nw, sw), LinePort(ne, se)]
 
         self.shape = Box(
             style={"background-color": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border
         )
-
-    @property
-    def matrix(self) -> Matrix:
-        return self._matrix
-
-    @property
-    def matrix_i2c(self) -> Matrix:
-        return self._matrix_i2c
 
     def handles(self):
         return self._handles

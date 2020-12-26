@@ -3,16 +3,15 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Callable, Generic, List, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
+
+from gaphas.item import Matrices
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.event import DiagramItemDeleted
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
-    from gaphas.connector import Handle  # noqa
-    from gaphas.matrix import Matrix  # noqa
-
     from gaphor.core.modeling.diagram import Diagram
 
 S = TypeVar("S", bound=Element)
@@ -20,8 +19,10 @@ S = TypeVar("S", bound=Element)
 
 log = logging.getLogger(__name__)
 
+Transient = False
 
-class Presentation(Element, Generic[S]):
+
+class Presentation(Matrices, Element, Generic[S]):
     """This presentation is used to link the behaviors of
     `gaphor.core.modeling` and `gaphas.Item`.
 
@@ -32,8 +33,12 @@ class Presentation(Element, Generic[S]):
     DiagramItemDeleted.
     """
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    def __init__(self, diagram: Diagram, id=None):
+        if id is Transient:
+            super().__init__(id=id)
+        else:
+            super().__init__(id=id, model=diagram.model)
+            self.diagram = diagram
 
         def update(event):
             if self.diagram:
@@ -41,6 +46,7 @@ class Presentation(Element, Generic[S]):
 
         self._watcher = self.watcher(default_handler=update)
         self.watch("subject")
+        self.watch("diagram", self._on_diagram_changed)
 
     subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
@@ -50,11 +56,6 @@ class Presentation(Element, Generic[S]):
 
     parent: relation_one[Presentation]
     children: relation_many[Presentation]
-
-    handles: Callable[[Presentation], List[Handle]]
-
-    matrix: Matrix
-    matrix_i2c: Matrix
 
     def request_update(self, matrix=True):
         if self.diagram:
@@ -85,6 +86,16 @@ class Presentation(Element, Generic[S]):
         super().unlink()
         if diagram:
             self.handle(DiagramItemDeleted(diagram, self))
+
+    def _on_diagram_changed(self, event):
+        log.debug("Diagram changed. Unlinking %s.", self)
+        diagram = event.old_value
+        if diagram:
+            diagram.connections.remove_connections_to_item(self)
+            self.unlink()
+            self.handle(DiagramItemDeleted(diagram, self))
+        if event.new_value:
+            raise ValueError("Can not change diagram for a presentation")
 
 
 Element.presentation = association(

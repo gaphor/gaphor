@@ -74,11 +74,10 @@ class MessageItem(LinePresentation[UML.Message], Named):
     - _arrow_angle: decorating arrow angle
     """
 
-    def __init__(self, connections, id=None, model=None):
+    def __init__(self, diagram, id=None):
         super().__init__(
-            connections,
+            diagram,
             id,
-            model,
             shape_middle=Box(
                 Text(
                     text=lambda: stereotypes_str(self.subject),

@@ -324,11 +324,10 @@ class Diagram(PackageableElement):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
-        item = type(connections=self._connections, id=id, model=self.model)
+        item = type(diagram=self, id=id)
         assert isinstance(
             item, gaphas.Item
         ), f"Type {type} does not comply with Item protocol"
-        item.diagram = self
         if subject:
             item.subject = subject
         if parent:
@@ -344,7 +343,6 @@ class Diagram(PackageableElement):
 
     def unlink(self):
         """Unlink all canvas items then unlink this diagram."""
-        log.debug("unlinking %s", self)
         for item in self.ownedPresentation:
             self.connections.remove_connections_to_item(item)
         self._watcher.unsubscribe_all()
