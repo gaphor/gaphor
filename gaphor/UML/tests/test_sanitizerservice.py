@@ -27,7 +27,7 @@ def create_item(element_factory, diagram):
     return create
 
 
-def test_connect_element_with_comments(create_item):
+def test_connect_element_with_comments(create_item, diagram):
     comment = create_item(CommentItem, UML.Comment)
     line = create_item(CommentLineItem)
     gi = create_item(GeneralizationItem)
@@ -37,7 +37,7 @@ def test_connect_element_with_comments(create_item):
     connect(line, line.head, comment)
     connect(line, line.tail, gi)
 
-    assert line.canvas.connections.get_connection(line.tail).connected is gi
+    assert diagram.connections.get_connection(line.tail).connected is gi
 
     # Now connect generaliztion ends.
     connect(gi, gi.head, clazz1)
@@ -52,13 +52,13 @@ def test_presentation_delete(create_item, element_factory):
     klass = klassitem.subject
 
     assert klassitem.subject.presentation[0] is klassitem
-    assert klassitem.canvas
+    assert klassitem.diagram
 
     # Delete presentation here:
 
     klassitem.unlink()
 
-    assert not klassitem.canvas
+    assert not klassitem.diagram
     assert klass not in element_factory
 
 
@@ -181,9 +181,9 @@ def test_stereotype_deletion(element_factory):
 def test_diagram_move(element_factory):
     diagram = element_factory.create(UML.Diagram)
     diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-    diagram.canvas.request_update = Mock()
+    diagram.request_update = Mock()
 
     package = element_factory.create(UML.Package)
     diagram.package = package
 
-    diagram.canvas.request_update.assert_called()
+    diagram.request_update.assert_called()

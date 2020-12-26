@@ -1,9 +1,8 @@
 """Verify the content of an element factory before it is saved."""
 
-import gaphas
-
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling.diagram import PseudoCanvas
 
 
 def orphan_references(factory):
@@ -34,17 +33,17 @@ def orphan_references(factory):
 
     def verify_element(name, value):
         """Store the element id."""
-        if isinstance(value, (Element, gaphas.Item)):
+        if isinstance(value, Element):
             verify_reference(name, value)
         elif isinstance(value, collection):
             verify_collection(name, value)
-        elif isinstance(value, gaphas.Canvas):
+        elif isinstance(value, PseudoCanvas):
             value.save(verify_canvas)
 
     def verify_canvas(value):
         elements.add(value.id)
         value.save(verify_canvasitem)
-        for child in value.canvas.get_children(value):
+        for child in value.children:
             verify_canvas(child)
 
     def verify_canvasitem(name, value):
@@ -54,7 +53,7 @@ def orphan_references(factory):
         """
         if isinstance(value, collection):
             verify_collection(name, value)
-        elif isinstance(value, (Element, gaphas.Item)):
+        elif isinstance(value, Element):
             verify_reference(name, value)
 
     for e in list(factory.values()):

@@ -33,13 +33,11 @@ class CopyServiceTestCase(TestCase):
         ci = diagram.create(CommentItem, subject=ef.create(UML.Comment))
 
         service.copy({ci})
-        assert list(diagram.canvas.get_all_items()) == [ci]
+        assert list(diagram.get_all_items()) == [ci]
 
         service.paste(diagram)
 
-        assert len(list(diagram.canvas.get_all_items())) == 2, list(
-            diagram.canvas.get_all_items()
-        )
+        assert len(list(diagram.get_all_items())) == 2, list(diagram.get_all_items())
 
     def _skip_test_copy_paste_undo(self):
         """Test if copied data is undoable."""
@@ -63,7 +61,7 @@ class CopyServiceTestCase(TestCase):
 
         service.paste(self.diagram)
 
-        all_items = list(self.diagram.canvas.get_all_items())
+        all_items = list(self.diagram.get_all_items())
 
         assert len(all_items) == 6
         assert not orphan_references(self.element_factory)
@@ -76,5 +74,5 @@ class CopyServiceTestCase(TestCase):
 
         undo_manager.undo_transaction()
 
-        assert len(self.diagram.canvas.get_all_items()) == 3
+        assert len(list(self.diagram.get_all_items())) == 3
         assert not orphan_references(self.element_factory)

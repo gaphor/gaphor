@@ -75,7 +75,7 @@ def test_disconnect_proxy_port_to_block(diagram, block_item, proxy_port_item):
     connector.disconnect(proxy_port_item.handles()[0])
 
     assert proxy_port_item.subject is None
-    assert proxy_port_item.canvas
+    assert proxy_port_item.diagram
 
 
 def test_allow_connector_to_proxy_port(

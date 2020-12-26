@@ -52,8 +52,20 @@ override Presentation
 override Element.presentation
 # defined in gaphor.core.modeling.presentation
 %%
+override Presentation.diagram
+# defined in gaphor.core.modeling.presentation
+%%
 override Presentation.subject
+# defined in gaphor.core.modeling.presentation
+%%
+override Presentation.parent
+# defined in gaphor.core.modeling.presentation
+%%
+override Presentation.children
 # defined in gaphor.core.modeling.presentation
 %%
 override Diagram
 # defined in gaphor.core.modeling.diagram
+%%
+override Diagram.ownedPresentation
+# defined in gaphor.core.modeling.presentation

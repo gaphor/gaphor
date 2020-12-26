@@ -120,7 +120,7 @@ class AssociationConnect(UnaryRelationshipConnect):
         element = self.element
         line = self.line
 
-        assert element.canvas
+        assert element.diagram
 
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)

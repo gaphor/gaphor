@@ -57,7 +57,7 @@ class DropZoneMove(GuidedItemMove):
         view = self.view
         x, y = pos
 
-        current_parent = view.model.get_parent(item)
+        current_parent = item.parent
         over_item = item_at_point(view, (x, y), selected=False)
 
         if not over_item:
@@ -83,8 +83,7 @@ class DropZoneMove(GuidedItemMove):
         super().stop_move(pos)
         item = self.item
         view = self.view
-        model = view.model
-        old_parent = model.get_parent(item)
+        old_parent = item.parent
         new_parent = view.selection.dropzone_item
         try:
 
@@ -94,7 +93,7 @@ class DropZoneMove(GuidedItemMove):
                 return
 
             if old_parent:
-                model.reparent(item, None)
+                item.parent = None
 
                 adapter = Group(old_parent, item)
                 if adapter:
@@ -103,7 +102,7 @@ class DropZoneMove(GuidedItemMove):
                 old_parent.request_update()
 
             if new_parent:
-                model.reparent(item, new_parent)
+                item.parent = new_parent
 
                 adapter = Group(new_parent, item)
                 if adapter and adapter.can_contain():

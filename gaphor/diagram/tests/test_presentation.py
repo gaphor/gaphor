@@ -53,11 +53,12 @@ def test_element_saving(element_factory, diagram):
 
     p.save(save_func)
 
-    assert len(properties) == 4
+    assert len(properties) == 5
     assert properties["matrix"] == (1.0, 0.0, 0.0, 1.0, 0.0, 0.0)
     assert properties["width"] == 10.0
     assert properties["height"] == 10.0
     assert properties["subject"] is subject
+    assert properties["diagram"] is diagram
 
 
 def test_element_loading(element_factory, diagram):

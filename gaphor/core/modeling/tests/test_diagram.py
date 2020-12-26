@@ -2,8 +2,9 @@ import gaphas
 import pytest
 
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory, Presentation, StyleSheet
-from gaphor.UML import Diagram
+from gaphor.core.modeling import Diagram, ElementFactory, Presentation, StyleSheet
+from gaphor.core.modeling.elementdispatcher import ElementDispatcher
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 class Example(gaphas.Element, Presentation):
@@ -15,16 +16,12 @@ class Example(gaphas.Element, Presentation):
 @pytest.fixture
 def element_factory():
     event_manager = EventManager()
-    element_factory = ElementFactory()
+    element_dispatcher = ElementDispatcher(event_manager, UMLModelingLanguage())
+    element_factory = ElementFactory(event_manager, element_dispatcher)
     yield element_factory
     element_factory.shutdown()
+    element_dispatcher.shutdown()
     event_manager.shutdown()
-
-
-def test_canvas_is_set_up():
-    diagram = Diagram("id", None)
-
-    assert diagram.canvas
 
 
 def test_diagram_can_be_used_as_gtkview_model():
@@ -45,7 +42,8 @@ def test_canvas_item_is_created(element_factory):
     diagram = element_factory.create(Diagram)
     example = diagram.create(Example)
 
-    assert example in diagram.canvas.get_all_items()
+    assert example in diagram.get_all_items()
+    assert example.diagram is diagram
 
 
 def test_canvas_is_unlinked(element_factory):
@@ -75,3 +73,26 @@ def test_diagram_stylesheet_is_always_there(element_factory):
     diagram = element_factory.create(Diagram)
 
     assert diagram.styleSheet is not None
+
+
+class ViewMock:
+    def __init__(self):
+        self.removed_items = set()
+
+    def request_update(self, items, matrix_only_items, removed_items) -> None:
+        self.removed_items.update(removed_items)
+
+
+def test_remove_presentation_triggers_view(element_factory):
+    diagram = element_factory.create(Diagram)
+    print(diagram.watcher())
+    view = ViewMock()
+    diagram.register_view(view)
+
+    example = diagram.create(Example)
+
+    example.unlink()
+
+    assert example.diagram is None
+    assert example not in diagram.ownedPresentation
+    assert example in view.removed_items

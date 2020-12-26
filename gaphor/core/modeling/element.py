@@ -130,6 +130,8 @@ class Element:
         if self._unlink_lock:
             return
 
+        log.debug("unlinking %s", self)
+
         try:
             self._unlink_lock += 1
 
@@ -153,8 +155,6 @@ class Element:
         else:
             return DummyEventWatcher()
 
-    # OCL methods: (from SMW by Ivan Porres (http://www.abo.fi/~iporres/smw))
-
     def isKindOf(self, class_: Type[Element]) -> bool:
         """Returns true if the object is an instance of `class_`."""
         return isinstance(self, class_)
@@ -167,9 +167,6 @@ class Element:
 class DummyEventWatcher:
     def watch(self, path: str, handler: Optional[Handler] = None) -> DummyEventWatcher:
         return self
-
-    def subscribe_all(self) -> None:
-        pass
 
     def unsubscribe_all(self) -> None:
         pass
@@ -212,9 +209,6 @@ class EventWatcherProtocol(Protocol):
     def watch(
         self, path: str, handler: Optional[Handler] = None
     ) -> EventWatcherProtocol:
-        ...
-
-    def subscribe_all(self) -> None:
         ...
 
     def unsubscribe_all(self) -> None:

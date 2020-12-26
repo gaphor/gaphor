@@ -78,7 +78,7 @@ def test_disconnect_execution_specification_from_lifeline(diagram, element_facto
 
     assert lifeline.subject
     assert exec_spec.subject is None
-    assert exec_spec.canvas
+    assert exec_spec.diagram
     assert elements_of_kind(UML.ExecutionSpecification) == []
     assert elements_of_kind(UML.ExecutionOccurrenceSpecification) == []
 
@@ -197,6 +197,8 @@ def test_disconnect_execution_specification_with_execution_specification_from_li
         child_exec_spec.ports()[0],
     )
 
+    assert child_exec_spec.parent is parent_exec_spec
+
     disconnect(parent_exec_spec, parent_exec_spec.handles()[0])
 
     assert lifeline.subject
@@ -212,7 +214,7 @@ def test_save_and_load(diagram, element_factory, saver, loader):
         diagram, element_factory
     )
 
-    diagram.canvas.update_now((lifeline, exec_spec))
+    diagram.update_now((lifeline, exec_spec))
 
     saved_data = saver()
 
@@ -232,6 +234,6 @@ def test_save_and_load(diagram, element_factory, saver, loader):
         )
         == 2
     )
-    assert loaded_exec_spec.canvas.connections.get_connection(
+    assert loaded_exec_spec.diagram.connections.get_connection(
         loaded_exec_spec.handles()[0]
     )

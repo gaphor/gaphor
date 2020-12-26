@@ -32,7 +32,7 @@ def modeling_language():
 
 
 @pytest.fixture
-def diagram(element_factory):
+def diagram(element_factory) -> Diagram:
     diagram = element_factory.create(Diagram)
     yield diagram
     diagram.unlink()
@@ -80,31 +80,31 @@ def connect(line, handle, item, port=None):
 
     If port is not provided, then first port is used.
     """
-    canvas = line.canvas
+    diagram = line.diagram
 
     if port is None and len(item.ports()) > 0:
         port = item.ports()[0]
 
     sink = ConnectionSink(item, port)
-    connector = ConnectorAspect(line, handle, canvas.connections)
+    connector = ConnectorAspect(line, handle, diagram.connections)
 
     connector.connect(sink)
 
-    cinfo = canvas.connections.get_connection(handle)
+    cinfo = diagram.connections.get_connection(handle)
     assert cinfo.connected is item
     assert cinfo.port is port
 
 
 def disconnect(line, handle):
     """Disconnect line's handle."""
-    canvas = line.canvas
+    diagram = line.diagram
 
-    canvas.connections.disconnect_item(line, handle)
-    assert not canvas.connections.get_connection(handle)
+    diagram.connections.disconnect_item(line, handle)
+    assert not diagram.connections.get_connection(handle)
 
 
 def get_connected(item, handle):
-    cinfo = item.canvas.connections.get_connection(handle)
+    cinfo = item.diagram.connections.get_connection(handle)
     if cinfo:
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
     return None
@@ -116,7 +116,7 @@ def clear_model(diagram, element_factory, retain=[]):
         if element is not diagram and element not in retain:
             element.unlink()
 
-    for item in diagram.canvas.get_all_items():
+    for item in diagram.get_all_items():
         item.unlink()
 
 

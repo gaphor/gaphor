@@ -50,7 +50,7 @@ class RequirementPropertyPage(PropertyPageBase):
                 buffer.set_text(event.new_value)
                 buffer.handler_unblock(changed_id)
 
-        self.watcher.watch("text", text_handler).subscribe_all()
+        self.watcher.watch("text", text_handler)
 
         builder.connect_signals(
             {

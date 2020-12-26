@@ -25,5 +25,5 @@ class ConnectorItemTestCase(TestCase):
 
         self.load(data)
 
-        assert self.diagram.canvas.select(ConnectorItem)
+        assert self.diagram.select(ConnectorItem)
         assert self.kindof(UML.ConnectorEnd)

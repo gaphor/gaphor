@@ -65,7 +65,7 @@ def on_drag_begin(gesture, start_x, start_y, placement_state):
 def create_item(view, factory, x, y):
     selection = view.selection
     parent = selection.dropzone_item
-    item = factory(view.model.diagram, parent)
+    item = factory(view.model, parent)
     x, y = view.get_matrix_v2i(item).transform_point(x, y)
     item.matrix.translate(x, y)
     selection.unselect_all()
@@ -79,7 +79,6 @@ def connect_opposite_handle(view, new_item, x, y, handle_index):
     except (KeyError, AttributeError):
         pass
     else:
-        # First make sure all matrices are updated:
         new_item.matrix_i2c.set(*view.model.get_matrix_i2c(new_item))
 
         handle_move = HandleMove(new_item, opposite, view)
@@ -123,8 +122,7 @@ def new_item_factory(
 
         adapter = Group(parent, item)
         if parent and adapter.can_contain():
-            canvas = diagram.canvas
-            canvas.reparent(item, parent=parent)
+            item.parent = parent
             adapter.group()
 
         if config_func:

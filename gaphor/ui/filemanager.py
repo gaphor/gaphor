@@ -135,6 +135,7 @@ class FileManager(Service, ActionProvider):
         orphans = verify.orphan_references(self.element_factory)
 
         if orphans:
+            log.info("Found orphan references %s", orphans)
             main_window = self.main_window
 
             dialog = QuestionDialog(
@@ -207,11 +208,11 @@ class FileManager(Service, ActionProvider):
 
         filename = self.filename
 
-        if filename:
-            self.save(filename)
-            return True
-        else:
+        if not filename:
             return self.action_save_as()
+
+        self.save(filename)
+        return True
 
     @action(name="file-save-as", shortcut="<Primary><Shift>s")
     def action_save_as(self):

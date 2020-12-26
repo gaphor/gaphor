@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from gi.repository import Gdk, Gtk, Pango
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, Element
 from gaphor.ui.iconname import get_icon_name
 from gaphor.ui.namespacemodel import RELATIONSHIPS, relationship_iter_parent
 
@@ -67,12 +67,12 @@ class NamespaceView(Gtk.TreeView):
         self.connect("drag-motion", NamespaceView.on_drag_motion)
         self.connect("drag-data-received", NamespaceView.on_drag_data_received)
 
-    def get_selected_element(self):
+    def get_selected_element(self) -> Optional[Element]:
         selection = self.get_selection()
         model, iter = selection.get_selected()
         if not iter:
-            return
-        return model.get_value(iter, 0)
+            return None
+        return model.get_value(iter, 0)  # type: ignore[no-any-return]
 
     def _set_pixbuf(self, column, cell, model, iter, data):
         element = model.get_value(iter, 0)

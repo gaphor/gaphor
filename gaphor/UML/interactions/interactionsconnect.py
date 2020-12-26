@@ -14,7 +14,7 @@ from gaphor.UML.interactions.message import MessageItem
 
 def get_connected(item, handle) -> Optional[Presentation[Element]]:
     """Get item connected to a handle."""
-    cinfo = item.canvas.connections.get_connection(handle)
+    cinfo = item.diagram.connections.get_connection(handle)
     if cinfo:
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
     return None
@@ -28,11 +28,11 @@ def get_lifeline(item, handle):
 
 
 def order_lifeline_covered_by(lifeline):
-    canvas = lifeline.canvas
+    diagram = lifeline.diagram
 
     def y_and_occurence(connected):
-        for conn in canvas.connections.get_connections(connected=connected):
-            m = canvas.get_matrix_i2c(conn.item)
+        for conn in diagram.connections.get_connections(connected=connected):
+            m = conn.item.matrix_i2c
             if isinstance(conn.item, ExecutionSpecificationItem):
                 yield (
                     m.transform_point(*conn.handle.pos)[1],
@@ -56,7 +56,7 @@ def order_lifeline_covered_by(lifeline):
 
 
 def owner_for_message(line, lifeline):
-    maybe_interaction = lifeline.canvas.get_parent(lifeline)
+    maybe_interaction = lifeline.parent
     if line.subject.interaction:
         return
     elif isinstance(maybe_interaction, InteractionItem):
@@ -187,7 +187,7 @@ class MessageLifelineConnect(BaseConnector):
 
         disconnect_lifelines(line, send, received)
 
-        if len(list(self.canvas.connections.get_connections(connected=lifeline))) == 1:
+        if len(list(self.diagram.connections.get_connections(connected=lifeline))) == 1:
             # after disconnection count of connected items will be
             # zero, so allow connections to lifeline's lifetime
             lifetime.connectable = True
@@ -247,11 +247,11 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
         if lifeline.interaction:
             exec_spec.enclosingInteraction = lifeline.interaction
 
-        canvas = self.canvas
-        if canvas.get_parent(self.line) is not self.element:
-            canvas.reparent(self.line, self.element)
+        diagram = self.diagram
+        if self.line.parent is not self.element:
+            self.line.parent = self.element
 
-        for cinfo in canvas.connections.get_connections(connected=self.line):
+        for cinfo in diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).connect(cinfo.handle, cinfo.port)
         return True
 
@@ -261,13 +261,13 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
         if exec_spec:
             exec_spec.unlink()
 
-        canvas = self.canvas
+        diagram = self.diagram
 
-        if canvas.get_parent(self.line) is self.element:
-            new_parent = canvas.get_parent(self.element)
-            canvas.reparent(self.line, new_parent)
+        if self.line.parent is self.element:
+            new_parent = self.element.parent
+            self.line.parent = new_parent  # type: ignore[assignment]
 
-        for cinfo in canvas.connections.get_connections(connected=self.line):
+        for cinfo in diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)
 
 
@@ -289,7 +289,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
         assert connected_item
         Connector(connected_item, self.line).connect(handle, None)
 
-        self.canvas.reparent(self.line, self.element)
+        self.line.parent = self.element
 
         return True
 
@@ -299,5 +299,5 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
         if exec_spec and not exec_spec.presentation:
             exec_spec.unlink()
 
-        for cinfo in self.canvas.connections.get_connections(connected=self.line):
+        for cinfo in self.diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)

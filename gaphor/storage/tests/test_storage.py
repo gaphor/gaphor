@@ -121,10 +121,10 @@ class StorageTestCase(TestCase):
         )
 
         # Check load/save of other canvas items.
-        assert len(list(d.canvas.get_all_items())) == 3
-        for item in d.canvas.get_all_items():
+        assert len(list(d.get_all_items())) == 3
+        for item in d.get_all_items():
             assert item.subject, f"No subject for {item}"
-        d1 = next(d.canvas.select(lambda e: isinstance(e, ClassItem)))
+        d1 = next(d.select(lambda e: isinstance(e, ClassItem)))
         assert d1
 
     def test_load_with_whitespace_name(self):
@@ -172,24 +172,22 @@ class StorageTestCase(TestCase):
         assert len(self.element_factory.lselect(UML.Association)) == 0
 
         # Check load/save of other canvas items.
-        assert len(list(d.canvas.get_all_items())) == 3
+        assert len(list(d.get_all_items())) == 3
         aa = next(
-            item
-            for item in d.canvas.get_all_items()
-            if isinstance(item, AssociationItem)
+            item for item in d.get_all_items() if isinstance(item, AssociationItem)
         )
         assert aa
         assert list(map(float, aa.handles()[0].pos)) == [10, 20], aa.handles()[0].pos
         assert list(map(float, aa.handles()[1].pos)) == [50, 60], aa.handles()[1].pos
-        d1 = next(d.canvas.select(lambda e: isinstance(e, ClassItem)))
+        d1 = next(d.select(lambda e: isinstance(e, ClassItem)))
         assert d1
 
     def test_save_and_load_of_association_with_two_connected_classes(self):
         c1 = self.create(ClassItem, UML.Class)
         c2 = self.create(ClassItem, UML.Class)
         c2.matrix.translate(200, 200)
-        self.diagram.canvas.request_update(c2)
-        self.diagram.canvas.update_now((c1, c2))
+        self.diagram.request_update(c2)
+        self.diagram.update_now((c1, c2))
         assert tuple(c2.matrix_i2c) == (1, 0, 0, 1, 200, 200)
 
         a = self.create(AssociationItem)
@@ -197,7 +195,7 @@ class StorageTestCase(TestCase):
         self.connect(a, a.head, c1)
         self.connect(a, a.tail, c2)
 
-        self.diagram.canvas.update_now((c1, c2, a))
+        self.diagram.update_now((c1, c2, a))
 
         assert a.head.pos.y == 0, a.head.pos
         assert a.tail.pos.x == 10, a.tail.pos
@@ -222,12 +220,12 @@ class StorageTestCase(TestCase):
         diagrams = list(self.kindof(UML.Diagram))
         assert len(diagrams) == 1
         d = diagrams[0]
-        a = next(d.canvas.select(lambda e: isinstance(e, AssociationItem)))
+        a = next(d.select(lambda e: isinstance(e, AssociationItem)))
         assert a.subject is not None
         assert old_a_subject_id == a.subject.id
-        cinfo_head = a.canvas.connections.get_connection(a.head)
+        cinfo_head = a.diagram.connections.get_connection(a.head)
         assert cinfo_head.connected is not None
-        cinfo_tail = a.canvas.connections.get_connection(a.tail)
+        cinfo_tail = a.diagram.connections.get_connection(a.tail)
         assert cinfo_tail.connected is not None
         assert cinfo_head.connected is not cinfo_tail.connected
 

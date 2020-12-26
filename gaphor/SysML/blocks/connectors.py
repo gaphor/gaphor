@@ -19,7 +19,7 @@ class BlockProperyProxyPortConnector:
         block: Union[BlockItem, PropertyItem],
         proxy_port: ProxyPortItem,
     ) -> None:
-        assert block.canvas is proxy_port.canvas
+        assert block.diagram is proxy_port.diagram
         self.block = block
         self.proxy_port = proxy_port
 
@@ -38,17 +38,17 @@ class BlockProperyProxyPortConnector:
             proxy_port.subject.encapsulatedClassifier = self.block.subject
 
         # This raises the item in the item hierarchy
-        assert proxy_port.canvas
-        proxy_port.canvas.reparent(proxy_port, self.block)
+        assert proxy_port.diagram
+        proxy_port.parent = self.block
 
         return True
 
     def disconnect(self, handle: Handle) -> None:
         proxy_port = self.proxy_port
-        if proxy_port.subject and proxy_port.canvas:
+        if proxy_port.subject and proxy_port.diagram:
             subject = proxy_port.subject
             del proxy_port.subject
-            proxy_port.canvas.reparent(proxy_port, None)
+            proxy_port.parent = None  # type: ignore[assignment]
             subject.unlink()
 
 
@@ -70,10 +70,7 @@ class PropertyConnectorConnector(UnaryRelationshipConnect):
         return super().allow(handle, port)
 
     def connect_subject(self, handle):
-        element = self.element
         line = self.line
-
-        assert element.canvas
 
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)

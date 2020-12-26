@@ -2,20 +2,23 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable, Generic, List, Optional, TypeVar
-
-from gaphas.state import observed, reversible_method
+import logging
+from typing import TYPE_CHECKING, Callable, Generic, List, TypeVar
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.event import DiagramItemDeleted
-from gaphor.core.modeling.properties import association, relation_one
+from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
-    from gaphas.canvas import Canvas  # noqa
     from gaphas.connector import Handle  # noqa
     from gaphas.matrix import Matrix  # noqa
 
+    from gaphor.core.modeling.diagram import Diagram
+
 S = TypeVar("S", bound=Element)
+
+
+log = logging.getLogger(__name__)
 
 
 class Presentation(Element, Generic[S]):
@@ -32,65 +35,30 @@ class Presentation(Element, Generic[S]):
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
 
-        self._canvas: Optional[Canvas] = None
-
         def update(event):
-            if self.canvas:
-                self.canvas.request_update(self)
+            if self.diagram:
+                self.diagram.request_update(self)
 
         self._watcher = self.watcher(default_handler=update)
-
         self.watch("subject")
 
     subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
     )
 
+    diagram: relation_one[Diagram]
+
+    parent: relation_one[Presentation]
+    children: relation_many[Presentation]
+
     handles: Callable[[Presentation], List[Handle]]
 
     matrix: Matrix
-
-    @observed
-    def _set_canvas(self, canvas):
-        """Set the canvas.
-
-        Should only be called from Canvas.add and Canvas.remove().
-        """
-        assert not canvas or not self._canvas or self._canvas is canvas
-        if self._canvas:
-            self.teardown_canvas()
-        self._canvas = canvas
-        if canvas:
-            self.setup_canvas()
-
-    reversible_method(
-        _set_canvas, _set_canvas, bind={"canvas": lambda self, canvas: self._canvas}
-    )
-
-    def setup_canvas(self):
-        """Called when the canvas is set for the item.
-
-        This method can be used to create constraints.
-        """
-        pass
-
-    def teardown_canvas(self):
-        """Called when the canvas is unset for the item.
-
-        This method can be used to dispose constraints.
-        """
-        pass
-
-    canvas = property(lambda s: s._canvas, _set_canvas)
+    matrix_i2c: Matrix
 
     def request_update(self, matrix=True):
-        if self.canvas:
-            self.canvas.request_update(self, matrix=matrix)
-
-    @property
-    def diagram(self):
-        canvas = self.canvas
-        return canvas.diagram if canvas else None
+        if self.diagram:
+            self.diagram.request_update(self, matrix=matrix)
 
     def watch(self, path, handler=None):
         """Watch a certain path of elements starting with the DiagramItem. The
@@ -104,23 +72,25 @@ class Presentation(Element, Generic[S]):
         self._watcher.watch(path, handler)
         return self
 
-    def subscribe_all(self):
-        """Subscribe all watched paths, as defined through `watch()`."""
-        self._watcher.subscribe_all()
-
     def unsubscribe_all(self):
         """Unsubscribe all watched paths, as defined through `watch()`."""
         self._watcher.unsubscribe_all()
 
     def unlink(self):
-        """Remove the item from the canvas and set subject to None."""
-        if self.canvas:
-            diagram = self.diagram
-            self.canvas.remove(self)
-            super().unlink()
+        """Remove the item from the diagram and set subject to None."""
+        diagram = self.diagram
+        self._watcher.unsubscribe_all()
+        if diagram:
+            diagram.connections.remove_connections_to_item(self)
+        super().unlink()
+        if diagram:
             self.handle(DiagramItemDeleted(diagram, self))
 
 
 Element.presentation = association(
     "presentation", Presentation, composite=True, opposite="subject"
+)
+Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
+Presentation.children = association(
+    "children", Presentation, composite=True, opposite="parent"
 )

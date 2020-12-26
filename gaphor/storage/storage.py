@@ -12,11 +12,11 @@ import os.path
 import uuid
 from functools import partial
 
-import gaphas
-
 from gaphor import application
-from gaphor.core.modeling import Diagram, Element
 from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling.diagram import Diagram, PseudoCanvas
+from gaphor.core.modeling.element import Element
+from gaphor.core.modeling.presentation import Presentation
 from gaphor.storage import parser
 
 FILE_FORMAT_VERSION = "3.0"
@@ -67,8 +67,7 @@ def save_element(name, value, writer):
 
     A value may be a primitive (string, int), a
     gaphor.core.modeling.collection (which contains a list of references
-    to other UML elements) or a gaphas.Canvas (which contains canvas
-    items).
+    to other UML elements) or a Diagram (which contains diagram items).
     """
 
     def save_reference(name, value):
@@ -107,39 +106,39 @@ def save_element(name, value, writer):
             writer.endElement("val")
             writer.endElement(name)
 
-    def save_canvas(value):
+    def save_diagram(value):
         """Save attributes and references in a gaphor.diagram.* object.
 
         The extra attribute reference can be used to force UML
         """
-        assert isinstance(value, gaphas.Item)
+        assert isinstance(value, Presentation)
         writer.startElement("item", {"id": value.id, "type": value.__class__.__name__})
-        value.save(save_canvas_item)
+        value.save(save_diagram_item)
 
-        for child in value.canvas.get_children(value):
-            save_canvas(child)
+        for child in value.children:
+            save_diagram(child)
 
         writer.endElement("item")
 
-    def save_canvas_item(name, value):
+    def save_diagram_item(name, value):
         """Save attributes and references in a gaphor.diagram.* object.
 
         The extra attribute reference can be used to force UML
         """
         if isinstance(value, collection):
             save_collection(name, value)
-        elif isinstance(value, (Element, gaphas.Item)):
+        elif isinstance(value, Element):
             save_reference(name, value)
         else:
             save_value(name, value)
 
-    if isinstance(value, (Element, gaphas.Item)):
+    if isinstance(value, Element):
         save_reference(name, value)
     elif isinstance(value, collection):
         save_collection(name, value)
-    elif isinstance(value, gaphas.Canvas):
+    elif isinstance(value, PseudoCanvas):
         writer.startElement("canvas", {})
-        value.save(save_canvas)
+        value.save(save_diagram)
         writer.endElement("canvas")
     else:
         save_value(name, value)
@@ -175,9 +174,8 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
     yield from _load_attributes_and_references(elements, update_status_queue)
 
     for d in factory.lselect(Diagram):
-        canvas = d.canvas
-        for item in canvas.get_all_items():
-            item.matrix_i2c.set(*canvas.get_matrix_i2c(item))
+        for item in d.get_all_items():
+            item.matrix_i2c.set(*d.get_matrix_i2c(item))
 
     for id, elem in list(elements.items()):
         yield from update_status_queue()
@@ -188,7 +186,7 @@ def _load_elements_and_canvasitems(
     elements, factory, modeling_language, gaphor_version, update_status_queue
 ):
     def create_canvasitems(diagram, canvasitems, parent=None):
-        """Canvas is a read gaphas.Canvas, items is a list of
+        """Diagram is a Core Diagram, items is a list of
         parser.canvasitem's."""
         if version_lower_than(gaphor_version, (1, 1, 0)):
             new_canvasitems = upgrade_message_item_to_1_1_0(canvasitems)

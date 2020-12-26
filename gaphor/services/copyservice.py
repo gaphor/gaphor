@@ -25,7 +25,7 @@ class CopyService(Service, ActionProvider):
     - How much data should be saved? An example use case is to copy a diagram
       item, remove it (the underlying UML element is removed), and then paste
       the copied item. The diagram should act as if we have placed a copy of
-      the removed item on the canvas and make the UML element visible again.
+      the removed item on the diagram and make the UML element visible again.
     """
 
     def __init__(self, event_manager, element_factory, diagrams):
@@ -52,8 +52,6 @@ class CopyService(Service, ActionProvider):
 
     def paste(self, diagram):
         """Paste items in the copy-buffer to the diagram."""
-        canvas = diagram.canvas
-
         with Transaction(self.event_manager):
             # Create new id's that have to be used to create the items:
             new_items: Set[Presentation] = paste(
@@ -62,7 +60,7 @@ class CopyService(Service, ActionProvider):
 
             # move pasted items a bit, so user can see result of his action :)
             for item in new_items:
-                if canvas.get_parent(item) not in new_items:
+                if item.parent not in new_items:
                     item.matrix.translate(10, 10)
 
         return new_items

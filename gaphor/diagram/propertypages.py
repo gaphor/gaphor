@@ -99,19 +99,14 @@ class EditableTreeModel(Gtk.ListStore):
 
     Last row is empty and contains no object to edit. It allows to enter
     new values.
-
-    When model is edited, then item is requested to be updated on canvas.
-
-    Attributes:
-    - _item: diagram item owning tree model
     """
 
     def __init__(self, item, cols=None):
         """Create new model.
 
-        Parameters:
-        - _item: diagram item owning tree model
-        - cols: model columns, defaults to [str, object]
+        Args:
+          item (Presentation): diagram item owning tree model
+          cols (tuple): model column types, defaults to [str, object]
         """
 
         if cols is None:
@@ -302,14 +297,14 @@ class LineStylePage(PropertyPageBase):
     @transactional
     def _on_orthogonal_change(self, button):
         if len(self.item.handles()) < 3:
-            line_segment = Segment(self.item, self.item.canvas)
+            line_segment = Segment(self.item, self.item.diagram)
             line_segment.split_segment(0)
         active = button.get_active()
         self.item.orthogonal = active
-        self.item.canvas.update_now((self.item,))
+        self.item.diagram.update_now((self.item,))
         self.horizontal_button.set_sensitive(active)
 
     @transactional
     def _on_horizontal_change(self, button):
         self.item.horizontal = button.get_active()
-        self.item.canvas.update_now((self.item,))
+        self.item.diagram.update_now((self.item,))

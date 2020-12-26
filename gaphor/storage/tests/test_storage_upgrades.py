@@ -15,7 +15,7 @@ def loader(element_factory, modeling_language):
             **{p.id: p for p in parsed_items},
         }
         load_elements(parsed_data, element_factory, modeling_language)
-        return element_factory.lselect()[0].canvas.get_root_items()[0]
+        return next(element_factory.lselect()[0].get_all_items())
 
     return _loader
 

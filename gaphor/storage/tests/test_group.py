@@ -17,18 +17,18 @@ def test_load_grouped_connected_items(element_factory, loader):
     loader(NODE_EXAMPLE_XML)
 
     diagram = element_factory.lselect()[0]
-    canvas = diagram.canvas
-    node_item, dep_item = canvas.get_root_items()
-    child_one, child_two = canvas.get_children(node_item)
+    node_item, dep_item = [e for e in diagram.get_all_items() if not e.parent]
+
+    child_one, child_two = node_item.children
 
     assert isinstance(node_item, NodeItem)
     assert isinstance(dep_item, DependencyItem)
     assert isinstance(child_one, NodeItem)
     assert isinstance(child_two, NodeItem)
 
-    assert canvas.get_parent(child_one) is node_item
+    assert child_one.parent is node_item
 
-    assert tuple(canvas.get_matrix_i2c(child_one)) == (
+    assert tuple(diagram.get_matrix_i2c(child_one)) == (
         1.0,
         0.0,
         0.0,
@@ -36,7 +36,7 @@ def test_load_grouped_connected_items(element_factory, loader):
         PARENT_X + CHILD_ONE_X,
         PARENT_Y + CHILD_ONE_Y,
     )
-    assert tuple(canvas.get_matrix_i2c(child_two)) == (
+    assert tuple(diagram.get_matrix_i2c(child_two)) == (
         1.0,
         0.0,
         0.0,
