@@ -35,10 +35,7 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
         adapter_type = Group.registry.get_registration(type(parent), item_class)
         # Do not do in depth check id we can actually connect.
         # We can do that only when we have and item_class instance.
-        if adapter_type:
-            view.selection.dropzone_item = parent
-        else:
-            view.selection.dropzone_item = None
+        view.selection.dropzone_item = parent if adapter_type else None
         model.request_update(parent, matrix=False)
     else:
         if view.selection.dropzone_item:
