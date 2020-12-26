@@ -11,13 +11,13 @@ class DummyVisualComponent:
 
 
 class StubElement(ElementPresentation):
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model, shape=DummyVisualComponent())
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model, shape=DummyVisualComponent())
 
 
 class StubLine(LinePresentation):
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model, shape_middle=DummyVisualComponent())
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model, shape_middle=DummyVisualComponent())
 
 
 def test_creation(diagram):

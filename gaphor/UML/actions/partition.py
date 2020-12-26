@@ -17,8 +17,8 @@ HEADER_HEIGHT: int = 29
 
 @represents(UML.ActivityPartition)
 class PartitionItem(ElementPresentation):
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
         self.min_height = 300
 
         self.shape = Box(

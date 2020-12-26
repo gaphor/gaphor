@@ -34,11 +34,11 @@ def text_position(position):
 
 @represents(sysml.ProxyPort)
 class ProxyPortItem(Presentation[sysml.ProxyPort], Named):
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(id=id, model=model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
         self._matrix = Matrix()
         self._matrix_i2c = Matrix()
-        self._connections = connections
+        self._connections = diagram.connections
 
         h1 = Handle(connectable=True)
         self._handles = [h1]

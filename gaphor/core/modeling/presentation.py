@@ -32,8 +32,12 @@ class Presentation(Element, Generic[S]):
     DiagramItemDeleted.
     """
 
-    def __init__(self, id=None, model=None):
+    def __init__(self, diagram: Diagram, id=None, model=None):
         super().__init__(id, model)
+
+        if self.id:
+            # Do not set diagram for transient objects
+            self.diagram = diagram
 
         def update(event):
             if self.diagram:

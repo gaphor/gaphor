@@ -28,8 +28,8 @@ from gaphor.UML.umlfmt import format_property
 
 @represents(Block)
 class BlockItem(ElementPresentation[Block], Classified):
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
 
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_parts", self.update_shapes

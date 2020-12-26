@@ -11,8 +11,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 class IncludeItem(LinePresentation, Named):
     """Use case inclusion relationship."""
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model, style={"dash-style": (7.0, 5.0)})
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model, style={"dash-style": (7.0, 5.0)})
 
         self.shape_middle = Box(
             Text(text=lambda: stereotypes_str(self.subject, ("include",))),

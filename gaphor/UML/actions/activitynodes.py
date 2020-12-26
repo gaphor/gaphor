@@ -39,8 +39,8 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
     Initial node has name which is put near top-left side of node.
     """
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -77,8 +77,8 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
     node.
     """
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -126,8 +126,8 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
     node.
     """
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
         no_movable_handles(self)
 
         self.shape = IconBox(
@@ -162,8 +162,8 @@ def draw_flow_final_node(_box, context, _bounding_box):
 class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
     """Representation of decision or merge node."""
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
         no_movable_handles(self)
 
         self._combined = None
@@ -216,11 +216,10 @@ def draw_decision_node(_box, context, _bounding_box):
 class ForkNodeItem(Presentation[UML.ForkNode], Named):
     """Representation of fork and join node."""
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(id=id, model=model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id=id, model=model)
         self._matrix = Matrix()
         self._matrix_i2c = Matrix()
-        self._connections = connections
 
         h1, h2 = Handle(), Handle()
         self._handles = [h1, h2]
@@ -246,8 +245,10 @@ class ForkNodeItem(Presentation[UML.ForkNode], Named):
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[JoinNode].joinSpec")
 
-        connections.add_constraint(self, constraint(vertical=(h1.pos, h2.pos)))
-        connections.add_constraint(self, constraint(above=(h1.pos, h2.pos), delta=30))
+        diagram.connections.add_constraint(self, constraint(vertical=(h1.pos, h2.pos)))
+        diagram.connections.add_constraint(
+            self, constraint(above=(h1.pos, h2.pos), delta=30)
+        )
 
     @property
     def matrix(self) -> Matrix:

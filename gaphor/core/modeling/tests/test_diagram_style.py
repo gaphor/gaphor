@@ -24,18 +24,20 @@ def diagram(element_factory):
 
 
 class DemoItem(gaphas.Element, Presentation):
-    def __init__(self, connections, id, model):
-        super().__init__(connections, id=id, model=model)
+    def __init__(self, diagram, id, model):
+        super().__init__(
+            connections=diagram.connections, diagram=diagram, id=id, model=model
+        )
 
 
-def test_name_does_not_have_item_suffix(diagram):
+def test_name_does_not_have_item_suffix(diagram: Diagram):
     item = diagram.create(DemoItem)
     node = StyledItem(item)
 
     assert node.name() == "demo"
 
 
-def test_diagram_is_parent_of_item(diagram):
+def test_diagram_is_parent_of_item(diagram: Diagram):
     item = diagram.create(DemoItem)
     node = StyledItem(item)
 

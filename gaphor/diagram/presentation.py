@@ -10,6 +10,7 @@ from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import matrix_i2i
 
+from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.styling import Style
 from gaphor.diagram.shapes import combined_style
@@ -86,8 +87,10 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
 
     _port_sides = ("top", "right", "bottom", "left")
 
-    def __init__(self, connections, id=None, model=None, shape=None):
-        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
+    def __init__(self, diagram: Diagram, id=None, model=None, shape=None):
+        super().__init__(  # type: ignore[call-arg]
+            connections=diagram.connections, diagram=diagram, id=id, model=model
+        )
         self._shape = shape
 
     def port_side(self, port):
@@ -140,7 +143,7 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
 class LinePresentation(gaphas.Line, Presentation[S]):
     def __init__(
         self,
-        connections,
+        diagram: Diagram,
         id=None,
         model=None,
         style: Style = {},
@@ -148,7 +151,9 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         shape_middle=None,
         shape_tail=None,
     ):
-        super().__init__(connections, id=id, model=model)  # type: ignore[misc]
+        super().__init__(  # type: ignore[call-arg]
+            connections=diagram.connections, diagram=diagram, id=id, model=model
+        )
 
         self.style = style
         self.shape_head = shape_head

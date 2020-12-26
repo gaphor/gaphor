@@ -19,8 +19,8 @@ class VertexItem(Named):
 
 @represents(UML.State)
 class StateItem(ElementPresentation[UML.State], VertexItem):
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")

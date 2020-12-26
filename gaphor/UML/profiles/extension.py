@@ -17,8 +17,8 @@ class ExtensionItem(LinePresentation, Named):
     represents a Property (with Property.association == my association).
     """
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
 
         self.shape_middle = Box(
             Text(

@@ -47,8 +47,8 @@ class AssociationItem(LinePresentation[UML.Association], Named):
     association).
     """
 
-    def __init__(self, connections, id=None, model=None):
-        super().__init__(connections, id, model)
+    def __init__(self, diagram, id=None, model=None):
+        super().__init__(diagram, id, model)
 
         # AssociationEnds are really inseparable from the AssociationItem.
         # We give them the same id as the association item.
@@ -337,7 +337,7 @@ def draw_tail_navigable(context):
     cr.line_to(15, 6)
 
 
-class AssociationEnd(Presentation):
+class AssociationEnd(Presentation[UML.Property]):
     """An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and one
     for the multiplicity (and maybe one for tagged values in the future).
@@ -347,7 +347,7 @@ class AssociationEnd(Presentation):
     """
 
     def __init__(self, owner, end=None):
-        super().__init__(id=False)  # Transient object
+        super().__init__(diagram=owner.diagram, id=False)  # Transient object
         self._canvas = None
         self._owner = owner
         self._end = end
