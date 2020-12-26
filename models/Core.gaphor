@@ -51,6 +51,8 @@
 <ref refid="cf596824-e0b9-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="216581ca-4465-11eb-8946-9bdfa28f7a50"/>
 <ref refid="446a3744-4465-11eb-8946-9bdfa28f7a50"/>
+<ref refid="d6e5886b-478f-11eb-a938-8fcfae32d12c"/>
+<ref refid="f4982c28-478f-11eb-a938-8fcfae32d12c"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -596,6 +598,46 @@
 <ref refid="446a3746-4465-11eb-8946-9bdfa28f7a50"/>
 </tail-subject>
 </item>
+<item id="d6e5886b-478f-11eb-a938-8fcfae32d12c" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 448.0, 624.0)</val>
+</matrix>
+<width>
+<val>177.0</val>
+</width>
+<height>
+<val>78.0</val>
+</height>
+<diagram>
+<ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
+</diagram>
+<subject>
+<ref refid="d6e5886a-478f-11eb-a938-8fcfae32d12c"/>
+</subject>
+</item>
+<item id="f4982c28-478f-11eb-a938-8fcfae32d12c" type="CommentLineItem">
+<diagram>
+<ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
+</diagram>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 505.0, 557.0)</val>
+</matrix>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<horizontal>
+<val>0</val>
+</horizontal>
+<points>
+<val>[(0.0, -4.0), (26.0, 67.0)]</val>
+</points>
+<head-connection>
+<ref refid="216581ca-4465-11eb-8946-9bdfa28f7a50"/>
+</head-connection>
+<tail-connection>
+<ref refid="d6e5886b-478f-11eb-a938-8fcfae32d12c"/>
+</tail-connection>
+</item>
 </canvas>
 </Diagram>
 <Class id="4cda498e-7a95-11ea-a112-7f953848cf85">
@@ -998,7 +1040,7 @@
 </reflist>
 </annotatedElement>
 <body>
-<val>One instance per model</val>
+<val>One instance per model.</val>
 </body>
 <presentation>
 <reflist>
@@ -1128,6 +1170,11 @@ diagram {
 </upperValue>
 </Property>
 <Association id="216581c9-4465-11eb-8946-9bdfa28f7a50">
+<comment>
+<reflist>
+<ref refid="d6e5886a-478f-11eb-a938-8fcfae32d12c"/>
+</reflist>
+</comment>
 <memberEnd>
 <reflist>
 <ref refid="216581cb-4465-11eb-8946-9bdfa28f7a50"/>
@@ -1263,4 +1310,19 @@ diagram {
 <val>*</val>
 </upperValue>
 </Property>
+<Comment id="d6e5886a-478f-11eb-a938-8fcfae32d12c">
+<annotatedElement>
+<reflist>
+<ref refid="216581c9-4465-11eb-8946-9bdfa28f7a50"/>
+</reflist>
+</annotatedElement>
+<body>
+<val>Presentation is unlinked (destroyed) when diagram changes.</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="d6e5886b-478f-11eb-a938-8fcfae32d12c"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>
