@@ -173,10 +173,6 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
     )
     yield from _load_attributes_and_references(elements, update_status_queue)
 
-    for d in factory.lselect(Diagram):
-        for item in d.get_all_items():
-            item.matrix_i2c.set(*d.get_matrix_i2c(item))
-
     for id, elem in list(elements.items()):
         yield from update_status_queue()
         elem.element.postload()

@@ -249,7 +249,6 @@ class Diagram(PackageableElement):
 
         self._watcher = self.watcher()
         self._watcher.watch("ownedPresentation", self._presentation_removed)
-        self._watcher.watch("ownedPresentation.parent", self._presentation_reparent)
 
         # Record all items changed during constraint solving,
         # so their `post_update()` method can be called.
@@ -262,25 +261,6 @@ class Diagram(PackageableElement):
     def _presentation_removed(self, event):
         if isinstance(event, AssociationDeleted) and event.old_value:
             self._update_views(removed_items=(event.old_value,))
-
-    def _presentation_reparent(self, event):
-        """A more fancy version of the reparent method."""
-        if event.property is not Presentation.parent:
-            return
-
-        item = event.element
-        old_parent = event.old_value
-
-        if old_parent:
-            m = self.get_matrix_i2c(old_parent)
-            item.matrix.set(*item.matrix.multiply(m))
-            self.request_update(old_parent)
-
-        new_parent = event.new_value
-        if new_parent:
-            m = self.get_matrix_i2c(new_parent).inverse()
-            item.matrix.set(*item.matrix.multiply(m))
-            self.request_update(new_parent)
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
@@ -361,12 +341,6 @@ class Diagram(PackageableElement):
     def connections(self) -> gaphas.connections.Connections:
         return self._connections
 
-    def get_matrix_i2c(self, item: Presentation) -> gaphas.matrix.Matrix:
-        if item.parent:
-            return item.matrix * self.get_matrix_i2c(item.parent)
-        else:
-            return item.matrix
-
     def get_all_items(self) -> Iterable[Presentation]:
         """Get all items owned by this diagram, ordered depth-first."""
 
@@ -424,10 +398,6 @@ class Diagram(PackageableElement):
         contexts = self._pre_update_items(all_dirty_items)
 
         self._resolved_items.clear()
-        for d in dirty_items:
-            d.matrix_i2c.set(*self.get_matrix_i2c(d))
-        for d in dirty_matrix_items:
-            d.matrix_i2c.set(*self.get_matrix_i2c(d))
 
         # solve all constraints
         self._connections.solve()
