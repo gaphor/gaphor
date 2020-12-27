@@ -75,3 +75,55 @@ def test_should_emit_event_when_diagram_changes(diagram, event_manager):
     assert events
     assert events[0].diagram is diagram
     assert events[0].element is presentation
+
+
+def test_matrix_i2c_updates_when_matrix_changes(diagram):
+    presentation = diagram.create(Example)
+
+    presentation.matrix.translate(1, 1)
+
+    assert tuple(presentation.matrix_i2c) == (1, 0, 0, 1, 1, 1)
+
+
+def test_parent_matrix_updates(diagram):
+    parent = diagram.create(Example)
+    presentation = diagram.create(Example)
+
+    presentation.parent = parent
+    parent.matrix.scale(2, 2)
+
+    assert tuple(presentation.matrix_i2c) == (2, 0, 0, 2, 0, 0)
+
+
+def test_set_parent_updates_matrix_i2c(diagram):
+    parent = diagram.create(Example)
+    presentation = diagram.create(Example)
+
+    parent.matrix.scale(2, 2)
+    presentation.parent = parent
+
+    assert tuple(presentation.matrix_i2c) == (1, 0, 0, 1, 0, 0)
+
+
+def test_unset_parent_updates_matrix_i2c(diagram):
+    parent = diagram.create(Example)
+    presentation = diagram.create(Example)
+
+    parent.matrix.scale(2, 2)
+    presentation.parent = parent
+    presentation.parent = None
+
+    assert tuple(presentation.matrix_i2c) == (1, 0, 0, 1, 0, 0)
+
+
+def test_change_parent_updates_matrix_i2c_and_keeps_coordinates(diagram):
+    parent = diagram.create(Example)
+    new_parent = diagram.create(Example)
+    presentation = diagram.create(Example)
+
+    parent.matrix.scale(2, 2)
+    new_parent.matrix.translate(2, 2)
+    presentation.parent = parent
+    presentation.parent = new_parent
+
+    assert tuple(presentation.matrix_i2c) == (1, 0, 0, 1, 0, 0)

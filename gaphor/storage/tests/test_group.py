@@ -28,7 +28,7 @@ def test_load_grouped_connected_items(element_factory, loader):
 
     assert child_one.parent is node_item
 
-    assert tuple(diagram.get_matrix_i2c(child_one)) == (
+    assert tuple(child_one.matrix_i2c) == (
         1.0,
         0.0,
         0.0,
@@ -36,7 +36,7 @@ def test_load_grouped_connected_items(element_factory, loader):
         PARENT_X + CHILD_ONE_X,
         PARENT_Y + CHILD_ONE_Y,
     )
-    assert tuple(diagram.get_matrix_i2c(child_two)) == (
+    assert tuple(child_two.matrix_i2c) == (
         1.0,
         0.0,
         0.0,

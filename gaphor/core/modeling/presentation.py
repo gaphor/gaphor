@@ -46,7 +46,10 @@ class Presentation(Matrices, Element, Generic[S]):
 
         self._watcher = self.watcher(default_handler=update)
         self.watch("subject")
+        self.watch("children")
         self.watch("diagram", self._on_diagram_changed)
+        self.watch("parent", self._on_parent_changed)
+        self.matrix.add_handler(self._on_matrix_changed)
 
     subject: relation_one[S] = association(
         "subject", Element, upper=1, opposite="presentation"
@@ -77,10 +80,21 @@ class Presentation(Matrices, Element, Generic[S]):
         """Unsubscribe all watched paths, as defined through `watch()`."""
         self._watcher.unsubscribe_all()
 
+    def postload(self):
+        super().postload()
+        if self.parent:
+            self.parent.matrix_i2c.add_handler(self._on_matrix_changed)
+
     def unlink(self):
         """Remove the item from the diagram and set subject to None."""
-        diagram = self.diagram
         self._watcher.unsubscribe_all()
+        self.matrix.remove_handler(self._on_matrix_changed)
+
+        parent = self.parent
+        if parent:
+            self.parent.matrix_i2c.remove_handler(self._on_matrix_changed)
+
+        diagram = self.diagram
         if diagram:
             diagram.connections.remove_connections_to_item(self)
         super().unlink()
@@ -96,6 +110,25 @@ class Presentation(Matrices, Element, Generic[S]):
             self.handle(DiagramItemDeleted(diagram, self))
         if event.new_value:
             raise ValueError("Can not change diagram for a presentation")
+
+    def _on_parent_changed(self, event):
+        old_parent = event.old_value
+        if old_parent:
+            old_parent.matrix_i2c.remove_handler(self._on_matrix_changed)
+            m = old_parent.matrix_i2c
+            self.matrix.set(*self.matrix.multiply(m))
+
+        new_parent = event.new_value
+        if new_parent:
+            new_parent.matrix_i2c.add_handler(self._on_matrix_changed)
+            m = new_parent.matrix_i2c.inverse()
+            self.matrix.set(*self.matrix.multiply(m))
+
+    def _on_matrix_changed(self, _matrix=None):
+        if self.parent:
+            self.matrix_i2c.set(*(self.matrix * self.parent.matrix_i2c))
+        else:
+            self.matrix_i2c.set(*self.matrix)
 
 
 Element.presentation = association(
