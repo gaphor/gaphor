@@ -28,12 +28,15 @@ pyinstvenv/bin/pyinstaller -y gaphor.spec
 
 # App code signing is not supported with a period in the MacOS lib path
 # Move gdk-pixbuf-2.0 to Resources and link it back to MacOS
-rm dist/Gaphor.app/Contents/MacOS/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-cp dist/Gaphor.app/Contents/Resources/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache dist/Gaphor.app/Contents/MacOS/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-rm -rf dist/Gaphor.app/Contents/Resources/lib/gdk-pixbuf-2.0
-mv dist/Gaphor.app/Contents/MacOS/lib/gdk-pixbuf-2.0 dist/Gaphor.app/Contents/Resources/lib/gdk-pixbuf-2.0
-cd "${DIR}"/dist/Gaphor.app/Contents/MacOS/lib
-ln -s ../../Resources/lib/gdk-pixbuf-2.0 gdk-pixbuf-2.0 
+MACOS_DIR="dist/Gaphor.app/Contents/MacOS/lib/gdk-pixbuf-2.0/2.10.0"
+RESOURCES_DIR="dist/Gaphor.app/Contents/Resources/lib/gdk-pixbuf-2.0/2.10.0"
+mkdir "${RESOURCES_DIR}"/loaders
+cp "${MACOS_DIR}"/loaders/* "${RESOURCES_DIR}"/loaders/ 
+rm "${MACOS_DIR}"/loaders.cache
+rm -f "${MACOS_DIR}"/loaders/*
+ln -s ../../../../Resources/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache "${MACOS_DIR}"/loaders.cache
+cd "${RESOURCES_DIR}"
+find loaders -type f -exec ln -s ../../../../../Resources/lib/gdk-pixbuf-2.0/2.10.0/{} "${DIR}"/"${MACOS_DIR}"/{}  \;
 
 # Cleanup
 rm -rf pyinstvenv
