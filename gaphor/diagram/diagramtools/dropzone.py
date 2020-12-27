@@ -47,6 +47,11 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
 @MoveAspect.register(LinePresentation)
 @MoveAspect.register(Presentation)
 class DropZoneMove(GuidedItemMove):
+    def start_move(self, pos):
+        super().start_move(pos)
+        if self.item.parent:
+            self.view.selection.dropzone_item = self.item.parent
+
     def move(self, pos):
         """Move the item.
 
