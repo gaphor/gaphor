@@ -4,6 +4,7 @@ import pytest
 from gaphas.aspect.connector import ConnectionSink
 from gaphas.aspect.connector import Connector as ConnectorAspect
 
+from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher
@@ -32,10 +33,23 @@ def modeling_language():
 
 
 @pytest.fixture
-def diagram(element_factory) -> Diagram:
-    diagram = element_factory.create(Diagram)
+def diagram(element_factory, event_manager) -> Diagram:
+    with Transaction(event_manager):
+        diagram = element_factory.create(Diagram)
     yield diagram
-    diagram.unlink()
+    with Transaction(event_manager):
+        diagram.unlink()
+
+
+@pytest.fixture
+def create(diagram, element_factory):
+    def _create(item_class, element_class=None):
+        return diagram.create(
+            item_class,
+            subject=(element_factory.create(element_class) if element_class else None),
+        )
+
+    return _create
 
 
 @pytest.fixture

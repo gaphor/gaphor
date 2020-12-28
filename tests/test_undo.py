@@ -35,20 +35,24 @@ def undo_manager(session):
 
 
 def test_class_association_undo_redo(event_manager, element_factory, undo_manager):
-    diagram = element_factory.create(UML.Diagram)
+    with Transaction(event_manager):
+        diagram = element_factory.create(UML.Diagram)
 
     assert 0 == len(diagram.connections.solver.constraints)
 
-    ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    with Transaction(event_manager):
+        ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     assert 6 == len(diagram.connections.solver.constraints)
 
-    ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    with Transaction(event_manager):
+        ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     assert 12 == len(diagram.connections.solver.constraints)
 
-    a = diagram.create(AssociationItem)
+    with Transaction(event_manager):
+        a = diagram.create(AssociationItem)
 
-    connect(a, a.head, ci1)
-    connect(a, a.tail, ci2)
+        connect(a, a.head, ci1)
+        connect(a, a.tail, ci2)
 
     # Diagram, Association, 2x Class, Property, LiteralSpecification
     assert 6 == len(element_factory.lselect())
@@ -88,7 +92,8 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 def test_diagram_item_should_not_end_up_in_element_factory(
     event_manager, element_factory, undo_manager
 ):
-    diagram = element_factory.create(UML.Diagram)
+    with Transaction(event_manager):
+        diagram = element_factory.create(UML.Diagram)
 
     with Transaction(event_manager):
         cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
@@ -102,8 +107,9 @@ def test_diagram_item_should_not_end_up_in_element_factory(
 def test_deleted_diagram_item_should_not_end_up_in_element_factory(
     event_manager, element_factory, undo_manager
 ):
-    diagram = element_factory.create(UML.Diagram)
-    cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    with Transaction(event_manager):
+        diagram = element_factory.create(UML.Diagram)
+        cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
     with Transaction(event_manager):
         cls.unlink()

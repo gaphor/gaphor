@@ -2,6 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.application import Session, distribution
+from gaphor.core import Transaction
 from gaphor.storage.storage import load
 
 
@@ -10,6 +11,11 @@ def session():
     session = Session()
     yield session
     session.shutdown()
+
+
+@pytest.fixture
+def event_manager(session):
+    return session.get_service("event_manager")
 
 
 @pytest.fixture
@@ -22,7 +28,7 @@ def element_factory(session):
     element_factory.shutdown()
 
 
-def test_package_removal(session, element_factory):
+def test_package_removal(session, event_manager, element_factory):
     # Find all profile instances
     profiles = element_factory.lselect(UML.Profile)
 
@@ -33,7 +39,8 @@ def test_package_removal(session, element_factory):
     assert len(profiles[0].presentation) == 1
 
     # Unlink the presentation
-    profiles[0].presentation[0].unlink()
+    with Transaction(event_manager):
+        profiles[0].presentation[0].unlink()
 
     assert not element_factory.lselect(UML.Profile)
 
@@ -46,7 +53,7 @@ def test_package_removal(session, element_factory):
     assert len(element_factory.lselect(UML.Diagram)) == 3
 
 
-def test_package_removal_by_removing_the_diagram(element_factory):
+def test_package_removal_by_removing_the_diagram(event_manager, element_factory):
 
     diagram = element_factory.lselect(
         lambda e: e.isKindOf(UML.Diagram) and e.name == "Stereotypes diagram"
@@ -54,7 +61,8 @@ def test_package_removal_by_removing_the_diagram(element_factory):
 
     assert diagram
 
-    diagram.unlink()
+    with Transaction(event_manager):
+        diagram.unlink()
 
     assert not element_factory.lselect(UML.Profile)
 
