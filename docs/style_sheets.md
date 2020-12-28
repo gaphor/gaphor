@@ -74,7 +74,7 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
 ```eval_rst
 ============================= ============================
 ``*``                         All items on the diagram, including the diagram itself.
-``node component``            Any component item which is a decendant of a node.
+``node component``            Any component item which is a descendant of a node.
 ``node > component``          A component item which is a child of a node.
 ``generaliation[subject]``    A generalization item with a subject present.
 ``class[name=Foo]``           A class with name "Foo".

@@ -115,7 +115,7 @@ two functions: one for copying and one for pasting.
    Returns the newly created item or element
 ```
 
-To serialize the copied elements and deserialize them again, there are two functions avaiable:
+To serialize the copied elements and deserialize them again, there are two functions available:
 
 ```eval_rst
 .. function:: gaphor.diagram.copypaste.serialize(value)

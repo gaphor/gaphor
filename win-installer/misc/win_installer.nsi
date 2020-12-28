@@ -144,13 +144,13 @@ Function custom_gui_init
             ; if it returns success proceede, otherwise abort the
             ; installer (uninstall aborted by user for example)
             ExecWait '"$uninst_bin_temp" _?=$INSTDIR' $R1
-            ; uninstall suceeded, since the uninstall.exe is still there
+            ; uninstall succeeded, since the uninstall.exe is still there
             ; goto rm_instdir as well
             StrCmp $R1 0 rm_instdir
             ; uninstall failed
             Abort
         rm_instdir:
-            ; either the uninstaller was sucessfull or
+            ; either the uninstaller was successful or
             ; the uninstaller.exe wasn't found
             RMDir /r "$INSTDIR"
     do_continue:
