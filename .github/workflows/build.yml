@@ -196,7 +196,7 @@ jobs:
 
           codesign --sign "Developer ID Application: Daniel Yeaw (Z7V37BLNR9)"
           --verbose --deep --timestamp
-          -o runtime "Gaphor-${{ steps.meta.outputs.version }}.app"
+          -o runtime "Gaphor.app"
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
         with:
