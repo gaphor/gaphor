@@ -52,14 +52,14 @@ jobs:
         run: make install
       - name: Test with Pytest
         run: xvfb-run make test-all
-      - name: Create Source Dist and Wheel
-        run: make dist
       - name: Upload Code Coverage to Code Climate
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
           coverageCommand: poetry run coverage xml
+      - name: Create Source Dist and Wheel
+        run: make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v2
         with:
@@ -70,6 +70,20 @@ jobs:
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
+      - name: Install AppImage Dependencies
+        run: |
+          cd appimage
+          make dep
+      - name: Build AppImage
+        run: |
+          cd appimage
+          make all
+          mv Gaphor-x86_64.AppImage ../dist/gaphor-${{ steps.meta.outputs.version }}.AppImage
+      - name: Upload gaphor-${{ steps.meta.outputs.version }}.AppImage
+        uses: actions/upload-artifact@v2
+        with:
+          name: gaphor-${{ steps.meta.outputs.version }}.AppImage
+          path: dist/gaphor-${{ steps.meta.outputs.version }}.AppImage
       - name: Publish to PyPI (release only)
         if: github.event_name == 'release'
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}

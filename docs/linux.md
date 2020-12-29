@@ -56,7 +56,7 @@ repository](https://github.com/flathub/org.gaphor.Gaphor).
 
 1. Install the GNOME SDK
 
-       $ flatpak install flathub org.gnome.Sdk 3.34
+       $ flatpak install flathub org.gnome.Sdk 3.38
 
 1. Clone the Flathub repository and install the necessary SDK:
 
@@ -71,6 +71,26 @@ repository](https://github.com/flathub/org.gaphor.Gaphor).
 1. Install the Flatpak
 
        $ make install
+
+## Create an AppImage Package
+
+[AppImage](https://appimage.org/) is a format for distributing portable software
+on Linux without needing superuser permissions to install the application. The
+AppImage file is one executable which contains both Gaphor and Python. It allows
+Gaphor to be run on any AppImage supported Linux distribution without
+installation or root access.
+
+The best way to build a Gaphor AppImage is using python-appimage:
+
+1. `cd appimage`
+
+1. `make update VERSION=x.x.x`
+
+1. Activate your virtualenv, then run `make dep` to install python_appimage with pip
+
+1. Build the AppImage by running `make all`
+
+1. Test that Gaphor-x86_64.AppImage works by running `make run`
 
 ## Linux Distribution Packages
 
