@@ -60,8 +60,12 @@ class ConsoleWindow(UIComponent, ActionProvider):
         window.set_transient_for(self.main_window.window)
         window.set_title(self.title)
 
+        element_factory = self.component_registry.get_service("element_factory")
         console = GTKInterpreterConsole(
-            locals={"service": self.component_registry.get_service}
+            locals={
+                "service": self.component_registry.get_service,
+                "select": element_factory.lselect,
+            }
         )
         console.show()
         window.add(console)

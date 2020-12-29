@@ -8,6 +8,7 @@
 
 import code
 import sys
+import textwrap
 from rlcompleter import Completer
 from typing import Dict, List
 
@@ -19,24 +20,49 @@ if __name__ == "__main__":
     gi.require_version("Gtk", "3.0")
 
 
-banner = (
-    """Gaphor Interactive Python Console
-%s
+banner = f"""\
+Gaphor Interactive Python Console
+{sys.version}
 Type "help" for more information.
 """
-    % sys.version
-)
+
+
+def docstring_dedent(docstr: str) -> str:
+    if docstr.startswith(" "):
+        return textwrap.dedent(docstr)
+
+    first_line, remaining_text = docstr.split("\n", 1)
+
+    return "\n".join([first_line, textwrap.dedent(remaining_text)])
 
 
 class Help:
+    def __init__(self, writer, locals={}):
+        self._writer = writer
+        self._locals = locals
+
     def __call__(self, obj=None):
-        if obj:
-            return obj.__doc__
-        else:
-            return str(self)
+        helptext = docstring_dedent(obj.__doc__ if obj else str(self))
+        with self._writer as writer:
+            writer.write("\n")
+            writer.write(textwrap.indent(helptext, prefix="  "))
+            writer.write("\n" if helptext.endswith("\n") else "\n\n")
 
     def __str__(self):
-        return "Usage: help(object)"
+        intro = textwrap.dedent(
+            """\
+
+        Usage: help(object)
+
+        The following functions/variables are defined:
+        """
+        )
+
+        members = "\n".join(
+            f"- {key}" for key in self._locals.keys() if not key.startswith("_")
+        )
+
+        return textwrap.indent(intro + members + "\n", prefix="  ")
 
     def __repr__(self):
         return str(self)
@@ -79,7 +105,6 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
     def __init__(self, locals: Dict[str, object], banner=banner):
         Gtk.ScrolledWindow.__init__(self)
         self.locals = dict(locals)
-        locals["help"] = Help()
 
         self.set_min_content_width(640)
         self.set_min_content_height(480)
@@ -138,6 +163,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.stderr = TextViewWriter("stderr", self.text, self.style_err)
 
         self.current_prompt = lambda: ""
+        locals["help"] = Help(self.stdout, locals)
 
         self.add(self.text)
         self.text.show()

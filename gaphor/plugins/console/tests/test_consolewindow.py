@@ -2,6 +2,7 @@ import pytest
 
 import gaphor.services.componentregistry
 import gaphor.ui.menufragment
+from gaphor.core.modeling import ElementFactory
 from gaphor.plugins.console.consolewindow import ConsoleWindow
 
 
@@ -12,7 +13,9 @@ class MainWindowStub:
 
 @pytest.fixture
 def component_registry():
-    return gaphor.services.componentregistry.ComponentRegistry()
+    component_registry = gaphor.services.componentregistry.ComponentRegistry()
+    component_registry.register("element_factory", ElementFactory())
+    return component_registry
 
 
 @pytest.fixture

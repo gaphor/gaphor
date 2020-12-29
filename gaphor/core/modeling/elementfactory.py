@@ -118,7 +118,13 @@ class ElementFactory(Service):
     def lselect(
         self, expression: Union[Callable[[Element], bool], Type[T], None] = None
     ) -> List[Element]:
-        """Like select(), but returns a list."""
+        """Get a list of elements that comply with expression.
+
+        The expression can be one of:
+        - None: return all elements
+        - class name: return all elements of type `class name`
+        - expression(e: Element) -> bool: return elements that comply with expression
+        """
         return list(self.select(expression))
 
     def keys(self) -> Iterator[str]:

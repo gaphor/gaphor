@@ -9,15 +9,32 @@ class KeyEvent:
         self.state = state
 
 
+class DummyWriter:
+    def __init__(self):
+        self.text = ""
+
+    def write(self, s):
+        self.text = self.text + s
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, _type, _value, _traceback):
+        pass
+
+
 def test_console_opening():
     main(main_loop=False)
     Gtk.main_iteration()
 
 
 def test_help():
-    help = Help()
+    writer = DummyWriter()
+    help = Help(writer)
 
-    assert help() == "Usage: help(object)"
+    help()
+
+    assert "Usage: help(object)" in writer.text
 
 
 def console_text(console):
