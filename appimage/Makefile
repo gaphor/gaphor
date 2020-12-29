@@ -30,7 +30,7 @@ entrypoint.sh:
 	cp entrypoint.sh.in entrypoint.sh
 
 requirements.txt:
-	poetry export --without-hashes -o ${CURDIR}/requirements.txt
+	poetry export --without-hashes -f requirements.txt -o ${CURDIR}/requirements.txt
 	sed -i -r 's/(^.+);.*/\1/g' requirements.txt
 	echo 'gaphor==${VERSION}' >> requirements.txt
 
