@@ -129,13 +129,12 @@ class UndoManager(Service, ActionProvider):
         assert not self._current_transaction
         self._current_transaction = ActionStack()
 
-    def add_undo_action(self, action, only_transactional=True):
+    def add_undo_action(self, action, requires_transaction=True):
         """Add an action to undo."""
         if self._current_transaction:
             self._current_transaction.add(action)
-            # TODO: should this be placed here?
             self._action_executed()
-        elif only_transactional:
+        elif requires_transaction:
             undo_stack = list(self._undo_stack)
             redo_stack = list(self._redo_stack)
 
@@ -259,7 +258,9 @@ class UndoManager(Service, ActionProvider):
     #
 
     def _gaphas_undo_handler(self, event):
-        self.add_undo_action(lambda: state.saveapply(*event), only_transactional=False)
+        self.add_undo_action(
+            lambda: state.saveapply(*event), requires_transaction=False
+        )
 
     def _register_undo_handlers(self):
 
