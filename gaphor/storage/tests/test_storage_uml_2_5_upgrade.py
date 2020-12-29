@@ -1,5 +1,6 @@
 import pytest
 
+from gaphor.core.modeling import StyleSheet
 from gaphor.storage.parser import element
 from gaphor.storage.storage import load_elements
 
@@ -20,7 +21,7 @@ def test_owned_comment_to_comment_upgrade(loader):
     e = element(id="2", type="Element")
     e.references["ownedComment"] = ["1"]
 
-    comment, elem = loader(c, e)
-
+    comment, elem, style_sheet = loader(c, e)
     assert elem in comment.annotatedElement
     assert comment in elem.comment
+    assert isinstance(style_sheet, StyleSheet)

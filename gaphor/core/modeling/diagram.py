@@ -5,7 +5,6 @@ Diagrams can be visualized and edited.
 from __future__ import annotations
 
 import logging
-import textwrap
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
@@ -38,27 +37,6 @@ FALLBACK_STYLE: Style = {
     "line-width": 2,
     "padding": (0, 0, 0, 0),
 }
-
-
-DEFAULT_STYLE_SHEET = textwrap.dedent(
-    """\
-    * {
-     background-color: transparent;
-     color: black;
-     font-family: sans;
-     font-size: 14;
-     highlight-color: rgba(0, 0, 255, 0.4);
-     line-width: 2;
-     padding: 0;
-    }
-
-    diagram {
-     background-color: white;
-     line-style: normal;
-     /* line-style: sloppy 0.3; */
-    }
-    """
-)
 
 
 @dataclass(frozen=True)
@@ -262,18 +240,13 @@ class Diagram(PackageableElement):
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:
-        model = self.model
-        style_sheet = next(model.select(StyleSheet), None)
-        if not style_sheet:
-            style_sheet = self.model.create(StyleSheet)
-            style_sheet.styleSheet = DEFAULT_STYLE_SHEET
-        return style_sheet
+        return next(self.model.select(StyleSheet), None)
 
     def style(self, node: StyleNode) -> Style:
         style_sheet = self.styleSheet
         return {
             **FALLBACK_STYLE,  # type: ignore[misc]
-            **style_sheet.match(node),
+            **(style_sheet.match(node) if style_sheet else {}),
         }
 
     def save(self, save_func):

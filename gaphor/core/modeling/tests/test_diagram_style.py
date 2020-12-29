@@ -2,7 +2,7 @@ import gaphas
 import pytest
 
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory, Presentation
+from gaphor.core.modeling import ElementFactory, Presentation, StyleSheet
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram, StyledItem
 
 
@@ -46,3 +46,9 @@ def test_diagram_has_no_parent(diagram):
     node = StyledDiagram(diagram)
 
     assert node.parent() is None
+
+
+def test_style_sheet_has_default_style():
+    style_sheet = StyleSheet()
+
+    assert "* {" in style_sheet.styleSheet

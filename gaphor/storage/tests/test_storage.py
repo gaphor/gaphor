@@ -7,6 +7,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.application import distribution
+from gaphor.core.modeling import StyleSheet
 from gaphor.diagram.general import CommentItem
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
@@ -82,12 +83,13 @@ class StorageTestCase(TestCase):
         data = self.save()
         self.load(data)
 
-        assert len(self.element_factory.lselect()) == 4
+        assert len(self.element_factory.lselect()) == 5
         assert len(self.element_factory.lselect(UML.Package)) == 1
         # diagram is created in TestCase.setUp
         assert len(self.element_factory.lselect(UML.Diagram)) == 1
         assert len(self.element_factory.lselect(UML.Comment)) == 1
         assert len(self.element_factory.lselect(UML.Class)) == 1
+        assert len(self.element_factory.lselect(StyleSheet)) == 1
 
     def test_load_uml_2(self):
         """Test loading of a freshly saved model."""
@@ -134,7 +136,7 @@ class StorageTestCase(TestCase):
         data = self.save()
         self.load(data)
         elements = self.element_factory.lselect()
-        assert len(elements) == 1, elements
+        assert len(elements) == 2, elements
         assert elements[0].name == difficult_name, elements[0].name
 
     @pytest.mark.slow

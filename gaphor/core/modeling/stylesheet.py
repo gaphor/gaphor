@@ -1,9 +1,31 @@
 from __future__ import annotations
 
+import textwrap
+
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
+
+DEFAULT_STYLE_SHEET = textwrap.dedent(
+    """\
+    * {
+     background-color: transparent;
+     color: black;
+     font-family: sans;
+     font-size: 14;
+     highlight-color: rgba(0, 0, 255, 0.4);
+     line-width: 2;
+     padding: 0;
+    }
+
+    diagram {
+     background-color: white;
+     line-style: normal;
+     /* line-style: sloppy 0.3; */
+    }
+    """
+)
 
 
 class StyleSheet(Element):
@@ -14,7 +36,7 @@ class StyleSheet(Element):
 
         self.compile_style_sheet()
 
-    styleSheet: attribute[str] = attribute("styleSheet", str, "")
+    styleSheet: attribute[str] = attribute("styleSheet", str, DEFAULT_STYLE_SHEET)
 
     def compile_style_sheet(self) -> None:
         self._compiled_style_sheet = CompiledStyleSheet(self.styleSheet)

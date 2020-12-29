@@ -17,6 +17,7 @@ from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.diagram import Diagram, PseudoCanvas
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.presentation import Presentation
+from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.storage import parser
 
 FILE_FORMAT_VERSION = "3.0"
@@ -172,6 +173,8 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
         elements, factory, modeling_language, gaphor_version, update_status_queue
     )
     yield from _load_attributes_and_references(elements, update_status_queue)
+
+    ensure_style_sheet_is_present(factory)
 
     for id, elem in list(elements.items()):
         yield from update_status_queue()
@@ -363,6 +366,12 @@ def clone_canvasitem(item, subject_id):
     new_item.references = dict(item.references)
     new_item.references["subject"] = subject_id
     return new_item
+
+
+def ensure_style_sheet_is_present(factory):
+    style_sheet = next(factory.select(StyleSheet), None)
+    if not style_sheet:
+        factory.create(StyleSheet)
 
 
 def upgrade_message_item_to_1_1_0(canvasitems):
