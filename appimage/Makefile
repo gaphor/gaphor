@@ -12,7 +12,7 @@ DIST := dist
 
 all: dist
 
-dist: requirements.txt $(ID).AppImage
+dist: requirements.txt entrypoint.sh $(ID).AppImage
 
 dep:
 	pip install python_appimage
@@ -26,15 +26,19 @@ version:
 appdata:
 	sed -i '/  <releases>/a \ \ \ \ <release version="$(VERSION)" date="$(shell date +%Y-%m-%d)"/>' share/org.gaphor.Gaphor.appdata.xml
 
+entrypoint.sh:
+	cp entrypoint.sh.in entrypoint.sh
+
 requirements.txt:
 	poetry export --without-hashes -o ${CURDIR}/requirements.txt
 	sed -i -r 's/(^.+);.*/\1/g' requirements.txt
 	echo 'gaphor==${VERSION}' >> requirements.txt
 
-$(ID).AppImage:
+$(ID).AppImage: requirements.txt entrypoint.sh
 	python-appimage build app $(CURDIR)
 
 clean:
+	rm -f entrypoint.sh
 	rm -f requirements.txt
 	rm -f $(ID).AppImage
 
