@@ -400,7 +400,11 @@ class association(umlproperty):
 
         if value is not None:
             setattr(obj, self._name, value)
-            self._set_opposite(obj, value, from_opposite)
+            try:
+                self._set_opposite(obj, value, from_opposite)
+            except Exception:
+                setattr(obj, self._name, old)
+                raise
 
         self.handle(AssociationSet(obj, self, old, value))
 
@@ -414,7 +418,11 @@ class association(umlproperty):
             return
 
         c.items.append(value)
-        self._set_opposite(obj, value, from_opposite)
+        try:
+            self._set_opposite(obj, value, from_opposite)
+        except Exception:
+            c.items.pop()
+            raise
 
         self.handle(AssociationAdded(obj, self, value))
 

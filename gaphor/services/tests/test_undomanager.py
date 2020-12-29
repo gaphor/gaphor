@@ -294,6 +294,91 @@ def test_uml_associations(event_manager, element_factory, undo_manager):
     assert events[2].property is A.a1
 
 
+def test_set_association_outside_transaction(
+    undo_manager, element_factory, event_manager
+):
+    class A(Element):
+        pass
+
+    A.a = association("a", A, upper=1, opposite="b")
+    A.b = association("b", A, opposite="a")
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+
+    with pytest.raises(NotInTransactionException):
+        a.a = a
+
+    assert not a.b
+    assert a.a is None
+
+
+def test_set_multi_association_outside_transaction(
+    undo_manager, element_factory, event_manager
+):
+    class A(Element):
+        pass
+
+    A.a = association("a", A, upper=1, opposite="b")
+    A.b = association("b", A, opposite="a")
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+
+    with pytest.raises(NotInTransactionException):
+        a.b = a
+
+    assert not a.b
+    assert a.a is None
+
+
+def test_update_association_outside_transaction(
+    undo_manager, element_factory, event_manager
+):
+    class A(Element):
+        pass
+
+    A.a = association("a", A, upper=1, opposite="b")
+    A.b = association("b", A, opposite="a")
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+        a.a = a
+        other = element_factory.create(A)
+
+    with pytest.raises(NotInTransactionException):
+        a.a = other
+
+    assert a in a.b
+    assert a.a is a
+
+
+def test_set_derived_union_outside_transaction(
+    undo_manager, element_factory, event_manager
+):
+    class A(Element):
+        pass
+
+    A.a = association("a", A, upper=1, opposite="b")
+    A.b = association("b", A, opposite="a")
+    A.derived_a = derivedunion("derived_a", A, 0, 1, A.a)
+    A.derived_b = derivedunion("derived_b", A, 0, "*", A.b)
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+
+    with pytest.raises(NotInTransactionException):
+        a.a = a
+
+    with pytest.raises(NotInTransactionException):
+        a.b = a
+
+    assert not a.b
+    assert not a.a
+    assert not a.derived_a
+    assert not a.derived_b
+
+
 def test_redo_stack(event_manager, element_factory, undo_manager):
     undo_manager.begin_transaction()
 
