@@ -52,8 +52,9 @@ def on_drag_begin(gesture, start_x, start_y, placement_state):
 
     handle = item.handles()[placement_state.handle_index]
     if handle.movable:
-        x, y = view.get_matrix_v2i(item).transform_point(start_x, start_y)
-        connect_opposite_handle(view, item, x, y, placement_state.handle_index)
+        connect_opposite_handle(
+            view, item, start_x, start_y, placement_state.handle_index
+        )
         placement_state.moving = HandleMove(item, handle, view)
         placement_state.moving.start_move((start_x, start_y))
     else:
