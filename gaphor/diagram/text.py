@@ -38,7 +38,7 @@ class Layout:
         self.set_alignment(text_align)
 
     def set(self, text=None, font=None, width=None, text_align=None):
-        # Since text expressions can return False, we should also accomodate for that
+        # Since text expressions can return False, we should also accommodate for that
         if text not in (None, False):
             self.set_text(text)
         if font:

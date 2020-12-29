@@ -19,7 +19,7 @@ BODY = 20
 class ActorItem(ElementPresentation, Classified):
     """Actor item is a classifier in icon mode.
 
-    Maybe it should be possible to switch to comparment mode in the
+    Maybe it should be possible to switch to compartment mode in the
     future.
     """
 
