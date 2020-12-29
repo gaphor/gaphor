@@ -3,7 +3,9 @@ import pytest
 
 from gaphor.core import event_handler
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling import Element, ElementFactory
+from gaphor.core.modeling.event import AssociationUpdated
+from gaphor.core.modeling.properties import association, attribute, derivedunion
 from gaphor.services.undomanager import NotInTransactionException, UndoManager
 from gaphor.transaction import Transaction
 
@@ -37,8 +39,10 @@ def test_not_in_transaction():
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
 
+    def action():
+        pass
+
     with pytest.raises(NotInTransactionException):
-        action = object()
         undo_manager.add_undo_action(action)
 
     undo_manager.begin_transaction()
@@ -89,8 +93,6 @@ def test_actions():
 
 
 def test_undo_attribute():
-    from gaphor.core.modeling import Element
-    from gaphor.core.modeling.properties import attribute
 
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
@@ -122,9 +124,22 @@ def test_undo_attribute():
     undo_manager.shutdown()
 
 
+def test_no_value_change_if_not_in_transaction(
+    event_manager, element_factory, undo_manager
+):
+    class A(Element):
+        attr = attribute("attr", bytes, default="default")
+
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+
+    with pytest.raises(NotInTransactionException):
+        a.attr = "foo"
+
+    assert a.attr == "default"
+
+
 def test_undo_association_1_x():
-    from gaphor.core.modeling import Element
-    from gaphor.core.modeling.properties import association
 
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
@@ -179,9 +194,6 @@ def test_undo_association_1_x():
 
 
 def test_undo_association_1_n():
-    from gaphor.core.modeling import Element
-    from gaphor.core.modeling.properties import association
-
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
     element_factory = ElementFactory(event_manager)
@@ -240,8 +252,6 @@ def test_undo_association_1_n():
 
 
 def test_element_factory_undo():
-    from gaphor.core.modeling import Element
-
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
     element_factory = ElementFactory(event_manager)
@@ -272,8 +282,6 @@ def test_element_factory_undo():
 
 
 def test_element_factory_rollback():
-    from gaphor.core.modeling import Element
-
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
     element_factory = ElementFactory(event_manager)
@@ -293,10 +301,6 @@ def test_element_factory_rollback():
 
 
 def test_uml_associations():
-
-    from gaphor.core.modeling.event import AssociationUpdated
-    from gaphor.core.modeling.properties import association, derivedunion
-    from gaphor.UML import Element
 
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
@@ -347,8 +351,6 @@ def test_uml_associations():
 
 
 def test_redo_stack():
-    from gaphor.core.modeling import Element
-
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
     element_factory = ElementFactory(event_manager)

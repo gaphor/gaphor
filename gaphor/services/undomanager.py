@@ -136,6 +136,17 @@ class UndoManager(Service, ActionProvider):
             # TODO: should this be placed here?
             self._action_executed()
         elif only_transactional:
+            undo_stack = list(self._undo_stack)
+            redo_stack = list(self._redo_stack)
+
+            try:
+                with Transaction(self.event_manager):
+                    action()
+            finally:
+                # Restore stacks and act like nothing happened
+                self._redo_stack = redo_stack
+                self._undo_stack = undo_stack
+
             raise NotInTransactionException("Updating state outside of a transaction.")
 
     @event_handler(TransactionCommit)
