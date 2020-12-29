@@ -23,8 +23,6 @@ from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.core.styling import Style, StyleNode
 
 if TYPE_CHECKING:
-    from cairo import Context as CairoContext
-
     from gaphor.UML import Package
 
 log = logging.getLogger(__name__)
@@ -82,7 +80,7 @@ class DrawContext:
     like selected and focused.
     """
 
-    cairo: CairoContext
+    cairo: gaphas.types.CairoContext
     style: Style
     selected: bool
     focused: bool
