@@ -80,12 +80,12 @@ def connect_opposite_handle(view, new_item, x, y, handle_index):
     except (KeyError, AttributeError):
         pass
     else:
-        handle_move = HandleMove(new_item, opposite, view)
-        vpos = (x, y)
-
-        sink = handle_move.glue(vpos)
-        if sink:
-            handle_move.connect(vpos)
+        if opposite.connectable:
+            vpos = (x, y)
+            handle_move = HandleMove(new_item, opposite, view)
+            sink = handle_move.glue(vpos)
+            if sink:
+                handle_move.connect(vpos)
 
 
 def on_drag_update(gesture, offset_x, offset_y, placement_state):
