@@ -6,4 +6,6 @@ from gaphor.services.undomanager import UndoManager
 
 @pytest.fixture
 def undo_manager(event_manager):
-    return UndoManager(event_manager)
+    undo_manager = UndoManager(event_manager)
+    yield undo_manager
+    undo_manager.shutdown()

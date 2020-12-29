@@ -22,9 +22,11 @@ def event_manager():
 
 @pytest.fixture
 def element_factory(event_manager):
-    return ElementFactory(
+    element_factory = ElementFactory(
         event_manager, ElementDispatcher(event_manager, UMLModelingLanguage())
     )
+    yield element_factory
+    element_factory.shutdown()
 
 
 @pytest.fixture
