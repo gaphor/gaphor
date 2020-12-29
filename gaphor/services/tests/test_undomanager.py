@@ -1,9 +1,10 @@
 """Test the UndoManager."""
+import pytest
 
 from gaphor.core import event_handler
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory
-from gaphor.services.undomanager import UndoManager
+from gaphor.services.undomanager import NotInTransactionException, UndoManager
 from gaphor.transaction import Transaction
 
 
@@ -36,9 +37,9 @@ def test_not_in_transaction():
     event_manager = EventManager()
     undo_manager = UndoManager(event_manager)
 
-    action = object()
-    undo_manager.add_undo_action(action)
-    assert undo_manager._current_transaction is None
+    with pytest.raises(NotInTransactionException):
+        action = object()
+        undo_manager.add_undo_action(action)
 
     undo_manager.begin_transaction()
     undo_manager.add_undo_action(action)
@@ -98,18 +99,24 @@ def test_undo_attribute():
     class A(Element):
         attr = attribute("attr", bytes, default="default")
 
+    undo_manager.begin_transaction()
     a = element_factory.create(A)
+    undo_manager.commit_transaction()
+
     assert a.attr == "default", a.attr
+
     undo_manager.begin_transaction()
     a.attr = "five"
-
     undo_manager.commit_transaction()
+
     assert a.attr == "five"
 
     undo_manager.undo_transaction()
+
     assert a.attr == "default", a.attr
 
     undo_manager.redo_transaction()
+
     assert a.attr == "five"
 
     undo_manager.shutdown()
@@ -132,8 +139,10 @@ def test_undo_association_1_x():
     A.one = association("one", B, 0, 1, opposite="two")
     B.two = association("two", A, 0, 1)
 
-    a = element_factory.create(A)
-    b = element_factory.create(B)
+    with Transaction(event_manager):
+        a = element_factory.create(A)
+        b = element_factory.create(B)
+    undo_manager.clear_undo_stack()
 
     assert a.one is None
     assert b.two is None
@@ -186,10 +195,13 @@ def test_undo_association_1_n():
     A.one = association("one", B, lower=0, upper=1, opposite="two")
     B.two = association("two", A, lower=0, upper="*", opposite="one")
 
-    a1 = element_factory.create(A)
-    a2 = element_factory.create(A)
-    b1 = element_factory.create(B)
-    element_factory.create(B)
+    with Transaction(event_manager):
+        a1 = element_factory.create(A)
+        a2 = element_factory.create(A)
+        b1 = element_factory.create(B)
+        element_factory.create(B)
+
+    undo_manager.clear_undo_stack()
 
     undo_manager.begin_transaction()
     b1.two = a1
@@ -313,27 +325,25 @@ def test_uml_associations():
         events.append(event)
 
     event_manager.subscribe(handler)
-    try:
-        a = element_factory.create(A)
 
-        undo_manager.begin_transaction()
+    undo_manager.begin_transaction()
 
-        a.a1 = element_factory.create(A)
-        undo_manager.commit_transaction()
+    a = element_factory.create(A)
+    a.a1 = element_factory.create(A)
+    undo_manager.commit_transaction()
 
-        assert len(events) == 2, events  # both  AssociationSet and DerivedSet events
-        assert events[0].property is A.a1
-        assert undo_manager.can_undo()
+    assert len(events) == 2, events  # both  AssociationSet and DerivedSet events
+    assert events[0].property is A.a1
+    assert undo_manager.can_undo()
 
-        undo_manager.undo_transaction()
-        assert not undo_manager.can_undo()
-        assert undo_manager.can_redo()
-        assert len(events) == 4, events
-        assert events[2].property is A.a1
+    undo_manager.undo_transaction()
+    assert not undo_manager.can_undo()
+    assert undo_manager.can_redo()
+    assert len(events) == 4, events
+    assert events[2].property is A.a1
 
-    finally:
-        event_manager.unsubscribe(handler)
-        undo_manager.shutdown()
+    event_manager.unsubscribe(handler)
+    undo_manager.shutdown()
 
 
 def test_redo_stack():

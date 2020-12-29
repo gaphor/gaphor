@@ -74,6 +74,10 @@ class UndoManagerStateChanged(ServiceEvent):
     """Event class used to send state changes on the Undo Manager."""
 
 
+class NotInTransactionException(Exception):
+    """Raised when changes occur outside of a transaction."""
+
+
 class UndoManager(Service, ActionProvider):
     """Simple transaction manager for Gaphor. This transaction manager supports
     nested transactions.
@@ -125,12 +129,14 @@ class UndoManager(Service, ActionProvider):
         assert not self._current_transaction
         self._current_transaction = ActionStack()
 
-    def add_undo_action(self, action):
+    def add_undo_action(self, action, only_transactional=True):
         """Add an action to undo."""
         if self._current_transaction:
             self._current_transaction.add(action)
             # TODO: should this be placed here?
             self._action_executed()
+        elif only_transactional:
+            raise NotInTransactionException("Updating state outside of a transaction.")
 
     @event_handler(TransactionCommit)
     def commit_transaction(self, event=None):
@@ -243,7 +249,7 @@ class UndoManager(Service, ActionProvider):
     #
 
     def _gaphas_undo_handler(self, event):
-        self.add_undo_action(lambda: state.saveapply(*event))
+        self.add_undo_action(lambda: state.saveapply(*event), only_transactional=False)
 
     def _register_undo_handlers(self):
 
