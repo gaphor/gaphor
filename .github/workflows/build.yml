@@ -70,15 +70,11 @@ jobs:
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
-      - name: Install AppImage Dependencies
-        run: |
-          cd appimage
-          make dep
       - name: Build AppImage
         run: |
-          cd appimage
+          cd packaging/appimage
           make all
-          mv dist/Gaphor-x86_64.AppImage ../dist/gaphor-${{ steps.meta.outputs.version }}.AppImage
+          mv dist/Gaphor-x86_64.AppImage ../../dist/gaphor-${{ steps.meta.outputs.version }}.AppImage
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.AppImage
         uses: actions/upload-artifact@v2
         with:
