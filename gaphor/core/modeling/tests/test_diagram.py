@@ -72,12 +72,6 @@ def test_diagram_stylesheet(element_factory):
     assert diagram.styleSheet is styleSheet
 
 
-def test_diagram_stylesheet_is_always_there(element_factory):
-    diagram = element_factory.create(Diagram)
-
-    assert diagram.styleSheet is not None
-
-
 class ViewMock:
     def __init__(self):
         self.removed_items = set()
