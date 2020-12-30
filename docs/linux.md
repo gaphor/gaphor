@@ -80,13 +80,14 @@ AppImage file is one executable which contains both Gaphor and Python. It allows
 Gaphor to be run on any AppImage supported Linux distribution without
 installation or root access.
 
-The best way to build a Gaphor AppImage is using python-appimage:
+We build our AppImage by first bundling Gaphor with PyInstaller and then
+converting it in to an AppImage.
+
+1. Activate your virtualenv, `source venv`
 
 1. `cd appimage`
 
 1. `make update VERSION=x.x.x`
-
-1. Activate your virtualenv, then run `make dep` to install python_appimage with pip
 
 1. Build the AppImage by running `make all`
 
