@@ -8,11 +8,12 @@ ID := Gaphor-x86_64
 # Do not change version by hand!
 VERSION := 2.1.1
 
+BUILD := build
 DIST := dist
 
 all: dist
 
-dist: requirements.txt entrypoint.sh $(ID).AppImage
+dist: requirements.txt entrypoint.sh $(DIST)/$(ID).AppImage
 
 dep:
 	pip install python_appimage
@@ -34,13 +35,19 @@ requirements.txt:
 	sed -i -r 's/(^.+);.*/\1/g' requirements.txt
 	echo 'gaphor==${VERSION}' >> requirements.txt
 
-$(ID).AppImage: requirements.txt entrypoint.sh
-	python-appimage build app $(CURDIR)
+$(DIST)/$(ID).AppImage: requirements.txt entrypoint.sh
+	./build-appimage.sh
+
+lint: $(DIST)/$(ID).AppImage
+	./appdir-lint.sh $(DIST)/AppRun
 
 clean:
 	rm -f entrypoint.sh
 	rm -f requirements.txt
-	rm -f $(ID).AppImage
+	rm -rf $(BUILD)
+	rm -rf $(DIST)
+	rm -rf pyinstvenv
+	rm -f $(subst $(notdir $(CURDIR)),,$(CURDIR))gaphor-script.py
 
 # for local testing:
 

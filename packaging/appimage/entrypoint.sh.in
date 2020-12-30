@@ -1,0 +1,2 @@
+#! /bin/bash -i
+"${APPDIR}/gaphor-exe" "$@"
