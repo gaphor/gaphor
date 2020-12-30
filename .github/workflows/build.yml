@@ -78,7 +78,7 @@ jobs:
         run: |
           cd appimage
           make all
-          mv Gaphor-x86_64.AppImage ../dist/gaphor-${{ steps.meta.outputs.version }}.AppImage
+          mv dist/Gaphor-x86_64.AppImage ../dist/gaphor-${{ steps.meta.outputs.version }}.AppImage
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.AppImage
         uses: actions/upload-artifact@v2
         with:

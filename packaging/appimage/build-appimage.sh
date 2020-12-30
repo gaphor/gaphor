@@ -40,8 +40,6 @@ function create_package {
     # PyInstaller + AppImage inspired by https://gitlab.com/scottywz/ezpyi/
     [ -d "${APP_DIR}" ] && rm -rf "${APP_DIR}"
     mv -v "dist/gaphor" "${APP_DIR}"
-    mv -v "${APP_DIR}/gaphor" "${APP_DIR}/AppRun"
-    ln -srv "${APP_DIR}/AppRun" "${APP_DIR}/gaphor"
 
     echo "Copying icon"
     cp -v "${APP_ID}.png" "${APP_DIR}/${APP_ID}.png"
@@ -52,6 +50,7 @@ function create_package {
     mkdir -pv "${APP_DIR}"/usr/share/applications
     cp -v "${APP_ID}.desktop" "${APP_DIR}/usr/share/applications/"
     ln -srv "${APP_DIR}/usr/share/applications/${APP_ID}.desktop" "${APP_DIR}/${APP_ID}.desktop"
+    cp -v AppRun "${APP_DIR}/AppRun"
 
     echo "Decompressing the AppImage tool"
     mkdir -p build
