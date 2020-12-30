@@ -39,5 +39,5 @@ clean:
 
 # for local testing:
 
-run: $(ID).AppImage
-	./$(ID).AppImage
+run: $(DIST)/$(ID).AppImage
+	./$(DIST)/$(ID).AppImage
