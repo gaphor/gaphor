@@ -1,8 +1,6 @@
 """Comment and comment line items connection adapters tests."""
 
-from typing import Type, TypeVar
-
-import pytest
+from typing import TypeVar
 
 from gaphor import UML
 from gaphor.core.modeling import Comment
@@ -14,19 +12,6 @@ from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.usecases.actor import ActorItem
 
 T = TypeVar("T")
-
-
-@pytest.fixture
-def create(element_factory, diagram):
-    def create(item_cls: Type[T], subject_cls=None, subject=None) -> T:
-        """Create an item with specified subject."""
-        if subject_cls:
-            subject = element_factory.create(subject_cls)
-        item = diagram.create(item_cls, subject=subject)
-        diagram.update_now((item,), ())
-        return item
-
-    return create
 
 
 # NOTE: Still have to test what happens if one Item at the CommentLineItem

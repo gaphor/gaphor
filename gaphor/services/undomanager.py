@@ -74,6 +74,10 @@ class UndoManagerStateChanged(ServiceEvent):
     """Event class used to send state changes on the Undo Manager."""
 
 
+class NotInTransactionException(Exception):
+    """Raised when changes occur outside of a transaction."""
+
+
 class UndoManager(Service, ActionProvider):
     """Simple transaction manager for Gaphor. This transaction manager supports
     nested transactions.
@@ -125,12 +129,24 @@ class UndoManager(Service, ActionProvider):
         assert not self._current_transaction
         self._current_transaction = ActionStack()
 
-    def add_undo_action(self, action):
+    def add_undo_action(self, action, requires_transaction=True):
         """Add an action to undo."""
         if self._current_transaction:
             self._current_transaction.add(action)
-            # TODO: should this be placed here?
             self._action_executed()
+        elif requires_transaction:
+            undo_stack = list(self._undo_stack)
+            redo_stack = list(self._redo_stack)
+
+            try:
+                with Transaction(self.event_manager):
+                    action()
+            finally:
+                # Restore stacks and act like nothing happened
+                self._redo_stack = redo_stack
+                self._undo_stack = undo_stack
+
+            raise NotInTransactionException("Updating state outside of a transaction.")
 
     @event_handler(TransactionCommit)
     def commit_transaction(self, event=None):
@@ -160,9 +176,8 @@ class UndoManager(Service, ActionProvider):
             with Transaction(self.event_manager):
                 try:
                     erroneous_tx.execute()
-                except Exception as e:
-                    logger.error("Could not roolback transaction")
-                    logger.error(e)
+                except Exception:
+                    logger.error("Could not rollback transaction", exc_info=True)
         finally:
             # Discard all data collected in the rollback "transaction"
             self._undo_stack = undo_stack
@@ -243,7 +258,9 @@ class UndoManager(Service, ActionProvider):
     #
 
     def _gaphas_undo_handler(self, event):
-        self.add_undo_action(lambda: state.saveapply(*event))
+        self.add_undo_action(
+            lambda: state.saveapply(*event), requires_transaction=False
+        )
 
     def _register_undo_handlers(self):
 

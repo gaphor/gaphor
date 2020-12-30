@@ -233,7 +233,6 @@ class MainWindow(Service, ActionProvider):
     @event_handler(ModelReady)
     def _new_model_content(self, event):
         """Open the toplevel element and load toplevel diagrams."""
-        # TODO: Make handlers for ModelReady from within the GUI obj
         for diagram in self.element_factory.select(
             lambda e: e.isKindOf(Diagram)
             and not (e.namespace and e.namespace.namespace)
