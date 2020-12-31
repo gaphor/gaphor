@@ -9,10 +9,10 @@ because that is what PyGObject currently supports.
 - Run `pacman -Syu` to update packages
 - Run `pacman -S git` to install git
 - Run `git clone https://github.com/gaphor/gaphor.git`
-- Execute `win-installer/msys2-install.sh` to install all the needed dependencies.
+- Execute `packaging/windows/msys2-install.sh` to install all the needed dependencies.
 - Run gaphor by typing `gaphor`
 
 ## Creating an Installer
-Simply run `win-installer/build-installer.sh` and both the installer and the portable
+Simply run `packaging/windows/build-installer.sh` and both the installer and the portable
 installer should appear in this directory.
 
