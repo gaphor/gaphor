@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from logging import getLogger
+import logging
 from typing import Dict, List, Optional, Set, Tuple
 
 from gaphor.abc import Service
@@ -16,6 +16,8 @@ from gaphor.core.modeling.event import (
     ModelReady,
 )
 from gaphor.core.modeling.properties import umlproperty
+
+log = logging.getLogger(__name__)
 
 
 class EventWatcher:
@@ -93,8 +95,6 @@ class ElementDispatcher(Service):
     dispatcher table is updated accordingly (so the right handlers are fired
     every time).
     """
-
-    logger = getLogger("ElementDispatcher")
 
     def __init__(self, event_manager, modeling_language):
         self.event_manager = event_manager
@@ -196,7 +196,7 @@ class ElementDispatcher(Service):
         try:
             del handlers[handler]
         except KeyError:
-            self.logger.debug(
+            log.debug(
                 "Handler %s is not registered for %s.%s",
                 handler,
                 element,
@@ -240,9 +240,7 @@ class ElementDispatcher(Service):
                 try:
                     handler(event)
                 except Exception:
-                    self.logger.error(
-                        f"Problem executing handler {handler}", exc_info=True
-                    )
+                    log.error(f"Problem executing handler {handler}", exc_info=True)
 
             # Handle add/removal of handlers based on the kind of event
             # Filter out handlers that have no remaining properties
