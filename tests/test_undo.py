@@ -121,3 +121,23 @@ def test_deleted_diagram_item_should_not_end_up_in_element_factory(
     undo_manager.redo_transaction()
 
     assert cls not in element_factory.lselect(), element_factory.lselect()
+
+
+def test_undo_should_not_cause_warnings(
+    event_manager, element_factory, undo_manager, capsys
+):
+    with Transaction(event_manager):
+        diagram = element_factory.create(UML.Diagram)
+
+    with Transaction(event_manager):
+        diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == ""
+
+    undo_manager.undo_transaction()
+
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == ""
