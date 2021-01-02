@@ -6,11 +6,11 @@ import math
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_line_point
 from gaphas.item import Handle, LinePort
-from gaphas.state import observed, reversible_property
 from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
+from gaphor.core.modeling.properties import association, relation_one
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
 from gaphor.diagram.support import represents
@@ -165,8 +165,6 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
         super().__init__(diagram, id)
         no_movable_handles(self)
 
-        self._combined = None
-
         self.shape = IconBox(
             Box(style={"min-width": 20, "min-height": 30}, draw=draw_decision_node),
             # Text should be left-top
@@ -179,22 +177,9 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-    def save(self, save_func):
-        if self._combined:
-            save_func("combined", self._combined)
-        super().save(save_func)
-
-    def load(self, name, value):
-        if name == "combined":
-            self._combined = value
-        else:
-            super().load(name, value)
-
-    @observed
-    def _set_combined(self, value):
-        self._combined = value
-
-    combined = reversible_property(lambda s: s._combined, _set_combined)
+    combined: relation_one[UML.ControlNode] = association(
+        "combined", UML.ControlNode, upper=1
+    )
 
 
 def draw_decision_node(_box, context, _bounding_box):
@@ -222,8 +207,6 @@ class ForkNodeItem(Presentation[UML.ForkNode], Named):
         self._handles = [h1, h2]
         self._ports = [LinePort(h1.pos, h2.pos)]
 
-        self._combined = None
-
         self.shape = IconBox(
             Box(style={"min-width": 0, "min-height": 45}, draw=self.draw_fork_node),
             Text(
@@ -247,6 +230,10 @@ class ForkNodeItem(Presentation[UML.ForkNode], Named):
             self, constraint(above=(h1.pos, h2.pos), delta=30)
         )
 
+    combined: relation_one[UML.ControlNode] = association(
+        "combined", UML.ControlNode, upper=1
+    )
+
     def handles(self):
         return self._handles
 
@@ -262,8 +249,6 @@ class ForkNodeItem(Presentation[UML.ForkNode], Named):
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
         save_func("height", float(self._handles[1].pos.y))
-        if self._combined:
-            save_func("combined", self._combined)
         super().save(save_func)
 
     def load(self, name, value):
@@ -271,16 +256,8 @@ class ForkNodeItem(Presentation[UML.ForkNode], Named):
             self.matrix.set(*ast.literal_eval(value))
         elif name == "height":
             self._handles[1].pos.y = ast.literal_eval(value)
-        elif name == "combined":
-            self._combined = value
         else:
             super().load(name, value)
-
-    @observed
-    def _set_combined(self, value):
-        self._combined = value
-
-    combined = reversible_property(lambda s: s._combined, _set_combined)
 
     def draw(self, context):
         h1, h2 = self.handles()
