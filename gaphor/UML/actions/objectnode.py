@@ -19,25 +19,33 @@ class ObjectNodeItem(ElementPresentation, Named):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
-
-        self.shape = IconBox(
-            Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject),
+        super().__init__(
+            diagram,
+            id,
+            shape=IconBox(
+                Box(
+                    Text(
+                        text=lambda: stereotypes_str(self.subject),
+                    ),
+                    EditableText(text=lambda: self.subject.name or ""),
+                    style={
+                        "min-width": 50,
+                        "min-height": 30,
+                        "padding": (5, 10, 5, 10),
+                    },
+                    draw=draw_border,
                 ),
-                EditableText(text=lambda: self.subject.name or ""),
-                style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 10)},
-                draw=draw_border,
-            ),
-            Text(
-                text=lambda: self.subject.upperBound not in (None, DEFAULT_UPPER_BOUND)
-                and f"{{ upperBound = {self.subject.upperBound} }}",
-            ),
-            Text(
-                text=lambda: self.show_ordering
-                and self.subject.ordering
-                and f"{{ ordering = {self.subject.ordering} }}",
+                Text(
+                    text=lambda: self.subject.upperBound
+                    not in (None, DEFAULT_UPPER_BOUND)
+                    and f"{{ upperBound = {self.subject.upperBound} }}",
+                ),
+                Text(
+                    text=lambda: self.show_ordering
+                    and self.subject.ordering
+                    and f"{{ ordering = {self.subject.ordering} }}"
+                    or "",
+                ),
             ),
         )
 
