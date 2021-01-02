@@ -116,6 +116,10 @@ rm -r "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/bin"
 rm -r "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/include"
 rm -r "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/share"
 
+log "Stripping signature from Python so that it can be signed again"
+
+codesign --remove-signature "${CONTENTSDIR}/Frameworks/Python.framework/Versions/${PYVER}/Python"
+
 log "Fixing dynamic link dependencies..."
 
 function map {
