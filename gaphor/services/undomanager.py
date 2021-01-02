@@ -11,13 +11,15 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
 import logging
-from typing import Callable, List
+from typing import Callable, List, Optional
 
 from gaphas import state
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
+from gaphor.core.modeling.diagram import Diagram
+from gaphor.core.modeling.element import Element, RepositoryProtocol
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -89,8 +91,9 @@ class UndoManager(Service, ActionProvider):
     performed action.
     """
 
-    def __init__(self, event_manager):
+    def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
+        self.element_factory: RepositoryProtocol = element_factory
         self._undo_stack: List[ActionStack] = []
         self._redo_stack: List[ActionStack] = []
         self._stack_depth = 20
@@ -253,6 +256,16 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
         self.event_manager.handle(UndoManagerStateChanged(self))
 
+    def deep_lookup(self, id: str) -> Optional[Element]:
+        element: Optional[Element] = self.element_factory.lookup(id)
+        if not element:
+            for diagram in self.element_factory.select(Diagram):
+                presentation: Element
+                for presentation in diagram.ownedPresentation:
+                    if presentation.id == id:
+                        return presentation
+        return element
+
     #
     # Undo Handlers
     #
@@ -322,10 +335,12 @@ class UndoManager(Service, ActionProvider):
     @event_handler(AttributeUpdated)
     def undo_attribute_change_event(self, event):
         attribute = event.property
-        element = event.element
+        element_id = event.element.id
         value = event.old_value
+        del event
 
         def _undo_attribute_change_event():
+            element = self.deep_lookup(element_id)
             attribute._set(element, value)
 
         self.add_undo_action(_undo_attribute_change_event)

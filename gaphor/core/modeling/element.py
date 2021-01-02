@@ -196,6 +196,9 @@ class RepositoryProtocol(Protocol):
     def select(self, expression: None) -> Iterator[Element]:
         ...
 
+    def lookup(self, id: str) -> Optional[Element]:
+        ...
+
     def watcher(
         self, element: Element, default_handler: Optional[Handler] = None
     ) -> EventWatcherProtocol:
