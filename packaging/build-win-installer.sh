@@ -37,11 +37,12 @@ set_build_root "${DIR}/dist/gaphor"
 
 function install_build_deps {
     pacman -S --needed --noconfirm p7zip git dos2unix upx \
-        mingw-w64-"${ARCH}"-nsis mingw-w64-"${ARCH}"-wget
+        mingw-w64-"${ARCH}"-nsis mingw-w64-"${ARCH}"-wget \
+	mingw-w64-"${ARCH}"-make
 }
 
 function build_pyinstaller {
-    make all
+    mingw32-make all
 }
 
 function build_installer {
