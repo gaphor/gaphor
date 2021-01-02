@@ -17,7 +17,7 @@ ARCH="x86_64"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${DIR}"
-mkdir -p output
+mkdir -p dist
 
 MISC="${DIR}"/misc
 if [ "${ARCH}" = "x86_64" ]; then
@@ -27,11 +27,6 @@ else
 fi
 
 VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
-
-python -m venv pyinstvenv
-
-pyinstvenv/bin/pip install "../dist/gaphor-${VERSION}-py3-none-any.whl"
-pyinstvenv/bin/pip install pyinstaller==4.1.0
 
 function set_build_root {
     DIST_LOCATION="$1"
@@ -46,22 +41,18 @@ function install_build_deps {
 }
 
 function build_pyinstaller {
-    echo "${DIR}"
-    sed "s/__version__/$VERSION/g" "${DIR}"/file_version_info.txt.in > "${DIR}"/file_version_info.txt
-    sed "s/__version__/$VERSION/g" "${DIR}"/gaphor.spec.in > "${DIR}"/gaphor.spec
-    python make-script.py ../pyproject.toml > gaphor-script.py
-    pyinstvenv/bin/pyinstaller -y gaphor.spec
+    make all
 }
 
 function build_installer {
     cp "${DIR}"/misc/gaphor.ico "${DIST_LOCATION}"
     (cd "${DIST_LOCATION}" && makensis -NOCD -DVERSION="$VERSION" "${MISC}"/win_installer.nsi)
 
-    mv "${DIST_LOCATION}/gaphor-LATEST.exe" "$DIR/output/gaphor-$VERSION-installer.exe"
+    mv "${DIST_LOCATION}/gaphor-LATEST.exe" "$DIR/dist/gaphor-$VERSION-installer.exe"
 }
 
 function build_portable_installer {
-    local PORTABLE="$DIR/output/gaphor-$VERSION-portable"
+    local PORTABLE="$DIR/dist/gaphor-$VERSION-portable"
 
     rm -rf "$PORTABLE"
     mkdir "$PORTABLE"
@@ -94,7 +85,6 @@ function main {
     build_installer
     echo "build portable installer"
     build_portable_installer
-    rm -rf pyinstvenv
 }
 
 main "$@";
