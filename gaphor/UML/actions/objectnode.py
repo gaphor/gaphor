@@ -1,10 +1,7 @@
 """Object node item."""
 
-import ast
-
-from gaphas.state import observed, reversible_property
-
 from gaphor import UML
+from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
@@ -24,8 +21,6 @@ class ObjectNodeItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
-        self._show_ordering = False
-
         self.shape = IconBox(
             Box(
                 Text(
@@ -40,7 +35,7 @@ class ObjectNodeItem(ElementPresentation, Named):
                 and f"{{ upperBound = {self.subject.upperBound} }}",
             ),
             Text(
-                text=lambda: self._show_ordering
+                text=lambda: self.show_ordering
                 and self.subject.ordering
                 and f"{{ ordering = {self.subject.ordering} }}",
             ),
@@ -50,20 +45,6 @@ class ObjectNodeItem(ElementPresentation, Named):
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[ObjectNode].upperBound")
         self.watch("subject[ObjectNode].ordering")
+        self.watch("show_ordering")
 
-    @observed
-    def _set_show_ordering(self, value):
-        self._show_ordering = value
-        self.request_update()
-
-    show_ordering = reversible_property(lambda s: s._show_ordering, _set_show_ordering)
-
-    def save(self, save_func):
-        save_func("show-ordering", self._show_ordering)
-        super().save(save_func)
-
-    def load(self, name, value):
-        if name == "show-ordering":
-            self._show_ordering = ast.literal_eval(value)
-        else:
-            super().load(name, value)
+    show_ordering: attribute[bool] = attribute("show_ordering", bool, False)
