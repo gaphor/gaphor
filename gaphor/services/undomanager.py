@@ -25,6 +25,8 @@ from gaphor.core.modeling.event import (
     AssociationDeleted,
     AssociationSet,
     AttributeUpdated,
+    DiagramItemCreated,
+    DiagramItemDeleted,
     ElementCreated,
     ElementDeleted,
     ModelReady,
@@ -256,7 +258,7 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
         self.event_manager.handle(UndoManagerStateChanged(self))
 
-    def deep_lookup(self, id: str) -> Optional[Element]:
+    def deep_lookup(self, id: str) -> Element:
         element: Optional[Element] = self.element_factory.lookup(id)
         if not element:
             for diagram in self.element_factory.select(Diagram):
@@ -264,6 +266,7 @@ class UndoManager(Service, ActionProvider):
                 for presentation in diagram.ownedPresentation:
                     if presentation.id == id:
                         return presentation
+            raise ValueError(f"Element with id {id} not found in model")
         return element
 
     #
@@ -279,8 +282,10 @@ class UndoManager(Service, ActionProvider):
 
         logger.debug("Registering undo handlers")
 
-        self.event_manager.subscribe(self.undo_create_event)
-        self.event_manager.subscribe(self.undo_delete_event)
+        self.event_manager.subscribe(self.undo_create_element_event)
+        self.event_manager.subscribe(self.undo_delete_element_event)
+        self.event_manager.subscribe(self.undo_create_diagram_item_event)
+        self.event_manager.subscribe(self.undo_delete_diagram_item_event)
         self.event_manager.subscribe(self.undo_attribute_change_event)
         self.event_manager.subscribe(self.undo_association_set_event)
         self.event_manager.subscribe(self.undo_association_add_event)
@@ -296,8 +301,10 @@ class UndoManager(Service, ActionProvider):
 
         logger.debug("Unregistering undo handlers")
 
-        self.event_manager.unsubscribe(self.undo_create_event)
-        self.event_manager.unsubscribe(self.undo_delete_event)
+        self.event_manager.unsubscribe(self.undo_create_element_event)
+        self.event_manager.unsubscribe(self.undo_delete_element_event)
+        self.event_manager.unsubscribe(self.undo_create_diagram_item_event)
+        self.event_manager.unsubscribe(self.undo_delete_diagram_item_event)
         self.event_manager.unsubscribe(self.undo_attribute_change_event)
         self.event_manager.unsubscribe(self.undo_association_set_event)
         self.event_manager.unsubscribe(self.undo_association_add_event)
@@ -308,27 +315,49 @@ class UndoManager(Service, ActionProvider):
         state.subscribers.discard(self._gaphas_undo_handler)
 
     @event_handler(ElementCreated)
-    def undo_create_event(self, event):
-        factory = event.service
-        element = event.element
+    def undo_create_element_event(self, event):
+        element_id = event.element.id
+        del event
 
         def _undo_create_event():
-            try:
-                del factory._elements[element.id]
-            except KeyError:
-                pass  # Key was probably already removed in an unlink call
-            self.event_manager.handle(ElementDeleted(factory, element))
+            element = self.deep_lookup(element_id)
+            element.unlink()
 
         self.add_undo_action(_undo_create_event)
 
     @event_handler(ElementDeleted)
-    def undo_delete_event(self, event):
-        factory = event.service
-        element = event.element
+    def undo_delete_element_event(self, event):
+        element_type = type(event.element)
+        element_id = event.element.id
+        del event
 
         def _undo_delete_event():
-            factory._elements[element.id] = element
-            self.event_manager.handle(ElementCreated(factory, element))
+            element = self.element_factory.create_as(element_type, element_id)
+            self.event_manager.handle(ElementCreated(self.element_factory, element))
+
+        self.add_undo_action(_undo_delete_event)
+
+    @event_handler(DiagramItemCreated)
+    def undo_create_diagram_item_event(self, event):
+        element_id = event.element.id
+        del event
+
+        def _undo_delete_event():
+            element = self.deep_lookup(element_id)
+            element.unlink()
+
+        self.add_undo_action(_undo_delete_event)
+
+    @event_handler(DiagramItemDeleted)
+    def undo_delete_diagram_item_event(self, event):
+        diagram_id = event.diagram.id
+        element_type = type(event.element)
+        element_id = event.element.id
+        del event
+
+        def _undo_delete_event():
+            diagram: Diagram = self.deep_lookup(diagram_id)  # type: ignore[assignment]
+            diagram.create_as(element_type, element_id)
 
         self.add_undo_action(_undo_delete_event)
 
@@ -350,12 +379,13 @@ class UndoManager(Service, ActionProvider):
         association = event.property
         if type(association) is not association_property:
             return
-        element = event.element
-        value = event.old_value
+        element_id = event.element.id
+        value_id = event.old_value and event.old_value.id
+        del event
 
         def _undo_association_set_event():
-            # Tell the association it should not need to let the opposite
-            # side connect (it has it's own signal)
+            element = self.deep_lookup(element_id)
+            value = value_id and self.deep_lookup(value_id)
             association._set(element, value, from_opposite=True)
 
         self.add_undo_action(_undo_association_set_event)
@@ -365,12 +395,13 @@ class UndoManager(Service, ActionProvider):
         association = event.property
         if type(association) is not association_property:
             return
-        element = event.element
-        value = event.new_value
+        element_id = event.element.id
+        value_id = event.new_value.id
+        del event
 
         def _undo_association_add_event():
-            # Tell the association it should not need to let the opposite
-            # side connect (it has it's own signal)
+            element = self.deep_lookup(element_id)
+            value = self.deep_lookup(value_id)
             association._del(element, value, from_opposite=True)
 
         self.add_undo_action(_undo_association_add_event)
@@ -380,12 +411,12 @@ class UndoManager(Service, ActionProvider):
         association = event.property
         if type(association) is not association_property:
             return
-        element = event.element
-        value = event.old_value
+        element_id = event.element.id
+        value_id = event.old_value.id
 
         def _undo_association_delete_event():
-            # Tell the assoctaion it should not need to let the opposite
-            # side connect (it has it's own signal)
+            element = self.deep_lookup(element_id)
+            value = self.deep_lookup(value_id)
             association._set(element, value, from_opposite=True)
 
         self.add_undo_action(_undo_association_delete_event)
