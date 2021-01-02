@@ -13,8 +13,6 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 import logging
 from typing import Callable, List, Optional
 
-from gaphas import state
-
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
@@ -273,11 +271,6 @@ class UndoManager(Service, ActionProvider):
     # Undo Handlers
     #
 
-    def _gaphas_undo_handler(self, event):
-        self.add_undo_action(
-            lambda: state.saveapply(*event), requires_transaction=False
-        )
-
     def _register_undo_handlers(self):
 
         logger.debug("Registering undo handlers")
@@ -291,12 +284,6 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.subscribe(self.undo_association_add_event)
         self.event_manager.subscribe(self.undo_association_delete_event)
 
-        #
-        # Direct revert-statements from gaphas to the undomanager
-        state.observers.add(state.revert_handler)
-
-        state.subscribers.add(self._gaphas_undo_handler)
-
     def _unregister_undo_handlers(self):
 
         logger.debug("Unregistering undo handlers")
@@ -309,10 +296,6 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.undo_association_set_event)
         self.event_manager.unsubscribe(self.undo_association_add_event)
         self.event_manager.unsubscribe(self.undo_association_delete_event)
-
-        state.observers.discard(state.revert_handler)
-
-        state.subscribers.discard(self._gaphas_undo_handler)
 
     @event_handler(ElementCreated)
     def undo_create_element_event(self, event):
