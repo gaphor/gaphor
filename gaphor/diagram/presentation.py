@@ -12,6 +12,7 @@ from gaphas.item import matrix_i2i
 
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.presentation import Presentation, S
+from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style
 from gaphor.diagram.shapes import combined_style
 from gaphor.diagram.text import TextAlign, text_point_at_line
@@ -159,9 +160,15 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         self._shape_head_rect = None
         self._shape_middle_rect = None
         self._shape_tail_rect = None
+        self.watch("orthogonal", self._on_orthogonal).watch(
+            "horizontal", self._on_horizontal
+        )
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
+
+    orthogonal: attribute[int] = attribute("orthogonal", int, False)
+    horizontal: attribute[int] = attribute("horizontal", int, False)
 
     def pre_update(self, context):
         pass
@@ -221,8 +228,7 @@ class LinePresentation(gaphas.Line, Presentation[S]):
 
         super().save(save_func)
         save_func("matrix", tuple(self.matrix))
-        for prop in ("orthogonal", "horizontal"):
-            save_func(prop, getattr(self, prop))
+        save_func("orthogonal", self.orthogonal)
         points = [tuple(map(float, h.pos)) for h in self.handles()]
         save_func("points", points)
 
@@ -247,8 +253,6 @@ class LinePresentation(gaphas.Line, Presentation[S]):
 
         elif name == "orthogonal":
             self._load_orthogonal = ast.literal_eval(value)
-        elif name == "horizontal":
-            self.horizontal = ast.literal_eval(value)
         elif name in ("head_connection", "head-connection"):
             self._load_head_connection = value
         elif name in ("tail_connection", "tail-connection"):
@@ -274,3 +278,9 @@ class LinePresentation(gaphas.Line, Presentation[S]):
             del self._load_tail_connection
 
         super().postload()
+
+    def _on_orthogonal(self, event):
+        self._set_orthogonal(event.new_value)
+
+    def _on_horizontal(self, event):
+        self._set_horizontal(event.new_value)
