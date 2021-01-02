@@ -9,7 +9,8 @@ all: pyinstvenv file_version_info.txt gaphor-script.py dist
 pyinstvenv:
 	python -m venv pyinstvenv
 	pyinstvenv/bin/pip install "../dist/gaphor-${VERSION}-py3-none-any.whl"
-	pyinstvenv/bin/pip install pyinstaller==4.1.0
+	# PyInstaller installed from source until #5435 is merged
+	pyinstvenv/bin/pip install git+https://github.com/danyeaw/pyinstaller.git@fix-gtk-macos-signing
 
 
 file_version_info.txt:

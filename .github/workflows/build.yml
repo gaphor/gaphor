@@ -184,7 +184,7 @@ jobs:
         run: |
           make dist
           cd packaging 
-          ./build-macos-installer.sh
+          make all
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1
         with: 
