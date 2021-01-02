@@ -37,8 +37,9 @@ class ObjectNodeItem(ElementPresentation, Named):
                 ),
                 Text(
                     text=lambda: self.subject.upperBound
-                    not in (None, DEFAULT_UPPER_BOUND)
-                    and f"{{ upperBound = {self.subject.upperBound} }}",
+                    not in (None, "", DEFAULT_UPPER_BOUND)
+                    and f"{{ upperBound = {self.subject.upperBound} }}"
+                    or "",
                 ),
                 Text(
                     text=lambda: self.show_ordering
