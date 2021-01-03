@@ -76,10 +76,6 @@ class Presentation(Matrices, Element, Generic[S]):
         self._watcher.watch(path, handler)
         return self
 
-    def unsubscribe_all(self):
-        """Unsubscribe all watched paths, as defined through `watch()`."""
-        self._watcher.unsubscribe_all()
-
     def postload(self):
         super().postload()
         if self.parent:
