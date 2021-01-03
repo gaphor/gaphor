@@ -118,9 +118,9 @@ jobs:
         run: |
           mingw32-make dist
           cd packaging
-          make all
+          mingw32-make all
           cd windows
-          make all
+          mingw32-make all
       - name: Sign Executables
         env:
           password: "${{ secrets.CERTPASSWORD }}"
