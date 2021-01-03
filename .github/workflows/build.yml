@@ -102,7 +102,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Dependencies
-        run: ./packaging/msys2-install.sh
+        run: ./packaging/windows/msys2-install.sh
       - name: Install Poetry
         run: |
           pip install poetry==$POETRY_VERSION
