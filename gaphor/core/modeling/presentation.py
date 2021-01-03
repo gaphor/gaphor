@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 from gaphas.item import Matrices
 
 from gaphor.core.modeling import Element
-from gaphor.core.modeling.event import DiagramItemDeleted
+from gaphor.core.modeling.event import DiagramItemDeleted, DiagramItemUpdated
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
@@ -119,11 +119,17 @@ class Presentation(Matrices, Element, Generic[S]):
             m = new_parent.matrix_i2c.inverse()
             self.matrix.set(*self.matrix.multiply(m))
 
-    def _on_matrix_changed(self, _matrix=None):
+    def _on_matrix_changed(self, matrix, old_value):
         if self.parent:
             self.matrix_i2c.set(*(self.matrix * self.parent.matrix_i2c))
         else:
             self.matrix_i2c.set(*self.matrix)
+        if matrix is self.matrix:
+            self.handle(
+                DiagramItemUpdated(
+                    self, Presentation.matrix, old_value, self.matrix.tuple()
+                )
+            )
 
 
 Element.presentation = association(
