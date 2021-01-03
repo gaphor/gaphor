@@ -235,7 +235,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Gaphor-${{ steps.meta.outputs.version }}.dmg
-          path: packaging/Gaphor-${{ steps.meta.outputs.version }}.dmg
+          path: packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg
       - name: Upload Assets (release only)
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
