@@ -98,7 +98,7 @@ def test_line_handle_position(diagram, undo_manager, event_manager):
 
     undo_manager.undo_transaction()
 
-    assert tuple(handle.pos) == (0, 0)
+    assert handle.pos.tuple() == (0, 0)
 
     undo_manager.redo_transaction()
 

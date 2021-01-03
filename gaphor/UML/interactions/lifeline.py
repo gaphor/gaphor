@@ -138,6 +138,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
+        self._connections = diagram.connections
         self.is_destroyed = False
 
         self.lifetime = LifetimeItem()

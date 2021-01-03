@@ -1,4 +1,4 @@
-"""Unnit tests for AssociationItem."""
+"""Unit tests for AssociationItem."""
 
 from gaphor import UML
 from gaphor.tests import TestCase

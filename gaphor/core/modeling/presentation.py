@@ -103,7 +103,6 @@ class Presentation(Matrices, Element, Generic[S]):
         if diagram:
             diagram.connections.remove_connections_to_item(self)
             self.unlink()
-            self.handle(DiagramItemDeleted(diagram, self))
         if event.new_value:
             raise ValueError("Can not change diagram for a presentation")
 
