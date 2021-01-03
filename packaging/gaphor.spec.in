@@ -58,5 +58,5 @@ app = BUNDLE(
           name='Gaphor.app',
           icon='macos/gaphor.icns',
           bundle_identifier='org.gaphor.gaphor',
-          version='ERSION',
+          version='__version__',
       )
