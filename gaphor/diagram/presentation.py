@@ -106,6 +106,8 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
         be drawn or when styling changes."""
 
     def pre_update(self, context):
+        if not self.shape:
+            self.update_shapes()
         self.min_width, self.min_height = self.shape.size(context)
 
     def post_update(self, context):
