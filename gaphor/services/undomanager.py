@@ -25,10 +25,12 @@ from gaphor.core.modeling.event import (
     AttributeUpdated,
     DiagramItemCreated,
     DiagramItemDeleted,
+    DiagramItemUpdated,
     ElementCreated,
     ElementDeleted,
     ModelReady,
 )
+from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import association as association_property
 from gaphor.event import (
     ActionEnabled,
@@ -279,6 +281,7 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.subscribe(self.undo_delete_element_event)
         self.event_manager.subscribe(self.undo_create_diagram_item_event)
         self.event_manager.subscribe(self.undo_delete_diagram_item_event)
+        self.event_manager.subscribe(self.undo_diagram_item_updated_event)
         self.event_manager.subscribe(self.undo_attribute_change_event)
         self.event_manager.subscribe(self.undo_association_set_event)
         self.event_manager.subscribe(self.undo_association_add_event)
@@ -292,6 +295,7 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.undo_delete_element_event)
         self.event_manager.unsubscribe(self.undo_create_diagram_item_event)
         self.event_manager.unsubscribe(self.undo_delete_diagram_item_event)
+        self.event_manager.unsubscribe(self.undo_diagram_item_updated_event)
         self.event_manager.unsubscribe(self.undo_attribute_change_event)
         self.event_manager.unsubscribe(self.undo_association_set_event)
         self.event_manager.unsubscribe(self.undo_association_add_event)
@@ -356,6 +360,18 @@ class UndoManager(Service, ActionProvider):
             attribute._set(element, value)
 
         self.add_undo_action(_undo_attribute_change_event)
+
+    @event_handler(DiagramItemUpdated)
+    def undo_diagram_item_updated_event(self, event):
+        element_id = event.element.id
+        value = event.old_value
+        del event
+
+        def _undo_matrix_change_event():
+            element: Presentation = self.deep_lookup(element_id)  # type: ignore[assignment]
+            element.matrix.set(*value)
+
+        self.add_undo_action(_undo_matrix_change_event)
 
     @event_handler(AssociationSet)
     def undo_association_set_event(self, event):

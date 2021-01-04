@@ -370,7 +370,6 @@ class Diagram(PackageableElement):
 
         self._resolved_items.clear()
 
-        # solve all constraints
         self._connections.solve()
 
         all_dirty_items.extend(self._resolved_items)
