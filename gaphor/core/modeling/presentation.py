@@ -128,7 +128,10 @@ class Presentation(Matrices, Element, Generic[S]):
         if matrix is self.matrix:
             self.handle(
                 DiagramItemUpdated(
-                    self, Presentation.matrix, old_value, self.matrix.tuple()
+                    self,
+                    Presentation.matrix,
+                    old_value,
+                    self.matrix.tuple(),
                 )
             )
 

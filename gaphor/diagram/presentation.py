@@ -11,6 +11,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import matrix_i2i
 
 from gaphor.core.modeling.diagram import Diagram
+from gaphor.core.modeling.event import DiagramItemUpdated
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style
@@ -165,6 +166,8 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         self.watch("orthogonal", self._on_orthogonal).watch(
             "horizontal", self._on_horizontal
         )
+        self.head.pos.add_handler(self._on_position_update)
+        self.head.pos.add_handler(self._on_position_update)
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
@@ -286,3 +289,13 @@ class LinePresentation(gaphas.Line, Presentation[S]):
 
     def _on_horizontal(self, event):
         self._set_horizontal(event.new_value)
+
+    def _on_position_update(self, position, old):
+        for index, handle in enumerate(self.handles()):
+            if handle.pos is position:
+                break
+        else:
+            return
+        self.handle(
+            DiagramItemUpdated(self, gaphas.Item.handles, old, position.tuple(), index)
+        )

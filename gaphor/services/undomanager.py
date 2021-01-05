@@ -13,6 +13,8 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 import logging
 from typing import Callable, List, Optional
 
+import gaphas
+
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
@@ -364,14 +366,27 @@ class UndoManager(Service, ActionProvider):
     @event_handler(DiagramItemUpdated)
     def undo_diagram_item_updated_event(self, event):
         element_id = event.element.id
+        property = event.property
+        target = event.target
         value = event.old_value
         del event
 
-        def _undo_matrix_change_event():
-            element: Presentation = self.deep_lookup(element_id)  # type: ignore[assignment]
-            element.matrix.set(*value)
+        if property is gaphas.Item.handles:
 
-        self.add_undo_action(_undo_matrix_change_event)
+            def _undo_position_change_event():
+                element: Presentation = self.deep_lookup(element_id)  # type: ignore[assignment]
+                element.handles()[target].pos = value
+
+            self.add_undo_action(_undo_position_change_event)
+        elif property is Presentation.matrix:
+
+            def _undo_matrix_change_event():
+                element: Presentation = self.deep_lookup(element_id)  # type: ignore[assignment]
+                element.matrix.set(*value)
+
+            self.add_undo_action(_undo_matrix_change_event)
+        else:
+            raise ValueError(f"No undo handler for property {property}")
 
     @event_handler(AssociationSet)
     def undo_association_set_event(self, event):

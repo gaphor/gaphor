@@ -224,7 +224,7 @@ class DiagramItemDeleted:
 class DiagramItemUpdated(ElementUpdated):
     """A attribute has changed value."""
 
-    def __init__(self, element, attribute, old_value, new_value):
+    def __init__(self, element, attribute, old_value, new_value, target=None):
         """Constructor.
 
         The element parameter is the element with the changing
@@ -236,6 +236,7 @@ class DiagramItemUpdated(ElementUpdated):
         super().__init__(element, attribute)
         self.old_value = old_value
         self.new_value = new_value
+        self.target = target
 
 
 class ModelReady(ServiceEvent):

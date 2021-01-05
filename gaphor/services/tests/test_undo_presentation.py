@@ -105,6 +105,10 @@ def test_line_handle_position(diagram, undo_manager, event_manager):
     assert tuple(handle.pos) == new_pos
 
 
+# TODO: test for insert/remove handle / split segment / merge segment
+# TODO: test handles of ElementPresentation
+
+
 def test_line_connections(diagram, undo_manager, element_factory, event_manager):
     with Transaction(event_manager):
         class_item = diagram.create(ClassItem, subject=element_factory.create(Class))
