@@ -139,15 +139,17 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
-        for prop in ("width", "height"):
-            save_func(prop, getattr(self, prop))
+        save_func("width", self.width)
+        save_func("height", self.height)
         super().save(save_func)
 
     def load(self, name, value):
         if name == "matrix":
             self.matrix.set(*ast.literal_eval(value))
-        elif name in ("width", "height"):
-            setattr(self, name, ast.literal_eval(value))
+        elif name == "width":
+            self.width = ast.literal_eval(value)
+        elif name == "height":
+            self.height = ast.literal_eval(value)
         else:
             super().load(name, value)
 
@@ -186,8 +188,8 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
 
-    orthogonal: attribute[int] = attribute("orthogonal", int, False)
-    horizontal: attribute[int] = attribute("horizontal", int, False)
+    orthogonal: attribute[int] = attribute("orthogonal", int, 0)
+    horizontal: attribute[int] = attribute("horizontal", int, 0)
 
     def pre_update(self, context):
         pass
@@ -247,7 +249,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         super().save(save_func)
         save_func("matrix", tuple(self.matrix))
-        save_func("orthogonal", self.orthogonal)
         points = [tuple(map(float, h.pos)) for h in self.handles()]
         save_func("points", points)
 
@@ -264,14 +265,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
                 self._handles.insert(1, h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
-
-            # Update connection ports of the line. Only handles are saved
-            # in Gaphor file therefore ports need to be recreated after
-            # handles information is loaded.
             self._update_ports()
-
-        elif name == "orthogonal":
-            self._load_orthogonal = ast.literal_eval(value)
         elif name in ("head_connection", "head-connection"):
             self._load_head_connection = value
         elif name in ("tail_connection", "tail-connection"):
@@ -280,13 +274,8 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             super().load(name, value)
 
     def postload(self):
-        if hasattr(self, "_load_orthogonal"):
-            # Ensure there are enough handles
-            if self._load_orthogonal and len(self._handles) < 3:
-                p0 = self._handles[-1].pos
-                self._handles.insert(1, self._create_handle(p0))
-            self.orthogonal = self._load_orthogonal
-            del self._load_orthogonal
+        if self.orthogonal:
+            self._set_orthogonal(self.orthogonal)
 
         if hasattr(self, "_load_head_connection"):
             postload_connect(self, self.head, self._load_head_connection)

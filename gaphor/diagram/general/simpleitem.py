@@ -2,63 +2,19 @@
 
 import ast
 
-from gaphas.connector import Handle
 from gaphas.item import NW, Element
-from gaphas.item import Line as _Line
 from gaphas.util import path_ellipse
 
 from gaphor.core.modeling import Presentation
+from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import stroke
 
 
-class Line(_Line, Presentation):
+class Line(LinePresentation):
     def __init__(self, diagram, id=None):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
-        self.fuzziness = 2
+        super().__init__(diagram=diagram, id=id)
         self._handles[0].connectable = False
         self._handles[-1].connectable = False
-
-    def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))
-        for prop in ("orthogonal", "horizontal"):
-            save_func(prop, getattr(self, prop))
-        points = [tuple(map(float, h.pos)) for h in self.handles()]
-        save_func("points", points)
-
-    def load(self, name, value):
-        if name == "horizontal":
-            self.horizontal = ast.literal_eval(value)
-        elif name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "orthogonal":
-            self._load_orthogonal = ast.literal_eval(value)
-        elif name == "points":
-            points = ast.literal_eval(value)
-            for _ in range(len(points) - 2):
-                h = Handle((0, 0))
-                self._handles.insert(1, h)
-            for i, p in enumerate(points):
-                self.handles()[i].pos = p
-            self._update_ports()
-
-    def postload(self):
-        if hasattr(self, "_load_orthogonal"):
-            self.orthogonal = self._load_orthogonal
-            del self._load_orthogonal
-
-    def pre_update(self, context):
-        pass
-
-    def post_update(self, context):
-        pass
-
-    def draw(self, context):
-        cr = context.cairo
-        style = context.style
-        self.line_width = style["line-width"]
-        if style["color"]:
-            cr.set_source_rgba(*style["color"])
-        super().draw(context)
 
 
 class Box(Element, Presentation):

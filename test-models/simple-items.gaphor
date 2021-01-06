@@ -26,15 +26,18 @@
 </package>
 <canvas>
 <item id="DCE:6719E9C4-3A1D-11DC-8B61-000D93868322" type="Line">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 336.0, 113.0)</val>
-</matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
+<diagram>
+<ref refid="DCE:658E851A-3A1D-11DC-8B61-000D93868322"/>
+</diagram>
 <horizontal>
 <val>0</val>
 </horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 336.0, 113.0)</val>
+</matrix>
 <points>
 <val>[(0.0, 0.0), (93.0, -2.0), (87.0, 83.0)]</val>
 </points>
