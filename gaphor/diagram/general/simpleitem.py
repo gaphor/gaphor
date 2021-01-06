@@ -1,12 +1,9 @@
 """Trivial drawing aids (box, line, ellipse)."""
 
-import ast
-
-from gaphas.item import NW, Element
+from gaphas.item import NW
 from gaphas.util import path_ellipse
 
-from gaphor.core.modeling import Presentation
-from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.shapes import stroke
 
 
@@ -17,36 +14,14 @@ class Line(LinePresentation):
         self._handles[-1].connectable = False
 
 
-class Box(Element, Presentation):
+class Box(ElementPresentation):
     """A Box has 4 handles (for a start)::
 
     NW +---+ NE SW +---+ SE
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
-
-    def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))
-        save_func("width", self.width)
-        save_func("height", self.height)
-
-    def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "width":
-            self.width = ast.literal_eval(value)
-        elif name == "height":
-            self.height = ast.literal_eval(value)
-
-    def postload(self):
-        pass
-
-    def pre_update(self, context):
-        pass
-
-    def post_update(self, context):
-        pass
+        super().__init__(diagram=diagram, id=id)
 
     def draw(self, context):
         cr = context.cairo
@@ -55,33 +30,11 @@ class Box(Element, Presentation):
         stroke(context)
 
 
-class Ellipse(Element, Presentation):
+class Ellipse(ElementPresentation):
     """"""
 
     def __init__(self, diagram, id=None):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
-
-    def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))
-        save_func("width", self.width)
-        save_func("height", self.height)
-
-    def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "width":
-            self.width = ast.literal_eval(value)
-        elif name == "height":
-            self.height = ast.literal_eval(value)
-
-    def postload(self):
-        pass
-
-    def pre_update(self, context):
-        pass
-
-    def post_update(self, context):
-        pass
+        super().__init__(diagram=diagram, id=id)
 
     def draw(self, context):
         cr = context.cairo

@@ -123,7 +123,8 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
     def pre_update(self, context):
         if not self.shape:
             self.update_shapes()
-        self.min_width, self.min_height = self.shape.size(context)
+        if self.shape:
+            self.min_width, self.min_height = self.shape.size(context)
 
     def post_update(self, context):
         pass

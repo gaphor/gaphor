@@ -47,11 +47,14 @@
 <val>(1.0, 0.0, 0.0, 1.0, 215.0, 121.0)</val>
 </matrix>
 <width>
-<val>97.0</val>
+<val>96.0</val>
 </width>
 <height>
-<val>74.0</val>
+<val>71.0</val>
 </height>
+<diagram>
+<ref refid="DCE:658E851A-3A1D-11DC-8B61-000D93868322"/>
+</diagram>
 </item>
 <item id="DCE:68ECCFB2-3A1D-11DC-8B61-000D93868322" type="Ellipse">
 <matrix>
@@ -63,6 +66,9 @@
 <height>
 <val>60.0</val>
 </height>
+<diagram>
+<ref refid="DCE:658E851A-3A1D-11DC-8B61-000D93868322"/>
+</diagram>
 </item>
 </canvas>
 </Diagram>
