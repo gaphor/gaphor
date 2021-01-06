@@ -12,6 +12,7 @@ from gaphas.tool import (
 
 import gaphor.diagram.diagramtools.connector
 import gaphor.diagram.diagramtools.grayout
+import gaphor.diagram.diagramtools.segment
 from gaphor.diagram.diagramtools.dropzone import drop_zone_tool
 from gaphor.diagram.diagramtools.placement import new_item_factory, placement_tool
 from gaphor.diagram.diagramtools.shortcut import shortcut_tool

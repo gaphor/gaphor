@@ -7,6 +7,7 @@
 """
 import pytest
 from gaphas.connector import Handle
+from gaphas.segment import Segment
 
 from gaphor.core import Transaction
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
@@ -82,6 +83,29 @@ def test_matrix_operation(action, diagram, undo_manager, event_manager):
     undo_manager.redo_transaction()
 
     assert tuple(line.matrix) != original
+
+
+@pytest.mark.parametrize("index", range(4))
+def test_element_handle_position(diagram, undo_manager, event_manager, index):
+    with Transaction(event_manager):
+        line = diagram.create(ElementPresentation)
+
+    handle = line.handles()[index]
+    old_pos = handle.pos.tuple()
+    new_pos = (30, 40)
+
+    with Transaction(event_manager):
+        handle.pos = new_pos
+
+    assert tuple(handle.pos) == new_pos
+
+    undo_manager.undo_transaction()
+
+    assert handle.pos.tuple() == old_pos
+
+    undo_manager.redo_transaction()
+
+    assert tuple(handle.pos) == new_pos
 
 
 @pytest.mark.parametrize("index", range(2))
@@ -177,32 +201,6 @@ def test_line_loading_of_points(diagram, undo_manager, event_manager, element_fa
     assert tuple(handle.pos) == new_pos
 
 
-@pytest.mark.parametrize("index", range(4))
-def test_element_handle_position(diagram, undo_manager, event_manager, index):
-    with Transaction(event_manager):
-        line = diagram.create(ElementPresentation)
-
-    handle = line.handles()[index]
-    old_pos = handle.pos.tuple()
-    new_pos = (30, 40)
-
-    with Transaction(event_manager):
-        handle.pos = new_pos
-
-    assert tuple(handle.pos) == new_pos
-
-    undo_manager.undo_transaction()
-
-    assert handle.pos.tuple() == old_pos
-
-    undo_manager.redo_transaction()
-
-    assert tuple(handle.pos) == new_pos
-
-
-# TODO: test for insert/remove handle / split segment / merge segment
-
-
 def test_line_connections(diagram, undo_manager, element_factory, event_manager):
     with Transaction(event_manager):
         class_item = diagram.create(ClassItem, subject=element_factory.create(Class))
@@ -224,3 +222,55 @@ def test_line_connections(diagram, undo_manager, element_factory, event_manager)
     undo_manager.redo_transaction()
 
     assert connections.get_connection(handle)
+
+
+def test_line_split_segment(diagram, undo_manager, event_manager):
+    with Transaction(event_manager):
+        line = diagram.create(LinePresentation)
+
+    head_handle = line.head
+    tail_handle = line.tail
+
+    with Transaction(event_manager):
+        segment = Segment(line, diagram)
+        segment.split((5, 5))
+
+    assert len(line.handles()) == 3
+
+    undo_manager.undo_transaction()
+
+    assert len(line.handles()) == 2
+    assert line.head is head_handle
+    assert line.tail is tail_handle
+
+    undo_manager.redo_transaction()
+
+    assert len(line.handles()) == 3
+
+
+def test_line_merge_segment(diagram, undo_manager, event_manager):
+    with Transaction(event_manager):
+        line = diagram.create(LinePresentation)
+        segment = Segment(line, diagram)
+        segment.split((5, 5))
+
+    head_handle = line.head
+    tail_handle = line.tail
+
+    with Transaction(event_manager):
+        segment = Segment(line, diagram)
+        segment.merge_segment(0)
+
+    assert len(line.handles()) == 2
+    assert line.head is head_handle
+    assert line.tail is tail_handle
+
+    undo_manager.undo_transaction()
+
+    assert len(line.handles()) == 3
+    assert line.head is head_handle
+    assert line.tail is tail_handle
+
+    undo_manager.redo_transaction()
+
+    assert len(line.handles()) == 2
