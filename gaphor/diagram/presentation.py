@@ -85,9 +85,12 @@ class HandlePositionEvent(ReversibleEvent):
 
 class HandlePositionUpdate:
     def watch_handle(self, handle):
-        handle.pos.add_handler(self.on_handle_position_update)
+        handle.pos.add_handler(self._on_handle_position_update)
 
-    def on_handle_position_update(self, position, old):
+    def remove_watch_handle(self, handle):
+        handle.pos.remove_handler(self._on_handle_position_update)
+
+    def _on_handle_position_update(self, position, old):
         for index, handle in enumerate(self.handles()):  # type: ignore[attr-defined]
             if handle.pos is position:
                 break
@@ -203,6 +206,14 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     orthogonal: attribute[int] = attribute("orthogonal", int, 0)
     horizontal: attribute[int] = attribute("horizontal", int, 0)
 
+    def insert_handle(self, index: int, handle: Handle) -> None:
+        super().insert_handle(index, handle)
+        self.watch_handle(handle)
+
+    def remove_handle(self, handle: Handle) -> None:
+        self.remove_watch_handle(handle)
+        super().remove_handle(handle)
+
     def pre_update(self, context):
         pass
 
@@ -275,6 +286,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             for _ in range(len(points) - 2):
                 h = Handle((0, 0))
                 self._handles.insert(1, h)
+                self.watch_handle(h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
             self._update_ports()

@@ -107,6 +107,76 @@ def test_line_handle_position(diagram, undo_manager, event_manager, index):
     assert tuple(handle.pos) == new_pos
 
 
+def test_line_handle_on_inserted_handle(diagram, undo_manager, event_manager):
+    with Transaction(event_manager):
+        line = diagram.create(LinePresentation)
+
+    handle = Handle()
+    # Note that inserting and removing handles is *not* transactional
+    line.insert_handle(1, handle)
+
+    old_pos = handle.pos.tuple()
+    new_pos = (30, 40)
+
+    with Transaction(event_manager):
+        handle.pos = new_pos
+
+    assert tuple(handle.pos) == new_pos
+
+    undo_manager.undo_transaction()
+
+    assert handle.pos.tuple() == old_pos
+
+    undo_manager.redo_transaction()
+
+    assert tuple(handle.pos) == new_pos
+
+
+def test_line_handle_no_events_for_removed_handle(diagram, undo_manager, event_manager):
+    with Transaction(event_manager):
+        line = diagram.create(LinePresentation)
+
+    # Note that inserting and removing handles is *not* transactional
+    handle = Handle()
+    line.insert_handle(1, handle)
+    line.remove_handle(handle)
+
+    new_pos = (30, 40)
+
+    with Transaction(event_manager):
+        handle.pos = new_pos
+
+    assert tuple(handle.pos) == new_pos
+
+    undo_manager.undo_transaction()
+
+    assert handle.pos.tuple() == new_pos
+
+
+def test_line_loading_of_points(diagram, undo_manager, event_manager, element_factory):
+    with Transaction(event_manager):
+        line = diagram.create(LinePresentation)
+        line.load("points", "[(0, 0), (5, 5), (10, 10)]")
+        assert len(line.handles()) == 3
+
+    handle = line.handles()[1]
+    old_pos = handle.pos.tuple()
+    new_pos = (30, 40)
+
+    with Transaction(event_manager):
+        handle.pos = new_pos
+
+    assert tuple(handle.pos) == new_pos
+
+    undo_manager.undo_transaction()
+
+    assert handle.pos.tuple() == old_pos
+
+    undo_manager.redo_transaction()
+
+    assert tuple(handle.pos) == new_pos
+
+
 @pytest.mark.parametrize("index", range(4))
 def test_element_handle_position(diagram, undo_manager, event_manager, index):
     with Transaction(event_manager):
