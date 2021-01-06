@@ -9,7 +9,7 @@ import pytest
 from gaphas.connector import Handle
 
 from gaphor.core import Transaction
-from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import Class
 from gaphor.UML.classes import ClassItem, GeneralizationItem
@@ -84,11 +84,13 @@ def test_matrix_operation(action, diagram, undo_manager, event_manager):
     assert tuple(line.matrix) != original
 
 
-def test_line_handle_position(diagram, undo_manager, event_manager):
+@pytest.mark.parametrize("index", range(2))
+def test_line_handle_position(diagram, undo_manager, event_manager, index):
     with Transaction(event_manager):
         line = diagram.create(LinePresentation)
 
-    handle = line.handles()[0]
+    handle = line.handles()[index]
+    old_pos = handle.pos.tuple()
     new_pos = (30, 40)
 
     with Transaction(event_manager):
@@ -98,7 +100,30 @@ def test_line_handle_position(diagram, undo_manager, event_manager):
 
     undo_manager.undo_transaction()
 
-    assert handle.pos.tuple() == (0, 0)
+    assert handle.pos.tuple() == old_pos
+
+    undo_manager.redo_transaction()
+
+    assert tuple(handle.pos) == new_pos
+
+
+@pytest.mark.parametrize("index", range(4))
+def test_element_handle_position(diagram, undo_manager, event_manager, index):
+    with Transaction(event_manager):
+        line = diagram.create(ElementPresentation)
+
+    handle = line.handles()[index]
+    old_pos = handle.pos.tuple()
+    new_pos = (30, 40)
+
+    with Transaction(event_manager):
+        handle.pos = new_pos
+
+    assert tuple(handle.pos) == new_pos
+
+    undo_manager.undo_transaction()
+
+    assert handle.pos.tuple() == old_pos
 
     undo_manager.redo_transaction()
 

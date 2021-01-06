@@ -73,10 +73,22 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     connector.connect(sink)
 
 
+class HandlePositionUpdate:
+    def on_handle_position_update(self: Presentation, position, old):  # type: ignore[misc]
+        for index, handle in enumerate(self.handles()):
+            if handle.pos is position:
+                break
+        else:
+            return
+        self.handle(
+            DiagramItemUpdated(self, gaphas.Item.handles, old, position.tuple(), index)
+        )
+
+
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
 
 
-class ElementPresentation(gaphas.Element, Presentation[S]):
+class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S]):
     """Presentation for Gaphas Element (box-like) items.
 
     To create a shape (boxes, text), assign a shape to `self.shape`. If
@@ -92,6 +104,8 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
     def __init__(self, diagram: Diagram, id=None, shape=None):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
         self._shape = shape
+        for handle in self.handles():
+            handle.pos.add_handler(self.on_handle_position_update)
 
     def port_side(self, port):
         return self._port_sides[self._ports.index(port)]
@@ -142,7 +156,7 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
         self.update_shapes()
 
 
-class LinePresentation(gaphas.Line, Presentation[S]):
+class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     def __init__(
         self,
         diagram: Diagram,
@@ -166,8 +180,8 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         self.watch("orthogonal", self._on_orthogonal).watch(
             "horizontal", self._on_horizontal
         )
-        self.head.pos.add_handler(self._on_position_update)
-        self.head.pos.add_handler(self._on_position_update)
+        self.head.pos.add_handler(self.on_handle_position_update)
+        self.tail.pos.add_handler(self.on_handle_position_update)
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
@@ -289,13 +303,3 @@ class LinePresentation(gaphas.Line, Presentation[S]):
 
     def _on_horizontal(self, event):
         self._set_horizontal(event.new_value)
-
-    def _on_position_update(self, position, old):
-        for index, handle in enumerate(self.handles()):
-            if handle.pos is position:
-                break
-        else:
-            return
-        self.handle(
-            DiagramItemUpdated(self, gaphas.Item.handles, old, position.tuple(), index)
-        )
