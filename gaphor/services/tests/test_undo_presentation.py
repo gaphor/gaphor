@@ -131,7 +131,6 @@ def test_element_handle_position(diagram, undo_manager, event_manager, index):
 
 
 # TODO: test for insert/remove handle / split segment / merge segment
-# TODO: test handles of ElementPresentation
 
 
 def test_line_connections(diagram, undo_manager, element_factory, event_manager):

@@ -11,7 +11,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import matrix_i2i
 
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.event import DiagramItemUpdated
+from gaphor.core.modeling.event import ReversibleEvent
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style
@@ -73,6 +73,16 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     connector.connect(sink)
 
 
+class HandlePositionEvent(ReversibleEvent):
+    def __init__(self, element, index, old_value):
+        super().__init__(element)
+        self.index = index
+        self.old_value = old_value
+
+    def reverse(self, target):
+        target.handles()[self.index].pos = self.old_value
+
+
 class HandlePositionUpdate:
     def on_handle_position_update(self: Presentation, position, old):  # type: ignore[misc]
         for index, handle in enumerate(self.handles()):
@@ -80,9 +90,7 @@ class HandlePositionUpdate:
                 break
         else:
             return
-        self.handle(
-            DiagramItemUpdated(self, gaphas.Item.handles, old, position.tuple(), index)
-        )
+        self.handle(HandlePositionEvent(self, index, old))
 
 
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.

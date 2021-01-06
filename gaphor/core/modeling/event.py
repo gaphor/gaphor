@@ -1,6 +1,25 @@
 """The core modeling events."""
-
 from gaphor.event import ServiceEvent
+
+
+class ReversibleEvent:
+    """Base type for all events that can be reversed.
+
+    This event can be used as "low level" event for anything that should
+    be revertible/undoable.
+    """
+
+    def __init__(self, element):
+        self.element = element
+
+    def reverse(self, target):
+        """Reverse whatever caused the event.
+
+        `target` Is the element the action should be performed upon,
+        which may be a different element than the one that caused the
+        event.
+        """
+        raise NotImplementedError("Method {self}.reverse() has not been implemented")
 
 
 class ElementUpdated:
@@ -219,24 +238,6 @@ class DiagramItemDeleted:
     def __init__(self, diagram, element):
         self.diagram = diagram
         self.element = element
-
-
-class DiagramItemUpdated(ElementUpdated):
-    """A attribute has changed value."""
-
-    def __init__(self, element, attribute, old_value, new_value, target=None):
-        """Constructor.
-
-        The element parameter is the element with the changing
-        attribute.  The attribute parameter is the parameter element
-        that changed.  The old_value is the old value of the attribute
-        and the new_value is the new value of the attribute.
-        """
-
-        super().__init__(element, attribute)
-        self.old_value = old_value
-        self.new_value = new_value
-        self.target = target
 
 
 class ModelReady(ServiceEvent):

@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 from gaphas.item import Matrices
 
 from gaphor.core.modeling import Element
-from gaphor.core.modeling.event import DiagramItemDeleted, DiagramItemUpdated
+from gaphor.core.modeling.event import DiagramItemDeleted, ReversibleEvent
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
@@ -20,6 +20,15 @@ S = TypeVar("S", bound=Element)
 log = logging.getLogger(__name__)
 
 Transient = False
+
+
+class MatrixUpdated(ReversibleEvent):
+    def __init__(self, element, old_value):
+        super().__init__(element)
+        self.old_value = old_value
+
+    def reverse(self, target):
+        target.matrix.set(*self.old_value)
 
 
 class Presentation(Matrices, Element, Generic[S]):
@@ -126,14 +135,7 @@ class Presentation(Matrices, Element, Generic[S]):
         else:
             self.matrix_i2c.set(*self.matrix)
         if matrix is self.matrix:
-            self.handle(
-                DiagramItemUpdated(
-                    self,
-                    Presentation.matrix,
-                    old_value,
-                    self.matrix.tuple(),
-                )
-            )
+            self.handle(MatrixUpdated(self, old_value))
 
 
 Element.presentation = association(

@@ -13,8 +13,6 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 import logging
 from typing import Callable, List, Optional
 
-import gaphas
-
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
@@ -27,12 +25,11 @@ from gaphor.core.modeling.event import (
     AttributeUpdated,
     DiagramItemCreated,
     DiagramItemDeleted,
-    DiagramItemUpdated,
     ElementCreated,
     ElementDeleted,
     ModelReady,
+    ReversibleEvent,
 )
-from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import association as association_property
 from gaphor.event import (
     ActionEnabled,
@@ -279,11 +276,11 @@ class UndoManager(Service, ActionProvider):
 
         logger.debug("Registering undo handlers")
 
+        self.event_manager.subscribe(self.undo_reversible_event)
         self.event_manager.subscribe(self.undo_create_element_event)
         self.event_manager.subscribe(self.undo_delete_element_event)
         self.event_manager.subscribe(self.undo_create_diagram_item_event)
         self.event_manager.subscribe(self.undo_delete_diagram_item_event)
-        self.event_manager.subscribe(self.undo_diagram_item_updated_event)
         self.event_manager.subscribe(self.undo_attribute_change_event)
         self.event_manager.subscribe(self.undo_association_set_event)
         self.event_manager.subscribe(self.undo_association_add_event)
@@ -293,15 +290,25 @@ class UndoManager(Service, ActionProvider):
 
         logger.debug("Unregistering undo handlers")
 
+        self.event_manager.unsubscribe(self.undo_reversible_event)
         self.event_manager.unsubscribe(self.undo_create_element_event)
         self.event_manager.unsubscribe(self.undo_delete_element_event)
         self.event_manager.unsubscribe(self.undo_create_diagram_item_event)
         self.event_manager.unsubscribe(self.undo_delete_diagram_item_event)
-        self.event_manager.unsubscribe(self.undo_diagram_item_updated_event)
         self.event_manager.unsubscribe(self.undo_attribute_change_event)
         self.event_manager.unsubscribe(self.undo_association_set_event)
         self.event_manager.unsubscribe(self.undo_association_add_event)
         self.event_manager.unsubscribe(self.undo_association_delete_event)
+
+    @event_handler(ReversibleEvent)
+    def undo_reversible_event(self, event):
+        element_id = event.element.id
+
+        def _undo_reversible_event():
+            element = self.deep_lookup(element_id)
+            event.reverse(element)
+
+        self.add_undo_action(_undo_reversible_event)
 
     @event_handler(ElementCreated)
     def undo_create_element_event(self, event):
@@ -362,31 +369,6 @@ class UndoManager(Service, ActionProvider):
             attribute._set(element, value)
 
         self.add_undo_action(_undo_attribute_change_event)
-
-    @event_handler(DiagramItemUpdated)
-    def undo_diagram_item_updated_event(self, event):
-        element_id = event.element.id
-        property = event.property
-        target = event.target
-        value = event.old_value
-        del event
-
-        if property is gaphas.Item.handles:
-
-            def _undo_position_change_event():
-                element: Presentation = self.deep_lookup(element_id)  # type: ignore[assignment]
-                element.handles()[target].pos = value
-
-            self.add_undo_action(_undo_position_change_event)
-        elif property is Presentation.matrix:
-
-            def _undo_matrix_change_event():
-                element: Presentation = self.deep_lookup(element_id)  # type: ignore[assignment]
-                element.matrix.set(*value)
-
-            self.add_undo_action(_undo_matrix_change_event)
-        else:
-            raise ValueError(f"No undo handler for property {property}")
 
     @event_handler(AssociationSet)
     def undo_association_set_event(self, event):
