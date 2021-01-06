@@ -84,13 +84,16 @@ class HandlePositionEvent(ReversibleEvent):
 
 
 class HandlePositionUpdate:
-    def on_handle_position_update(self: Presentation, position, old):  # type: ignore[misc]
-        for index, handle in enumerate(self.handles()):
+    def watch_handle(self, handle):
+        handle.pos.add_handler(self.on_handle_position_update)
+
+    def on_handle_position_update(self, position, old):
+        for index, handle in enumerate(self.handles()):  # type: ignore[attr-defined]
             if handle.pos is position:
                 break
         else:
             return
-        self.handle(HandlePositionEvent(self, index, old))
+        self.handle(HandlePositionEvent(self, index, old))  # type: ignore[attr-defined]
 
 
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
@@ -113,7 +116,7 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
         self._shape = shape
         for handle in self.handles():
-            handle.pos.add_handler(self.on_handle_position_update)
+            self.watch_handle(handle)
 
     def port_side(self, port):
         return self._port_sides[self._ports.index(port)]
@@ -191,8 +194,8 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self.watch("orthogonal", self._on_orthogonal).watch(
             "horizontal", self._on_horizontal
         )
-        self.head.pos.add_handler(self.on_handle_position_update)
-        self.tail.pos.add_handler(self.on_handle_position_update)
+        self.watch_handle(self.head)
+        self.watch_handle(self.tail)
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
