@@ -8,7 +8,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.diagramtools.placement import PresentationConnector
+from gaphor.diagram.diagramtools.connector import PresentationConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.ui.diagrams import Diagrams

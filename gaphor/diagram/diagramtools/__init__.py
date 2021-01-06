@@ -10,6 +10,7 @@ from gaphas.tool import (
     zoom_tool,
 )
 
+import gaphor.diagram.diagramtools.connector
 import gaphor.diagram.diagramtools.grayout
 from gaphor.diagram.diagramtools.dropzone import drop_zone_tool
 from gaphor.diagram.diagramtools.placement import new_item_factory, placement_tool

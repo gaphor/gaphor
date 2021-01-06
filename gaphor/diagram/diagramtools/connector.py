@@ -1,0 +1,153 @@
+import logging
+
+from gaphas.aspect.connector import ConnectionSink
+from gaphas.aspect.connector import Connector as ConnectorAspect
+from gaphas.aspect.connector import ItemConnector
+
+from gaphor.core import transactional
+from gaphor.core.modeling.event import ReversibleEvent
+from gaphor.diagram.connectors import Connector
+from gaphor.diagram.presentation import Presentation
+
+log = logging.getLogger(__name__)
+
+
+@ConnectorAspect.register(Presentation)
+class PresentationConnector(ItemConnector):
+    """Handle Tool (acts on item handles) that uses the Connector protocol to
+    connect items to one-another.
+
+    It also adds handles to lines when a line is grabbed on the middle
+    of a line segment (points are drawn by the LineSegmentPainter).
+    """
+
+    def allow(self, sink):
+        adapter = Connector(sink.item, self.item)
+        return adapter and adapter.allow(self.handle, sink.port)
+
+    @transactional
+    def connect(self, sink):
+        """Create connection at handle level and at model level."""
+        handle = self.handle
+        item = self.item
+        cinfo = self.connections.get_connection(handle)
+
+        try:
+            callback = DisconnectHandle(self.item, self.handle, self.connections)
+            if cinfo and cinfo.connected is sink.item:
+                # reconnect only constraint - leave model intact
+                log.debug("performing reconnect constraint")
+                constraint = sink.port.constraint(item, handle, sink.item)
+                self.connections.reconnect_item(
+                    item, handle, sink.port, constraint=constraint
+                )
+            elif cinfo:
+                # first disconnect but disable disconnection handle as
+                # reconnection is going to happen
+                adapter = Connector(sink.item, item)
+                try:
+                    connect = adapter.reconnect
+                except AttributeError:
+                    connect = adapter.connect
+                else:
+                    cinfo.callback.disable = True
+                self.disconnect()
+
+                # new connection
+                self.connect_handle(sink, callback=callback)
+
+                # adapter requires both ends to be connected.
+                connect(handle, sink.port)
+                item.handle(ItemConnected(item, handle, sink.connected, sink.port))
+            else:
+                # new connection
+                adapter = Connector(sink.item, item)
+                self.connect_handle(sink, callback=callback)
+                adapter.connect(handle, sink.port)
+                item.handle(ItemConnected(item, handle, sink.item, sink.port))
+        except Exception:
+            log.error("Error during connect", exc_info=True)
+
+    @transactional
+    def disconnect(self):
+        cinfo = self.connections.get_connection(self.handle)
+        super().disconnect()
+        self.item.handle(
+            ItemDisconnected(self.item, self.handle, cinfo.connected, cinfo.port)
+        )
+
+
+class DisconnectHandle:
+    """Callback for items disconnection using the adapters.
+
+    This is an object so disconnection data can be serialized/deserialized
+    using pickle.
+
+    :Variables:
+     item
+        Connecting item.
+     handle
+        Handle of connecting item.
+     disable
+        If set, then disconnection is disabled.
+    """
+
+    def __init__(self, item, handle, connections):
+        self.item = item
+        self.handle = handle
+        self.connections = connections
+        self.disable = False
+
+    def __call__(self):
+        handle = self.handle
+        item = self.item
+        connections = self.connections
+        cinfo = connections.get_connection(handle)
+
+        if self.disable:
+            log.debug(f"Not disconnecting {item}.{handle} (disabled)")
+        else:
+            log.debug(f"Disconnecting {item}.{handle}")
+            if cinfo:
+                adapter = Connector(cinfo.connected, item)
+                adapter.disconnect(handle)
+                self.item.handle(
+                    ItemDisconnected(
+                        self.item, self.handle, cinfo.connected, cinfo.port
+                    )
+                )
+
+
+class ItemConnected(ReversibleEvent):
+    def __init__(self, element, handle, connected, port):
+        self.element = element
+        self.handle_index = element.handles().index(handle)
+        self.connected = connected
+        self.port_index = connected.ports().index(port)
+
+    def reverse(self, target):
+        connections = target.diagram.connections
+        connector = ConnectorAspect(
+            target, target.handles()[self.handle_index], connections
+        )
+        connector.disconnect()
+
+
+class ItemDisconnected(ReversibleEvent):
+    def __init__(self, element, handle, connected, port):
+        self.element = element
+        self.handle_index = element.handles().index(handle)
+        self.connected = connected
+        self.port_index = connected.ports().index(port)
+
+    def reverse(self, target):
+        connections = target.diagram.connections
+        assert connections
+
+        connected = target.diagram.lookup(self.connected.id)
+        sink = ConnectionSink(connected, connected.ports()[self.port_index])
+
+        connector = ConnectorAspect(
+            target, target.handles()[self.handle_index], connections
+        )
+        connector.connect(sink)

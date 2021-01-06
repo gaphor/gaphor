@@ -81,10 +81,10 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
         undo_manager.undo_transaction()
 
-        assert 13 == len(diagram.connections.solver.constraints)
+        assert 14 == len(diagram.connections.solver.constraints)
 
         assert ci1 == get_connected(a.head)
-        assert ci2 == get_connected(a.tail)
+        assert ci2.id == get_connected(a.tail).id
 
         undo_manager.redo_transaction()
 
