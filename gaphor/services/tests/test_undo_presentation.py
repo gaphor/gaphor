@@ -16,6 +16,25 @@ from gaphor.UML import Class
 from gaphor.UML.classes import ClassItem, GeneralizationItem
 
 
+def test_line_create(diagram, undo_manager, event_manager, capsys):
+    with Transaction(event_manager):
+        LinePresentation(diagram)
+
+    assert diagram.ownedPresentation
+
+    undo_manager.undo_transaction()
+    # Errors in undo manager are reported on stdout
+    captured = capsys.readouterr()
+
+    assert not captured.out
+    assert not captured.err
+    assert not diagram.ownedPresentation
+
+    undo_manager.redo_transaction()
+
+    assert diagram.ownedPresentation
+
+
 def test_line_orthogonal_property(diagram, undo_manager, event_manager):
     with Transaction(event_manager):
         line = LinePresentation(diagram)

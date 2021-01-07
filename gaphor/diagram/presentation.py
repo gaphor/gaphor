@@ -81,6 +81,7 @@ class HandlePositionEvent(ReversibleEvent):
 
     def reverse(self, target):
         target.handles()[self.index].pos = self.old_value
+        target.request_update()
 
 
 class HandlePositionUpdate:

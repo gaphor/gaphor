@@ -22,15 +22,6 @@ log = logging.getLogger(__name__)
 Transient = False
 
 
-class MatrixUpdated(ReversibleEvent):
-    def __init__(self, element, old_value):
-        super().__init__(element)
-        self.old_value = old_value
-
-    def reverse(self, target):
-        target.matrix.set(*self.old_value)
-
-
 class Presentation(Matrices, Element, Generic[S]):
     """This presentation is used to link the behaviors of
     `gaphor.core.modeling` and `gaphas.Item`.
@@ -134,6 +125,7 @@ class Presentation(Matrices, Element, Generic[S]):
             self.matrix_i2c.set(*(self.matrix * self.parent.matrix_i2c))
         else:
             self.matrix_i2c.set(*self.matrix)
+        self.request_update()
         if matrix is self.matrix:
             self.handle(MatrixUpdated(self, old_value))
 
@@ -145,3 +137,12 @@ Presentation.parent = association("parent", Presentation, upper=1, opposite="chi
 Presentation.children = association(
     "children", Presentation, composite=True, opposite="parent"
 )
+
+
+class MatrixUpdated(ReversibleEvent):
+    def __init__(self, element, old_value):
+        super().__init__(element)
+        self.old_value = old_value
+
+    def reverse(self, target):
+        target.matrix.set(*self.old_value)
