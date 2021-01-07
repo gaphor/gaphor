@@ -67,6 +67,7 @@ class ActionStack:
         self._actions.reverse()
 
         for act in self._actions:
+            logger.debug(act.__doc__)
             try:
                 act()
             except Exception:
@@ -308,16 +309,22 @@ class UndoManager(Service, ActionProvider):
             element = self.deep_lookup(element_id)
             event.reverse(element)
 
-        self.add_undo_action(_undo_reversible_event)
+        _undo_reversible_event.__doc__ = (
+            f"Undo reversible event {event} for element {event.element}."
+        )
+
+        self.add_undo_action(_undo_reversible_event, requires_transaction=False)
 
     @event_handler(ElementCreated)
     def undo_create_element_event(self, event):
         element_id = event.element.id
-        del event
 
         def _undo_create_event():
             element = self.deep_lookup(element_id)
             element.unlink()
+
+        _undo_create_event.__doc__ = f"Undo create element {event.element}."
+        del event
 
         self.add_undo_action(_undo_create_event)
 
@@ -325,35 +332,42 @@ class UndoManager(Service, ActionProvider):
     def undo_delete_element_event(self, event):
         element_type = type(event.element)
         element_id = event.element.id
-        del event
 
         def _undo_delete_event():
             element = self.element_factory.create_as(element_type, element_id)
             self.event_manager.handle(ElementCreated(self.element_factory, element))
+
+        _undo_delete_event.__doc__ = f"Undo delete element {event.element}."
+        del event
 
         self.add_undo_action(_undo_delete_event)
 
     @event_handler(DiagramItemCreated)
     def undo_create_diagram_item_event(self, event):
         element_id = event.element.id
-        del event
 
-        def _undo_delete_event():
+        def _undo_create_event():
             element = self.deep_lookup(element_id)
             element.unlink()
 
-        self.add_undo_action(_undo_delete_event)
+        _undo_create_event.__doc__ = f"Undo create diagram item {event.element}."
+        del event
+
+        self.add_undo_action(_undo_create_event)
 
     @event_handler(DiagramItemDeleted)
     def undo_delete_diagram_item_event(self, event):
         diagram_id = event.diagram.id
         element_type = type(event.element)
         element_id = event.element.id
-        del event
 
+        # TODO: save item attributes (not refs)
         def _undo_delete_event():
             diagram: Diagram = self.deep_lookup(diagram_id)  # type: ignore[assignment]
             diagram.create_as(element_type, element_id)
+
+        _undo_delete_event.__doc__ = f"Undo delete diagram item {event.element}."
+        del event
 
         self.add_undo_action(_undo_delete_event)
 
@@ -362,11 +376,15 @@ class UndoManager(Service, ActionProvider):
         attribute = event.property
         element_id = event.element.id
         value = event.old_value
-        del event
 
         def _undo_attribute_change_event():
             element = self.deep_lookup(element_id)
             attribute._set(element, value)
+
+        _undo_attribute_change_event.__doc__ = (
+            f"Undo delete attribute {attribute} for {event.element} value {value}."
+        )
+        del event
 
         self.add_undo_action(_undo_attribute_change_event)
 
@@ -377,12 +395,14 @@ class UndoManager(Service, ActionProvider):
             return
         element_id = event.element.id
         value_id = event.old_value and event.old_value.id
-        del event
 
         def _undo_association_set_event():
             element = self.deep_lookup(element_id)
             value = value_id and self.deep_lookup(value_id)
             association._set(element, value, from_opposite=True)
+
+        _undo_association_set_event.__doc__ = f"Undo set association {association} for {event.element} value {event.old_value}."
+        del event
 
         self.add_undo_action(_undo_association_set_event)
 
@@ -393,12 +413,14 @@ class UndoManager(Service, ActionProvider):
             return
         element_id = event.element.id
         value_id = event.new_value.id
-        del event
 
         def _undo_association_add_event():
             element = self.deep_lookup(element_id)
             value = self.deep_lookup(value_id)
             association._del(element, value, from_opposite=True)
+
+        _undo_association_add_event.__doc__ = f"Undo add association {association} for {event.element} value {event.new_value}."
+        del event
 
         self.add_undo_action(_undo_association_add_event)
 
@@ -414,5 +436,8 @@ class UndoManager(Service, ActionProvider):
             element = self.deep_lookup(element_id)
             value = self.deep_lookup(value_id)
             association._set(element, value, from_opposite=True)
+
+        _undo_association_delete_event.__doc__ = f"Undo delete association {association} for {event.element} value {event.old_value}."
+        del event
 
         self.add_undo_action(_undo_association_delete_event)
