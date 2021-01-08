@@ -31,6 +31,7 @@ from gaphor.core.modeling.event import (
     ReversibleEvent,
 )
 from gaphor.core.modeling.properties import association as association_property
+from gaphor.diagram.copypaste import deserialize, serialize
 from gaphor.event import (
     ActionEnabled,
     ServiceEvent,
@@ -100,6 +101,7 @@ class UndoManager(Service, ActionProvider):
         self._redo_stack: List[ActionStack] = []
         self._stack_depth = 20
         self._current_transaction = None
+        self._undoing = 0
 
         event_manager.subscribe(self.reset)
         event_manager.subscribe(self.begin_transaction)
@@ -211,6 +213,7 @@ class UndoManager(Service, ActionProvider):
         self._undo_stack = []
 
         try:
+            self._undoing += 1
             with Transaction(self.event_manager):
                 transaction.execute()
         finally:
@@ -219,6 +222,7 @@ class UndoManager(Service, ActionProvider):
             if self._undo_stack:
                 self._redo_stack.extend(self._undo_stack)
             self._undo_stack = undo_stack
+            self._undoing -= 1
 
         while len(self._redo_stack) > self._stack_depth:
             del self._redo_stack[0]
@@ -237,15 +241,22 @@ class UndoManager(Service, ActionProvider):
 
         redo_stack = list(self._redo_stack)
         try:
+            self._undoing += 1
             with Transaction(self.event_manager):
                 transaction.execute()
         finally:
             self._redo_stack = redo_stack
+            self._undoing -= 1
 
         self._action_executed()
 
     def in_transaction(self):
+        """The undo manager is recording changes."""
         return self._current_transaction is not None
+
+    def in_undo_transaction(self):
+        """An undo or redo action is currently performed."""
+        return bool(self._undoing)
 
     def can_undo(self):
         return bool(self._current_transaction or self._undo_stack)
@@ -360,11 +371,19 @@ class UndoManager(Service, ActionProvider):
         diagram_id = event.diagram.id
         element_type = type(event.element)
         element_id = event.element.id
+        data = {}
 
-        # TODO: save item attributes (not refs)
+        def save_func(name, value):
+            data[name] = serialize(value)
+
+        event.element.save(save_func)
+
         def _undo_delete_event():
             diagram: Diagram = self.deep_lookup(diagram_id)  # type: ignore[assignment]
-            diagram.create_as(element_type, element_id)
+            element = diagram.create_as(element_type, element_id)
+            for name, ser in data.items():
+                for value in deserialize(ser, lambda ref: None):
+                    element.load(name, value)
 
         _undo_delete_event.__doc__ = f"Undo delete diagram item {event.element}."
         del event

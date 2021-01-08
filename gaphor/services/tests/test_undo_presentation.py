@@ -35,6 +35,23 @@ def test_line_create(diagram, undo_manager, event_manager, capsys):
     assert diagram.ownedPresentation
 
 
+def test_line_delete(diagram, undo_manager, event_manager):
+    with Transaction(event_manager):
+        line = LinePresentation(diagram)
+        line.insert_handle(1, Handle((20, 20)))
+        line.matrix.translate(10, 10)
+
+    with Transaction(event_manager):
+        line.unlink()
+
+    undo_manager.undo_transaction()
+
+    line = diagram.ownedPresentation[0]
+    assert len(line.handles()) == 3
+    assert line.handles()[1].pos.tuple() == (20, 20)
+    assert line.matrix.tuple() == (1, 0, 0, 1, 10, 10)
+
+
 def test_line_orthogonal_property(diagram, undo_manager, event_manager):
     with Transaction(event_manager):
         line = LinePresentation(diagram)

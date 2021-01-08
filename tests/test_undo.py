@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 
 from gaphor import UML
@@ -89,6 +91,22 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
         undo_manager.redo_transaction()
 
 
+def test_diagram_item_can_undo_(event_manager, element_factory, undo_manager, caplog):
+    caplog.set_level(logging.INFO)
+    with Transaction(event_manager):
+        diagram = element_factory.create(UML.Diagram)
+
+    with Transaction(event_manager):
+        cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        cls.matrix.translate(10, 10)
+
+    undo_manager.undo_transaction()
+    undo_manager.redo_transaction()
+
+    assert diagram.ownedPresentation[0].matrix.tuple() == (1, 0, 0, 1, 10, 10)
+    assert not caplog.records
+
+
 def test_diagram_item_should_not_end_up_in_element_factory(
     event_manager, element_factory, undo_manager
 ):
@@ -124,20 +142,18 @@ def test_deleted_diagram_item_should_not_end_up_in_element_factory(
 
 
 def test_undo_should_not_cause_warnings(
-    event_manager, element_factory, undo_manager, capsys
+    event_manager, element_factory, undo_manager, caplog
 ):
+    caplog.set_level(logging.INFO)
     with Transaction(event_manager):
         diagram = element_factory.create(UML.Diagram)
 
     with Transaction(event_manager):
         diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
-    captured = capsys.readouterr()
-    assert captured.out == ""
-    assert captured.err == ""
+    assert not caplog.records
 
     undo_manager.undo_transaction()
 
-    captured = capsys.readouterr()
-    assert captured.out == ""
-    assert captured.err == ""
+    assert not diagram.ownedPresentation
+    assert not caplog.records
