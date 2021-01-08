@@ -33,7 +33,6 @@ class PresentationConnector(ItemConnector):
         cinfo = self.connections.get_connection(handle)
 
         try:
-            callback = DisconnectHandle(self.item, self.handle, self.connections)
             if cinfo and cinfo.connected is sink.item:
                 # reconnect only constraint - leave model intact
                 log.debug("performing reconnect constraint")
@@ -54,7 +53,7 @@ class PresentationConnector(ItemConnector):
                 self.disconnect()
 
                 # new connection
-                self.connect_handle(sink, callback=callback)
+                self.connect_handle(sink)
 
                 # adapter requires both ends to be connected.
                 connect(handle, sink.port)
@@ -62,11 +61,15 @@ class PresentationConnector(ItemConnector):
             else:
                 # new connection
                 adapter = Connector(sink.item, item)
-                self.connect_handle(sink, callback=callback)
+                self.connect_handle(sink)
                 adapter.connect(handle, sink.port)
                 item.handle(ItemConnected(item, handle, sink.item, sink.port))
         except Exception:
             log.error("Error during connect", exc_info=True)
+
+    def connect_handle(self, sink):
+        callback = DisconnectHandle(self.item, self.handle, self.connections)
+        super().connect_handle(sink, callback=callback)
 
     @transactional
     def disconnect(self):
@@ -126,10 +129,14 @@ class ItemConnected(ReversibleEvent):
         self.port_index = connected.ports().index(port)
 
     def reverse(self, target):
+        # Reverse only the diagram level connection.
+        # Associations have their own handlers
         connections = target.diagram.connections
-        connector = ConnectorAspect(
-            target, target.handles()[self.handle_index], connections
-        )
+        handle = target.handles()[self.handle_index]
+        connector = ConnectorAspect(target, handle, connections)
+        cinfo = connections.get_connection(handle)
+        if cinfo:
+            cinfo.callback.disable = True
         connector.disconnect()
 
 
@@ -141,6 +148,8 @@ class ItemDisconnected(ReversibleEvent):
         self.port_index = connected.ports().index(port)
 
     def reverse(self, target):
+        # Reverse only the diagram level connection.
+        # Associations have their own handlers
         connections = target.diagram.connections
         assert connections
 
@@ -150,4 +159,4 @@ class ItemDisconnected(ReversibleEvent):
         connector = ConnectorAspect(
             target, target.handles()[self.handle_index], connections
         )
-        connector.connect(sink)
+        connector.connect_handle(sink)
