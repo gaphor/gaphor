@@ -301,7 +301,7 @@ class Diagram(PackageableElement):
         self._watcher.unsubscribe_all()
         super().unlink()
 
-    def select(self, expression=None) -> Iterable[Presentation]:
+    def select(self, expression=None) -> Iterator[Presentation]:
         """Return a iterator of all canvas items that match expression."""
         if expression is None:
             yield from self.get_all_items()

@@ -5,8 +5,9 @@ import pytest
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.core import Transaction
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.UML.classes import AssociationItem, ClassItem
+from gaphor.UML.classes import AssociationItem, ClassItem, GeneralizationItem
 
 
 @pytest.fixture
@@ -38,7 +39,7 @@ def undo_manager(session):
 
 def test_class_association_undo_redo(event_manager, element_factory, undo_manager):
     with Transaction(event_manager):
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(Diagram)
 
     assert 0 == len(diagram.connections.solver.constraints)
 
@@ -94,7 +95,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 def test_diagram_item_can_undo_(event_manager, element_factory, undo_manager, caplog):
     caplog.set_level(logging.INFO)
     with Transaction(event_manager):
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(Diagram)
 
     with Transaction(event_manager):
         cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
@@ -111,7 +112,7 @@ def test_diagram_item_should_not_end_up_in_element_factory(
     event_manager, element_factory, undo_manager
 ):
     with Transaction(event_manager):
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(Diagram)
 
     with Transaction(event_manager):
         cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
@@ -126,7 +127,7 @@ def test_deleted_diagram_item_should_not_end_up_in_element_factory(
     event_manager, element_factory, undo_manager
 ):
     with Transaction(event_manager):
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(Diagram)
         cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
     with Transaction(event_manager):
@@ -146,7 +147,7 @@ def test_undo_should_not_cause_warnings(
 ):
     caplog.set_level(logging.INFO)
     with Transaction(event_manager):
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(Diagram)
 
     with Transaction(event_manager):
         diagram.create(ClassItem, subject=element_factory.create(UML.Class))
@@ -156,4 +157,70 @@ def test_undo_should_not_cause_warnings(
     undo_manager.undo_transaction()
 
     assert not diagram.ownedPresentation
+    assert not caplog.records
+
+
+def test_can_undo_connected_generalization(
+    event_manager, element_factory, undo_manager, caplog
+):
+    caplog.set_level(logging.INFO)
+    with Transaction(event_manager):
+        diagram: Diagram = element_factory.create(Diagram)
+        general = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        specific = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    with Transaction(event_manager):
+        generalization = diagram.create(GeneralizationItem)
+        connect(generalization, generalization.head, general)
+        connect(generalization, generalization.tail, specific)
+
+    assert not caplog.records
+
+    undo_manager.undo_transaction()
+
+    assert not list(diagram.select(GeneralizationItem))
+    assert not caplog.records
+
+    undo_manager.redo_transaction()
+    new_generalization_item = next(diagram.select(GeneralizationItem))
+    new_generalization = next(element_factory.select(UML.Generalization))
+
+    assert len(list(diagram.select(GeneralizationItem))) == 1
+    assert len(element_factory.lselect(UML.Generalization)) == 1
+    assert new_generalization_item.subject is new_generalization
+    assert not caplog.records
+
+
+def test_can_undo_connected_association(
+    event_manager, element_factory, undo_manager, caplog
+):
+    caplog.set_level(logging.INFO)
+    with Transaction(event_manager):
+        diagram: Diagram = element_factory.create(Diagram)
+        parent = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        child = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    with Transaction(event_manager):
+        association = diagram.create(AssociationItem)
+        connect(association, association.head, parent)
+        connect(association, association.tail, child)
+
+    assert not caplog.records
+
+    undo_manager.undo_transaction()
+
+    assert not list(diagram.select(AssociationItem))
+    assert not caplog.records
+
+    undo_manager.redo_transaction()
+    new_association_item = next(diagram.select(AssociationItem))
+    new_association = next(element_factory.select(UML.Association))
+
+    assert len(list(diagram.select(AssociationItem))) == 1
+    assert len(element_factory.lselect(UML.Association)) == 1
+
+    assert len(new_association.memberEnd) == 2
+    assert new_association_item.subject is new_association
+    assert new_association_item.head_subject
+    assert new_association_item.tail_subject
     assert not caplog.records
