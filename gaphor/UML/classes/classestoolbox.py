@@ -23,11 +23,11 @@ def create_association(
     assoc.memberEnd.append(assoc_item.model.create(UML.Property))
     assoc.memberEnd.append(assoc_item.model.create(UML.Property))
 
-    assoc_item.head_end.subject = assoc.memberEnd[0]
-    assoc_item.tail_end.subject = assoc.memberEnd[1]
+    assoc_item.head_subject = assoc.memberEnd[0]
+    assoc_item.tail_subject = assoc.memberEnd[1]
 
-    UML.model.set_navigability(assoc, assoc_item.head_end.subject, True)
-    assoc_item.head_end.subject.aggregation = association_type.value
+    UML.model.set_navigability(assoc, assoc_item.head_subject, True)
+    assoc_item.head_subject.aggregation = association_type.value
 
 
 def composite_association_config(assoc_item: diagramitems.AssociationItem) -> None:
