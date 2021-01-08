@@ -19,8 +19,6 @@ S = TypeVar("S", bound=Element)
 
 log = logging.getLogger(__name__)
 
-Transient = False
-
 
 class Presentation(Matrices, Element, Generic[S]):
     """This presentation is used to link the behaviors of
@@ -34,11 +32,8 @@ class Presentation(Matrices, Element, Generic[S]):
     """
 
     def __init__(self, diagram: Diagram, id=None):
-        if id is Transient:
-            super().__init__(id=id)
-        else:
-            super().__init__(id=id, model=diagram.model)
-            self.diagram = diagram
+        super().__init__(id=id, model=diagram.model)
+        self.diagram = diagram
 
         def update(event):
             if self.diagram:

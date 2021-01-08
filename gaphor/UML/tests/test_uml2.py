@@ -182,8 +182,6 @@ def test_realization(factory):
 def test_ids(factory):
     c = factory.create(UML.Class)
     assert c.id
-    p = factory.create_as(UML.Class, id=False)
-    assert p.id is False, p.id
 
 
 def test1(factory):

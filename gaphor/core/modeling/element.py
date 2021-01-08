@@ -6,16 +6,7 @@ from __future__ import annotations
 import logging
 import uuid
 from contextlib import contextmanager
-from typing import (
-    TYPE_CHECKING,
-    Callable,
-    Iterator,
-    Optional,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Callable, Iterator, Optional, Type, TypeVar, overload
 
 from typing_extensions import Protocol
 
@@ -38,7 +29,7 @@ class UnlinkEvent:
         self.element = element
 
 
-Id = Union[str, bool]
+Id = str
 
 
 class Element:
@@ -66,7 +57,7 @@ class Element:
         A model can be provided to refer to the model this element belongs to.
         """
         super().__init__()
-        self._id: Id = id or (id is not False and str(uuid.uuid1()) or False)
+        self._id: Id = id or str(uuid.uuid1())
         # The model this element belongs to.
         self._model = model
         self._unlink_lock = 0
