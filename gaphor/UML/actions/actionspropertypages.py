@@ -60,7 +60,6 @@ class ObjectNodePropertyPage(PropertyPageBase):
     @transactional
     def _on_ordering_show_change(self, button, gparam):
         self.item.show_ordering = button.get_active()
-        print("show_ordering", self.item.show_ordering)
 
 
 @PropertyPages.register(ForkNodeItem)
