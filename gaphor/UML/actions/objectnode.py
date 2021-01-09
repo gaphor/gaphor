@@ -57,3 +57,8 @@ class ObjectNodeItem(ElementPresentation, Named):
         self.watch("show_ordering")
 
     show_ordering: attribute[bool] = attribute("show_ordering", bool, False)
+
+    def load(self, name, value):
+        if name == "show-ordering":
+            name = "show_ordering"
+        super().load(name, value)
