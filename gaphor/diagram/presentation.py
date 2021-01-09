@@ -74,6 +74,9 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
 
 
 class HandlePositionEvent(RevertibeEvent):
+
+    requires_transaction = False
+
     def __init__(self, element, index, old_value):
         super().__init__(element)
         self.index = index

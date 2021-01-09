@@ -315,7 +315,7 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.undo_association_delete_event)
 
     @event_handler(RevertibeEvent)
-    def undo_reversible_event(self, event):
+    def undo_reversible_event(self, event: RevertibeEvent):
         element_id = event.element.id
 
         def _undo_reversible_event():
@@ -326,10 +326,12 @@ class UndoManager(Service, ActionProvider):
             f"Reverse event {event.__class__.__name__} for element {event.element}."
         )
 
-        self.add_undo_action(_undo_reversible_event, requires_transaction=False)
+        self.add_undo_action(
+            _undo_reversible_event, requires_transaction=event.requires_transaction
+        )
 
     @event_handler(ElementCreated)
-    def undo_create_element_event(self, event):
+    def undo_create_element_event(self, event: ElementCreated):
         element_id = event.element.id
 
         def _undo_create_event():
@@ -342,7 +344,7 @@ class UndoManager(Service, ActionProvider):
         self.add_undo_action(_undo_create_event)
 
     @event_handler(ElementDeleted)
-    def undo_delete_element_event(self, event):
+    def undo_delete_element_event(self, event: ElementDeleted):
         element_type = type(event.element)
         element_id = event.element.id
 
@@ -356,7 +358,7 @@ class UndoManager(Service, ActionProvider):
         self.add_undo_action(_undo_delete_event)
 
     @event_handler(DiagramItemCreated)
-    def undo_create_diagram_item_event(self, event):
+    def undo_create_diagram_item_event(self, event: DiagramItemCreated):
         element_id = event.element.id
 
         def _undo_create_event():
@@ -369,7 +371,7 @@ class UndoManager(Service, ActionProvider):
         self.add_undo_action(_undo_create_event)
 
     @event_handler(DiagramItemDeleted)
-    def undo_delete_diagram_item_event(self, event):
+    def undo_delete_diagram_item_event(self, event: DiagramItemDeleted):
         diagram_id = event.diagram.id
         element_type = type(event.element)
         element_id = event.element.id
@@ -393,7 +395,7 @@ class UndoManager(Service, ActionProvider):
         self.add_undo_action(_undo_delete_event)
 
     @event_handler(AttributeUpdated)
-    def undo_attribute_change_event(self, event):
+    def undo_attribute_change_event(self, event: AttributeUpdated):
         attribute = event.property
         element_id = event.element.id
         value = event.old_value
@@ -410,7 +412,7 @@ class UndoManager(Service, ActionProvider):
         self.add_undo_action(_undo_attribute_change_event)
 
     @event_handler(AssociationSet)
-    def undo_association_set_event(self, event):
+    def undo_association_set_event(self, event: AssociationSet):
         association = event.property
         if type(association) is not association_property:
             return
@@ -430,7 +432,7 @@ class UndoManager(Service, ActionProvider):
         self.add_undo_action(_undo_association_set_event)
 
     @event_handler(AssociationAdded)
-    def undo_association_add_event(self, event):
+    def undo_association_add_event(self, event: AssociationAdded):
         association = event.property
         if type(association) is not association_property:
             return
@@ -450,7 +452,7 @@ class UndoManager(Service, ActionProvider):
         self.add_undo_action(_undo_association_add_event)
 
     @event_handler(AssociationDeleted)
-    def undo_association_delete_event(self, event):
+    def undo_association_delete_event(self, event: AssociationDeleted):
         association = event.property
         if type(association) is not association_property:
             return
