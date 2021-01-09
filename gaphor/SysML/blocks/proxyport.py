@@ -5,7 +5,7 @@ from gaphas.connector import Handle, LinePort, Position
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.presentation import Named, postload_connect
+from gaphor.diagram.presentation import HandlePositionUpdate, Named, postload_connect
 from gaphor.diagram.shapes import (
     Box,
     EditableText,
@@ -32,13 +32,14 @@ def text_position(position):
 
 
 @represents(sysml.ProxyPort)
-class ProxyPortItem(Presentation[sysml.ProxyPort], Named):
+class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
         self._connections = diagram.connections
 
         h1 = Handle(connectable=True)
         self._handles = [h1]
+        self.watch_handle(h1)
 
         d = self.dimensions()
         top_left = Position(d.x, d.y)

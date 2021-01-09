@@ -11,7 +11,7 @@ from gaphas.util import path_ellipse
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.properties import association, relation_one
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.presentation import ElementPresentation, HandlePositionUpdate, Named
 from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
@@ -197,7 +197,7 @@ def draw_decision_node(_box, context, _bounding_box):
 
 
 @represents(UML.ForkNode)
-class ForkNodeItem(Presentation[UML.ForkNode], Named):
+class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
     """Representation of fork and join node."""
 
     def __init__(self, diagram, id=None):
@@ -206,6 +206,8 @@ class ForkNodeItem(Presentation[UML.ForkNode], Named):
         h1, h2 = Handle(), Handle()
         self._handles = [h1, h2]
         self._ports = [LinePort(h1.pos, h2.pos)]
+        self.watch_handle(h1)
+        self.watch_handle(h2)
 
         self.shape = IconBox(
             Box(style={"min-width": 0, "min-height": 45}, draw=self.draw_fork_node),

@@ -352,7 +352,7 @@ class AssociationEnd:
     name_bounds = property(lambda s: s._name_bounds)
 
     @property
-    def owner(self) -> AssociationItem:  # type: ignore[override]
+    def owner(self) -> AssociationItem:
         """Override Element.owner."""
         return self._owner
 
@@ -362,7 +362,7 @@ class AssociationEnd:
         return self._owner.head if self is self._owner.head_end else self._owner.tail
 
     @property
-    def subject(self) -> Optional[UML.Property]:  # type: ignore[override]
+    def subject(self) -> Optional[UML.Property]:
         return getattr(self.owner, f"{self._end}_subject")  # type:ignore[no-any-return]
 
     def request_update(self):

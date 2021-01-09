@@ -180,7 +180,7 @@ class MessageLifelineConnect(BaseConnector):
         # if a message is delete message, then disconnection causes
         # lifeline to be no longer destroyed (note that there can be
         # only one delete message connected to lifeline)
-        if received and line.subject.messageSort == "deleteMessage":
+        if received and line.subject and line.subject.messageSort == "deleteMessage":
             assert isinstance(received, LifelineItem)
             received.is_destroyed = False
             received.request_update()

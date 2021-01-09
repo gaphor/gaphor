@@ -148,6 +148,8 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
 
         self._handles.append(top)
         self._handles.append(bottom)
+        self.watch_handle(top)
+        self.watch_handle(bottom)
         self._ports.append(self.lifetime.port)
 
         self.shape = Box(

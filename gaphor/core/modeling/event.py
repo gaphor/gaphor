@@ -21,7 +21,7 @@ class RevertibeEvent:
         which may be a different element than the one that caused the
         event.
         """
-        raise NotImplementedError("Method {self}.reverse() has not been implemented")
+        raise NotImplementedError("Method {self}.revert() has not been implemented")
 
 
 class ElementUpdated:
