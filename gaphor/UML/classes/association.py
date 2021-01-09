@@ -114,6 +114,9 @@ class AssociationItem(LinePresentation[UML.Association], Named):
             name = "head_subject"
         elif name in ("tail_end", "tail-subject"):
             name = "tail_subject"
+        elif name == "show-direction":
+            name = "show_direction"
+
         super().load(name, value)
 
     def postload(self):
