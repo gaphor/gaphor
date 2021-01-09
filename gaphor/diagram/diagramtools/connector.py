@@ -57,7 +57,7 @@ class PresentationConnector(ItemConnector):
 
                 # adapter requires both ends to be connected.
                 connect(handle, sink.port)
-                item.handle(ItemConnected(item, handle, sink.connected, sink.port))
+                item.handle(ItemConnected(item, handle, sink.item, sink.port))
             else:
                 # new connection
                 adapter = Connector(sink.item, item)
@@ -73,11 +73,8 @@ class PresentationConnector(ItemConnector):
 
     @transactional
     def disconnect(self):
-        cinfo = self.connections.get_connection(self.handle)
+        # Model level disconnect and event is handled in callback
         super().disconnect()
-        self.item.handle(
-            ItemDisconnected(self.item, self.handle, cinfo.connected, cinfo.port)
-        )
 
 
 class DisconnectHandle:
@@ -108,17 +105,15 @@ class DisconnectHandle:
         cinfo = connections.get_connection(handle)
 
         if self.disable:
-            log.debug(f"Not disconnecting {item}.{handle} (disabled)")
+            log.debug(f"Disconnect callback disabled for {item}.{handle} (disabled)")
         else:
-            log.debug(f"Disconnecting {item}.{handle}")
+            log.debug(f"Disconnect callback {item}.{handle}")
             if cinfo:
                 adapter = Connector(cinfo.connected, item)
                 adapter.disconnect(handle)
-                self.item.handle(
-                    ItemDisconnected(
-                        self.item, self.handle, cinfo.connected, cinfo.port
-                    )
-                )
+        self.item.handle(
+            ItemDisconnected(self.item, self.handle, cinfo.connected, cinfo.port)
+        )
 
 
 class ItemConnected(ReversibleEvent):
@@ -156,7 +151,7 @@ class ItemDisconnected(ReversibleEvent):
         connected = target.diagram.lookup(self.connected.id)
         sink = ConnectionSink(connected, connected.ports()[self.port_index])
 
-        connector = ConnectorAspect(
-            target, target.handles()[self.handle_index], connections
-        )
+        handle = target.handles()[self.handle_index]
+        connector = ConnectorAspect(target, handle, connections)
         connector.connect_handle(sink)
+        target.handle(ItemConnected(target, handle, sink.item, sink.port))

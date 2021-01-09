@@ -68,11 +68,13 @@ class ActionStack:
         self._actions.reverse()
 
         for act in self._actions:
-            logger.debug(act.__doc__)
+            logger.debug("%s", act.__doc__)
             try:
                 act()
             except Exception:
-                logger.error(f"Error while undoing action {act}", exc_info=True)
+                logger.error(
+                    "Error while undoing action %s", act.__doc__, exc_info=True
+                )
 
 
 class UndoManagerStateChanged(ServiceEvent):
@@ -321,7 +323,7 @@ class UndoManager(Service, ActionProvider):
             event.reverse(element)
 
         _undo_reversible_event.__doc__ = (
-            f"Undo reversible event {event} for element {event.element}."
+            f"Reverse event {event.__class__.__name__} for element {event.element}."
         )
 
         self.add_undo_action(_undo_reversible_event, requires_transaction=False)
@@ -348,7 +350,7 @@ class UndoManager(Service, ActionProvider):
             element = self.element_factory.create_as(element_type, element_id)
             self.event_manager.handle(ElementCreated(self.element_factory, element))
 
-        _undo_delete_event.__doc__ = f"Undo delete element {event.element}."
+        _undo_delete_event.__doc__ = f"Recreate element {element_type} ({element_id})."
         del event
 
         self.add_undo_action(_undo_delete_event)
@@ -401,7 +403,7 @@ class UndoManager(Service, ActionProvider):
             attribute._set(element, value)
 
         _undo_attribute_change_event.__doc__ = (
-            f"Undo delete attribute {attribute} for {event.element} value {value}."
+            f"Revert {event.element}.{attribute.name} to {value}."
         )
         del event
 
@@ -420,7 +422,9 @@ class UndoManager(Service, ActionProvider):
             value = value_id and self.deep_lookup(value_id)
             association._set(element, value, from_opposite=True)
 
-        _undo_association_set_event.__doc__ = f"Undo set association {association} for {event.element} value {event.old_value}."
+        _undo_association_set_event.__doc__ = (
+            f"Revert {event.element}.{association.name} to {event.old_value}."
+        )
         del event
 
         self.add_undo_action(_undo_association_set_event)
@@ -438,7 +442,9 @@ class UndoManager(Service, ActionProvider):
             value = self.deep_lookup(value_id)
             association._del(element, value, from_opposite=True)
 
-        _undo_association_add_event.__doc__ = f"Undo add association {association} for {event.element} value {event.new_value}."
+        _undo_association_add_event.__doc__ = (
+            f"{event.element}.{association.name} delete {event.new_value}."
+        )
         del event
 
         self.add_undo_action(_undo_association_add_event)
@@ -456,7 +462,9 @@ class UndoManager(Service, ActionProvider):
             value = self.deep_lookup(value_id)
             association._set(element, value, from_opposite=True)
 
-        _undo_association_delete_event.__doc__ = f"Undo delete association {association} for {event.element} value {event.old_value}."
+        _undo_association_delete_event.__doc__ = (
+            f"{event.element}.{association.name} add {event.old_value}."
+        )
         del event
 
         self.add_undo_action(_undo_association_delete_event)
