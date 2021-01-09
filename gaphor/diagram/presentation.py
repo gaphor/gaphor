@@ -11,7 +11,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import matrix_i2i
 
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.event import ReversibleEvent
+from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style
@@ -73,13 +73,13 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     connector.connect(sink)
 
 
-class HandlePositionEvent(ReversibleEvent):
+class HandlePositionEvent(RevertibeEvent):
     def __init__(self, element, index, old_value):
         super().__init__(element)
         self.index = index
         self.old_value = old_value
 
-    def reverse(self, target):
+    def revert(self, target):
         target.handles()[self.index].pos = self.old_value
         target.request_update()
 

@@ -1,6 +1,6 @@
 from gaphas.segment import LineSegment, Segment
 
-from gaphor.core.modeling.event import ReversibleEvent
+from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.diagram.presentation import LinePresentation
 
 
@@ -19,23 +19,23 @@ class PresentationSegment(LineSegment):
         return deleted_handles, deleted_ports
 
 
-class LineSplitSegmentEvent(ReversibleEvent):
+class LineSplitSegmentEvent(RevertibeEvent):
     def __init__(self, element, segment, count):
         super().__init__(element)
         self.segment = segment
         self.count = count
 
-    def reverse(self, target):
+    def revert(self, target):
         segment = Segment(target, target.diagram)
         segment.merge_segment(self.segment, self.count)
 
 
-class LineMergeSegmentEvent(ReversibleEvent):
+class LineMergeSegmentEvent(RevertibeEvent):
     def __init__(self, element, segment, count):
         super().__init__(element)
         self.segment = segment
         self.count = count
 
-    def reverse(self, target):
+    def revert(self, target):
         segment = Segment(target, target.diagram)
         segment.split_segment(self.segment, self.count)

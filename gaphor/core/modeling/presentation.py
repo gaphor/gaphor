@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 from gaphas.item import Matrices
 
 from gaphor.core.modeling import Element
-from gaphor.core.modeling.event import DiagramItemDeleted, ReversibleEvent
+from gaphor.core.modeling.event import DiagramItemDeleted, RevertibeEvent
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
@@ -134,10 +134,10 @@ Presentation.children = association(
 )
 
 
-class MatrixUpdated(ReversibleEvent):
+class MatrixUpdated(RevertibeEvent):
     def __init__(self, element, old_value):
         super().__init__(element)
         self.old_value = old_value
 
-    def reverse(self, target):
+    def revert(self, target):
         target.matrix.set(*self.old_value)

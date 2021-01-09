@@ -28,7 +28,7 @@ from gaphor.core.modeling.event import (
     ElementCreated,
     ElementDeleted,
     ModelReady,
-    ReversibleEvent,
+    RevertibeEvent,
 )
 from gaphor.core.modeling.properties import association as association_property
 from gaphor.diagram.copypaste import deserialize, serialize
@@ -314,13 +314,13 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.undo_association_add_event)
         self.event_manager.unsubscribe(self.undo_association_delete_event)
 
-    @event_handler(ReversibleEvent)
+    @event_handler(RevertibeEvent)
     def undo_reversible_event(self, event):
         element_id = event.element.id
 
         def _undo_reversible_event():
             element = self.deep_lookup(element_id)
-            event.reverse(element)
+            event.revert(element)
 
         _undo_reversible_event.__doc__ = (
             f"Reverse event {event.__class__.__name__} for element {event.element}."

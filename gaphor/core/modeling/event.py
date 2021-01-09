@@ -2,7 +2,7 @@
 from gaphor.event import ServiceEvent
 
 
-class ReversibleEvent:
+class RevertibeEvent:
     """Base type for all events that can be reversed.
 
     This event can be used as "low level" event for anything that should
@@ -12,7 +12,7 @@ class ReversibleEvent:
     def __init__(self, element):
         self.element = element
 
-    def reverse(self, target):
+    def revert(self, target):
         """Reverse whatever caused the event.
 
         `target` Is the element the action should be performed upon,

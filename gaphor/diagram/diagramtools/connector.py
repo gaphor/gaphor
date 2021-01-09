@@ -5,7 +5,7 @@ from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.aspect.connector import ItemConnector
 
 from gaphor.core import transactional
-from gaphor.core.modeling.event import ReversibleEvent
+from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.presentation import Presentation
 
@@ -116,14 +116,14 @@ class DisconnectHandle:
         )
 
 
-class ItemConnected(ReversibleEvent):
+class ItemConnected(RevertibeEvent):
     def __init__(self, element, handle, connected, port):
         self.element = element
         self.handle_index = element.handles().index(handle)
         self.connected = connected
         self.port_index = connected.ports().index(port)
 
-    def reverse(self, target):
+    def revert(self, target):
         # Reverse only the diagram level connection.
         # Associations have their own handlers
         connections = target.diagram.connections
@@ -135,14 +135,14 @@ class ItemConnected(ReversibleEvent):
         connector.disconnect()
 
 
-class ItemDisconnected(ReversibleEvent):
+class ItemDisconnected(RevertibeEvent):
     def __init__(self, element, handle, connected, port):
         self.element = element
         self.handle_index = element.handles().index(handle)
         self.connected = connected
         self.port_index = connected.ports().index(port)
 
-    def reverse(self, target):
+    def revert(self, target):
         # Reverse only the diagram level connection.
         # Associations have their own handlers
         connections = target.diagram.connections
