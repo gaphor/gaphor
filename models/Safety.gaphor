@@ -1245,7 +1245,6 @@ Figure 9.4</val>
 <ref refid="55ddf24f-239a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="dfe6f6f2-239a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="08aa40bc-239b-11ea-99a7-7d79dbbd423e"/>
-<ref refid="76671bfe-242a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="a76ab094-242a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="cff5bc02-242a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="7e68fa60-242b-11ea-99a7-7d79dbbd423e"/>
@@ -1270,7 +1269,6 @@ Figure 9.4</val>
 <ref refid="4ca3e422-239a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="b662935e-239a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="ff0937c0-239a-11ea-99a7-7d79dbbd423e"/>
-<ref refid="67587c20-242a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="9b1b2828-242a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="62b87052-242b-11ea-99a7-7d79dbbd423e"/>
 </reflist>
@@ -4307,7 +4305,6 @@ Figure 9.19</val>
 <reflist>
 <ref refid="dfe6f6f3-239a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="04990490-239b-11ea-99a7-7d79dbbd423e"/>
-<ref refid="71ff27dc-242a-11ea-99a7-7d79dbbd423e"/>
 <ref refid="78ca0e14-242b-11ea-99a7-7d79dbbd423e"/>
 <ref refid="16c0aa52-2b3d-11ea-99a7-7d79dbbd423e"/>
 <ref refid="d480aa70-2b41-11ea-99a7-7d79dbbd423e"/>
@@ -4506,172 +4503,13 @@ Figure 9.20</val>
 </reflist>
 </presentation>
 </Comment>
-<Diagram id="67587c20-242a-11ea-99a7-7d79dbbd423e">
-<name>
-<val>Vulnerability</val>
-</name>
-<ownedPresentation>
-<reflist>
-<ref refid="71ff27dc-242a-11ea-99a7-7d79dbbd423e"/>
-<ref refid="76671bff-242a-11ea-99a7-7d79dbbd423e"/>
-<ref refid="7a71e780-242a-11ea-99a7-7d79dbbd423e"/>
-<ref refid="8856a888-242a-11ea-99a7-7d79dbbd423e"/>
-</reflist>
-</ownedPresentation>
-<package>
-<ref refid="074e74c2-2364-11ea-ab0b-c72c0738acd2"/>
-</package>
-<canvas>
-<item id="71ff27dc-242a-11ea-99a7-7d79dbbd423e" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 98.2066650390625, 32.91607666015625)</val>
-</matrix>
-<width>
-<val>117.0</val>
-</width>
-<height>
-<val>74.0</val>
-</height>
-<diagram>
-<ref refid="67587c20-242a-11ea-99a7-7d79dbbd423e"/>
-</diagram>
-<show_attributes>
-<val>0</val>
-</show_attributes>
-<show_operations>
-<val>0</val>
-</show_operations>
-<subject>
-<ref refid="dfe6f6f2-239a-11ea-99a7-7d79dbbd423e"/>
-</subject>
-</item>
-<item id="76671bff-242a-11ea-99a7-7d79dbbd423e" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 106.7066650390625, 199.8211669921875)</val>
-</matrix>
-<width>
-<val>106.0</val>
-</width>
-<height>
-<val>74.0</val>
-</height>
-<diagram>
-<ref refid="67587c20-242a-11ea-99a7-7d79dbbd423e"/>
-</diagram>
-<show_attributes>
-<val>0</val>
-</show_attributes>
-<show_operations>
-<val>0</val>
-</show_operations>
-<subject>
-<ref refid="76671bfe-242a-11ea-99a7-7d79dbbd423e"/>
-</subject>
-</item>
-<item id="7a71e780-242a-11ea-99a7-7d79dbbd423e" type="GeneralizationItem">
-<diagram>
-<ref refid="67587c20-242a-11ea-99a7-7d79dbbd423e"/>
-</diagram>
-<horizontal>
-<val>0</val>
-</horizontal>
-<orthogonal>
-<val>1</val>
-</orthogonal>
-<subject>
-<ref refid="7b9de774-242a-11ea-99a7-7d79dbbd423e"/>
-</subject>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 157.41726684570312, 106.91607666015625)</val>
-</matrix>
-<points>
-<val>[(0.0, 0.0), (0.0, 92.90509033203125), (3.6429943847656148, 92.90509033203125)]</val>
-</points>
-<head-connection>
-<ref refid="71ff27dc-242a-11ea-99a7-7d79dbbd423e"/>
-</head-connection>
-<tail-connection>
-<ref refid="76671bff-242a-11ea-99a7-7d79dbbd423e"/>
-</tail-connection>
-</item>
-<item id="8856a888-242a-11ea-99a7-7d79dbbd423e" type="CommentItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 314.28753662109375, 18.783798217773438)</val>
-</matrix>
-<width>
-<val>264.03302001953125</val>
-</width>
-<height>
-<val>44.0</val>
-</height>
-<diagram>
-<ref refid="67587c20-242a-11ea-99a7-7d79dbbd423e"/>
-</diagram>
-<subject>
-<ref refid="8856a887-242a-11ea-99a7-7d79dbbd423e"/>
-</subject>
-</item>
-</canvas>
-</Diagram>
-<Class id="76671bfe-242a-11ea-99a7-7d79dbbd423e">
-<appliedStereotype>
-<reflist>
-<ref refid="83359d42-242a-11ea-99a7-7d79dbbd423e"/>
-</reflist>
-</appliedStereotype>
-<generalization>
-<reflist>
-<ref refid="7b9de774-242a-11ea-99a7-7d79dbbd423e"/>
-</reflist>
-</generalization>
-<name>
-<val>Vulnerability</val>
-</name>
-<package>
-<ref refid="074e74c2-2364-11ea-ab0b-c72c0738acd2"/>
-</package>
-<presentation>
-<reflist>
-<ref refid="76671bff-242a-11ea-99a7-7d79dbbd423e"/>
-</reflist>
-</presentation>
-</Class>
-<Generalization id="7b9de774-242a-11ea-99a7-7d79dbbd423e">
-<general>
-<ref refid="dfe6f6f2-239a-11ea-99a7-7d79dbbd423e"/>
-</general>
-<presentation>
-<reflist>
-<ref refid="7a71e780-242a-11ea-99a7-7d79dbbd423e"/>
-</reflist>
-</presentation>
-<specific>
-<ref refid="76671bfe-242a-11ea-99a7-7d79dbbd423e"/>
-</specific>
-</Generalization>
 <InstanceSpecification id="83359d42-242a-11ea-99a7-7d79dbbd423e">
 <classifier>
 <reflist>
 <ref refid="dde0bab8-235f-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </classifier>
-<extended>
-<reflist>
-<ref refid="76671bfe-242a-11ea-99a7-7d79dbbd423e"/>
-</reflist>
-</extended>
 </InstanceSpecification>
-<Comment id="8856a887-242a-11ea-99a7-7d79dbbd423e">
-<body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.20</val>
-</body>
-<presentation>
-<reflist>
-<ref refid="8856a888-242a-11ea-99a7-7d79dbbd423e"/>
-</reflist>
-</presentation>
-</Comment>
 <Diagram id="9b1b2828-242a-11ea-99a7-7d79dbbd423e">
 <name>
 <val>Scenario</val>
