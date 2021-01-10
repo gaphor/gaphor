@@ -3022,7 +3022,7 @@ Figure 1.23</val>
 <val>(1.0, 0.0, 0.0, 1.0, 337.1187744140625, 16.541458129882812)</val>
 </matrix>
 <width>
-<val>249.742431640625</val>
+<val>98.4085693359375</val>
 </width>
 <height>
 <val>44.0</val>
@@ -3106,7 +3106,7 @@ Figure 1.23</val>
 </InstanceSpecification>
 <Diagram id="2b69d716-2396-11ea-99a7-7d79dbbd423e">
 <name>
-<val>AbstractEffect</val>
+<val>Abstract Effect</val>
 </name>
 <ownedPresentation>
 <reflist>
@@ -3197,7 +3197,7 @@ Figure 1.23</val>
 <val>(1.0, 0.0, 0.0, 1.0, 295.87725830078125, 14.708999633789062)</val>
 </matrix>
 <width>
-<val>247.62530517578125</val>
+<val>98.86492919921875</val>
 </width>
 <height>
 <val>44.0</val>
@@ -3267,8 +3267,8 @@ Figure 1.23</val>
 </InstanceSpecification>
 <Comment id="8e1c5f1f-2396-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.13</val>
+<val>RAAML 1.0
+Figure 9.14</val>
 </body>
 <presentation>
 <reflist>
@@ -3285,6 +3285,7 @@ Figure 1.13</val>
 <ref refid="e2921aa6-2397-11ea-99a7-7d79dbbd423e"/>
 <ref refid="e8ebdc21-2397-11ea-99a7-7d79dbbd423e"/>
 <ref refid="ede5400e-2397-11ea-99a7-7d79dbbd423e"/>
+<ref refid="4441a0c2-537c-11eb-94ad-18cf5efc6bb9"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -3362,6 +3363,23 @@ Figure 1.13</val>
 <tail-connection>
 <ref refid="e8ebdc21-2397-11ea-99a7-7d79dbbd423e"/>
 </tail-connection>
+</item>
+<item id="4441a0c2-537c-11eb-94ad-18cf5efc6bb9" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 340.0, 19.6015625)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="2fec63e8-2397-11ea-99a7-7d79dbbd423e"/>
+</diagram>
+<subject>
+<ref refid="44418510-537c-11eb-94ad-18cf5efc6bb9"/>
+</subject>
 </item>
 </canvas>
 </Diagram>
@@ -9593,8 +9611,8 @@ Figure 1.38</val>
 </Comment>
 <Comment id="58230178-2a6d-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.11</val>
+<val>RAAML 1.0
+Figure 9.13</val>
 </body>
 <presentation>
 <reflist>
@@ -39968,6 +39986,17 @@ Figure 9.12</val>
 <presentation>
 <reflist>
 <ref refid="4cf66ffa-537b-11eb-94ad-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Comment>
+<Comment id="44418510-537c-11eb-94ad-18cf5efc6bb9">
+<body>
+<val>RAAML 1.0
+Figure 9.15</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="4441a0c2-537c-11eb-94ad-18cf5efc6bb9"/>
 </reflist>
 </presentation>
 </Comment>
