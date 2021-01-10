@@ -673,7 +673,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 380.66729736328125, 11.334640502929688)</val>
 </matrix>
 <width>
-<val>248.12225341796875</val>
+<val>99.33270263671875</val>
 </width>
 <height>
 <val>44.0</val>
@@ -762,8 +762,8 @@
 </Generalization>
 <Comment id="28f5cea3-2361-11ea-ab0b-c72c0738acd2">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.4</val>
+<val>RAAML 1.0
+Figure 9.5</val>
 </body>
 <presentation>
 <reflist>
