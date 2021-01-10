@@ -195,7 +195,7 @@
 </Diagram>
 <Diagram id="b63dbe70-235f-11ea-ab0b-c72c0738acd2">
 <name>
-<val>Situations</val>
+<val>Situation</val>
 </name>
 <ownedPresentation>
 <reflist>
@@ -773,8 +773,8 @@ Figure 1.4</val>
 </Comment>
 <Comment id="9cc110ee-2361-11ea-ab0b-c72c0738acd2">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.3</val>
+<val>RAAML 1.0
+Figure 9.4</val>
 </body>
 <presentation>
 <reflist>
