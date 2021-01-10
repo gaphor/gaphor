@@ -3673,13 +3673,13 @@ Figure 9.14</val>
 </item>
 <item id="de352571-2399-11ea-99a7-7d79dbbd423e" type="CommentItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 464.12786865234375, 62.05560302734375)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 468.8648681640625, 48.05560302734375)</val>
 </matrix>
 <width>
-<val>249.198974609375</val>
+<val>101.87213134765625</val>
 </width>
 <height>
-<val>44.0</val>
+<val>45.94439697265625</val>
 </height>
 <diagram>
 <ref refid="3789cb08-2398-11ea-99a7-7d79dbbd423e"/>
@@ -3814,10 +3814,10 @@ Figure 9.14</val>
 <canvas>
 <item id="f5086c07-2399-11ea-99a7-7d79dbbd423e" type="CommentItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 436.6932373046875, 21.208755493164062)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 331.6932373046875, 28.208755493164062)</val>
 </matrix>
 <width>
-<val>252.29937744140625</val>
+<val>105.3067626953125</val>
 </width>
 <height>
 <val>44.0</val>
@@ -3831,7 +3831,7 @@ Figure 9.14</val>
 </item>
 <item id="0670a9d6-239a-11ea-99a7-7d79dbbd423e" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 125.67617797851562, 231.17510986328125)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 98.67617797851562, 160.17510986328125)</val>
 </matrix>
 <width>
 <val>153.0</val>
@@ -3842,6 +3842,12 @@ Figure 9.14</val>
 <diagram>
 <ref refid="bcfa898e-2399-11ea-99a7-7d79dbbd423e"/>
 </diagram>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
 <subject>
 <ref refid="d3cc842e-2370-11ea-99a7-7d79dbbd423e"/>
 </subject>
@@ -3869,7 +3875,7 @@ Figure 9.14</val>
 <ref refid="0b5900a0-239a-11ea-99a7-7d79dbbd423e"/>
 </tail_subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 192.82086181640625, 231.17510986328125)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 165.82086181640625, 160.17510986328125)</val>
 </matrix>
 <points>
 <val>[(0.0, 0.0), (-0.127227783203125, -65.64190673828125), (180.2943115234375, -63.14495849609375), (180.86163330078125, 40.3958740234375), (85.85531616210938, 40.28466796875)]</val>
@@ -3885,8 +3891,8 @@ Figure 9.14</val>
 </Diagram>
 <Comment id="de352570-2399-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.15</val>
+<val>RAAML 1.0
+Figure 9.16</val>
 </body>
 <presentation>
 <reflist>
@@ -3896,8 +3902,8 @@ Figure 1.15</val>
 </Comment>
 <Comment id="f5086c06-2399-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.16</val>
+<val>RAAML 1.0
+Figure 9.17</val>
 </body>
 <presentation>
 <reflist>
@@ -4060,7 +4066,7 @@ Figure 1.16</val>
 <val>(1.0, 0.0, 0.0, 1.0, 434.3662109375, 14.991485595703125)</val>
 </matrix>
 <width>
-<val>249.88153076171875</val>
+<val>107.6337890625</val>
 </width>
 <height>
 <val>44.0</val>
@@ -4153,8 +4159,8 @@ Figure 1.16</val>
 </Property>
 <Comment id="84a63c47-239a-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.17</val>
+<val>RAAML 1.0
+Figure 9.18</val>
 </body>
 <presentation>
 <reflist>
@@ -4180,10 +4186,10 @@ Figure 1.17</val>
 <canvas>
 <item id="ba852489-239a-11ea-99a7-7d79dbbd423e" type="CommentItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 359.3753662109375, 19.577362060546875)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 304.3753662109375, 19.577362060546875)</val>
 </matrix>
 <width>
-<val>248.61517333984375</val>
+<val>99.6246337890625</val>
 </width>
 <height>
 <val>44.0</val>
@@ -4271,8 +4277,8 @@ Figure 1.17</val>
 </Diagram>
 <Comment id="ba852488-239a-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.18</val>
+<val>RAAML 1.0
+Figure 9.19</val>
 </body>
 <presentation>
 <reflist>
@@ -4426,7 +4432,7 @@ Figure 1.18</val>
 <val>(1.0, 0.0, 0.0, 1.0, 285.0263671875, 10.602218627929688)</val>
 </matrix>
 <width>
-<val>259.59014892578125</val>
+<val>103.9736328125</val>
 </width>
 <height>
 <val>44.0</val>
@@ -4491,8 +4497,8 @@ Figure 1.18</val>
 </Generalization>
 <Comment id="2de0ec6a-242a-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.19</val>
+<val>RAAML 1.0
+Figure 9.20</val>
 </body>
 <presentation>
 <reflist>
@@ -4795,7 +4801,7 @@ Figure 1.20</val>
 <val>(1.0, 0.0, 0.0, 1.0, 431.18231201171875, 11.299224853515625)</val>
 </matrix>
 <width>
-<val>268.0953369140625</val>
+<val>98.81768798828125</val>
 </width>
 <height>
 <val>44.0</val>
@@ -4929,8 +4935,8 @@ Figure 1.20</val>
 </InstanceSpecification>
 <Comment id="33996dfd-242b-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.21</val>
+<val>RAAML 1.0
+Figure 9.21</val>
 </body>
 <presentation>
 <reflist>
