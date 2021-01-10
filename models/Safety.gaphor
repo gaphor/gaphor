@@ -1191,7 +1191,7 @@ Figure 9.4</val>
 <val>(1.0, 0.0, 0.0, 1.0, 248.7108154296875, 25.673431396484375)</val>
 </matrix>
 <width>
-<val>250.47991943359375</val>
+<val>101.2891845703125</val>
 </width>
 <height>
 <val>44.0</val>
@@ -26732,8 +26732,8 @@ Figure 1.115</val>
 </ExtensionEnd>
 <Comment id="41808360-2b27-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.6</val>
+<val>RAAML 1.0
+Figure 9.7</val>
 </body>
 <presentation>
 <reflist>
