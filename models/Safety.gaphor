@@ -817,6 +817,7 @@ Figure 9.4</val>
 <ref refid="7833aba1-2362-11ea-ab0b-c72c0738acd2"/>
 <ref refid="a301c9de-2362-11ea-ab0b-c72c0738acd2"/>
 <ref refid="a96e71b7-2362-11ea-ab0b-c72c0738acd2"/>
+<ref refid="923a6eb0-5379-11eb-94ad-18cf5efc6bb9"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -940,6 +941,23 @@ Figure 9.4</val>
 <tail-connection>
 <ref refid="7833aba1-2362-11ea-ab0b-c72c0738acd2"/>
 </tail-connection>
+</item>
+<item id="923a6eb0-5379-11eb-94ad-18cf5efc6bb9" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 409.0, -18.671875)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="5269e650-2362-11ea-ab0b-c72c0738acd2"/>
+</diagram>
+<subject>
+<ref refid="923a3b02-5379-11eb-94ad-18cf5efc6bb9"/>
+</subject>
 </item>
 </canvas>
 </Diagram>
@@ -39884,4 +39902,15 @@ Figure 1.170</val>
 </canvas>
 </Diagram>
 <StyleSheet id="4223783c-5378-11eb-94ad-18cf5efc6bb9"/>
+<Comment id="923a3b02-5379-11eb-94ad-18cf5efc6bb9">
+<body>
+<val>RAAML 1.0
+Figure 9.6</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="923a6eb0-5379-11eb-94ad-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>
