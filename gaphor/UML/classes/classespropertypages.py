@@ -504,9 +504,11 @@ class AssociationPropertyPage(PropertyPageBase):
             self.update_end_name(builder, end_name, event.element)
 
         def restore_nav_handler(event):
-            for end_name, end in (("head", head), ("tail", tail)):
-                combo = builder.get_object(f"{end_name}-navigation")
-                self._on_end_navigability_change(combo, end)
+            prop = event.element
+            if prop.type and prop.opposite and prop.opposite.type:
+                for end_name, end in (("head", head), ("tail", tail)):
+                    combo = builder.get_object(f"{end_name}-navigation")
+                    self._on_end_navigability_change(combo, end)
 
         # Watch on association end:
         self.watcher.watch("memberEnd[Property].name", name_handler).watch(
