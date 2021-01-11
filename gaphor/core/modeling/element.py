@@ -51,8 +51,7 @@ class Element:
 
         Id is a serial number for the element. The default id is None and will
         result in an automatic creation of an id. An existing id (such as an
-        int or string) can be provided as well. An id False will result in no
-        id being  given (for "transient" or helper classes).
+        int or string) can be provided as well.
 
         A model can be provided to refer to the model this element belongs to.
         """

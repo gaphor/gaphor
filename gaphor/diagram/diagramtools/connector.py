@@ -83,13 +83,10 @@ class DisconnectHandle:
     This is an object so disconnection data can be serialized/deserialized
     using pickle.
 
-    :Variables:
-     item
-        Connecting item.
-     handle
-        Handle of connecting item.
-     disable
-        If set, then disconnection is disabled.
+    Args:
+      item (Item): Connecting item.
+      handle (Handle): Handle of connecting item.
+      connections (Connections): Connections object containing connection constraints.
     """
 
     def __init__(self, item, handle, connections):

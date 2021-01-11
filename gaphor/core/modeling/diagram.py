@@ -275,7 +275,7 @@ class Diagram(PackageableElement):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
-        # Avoid events that reference this element before it's created-event is emitted.
+        # Avoid events that reference this element before its created-event is emitted.
         with self.model.block_events():
             item = type(diagram=self, id=id)
         assert isinstance(

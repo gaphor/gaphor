@@ -16,18 +16,15 @@ from gaphor.UML import Class
 from gaphor.UML.classes import ClassItem, GeneralizationItem
 
 
-def test_line_create(diagram, undo_manager, event_manager, capsys):
+def test_line_create(diagram, undo_manager, event_manager, caplog):
     with Transaction(event_manager):
         LinePresentation(diagram)
 
     assert diagram.ownedPresentation
 
     undo_manager.undo_transaction()
-    # Errors in undo manager are reported on stdout
-    captured = capsys.readouterr()
 
-    assert not captured.out
-    assert not captured.err
+    assert not caplog.records
     assert not diagram.ownedPresentation
 
     undo_manager.redo_transaction()
