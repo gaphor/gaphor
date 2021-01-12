@@ -16486,7 +16486,7 @@ Figure 9.50</val>
 <val>(1.0, 0.0, 0.0, 1.0, 281.88824462890625, 15.993576049804688)</val>
 </matrix>
 <width>
-<val>253.052978515625</val>
+<val>98.11175537109375</val>
 </width>
 <height>
 <val>44.0</val>
@@ -16550,8 +16550,8 @@ Figure 9.50</val>
 </Generalization>
 <Comment id="c0993e66-2b0a-11ea-99a7-7d79dbbd423e">
 <body>
-<val>Safety and Reliability Analysis 1.0
-Figure 1.50</val>
+<val>RAAML 1.0
+Figure 9.51</val>
 </body>
 <presentation>
 <reflist>
