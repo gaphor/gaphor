@@ -11,7 +11,9 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.item import matrix_i2i
 
 from gaphor.core.modeling.diagram import Diagram
+from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.presentation import Presentation, S
+from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style
 from gaphor.diagram.shapes import combined_style
 from gaphor.diagram.text import TextAlign, text_point_at_line
@@ -71,10 +73,40 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     connector.connect(sink)
 
 
+class HandlePositionEvent(RevertibeEvent):
+
+    requires_transaction = False
+
+    def __init__(self, element, index, old_value):
+        super().__init__(element)
+        self.index = index
+        self.old_value = old_value
+
+    def revert(self, target):
+        target.handles()[self.index].pos = self.old_value
+        target.request_update()
+
+
+class HandlePositionUpdate:
+    def watch_handle(self, handle):
+        handle.pos.add_handler(self._on_handle_position_update)
+
+    def remove_watch_handle(self, handle):
+        handle.pos.remove_handler(self._on_handle_position_update)
+
+    def _on_handle_position_update(self, position, old):
+        for index, handle in enumerate(self.handles()):  # type: ignore[attr-defined]
+            if handle.pos is position:
+                break
+        else:
+            return
+        self.handle(HandlePositionEvent(self, index, old))  # type: ignore[attr-defined]
+
+
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
 
 
-class ElementPresentation(gaphas.Element, Presentation[S]):
+class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S]):
     """Presentation for Gaphas Element (box-like) items.
 
     To create a shape (boxes, text), assign a shape to `self.shape`. If
@@ -90,6 +122,8 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
     def __init__(self, diagram: Diagram, id=None, shape=None):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
         self._shape = shape
+        for handle in self.handles():
+            self.watch_handle(handle)
 
     def port_side(self, port):
         return self._port_sides[self._ports.index(port)]
@@ -105,7 +139,10 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
         be drawn or when styling changes."""
 
     def pre_update(self, context):
-        self.min_width, self.min_height = self.shape.size(context)
+        if not self.shape:
+            self.update_shapes()
+        if self.shape:
+            self.min_width, self.min_height = self.shape.size(context)
 
     def post_update(self, context):
         pass
@@ -121,15 +158,17 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
-        for prop in ("width", "height"):
-            save_func(prop, getattr(self, prop))
+        save_func("width", self.width)
+        save_func("height", self.height)
         super().save(save_func)
 
     def load(self, name, value):
         if name == "matrix":
             self.matrix.set(*ast.literal_eval(value))
-        elif name in ("width", "height"):
-            setattr(self, name, ast.literal_eval(value))
+        elif name == "width":
+            self.width = ast.literal_eval(value)
+        elif name == "height":
+            self.height = ast.literal_eval(value)
         else:
             super().load(name, value)
 
@@ -138,7 +177,7 @@ class ElementPresentation(gaphas.Element, Presentation[S]):
         self.update_shapes()
 
 
-class LinePresentation(gaphas.Line, Presentation[S]):
+class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     def __init__(
         self,
         diagram: Diagram,
@@ -159,9 +198,25 @@ class LinePresentation(gaphas.Line, Presentation[S]):
         self._shape_head_rect = None
         self._shape_middle_rect = None
         self._shape_tail_rect = None
+        self.watch("orthogonal", self._on_orthogonal).watch(
+            "horizontal", self._on_horizontal
+        )
+        self.watch_handle(self.head)
+        self.watch_handle(self.tail)
 
     head = property(lambda self: self._handles[0])
     tail = property(lambda self: self._handles[-1])
+
+    orthogonal: attribute[int] = attribute("orthogonal", int, 0)
+    horizontal: attribute[int] = attribute("horizontal", int, 0)
+
+    def insert_handle(self, index: int, handle: Handle) -> None:
+        super().insert_handle(index, handle)
+        self.watch_handle(handle)
+
+    def remove_handle(self, handle: Handle) -> None:
+        self.remove_watch_handle(handle)
+        super().remove_handle(handle)
 
     def pre_update(self, context):
         pass
@@ -221,8 +276,6 @@ class LinePresentation(gaphas.Line, Presentation[S]):
 
         super().save(save_func)
         save_func("matrix", tuple(self.matrix))
-        for prop in ("orthogonal", "horizontal"):
-            save_func(prop, getattr(self, prop))
         points = [tuple(map(float, h.pos)) for h in self.handles()]
         save_func("points", points)
 
@@ -237,18 +290,10 @@ class LinePresentation(gaphas.Line, Presentation[S]):
             for _ in range(len(points) - 2):
                 h = Handle((0, 0))
                 self._handles.insert(1, h)
+                self.watch_handle(h)
             for i, p in enumerate(points):
                 self.handles()[i].pos = p
-
-            # Update connection ports of the line. Only handles are saved
-            # in Gaphor file therefore ports need to be recreated after
-            # handles information is loaded.
             self._update_ports()
-
-        elif name == "orthogonal":
-            self._load_orthogonal = ast.literal_eval(value)
-        elif name == "horizontal":
-            self.horizontal = ast.literal_eval(value)
         elif name in ("head_connection", "head-connection"):
             self._load_head_connection = value
         elif name in ("tail_connection", "tail-connection"):
@@ -257,13 +302,8 @@ class LinePresentation(gaphas.Line, Presentation[S]):
             super().load(name, value)
 
     def postload(self):
-        if hasattr(self, "_load_orthogonal"):
-            # Ensure there are enough handles
-            if self._load_orthogonal and len(self._handles) < 3:
-                p0 = self._handles[-1].pos
-                self._handles.insert(1, self._create_handle(p0))
-            self.orthogonal = self._load_orthogonal
-            del self._load_orthogonal
+        if self.orthogonal:
+            self._set_orthogonal(self.orthogonal)
 
         if hasattr(self, "_load_head_connection"):
             postload_connect(self, self.head, self._load_head_connection)
@@ -274,3 +314,9 @@ class LinePresentation(gaphas.Line, Presentation[S]):
             del self._load_tail_connection
 
         super().postload()
+
+    def _on_orthogonal(self, event):
+        self._set_orthogonal(event.new_value)
+
+    def _on_horizontal(self, event):
+        self._set_horizontal(event.new_value)

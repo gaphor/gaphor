@@ -235,7 +235,7 @@ def test_element_factory_undo(element_factory, undo_manager):
     assert undo_manager.can_undo()
     assert not undo_manager.can_redo()
     assert element_factory.size() == 1
-    assert element_factory.lselect()[0] is p
+    assert element_factory.lookup(p.id)
 
 
 def test_element_factory_rollback(element_factory, undo_manager):
@@ -424,4 +424,4 @@ def test_redo_stack(event_manager, element_factory, undo_manager):
     assert not undo_manager.can_redo()
     assert element_factory.size() == 2
 
-    assert p in element_factory.lselect()
+    assert element_factory.lookup(p.id)

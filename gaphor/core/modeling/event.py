@@ -1,6 +1,27 @@
 """The core modeling events."""
-
 from gaphor.event import ServiceEvent
+
+
+class RevertibeEvent:
+    """Base type for all events that can be reversed.
+
+    This event can be used as "low level" event for anything that should
+    be revertible/undoable.
+    """
+
+    requires_transaction = True
+
+    def __init__(self, element):
+        self.element = element
+
+    def revert(self, target):
+        """Reverse whatever caused the event.
+
+        `target` Is the element the action should be performed upon,
+        which may be a different element than the one that caused the
+        event.
+        """
+        raise NotImplementedError("Method {self}.revert() has not been implemented")
 
 
 class ElementUpdated:

@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 from gaphas.item import Matrices
 
 from gaphor.core.modeling import Element
-from gaphor.core.modeling.event import DiagramItemDeleted
+from gaphor.core.modeling.event import DiagramItemDeleted, RevertibeEvent
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
@@ -18,8 +18,6 @@ S = TypeVar("S", bound=Element)
 
 
 log = logging.getLogger(__name__)
-
-Transient = False
 
 
 class Presentation(Matrices, Element, Generic[S]):
@@ -34,11 +32,8 @@ class Presentation(Matrices, Element, Generic[S]):
     """
 
     def __init__(self, diagram: Diagram, id=None):
-        if id is Transient:
-            super().__init__(id=id)
-        else:
-            super().__init__(id=id, model=diagram.model)
-            self.diagram = diagram
+        super().__init__(id=id, model=diagram.model)
+        self.diagram = diagram
 
         def update(event):
             if self.diagram:
@@ -120,11 +115,14 @@ class Presentation(Matrices, Element, Generic[S]):
             m = new_parent.matrix_i2c.inverse()
             self.matrix.set(*self.matrix.multiply(m))
 
-    def _on_matrix_changed(self, _matrix=None):
+    def _on_matrix_changed(self, matrix, old_value):
         if self.parent:
             self.matrix_i2c.set(*(self.matrix * self.parent.matrix_i2c))
         else:
             self.matrix_i2c.set(*self.matrix)
+        self.request_update()
+        if matrix is self.matrix:
+            self.handle(MatrixUpdated(self, old_value))
 
 
 Element.presentation = association(
@@ -134,3 +132,12 @@ Presentation.parent = association("parent", Presentation, upper=1, opposite="chi
 Presentation.children = association(
     "children", Presentation, composite=True, opposite="parent"
 )
+
+
+class MatrixUpdated(RevertibeEvent):
+    def __init__(self, element, old_value):
+        super().__init__(element)
+        self.old_value = old_value
+
+    def revert(self, target):
+        target.matrix.set(*self.old_value)

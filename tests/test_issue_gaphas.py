@@ -22,8 +22,8 @@ def sanitizer_service(event_manager):
 
 
 @pytest.fixture(autouse=True)
-def undo_manager(event_manager):
-    return UndoManager(event_manager)
+def undo_manager(event_manager, element_factory):
+    return UndoManager(event_manager, element_factory)
 
 
 def test_remove_class_with_association(create, diagram, element_factory, event_manager):

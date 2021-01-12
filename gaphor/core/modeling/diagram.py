@@ -275,15 +275,17 @@ class Diagram(PackageableElement):
             raise TypeError(
                 f"Type {type} can not be added to a diagram as it is not a diagram item"
             )
-        item = type(diagram=self, id=id)
+        # Avoid events that reference this element before its created-event is emitted.
+        with self.model.block_events():
+            item = type(diagram=self, id=id)
         assert isinstance(
             item, gaphas.Item
         ), f"Type {type} does not comply with Item protocol"
+        self.model.handle(DiagramItemCreated(self, item))
         if subject:
             item.subject = subject
         if parent:
             item.parent = parent
-        self.model.handle(DiagramItemCreated(self, item))
         self.request_update(item)
         return item
 
@@ -299,7 +301,7 @@ class Diagram(PackageableElement):
         self._watcher.unsubscribe_all()
         super().unlink()
 
-    def select(self, expression=None) -> Iterable[Presentation]:
+    def select(self, expression=None) -> Iterator[Presentation]:
         """Return a iterator of all canvas items that match expression."""
         if expression is None:
             yield from self.get_all_items()
@@ -370,7 +372,6 @@ class Diagram(PackageableElement):
 
         self._resolved_items.clear()
 
-        # solve all constraints
         self._connections.solve()
 
         all_dirty_items.extend(self._resolved_items)

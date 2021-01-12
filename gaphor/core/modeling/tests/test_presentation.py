@@ -1,3 +1,4 @@
+import pytest
 from gaphas.constraint import BaseConstraint
 from gaphas.item import Item
 from gaphas.solver import Variable
@@ -55,7 +56,8 @@ def test_presentation_can_not_set_new_diagram(diagram, element_factory):
     presentation = diagram.create(Example)
     new_diagram = element_factory.create(Diagram)
 
-    presentation.diagram = new_diagram
+    with pytest.raises(ValueError):
+        presentation.diagram = new_diagram
 
     assert presentation.diagram is None
 

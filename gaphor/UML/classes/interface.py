@@ -260,7 +260,7 @@ class InterfaceItem(ElementPresentation, Classified):
 
     def pre_update(self, context):
         connected_items = [
-            c.item for c in self._connections.get_connections(connected=self)
+            c.item for c in self.diagram.connections.get_connections(connected=self)
         ]
         connectors = any(
             map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
@@ -332,7 +332,7 @@ class InterfaceItem(ElementPresentation, Classified):
         if connectors is None:
             # distinguish between None and []
             connected_items = [
-                c.item for c in self._connections.get_connections(connected=self)
+                c.item for c in self.diagram.connections.get_connections(connected=self)
             ]
             connectors = any(
                 map(lambda i: isinstance(i.subject, UML.Connector), connected_items)

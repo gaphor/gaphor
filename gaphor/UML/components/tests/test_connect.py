@@ -112,7 +112,7 @@ class InterfaceConnectTestCase(TestCase):
         comp = self.create(ComponentItem, UML.Component)
         line = self.create(ConnectorItem)
 
-        pport = iface.ports()[0]
+        pport = comp.ports()[0]
         rport = iface.ports()[2]
 
         self.connect(line, line.head, iface, rport)

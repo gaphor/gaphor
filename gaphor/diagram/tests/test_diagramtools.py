@@ -42,8 +42,8 @@ class DiagramItemConnectorTestCase(TestCase):
         self.connect(a, a.tail, ci2)
 
         assert a.subject
-        assert a.head_end.subject
-        assert a.tail_end.subject
+        assert a.head_subject
+        assert a.tail_subject
 
         the_association = a.subject
 

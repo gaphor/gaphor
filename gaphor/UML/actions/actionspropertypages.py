@@ -15,6 +15,7 @@ class ObjectNodePropertyPage(PropertyPageBase):
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
 
     subject: UML.ObjectNode
+    item: ObjectNodeItem
 
     def __init__(self, item):
         self.item = item

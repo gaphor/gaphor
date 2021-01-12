@@ -1,4 +1,4 @@
-"""Unnit tests for AssociationItem."""
+"""Unit tests for AssociationItem."""
 
 from gaphor import UML
 from gaphor.tests import TestCase
@@ -19,8 +19,8 @@ class AssociationItemTestCase(TestCase):
         self.connect(self.assoc, self.assoc.tail, self.class2)
 
         assert isinstance(self.assoc.subject, UML.Association)
-        assert self.assoc.head_end.subject is not None
-        assert self.assoc.tail_end.subject is not None
+        assert self.assoc.head_subject is not None
+        assert self.assoc.tail_subject is not None
 
         assert not self.assoc.show_direction
 
@@ -32,8 +32,8 @@ class AssociationItemTestCase(TestCase):
         self.connect(self.assoc, self.assoc.head, self.class1)
         self.connect(self.assoc, self.assoc.tail, self.class2)
 
-        assert self.assoc.head_end.subject is self.assoc.subject.memberEnd[0]
-        assert self.assoc.tail_end.subject is self.assoc.subject.memberEnd[1]
+        assert self.assoc.head_subject is self.assoc.subject.memberEnd[0]
+        assert self.assoc.tail_subject is self.assoc.subject.memberEnd[1]
 
     def test_invert_direction(self):
         self.connect(self.assoc, self.assoc.head, self.class1)
@@ -42,8 +42,8 @@ class AssociationItemTestCase(TestCase):
         self.assoc.invert_direction()
 
         assert self.assoc.subject.memberEnd
-        assert self.assoc.head_end.subject is self.assoc.subject.memberEnd[1]
-        assert self.assoc.tail_end.subject is self.assoc.subject.memberEnd[0]
+        assert self.assoc.head_subject is self.assoc.subject.memberEnd[1]
+        assert self.assoc.tail_subject is self.assoc.subject.memberEnd[0]
 
     def test_association_end_updates(self):
         """Test association end navigability connected to a class."""
@@ -61,8 +61,8 @@ class AssociationItemTestCase(TestCase):
 
         assert a.subject.memberEnd, a.subject.memberEnd
 
-        assert a.subject.memberEnd[0] is a.head_end.subject
-        assert a.subject.memberEnd[1] is a.tail_end.subject
+        assert a.subject.memberEnd[0] is a.head_subject
+        assert a.subject.memberEnd[1] is a.tail_subject
         assert a.subject.memberEnd[0].name is None
 
         a.subject.memberEnd[0].name = "blah"

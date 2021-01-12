@@ -5,16 +5,8 @@ from __future__ import annotations
 
 import logging
 import uuid
-from typing import (
-    TYPE_CHECKING,
-    Callable,
-    Iterator,
-    Optional,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
+from contextlib import contextmanager
+from typing import TYPE_CHECKING, Callable, Iterator, Optional, Type, TypeVar, overload
 
 from typing_extensions import Protocol
 
@@ -37,7 +29,7 @@ class UnlinkEvent:
         self.element = element
 
 
-Id = Union[str, bool]
+Id = str
 
 
 class Element:
@@ -59,13 +51,12 @@ class Element:
 
         Id is a serial number for the element. The default id is None and will
         result in an automatic creation of an id. An existing id (such as an
-        int or string) can be provided as well. An id False will result in no
-        id being  given (for "transient" or helper classes).
+        int or string) can be provided as well.
 
         A model can be provided to refer to the model this element belongs to.
         """
         super().__init__()
-        self._id: Id = id or (id is not False and str(uuid.uuid1()) or False)
+        self._id: Id = id or str(uuid.uuid1())
         # The model this element belongs to.
         self._model = model
         self._unlink_lock = 0
@@ -196,12 +187,19 @@ class RepositoryProtocol(Protocol):
     def select(self, expression: None) -> Iterator[Element]:
         ...
 
+    def lookup(self, id: str) -> Optional[Element]:
+        ...
+
     def watcher(
         self, element: Element, default_handler: Optional[Handler] = None
     ) -> EventWatcherProtocol:
         ...
 
     def handle(self, event: object) -> None:
+        ...
+
+    @contextmanager
+    def block_events(self) -> Iterator[RepositoryProtocol]:
         ...
 
 

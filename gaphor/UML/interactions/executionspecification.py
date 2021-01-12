@@ -30,14 +30,16 @@ from gaphas.solver import WEAK
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.presentation import postload_connect
+from gaphor.diagram.presentation import HandlePositionUpdate, postload_connect
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
 
 
 @represents(UML.ExecutionSpecification)
 @represents(UML.BehaviorExecutionSpecification)
-class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
+class ExecutionSpecificationItem(
+    Presentation[UML.ExecutionSpecification], HandlePositionUpdate
+):
     """Representation of interaction execution specification."""
 
     def __init__(self, diagram, id=None):
@@ -50,6 +52,8 @@ class ExecutionSpecificationItem(Presentation[UML.ExecutionSpecification]):
         ht.connectable = True
 
         self._handles = [ht, hb]
+        self.watch_handle(ht)
+        self.watch_handle(hb)
 
         self._connections.add_constraint(self, constraint(vertical=(ht.pos, hb.pos)))
 

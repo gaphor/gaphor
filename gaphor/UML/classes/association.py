@@ -12,14 +12,14 @@ Plan:
 #   tail end and visa versa.
 
 
-import ast
 from math import atan2, pi
+from typing import Optional
 
+from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
-from gaphas.state import reversible_property
 
 from gaphor import UML
-from gaphor.core.modeling.presentation import Presentation, Transient
+from gaphor.core.modeling.properties import association, attribute
 from gaphor.core.styling import Style
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
@@ -56,7 +56,6 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         self._tail_end = AssociationEnd(owner=self, end="tail")
 
         # Direction depends on the ends that hold the ownedEnd attributes.
-        self._show_direction = False
         self._dir_angle = 0
         self._dir_pos = 0, 0
 
@@ -100,34 +99,25 @@ class AssociationItem(LinePresentation[UML.Association], Named):
             "subject[Association].ownedEnd"
         ).watch(
             "subject[Association].navigableOwnedEnd"
+        ).watch(
+            "show_direction"
         )
 
-    def set_show_direction(self, dir):
-        self._show_direction = dir
-        self.request_update()
-
-    show_direction = reversible_property(
-        lambda s: s._show_direction, set_show_direction
-    )
+    show_direction: attribute[bool] = attribute("show_direction", bool, False)
 
     def save(self, save_func):
         super().save(save_func)
-        save_func("show-direction", self._show_direction)
-        if self._head_end.subject:
-            save_func("head-subject", self._head_end.subject)
-        if self._tail_end.subject:
-            save_func("tail-subject", self._tail_end.subject)
 
     def load(self, name, value):
         # end_head and end_tail were used in an older Gaphor version
-        if name in ("head_end", "head_subject", "head-subject"):
-            self._head_end.subject = value
-        elif name in ("tail_end", "tail_subject", "tail-subject"):
-            self._tail_end.subject = value
+        if name in ("head_end", "head-subject"):
+            name = "head_subject"
+        elif name in ("tail_end", "tail-subject"):
+            name = "tail_subject"
         elif name == "show-direction":
-            self._show_direction = ast.literal_eval(value)
-        else:
-            super().load(name, value)
+            name = "show_direction"
+
+        super().load(name, value)
 
     def postload(self):
         super().postload()
@@ -135,13 +125,9 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         self._tail_end.set_text()
 
     head_end = property(lambda self: self._head_end)
-
     tail_end = property(lambda self: self._tail_end)
-
-    def unlink(self):
-        self._head_end.unlink()
-        self._tail_end.unlink()
-        super().unlink()
+    head_subject = association("head_subject", UML.Property, upper=1)
+    tail_subject = association("tail_subject", UML.Property, upper=1)
 
     def invert_direction(self):
         """Invert the direction of the association, this is done by swapping
@@ -166,8 +152,8 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         handles = self.handles()
 
         # Update line endings:
-        head_subject = self._head_end.subject
-        tail_subject = self._tail_end.subject
+        head_subject = self.head_subject
+        tail_subject = self.tail_subject
 
         # Update line ends using the aggregation and isNavigable values:
         if head_subject and tail_subject:
@@ -191,8 +177,8 @@ class AssociationItem(LinePresentation[UML.Association], Named):
                 self.draw_tail = draw_tail_none
             else:
                 self.draw_tail = draw_default_tail
-            if self._show_direction:
-                inverted = self.tail_end.subject is self.subject.memberEnd[0]
+            if self.show_direction:
+                inverted = self.tail_subject is self.subject.memberEnd[0]
                 pos, angle = get_center_pos(self.handles(), inverted)
                 self._dir_pos = pos
                 self._dir_angle = angle
@@ -219,7 +205,7 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         super().draw(context)
         self._head_end.draw(context)
         self._tail_end.draw(context)
-        if self._show_direction:
+        if self.show_direction:
             with cairo_state(context.cairo) as cr:
                 cr.translate(*self._dir_pos)
                 cr.rotate(self._dir_angle)
@@ -337,7 +323,7 @@ def draw_tail_navigable(context):
     cr.line_to(15, 6)
 
 
-class AssociationEnd(Presentation[UML.Property]):
+class AssociationEnd:
     """An association end represents one end of an association. An association
     has two ends. An association end has two labels: one for the name and one
     for the multiplicity (and maybe one for tagged values in the future).
@@ -346,8 +332,7 @@ class AssociationEnd(Presentation[UML.Property]):
     be recreated by the owning Association.
     """
 
-    def __init__(self, owner, end=None):
-        super().__init__(diagram=owner.diagram, id=Transient)
+    def __init__(self, owner: AssociationItem, end: Optional[str] = None):
         self._canvas = None
         self._owner = owner
         self._end = end
@@ -367,14 +352,18 @@ class AssociationEnd(Presentation[UML.Property]):
     name_bounds = property(lambda s: s._name_bounds)
 
     @property
-    def owner(self):
+    def owner(self) -> AssociationItem:
         """Override Element.owner."""
         return self._owner
 
     @property
-    def owner_handle(self):
+    def owner_handle(self) -> Handle:
         # handle(event) is the event handler method
         return self._owner.head if self is self._owner.head_end else self._owner.tail
+
+    @property
+    def subject(self) -> Optional[UML.Property]:
+        return getattr(self.owner, f"{self._end}_subject")  # type:ignore[no-any-return]
 
     def request_update(self):
         self._owner.request_update()

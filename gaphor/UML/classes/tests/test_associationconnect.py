@@ -26,8 +26,8 @@ def clone(create):
     def _clone(item):
         new = create(type(item))
         new.subject = item.subject
-        new.head_end.subject = item.head_end.subject
-        new.tail_end.subject = item.tail_end.subject
+        new.head_subject = item.head_subject
+        new.tail_subject = item.tail_subject
         return new
 
     return _clone
@@ -50,15 +50,15 @@ def test_association_item_connect(connected_association, element_factory):
 
     # Diagram, Class *2, Property *2, Association
     assert len(element_factory.lselect()) == 6
-    assert asc.head_end.subject is not None
-    assert asc.tail_end.subject is not None
+    assert asc.head_subject is not None
+    assert asc.tail_subject is not None
 
 
 def test_association_item_reconnect(connected_association, create):
     asc, c1, c2 = connected_association
     c3 = create(ClassItem, UML.Class)
 
-    UML.model.set_navigability(asc.subject, asc.tail_end.subject, True)
+    UML.model.set_navigability(asc.subject, asc.tail_subject, True)
 
     a = asc.subject
 
@@ -69,7 +69,7 @@ def test_association_item_reconnect(connected_association, create):
     assert c1.subject in ends
     assert c3.subject in ends
     assert c2.subject not in ends
-    assert asc.tail_end.subject.navigability is True
+    assert asc.tail_subject.navigability is True
 
 
 def test_disconnect_should_disconnect_model(connected_association):
@@ -103,19 +103,19 @@ def test_disconnect_of_navigable_end_should_remove_owner_relationship(
 ):
     asc, c1, c2 = connected_association
 
-    UML.model.set_navigability(asc.subject, asc.head_end.subject, True)
+    UML.model.set_navigability(asc.subject, asc.head_subject, True)
 
-    assert asc.head_end.subject in c2.subject.ownedAttribute
+    assert asc.head_subject in c2.subject.ownedAttribute
 
     disconnect(asc, asc.head)
 
     assert asc.subject
     assert len(asc.subject.memberEnd) == 2
     assert asc.subject.memberEnd[0].type is None
-    assert asc.head_end.subject not in c2.subject.ownedAttribute
-    assert asc.tail_end.subject not in c1.subject.ownedAttribute
-    assert asc.head_end.subject.type is None
-    assert asc.tail_end.subject.type is None
+    assert asc.head_subject not in c2.subject.ownedAttribute
+    assert asc.tail_subject not in c1.subject.ownedAttribute
+    assert asc.head_subject.type is None
+    assert asc.tail_subject.type is None
 
 
 def test_allow_reconnect_for_single_presentation(connected_association, create):

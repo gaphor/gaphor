@@ -10,12 +10,21 @@ from gaphor.core.modeling.event import AssociationDeleted, AssociationSet, Deriv
 from gaphor.diagram.general import CommentLineItem
 
 
+def undo_guard(func):
+    def guard(self, event):
+        if not (self.undo_manager and self.undo_manager.in_undo_transaction()):
+            func(self, event)
+
+    return guard
+
+
 class SanitizerService(Service):
     """Does some background cleanup jobs, such as removing elements from the
     model that have no presentations (and should have some)."""
 
-    def __init__(self, event_manager):
+    def __init__(self, event_manager, undo_manager=None):
         self.event_manager = event_manager
+        self.undo_manager = undo_manager
 
         event_manager.subscribe(self._unlink_on_presentation_delete)
         event_manager.subscribe(self.update_annotated_element_link)
@@ -34,6 +43,7 @@ class SanitizerService(Service):
         event_manager.unsubscribe(self._redraw_diagram_on_move)
 
     @event_handler(AssociationDeleted)
+    @undo_guard
     def _unlink_on_presentation_delete(self, event):
         """Unlink the model element if no more presentations link to the
         `item`'s subject or the deleted item was the only item currently
@@ -44,6 +54,7 @@ class SanitizerService(Service):
                 event.element.unlink()
 
     @event_handler(AssociationSet)
+    @undo_guard
     def update_annotated_element_link(self, event):
         """Link comment and element if a comment line is present, but comment
         and element subject are not connected yet."""
@@ -76,6 +87,7 @@ class SanitizerService(Service):
                     i.unlink()
 
     @event_handler(AssociationDeleted)
+    @undo_guard
     def _unlink_on_extension_delete(self, event):
         """Remove applied stereotypes when extension is deleted."""
         if (
@@ -93,6 +105,7 @@ class SanitizerService(Service):
                 self.perform_unlink_for_instances(st, meta)
 
     @event_handler(AssociationSet)
+    @undo_guard
     def _disconnect_extension_end(self, event):
         if event.property is UML.ExtensionEnd.type and event.old_value:
             ext = event.element
@@ -105,6 +118,7 @@ class SanitizerService(Service):
                 self.perform_unlink_for_instances(st, meta)
 
     @event_handler(AssociationDeleted)
+    @undo_guard
     def _unlink_on_stereotype_delete(self, event):
         """Remove applied stereotypes when stereotype is deleted."""
         if event.property is UML.InstanceSpecification.classifier and isinstance(
@@ -113,6 +127,7 @@ class SanitizerService(Service):
             event.element.unlink()
 
     @event_handler(DerivedSet)
+    @undo_guard
     def _redraw_diagram_on_move(self, event):
         if event.property is Element.owner and isinstance(event.element, Diagram):
             diagram = event.element

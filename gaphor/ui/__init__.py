@@ -51,7 +51,8 @@ def main(argv=sys.argv):
         return any(o in argv for o in options)
 
     if has_option("-v", "--verbose"):
-        logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
+        logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+        logging.getLogger("gaphor").setLevel(logging.DEBUG)
     elif has_option("-q", "--quiet"):
         logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
     else:

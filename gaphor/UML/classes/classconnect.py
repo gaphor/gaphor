@@ -102,19 +102,18 @@ class AssociationConnect(UnaryRelationshipConnect):
             return True
 
         line = self.line
+        subject = line.subject
         is_head = handle is line.head
-        end = line.head_end if is_head else line.tail_end
-        assert end.subject
 
-        def is_connection_allowed(h):
+        def is_connection_allowed(p):
+            end = p.head_end if is_head else p.tail_end
+            h = end.owner_handle
             if h is handle:
                 return True
             connected = self.get_connected(h)
             return (not connected) or connected.subject is element.subject
 
-        return all(
-            is_connection_allowed(p.owner_handle) for p in end.subject.presentation
-        )
+        return all(is_connection_allowed(p) for p in subject.presentation)
 
     def connect_subject(self, handle):
         element = self.element
@@ -129,14 +128,14 @@ class AssociationConnect(UnaryRelationshipConnect):
             if not line.subject:
                 relation = UML.model.create_association(c1.subject, c2.subject)
                 relation.package = element.diagram.namespace
-                line.head_end.subject = relation.memberEnd[0]
-                line.tail_end.subject = relation.memberEnd[1]
+                line.head_subject = relation.memberEnd[0]
+                line.tail_subject = relation.memberEnd[1]
 
                 # Set subject last so that event handlers can trigger
                 line.subject = relation
 
-            line.head_end.subject.type = c1.subject  # type: ignore[assignment]
-            line.tail_end.subject.type = c2.subject  # type: ignore[assignment]
+            line.head_subject.type = c1.subject  # type: ignore[assignment]
+            line.tail_subject.type = c2.subject  # type: ignore[assignment]
 
     def reconnect(self, handle, port):
         line = self.line

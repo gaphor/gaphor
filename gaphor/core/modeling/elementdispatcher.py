@@ -236,29 +236,29 @@ class ElementDispatcher(Service):
     def on_element_change_event(self, event):
         handlers = self._handlers.get((event.element, event.property))
         if handlers:
-            for handler in set(handlers.keys()):
-                try:
+            try:
+                for handler in set(handlers.keys()):
                     handler(event)
-                except Exception:
-                    log.error(f"Problem executing handler {handler}", exc_info=True)
+            finally:
+                # Handle add/removal of handlers based on the kind of event
+                # Filter out handlers that have no remaining properties
+                if (
+                    isinstance(event, (AssociationSet, AssociationDeleted))
+                    and event.old_value
+                ):
+                    for handler, remainders in handlers.items():
+                        for remainder in remainders:
+                            self._remove_handlers(
+                                event.old_value, remainder[0], handler
+                            )
 
-            # Handle add/removal of handlers based on the kind of event
-            # Filter out handlers that have no remaining properties
-            if (
-                isinstance(event, (AssociationSet, AssociationDeleted))
-                and event.old_value
-            ):
-                for handler, remainders in handlers.items():
-                    for remainder in remainders:
-                        self._remove_handlers(event.old_value, remainder[0], handler)
-
-            if (
-                isinstance(event, (AssociationSet, AssociationAdded))
-                and event.new_value
-            ):
-                for handler, remainders in handlers.items():
-                    for remainder in remainders:
-                        self._add_handlers(event.new_value, remainder, handler)
+                if (
+                    isinstance(event, (AssociationSet, AssociationAdded))
+                    and event.new_value
+                ):
+                    for handler, remainders in handlers.items():
+                        for remainder in remainders:
+                            self._add_handlers(event.new_value, remainder, handler)
 
     @event_handler(ModelReady)
     def on_model_loaded(self, event):

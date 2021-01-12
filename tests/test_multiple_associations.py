@@ -84,8 +84,8 @@ def test_delete_copied_associations(class_and_association_with_copy, event_manag
     assert a.subject.memberEnd[1].type
     assert a.subject.memberEnd[0].type is c.subject
     assert a.subject.memberEnd[1].type is c.subject
-    assert a.subject.memberEnd[0] is a.head_end.subject
-    assert a.subject.memberEnd[1] is a.tail_end.subject
+    assert a.subject.memberEnd[0] is a.head_subject
+    assert a.subject.memberEnd[1] is a.tail_subject
     assert a.subject.memberEnd[0] in a.subject.memberEnd[1].type.ownedAttribute
 
     # Delete the copy and all is fine
@@ -97,8 +97,8 @@ def test_delete_copied_associations(class_and_association_with_copy, event_manag
     assert a.subject.memberEnd[1].type
     assert a.subject.memberEnd[0].type is c.subject
     assert a.subject.memberEnd[1].type is c.subject
-    assert a.subject.memberEnd[0] is a.head_end.subject
-    assert a.subject.memberEnd[1] is a.tail_end.subject
+    assert a.subject.memberEnd[0] is a.head_subject
+    assert a.subject.memberEnd[1] is a.tail_subject
     assert a.subject.memberEnd[0] in a.subject.memberEnd[1].type.ownedAttribute
 
 
@@ -110,8 +110,8 @@ def test_delete_original_association(class_and_association_with_copy, event_mana
     assert aa.subject.memberEnd[1].type
     assert aa.subject.memberEnd[0].type is c.subject
     assert aa.subject.memberEnd[1].type is c.subject
-    assert aa.subject.memberEnd[0] is aa.head_end.subject
-    assert aa.subject.memberEnd[1] is aa.tail_end.subject
+    assert aa.subject.memberEnd[0] is aa.head_subject
+    assert aa.subject.memberEnd[1] is aa.tail_subject
     assert aa.subject.memberEnd[0] in aa.subject.memberEnd[1].type.ownedAttribute
 
     # Now, when the original is deleted, the model is changed and made invalid
@@ -123,6 +123,6 @@ def test_delete_original_association(class_and_association_with_copy, event_mana
     assert aa.subject.memberEnd[1].type
     assert aa.subject.memberEnd[0].type is c.subject
     assert aa.subject.memberEnd[1].type is c.subject
-    assert aa.subject.memberEnd[0] is aa.head_end.subject
-    assert aa.subject.memberEnd[1] is aa.tail_end.subject
+    assert aa.subject.memberEnd[0] is aa.head_subject
+    assert aa.subject.memberEnd[1] is aa.tail_subject
     assert aa.subject.memberEnd[0] in aa.subject.memberEnd[1].type.ownedAttribute
