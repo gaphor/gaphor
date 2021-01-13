@@ -154,8 +154,8 @@ class ConnectorConnectBase(BaseConnector):
                 assert isinstance(line.subject, UML.Connector)
                 assembly = line.subject
                 assert assembly.end
-                assert assembly.end[:].partWithPort
-                assert iface in assembly.end[:].role
+                assert list(assembly.end[:].partWithPort)
+                assert iface.subject in assembly.end[:].role
                 return
 
             if assembly is None:

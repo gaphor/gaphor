@@ -112,11 +112,8 @@ class InterfaceConnectTestCase(TestCase):
         comp = self.create(ComponentItem, UML.Component)
         line = self.create(ConnectorItem)
 
-        pport = comp.ports()[0]
-        rport = iface.ports()[2]
-
-        self.connect(line, line.head, iface, rport)
-        self.connect(line, line.tail, comp, pport)
+        self.connect(line, line.head, iface)
+        self.connect(line, line.tail, comp)
         iface.request_update()
         self.diagram.update_now((iface, comp, line))
 
@@ -131,9 +128,8 @@ class InterfaceConnectTestCase(TestCase):
         line = self.create(ConnectorItem)
 
         iface.folded = Folded.PROVIDED
-        pport = iface.ports()[1]
 
-        self.connect(line, line.head, iface, pport)
+        self.connect(line, line.head, iface)
 
         self.disconnect(line, line.head)
         assert Folded.PROVIDED == iface.folded
@@ -198,8 +194,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.ASSEMBLY
-        pport = iface.ports()[0]
-        rport = iface.ports()[2]
 
         # first component provides interface
         # and the second one requires it
@@ -211,8 +205,8 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn2, conn2.head, c2)
 
         # make an assembly
-        self.connect(conn1, conn1.tail, iface, pport)
-        self.connect(conn2, conn2.tail, iface, rport)
+        self.connect(conn1, conn1.tail, iface)
+        self.connect(conn2, conn2.tail, iface)
 
         # test UML data model
         self.assertTrue(
@@ -236,7 +230,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.ASSEMBLY
-        pport = iface.ports()[0]
         rport = iface.ports()[2]
 
         self.provide(c1.subject, iface.subject)
@@ -246,7 +239,7 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn1, conn1.head, c1)
         self.connect(conn2, conn2.head, c2)
 
-        self.connect(conn1, conn1.tail, iface, pport)
+        self.connect(conn1, conn1.tail, iface)
         glued = self.allow(conn2, conn2.tail, iface, rport)
         assert glued
 
@@ -259,7 +252,6 @@ class AssemblyConnectorTestCase(TestCase):
         c2 = self.create(ComponentItem, UML.Component)
 
         iface = self.create(InterfaceItem, UML.Interface)
-        pport = iface.ports()[0]
 
         # both components provide interface only
         self.provide(c1.subject, iface.subject)
@@ -270,8 +262,8 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn2, conn2.head, c2)
 
         # connect to provided port
-        self.connect(conn1, conn1.tail, iface, pport)
-        self.connect(conn2, conn2.tail, iface, pport)
+        self.connect(conn1, conn1.tail, iface)
+        self.connect(conn2, conn2.tail, iface)
         # no UML data model yet (no connection on required port)
         assert conn1.subject
         assert conn2.subject
@@ -288,8 +280,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.ASSEMBLY
-        pport = iface.ports()[0]
-        rport = iface.ports()[2]
 
         # provide and require interface by components
         self.provide(c1.subject, iface.subject)
@@ -302,14 +292,14 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn3, conn3.head, c3)
 
         # create assembly
-        self.connect(conn1, conn1.tail, iface, pport)
-        self.connect(conn2, conn2.tail, iface, rport)
+        self.connect(conn1, conn1.tail, iface)
+        self.connect(conn2, conn2.tail, iface)
 
         # test precondition
         assert conn1.subject and conn2.subject
 
         #  additional connection
-        self.connect(conn3, conn3.tail, iface, rport)
+        self.connect(conn3, conn3.tail, iface)
 
         # test UML data model
         self.assertTrue(conn3.subject is conn1.subject)
@@ -328,8 +318,6 @@ class AssemblyConnectorTestCase(TestCase):
 
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.ASSEMBLY
-        pport = iface.ports()[0]
-        rport = iface.ports()[2]
 
         # first component provides interface
         # and the second one requires it
@@ -341,8 +329,8 @@ class AssemblyConnectorTestCase(TestCase):
         self.connect(conn2, conn2.head, c2)
 
         # make an assembly
-        self.connect(conn1, conn1.tail, iface, pport)
-        self.connect(conn2, conn2.tail, iface, rport)
+        self.connect(conn1, conn1.tail, iface)
+        self.connect(conn2, conn2.tail, iface)
 
         # test precondition
         assert conn1.subject is conn2.subject

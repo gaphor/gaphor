@@ -26,10 +26,10 @@ def test_ordering(diagram, element_factory):
     message3.tail.pos.y = lifetime_top.y + 700
 
     # Add in "random" order
-    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
-    connect(message3, message3.tail, lifeline, lifeline.lifetime.port)
-    connect(message1, message1.head, lifeline, lifeline.lifetime.port)
-    connect(message2, message2.head, exec_spec, exec_spec.ports()[1])
+    connect(exec_spec, exec_spec.handles()[0], lifeline)
+    connect(message3, message3.tail, lifeline)
+    connect(message1, message1.head, lifeline)
+    connect(message2, message2.head, exec_spec)
 
     occurrences = [
         message1.subject.sendEvent,

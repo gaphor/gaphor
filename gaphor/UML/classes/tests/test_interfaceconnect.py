@@ -20,7 +20,7 @@ class ImplementationTestCase(TestCase):
         iface.folded = Folded.PROVIDED
         impl = self.create(ImplementationItem)
 
-        self.connect(impl, impl.head, iface, iface.ports()[0])
+        self.connect(impl, impl.head, iface)
         self.diagram.update_now((iface, impl))
 
         assert not impl.style["dash-style"]
@@ -31,7 +31,7 @@ class ImplementationTestCase(TestCase):
         iface.folded = Folded.PROVIDED
         impl = self.create(ImplementationItem)
 
-        self.connect(impl, impl.head, iface, iface.ports()[0])
+        self.connect(impl, impl.head, iface)
         self.disconnect(impl, impl.head)
         impl.request_update()
 
@@ -51,8 +51,8 @@ class DependencyTestCase(TestCase):
         iface.folded = Folded.PROVIDED
         dep = self.create(DependencyItem)
 
-        self.connect(dep, dep.head, iface, iface.ports()[0])
-        self.connect(dep, dep.tail, clazz, clazz.ports()[0])
+        self.connect(dep, dep.head, iface)
+        self.connect(dep, dep.tail, clazz)
         iface.request_update()
         self.diagram.update_now((clazz, iface, dep))
 
@@ -66,7 +66,7 @@ class DependencyTestCase(TestCase):
         iface.folded = Folded.PROVIDED
         dep = self.create(DependencyItem)
 
-        self.connect(dep, dep.head, iface, iface.ports()[0])
+        self.connect(dep, dep.head, iface)
         self.disconnect(dep, dep.head)
         dep.request_update()
 
@@ -78,5 +78,5 @@ class DependencyTestCase(TestCase):
         iface = self.create(InterfaceItem, UML.Interface)
         dep = self.create(DependencyItem)
 
-        self.connect(dep, dep.head, iface, iface.ports()[0])
+        self.connect(dep, dep.head, iface)
         assert (7.0, 5.0) == dep.style["dash-style"]

@@ -2,17 +2,22 @@ import logging
 
 from gaphas.aspect.connector import ConnectionSink
 from gaphas.aspect.connector import Connector as ConnectorAspect
-from gaphas.aspect.connector import ItemConnector
+from gaphas.aspect.connector import ItemConnector, LineConnector
 
 from gaphor.core import transactional
 from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.presentation import Presentation
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    LinePresentation,
+    Presentation,
+)
 
 log = logging.getLogger(__name__)
 
 
 @ConnectorAspect.register(Presentation)
+@ConnectorAspect.register(ElementPresentation)
 class PresentationConnector(ItemConnector):
     """Handle Tool (acts on item handles) that uses the Connector protocol to
     connect items to one-another.
@@ -36,14 +41,17 @@ class PresentationConnector(ItemConnector):
             if cinfo and cinfo.connected is sink.item:
                 # reconnect only constraint - leave model intact
                 log.debug("performing reconnect constraint")
-                constraint = sink.port.constraint(item, handle, sink.item)
+                self.glue(sink)
+                constraint = sink.constraint(item, handle)
                 self.connections.reconnect_item(
                     item, handle, sink.port, constraint=constraint
                 )
-            elif cinfo:
+                return
+
+            adapter = Connector(sink.item, item)
+            if cinfo:
                 # first disconnect but disable disconnection handle as
                 # reconnection is going to happen
-                adapter = Connector(sink.item, item)
                 try:
                     connect = adapter.reconnect
                 except AttributeError:
@@ -51,19 +59,20 @@ class PresentationConnector(ItemConnector):
                 else:
                     cinfo.callback.disable = True
                 self.disconnect()
-
-                # new connection
-                self.connect_handle(sink)
-
-                # adapter requires both ends to be connected.
-                connect(handle, sink.port)
-                item.handle(ItemConnected(item, handle, sink.item, sink.port))
             else:
                 # new connection
-                adapter = Connector(sink.item, item)
-                self.connect_handle(sink)
-                adapter.connect(handle, sink.port)
-                item.handle(ItemConnected(item, handle, sink.item, sink.port))
+                connect = adapter.connect
+
+            self.glue(sink)
+            if not sink.port:
+                print("No port found", item, sink.item)
+                return
+
+            self.connect_handle(sink)
+
+            # adapter requires both ends to be connected.
+            connect(handle, sink.port)
+            item.handle(ItemConnected(item, handle, sink.item, sink.port))
         except Exception:
             log.error("Error during connect", exc_info=True)
 
@@ -75,6 +84,11 @@ class PresentationConnector(ItemConnector):
     def disconnect(self):
         # Model level disconnect and event is handled in callback
         super().disconnect()
+
+
+@ConnectorAspect.register(LinePresentation)
+class LinePresentationConnector(PresentationConnector, LineConnector):
+    pass
 
 
 class DisconnectHandle:
@@ -146,7 +160,8 @@ class ItemDisconnected(RevertibeEvent):
         assert connections
 
         connected = target.diagram.lookup(self.connected.id)
-        sink = ConnectionSink(connected, connected.ports()[self.port_index])
+        sink = ConnectionSink(connected)
+        sink.port = connected.ports()[self.port_index]
 
         handle = target.handles()[self.handle_index]
         connector = ConnectorAspect(target, handle, connections)

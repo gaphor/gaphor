@@ -98,17 +98,14 @@ def connect(line, handle, item, port=None):
     """
     diagram = line.diagram
 
-    if port is None and len(item.ports()) > 0:
-        port = item.ports()[0]
-
-    sink = ConnectionSink(item, port)
     connector = ConnectorAspect(line, handle, diagram.connections)
+    sink = ConnectionSink(item, distance=1e4)
 
     connector.connect(sink)
 
     cinfo = diagram.connections.get_connection(handle)
     assert cinfo.connected is item
-    assert cinfo.port is port
+    assert cinfo.port
 
 
 def disconnect(line, handle):
