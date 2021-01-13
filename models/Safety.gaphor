@@ -10189,6 +10189,7 @@ Figure 9.42</val>
 <ref refid="bcc987b6-2a70-11ea-99a7-7d79dbbd423e"/>
 <ref refid="a39a9a9a-2a71-11ea-99a7-7d79dbbd423e"/>
 <ref refid="aab050f4-2a71-11ea-99a7-7d79dbbd423e"/>
+<ref refid="ed6abbda-5542-11eb-a85e-18cf5efc6bb9"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -10315,6 +10316,23 @@ Figure 9.42</val>
 <tail-connection>
 <ref refid="b040b14b-2a70-11ea-99a7-7d79dbbd423e"/>
 </tail-connection>
+</item>
+<item id="ed6abbda-5542-11eb-a85e-18cf5efc6bb9" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 351.51190185546875, -20.08203125)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="96ed3524-2a70-11ea-99a7-7d79dbbd423e"/>
+</diagram>
+<subject>
+<ref refid="ed6a9e98-5542-11eb-a85e-18cf5efc6bb9"/>
+</subject>
 </item>
 </canvas>
 </Diagram>
@@ -11083,10 +11101,10 @@ Figure 9.45</val>
 <canvas>
 <item id="526d2336-2a7d-11ea-99a7-7d79dbbd423e" type="CommentItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 413.33209228515625, 11.681198120117188)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 282.6829528808594, -12.318801879882812)</val>
 </matrix>
 <width>
-<val>261.2633056640625</val>
+<val>95.60540771484375</val>
 </width>
 <height>
 <val>44.0</val>
@@ -11261,6 +11279,7 @@ Figure 9.45</val>
 <ref refid="04ba25c5-2a7d-11ea-99a7-7d79dbbd423e"/>
 <ref refid="08a69a00-2a7d-11ea-99a7-7d79dbbd423e"/>
 <ref refid="0fdd41cf-2a7d-11ea-99a7-7d79dbbd423e"/>
+<ref refid="0b1d99a4-5543-11eb-a85e-18cf5efc6bb9"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -11338,6 +11357,23 @@ Figure 9.45</val>
 <tail-connection>
 <ref refid="04ba25c5-2a7d-11ea-99a7-7d79dbbd423e"/>
 </tail-connection>
+</item>
+<item id="0b1d99a4-5543-11eb-a85e-18cf5efc6bb9" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 313.62109375, 6.1328125)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="f6a2fc9a-2a7c-11ea-99a7-7d79dbbd423e"/>
+</diagram>
+<subject>
+<ref refid="0b1d516a-5543-11eb-a85e-18cf5efc6bb9"/>
+</subject>
 </item>
 </canvas>
 </Diagram>
@@ -11562,10 +11598,10 @@ Figure 9.65</val>
 </item>
 <item id="1950f60b-2a7e-11ea-99a7-7d79dbbd423e" type="CommentItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 403.6541748046875, 15.094223022460938)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 275.4599609375, -17.905776977539062)</val>
 </matrix>
 <width>
-<val>253.3427734375</val>
+<val>96.4317626953125</val>
 </width>
 <height>
 <val>44.0</val>
@@ -11891,10 +11927,10 @@ Figure 9.64</val>
 </item>
 <item id="92bcd6fa-2a7e-11ea-99a7-7d79dbbd423e" type="CommentItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 408.81207275390625, 12.894210815429688)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 287.73681640625, -41.10578918457031)</val>
 </matrix>
 <width>
-<val>252.60772705078125</val>
+<val>101.02386474609375</val>
 </width>
 <height>
 <val>44.0</val>
@@ -12120,7 +12156,7 @@ Figure 9.62</val>
 <val>(1.0, 0.0, 0.0, 1.0, 349.9652099609375, 23.1392822265625)</val>
 </matrix>
 <width>
-<val>255.0072021484375</val>
+<val>95.6246337890625</val>
 </width>
 <height>
 <val>44.0</val>
@@ -12369,7 +12405,7 @@ Figure 9.66</val>
 <val>(1.0, 0.0, 0.0, 1.0, 337.18878173828125, 13.631317138671875)</val>
 </matrix>
 <width>
-<val>249.703369140625</val>
+<val>96.57684326171875</val>
 </width>
 <height>
 <val>44.0</val>
@@ -12618,7 +12654,7 @@ Figure 9.67</val>
 <val>(1.0, 0.0, 0.0, 1.0, 375.64715576171875, 21.417556762695312)</val>
 </matrix>
 <width>
-<val>255.8331298828125</val>
+<val>98.55596923828125</val>
 </width>
 <height>
 <val>44.0</val>
@@ -12867,7 +12903,7 @@ Figure 9.68</val>
 <val>(1.0, 0.0, 0.0, 1.0, 392.70257568359375, 20.824234008789062)</val>
 </matrix>
 <width>
-<val>252.07080078125</val>
+<val>97.55133056640625</val>
 </width>
 <height>
 <val>44.0</val>
@@ -13118,7 +13154,7 @@ Figure 9.69</val>
 <val>(1.0, 0.0, 0.0, 1.0, 433.63751220703125, 23.46453857421875)</val>
 </matrix>
 <width>
-<val>248.7958984375</val>
+<val>98.44842529296875</val>
 </width>
 <height>
 <val>44.0</val>
@@ -13358,7 +13394,7 @@ Figure 9.69</val>
 <val>(1.0, 0.0, 0.0, 1.0, 438.0809326171875, -27.2928466796875)</val>
 </matrix>
 <width>
-<val>248.28179931640625</val>
+<val>96.9776611328125</val>
 </width>
 <height>
 <val>44.0</val>
@@ -13620,7 +13656,7 @@ Figure 9.71</val>
 <val>(1.0, 0.0, 0.0, 1.0, 423.77056884765625, 22.25238037109375)</val>
 </matrix>
 <width>
-<val>248.87127685546875</val>
+<val>96.42864990234375</val>
 </width>
 <height>
 <val>44.0</val>
@@ -13871,7 +13907,7 @@ Figure 9.72</val>
 <val>(1.0, 0.0, 0.0, 1.0, 459.690673828125, 31.180709838867188)</val>
 </matrix>
 <width>
-<val>250.295166015625</val>
+<val>97.071044921875</val>
 </width>
 <height>
 <val>44.0</val>
@@ -14123,10 +14159,10 @@ Figure 9.73</val>
 <val>(1.0, 0.0, 0.0, 1.0, 436.00286865234375, 20.332412719726562)</val>
 </matrix>
 <width>
-<val>250.35162353515625</val>
+<val>99.66119384765625</val>
 </width>
 <height>
-<val>45.233856201171875</val>
+<val>44.0</val>
 </height>
 <diagram>
 <ref refid="07f18afc-2a82-11ea-99a7-7d79dbbd423e"/>
@@ -14374,7 +14410,7 @@ Figure 9.74</val>
 <val>(1.0, 0.0, 0.0, 1.0, 391.677490234375, 16.05609130859375)</val>
 </matrix>
 <width>
-<val>249.53582763671875</val>
+<val>98.658447265625</val>
 </width>
 <height>
 <val>44.0</val>
@@ -14625,7 +14661,7 @@ Figure 9.75</val>
 <val>(1.0, 0.0, 0.0, 1.0, 439.73931884765625, 40.98628234863281)</val>
 </matrix>
 <width>
-<val>254.91162109375</val>
+<val>98.58880615234375</val>
 </width>
 <height>
 <val>44.0</val>
@@ -14874,10 +14910,10 @@ Figure 9.76</val>
 <val>(1.0, 0.0, 0.0, 1.0, 447.71551513671875, 20.770156860351562)</val>
 </matrix>
 <width>
-<val>274.82281494140625</val>
+<val>96.07745361328125</val>
 </width>
 <height>
-<val>48.058807373046875</val>
+<val>44.0</val>
 </height>
 <diagram>
 <ref refid="a0b44e0a-2a82-11ea-99a7-7d79dbbd423e"/>
@@ -15072,7 +15108,7 @@ Figure 9.78</val>
 <val>(1.0, 0.0, 0.0, 1.0, 307.6751708984375, 18.252029418945312)</val>
 </matrix>
 <width>
-<val>249.19219970703125</val>
+<val>95.1763916015625</val>
 </width>
 <height>
 <val>44.0</val>
@@ -15310,7 +15346,7 @@ Figure 9.78</val>
 <val>(1.0, 0.0, 0.0, 1.0, 406.3211669921875, 19.670425415039062)</val>
 </matrix>
 <width>
-<val>247.7532958984375</val>
+<val>97.2921142578125</val>
 </width>
 <height>
 <val>44.0</val>
@@ -41512,6 +41548,28 @@ Figure 9.60</val>
 <presentation>
 <reflist>
 <ref refid="215dfd14-5541-11eb-a85e-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Comment>
+<Comment id="ed6a9e98-5542-11eb-a85e-18cf5efc6bb9">
+<body>
+<val>RAAML 1.0
+Figure 9.61</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="ed6abbda-5542-11eb-a85e-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Comment>
+<Comment id="0b1d516a-5543-11eb-a85e-18cf5efc6bb9">
+<body>
+<val>RAAML 1.0
+Figure 9.62</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="0b1d99a4-5543-11eb-a85e-18cf5efc6bb9"/>
 </reflist>
 </presentation>
 </Comment>
