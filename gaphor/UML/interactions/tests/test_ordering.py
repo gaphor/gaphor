@@ -19,11 +19,13 @@ def test_ordering(diagram, element_factory):
     message2 = diagram.create(MessageItem)
     message3 = diagram.create(MessageItem)
 
-    message1.head.pos.y = lifetime_top.y + 300
+    message1.head.pos.y = message1.tail.pos.y = lifetime_top.y + 300
     exec_spec.top.pos.y = lifetime_top.y + 400
-    message2.head.pos.y = lifetime_top.y + 500
+    message2.head.pos.y = message2.tail.pos.y = lifetime_top.y + 500
     exec_spec.bottom.pos.y = lifetime_top.y + 600
-    message3.tail.pos.y = lifetime_top.y + 700
+    message3.head.pos.y = message3.tail.pos.y = lifetime_top.y + 700
+
+    diagram.connections.solve()
 
     # Add in "random" order
     connect(exec_spec, exec_spec.handles()[0], lifeline)
