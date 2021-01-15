@@ -10,8 +10,7 @@ pyinstvenv:
 	python -m venv pyinstvenv
 	pyinstvenv/bin/pip install "../dist/gaphor-${VERSION}-py3-none-any.whl"
 	pyinstvenv/bin/pip install tomlkit
-	# PyInstaller installed from source until version 4.2 released
-	pyinstvenv/bin/pip install git+https://github.com/pyinstaller/pyinstaller.git@5ae5a2d4a
+	pyinstvenv/bin/pip install pyinstaller==4.2
 
 windows/file_version_info.txt:
 	sed "s/__version__/${VERSION}/g" windows/file_version_info.txt.in > windows/file_version_info.txt
