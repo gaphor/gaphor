@@ -8,7 +8,6 @@ from gaphas.aspect.connector import ConnectionSink
 from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
-from gaphas.item import matrix_i2i
 
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.event import RevertibeEvent
@@ -46,21 +45,6 @@ def from_package_str(item):
     return f"(from {namespace.name})" if namespace is not item.diagram.namespace else ""
 
 
-def _get_sink(item, handle, target):
-    assert item.diagram
-
-    hpos = matrix_i2i(item, target).transform_point(*handle.pos)
-    port = None
-    dist = 10e6
-    for p in target.ports():
-        pos, d = p.glue(hpos)
-        if not port or d < dist:
-            port = p
-            dist = d
-
-    return ConnectionSink(target, port)
-
-
 def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
     """Helper function: when loading a model, handles should be connected as
     part of the `postload` step.
@@ -69,7 +53,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     the handle to.
     """
     connector = ConnectorAspect(item, handle, item.diagram.connections)
-    sink = _get_sink(item, handle, target)
+    sink = ConnectionSink(target, distance=1e4)
     connector.connect(sink)
 
 
@@ -307,10 +291,12 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         if hasattr(self, "_load_head_connection"):
             postload_connect(self, self.head, self._load_head_connection)
+            assert self._connections.get_connection(self.head)
             del self._load_head_connection
 
         if hasattr(self, "_load_tail_connection"):
             postload_connect(self, self.tail, self._load_tail_connection)
+            assert self._connections.get_connection(self.tail)
             del self._load_tail_connection
 
         super().postload()

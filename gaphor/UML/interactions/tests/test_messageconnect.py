@@ -207,13 +207,16 @@ def test_lifetime_connectivity_on_head(diagram, element_factory):
 def test_lifetime_connectivity_on_lifetime(diagram, element_factory):
     """Test lifeline's lifetime connectivity change on lifetime connection."""
     ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
-    msg = diagram.create(MessageItem)
-
     ll.lifetime.visible = True
+    ll.handles()[-1].pos.y = 500
+    msg = diagram.create(MessageItem)
+    msg.head.pos.y = 400
 
     # connect message to lifeline's lifetime, lifeline's lifetime
     # visibility and connectivity should be unchanged
-    connect(msg, msg.head, ll, ll.lifetime.port)
+    connect(msg, msg.head, ll)
+
+    assert diagram.connections.get_connection(msg.head).port is ll.ports()[-1]
     assert ll.lifetime.connectable
     assert ll.lifetime.MIN_LENGTH_VISIBLE == ll.lifetime.min_length
 

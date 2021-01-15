@@ -83,24 +83,19 @@ class TestCase(unittest.TestCase):
         adapter = Connector(item, line)
         return adapter.allow(handle, port)
 
-    def connect(self, line, handle, item, port=None):
-        """Connect line's handle to an item.
-
-        If port is not provided, then first port is used.
-        """
+    def connect(self, line, handle, item):
+        """Connect line's handle to an item."""
         diagram = line.diagram
         assert diagram is item.diagram
-        if port is None and len(item.ports()) > 0:
-            port = item.ports()[0]
 
-        sink = ConnectionSink(item, port)
+        sink = ConnectionSink(item, distance=1e4)
         connector = ConnectorAspect(line, handle, diagram.connections)
 
         connector.connect(sink)
 
         cinfo = diagram.connections.get_connection(handle)
         assert cinfo.connected is item
-        assert cinfo.port is port
+        assert cinfo.port
 
     def disconnect(self, line, handle):
         """Disconnect line's handle."""

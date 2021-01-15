@@ -58,12 +58,12 @@ def test_allow(commentline, comment, connections):
     assert aspect.item is commentline
     assert aspect.handle is commentline.handles()[0]
 
-    sink = ConnectionSink(comment, comment.ports()[0])
+    sink = ConnectionSink(comment)
     assert aspect.allow(sink)
 
 
 def test_connect(diagram, comment, commentline, connections):
-    sink = ConnectionSink(comment, comment.ports()[0])
+    sink = ConnectionSink(comment)
     aspect = ConnectorAspect(commentline, commentline.handles()[0], connections)
     aspect.connect(sink)
     cinfo = diagram.connections.get_connection(commentline.handles()[0])
@@ -88,21 +88,16 @@ def test_iconnect(event_manager, element_factory, diagrams):
     event_manager.handle(DiagramOpened(diagram))
     comment = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
 
-    actor = diagram.create(ActorItem, subject=element_factory.create(UML.Actor))
-    actor.matrix.translate(200, 200)
-    diagram.update_now((actor,))
-
     line = diagram.create(CommentLineItem)
 
     view = current_diagram_view(diagrams)
     assert view, "View should be available here"
-    comment_bb = view.get_item_bounding_box(comment)
 
     # select handle:
     handle = line.handles()[-1]
 
     move = HandleMove(line, handle, view)
-    handle.pos = (comment_bb.x, comment_bb.y)
+    handle.pos = (0, 0)
     item = move.glue(handle.pos)
     assert item is not None
 

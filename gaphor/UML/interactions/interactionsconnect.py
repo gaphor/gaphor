@@ -35,7 +35,7 @@ def order_lifeline_covered_by(lifeline):
             m = conn.item.matrix_i2c
             if isinstance(conn.item, ExecutionSpecificationItem):
                 yield (
-                    m.transform_point(*conn.handle.pos)[1],
+                    m.transform_point(*conn.item.top.pos)[1],
                     conn.item.subject.start,
                 )
                 yield (

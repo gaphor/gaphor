@@ -200,7 +200,7 @@ class StorageTestCase(TestCase):
         self.diagram.update_now((c1, c2, a))
 
         assert a.head.pos.y == 0, a.head.pos
-        assert a.tail.pos.x == 10, a.tail.pos
+        assert a.tail.pos.x == 200, a.tail.pos
         assert a.tail.pos.y == 200, a.tail.pos
         assert a.subject
 

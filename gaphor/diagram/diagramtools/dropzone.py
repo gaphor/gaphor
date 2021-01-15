@@ -63,7 +63,7 @@ class DropZoneMove(GuidedItemMove):
         x, y = pos
 
         current_parent = item.parent
-        over_item = item_at_point(view, (x, y), selected=False)
+        over_item = item_at_point(view, (x, y), exclude=view.selection.selected_items)
 
         if not over_item:
             view.selection.dropzone_item = None
