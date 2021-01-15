@@ -83,12 +83,8 @@ class TestCase(unittest.TestCase):
         adapter = Connector(item, line)
         return adapter.allow(handle, port)
 
-    # def connect(self, line, handle, item, port=None):
     def connect(self, line, handle, item):
-        """Connect line's handle to an item.
-
-        If port is not provided, then first port is used.
-        """
+        """Connect line's handle to an item."""
         diagram = line.diagram
         assert diagram is item.diagram
 
