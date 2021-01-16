@@ -83,8 +83,9 @@ class CopyService(Service, ActionProvider):
             self.clipboard.set_text("", -1)
             items = view.selection.selected_items
             self.copy(items)
-            for i in list(items):
-                i.unlink()
+            with Transaction(self.event_manager):
+                for i in list(items):
+                    i.unlink()
 
     @action(name="edit-paste", shortcut="<Primary>v")
     def paste_action(self):
