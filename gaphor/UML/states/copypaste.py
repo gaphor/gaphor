@@ -19,7 +19,7 @@ class StateCopy(NamedTuple):
 
 @copy.register
 def copy_state(element: State):
-    return StateCopy(
+    return element.id, StateCopy(
         state=copy_element(element),
         entry=copy_element(element.entry) if element.entry else None,
         exit=copy_element(element.exit) if element.exit else None,
@@ -45,7 +45,7 @@ class TransitionCopy(NamedTuple):
 
 @copy.register
 def copy_transition(element: Transition):
-    return TransitionCopy(
+    return element.id, TransitionCopy(
         transition=copy_element(element),
         guard=copy_element(element.guard) if element.guard else None,
     )

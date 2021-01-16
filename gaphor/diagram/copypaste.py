@@ -27,14 +27,15 @@ from typing import (
 
 import gaphas
 
-from gaphor.core.modeling import Diagram, Element, NamedElement, Presentation
+from gaphor.core.modeling import Diagram, NamedElement, Presentation
 from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling.element import Element, Id
 
 T = TypeVar("T")
 
 
 @singledispatch
-def copy(obj: Element) -> T:
+def copy(obj: Element) -> Tuple[Id, T]:
     """Create a copy of an element (or list of elements).
 
     The returned type should be distinct, so the `paste()` function can
@@ -96,7 +97,9 @@ def copy_element(element: Element) -> ElementCopy:
     return ElementCopy(cls=element.__class__, id=element.id, data=data)
 
 
-copy.register(Element, copy_element)  # type: ignore[arg-type]
+@copy.register
+def _copy_element(element: Element) -> Tuple[Id, ElementCopy]:
+    return element.id, copy_element(element)
 
 
 def paste_element(copy_data: ElementCopy, diagram, lookup):
@@ -123,7 +126,9 @@ def copy_named_element(element: NamedElement) -> NamedElementCopy:
     )
 
 
-copy.register(NamedElement, copy_named_element)  # type: ignore[arg-type]
+@copy.register
+def _copy_named_element(element: NamedElement) -> Tuple[Id, NamedElementCopy]:
+    return element.id, copy_named_element(element)
 
 
 def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
@@ -143,7 +148,7 @@ class PresentationCopy(NamedTuple):
 
 
 @copy.register
-def copy_presentation(item: Presentation) -> PresentationCopy:
+def copy_presentation(item: Presentation) -> Tuple[Id, PresentationCopy]:
     assert item.diagram
     data = {}
 
@@ -155,7 +160,7 @@ def copy_presentation(item: Presentation) -> PresentationCopy:
 
     item.save(save_func)
     parent = item.parent
-    return PresentationCopy(
+    return item.id, PresentationCopy(
         cls=item.__class__,
         data=data,
         parent=parent.id if parent and isinstance(parent.id, str) else None,
@@ -193,13 +198,14 @@ class CopyData(NamedTuple):
 
 @copy.register
 def _copy_all(items: set) -> CopyData:
+    # iterate and lookup id in diagram -> if failed, it's a model element
     return CopyData(
-        items={item.id: copy(item) for item in items},
-        elements={
-            item.subject.id: copy(item.subject)
+        items=dict(copy(item) for item in items),
+        elements=dict(
+            copy(item.subject)
             for item in items
             if isinstance(item, Presentation) and item.subject
-        },
+        ),
     )
 
 

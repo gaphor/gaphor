@@ -24,7 +24,7 @@ class ClassCopy(NamedTuple):
 @copy.register(Class)
 @copy.register(Interface)
 def copy_class(element):
-    return ClassCopy(
+    return element.id, ClassCopy(
         element_copy=copy_named_element(element),
         owned_attributes=[
             copy_element(attr)
@@ -60,7 +60,7 @@ class AssociationCopy(NamedTuple):
 
 @copy.register
 def copy_association(element: Association):
-    return AssociationCopy(
+    return element.id, AssociationCopy(
         element_copy=copy_named_element(element),
         member_ends=[copy_element(end) for end in element.memberEnd],
     )
