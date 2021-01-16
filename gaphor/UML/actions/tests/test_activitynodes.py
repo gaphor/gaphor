@@ -1,7 +1,6 @@
 from gaphas.item import Item
 
 from gaphor import UML
-from gaphor.tests.testcase import TestCase
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 
 
@@ -11,51 +10,56 @@ def test_fork_node_item_implements_item_protocol(diagram):
     assert isinstance(fork_node_item, Item)
 
 
-class ActivityNodesTestCase(TestCase):
-    def test_decision_node(self):
-        """Test creation of decision node."""
-        self.create(DecisionNodeItem, UML.DecisionNode)
+def test_decision_node_persistence(diagram, element_factory, saver, loader):
+    item = diagram.create(
+        DecisionNodeItem, subject=element_factory.create(UML.DecisionNode)
+    )
 
-    def test_fork_node(self):
-        """Test creation of fork node."""
-        self.create(ForkNodeItem, UML.ForkNode)
+    data = saver()
+    loader(data)
+    new_diagram = next(element_factory.select(UML.Diagram))
+    item = next(new_diagram.select(DecisionNodeItem))
 
-    def test_decision_node_persistence(self):
-        """Test saving/loading of decision node."""
-        factory = self.element_factory
-        item = self.create(DecisionNodeItem, UML.DecisionNode)
+    assert item.combined is None, item.combined
 
-        data = self.save()
-        self.load(data)
 
-        item = next(self.diagram.select(DecisionNodeItem))
-        assert item.combined is None, item.combined
+def test_combined_decision_node_persistence(diagram, element_factory, saver, loader):
+    item = diagram.create(
+        DecisionNodeItem, subject=element_factory.create(UML.DecisionNode)
+    )
+    merge_node = element_factory.create(UML.MergeNode)
+    item.combined = merge_node
 
-        merge_node = factory.create(UML.MergeNode)
-        item.combined = merge_node
-        data = self.save()
-        self.load(data)
+    data = saver()
+    loader(data)
+    new_diagram = next(element_factory.select(UML.Diagram))
+    item = next(new_diagram.select(DecisionNodeItem))
 
-        item = next(self.diagram.select(DecisionNodeItem))
-        assert item.combined is not None, item.combined
-        assert isinstance(item.combined, UML.MergeNode)
+    assert item.combined is not None, item.combined
+    assert isinstance(item.combined, UML.MergeNode)
 
-    def test_fork_node_persistence(self):
-        """Test saving/loading of fork node."""
-        factory = self.element_factory
-        item = self.create(ForkNodeItem, UML.ForkNode)
 
-        data = self.save()
-        self.load(data)
+def test_fork_node_persistence(diagram, element_factory, saver, loader):
+    item = diagram.create(ForkNodeItem, subject=element_factory.create(UML.ForkNode))
 
-        item = next(self.diagram.select(ForkNodeItem))
-        assert item.combined is None, item.combined
+    data = saver()
+    loader(data)
 
-        merge_node = factory.create(UML.JoinNode)
-        item.combined = merge_node
-        data = self.save()
-        self.load(data)
+    new_diagram = next(element_factory.select(UML.Diagram))
+    item = next(new_diagram.select(ForkNodeItem))
+    assert item.combined is None, item.combined
 
-        item = next(self.diagram.select(ForkNodeItem))
-        assert item.combined is not None, item.combined
-        assert isinstance(item.combined, UML.JoinNode)
+
+def test_combined_fork_node_persistence(diagram, element_factory, saver, loader):
+    item = diagram.create(ForkNodeItem, subject=element_factory.create(UML.ForkNode))
+
+    merge_node = element_factory.create(UML.JoinNode)
+    item.combined = merge_node
+
+    data = saver()
+    loader(data)
+    new_diagram = next(element_factory.select(UML.Diagram))
+    item = next(new_diagram.select(ForkNodeItem))
+
+    assert item.combined is not None, item.combined
+    assert isinstance(item.combined, UML.JoinNode)
