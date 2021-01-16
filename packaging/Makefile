@@ -30,5 +30,6 @@ clean:
 	rm -f windows/file_version_info.txt
 	rm -f gaphor-script.py
 	rm -rf pyinstvenv
+	rm -f gaphor.spec
 
 .PHONY: clean pyinstvenv all help dist

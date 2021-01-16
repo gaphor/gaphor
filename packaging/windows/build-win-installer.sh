@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+# DIR is the parent directory
 DIR="$(dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )")"
 cd "${DIR}"
 mkdir -p dist

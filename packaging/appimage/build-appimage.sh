@@ -2,22 +2,12 @@
 
 set -euo pipefail
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# DIR is the parent directory
+DIR="$(dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )")"
 cd "${DIR}"
 
 APP_DIR="${DIR}"/dist/AppRun
 APP_ID="org.gaphor.Gaphor"
-VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
-
-python -m venv pyinstvenv
-
-pyinstvenv/bin/pip install ../../dist/gaphor-"${VERSION}"-py3-none-any.whl
-pyinstvenv/bin/pip install pyinstaller==4.1.0
-
-function build_pyinstaller {
-    python ../make-script.py ../../pyproject.toml > ../gaphor-script.py
-    pyinstvenv/bin/pyinstaller -y ../gaphor.spec
-}
 
 function remove_excluded_files {
     # Remove excludelist files known as having bad side effects
@@ -25,32 +15,33 @@ function remove_excluded_files {
     while IFS= read -r line; do
         file="$(echo "${line}" | cut -d' ' -f1)"
         if [ ! "${file}" = "" ] && [ ! "${file}" = "#" ]; then
-            [ -f "dist/gaphor/${file}" ] && rm -fv "dist/gaphor/${file}"
+            [ -f "${DIR}/dist/gaphor/${file}" ] && rm -fv "${DIR}/dist/gaphor/${file}"
+            echo "${file}"
         fi
-    done < excludelist
+    done < "${DIR}/appimage/excludelist"
 }
 
 function create_package {
     # Inspired by https://github.com/nuxeo/nuxeo-drive
     # Create the final AppImage
     local app_name="Gaphor"
-    local output="dist/${app_name}-x86_64.AppImage"
+    local output="${DIR}/dist/${app_name}-x86_64.AppImage"
 
     echo "Adjusting file names to fit in the AppImage"
     # PyInstaller + AppImage inspired by https://gitlab.com/scottywz/ezpyi/
     [ -d "${APP_DIR}" ] && rm -rf "${APP_DIR}"
-    mv -v "dist/gaphor" "${APP_DIR}"
+    mv -v "${DIR}/dist/gaphor" "${APP_DIR}"
 
     echo "Copying icon"
-    cp -v "${APP_ID}.png" "${APP_DIR}/${APP_ID}.png"
+    cp -v "${DIR}/appimage/${APP_ID}.png" "${APP_DIR}/${APP_ID}.png"
 
     echo "Copying metadata files"
     mkdir -pv "${APP_DIR}/usr/share/metainfo"
-    cp -v "${APP_ID}".appdata.xml "${APP_DIR}"/usr/share/metainfo
+    cp -v "${DIR}/appimage/${APP_ID}".appdata.xml "${APP_DIR}"/usr/share/metainfo
     mkdir -pv "${APP_DIR}"/usr/share/applications
-    cp -v "${APP_ID}.desktop" "${APP_DIR}/usr/share/applications/"
+    cp -v "${DIR}/appimage/${APP_ID}.desktop" "${APP_DIR}/usr/share/applications/"
     ln -srv "${APP_DIR}/usr/share/applications/${APP_ID}.desktop" "${APP_DIR}/${APP_ID}.desktop"
-    cp -v AppRun "${APP_DIR}/AppRun"
+    cp -v "${DIR}/appimage/AppRun" "${APP_DIR}/AppRun"
 
     echo "Decompressing the AppImage tool"
     mkdir -p build
@@ -70,7 +61,6 @@ function create_package {
 }
 
 function main {
-    build_pyinstaller
     remove_excluded_files
     create_package
 }
