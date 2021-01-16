@@ -6,6 +6,8 @@ set -euo pipefail
 DIR="$(dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )")"
 cd "${DIR}"
 
+DIST_LOCATION="${DIR}/dist/gaphor"
+VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 APP_DIR="${DIR}"/dist/AppRun
 APP_ID="org.gaphor.Gaphor"
 
@@ -15,7 +17,7 @@ function remove_excluded_files {
     while IFS= read -r line; do
         file="$(echo "${line}" | cut -d' ' -f1)"
         if [ ! "${file}" = "" ] && [ ! "${file}" = "#" ]; then
-            [ -f "${DIR}/dist/gaphor/${file}" ] && rm -fv "${DIR}/dist/gaphor/${file}"
+            [ -f "${DIST_LOCATION}/{file}" ] && rm -fv "${DIST_LOCATION}/{file}"
             echo "${file}"
         fi
     done < "${DIR}/appimage/excludelist"
@@ -30,7 +32,7 @@ function create_package {
     echo "Adjusting file names to fit in the AppImage"
     # PyInstaller + AppImage inspired by https://gitlab.com/scottywz/ezpyi/
     [ -d "${APP_DIR}" ] && rm -rf "${APP_DIR}"
-    mv -v "${DIR}/dist/gaphor" "${APP_DIR}"
+    mv -v "${DIST_LOCATION}" "${APP_DIR}"
 
     echo "Copying icon"
     cp -v "${DIR}/appimage/${APP_ID}.png" "${APP_DIR}/${APP_ID}.png"
@@ -58,6 +60,8 @@ function create_package {
 
     echo "Clean-up"
     rm -rf squashfs-root
+
+    mv "${DIR}/dist/Gaphor-x86_64.AppImage" "${DIR}/dist/Gaphor-${VERSION}-x86_64.AppImage"
 }
 
 function main {

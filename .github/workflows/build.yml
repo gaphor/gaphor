@@ -72,14 +72,15 @@ jobs:
           path: dist/gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
       - name: Build AppImage
         run: |
-          cd packaging/appimage
+          cd packaging
           make all
-          mv dist/Gaphor-x86_64.AppImage ../../dist/gaphor-${{ steps.meta.outputs.version }}.AppImage
-      - name: Upload gaphor-${{ steps.meta.outputs.version }}.AppImage
+          cd appimage
+          make dist
+      - name: Upload gaphor-${{ steps.meta.outputs.version }}-x86_64.AppImage
         uses: actions/upload-artifact@v2
         with:
-          name: gaphor-${{ steps.meta.outputs.version }}.AppImage
-          path: dist/gaphor-${{ steps.meta.outputs.version }}.AppImage
+          name: Gaphor-${{ steps.meta.outputs.version }}-x86_64.AppImage
+          path: packaging/dist/Gaphor-${{ steps.meta.outputs.version }}-x86_64.AppImage
       - name: Publish to PyPI (release only)
         if: github.event_name == 'release'
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
