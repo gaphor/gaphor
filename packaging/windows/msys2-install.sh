@@ -11,6 +11,7 @@ cat /etc/pacman.d/mirrorlist.mingw64
 pacman --noconfirm -Suy
 
 pacman --noconfirm -S --needed \
+    git \
     mingw-w64-x86_64-make \
     mingw-w64-x86_64-gcc \
     mingw-w64-x86_64-gtk3 \
