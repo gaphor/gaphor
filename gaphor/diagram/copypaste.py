@@ -85,15 +85,15 @@ class ElementCopy(NamedTuple):
 
 
 def copy_element(element: Element) -> ElementCopy:
-    buffer = {}
+    data = {}
 
     def save_func(name, value):
         # do not copy Element.presentation, to avoid cyclic dependencies
         if name != "presentation":
-            buffer[name] = serialize(value)
+            data[name] = serialize(value)
 
     element.save(save_func)
-    return ElementCopy(cls=element.__class__, id=element.id, data=buffer)
+    return ElementCopy(cls=element.__class__, id=element.id, data=data)
 
 
 copy.register(Element, copy_element)  # type: ignore[arg-type]
@@ -145,18 +145,19 @@ class PresentationCopy(NamedTuple):
 @copy.register
 def copy_presentation(item: Presentation) -> PresentationCopy:
     assert item.diagram
-    buffer = {}
+    data = {}
 
     def save_func(name, value):
-        # Do not copy diagram, it's set when pasted
+        # Do not copy diagram, it's set when pasted,
+        # parent and children are set separately.
         if name not in ("diagram", "parent", "children"):
-            buffer[name] = serialize(value)
+            data[name] = serialize(value)
 
     item.save(save_func)
     parent = item.parent
     return PresentationCopy(
         cls=item.__class__,
-        data=buffer,
+        data=data,
         parent=parent.id if parent and isinstance(parent.id, str) else None,
     )
 
