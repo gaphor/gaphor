@@ -176,7 +176,7 @@ class UnaryRelationshipConnect(BaseConnector):
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram on the tail side, since tail should
         # have a reference to head at least.
-        if not tail.opposite:
+        if not (head_subject and tail.opposite):
             return None
 
         gen: Element
