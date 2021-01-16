@@ -169,7 +169,16 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
         p = lookup(parent)
         if p:
             item.parent = p
+
+    # Ensure we deserialize the subject first, other elements may depend on it
+    ser = data.get("subject")
+    if ser:
+        for value in deserialize(ser, lookup):
+            item.load("subject", value)
+
     for name, ser in data.items():
+        if name == "subject":
+            continue
         for value in deserialize(ser, lookup):
             item.load(name, value)
     diagram.update_now((), [item])

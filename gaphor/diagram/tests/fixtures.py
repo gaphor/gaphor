@@ -133,8 +133,12 @@ def clear_model(diagram, element_factory, retain=[]):
         item.unlink()
 
 
+def copy_and_paste(items, diagram, element_factory, retain=[]):
+    buffer = copy(items)
+    return paste(buffer, diagram, element_factory.lookup)
+
+
 def copy_clear_and_paste(items, diagram, element_factory, retain=[]):
     buffer = copy(items)
     clear_model(diagram, element_factory, retain)
-    print(buffer)
     return paste(buffer, diagram, element_factory.lookup)

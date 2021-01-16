@@ -1,6 +1,6 @@
 from gaphor import UML
 from gaphor.core.format import format, parse
-from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import connect, copy_and_paste, copy_clear_and_paste
 from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 
 
@@ -77,6 +77,26 @@ def two_classes_and_an_association(diagram, element_factory):
     return gen_cls_item, spc_cls_item, assoc_item
 
 
+def test_copy_paste_items_with_connections(diagram, element_factory):
+    gen_cls_item, spc_cls_item, assoc_item = two_classes_and_an_association(
+        diagram, element_factory
+    )
+
+    assert assoc_item.head_subject
+    assert assoc_item.tail_subject
+
+    assoc = assoc_item.subject
+
+    copy_and_paste({gen_cls_item, assoc_item, spc_cls_item}, diagram, element_factory)
+
+    new_assoc_item = assoc.presentation[1]
+
+    assert assoc.presentation[0] is assoc_item
+
+    assert new_assoc_item.head_subject
+    assert new_assoc_item.tail_subject
+
+
 def test_copy_remove_paste_items_with_connections(diagram, element_factory):
     gen_cls_item, spc_cls_item, assoc_item = two_classes_and_an_association(
         diagram, element_factory
@@ -94,3 +114,5 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
     assert new_cls1.presentation[0] in new_items
     assert new_cls2.presentation[0] in new_items
     assert new_assoc.presentation[0] in new_items
+    assert new_assoc.presentation[0].head_subject
+    assert new_assoc.presentation[0].tail_subject
