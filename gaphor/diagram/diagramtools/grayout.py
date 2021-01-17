@@ -1,6 +1,9 @@
-from gaphas.aspect.handlemove import HandleMove
+from typing import Optional
+
+from gaphas.aspect.handlemove import ConnectionSinkType, HandleMove, ItemHandleMove
 from gaphas.item import Line
 from gaphas.segment import LineHandleMove
+from gaphas.types import Pos
 
 from gaphor.diagram.connectors import Connector
 
@@ -33,3 +36,11 @@ class GrayOutLineHandleMove(LineHandleMove):
         super().stop_move(pos)
         selection = self.view.selection
         selection.grayed_out_items = set()
+        selection.dropzone_item = None
+
+    def glue(
+        self, pos: Pos, distance: int = ItemHandleMove.GLUE_DISTANCE
+    ) -> Optional[ConnectionSinkType]:
+        sink = super().glue(pos, distance)
+        self.view.selection.dropzone_item = sink and sink.item
+        return sink
