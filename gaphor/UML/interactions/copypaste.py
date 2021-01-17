@@ -18,7 +18,7 @@ class MessageCopy(NamedTuple):
 
 @copy.register
 def copy_message(element: Message):
-    return element.id, MessageCopy(
+    yield element.id, MessageCopy(
         element_copy=copy_element(element),
         send_event=copy_element(element.sendEvent) if element.sendEvent else None,
         receive_event=copy_element(element.receiveEvent)
@@ -43,7 +43,7 @@ class ExecutionSpecificationCopy(NamedTuple):
 
 @copy.register
 def copy_execution_specification(element: ExecutionSpecification):
-    return element.id, ExecutionSpecificationCopy(
+    yield element.id, ExecutionSpecificationCopy(
         element_copy=copy_element(element),
         occurrences=[
             copy_element(occurrence)

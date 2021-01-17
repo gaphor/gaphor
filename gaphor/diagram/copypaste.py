@@ -16,6 +16,7 @@ from functools import singledispatch
 from typing import (
     Callable,
     Dict,
+    Iterator,
     NamedTuple,
     Optional,
     Set,
@@ -35,7 +36,7 @@ T = TypeVar("T")
 
 
 @singledispatch
-def copy(obj: Element) -> Tuple[Id, T]:
+def copy(obj: Element) -> Iterator[Tuple[Id, T]]:
     """Create a copy of an element (or list of elements).
 
     The returned type should be distinct, so the `paste()` function can
@@ -98,8 +99,8 @@ def copy_element(element: Element) -> ElementCopy:
 
 
 @copy.register
-def _copy_element(element: Element) -> Tuple[Id, ElementCopy]:
-    return element.id, copy_element(element)
+def _copy_element(element: Element) -> Iterator[Tuple[Id, ElementCopy]]:
+    yield element.id, copy_element(element)
 
 
 def paste_element(copy_data: ElementCopy, diagram, lookup):
@@ -127,8 +128,8 @@ def copy_named_element(element: NamedElement) -> NamedElementCopy:
 
 
 @copy.register
-def _copy_named_element(element: NamedElement) -> Tuple[Id, NamedElementCopy]:
-    return element.id, copy_named_element(element)
+def _copy_named_element(element: NamedElement) -> Iterator[Tuple[Id, NamedElementCopy]]:
+    yield element.id, copy_named_element(element)
 
 
 def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
@@ -148,7 +149,7 @@ class PresentationCopy(NamedTuple):
 
 
 @copy.register
-def copy_presentation(item: Presentation) -> Tuple[Id, PresentationCopy]:
+def copy_presentation(item: Presentation) -> Iterator[Tuple[Id, PresentationCopy]]:
     assert item.diagram
     data = {}
 
@@ -160,7 +161,7 @@ def copy_presentation(item: Presentation) -> Tuple[Id, PresentationCopy]:
 
     item.save(save_func)
     parent = item.parent
-    return item.id, PresentationCopy(
+    yield item.id, PresentationCopy(
         cls=item.__class__,
         data=data,
         parent=parent.id if parent and isinstance(parent.id, str) else None,
@@ -200,9 +201,9 @@ class CopyData(NamedTuple):
 def _copy_all(items: set) -> CopyData:
     # iterate and lookup id in diagram -> if failed, it's a model element
     return CopyData(
-        items=dict(copy(item) for item in items),
+        items=dict(next(copy(item)) for item in items),
         elements=dict(
-            copy(item.subject)
+            next(copy(item.subject))
             for item in items
             if isinstance(item, Presentation) and item.subject
         ),

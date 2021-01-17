@@ -19,7 +19,7 @@ class ConnectorCopy(NamedTuple):
 
 @copy.register
 def copy_connector(element: Connector):
-    return element.id, ConnectorCopy(
+    yield element.id, ConnectorCopy(
         element_copy=copy_element(element),
         ends=[copy_element(end) for end in element.end],
         ports=[copy_element(port) for port in element.end[:].partWithPort],

@@ -10,7 +10,7 @@ def test_copy_item_adds_new_item_to_the_diagram(diagram, element_factory):
     cls = element_factory.create(UML.Class)
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    _, buffer = copy(cls_item)
+    _, buffer = next(copy(cls_item))
 
     paste(buffer, diagram, element_factory.lookup)
 
@@ -21,7 +21,7 @@ def test_copied_item_references_same_model_element(diagram, element_factory):
     cls = element_factory.create(UML.Class)
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    _, buffer = copy(cls_item)
+    _, buffer = next(copy(cls_item))
 
     paste(buffer, diagram, element_factory.lookup)
 
