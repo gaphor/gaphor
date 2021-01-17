@@ -26,11 +26,8 @@ class GrayOutLineHandleMove(LineHandleMove):
             line = self.item
             model = self.view.model
             selection = self.view.selection
-            selection.grayed_out_items = set(
-                item
-                for item in model.get_all_items()
-                if not (item is line or connectable(line, handle, item))
-            )
+            selection.grayed_out_items = {item for item in model.get_all_items()
+                        if not (item is line or connectable(line, handle, item))}
 
     def stop_move(self, pos):
         super().stop_move(pos)
