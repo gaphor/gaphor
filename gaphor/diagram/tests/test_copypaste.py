@@ -12,8 +12,9 @@ def test_copy_item_adds_new_item_to_the_diagram(diagram, element_factory):
 
     _, buffer = next(copy(cls_item))
 
-    paste(buffer, diagram, element_factory.lookup)
-
+    paster = paste(buffer, diagram, element_factory.lookup)
+    next(paster)
+    next(paster, None)
     assert len(list(diagram.get_all_items())) == 2
 
 
@@ -23,7 +24,8 @@ def test_copied_item_references_same_model_element(diagram, element_factory):
 
     _, buffer = next(copy(cls_item))
 
-    paste(buffer, diagram, element_factory.lookup)
+    for element in paste(buffer, diagram, element_factory.lookup):
+        pass
 
     assert len(list(diagram.get_all_items())) == 2
     item1, item2 = diagram.get_all_items()

@@ -73,7 +73,6 @@ def deserialize(ser, lookup):
         if e:
             yield e
     elif vtype == "c":
-        # TODO: should apply elements to model one at a time
         for v in value:
             yield from deserialize(v, lookup)
     elif vtype == "v":
@@ -106,11 +105,11 @@ def _copy_element(element: Element) -> Iterator[Tuple[Id, ElementCopy]]:
 def paste_element(copy_data: ElementCopy, diagram, lookup):
     cls, id, data = copy_data
     element = diagram.model.create_as(cls, id)
+    yield element
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             element.load(name, value)
     element.postload()
-    return element
 
 
 paste.register(ElementCopy, paste_element)
@@ -133,10 +132,12 @@ def _copy_named_element(element: NamedElement) -> Iterator[Tuple[Id, NamedElemen
 
 
 def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
-    element = paste_element(copy_data.element_copy, diagram, lookup)
+    paster = paste_element(copy_data.element_copy, diagram, lookup)
+    element = next(paster)
+    yield element
+    next(paster, None)
     if copy_data.with_namespace and not element.namespace:
         element.package = diagram.namespace
-    return element
 
 
 paste.register(NamedElementCopy, paste_named_element)
@@ -148,8 +149,7 @@ class PresentationCopy(NamedTuple):
     parent: Optional[str]
 
 
-@copy.register
-def copy_presentation(item: Presentation) -> Iterator[Tuple[Id, object]]:
+def copy_presentation(item: Presentation) -> PresentationCopy:
     assert item.diagram
     data = {}
 
@@ -161,11 +161,16 @@ def copy_presentation(item: Presentation) -> Iterator[Tuple[Id, object]]:
 
     item.save(save_func)
     parent = item.parent
-    yield item.id, PresentationCopy(
+    return PresentationCopy(
         cls=item.__class__,
         data=data,
         parent=parent.id if parent and isinstance(parent.id, str) else None,
     )
+
+
+@copy.register
+def _copy_presentation(item: Presentation) -> Iterator[Tuple[Id, object]]:
+    yield item.id, copy_presentation(item)
     if item.subject:
         yield from copy(item.subject)
 
@@ -174,24 +179,16 @@ def copy_presentation(item: Presentation) -> Iterator[Tuple[Id, object]]:
 def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     cls, data, parent = copy_data
     item = diagram.create(cls)
+    yield item
     if parent:
         p = lookup(parent)
         if p:
             item.parent = p
 
-    # Ensure we deserialize the subject first, other elements may depend on it
-    ser = data.get("subject")
-    if ser:
-        for value in deserialize(ser, lookup):
-            item.load("subject", value)
-
     for name, ser in data.items():
-        if name == "subject":
-            continue
         for value in deserialize(ser, lookup):
             item.load(name, value)
     diagram.update_now((), [item])
-    return item
 
 
 class CopyData(NamedTuple):
@@ -200,10 +197,8 @@ class CopyData(NamedTuple):
 
 @copy.register
 def _copy_all(items: set) -> CopyData:
-    elements: Dict[str, object] = dict(
-        itertools.chain.from_iterable(copy(item) for item in items)
-    )
-    return CopyData(elements=elements)
+    elements = itertools.chain.from_iterable(copy(item) for item in items)
+    return CopyData(elements=dict(elements))
 
 
 @paste.register
@@ -219,8 +214,9 @@ def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
             return looked_up
 
         elif ref in copy_data.elements:
-            new_elements[ref] = None
-            new_elements[ref] = paste(copy_data.elements[ref], diagram, element_lookup)
+            paster = paste(copy_data.elements[ref], diagram, element_lookup)
+            new_elements[ref] = next(paster)
+            next(paster, None)
             return new_elements[ref]
 
         looked_up = diagram.lookup(ref)
