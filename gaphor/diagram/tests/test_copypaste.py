@@ -96,8 +96,9 @@ def test_copy_item_with_connection(diagram, element_factory):
     assert new_cls_item2 in new_items
 
     # Model elements are not copied
-    assert len(element_factory.lselect(UML.Class)) == 2
-    assert len(element_factory.lselect(UML.Generalization)) == 1
+    assert new_cls_item1.subject is gen_cls_item.subject
+    assert new_cls_item2.subject is spc_cls_item.subject
+    assert new_gen_item.subject is gen_item.subject
 
 
 def test_copy_item_when_subject_has_been_removed(diagram, element_factory):

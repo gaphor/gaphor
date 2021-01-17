@@ -12,6 +12,7 @@ the `paste()` function will load this data in a model.
 
 from __future__ import annotations
 
+import itertools
 from functools import singledispatch
 from typing import (
     Callable,
@@ -22,7 +23,6 @@ from typing import (
     Set,
     Tuple,
     Type,
-    TypeVar,
     Union,
 )
 
@@ -32,11 +32,11 @@ from gaphor.core.modeling import Diagram, NamedElement, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id
 
-T = TypeVar("T")
+Opaque = object
 
 
 @singledispatch
-def copy(obj: Element) -> Iterator[Tuple[Id, T]]:
+def copy(obj: Element) -> Iterator[Tuple[Id, Opaque]]:
     """Create a copy of an element (or list of elements).
 
     The returned type should be distinct, so the `paste()` function can
@@ -46,7 +46,7 @@ def copy(obj: Element) -> Iterator[Tuple[Id, T]]:
 
 
 @singledispatch
-def paste(copy_data: T, diagram: Diagram, lookup: Callable[[str], Element]):
+def paste(copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element]):
     """Paste previously copied data.
 
     Based on the data type created in the `copy()` function, try to
@@ -149,7 +149,7 @@ class PresentationCopy(NamedTuple):
 
 
 @copy.register
-def copy_presentation(item: Presentation) -> Iterator[Tuple[Id, PresentationCopy]]:
+def copy_presentation(item: Presentation) -> Iterator[Tuple[Id, object]]:
     assert item.diagram
     data = {}
 
@@ -166,6 +166,8 @@ def copy_presentation(item: Presentation) -> Iterator[Tuple[Id, PresentationCopy
         data=data,
         parent=parent.id if parent and isinstance(parent.id, str) else None,
     )
+    if item.subject:
+        yield from copy(item.subject)
 
 
 @paste.register
@@ -193,58 +195,45 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
 
 
 class CopyData(NamedTuple):
-    items: Dict[str, object]
     elements: Dict[str, object]
 
 
 @copy.register
 def _copy_all(items: set) -> CopyData:
-    # iterate and lookup id in diagram -> if failed, it's a model element
-    return CopyData(
-        items=dict(next(copy(item)) for item in items),
-        elements=dict(
-            next(copy(item.subject))
-            for item in items
-            if isinstance(item, Presentation) and item.subject
-        ),
+    elements: Dict[str, object] = dict(
+        itertools.chain.from_iterable(copy(item) for item in items)
     )
+    return CopyData(elements=elements)
 
 
 @paste.register
 def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
-    new_items: Dict[str, Presentation] = {}
-    new_elements: Dict[str, Optional[Element]] = {}
+    new_elements: Dict[str, Optional[Presentation]] = {}
 
-    # element_lookup prefers elements already in the model
     def element_lookup(ref: str):
         if ref in new_elements:
             return new_elements[ref]
+
         looked_up = lookup(ref)
         if looked_up:
             return looked_up
-        if ref in copy_data.elements:
+
+        elif ref in copy_data.elements:
             new_elements[ref] = None
             new_elements[ref] = paste(copy_data.elements[ref], diagram, element_lookup)
             return new_elements[ref]
 
-    # item_lookup copies items. Elements are looked up
-    def item_lookup(ref: str):
-        if ref in new_items:
-            return new_items[ref]
-        elif ref in copy_data.items:
-            new_items[ref] = paste(copy_data.items[ref], diagram, item_lookup)
-            return new_items[ref]
         looked_up = diagram.lookup(ref)
         if looked_up:
             return looked_up
-        return element_lookup(ref)
 
-    for old_id, data in copy_data.items.items():
-        if old_id in new_items:
+    for old_id, data in copy_data.elements.items():
+        if old_id in new_elements:
             continue
-        new_items[old_id] = paste(data, diagram, item_lookup)
+        element_lookup(old_id)
 
-    for new_item in new_items.values():
-        new_item.postload()
+    for element in new_elements.values():
+        assert element
+        element.postload()
 
-    return set(new_items.values())
+    return set(e for e in new_elements.values() if isinstance(e, Presentation))
