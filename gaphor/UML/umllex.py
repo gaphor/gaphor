@@ -20,14 +20,14 @@ vis_subpat = r"\s*(?P<vis>[-+#])?"
 derived_subpat = r"\s*(?P<derived>/)?"
 
 # name (required) ::= name
-name_subpat = r"\s*(?P<name>[a-zA-Z_]\w*)"
+name_subpat = r"\s*(?P<name>[a-zA-Z_]\w*( +\w+)*)"
 
 # Multiplicity ::= '[' [mult_l ..] mult_u ']'
 mult_subpat = r"\s*(\[\s*((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\s*\])?"
 multa_subpat = r"\s*(\[?((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\]?)?"
 
 # Type and multiplicity (optional) ::= ':' type
-type_subpat = r"\s*(:\s*(?P<type>\w+))?"
+type_subpat = r"\s*(:\s*(?P<type>[a-zA-Z_]\w*( +\w+)*))?"
 
 # default value (optional) ::= '=' default
 default_subpat = r"\s*(=\s*(?P<default>\S+))?"

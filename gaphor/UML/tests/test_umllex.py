@@ -69,6 +69,16 @@ def test_parse_property_complex(factory):
     assert '"aap"' == a.defaultValue
 
 
+def test_parse_property_with_space_in_name(factory):
+    a = factory.create(UML.Property)
+
+    parse(a, "+ name with space : str")
+
+    assert "public" == a.visibility
+    assert "name with space" == a.name
+    assert "str" == a.typeValue
+
+
 def test_parse_property_invalid(factory):
     """Test parsing property with invalid syntax."""
     a = factory.create(UML.Property)
@@ -127,10 +137,10 @@ def test_parse_association_end_derived_end(factory):
     a = factory.create(UML.Association)
     p = factory.create(UML.Property)
     p.association = a
-    parse(p, "-/end[*] { mytag}")
+    parse(p, "-/end name[*] { mytag}")
     assert "private" == p.visibility
     assert p.isDerived
-    assert "end" == p.name
+    assert "end name" == p.name
     assert not p.typeValue
     assert not p.lowerValue
     assert "*" == p.upperValue
@@ -197,6 +207,14 @@ def test_parse_operation_1_param(factory):
     assert "a" == o.formalParameter[0].name
     assert "node" == o.formalParameter[0].typeValue
     assert o.formalParameter[0].defaultValue is None
+
+
+def test_parse_operation_with_spaces(factory):
+    o = factory.create(UML.Operation)
+    parse(o, "- name with space (param with space: some node ): double")
+    assert "name with space" == o.name
+    assert "param with space" == o.formalParameter[0].name
+    assert "some node" == o.formalParameter[0].typeValue
 
 
 def test_parse_operation_invalid_syntax(factory):
