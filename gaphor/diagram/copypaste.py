@@ -12,29 +12,31 @@ the `paste()` function will load this data in a model.
 
 from __future__ import annotations
 
+import itertools
 from functools import singledispatch
 from typing import (
     Callable,
     Dict,
+    Iterator,
     NamedTuple,
     Optional,
     Set,
     Tuple,
     Type,
-    TypeVar,
     Union,
 )
 
 import gaphas
 
-from gaphor.core.modeling import Diagram, Element, NamedElement, Presentation
+from gaphor.core.modeling import Diagram, NamedElement, Presentation
 from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling.element import Element, Id
 
-T = TypeVar("T")
+Opaque = object
 
 
 @singledispatch
-def copy(obj: Element) -> T:
+def copy(obj: Element) -> Iterator[Tuple[Id, Opaque]]:
     """Create a copy of an element (or list of elements).
 
     The returned type should be distinct, so the `paste()` function can
@@ -44,7 +46,7 @@ def copy(obj: Element) -> T:
 
 
 @singledispatch
-def paste(copy_data: T, diagram: Diagram, lookup: Callable[[str], Element]):
+def paste(copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element]):
     """Paste previously copied data.
 
     Based on the data type created in the `copy()` function, try to
@@ -71,7 +73,6 @@ def deserialize(ser, lookup):
         if e:
             yield e
     elif vtype == "c":
-        # TODO: should apply elements to model one at a time
         for v in value:
             yield from deserialize(v, lookup)
     elif vtype == "v":
@@ -85,28 +86,30 @@ class ElementCopy(NamedTuple):
 
 
 def copy_element(element: Element) -> ElementCopy:
-    buffer = {}
+    data = {}
 
     def save_func(name, value):
         # do not copy Element.presentation, to avoid cyclic dependencies
         if name != "presentation":
-            buffer[name] = serialize(value)
+            data[name] = serialize(value)
 
     element.save(save_func)
-    return ElementCopy(cls=element.__class__, id=element.id, data=buffer)
+    return ElementCopy(cls=element.__class__, id=element.id, data=data)
 
 
-copy.register(Element, copy_element)  # type: ignore[arg-type]
+@copy.register
+def _copy_element(element: Element) -> Iterator[Tuple[Id, ElementCopy]]:
+    yield element.id, copy_element(element)
 
 
 def paste_element(copy_data: ElementCopy, diagram, lookup):
     cls, id, data = copy_data
     element = diagram.model.create_as(cls, id)
+    yield element
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             element.load(name, value)
     element.postload()
-    return element
 
 
 paste.register(ElementCopy, paste_element)
@@ -123,14 +126,18 @@ def copy_named_element(element: NamedElement) -> NamedElementCopy:
     )
 
 
-copy.register(NamedElement, copy_named_element)  # type: ignore[arg-type]
+@copy.register
+def _copy_named_element(element: NamedElement) -> Iterator[Tuple[Id, NamedElementCopy]]:
+    yield element.id, copy_named_element(element)
 
 
 def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
-    element = paste_element(copy_data.element_copy, diagram, lookup)
+    paster = paste_element(copy_data.element_copy, diagram, lookup)
+    element = next(paster)
+    yield element
+    next(paster, None)
     if copy_data.with_namespace and not element.namespace:
         element.package = diagram.namespace
-    return element
 
 
 paste.register(NamedElementCopy, paste_named_element)
@@ -142,92 +149,87 @@ class PresentationCopy(NamedTuple):
     parent: Optional[str]
 
 
-@copy.register
 def copy_presentation(item: Presentation) -> PresentationCopy:
     assert item.diagram
-    buffer = {}
+    data = {}
 
     def save_func(name, value):
-        # Do not copy diagram, it's set when pasted
+        # Do not copy diagram, it's set when pasted,
+        # parent and children are set separately.
         if name not in ("diagram", "parent", "children"):
-            buffer[name] = serialize(value)
+            data[name] = serialize(value)
 
     item.save(save_func)
     parent = item.parent
     return PresentationCopy(
         cls=item.__class__,
-        data=buffer,
+        data=data,
         parent=parent.id if parent and isinstance(parent.id, str) else None,
     )
+
+
+@copy.register
+def _copy_presentation(item: Presentation) -> Iterator[Tuple[Id, object]]:
+    yield item.id, copy_presentation(item)
+    if item.subject:
+        yield from copy(item.subject)
 
 
 @paste.register
 def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     cls, data, parent = copy_data
     item = diagram.create(cls)
+    yield item
     if parent:
         p = lookup(parent)
         if p:
             item.parent = p
+
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             item.load(name, value)
     diagram.update_now((), [item])
-    return item
 
 
 class CopyData(NamedTuple):
-    items: Dict[str, object]
     elements: Dict[str, object]
 
 
 @copy.register
 def _copy_all(items: set) -> CopyData:
-    return CopyData(
-        items={item.id: copy(item) for item in items},
-        elements={
-            item.subject.id: copy(item.subject)
-            for item in items
-            if isinstance(item, Presentation) and item.subject
-        },
-    )
+    elements = itertools.chain.from_iterable(copy(item) for item in items)
+    return CopyData(elements=dict(elements))
 
 
 @paste.register
 def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
-    new_items: Dict[str, Presentation] = {}
-    new_elements: Dict[str, Optional[Element]] = {}
+    new_elements: Dict[str, Optional[Presentation]] = {}
 
-    # element_lookup prefers elements already in the model
     def element_lookup(ref: str):
         if ref in new_elements:
             return new_elements[ref]
+
         looked_up = lookup(ref)
         if looked_up:
             return looked_up
-        if ref in copy_data.elements:
-            new_elements[ref] = None
-            new_elements[ref] = paste(copy_data.elements[ref], diagram, element_lookup)
+
+        elif ref in copy_data.elements:
+            paster = paste(copy_data.elements[ref], diagram, element_lookup)
+            new_elements[ref] = next(paster)
+            next(paster, None)
             return new_elements[ref]
 
-    # item_lookup copies items. Elements are looked up
-    def item_lookup(ref: str):
-        if ref in new_items:
-            return new_items[ref]
-        elif ref in copy_data.items:
-            new_items[ref] = paste(copy_data.items[ref], diagram, item_lookup)
-            return new_items[ref]
         looked_up = diagram.lookup(ref)
         if looked_up:
             return looked_up
-        return element_lookup(ref)
 
-    for old_id, data in copy_data.items.items():
-        if old_id in new_items:
+    for old_id, data in copy_data.elements.items():
+        if old_id in new_elements:
             continue
-        new_items[old_id] = paste(data, diagram, item_lookup)
+        element_lookup(old_id)
 
-    for new_item in new_items.values():
-        new_item.postload()
+    for element in new_elements.values():
+        assert element
+        element.postload()
 
-    return set(new_items.values())
+    return set(e for e in new_elements.values() if isinstance(e, Presentation))

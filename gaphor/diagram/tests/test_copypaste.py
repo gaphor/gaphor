@@ -10,10 +10,11 @@ def test_copy_item_adds_new_item_to_the_diagram(diagram, element_factory):
     cls = element_factory.create(UML.Class)
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy(cls_item)
+    _, buffer = next(copy(cls_item))
 
-    paste(buffer, diagram, element_factory.lookup)
-
+    paster = paste(buffer, diagram, element_factory.lookup)
+    next(paster)
+    next(paster, None)
     assert len(list(diagram.get_all_items())) == 2
 
 
@@ -21,9 +22,10 @@ def test_copied_item_references_same_model_element(diagram, element_factory):
     cls = element_factory.create(UML.Class)
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy(cls_item)
+    _, buffer = next(copy(cls_item))
 
-    paste(buffer, diagram, element_factory.lookup)
+    for element in paste(buffer, diagram, element_factory.lookup):
+        pass
 
     assert len(list(diagram.get_all_items())) == 2
     item1, item2 = diagram.get_all_items()
@@ -96,8 +98,9 @@ def test_copy_item_with_connection(diagram, element_factory):
     assert new_cls_item2 in new_items
 
     # Model elements are not copied
-    assert len(element_factory.lselect(UML.Class)) == 2
-    assert len(element_factory.lselect(UML.Generalization)) == 1
+    assert new_cls_item1.subject is gen_cls_item.subject
+    assert new_cls_item2.subject is spc_cls_item.subject
+    assert new_gen_item.subject is gen_item.subject
 
 
 def test_copy_item_when_subject_has_been_removed(diagram, element_factory):

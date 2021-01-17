@@ -105,9 +105,6 @@ class AssociationItem(LinePresentation[UML.Association], Named):
 
     show_direction: attribute[bool] = attribute("show_direction", bool, False)
 
-    def save(self, save_func):
-        super().save(save_func)
-
     def load(self, name, value):
         # end_head and end_tail were used in an older Gaphor version
         if name in ("head_end", "head-subject"):

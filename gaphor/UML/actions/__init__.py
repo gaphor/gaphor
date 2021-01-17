@@ -2,6 +2,7 @@ from gaphor.UML.actions import (
     actionseditors,
     actionsgrouping,
     actionspropertypages,
+    copypaste,
     flowconnect,
     partitionpage,
 )

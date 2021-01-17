@@ -37,44 +37,41 @@ class PresentationConnector(ItemConnector):
         item = self.item
         cinfo = self.connections.get_connection(handle)
 
-        try:
-            if cinfo and cinfo.connected is sink.item:
-                # reconnect only constraint - leave model intact
-                log.debug("performing reconnect constraint")
-                self.glue(sink)
-                constraint = sink.constraint(item, handle)
-                self.connections.reconnect_item(
-                    item, handle, sink.port, constraint=constraint
-                )
-                return
-
-            adapter = Connector(sink.item, item)
-            if cinfo:
-                # first disconnect but disable disconnection handle as
-                # reconnection is going to happen
-                try:
-                    connect = adapter.reconnect
-                except AttributeError:
-                    connect = adapter.connect
-                else:
-                    cinfo.callback.disable = True
-                self.disconnect()
-            else:
-                # new connection
-                connect = adapter.connect
-
+        if cinfo and cinfo.connected is sink.item:
+            # reconnect only constraint - leave model intact
+            log.debug("performing reconnect constraint")
             self.glue(sink)
-            if not sink.port:
-                print("No port found", item, sink.item)
-                return
+            constraint = sink.constraint(item, handle)
+            self.connections.reconnect_item(
+                item, handle, sink.port, constraint=constraint
+            )
+            return
 
-            self.connect_handle(sink)
+        adapter = Connector(sink.item, item)
+        if cinfo:
+            # first disconnect but disable disconnection handle as
+            # reconnection is going to happen
+            try:
+                connect = adapter.reconnect
+            except AttributeError:
+                connect = adapter.connect
+            else:
+                cinfo.callback.disable = True
+            self.disconnect()
+        else:
+            # new connection
+            connect = adapter.connect
 
-            # adapter requires both ends to be connected.
-            connect(handle, sink.port)
-            item.handle(ItemConnected(item, handle, sink.item, sink.port))
-        except Exception:
-            log.error("Error during connect", exc_info=True)
+        self.glue(sink)
+        if not sink.port:
+            print("No port found", item, sink.item)
+            return
+
+        self.connect_handle(sink)
+
+        # adapter requires both ends to be connected.
+        connect(handle, sink.port)
+        item.handle(ItemConnected(item, handle, sink.item, sink.port))
 
     def connect_handle(self, sink):
         callback = DisconnectHandle(self.item, self.handle, self.connections)

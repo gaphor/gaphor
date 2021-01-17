@@ -51,8 +51,9 @@ def order_lifeline_covered_by(lifeline):
                     else conn.item.subject.receiveEvent,
                 )
 
-    keys = {o: y for y, o in y_and_occurence(lifeline)}
-    lifeline.subject.coveredBy.order(keys.get)
+    if lifeline.subject:
+        keys = {o: y for y, o in y_and_occurence(lifeline)}
+        lifeline.subject.coveredBy.order(keys.get)
 
 
 def owner_for_message(line, lifeline):

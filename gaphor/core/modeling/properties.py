@@ -341,7 +341,10 @@ class association(umlproperty):
                 "Value for %s should be of type %s (%s)"
                 % (self.name, self.type.__name__, type(value).__name__)
             )
-        self._set(obj, value)
+        if self.upper == 1:
+            self._set_one(obj, value)
+        else:
+            self._set_many(obj, value, from_load=True)
 
     def __str__(self):
         if self.lower == self.upper:
@@ -382,7 +385,7 @@ class association(umlproperty):
         else:
             self._set_many(obj, value, from_opposite)
 
-    def _set_one(self, obj, value, from_opposite) -> None:
+    def _set_one(self, obj, value, from_opposite=False) -> None:
         if not (isinstance(value, self.type) or (value is None)):
             raise AttributeError(
                 f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
@@ -408,13 +411,16 @@ class association(umlproperty):
 
         self.handle(AssociationSet(obj, self, old, value))
 
-    def _set_many(self, obj, value, from_opposite) -> None:
+    def _set_many(self, obj, value, from_opposite=False, from_load=False) -> None:
         if not isinstance(value, self.type):
             raise AttributeError(f"Value should be of type {self.type.__name__}")
 
         # Set the actual value
         c: collection = self._get_many(obj)
         if value in c:
+            if from_load:
+                c.items.remove(value)
+                c.items.append(value)
             return
 
         c.items.append(value)
