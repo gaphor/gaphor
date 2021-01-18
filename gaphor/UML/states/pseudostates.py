@@ -7,7 +7,14 @@ from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
+from gaphor.diagram.shapes import (
+    Box,
+    EditableText,
+    IconBox,
+    Text,
+    draw_highlight,
+    stroke,
+)
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.UML.states.state import VertexItem
@@ -25,12 +32,17 @@ class PseudostateItem(ElementPresentation, VertexItem):
         self.watch("subject[Pseudostate].kind", self.update_shapes)
 
     def update_shapes(self, event=None):
+        if self.subject and self.subject.kind == "shallowHistory":
+            box = Box(
+                style={"min-height": 30, "min-width": 30}, draw=draw_history_pseudostate
+            )
+        else:
+            box = Box(
+                style={"min-height": 20, "min-width": 20}, draw=draw_initial_pseudostate
+            )
+
         self.shape = IconBox(
-            Box(
-                draw=draw_history_pseudostate
-                if self.subject and self.subject.kind == "shallowHistory"
-                else draw_initial_pseudostate
-            ),
+            box,
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
@@ -47,6 +59,7 @@ def draw_initial_pseudostate(box, context, bounding_box):
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
+    draw_highlight(context)
     cr.set_line_width(0.01)
     cr.fill()
 
@@ -56,7 +69,7 @@ def draw_history_pseudostate(box, context, bounding_box):
     r = 15
     d = r * 2
     path_ellipse(cr, r, r, d, d)
-    stroke(context)
+    stroke(context, highlight=True)
 
     cr.move_to(12, 10)
     cr.line_to(12, 20)
