@@ -31,7 +31,7 @@ def add_tag_is_foo_metadata_field(e, factory):
     "text,formatted_text",
     [
         ("", ""),
-        ("not an attribute===foobar", "+ not an attribute===foobar"),
+        ("an attribute===foobar", "+ an attribute = ==foobar"),
         ("myattr", "+ myattr"),
         ("myattr:int", "+ myattr: int"),
         ("- myattr:int[3]", "- myattr: int[3]"),
@@ -60,7 +60,8 @@ def test_attribute_with_applied_stereotype(factory):
     "text,name_part, mult_part",
     [
         ("", "", ""),
-        ("not an association end[3]", "+ not an association end[3]", ""),
+        ("errorous (name)[3]", "+ errorous (name)[3]", ""),
+        ("association end with spaces[3]", "+ association end with spaces", "3"),
         ("myattr", "+ myattr", ""),
         ("myattr[0..1]", "+ myattr", "0..1"),
         ("- myattr[0..1]", "- myattr", "0..1"),
