@@ -207,9 +207,14 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         """
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
-        stroke(context)
+        stroke(context, highlight=True)
 
-        if context.hovered or context.focused or self.lifetime.visible:
+        if (
+            context.hovered
+            or context.focused
+            or context.dropzone
+            or self.lifetime.visible
+        ):
             bottom = self.lifetime.bottom
             cr = context.cairo
             with cairo_state(cr):
@@ -217,7 +222,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
                 top = self.lifetime.top
                 cr.move_to(top.pos.x, top.pos.y)
                 cr.line_to(bottom.pos.x, bottom.pos.y)
-                cr.stroke()
+                stroke(context, highlight=True)
 
             # draw destruction event
             if self.is_destroyed:
