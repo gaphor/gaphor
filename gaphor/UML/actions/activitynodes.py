@@ -12,7 +12,14 @@ from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.properties import association, relation_one
 from gaphor.diagram.presentation import ElementPresentation, HandlePositionUpdate, Named
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
+from gaphor.diagram.shapes import (
+    Box,
+    EditableText,
+    IconBox,
+    Text,
+    draw_highlight,
+    stroke,
+)
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -64,6 +71,7 @@ def draw_initial_node(_box, context, _bounding_box):
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
+    draw_highlight(context)
     cr.set_line_width(0.01)
     cr.fill()
 
@@ -103,13 +111,13 @@ def draw_activity_final_node(_box, context, _bounding_box):
 
     inner_radius = 10
     outer_radius = 15
-    r = outer_radius + 1
+    r = outer_radius
 
     d = r * 2
     path_ellipse(cr, r, r, d, d)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
-    stroke(context)
+    stroke(context, highlight=True)
 
     d = inner_radius * 2
     path_ellipse(cr, r, r, d, d)
@@ -147,7 +155,7 @@ def draw_flow_final_node(_box, context, _bounding_box):
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
-    stroke(context)
+    stroke(context, highlight=True)
 
     dr = (1 - math.sin(math.pi / 4)) * r
     cr.move_to(dr, dr)
@@ -193,7 +201,7 @@ def draw_decision_node(_box, context, _bounding_box):
     cr.line_to(r2, r * 2)
     cr.line_to(0, r)
     cr.close_path()
-    stroke(context)
+    stroke(context, highlight=True)
 
 
 @represents(UML.ForkNode)
@@ -274,11 +282,14 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
         cr = context.cairo
 
         cr.set_line_width(6)
+        stroke = context.style.get("color")
+        if stroke:
+            cr.set_source_rgba(*stroke)
         h1, h2 = self._handles
         cr.move_to(h1.pos.x, h1.pos.y)
         cr.line_to(h2.pos.x, h2.pos.y)
-
-        stroke(context)
+        draw_highlight(context)
+        cr.stroke()
 
     def point(self, x, y):
         h1, h2 = self._handles

@@ -92,7 +92,7 @@ def draw_highlight(context: DrawContext):
     with cairo_state(context.cairo) as cr:
         highlight_color = context.style["highlight-color"]
         cr.set_source_rgba(*highlight_color)
-        cr.set_line_width(cr.get_line_width() * 3.141)
+        cr.set_line_width(cr.get_line_width() + 3.8)
         cr.stroke_preserve()
 
 
