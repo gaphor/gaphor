@@ -5,6 +5,6 @@ exclude:
 - /gaphor/UML/uml2\.py
 - /docs/.*
 - /utils/.*
-- /win-installer/.*
+- /packaging/windows/.*
 - .*\.gaphor
 - .*\.svg

@@ -38,10 +38,10 @@ pip-wheel-metadata
 .idea
 
 # Windows Install
-win-installer/gaphor-script.py
-win-installer/_build_root
-win-installer/file_version_info.txt
-win-installer/output
+packaging/windows/gaphor-script.py
+packaging/windows/_build_root
+packaging/windows/file_version_info.txt
+packaging/windows/output
 
 # MacOS
 package/gaphor.iconset/

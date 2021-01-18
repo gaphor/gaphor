@@ -35,6 +35,6 @@ script that creates a Windows installer using
 1. Follow the instructions for settings up a development environment above
 1. Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
 ```bash
-$ cd win-installer
+$ cd packaging/windows
 $ ./build-installer.sh
 ```

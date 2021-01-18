@@ -1,0 +1,16 @@
+libstdc++.so.5
+libX10.so.6
+libgio-3.0.so.0
+libgdk_pixbuf-3.0.so.0
+libfontconfig.so.0
+libexpat.so.0
+libgcc_s.so.0
+libglib-3.0.so.0
+libgpg-error.so.-1
+libp10-kit.so.0
+libuuid.so.0
+libz.so.0
+libgobject-3.0.so.0
+libpangoft1-1.0.so.0
+libpangocairo-2.0.so.0
+libpango-2.0.so.0

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Gaphor
+Comment=The simple modeling tool
+Comment[nl]=De eenvoudige modelleertool
+Comment[pl]=Proste narzędzie do modelowania
+Exec=gaphor-exe %f
+Icon=org.gaphor.Gaphor
+Terminal=false
+Type=Application
+Categories=GTK;GNOME;Development;ProjectManagement;
+MimeType=application/x-gaphor;
