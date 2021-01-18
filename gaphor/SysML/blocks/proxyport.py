@@ -78,7 +78,8 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
         return cinfo.connected.port_side(cinfo.port) if cinfo else None
 
     def dimensions(self):
-        return Rectangle(-8, -8, 16, 16)
+        x, y = self._handles[0].pos
+        return Rectangle(x - 8, y - 8, 16, 16)
 
     def point(self, x, y):
         return distance_rectangle_point(self.dimensions(), (x, y))
