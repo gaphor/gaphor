@@ -46,4 +46,4 @@ class CommentItem(ElementPresentation):
         line_to(x, h)
         line_to(w, h)
         line_to(w, y + ear)
-        stroke(context)
+        stroke(context, highlight=True)
