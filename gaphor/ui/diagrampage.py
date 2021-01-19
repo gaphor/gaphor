@@ -320,7 +320,8 @@ class DiagramPage:
             and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
             tool_def = self.get_tool_def(data.get_data().decode())
-            create_item(view, tool_def.item_factory, x, y)
+            with Transaction(self.event_manager):
+                create_item(view, tool_def.item_factory, x, y)
             context.finish(True, False, time)
         elif (
             data
