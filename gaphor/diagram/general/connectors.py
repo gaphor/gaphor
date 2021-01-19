@@ -158,12 +158,3 @@ class CommentLineLineConnect(BaseConnector):
             ):
                 del c2.subject.annotatedElement[c1.subject]
         super().disconnect(handle)
-
-
-@Connector.register(CommentLineItem, LinePresentation)
-class InverseCommentLineLineConnect(CommentLineLineConnect):
-    """In case a line is disconnected that contains a comment-line, the comment
-    line unlinking should happen in a correct way."""
-
-    def __init__(self, line, element):
-        super().__init__(element, line)
