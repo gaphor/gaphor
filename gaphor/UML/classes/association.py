@@ -233,7 +233,6 @@ def draw_head_none(context):
     cr.rel_line_to(8, 8)
     cr.rel_move_to(0, -8)
     cr.rel_line_to(-8, 8)
-    cr.stroke()
     cr.move_to(0, 0)
 
 
@@ -246,7 +245,6 @@ def draw_tail_none(context):
     cr.rel_line_to(8, 8)
     cr.rel_move_to(0, -8)
     cr.rel_line_to(-8, 8)
-    cr.stroke()
 
 
 def _draw_diamond(cr):
@@ -265,7 +263,6 @@ def draw_head_composite(context):
     cr = context.cairo
     _draw_diamond(cr)
     context.cairo.fill_preserve()
-    cr.stroke()
     cr.move_to(20, 0)
 
 
@@ -274,10 +271,8 @@ def draw_tail_composite(context):
     at association tail."""
     cr = context.cairo
     cr.line_to(20, 0)
-    cr.stroke()
     _draw_diamond(cr)
     cr.fill_preserve()
-    cr.stroke()
 
 
 def draw_head_shared(context):
@@ -293,9 +288,7 @@ def draw_tail_shared(context):
     association tail."""
     cr = context.cairo
     cr.line_to(20, 0)
-    cr.stroke()
     _draw_diamond(cr)
-    cr.stroke()
 
 
 def draw_head_navigable(context):
@@ -305,7 +298,6 @@ def draw_head_navigable(context):
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
-    cr.stroke()
     cr.move_to(0, 0)
 
 
@@ -314,7 +306,6 @@ def draw_tail_navigable(context):
     association tail."""
     cr = context.cairo
     cr.line_to(0, 0)
-    cr.stroke()
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)

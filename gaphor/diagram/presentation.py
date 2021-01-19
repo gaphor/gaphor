@@ -233,7 +233,9 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         return min(d0, *ds) if ds else d0
 
     def draw(self, context):
-        def draw_line_end(pos, angle, draw):
+        def draw_line_end(end_handle, second_handle, draw):
+            pos, p1 = end_handle.pos, second_handle.pos
+            angle = atan2(p1.y - pos.y, p1.x - pos.x)
             cr = context.cairo
             cr.save()
             try:
@@ -253,18 +255,14 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         if stroke:
             cr.set_source_rgba(*stroke)
 
-        h0, h1 = self._handles[:2]
-        p0, p1 = h0.pos, h1.pos
-        head_angle = atan2(p1.y - p0.y, p1.x - p0.x)
-        draw_line_end(self._handles[0].pos, head_angle, self.draw_head)
+        handles = self._handles
+        draw_line_end(handles[0], handles[1], self.draw_head)
 
         for h in self._handles[1:-1]:
             cr.line_to(*h.pos)
 
-        h1, h0 = self._handles[-2:]
-        p1, p0 = h1.pos, h0.pos
-        tail_angle = atan2(p1.y - p0.y, p1.x - p0.x)
-        draw_line_end(self._handles[-1].pos, tail_angle, self.draw_tail)
+        draw_line_end(handles[-1], handles[-2], self.draw_tail)
+
         draw_highlight(context)
         cr.stroke()
 

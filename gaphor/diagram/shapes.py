@@ -357,14 +357,12 @@ def draw_arrow_head(context: DrawContext):
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
-    cr.stroke()
     cr.move_to(0, 0)
 
 
 def draw_arrow_tail(context: DrawContext):
     cr = context.cairo
     cr.line_to(0, 0)
-    cr.stroke()
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)

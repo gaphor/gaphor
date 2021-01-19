@@ -18,7 +18,7 @@ import ast
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.shapes import Box, EditableText, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.modelfactory import stereotypes_str
@@ -103,5 +103,5 @@ class DependencyItem(LinePresentation, Named):
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
-            cr.stroke()
+            stroke(context, highlight=True)
         cr.move_to(0, 0)
