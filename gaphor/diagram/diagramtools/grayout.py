@@ -44,3 +44,7 @@ class GrayOutLineHandleMove(LineHandleMove):
         sink = super().glue(pos, distance)
         self.view.selection.dropzone_item = sink and sink.item
         return sink
+
+    def connect(self, pos: Pos) -> None:
+        super().connect(pos)
+        self.view.selection.dropzone_item = None
