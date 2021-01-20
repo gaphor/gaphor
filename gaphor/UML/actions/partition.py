@@ -1,6 +1,5 @@
 """Activity Partition item."""
 
-from cairo import Context as CairoContext
 from gaphas.geometry import Rectangle
 
 from gaphor import UML
@@ -55,7 +54,7 @@ class PartitionItem(ElementPresentation):
         """
         cr = context.cairo
         cr.set_line_width(context.style["line-width"])
-        self.draw_outline(bounding_box, cr)
+        self.draw_outline(bounding_box, context)
         self.draw_partitions(bounding_box, context)
         stroke(context)
         self.draw_hover(bounding_box, context)
@@ -68,7 +67,6 @@ class PartitionItem(ElementPresentation):
                 cr.set_dash((1.0, 5.0), 0)
                 cr.set_line_width(1.0)
                 cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
-                draw_highlight(context)
                 cr.stroke()
 
     def draw_partitions(self, bounding_box: Rectangle, context: DrawContext) -> None:
@@ -92,12 +90,14 @@ class PartitionItem(ElementPresentation):
                 default_size=(partition_width, HEADER_HEIGHT),
             )
 
-    def draw_outline(self, bounding_box: Rectangle, cr: CairoContext) -> None:
+    def draw_outline(self, bounding_box: Rectangle, context: DrawContext) -> None:
         """Draw the outline and header of the swimlanes."""
+        cr = context.cairo
         cr.move_to(0, bounding_box.height)
         cr.line_to(0, 0)
         cr.line_to(bounding_box.width, 0)
         cr.line_to(bounding_box.width, bounding_box.height)
+        draw_highlight(context)
         cr.move_to(0, bounding_box.height)
         cr.line_to(0, HEADER_HEIGHT)
         cr.line_to(0 + bounding_box.width, HEADER_HEIGHT)

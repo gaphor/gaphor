@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 from dataclasses import replace
+from math import atan2
 
 import gaphas
 from gaphas.aspect.connector import ConnectionSink
@@ -14,7 +15,7 @@ from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style
-from gaphor.diagram.shapes import combined_style
+from gaphor.diagram.shapes import combined_style, draw_highlight
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -232,17 +233,38 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         return min(d0, *ds) if ds else d0
 
     def draw(self, context):
+        def draw_line_end(end_handle, second_handle, draw):
+            pos, p1 = end_handle.pos, second_handle.pos
+            angle = atan2(p1.y - pos.y, p1.x - pos.x)
+            cr = context.cairo
+            cr.save()
+            try:
+                cr.translate(*pos)
+                cr.rotate(angle)
+                draw(context)
+            finally:
+                cr.restore()
+
         style = combined_style(context.style, self.style)
         context = replace(context, style=style)
 
         cr = context.cairo
-        self.line_width = style["line-width"]
+        cr.set_line_width(self.line_width)
         cr.set_dash(style.get("dash-style", ()), 0)
         stroke = style["color"]
         if stroke:
             cr.set_source_rgba(*stroke)
 
-        super().draw(context)
+        handles = self._handles
+        draw_line_end(handles[0], handles[1], self.draw_head)
+
+        for h in self._handles[1:-1]:
+            cr.line_to(*h.pos)
+
+        draw_line_end(handles[-1], handles[-2], self.draw_tail)
+
+        draw_highlight(context)
+        cr.stroke()
 
         for shape, rect in (
             (self.shape_head, self._shape_head_rect),

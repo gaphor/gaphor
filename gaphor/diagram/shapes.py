@@ -92,7 +92,7 @@ def draw_highlight(context: DrawContext):
     with cairo_state(context.cairo) as cr:
         highlight_color = context.style["highlight-color"]
         cr.set_source_rgba(*highlight_color)
-        cr.set_line_width(cr.get_line_width() * 3.141)
+        cr.set_line_width(cr.get_line_width() + 3.8)
         cr.stroke_preserve()
 
 
@@ -357,14 +357,12 @@ def draw_arrow_head(context: DrawContext):
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
-    cr.stroke()
     cr.move_to(0, 0)
 
 
 def draw_arrow_tail(context: DrawContext):
     cr = context.cairo
     cr.line_to(0, 0)
-    cr.stroke()
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)

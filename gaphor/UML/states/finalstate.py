@@ -18,7 +18,7 @@ class FinalStateItem(ElementPresentation, VertexItem):
             h.movable = False
 
         self.shape = IconBox(
-            Box(draw=draw_final_state),
+            Box(style={"min-width": 30, "min-height": 30}, draw=draw_final_state),
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
@@ -31,13 +31,13 @@ class FinalStateItem(ElementPresentation, VertexItem):
 
 def draw_final_state(box, context, bounding_box):
     cr = context.cairo
-    r = 16
+    r = 15
 
     d = r * 2
     path_ellipse(cr, r, r, d, d)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
-    stroke(context)
+    stroke(context, highlight=True)
 
     stroke_color = context.style["color"]
     if stroke_color:

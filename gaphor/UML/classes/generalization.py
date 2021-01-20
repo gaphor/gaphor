@@ -3,7 +3,7 @@
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation
-from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -26,5 +26,5 @@ class GeneralizationItem(LinePresentation):
         cr.line_to(15, -10)
         cr.line_to(15, 10)
         cr.close_path()
-        cr.stroke()
+        stroke(context, highlight=True)
         cr.move_to(15, 0)

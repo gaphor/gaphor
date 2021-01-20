@@ -58,7 +58,7 @@ class SendSignalActionItem(ElementPresentation, Named):
         cr.line_to(0, height)
         cr.close_path()
 
-        stroke(context)
+        stroke(context, highlight=True)
 
 
 @represents(UML.AcceptEventAction)
@@ -89,4 +89,4 @@ class AcceptEventActionItem(ElementPresentation, Named):
         cr.line_to(d, height / 2)
         cr.close_path()
 
-        stroke(context)
+        stroke(context, highlight=True)
