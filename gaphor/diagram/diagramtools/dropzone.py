@@ -1,3 +1,5 @@
+import functools
+import itertools
 from typing import Type
 
 from gaphas.aspect.move import Move as MoveAspect
@@ -6,6 +8,7 @@ from gaphas.tool.itemtool import item_at_point
 from gaphas.view import GtkView
 from gi.repository import Gtk
 
+from gaphor.diagram.connectors import Connector
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.presentation import (
     ElementPresentation,
@@ -22,6 +25,14 @@ def drop_zone_tool(
     return ctrl
 
 
+@functools.lru_cache()
+def has_registration(generic_type, parent_type, child_type):
+    get_registration = generic_type.registry.get_registration
+    for t1, t2 in itertools.product(parent_type.__mro__, child_type.__mro__):
+        if get_registration(t1, t2):
+            return True
+
+
 def on_motion(controller, x, y, item_class: Type[Presentation]):
     view: GtkView = controller.get_widget()
     model = view.model
@@ -32,10 +43,11 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
         parent = None
 
     if parent:
-        adapter_type = Group.registry.get_registration(type(parent), item_class)
-        # No in depth check is done to see if we can actually connect,
-        # since we only have the item_class, not an actual item.
-        view.selection.dropzone_item = parent if adapter_type else None
+        parent_type = type(parent)
+        dropzone = has_registration(Group, parent_type, item_class) or has_registration(  # type: ignore[arg-type]
+            Connector, parent_type, item_class  # type: ignore[arg-type]
+        )
+        view.selection.dropzone_item = parent if dropzone else None
         model.request_update(parent, matrix=False)
     else:
         if view.selection.dropzone_item:
