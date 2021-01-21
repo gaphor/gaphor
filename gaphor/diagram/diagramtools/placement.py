@@ -92,11 +92,12 @@ def on_drag_update(gesture, offset_x, offset_y, placement_state):
 
 def on_drag_end(gesture, offset_x, offset_y, placement_state):
     if placement_state.moving:
+        view = gesture.get_widget()
         _, x, y = gesture.get_start_point()
+        item = placement_state.moving.item
         placement_state.moving.stop_move((x + offset_x, y + offset_y))
-        placement_state.event_manager.handle(
-            DiagramItemPlaced(placement_state.moving.item)
-        )
+        connect_opposite_handle(view, item, x, y, placement_state.handle_index)
+        placement_state.event_manager.handle(DiagramItemPlaced(item))
 
 
 def new_item_factory(
