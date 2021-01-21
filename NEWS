@@ -1,3 +1,26 @@
+2.2.0
+-----
+- Guide users to create valid relationships
+- macOS builds are signed and notarized
+- New app icon
+- Improvements to copy and paste, and undo robustness
+- Fix RuntimeError caused by style sheet creation
+- Use EventControllers from GTK 3.24
+
+2.1.1
+-----
+- Fix copy and paste in Linux with Wayland
+
+2.1.0
+-----
+- Improve swimlane behavior
+- Add auto select in tree view
+- Add in-app notifications
+- Improve file load and save dialogs
+- Show more elements and relationships in namespace tree
+- Update Italian translation
+- Make lifelines and messages owned by interactions
+
 2.0.1
 -----
 - Fix Gaphor fails to launch in macOS
