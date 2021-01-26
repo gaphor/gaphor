@@ -44,26 +44,23 @@ $H1
 EOF
 fi
 
-find models/"$M" | while read -r PACKAGE
+find "models/${M}" -mindepth 1 -type d -printf "%P\n" | sort | while read -r PACKAGE
 do
-  if test -d models/"$M"/"$PACKAGE"
-  then
-    echo "  $(basename "$M")/${PACKAGE}" >> models/"$M".rst
+  echo "  ${M}/${PACKAGE}" >> "models/${M}.rst"
 
-    {
-      echo "${PACKAGE//_/ }"
-      echo $H1
+  {
+    echo "${PACKAGE//_/ }"
+    echo $H1
+    echo
+    find "models/${M}/${PACKAGE}" -mindepth 1 -printf "%P\n" | sort | while read -r DIAGRAM
+    do
+      name=${DIAGRAM%.svg}
+      echo "${name//_/ }"
+      echo $H2
       echo
-      find models/"$M"/"${PACKAGE}" | while read -r DIAGRAM
-      do
-        name=${DIAGRAM%.svg}
-        echo "${name//_/ }"
-        echo $H2
-        echo
-        echo ".. thumbnail:: ${PACKAGE}/${DIAGRAM}"
-        echo "  :group: ${PACKAGE}"
-        echo
-      done
-    } > models/"$M"/"${PACKAGE}".rst
-  fi
+      echo ".. thumbnail:: ${PACKAGE}/${DIAGRAM}"
+      echo "  :group: ${PACKAGE}"
+      echo
+    done
+  } > models/"$M"/"${PACKAGE}".rst
 done
