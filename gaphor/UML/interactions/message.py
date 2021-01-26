@@ -49,7 +49,7 @@ from math import atan2, pi
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state
+from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import middle_segment
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -167,7 +167,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
             cr.set_dash((7.0, 5.0), 0)
 
         cr.line_to(0, 0)
-        cr.stroke()
+        stroke(context, highlight=True)
 
         cr.set_dash((), 0)
 
@@ -184,7 +184,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
         else:
             self._draw_arrow(cr)
 
-        cr.stroke()
+        stroke(context, highlight=True)
 
     def _draw_decorating_arrow(self, cr, inverted=False):
         with cairo_state(cr):
