@@ -31,7 +31,7 @@ $H1
 
 EOF
 else
-  cat > models/"$M".rst << EOF
+  cat > "models/$(basename "$M").rst" << EOF
 Systems Modeling Language
 $H1
 
@@ -46,7 +46,7 @@ fi
 
 find "models/${M}" -mindepth 1 -type d -printf "%P\n" | sort | while read -r PACKAGE
 do
-  echo "  ${M}/${PACKAGE}" >> "models/${M}.rst"
+  echo "  ${M}/${PACKAGE}" >> "models/$(basename "$M").rst"
 
   {
     echo "${PACKAGE//_/ }"
@@ -62,5 +62,5 @@ do
       echo "  :group: ${PACKAGE}"
       echo
     done
-  } > models/"$M"/"${PACKAGE}".rst
+  } > "models/$M/${PACKAGE}.rst"
 done

@@ -43,7 +43,7 @@ plug-in.
 
    models/core
    models/uml
-   models/sysml/Profiles/SysML
+   models/SysML
 
 .. toctree::
    :caption: Storage

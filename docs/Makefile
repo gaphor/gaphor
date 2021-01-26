@@ -131,7 +131,7 @@ doctest:
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
-models: models/core.rst models/uml.rst models/sysml/Profiles/SysML.rst
+models: models/core.rst models/uml.rst models/SysML.rst
 
 models/core.rst: ../models/Core.gaphor
 	gaphorconvert --format=svg --dir=models/core --use-underscores $< && \
@@ -141,6 +141,6 @@ models/uml.rst: ../models/UML.gaphor
 	gaphorconvert --format=svg --dir=models/uml --use-underscores $< && \
 	./modeldoc.sh uml
 
-models/sysml/Profiles/SysML.rst: ../models/SysML.gaphor
+models/SysML.rst: ../models/SysML.gaphor
 	gaphorconvert --format=svg --dir=models/sysml --use-underscores $< && \
 	./modeldoc.sh sysml/Profiles/SysML
