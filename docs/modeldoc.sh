@@ -35,7 +35,7 @@ else
 Systems Modeling Language
 $H1
 
-.. image:: $(basename "$M")/SysML.svg
+.. image:: $M/SysML.svg
 
 .. toctree::
   :caption: Packages

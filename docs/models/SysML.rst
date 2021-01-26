@@ -1,7 +1,7 @@
 Systems Modeling Language
 ==================================================
 
-.. image:: SysML/SysML.svg
+.. image:: sysml/Profiles/SysML/SysML.svg
 
 .. toctree::
   :caption: Packages
