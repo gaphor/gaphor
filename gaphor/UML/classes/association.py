@@ -30,6 +30,7 @@ from gaphor.diagram.shapes import (
     combined_style,
     draw_default_head,
     draw_default_tail,
+    stroke,
     text_draw_focus_box,
 )
 from gaphor.diagram.support import represents
@@ -271,8 +272,10 @@ def draw_tail_composite(context):
     at association tail."""
     cr = context.cairo
     cr.line_to(20, 0)
+    stroke(context, highlight=True)
     _draw_diamond(cr)
     cr.fill_preserve()
+    stroke(context, highlight=True)
 
 
 def draw_head_shared(context):
