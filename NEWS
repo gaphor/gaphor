@@ -1,3 +1,7 @@
+2.2.1
+-----
+- Fix drawing of containment relationships
+
 2.2.0
 -----
 - Guide users to create valid relationships
