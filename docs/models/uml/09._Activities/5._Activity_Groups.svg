@@ -358,7 +358,8 @@
   <rect x="0" y="0" width="1066" height="672"/>
 </clipPath>
 <g id="surface5341" clip-path="url(#clip4)">
-<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -15 6 L 0 0 L -15 -6 M 0 0 L -175 0 L -175 44 L -20 44 M -20 44 L -10 50 L 0 44 L -10 38 Z M -20 44 " transform="matrix(1,0,0,1,486.5,231.5)"/>
+<path style="fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 15 38 L -0.000000000000056843 44 L 15 50 M -0.000000000000056843 44 L 175 44 L 175 0 L 20 0 " transform="matrix(-1,0.000000000000000122,-0.000000000000000122,-1,486.5,275.5)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 20 0 L 10 -6 L 0 0 L 10 6 Z M 20 0 " transform="matrix(-1,0.000000000000000122,-0.000000000000000122,-1,486.5,275.5)"/>
 <g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
   <use xlink:href="#glyph1-1" x="422.5" y="223.5"/>
   <use xlink:href="#glyph1-2" x="430.5" y="223.5"/>
@@ -453,7 +454,8 @@
   <rect x="0" y="0" width="1066" height="672"/>
 </clipPath>
 <g id="surface5344" clip-path="url(#clip5)">
-<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M -14.980469 6.046875 L 0 0 L -15.019531 -5.953125 M 0 0 L -302.5 0.9375 M -302.5 0.9375 L -312.519531 -5.03125 L -322.5 1 L -312.480469 6.96875 Z M -302.5 0.9375 " transform="matrix(1,0,0,1,486.5,175)"/>
+<path style="fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 307.502404 6.000395 L 322.50155 0 L 307.500551 -5.999668 M 322.50155 0 L 20.000098 -0.000484494 " transform="matrix(0.999995,-0.00310076,0.00310076,0.999995,164,176)"/>
+<path style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 20.000098 -0.000484494 L 9.999122 -6.000274 L 0 0 L 10.000975 5.999789 Z M 20.000098 -0.000484494 " transform="matrix(0.999995,-0.00310076,0.00310076,0.999995,164,176)"/>
 <g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
   <use xlink:href="#glyph1-1" x="442.5" y="167"/>
   <use xlink:href="#glyph1-2" x="450.5" y="167"/>
