@@ -1,6 +1,6 @@
 2.2.1
 -----
-- Fix drawing of containment relationships
+- Fix drawing of composite association
 
 2.2.0
 -----
