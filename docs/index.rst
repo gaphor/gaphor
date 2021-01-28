@@ -46,16 +46,10 @@ plug-in.
    models/SysML
 
 .. toctree::
-   :caption: Storage
-   :maxdepth: 1
-
-   storage
-   xml-format
-
-.. toctree::
    :caption: Services
    :maxdepth: 1
 
+   storage
    undo
 
 .. toctree::
