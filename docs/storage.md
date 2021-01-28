@@ -6,53 +6,84 @@ Gaphor model.
 
 The idea is to keep the file format as simple and extensible as
 possible: UML elements (including Diagram) are at the top level with no nesting.
-A UML element can have two tags: `Reference` and `Value`. Reference is used to
-point to other UML elements, Value has a value inside (an integer or a string).
+A UML element can have two tags: references (`ref`) and values (`val`). References are used to point to other UML elements. Values have a value inside (an integer or a string).
 
-Diagram is a special case. Since this element contains a diagram canvas
-inside, it may become pretty big (with lots of nested elements). This is
-handled by the load and save function of the Diagram class. All elements
-inside a canvas have a tag `Item`.
+Diagram is a special case. All items on a canvas are embedded in the Diagram
+element's.
+
+Since many references are bi-directional, you'll find both ends defined in the file (e.g. `Package.ownedClassifier` - `Actor.package`, and `Diagram.ownedPresentation` and `UseCaseItem.diagram`).
 
 ```xml 
 <?xml version="1.0" ?>
 <Gaphor version="1.0" gaphor_version="0.3">
   <Package id="1">
-    <ownedElement>
+    <ownedClassifier>
       <reflist>
         <ref refid="2"/>
         <ref refid="3"/>
         <ref refid="4"/>
       </reflist>
-    </ownedElement>
+    </ownedClassifier>
   </Package>
   <Diagram id="2">
-    <namespace>
+    <package>
       <ref refid="1"/>
-    </namespace>
-    <canvas extents="(9.0, 9.0, 189.0, 247.0)" grid_bg="0xFFFFFFFF"
-     grid_color="0x80ff" grid_int_x="10.0" grid_int_y="10.0"
-     grid_ofs_x="0.0" grid_ofs_y="0.0" snap_to_grid="0"
-     static_extents="0" affine="(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)"
-     id="DCE:xxxx">
-      <item affine="(1.0, 0.0, 0.0, 1.0, 150.0, 50.0)" cid="0x8293e74"
-         height="78.0" subject="3" type="ActorItem" width="38.0"/>
-      <item affine="(1.0, 0.0, 0.0, 1.0, 10.0, 10.0)" cid="0x82e7d74"
-         height="26.0" subject="5" type="CommentItem" width="100.0"/>
+    </package>
+    <ownedPresentation>
+      <reflist>
+        <ref refid="5"/>
+        <ref refid="6"/>
+      </reflist>
+    </ownedPresentation>
+    <canvas>
+     <item id="5" type="ActorItem">
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 147.0, 132.0)</val>
+        </matrix>
+        <width>
+          <val>38.0</val>
+        </width>
+        <height>
+          <val>60.0</val>
+        </height>
+        <diagram>
+          <ref refid="2"/>
+        </diagram>
+        <subject>
+          <ref refid="3"/>
+        </subject>
+      </item>
+      <item id="6" type="UseCaseItem">
+        <matrix>
+          <val>(1.0, 0.0, 0.0, 1.0, 341.0, 144.0)</val>
+        </matrix>
+        <width>
+          <val>98.0</val>
+        </width>
+        <height>
+          <val>30.0</val>
+        </height>
+        <diagram>
+          <ref refid="2"/>
+        </diagram>
+        <subject>
+          <ref refid="4"/>
+        </subject>
+      </item>
     </canvas>
   </Diagram>
   <Actor id="3">
     <name>
-      <val><![CDATA[Actor]]></val>
+      <val>Actor></val>
     </name>
-    <namespace>
+    <package>
       <ref refid="1"/>
-    </namespace>
+    </package>
   </Actor>
   <UseCase id="4">
-    <namespace>
+    <package>
       <ref refid="1"/>
-    </namespace>
+    </package>
   </UseCase>
   <Comment id="5"/>
 </Gaphor>
