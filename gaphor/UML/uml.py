@@ -249,7 +249,7 @@ class InputPin(Pin):
 
 
 class Manifestation(Abstraction):
-    pass
+    artifact: relation_one[Artifact]
 
 
 class Component(Class):
@@ -312,6 +312,7 @@ class Property(StructuralFeature, ConnectableElement):
     owningAssociation: relation_one[Association]
     useCase: relation_one[UseCase]
     actor: relation_one[Actor]
+    artifact: relation_one[Artifact]
     isComposite: derived[bool]
     navigability: derived[Optional[bool]]
     opposite: relation_one[Optional[Property]]
@@ -357,6 +358,8 @@ class Artifact(Classifier, DeployedArtifact):
     manifestation: relation_many[Manifestation]
     nestedArtifact: relation_many[Artifact]
     artifact: relation_one[Artifact]
+    ownedAttribute: relation_many[Property]
+    ownedOperation: relation_many[Operation]
 
 
 class ActivityParameterNode(ObjectNode):
@@ -433,6 +436,7 @@ class Operation(BehavioralFeature):
     postcondition: relation_many[Constraint]
     interface_: relation_one[Interface]
     raisedException: relation_many[Type]
+    artifact: relation_one[Artifact]
     type: derivedunion[DataType]
     formalParameter: relation_many[Parameter]  # type: ignore[assignment]
 
@@ -1005,7 +1009,12 @@ Association.ownedEnd = association(
     "ownedEnd", Property, composite=True, opposite="owningAssociation"
 )
 Interface.redefinedInterface = association("redefinedInterface", Interface)
-Artifact.manifestation = association("manifestation", Manifestation, composite=True)
+Artifact.manifestation = association(
+    "manifestation", Manifestation, composite=True, opposite="artifact"
+)
+Manifestation.artifact = association(
+    "artifact", Artifact, lower=1, upper=1, opposite="manifestation"
+)
 ExtensionPoint.useCase = association(
     "useCase", UseCase, lower=1, upper=1, opposite="extensionPoint"
 )
@@ -1294,6 +1303,18 @@ Artifact.nestedArtifact = association(
 Artifact.artifact = association(
     "artifact", Artifact, upper=1, opposite="nestedArtifact"
 )
+Property.artifact = association(
+    "artifact", Artifact, upper=1, opposite="ownedAttribute"
+)
+Artifact.ownedAttribute = association(
+    "ownedAttribute", Property, composite=True, opposite="artifact"
+)
+Operation.artifact = association(
+    "artifact", Artifact, upper=1, opposite="ownedOperation"
+)
+Artifact.ownedOperation = association(
+    "ownedOperation", Operation, composite=True, opposite="artifact"
+)
 # 38: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
@@ -1332,6 +1353,7 @@ Classifier.attribute = derivedunion(
     Actor.ownedAttribute,
     StructuredClassifier.ownedAttribute,
     Signal.ownedAttribute,
+    Artifact.ownedAttribute,
 )
 Classifier.feature = derivedunion(
     "feature",
@@ -1347,6 +1369,7 @@ Classifier.feature = derivedunion(
     StructuredClassifier.ownedConnector,
     Class.ownedReception,
     Interface.ownedReception,
+    Artifact.ownedOperation,
 )
 Feature.featuringClassifier = derivedunion(
     "featuringClassifier",
@@ -1359,6 +1382,7 @@ Feature.featuringClassifier = derivedunion(
     Operation.datatype,
     Property.datatype,
     Operation.interface_,
+    Operation.artifact,
 )
 # 79: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
 # defined in umloverrides.py
@@ -1383,6 +1407,7 @@ RedefinableElement.redefinitionContext = derivedunion(
     Connector.structuredClassifier,
     Port.encapsulatedClassifier,
     Classifier.nestingClass,
+    Operation.artifact,
 )
 PackageableElement.owningPackage = derivedunion(
     "owningPackage", Package, 0, 1, Type.package
@@ -1421,6 +1446,8 @@ NamedElement.namespace = derivedunion(
     ConnectionPointReference.state,
     Classifier.nestingClass,
     Artifact.artifact,
+    Property.artifact,
+    Operation.artifact,
 )
 Package.packagedElement = derivedunion(
     "packagedElement", PackageableElement, 0, "*", Package.ownedClassifier
@@ -1469,6 +1496,8 @@ Namespace.ownedMember = derivedunion(
     Stereotype.icon,
     Namespace.ownedRule,
     Artifact.nestedArtifact,
+    Artifact.ownedAttribute,
+    Artifact.ownedOperation,
 )
 # 70: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived(
@@ -1607,6 +1636,7 @@ Element.owner = derivedunion(
     ActivityGroup.activity,
     PackageImport.importingNamespace,
     PackageMerge.mergingPackage,
+    Manifestation.artifact,
     NamedElement.namespace,
     Dependency.client,
     Constraint.stateInvariant,
