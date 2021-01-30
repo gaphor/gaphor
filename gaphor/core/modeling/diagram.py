@@ -146,8 +146,8 @@ class StyledDiagram:
 class StyledItem:
     """Wrapper to allow style information to be retrieved.
 
-    For convenience, a view can be added. The view will provide pseudo-
-    classes for the item (focus, hover, etc.)
+    For convenience, a selection can be added. The selection instance
+    will provide pseudo-classes for the item (focus, hover, etc.).
     """
 
     def __init__(
