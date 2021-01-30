@@ -157,7 +157,7 @@ class StyledItem:
         assert item.diagram
         self.item = item
         self.diagram = item.diagram
-        self.selection = selection or gaphas.view.Selection()
+        self.selection = selection
 
     def name(self) -> str:
         return removesuffix(type(self.item).__name__, "Item").lower()
@@ -185,10 +185,14 @@ class StyledItem:
         item = self.item
         selection = self.selection
         return (
-            "active" if item in selection.selected_items else "",
-            "focus" if item is selection.focused_item else "",
-            "hover" if item is selection.hovered_item else "",
-            "drop" if item is selection.dropzone_item else "",
+            (
+                "active" if item in selection.selected_items else "",
+                "focus" if item is selection.focused_item else "",
+                "hover" if item is selection.hovered_item else "",
+                "drop" if item is selection.dropzone_item else "",
+            )
+            if selection
+            else ()
         )
 
 
