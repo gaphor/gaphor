@@ -634,6 +634,7 @@ class Port(Property):
 
 
 class Deployment(Dependency):
+    location: relation_one[DeploymentTarget]
     deployedArtifact: relation_many[DeployedArtifact]
 
 
@@ -1215,7 +1216,12 @@ InstanceSpecification.extended = association(
     "extended", Element, opposite="appliedStereotype"
 )
 Node.nestedNode = association("nestedNode", Node, composite=True)
-DeploymentTarget.deployment = association("deployment", Deployment, composite=True)
+Deployment.location = association(
+    "location", DeploymentTarget, lower=1, upper=1, opposite="deployment"
+)
+DeploymentTarget.deployment = association(
+    "deployment", Deployment, composite=True, opposite="location"
+)
 Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
 ActivityNode.inPartition = association(
     "inPartition", ActivityPartition, opposite="node"
@@ -1642,6 +1648,7 @@ Element.owner = derivedunion(
     Constraint.stateInvariant,
     Pseudostate.state,
     Constraint.transition,
+    Deployment.location,
     Action.interaction,
     GeneralOrdering.interactionFragment,
     Constraint.parameterSet,

@@ -39293,6 +39293,7 @@ directly in a model.</val>
 <ownedAttribute>
 <reflist>
 <ref refid="bdfdf830-b13e-11de-9fae-000d93868322"/>
+<ref refid="ba10bda2-b13e-11de-9fae-000d93868322"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -39351,11 +39352,6 @@ directly in a model.</val>
 <ref refid="ba14dc84-b13e-11de-9fae-000d93868322"/>
 </reflist>
 </memberEnd>
-<ownedEnd>
-<reflist>
-<ref refid="ba10bda2-b13e-11de-9fae-000d93868322"/>
-</reflist>
-</ownedEnd>
 <package>
 <ref refid="DCE:C480ADC2-A41A-11D8-A88E-00061BC22919"/>
 </package>
@@ -39374,12 +39370,12 @@ directly in a model.</val>
 <association>
 <ref refid="ba0f29a6-b13e-11de-9fae-000d93868322"/>
 </association>
+<class_>
+<ref refid="531be0a4-b13e-11de-9fae-000d93868322"/>
+</class_>
 <name>
 <val>location</val>
 </name>
-<owningAssociation>
-<ref refid="ba0f29a6-b13e-11de-9fae-000d93868322"/>
-</owningAssociation>
 <type>
 <ref refid="7c575eda-b13e-11de-9fae-000d93868322"/>
 </type>
@@ -46464,7 +46460,7 @@ swimlanes</val>
 <ref refid="17976a30-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>client</val>
+<val>client, owner</val>
 </value>
 </Slot>
 <InstanceSpecification id="179806c0-fa90-11de-bd51-00224128e79d">
