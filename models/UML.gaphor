@@ -46488,7 +46488,7 @@ swimlanes</val>
 <ref refid="179806c0-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>ownedElement, subsets clientDependency</val>
+<val>ownedElement, clientDependency</val>
 </value>
 </Slot>
 <InstanceSpecification id="1798a742-fa90-11de-bd51-00224128e79d">
