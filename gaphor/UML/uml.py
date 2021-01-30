@@ -107,7 +107,7 @@ class BehavioredClassifier(Classifier):
 
 
 class Actor(BehavioredClassifier):
-    ownedAttribute: relation_many[Property]
+    pass
 
 
 class ActivityNode(RedefinableElement):
@@ -241,7 +241,6 @@ class UseCase(BehavioredClassifier):
     extensionPoint: relation_many[ExtensionPoint]
     include: relation_many[Include]
     extend: relation_many[Extend]
-    ownedAttribute: relation_many[Property]
 
 
 class InputPin(Pin):
@@ -310,8 +309,6 @@ class Property(StructuralFeature, ConnectableElement):
     association: relation_one[Association]
     interface_: relation_one[Interface]
     owningAssociation: relation_one[Association]
-    useCase: relation_one[UseCase]
-    actor: relation_one[Actor]
     artifact: relation_one[Artifact]
     isComposite: derived[bool]
     navigability: derived[Optional[bool]]
@@ -1020,7 +1017,7 @@ ExtensionPoint.useCase = association(
     "useCase", UseCase, lower=1, upper=1, opposite="extensionPoint"
 )
 UseCase.extensionPoint = association(
-    "extensionPoint", ExtensionPoint, opposite="useCase"
+    "extensionPoint", ExtensionPoint, composite=True, opposite="useCase"
 )
 Operation.postcondition = association("postcondition", Constraint, composite=True)
 Extension.ownedEnd = association(
@@ -1098,14 +1095,6 @@ ActivityGroup.nodeContents = association(
     "nodeContents", ActivityNode, opposite="inGroup"
 )
 ActivityNode.inGroup = association("inGroup", ActivityGroup, opposite="nodeContents")
-UseCase.ownedAttribute = association(
-    "ownedAttribute", Property, composite=True, opposite="useCase"
-)
-Property.useCase = association("useCase", UseCase, upper=1, opposite="ownedAttribute")
-Property.actor = association("actor", Actor, upper=1, opposite="ownedAttribute")
-Actor.ownedAttribute = association(
-    "ownedAttribute", Property, composite=True, opposite="actor"
-)
 InteractionFragment.enclosingInteraction = association(
     "enclosingInteraction", Interaction, upper=1, opposite="fragment"
 )
@@ -1355,8 +1344,6 @@ Classifier.attribute = derivedunion(
     Class.ownedAttribute,
     DataType.ownedAttribute,
     Interface.ownedAttribute,
-    UseCase.ownedAttribute,
-    Actor.ownedAttribute,
     StructuredClassifier.ownedAttribute,
     Signal.ownedAttribute,
     Artifact.ownedAttribute,
@@ -1367,7 +1354,6 @@ Classifier.feature = derivedunion(
     0,
     "*",
     Interface.ownedOperation,
-    UseCase.extensionPoint,
     DataType.ownedOperation,
     Class.ownedOperation,
     Association.ownedEnd,
@@ -1424,6 +1410,7 @@ NamedElement.namespace = derivedunion(
     0,
     1,
     Extend.extension,
+    ExtensionPoint.useCase,
     Parameter.ownerReturnParam,
     Property.interface_,
     Include.includingCase,
@@ -1438,8 +1425,6 @@ NamedElement.namespace = derivedunion(
     Operation.interface_,
     Package.package,
     Parameter.ownerFormalParam,
-    Property.useCase,
-    Property.actor,
     InteractionFragment.enclosingInteraction,
     Lifeline.interaction,
     Message.interaction,
@@ -1486,8 +1471,6 @@ Namespace.ownedMember = derivedunion(
     Extend.constraint,
     Package.nestedPackage,
     BehavioredClassifier.ownedBehavior,
-    UseCase.ownedAttribute,
-    Actor.ownedAttribute,
     Interaction.fragment,
     Interaction.lifeline,
     Interaction.message,
