@@ -35,3 +35,10 @@ def test_owned_classifier_to_owned_type(loader):
     package, clazz, _ = loader(p, c)
     assert clazz in package.ownedType
     assert clazz.package is package
+
+
+def test_implementation_to_interface_realization(loader):
+    i = element(id="1", type="Implementation")
+
+    interface_realization, _ = loader(i)
+    assert interface_realization

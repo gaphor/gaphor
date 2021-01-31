@@ -103,7 +103,7 @@ class Extension(Association):
 
 class BehavioredClassifier(Classifier):
     ownedBehavior: relation_many[Behavior]
-    implementation: relation_many[Implementation]  # type: ignore[assignment]
+    implementation: relation_many[InterfaceRealization]  # type: ignore[assignment]
 
 
 class Actor(BehavioredClassifier):
@@ -398,7 +398,7 @@ class Activity(Behavior):
     node: relation_many[ActivityNode]
 
 
-class Implementation(Realization):
+class InterfaceRealization(Realization):
     contract: relation_many[Interface]  # type: ignore[assignment]
     implementatingClassifier: relation_one[BehavioredClassifier]  # type: ignore[assignment]
 
@@ -1691,17 +1691,20 @@ ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
 ActivityNode.redefinedElement = redefine(
     ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
 )
-Implementation.contract = redefine(
-    Implementation, "contract", Interface, Dependency.supplier
+InterfaceRealization.contract = redefine(
+    InterfaceRealization, "contract", Interface, Dependency.supplier
 )
 BehavioredClassifier.implementation = redefine(
     BehavioredClassifier,
     "implementation",
-    Implementation,
+    InterfaceRealization,
     NamedElement.clientDependency,
 )
-Implementation.implementatingClassifier = redefine(
-    Implementation, "implementatingClassifier", BehavioredClassifier, Dependency.client
+InterfaceRealization.implementatingClassifier = redefine(
+    InterfaceRealization,
+    "implementatingClassifier",
+    BehavioredClassifier,
+    Dependency.client,
 )
 Parameter.operation = redefine(
     Parameter, "operation", Operation, Parameter.ownerFormalParam

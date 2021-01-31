@@ -196,6 +196,7 @@ def _load_elements_and_canvasitems(
         for item in canvasitems:
             item = upgrade_canvas_item_to_1_0_2(item)
             item = upgrade_canvas_item_to_1_3_0(item)
+            item = upgrade_implementation_item_to_interface_realization_item(item)
             if version_lower_than(gaphor_version, (1, 1, 0)):
                 item = upgrade_presentation_item_to_1_1_0(item)
             cls = modeling_language.lookup_diagram_item(item.type)
@@ -210,6 +211,7 @@ def _load_elements_and_canvasitems(
                 elem = upgrade_element_owned_comment_to_comment(elem)
             if version_lower_than(gaphor_version, (2, 3, 0)):
                 elem = upgrade_package_owned_classifier_to_owned_type(elem)
+            elem = upgrade_implementation_to_interface_realization(elem)
 
             cls = modeling_language.lookup_element(elem.type)
             assert cls, f"Type {elem.type} can not be loaded: no such element"
@@ -429,3 +431,17 @@ def upgrade_package_owned_classifier_to_owned_type(elem):
             del elem.references["ownedClassifier"]
             break
     return elem
+
+
+# since 2.3.0
+def upgrade_implementation_to_interface_realization(elem):
+    if elem.type == "Implementation":
+        elem.type = "InterfaceRealization"
+    return elem
+
+
+# since 2.3.0
+def upgrade_implementation_item_to_interface_realization_item(item):
+    if item.type == "ImplementationItem":
+        item.type = "InterfaceRealizationItem"
+    return item

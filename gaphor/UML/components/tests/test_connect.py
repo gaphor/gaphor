@@ -3,8 +3,8 @@
 from gaphor import UML
 from gaphor.tests import TestCase
 from gaphor.UML.classes.dependency import DependencyItem
-from gaphor.UML.classes.implementation import ImplementationItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem, Side
+from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 from gaphor.UML.components import ComponentItem, ConnectorItem
 from gaphor.UML.components.connectorconnect import ConnectorConnectBase
 
@@ -80,7 +80,7 @@ class InterfaceConnectTestCase(TestCase):
         """Test interface gluing, when implementation connected."""
 
         iface = self.create(InterfaceItem, UML.Component)
-        impl = self.create(ImplementationItem)
+        impl = self.create(InterfaceRealizationItem)
         line = self.create(ConnectorItem)
 
         self.connect(impl, impl.head, iface)
@@ -159,7 +159,7 @@ class AssemblyConnectorTestCase(TestCase):
 
     def provide(self, component, interface):
         """Change component's data so it implements interfaces."""
-        impl = self.element_factory.create(UML.Implementation)
+        impl = self.element_factory.create(UML.InterfaceRealization)
         component.implementation = impl
         impl.contract = interface
 

@@ -103,12 +103,12 @@ def _pr_rc_interface_deps(component, dep_type):
     )
 
 
-def component_provided(self) -> List[Union[uml.Implementation, uml.Realization]]:
+def component_provided(self) -> List[Union[uml.InterfaceRealization, uml.Realization]]:
     """Interfaces provided to component environment."""
     implementations = (
         impl.contract[0]
         for impl in self.implementation
-        if impl.isKindOf(uml.Implementation)
+        if impl.isKindOf(uml.InterfaceRealization)
     )
     realizations = _pr_interface_deps(self, uml.Realization)
 

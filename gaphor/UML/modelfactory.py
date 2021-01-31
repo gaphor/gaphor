@@ -22,7 +22,6 @@ from gaphor.UML.uml import (
     Extension,
     ExtensionEnd,
     Generalization,
-    Implementation,
     InstanceSpecification,
     Interface,
     Message,
@@ -222,17 +221,6 @@ def create_generalization(general, specific):
     gen.general = general
     gen.specific = specific
     return gen
-
-
-def create_implementation(contract, implementatingClassifier):
-    assert (
-        contract.model is implementatingClassifier.model
-    ), "Contract and Implementing classifier are from different models"
-    model = contract.model
-    impl = model.create(Implementation)
-    impl.contract = contract
-    impl.implementatingClassifier = implementatingClassifier
-    return impl
 
 
 def create_association(type_a, type_b):

@@ -356,7 +356,7 @@ class DependencyPropertyPage(PropertyPageBase):
         (gettext("Dependency"), UML.Dependency),
         (gettext("Usage"), UML.Usage),
         (gettext("Realization"), UML.Realization),
-        (gettext("Implementation"), UML.Implementation),
+        (gettext("Implementation"), UML.InterfaceRealization),
     )
 
     def __init__(self, item):

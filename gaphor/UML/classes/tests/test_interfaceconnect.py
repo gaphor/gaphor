@@ -3,14 +3,14 @@
 from gaphor import UML
 from gaphor.tests import TestCase
 from gaphor.UML.classes.dependency import DependencyItem
-from gaphor.UML.classes.implementation import ImplementationItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
+from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 from gaphor.UML.classes.klass import ClassItem
 
 
-class ImplementationTestCase(TestCase):
+class InterfaceRealizationTestCase(TestCase):
     def test_default_line_style(self):
-        impl = self.create(ImplementationItem)
+        impl = self.create(InterfaceRealizationItem)
 
         assert impl.style["dash-style"]
 
@@ -18,7 +18,7 @@ class ImplementationTestCase(TestCase):
         """Test connecting implementation to folded interface."""
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.PROVIDED
-        impl = self.create(ImplementationItem)
+        impl = self.create(InterfaceRealizationItem)
 
         self.connect(impl, impl.head, iface)
         self.diagram.update_now((iface, impl))
@@ -29,7 +29,7 @@ class ImplementationTestCase(TestCase):
         """Test disconnection implementation from folded interface."""
         iface = self.create(InterfaceItem, UML.Interface)
         iface.folded = Folded.PROVIDED
-        impl = self.create(ImplementationItem)
+        impl = self.create(InterfaceRealizationItem)
 
         self.connect(impl, impl.head, iface)
         self.disconnect(impl, impl.head)

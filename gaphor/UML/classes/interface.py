@@ -268,7 +268,8 @@ class InterfaceItem(ElementPresentation, Classified):
         if connectors or self._folded != Folded.NONE:
             provided = connectors or any(
                 map(
-                    lambda i: isinstance(i.subject, UML.Implementation), connected_items
+                    lambda i: isinstance(i.subject, UML.InterfaceRealization),
+                    connected_items,
                 )
             )
             required = any(
