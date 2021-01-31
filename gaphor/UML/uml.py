@@ -373,7 +373,7 @@ class Package(Namespace, PackageableElement):
     ownedDiagram: relation_many[Diagram]
     nestedPackage: relation_many[Package]
     package: relation_one[Package]
-    ownedClassifier: relation_many[Type]
+    ownedType: relation_many[Type]
     packageMerge: relation_many[PackageMerge]
     appliedProfile: relation_many[ProfileApplication]
     packagedElement: relation_many[PackageableElement]
@@ -869,10 +869,8 @@ Activity.group = association(
     "group", ActivityGroup, composite=True, opposite="activity"
 )
 ActivityGroup.activity = association("activity", Activity, upper=1, opposite="group")
-Package.ownedClassifier = association(
-    "ownedClassifier", Type, composite=True, opposite="package"
-)
-Type.package = association("package", Package, upper=1, opposite="ownedClassifier")
+Package.ownedType = association("ownedType", Type, composite=True, opposite="package")
+Type.package = association("package", Package, upper=1, opposite="ownedType")
 Property.subsettedProperty = association("subsettedProperty", Property)
 Property.classifier = association(
     "classifier", Classifier, upper=1, opposite="attribute"
@@ -1421,7 +1419,7 @@ Package.packagedElement = derivedunion(
     PackageableElement,
     0,
     "*",
-    Package.ownedClassifier,
+    Package.ownedType,
     Package.nestedPackage,
 )
 Namespace.ownedMember = derivedunion(

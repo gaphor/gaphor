@@ -25,3 +25,13 @@ def test_owned_comment_to_comment_upgrade(loader):
     assert elem in comment.annotatedElement
     assert comment in elem.comment
     assert isinstance(style_sheet, StyleSheet)
+
+
+def test_owned_classifier_to_owned_type(loader):
+    p = element(id="1", type="Package")
+    p.references["ownedClassifier"] = ["2"]
+    c = element(id="2", type="Class")
+
+    package, clazz, _ = loader(p, c)
+    assert clazz in package.ownedType
+    assert clazz.package is package

@@ -29,7 +29,7 @@ def state_machine_config(new_item):
     package = diagram.namespace
 
     state_machines = (
-        [i for i in package.ownedClassifier if isinstance(i, UML.StateMachine)]
+        [i for i in package.ownedType if isinstance(i, UML.StateMachine)]
         if package
         else diagram.model.lselect(
             lambda e: isinstance(e, UML.StateMachine) and e.package is None

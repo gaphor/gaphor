@@ -11,9 +11,9 @@ A UML element can have two tags: references (`ref`) and values (`val`). Referenc
 Diagram is a special case. All items on a canvas are embedded in the Diagram
 element's.
 
-Since many references are bi-directional, you'll find both ends defined in the file (e.g. `Package.ownedClassifier` - `Actor.package`, and `Diagram.ownedPresentation` and `UseCaseItem.diagram`).
+Since many references are bi-directional, you'll find both ends defined in the file (e.g. `Package.ownedType` - `Actor.package`, and `Diagram.ownedPresentation` and `UseCaseItem.diagram`).
 
-```xml 
+```xml
 <?xml version="1.0" ?>
 <Gaphor version="1.0" gaphor_version="0.3">
   <Package id="1">

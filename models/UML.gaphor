@@ -12487,7 +12487,7 @@
 <ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
 </class_>
 <name>
-<val>ownedClassifier</val>
+<val>ownedType</val>
 </name>
 <type>
 <ref refid="DCE:6B38D020-83D9-11D7-ADE2-4B1972AF3391"/>
