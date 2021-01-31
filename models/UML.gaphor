@@ -14037,7 +14037,7 @@
 </item>
 <item id="DCE:02AD11F6-509C-11D7-811E-AF5893A6470D" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 663.0, 137.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 928.0, 140.0)</val>
 </matrix>
 <width>
 <val>171.0</val>
@@ -14087,7 +14087,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 253.0, 162.00000000000003)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (410.0, -0.7000000000000739)]</val>
+<val>[(0.0, 0.0), (675.0, 2.299999999999926)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:BE81E452-509B-11D7-811E-AF5893A6470D"/>
@@ -14098,7 +14098,7 @@
 </item>
 <item id="DCE:7DE81C50-509C-11D7-811E-AF5893A6470D" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 663.0, 226.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 928.0, 229.0)</val>
 </matrix>
 <width>
 <val>171.0</val>
@@ -14148,7 +14148,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 253.0, 257.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (410.0, -2.840000000000032)]</val>
+<val>[(0.0, 0.0), (675.0, 0.15999999999996817)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:BE81E452-509B-11D7-811E-AF5893A6470D"/>
@@ -14185,7 +14185,7 @@
 </item>
 <item id="DCE:B10A179C-509E-11D7-9F0D-F80F4B06507D" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 651.5, 317.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 914.5, 342.5)</val>
 </matrix>
 <width>
 <val>198.0</val>
@@ -14211,7 +14211,7 @@
 </item>
 <item id="DCE:C9A01FAE-509E-11D7-9F0D-F80F4B06507D" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 656.5, 405.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 921.5, 429.0)</val>
 </matrix>
 <width>
 <val>184.0</val>
@@ -14249,10 +14249,10 @@
 <ref refid="DCE:D750F4D4-509E-11D7-9F0D-F80F4B06507D"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 745.0, 371.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1007.0, 396.5)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (0.3988764044943309, 34.0)]</val>
+<val>[(3.7053915814187235, 0.0), (3.398876404494331, 32.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:B10A179C-509E-11D7-9F0D-F80F4B06507D"/>
@@ -14287,7 +14287,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 352.0, 429.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (172.5, 0.0), (172.5, 17.62711864406799), (304.5, 17.62711864406799)]</val>
+<val>[(0.0, 0.0), (172.5, 0.0), (172.5, 41.12711864406799), (569.5, 41.12711864406799)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:E9D7DB02-509B-11D7-811E-AF5893A6470D"/>
@@ -39712,7 +39712,7 @@ swimlanes</val>
 <ref refid="1715ed66-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>feature, ownedMember</val>
+<val>feature, ownedMember, redefinableElement</val>
 </value>
 </Slot>
 <InstanceSpecification id="171756b0-fa90-11de-bd51-00224128e79d">
@@ -42047,7 +42047,7 @@ swimlanes</val>
 <ref refid="17502922-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>namespace, featuringClassifier, classifier</val>
+<val>namespace, classifier</val>
 </value>
 </Slot>
 <InstanceSpecification id="1750c882-fa90-11de-bd51-00224128e79d">

@@ -1347,7 +1347,6 @@ Feature.featuringClassifier = derivedunion(
     Property.owningAssociation,
     Operation.class_,
     Operation.datatype,
-    Property.datatype,
     Operation.interface_,
     Operation.artifact,
 )
