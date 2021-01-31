@@ -4410,7 +4410,7 @@
 <ref refid="DCE:555F3576-6679-11D7-A84E-6C8643AD0CA4"/>
 </class_>
 <name>
-<val>implementation</val>
+<val>interfaceRealization</val>
 </name>
 <type>
 <ref refid="DCE:882D4230-A35C-11D8-9D85-00C00C03A405"/>
@@ -4421,9 +4421,6 @@
 <upperValue>
 <val>*</val>
 </upperValue>
-<visibility>
-<val>public</val>
-</visibility>
 </Property>
 <Property id="DCE:6A6F6CC0-A418-11D8-B4C8-00061BC22919">
 <appliedStereotype>
@@ -14524,6 +14521,11 @@
 </presentation>
 </Association>
 <Association id="DCE:C229073A-A418-11D8-B4C8-00061BC22919">
+<comment>
+<reflist>
+<ref refid="0f3df240-63e4-11eb-9492-9757bcbe474b"/>
+</reflist>
+</comment>
 <memberEnd>
 <reflist>
 <ref refid="DCE:C22988EA-A418-11D8-B4C8-00061BC22919"/>
@@ -19299,6 +19301,8 @@
 <ref refid="96ea2548-e95e-11ea-87d1-cbf2d1fcaed0"/>
 <ref refid="9c52ec0e-e95e-11ea-87d1-cbf2d1fcaed0"/>
 <ref refid="a7cf06d0-e95e-11ea-87d1-cbf2d1fcaed0"/>
+<ref refid="0f3df241-63e4-11eb-9492-9757bcbe474b"/>
+<ref refid="16c5d578-63e4-11eb-9492-9757bcbe474b"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -19836,6 +19840,43 @@
 </head-connection>
 <tail-connection>
 <ref refid="96ea2548-e95e-11ea-87d1-cbf2d1fcaed0"/>
+</tail-connection>
+</item>
+<item id="0f3df241-63e4-11eb-9492-9757bcbe474b" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 253.0, 538.0)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>61.0</val>
+</height>
+<diagram>
+<ref refid="DCE:2D47DA48-50A5-11D7-807A-302CB4EF44FD"/>
+</diagram>
+<subject>
+<ref refid="0f3df240-63e4-11eb-9492-9757bcbe474b"/>
+</subject>
+</item>
+<item id="16c5d578-63e4-11eb-9492-9757bcbe474b" type="CommentLineItem">
+<diagram>
+<ref refid="DCE:2D47DA48-50A5-11D7-807A-302CB4EF44FD"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 292.0, 460.0)</val>
+</matrix>
+<points>
+<val>[(0.02416403388258459, 2.377136833200685), (3.9167885609580537, 78.0)]</val>
+</points>
+<head-connection>
+<ref refid="DCE:C0F30262-A418-11D8-B4C8-00061BC22919"/>
+</head-connection>
+<tail-connection>
+<ref refid="0f3df241-63e4-11eb-9492-9757bcbe474b"/>
 </tail-connection>
 </item>
 </canvas>
@@ -54017,4 +54058,19 @@ have an opposite end.
 <ref refid="DCE:6C8F2E88-4B3D-11D7-B391-02BBFE4396CE"/>
 </specific>
 </Generalization>
+<Comment id="0f3df240-63e4-11eb-9492-9757bcbe474b">
+<annotatedElement>
+<reflist>
+<ref refid="DCE:C229073A-A418-11D8-B4C8-00061BC22919"/>
+</reflist>
+</annotatedElement>
+<body>
+<val>Redefine, instead of subset!</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="0f3df241-63e4-11eb-9492-9757bcbe474b"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>

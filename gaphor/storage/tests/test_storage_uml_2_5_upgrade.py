@@ -10,7 +10,9 @@ def loader(element_factory, modeling_language):
     def _loader(*parsed_elements):
         parsed_data = {p.id: p for p in parsed_elements}
         load_elements(parsed_data, element_factory, modeling_language)
-        return element_factory.lselect()
+        *elements, style_sheet = element_factory.lselect()
+        assert isinstance(style_sheet, StyleSheet)
+        return elements
 
     return _loader
 
@@ -21,10 +23,9 @@ def test_owned_comment_to_comment_upgrade(loader):
     e = element(id="2", type="Element")
     e.references["ownedComment"] = ["1"]
 
-    comment, elem, style_sheet = loader(c, e)
+    comment, elem = loader(c, e)
     assert elem in comment.annotatedElement
     assert comment in elem.comment
-    assert isinstance(style_sheet, StyleSheet)
 
 
 def test_owned_classifier_to_owned_type(loader):
@@ -32,13 +33,16 @@ def test_owned_classifier_to_owned_type(loader):
     p.references["ownedClassifier"] = ["2"]
     c = element(id="2", type="Class")
 
-    package, clazz, _ = loader(p, c)
+    package, clazz = loader(p, c)
     assert clazz in package.ownedType
     assert clazz.package is package
 
 
 def test_implementation_to_interface_realization(loader):
     i = element(id="1", type="Implementation")
+    c = element(id="2", type="Class")
+    c.references["clientDependency"] = ["1"]
 
-    interface_realization, _ = loader(i)
-    assert interface_realization
+    interface_realization, clazz = loader(i, c)
+    assert interface_realization in clazz.interfaceRealization
+    assert interface_realization.implementatingClassifier is clazz

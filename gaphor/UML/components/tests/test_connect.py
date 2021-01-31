@@ -160,7 +160,7 @@ class AssemblyConnectorTestCase(TestCase):
     def provide(self, component, interface):
         """Change component's data so it implements interfaces."""
         impl = self.element_factory.create(UML.InterfaceRealization)
-        component.implementation = impl
+        component.interfaceRealization = impl
         impl.contract = interface
 
     def require(self, component, interface):

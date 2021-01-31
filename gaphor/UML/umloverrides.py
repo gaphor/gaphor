@@ -107,7 +107,7 @@ def component_provided(self) -> List[Union[uml.InterfaceRealization, uml.Realiza
     """Interfaces provided to component environment."""
     implementations = (
         impl.contract[0]
-        for impl in self.implementation
+        for impl in self.interfaceRealization
         if impl.isKindOf(uml.InterfaceRealization)
     )
     realizations = _pr_interface_deps(self, uml.Realization)
