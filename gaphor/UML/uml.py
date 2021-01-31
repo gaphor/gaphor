@@ -525,11 +525,13 @@ class Message(NamedElement):
     receiveEvent: relation_one[MessageEnd]
     interaction: relation_one[Interaction]
     signature: relation_one[NamedElement]
+    messageEnd: relation_many[MessageEnd]
 
 
 class MessageEnd(NamedElement):
     sendMessage: relation_one[Message]
     receiveMessage: relation_one[Message]
+    message: relation_one[Message]
 
 
 class OccurrenceSpecification(InteractionFragment):
@@ -1702,6 +1704,12 @@ ExecutionSpecification.finish = derived(
 )
 
 ConnectorEnd.definingEnd = derivedunion("definingEnd", Property, 0, 1)
+MessageEnd.message = derivedunion(
+    "message", Message, 0, 1, MessageEnd.sendMessage, MessageEnd.receiveMessage
+)
+Message.messageEnd = derivedunion(
+    "messageEnd", MessageEnd, 0, 2, Message.sendEvent, Message.receiveEvent
+)
 # 73: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
