@@ -1379,7 +1379,7 @@ RedefinableElement.redefinitionContext = derivedunion(
     Operation.artifact,
 )
 PackageableElement.owningPackage = derivedunion(
-    "owningPackage", Package, 0, 1, Type.package
+    "owningPackage", Package, 0, 1, Type.package, Package.package
 )
 NamedElement.namespace = derivedunion(
     "namespace",
@@ -1400,7 +1400,6 @@ NamedElement.namespace = derivedunion(
     Operation.datatype,
     Property.datatype,
     Operation.interface_,
-    Package.package,
     Parameter.ownerFormalParam,
     InteractionFragment.enclosingInteraction,
     Lifeline.interaction,
@@ -1418,7 +1417,12 @@ NamedElement.namespace = derivedunion(
     Operation.artifact,
 )
 Package.packagedElement = derivedunion(
-    "packagedElement", PackageableElement, 0, "*", Package.ownedClassifier
+    "packagedElement",
+    PackageableElement,
+    0,
+    "*",
+    Package.ownedClassifier,
+    Package.nestedPackage,
 )
 Namespace.ownedMember = derivedunion(
     "ownedMember",
@@ -1446,7 +1450,6 @@ Namespace.ownedMember = derivedunion(
     Operation.bodyCondition,
     UseCase.extend,
     Extend.constraint,
-    Package.nestedPackage,
     BehavioredClassifier.ownedBehavior,
     Interaction.fragment,
     Interaction.lifeline,
@@ -1519,6 +1522,7 @@ Element.directedRelationship = derivedunion(
     0,
     "*",
     UseCase.include,
+    Package.packageMerge,
     UseCase.extend,
 )
 DirectedRelationship.source = derivedunion(
