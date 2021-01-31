@@ -571,14 +571,12 @@ class ForkNode(ControlNode):
 
 class StateMachine(Behavior):
     region: relation_many[Region]
-    extendedStateMachine: relation_one[StateMachine]
 
 
-class Region(Namespace, RedefinableElement):
+class Region(Namespace):
     stateMachine: relation_one[StateMachine]
     subvertex: relation_many[Vertex]
     state: relation_one[State]
-    extendedRegion: relation_many[Region]  # type: ignore[assignment]
 
 
 # 26: override Transition
@@ -612,13 +610,12 @@ class ConnectionPointReference(Vertex):
     state: relation_one[State]
 
 
-class State(Vertex, Namespace, RedefinableElement):
+class State(Vertex, Namespace):
     entry: relation_one[Behavior]
     exit: relation_one[Behavior]
     doActivity: relation_one[Behavior]
     statevariant: relation_one[Constraint]
     submachine: relation_one[StateMachine]
-    redefinedState: relation_many[State]  # type: ignore[assignment]
 
 
 class FinalState(State):
@@ -1188,9 +1185,6 @@ Transition.guard = association(
 )
 Constraint.transition = association("transition", Transition, upper=1, opposite="guard")
 State.submachine = association("submachine", StateMachine, upper=1)
-StateMachine.extendedStateMachine = association(
-    "extendedStateMachine", StateMachine, upper=1
-)
 ConnectorEnd.partWithPort = association("partWithPort", Property, upper=1)
 Port.encapsulatedClassifier = association(
     "encapsulatedClassifier", EncapsulatedClassifer, upper=1, opposite="ownedPort"
@@ -1738,21 +1732,6 @@ ActivityEdge.redefinedElement = redefine(
 )
 Component.ownedMember = redefine(
     Component, "ownedMember", PackageableElement, Namespace.ownedMember
-)
-Transition.redefinitionContext = redefine(
-    Transition,
-    "redefinitionContext",
-    Classifier,
-    RedefinableElement.redefinitionContext,
-)
-Region.extendedRegion = redefine(
-    Region, "extendedRegion", Region, RedefinableElement.redefinedElement
-)
-State.redefinedState = redefine(
-    State, "redefinedState", State, RedefinableElement.redefinedElement
-)
-Transition.redefinedTransition = redefine(
-    Transition, "redefinedTransition", Transition, RedefinableElement.redefinedElement
 )
 StateInvariant.covered = redefine(
     StateInvariant, "covered", Lifeline, InteractionFragment.covered
