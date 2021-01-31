@@ -397,7 +397,6 @@ class Activity(Behavior):
     language: attribute[str]
     edge: relation_many[ActivityEdge]
     group: relation_many[ActivityGroup]
-    action: relation_many[Action]
     node: relation_many[ActivityNode]
 
 
@@ -976,7 +975,6 @@ Component.realization = association(
 # 'ValuePin.value_' is a simple attribute
 ValuePin.value_ = attribute("value_", str)
 BehavioralFeature.raisedException = association("raisedException", Type)
-Activity.action = association("action", Action, composite=True)
 # 'Abstraction.mapping' is a simple attribute
 Abstraction.mapping = attribute("mapping", str)
 ActivityNode.incoming = association("incoming", ActivityEdge, opposite="target")
