@@ -213,11 +213,10 @@ class EncapsulatedClassifer(StructuredClassifier):
     ownedPort: relation_many[Port]
 
 
-class Class(BehavioredClassifier, EncapsulatedClassifer):
+class Class(EncapsulatedClassifer, BehavioredClassifier):
     isActive: attribute[int]
     ownedOperation: relation_many[Operation]
     ownedAttribute: relation_many[Property]
-    ownedReception: relation_many[Reception]
     nestedClassifier: relation_many[Classifier]
     extension: property
     superClass: derived[Classifier]
@@ -268,7 +267,6 @@ class Interface(Classifier, ConnectableElement):
     redefinedInterface: relation_many[Interface]
     nestedClassifier: relation_many[Classifier]
     ownedOperation: relation_many[Operation]
-    ownedReception: relation_many[Reception]
 
 
 class Include(DirectedRelationship, NamedElement):
@@ -684,14 +682,6 @@ class Trigger(NamedElement):
 
 class Event(PackageableElement):
     pass
-
-
-class Signal(Classifier):
-    ownedAttribute: relation_many[Property]
-
-
-class Reception(BehavioralFeature):
-    signal: relation_one[Signal]
 
 
 class ExecutionSpecification(InteractionFragment):
@@ -1231,10 +1221,6 @@ ReplyAction.returnInformation = association(
 SendSignalAction.target = association("target", InputPin, composite=True)
 Collaboration.collaborationRole = association("collaborationRole", ConnectableElement)
 Trigger.event = association("event", Event, lower=1, upper=1)
-Signal.ownedAttribute = association("ownedAttribute", Property, composite=True)
-Reception.signal = association("signal", Signal, upper=1)
-Class.ownedReception = association("ownedReception", Reception, composite=True)
-Interface.ownedReception = association("ownedReception", Reception, composite=True)
 Action.interaction = association("interaction", Interaction, upper=1, opposite="action")
 Interaction.action = association(
     "action", Action, composite=True, opposite="interaction"
@@ -1339,7 +1325,6 @@ Classifier.attribute = derivedunion(
     DataType.ownedAttribute,
     Interface.ownedAttribute,
     StructuredClassifier.ownedAttribute,
-    Signal.ownedAttribute,
     Artifact.ownedAttribute,
 )
 Classifier.feature = derivedunion(
@@ -1353,8 +1338,6 @@ Classifier.feature = derivedunion(
     Association.ownedEnd,
     Classifier.attribute,
     StructuredClassifier.ownedConnector,
-    Class.ownedReception,
-    Interface.ownedReception,
     Artifact.ownedOperation,
 )
 Feature.featuringClassifier = derivedunion(
@@ -1473,9 +1456,6 @@ Namespace.ownedMember = derivedunion(
     StateMachine.region,
     Region.subvertex,
     Node.nestedNode,
-    Signal.ownedAttribute,
-    Class.ownedReception,
-    Interface.ownedReception,
     Stereotype.icon,
     Namespace.ownedRule,
     Artifact.nestedArtifact,
