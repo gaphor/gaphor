@@ -226,7 +226,7 @@ def parse_operation(el: uml.Operation, s: str) -> None:
         el.name = s
         del el.visibility
         list(map(uml.Parameter.unlink, list(el.returnResult)))
-        list(map(uml.Parameter.unlink, list(el.formalParameter)))
+        list(map(uml.Parameter.unlink, list(el.ownedParameter)))
     else:
         g = m.group
         create = el.model.create
@@ -248,7 +248,7 @@ def parse_operation(el: uml.Operation, s: str) -> None:
                 break
             g = m.group
             try:
-                p = el.formalParameter[pindex]
+                p = el.ownedParameter[pindex]
             except IndexError:
                 p = create(uml.Parameter)
             p.direction = g("dir") or "in"
@@ -257,14 +257,14 @@ def parse_operation(el: uml.Operation, s: str) -> None:
             p.lowerValue = g("mult_l")
             p.upperValue = g("mult_u")
             p.defaultValue = g("default")
-            el.formalParameter = p
+            el.ownedParameter = p
 
             # Do the next parameter:
             params = g("rest")
             pindex += 1
 
         # Remove remaining parameters:
-        for fp in el.formalParameter[pindex:]:
+        for fp in el.ownedParameter[pindex:]:
             fp.unlink()
 
 

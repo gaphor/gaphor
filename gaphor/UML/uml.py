@@ -415,11 +415,10 @@ class Parameter(ConnectableElement, MultiplicityElement):
 class BehavioralFeature(Feature, Namespace):
     isAbstract: attribute[int]
     method: relation_many[Behavior]
-    formalParameter: relation_many[Parameter]
+    ownedParameter: relation_many[Parameter]
     raisedException: relation_many[Type]
     returnResult: relation_many[Parameter]
     ownedParameterSet: relation_many[ParameterSet]
-    parameter: relation_many[Parameter]
 
 
 class Operation(BehavioralFeature):
@@ -434,7 +433,7 @@ class Operation(BehavioralFeature):
     raisedException: relation_many[Type]
     artifact: relation_one[Artifact]
     type: derivedunion[DataType]
-    formalParameter: relation_many[Parameter]  # type: ignore[assignment]
+    ownedParameter: relation_many[Parameter]  # type: ignore[assignment]
 
 
 class ControlFlow(ActivityEdge):
@@ -930,11 +929,11 @@ Realization.realizingClassifier = association(
 TypedElement.typeValue = attribute("typeValue", str)
 Constraint.constrainedElement = association("constrainedElement", Element)
 PackageMerge.mergedPackage = association("mergedPackage", Package, lower=1, upper=1)
-BehavioralFeature.formalParameter = association(
-    "formalParameter", Parameter, composite=True, opposite="ownerFormalParam"
+BehavioralFeature.ownedParameter = association(
+    "ownedParameter", Parameter, composite=True, opposite="ownerFormalParam"
 )
 Parameter.ownerFormalParam = association(
-    "ownerFormalParam", BehavioralFeature, upper=1, opposite="formalParameter"
+    "ownerFormalParam", BehavioralFeature, upper=1, opposite="ownedParameter"
 )
 Class.ownedAttribute = association(
     "ownedAttribute", Property, composite=True, opposite="class_"
@@ -1367,14 +1366,6 @@ Feature.featuringClassifier = derivedunion(
 # 79: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
 # defined in umloverrides.py
 
-BehavioralFeature.parameter = derivedunion(
-    "parameter",
-    Parameter,
-    0,
-    "*",
-    BehavioralFeature.returnResult,
-    BehavioralFeature.formalParameter,
-)
 Action.output = derivedunion("output", OutputPin, 0, "*")
 RedefinableElement.redefinitionContext = derivedunion(
     "redefinitionContext",
@@ -1451,7 +1442,7 @@ Namespace.ownedMember = derivedunion(
     Operation.precondition,
     BehavioralFeature.returnResult,
     Class.ownedAttribute,
-    BehavioralFeature.formalParameter,
+    BehavioralFeature.ownedParameter,
     Classifier.ownedUseCase,
     DataType.ownedAttribute,
     Class.ownedOperation,
@@ -1587,7 +1578,6 @@ Namespace.member = derivedunion(
     NamedElement,
     0,
     "*",
-    BehavioralFeature.parameter,
     Namespace.ownedMember,
     Association.memberEnd,
     Classifier.inheritedMember,
@@ -1728,8 +1718,8 @@ InterfaceRealization.implementatingClassifier = redefine(
 Parameter.operation = redefine(
     Parameter, "operation", Operation, Parameter.ownerFormalParam
 )
-Operation.formalParameter = redefine(
-    Operation, "formalParameter", Parameter, BehavioralFeature.formalParameter
+Operation.ownedParameter = redefine(
+    Operation, "ownedParameter", Parameter, BehavioralFeature.ownedParameter
 )
 ActivityEdge.redefinedElement = redefine(
     ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement

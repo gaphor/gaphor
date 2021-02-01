@@ -167,7 +167,7 @@ def test_parse_operation(factory):
     parse(o, "myfunc()")
     assert "myfunc" == o.name
     assert not o.returnResult[0].typeValue
-    assert not o.formalParameter
+    assert not o.ownedParameter
 
 
 def test_parse_operation_return(factory):
@@ -177,7 +177,7 @@ def test_parse_operation_return(factory):
     assert "myfunc" == o.name
     assert "int" == o.returnResult[0].typeValue
     assert "public" == o.visibility
-    assert not o.formalParameter
+    assert not o.ownedParameter
 
 
 def test_parse_operation_2_params(factory):
@@ -187,13 +187,13 @@ def test_parse_operation_2_params(factory):
     assert "myfunc2" == o.name
     assert "float" == o.returnResult[0].typeValue
     assert "protected" == o.visibility
-    assert len(o.formalParameter) == 2
-    assert "a" == o.formalParameter[0].name
-    assert "str" == o.formalParameter[0].typeValue
-    assert o.formalParameter[0].defaultValue is None
-    assert "b" == o.formalParameter[1].name
-    assert "int" == o.formalParameter[1].typeValue
-    assert "3" == o.formalParameter[1].defaultValue
+    assert len(o.ownedParameter) == 2
+    assert "a" == o.ownedParameter[0].name
+    assert "str" == o.ownedParameter[0].typeValue
+    assert o.ownedParameter[0].defaultValue is None
+    assert "b" == o.ownedParameter[1].name
+    assert "int" == o.ownedParameter[1].typeValue
+    assert "3" == o.ownedParameter[1].defaultValue
 
 
 def test_parse_operation_1_param(factory):
@@ -203,18 +203,18 @@ def test_parse_operation_1_param(factory):
     assert "myfunc2" == o.name
     assert "double" == o.returnResult[0].typeValue
     assert "private" == o.visibility
-    assert len(o.formalParameter) == 1
-    assert "a" == o.formalParameter[0].name
-    assert "node" == o.formalParameter[0].typeValue
-    assert o.formalParameter[0].defaultValue is None
+    assert len(o.ownedParameter) == 1
+    assert "a" == o.ownedParameter[0].name
+    assert "node" == o.ownedParameter[0].typeValue
+    assert o.ownedParameter[0].defaultValue is None
 
 
 def test_parse_operation_with_spaces(factory):
     o = factory.create(UML.Operation)
     parse(o, "- name with space (param with space: some node ): double")
     assert "name with space" == o.name
-    assert "param with space" == o.formalParameter[0].name
-    assert "some node" == o.formalParameter[0].typeValue
+    assert "param with space" == o.ownedParameter[0].name
+    assert "some node" == o.ownedParameter[0].typeValue
 
 
 def test_parse_operation_invalid_syntax(factory):

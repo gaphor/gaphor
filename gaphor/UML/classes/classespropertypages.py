@@ -318,13 +318,13 @@ class OperationsPage(PropertyPageBase):
         ).watch(
             "ownedOperation.returnResult.typeValue", handler
         ).watch(
-            "ownedOperation.formalParameter.lowerValue", handler
+            "ownedOperation.ownedParameter.lowerValue", handler
         ).watch(
-            "ownedOperation.formalParameter.upperValue", handler
+            "ownedOperation.ownedParameter.upperValue", handler
         ).watch(
-            "ownedOperation.formalParameter.typeValue", handler
+            "ownedOperation.ownedParameter.typeValue", handler
         ).watch(
-            "ownedOperation.formalParameter.defaultValue", handler
+            "ownedOperation.ownedParameter.defaultValue", handler
         )
 
         builder.connect_signals(

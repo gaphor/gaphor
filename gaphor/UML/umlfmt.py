@@ -121,7 +121,7 @@ def format_operation(
     s.append(name)
     s.append("(")
 
-    for p in el.formalParameter:
+    for p in el.ownedParameter:
         s.append(
             format(
                 p,
@@ -131,7 +131,7 @@ def format_operation(
                 default=default,
             )
         )
-        if p is not el.formalParameter[-1]:
+        if p is not el.ownedParameter[-1]:
             s.append(", ")
 
     s.append(")")

@@ -46,3 +46,13 @@ def test_implementation_to_interface_realization(loader):
     interface_realization, clazz = loader(i, c)
     assert interface_realization in clazz.interfaceRealization
     assert interface_realization.implementatingClassifier is clazz
+
+
+def test_formal_parameter_to_owned_parameter(loader):
+    o = element(id="1", type="Operation")
+    o.references["formalParameter"] = ["2"]
+    p = element(id="2", type="Parameter")
+
+    operation, parameter = loader(o, p)
+    assert parameter in operation.ownedParameter
+    assert parameter.operation is operation

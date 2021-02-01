@@ -211,7 +211,8 @@ def _load_elements_and_canvasitems(
                 elem = upgrade_element_owned_comment_to_comment(elem)
             if version_lower_than(gaphor_version, (2, 3, 0)):
                 elem = upgrade_package_owned_classifier_to_owned_type(elem)
-            elem = upgrade_implementation_to_interface_realization(elem)
+                elem = upgrade_implementation_to_interface_realization(elem)
+                elem = upgrade_feature_formal_parameter_to_owned_parameter(elem)
 
             cls = modeling_language.lookup_element(elem.type)
             assert cls, f"Type {elem.type} can not be loaded: no such element"
@@ -445,3 +446,13 @@ def upgrade_implementation_item_to_interface_realization_item(item):
     if item.type == "ImplementationItem":
         item.type = "InterfaceRealizationItem"
     return item
+
+
+# since 2.3.0
+def upgrade_feature_formal_parameter_to_owned_parameter(elem):
+    for name, refids in dict(elem.references).items():
+        if name == "formalParameter":
+            elem.references["ownedParameter"] = refids
+            del elem.references["formalParameter"]
+            break
+    return elem

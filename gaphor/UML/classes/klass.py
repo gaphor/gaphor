@@ -152,13 +152,13 @@ def operation_watches(presentation, cast):
     ).watch(
         f"subject[{cast}].ownedOperation.returnResult.typeValue"
     ).watch(
-        f"subject[{cast}].ownedOperation.formalParameter.lowerValue"
+        f"subject[{cast}].ownedOperation.ownedParameter.lowerValue"
     ).watch(
-        f"subject[{cast}].ownedOperation.formalParameter.upperValue"
+        f"subject[{cast}].ownedOperation.ownedParameter.upperValue"
     ).watch(
-        f"subject[{cast}].ownedOperation.formalParameter.typeValue"
+        f"subject[{cast}].ownedOperation.ownedParameter.typeValue"
     ).watch(
-        f"subject[{cast}].ownedOperation.formalParameter.defaultValue"
+        f"subject[{cast}].ownedOperation.ownedParameter.defaultValue"
     )
 
 

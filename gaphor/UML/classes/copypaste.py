@@ -19,7 +19,7 @@ def copy_class(element):
 def copy_operation(element: Operation):
     yield element.id, copy_named_element(element)
     for feature in itertools.chain(
-        element.formalParameter,
+        element.ownedParameter,
         element.returnResult,
     ):
         yield from copy(feature)
