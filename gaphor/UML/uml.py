@@ -408,6 +408,7 @@ class Parameter(ConnectableElement, MultiplicityElement):
     defaultValue: attribute[str]
     ownerFormalParam: relation_one[BehavioralFeature]
     ownerReturnParam: relation_one[BehavioralFeature]
+    parameterSet: relation_many[ParameterSet]
     operation: relation_one[Operation]  # type: ignore[assignment]
 
 
@@ -417,6 +418,7 @@ class BehavioralFeature(Feature, Namespace):
     formalParameter: relation_many[Parameter]
     raisedException: relation_many[Type]
     returnResult: relation_many[Parameter]
+    ownedParameterSet: relation_many[ParameterSet]
     parameter: relation_many[Parameter]
 
 
@@ -719,7 +721,9 @@ class AddStructuralFeatureValueAction(WriteStructuralFeatureAction):
 
 
 class ParameterSet(NamedElement):
+    parameter: relation_many[Parameter]
     condition: relation_many[Constraint]
+    behavioralFeature: relation_one[BehavioralFeature]
 
 
 class Image(Element):
@@ -1248,11 +1252,21 @@ ActionExecutionSpecification.action = association("action", Action, lower=1, upp
 BehaviorExecutionSpecification.behavior = association("behavior", Behavior, upper=1)
 # 'ChangeEvent.changeExpression' is a simple attribute
 ChangeEvent.changeExpression = attribute("changeExpression", str)
+Parameter.parameterSet = association("parameterSet", ParameterSet, opposite="parameter")
+ParameterSet.parameter = association(
+    "parameter", Parameter, lower=1, opposite="parameterSet"
+)
 Constraint.parameterSet = association(
     "parameterSet", ParameterSet, upper=1, opposite="condition"
 )
 ParameterSet.condition = association(
     "condition", Constraint, composite=True, opposite="parameterSet"
+)
+ParameterSet.behavioralFeature = association(
+    "behavioralFeature", BehavioralFeature, upper=1, opposite="ownedParameterSet"
+)
+BehavioralFeature.ownedParameterSet = association(
+    "ownedParameterSet", ParameterSet, composite=True, opposite="behavioralFeature"
 )
 Connector.end = association("end", ConnectorEnd, lower=2, composite=True)
 ConnectorEnd.role = association("role", ConnectableElement, upper=1, opposite="end")
@@ -1408,6 +1422,7 @@ NamedElement.namespace = derivedunion(
     Pseudostate.stateMachine,
     Region.state,
     ConnectionPointReference.state,
+    BehavioralFeature.ownedParameterSet,
     Classifier.nestingClass,
     Artifact.artifact,
     Property.artifact,
@@ -1456,6 +1471,7 @@ Namespace.ownedMember = derivedunion(
     StateMachine.region,
     Region.subvertex,
     Node.nestedNode,
+    ParameterSet.behavioralFeature,
     Stereotype.icon,
     Namespace.ownedRule,
     Artifact.nestedArtifact,
