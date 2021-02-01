@@ -2,18 +2,13 @@
 
 from typing import Tuple, Union
 
-import gi
 from gaphas.canvas import instant_cairo_context
 from gaphas.geometry import Rectangle
 from gaphas.painter.boundingboxpainter import CairoBoundingBoxContext
 from gaphas.painter.freehand import FreeHandCairoContext
+from gi.repository import GLib, Pango, PangoCairo
 
 from gaphor.core.styling import FontStyle, FontWeight, Style, TextAlign, TextDecoration
-
-# fmt: off
-gi.require_version('PangoCairo', '1.0')  # noqa: isort:skip
-from gi.repository import GLib, Pango, PangoCairo  # noqa: isort:skip
-# fmt: on
 
 
 class Layout:

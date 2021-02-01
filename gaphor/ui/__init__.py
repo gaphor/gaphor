@@ -7,21 +7,13 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-import gi
+from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor.application import Application
 from gaphor.core import event_handler
 from gaphor.event import ApplicationShutdown, SessionCreated
 from gaphor.ui.actiongroup import apply_application_actions
-
-# fmt: off
-gi.require_version("Gtk", "3.0")  # noqa: isort:skip
-gi.require_version("Gdk", "3.0")  # noqa: isort:skip
-from gi.repository import GLib, Gdk, Gio, Gtk  # noqa: isort:skip
 from gaphor.ui.macosshim import macos_init
-
-# fmt: on
-
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 
