@@ -1512,12 +1512,16 @@ DirectedRelationship.target = derivedunion(
     Extend.extendedCase,
     Realization.realizingClassifier,
     ElementImport.importedElement,
+    Dependency.supplier,
+    Dependency.client,
 )
 Element.directedRelationship = derivedunion(
     "directedRelationship",
     DirectedRelationship,
     0,
     "*",
+    NamedElement.supplierDependency,
+    NamedElement.clientDependency,
     UseCase.include,
     Package.packageMerge,
     UseCase.extend,

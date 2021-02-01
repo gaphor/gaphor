@@ -10478,6 +10478,9 @@
 </canvas>
 </Diagram>
 <Property id="DCE:881EB662-65CF-11D7-89A9-9C62884CFFDE">
+<aggregation>
+<val>composite</val>
+</aggregation>
 <association>
 <ref refid="DCE:881E7D46-65CF-11D7-89A9-9C62884CFFDE"/>
 </association>
@@ -22055,7 +22058,7 @@ specially for Gaphor</val>
 <canvas>
 <item id="DCE:AA00C386-50A5-11D7-807A-302CB4EF44FD" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 81.875, 206.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 8.625, 205.5)</val>
 </matrix>
 <width>
 <val>163.75</val>
@@ -22183,7 +22186,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 245.625, 223.5)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (382.875, -3.2089552238805936)]</val>
+<val>[(-73.25, -1.0), (382.875, -3.2089552238805936)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:AA00C386-50A5-11D7-807A-302CB4EF44FD"/>
@@ -22218,7 +22221,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 245.625, 263.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (382.875, -1.3358208955223745)]</val>
+<val>[(-73.25, -1.0), (382.875, -1.3358208955223745)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:AA00C386-50A5-11D7-807A-302CB4EF44FD"/>
@@ -22409,7 +22412,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 255.0, 421.1098901098901)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (346.5, -8.146927146926998)]</val>
+<val>[(-70.875, -7.5), (346.5, -8.146927146926998)]</val>
 </points>
 <head-connection>
 <ref refid="0a8b38b2-e189-11ea-b7ab-f5b4c130f24e"/>
@@ -22472,7 +22475,7 @@ specially for Gaphor</val>
 </item>
 <item id="0a8b38b2-e189-11ea-b7ab-f5b4c130f24e" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 79.5, 386.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 8.625, 378.5)</val>
 </matrix>
 <width>
 <val>175.5</val>
@@ -38493,6 +38496,8 @@ swimlanes</val>
 <ref refid="8d2b539a-63c7-11eb-9492-9757bcbe474b"/>
 <ref refid="93f23af4-63c7-11eb-9492-9757bcbe474b"/>
 <ref refid="99332f14-63c7-11eb-9492-9757bcbe474b"/>
+<ref refid="d625de5a-64ba-11eb-9492-9757bcbe474b"/>
+<ref refid="dda913e0-64ba-11eb-9492-9757bcbe474b"/>
 </reflist>
 </slot>
 <typeValue>
@@ -40586,6 +40591,11 @@ swimlanes</val>
 <ref refid="DCE:B71C4ADE-65C6-11D7-89A9-9C62884CFFDE"/>
 </reflist>
 </extended>
+<slot>
+<reflist>
+<ref refid="dda913e0-64ba-11eb-9492-9757bcbe474b"/>
+</reflist>
+</slot>
 </InstanceSpecification>
 <InstanceSpecification id="172dc738-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -42173,6 +42183,11 @@ swimlanes</val>
 <ref refid="DCE:B71C181E-65C6-11D7-89A9-9C62884CFFDE"/>
 </reflist>
 </extended>
+<slot>
+<reflist>
+<ref refid="d625de5a-64ba-11eb-9492-9757bcbe474b"/>
+</reflist>
+</slot>
 </InstanceSpecification>
 <InstanceSpecification id="1753e74c-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -53516,7 +53531,7 @@ have an opposite end.
 <ref refid="17395364-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>ownedElement</val>
+<val>ownedElement, directedRelationship</val>
 </value>
 </Slot>
 <Slot id="cb489f42-f9d8-11ea-b854-fb98adcb9438">
@@ -53527,7 +53542,7 @@ have an opposite end.
 <ref refid="176453e8-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>owner</val>
+<val>owner, target</val>
 </value>
 </Slot>
 <InstanceSpecification id="1de265ac-00f1-11eb-8f71-7fd0147881a5">
@@ -54073,4 +54088,26 @@ have an opposite end.
 </reflist>
 </presentation>
 </Comment>
+<Slot id="d625de5a-64ba-11eb-9492-9757bcbe474b">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="1753a732-fa90-11de-bd51-00224128e79d"/>
+</owningInstance>
+<value>
+<val>target</val>
+</value>
+</Slot>
+<Slot id="dda913e0-64ba-11eb-9492-9757bcbe474b">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="172d8c14-fa90-11de-bd51-00224128e79d"/>
+</owningInstance>
+<value>
+<val>directedRelationship</val>
+</value>
+</Slot>
 </gaphor>
