@@ -120,9 +120,8 @@ def format_operation(
 
     s.append(name)
     s.append("(")
-
-    for p in el.ownedParameter:
-        s.append(
+    s.append(
+        ", ".join(
             format(
                 p,
                 direction=direction,
@@ -130,13 +129,13 @@ def format_operation(
                 multiplicity=multiplicity,
                 default=default,
             )
+            for p in el.ownedParameter
+            if p.direction != "return"
         )
-        if p is not el.ownedParameter[-1]:
-            s.append(", ")
-
+    )
     s.append(")")
 
-    rr = el.returnResult and el.returnResult[0]
+    rr = next((p for p in el.ownedParameter if p.direction == "return"), None)
     if rr:
         s.append(format(rr, type=type, multiplicity=multiplicity, default=default))
     return "".join(s)

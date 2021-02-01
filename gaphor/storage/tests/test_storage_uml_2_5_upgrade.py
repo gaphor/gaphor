@@ -56,3 +56,28 @@ def test_formal_parameter_to_owned_parameter(loader):
     operation, parameter = loader(o, p)
     assert parameter in operation.ownedParameter
     assert parameter.operation is operation
+
+
+def test_return_result_to_owned_parameter(loader):
+    o = element(id="1", type="Operation")
+    o.references["returnResult"] = ["2"]
+    p = element(id="2", type="Parameter")
+    p.references["ownerReturnParam"] = ["1"]
+
+    operation, parameter = loader(o, p)
+    assert parameter in operation.ownedParameter
+    assert parameter.operation is operation
+
+
+def test_parameters_to_owned_parameter(loader):
+    o = element(id="1", type="Operation")
+    o.references["formalParameter"] = ["2"]
+    o.references["returnResult"] = ["3"]
+    p = element(id="2", type="Parameter")
+    r = element(id="3", type="Parameter")
+
+    operation, parameter, return_param = loader(o, p, r)
+    assert parameter in operation.ownedParameter
+    assert return_param in operation.ownedParameter
+    assert parameter.operation is operation
+    assert return_param.operation is operation

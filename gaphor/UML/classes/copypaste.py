@@ -18,10 +18,7 @@ def copy_class(element):
 @copy.register
 def copy_operation(element: Operation):
     yield element.id, copy_named_element(element)
-    for feature in itertools.chain(
-        element.ownedParameter,
-        element.returnResult,
-    ):
+    for feature in element.ownedParameter:
         yield from copy(feature)
 
 

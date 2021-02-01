@@ -312,12 +312,6 @@ class OperationsPage(PropertyPageBase):
         self.watcher.watch("ownedOperation.name", handler).watch(
             "ownedOperation.isAbstract", handler
         ).watch("ownedOperation.visibility", handler).watch(
-            "ownedOperation.returnResult.lowerValue", handler
-        ).watch(
-            "ownedOperation.returnResult.upperValue", handler
-        ).watch(
-            "ownedOperation.returnResult.typeValue", handler
-        ).watch(
             "ownedOperation.ownedParameter.lowerValue", handler
         ).watch(
             "ownedOperation.ownedParameter.upperValue", handler

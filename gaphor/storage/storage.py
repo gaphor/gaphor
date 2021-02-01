@@ -212,7 +212,8 @@ def _load_elements_and_canvasitems(
             if version_lower_than(gaphor_version, (2, 3, 0)):
                 elem = upgrade_package_owned_classifier_to_owned_type(elem)
                 elem = upgrade_implementation_to_interface_realization(elem)
-                elem = upgrade_feature_formal_parameter_to_owned_parameter(elem)
+                elem = upgrade_feature_parameters_to_owned_parameter(elem)
+                elem = upgrade_parameter_owner_formal_param(elem)
 
             cls = modeling_language.lookup_element(elem.type)
             assert cls, f"Type {elem.type} can not be loaded: no such element"
@@ -449,10 +450,25 @@ def upgrade_implementation_item_to_interface_realization_item(item):
 
 
 # since 2.3.0
-def upgrade_feature_formal_parameter_to_owned_parameter(elem):
+def upgrade_feature_parameters_to_owned_parameter(elem):
+    formal_params = []
+    return_results = []
     for name, refids in dict(elem.references).items():
         if name == "formalParameter":
-            elem.references["ownedParameter"] = refids
+            formal_params = refids
             del elem.references["formalParameter"]
+        if name == "returnResult":
+            return_results = refids
+            del elem.references["returnResult"]
+    elem.references["ownedParameter"] = formal_params + return_results
+    return elem
+
+
+# since 2.3.0
+def upgrade_parameter_owner_formal_param(elem):
+    for name, refids in dict(elem.references).items():
+        if name == "ownerReturnParam":
+            elem.references["ownerFormalParam"] = refids
+            del elem.references["ownerReturnParam"]
             break
     return elem

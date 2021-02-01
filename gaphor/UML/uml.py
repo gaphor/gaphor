@@ -407,7 +407,6 @@ class Parameter(ConnectableElement, MultiplicityElement):
     direction: enumeration
     defaultValue: attribute[str]
     ownerFormalParam: relation_one[BehavioralFeature]
-    ownerReturnParam: relation_one[BehavioralFeature]
     parameterSet: relation_many[ParameterSet]
     operation: relation_one[Operation]  # type: ignore[assignment]
 
@@ -417,7 +416,6 @@ class BehavioralFeature(Feature, Namespace):
     method: relation_many[Behavior]
     ownedParameter: relation_many[Parameter]
     raisedException: relation_many[Type]
-    returnResult: relation_many[Parameter]
     ownedParameterSet: relation_many[ParameterSet]
 
 
@@ -1035,12 +1033,6 @@ Operation.interface_ = association(
 ElementImport.importedElement = association(
     "importedElement", PackageableElement, lower=1, upper=1
 )
-Parameter.ownerReturnParam = association(
-    "ownerReturnParam", BehavioralFeature, upper=1, opposite="returnResult"
-)
-BehavioralFeature.returnResult = association(
-    "returnResult", Parameter, composite=True, opposite="ownerReturnParam"
-)
 Classifier.redefinedClassifier = association("redefinedClassifier", Classifier)
 Operation.raisedException = association("raisedException", Type)
 PackageImport.importedPackage = association(
@@ -1390,7 +1382,6 @@ NamedElement.namespace = derivedunion(
     1,
     Extend.extension,
     ExtensionPoint.useCase,
-    Parameter.ownerReturnParam,
     Property.interface_,
     Include.includingCase,
     Property.class_,
@@ -1440,7 +1431,6 @@ Namespace.ownedMember = derivedunion(
     Package.packagedElement,
     DataType.ownedOperation,
     Operation.precondition,
-    BehavioralFeature.returnResult,
     Class.ownedAttribute,
     BehavioralFeature.ownedParameter,
     Classifier.ownedUseCase,
