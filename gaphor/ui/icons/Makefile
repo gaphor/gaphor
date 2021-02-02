@@ -21,7 +21,7 @@ ICONS=diagram \
 	dependency \
 	usage \
 	realization \
-	implementation \
+	interface-realization \
 	component \
 	artifact \
 	node \
