@@ -13,9 +13,3 @@
 .. thumbnail:: 07._Common_Behaviors/2._Events.svg
   :group: 07._Common_Behaviors
 
-Reception
---------------------------------------------------
-
-.. thumbnail:: 07._Common_Behaviors/Reception.svg
-  :group: 07._Common_Behaviors
-

@@ -7,9 +7,3 @@
 .. thumbnail:: 08._State_Machines/1._Behavior_State_Machines.svg
   :group: 08._State_Machines
 
-2. State Machine Redefinitions
---------------------------------------------------
-
-.. thumbnail:: 08._State_Machines/2._State_Machine_Redefinitions.svg
-  :group: 08._State_Machines
-
