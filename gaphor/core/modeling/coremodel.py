@@ -18,7 +18,7 @@ from gaphor.core.modeling.properties import (
 )
 
 if TYPE_CHECKING:
-    from gaphor.UML import Dependency, Namespace, Package
+    from gaphor.UML import Component, Dependency, Namespace, Package
 # 8: override Element
 # defined above
 
@@ -38,6 +38,7 @@ class NamedElement(Element):
 # 39: override PackageableElement
 class PackageableElement(NamedElement):
     owningPackage: relation_one[Package]
+    component: relation_one[Component]
 
 
 # 67: override Diagram

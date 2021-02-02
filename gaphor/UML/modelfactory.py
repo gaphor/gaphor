@@ -348,7 +348,7 @@ def dependency_type(client, supplier):
     # test interface first as it is a classifier
     if isinstance(supplier, Interface):
         dt = Usage
-    elif isinstance(client, Component) and isinstance(supplier, Classifier):
+    elif isinstance(supplier, Component) and isinstance(client, Classifier):
         dt = Realization
 
     return dt

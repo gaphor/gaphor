@@ -8,7 +8,7 @@ normal properties.
 from __future__ import annotations
 
 import itertools
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from gaphor.core.modeling.properties import derived
 from gaphor.UML import uml, umllex
@@ -103,7 +103,7 @@ def _pr_rc_interface_deps(component, dep_type):
     )
 
 
-def component_provided(self) -> List[Union[uml.InterfaceRealization, uml.Realization]]:
+def component_provided(self) -> List[uml.Realization]:
     """Interfaces provided to component environment."""
     implementations = (
         impl.contract[0]

@@ -85,6 +85,7 @@ class Classifier(Namespace, Type, RedefinableElement):
     feature: relation_many[Feature]
     general: derived[Classifier]
     inheritedMember: derivedunion[NamedElement]
+    componentRealization: relation_many[ComponentRealization]  # type: ignore[assignment]
 
 
 class Association(Classifier, Relationship):
@@ -167,8 +168,7 @@ class Abstraction(Dependency):
 
 
 class Realization(Abstraction):
-    realizingClassifier: relation_one[Classifier]
-    abstraction: relation_one[Component]
+    pass
 
 
 class TypedElement(NamedElement):
@@ -252,10 +252,10 @@ class Manifestation(Abstraction):
 
 class Component(Class):
     isIndirectlyInstantiated: attribute[int]
-    realization: relation_many[Realization]
+    packagedElement: relation_many[PackageableElement]
     required: property
     provided: property
-    ownedMember: relation_many[PackageableElement]  # type: ignore[assignment]
+    realization: relation_many[ComponentRealization]  # type: ignore[assignment]
 
 
 class ConnectableElement(TypedElement):
@@ -728,6 +728,11 @@ class Image(Element):
     format: attribute[str]
 
 
+class ComponentRealization(Realization):
+    realizingClassifier: relation_one[Classifier]  # type: ignore[assignment]
+    abstraction: relation_one[Component]  # type: ignore[assignment]
+
+
 # class 'Expression' has been stereotyped as 'SimpleAttribute'
 # class 'OpaqueExpression' has been stereotyped as 'SimpleAttribute'
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
@@ -837,7 +842,7 @@ Package.nestedPackage = association(
 )
 Package.package = association("package", Package, upper=1, opposite="nestedPackage")
 NamedElement.clientDependency = association(
-    "clientDependency", Dependency, opposite="client"
+    "clientDependency", Dependency, composite=True, opposite="client"
 )
 Dependency.client = association(
     "client", NamedElement, upper=1, opposite="clientDependency"
@@ -920,9 +925,6 @@ Parameter.defaultValue = attribute("defaultValue", str)
 # 'Slot.value' is a simple attribute
 Slot.value = attribute("value", str)
 Include.addition = association("addition", UseCase, lower=1, upper=1)
-Realization.realizingClassifier = association(
-    "realizingClassifier", Classifier, lower=1, upper=1
-)
 # 'TypedElement.typeValue' is a simple attribute
 TypedElement.typeValue = attribute("typeValue", str)
 Constraint.constrainedElement = association("constrainedElement", Element)
@@ -951,12 +953,6 @@ Classifier.generalization = association(
 )
 Generalization.specific = association(
     "specific", Classifier, lower=1, upper=1, opposite="generalization"
-)
-Realization.abstraction = association(
-    "abstraction", Component, upper=1, opposite="realization"
-)
-Component.realization = association(
-    "realization", Realization, composite=True, opposite="abstraction"
 )
 # 'ValuePin.value_' is a simple attribute
 ValuePin.value_ = attribute("value_", str)
@@ -1065,6 +1061,12 @@ PackageImport.importingNamespace = association(
     "importingNamespace", Namespace, upper=1, opposite="packageImport"
 )
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
+Component.packagedElement = association(
+    "packagedElement", PackageableElement, composite=True, opposite="component"
+)
+PackageableElement.component = association(
+    "component", Component, upper=1, opposite="packagedElement"
+)
 Behavior.context2 = association(
     "context2", BehavioredClassifier, upper=1, opposite="ownedBehavior"
 )
@@ -1392,6 +1394,7 @@ NamedElement.namespace = derivedunion(
     PackageableElement.owningPackage,
     Operation.datatype,
     Property.datatype,
+    PackageableElement.component,
     Operation.interface_,
     Parameter.ownerFormalParam,
     InteractionFragment.enclosingInteraction,
@@ -1431,6 +1434,7 @@ Namespace.ownedMember = derivedunion(
     Package.packagedElement,
     DataType.ownedOperation,
     Operation.precondition,
+    Component.packagedElement,
     Class.ownedAttribute,
     BehavioralFeature.ownedParameter,
     Classifier.ownedUseCase,
@@ -1507,7 +1511,6 @@ DirectedRelationship.target = derivedunion(
     Generalization.general,
     Include.addition,
     Extend.extendedCase,
-    Realization.realizingClassifier,
     ElementImport.importedElement,
     Dependency.supplier,
     Dependency.client,
@@ -1529,7 +1532,6 @@ DirectedRelationship.source = derivedunion(
     1,
     "*",
     Extend.extension,
-    Realization.abstraction,
     Include.includingCase,
     ElementImport.importingNamespace,
     Generalization.specific,
@@ -1592,7 +1594,6 @@ Element.owner = derivedunion(
     0,
     1,
     Slot.owningInstance,
-    Realization.abstraction,
     ElementImport.importingNamespace,
     Generalization.specific,
     ActivityEdge.activity,
@@ -1624,7 +1625,6 @@ Element.ownedElement = derivedunion(
     Namespace.ownedMember,
     Namespace.elementImport,
     Activity.group,
-    Component.realization,
     NamedElement.clientDependency,
     Namespace.packageImport,
     Package.packageMerge,
@@ -1690,6 +1690,15 @@ ExtensionEnd.type = redefine(ExtensionEnd, "type", Stereotype, Property.type)
 ActivityNode.redefinedElement = redefine(
     ActivityNode, "redefinedElement", ActivityNode, RedefinableElement.redefinedElement
 )
+Classifier.componentRealization = redefine(
+    Classifier,
+    "componentRealization",
+    ComponentRealization,
+    NamedElement.clientDependency,
+)
+ComponentRealization.realizingClassifier = redefine(
+    ComponentRealization, "realizingClassifier", Classifier, Dependency.client
+)
 InterfaceRealization.contract = redefine(
     InterfaceRealization, "contract", Interface, Dependency.supplier
 )
@@ -1705,6 +1714,12 @@ InterfaceRealization.implementatingClassifier = redefine(
     BehavioredClassifier,
     Dependency.client,
 )
+ComponentRealization.abstraction = redefine(
+    ComponentRealization, "abstraction", Component, Dependency.supplier
+)
+Component.realization = redefine(
+    Component, "realization", ComponentRealization, NamedElement.supplierDependency
+)
 Parameter.operation = redefine(
     Parameter, "operation", Operation, Parameter.ownerFormalParam
 )
@@ -1713,9 +1728,6 @@ Operation.ownedParameter = redefine(
 )
 ActivityEdge.redefinedElement = redefine(
     ActivityEdge, "redefinedElement", ActivityEdge, RedefinableElement.redefinedElement
-)
-Component.ownedMember = redefine(
-    Component, "ownedMember", PackageableElement, Namespace.ownedMember
 )
 StateInvariant.covered = redefine(
     StateInvariant, "covered", Lifeline, InteractionFragment.covered
