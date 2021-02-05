@@ -69,12 +69,7 @@ class ActionStack:
 
         for act in self._actions:
             logger.debug(act.__doc__)
-            try:
-                act()
-            except Exception:
-                logger.error(
-                    "Error while undoing action %s", act.__doc__, exc_info=True
-                )
+            act()
 
 
 class UndoManagerStateChanged(ServiceEvent):
