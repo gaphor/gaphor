@@ -121,14 +121,13 @@ class Element:
         if self._unlink_lock:
             return
 
-        log.debug("unlinking %s", self)
-
         try:
             self._unlink_lock += 1
 
             for prop in self.umlproperties():
                 prop.unlink(self)
 
+            log.debug("unlinking %s", self)
             self.handle(UnlinkEvent(self))
         finally:
             self._unlink_lock -= 1
