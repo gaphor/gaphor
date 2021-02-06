@@ -20,14 +20,13 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor import UML
 from gaphor.core.modeling.properties import association, attribute
-from gaphor.core.styling import Style
+from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
     EditableText,
     Text,
     cairo_state,
-    combined_style,
     draw_default_head,
     draw_default_tail,
     stroke,
@@ -385,7 +384,7 @@ class AssociationEnd:
 
         p1 is the line end and p2 is the last but one point of the line.
         """
-        style = combined_style(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         ofs = 5
 
         dx = float(p2[0]) - float(p1[0])

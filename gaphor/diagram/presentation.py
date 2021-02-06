@@ -14,8 +14,7 @@ from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import Style
-from gaphor.diagram.shapes import combined_style
+from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -245,7 +244,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             finally:
                 cr.restore()
 
-        style = combined_style(context.style, self.style)
+        style = merge_styles(context.style, self.style)
         context = replace(context, style=style)
 
         cr = context.cairo

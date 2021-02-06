@@ -43,7 +43,7 @@ Rule = Union[
 ]
 
 
-def merge_styles(styles) -> Style:
+def merge_styles(*styles) -> Style:
     style: Style = {}
     for s in styles:
         style.update(s)
@@ -67,7 +67,7 @@ class CompiledStyleSheet:
             ),
             key=MATCH_SORT_KEY,
         )
-        return merge_styles(decl for _, _, decl in results)
+        return merge_styles(*(decl for _, _, decl in results))
 
 
 def parse_style_sheets(*css: str) -> Iterator[Rule]:
