@@ -7,7 +7,11 @@ from typing import Callable, Dict, Iterator, List, Optional, Sequence, Tuple, Un
 import tinycss2
 from typing_extensions import Literal, Protocol
 
-from gaphor.core.styling.declarations import parse_declarations
+from gaphor.core.styling.declarations import (
+    FONT_SIZE_VALUES,
+    number,
+    parse_declarations,
+)
 from gaphor.core.styling.parser import SelectorError
 from gaphor.core.styling.properties import (
     Color,
@@ -46,8 +50,15 @@ Rule = Union[
 
 def merge_styles(*styles: Style) -> Style:
     style = Style()
+    abs_font_size = None
     for s in styles:
+        font_size = s.get("font-size")
+        if font_size and isinstance(font_size, number):
+            abs_font_size = font_size
         style.update(s)
+
+    if abs_font_size and style["font-size"] in FONT_SIZE_VALUES:
+        style["font-size"] = abs_font_size * FONT_SIZE_VALUES[style["font-size"]]  # type: ignore[index]
 
     if "opacity" in style:
         opacity = style["opacity"]

@@ -13,6 +13,14 @@ from gaphor.core.styling.properties import (
     VerticalAlign,
 )
 
+FONT_SIZE_VALUES = {
+    "x-small": 3 / 4,
+    "small": 8 / 9,
+    "medium": 1,
+    "large": 6 / 5,
+    "x-large": 3 / 2,
+}
+
 
 class _Declarations:
     """Convert raw CSS declarations into Gaphor styling declarations."""
@@ -100,7 +108,6 @@ def parse_color(prop, value):
     "line-width",
     "vertical-spacing",
     "border-radius",
-    "font-size",
     "opacity",
 )
 def parse_positive_number(prop, value) -> Optional[Number]:
@@ -115,6 +122,15 @@ def parse_string(prop, value) -> Optional[str]:
         return value
     elif value:
         return " ".join(str(v) for v in value)
+    return None
+
+
+@declarations.register("font-size")
+def parse_font_size(prop, value) -> Union[None, int, float, str]:
+    if isinstance(value, number) and value > 0:
+        return value
+    if isinstance(value, str) and value in FONT_SIZE_VALUES:
+        return value
     return None
 
 

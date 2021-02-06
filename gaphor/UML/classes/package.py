@@ -27,7 +27,7 @@ class PackageItem(ElementPresentation, Named):
             ),
             Text(
                 text=lambda: from_package_str(self),
-                style={"font-size": 10, "min-width": 0, "min-height": 0},
+                style={"font-size": "x-small", "min-width": 0, "min-height": 0},
             ),
             style={"min-width": 50, "min-height": 70, "padding": (25, 10, 5, 10)},
             draw=draw_package,

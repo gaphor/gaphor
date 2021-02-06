@@ -337,7 +337,7 @@ class AssociationEnd:
         self._name_layout = Layout("")
         self._mult_layout = Layout("")
 
-        self._inline_style: Style = {"font-size": 10}
+        self._inline_style: Style = {"font-size": "x-small"}
 
     name_bounds = property(lambda s: s._name_bounds)
 

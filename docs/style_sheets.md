@@ -145,7 +145,7 @@ family, size, weight.
 ```eval_rst
 ======================= =======================================
 ``font-family``         A single font name (e.g. ``sans``, ``serif``, ``courier``)
-``font-size``           Font size: ``font-size: 14``
+``font-size``           An absolute size (e.g. ``14``) or a size value (e.g. ``small``)
 ``font-style``          Either ``normal`` or ``italic``
 ``font-weight``         Either ``normal`` or ``bold``
 ``text-align``          Either ``left``, ``center``, ``right``
@@ -161,6 +161,8 @@ family, size, weight.
 
 * `font-family` can be only one font name, not a list of (fallback) names, as
   is used for HTML.
+* `font-size` can be a number or [CSS absolute-size values](https://drafts.csswg.org/css-fonts-3/#font-size-prop).
+  Only the values `x-small`, `small`, `medium`, `large` and `x-large` are supported.
 
 ### Drawing and spacing
 

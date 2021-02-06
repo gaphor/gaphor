@@ -150,18 +150,34 @@ def test_compiled_style_sheet():
     """
 
     compiled_style_sheet = CompiledStyleSheet(css)
-
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props.get("font-family") == "sans"
     assert props.get("font-size") == 42
 
 
+@pytest.mark.parametrize(
+    "font_size", ["x-small", "small", "medium", "large", "x-large"]
+)
+def test_relative_font_size(font_size):
+    css = f"* {{ font-size: {font_size} }}"
+
+    props = first_decl_block(css)
+    assert props.get("font-size") == font_size
+
+
+@pytest.mark.parametrize("font_size", ["foo", "xx-small", "xx-large"])
+def test_faulty_font_size(font_size):
+    css = f"* {{ font-size: {font_size} }}"
+
+    props = first_decl_block(css)
+    assert props.get("font-size") is None
+
+
 def test_empty_compiled_style_sheet():
     css = ""
 
     compiled_style_sheet = CompiledStyleSheet(css)
-
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props == {}
@@ -171,7 +187,6 @@ def test_color():
     css = "mytype { color: #00ff00 }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props.get("color") == (0, 1, 0, 1)
@@ -181,7 +196,6 @@ def test_color_typing_in_progress():
     css = "mytype { color: # }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props.get("color") is None
@@ -203,7 +217,6 @@ def test_line_style(css_value, result):
     css = f"mytype {{ line-style: {css_value} }}"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props.get("line-style") == result
@@ -214,6 +227,6 @@ def test_broken_line_style():
     css = "diagram { line-style: sloppy * { }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-
     props = compiled_style_sheet.match(Node("mytype"))
+
     assert props.get("line-style") is None

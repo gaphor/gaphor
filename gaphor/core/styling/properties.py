@@ -47,7 +47,7 @@ Style = TypedDict(
         "dash-style": Sequence[Number],
         "padding": Padding,
         "font-family": str,
-        "font-size": Number,
+        "font-size": Union[int, float, str],
         "font-style": FontStyle,
         "font-weight": FontWeight,
         "line-style": Number,

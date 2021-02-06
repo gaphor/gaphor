@@ -303,7 +303,7 @@ class InterfaceItem(ElementPresentation, Classified):
                 ),
                 Text(
                     text=lambda: from_package_str(self),
-                    style={"font-size": 10, "min-width": 0, "min-height": 0},
+                    style={"font-size": "x-small", "min-width": 0, "min-height": 0},
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),
