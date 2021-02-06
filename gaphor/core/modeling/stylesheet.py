@@ -7,7 +7,7 @@ from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
 
-DEFAULT_STYLE_SHEET = textwrap.dedent(
+SYSTEM_STYLE_SHEET = textwrap.dedent(
     """\
     * {
      background-color: transparent;
@@ -31,7 +31,20 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
 
     diagram {
      background-color: white;
-     line-style: normal;
+    }
+    """
+)
+
+DEFAULT_STYLE_SHEET = textwrap.dedent(
+    """\
+    * {
+     background-color: transparent;
+     color: black;
+     font-family: sans;
+     font-size: 14;
+    }
+
+    diagram {
      /* line-style: sloppy 0.3; */
     }
     """
@@ -49,7 +62,9 @@ class StyleSheet(Element):
     styleSheet: attribute[str] = attribute("styleSheet", str, DEFAULT_STYLE_SHEET)
 
     def compile_style_sheet(self) -> None:
-        self._compiled_style_sheet = CompiledStyleSheet(self.styleSheet)
+        self._compiled_style_sheet = CompiledStyleSheet(
+            SYSTEM_STYLE_SHEET, self.styleSheet
+        )
 
     def match(self, node: StyleNode) -> Style:
         return self._compiled_style_sheet.match(node)
