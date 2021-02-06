@@ -19,6 +19,10 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
      padding: 0;
     }
 
+    *:disabled {
+     color: #bbbbbb;
+    }
+
     diagram {
      background-color: white;
      line-style: normal;

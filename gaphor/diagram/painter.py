@@ -20,24 +20,6 @@ from gaphor.diagram.selection import Selection
 TOLERANCE = 0.8
 
 
-def maybe_gray_out(style, item, selection):
-    """Update color properties if item is grayed out."""
-    if item not in selection.grayed_out_items:
-        return style
-
-    for style_prop in (
-        "background-color",
-        "color",
-        "highlight-color",
-        "text-color",
-    ):
-        value = style.get(style_prop)
-        if value is not None:
-            style[style_prop] = value[:3] + (value[3] * 0.4,)
-
-    return style
-
-
 class ItemPainter:
     def __init__(self, selection: Optional[Selection] = None):
         self.selection: Selection = selection or Selection()
@@ -45,9 +27,7 @@ class ItemPainter:
     def paint_item(self, item, cairo):
         selection = self.selection
         diagram = item.diagram
-        style = maybe_gray_out(
-            diagram.style(StyledItem(item, selection)), item, selection
-        )
+        style = diagram.style(StyledItem(item, selection))
 
         cairo.save()
         try:

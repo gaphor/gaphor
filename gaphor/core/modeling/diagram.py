@@ -190,6 +190,7 @@ class StyledItem:
                 "focus" if item is selection.focused_item else "",
                 "hover" if item is selection.hovered_item else "",
                 "drop" if item is selection.dropzone_item else "",
+                "disabled" if item in selection.grayed_out_items else "",
             )
             if selection
             else ()
