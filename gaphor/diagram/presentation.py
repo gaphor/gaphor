@@ -249,7 +249,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         context = replace(context, style=style)
 
         cr = context.cairo
-        cr.set_line_width(self.line_width)
+        cr.set_line_width(style["line-width"])
         cr.set_dash(style.get("dash-style", ()), 0)
         stroke = style["color"]
         if stroke:
