@@ -132,8 +132,6 @@ family, size, weight.
                         ``background-color: rgb(255, 255, 255);`` |br|
                         ``background-color: hsl(130, 95%, 10%);``
 ``color``               Color used for lines
-``highlight-color``     Color used for highlight, e.g. when dragging
-                        an item over another item.
 ``text-color``          Color for text
 ======================= =======================================
 ```

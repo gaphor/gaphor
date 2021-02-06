@@ -44,7 +44,7 @@ class InteractionItem(ElementPresentation, Named):
 def draw_interaction(box, context, bounding_box):
     cr = context.cairo
     cr.rectangle(0, 0, bounding_box.width, bounding_box.height)
-    stroke(context, highlight=True)
+    stroke(context)
     # draw pentagon
     w, h = box.sizes[0]
     h2 = h / 2.0

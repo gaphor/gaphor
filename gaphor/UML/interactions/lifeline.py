@@ -207,7 +207,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
         """
         cr = context.cairo
         cr.rectangle(0, 0, self.width, self.height)
-        stroke(context, highlight=True)
+        stroke(context)
 
         if (
             context.hovered
@@ -222,7 +222,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
                 top = self.lifetime.top
                 cr.move_to(top.pos.x, top.pos.y)
                 cr.line_to(bottom.pos.x, bottom.pos.y)
-                stroke(context, highlight=True)
+                stroke(context)
 
             # draw destruction event
             if self.is_destroyed:

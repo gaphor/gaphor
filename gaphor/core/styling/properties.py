@@ -50,7 +50,6 @@ Style = TypedDict(
         "font-size": Number,
         "font-style": FontStyle,
         "font-weight": FontWeight,
-        "highlight-color": Color,
         "line-style": Number,
         "line-width": Number,
         "min-width": Number,

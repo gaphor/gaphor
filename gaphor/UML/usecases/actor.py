@@ -67,4 +67,4 @@ def draw_actor(box, context, bounding_box):
     cr.move_to(0, (HEAD + NECK + BODY + ARM) * fy)
     cr.line_to(ARM * fx, (HEAD + NECK + BODY) * fy)
     cr.line_to(ARM * 2 * fx, (HEAD + NECK + BODY + ARM) * fy)
-    stroke(context, fill=False, highlight=True)
+    stroke(context, fill=False)

@@ -85,7 +85,7 @@ def _clip_color(c):
     return c
 
 
-@declarations.register("background-color", "color", "highlight-color", "text-color")
+@declarations.register("background-color", "color", "text-color")
 def parse_color(prop, value):
     try:
         color = tinycss2.color3.parse_color(value)

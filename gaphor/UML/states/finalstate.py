@@ -37,7 +37,7 @@ def draw_final_state(box, context, bounding_box):
     path_ellipse(cr, r, r, d, d)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
-    stroke(context, highlight=True)
+    stroke(context)
 
     stroke_color = context.style["color"]
     if stroke_color:

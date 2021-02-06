@@ -28,7 +28,7 @@ def combined_style(item_style: Style, inline_style: Style = {}) -> Style:
     return {**item_style, **inline_style}  # type: ignore[misc]
 
 
-def stroke(context: DrawContext, fill=True, highlight=False):
+def stroke(context: DrawContext, fill=True):
     style = context.style
     cr = context.cairo
     fill_color = style.get("background-color")
@@ -36,9 +36,6 @@ def stroke(context: DrawContext, fill=True, highlight=False):
         with cairo_state(cr):
             cr.set_source_rgba(*fill_color)
             cr.fill_preserve()
-
-    if highlight:
-        draw_highlight(context)
 
     with cairo_state(cr):
         stroke = style.get("color")
@@ -72,8 +69,6 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
 
     cr.close_path()
 
-    draw_highlight(context)
-
     stroke(context)
 
 
@@ -84,16 +79,6 @@ def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
     cr.line_to(x + w, y)
 
     stroke(context, fill=False)
-
-
-def draw_highlight(context: DrawContext):
-    if not context.dropzone:
-        return
-    with cairo_state(context.cairo) as cr:
-        highlight_color = context.style["highlight-color"]
-        cr.set_source_rgba(*highlight_color)
-        cr.set_line_width(cr.get_line_width() + 3.8)
-        cr.stroke_preserve()
 
 
 class Box:

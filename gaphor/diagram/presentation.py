@@ -15,7 +15,7 @@ from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style
-from gaphor.diagram.shapes import combined_style, draw_highlight
+from gaphor.diagram.shapes import combined_style
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -263,7 +263,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         draw_line_end(handles[-1], handles[-2], self.draw_tail)
 
-        draw_highlight(context)
         cr.stroke()
 
         for shape, rect in (

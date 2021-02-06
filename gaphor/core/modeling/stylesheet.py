@@ -14,13 +14,19 @@ DEFAULT_STYLE_SHEET = textwrap.dedent(
      color: black;
      font-family: sans;
      font-size: 14;
-     highlight-color: rgba(0, 0, 255, 0.4);
      line-width: 2;
      padding: 0;
     }
 
+    *:drop {
+     color: hsl(210, 100%, 25%);
+     line-width: 3;
+    }
+
     *:disabled {
-     color: #bbbbbb;
+     text-color: #b0b0b0;
+     color: #b0b0b0;
+     backgound-color: transparent;
     }
 
     diagram {
