@@ -101,6 +101,7 @@ def parse_color(prop, value):
     "vertical-spacing",
     "border-radius",
     "font-size",
+    "opacity",
 )
 def parse_positive_number(prop, value) -> Optional[Number]:
     if isinstance(value, number) and value > 0:

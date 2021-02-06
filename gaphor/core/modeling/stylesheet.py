@@ -24,9 +24,7 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
     }
 
     *:disabled {
-     text-color: #b0b0b0;
-     color: #b0b0b0;
-     backgound-color: transparent;
+     opacity: 0.5;
     }
 
     diagram {

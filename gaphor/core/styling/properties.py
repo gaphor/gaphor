@@ -54,6 +54,7 @@ Style = TypedDict(
         "line-width": Number,
         "min-width": Number,
         "min-height": Number,
+        "opacity": Number,
         "text-decoration": TextDecoration,
         "text-align": TextAlign,
         "text-color": Color,

@@ -10,6 +10,7 @@ from typing_extensions import Literal, Protocol
 from gaphor.core.styling.declarations import parse_declarations
 from gaphor.core.styling.parser import SelectorError
 from gaphor.core.styling.properties import (
+    Color,
     FontStyle,
     FontWeight,
     Style,
@@ -43,10 +44,18 @@ Rule = Union[
 ]
 
 
-def merge_styles(*styles) -> Style:
-    style: Style = {}
+def merge_styles(*styles: Style) -> Style:
+    style = Style()
     for s in styles:
         style.update(s)
+
+    if "opacity" in style:
+        opacity = style["opacity"]
+        for color_prop in ("color", "background-color", "text-color"):
+            color: Optional[Color] = style.get(color_prop)  # type: ignore[assignment]
+            if color and color[3] > 0.0:
+                style[color_prop] = color[:3] + (color[3] * opacity,)  # type: ignore[misc]
+
     return style
 
 
@@ -67,7 +76,7 @@ class CompiledStyleSheet:
             ),
             key=MATCH_SORT_KEY,
         )
-        return merge_styles(*(decl for _, _, decl in results))
+        return merge_styles(*(decl for _, _, decl in results))  # type: ignore[arg-type]
 
 
 def parse_style_sheets(*css: str) -> Iterator[Rule]:
