@@ -208,7 +208,7 @@ def test_empty_pseudo_selector_with_name():
 
 @pytest.mark.parametrize(
     "state",
-    ["root", "hover", "focus", "active", "drop"],
+    ["root", "hover", "focus", "active", "drop", "disabled"],
 )
 def test_hovered_pseudo_selector(state):
 
