@@ -248,10 +248,7 @@ class Diagram(PackageableElement):
 
     def style(self, node: StyleNode) -> Style:
         style_sheet = self.styleSheet
-        return {
-            **FALLBACK_STYLE,  # type: ignore[misc]
-            **(style_sheet.match(node) if style_sheet else {}),
-        }
+        return style_sheet.match(node) if style_sheet else FALLBACK_STYLE
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
