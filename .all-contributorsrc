@@ -337,6 +337,15 @@
         "ideas",
         "doc"
       ]
+    },
+    {
+      "login": "samirodj",
+      "name": "samirodj",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36422980?v=4",
+      "profile": "https://github.com/samirodj",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
