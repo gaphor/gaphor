@@ -343,5 +343,4 @@ class MinimalValueConstraint(BaseConstraint):
 
     def solve_for(self, var):
         min = self._min
-        if var.value < min:
-            var.value = min
+        var.value = max(var.value, min)
