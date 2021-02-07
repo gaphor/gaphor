@@ -160,7 +160,6 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},
             ),
-            style={"min-width": 100, "min-height": 50},
             draw=self.draw_lifeline,
         )
 

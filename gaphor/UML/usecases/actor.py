@@ -24,11 +24,10 @@ class ActorItem(ElementPresentation, Classified):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=ARM * 2, height=HEAD + NECK + BODY + ARM)
 
         self.shape = IconBox(
             Box(
-                style={"min-width": ARM * 2, "min-height": HEAD + NECK + BODY + ARM},
                 draw=draw_actor,
             ),
             Text(

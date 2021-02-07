@@ -15,7 +15,7 @@ class UseCaseItem(ElementPresentation, Classified):
     """Presentation of gaphor.UML.UseCase."""
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, height=30)
         self.shape = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -24,7 +24,6 @@ class UseCaseItem(ElementPresentation, Classified):
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},
             ),
-            style={"min-width": 50, "min-height": 30},
             draw=draw_usecase,
         )
 

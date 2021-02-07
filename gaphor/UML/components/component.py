@@ -35,13 +35,11 @@ class ComponentItem(ElementPresentation, Classified):
                     text=lambda: self.subject.name or "",
                     style={"font-weight": FontWeight.BOLD},
                 ),
-                style={"padding": (4, 34, 4, 4), "min-height": 44},
+                style={"padding": (4, 34, 4, 4)},
                 draw=draw_component_icon,
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "min-width": 100,
-                "min-height": 50,
                 "vertical-align": VerticalAlign.TOP
                 if self.diagram and self.children
                 else VerticalAlign.MIDDLE,

@@ -10,7 +10,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 @represents(UML.Action)
 class ActionItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=50, height=30)
 
         self.shape = Box(
             Text(
@@ -18,8 +18,6 @@ class ActionItem(ElementPresentation, Named):
             ),
             EditableText(text=lambda: self.subject.name or ""),
             style={
-                "min-width": 50,
-                "min-height": 30,
                 "padding": (5, 10, 5, 10),
                 "border-radius": 15,
             },
@@ -33,14 +31,14 @@ class ActionItem(ElementPresentation, Named):
 @represents(UML.SendSignalAction)
 class SendSignalActionItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=50, height=30)
 
         self.shape = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
             EditableText(text=lambda: self.subject.name or ""),
-            style={"min-width": 50, "min-height": 30, "padding": (5, 25, 5, 10)},
+            style={"padding": (5, 25, 5, 10)},
             draw=self.draw_border,
         )
 
@@ -64,14 +62,14 @@ class SendSignalActionItem(ElementPresentation, Named):
 @represents(UML.AcceptEventAction)
 class AcceptEventActionItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=50, height=30)
 
         self.shape = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
             EditableText(text=lambda: self.subject.name or ""),
-            style={"min-width": 50, "min-height": 30, "padding": (5, 10, 5, 25)},
+            style={"padding": (5, 10, 5, 25)},
             draw=self.draw_border,
         )
 

@@ -56,7 +56,6 @@ class BlockItem(ElementPresentation[Block], Classified):
             Box(
                 Text(
                     text=lambda: stereotypes_str(self.subject, ["block"]),
-                    style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",
@@ -70,7 +69,7 @@ class BlockItem(ElementPresentation[Block], Classified):
                 ),
                 Text(
                     text=lambda: from_package_str(self),
-                    style={"font-size": 10, "min-width": 0, "min-height": 0},
+                    style={"font-size": "x-small"},
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),
@@ -98,8 +97,6 @@ class BlockItem(ElementPresentation[Block], Classified):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "min-width": 100,
-                "min-height": 50,
                 "vertical-align": VerticalAlign.TOP,
             },
             draw=draw_border,
@@ -115,7 +112,7 @@ class BlockItem(ElementPresentation[Block], Classified):
                 text=name,
                 style={
                     "padding": (0, 0, 4, 0),
-                    "font-size": 10,
+                    "font-size": "x-small",
                     "font-style": FontStyle.ITALIC,
                 },
             ),
@@ -124,6 +121,6 @@ class BlockItem(ElementPresentation[Block], Classified):
                 for attribute in self.subject.ownedAttribute
                 if predicate(attribute)
             ),
-            style={"padding": (4, 4, 4, 4), "min-height": 8},
+            style={"padding": (4, 4, 4, 4)},
             draw=draw_top_separator,
         )

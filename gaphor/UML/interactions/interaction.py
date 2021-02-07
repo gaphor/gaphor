@@ -11,15 +11,13 @@ from gaphor.UML.modelfactory import stereotypes_str
 @represents(UML.Interaction)
 class InteractionItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=150, height=100)
 
         self.shape = Box(
             Box(
                 Text(
                     text=lambda: stereotypes_str(self.subject),
                     style={
-                        "min-width": 0,
-                        "min-height": 0,
                         "text-align": TextAlign.LEFT,
                     },
                 ),
@@ -30,8 +28,6 @@ class InteractionItem(ElementPresentation, Named):
                 style={"padding": (4, 4, 4, 4)},
             ),
             style={
-                "min-width": 150,
-                "min-height": 100,
                 "vertical-align": VerticalAlign.TOP,
             },
             draw=draw_interaction,

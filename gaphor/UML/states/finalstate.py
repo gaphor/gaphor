@@ -13,12 +13,12 @@ from gaphor.UML.states.state import VertexItem
 @represents(UML.FinalState)
 class FinalStateItem(ElementPresentation, VertexItem):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=30, height=30)
         for h in self.handles():
             h.movable = False
 
         self.shape = IconBox(
-            Box(style={"min-width": 30, "min-height": 30}, draw=draw_final_state),
+            Box(draw=draw_final_state),
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),

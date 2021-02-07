@@ -55,8 +55,8 @@ def test_element_saving(element_factory, diagram):
 
     assert len(properties) == 5
     assert properties["matrix"] == (1.0, 0.0, 0.0, 1.0, 0.0, 0.0)
-    assert properties["width"] == 10.0
-    assert properties["height"] == 10.0
+    assert properties["width"] == 100.0
+    assert properties["height"] == 50.0
     assert properties["subject"] is subject
     assert properties["diagram"] is diagram
 

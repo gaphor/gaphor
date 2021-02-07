@@ -45,11 +45,11 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     with Transaction(event_manager):
         ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    assert 6 == len(diagram.connections.solver.constraints)
+    assert 8 == len(diagram.connections.solver.constraints)
 
     with Transaction(event_manager):
         ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    assert 12 == len(diagram.connections.solver.constraints)
+    assert 16 == len(diagram.connections.solver.constraints)
 
     with Transaction(event_manager):
         a = diagram.create(AssociationItem)
@@ -59,7 +59,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     # Diagram, Association, 2x Class, Property, LiteralSpecification
     assert 6 == len(element_factory.lselect())
-    assert 14 == len(diagram.connections.solver.constraints)
+    assert 18 == len(diagram.connections.solver.constraints)
 
     undo_manager.clear_undo_stack()
     assert not undo_manager.can_undo()
@@ -80,11 +80,11 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
     assert None is get_connected(a.tail)
 
     for i in range(3):
-        assert 7 == len(diagram.connections.solver.constraints)
+        assert 9 == len(diagram.connections.solver.constraints)
 
         undo_manager.undo_transaction()
 
-        assert 14 == len(diagram.connections.solver.constraints)
+        assert 18 == len(diagram.connections.solver.constraints)
 
         assert ci1 == get_connected(a.head)
         assert ci2.id == get_connected(a.tail).id

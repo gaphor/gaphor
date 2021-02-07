@@ -20,7 +20,7 @@ class VertexItem(Named):
 @represents(UML.State)
 class StateItem(ElementPresentation[UML.State], VertexItem):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=50, height=30)
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
@@ -34,19 +34,19 @@ class StateItem(ElementPresentation[UML.State], VertexItem):
                 text=lambda: self.subject.entry.name
                 and f"entry / {self.subject.entry.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT, "min-height": 0},
+                style={"text-align": TextAlign.LEFT},
             ),
             Text(
                 text=lambda: self.subject.exit.name
                 and f"exit / {self.subject.exit.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT, "min-height": 0},
+                style={"text-align": TextAlign.LEFT},
             ),
             Text(
                 text=lambda: self.subject.doActivity.name
                 and f"do / {self.subject.doActivity.name}"
                 or "",
-                style={"text-align": TextAlign.LEFT, "min-height": 0},
+                style={"text-align": TextAlign.LEFT},
             ),
             style={"padding": (4, 4, 4, 4), "vertical-align": VerticalAlign.TOP},
             draw=draw_top_separator,
@@ -64,8 +64,6 @@ class StateItem(ElementPresentation[UML.State], VertexItem):
             ),
             compartment,
             style={
-                "min-width": 50,
-                "min-height": 30,
                 "vertical-align": VerticalAlign.TOP,
             },
             draw=draw_state,

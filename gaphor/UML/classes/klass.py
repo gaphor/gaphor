@@ -86,7 +86,7 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
                 ),
                 Text(
                     text=lambda: from_package_str(self),
-                    style={"font-size": "x-small", "min-width": 0, "min-height": 0},
+                    style={"font-size": "x-small"},
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),
@@ -104,8 +104,6 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "min-width": 100,
-                "min-height": 50,
                 "vertical-align": VerticalAlign.TOP,
             },
             draw=draw_border,
@@ -193,7 +191,7 @@ def attributes_compartment(subject):
             for attribute in subject.ownedAttribute
             if not attribute.association
         ),
-        style={"padding": (4, 4, 4, 4), "min-height": 8},
+        style={"padding": (4, 4, 4, 4)},
         draw=draw_top_separator,
     )
 
@@ -220,6 +218,6 @@ def operations_compartment(subject):
             )
             for operation in subject.ownedOperation
         ),
-        style={"padding": (4, 4, 4, 4), "min-height": 8},
+        style={"padding": (4, 4, 4, 4)},
         draw=draw_top_separator,
     )
