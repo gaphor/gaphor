@@ -20,14 +20,13 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor import UML
 from gaphor.core.modeling.properties import association, attribute
-from gaphor.core.styling import Style
+from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
     EditableText,
     Text,
     cairo_state,
-    combined_style,
     draw_default_head,
     draw_default_tail,
     stroke,
@@ -272,10 +271,10 @@ def draw_tail_composite(context):
     at association tail."""
     cr = context.cairo
     cr.line_to(20, 0)
-    stroke(context, highlight=True)
+    stroke(context)
     _draw_diamond(cr)
     cr.fill_preserve()
-    stroke(context, highlight=True)
+    stroke(context)
 
 
 def draw_head_shared(context):
@@ -338,7 +337,7 @@ class AssociationEnd:
         self._name_layout = Layout("")
         self._mult_layout = Layout("")
 
-        self._inline_style: Style = {"font-size": 10}
+        self._inline_style: Style = {"font-size": "x-small"}
 
     name_bounds = property(lambda s: s._name_bounds)
 
@@ -385,7 +384,7 @@ class AssociationEnd:
 
         p1 is the line end and p2 is the last but one point of the line.
         """
-        style = combined_style(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         ofs = 5
 
         dx = float(p2[0]) - float(p1[0])

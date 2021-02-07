@@ -7,7 +7,7 @@ from typing import Callable, List, Optional, Tuple
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling import DrawContext, UpdateContext
-from gaphor.core.styling import Style, TextAlign, VerticalAlign
+from gaphor.core.styling import Style, TextAlign, VerticalAlign, merge_styles
 from gaphor.diagram.text import Layout, focus_box_pos
 
 
@@ -23,12 +23,7 @@ class cairo_state:
         self._cr.restore()
 
 
-def combined_style(item_style: Style, inline_style: Style = {}) -> Style:
-    """Combine context style and inline styles into one style."""
-    return {**item_style, **inline_style}  # type: ignore[misc]
-
-
-def stroke(context: DrawContext, fill=True, highlight=False):
+def stroke(context: DrawContext, fill=True):
     style = context.style
     cr = context.cairo
     fill_color = style.get("background-color")
@@ -36,9 +31,6 @@ def stroke(context: DrawContext, fill=True, highlight=False):
         with cairo_state(cr):
             cr.set_source_rgba(*fill_color)
             cr.fill_preserve()
-
-    if highlight:
-        draw_highlight(context)
 
     with cairo_state(cr):
         stroke = style.get("color")
@@ -72,8 +64,6 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
 
     cr.close_path()
 
-    draw_highlight(context)
-
     stroke(context)
 
 
@@ -84,16 +74,6 @@ def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
     cr.line_to(x + w, y)
 
     stroke(context, fill=False)
-
-
-def draw_highlight(context: DrawContext):
-    if not context.dropzone:
-        return
-    with cairo_state(context.cairo) as cr:
-        highlight_color = context.style["highlight-color"]
-        cr.set_source_rgba(*highlight_color)
-        cr.set_line_width(cr.get_line_width() + 3.8)
-        cr.stroke_preserve()
 
 
 class Box:
@@ -128,7 +108,7 @@ class Box:
         return self.children[index]
 
     def size(self, context: UpdateContext):
-        style: Style = combined_style(context.style, self._inline_style)
+        style: Style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
@@ -149,7 +129,7 @@ class Box:
             return min_width, min_height
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style: Style = combined_style(context.style, self._inline_style)
+        style: Style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         valign = style.get("vertical-align", VerticalAlign.MIDDLE)
@@ -192,7 +172,7 @@ class IconBox:
         self._inline_style = style
 
     def size(self, context: UpdateContext):
-        style = combined_style(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
@@ -236,7 +216,7 @@ class IconBox:
         )
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style = combined_style(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         x = bounding_box.x + padding_left
@@ -265,7 +245,7 @@ class Text:
             return ""
 
     def size(self, context: UpdateContext):
-        style = combined_style(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         min_w = style.get("min-width", 0)
         min_h = style.get("min-height", 0)
         text_align = style.get("text-align", TextAlign.CENTER)
@@ -293,7 +273,7 @@ class Text:
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         """Draw the text, return the location and size."""
-        style = combined_style(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         min_w = max(style.get("min-width", 0), bounding_box.width)
         min_h = max(style.get("min-height", 0), bounding_box.height)
         text_box = self.text_box(style, bounding_box)
@@ -329,7 +309,7 @@ class EditableText(Text):
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         """Draw the editable text."""
         super().draw(context, bounding_box)
-        style = combined_style(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
 
         text_box = self.text_box(style, bounding_box)
         text_align = style.get("text-align", TextAlign.CENTER)

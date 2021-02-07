@@ -40,4 +40,4 @@ def draw_usecase(box, context, bounding_box):
 
     cr.move_to(bounding_box.width, ry)
     path_ellipse(cr, rx, ry, bounding_box.width, bounding_box.height)
-    stroke(context, highlight=True)
+    stroke(context)

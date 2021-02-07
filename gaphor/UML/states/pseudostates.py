@@ -7,14 +7,7 @@ from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.shapes import (
-    Box,
-    EditableText,
-    IconBox,
-    Text,
-    draw_highlight,
-    stroke,
-)
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.UML.states.state import VertexItem
@@ -59,7 +52,6 @@ def draw_initial_pseudostate(box, context, bounding_box):
     r = 10
     d = r * 2
     path_ellipse(cr, r, r, d, d)
-    draw_highlight(context)
     cr.set_line_width(0.01)
     cr.fill()
 
@@ -69,7 +61,7 @@ def draw_history_pseudostate(box, context, bounding_box):
     r = 15
     d = r * 2
     path_ellipse(cr, r, r, d, d)
-    stroke(context, highlight=True)
+    stroke(context)
 
     cr.move_to(12, 10)
     cr.line_to(12, 20)

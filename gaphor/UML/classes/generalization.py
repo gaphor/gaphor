@@ -26,5 +26,5 @@ class GeneralizationItem(LinePresentation):
         cr.line_to(15, -10)
         cr.line_to(15, 10)
         cr.close_path()
-        stroke(context, highlight=True)
+        stroke(context)
         cr.move_to(15, 0)

@@ -7,7 +7,7 @@ from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.properties import association
 from gaphor.core.styling import VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.shapes import Box, cairo_state, draw_highlight, stroke
+from gaphor.diagram.shapes import Box, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
 
@@ -97,7 +97,6 @@ class PartitionItem(ElementPresentation):
         cr.line_to(0, 0)
         cr.line_to(bounding_box.width, 0)
         cr.line_to(bounding_box.width, bounding_box.height)
-        draw_highlight(context)
         cr.move_to(0, bounding_box.height)
         cr.line_to(0, HEADER_HEIGHT)
         cr.line_to(0 + bounding_box.width, HEADER_HEIGHT)

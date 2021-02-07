@@ -14,8 +14,7 @@ from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import Style
-from gaphor.diagram.shapes import combined_style, draw_highlight
+from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -245,11 +244,11 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             finally:
                 cr.restore()
 
-        style = combined_style(context.style, self.style)
+        style = merge_styles(context.style, self.style)
         context = replace(context, style=style)
 
         cr = context.cairo
-        cr.set_line_width(self.line_width)
+        cr.set_line_width(style["line-width"])
         cr.set_dash(style.get("dash-style", ()), 0)
         stroke = style["color"]
         if stroke:
@@ -263,7 +262,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         draw_line_end(handles[-1], handles[-2], self.draw_tail)
 
-        draw_highlight(context)
         cr.stroke()
 
         for shape, rect in (

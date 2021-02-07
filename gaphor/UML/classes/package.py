@@ -27,7 +27,7 @@ class PackageItem(ElementPresentation, Named):
             ),
             Text(
                 text=lambda: from_package_str(self),
-                style={"font-size": 10, "min-width": 0, "min-height": 0},
+                style={"font-size": "x-small", "min-width": 0, "min-height": 0},
             ),
             style={"min-width": 50, "min-height": 70, "padding": (25, 10, 5, 10)},
             draw=draw_package,
@@ -52,4 +52,4 @@ def draw_package(box, context, bounding_box):
         cr.line_to(w, h)
         cr.line_to(w, y)
         cr.line_to(o, y)
-        stroke(context, highlight=True)
+        stroke(context)

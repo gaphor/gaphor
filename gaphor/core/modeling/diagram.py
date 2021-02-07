@@ -33,7 +33,6 @@ FALLBACK_STYLE: Style = {
     "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
-    "highlight-color": (0, 0, 1, 0.4),
     "line-width": 2,
     "padding": (0, 0, 0, 0),
 }
@@ -190,6 +189,7 @@ class StyledItem:
                 "focus" if item is selection.focused_item else "",
                 "hover" if item is selection.hovered_item else "",
                 "drop" if item is selection.dropzone_item else "",
+                "disabled" if item in selection.grayed_out_items else "",
             )
             if selection
             else ()
@@ -248,10 +248,7 @@ class Diagram(PackageableElement):
 
     def style(self, node: StyleNode) -> Style:
         style_sheet = self.styleSheet
-        return {
-            **FALLBACK_STYLE,  # type: ignore[misc]
-            **(style_sheet.match(node) if style_sheet else {}),
-        }
+        return style_sheet.match(node) if style_sheet else FALLBACK_STYLE
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
