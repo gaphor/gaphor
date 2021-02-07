@@ -14,11 +14,10 @@
   <screenshots>
     <screenshot type="default">
       <caption>The Gaphor main window</caption>
-      <image type="source">
-        https://upload.wikimedia.org/wikipedia/commons/2/2e/Gaphor_2.0.0_Screenshot.png</image>
+      <image type="source">https://gaphor.org/images/screenshot.png</image>
     </screenshot>
   </screenshots>
-  <url type="homepage">https://github.com/gaphor/gaphor</url>
+  <url type="homepage">https://gaphor.org</url>
   <url type="help">https://gaphor.readthedocs.io</url>
   <description>
     <p>Gaphor is a simple modeling tool written in Python. It is Free and Open Source software
