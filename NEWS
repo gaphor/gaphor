@@ -1,3 +1,9 @@
+2.2.2
+_____
+- Fix undo of deleted elements
+- Fix requirements are missing ID and text
+- Add CSS styling to dropzone and grayed out elements
+
 2.2.1
 -----
 - Fix drawing of composite association
