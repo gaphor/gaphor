@@ -9,6 +9,7 @@ from gaphas.aspect.connector import ConnectionSink
 from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
+from gaphas.solver.constraint import BaseConstraint
 
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.event import RevertibeEvent
@@ -103,11 +104,18 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
 
     _port_sides = ("top", "right", "bottom", "left")
 
-    def __init__(self, diagram: Diagram, id=None, shape=None):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
+    def __init__(self, diagram: Diagram, id=None, shape=None, width=100, height=50):
+        super().__init__(connections=diagram.connections, diagram=diagram, id=id, width=width, height=height)  # type: ignore[call-arg]
         self._shape = shape
         for handle in self.handles():
             self.watch_handle(handle)
+
+        diagram.connections.add_constraint(
+            self, MinimalValueConstraint(self.min_width, width)
+        )
+        diagram.connections.add_constraint(
+            self, MinimalValueConstraint(self.min_height, height)
+        )
 
     def port_side(self, port):
         return self._port_sides[self._ports.index(port)]
@@ -326,3 +334,14 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     def _on_horizontal(self, event):
         self._set_horizontal(event.new_value)
+
+
+class MinimalValueConstraint(BaseConstraint):
+    def __init__(self, var, min):
+        super().__init__(var)
+        self._min = min
+
+    def solve_for(self, var):
+        min = self._min
+        if var.value < min:
+            var.value = min

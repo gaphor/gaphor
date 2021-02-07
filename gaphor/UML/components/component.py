@@ -40,8 +40,6 @@ class ComponentItem(ElementPresentation, Classified):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "min-width": 100,
-                "min-height": 50,
                 "vertical-align": VerticalAlign.TOP
                 if self.diagram and self.children
                 else VerticalAlign.MIDDLE,

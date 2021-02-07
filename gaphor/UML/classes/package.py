@@ -12,7 +12,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 @represents(UML.Profile)
 class PackageItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=70, height=70)
 
         self.shape = Box(
             Text(
@@ -27,9 +27,9 @@ class PackageItem(ElementPresentation, Named):
             ),
             Text(
                 text=lambda: from_package_str(self),
-                style={"font-size": "x-small", "min-width": 0, "min-height": 0},
+                style={"font-size": "x-small"},
             ),
-            style={"min-width": 50, "min-height": 70, "padding": (25, 10, 5, 10)},
+            style={"padding": (25, 10, 5, 10)},
             draw=draw_package,
         )
 

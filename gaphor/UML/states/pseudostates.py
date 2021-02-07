@@ -3,6 +3,7 @@
 See also gaphor.UML.states package description.
 """
 
+from gaphas.item import SE
 from gaphas.util import path_ellipse
 
 from gaphor import UML
@@ -16,7 +17,7 @@ from gaphor.UML.states.state import VertexItem
 @represents(UML.Pseudostate)
 class PseudostateItem(ElementPresentation, VertexItem):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=20, height=20)
         for h in self.handles():
             h.movable = False
 
@@ -26,13 +27,11 @@ class PseudostateItem(ElementPresentation, VertexItem):
 
     def update_shapes(self, event=None):
         if self.subject and self.subject.kind == "shallowHistory":
-            box = Box(
-                style={"min-height": 30, "min-width": 30}, draw=draw_history_pseudostate
-            )
+            box = Box(draw=draw_history_pseudostate)
+            self.handles()[SE].pos = (30, 30)
         else:
-            box = Box(
-                style={"min-height": 20, "min-width": 20}, draw=draw_initial_pseudostate
-            )
+            box = Box(draw=draw_initial_pseudostate)
+            self.handles()[SE].pos = (20, 20)
 
         self.shape = IconBox(
             box,

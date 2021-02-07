@@ -29,8 +29,6 @@ class ObjectNodeItem(ElementPresentation, Named):
                     ),
                     EditableText(text=lambda: self.subject.name or ""),
                     style={
-                        "min-width": 50,
-                        "min-height": 30,
                         "padding": (5, 10, 5, 10),
                     },
                     draw=draw_border,
@@ -48,6 +46,8 @@ class ObjectNodeItem(ElementPresentation, Named):
                     or "",
                 ),
             ),
+            width=50,
+            height=30,
         )
 
         self.watch("subject[NamedElement].name")

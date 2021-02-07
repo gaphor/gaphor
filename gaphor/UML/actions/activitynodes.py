@@ -39,11 +39,11 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=20, height=20)
         no_movable_handles(self)
 
         self.shape = IconBox(
-            Box(style={"min-width": 20, "min-height": 20}, draw=draw_initial_node),
+            Box(draw=draw_initial_node),
             # Text should be left-top
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -77,13 +77,11 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=30, height=30)
         no_movable_handles(self)
 
         self.shape = IconBox(
-            Box(
-                style={"min-width": 30, "min-height": 30}, draw=draw_activity_final_node
-            ),
+            Box(draw=draw_activity_final_node),
             # Text should be right-bottom
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -126,11 +124,11 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=20, height=20)
         no_movable_handles(self)
 
         self.shape = IconBox(
-            Box(style={"min-width": 20, "min-height": 20}, draw=draw_flow_final_node),
+            Box(draw=draw_flow_final_node),
             # Text should be right-bottom
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -162,11 +160,11 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
     """Representation of decision or merge node."""
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, width=20, height=30)
         no_movable_handles(self)
 
         self.shape = IconBox(
-            Box(style={"min-width": 20, "min-height": 30}, draw=draw_decision_node),
+            Box(draw=draw_decision_node),
             # Text should be left-top
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -210,7 +208,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
         self.watch_handle(h2)
 
         self.shape = IconBox(
-            Box(style={"min-width": 0, "min-height": 45}, draw=self.draw_fork_node),
+            Box(draw=self.draw_fork_node),
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),

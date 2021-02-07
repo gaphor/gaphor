@@ -60,7 +60,6 @@ class RequirementItem(ElementPresentation[Requirement], Classified):
             Box(
                 Text(
                     text=lambda: stereotypes_str(self.subject, ["requirement"]),
-                    style={"min-width": 0, "min-height": 0},
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",
@@ -74,7 +73,7 @@ class RequirementItem(ElementPresentation[Requirement], Classified):
                 ),
                 Text(
                     text=lambda: from_package_str(self),
-                    style={"font-size": "x-small", "min-width": 0, "min-height": 0},
+                    style={"font-size": "x-small"},
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),
@@ -93,8 +92,6 @@ class RequirementItem(ElementPresentation[Requirement], Classified):
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             self.id_and_text_compartment(),
             style={
-                "min-width": 100,
-                "min-height": 50,
                 "vertical-align": VerticalAlign.TOP,
             },
             draw=draw_border,
