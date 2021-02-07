@@ -108,10 +108,18 @@ def parse_color(prop, value):
     "line-width",
     "vertical-spacing",
     "border-radius",
-    "opacity",
 )
 def parse_positive_number(prop, value) -> Optional[Number]:
-    if isinstance(value, number) and value > 0:
+    if isinstance(value, number) and value >= 0:
+        return value
+    return None
+
+
+@declarations.register(
+    "opacity",
+)
+def parse_factor(prop, value) -> Optional[Number]:
+    if isinstance(value, number) and 0 <= value <= 1:
         return value
     return None
 

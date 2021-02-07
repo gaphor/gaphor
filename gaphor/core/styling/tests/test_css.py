@@ -222,6 +222,26 @@ def test_line_style(css_value, result):
     assert props.get("line-style") == result
 
 
+@pytest.mark.parametrize(
+    "css_value,result",
+    [
+        [0.5, 0.5],
+        [0, 0.0],
+        [1, 1.0],
+        [-0.1, None],
+        [1.1, None],
+        ["wrong", None],
+    ],
+)
+def test_opacity(css_value, result):
+    css = f"mytype {{ opacity: {css_value} }}"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("mytype"))
+
+    assert props.get("opacity") == result
+
+
 def test_broken_line_style():
     # diagram css is missing the closing bracket
     css = "diagram { line-style: sloppy * { }"

@@ -133,6 +133,8 @@ family, size, weight.
                         ``background-color: hsl(130, 95%, 10%);``
 ``color``               Color used for lines
 ``text-color``          Color for text
+``opacity``             Color opacity factor (``0.0`` - ``1.0``),
+                        applied to all colors
 ======================= =======================================
 ```
 
