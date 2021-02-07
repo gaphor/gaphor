@@ -3,6 +3,7 @@ _____
 - Fix undo of deleted elements
 - Fix requirements are missing ID and text
 - Add CSS styling to dropzone and grayed out elements
+- Start to remove use of inline styles
 
 2.2.1
 -----
