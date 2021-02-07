@@ -70,7 +70,7 @@ class BlockItem(ElementPresentation[Block], Classified):
                 ),
                 Text(
                     text=lambda: from_package_str(self),
-                    style={"font-size": 10, "min-width": 0, "min-height": 0},
+                    style={"font-size": "x-small", "min-width": 0, "min-height": 0},
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),
@@ -115,7 +115,7 @@ class BlockItem(ElementPresentation[Block], Classified):
                 text=name,
                 style={
                     "padding": (0, 0, 4, 0),
-                    "font-size": 10,
+                    "font-size": "x-small",
                     "font-style": FontStyle.ITALIC,
                 },
             ),
