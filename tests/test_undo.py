@@ -123,6 +123,50 @@ def test_diagram_item_should_not_end_up_in_element_factory(
     assert cls not in element_factory.lselect(), element_factory.lselect()
 
 
+def test_delete_and_undo_diagram_item(event_manager, element_factory, undo_manager):
+    with Transaction(event_manager):
+        diagram = element_factory.create(Diagram)
+
+    with Transaction(event_manager):
+        subject = element_factory.create(UML.Class)
+        subject.name = "Name"
+        cls = diagram.create(ClassItem, subject=subject)
+
+    with Transaction(event_manager):
+        cls.unlink()
+
+    undo_manager.undo_transaction()
+
+    new_cls = diagram.ownedPresentation[0]
+    new_elem = element_factory.lookup(subject.id)
+
+    assert new_cls in new_elem.presentation
+    assert new_cls.subject
+    assert new_elem.name == "Name"
+
+
+def test_delete_and_undo_model_element(event_manager, element_factory, undo_manager):
+    with Transaction(event_manager):
+        diagram = element_factory.create(Diagram)
+
+    with Transaction(event_manager):
+        subject = element_factory.create(UML.Class)
+        subject.name = "Name"
+        diagram.create(ClassItem, subject=subject)
+
+    with Transaction(event_manager):
+        subject.unlink()
+
+    undo_manager.undo_transaction()
+
+    new_cls = diagram.ownedPresentation[0]
+    new_elem = element_factory.lookup(subject.id)
+
+    assert new_cls in new_elem.presentation
+    assert new_cls.subject
+    assert new_elem.name == "Name"
+
+
 def test_deleted_diagram_item_should_not_end_up_in_element_factory(
     event_manager, element_factory, undo_manager
 ):

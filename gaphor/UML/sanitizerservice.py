@@ -26,7 +26,7 @@ class SanitizerService(Service):
         self.event_manager = event_manager
         self.undo_manager = undo_manager
 
-        event_manager.subscribe(self._unlink_on_presentation_delete)
+        event_manager.subscribe(self._unlink_on_subject_delete)
         event_manager.subscribe(self.update_annotated_element_link)
         event_manager.subscribe(self._unlink_on_stereotype_delete)
         event_manager.subscribe(self._unlink_on_extension_delete)
@@ -35,23 +35,23 @@ class SanitizerService(Service):
 
     def shutdown(self):
         event_manager = self.event_manager
-        event_manager.unsubscribe(self._unlink_on_presentation_delete)
+        event_manager.unsubscribe(self._unlink_on_subject_delete)
         event_manager.unsubscribe(self.update_annotated_element_link)
         event_manager.unsubscribe(self._unlink_on_stereotype_delete)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
         event_manager.unsubscribe(self._disconnect_extension_end)
         event_manager.unsubscribe(self._redraw_diagram_on_move)
 
-    @event_handler(AssociationDeleted)
+    @event_handler(AssociationSet)
     @undo_guard
-    def _unlink_on_presentation_delete(self, event):
+    def _unlink_on_subject_delete(self, event):
         """Unlink the model element if no more presentations link to the
         `item`'s subject or the deleted item was the only item currently
         linked."""
-        if event.property is UML.Element.presentation:
-            old_presentation = event.old_value
-            if old_presentation and not event.element.presentation:
-                event.element.unlink()
+        if event.property is Presentation.subject:  # type: ignore[misc]
+            old_subject = event.old_value
+            if old_subject and not old_subject.presentation:
+                old_subject.unlink()
 
     @event_handler(AssociationSet)
     @undo_guard

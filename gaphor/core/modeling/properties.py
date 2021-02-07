@@ -203,6 +203,11 @@ class attribute(umlproperty, Generic[T]):
             )
             raise TypeError(error_msg)
 
+    def unlink(self, obj):
+        old = self._get(obj)
+        log.debug("Unlink attribute %s.%s", obj, self.name)
+        self.handle(AttributeUpdated(obj, self, old, old))
+
     def __str__(self):
         return f"<attribute {self.name}: {self.type} = {self.default}>"
 
@@ -275,6 +280,10 @@ class enumeration(umlproperty):
         if value not in self.values:
             raise AttributeError("Value should be one of %s" % str(self.values))
         setattr(obj, self._name, value)
+
+    def unlink(self, obj):
+        old = self._get(obj)
+        self.handle(AttributeUpdated(obj, self, old, old))
 
     def _set(self, obj, value):
         if value not in self.values:

@@ -18,7 +18,7 @@ from gaphor.UML.classes import ClassItem, GeneralizationItem
 
 def test_line_create(diagram, undo_manager, event_manager, caplog):
     with Transaction(event_manager):
-        LinePresentation(diagram)
+        diagram.create(LinePresentation)
 
     assert diagram.ownedPresentation
 
