@@ -121,6 +121,6 @@ class BlockItem(ElementPresentation[Block], Classified):
                 for attribute in self.subject.ownedAttribute
                 if predicate(attribute)
             ),
-            style={"padding": (4, 4, 4, 4), "min-height": 8},
+            style={"padding": (4, 4, 4, 4)},
             draw=draw_top_separator,
         )

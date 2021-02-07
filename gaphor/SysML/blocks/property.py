@@ -56,7 +56,7 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
                     or "",
                     style={"font-weight": FontWeight.BOLD},
                 ),
-                style={"padding": (12, 4, 12, 4), "min-height": 44},
+                style={"padding": (12, 4, 12, 4)},
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={

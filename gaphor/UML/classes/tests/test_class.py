@@ -28,7 +28,7 @@ class ClassTestCase(TestCase):
 
         diagram.update_now((klass,))
 
-        assert 54 == float(klass.min_height)  # min_height
+        assert 50 == float(klass.min_height)
         assert 100 == float(klass.min_width)
 
         attr = element_factory.create(UML.Property)

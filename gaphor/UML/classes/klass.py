@@ -191,7 +191,7 @@ def attributes_compartment(subject):
             for attribute in subject.ownedAttribute
             if not attribute.association
         ),
-        style={"padding": (4, 4, 4, 4), "min-height": 8},
+        style={"padding": (4, 4, 4, 4)},
         draw=draw_top_separator,
     )
 
@@ -218,6 +218,6 @@ def operations_compartment(subject):
             )
             for operation in subject.ownedOperation
         ),
-        style={"padding": (4, 4, 4, 4), "min-height": 8},
+        style={"padding": (4, 4, 4, 4)},
         draw=draw_top_separator,
     )
