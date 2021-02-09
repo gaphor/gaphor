@@ -18,7 +18,7 @@ class ActionItem(ElementPresentation, Named):
             ),
             EditableText(text=lambda: self.subject.name or ""),
             style={
-                "padding": (5, 10, 5, 10),
+                "padding": (4, 12, 4, 12),
                 "border-radius": 15,
             },
             draw=draw_border,
@@ -38,7 +38,7 @@ class SendSignalActionItem(ElementPresentation, Named):
                 text=lambda: stereotypes_str(self.subject),
             ),
             EditableText(text=lambda: self.subject.name or ""),
-            style={"padding": (5, 25, 5, 10)},
+            style={"padding": (4, 24, 4, 12)},
             draw=self.draw_border,
         )
 
@@ -69,7 +69,7 @@ class AcceptEventActionItem(ElementPresentation, Named):
                 text=lambda: stereotypes_str(self.subject),
             ),
             EditableText(text=lambda: self.subject.name or ""),
-            style={"padding": (5, 10, 5, 25)},
+            style={"padding": (4, 12, 4, 24)},
             draw=self.draw_border,
         )
 

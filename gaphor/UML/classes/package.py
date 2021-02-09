@@ -29,7 +29,7 @@ class PackageItem(ElementPresentation, Named):
                 text=lambda: from_package_str(self),
                 style={"font-size": "x-small"},
             ),
-            style={"padding": (25, 10, 5, 10)},
+            style={"padding": (24, 12, 4, 12)},
             draw=draw_package,
         )
 

@@ -29,7 +29,7 @@ class ObjectNodeItem(ElementPresentation, Named):
                     ),
                     EditableText(text=lambda: self.subject.name or ""),
                     style={
-                        "padding": (5, 10, 5, 10),
+                        "padding": (4, 12, 4, 12),
                     },
                     draw=draw_border,
                 ),
