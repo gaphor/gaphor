@@ -92,19 +92,24 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
         undo_manager.redo_transaction()
 
 
-def test_diagram_item_can_undo_(event_manager, element_factory, undo_manager, caplog):
+def test_diagram_item_can_undo_and_redo(
+    event_manager, element_factory, undo_manager, caplog
+):
     caplog.set_level(logging.INFO)
     with Transaction(event_manager):
         diagram = element_factory.create(Diagram)
 
     with Transaction(event_manager):
         cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+        cls.subject.name = "name"
         cls.matrix.translate(10, 10)
 
     undo_manager.undo_transaction()
     undo_manager.redo_transaction()
-
-    assert diagram.ownedPresentation[0].matrix.tuple() == (1, 0, 0, 1, 10, 10)
+    new_cls = diagram.ownedPresentation[0]
+    assert new_cls.matrix.tuple() == (1, 0, 0, 1, 10, 10)
+    assert new_cls.subject, element_factory.select()
+    assert new_cls.subject.name == "name"
     assert not caplog.records
 
 
