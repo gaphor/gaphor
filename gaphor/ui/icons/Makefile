@@ -69,7 +69,12 @@ ICONS=diagram \
 	refine \
 	verify \
 	constraint \
-	view-editor
+	view-editor \
+	c4-person \
+	c4-software-system \
+	c4-container \
+	c4-container-database \
+	c4-component
 
 ICON_THEME=hicolor/scalable/actions
 

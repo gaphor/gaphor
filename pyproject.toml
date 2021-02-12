@@ -93,6 +93,7 @@ gaphorconvert = 'gaphor.plugins.diagramexport.gaphorconvert:main'
 [tool.poetry.plugins."gaphor.modelinglanguages"]
 "UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
 "SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
+"C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
 
 [tool.pytest.ini_options]
 testpaths = [
