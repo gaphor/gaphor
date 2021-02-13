@@ -8,9 +8,7 @@ def test_modeling_language_name():
     assert ml.name
 
 
-@pytest.mark.parametrize(
-    "name", ["C4Person", "C4SoftwareSystem", "C4Container", "C4Component"]
-)
+@pytest.mark.parametrize("name", ["C4Person", "C4Container"])
 def test_elements(name):
     ml = C4ModelLanguage()
 
@@ -21,10 +19,8 @@ def test_elements(name):
     "name",
     [
         "C4PersonItem",
-        "C4SoftwareSystemItem",
         "C4ContainerItem",
         "C4ContainerDatabaseItem",
-        "C4ComponentItem",
     ],
 )
 def test_diagram_items(name):

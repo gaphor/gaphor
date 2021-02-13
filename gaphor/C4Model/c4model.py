@@ -2,32 +2,40 @@
 
 from __future__ import annotations
 
-from gaphor.core.modeling.properties import attribute
-from gaphor.UML import Actor, Component, Element, Package
+from gaphor.core.modeling.properties import (
+    association,
+    attribute,
+    relation_many,
+    relation_one,
+)
+from gaphor.UML import Actor, Package
 
 
-class C4Extension(Element):
-    technology: attribute[str]
-    location: attribute[str]
+class C4Container(Package):
     description: attribute[str]
+    location: attribute[str]
+    ownerContainer: relation_one[C4Container]
+    owningContainer: relation_many[C4Container]
+    technology: attribute[str]
+    type: attribute[str]
 
 
-class C4Component(C4Extension, Component):
-    pass
+class C4Person(Actor):
+    description: attribute[str]
+    location: attribute[str]
 
 
-class C4Container(C4Extension, Component):
-    pass
-
-
-class C4Person(Actor, C4Extension):
-    pass
-
-
-class C4SoftwareSystem(C4Extension, Package):
-    pass
-
-
-C4Extension.description = attribute("description", str)
-C4Extension.location = attribute("location", str)
-C4Extension.technology = attribute("technology", str)
+C4Container.description = attribute("description", str)
+C4Container.location = attribute("location", str)
+C4Container.ownerContainer = association(
+    "ownerContainer", C4Container, upper=1, opposite="owningContainer"
+)
+C4Container.owningContainer = association(
+    "owningContainer", C4Container, composite=True, opposite="ownerContainer"
+)
+C4Container.technology = attribute("technology", str)
+C4Container.type = attribute("type", str)
+C4Person.description = attribute("description", str)
+C4Person.location = attribute("location", str)
+C4Container.namespace.subsets.add(C4Container.ownerContainer)  # type: ignore[attr-defined]
+C4Container.ownedMember.subsets.add(C4Container.owningContainer)  # type: ignore[attr-defined]

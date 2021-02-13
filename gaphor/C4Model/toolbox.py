@@ -36,8 +36,8 @@ c4 = ToolSection(
             "gaphor-c4-software-system-symbolic",
             "s",
             new_item_factory(
-                diagramitems.C4SoftwareSystemItem,
-                c4model.C4SoftwareSystem,
+                diagramitems.C4ContainerItem,
+                c4model.C4Container,
                 config_func=namespace_config,
             ),
         ),
@@ -69,8 +69,8 @@ c4 = ToolSection(
             "gaphor-c4-component-symbolic",
             "c",
             new_item_factory(
-                diagramitems.C4ComponentItem,
-                c4model.C4Component,
+                diagramitems.C4ContainerItem,
+                c4model.C4Container,
                 config_func=namespace_config,
             ),
         ),
