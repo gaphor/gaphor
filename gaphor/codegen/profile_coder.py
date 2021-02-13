@@ -57,6 +57,10 @@ def find_enumerations(
     return classes, enumerations
 
 
+def filter_out_gaphor_profile(classes: List[UML.Class]) -> List[UML.Class]:
+    return [cls for cls in classes if not cls.qualifiedName[0] == "Gaphor Profile"]
+
+
 def get_class_extensions(cls: UML.Class):
     """Get the meta classes connected with extensions."""
     for a in cls.attribute["it.association"]:  # type: ignore
@@ -176,6 +180,19 @@ def write_properties(
                 )
 
 
+def write_subsets(cls, f):
+    # >>> p.appliedStereotype[0].slot[0].definingFeature.name
+    # 'subsets'
+    # >>> p.appliedStereotype[0].slot[0].value
+    # 'namespace'
+    for a in cls.attribute:
+        for slot in a.appliedStereotype[:].slot:
+            if slot.definingFeature.name == "subsets":
+                f.write(
+                    f"{cls.name}.{slot.value}.subsets.add({cls.name}.{a.name})  # type: ignore[attr-defined]\n"
+                )
+
+
 def generate(
     filename: PathLike,
     outfile: PathLike,
@@ -199,6 +216,7 @@ def generate(
         f.write(header)
         classes: List = element_factory.lselect(UML.Class)
         classes, enumerations = find_enumerations(classes)
+        classes = filter_out_gaphor_profile(classes)
 
         # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
         classes = sorted(
@@ -221,5 +239,8 @@ def generate(
 
         for cls in trees.keys():
             write_properties(cls, f, enumerations)
+
+        for cls in trees.keys():
+            write_subsets(cls, f)
 
     element_factory.shutdown()
