@@ -35678,9 +35678,6 @@ Figure 9.93</val>
 <horizontal>
 <val>0</val>
 </horizontal>
-<orthogonal>
-<val>1</val>
-</orthogonal>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 505.35345458984375, 156.93951416015625)</val>
 </matrix>
