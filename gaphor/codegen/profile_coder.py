@@ -58,7 +58,7 @@ def find_enumerations(
 
 
 def filter_out_gaphor_profile(classes: List[UML.Class]) -> List[UML.Class]:
-    return [cls for cls in classes if not cls.qualifiedName[0] == "Gaphor Profile"]
+    return [cls for cls in classes if cls.qualifiedName[0] != "Gaphor Profile"]
 
 
 def get_class_extensions(cls: UML.Class):
