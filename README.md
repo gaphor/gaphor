@@ -157,6 +157,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://github.com/freddii"><img src="https://avatars0.githubusercontent.com/u/7213207?v=4?s=100" width="100px;" alt=""/><br /><sub><b>freddii</b></sub></a><br /><a href="#ideas-freddii" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/gaphor/gaphor/commits?author=freddii" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/samirodj"><img src="https://avatars.githubusercontent.com/u/36422980?v=4?s=100" width="100px;" alt=""/><br /><sub><b>samirodj</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3Asamirodj" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/TiemenSch"><img src="https://avatars.githubusercontent.com/u/7141863?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tiemen Schuijbroek</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3ATiemenSch" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->

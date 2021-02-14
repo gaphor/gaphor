@@ -346,6 +346,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "TiemenSch",
+      "name": "Tiemen Schuijbroek",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7141863?v=4",
+      "profile": "https://github.com/TiemenSch",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
