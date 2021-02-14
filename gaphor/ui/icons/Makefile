@@ -69,7 +69,20 @@ ICONS=diagram \
 	refine \
 	verify \
 	constraint \
-	view-editor
+	view-editor \
+	and \
+	or \
+	not \
+	seq \
+	xor \
+	majority-vote \
+	transfer-in \
+	inhibit \
+	basic-event \
+	conditional-event \
+	dormant-event \
+	house-event \
+	zero-event
 
 ICON_THEME=hicolor/scalable/actions
 
