@@ -1,6 +1,7 @@
 """The SysML Modeling Language module is the entrypoint for SysML related
 assets."""
 
+import gaphor.C4Model.grouping  # noqa
 import gaphor.C4Model.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
 from gaphor.C4Model import c4model, diagramitems

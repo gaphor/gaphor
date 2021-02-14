@@ -14,29 +14,29 @@ class C4ContainerItem(ElementPresentation, Named):
         self.watch("subject[C4Container].technology")
         self.watch("subject[C4Container].description")
         self.watch("subject[C4Container].type")
+        self.watch("children", self.update_shapes)
 
     def update_shapes(self, event=None):
+        text_align = (
+            TextAlign.LEFT if self.diagram and self.children else TextAlign.CENTER
+        )
         self.shape = Box(
-            Box(
-                EditableText(
-                    text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
-                ),
-                Text(
-                    text=lambda: self.subject.technology
-                    and f"[{self.subject.type}: {self.subject.technology}]"
-                    or f"[{self.subject.type}]",
-                    style={"font-size": "x-small"},
-                ),
-                Text(
-                    text=lambda: self.subject.description or "",
-                ),
-                style={"padding": (4, 4, 4, 4)},
+            EditableText(
+                text=lambda: self.subject.name or "",
+                style={"font-weight": FontWeight.BOLD, "text-align": text_align},
+            ),
+            Text(
+                text=lambda: self.subject.technology
+                and f"[{self.subject.type}: {self.subject.technology}]"
+                or f"[{self.subject.type}]",
+                style={"font-size": "x-small", "text-align": text_align},
+            ),
+            Text(
+                text=lambda: self.subject.description or "",
+                style={"text-align": text_align},
             ),
             style={
-                "text-align": TextAlign.LEFT
-                if self.diagram and self.children
-                else TextAlign.CENTER,
+                "padding": (4, 4, 4, 4),
                 "vertical-align": VerticalAlign.BOTTOM
                 if self.diagram and self.children
                 else VerticalAlign.MIDDLE,
