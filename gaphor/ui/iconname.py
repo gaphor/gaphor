@@ -3,7 +3,7 @@
 import re
 from functools import singledispatch
 
-TO_KEBAB = re.compile(r"([a-z])([A-Z]+)")
+TO_KEBAB = re.compile(r"([a-z0-9])([A-Z]+)")
 
 
 def to_kebab_case(s):
