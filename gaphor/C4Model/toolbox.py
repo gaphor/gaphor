@@ -6,6 +6,7 @@ from gaphor.diagram.diagramtoolbox import (
     ToolboxDefinition,
     ToolDef,
     ToolSection,
+    default_namespace,
     general_tools,
     namespace_config,
 )
@@ -15,6 +16,28 @@ from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
+
+
+def software_system_config(new_item):
+    default_namespace(new_item)
+    subject = new_item.subject
+    subject.type = gettext("Software System")
+    subject.name = "NewSoftwareSystem"
+
+
+def container_config(new_item):
+    default_namespace(new_item)
+    subject = new_item.subject
+    subject.type = gettext("Container")
+    subject.name = "NewContainer"
+
+
+def component_config(new_item):
+    default_namespace(new_item)
+    subject = new_item.subject
+    subject.type = gettext("Component")
+    subject.name = "NewComponent"
+
 
 c4 = ToolSection(
     gettext("C4 Model"),
@@ -38,7 +61,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4ContainerItem,
                 c4model.C4Container,
-                config_func=namespace_config,
+                config_func=software_system_config,
             ),
         ),
         ToolDef(
@@ -49,7 +72,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4ContainerItem,
                 c4model.C4Container,
-                config_func=namespace_config,
+                config_func=container_config,
             ),
         ),
         ToolDef(
@@ -60,7 +83,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4ContainerDatabaseItem,
                 c4model.C4Container,
-                config_func=namespace_config,
+                config_func=container_config,
             ),
         ),
         ToolDef(
@@ -71,7 +94,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4ContainerItem,
                 c4model.C4Container,
-                config_func=namespace_config,
+                config_func=component_config,
             ),
         ),
         ToolDef(

@@ -24,8 +24,8 @@ class C4ContainerItem(ElementPresentation, Named):
                 ),
                 Text(
                     text=lambda: self.subject.technology
-                    and f"[component: {self.subject.technology}]"
-                    or "[component]",
+                    and f"[{self.subject.type}: {self.subject.technology}]"
+                    or f"[{self.subject.type}]",
                     style={"font-size": "x-small"},
                 ),
                 Text(
