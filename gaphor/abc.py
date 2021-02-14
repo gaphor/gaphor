@@ -25,7 +25,7 @@ class ActionProvider(metaclass=abc.ABCMeta):
 
 class ModelingLanguage(metaclass=abc.ABCMeta):
     """A model provider is a special service that provides an entrypoint to a
-    model implementation, such as UML, SysML, Safety."""
+    model implementation, such as UML, SysML, RAAML."""
 
     @abc.abstractproperty
     def name(self) -> str:
