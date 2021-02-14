@@ -1,6 +1,7 @@
 from gaphas.util import path_ellipse
 
 from gaphor.C4Model import c4model
+from gaphor.core import gettext
 from gaphor.core.styling import FontWeight, TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, EditableText, Text, stroke
@@ -26,8 +27,8 @@ class C4ContainerDatabaseItem(ElementPresentation, Named):
                 ),
                 Text(
                     text=lambda: self.subject.technology
-                    and f"[{self.subject.type}: {self.subject.technology}]"
-                    or f"[{self.subject.type}]",
+                    and f"[{gettext(self.subject.type)}: {self.subject.technology}]"
+                    or f"[{gettext(self.subject.type)}]",
                     style={"font-size": "x-small"},
                 ),
                 Text(
