@@ -4,7 +4,6 @@ import pytest
 
 from gaphor.application import distribution
 from gaphor.codegen.profile_coder import (
-    create_referenced,
     filter_uml_classes,
     find_enumerations,
     generate,
@@ -302,7 +301,7 @@ def test_write_properties_for_enumeration(filename, element_factory):
 
     assert (
         filename.data
-        == f'{book.name}.{a.name} = enumeration("kind", (\'{e.name}\',), "{e.name}")\n'
+        == f'{book.name}.{a.name} = enumeration("duration", (\'{e.name}\',), "{e.name}")\n'
     )
 
 
@@ -325,16 +324,6 @@ def test_write_properties_for_association(filename, element_factory):
         filename.data
         == f'{patron.name}.{a.name} = association("{a.name}", {type_value}{lower}{upper}{composite}{opposite})\n'
     )
-
-
-def test_create_referenced(classes):
-    """Test list of referenced UML.Class objects."""
-    referenced = create_referenced(classes)
-    assert len(referenced) == 3
-
-    nodes = [0, 2, 5]
-    for node in nodes:
-        assert classes[node] in referenced
 
 
 def test_model_header(tmp_path):
