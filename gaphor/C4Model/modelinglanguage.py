@@ -2,6 +2,7 @@
 assets."""
 
 import gaphor.C4Model.grouping  # noqa
+import gaphor.C4Model.iconname  # noqa
 import gaphor.C4Model.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
 from gaphor.C4Model import c4model, diagramitems

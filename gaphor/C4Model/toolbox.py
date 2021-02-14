@@ -21,21 +21,28 @@ from gaphor.UML.states.statestoolbox import states
 def software_system_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
-    subject.type = gettext("Software System")
+    subject.type = "Software System"
     subject.name = "NewSoftwareSystem"
 
 
 def container_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
-    subject.type = gettext("Container")
+    subject.type = "Container"
     subject.name = "NewContainer"
+
+
+def container_database_config(new_item):
+    default_namespace(new_item)
+    subject = new_item.subject
+    subject.type = "Database"
+    subject.name = "NewDatabase"
 
 
 def component_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
-    subject.type = gettext("Component")
+    subject.type = "Component"
     subject.name = "NewComponent"
 
 
@@ -83,7 +90,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4ContainerDatabaseItem,
                 c4model.C4Container,
-                config_func=container_config,
+                config_func=container_database_config,
             ),
         ),
         ToolDef(
