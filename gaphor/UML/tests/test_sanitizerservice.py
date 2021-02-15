@@ -1,5 +1,3 @@
-from unittest.mock import Mock
-
 import pytest
 
 from gaphor import UML
@@ -44,7 +42,7 @@ def test_connect_element_with_comments(create_item, diagram):
 
     assert diagram.connections.get_connection(line.tail).connected is gi
 
-    # Now connect generaliztion ends.
+    # Now connect generalization ends.
     connect(gi, gi.head, clazz1)
     connect(gi, gi.tail, clazz2)
 
@@ -183,12 +181,12 @@ def test_stereotype_deletion(element_factory):
     assert [] == list(klass.appliedStereotype)
 
 
-def test_diagram_move(element_factory):
+def test_diagram_move(element_factory, mocker):
     diagram = element_factory.create(UML.Diagram)
     diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
-    diagram.request_update = Mock()
+    mocked_func = mocker.patch.object(diagram, "request_update")
 
     package = element_factory.create(UML.Package)
     diagram.package = package
 
-    diagram.request_update.assert_called()
+    mocked_func.assert_called()
