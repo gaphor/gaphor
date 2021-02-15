@@ -1,6 +1,6 @@
 """Unit tests for simple items."""
 
-from gaphor.diagram.general.simpleitem import Ellipse, Line
+from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 
 
 def test_line(case):
@@ -10,7 +10,7 @@ def test_line(case):
 
 def test_box(case):
     """"""
-    case.diagram.create(Line)
+    case.diagram.create(Box)
 
 
 def test_ellipse(case):
