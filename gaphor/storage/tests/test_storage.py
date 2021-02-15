@@ -11,7 +11,6 @@ from gaphor.core.modeling import StyleSheet
 from gaphor.diagram.general import CommentItem
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
-from gaphor.tests.testcase import TestCase
 from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 
 
@@ -26,7 +25,7 @@ class PseudoFile:
         pass
 
 
-class StorageTestCase(TestCase):
+class TestStorage:
     def test_version_check(self):
         from gaphor.storage.storage import version_lower_than
 
@@ -43,15 +42,15 @@ class StorageTestCase(TestCase):
         assert not version_lower_than("0.15.0.b2", (0, 14, 99))
         assert not version_lower_than("1.2.0rc2-dev0+7fad31a0", (0, 17, 0))
 
-    def test_save_uml(self):
+    def test_save_uml(self, case):
         """Saving gaphor.UML model elements."""
-        self.element_factory.create(UML.Package)
-        self.element_factory.create(UML.Diagram)
-        self.element_factory.create(UML.Comment)
-        self.element_factory.create(UML.Class)
+        case.element_factory.create(UML.Package)
+        case.element_factory.create(UML.Diagram)
+        case.element_factory.create(UML.Comment)
+        case.element_factory.create(UML.Class)
 
         out = PseudoFile()
-        storage.save(XMLWriter(out), factory=self.element_factory)
+        storage.save(XMLWriter(out), factory=case.element_factory)
         out.close()
 
         assert "<Package " in out.data
@@ -59,13 +58,13 @@ class StorageTestCase(TestCase):
         assert "<Comment " in out.data
         assert "<Class " in out.data
 
-    def test_save_item(self):
-        """Save a diagranm item too."""
-        diagram = self.element_factory.create(UML.Diagram)
-        diagram.create(CommentItem, subject=self.element_factory.create(UML.Comment))
+    def test_save_item(self, case):
+        """Save a diagram item too."""
+        diagram = case.element_factory.create(UML.Diagram)
+        diagram.create(CommentItem, subject=case.element_factory.create(UML.Comment))
 
         out = PseudoFile()
-        storage.save(XMLWriter(out), factory=self.element_factory)
+        storage.save(XMLWriter(out), factory=case.element_factory)
         out.close()
 
         assert "<Diagram " in out.data
@@ -73,49 +72,49 @@ class StorageTestCase(TestCase):
         assert "<canvas>" in out.data
         assert ' type="CommentItem"' in out.data, out.data
 
-    def test_load_uml(self):
+    def test_load_uml(self, case):
         """Test loading of a freshly saved model."""
-        self.element_factory.create(UML.Package)
-        # diagram is created in TestCase.setUp
-        self.element_factory.create(UML.Comment)
-        self.element_factory.create(UML.Class)
+        case.element_factory.create(UML.Package)
+        # diagram is created in case's init
+        case.element_factory.create(UML.Comment)
+        case.element_factory.create(UML.Class)
 
-        data = self.save()
-        self.load(data)
+        data = case.save()
+        case.load(data)
 
-        assert len(self.element_factory.lselect()) == 5
-        assert len(self.element_factory.lselect(UML.Package)) == 1
-        # diagram is created in TestCase.setUp
-        assert len(self.element_factory.lselect(UML.Diagram)) == 1
-        assert len(self.element_factory.lselect(UML.Comment)) == 1
-        assert len(self.element_factory.lselect(UML.Class)) == 1
-        assert len(self.element_factory.lselect(StyleSheet)) == 1
+        assert len(case.element_factory.lselect()) == 5
+        assert len(case.element_factory.lselect(UML.Package)) == 1
+        # diagram is created in case's init
+        assert len(case.element_factory.lselect(UML.Diagram)) == 1
+        assert len(case.element_factory.lselect(UML.Comment)) == 1
+        assert len(case.element_factory.lselect(UML.Class)) == 1
+        assert len(case.element_factory.lselect(StyleSheet)) == 1
 
-    def test_load_uml_2(self):
+    def test_load_uml_2(self, case):
         """Test loading of a freshly saved model."""
-        self.element_factory.create(UML.Package)
-        self.create(CommentItem, UML.Comment)
-        self.create(ClassItem, UML.Class)
-        iface = self.create(InterfaceItem, UML.Interface)
+        case.element_factory.create(UML.Package)
+        case.create(CommentItem, UML.Comment)
+        case.create(ClassItem, UML.Class)
+        iface = case.create(InterfaceItem, UML.Interface)
         iface.subject.name = "Circus"
         iface.matrix.translate(10, 10)
 
-        data = self.save()
-        self.load(data)
+        data = case.save()
+        case.load(data)
 
-        assert len(self.element_factory.lselect()) == 6
-        assert len(self.element_factory.lselect(UML.Package)) == 1
-        assert len(self.element_factory.lselect(UML.Diagram)) == 1
-        d = self.element_factory.lselect(UML.Diagram)[0]
-        assert len(self.element_factory.lselect(UML.Comment)) == 1
-        assert len(self.element_factory.lselect(UML.Class)) == 1
-        assert len(self.element_factory.lselect(UML.Interface)) == 1
+        assert len(case.element_factory.lselect()) == 6
+        assert len(case.element_factory.lselect(UML.Package)) == 1
+        assert len(case.element_factory.lselect(UML.Diagram)) == 1
+        d = case.element_factory.lselect(UML.Diagram)[0]
+        assert len(case.element_factory.lselect(UML.Comment)) == 1
+        assert len(case.element_factory.lselect(UML.Class)) == 1
+        assert len(case.element_factory.lselect(UML.Interface)) == 1
 
-        c = self.element_factory.lselect(UML.Class)[0]
+        c = case.element_factory.lselect(UML.Class)[0]
         assert c.presentation
         assert c.presentation[0].subject is c
 
-        iface = self.element_factory.lselect(UML.Interface)[0]
+        iface = case.element_factory.lselect(UML.Interface)[0]
         assert iface.name == "Circus"
         assert len(iface.presentation) == 1
         assert tuple(iface.presentation[0].matrix) == (1, 0, 0, 1, 10, 10), tuple(
@@ -129,49 +128,49 @@ class StorageTestCase(TestCase):
         d1 = next(d.select(lambda e: isinstance(e, ClassItem)))
         assert d1
 
-    def test_load_with_whitespace_name(self):
+    def test_load_with_whitespace_name(self, case):
         difficult_name = "    with space before and after  "
-        diagram = self.element_factory.lselect()[0]
+        diagram = case.element_factory.lselect()[0]
         diagram.name = difficult_name
-        data = self.save()
-        self.load(data)
-        elements = self.element_factory.lselect()
+        data = case.save()
+        case.load(data)
+        elements = case.element_factory.lselect()
         assert len(elements) == 2, elements
         assert elements[0].name == difficult_name, elements[0].name
 
     @pytest.mark.slow
-    def test_load_uml_metamodel(self):
+    def test_load_uml_metamodel(self, case):
         path = distribution().locate_file("models/UML.gaphor")
 
         with open(path) as ifile:
             storage.load(
                 ifile,
-                factory=self.element_factory,
-                modeling_language=self.modeling_language,
+                factory=case.element_factory,
+                modeling_language=case.modeling_language,
             )
 
-    def test_save_and_load_model_with_relationships(self):
-        self.element_factory.create(UML.Package)
-        self.create(CommentItem, UML.Comment)
-        self.create(ClassItem, UML.Class)
+    def test_save_and_load_model_with_relationships(self, case):
+        case.element_factory.create(UML.Package)
+        case.create(CommentItem, UML.Comment)
+        case.create(ClassItem, UML.Class)
 
-        a = self.diagram.create(AssociationItem)
+        a = case.diagram.create(AssociationItem)
         a.handles()[0].pos = (10, 20)
         a.handles()[1].pos = (50, 60)
         assert a.handles()[0].pos.x == 10, a.handles()[0].pos
         assert a.handles()[0].pos.y == 20, a.handles()[0].pos
         assert tuple(a.handles()[1].pos) == (50, 60), a.handles()[1].pos
 
-        data = self.save()
-        self.load(data)
+        data = case.save()
+        case.load(data)
 
-        assert len(self.element_factory.lselect()) == 5
-        assert len(self.element_factory.lselect(UML.Package)) == 1
-        assert len(self.element_factory.lselect(UML.Diagram)) == 1
-        d = self.element_factory.lselect(UML.Diagram)[0]
-        assert len(self.element_factory.lselect(UML.Comment)) == 1
-        assert len(self.element_factory.lselect(UML.Class)) == 1
-        assert len(self.element_factory.lselect(UML.Association)) == 0
+        assert len(case.element_factory.lselect()) == 5
+        assert len(case.element_factory.lselect(UML.Package)) == 1
+        assert len(case.element_factory.lselect(UML.Diagram)) == 1
+        d = case.element_factory.lselect(UML.Diagram)[0]
+        assert len(case.element_factory.lselect(UML.Comment)) == 1
+        assert len(case.element_factory.lselect(UML.Class)) == 1
+        assert len(case.element_factory.lselect(UML.Association)) == 0
 
         # Check load/save of other canvas items.
         assert len(list(d.get_all_items())) == 3
@@ -184,20 +183,20 @@ class StorageTestCase(TestCase):
         d1 = next(d.select(lambda e: isinstance(e, ClassItem)))
         assert d1
 
-    def test_save_and_load_of_association_with_two_connected_classes(self):
-        c1 = self.create(ClassItem, UML.Class)
-        c2 = self.create(ClassItem, UML.Class)
+    def test_save_and_load_of_association_with_two_connected_classes(self, case):
+        c1 = case.create(ClassItem, UML.Class)
+        c2 = case.create(ClassItem, UML.Class)
         c2.matrix.translate(200, 200)
-        self.diagram.request_update(c2)
-        self.diagram.update_now((c1, c2))
+        case.diagram.request_update(c2)
+        case.diagram.update_now((c1, c2))
         assert tuple(c2.matrix_i2c) == (1, 0, 0, 1, 200, 200)
 
-        a = self.create(AssociationItem)
+        a = case.create(AssociationItem)
 
-        self.connect(a, a.head, c1)
-        self.connect(a, a.tail, c2)
+        case.connect(a, a.head, c1)
+        case.connect(a, a.tail, c2)
 
-        self.diagram.update_now((c1, c2, a))
+        case.diagram.update_now((c1, c2, a))
 
         assert a.head.pos.y == 0, a.head.pos
         assert a.tail.pos.x == 200, a.tail.pos
@@ -205,21 +204,21 @@ class StorageTestCase(TestCase):
         assert a.subject
 
         fd = StringIO()
-        storage.save(XMLWriter(fd), factory=self.element_factory)
+        storage.save(XMLWriter(fd), factory=case.element_factory)
         data = fd.getvalue()
         fd.close()
 
         old_a_subject_id = a.subject.id
 
-        self.element_factory.flush()
-        assert not list(self.element_factory.select())
+        case.element_factory.flush()
+        assert not list(case.element_factory.select())
         fd = StringIO(data)
         storage.load(
-            fd, factory=self.element_factory, modeling_language=self.modeling_language
+            fd, factory=case.element_factory, modeling_language=case.modeling_language
         )
         fd.close()
 
-        diagrams = list(self.kindof(UML.Diagram))
+        diagrams = list(case.kindof(UML.Diagram))
         assert len(diagrams) == 1
         d = diagrams[0]
         a = next(d.select(lambda e: isinstance(e, AssociationItem)))
@@ -231,19 +230,19 @@ class StorageTestCase(TestCase):
         assert cinfo_tail.connected is not None
         assert cinfo_head.connected is not cinfo_tail.connected
 
-    def test_load_and_save_of_a_model(self):
+    def test_load_and_save_of_a_model(self, case):
         path = distribution().locate_file("test-models/simple-items.gaphor")
 
         with open(path, "r") as ifile:
             storage.load(
                 ifile,
-                factory=self.element_factory,
-                modeling_language=self.modeling_language,
+                factory=case.element_factory,
+                modeling_language=case.modeling_language,
             )
 
         pf = PseudoFile()
 
-        storage.save(XMLWriter(pf), factory=self.element_factory)
+        storage.save(XMLWriter(pf), factory=case.element_factory)
 
         with open(path, "r") as ifile:
 
@@ -255,10 +254,10 @@ class StorageTestCase(TestCase):
         orig = expr.sub("%VER%", orig)
         copy = expr.sub("%VER%", copy)
 
-        self.maxDiff = None
+        case.maxDiff = None
         assert copy == orig, "Saved model does not match copy"
 
-    def test_can_not_load_models_older_that_0_17_0(self):
+    def test_can_not_load_models_older_that_0_17_0(self, case):
 
         path = distribution().locate_file("test-models/old-gaphor-version.gaphor")
 
@@ -266,8 +265,9 @@ class StorageTestCase(TestCase):
             with open(path, "r") as ifile:
                 storage.load(
                     ifile,
-                    factory=self.element_factory,
-                    modeling_language=self.modeling_language,
+                    factory=case.element_factory,
+                    modeling_language=case.modeling_language,
                 )
 
-        self.assertRaises(ValueError, load_old_model)
+        with pytest.raises(ValueError):
+            load_old_model()
