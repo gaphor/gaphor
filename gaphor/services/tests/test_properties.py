@@ -1,6 +1,4 @@
-import os
-import tempfile
-from unittest import TestCase
+import pytest
 
 from gaphor.services.properties import FileBackend, Properties, get_config_dir
 
@@ -10,45 +8,40 @@ class MockEventManager(list):
         self.append(event)
 
 
-class TestProperties(TestCase):
-    def setUp(self):
-        self.tmpdir = tempfile.mkdtemp()
-        backend = FileBackend(self.tmpdir)
-        self.events = MockEventManager()
-        self.properties = Properties(self.events, backend)
+@pytest.fixture
+def prop(tmpdir):
+    backend = FileBackend(tmpdir)
+    events = MockEventManager()
+    properties = Properties(events, backend)
 
-    def shutDown(self):
-        self.properties.shutdown()
-        os.remove(os.path.join(self.tmpdir, FileBackend.RESOURCE_FILE))
-        os.rmdir(self.tmpdir)
+    yield properties
+    properties.shutdown()
 
-    def test_properties(self):
-        prop = self.properties
 
-        prop.set("test1", 2)
-        assert len(self.events) == 1, self.events
-        event = self.events[0]
-        assert "test1" == event.key
-        assert None is event.old_value
-        assert event.new_value == 2
-        assert prop("test1") == 2
+def test_properties(prop):
+    prop.set("test1", 2)
+    assert len(prop.event_manager) == 1, prop.event_manager
+    event = prop.event_manager[0]
+    assert "test1" == event.key
+    assert None is event.old_value
+    assert event.new_value == 2
+    assert prop("test1") == 2
 
-        prop.set("test1", 2)
-        assert len(self.events) == 1
+    prop.set("test1", 2)
+    assert len(prop.event_manager) == 1
 
-        prop.set("test1", "foo")
-        assert len(self.events) == 2
-        event = self.events[1]
-        assert "test1" == event.key
-        assert event.old_value == 2
-        assert "foo" == event.new_value
-        assert "foo" == prop("test1")
+    prop.set("test1", "foo")
+    assert len(prop.event_manager) == 2
+    event = prop.event_manager[1]
+    assert "test1" == event.key
+    assert event.old_value == 2
+    assert "foo" == event.new_value
+    assert "foo" == prop("test1")
 
-        assert prop("test2", 3) == 3
-        assert prop("test2", 4) == 3
+    assert prop("test2", 3) == 3
+    assert prop("test2", 4) == 3
 
 
 def test_config_dir():
     config_dir = get_config_dir()
-
     assert config_dir.endswith("gaphor")
