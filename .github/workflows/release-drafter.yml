@@ -10,6 +10,6 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       # Drafts your next Release notes as Pull Requests are merged into "master"
-      - uses: toolmantim/release-drafter@v5.13.0
+      - uses: toolmantim/release-drafter@v5.14.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
