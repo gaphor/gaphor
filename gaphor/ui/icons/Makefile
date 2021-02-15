@@ -74,7 +74,20 @@ ICONS=diagram \
 	c4-software-system \
 	c4-container \
 	c4-container-database \
-	c4-component
+	c4-component \
+	and \
+	or \
+	not \
+	seq \
+	xor \
+	majority-vote \
+	transfer-in \
+	inhibit \
+	basic-event \
+	conditional-event \
+	dormant-event \
+	house-event \
+	zero-event
 
 ICON_THEME=hicolor/scalable/actions
 
