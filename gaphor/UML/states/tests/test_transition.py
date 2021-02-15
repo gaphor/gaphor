@@ -1,20 +1,19 @@
 """Test transitions."""
 
 from gaphor import UML
-from gaphor.tests.testcase import TestCase
 from gaphor.UML.states.transition import TransitionItem
 
 
-class TransitionTestCase(TestCase):
+class TestTransition:
     """Test the working of transitions."""
 
-    def test_transition_guard(self):
+    def test_transition_guard(self, case):
         """Test events of transition.guard."""
-        item = self.create(TransitionItem, UML.Transition)
+        item = case.create(TransitionItem, UML.Transition)
         guard = item.shape_middle
         assert guard.text() == ""
 
-        c = self.element_factory.create(UML.Constraint)
+        c = case.element_factory.create(UML.Constraint)
         c.specification = "blah"
         assert guard.text() == ""
 
