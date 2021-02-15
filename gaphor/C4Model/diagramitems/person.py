@@ -14,7 +14,7 @@ class C4PersonItem(ElementPresentation, Named):
         super().__init__(diagram, id, width=48, height=48)
 
         self.watch("subject[NamedElement].name")
-        self.watch("subject[C4Container].description")
+        self.watch("subject[C4Person].description")
 
     def update_shapes(self, event=None):
         self.shape = Box(
@@ -29,6 +29,8 @@ class C4PersonItem(ElementPresentation, Named):
                 ),
                 Text(
                     text=lambda: self.subject.description or "",
+                    width=lambda: self.width - 8,
+                    style={"padding": (4, 0, 0, 0)},
                 ),
                 style={"padding": (4, 4, 4, 4)},
             ),

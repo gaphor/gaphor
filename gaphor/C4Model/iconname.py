@@ -1,4 +1,4 @@
-from gaphor.C4Model.c4model import C4Container
+from gaphor.C4Model.c4model import C4Container, C4Database
 from gaphor.ui.iconname import get_default_icon_name, get_icon_name
 
 
@@ -6,11 +6,12 @@ from gaphor.ui.iconname import get_default_icon_name, get_icon_name
 def get_name_for_class(element):
     if element.type == "Software System":
         return "gaphor-c4-software-system-symbolic"
-    elif element.type == "Container":
-        return "gaphor-c4-container-symbolic"
     elif element.type == "Component":
         return "gaphor-c4-component-symbolic"
-    elif element.type == "Database":
-        return "gaphor-c4-container-database-symbolic"
     else:
         return get_default_icon_name(element)
+
+
+@get_icon_name.register(C4Database)
+def get_database_name(element):
+    return get_default_icon_name(element)

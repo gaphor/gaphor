@@ -60,16 +60,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.5035565"
-     inkscape:cx="303.86588"
-     inkscape:cy="155.53198"
+     inkscape:cx="451.24217"
+     inkscape:cy="12.754987"
      inkscape:document-units="px"
-     inkscape:current-layer="xor"
+     inkscape:current-layer="c4-database"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
      inkscape:window-height="1016"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      showborder="false"
      inkscape:document-rotation="0">
@@ -3165,8 +3165,8 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="c4-container-database"
-     inkscape:label="c4-container-database">
+     id="c4-database"
+     inkscape:label="c4-database">
     <ellipse
        style="fill:none;stroke:#000000;stroke-width:0.532917;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path1355"

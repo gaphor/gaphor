@@ -20,6 +20,10 @@ class C4Container(Package):
     type: attribute[str]
 
 
+class C4Database(C4Container):
+    pass
+
+
 class C4Person(Actor):
     description: attribute[str]
     location: attribute[str]

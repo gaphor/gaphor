@@ -32,9 +32,16 @@ class C4ContainerItem(ElementPresentation, Named):
                 or f"[{gettext(self.subject.type)}]",
                 style={"font-size": "x-small", "text-align": text_align},
             ),
-            Text(
-                text=lambda: self.subject.description or "",
-                style={"text-align": text_align},
+            *(
+                ()
+                if self.children
+                else (
+                    Text(
+                        text=lambda: self.subject.description or "",
+                        width=lambda: self.width - 8,
+                        style={"padding": (4, 0, 0, 0), "text-align": text_align},
+                    ),
+                )
             ),
             style={
                 "padding": (4, 4, 4, 4),

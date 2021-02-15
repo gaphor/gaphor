@@ -12,6 +12,7 @@
 <ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
 <ref refid="ee5ba098-6d81-11eb-bdd8-859c1b7b5447"/>
 <ref refid="2daf9a4b-6dde-11eb-bdd8-859c1b7b5447"/>
+<ref refid="6e5e9410-6faf-11eb-bdd8-859c1b7b5447"/>
 </reflist>
 </ownedClassifier>
 <ownedDiagram>
@@ -38,6 +39,8 @@
 <ref refid="ca16bf74-6d81-11eb-bdd8-859c1b7b5447"/>
 <ref refid="d7d28eb9-6d81-11eb-bdd8-859c1b7b5447"/>
 <ref refid="2daf9a4a-6dde-11eb-bdd8-859c1b7b5447"/>
+<ref refid="5630b2f6-6faf-11eb-bdd8-859c1b7b5447"/>
+<ref refid="6e5e9411-6faf-11eb-bdd8-859c1b7b5447"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -138,7 +141,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 399.0, 827.0)</val>
 </matrix>
 <points>
-<val>[(9.71247902554223, -656.0), (9.721649621102245, -575.0)]</val>
+<val>[(9.71247902554223, -656.0), (11.721649621102245, -548.7179487179487)]</val>
 </points>
 <head-connection>
 <ref refid="b680213b-6d81-11eb-bdd8-859c1b7b5447"/>
@@ -149,7 +152,7 @@
 </item>
 <item id="d7d28eb9-6d81-11eb-bdd8-859c1b7b5447" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 345.0, 252.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 347.0, 278.28205128205127)</val>
 </matrix>
 <width>
 <val>130.0</val>
@@ -187,7 +190,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 195.0, 500.046875)</val>
 </matrix>
 <points>
-<val>[(280.0, -182.76482371794873), (475.0, -182.76482371794873), (475.0, -41.046875), (206.0, -41.046875), (206.0, -114.046875)]</val>
+<val>[(282.0, -183.046875), (475.0, -183.046875), (475.0, -109.76482371794873), (282.0, -109.76482371794873)]</val>
 </points>
 <head-connection>
 <ref refid="d7d28eb9-6d81-11eb-bdd8-859c1b7b5447"/>
@@ -195,6 +198,46 @@
 <tail-connection>
 <ref refid="d7d28eb9-6d81-11eb-bdd8-859c1b7b5447"/>
 </tail-connection>
+</item>
+<item id="5630b2f6-6faf-11eb-bdd8-859c1b7b5447" type="GeneralizationItem">
+<diagram>
+<ref refid="2e656718-6cae-11eb-aee1-750f3fed8beb"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="74ad084c-6faf-11eb-bdd8-859c1b7b5447"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 375.0, 354.0)</val>
+</matrix>
+<points>
+<val>[(38.0, 58.28205128205127), (38.0, 135.0)]</val>
+</points>
+<head-connection>
+<ref refid="d7d28eb9-6d81-11eb-bdd8-859c1b7b5447"/>
+</head-connection>
+<tail-connection>
+<ref refid="6e5e9411-6faf-11eb-bdd8-859c1b7b5447"/>
+</tail-connection>
+</item>
+<item id="6e5e9411-6faf-11eb-bdd8-859c1b7b5447" type="ClassItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 349.0, 489.0)</val>
+</matrix>
+<width>
+<val>128.0</val>
+</width>
+<height>
+<val>91.0</val>
+</height>
+<diagram>
+<ref refid="2e656718-6cae-11eb-aee1-750f3fed8beb"/>
+</diagram>
+<subject>
+<ref refid="6e5e9410-6faf-11eb-bdd8-859c1b7b5447"/>
+</subject>
 </item>
 </canvas>
 </Diagram>
@@ -847,4 +890,35 @@
 <val>str</val>
 </typeValue>
 </Property>
+<Class id="6e5e9410-6faf-11eb-bdd8-859c1b7b5447">
+<generalization>
+<reflist>
+<ref refid="74ad084c-6faf-11eb-bdd8-859c1b7b5447"/>
+</reflist>
+</generalization>
+<name>
+<val>C4Database</val>
+</name>
+<package>
+<ref refid="2e656717-6cae-11eb-aee1-750f3fed8beb"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="6e5e9411-6faf-11eb-bdd8-859c1b7b5447"/>
+</reflist>
+</presentation>
+</Class>
+<Generalization id="74ad084c-6faf-11eb-bdd8-859c1b7b5447">
+<general>
+<ref refid="d7d28eb8-6d81-11eb-bdd8-859c1b7b5447"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="5630b2f6-6faf-11eb-bdd8-859c1b7b5447"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="6e5e9410-6faf-11eb-bdd8-859c1b7b5447"/>
+</specific>
+</Generalization>
 </gaphor>

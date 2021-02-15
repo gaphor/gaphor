@@ -8,7 +8,7 @@ from gaphor.diagram.shapes import Box, EditableText, Text, stroke
 from gaphor.diagram.support import represents
 
 
-@represents(c4model.C4Container)
+@represents(c4model.C4Database)
 class C4ContainerDatabaseItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
@@ -33,6 +33,8 @@ class C4ContainerDatabaseItem(ElementPresentation, Named):
                 ),
                 Text(
                     text=lambda: self.subject.description or "",
+                    width=lambda: self.width - 8,
+                    style={"padding": (4, 0, 0, 0)},
                 ),
                 style={"padding": (4, 4, 4, 4)},
             ),

@@ -86,11 +86,11 @@ c4 = ToolSection(
         ToolDef(
             "c4-container-database",
             gettext("Container: Database"),
-            "gaphor-c4-container-database-symbolic",
+            "gaphor-c4-database-symbolic",
             "d",
             new_item_factory(
                 diagramitems.C4ContainerDatabaseItem,
-                c4model.C4Container,
+                c4model.C4Database,
                 config_func=container_database_config,
             ),
         ),

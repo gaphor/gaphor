@@ -1,3 +1,4 @@
+MAKEFLAGS += -j4
 
 STENSIL=stensil.svg
 
@@ -73,7 +74,7 @@ ICONS=diagram \
 	c4-person \
 	c4-software-system \
 	c4-container \
-	c4-container-database \
+	c4-database \
 	c4-component \
 	and \
 	or \
