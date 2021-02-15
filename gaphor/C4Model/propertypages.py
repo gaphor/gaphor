@@ -1,4 +1,5 @@
 import importlib.resources
+from typing import Union
 
 from gi.repository import Gtk
 
@@ -18,22 +19,20 @@ def new_builder(*object_ids):
 
 
 @PropertyPages.register(c4model.C4Container)
-class ContainerPropertyPage(PropertyPageBase):
+@PropertyPages.register(c4model.C4Person)
+class DescriptionPropertyPage(PropertyPageBase):
 
-    order = 15
+    order = 14
 
-    def __init__(self, subject: c4model.C4Container):
+    def __init__(self, subject: Union[c4model.C4Container, c4model.C4Person]):
         super().__init__()
         assert subject
         self.subject = subject
         self.watcher = subject.watcher()
 
     def construct(self):
-        builder = new_builder("container-editor", "description-text-buffer")
+        builder = new_builder("description-editor", "description-text-buffer")
         subject = self.subject
-
-        technology = builder.get_object("technology")
-        technology.set_text(subject.technology or "")
 
         description = builder.get_object("description")
 
@@ -53,18 +52,42 @@ class ContainerPropertyPage(PropertyPageBase):
 
         builder.connect_signals(
             {
-                "technology-changed": (self._on_technology_changed,),
                 "container-destroyed": (self.watcher.unsubscribe_all,),
             }
         )
-        return builder.get_object("container-editor")
-
-    @transactional
-    def _on_technology_changed(self, entry):
-        self.subject.technology = entry.get_text()
+        return builder.get_object("description-editor")
 
     @transactional
     def _on_description_changed(self, buffer):
         self.subject.description = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
+
+
+@PropertyPages.register(c4model.C4Container)
+class TechnologyPropertyPage(PropertyPageBase):
+
+    order = 15
+
+    def __init__(self, subject: c4model.C4Container):
+        super().__init__()
+        assert subject
+        self.subject = subject
+
+    def construct(self):
+        builder = new_builder("technology-editor")
+        subject = self.subject
+
+        technology = builder.get_object("technology")
+        technology.set_text(subject.technology or "")
+
+        builder.connect_signals(
+            {
+                "technology-changed": (self._on_technology_changed,),
+            }
+        )
+        return builder.get_object("technology-editor")
+
+    @transactional
+    def _on_technology_changed(self, entry):
+        self.subject.technology = entry.get_text()
