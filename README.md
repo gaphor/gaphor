@@ -159,6 +159,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/TiemenSch"><img src="https://avatars.githubusercontent.com/u/7141863?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tiemen Schuijbroek</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3ATiemenSch" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/blippost"><img src="https://avatars.githubusercontent.com/u/74373678?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Blippost</b></sub></a><br /><a href="#ideas-Blippost" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
