@@ -182,7 +182,7 @@ pyflakes = ">=2.2.0,<2.3.0"
 
 [[package]]
 name = "gaphas"
-version = "3.0.0"
+version = "3.0.1"
 description = "Gaphas is a GTK+ based diagramming widget"
 category = "main"
 optional = false
@@ -895,8 +895,8 @@ flake8 = [
     {file = "flake8-3.8.4.tar.gz", hash = "sha256:aadae8761ec651813c24be05c6f7b4680857ef6afaae4651a4eccaef97ce6c3b"},
 ]
 gaphas = [
-    {file = "gaphas-3.0.0-py3-none-any.whl", hash = "sha256:ef7a59130ecd48fbef38916e0466768d6647aaf88ff59d61a626c5834b0205b5"},
-    {file = "gaphas-3.0.0.tar.gz", hash = "sha256:a15810011a83d0c0a0343c7f436a8e428e1d6109f31dd03b542bd2c929eb9695"},
+    {file = "gaphas-3.0.1-py3-none-any.whl", hash = "sha256:e55b553dd8426bbb49f246047e9d9a286359291350a74b76b39891757426a9d5"},
+    {file = "gaphas-3.0.1.tar.gz", hash = "sha256:d5491050d4e7147290815ea6d2847fd7b3e27c62b9eacbef182528c5d32292fe"},
 ]
 generic = [
     {file = "generic-1.0.0-py3-none-any.whl", hash = "sha256:a8dbb3133929223149272fcc70a95967cf3b24e3fa12601f91c67fb61efe29d4"},
