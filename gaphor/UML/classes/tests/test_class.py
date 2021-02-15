@@ -3,7 +3,6 @@
 from gaphor import UML
 from gaphor.core.modeling import UpdateContext
 from gaphor.core.modeling.diagram import FALLBACK_STYLE
-from gaphor.tests.testcase import TestCase
 from gaphor.UML.classes.klass import ClassItem
 
 
@@ -15,10 +14,10 @@ def context():
     return UpdateContext(style=FALLBACK_STYLE)
 
 
-class ClassTestCase(TestCase):
-    def test_compartments(self):
+class TestClass:
+    def test_compartments(self, case):
         """Test creation of classes and working of compartments."""
-        element_factory = self.element_factory
+        element_factory = case.element_factory
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
@@ -52,9 +51,9 @@ class ClassTestCase(TestCase):
         assert 2 == len(compartments(klass)[1])
         assert compartments(klass)[1].size(context()) > (63.0, 34.0)
 
-    def test_attribute_removal(self):
+    def test_attribute_removal(self, case):
 
-        element_factory = self.element_factory
+        element_factory = case.element_factory
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
         diagram.update_now((klass,))
@@ -77,8 +76,8 @@ class ClassTestCase(TestCase):
 
         assert len(compartments(klass)[0]) == 2
 
-    def test_compartment_resizing(self):
-        element_factory = self.element_factory
+    def test_compartment_resizing(self, case):
+        element_factory = case.element_factory
         diagram = element_factory.create(UML.Diagram)
         klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
         klass.subject.name = "Class1"
