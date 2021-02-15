@@ -11,7 +11,6 @@ from gaphor.diagram.tests.fixtures import (
     event_manager,
 )
 from gaphor.services.undomanager import UndoManager
-from gaphor.tests import TestCase
 from gaphor.UML.classes import AssociationItem, ClassItem
 from gaphor.UML.sanitizerservice import SanitizerService
 
